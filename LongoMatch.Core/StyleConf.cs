@@ -21,29 +21,61 @@ namespace LongoMatch.Common
 {
 	public class StyleConf
 	{
-		public int WelcomeBorder { get; set; }
+		public const int WelcomeBorder = 30;
+		public const int WelcomeIconSize = 80;
+		public const int WelcomeLogoWidth = 450;
+		public const int WelcomeLogoHeight = 99;
+		public const int WelcomeIconsHSpacing = 105;
+		public const int WelcomeIconsVSpacing = 55;
+		public const int WelcomeIconsTextSpacing = 5;
+		public const int WelcomeIconsTextHeight = 20;
+		public const int WelcomeIconsPerRow = 3;
+		public const int WelcomeTextHeight = 20;
+		public const int WelcomeMinWidthBorder = 30;
+		public const int NewHeaderHeight = 60;
+		public const int NewHeaderSpacing = 10;
+		public const int NewEntryWidth = 150;
+		public const int NewEntryHeight = 30;
+		public const int NewTableHSpacing = 5;
+		public const int NewTableVSpacing = 5;
+		public const int NewTeamsComboWidth = 245;
+		public const int NewTeamsComboHeight = 60;
+		public const int NewTeamsIconSize = 55;
+		public const string NewTeamsFont = "Ubuntu 16";
+		public static Color NewTeamsFontColor = Color.White;
+		public const int NewTeamsSpacing = 60;
+		public const int NewTaggerSpacing = 35;
+		
+		public int BenchLineWidth = 2;
+		public int TeamTaggerBenchBorder = 10;
+		
+		public int PlayerSize = 60;
+		public int PlayerBorder = 2;
+		public int PlayerRadius = 2;
+		public int PlayerTeamLineWidth = 2;
+		public int PlayerNumberHeight  = 17;
+		public int PlayerNumberWidth  = 26;
+		public int PlayerNumberOffset  = 17;
+		public int PlayerArrowOffset = 14; 
+		public int PlayerArrowSize = 20; 
 
-		public int WelcomeIconSize { get; set; }
+		public Color HomeTeamColor { get; set; }
 
-		public int WelcomeLogoWidth { get; set; }
+		public Color AwayTeamColor { get; set; }
 
-		public int WelcomeLogoHeight { get; set; }
+		public Color PaletteBackground { get; set; }
 
-		public int WelcomeIconsHSpacing { get; set; }
+		public Color PaletteBackgroundLight { get; set; }
 
-		public int WelcomeIconsVSpacing { get; set; }
+		public Color PaletteBackgroundDark { get; set; }
 
-		public int WelcomeIconsTextSpacing { get; set; }
+		public Color PaletteWidgets { get; set; }
 
-		public int WelcomeIconsTextHeight { get; set; }
+		public Color PaletteSelected { get; set; }
 
-		public int WelcomeIconsPerRow { get; set; }
+		public Color PaletteActive { get; set; }
 
-		public int WelcomeTextHeight { get; set; }
-
-		public int WelcomeMinWidthBorder { get; set; }
-
-		public int TeamsComboColorHeight { get; set; }
+		public Color PaletteTool { get; set; }
 
 		public static StyleConf Load (string filename)
 		{

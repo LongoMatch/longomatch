@@ -37,7 +37,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.VBox menubox;
 		private global::Gtk.MenuBar menubar1;
 		private global::Gtk.HBox centralbox;
-		private global::LongoMatch.Gui.Panel.WelcomePanel welcomepanel1;
+		private global::LongoMatch.Gui.Panel.WelcomePanel welcomepanel;
 		private global::Gtk.Statusbar statusbar1;
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
 
@@ -171,11 +171,11 @@ namespace LongoMatch.Gui
 			this.centralbox.Name = "centralbox";
 			this.centralbox.Spacing = 6;
 			// Container child centralbox.Gtk.Box+BoxChild
-			this.welcomepanel1 = new global::LongoMatch.Gui.Panel.WelcomePanel ();
-			this.welcomepanel1.Events = ((global::Gdk.EventMask)(256));
-			this.welcomepanel1.Name = "welcomepanel1";
-			this.centralbox.Add (this.welcomepanel1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.centralbox [this.welcomepanel1]));
+			this.welcomepanel = new global::LongoMatch.Gui.Panel.WelcomePanel ();
+			this.welcomepanel.Events = ((global::Gdk.EventMask)(256));
+			this.welcomepanel.Name = "welcomepanel";
+			this.centralbox.Add (this.welcomepanel);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.centralbox [this.welcomepanel]));
 			w4.Position = 0;
 			this.vbox1.Add (this.centralbox);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.centralbox]));

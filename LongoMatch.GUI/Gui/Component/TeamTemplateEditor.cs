@@ -66,12 +66,13 @@ namespace LongoMatch.Gui.Component
 		public TeamTemplate  Team {
 			set {
 				template = value;
-				subsbutton.Active = false;
 				ignoreChanges = true;
 				if (template.Shield != null) {
 					shieldimage.Pixbuf = template.Shield.Value;
 				} else {
-					shieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+					shieldimage.Pixbuf = IconTheme.Default.LoadIcon (Constants.LOGO_ICON,
+					                                                 Constants.MAX_SHIELD_ICON_SIZE,
+					                                                 IconLookupFlags.ForceSvg);
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
@@ -102,8 +103,6 @@ namespace LongoMatch.Gui.Component
 			tacticsentry.Activated += (s, e) => {ParseTactics();};
 			
 			datebutton.Clicked += HandleCalendarbuttonClicked; 
-			
-			subsbutton.Clicked += HandleSubsClicked;
 			
 			Edited = false;
 		}
@@ -203,12 +202,6 @@ namespace LongoMatch.Gui.Component
 			Team = template;
 		}
 		
-		void HandleSubsClicked (object sender, EventArgs e)
-		{
-			teamtagger.SubstitutionsMode = subsbutton.Active;
-			warninglabel.Visible = subsbutton.Active;
-		}
-
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
 			PlayersSelected (players);

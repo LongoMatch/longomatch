@@ -84,7 +84,8 @@ namespace LongoMatch.Gui.Panel
 			
 		}
 
-		void Load (string templateName) {
+		void Load (string templateName)
+		{
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;
 			
@@ -94,11 +95,13 @@ namespace LongoMatch.Gui.Panel
 				Pixbuf img;
 				TreeIter iter;
 				
-				if (template.Shield != null)
+				if (template.Shield != null) {
 					img = template.Shield.Value;
-				else
-					img = Gdk.Pixbuf.LoadFromResource ("logo.svg");
-					
+				} else {
+					img = IconTheme.Default.LoadIcon (Constants.LOGO_ICON,
+					                                  Constants.MAX_SHIELD_ICON_SIZE,
+					                                  IconLookupFlags.ForceSvg);
+				}
 				iter = teams.AppendValues (img, template.Name, template.TeamName);
 				itersDict.Add (template.Name, iter);
 				if (first || template.Name == templateName) {

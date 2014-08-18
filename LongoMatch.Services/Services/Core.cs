@@ -41,17 +41,6 @@ namespace LongoMatch.Services
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern void g_setenv (String env, String val);
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		#endif
 		public static void Init ()

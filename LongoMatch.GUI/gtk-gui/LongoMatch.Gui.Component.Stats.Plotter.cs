@@ -31,6 +31,7 @@ namespace LongoMatch.Gui.Component.Stats
 			this.historadiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("Histogram"));
 			this.historadiobutton.CanFocus = true;
 			this.historadiobutton.Name = "historadiobutton";
+			this.historadiobutton.Active = true;
 			this.historadiobutton.DrawIndicator = true;
 			this.historadiobutton.UseUnderline = true;
 			this.historadiobutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);

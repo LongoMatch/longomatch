@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Panel
 				if (template.Image != null)
 					img = template.Image.Value;
 				else
-					img = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+					img = IconTheme.Default.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
 					
 				iter = templates.AppendValues (img, template.Name);
 				if (first || template.Name == templateName) {

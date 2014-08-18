@@ -12,6 +12,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/CoordinatesTagger.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
+	Gui/Component/MediaFileChooser.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PeriodsRecoder.cs \
 	Gui/Component/PlayListWidget.cs \
@@ -34,6 +35,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/Stats/Plotter.cs \
 	Gui/Component/Stats/SubcategoryViewer.cs \
 	Gui/Component/TeamTemplateEditor.cs \
+	Gui/Component/TeamsComboBox.cs \
 	Gui/Component/Timeline.cs \
 	Gui/Component/VideoPreferencesPanel.cs \
 	Gui/Dialog/About.cs \
@@ -84,6 +86,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
+	gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PeriodsRecoder.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
@@ -134,7 +137,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/generated.cs
 
 RESOURCES = gtk-gui/gui.stetic \
-	$(top_srcdir)/images/logo.svg \
 	$(top_srcdir)/images/video.png \
 	$(top_srcdir)/images/camera-video.png \
 	$(top_srcdir)/images/background.png \

@@ -310,4 +310,20 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.TeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.DatePicker" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="DatePicker Properties">
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
 </objects>

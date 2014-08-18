@@ -20,18 +20,13 @@ using System.Collections.Generic;
 using Gtk;
 using Gdk;
 using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Store.Templates;
-using LongoMatch.Multimedia.Utils;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 using Mono.Unix;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Video.Utils;
 using LongoMatch.Interfaces.GUI;
 
 using Device = LongoMatch.Common.Device;
@@ -69,32 +64,34 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			this.mtoolkit = Config.MultimediaToolkit;
 			this.gtoolkit = Config.GUIToolkit;
+			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", StyleConf.NewHeaderHeight - 10,
+			                                               IconLookupFlags.ForceSvg);
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
-			backgroundwidget.Background = Gdk.Pixbuf.LoadFromResource (Constants.BACKGROUND).RotateSimple (Gdk.PixbufRotation.Counterclockwise);
-			backgroundwidget.WidthRequest = 200;
-			nextbutton.Clicked += HandleNextClicked;
-			backbutton.Clicked += HandleBackClicked;
+			nextroundedbutton.Clicked += HandleNextClicked;
+			backrectbutton.Clicked += HandleBackClicked;
 			ConnectSignals ();
 			FillCategories ();
 			FillFormats ();
 			FillDevices (mtoolkit.VideoDevices);
 			LoadTeams ();
+			titlelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 			if (project == null) {
 				notebook1.Page = 0;
-				datelabel.Text = DateTime.Now.ToShortDateString();
+				datepicker1.Date = DateTime.Now;
 			} else {
 				notebook1.Page = 1;
 				this.project = project;
 				projectType = ProjectType.EditProject;
 				FillProjectDetails ();
 			}
+			UpdateTitle();
 			Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
 			urilabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
-			filelabel.ModifyFg (StateType.Normal, red);
+			ApplyStyle ();
 		}
 		
 		protected override void OnDestroyed ()
@@ -103,34 +100,39 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 		
+		void ApplyStyle () {
+			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
+			newheaderbox.HeightRequest = StyleConf.NewHeaderHeight;
+			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
+			lefttable.RowSpacing = filetable.RowSpacing =
+				outputfiletable.RowSpacing = righttable.RowSpacing = StyleConf.NewTableHSpacing;
+			lefttable.ColumnSpacing = righttable.ColumnSpacing = StyleConf.NewTableHSpacing;
+			filetable.ColumnSpacing = outputfiletable.ColumnSpacing = StyleConf.NewTeamsSpacing; 
+			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
+			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
+			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
+			titlelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
+		}
+		
 		void LoadTeams () {
-			drawingarea1.HeightRequest = 200;
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
-			teams = new ListStore (typeof(string));
-
-			teamtagger.HomeColor = Constants.HOME_COLOR;
-			teamtagger.AwayColor = Constants.AWAY_COLOR;
-
-			foreach (string name in Config.TeamTemplatesProvider.TemplatesNames) {
-				teams.AppendValues (name);
-			}
-			hometeamscombobox.Model = teams;
+			List<TeamTemplate> teams;
+			
+			drawingarea.HeightRequest = 200;
+			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teams = Config.TeamTemplatesProvider.Templates;
+			hometeamscombobox.Load (teams, false);
 			hometeamscombobox.Changed += (sender, e) => {
-				LoadTemplate (hometeamscombobox.ActiveText, Team.LOCAL);};
-			awayteamscombobox.Model = teams;
+				LoadTemplate (hometeamscombobox.ActiveTeam, Team.LOCAL);};
+			awayteamscombobox.Load (teams, true);
 			awayteamscombobox.Changed += (sender, e) => {
-				LoadTemplate (awayteamscombobox.ActiveText, Team.VISITOR);};
+				LoadTemplate (awayteamscombobox.ActiveTeam, Team.VISITOR);};
 			hometeamscombobox.Active = 0;
 			awayteamscombobox.Active = 0;
-			teamtagger.SubstitutionsMode = true;
 		}
 		
 		void ConnectSignals () {
-			calendarbutton.Clicked += HandleCalendarbuttonClicked; 
-			openbutton.Clicked += HandleOpenbuttonClicked;
 			savebutton.Clicked += HandleSavebuttonClicked;
 			urientry.Changed += HandleEntryChanged;
-			fileEntry.Changed += HandleEntryChanged;
 			outfileEntry.Changed += HandleEntryChanged;
 			createbutton.Clicked += HandleCreateProject;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
@@ -139,13 +141,12 @@ namespace LongoMatch.Gui.Panel
 		void FillProjectDetails () {
 			seasonentry.Text = project.Description.Season;
 			competitionentry.Text = project.Description.Competition;
-			datelabel.Text = project.Description.MatchDate.ToShortDateString();
-			localSpinButton.Value = project.Description.LocalGoals;
-			visitorSpinButton.Value = project.Description.VisitorGoals;
+			datelabel2.Text = project.Description.MatchDate.ToShortDateString();
+			datepicker1.Date = project.Description.MatchDate;
 			hometeamscombobox.Sensitive = false;
 			awayteamscombobox.Sensitive = false;
 			tagscombobox.Visible = false;
-			label9.Visible = false;
+			analysislabel.Visible = false;
 			filetable.Visible = true;
 			analysisTemplate = project.Categories;
 			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
@@ -230,32 +231,32 @@ namespace LongoMatch.Gui.Panel
 		
 		void LoadTemplate (TeamTemplate template, Team team) {
 			if (team == Team.LOCAL) {
-				if (template.Shield != null) {
-					homeshieldimage.Pixbuf = template.Shield.Value;
-				} else {
-					homeshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
-				}
-				homelabel.Text = template.TeamName;
 				hometemplate = template;
 			} else {
-				if (template.Shield != null) {
-					awayshieldimage.Pixbuf = template.Shield.Value;
-				} else {
-					awayshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
-				}
-				awaylabel.Text = template.TeamName;
 				awaytemplate = template;
 			}
 			teamtagger.LoadTeams (hometemplate, awaytemplate,
 			                      analysisTemplate.FieldBackground);
 		}
 		
-		bool CreateProject () {
+		void UpdateTitle ()
+		{
+			if (notebook1.Page == 0) {
+				titlelabel.Markup = Catalog.GetString ("<b>PROJECT TYPE</b>");
+			} else if (notebook1.Page == 1) {
+				titlelabel.Markup = Catalog.GetString ("<b>PROJECT PROPERTIES</b>");
+			} else if (notebook1.Page == 2) {
+				titlelabel.Markup = Catalog.GetString ("<b>PERIODS SYNCHRONIZATION</b>");
+			}
+		}
+		
+		bool CreateProject ()
+		{
 			TreeIter iter;
 			
 			if (projectType == ProjectType.FileProject ||
-			    projectType == ProjectType.EditProject) {
-				if (fileEntry.Text == "") {
+				projectType == ProjectType.EditProject) {
+				if (mediafilechooser1.File == null) {
 					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
 					return false;
 				}
@@ -286,9 +287,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description = new ProjectDescription ();
 			project.Description.Competition = competitionentry.Text;
 			project.Description.File = mediaFile;
-			project.Description.LocalGoals = (int) localSpinButton.Value;
-			project.Description.VisitorGoals = (int) visitorSpinButton.Value;
-			project.Description.MatchDate = DateTime.Parse (datelabel.Text);
+			project.Description.MatchDate = datepicker1.Date;
 			project.Description.Season = seasonentry.Text;
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
@@ -335,11 +334,6 @@ namespace LongoMatch.Gui.Panel
 			return true;
 		}
 		
-		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
-		{
-			datelabel.Text = Config.GUIToolkit.SelectDate (project.Description.MatchDate, this).ToShortDateString ();
-		}
-
 		void HandleSavebuttonClicked(object sender, System.EventArgs e)
 		{
 			string filename;
@@ -352,21 +346,8 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleOpenbuttonClicked(object sender, System.EventArgs e)
-		{
-			mediaFile = Misc.OpenFile (this);
-			if (mediaFile != null) {
-				fileEntry.Text = mediaFile.FilePath;
-			}
-		}
-		
 		void HandleEntryChanged (object sender, EventArgs e)
 		{
-			if (fileEntry.Text != "") {
-				filelabel.ModifyFg (StateType.Normal);
-			} else {
-				filelabel.ModifyFg (StateType.Normal, red);
-			}
 			if (urientry.Text != "") {
 				urilabel.ModifyFg (StateType.Normal);
 			} else {
@@ -407,9 +388,10 @@ namespace LongoMatch.Gui.Panel
 				}
 			} else {
 				notebook1.Page --;
-				nextbutton.Visible = true;
+				nextroundedbutton.Visible = true;
 				createbutton.Visible = false;
 			}
+			UpdateTitle ();
 		}
 
 		void HandleNextClicked (object sender, EventArgs e)
@@ -430,15 +412,16 @@ namespace LongoMatch.Gui.Panel
 				case ProjectType.CaptureProject:
 				case ProjectType.FakeCaptureProject:
 				case ProjectType.URICaptureProject:
-					nextbutton.Visible = false;
+					nextroundedbutton.Visible = false;
 					createbutton.Visible = true;
 					break;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
 				projectperiods1.Project = project;
-				nextbutton.Visible = false;
+				nextroundedbutton.Visible = false;
 				createbutton.Visible = true;
 			}
+			UpdateTitle ();
 		}
 	}
 }

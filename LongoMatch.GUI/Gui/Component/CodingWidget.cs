@@ -48,8 +48,6 @@ namespace LongoMatch.Gui.Component
 			autoTaggingMode.Active = true;
 			
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
-			teamtagger.HomeColor = Constants.HOME_COLOR;
-			teamtagger.AwayColor = Constants.AWAY_COLOR;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 
@@ -130,11 +128,6 @@ namespace LongoMatch.Gui.Component
 		{
 			loadedPlay = play;
 			timeline.SelectedTimeNode = play;
-			if (play != null) {
-				teamtagger.Select (play.Players);
-			} else {
-				teamtagger.ClearSelection ();
-			}
 		}
 
 		void HandleTick (Time currentTime)

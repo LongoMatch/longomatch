@@ -73,7 +73,6 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/logo.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/video.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
@@ -182,6 +181,12 @@
     <File subtype="Code" buildaction="Nothing" name="LongoMatch.GUI.dll.config" copyToOutputDirectory="PreserveNewest" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../data/images/longomatch-light-bg.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../data/images/longomatch-dark-bg.svg" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamsComboBox.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/MediaFileChooser.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/DatePicker.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DatePicker.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

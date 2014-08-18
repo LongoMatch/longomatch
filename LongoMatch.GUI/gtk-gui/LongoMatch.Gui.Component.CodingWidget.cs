@@ -40,12 +40,12 @@ namespace LongoMatch.Gui.Component
 			this.timelineMode.Group = this.positionMode.Group;
 			w3.Add (this.timelineMode, null);
 			this.autoTaggingMode = new global::Gtk.RadioAction ("autoTaggingMode", null, global::Mono.Unix.Catalog.GetString ("Automatic tagging view"), "gtk-select-color", 0);
-			this.autoTaggingMode.Group = this.positionMode.Group;
+			this.autoTaggingMode.Group = this.timelineMode.Group;
 			w3.Add (this.autoTaggingMode, null);
 			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
 			w3.Add (this.zoomFitAction, null);
 			this.convertAction = new global::Gtk.RadioAction ("convertAction", null, null, "gtk-convert", 0);
-			this.convertAction.Group = this.positionMode.Group;
+			this.convertAction.Group = this.autoTaggingMode.Group;
 			w3.Add (this.convertAction, null);
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
