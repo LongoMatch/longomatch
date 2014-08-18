@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Panel
 	public partial class SportsTemplatesPanel
 	{
 		private global::Gtk.VBox vbox3;
-		private global::Gtk.EventBox newheaderbox;
+		private global::Gtk.EventBox headereventbox;
 		private global::Gtk.HBox headerhbox;
 		private global::Gtk.Image logoimage;
 		private global::Gtk.Label titlelabel;
@@ -37,9 +37,9 @@ namespace LongoMatch.Gui.Panel
 			this.vbox3.Name = "vbox3";
 			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.newheaderbox = new global::Gtk.EventBox ();
-			this.newheaderbox.Name = "newheaderbox";
-			// Container child newheaderbox.Gtk.Container+ContainerChild
+			this.headereventbox = new global::Gtk.EventBox ();
+			this.headereventbox.Name = "headereventbox";
+			// Container child headereventbox.Gtk.Container+ContainerChild
 			this.headerhbox = new global::Gtk.HBox ();
 			this.headerhbox.Name = "headerhbox";
 			this.headerhbox.Spacing = 6;
@@ -90,9 +90,9 @@ namespace LongoMatch.Gui.Panel
 			w11.Position = 2;
 			w11.Expand = false;
 			w11.Fill = false;
-			this.newheaderbox.Add (this.headerhbox);
-			this.vbox3.Add (this.newheaderbox);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.newheaderbox]));
+			this.headereventbox.Add (this.headerhbox);
+			this.vbox3.Add (this.headereventbox);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.headereventbox]));
 			w13.Position = 0;
 			w13.Expand = false;
 			w13.Fill = false;

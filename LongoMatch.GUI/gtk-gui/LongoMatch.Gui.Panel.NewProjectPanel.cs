@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewProjectPanel
 	{
 		private global::Gtk.VBox vbox3;
-		private global::Gtk.EventBox newheaderbox;
+		private global::Gtk.EventBox headereventbox;
 		private global::Gtk.HBox headerhbox;
 		private global::Gtk.Image logoimage;
 		private global::Gtk.Label titlelabel;
@@ -84,9 +84,9 @@ namespace LongoMatch.Gui.Panel
 			this.vbox3 = new global::Gtk.VBox ();
 			this.vbox3.Name = "vbox3";
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.newheaderbox = new global::Gtk.EventBox ();
-			this.newheaderbox.Name = "newheaderbox";
-			// Container child newheaderbox.Gtk.Container+ContainerChild
+			this.headereventbox = new global::Gtk.EventBox ();
+			this.headereventbox.Name = "headereventbox";
+			// Container child headereventbox.Gtk.Container+ContainerChild
 			this.headerhbox = new global::Gtk.HBox ();
 			this.headerhbox.Name = "headerhbox";
 			this.headerhbox.Spacing = 6;
@@ -162,9 +162,12 @@ namespace LongoMatch.Gui.Panel
 			w20.Expand = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
 			this.backrectbutton = new global::Gtk.Button ();
+			this.backrectbutton.WidthRequest = 80;
+			this.backrectbutton.HeightRequest = 40;
 			this.backrectbutton.CanFocus = true;
 			this.backrectbutton.Name = "backrectbutton";
 			this.backrectbutton.UseUnderline = true;
+			this.backrectbutton.BorderWidth = ((uint)(10));
 			// Container child backrectbutton.Gtk.Container+ContainerChild
 			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
@@ -185,9 +188,9 @@ namespace LongoMatch.Gui.Panel
 			w29.Position = 4;
 			w29.Expand = false;
 			w29.Fill = false;
-			this.newheaderbox.Add (this.headerhbox);
-			this.vbox3.Add (this.newheaderbox);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.newheaderbox]));
+			this.headereventbox.Add (this.headerhbox);
+			this.vbox3.Add (this.headereventbox);
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.headereventbox]));
 			w31.Position = 0;
 			w31.Expand = false;
 			w31.Fill = false;
@@ -195,7 +198,7 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
+			this.notebook1.CurrentPage = 1;
 			this.notebook1.ShowBorder = false;
 			this.notebook1.Scrollable = true;
 			// Container child notebook1.Gtk.Notebook+NotebookChild

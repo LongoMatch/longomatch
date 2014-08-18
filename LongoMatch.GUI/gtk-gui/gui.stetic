@@ -6280,7 +6280,7 @@ You can continue with the current capture, cancel it or save your project.
       <widget class="Gtk.VBox" id="vbox3">
         <property name="MemberName" />
         <child>
-          <widget class="Gtk.EventBox" id="newheaderbox">
+          <widget class="Gtk.EventBox" id="headereventbox">
             <property name="MemberName" />
             <child>
               <widget class="Gtk.HBox" id="headerhbox">
@@ -7267,7 +7267,7 @@ You can continue with the current capture, cancel it or save your project.
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.EventBox" id="newheaderbox">
+          <widget class="Gtk.EventBox" id="headereventbox">
             <property name="MemberName" />
             <child>
               <widget class="Gtk.HBox" id="headerhbox">
@@ -8939,7 +8939,7 @@ You can continue with the current capture, cancel it or save your project.
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.EventBox" id="newheaderbox">
+          <widget class="Gtk.EventBox" id="headereventbox">
             <property name="MemberName" />
             <child>
               <widget class="Gtk.HBox" id="headerhbox">
