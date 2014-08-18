@@ -45,6 +45,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.CategoriesTemplatesProvider;
+			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
 			
 			templates = new ListStore (typeof(Pixbuf), typeof(string));
 			
@@ -57,19 +58,18 @@ namespace LongoMatch.Gui.Panel
 			templatestreeview.EnableGridLines = TreeViewGridLines.None;
 			templatestreeview.CursorChanged += HandleSelectionChanged;
 			
-			teamsvbox.WidthRequest = 280;
+			templatesvbox.WidthRequest = 280;
 			
 			buttonswidget.Sensitive = false;
 			buttonswidget.Mode = TagMode.Edit;
-			newteam.Visible = true;
-			deleteteambutton.Visible = false;
+			newtemplatebutton.Visible = true;
+			deletetemplatebutton.Visible = false;
 			
 			selectedTemplate = new List<string>();
-			newteam.Clicked += HandleNewTeamClicked;
-			deleteteambutton.Clicked += HandleDeleteTeamClicked;
-			savebutton.Clicked += (sender, e) => Save ();
-			
-			backbutton.Clicked += (sender, o) => {
+			newtemplatebutton.Clicked += HandleNewTeamClicked;
+			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
+			savetemplatebutton.Clicked += (sender, e) => Save ();
+			backrectbutton.Clicked += (sender, o) => {
 				if (BackEvent != null)
 					BackEvent();
 			};
@@ -137,7 +137,7 @@ namespace LongoMatch.Gui.Panel
 				selectedTemplate.Add (templatestreeview.Model.GetValue (iter, 1) as string);
 			}
 			
-			deleteteambutton.Visible = selectedTemplate.Count >= 1;
+			deletetemplatebutton.Visible = selectedTemplate.Count >= 1;
 			buttonswidget.Sensitive = true;
 			
 			if (selectedTemplate.Count == 1) {
@@ -205,6 +205,6 @@ namespace LongoMatch.Gui.Panel
 			}
 			dialog.Destroy();
 		}
-		}
+	}
 }
 

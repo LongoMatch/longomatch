@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
+			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
 			
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
 			itersDict = new Dictionary<string, TreeIter>();
@@ -67,15 +68,15 @@ namespace LongoMatch.Gui.Panel
 			teamsvbox.WidthRequest = 280;
 			
 			teamtemplateeditor1.Visible = false;
-			newteam.Visible = true;
-			deleteteambutton.Visible = false;
+			newteamtemplatebutton.Visible = true;
+			deleteteamteamplatebutton.Visible = false;
 			
 			selectedTeams = new List<string>();
-			newteam.Clicked += HandleNewTeamClicked;
-			deleteteambutton.Clicked += HandleDeleteTeamClicked;
+			newteamtemplatebutton.Clicked += HandleNewTeamClicked;
+			deleteteamteamplatebutton.Clicked += HandleDeleteTeamClicked;
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 			
-			backbutton.Clicked += (sender, o) => {
+			backrectbutton.Clicked += (sender, o) => {
 				PromptSave ();
 				if (BackEvent != null)
 					BackEvent();
@@ -164,7 +165,7 @@ namespace LongoMatch.Gui.Panel
 				selectedTeams.Add (teamstreeview.Model.GetValue (iter, 1) as string);
 			}
 			
-			deleteteambutton.Visible = selectedTeams.Count >= 1;
+			deleteteamteamplatebutton.Visible = selectedTeams.Count >= 1;
 			teamtemplateeditor1.Visible = true;
 			
 			if (selectedTeams.Count == 1) {
