@@ -7263,7 +7263,7 @@ You can continue with the current capture, cancel it or save your project.
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.VBox" id="vbox3">
+      <widget class="Gtk.VBox" id="mainvbox">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
@@ -7288,7 +7288,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;TEAM TEMPLATE EDITOR&lt;/b&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;TEAM EDITOR&lt;/b&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -7329,59 +7329,133 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HBox" id="hbox1">
+          <widget class="Gtk.Alignment" id="contentalignment">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="LeftPadding">12</property>
+            <property name="RightPadding">12</property>
             <child>
-              <widget class="Gtk.VBox" id="teamsvbox">
+              <widget class="Gtk.VBox" id="contentvbox">
                 <property name="MemberName" />
-                <property name="WidthRequest">280</property>
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.HButtonBox" id="hbuttonbox4">
+                  <widget class="Gtk.HBox" id="hbox7">
                     <property name="MemberName" />
-                    <property name="Size">3</property>
-                    <property name="LayoutStyle">Start</property>
+                    <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Button" id="newteamtemplatebutton">
+                      <widget class="Gtk.Alignment" id="templateimagealignment">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-template-add SmallToolbar</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="LeftPadding">12</property>
+                        <property name="RightPadding">24</property>
+                        <child>
+                          <widget class="Gtk.Image" id="teamimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Button" id="deleteteamteamplatebutton">
+                      <widget class="Gtk.VBox" id="vbox7">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-template-delete SmallToolbar</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="label4">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Edit team</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.HButtonBox" id="teambuttonbox">
+                            <property name="MemberName" />
+                            <property name="Spacing">12</property>
+                            <property name="Size">3</property>
+                            <property name="LayoutStyle">Start</property>
+                            <child>
+                              <widget class="Gtk.Button" id="newteamtemplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">New team</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="newteamimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="deleteteamteamplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">Delete team</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="deleteteamimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="saveteamtemplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">Save team</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="saveteamimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">2</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Button" id="saveteamtemplatebutton">
+                      <widget class="Gtk.VSeparator" id="vseparator3">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-template-save SmallToolbar</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
                         <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
@@ -7395,74 +7469,67 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Frame" id="frame4">
+                  <widget class="Gtk.HBox" id="hbox1">
                     <property name="MemberName" />
-                    <property name="ShadowType">None</property>
+                    <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Alignment" id="GtkAlignment7">
+                      <widget class="Gtk.VBox" id="teamsvbox">
                         <property name="MemberName" />
-                        <property name="Xalign">0</property>
-                        <property name="Yalign">0</property>
-                        <property name="LeftPadding">12</property>
+                        <property name="WidthRequest">280</property>
+                        <property name="Spacing">6</property>
                         <child>
                           <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
                             <child>
-                              <widget class="Gtk.TreeView" id="teamtemplatestreeview">
+                              <widget class="Gtk.TreeView" id="teamseditortreeview">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
                               </widget>
                             </child>
                           </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="GtkLabel7">
+                      <widget class="Gtk.VSeparator" id="vseparator2">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">&lt;b&gt;Teams&lt;/b&gt;</property>
-                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
-                        <property name="type">label_item</property>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.TeamTemplateEditor" id="teamtemplateeditor1">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
+                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
               </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.VSeparator" id="vseparator2">
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="LongoMatch.Gui.Component.TeamTemplateEditor" id="teamtemplateeditor1">
-                <property name="MemberName" />
-                <property name="Events">ButtonPressMask</property>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
             </child>
           </widget>
           <packing>
@@ -8931,11 +8998,11 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1388 783">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1412 783">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.VBox" id="vbox3">
+      <widget class="Gtk.VBox" id="mainvbox">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
@@ -8960,7 +9027,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;SPORT TEMPLATE EDITOR&lt;/b&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;ANALYSIS DASHBOARD EDITOR&lt;/b&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -9001,62 +9068,140 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HBox" id="hbox1">
+          <widget class="Gtk.Alignment" id="contentalignment">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="LeftPadding">12</property>
+            <property name="RightPadding">12</property>
             <child>
-              <widget class="Gtk.VBox" id="templatesvbox">
+              <widget class="Gtk.VBox" id="contentvbox">
                 <property name="MemberName" />
-                <property name="WidthRequest">280</property>
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.HButtonBox" id="hbuttonbox4">
+                  <widget class="Gtk.HBox" id="hbox3">
                     <property name="MemberName" />
-                    <property name="Size">3</property>
-                    <property name="LayoutStyle">Start</property>
+                    <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Button" id="newtemplatebutton">
+                      <widget class="Gtk.Alignment" id="templateimagealignment">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-add SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Add</property>
-                        <property name="UseUnderline">True</property>
+                        <property name="LeftPadding">12</property>
+                        <property name="RightPadding">24</property>
+                        <child>
+                          <widget class="Gtk.Image" id="templateimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Button" id="deletetemplatebutton">
+                      <widget class="Gtk.VBox" id="vbox3">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-remove SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Remove</property>
-                        <property name="UseUnderline">True</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="label2">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Edit dashboard</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.HButtonBox" id="hbuttonbox4">
+                            <property name="MemberName" />
+                            <property name="Spacing">12</property>
+                            <property name="Size">3</property>
+                            <property name="LayoutStyle">Start</property>
+                            <child>
+                              <widget class="Gtk.Button" id="newtemplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">New dashboard</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="newtemplateimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="deletetemplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">Delete dashboard</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="deletetemplateimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="savetemplatebutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes">Save dashboard</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="savetemplateimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">2</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Button" id="savetemplatebutton">
+                      <widget class="Gtk.VSeparator" id="vseparator1">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-save SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Save</property>
-                        <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
                         <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder />
                     </child>
                   </widget>
                   <packing>
@@ -9067,38 +9212,71 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Frame" id="frame4">
+                  <widget class="Gtk.HBox" id="hbox1">
                     <property name="MemberName" />
-                    <property name="ShadowType">None</property>
+                    <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Alignment" id="GtkAlignment7">
+                      <widget class="Gtk.VBox" id="templatesvbox">
                         <property name="MemberName" />
-                        <property name="Xalign">0</property>
-                        <property name="Yalign">0</property>
-                        <property name="LeftPadding">12</property>
+                        <property name="WidthRequest">280</property>
+                        <property name="Spacing">6</property>
                         <child>
                           <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
                             <child>
-                              <widget class="Gtk.TreeView" id="sporttemplatestreeview">
+                              <widget class="Gtk.TreeView" id="dashboardseditortreeview">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
                               </widget>
                             </child>
                           </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="GtkLabel7">
+                      <widget class="Gtk.VBox" id="vbox4">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">&lt;b&gt;Analysis templates&lt;/b&gt;</property>
-                        <property name="UseMarkup">True</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                            <property name="Edited">False</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.HButtonBox" id="hbuttonbox5">
+                            <property name="MemberName" />
+                            <property name="Size">0</property>
+                            <property name="LayoutStyle">Spread</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
-                        <property name="type">label_item</property>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
                       </packing>
                     </child>
                   </widget>
@@ -9108,62 +9286,11 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
               </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.VSeparator" id="vseparator2">
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.VBox" id="vbox4">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Edited">False</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HButtonBox" id="hbuttonbox5">
-                    <property name="MemberName" />
-                    <property name="Size">0</property>
-                    <property name="LayoutStyle">Spread</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-              </packing>
             </child>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">False</property>
+            <property name="AutoSize">True</property>
           </packing>
         </child>
       </widget>

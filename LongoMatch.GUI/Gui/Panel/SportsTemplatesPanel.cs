@@ -46,17 +46,20 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			provider = Config.CategoriesTemplatesProvider;
 			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
+			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 80, IconLookupFlags.ForceSvg);
+			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 40, IconLookupFlags.ForceSvg);
+			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 40, IconLookupFlags.ForceSvg);
+			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 40, IconLookupFlags.ForceSvg);
 			
 			templates = new ListStore (typeof(Pixbuf), typeof(string));
 			
-			sporttemplatestreeview.Model = templates;
-			sporttemplatestreeview.Model = templates;
-			sporttemplatestreeview.HeadersVisible = false;
-			sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			sporttemplatestreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
-			sporttemplatestreeview.SearchColumn = 1;
-			sporttemplatestreeview.EnableGridLines = TreeViewGridLines.None;
-			sporttemplatestreeview.CursorChanged += HandleSelectionChanged;
+			dashboardseditortreeview.Model = templates;
+			dashboardseditortreeview.HeadersVisible = false;
+			//sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
+			dashboardseditortreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			dashboardseditortreeview.SearchColumn = 0;
+			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
+			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 			
 			templatesvbox.WidthRequest = 280;
 			
@@ -97,7 +100,7 @@ namespace LongoMatch.Gui.Panel
 				first = false;
 			}
 			if (templates.IterIsValid (templateIter)) {
-				sporttemplatestreeview.Selection.SelectIter (templateIter);
+				dashboardseditortreeview.Selection.SelectIter (templateIter);
 				HandleSelectionChanged (null, null);
 			}
 		}
@@ -131,10 +134,10 @@ namespace LongoMatch.Gui.Panel
 			
 			selectedTemplate.Clear ();
 
-			pathArray = sporttemplatestreeview.Selection.GetSelectedRows ();
+			pathArray = dashboardseditortreeview.Selection.GetSelectedRows ();
 			for(int i=0; i< pathArray.Length; i++) {
-				sporttemplatestreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTemplate.Add (sporttemplatestreeview.Model.GetValue (iter, 1) as string);
+				dashboardseditortreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+				selectedTemplate.Add (dashboardseditortreeview.Model.GetValue (iter, 1) as string);
 			}
 			
 			deletetemplatebutton.Visible = selectedTemplate.Count >= 1;
@@ -207,4 +210,5 @@ namespace LongoMatch.Gui.Panel
 		}
 	}
 }
+
 

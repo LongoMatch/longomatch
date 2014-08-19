@@ -186,7 +186,7 @@ style "longomatch-header" {
   text[NORMAL]      = @base_color
 }
 
-style "longomatch-templates-treeview" {
+style "longomatch-editor-treeview" {
   # Background color
   base[NORMAL]       = @bg_dark_color
   # Line color when active (default)
@@ -352,7 +352,7 @@ widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
 widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
-widget "*templatestreeview" style "longomatch-templates-treeview"
+widget "*editortreeview" style "longomatch-editor-treeview"
 widget "*teamscombobox*" style "longomatch-teams-combo"
 widget "*mediafilechooser*entry*" style "longomatch-filechooser-entry"
 widget "*datepicker*button*" style "longomatch-filechooser-button"

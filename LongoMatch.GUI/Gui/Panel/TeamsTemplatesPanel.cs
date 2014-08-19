@@ -51,19 +51,22 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
 			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
+			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 80, IconLookupFlags.ForceSvg);
+			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 40, IconLookupFlags.ForceSvg);
+			deleteteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-delete", 40, IconLookupFlags.ForceSvg);
+			saveteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-save", 40, IconLookupFlags.ForceSvg);
 			
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
 			itersDict = new Dictionary<string, TreeIter>();
 			
-			teamtemplatestreeview.Model = teams;
-			teamtemplatestreeview.Model = teams;
-			teamtemplatestreeview.HeadersVisible = false;
-			teamtemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			teamtemplatestreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
-			teamtemplatestreeview.SearchColumn = 1;
-			teamtemplatestreeview.TooltipColumn = 2;
-			teamtemplatestreeview.EnableGridLines = TreeViewGridLines.None;
-			teamtemplatestreeview.CursorChanged += HandleSelectionChanged;
+			teamseditortreeview.Model = teams;
+			teamseditortreeview.HeadersVisible = false;
+			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
+			teamseditortreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			teamseditortreeview.SearchColumn = 1;
+			teamseditortreeview.TooltipColumn = 2;
+			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
+			teamseditortreeview.CursorChanged += HandleSelectionChanged;
 			
 			teamsvbox.WidthRequest = 280;
 			
@@ -111,7 +114,7 @@ namespace LongoMatch.Gui.Panel
 				first = false;
 			}
 			if (teams.IterIsValid (templateIter)) {
-				teamtemplatestreeview.Selection.SelectIter (templateIter);
+				teamseditortreeview.Selection.SelectIter (templateIter);
 				HandleSelectionChanged (null, null);
 			}
 		}
@@ -123,7 +126,7 @@ namespace LongoMatch.Gui.Panel
 			provider.Update (loadedTeam);
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
-				teamtemplatestreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
+				teamseditortreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
 				                              loadedTeam.Shield.Value);
 			}
 		}
@@ -159,10 +162,10 @@ namespace LongoMatch.Gui.Panel
 			
 			selectedTeams.Clear ();
 
-			pathArray = teamtemplatestreeview.Selection.GetSelectedRows ();
+			pathArray = teamseditortreeview.Selection.GetSelectedRows ();
 			for(int i=0; i< pathArray.Length; i++) {
-				teamtemplatestreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTeams.Add (teamtemplatestreeview.Model.GetValue (iter, 1) as string);
+				teamseditortreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+				selectedTeams.Add (teamseditortreeview.Model.GetValue (iter, 1) as string);
 			}
 			
 			deleteteamteamplatebutton.Visible = selectedTeams.Count >= 1;

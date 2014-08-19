@@ -4,24 +4,31 @@ namespace LongoMatch.Gui.Panel
 {
 	public partial class SportsTemplatesPanel
 	{
-		private global::Gtk.VBox vbox3;
+		private global::Gtk.VBox mainvbox;
 		private global::Gtk.EventBox headereventbox;
 		private global::Gtk.HBox headerhbox;
 		private global::Gtk.Image logoimage;
 		private global::Gtk.Label titlelabel;
 		private global::Gtk.Button backrectbutton;
-		private global::Gtk.HBox hbox1;
-		private global::Gtk.VBox templatesvbox;
+		private global::Gtk.Alignment contentalignment;
+		private global::Gtk.VBox contentvbox;
+		private global::Gtk.HBox hbox3;
+		private global::Gtk.Alignment templateimagealignment;
+		private global::Gtk.Image templateimage;
+		private global::Gtk.VBox vbox3;
+		private global::Gtk.Label label2;
 		private global::Gtk.HButtonBox hbuttonbox4;
 		private global::Gtk.Button newtemplatebutton;
+		private global::Gtk.Image newtemplateimage;
 		private global::Gtk.Button deletetemplatebutton;
+		private global::Gtk.Image deletetemplateimage;
 		private global::Gtk.Button savetemplatebutton;
-		private global::Gtk.Frame frame4;
-		private global::Gtk.Alignment GtkAlignment7;
+		private global::Gtk.Image savetemplateimage;
+		private global::Gtk.VSeparator vseparator1;
+		private global::Gtk.HBox hbox1;
+		private global::Gtk.VBox templatesvbox;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		private global::Gtk.TreeView sporttemplatestreeview;
-		private global::Gtk.Label GtkLabel7;
-		private global::Gtk.VSeparator vseparator2;
+		private global::Gtk.TreeView dashboardseditortreeview;
 		private global::Gtk.VBox vbox4;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::Gtk.HButtonBox hbuttonbox5;
@@ -33,10 +40,10 @@ namespace LongoMatch.Gui.Panel
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Panel.SportsTemplatesPanel";
 			// Container child LongoMatch.Gui.Panel.SportsTemplatesPanel.Gtk.Container+ContainerChild
-			this.vbox3 = new global::Gtk.VBox ();
-			this.vbox3.Name = "vbox3";
-			this.vbox3.Spacing = 6;
-			// Container child vbox3.Gtk.Box+BoxChild
+			this.mainvbox = new global::Gtk.VBox ();
+			this.mainvbox.Name = "mainvbox";
+			this.mainvbox.Spacing = 6;
+			// Container child mainvbox.Gtk.Box+BoxChild
 			this.headereventbox = new global::Gtk.EventBox ();
 			this.headereventbox.Name = "headereventbox";
 			// Container child headereventbox.Gtk.Container+ContainerChild
@@ -55,7 +62,7 @@ namespace LongoMatch.Gui.Panel
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>SPORT TEMPLATE EDITOR</b>");
+			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>ANALYSIS DASHBOARD EDITOR</b>");
 			this.titlelabel.UseMarkup = true;
 			this.titlelabel.Justify = ((global::Gtk.Justification)(2));
 			this.headerhbox.Add (this.titlelabel);
@@ -91,12 +98,124 @@ namespace LongoMatch.Gui.Panel
 			w11.Expand = false;
 			w11.Fill = false;
 			this.headereventbox.Add (this.headerhbox);
-			this.vbox3.Add (this.headereventbox);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.headereventbox]));
+			this.mainvbox.Add (this.headereventbox);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.headereventbox]));
 			w13.Position = 0;
 			w13.Expand = false;
 			w13.Fill = false;
+			// Container child mainvbox.Gtk.Box+BoxChild
+			this.contentalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.contentalignment.Name = "contentalignment";
+			this.contentalignment.LeftPadding = ((uint)(12));
+			this.contentalignment.RightPadding = ((uint)(12));
+			// Container child contentalignment.Gtk.Container+ContainerChild
+			this.contentvbox = new global::Gtk.VBox ();
+			this.contentvbox.Name = "contentvbox";
+			this.contentvbox.Spacing = 6;
+			// Container child contentvbox.Gtk.Box+BoxChild
+			this.hbox3 = new global::Gtk.HBox ();
+			this.hbox3.Name = "hbox3";
+			this.hbox3.Spacing = 6;
+			// Container child hbox3.Gtk.Box+BoxChild
+			this.templateimagealignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.templateimagealignment.Name = "templateimagealignment";
+			this.templateimagealignment.LeftPadding = ((uint)(12));
+			this.templateimagealignment.RightPadding = ((uint)(24));
+			// Container child templateimagealignment.Gtk.Container+ContainerChild
+			this.templateimage = new global::Gtk.Image ();
+			this.templateimage.Name = "templateimage";
+			this.templateimagealignment.Add (this.templateimage);
+			this.hbox3.Add (this.templateimagealignment);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.templateimagealignment]));
+			w15.Position = 0;
+			w15.Expand = false;
+			w15.Fill = false;
+			// Container child hbox3.Gtk.Box+BoxChild
+			this.vbox3 = new global::Gtk.VBox ();
+			this.vbox3.Name = "vbox3";
+			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.Xalign = 0F;
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Edit dashboard");
+			this.vbox3.Add (this.label2);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.label2]));
+			w16.Position = 0;
+			w16.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.hbuttonbox4 = new global::Gtk.HButtonBox ();
+			this.hbuttonbox4.Name = "hbuttonbox4";
+			this.hbuttonbox4.Spacing = 12;
+			this.hbuttonbox4.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
+			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
+			this.newtemplatebutton = new global::Gtk.Button ();
+			this.newtemplatebutton.TooltipMarkup = "New dashboard";
+			this.newtemplatebutton.CanFocus = true;
+			this.newtemplatebutton.Name = "newtemplatebutton";
+			// Container child newtemplatebutton.Gtk.Container+ContainerChild
+			this.newtemplateimage = new global::Gtk.Image ();
+			this.newtemplateimage.Name = "newtemplateimage";
+			this.newtemplatebutton.Add (this.newtemplateimage);
+			this.newtemplatebutton.Label = null;
+			this.hbuttonbox4.Add (this.newtemplatebutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w18 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.newtemplatebutton]));
+			w18.Expand = false;
+			w18.Fill = false;
+			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
+			this.deletetemplatebutton = new global::Gtk.Button ();
+			this.deletetemplatebutton.TooltipMarkup = "Delete dashboard";
+			this.deletetemplatebutton.CanFocus = true;
+			this.deletetemplatebutton.Name = "deletetemplatebutton";
+			// Container child deletetemplatebutton.Gtk.Container+ContainerChild
+			this.deletetemplateimage = new global::Gtk.Image ();
+			this.deletetemplateimage.Name = "deletetemplateimage";
+			this.deletetemplatebutton.Add (this.deletetemplateimage);
+			this.deletetemplatebutton.Label = null;
+			this.hbuttonbox4.Add (this.deletetemplatebutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w20 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.deletetemplatebutton]));
+			w20.Position = 1;
+			w20.Expand = false;
+			w20.Fill = false;
+			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
+			this.savetemplatebutton = new global::Gtk.Button ();
+			this.savetemplatebutton.TooltipMarkup = "Save dashboard";
+			this.savetemplatebutton.CanFocus = true;
+			this.savetemplatebutton.Name = "savetemplatebutton";
+			// Container child savetemplatebutton.Gtk.Container+ContainerChild
+			this.savetemplateimage = new global::Gtk.Image ();
+			this.savetemplateimage.Name = "savetemplateimage";
+			this.savetemplatebutton.Add (this.savetemplateimage);
+			this.savetemplatebutton.Label = null;
+			this.hbuttonbox4.Add (this.savetemplatebutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.savetemplatebutton]));
+			w22.Position = 2;
+			w22.Expand = false;
+			w22.Fill = false;
+			this.vbox3.Add (this.hbuttonbox4);
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbuttonbox4]));
+			w23.Position = 1;
+			w23.Expand = false;
+			w23.Fill = false;
+			this.hbox3.Add (this.vbox3);
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox3]));
+			w24.Position = 1;
+			w24.Expand = false;
+			w24.Fill = false;
+			// Container child hbox3.Gtk.Box+BoxChild
+			this.vseparator1 = new global::Gtk.VSeparator ();
+			this.vseparator1.Name = "vseparator1";
+			this.hbox3.Add (this.vseparator1);
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vseparator1]));
+			w25.Position = 2;
+			w25.Expand = false;
+			w25.Fill = false;
+			this.contentvbox.Add (this.hbox3);
+			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox3]));
+			w26.Position = 0;
+			w26.Expand = false;
+			w26.Fill = false;
+			// Container child contentvbox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
@@ -106,131 +225,22 @@ namespace LongoMatch.Gui.Panel
 			this.templatesvbox.Name = "templatesvbox";
 			this.templatesvbox.Spacing = 6;
 			// Container child templatesvbox.Gtk.Box+BoxChild
-			this.hbuttonbox4 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox4.Name = "hbuttonbox4";
-			this.hbuttonbox4.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
-			this.newtemplatebutton = new global::Gtk.Button ();
-			this.newtemplatebutton.CanFocus = true;
-			this.newtemplatebutton.Name = "newtemplatebutton";
-			this.newtemplatebutton.UseUnderline = true;
-			// Container child newtemplatebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w14 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w15 = new global::Gtk.HBox ();
-			w15.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w16 = new global::Gtk.Image ();
-			w16.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.SmallToolbar);
-			w15.Add (w16);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w18 = new global::Gtk.Label ();
-			w18.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add");
-			w18.UseUnderline = true;
-			w15.Add (w18);
-			w14.Add (w15);
-			this.newtemplatebutton.Add (w14);
-			this.hbuttonbox4.Add (this.newtemplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.newtemplatebutton]));
-			w22.Expand = false;
-			w22.Fill = false;
-			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
-			this.deletetemplatebutton = new global::Gtk.Button ();
-			this.deletetemplatebutton.CanFocus = true;
-			this.deletetemplatebutton.Name = "deletetemplatebutton";
-			this.deletetemplatebutton.UseUnderline = true;
-			// Container child deletetemplatebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w23 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w24 = new global::Gtk.HBox ();
-			w24.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w25 = new global::Gtk.Image ();
-			w25.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.SmallToolbar);
-			w24.Add (w25);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w27 = new global::Gtk.Label ();
-			w27.LabelProp = global::Mono.Unix.Catalog.GetString ("_Remove");
-			w27.UseUnderline = true;
-			w24.Add (w27);
-			w23.Add (w24);
-			this.deletetemplatebutton.Add (w23);
-			this.hbuttonbox4.Add (this.deletetemplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.deletetemplatebutton]));
-			w31.Position = 1;
-			w31.Expand = false;
-			w31.Fill = false;
-			// Container child hbuttonbox4.Gtk.ButtonBox+ButtonBoxChild
-			this.savetemplatebutton = new global::Gtk.Button ();
-			this.savetemplatebutton.CanFocus = true;
-			this.savetemplatebutton.Name = "savetemplatebutton";
-			this.savetemplatebutton.UseUnderline = true;
-			// Container child savetemplatebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w32 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w33 = new global::Gtk.HBox ();
-			w33.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w34 = new global::Gtk.Image ();
-			w34.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.SmallToolbar);
-			w33.Add (w34);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w36 = new global::Gtk.Label ();
-			w36.LabelProp = global::Mono.Unix.Catalog.GetString ("_Save");
-			w36.UseUnderline = true;
-			w33.Add (w36);
-			w32.Add (w33);
-			this.savetemplatebutton.Add (w32);
-			this.hbuttonbox4.Add (this.savetemplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w40 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox4 [this.savetemplatebutton]));
-			w40.Position = 2;
-			w40.Expand = false;
-			w40.Fill = false;
-			this.templatesvbox.Add (this.hbuttonbox4);
-			global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.hbuttonbox4]));
-			w41.Position = 0;
-			w41.Expand = false;
-			w41.Fill = false;
-			// Container child templatesvbox.Gtk.Box+BoxChild
-			this.frame4 = new global::Gtk.Frame ();
-			this.frame4.Name = "frame4";
-			this.frame4.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child frame4.Gtk.Container+ContainerChild
-			this.GtkAlignment7 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-			this.GtkAlignment7.Name = "GtkAlignment7";
-			this.GtkAlignment7.LeftPadding = ((uint)(12));
-			// Container child GtkAlignment7.Gtk.Container+ContainerChild
 			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-			this.sporttemplatestreeview = new global::Gtk.TreeView ();
-			this.sporttemplatestreeview.CanFocus = true;
-			this.sporttemplatestreeview.Name = "sporttemplatestreeview";
-			this.GtkScrolledWindow1.Add (this.sporttemplatestreeview);
-			this.GtkAlignment7.Add (this.GtkScrolledWindow1);
-			this.frame4.Add (this.GtkAlignment7);
-			this.GtkLabel7 = new global::Gtk.Label ();
-			this.GtkLabel7.Name = "GtkLabel7";
-			this.GtkLabel7.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Analysis templates</b>");
-			this.GtkLabel7.UseMarkup = true;
-			this.frame4.LabelWidget = this.GtkLabel7;
-			this.templatesvbox.Add (this.frame4);
-			global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.frame4]));
-			w45.Position = 1;
+			this.dashboardseditortreeview = new global::Gtk.TreeView ();
+			this.dashboardseditortreeview.CanFocus = true;
+			this.dashboardseditortreeview.Name = "dashboardseditortreeview";
+			this.GtkScrolledWindow1.Add (this.dashboardseditortreeview);
+			this.templatesvbox.Add (this.GtkScrolledWindow1);
+			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
+			w28.Position = 0;
 			this.hbox1.Add (this.templatesvbox);
-			global::Gtk.Box.BoxChild w46 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
-			w46.Position = 0;
-			w46.Expand = false;
-			w46.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.vseparator2 = new global::Gtk.VSeparator ();
-			this.vseparator2.Name = "vseparator2";
-			this.hbox1.Add (this.vseparator2);
-			global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vseparator2]));
-			w47.Position = 1;
-			w47.Expand = false;
-			w47.Fill = false;
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
+			w29.Position = 0;
+			w29.Expand = false;
+			w29.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox4 = new global::Gtk.VBox ();
 			this.vbox4.Name = "vbox4";
@@ -241,24 +251,28 @@ namespace LongoMatch.Gui.Panel
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;
 			this.vbox4.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
-			w48.Position = 0;
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
+			w30.Position = 0;
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.hbuttonbox5 = new global::Gtk.HButtonBox ();
 			this.hbuttonbox5.Name = "hbuttonbox5";
 			this.hbuttonbox5.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 			this.vbox4.Add (this.hbuttonbox5);
-			global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbuttonbox5]));
-			w49.Position = 1;
-			w49.Expand = false;
-			w49.Fill = false;
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbuttonbox5]));
+			w31.Position = 1;
+			w31.Expand = false;
+			w31.Fill = false;
 			this.hbox1.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w50 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
-			w50.Position = 2;
-			this.vbox3.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w51 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox1]));
-			w51.Position = 1;
-			this.Add (this.vbox3);
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
+			w32.Position = 1;
+			this.contentvbox.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w33.Position = 1;
+			this.contentalignment.Add (this.contentvbox);
+			this.mainvbox.Add (this.contentalignment);
+			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.contentalignment]));
+			w35.Position = 1;
+			this.Add (this.mainvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

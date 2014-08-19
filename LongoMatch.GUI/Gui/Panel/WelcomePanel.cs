@@ -39,9 +39,9 @@ namespace LongoMatch.Gui.Panel
 			                   new Action (() => Config.EventsBroker.EmitImportProject ())),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageProjects ())),
-			new WelcomeButton ("longomatch-sportconfig", Catalog.GetString ("Sport\ntemplates"),
+			new WelcomeButton ("longomatch-sportconfig", Catalog.GetString ("Analysis\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageCategories ())),
-			new WelcomeButton ("longomatch-teamconfig", Catalog.GetString ("Team\ntemplates"),
+			new WelcomeButton ("longomatch-teamconfig", Catalog.GetString ("Team\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageTeams ())),
 			                   
 		};
