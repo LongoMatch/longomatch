@@ -251,7 +251,9 @@ style "longomatch-filechooser-entry"
 
 style "longomatch-filechooser-button"
 {
-   ythickness = 4
+   ythickness = 3
+   xthickness = 10
+
    engine "pixmap"
    {
     image
