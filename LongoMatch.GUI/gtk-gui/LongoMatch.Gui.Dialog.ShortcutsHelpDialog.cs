@@ -15,7 +15,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.ShortcutsHelpDialog
 			this.Name = "LongoMatch.Gui.Dialog.ShortcutsHelpDialog";
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			this.SkipPagerHint = true;

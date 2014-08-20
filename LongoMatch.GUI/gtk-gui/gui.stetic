@@ -2772,7 +2772,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="522 538">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Buttons">1</property>
@@ -2823,7 +2823,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="977 863">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Drawing Tool</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -3813,7 +3813,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.RenderingJobsDialog" design-size="400 212">
     <property name="MemberName" />
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -4125,7 +4125,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ShortcutsHelpDialog" design-size="538 248">
     <property name="MemberName" />
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="SkipPagerHint">True</property>
@@ -4234,7 +4234,7 @@ You can continue with the current capture, cancel it or save your project.
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoConversionTool" design-size="400 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video converter tool</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="DestroyWithParent">True</property>
@@ -4486,7 +4486,7 @@ You can continue with the current capture, cancel it or save your project.
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DatabasesManager" design-size="400 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Databases manager</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -5753,7 +5753,7 @@ You can continue with the current capture, cancel it or save your project.
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.StatsViewer" design-size="1167 619">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Stats</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="TypeHint">Utility</property>
     <property name="WindowPosition">CenterAlways</property>
     <property name="Modal">True</property>

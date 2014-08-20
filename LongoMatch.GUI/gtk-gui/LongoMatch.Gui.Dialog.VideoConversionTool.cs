@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.VideoConversionTool
 			this.Name = "LongoMatch.Gui.Dialog.VideoConversionTool";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Video converter tool");
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			this.DestroyWithParent = true;

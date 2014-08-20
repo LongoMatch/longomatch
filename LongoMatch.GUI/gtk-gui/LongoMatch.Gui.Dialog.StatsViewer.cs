@@ -19,7 +19,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.StatsViewer
 			this.Name = "LongoMatch.Gui.Dialog.StatsViewer";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Stats");
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(5));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(3));
 			this.Modal = true;
