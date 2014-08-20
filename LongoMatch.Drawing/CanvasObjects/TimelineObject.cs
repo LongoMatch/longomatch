@@ -59,6 +59,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 			protected get;
 		}
+		
+		public double Height {
+			get {
+				return StyleConf.TimelineCategoryHeight;
+			}
+		}
 
 		public double Width {
 			set;
@@ -79,6 +85,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			nodes.RemoveAll (po => po.TimeNode == node);
 		}
+		
+		protected virtual void DrawBackground (IDrawingToolkit tk, Area area)
+		{
+			tk.FillColor = background;
+			tk.StrokeColor = background;
+			tk.LineWidth = 0;
+			
+			tk.DrawRectangle (new Point (0, OffsetY), Width,
+			                  Height);
+		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
@@ -88,11 +104,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			selected = new List<TimeNodeObject> ();
 
 			tk.Begin ();
-			tk.FillColor = background;
-			tk.StrokeColor = background;
-			tk.LineWidth = 1;
-			tk.DrawRectangle (new Point (0, OffsetY), Width,
-			                  Constants.CATEGORY_HEIGHT);
+			DrawBackground (tk, area);
 			foreach (TimeNodeObject p in nodes) {
 				if (p.Selected) {
 					selected.Add (p);
@@ -103,13 +115,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			foreach (TimeNodeObject p in selected) {
 				p.Draw (tk, area);
 			}
-			
-			tk.FillColor = Constants.TIMELINE_LINE_COLOR;
-			tk.StrokeColor = Constants.TIMELINE_LINE_COLOR;
+
+			tk.FillColor = Config.Style.PaletteTool;
+			tk.StrokeColor = Config.Style.PaletteTool;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			position = Utils.TimeToPos (CurrentTime, secondsPerPixel);
 			tk.DrawLine (new Point (position, OffsetY),
-			             new Point (position, OffsetY + Constants.CATEGORY_HEIGHT));
+			             new Point (position, OffsetY + Height));
 			
 			tk.End ();
 		}
@@ -118,7 +130,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			Selection selection = null;
 
-			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
+			if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
 				foreach (TimeNodeObject po in nodes) {
 					Selection tmp;
 					tmp = po.GetSelection (point, precision);
@@ -180,6 +192,20 @@ namespace LongoMatch.Drawing.CanvasObjects
 					AddNode (to);
 				}
 			}
+		}
+		
+		protected override void DrawBackground (IDrawingToolkit tk, Area area)
+		{
+			double linepos;
+			base.DrawBackground (tk, area);
+
+			linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			tk.LineWidth = 4;
+			tk.DrawLine (new Point (0, linepos),
+			             new Point (Width, linepos));
 		}
 	}
 }

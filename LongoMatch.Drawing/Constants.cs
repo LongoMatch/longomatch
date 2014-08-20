@@ -24,9 +24,6 @@ namespace LongoMatch.Drawing
 {
 	public class Constants
 	{
-		public const int CATEGORY_HEIGHT = 20;
-		public const int CATEGORY_WIDTH = 150;
-		public const int CATEGORY_H_SPACE = 5;
 		public const int TIMER_HEIGHT = 20;
 		public const int TIMERULE_HEIGHT = 30;
 		public const int TAGGER_POINT_SIZE = 5;
@@ -36,7 +33,6 @@ namespace LongoMatch.Drawing
 		public const int CATEGORY_TPL_GRID = 10;
 		public const double TIMELINE_ACCURACY = 5;
 		public static Color TEXT_COLOR = Color.Black;
-		public static Color TIMELINE_LINE_COLOR = Color.Black;
 		public static Color TIMERULE_BACKGROUND = Color.White;
 		public static Color PLAY_OBJECT_SELECTED_COLOR = Color.Black;
 		public static Color PLAY_OBJECT_UNSELECTED_COLOR = Color.Grey1;

@@ -127,6 +127,11 @@ namespace LongoMatch.Drawing.Cairo
 			set;
 		}
 
+		public ISurface CreateSurface (string filename)
+		{
+			return new Surface (filename);
+		}
+
 		public ISurface CreateSurface (int width, int height, Image image=null)
 		{
 			return new Surface (width, height, image);
@@ -390,10 +395,19 @@ namespace LongoMatch.Drawing.Cairo
 			StrokeAndFill ();
 		}
 
-		public void DrawSurface (ISurface surface)
+		public void DrawSurface (ISurface surface, Point p = null)
 		{
-			CContext.SetSourceSurface (surface.Value as ImageSurface, 0, 0);
-			CContext.Paint ();
+			ImageSurface image;
+
+			image = surface.Value as ImageSurface;
+			if (p == null) {
+				CContext.SetSourceSurface (image, 0, 0);
+				CContext.Paint ();
+			} else {
+				CContext.SetSourceSurface (image, (int)p.X, (int)p.Y);
+				CContext.Rectangle (p.X, p.Y, image.Width, image.Height);
+				CContext.Fill ();
+			}
 		}
 
 		public Image Copy (ICanvas canvas, double width, double height)

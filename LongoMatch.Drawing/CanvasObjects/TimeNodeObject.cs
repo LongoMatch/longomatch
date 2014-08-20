@@ -21,11 +21,13 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
+using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{
+		ISurface needle;
 		const int MAX_TIME_SPAN = 1000;
 
 		public TimeNodeObject (TimeNode node)
@@ -52,6 +54,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public double OffsetY {
 			get;
 			set;
+		}
+		
+		public double Height {
+			get {
+				return StyleConf.TimelineCategoryHeight;
+			}
 		}
 
 		public double SecondsPerPixel {
@@ -81,7 +89,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public Selection GetSelection (Point point, double precision)
 		{
 			double accuracy;
-			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
+			if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
 				if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
 					return new Selection (this, SelectionPosition.Left, accuracy);
 				} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
@@ -129,33 +137,33 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			double mid, bottom, stop;
-			Color c;
+			double linepos;
 
 			tk.Begin ();
-			if (Selected) {
-				c = Constants.TIMER_SELECTED_COLOR;
-			} else {
-				c = Constants.TIMER_UNSELECTED_COLOR;
+			if (needle == null) {
+				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleUP); 
+				Image img = Image.LoadFromFile (path);
+				needle = tk.CreateSurface (img.Width, img.Height, img);
 			}
-			tk.FillColor = c;
-			tk.StrokeColor = c;
-			tk.LineWidth = 4;
 			
-			mid = OffsetY + Constants.CATEGORY_HEIGHT / 2;
-			bottom = OffsetY + Constants.CATEGORY_HEIGHT;
-			stop = Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
+			tk.FillColor = Config.Style.PaletteBackgroundLight;
+			tk.StrokeColor = Config.Style.PaletteBackgroundLight;
+			tk.LineWidth = StyleConf.TimelineLineSize;
 			
-			tk.DrawLine (new Point (StartX, OffsetY),
-			             new Point (StartX, bottom));
-			tk.DrawLine (new Point (StartX, bottom),
-			             new Point (stop, bottom));
-			tk.DrawLine (new Point (stop, OffsetY),
-			             new Point (stop, bottom));
-			tk.FontSize = 20;
-			tk.DrawText (new Point (StartX, OffsetY), stop - StartX,
-			             Constants.CATEGORY_HEIGHT - 4, TimeNode.Name);
-			             
+			linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+			
+			tk.DrawLine (new Point (StartX, linepos),
+			             new Point (StopX, linepos));
+			tk.DrawSurface (needle, new Point (StartX - needle.Width / 2, linepos - 9)); 
+			tk.DrawSurface (needle, new Point (StopX - needle.Width / 2, linepos - 9)); 
+
+			tk.FontSize = 16;
+			tk.FontWeight = FontWeight.Bold;
+			tk.FillColor = Config.Style.PaletteActive;
+			tk.StrokeColor = Config.Style.PaletteActive;
+			tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
+			             Height - StyleConf.TimelineLineSize,
+			             TimeNode.Name);
 			tk.End ();
 		}
 	}

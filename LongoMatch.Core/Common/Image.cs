@@ -145,6 +145,16 @@ namespace LongoMatch.Common
 			}
 		}
 		
+		public static Image LoadFromResource (string resource)
+		{
+			return new Image (SImage.LoadFromResource (resource));
+		}
+		
+		public static Image LoadFromFile (string filename)
+		{
+			return new Image (new SImage (filename));
+		}
+		
 		public static Image Composite(Image image1, Image image2) {
 			SImage dest = new SImage(image1.Value.Colorspace, true, image1.Value.BitsPerSample,
 			                         image1.Width, image1.Height);

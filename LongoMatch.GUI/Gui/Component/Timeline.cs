@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			focusscale.Adjustment.Upper = 12;
 			focusscale.ValueChanged += HandleValueChanged;
 			timerulearea.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
-			labelsarea.WidthRequest = LongoMatch.Drawing.Constants.CATEGORY_WIDTH;
+			labelsarea.WidthRequest = StyleConf.TimelineCategoryHeight;
 			hbox1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;

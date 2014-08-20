@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Clear ();
 			categories.Clear ();
 			duration = project.Description.File.Duration;
-			widget.Height = project.Categories.List.Count * Constants.CATEGORY_HEIGHT;
+			widget.Height = project.Categories.List.Count * StyleConf.TimelineCategoryHeight;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
@@ -107,14 +107,14 @@ namespace LongoMatch.Drawing.Widgets
 				Color c;
 				
 				if (i % 2 == 0) {
-					c = Color.White;
+					c = Config.Style.PaletteBackground;
 				} else {
-					c = Color.Grey1;
+					c = Config.Style.PaletteBackgroundLight;
 				}
 				
 				cat = project.Categories.CategoriesList [i];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat),
-				                           duration, i * Constants.CATEGORY_HEIGHT, c);
+				                           duration, i * StyleConf.TimelineCategoryHeight, c);
 				categories [cat] = tl;
 				Objects.Add (tl);
 			}
@@ -128,7 +128,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (Category cat in categories.Keys) {
 				TimelineObject timeline = categories [cat];
 				if (playsFilter.VisibleCategories.Contains (cat)) {
-					timeline.OffsetY = i * Constants.CATEGORY_HEIGHT;
+					timeline.OffsetY = i * timeline.Height;
 					timeline.Visible = true;
 					i++;
 				} else {
@@ -176,7 +176,7 @@ namespace LongoMatch.Drawing.Widgets
 				TimelineObject tl = categories [c];
 				if (!tl.Visible)
 					continue;
-				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Constants.CATEGORY_HEIGHT) {
+				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
 					cat = c;
 					break;
 				}

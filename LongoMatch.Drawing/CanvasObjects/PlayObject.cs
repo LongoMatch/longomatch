@@ -42,20 +42,53 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		void DrawLine (IDrawingToolkit tk, double start, double stop, int lineWidth)
+		{
+			double y;
+			
+			y = OffsetY + Height / 2;
+			tk.LineWidth = lineWidth;
+			tk.FillColor = Play.Category.Color;
+			tk.StrokeColor = Play.Category.Color;
+			if (stop - start <= lineWidth) {
+				tk.LineWidth = 0;
+				tk.DrawCircle (new Point (start + (stop - start) / 2, y), 3);
+			} else {
+				tk.DrawLine (new Point (start + lineWidth / 2, y),
+				             new Point (stop - lineWidth / 2, y));
+			}
+		}
+
+		void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
+		{
+			double y1, y2;
+
+			tk.LineWidth = lineWidth;
+			tk.FillColor = Config.Style.PaletteWidgets;
+			tk.StrokeColor = Config.Style.PaletteWidgets;
+			y1 = OffsetY + 6;
+			y2 = OffsetY + Height - 6;
+				tk.DrawLine (new Point (start, y1), new Point (start, y2));
+				tk.DrawLine (new Point (stop, y1), new Point (stop, y2));
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color c = Play.Category.Color;
+			double start, stop;
+			int lineWidth = StyleConf.TimelineLineSize;
+
 			tk.Begin ();
-			tk.FillColor = new Color (c.R, c.G, c.B, (byte)(0.8 * byte.MaxValue));
-			if (Selected) {
-				tk.StrokeColor = Constants.PLAY_OBJECT_SELECTED_COLOR;
+			
+			start = StartX;
+			stop = StopX;
+			
+			if (stop - start <= lineWidth) {
+				DrawBorders (tk, start, stop, lineWidth);
+				DrawLine (tk, start, stop, lineWidth);
 			} else {
-				tk.StrokeColor = Play.Category.Color;
+				DrawLine (tk, start, stop, lineWidth);
+				DrawBorders (tk, start, stop, lineWidth);
 			}
-			tk.LineWidth = 2;
-			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),
-			                         Utils.TimeToPos (Play.Duration, SecondsPerPixel),
-			                         Constants.CATEGORY_HEIGHT, 2);
 			tk.End ();
 		}
 	}

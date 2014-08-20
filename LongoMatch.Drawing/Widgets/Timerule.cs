@@ -20,6 +20,7 @@ using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
+using System.IO;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -29,6 +30,7 @@ namespace LongoMatch.Drawing.Widgets
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int TIME_SPACING = 100;
+		ISurface needle;
 
 		public Timerule (IWidget widget):base (widget)
 		{
@@ -65,14 +67,19 @@ namespace LongoMatch.Drawing.Widgets
 			if (Duration == null) {
 				return;
 			}
+			
+			if (needle == null) {
+				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
+				Image img = Image.LoadFromFile (path);
+				needle = tk.CreateSurface (img.Width, img.Height, img);
+			}
 
 			tk.Context = context;
 			tk.Begin ();
-			tk.FillColor = Constants.TIMERULE_BACKGROUND;
-			tk.StrokeColor = Constants.TIMERULE_BACKGROUND;
-			tk.DrawRectangle (new Point (0, 0), width, height);
+			tk.Clear (Config.Style.PaletteBackgroundDark);
 			
-			tk.StrokeColor = Constants.TIMELINE_LINE_COLOR;
+			tk.StrokeColor = Config.Style.PaletteWidgets;
+			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = 12;
@@ -102,10 +109,8 @@ namespace LongoMatch.Drawing.Widgets
 			/* Draw position triangle */
 			tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
 			tpos -= Scroll;
-			tk.FillColor = Constants.TIMELINE_LINE_COLOR;
-			tk.DrawTriangle (new Point (tpos, widget.Height), 8,
-			                 BIG_LINE_HEIGHT, SelectionPosition.Bottom);
-
+			tpos -= needle.Width / 2;
+			tk.DrawSurface (needle, new Point (tpos, widget.Height - needle.Height));
 			tk.End ();
 			tk.Context = null;
 		}

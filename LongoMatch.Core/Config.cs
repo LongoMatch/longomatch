@@ -31,6 +31,7 @@ namespace LongoMatch
 		public static string homeDirectory;
 		public static string baseDirectory;
 		public static string configDirectory;
+		public static string dataDir;
 		
 		/* State */
 		public static IGUIToolkit GUIToolkit;
@@ -136,6 +137,12 @@ namespace LongoMatch
 			get {
 				return RelativeToPrefix(String.Format("share/{0}/images",
 				                                      Constants.SOFTWARE_NAME.ToLower()));
+			}
+		}
+		
+		public static string IconsDir {
+			get {
+				return Path.Combine (dataDir, "icons");
 			}
 		}
 		

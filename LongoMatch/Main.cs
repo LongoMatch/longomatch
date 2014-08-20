@@ -87,6 +87,7 @@ namespace LongoMatch
 				dataDir = Path.Combine (Config.baseDirectory, "share",
 				                        Constants.SOFTWARE_NAME.ToLower ());
 			}
+			Config.dataDir = dataDir;
 			
 			gtkRC = Path.Combine (dataDir, "theme", "gtk-2.0", "gtkrc");
 			if (File.Exists (gtkRC)) {

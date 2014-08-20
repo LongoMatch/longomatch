@@ -30,6 +30,8 @@ namespace LongoMatch.Interfaces.Drawing
 		Image Copy ();
 		object Value {get;}
 		IContext Context {get;}
+		int Width { get; }
+		int Height { get; }
 	}
 	
 	public interface IDrawingToolkit
@@ -45,8 +47,9 @@ namespace LongoMatch.Interfaces.Drawing
 		int FontSize {set;}
 		LineStyle LineStyle {set;}
 		
+		ISurface CreateSurface (string filename);
 		ISurface CreateSurface (int width, int height, Image image=null);
-		void DrawSurface (ISurface surface);
+		void DrawSurface (ISurface surface, Point p = null);
 		void Begin();
 		void End();
 		void Clear (Color color);

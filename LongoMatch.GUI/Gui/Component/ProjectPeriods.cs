@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -47,6 +48,7 @@ namespace LongoMatch.Gui.Component
 			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
 			                                Catalog.GetString ("Synchronize the game periods"),
 			                                "  ⬇</b>");
+			Misc.DisableFocus (this);
 		}
 		
 		protected override void OnDestroyed ()

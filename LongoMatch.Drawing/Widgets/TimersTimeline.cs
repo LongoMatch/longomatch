@@ -74,7 +74,8 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (!splitTimers) {
 				widget.Height = Constants.TIMER_HEIGHT;
-				TimerTimeline tl = new TimerTimeline (timers, duration, 0, Color.White);
+				TimerTimeline tl = new TimerTimeline (timers, duration, 0,
+				                                      Config.Style.PaletteBackground);
 				foreach (Timer t in timers) {
 					this.timers [t] = tl;
 				}

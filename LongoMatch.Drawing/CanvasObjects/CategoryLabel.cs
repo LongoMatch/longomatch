@@ -18,24 +18,35 @@
 using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
+using System;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CategoryLabel: CanvasObject, ICanvasObject
 	{
 		Category category;
-		double width, height;
+		double width;
 
 		public CategoryLabel (Category category, double width, double height,
 		                            double offsetY)
 		{
 			this.category = category;
-			this.height = height;
+			this.Height = height;
 			this.width = width;
 			OffsetY = offsetY;
 		}
 
+		public double Height {
+			get;
+			set;
+		}
+
 		public double Scroll {
+			get;
+			set;
+		}
+
+		public bool Even {
 			get;
 			set;
 		}
@@ -47,19 +58,40 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			Color color;
+			double hs, vs, to, rectSize;
 			double y;
 			
-			y = OffsetY - Scroll;
+			if (Even) {
+				color = Config.Style.PaletteBackground;
+			} else {
+				color = Config.Style.PaletteBackgroundLight;
+			}
+			
+			hs = StyleConf.TimelineLabelHSpacing;
+			vs = StyleConf.TimelineLabelVSpacing;
+			rectSize = Height - vs * 2;
+			to = hs + rectSize + hs;
+			
+			y = OffsetY - Math.Floor (Scroll);
 			tk.Begin ();
+			tk.FillColor = color;
+			tk.StrokeColor = color;
+			tk.LineWidth = 0;
+			tk.DrawRectangle (new Point (0, y), width, Height);
+			
+			/* Draw a rectangle with the category color */
 			tk.FillColor = category.Color;
 			tk.StrokeColor = category.Color;
+			tk.DrawRectangle (new Point (hs, y + vs), rectSize, rectSize); 
+			
+			/* Draw category name */
 			tk.FontSlant = FontSlant.Normal;
+			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 12;
-			tk.DrawRoundedRectangle (new Point (0, y + 1), width, height - 1, 3);  
-			tk.FillColor = Constants.TEXT_COLOR;
-			tk.StrokeColor = Constants.TEXT_COLOR;
-			tk.DrawText (new Point (0, y), width, height,
-			                      category.Name);
+			tk.FillColor = Config.Style.PaletteWidgets;
+			tk.StrokeColor = Config.Style.PaletteWidgets;
+			tk.DrawText (new Point (to, y), width - to, Height, category.Name);
 			tk.End ();
 		}
 	}

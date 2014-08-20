@@ -5,11 +5,11 @@ namespace LongoMatch.Gui.Component
 	public partial class CodingWidget
 	{
 		private global::Gtk.UIManager UIManager;
-		private global::Gtk.RadioAction positionMode;
 		private global::Gtk.RadioAction timelineMode;
 		private global::Gtk.RadioAction autoTaggingMode;
 		private global::Gtk.Action zoomFitAction;
 		private global::Gtk.RadioAction convertAction;
+		private global::Gtk.RadioAction positionMode;
 		private global::Gtk.VBox vbox;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Toolbar codingtoolbar;
@@ -30,23 +30,23 @@ namespace LongoMatch.Gui.Component
 			// Widget LongoMatch.Gui.Component.CodingWidget
 			Stetic.BinContainer w1 = global::Stetic.BinContainer.Attach (this);
 			this.UIManager = new global::Gtk.UIManager ();
-			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Timeline");
-			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
-			this.positionMode.Group = new global::GLib.SList (global::System.IntPtr.Zero);
-			w2.Add (this.positionMode, null);
-			this.UIManager.InsertActionGroup (w2, 0);
-			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Default");
+			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Default");
 			this.timelineMode = new global::Gtk.RadioAction ("timelineMode", null, global::Mono.Unix.Catalog.GetString ("Timeline view"), "gtk-justify-fill", 0);
-			this.timelineMode.Group = this.positionMode.Group;
-			w3.Add (this.timelineMode, null);
+			this.timelineMode.Group = new global::GLib.SList (global::System.IntPtr.Zero);
+			w2.Add (this.timelineMode, null);
 			this.autoTaggingMode = new global::Gtk.RadioAction ("autoTaggingMode", null, global::Mono.Unix.Catalog.GetString ("Automatic tagging view"), "gtk-select-color", 0);
 			this.autoTaggingMode.Group = this.timelineMode.Group;
-			w3.Add (this.autoTaggingMode, null);
+			w2.Add (this.autoTaggingMode, null);
 			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
-			w3.Add (this.zoomFitAction, null);
+			w2.Add (this.zoomFitAction, null);
 			this.convertAction = new global::Gtk.RadioAction ("convertAction", null, null, "gtk-convert", 0);
 			this.convertAction.Group = this.autoTaggingMode.Group;
-			w3.Add (this.convertAction, null);
+			w2.Add (this.convertAction, null);
+			this.UIManager.InsertActionGroup (w2, 0);
+			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
+			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
+			this.positionMode.Group = this.autoTaggingMode.Group;
+			w3.Add (this.positionMode, null);
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
@@ -76,7 +76,8 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 2;
+			this.notebook.CurrentPage = 1;
+			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;

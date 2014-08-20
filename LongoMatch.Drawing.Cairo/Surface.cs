@@ -36,6 +36,11 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		public Surface (string filename)
+		{
+			surface = new ImageSurface (filename);
+		}
+
 		public object Value {
 			get {
 				return surface;
@@ -48,6 +53,18 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		public int Width {
+			get {
+				return surface.Width;
+			}
+		}
+		
+		public int Height {
+			get {
+				return surface.Height;
+			}
+		}
+		
 		public Image Copy ()
 		{
 			string tempFile = System.IO.Path.GetTempFileName ();

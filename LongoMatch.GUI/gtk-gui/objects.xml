@@ -293,7 +293,6 @@
       <itemgroup label="PlayerBin Signals">
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
-        <signal name="SeekEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -306,7 +305,6 @@
     <signals>
       <itemgroup label="IPlayerBin Signals">
         <signal name="PlayStateChanged" />
-        <signal name="SeekEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -316,7 +314,11 @@
   </object>
   <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="MediaFileChooser Signals">
+        <signal name="ChangedEvent" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.DatePicker" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>

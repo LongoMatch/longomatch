@@ -105,7 +105,6 @@ namespace LongoMatch.Gui.Component
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.vbox7 = new global::Gtk.VBox ();
 			this.vbox7.Name = "vbox7";
-			this.vbox7.Spacing = 6;
 			// Container child vbox7.Gtk.Box+BoxChild
 			this.drawingarea1 = new global::Gtk.DrawingArea ();
 			this.drawingarea1.Name = "drawingarea1";
@@ -117,7 +116,6 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2.HeightRequest = 50;
 			this.scrolledwindow2.CanFocus = true;
 			this.scrolledwindow2.Name = "scrolledwindow2";
-			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w23 = new global::Gtk.Viewport ();
 			w23.ShadowType = ((global::Gtk.ShadowType)(0));
