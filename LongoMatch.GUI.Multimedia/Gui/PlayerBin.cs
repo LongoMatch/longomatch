@@ -49,7 +49,6 @@ namespace LongoMatch.Gui
 
 		public event TickHandler Tick;
 		public event StateChangeHandler PlayStateChanged;
-		public event SeekEventHandler SeekEvent;
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
@@ -247,8 +246,7 @@ namespace LongoMatch.Gui
 		{
 			DrawingsVisible = false;
 			player.Seek (time, accurate);
-			if (SeekEvent != null)
-				SeekEvent (time);
+			OnTick ();
 		}
 
 		public void SeekToNextFrame ()
@@ -256,8 +254,7 @@ namespace LongoMatch.Gui
 			DrawingsVisible = false;
 			if (player.CurrentTime < segment.Stop) {
 				player.SeekToNextFrame ();
-				if (SeekEvent != null)
-					SeekEvent (player.CurrentTime);
+				OnTick ();
 			}
 		}
 
@@ -401,10 +398,10 @@ namespace LongoMatch.Gui
 			ImageLoaded = false;
 			if (readyToSeek) {
 				Log.Debug ("Player is ready to seek, seeking to " +
-					start.ToMSecondsString ());
+					seekTime.ToMSecondsString ());
 				SetScaleValue ((int)(rate * SCALE_FPS));
 				player.Rate = (double)rate;
-				player.Seek (seekTime, true);
+				Seek (seekTime, true);
 				if (playing) {
 					Play ();
 				}
@@ -788,14 +785,12 @@ namespace LongoMatch.Gui
 					player.SeekToPreviousFrame ();
 				else
 					player.SeekToNextFrame ();
-				if (SeekEvent != null)
-					SeekEvent (CurrentTime);
+				OnTick ();
 			}
 			if (type == SeekType.Accurate || type == SeekType.Keyframe) {
 				player.Rate = (double)rate;
 				player.Seek (start, type == SeekType.Accurate);
-				if (SeekEvent != null)
-					SeekEvent (start);
+				OnTick ();
 			}
 		}
 		#endregion

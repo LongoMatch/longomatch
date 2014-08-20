@@ -17,7 +17,6 @@
       <itemgroup label="PlayerBin Signals">
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
-        <signal name="SeekEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -30,7 +29,6 @@
     <signals>
       <itemgroup label="IPlayerBin Signals">
         <signal name="PlayStateChanged" />
-        <signal name="SeekEvent" />
       </itemgroup>
     </signals>
   </object>

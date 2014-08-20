@@ -33,7 +33,6 @@ namespace LongoMatch.Gui
 	{	
 		/* Player Events */
 		public event StateChangeHandler PlayStateChanged;
-		public event SeekEventHandler SeekEvent;
 		
 		public enum PlayerOperationMode {
 			Player,
@@ -277,12 +276,6 @@ namespace LongoMatch.Gui
 				if (PlayStateChanged != null)
 					PlayStateChanged (playing);
 			};
-			
-			playerbin.SeekEvent += delegate (Time pos) {
-				if (SeekEvent != null)
-					SeekEvent (pos);
-			};
-			
 		}
 		
 		void LoadBackgroundPlayer (MediaFile file) {
