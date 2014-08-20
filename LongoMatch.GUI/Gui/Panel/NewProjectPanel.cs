@@ -137,6 +137,7 @@ namespace LongoMatch.Gui.Panel
 			outfileEntry.Changed += HandleEntryChanged;
 			createbutton.Clicked += HandleCreateProject;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
+			mediafilechooser1.ChangedEvent += (sender, e) => {mediaFile = mediafilechooser1.File;};
 		}
 
 		void FillProjectDetails () {

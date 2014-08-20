@@ -25,6 +25,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class MediaFileChooser : Gtk.Bin
 	{
+		public event EventHandler ChangedEvent;
 		MediaFile file;
 
 		public MediaFileChooser ()
@@ -50,6 +51,9 @@ namespace LongoMatch.Gui.Component
 		void HandleClicked (object sender, EventArgs e)
 		{
 			File = Misc.OpenFile (this);
+			if (ChangedEvent != null) {
+				ChangedEvent (this, null);
+			}
 		}
 	}
 }
