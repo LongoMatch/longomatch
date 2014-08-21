@@ -32,7 +32,7 @@ SOURCES = Canvas.cs \
 	Utils.cs \
 	Widgets/Blackboard.cs \
 	Widgets/CategoriesLabels.cs \
-	Widgets/PlaysTagger.cs \
+	Widgets/Dashboard.cs \
 	Widgets/PlaysTimeline.cs \
 	Widgets/PositionTagger.cs \
 	Widgets/TeamTagger.cs \

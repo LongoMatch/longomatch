@@ -43,7 +43,6 @@
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/CounterObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/CategoryObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="Widgets/PlaysTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/TaggerObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/ScoreObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/CardObject.cs" />
@@ -52,6 +51,7 @@
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/BenchObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/FieldObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/PlayersTaggerObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Widgets/Dashboard.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

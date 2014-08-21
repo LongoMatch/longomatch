@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 		public event NewTagHandler NewTagEvent;
 
 		TagMode tagMode;
-		PlaysTagger tagger;
+		Dashboard tagger;
 		Categories template;
 		TaggerButton selected;
 		bool internalButtons;
@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Component
 		public ButtonsWidget()
 		{
 			this.Build();
-			tagger = new PlaysTagger (new WidgetWrapper (drawingarea));
+			tagger = new Dashboard (new WidgetWrapper (drawingarea));
 			tagger.FitMode = FitMode.Original;
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;

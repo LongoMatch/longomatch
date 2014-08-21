@@ -29,7 +29,7 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class PlaysTagger: SelectionCanvas
+	public class Dashboard: SelectionCanvas
 	{
 	
 		public event TaggersSelectedHandler TaggersSelectedEvent;
@@ -42,7 +42,7 @@ namespace LongoMatch.Drawing.Widgets
 		Time currentTime;
 		int templateWidth, templateHeight;
 
-		public PlaysTagger (IWidget widget): base (widget)
+		public Dashboard (IWidget widget): base (widget)
 		{
 			Accuracy = 5;
 			TagMode = TagMode.Edit;
