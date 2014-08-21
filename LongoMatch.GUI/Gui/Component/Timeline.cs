@@ -66,6 +66,12 @@ namespace LongoMatch.Gui.Component
 			menu = new PlaysMenu ();
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			timerule.Dispose ();
+			base.OnDestroyed ();
+		}
+		
 		public TimeNode SelectedTimeNode {
 			set {
 			}

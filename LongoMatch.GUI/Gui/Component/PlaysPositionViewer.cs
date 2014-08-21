@@ -42,6 +42,14 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
 			menu = new PlaysMenu ();
 		}
+		
+		protected override bool OnDestroyEvent (Gdk.Event evnt)
+		{
+			return base.OnDestroyEvent (evnt);
+			field.Destroy ();
+			hfield.Destroy ();
+			goal.Destroy ();
+		}
 
 		public void LoadProject (Project project) {
 			this.project = project;

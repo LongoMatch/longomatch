@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing
 		protected IWidget widget;
 		protected double scaleX, scaleY;
 		protected Point translation;
+		bool disposed;
 
 		public Canvas (IWidget widget)
 		{
@@ -42,6 +43,33 @@ namespace LongoMatch.Drawing
 			scaleX = 1;
 			scaleY = 1;
 			translation = new Point (0, 0);
+		}
+		
+		~ Canvas ()
+		{
+			if (! disposed) {
+				Log.Error (String.Format ("Canvas {0} was not disposed correctly", this));
+				Dispose (true);
+			}
+		}
+
+		public void Dispose(){
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (disposing) {
+				if (Objects != null) {
+					foreach (CanvasObject co in Objects) {
+						co.Dispose ();
+					}
+				}
+				Objects.Clear ();
+				Objects = null;
+				disposed = true;
+			}
 		}
 
 		public List<ICanvasObject> Objects {

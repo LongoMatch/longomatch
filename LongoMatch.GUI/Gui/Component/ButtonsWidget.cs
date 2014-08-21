@@ -74,6 +74,7 @@ namespace LongoMatch.Gui.Component
 		public override void Destroy ()
 		{
 			Config.EventsBroker.Tick -= HandleTick;
+			tagger.Dispose ();
 			base.Destroy ();
 		}
 		

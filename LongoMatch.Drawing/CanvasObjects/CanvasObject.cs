@@ -18,6 +18,7 @@
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
+using System;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -25,10 +26,31 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		public delegate void CanvasHandler (CanvasObject co);
 		public event CanvasHandler ClickedEvent;
+		
+		bool disposed;
 
 		protected CanvasObject ()
 		{
 			Visible = true;
+		}
+
+		~CanvasObject ()
+		{
+			if (! disposed) {
+				Log.Error (String.Format ("Canvas object {0} not disposed correctly", this));
+				Dispose (true);
+			}
+		}
+
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			disposed = true;
 		}
 
 		public virtual string Description {
@@ -64,7 +86,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 
-	public abstract class CanvasButtonObject: CanvasObject {
+	public abstract class CanvasButtonObject: CanvasObject
+	{
 	
 		public bool Toggle {
 			get;
@@ -89,7 +112,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			EmitClickEvent ();
 		}
 	}
-	
+
 	public abstract class CanvasDrawableObject<T>: CanvasObject, ICanvasDrawableObject where T: IBlackboardObject
 	{
 		

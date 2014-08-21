@@ -32,6 +32,12 @@ namespace LongoMatch.Gui.Component
 			Tagger = new PositionTagger (new WidgetWrapper (drawingarea));
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			Tagger.Dispose ();
+			base.OnDestroyed ();
+		}
+
 		public PositionTagger Tagger {
 			get;
 			set;

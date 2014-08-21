@@ -38,6 +38,15 @@ namespace LongoMatch.Drawing.Widgets
 			CurrentTime = new Time (0);
 		}
 
+		protected override void Dispose (bool disposing)
+		{
+			base.Dispose (disposing);
+			if (needle != null) {
+				needle.Dispose ();
+				needle = null;
+			}
+		}
+
 		public double Scroll {
 			set;
 			protected get;

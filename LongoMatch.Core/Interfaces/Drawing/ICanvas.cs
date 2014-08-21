@@ -24,12 +24,12 @@ using LongoMatch.Interfaces.Drawing;
 namespace LongoMatch.Interfaces.Drawing
 {
 
-	public interface ICanvas
+	public interface ICanvas: IDisposable
 	{
 		 void Draw (IContext context, Area area);
 	}
 	
-	public interface ICanvasObject
+	public interface ICanvasObject: IDisposable
 	{
 		void Draw (IDrawingToolkit tk, Area area);
 		bool Visible {set; get;}
