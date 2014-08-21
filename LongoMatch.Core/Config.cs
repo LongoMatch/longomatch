@@ -135,8 +135,7 @@ namespace LongoMatch
 
 		public static string ImagesDir {
 			get {
-				return RelativeToPrefix(String.Format("share/{0}/images",
-				                                      Constants.SOFTWARE_NAME.ToLower()));
+				return Path.Combine (dataDir, "images");
 			}
 		}
 		

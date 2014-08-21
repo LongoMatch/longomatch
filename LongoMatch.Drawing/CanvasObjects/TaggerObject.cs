@@ -74,7 +74,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public virtual Selection GetSelection (Point p, double precision)
+		public Selection GetSelection (Point p, double precision, bool inMotion=false)
 		{
 			Selection s;
 

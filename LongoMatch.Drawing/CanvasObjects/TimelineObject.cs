@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			Selection selection = null;
 

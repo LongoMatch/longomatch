@@ -39,7 +39,7 @@ namespace LongoMatch.Drawing.Cairo
 		DrawingArea widget;
 		int currentWidth, currentHeight;
 		double lastX, lastY;
-		bool canMove;
+		bool canMove, inButtonPress;
 		uint moveTimerID, hoverTimerID;
 
 		public WidgetWrapper (DrawingArea widget)
@@ -258,8 +258,10 @@ namespace LongoMatch.Drawing.Cairo
 			lastX = args.Event.X;
 			lastY = args.Event.Y;
 
-			if (MotionEvent != null && canMove) {
-				MotionEvent (new Point (lastX, lastY));
+			if (MotionEvent != null) {
+				if (!inButtonPress || canMove) {
+					MotionEvent (new Point (lastX, lastY));
+				}
 			}
 		}
 
@@ -278,6 +280,7 @@ namespace LongoMatch.Drawing.Cairo
 				bm = ParseButtonModifier (args.Event.State);
 				ButtonReleasedEvent (new Point (args.Event.X, args.Event.Y), bt, bm);
 			}
+			inButtonPress = false;
 		}
 
 		void HandleButtonPressEvent (object o, ButtonPressEventArgs args)
@@ -286,6 +289,7 @@ namespace LongoMatch.Drawing.Cairo
 			 * should be ignored. Start moving only when the button has been
 			 * pressed for more than 200ms */
 			canMove = false;
+			inButtonPress = true;
 			moveTimerID = GLib.Timeout.Add (MoveWaitMS, ReadyToMove);
 			if (ButtonPressEvent != null) {
 				ButtonType bt;

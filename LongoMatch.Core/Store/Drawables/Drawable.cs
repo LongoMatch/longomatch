@@ -62,7 +62,7 @@ namespace LongoMatch.Store.Drawables
 		public virtual void Reorder () {
 		}
 		
-		public virtual Selection GetSelection (Point point, double pr) {
+		public virtual Selection GetSelection (Point point, double pr, bool inMotion=false) {
 			Point[] vertices;
 			double d;
 			

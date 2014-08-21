@@ -55,19 +55,25 @@ namespace LongoMatch.Common
 		public const int TimelineLabelVSpacing = 2;
 		public const int TimelineLineSize = 6;
 		
+		public const string PlayerBackground = "player/background.svg";
+		public const string PlayerHomeNumber = "player/home-number.svg";
+		public const string PlayerAwayNumber = "player/away-number.svg";
+		public const string PlayerHomeIn = "player/home-in.svg";
+		public const string PlayerAwayIn = "player/away-in.svg";
+		public const string PlayerHomeOut = "player/home-out.svg";
+		public const string PlayerAwayOut = "player/away-out.svg";
+		public const string PlayerPhoto = "player/photo.svg";
+		public const int PlayerLineWidth = 2;
+		public const int PlayerNumberHeight  = 17;
+		public const int PlayerNumberWidth  = 26;
+		public const int PlayerNumberOffset  = 17;
+		public const int PlayerArrowOffset = 14; 
+		public const int PlayerArrowSize = 20; 
+
+		
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;
 		
-		public int PlayerSize = 60;
-		public int PlayerBorder = 2;
-		public int PlayerRadius = 2;
-		public int PlayerTeamLineWidth = 2;
-		public int PlayerNumberHeight  = 17;
-		public int PlayerNumberWidth  = 26;
-		public int PlayerNumberOffset  = 17;
-		public int PlayerArrowOffset = 14; 
-		public int PlayerArrowSize = 20; 
-
 		public Color HomeTeamColor { get; set; }
 
 		public Color AwayTeamColor { get; set; }

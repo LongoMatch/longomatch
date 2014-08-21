@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing
 			scaleY = 1;
 			translation = new Point (0, 0);
 		}
-		
+
 		~ Canvas ()
 		{
 			if (! disposed) {
@@ -53,9 +53,10 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		public void Dispose(){
-			Dispose(true);
-			GC.SuppressFinalize(this);
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
 		}
 
 		protected virtual void Dispose (bool disposing)
@@ -115,6 +116,7 @@ namespace LongoMatch.Drawing
 		protected Point start;
 		uint lastTime;
 		Selection clickedSel;
+		CanvasObject highlighted;
 
 		public SelectionCanvas (IWidget widget): base (widget)
 		{
@@ -135,7 +137,7 @@ namespace LongoMatch.Drawing
 			get;
 			set;
 		}
-		
+
 		public double Accuracy {
 			get;
 			set;
@@ -167,6 +169,26 @@ namespace LongoMatch.Drawing
 
 		protected virtual void CursorMoved (Point coords)
 		{
+			CanvasObject current;
+			Selection sel;
+
+			sel = GetSelection (coords, true);
+			if (sel == null) {
+				current = null;
+			} else {
+				current = sel.Drawable as CanvasObject;
+			}
+
+			if (current != highlighted) {
+				if (highlighted != null) {
+					highlighted.Highlighted = false;
+				}
+				if (current != null) {
+					current.Highlighted = true;
+				}
+				highlighted = current;
+				widget.ReDraw ();
+			}
 		}
 
 		protected virtual void SelectionMoved (Selection sel)
@@ -228,17 +250,17 @@ namespace LongoMatch.Drawing
 			widget.ReDraw (so);
 		}
 
-		Selection GetSelection (Point coords)
+		Selection GetSelection (Point coords, bool inMotion=false)
 		{
 			Selection sel = null;
 
 			/* Try with the selected item first */
 			if (Selections.Count > 0) {
-				sel = Selections.LastOrDefault ().Drawable.GetSelection (coords, Accuracy);
+				sel = Selections.LastOrDefault ().Drawable.GetSelection (coords, Accuracy, inMotion);
 			}
 			if (sel == null) {
 				foreach (ICanvasSelectableObject co in Objects) {
-					sel = co.GetSelection (coords, Accuracy);
+					sel = co.GetSelection (coords, Accuracy, inMotion);
 					if (sel != null) {
 						break;
 					}
@@ -301,14 +323,14 @@ namespace LongoMatch.Drawing
 			Selection sel;
 
 			coords = ToUserCoords (coords);
-			if (Selections.Count == 0) {
-				CursorMoved (coords);
-				start = coords;
-			} else if (moving) {
+			if (moving && Selections.Count != 0) {
 				sel = Selections [0];
 				sel.Drawable.Move (sel, coords, start);  
 				widget.ReDraw (sel.Drawable);
 				SelectionMoved (sel);
+				start = coords;
+			} else {
+				CursorMoved (coords);
 				start = coords;
 			}
 		}

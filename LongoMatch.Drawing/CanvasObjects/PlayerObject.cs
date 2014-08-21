@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Player = player;
 			Init (position);
 		}
-		
+
 		void Init (Point pos = null) {
 			if (pos == null) {
 				pos = new Point (0, 0);
@@ -49,6 +49,41 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Toggle = true;
 		}
 
+		public ISurface Photo {
+			set;
+			protected get;
+		}
+
+		public ISurface Background {
+			set;
+			protected get;
+		}
+		
+		public ISurface Number {
+			set;
+			protected get;
+		}
+		
+		public ISurface Out {
+			set;
+			protected get;
+		}
+		
+		public ISurface In {
+			set;
+			protected get;
+		}
+		
+		public bool SubstitutionMode {
+			get;
+			set;
+		}
+		
+		public bool Playing {
+			get;
+			set;
+		}
+		
 		public Player Player {
 			get;
 			set;
@@ -91,7 +126,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			Point position = new Point (Position.X - Width / 2, Position.Y - Height / 2);
 
@@ -114,7 +149,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double size, scale;
 
 			zero = new Point (0, 0);
-			size = Config.Style.PlayerSize;
+			size = Background.Height - StyleConf.PlayerLineWidth;
 			scale = Width / size; 
 			
 			tk.Begin ();
@@ -122,36 +157,33 @@ namespace LongoMatch.Drawing.CanvasObjects
 			                      new Point (scale, scale));
 
 			/* Background */
-			tk.LineStyle = LineStyle.Normal;
-			tk.LineWidth = Config.Style.PlayerBorder;
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-			tk.DrawRoundedRectangle (zero, size, size, Config.Style.PlayerRadius);
+			tk.DrawSurface (Background, zero);
 			
-			if (!DrawPhoto || Player.Photo == null) {
-				numberHeight = size;
-				numberWidth = Config.Style.PlayerNumberWidth;
-				p = new Point (Config.Style.PlayerNumberOffset, 0);
-			} else {
-				/* Image */
+			/* Image */
+			if (Player.Photo != null) {
 				tk.DrawImage (zero, size, size, Player.Photo, true);
-				numberHeight = Config.Style.PlayerNumberHeight;
-				numberWidth = Config.Style.PlayerNumberWidth;
-				p = new Point (Config.Style.PlayerNumberOffset, size - numberHeight);
+			} else {
+				tk.DrawSurface (Photo, zero);
 			}
+			numberHeight = StyleConf.PlayerNumberHeight;
+			numberWidth = StyleConf.PlayerNumberWidth;
+			p = new Point (StyleConf.PlayerNumberOffset, size - numberHeight);
 			
 			/* Draw background */
-			tk.FillColor = Color;
-			tk.StrokeColor = Color;
-			tk.LineWidth = 0;
-			tk.DrawRoundedRectangle (p, numberWidth, numberHeight, Config.Style.PlayerRadius);
+			tk.DrawSurface (Number, zero);
+			
+			/* Draw Arrow */
+			if (SubstitutionMode && (Highlighted || Active)) {
+				ISurface arrow;
 				
-			/* Draw bottom Line */
-			tk.StrokeColor = Color;
-			tk.FillColor = Color;
-			tk.LineWidth = Config.Style.PlayerBorder;
-			tk.DrawRoundedRectangle (new Point (0, size - Config.Style.PlayerTeamLineWidth),
-			                         size, Config.Style.PlayerTeamLineWidth + 1, 2);
+				if (Playing) {
+					arrow = Out;
+				} else {
+					arrow = In;
+				}
+				tk.DrawSurface (arrow, new Point (Background.Width / 2 - In.Width / 2,
+				                                  Background.Height / 2 - In.Height / 2));
+			}
 			
 			/* Draw number */
 			tk.FillColor = Color.White;
@@ -167,10 +199,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			/* Selection line */
 			if (Active) {
 				tk.LineStyle = LineStyle.Normal;
-				tk.LineWidth = Config.Style.PlayerBorder;
+				tk.LineWidth = StyleConf.PlayerLineWidth;
 				tk.FillColor = null;
 				tk.StrokeColor = Config.Style.PaletteActive;
-				tk.DrawRoundedRectangle (zero, size + 1, size + 1, Config.Style.PlayerRadius);
+				tk.DrawRoundedRectangle (zero, size + 1, size + 1, StyleConf.PlayerLineWidth);
 			}
 			
 			tk.End ();

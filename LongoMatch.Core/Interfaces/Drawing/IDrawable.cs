@@ -24,7 +24,7 @@ namespace LongoMatch.Interfaces.Drawing
 	public interface IMovableObject
 	{
 		bool Selected {get;set;}
-		Selection GetSelection (Point point, double precision);
+		Selection GetSelection (Point point, double precision, bool inMotion=false);
 		void Move (Selection s, Point dst, Point start);
 	}
 	

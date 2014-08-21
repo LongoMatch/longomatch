@@ -15,15 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using Cairo;
-using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing.Cairo
 {
 	public class Surface: ISurface
 	{
 		ImageSurface surface;
+		bool disposed;
 
 		public Surface (int width, int height, Image image)
 		{
@@ -33,6 +35,30 @@ namespace LongoMatch.Drawing.Cairo
 					Gdk.CairoHelper.SetSourcePixbuf (context, image.Value, 0, 0);
 					context.Paint ();
 				}
+			}
+		}
+
+		~Surface ()
+		{
+			if (! disposed) {
+				Log.Error (String.Format ("Surface {0} was not disposed correctly", this));
+				Dispose (true);
+			}
+		}
+
+		public void Dispose(){
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (disposing) {
+				if (surface != null) {
+					surface.Dispose ();
+				}
+				surface = null;
+				disposed = true;
 			}
 		}
 
@@ -71,11 +97,6 @@ namespace LongoMatch.Drawing.Cairo
 			surface.WriteToPng (tempFile);
 			Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (tempFile);
 			return new Image (pixbuf);
-		}
-
-		public void Dispose ()
-		{
-			surface.Dispose ();
 		}
 	}
 }

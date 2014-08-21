@@ -129,7 +129,8 @@ namespace LongoMatch.Drawing.Cairo
 
 		public ISurface CreateSurface (string filename)
 		{
-			return new Surface (filename);
+			Image img = Image.LoadFromFile (filename);
+			return CreateSurface (img.Width, img.Height, img);
 		}
 
 		public ISurface CreateSurface (int width, int height, Image image=null)
@@ -284,8 +285,8 @@ namespace LongoMatch.Drawing.Cairo
 			
 			x = start.X + LineWidth / 2;
 			y = start.Y + LineWidth / 2;
-			height -= LineWidth;
-			width -= LineWidth;
+			height -= LineWidth / 2;
+			width -= LineWidth / 2;
 
 			if ((radius > height / 2) || (radius > width / 2))
 				radius = Math.Min (height / 2, width / 2);

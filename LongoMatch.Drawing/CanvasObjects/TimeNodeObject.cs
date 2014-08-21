@@ -95,7 +95,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			double accuracy;
 			if (point.Y >= OffsetY && point.Y < OffsetY + Height) {

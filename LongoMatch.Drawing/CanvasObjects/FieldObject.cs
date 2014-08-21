@@ -53,6 +53,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public bool SubstitutionMode {
+			get;
+			set;
+		}
+
 		public void LoadTeams (Image backgroundImg, int[] homeF, int[] awayF,
 		                       List<PlayerObject> homeT, List<PlayerObject> awayT,
 		                       int size, int nteams)
@@ -132,18 +137,20 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			if (homePlayingPlayers != null) {
 				foreach (PlayerObject po in homePlayingPlayers) {
+					po.Playing = true;
 					po.Draw (tk, area);
 				}
 			}
 			if (awayPlayingPlayers != null) {
 				foreach (PlayerObject po in awayPlayingPlayers) {
+					po.Playing = true;
 					po.Draw (tk, area);
 				}
 			}
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion)
 		{
 			Selection selection = null;
 

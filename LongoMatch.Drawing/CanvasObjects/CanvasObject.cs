@@ -63,6 +63,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public virtual bool Highlighted {
+			get;
+			set;
+		}
+
 		public virtual bool Selected {
 			set;
 			get;
@@ -139,9 +144,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
-			Selection sel = Drawable.GetSelection (point, precision);
+			Selection sel = Drawable.GetSelection (point, precision, inMotion);
 			if (sel != null) {
 				sel.Drawable = this;
 			}

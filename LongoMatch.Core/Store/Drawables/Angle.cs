@@ -61,7 +61,7 @@ namespace LongoMatch.Store.Drawables
 			}
 		}
 		
-		public override Selection GetSelection (Point p, double pr=0.05) {
+		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
 			if (p.Distance (Start) < pr) {
 				return new Selection (this, SelectionPosition.AngleStart, p.Distance (Start));
 			} else if (p.Distance (Stop) < pr) {

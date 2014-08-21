@@ -70,7 +70,7 @@ namespace LongoMatch.Store.Drawables
 			BottomRight = array[3];
 		}
 		
-		public override Selection GetSelection (Point p, double pr=0.05) {
+		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
 			Selection selection;
 			double d;
 			

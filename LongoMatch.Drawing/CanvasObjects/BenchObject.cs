@@ -35,6 +35,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public bool SubstitutionMode {
+			get;
+			set;
+		}
+		
 		public Point Position {
 			get;
 			set;
@@ -94,13 +99,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineStyle = LineStyle.Normal;
 
 			foreach (PlayerObject po in BenchPlayers) {
+				po.Playing = false;
+				po.SubstitutionMode = SubstitutionMode;
 				po.Draw (tk, area);
 			}
 			
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			Selection selection = null;
 

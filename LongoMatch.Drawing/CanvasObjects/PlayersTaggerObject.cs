@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 using LongoMatch.Store;
 using LongoMatch.Handlers;
+using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -35,10 +36,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		 * For this reason we can't use the canvas selection logic and we have
 		 * to handle it internally
 		 */
-
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
-
+		/* Cached surfaces reused by player objects */
+		ISurface backgroundSurface, homeNumberSurface, awayNumberSurface, photoSurface;
+		ISurface homeInSurface, homeOutSurface, awayInSurface, awayOutSurface;
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
 		List<PlayerObject> homePlayingPlayers, awayPlayingPlayers;
@@ -49,6 +51,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		FieldObject field;
 		int NTeams;
 		Point offset;
+		bool substitutionMode;
 		double scaleX, scaleY;
 
 		public PlayersTaggerObject ()
@@ -58,6 +61,45 @@ namespace LongoMatch.Drawing.CanvasObjects
 			awayBench = new BenchObject ();
 			field = new FieldObject ();
 			SelectedPlayers = new List<Player> ();
+			LoadSurfaces ();
+		}
+
+		protected override void Dispose (bool disposing)
+		{
+			ClearPlayers ();
+			if (photoSurface != null) {
+				photoSurface.Dispose ();
+				photoSurface = null;
+			}
+			if (backgroundSurface != null) {
+				backgroundSurface.Dispose ();
+				backgroundSurface = null;
+			}
+			if (homeNumberSurface != null) {
+				homeNumberSurface.Dispose ();
+				homeNumberSurface = null;
+			} 
+			if (awayNumberSurface != null) {
+				awayNumberSurface.Dispose ();
+				awayNumberSurface = null;
+			}
+			if (homeOutSurface != null) {
+				homeOutSurface.Dispose ();
+				homeOutSurface = null;
+			} 
+			if (awayOutSurface != null) {
+				awayOutSurface.Dispose ();
+				awayOutSurface = null;
+			}
+			if (homeInSurface != null) {
+				homeInSurface.Dispose ();
+				homeInSurface = null;
+			} 
+			if (awayInSurface != null) {
+				awayInSurface.Dispose ();
+				awayInSurface = null;
+			}
+			base.Dispose (disposing);
 		}
 
 		public Point Position {
@@ -76,16 +118,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public bool SubstitutionMode {
-			get;
-			set;
+			get {
+				return substitutionMode;
+			}
+			set {
+				substitutionMode = value;
+				homeBench.SubstitutionMode = awayBench.SubstitutionMode = field.SubstitutionMode = value;
+			}
 		}
-		
+
 		public List<Player> SelectedPlayers {
 			get;
 			set;
 		}
 
-		public void Reload () {
+		public void Reload ()
+		{
 			LoadTeams (homeTeam, awayTeam, background);
 		}
 
@@ -107,7 +155,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				player.Active = false;
 			}
 		}
-		
+
 		public void Substitute (Player p1, Player p2, TeamTemplate team)
 		{
 			if (team == homeTeam) {
@@ -139,6 +187,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				field.Width = 300;
 				field.Height = 250;
 			}
+			ClearPlayers ();
 			homePlayingPlayers = awayPlayingPlayers = null;
 
 			homePlayers = new List<PlayerObject> ();
@@ -181,6 +230,39 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Update ();
 		}
 
+		void ClearPlayers ()
+		{
+			if (homePlayers != null) {
+				foreach (PlayerObject po in homePlayers) {
+					po.Dispose ();
+					homePlayers = null;
+				}
+			}
+			if (awayPlayers != null) {
+				foreach (PlayerObject po in awayPlayers) {
+					po.Dispose ();
+					awayPlayers = null;
+				}
+			}
+		}
+		
+		ISurface CreateSurface (string name)
+		{
+			
+			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name));
+		}
+
+		void LoadSurfaces ()
+		{
+			photoSurface = CreateSurface (StyleConf.PlayerPhoto);
+			backgroundSurface = CreateSurface (StyleConf.PlayerBackground);
+			homeNumberSurface = CreateSurface (StyleConf.PlayerHomeNumber);
+			awayNumberSurface = CreateSurface (StyleConf.PlayerAwayNumber);
+			homeOutSurface = CreateSurface (StyleConf.PlayerHomeOut);
+			awayOutSurface = CreateSurface (StyleConf.PlayerAwayOut);
+			homeInSurface = CreateSurface (StyleConf.PlayerHomeIn);
+			awayInSurface = CreateSurface (StyleConf.PlayerAwayIn);
+		}
 
 		void Substitute (PlayerObject p1, PlayerObject p2,
 		                 List<PlayerObject> playingPlayers,
@@ -245,16 +327,27 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			List<PlayerObject> playerObjects;
 			Color color = null;
+			ISurface number, sin, sout;
 
 			if (team == Team.LOCAL) {
 				color = Config.Style.HomeTeamColor;
+				number = homeNumberSurface;
+				sin = homeInSurface;
+				sout = homeOutSurface;
 			} else {
 				color = Config.Style.AwayTeamColor;
+				number = awayNumberSurface;
+				sin = awayInSurface;
+				sout = awayOutSurface;
 			}
 
 			playerObjects = new List<PlayerObject> ();
 			foreach (Player p in players) {
-				PlayerObject po = new PlayerObject { Player = p, Color = color, Team = team };
+				PlayerObject po = new PlayerObject { Player = p, Color = color,
+					Team = team, Background = backgroundSurface,
+					Number =  number, In = sin, Out = sout,
+					SubstitutionMode =  SubstitutionMode,
+					Photo = photoSurface };
 				po.ClickedEvent += HandleClickedEvent;
 				playerObjects.Add (po);
 			}
@@ -303,18 +396,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			
 			point = Utils.ToUserCoords (point, offset, scaleX, scaleY);
-			selection = homeBench.GetSelection (point, 0);
+			selection = homeBench.GetSelection (point, 0, false);
 			if (selection == null) {
-				selection = awayBench.GetSelection (point, 0);
+				selection = awayBench.GetSelection (point, 0, false);
 				if (selection == null) {
-					selection = field.GetSelection (point, 0);
+					selection = field.GetSelection (point, 0, false);
 				}
 			}
 			if (selection != null) {
 				clickedPlayer = selection.Drawable as PlayerObject;
 				if (SubstitutionMode && substitutionPlayer != null &&
 					clickedPlayer.Team != substitutionPlayer.Team) {
-					clickedPlayer= null;
+					clickedPlayer = null;
 				} else {
 					(selection.Drawable as ICanvasObject).ClickPressed (point, modif);
 				}
@@ -354,13 +447,28 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
-			if (point.X < Position.X || point.X > Position.X + Width ||
-				point.Y < Position.Y || point.Y > Position.Y + Height) {
-				return null;
+			Selection sel = null;
+
+			if (!inMotion) {
+				if (point.X < Position.X || point.X > Position.X + Width ||
+					point.Y < Position.Y || point.Y > Position.Y + Height) {
+					sel = null;
+				} else {
+					sel = new Selection (this, SelectionPosition.All, 0);
+				}
+			} else {
+				point = Utils.ToUserCoords (point, offset, scaleX, scaleY);
+				sel = homeBench.GetSelection (point, 0, false);
+				if (sel == null) {
+					sel = awayBench.GetSelection (point, 0, false);
+					if (sel == null) {
+						sel = field.GetSelection (point, 0, false);
+					}
+				}
 			}
-			return new Selection (this, SelectionPosition.All, 0);
+			return sel;
 		}
 
 		public void Move (Selection s, Point p, Point start)

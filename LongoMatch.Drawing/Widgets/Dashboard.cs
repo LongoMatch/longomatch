@@ -187,6 +187,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		void LoadTemplate ()
 		{
+			foreach (CanvasObject co in Objects) {
+				co.Dispose ();
+			}
 			Objects.Clear ();
 			foreach (TagButton tag in template.CommonTags) {
 				TagObject to = new TagObject (tag);

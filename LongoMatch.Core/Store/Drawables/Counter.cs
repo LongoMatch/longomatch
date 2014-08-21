@@ -36,11 +36,6 @@ namespace LongoMatch.Store.Drawables
 			get;
 			set;
 		}
-		
-		public Color TextColor {
-			get;
-			set;
-		}
 	}
 }
 

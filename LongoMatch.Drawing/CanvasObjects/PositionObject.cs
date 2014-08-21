@@ -82,7 +82,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Selection GetSelection (Point point, double precision)
+		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			if (point.Distance (Start) < precision) {
 				return new Selection (this, SelectionPosition.LineStart);

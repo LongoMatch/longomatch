@@ -67,7 +67,8 @@ namespace LongoMatch.Store.Drawables
 				return new Area (new Point (xmin, ymin), xmax - xmin, ymax - ymin);
 			}
 		}
-		public override Selection GetSelection (Point p, double pr) {
+
+		public override Selection GetSelection (Point p, double pr, bool inMotion=false) {
 			double xmin, xmax, ymin, ymax;
 			double d;
 			

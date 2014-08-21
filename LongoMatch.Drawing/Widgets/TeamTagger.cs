@@ -25,6 +25,7 @@ using LongoMatch.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Store;
 using LongoMatch.Handlers;
+using System.IO;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -33,9 +34,7 @@ namespace LongoMatch.Drawing.Widgets
 	
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
-
 		PlayersTaggerObject tagger;
-		Point offset;
 		MultiSelectionMode prevMode;
 		bool inSubs;
 
@@ -51,13 +50,14 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Add (tagger);
 		}
 
-		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
+			public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget.ReDraw ();
 		}
-		
-		public void Reload () {
+
+		public void Reload ()
+		{
 			tagger.Reload ();
 		}
 
@@ -66,26 +66,28 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.SubstitutionMode = value;
 			}
 		}
-		
-		public void Select (Player p) {
+
+		public void Select (Player p)
+		{
 		}
-		
+
 		protected override void ShowMenu (Point coords)
 		{
 			Selection sel = tagger.GetSelection (coords, 0);
 			
 			if (sel != null && ShowMenuEvent != null) {
 				PlayerObject po = sel.Drawable as PlayerObject;
-				ShowMenuEvent (new List<Player> {po.Player});
+				ShowMenuEvent (new List<Player> { po.Player });
 			}
 		}
+
 
 		void HandleSizeChangedEvent ()
 		{
 			tagger.Width = widget.Width;
 			tagger.Height = widget.Height;
 		}
-		
+
 		void HandlePlayersSubstitutionEvent (Player p1, Player p2, TeamTemplate team)
 		{
 			team.List.Swap (p1, p2);

@@ -24,7 +24,7 @@ namespace Tests.Core.Drawables
 {
 	public class DrawableImp: Drawable
 	{
-		public override Selection GetSelection (Point point, double precision)
+		public override Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			throw new System.NotImplementedException ();
 		}
