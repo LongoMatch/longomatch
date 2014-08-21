@@ -95,7 +95,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ButtonsWidget" design-size="1324 747">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DashboardWidget" design-size="1324 747">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.HBox" id="hbox2">

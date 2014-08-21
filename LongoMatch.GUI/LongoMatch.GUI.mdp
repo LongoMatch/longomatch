@@ -21,7 +21,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EditCategoryDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EntryDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/ButtonsWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/DashboardWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/NotesWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/FramesCaptureProgressDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/HotKeySelectorDialog.cs" />
@@ -47,7 +47,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.MainWindow.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs" />
@@ -187,6 +186,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/DatePicker.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DatePicker.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

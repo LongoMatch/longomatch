@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 		private global::Gtk.TreeView dashboardseditortreeview;
 		private global::Gtk.VBox vbox4;
-		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
+		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
 
 		protected virtual void Build ()
 		{
@@ -362,7 +362,7 @@ namespace LongoMatch.Gui.Panel
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.buttonswidget = new global::LongoMatch.Gui.Component.ButtonsWidget ();
+			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;

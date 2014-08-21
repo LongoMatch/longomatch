@@ -6,10 +6,10 @@ LINK = $(REF_DEP_LONGOMATCH_GUI)
 SOURCES = Gui/Cairo.cs \
 	Gui/Component/AnalysisComponent.cs \
 	Gui/Component/BackgroundWidget.cs \
-	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/CodingWidget.cs \
 	Gui/Component/CoordinatesTagger.cs \
+	Gui/Component/DashboardWidget.cs \
 	Gui/Component/DatePicker.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
@@ -80,10 +80,10 @@ SOURCES = Gui/Cairo.cs \
 	Gui/TreeView/RenderingJobsTreeView.cs \
 	gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs \
 	gtk-gui/LongoMatch.Gui.Component.BackgroundWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs \
+	gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \

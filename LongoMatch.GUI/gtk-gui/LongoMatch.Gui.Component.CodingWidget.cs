@@ -17,7 +17,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HPaned hpaned1;
 		private global::Gtk.DrawingArea teamsdrawingarea;
 		private global::Gtk.HBox hbox5;
-		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
+		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
 		private global::Gtk.Label label19;
@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 			this.hbox5.Name = "hbox5";
 			this.hbox5.Spacing = 6;
 			// Container child hbox5.Gtk.Box+BoxChild
-			this.buttonswidget = new global::LongoMatch.Gui.Component.ButtonsWidget ();
+			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;

@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class ButtonsWidget : Gtk.Bin
+	public partial class DashboardWidget : Gtk.Bin
 	{
 		public event NewTagHandler NewTagEvent;
 
@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 		bool internalButtons;
 		bool edited;
 
-		public ButtonsWidget()
+		public DashboardWidget()
 		{
 			this.Build();
 			tagger = new Dashboard (new WidgetWrapper (drawingarea));

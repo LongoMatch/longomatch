@@ -3,18 +3,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ButtonsWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ButtonsWidget Signals">
-        <signal name="NewTagEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -336,6 +324,18 @@
         <signal name="ExposeEvent" />
         <signal name="ButtonPressEvent" />
         <signal name="ScrollEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="DashboardWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="DashboardWidget Signals">
+        <signal name="NewTagEvent" />
       </itemgroup>
     </signals>
   </object>
