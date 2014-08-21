@@ -66,86 +66,6 @@ style "longomatch-default"
   }
 }
 
-style "longomatch-rounded-button" = "longomatch-default"
-{
-  font_name = "Ubuntu 14"
-
-  engine "pixmap"
-  {
-    image
-    {
-      function  = BOX
-      state     = NORMAL
-      file      = "Buttons/button-rounded-default.svg"
-      border    = { 4, 4, 4, 4 }
-      stretch   = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = PRELIGHT
-      file       = "Buttons/button-rounded-prelight.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = ACTIVE
-      file       = "Buttons/button-rounded-pressed.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = INSENSITIVE
-      file       = "Buttons/button-rounded-default.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-  }
-}
-
-style "longomatch-rect-button" = "longomatch-default"
-{
-  engine "pixmap"
-  {
-    image
-    {
-      function  = BOX
-      state     = NORMAL
-      file      = "Buttons/button-rect-default.svg"
-      border    = { 4, 4, 4, 4 }
-      stretch   = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = PRELIGHT
-      file       = "Buttons/button-rect-prelight.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = ACTIVE
-      file       = "Buttons/button-rect-pressed.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = INSENSITIVE
-      file       = "Buttons/button-rect-default.svg"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-  }
-}
-
 style "longomatch-entry" = "longomatch-default" {
 
   font = "Ubuntu 12"
@@ -184,6 +104,15 @@ style "longomatch-header" {
   base[NORMAL]      = @bg_light_color
   bg[NORMAL]        = @bg_light_color
   text[NORMAL]      = @base_color
+}
+
+style "longomatch-editor" {
+  text[NORMAL]      = @text_color
+  fg[NORMAL]      = @text_color
+}
+
+style "longomatch-drawingarea" {
+  bg[NORMAL]        = @bg_dark_color
 }
 
 style "longomatch-editor-treeview" {
@@ -337,9 +266,11 @@ style "longomatch-combobox" {
    }
 }
 
+include "buttons.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
+class "GtkButton"                                style "longomatch-square-button"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
 # Text color for the menu items in the bar and the menus
@@ -349,6 +280,8 @@ widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
 #widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-combobox-button"
 #widget_class "*<GtkComboBox>*<GtkEntry>"         style "longomatch-combobox-entry"
 
+widget "*editorbuttonbar.*" style "longomatch-editor"
+widget "*dashboardeditorvbox.*.drawingarea" style "longomatch-drawingarea"
 widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
