@@ -7375,6 +7375,7 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.HBox" id="headerhbox">
                 <property name="MemberName" />
+                <property name="HeightRequest">60</property>
                 <property name="Spacing">6</property>
                 <child>
                   <widget class="Gtk.Image" id="logoimage">
@@ -7391,7 +7392,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;TEAM EDITOR&lt;/b&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;span font_desc="27"&gt;&lt;b&gt;TEAM EDITOR&lt;/b&gt;&lt;/span&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -7443,7 +7444,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.HBox" id="teameditorbuttonbar">
                     <property name="MemberName" />
-                    <property name="Spacing">6</property>
+                    <property name="Spacing">24</property>
                     <child>
                       <widget class="Gtk.Alignment" id="templateimagealignment">
                         <property name="MemberName" />
@@ -7452,6 +7453,8 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="teamimage">
                             <property name="MemberName" />
+                            <property name="Ypad">5</property>
+                            <property name="Yalign">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -7463,75 +7466,86 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.VBox" id="editteamvbox">
+                      <widget class="Gtk.VBox" id="editteamsvbox">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
+                        <property name="Spacing">2</property>
                         <child>
-                          <widget class="Gtk.Label" id="editteamlabel">
+                          <widget class="Gtk.Label" id="editteamslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Edit team</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage teams&lt;/span&gt;</property>
+                            <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
-                            <property name="AutoSize">False</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.HButtonBox" id="teambuttonbox">
+                          <widget class="Gtk.HBox" id="hbox8">
                             <property name="MemberName" />
-                            <property name="Spacing">12</property>
-                            <property name="Size">3</property>
-                            <property name="LayoutStyle">Start</property>
+                            <property name="Spacing">6</property>
                             <child>
-                              <widget class="Gtk.Button" id="newteamtemplatebutton">
+                              <widget class="Gtk.Button" id="newteambutton">
                                 <property name="MemberName" />
-                                <property name="Tooltip" translatable="yes">New team</property>
+                                <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
                                   <widget class="Gtk.Image" id="newteamimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
                               <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="deleteteamteamplatebutton">
+                              <widget class="Gtk.Button" id="deleteteambutton">
                                 <property name="MemberName" />
-                                <property name="Tooltip" translatable="yes">Delete team</property>
+                                <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
                                   <widget class="Gtk.Image" id="deleteteamimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
                               <packing>
                                 <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="saveteamtemplatebutton">
+                              <widget class="Gtk.Button" id="saveteambutton">
                                 <property name="MemberName" />
-                                <property name="Tooltip" translatable="yes">Save team</property>
+                                <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
                                   <widget class="Gtk.Image" id="saveteamimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
                               <packing>
                                 <property name="Position">2</property>
+                                <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
                               </packing>
@@ -7539,7 +7553,7 @@ You can continue with the current capture, cancel it or save your project.
                           </widget>
                           <packing>
                             <property name="Position">1</property>
-                            <property name="AutoSize">False</property>
+                            <property name="AutoSize">True</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
@@ -7553,11 +7567,90 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.VSeparator" id="vseparator3">
+                      <widget class="Gtk.Image" id="vseparatorimage">
                         <property name="MemberName" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.VBox" id="editplayersvbox">
+                        <property name="MemberName" />
+                        <property name="Spacing">2</property>
+                        <child>
+                          <widget class="Gtk.Label" id="editplayerslabel">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage players&lt;/span&gt;</property>
+                            <property name="UseMarkup">True</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.HBox" id="hbox7">
+                            <property name="MemberName" />
+                            <property name="Spacing">6</property>
+                            <child>
+                              <widget class="Gtk.Button" id="newplayerbutton1">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="newplayerimage">
+                                    <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="deleteplayerbutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="deleteplayerimage">
+                                    <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">3</property>
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
@@ -7574,7 +7667,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.HBox" id="hbox1">
                     <property name="MemberName" />
-                    <property name="Spacing">6</property>
+                    <property name="Spacing">15</property>
                     <child>
                       <widget class="Gtk.VBox" id="teamsvbox">
                         <property name="MemberName" />
@@ -7606,23 +7699,12 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.VSeparator" id="vseparator2">
-                        <property name="MemberName" />
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="LongoMatch.Gui.Component.TeamTemplateEditor" id="teamtemplateeditor1">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
-                        <property name="Position">2</property>
+                        <property name="Position">1</property>
                         <property name="AutoSize">False</property>
                       </packing>
                     </child>
@@ -9097,6 +9179,7 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.HBox" id="headerhbox">
                 <property name="MemberName" />
+                <property name="HeightRequest">60</property>
                 <property name="Spacing">6</property>
                 <child>
                   <widget class="Gtk.Image" id="logoimage">
@@ -9113,7 +9196,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;b&gt;ANALYSIS DASHBOARD EDITOR&lt;/b&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;span font_desc="27"&gt;&lt;b&gt;ANALYSIS DASHBOARD EDITOR&lt;/b&gt;&lt;/span&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -9126,27 +9209,19 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Button" id="backrectbutton">
                     <property name="MemberName" />
+                    <property name="WidthRequest">80</property>
+                    <property name="HeightRequest">40</property>
                     <property name="CanFocus">True</property>
-                    <property name="Type">Custom</property>
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:longomatch-back Dialog</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="UseUnderline">True</property>
                     <property name="BorderWidth">10</property>
-                    <child>
-                      <widget class="Gtk.Alignment" id="backalignment">
-                        <property name="MemberName" />
-                        <property name="LeftPadding">24</property>
-                        <property name="RightPadding">24</property>
-                        <child>
-                          <widget class="Gtk.Label" id="backlabel">
-                            <property name="MemberName" />
-                            <property name="LabelProp" translatable="yes">Back</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
                     <property name="Position">2</property>
-                    <property name="AutoSize">False</property>
+                    <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
                   </packing>
@@ -9182,6 +9257,8 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="templateimage">
                             <property name="MemberName" />
+                            <property name="Ypad">5</property>
+                            <property name="Yalign">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -9195,12 +9272,13 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.VBox" id="vbox3">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
+                        <property name="Spacing">2</property>
                         <child>
                           <widget class="Gtk.Label" id="editdashboardslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Manage dashboards</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage dashboards&lt;/span&gt;</property>
+                            <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
@@ -9221,6 +9299,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="newtemplateimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9240,6 +9320,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="deletetemplateimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9259,6 +9341,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="savetemplateimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9299,12 +9383,13 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.VBox" id="vbox17">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
+                        <property name="Spacing">2</property>
                         <child>
                           <widget class="Gtk.Label" id="editbuttonslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">Manage dashboard buttons</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage dashboard buttons&lt;/span&gt;</property>
+                            <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
@@ -9325,6 +9410,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="addcategoryimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9344,6 +9431,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="addtagimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9363,6 +9452,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="scoreimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9382,6 +9473,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="cardimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -9401,6 +9494,8 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="timerimage">
                                     <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
                                   </widget>
                                 </child>
                               </widget>

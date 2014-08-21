@@ -47,26 +47,27 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.CategoriesTemplatesProvider;
 
 			// Assign images
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
-			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 80, IconLookupFlags.ForceSvg);
-			propertiesimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag", 80, IconLookupFlags.ForceSvg);
-			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 40, IconLookupFlags.ForceSvg);
-			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 40, IconLookupFlags.ForceSvg);
-			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 40, IconLookupFlags.ForceSvg);
-			addcategoryimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-category", 40, IconLookupFlags.ForceSvg);
-			addtagimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-tag", 40, IconLookupFlags.ForceSvg);
-			scoreimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-score", 40, IconLookupFlags.ForceSvg);
-			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 40, IconLookupFlags.ForceSvg);
-			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 40, IconLookupFlags.ForceSvg);
-			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 40, IconLookupFlags.ForceSvg);
+			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
+			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 45, IconLookupFlags.ForceSvg);
+			propertiesimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 45, IconLookupFlags.ForceSvg);
+			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 34, IconLookupFlags.ForceSvg);
+			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 34, IconLookupFlags.ForceSvg);
+			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 34, IconLookupFlags.ForceSvg);
+			addcategoryimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-category", 34, IconLookupFlags.ForceSvg);
+			addtagimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-tag", 34, IconLookupFlags.ForceSvg);
+			scoreimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-score", 34, IconLookupFlags.ForceSvg);
+			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 34, IconLookupFlags.ForceSvg);
+			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 34, IconLookupFlags.ForceSvg);
+			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
-			deletetemplatebutton.Entered += HandleEnterTemplateButton;
-			savetemplatebutton.Entered += HandleEnterTemplateButton;
 			newtemplatebutton.Left += HandleLeftTemplateButton;
+			deletetemplatebutton.Entered += HandleEnterTemplateButton;
 			deletetemplatebutton.Left += HandleLeftTemplateButton;
+			savetemplatebutton.Entered += HandleEnterTemplateButton;
 			savetemplatebutton.Left += HandleLeftTemplateButton;
+
 			addcategorybutton.Entered += HandleEnterTagButton;
 			addcategorybutton.Left += HandleLeftTagButton;
 		    addcategorybutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Category"); };
@@ -89,7 +90,7 @@ namespace LongoMatch.Gui.Panel
 			dashboardseditortreeview.Model = templates;
 			dashboardseditortreeview.HeadersVisible = false;
 			//sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			dashboardseditortreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			dashboardseditortreeview.AppendColumn ("Text", new CellRendererText () { SizePoints = 14.0 }, "text", 1); 
 			dashboardseditortreeview.SearchColumn = 0;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
@@ -170,37 +171,37 @@ namespace LongoMatch.Gui.Panel
 		void HandleEnterTemplateButton (object sender, EventArgs e)
 		{
 			if (sender == newtemplatebutton) {
-				editdashboardslabel.Text = Catalog.GetString ("New dashboard");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New dashboard</span>");
 			} else if (sender == deletetemplatebutton) {
-				editdashboardslabel.Text = Catalog.GetString ("Delete dashboard");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete dashboard</span>");
 			} else if (sender == savetemplatebutton) {
-				editdashboardslabel.Text = Catalog.GetString ("Save dashboard");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Save dashboard</span>");
 			}
 		}
 
 		void HandleLeftTemplateButton (object sender, EventArgs e)
 		{
-			editdashboardslabel.Text = Catalog.GetString ("Manage dashboards");
+			editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage dashboards</span>");
 		}
 
 		void HandleEnterTagButton (object sender, EventArgs e)
 		{
 			if (sender == addcategorybutton) {
-				editbuttonslabel.Text = Catalog.GetString ("Add category button");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add category button</span>");
 			} else if (sender == addtagbutton1) {
-				editbuttonslabel.Text = Catalog.GetString ("Add tag button");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add tag button</span>");
 			} else if (sender == scorebutton) {
-				editbuttonslabel.Text = Catalog.GetString ("Add score button");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add score button</span>");
 			} else if (sender == timerbutton) {
-				editbuttonslabel.Text = Catalog.GetString ("Add timer button");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add timer button</span>");
 			} else if (sender == cardbutton) {
-				editbuttonslabel.Text = Catalog.GetString ("Add card button");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add card button</span>");
 			}
 		}
 
 		void HandleLeftTagButton (object sender, EventArgs e)
 		{
-			editbuttonslabel.Text = Catalog.GetString ("Manage dashboard buttons");
+			editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage dashboard buttons</span>");
 		}
 
 		void HandleSelectionChanged (object sender, EventArgs e)

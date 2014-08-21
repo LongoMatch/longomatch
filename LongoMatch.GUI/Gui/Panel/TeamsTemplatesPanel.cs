@@ -50,12 +50,29 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
-			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 80, IconLookupFlags.ForceSvg);
-			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 40, IconLookupFlags.ForceSvg);
-			deleteteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-delete", 40, IconLookupFlags.ForceSvg);
-			saveteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-save", 40, IconLookupFlags.ForceSvg);
-			
+			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
+			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 45, IconLookupFlags.ForceSvg);
+			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 34, IconLookupFlags.ForceSvg);
+			deleteteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-delete", 34, IconLookupFlags.ForceSvg);
+			saveteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-save", 34, IconLookupFlags.ForceSvg);
+			newplayerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-add", 34, IconLookupFlags.ForceSvg);
+			deleteplayerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-delete", 34, IconLookupFlags.ForceSvg);
+			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
+
+			newteambutton.Entered += HandleEnterTeamButton;
+			newteambutton.Left += HandleLeftTeamButton;
+			newteambutton.Clicked += HandleNewTeamClicked;
+			deleteteambutton.Entered += HandleEnterTeamButton;
+			deleteteambutton.Left += HandleLeftTeamButton;
+			deleteteambutton.Clicked += HandleDeleteTeamClicked;
+			saveteambutton.Entered += HandleEnterTeamButton;
+			saveteambutton.Left += HandleLeftTeamButton;
+			saveteambutton.Clicked += (s, e) => {SaveLoadedTeam ();};
+			newplayerbutton1.Entered += HandleEnterPlayerButton;
+			newplayerbutton1.Left += HandleLeftPlayerButton;
+			deleteplayerbutton.Entered += HandleEnterPlayerButton;
+			deleteplayerbutton.Left += HandleLeftPlayerButton;
+
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
 			itersDict = new Dictionary<string, TreeIter>();
 			
@@ -71,12 +88,10 @@ namespace LongoMatch.Gui.Panel
 			teamsvbox.WidthRequest = 280;
 			
 			teamtemplateeditor1.Visible = false;
-			newteamtemplatebutton.Visible = true;
-			deleteteamteamplatebutton.Visible = false;
+			newteambutton.Visible = true;
+			deleteteambutton.Visible = false;
 			
 			selectedTeams = new List<string>();
-			newteamtemplatebutton.Clicked += HandleNewTeamClicked;
-			deleteteamteamplatebutton.Clicked += HandleDeleteTeamClicked;
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 			
 			backrectbutton.Clicked += (sender, o) => {
@@ -124,7 +139,37 @@ namespace LongoMatch.Gui.Panel
 				HandleSelectionChanged (null, null);
 			}
 		}
-		
+
+		void HandleEnterTeamButton (object sender, EventArgs e)
+		{
+			if (sender == newteambutton) {
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New team</span>");
+			} else if (sender == deleteteambutton) {
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete team</span>");
+			} else if (sender == saveteambutton) {
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Save team</span>");
+			}
+		}
+
+		void HandleLeftTeamButton (object sender, EventArgs e)
+		{
+			editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage teams</span>");
+		}
+
+		void HandleEnterPlayerButton (object sender, EventArgs e)
+		{
+			if (sender == newplayerbutton1) {
+				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New player</span>");
+			} else if (sender == deleteplayerbutton) {
+				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete player</span>");
+			}
+		}
+
+		void HandleLeftPlayerButton (object sender, EventArgs e)
+		{
+			editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage players</span>");
+		}
+
 		void SaveLoadedTeam () {
 			if (loadedTeam == null)
 				return;
@@ -174,7 +219,7 @@ namespace LongoMatch.Gui.Panel
 				selectedTeams.Add (teamseditortreeview.Model.GetValue (iter, 1) as string);
 			}
 			
-			deleteteamteamplatebutton.Visible = selectedTeams.Count >= 1;
+			deleteteambutton.Visible = selectedTeams.Count >= 1;
 			teamtemplateeditor1.Visible = true;
 			
 			if (selectedTeams.Count == 1) {

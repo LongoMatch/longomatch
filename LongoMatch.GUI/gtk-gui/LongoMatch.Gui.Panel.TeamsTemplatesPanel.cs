@@ -15,21 +15,27 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.HBox teameditorbuttonbar;
 		private global::Gtk.Alignment templateimagealignment;
 		private global::Gtk.Image teamimage;
-		private global::Gtk.VBox editteamvbox;
-		private global::Gtk.Label editteamlabel;
-		private global::Gtk.HButtonBox teambuttonbox;
-		private global::Gtk.Button newteamtemplatebutton;
+		private global::Gtk.VBox editteamsvbox;
+		private global::Gtk.Label editteamslabel;
+		private global::Gtk.HBox hbox8;
+		private global::Gtk.Button newteambutton;
 		private global::Gtk.Image newteamimage;
-		private global::Gtk.Button deleteteamteamplatebutton;
+		private global::Gtk.Button deleteteambutton;
 		private global::Gtk.Image deleteteamimage;
-		private global::Gtk.Button saveteamtemplatebutton;
+		private global::Gtk.Button saveteambutton;
 		private global::Gtk.Image saveteamimage;
-		private global::Gtk.VSeparator vseparator3;
+		private global::Gtk.Image vseparatorimage;
+		private global::Gtk.VBox editplayersvbox;
+		private global::Gtk.Label editplayerslabel;
+		private global::Gtk.HBox hbox7;
+		private global::Gtk.Button newplayerbutton1;
+		private global::Gtk.Image newplayerimage;
+		private global::Gtk.Button deleteplayerbutton;
+		private global::Gtk.Image deleteplayerimage;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.VBox teamsvbox;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 		private global::Gtk.TreeView teamseditortreeview;
-		private global::Gtk.VSeparator vseparator2;
 		private global::LongoMatch.Gui.Component.TeamTemplateEditor teamtemplateeditor1;
 
 		protected virtual void Build ()
@@ -47,6 +53,7 @@ namespace LongoMatch.Gui.Panel
 			this.headereventbox.Name = "headereventbox";
 			// Container child headereventbox.Gtk.Container+ContainerChild
 			this.headerhbox = new global::Gtk.HBox ();
+			this.headerhbox.HeightRequest = 60;
 			this.headerhbox.Name = "headerhbox";
 			this.headerhbox.Spacing = 6;
 			// Container child headerhbox.Gtk.Box+BoxChild
@@ -61,7 +68,7 @@ namespace LongoMatch.Gui.Panel
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>TEAM EDITOR</b>");
+			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"27\"><b>TEAM EDITOR</b></span>");
 			this.titlelabel.UseMarkup = true;
 			this.titlelabel.Justify = ((global::Gtk.Justification)(2));
 			this.headerhbox.Add (this.titlelabel);
@@ -114,7 +121,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child contentvbox.Gtk.Box+BoxChild
 			this.teameditorbuttonbar = new global::Gtk.HBox ();
 			this.teameditorbuttonbar.Name = "teameditorbuttonbar";
-			this.teameditorbuttonbar.Spacing = 6;
+			this.teameditorbuttonbar.Spacing = 24;
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
 			this.templateimagealignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.templateimagealignment.Name = "templateimagealignment";
@@ -123,6 +130,8 @@ namespace LongoMatch.Gui.Panel
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
 			this.teamimage = new global::Gtk.Image ();
 			this.teamimage.Name = "teamimage";
+			this.teamimage.Ypad = 5;
+			this.teamimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.teamimage);
 			this.teameditorbuttonbar.Add (this.templateimagealignment);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.templateimagealignment]));
@@ -130,93 +139,159 @@ namespace LongoMatch.Gui.Panel
 			w15.Expand = false;
 			w15.Fill = false;
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
-			this.editteamvbox = new global::Gtk.VBox ();
-			this.editteamvbox.Name = "editteamvbox";
-			this.editteamvbox.Spacing = 6;
-			// Container child editteamvbox.Gtk.Box+BoxChild
-			this.editteamlabel = new global::Gtk.Label ();
-			this.editteamlabel.Name = "editteamlabel";
-			this.editteamlabel.Xalign = 0F;
-			this.editteamlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Edit team");
-			this.editteamvbox.Add (this.editteamlabel);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.editteamvbox [this.editteamlabel]));
+			this.editteamsvbox = new global::Gtk.VBox ();
+			this.editteamsvbox.Name = "editteamsvbox";
+			this.editteamsvbox.Spacing = 2;
+			// Container child editteamsvbox.Gtk.Box+BoxChild
+			this.editteamslabel = new global::Gtk.Label ();
+			this.editteamslabel.Name = "editteamslabel";
+			this.editteamslabel.Xalign = 0F;
+			this.editteamslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage teams</span>");
+			this.editteamslabel.UseMarkup = true;
+			this.editteamsvbox.Add (this.editteamslabel);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.editteamsvbox [this.editteamslabel]));
 			w16.Position = 0;
-			// Container child editteamvbox.Gtk.Box+BoxChild
-			this.teambuttonbox = new global::Gtk.HButtonBox ();
-			this.teambuttonbox.Name = "teambuttonbox";
-			this.teambuttonbox.Spacing = 12;
-			this.teambuttonbox.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-			// Container child teambuttonbox.Gtk.ButtonBox+ButtonBoxChild
-			this.newteamtemplatebutton = new global::Gtk.Button ();
-			this.newteamtemplatebutton.TooltipMarkup = "New team";
-			this.newteamtemplatebutton.CanFocus = true;
-			this.newteamtemplatebutton.Name = "newteamtemplatebutton";
-			// Container child newteamtemplatebutton.Gtk.Container+ContainerChild
+			w16.Expand = false;
+			w16.Fill = false;
+			// Container child editteamsvbox.Gtk.Box+BoxChild
+			this.hbox8 = new global::Gtk.HBox ();
+			this.hbox8.Name = "hbox8";
+			this.hbox8.Spacing = 6;
+			// Container child hbox8.Gtk.Box+BoxChild
+			this.newteambutton = new global::Gtk.Button ();
+			this.newteambutton.CanFocus = true;
+			this.newteambutton.Name = "newteambutton";
+			// Container child newteambutton.Gtk.Container+ContainerChild
 			this.newteamimage = new global::Gtk.Image ();
 			this.newteamimage.Name = "newteamimage";
-			this.newteamtemplatebutton.Add (this.newteamimage);
-			this.newteamtemplatebutton.Label = null;
-			this.teambuttonbox.Add (this.newteamtemplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w18 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.teambuttonbox [this.newteamtemplatebutton]));
+			this.newteamimage.Xpad = 5;
+			this.newteamimage.Ypad = 5;
+			this.newteambutton.Add (this.newteamimage);
+			this.newteambutton.Label = null;
+			this.hbox8.Add (this.newteambutton);
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.newteambutton]));
+			w18.Position = 0;
 			w18.Expand = false;
 			w18.Fill = false;
-			// Container child teambuttonbox.Gtk.ButtonBox+ButtonBoxChild
-			this.deleteteamteamplatebutton = new global::Gtk.Button ();
-			this.deleteteamteamplatebutton.TooltipMarkup = "Delete team";
-			this.deleteteamteamplatebutton.CanFocus = true;
-			this.deleteteamteamplatebutton.Name = "deleteteamteamplatebutton";
-			// Container child deleteteamteamplatebutton.Gtk.Container+ContainerChild
+			// Container child hbox8.Gtk.Box+BoxChild
+			this.deleteteambutton = new global::Gtk.Button ();
+			this.deleteteambutton.CanFocus = true;
+			this.deleteteambutton.Name = "deleteteambutton";
+			// Container child deleteteambutton.Gtk.Container+ContainerChild
 			this.deleteteamimage = new global::Gtk.Image ();
 			this.deleteteamimage.Name = "deleteteamimage";
-			this.deleteteamteamplatebutton.Add (this.deleteteamimage);
-			this.deleteteamteamplatebutton.Label = null;
-			this.teambuttonbox.Add (this.deleteteamteamplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w20 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.teambuttonbox [this.deleteteamteamplatebutton]));
+			this.deleteteamimage.Xpad = 5;
+			this.deleteteamimage.Ypad = 5;
+			this.deleteteambutton.Add (this.deleteteamimage);
+			this.deleteteambutton.Label = null;
+			this.hbox8.Add (this.deleteteambutton);
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.deleteteambutton]));
 			w20.Position = 1;
 			w20.Expand = false;
 			w20.Fill = false;
-			// Container child teambuttonbox.Gtk.ButtonBox+ButtonBoxChild
-			this.saveteamtemplatebutton = new global::Gtk.Button ();
-			this.saveteamtemplatebutton.TooltipMarkup = "Save team";
-			this.saveteamtemplatebutton.CanFocus = true;
-			this.saveteamtemplatebutton.Name = "saveteamtemplatebutton";
-			// Container child saveteamtemplatebutton.Gtk.Container+ContainerChild
+			// Container child hbox8.Gtk.Box+BoxChild
+			this.saveteambutton = new global::Gtk.Button ();
+			this.saveteambutton.CanFocus = true;
+			this.saveteambutton.Name = "saveteambutton";
+			// Container child saveteambutton.Gtk.Container+ContainerChild
 			this.saveteamimage = new global::Gtk.Image ();
 			this.saveteamimage.Name = "saveteamimage";
-			this.saveteamtemplatebutton.Add (this.saveteamimage);
-			this.saveteamtemplatebutton.Label = null;
-			this.teambuttonbox.Add (this.saveteamtemplatebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.teambuttonbox [this.saveteamtemplatebutton]));
+			this.saveteamimage.Xpad = 5;
+			this.saveteamimage.Ypad = 5;
+			this.saveteambutton.Add (this.saveteamimage);
+			this.saveteambutton.Label = null;
+			this.hbox8.Add (this.saveteambutton);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.saveteambutton]));
 			w22.Position = 2;
 			w22.Expand = false;
 			w22.Fill = false;
-			this.editteamvbox.Add (this.teambuttonbox);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.editteamvbox [this.teambuttonbox]));
+			this.editteamsvbox.Add (this.hbox8);
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.editteamsvbox [this.hbox8]));
 			w23.Position = 1;
 			w23.Expand = false;
 			w23.Fill = false;
-			this.teameditorbuttonbar.Add (this.editteamvbox);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.editteamvbox]));
+			this.teameditorbuttonbar.Add (this.editteamsvbox);
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.editteamsvbox]));
 			w24.Position = 1;
 			w24.Expand = false;
 			w24.Fill = false;
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
-			this.vseparator3 = new global::Gtk.VSeparator ();
-			this.vseparator3.Name = "vseparator3";
-			this.teameditorbuttonbar.Add (this.vseparator3);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.vseparator3]));
+			this.vseparatorimage = new global::Gtk.Image ();
+			this.vseparatorimage.Name = "vseparatorimage";
+			this.teameditorbuttonbar.Add (this.vseparatorimage);
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.vseparatorimage]));
 			w25.Position = 2;
 			w25.Expand = false;
 			w25.Fill = false;
-			this.contentvbox.Add (this.teameditorbuttonbar);
-			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.teameditorbuttonbar]));
+			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
+			this.editplayersvbox = new global::Gtk.VBox ();
+			this.editplayersvbox.Name = "editplayersvbox";
+			this.editplayersvbox.Spacing = 2;
+			// Container child editplayersvbox.Gtk.Box+BoxChild
+			this.editplayerslabel = new global::Gtk.Label ();
+			this.editplayerslabel.Name = "editplayerslabel";
+			this.editplayerslabel.Xalign = 0F;
+			this.editplayerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage players</span>");
+			this.editplayerslabel.UseMarkup = true;
+			this.editplayersvbox.Add (this.editplayerslabel);
+			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.editplayersvbox [this.editplayerslabel]));
 			w26.Position = 0;
-			w26.Expand = false;
 			w26.Fill = false;
+			// Container child editplayersvbox.Gtk.Box+BoxChild
+			this.hbox7 = new global::Gtk.HBox ();
+			this.hbox7.Name = "hbox7";
+			this.hbox7.Spacing = 6;
+			// Container child hbox7.Gtk.Box+BoxChild
+			this.newplayerbutton1 = new global::Gtk.Button ();
+			this.newplayerbutton1.CanFocus = true;
+			this.newplayerbutton1.Name = "newplayerbutton1";
+			// Container child newplayerbutton1.Gtk.Container+ContainerChild
+			this.newplayerimage = new global::Gtk.Image ();
+			this.newplayerimage.Name = "newplayerimage";
+			this.newplayerimage.Xpad = 5;
+			this.newplayerimage.Ypad = 5;
+			this.newplayerbutton1.Add (this.newplayerimage);
+			this.newplayerbutton1.Label = null;
+			this.hbox7.Add (this.newplayerbutton1);
+			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.newplayerbutton1]));
+			w28.Position = 0;
+			w28.Expand = false;
+			w28.Fill = false;
+			// Container child hbox7.Gtk.Box+BoxChild
+			this.deleteplayerbutton = new global::Gtk.Button ();
+			this.deleteplayerbutton.CanFocus = true;
+			this.deleteplayerbutton.Name = "deleteplayerbutton";
+			// Container child deleteplayerbutton.Gtk.Container+ContainerChild
+			this.deleteplayerimage = new global::Gtk.Image ();
+			this.deleteplayerimage.Name = "deleteplayerimage";
+			this.deleteplayerimage.Xpad = 5;
+			this.deleteplayerimage.Ypad = 5;
+			this.deleteplayerbutton.Add (this.deleteplayerimage);
+			this.deleteplayerbutton.Label = null;
+			this.hbox7.Add (this.deleteplayerbutton);
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.deleteplayerbutton]));
+			w30.Position = 1;
+			w30.Expand = false;
+			w30.Fill = false;
+			this.editplayersvbox.Add (this.hbox7);
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.editplayersvbox [this.hbox7]));
+			w31.Position = 1;
+			w31.Expand = false;
+			w31.Fill = false;
+			this.teameditorbuttonbar.Add (this.editplayersvbox);
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.editplayersvbox]));
+			w32.Position = 3;
+			w32.Expand = false;
+			w32.Fill = false;
+			this.contentvbox.Add (this.teameditorbuttonbar);
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.teameditorbuttonbar]));
+			w33.Position = 0;
+			w33.Expand = false;
+			w33.Fill = false;
 			// Container child contentvbox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
+			this.hbox1.Spacing = 15;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.teamsvbox = new global::Gtk.VBox ();
 			this.teamsvbox.WidthRequest = 280;
@@ -232,35 +307,27 @@ namespace LongoMatch.Gui.Panel
 			this.teamseditortreeview.Name = "teamseditortreeview";
 			this.GtkScrolledWindow1.Add (this.teamseditortreeview);
 			this.teamsvbox.Add (this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.teamsvbox [this.GtkScrolledWindow1]));
-			w28.Position = 0;
+			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.teamsvbox [this.GtkScrolledWindow1]));
+			w35.Position = 0;
 			this.hbox1.Add (this.teamsvbox);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamsvbox]));
-			w29.Position = 0;
-			w29.Expand = false;
-			w29.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.vseparator2 = new global::Gtk.VSeparator ();
-			this.vseparator2.Name = "vseparator2";
-			this.hbox1.Add (this.vseparator2);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vseparator2]));
-			w30.Position = 1;
-			w30.Expand = false;
-			w30.Fill = false;
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamsvbox]));
+			w36.Position = 0;
+			w36.Expand = false;
+			w36.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.teamtemplateeditor1 = new global::LongoMatch.Gui.Component.TeamTemplateEditor ();
 			this.teamtemplateeditor1.Events = ((global::Gdk.EventMask)(256));
 			this.teamtemplateeditor1.Name = "teamtemplateeditor1";
 			this.hbox1.Add (this.teamtemplateeditor1);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamtemplateeditor1]));
-			w31.Position = 2;
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamtemplateeditor1]));
+			w37.Position = 1;
 			this.contentvbox.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
-			w32.Position = 1;
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w38.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
 			this.teameditorvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.contentalignment]));
-			w34.Position = 1;
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.contentalignment]));
+			w40.Position = 1;
 			this.Add (this.teameditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
