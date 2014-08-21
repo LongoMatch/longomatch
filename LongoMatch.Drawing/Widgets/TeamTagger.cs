@@ -75,6 +75,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void Select (Player p)
 		{
+			tagger.Select (p);
+			widget.ReDraw ();
 		}
 
 		protected override void ShowMenu (Point coords)

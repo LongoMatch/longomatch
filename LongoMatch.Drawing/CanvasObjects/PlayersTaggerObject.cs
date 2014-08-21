@@ -122,6 +122,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 			awayBench.Update ();
 			field.Update ();
 		}
+		
+		public void Select (Player player)
+		{
+			PlayerObject po;
+
+			po = homePlayers.FirstOrDefault (p => p.Player == player);
+			if (po == null) {
+				po = awayPlayers.FirstOrDefault (p => p.Player == player);
+			}
+			if (po != null) {
+				ResetSelection ();
+				SelectedPlayers.Add (player);
+				po.Active = true;
+				if (PlayersSelectionChangedEvent != null) {
+					PlayersSelectionChangedEvent (SelectedPlayers);
+				}
+			}
+		}
 
 		public void ResetSelection ()
 		{
