@@ -99,8 +99,6 @@ style "longomatch-teams-combo" = "longomatch-default" {
 }
 
 style "longomatch-header" {
-  font = "Ubuntu 25"
-
   base[NORMAL]      = @bg_light_color
   bg[NORMAL]        = @bg_light_color
   text[NORMAL]      = @base_color
