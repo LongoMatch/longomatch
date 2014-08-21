@@ -49,19 +49,19 @@ namespace LongoMatch.Gui.Component
 		public ButtonsWidget()
 		{
 			this.Build();
-			tagger = new PlaysTagger (new WidgetWrapper (drawingarea1));
+			tagger = new PlaysTagger (new WidgetWrapper (drawingarea));
 			tagger.FitMode = FitMode.Original;
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.AddNewTagEvent += HandleAddNewTagEvent;
-			drawingarea1.CanFocus = true;
-			drawingarea1.KeyPressEvent += HandleKeyPressEvent;
+			drawingarea.CanFocus = true;
+			drawingarea.KeyPressEvent += HandleKeyPressEvent;
 			Mode = TagMode.Predefined;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
-			categoryproperties1.EditedEvent += (sender, e) => {drawingarea1.QueueDraw();};
+			tagproperties.EditedEvent += (sender, e) => {drawingarea.QueueDraw();};
 			addcatbutton.Clicked += HandleAddClicked;
 			addtimerbutton.Clicked += HandleAddClicked;
 			addscorebutton.Clicked += HandleAddClicked;
@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Component
 		
 		public bool Edited {
 			get {
-				return edited || tagger.Edited || categoryproperties1.Edited;
+				return edited || tagger.Edited || tagproperties.Edited;
 			}
 			set {
 				edited = value;
@@ -102,12 +102,44 @@ namespace LongoMatch.Gui.Component
 			set {
 				tagMode = value;
 				tagger.TagMode = value;
-				hbuttonbox2.Visible = rightbox.Visible = tagMode == TagMode.Edit;
+				// Properties only visible in edit mode
+				rightbox.Visible = tagMode == TagMode.Edit;
+			}
+		}
+
+		public bool ButtonsVisible {
+			set {
+				// Add buttons for cards/tags/etc.. can be handled remotely.
+				hbuttonbox2.Visible = value;
 			}
 		}
 		
 		public void Refresh (TaggerButton b = null) {
 			tagger.Refresh (b);
+		}
+
+		public void AddButton (string buttontype) {
+			TaggerButton tagger = null;
+
+			if (buttontype == "Card") {
+				tagger = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle);
+			} else if (buttontype == "Score") {
+				tagger = new Score ("Score", 1);
+			} else if (buttontype == "Timer") {
+				tagger = new Timer {Name = "Timer"};
+			} else if (buttontype == "Tag") {
+				tagger = new TagButton {Name = "Tag"};
+			} else if (buttontype == "Category") {
+				tagger = template.AddDefaultItem (template.List.Count);
+			} else {
+				return;
+			}
+
+			if (!(tagger is Category)) {
+				template.List.Add (tagger);
+			}
+			tagger.Position = new Point (template.CanvasWidth, 0);
+			Refresh (tagger);
 		}
 		
 		void RemoveButton (TaggerButton button) {
@@ -123,11 +155,11 @@ namespace LongoMatch.Gui.Component
 		{
 			if (taggers.Count == 1) {
 				selected = taggers[0];
-				categoryproperties1.Tagger = taggers[0];
-				propsframe.Sensitive = true;
+				tagproperties.Tagger = taggers[0];
+				tagproperties.Sensitive = true;
 			} else {
 				selected = null;
-				propsframe.Sensitive = false;
+				tagproperties.Sensitive = false;
 			}
 		}
 		
@@ -159,7 +191,7 @@ namespace LongoMatch.Gui.Component
 		void HandleTick (Time currentTime)
 		{
 			tagger.CurrentTime = currentTime;
-			drawingarea1.QueueDraw ();
+			drawingarea.QueueDraw ();
 		}
 		
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
@@ -196,27 +228,19 @@ namespace LongoMatch.Gui.Component
 		}
 
 		void HandleAddClicked (object sender, EventArgs e) {
-			TaggerButton tagger = null;
-			
 			if (sender == addcardbutton) {
-				tagger = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle);
+				AddButton ("Card");
 			} else if (sender == addscorebutton) {
-				tagger = new Score ("Score", 1);
+				AddButton ("Score");
 			} else if (sender == addtimerbutton) {
-				tagger = new Timer {Name = "Timer"};
+				AddButton ("Timer");
 			} else if (sender == addtagbutton) {
-				tagger = new TagButton {Name = "Tag"};
+				AddButton ("Tag");
 			} else if (sender == addcatbutton) {
-				tagger = template.AddDefaultItem (template.List.Count);
+				AddButton ("Category");
 			} else {
 				return;
 			}
-			
-			if (!(tagger is Category)) {
-				template.List.Add (tagger);
-			}
-			tagger.Position = new Point (template.CanvasWidth, 0);
-			Refresh (tagger);
 		}
 		
 		void HandleNewTagEvent (TaggerButton button, List<Player> players,
