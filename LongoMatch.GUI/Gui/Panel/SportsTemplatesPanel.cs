@@ -45,14 +45,47 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.CategoriesTemplatesProvider;
+
+			// Assign images
 			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 80, IconLookupFlags.ForceSvg);
 			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 80, IconLookupFlags.ForceSvg);
+			propertiesimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag", 80, IconLookupFlags.ForceSvg);
 			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 40, IconLookupFlags.ForceSvg);
 			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 40, IconLookupFlags.ForceSvg);
 			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 40, IconLookupFlags.ForceSvg);
-			
+			addcategoryimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-category", 40, IconLookupFlags.ForceSvg);
+			addtagimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-tag", 40, IconLookupFlags.ForceSvg);
+			scoreimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-score", 40, IconLookupFlags.ForceSvg);
+			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 40, IconLookupFlags.ForceSvg);
+			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 40, IconLookupFlags.ForceSvg);
+			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 40, IconLookupFlags.ForceSvg);
+
+			// Connect buttons from the bar
+			newtemplatebutton.Entered += HandleEnterTemplateButton;
+			deletetemplatebutton.Entered += HandleEnterTemplateButton;
+			savetemplatebutton.Entered += HandleEnterTemplateButton;
+			newtemplatebutton.Left += HandleLeftTemplateButton;
+			deletetemplatebutton.Left += HandleLeftTemplateButton;
+			savetemplatebutton.Left += HandleLeftTemplateButton;
+			addcategorybutton.Entered += HandleEnterTagButton;
+			addcategorybutton.Left += HandleLeftTagButton;
+		    addcategorybutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Category"); };
+			addtagbutton1.Entered += HandleEnterTagButton;
+			addtagbutton1.Left += HandleLeftTagButton;
+			addtagbutton1.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Tag"); };
+			scorebutton.Entered += HandleEnterTagButton;
+			scorebutton.Left += HandleLeftTagButton;
+			scorebutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Score"); };
+			cardbutton.Entered += HandleEnterTagButton;
+			cardbutton.Left += HandleLeftTagButton;
+			cardbutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Card"); };
+			timerbutton.Entered += HandleEnterTagButton;
+			timerbutton.Left += HandleLeftTagButton;
+			timerbutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Timer"); };
+
 			templates = new ListStore (typeof(Pixbuf), typeof(string));
-			
+
+			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = templates;
 			dashboardseditortreeview.HeadersVisible = false;
 			//sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
@@ -61,9 +94,10 @@ namespace LongoMatch.Gui.Panel
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 			
-			templatesvbox.WidthRequest = 280;
+			templatesvbox.WidthRequest = 160;
 			
 			buttonswidget.Sensitive = false;
+			buttonswidget.ButtonsVisible = false;
 			buttonswidget.Mode = TagMode.Edit;
 			newtemplatebutton.Visible = true;
 			deletetemplatebutton.Visible = false;
@@ -126,7 +160,43 @@ namespace LongoMatch.Gui.Panel
 				return;
 			}
 		}
-		
+
+		void HandleEnterTemplateButton (object sender, EventArgs e)
+		{
+			if (sender == newtemplatebutton) {
+				editdashboardslabel.Text = Catalog.GetString ("New dashboard");
+			} else if (sender == deletetemplatebutton) {
+				editdashboardslabel.Text = Catalog.GetString ("Delete dashboard");
+			} else if (sender == savetemplatebutton) {
+				editdashboardslabel.Text = Catalog.GetString ("Save dashboard");
+			}
+		}
+
+		void HandleLeftTemplateButton (object sender, EventArgs e)
+		{
+			editdashboardslabel.Text = Catalog.GetString ("Manage dashboards");
+		}
+
+		void HandleEnterTagButton (object sender, EventArgs e)
+		{
+			if (sender == addcategorybutton) {
+				editbuttonslabel.Text = Catalog.GetString ("Add category button");
+			} else if (sender == addtagbutton1) {
+				editbuttonslabel.Text = Catalog.GetString ("Add tag button");
+			} else if (sender == scorebutton) {
+				editbuttonslabel.Text = Catalog.GetString ("Add score button");
+			} else if (sender == timerbutton) {
+				editbuttonslabel.Text = Catalog.GetString ("Add timer button");
+			} else if (sender == cardbutton) {
+				editbuttonslabel.Text = Catalog.GetString ("Add card button");
+			}
+		}
+
+		void HandleLeftTagButton (object sender, EventArgs e)
+		{
+			editbuttonslabel.Text = Catalog.GetString ("Manage dashboard buttons");
+		}
+
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
