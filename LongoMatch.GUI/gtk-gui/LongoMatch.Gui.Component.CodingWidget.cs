@@ -18,9 +18,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.DrawingArea teamsdrawingarea;
 		private global::Gtk.HBox hbox5;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
-		private global::Gtk.Label label18;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
-		private global::Gtk.Label label21;
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
 		private global::Gtk.Label label19;
 
@@ -40,12 +38,12 @@ namespace LongoMatch.Gui.Component
 			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
 			w2.Add (this.zoomFitAction, null);
 			this.convertAction = new global::Gtk.RadioAction ("convertAction", null, null, "gtk-convert", 0);
-			this.convertAction.Group = this.autoTaggingMode.Group;
+			this.convertAction.Group = this.timelineMode.Group;
 			w2.Add (this.convertAction, null);
 			this.UIManager.InsertActionGroup (w2, 0);
 			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
 			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
-			this.positionMode.Group = this.autoTaggingMode.Group;
+			this.positionMode.Group = this.convertAction.Group;
 			w3.Add (this.positionMode, null);
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
@@ -103,12 +101,6 @@ namespace LongoMatch.Gui.Component
 			w7.Position = 0;
 			this.hpaned1.Add (this.hbox5);
 			this.notebook.Add (this.hpaned1);
-			// Notebook tab
-			this.label18 = new global::Gtk.Label ();
-			this.label18.Name = "label18";
-			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
-			this.notebook.SetTabLabel (this.hpaned1, this.label18);
-			this.label18.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
@@ -116,12 +108,6 @@ namespace LongoMatch.Gui.Component
 			this.notebook.Add (this.timeline);
 			global::Gtk.Notebook.NotebookChild w10 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.timeline]));
 			w10.Position = 1;
-			// Notebook tab
-			this.label21 = new global::Gtk.Label ();
-			this.label21.Name = "label21";
-			this.label21.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
-			this.notebook.SetTabLabel (this.timeline, this.label21);
-			this.label21.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.playspositionviewer1 = new global::LongoMatch.Gui.Component.PlaysPositionViewer ();
 			this.playspositionviewer1.Events = ((global::Gdk.EventMask)(256));
@@ -130,14 +116,17 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Notebook.NotebookChild w11 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playspositionviewer1]));
 			w11.Position = 2;
 			// Notebook tab
+			global::Gtk.Label w12 = new global::Gtk.Label ();
+			w12.Visible = true;
+			this.notebook.Add (w12);
 			this.label19 = new global::Gtk.Label ();
 			this.label19.Name = "label19";
 			this.label19.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
-			this.notebook.SetTabLabel (this.playspositionviewer1, this.label19);
+			this.notebook.SetTabLabel (w12, this.label19);
 			this.label19.ShowAll ();
 			this.vbox.Add (this.notebook);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox [this.notebook]));
-			w12.Position = 1;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox [this.notebook]));
+			w13.Position = 1;
 			this.Add (this.vbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

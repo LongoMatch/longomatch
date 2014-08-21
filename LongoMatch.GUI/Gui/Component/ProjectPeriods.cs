@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 				
 				timerule.Duration = duration;
 				SetZoom ();
-				playerbin2.Open (value.Description.File.FilePath);
+				playerbin2.Open (value.Description.File);
 				
 				foreach (string s in gamePeriods) {
 					Period period = new Period {Name = s};

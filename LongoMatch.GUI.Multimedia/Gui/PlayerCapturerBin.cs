@@ -190,8 +190,8 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public void Open (string mrl) {
-			playerbin.Open (mrl);
+		public void Open (MediaFile file) {
+			playerbin.Open (file);
 		}
 		
 		public void Play () {
@@ -284,7 +284,7 @@ namespace LongoMatch.Gui
 				
 			/* The output video file is now created, it's time to 
 				 * load it in the player */
-			playerbin.Open (file.FilePath);
+			playerbin.Open (file);
 			playerbin.SeekingEnabled = false;
 			Log.Debug ("Loading encoded file in the backround player");
 			backLoaded = true;

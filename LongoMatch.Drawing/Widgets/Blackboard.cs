@@ -324,7 +324,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tk.Context = context;
 			tk.Begin ();
-			tk.Clear (Color.Black);
+			tk.Clear (Config.Style.PaletteBackground);
 			tk.End ();
 			
 			base.Draw (context, area);

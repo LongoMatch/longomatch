@@ -175,8 +175,6 @@ lgm_element_msg_sync_cb (GstBus * bus, GstMessage * msg, gpointer data)
         gst_object_unref (lvp->priv->xoverlay);
       }
       lvp->priv->xoverlay = gst_object_ref (GST_X_OVERLAY (sender));
-      g_object_set (GST_ELEMENT (lvp->priv->xoverlay), "force-aspect-ratio",
-          TRUE, NULL);
       lgm_set_window_handle(lvp->priv->xoverlay, lvp->priv->window_handle);
       g_mutex_unlock (&lvp->priv->overlay_lock);
     }

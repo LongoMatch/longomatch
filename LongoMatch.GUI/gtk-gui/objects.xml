@@ -328,4 +328,15 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="VideoWindow Signals">
+        <signal name="Realized" />
+        <signal name="ExposeEvent" />
+        <signal name="ButtonPressEvent" />
+        <signal name="ScrollEvent" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

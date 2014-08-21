@@ -59,7 +59,7 @@ namespace LongoMatch.Gui
 		Time length, lastTime;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
 		bool ignoreTick, stillimageLoaded;
-		string filename;
+		MediaFile file;
 		double previousVLevel = 1;
 		double[] seeksQueue;
 		object[] pendingSeek;
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox3);
-			videodrawingarea.CanFocus = true;
+			videowindow.CanFocus = true;
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;
 			seeksQueue [1] = -1;
@@ -146,7 +146,7 @@ namespace LongoMatch.Gui
 
 		public bool Opened {
 			get {
-				return filename != null;
+				return file != null;
 			}
 		}
 
@@ -164,9 +164,9 @@ namespace LongoMatch.Gui
 		}
 		#endregion
 		#region Public methods
-		public void Open (string filename)
+		public void Open (MediaFile file)
 		{
-			Open (filename, true);
+			Open (file, true);
 		}
 
 		public void Play ()
@@ -199,7 +199,7 @@ namespace LongoMatch.Gui
 			IsPlayingPrevState = false;
 			muted = false;
 			emitRateScale = true;
-			videodrawingarea.Visible = true;
+			videowindow.Visible = true;
 			blackboarddrawingarea.Visible = false;
 		}
 
@@ -237,7 +237,7 @@ namespace LongoMatch.Gui
 		{
 			ReconfigureTimeout (0);
 			player.Close ();
-			filename = null;
+			file = null;
 			timescale.Value = 0;
 			UnSensitive ();
 		}
@@ -318,21 +318,22 @@ namespace LongoMatch.Gui
 		#region Private methods
 		bool DrawingsVisible {
 			set {
-				videodrawingarea.Visible = !value;
+				videowindow.Visible = !value;
 				blackboarddrawingarea.Visible = value;
 			}
 		}
 
-		void Open (string filename, bool seek)
+		void Open (MediaFile file, bool seek)
 		{
 			ResetGui ();
 			CloseSegment ();
-			if (filename != this.filename) {
+			videowindow.Ratio = (float) (file.VideoWidth * file.Par / file.VideoHeight);
+			if (file != this.file) {
 				readyToSeek = false;
-				this.filename = filename;
+				this.file = file;
 				try {
-					Log.Debug ("Openning new file " + filename);
-					player.Open (filename);
+					Log.Debug ("Openning new file " + file.FilePath);
+					player.Open (file.FilePath);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					//We handle this error async
@@ -387,8 +388,8 @@ namespace LongoMatch.Gui
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 			                          start.ToMSecondsString (),
 			                          stop.ToMSecondsString (), rate));
-			if (filename != this.filename) {
-				Open (file.FilePath, false);
+			if (file != this.file) {
+				Open (file, false);
 			}
 			Pause ();
 			segment.Start = start;
@@ -417,7 +418,7 @@ namespace LongoMatch.Gui
 			blackboard.Drawing = drawing;
 			DrawingsVisible = true;
 			blackboarddrawingarea.QueueDraw ();
-			videodrawingarea.Visible = false;
+			videowindow.Visible = false;
 		}
 
 		void LoadStillImage (Image image)
@@ -491,18 +492,17 @@ namespace LongoMatch.Gui
 
 		void CreatePlayer ()
 		{
-			videodrawingarea.DoubleBuffered = false;
 			player = Config.MultimediaToolkit.GetPlayer ();
 
 			player.Error += OnError;
 			player.StateChange += OnStateChanged;
 			player.Eos += OnEndOfStream;
 			player.ReadyToSeek += OnReadyToSeek;
-			videoeventbox.ButtonPressEvent += OnVideoboxButtonPressEvent;
-			videoeventbox.ScrollEvent += OnVideoboxScrollEvent;
-			videodrawingarea.Realized += HandleRealized;
-			videodrawingarea.ExposeEvent += HandleExposeEvent;
-			videodrawingarea.CanFocus = false;
+			videowindow.ButtonPressEvent += OnVideoboxButtonPressEvent;
+			videowindow.ScrollEvent += OnVideoboxScrollEvent;
+			videowindow.Realized += HandleRealized;
+			videowindow.ExposeEvent += HandleExposeEvent;
+			videowindow.CanFocus = true;
 		}
 
 		void ReconfigureTimeout (uint mseconds)
@@ -657,8 +657,27 @@ namespace LongoMatch.Gui
 			vwin.Show ();
 		}
 
+		void SetVolumeIcon (string name)
+		{
+			Gtk.Image img;
+			img = ((volumebutton.Child as Bin).Child as Box).Children[0] as Gtk.Image;
+			img.Pixbuf = Stetic.IconLoader.LoadIcon (this, name, IconSize.Button);
+		}
+		
 		void OnVolumeChanged (double level)
 		{
+			double prevLevel;
+		
+			prevLevel = player.Volume;
+			if (prevLevel > 0 && level == 0) {
+				SetVolumeIcon ("longomatch-control-volume-off");
+			} else if (prevLevel > 0.5 && level <= 0.5) {
+				SetVolumeIcon ("longomatch-control-volume-low");
+			} else if (prevLevel <= 0.5 && level > 0.5) {
+				SetVolumeIcon ("longomatch-control-volume-med");
+			} else if (prevLevel < 1 && level == 1) {
+				SetVolumeIcon ("longomatch-control-volume-hi");
+			}
 			player.Volume = level;
 			if (level == 0)
 				muted = true;
@@ -734,7 +753,7 @@ namespace LongoMatch.Gui
 
 		void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			if (filename == null)
+			if (file == null)
 				return;
 			/* FIXME: The pointer is grabbed when the event box is clicked.
 			 * Make sure to ungrab it in order to avoid clicks outisde the window
@@ -771,7 +790,7 @@ namespace LongoMatch.Gui
 
 		void HandleRealized (object sender, EventArgs e)
 		{
-			player.WindowHandle = WindowHandle.GetWindowHandle (videodrawingarea.GdkWindow);
+			player.WindowHandle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
 		}
 
 		void HandleSeekEvent (SeekType type, Time start, float rate)

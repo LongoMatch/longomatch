@@ -93,33 +93,28 @@
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.EventBox" id="videoeventbox">
+                      <widget class="Gtk.HBox" id="hbox2">
                         <property name="MemberName" />
+                        <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.HBox" id="hbox2">
+                          <widget class="LongoMatch.Gui.VideoWindow" id="videowindow">
                             <property name="MemberName" />
-                            <property name="Spacing">6</property>
-                            <child>
-                              <widget class="Gtk.DrawingArea" id="videodrawingarea">
-                                <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                              </widget>
-                              <packing>
-                                <property name="Position">0</property>
-                                <property name="AutoSize">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.DrawingArea" id="blackboarddrawingarea">
-                                <property name="MemberName" />
-                                <property name="Visible">False</property>
-                              </widget>
-                              <packing>
-                                <property name="Position">1</property>
-                                <property name="AutoSize">True</property>
-                              </packing>
-                            </child>
+                            <property name="Events">ButtonPressMask</property>
                           </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.DrawingArea" id="blackboarddrawingarea">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>
@@ -193,9 +188,10 @@
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-close Dnd</property>
+                    <property name="Icon">stock:longomatch-control-back Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
+                    <property name="Relief">None</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -208,7 +204,7 @@
                   <widget class="Gtk.Button" id="drawbutton">
                     <property name="MemberName" />
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-select-color Menu</property>
+                    <property name="Icon">stock:longomatch-control-draw Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
@@ -224,7 +220,7 @@
                   <widget class="Gtk.Button" id="playbutton">
                     <property name="MemberName" />
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-media-play Button</property>
+                    <property name="Icon">stock:longomatch-control-play Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
@@ -240,7 +236,7 @@
                   <widget class="Gtk.Button" id="pausebutton">
                     <property name="MemberName" />
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-media-pause Button</property>
+                    <property name="Icon">stock:longomatch-control-pause Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
@@ -257,7 +253,7 @@
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-media-previous Button</property>
+                    <property name="Icon">stock:longomatch-control-rw Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
@@ -275,7 +271,7 @@
                     <property name="Visible">False</property>
                     <property name="Sensitive">False</property>
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-media-next Button</property>
+                    <property name="Icon">stock:longomatch-control-ff Button</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
@@ -381,7 +377,7 @@
               <widget class="Gtk.Button" id="volumebutton">
                 <property name="MemberName" />
                 <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:stock_volume Button</property>
+                <property name="Icon">stock:longomatch-control-volume-hi Button</property>
                 <property name="Label" translatable="yes" />
                 <property name="UseUnderline">True</property>
                 <property name="Relief">None</property>
@@ -397,7 +393,7 @@
               <widget class="Gtk.Button" id="detachbutton">
                 <property name="MemberName" />
                 <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-disconnect Menu</property>
+                <property name="Icon">stock:longomatch-control-detach Button</property>
                 <property name="Label" translatable="yes" />
                 <property name="UseUnderline">True</property>
                 <property name="Relief">None</property>
@@ -617,6 +613,18 @@
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.VideoWindow" design-size="742 342">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.EventBox" id="eventbox">
+        <property name="MemberName" />
+        <child>
+          <placeholder />
         </child>
       </widget>
     </child>

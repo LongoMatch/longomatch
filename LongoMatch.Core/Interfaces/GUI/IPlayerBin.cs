@@ -35,7 +35,7 @@ namespace LongoMatch.Interfaces.GUI
 		bool SeekingEnabled {set;}
 		bool Sensitive {set; get;}
 
-		void Open (string mrl);
+		void Open (MediaFile file);
 		void Close();
 		void Play ();
 		void Pause ();

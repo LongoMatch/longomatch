@@ -189,7 +189,7 @@ namespace LongoMatch.Services
 					return false;
 				}
 				try {
-					Player.Open (project.Description.File.FilePath);
+					Player.Open (project.Description.File);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);

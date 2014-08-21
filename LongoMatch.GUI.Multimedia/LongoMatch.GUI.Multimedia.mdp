@@ -31,6 +31,8 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Utils/Remuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="MultimediaToolkit.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Utils/FramesCapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/VideoWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.VideoWindow.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />

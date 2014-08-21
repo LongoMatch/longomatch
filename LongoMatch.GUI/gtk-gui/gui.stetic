@@ -6379,7 +6379,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Notebook" id="notebook1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">2</property>
+            <property name="CurrentPage">1</property>
             <property name="ShowBorder">False</property>
             <property name="Scrollable">True</property>
             <child>
@@ -9368,6 +9368,17 @@ You can continue with the current capture, cancel it or save your project.
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1305 494">
+    <action-group name="Timeline">
+      <action id="positionMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+    </action-group>
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -9398,17 +9409,6 @@ You can continue with the current capture, cancel it or save your project.
         <property name="Type">Radio</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-convert</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
-    <action-group name="Timeline">
-      <action id="positionMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
@@ -9495,30 +9495,12 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="label18">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">page2</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
-              </packing>
-            </child>
-            <child>
               <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="label21">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">page1</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
               </packing>
             </child>
             <child>
@@ -9529,6 +9511,12 @@ You can continue with the current capture, cancel it or save your project.
               <packing>
                 <property name="Position">2</property>
               </packing>
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
             </child>
             <child>
               <widget class="Gtk.Label" id="label19">
