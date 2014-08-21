@@ -112,6 +112,12 @@ namespace LongoMatch.Gui.Panel
 			};
 			Load (null);
 		}
+
+		protected override void OnDestroyed ()
+		{
+			buttonswidget.Destroy ();
+			base.OnDestroyed ();
+		}
 		
 		void Load (string templateName) {
 			TreeIter templateIter = TreeIter.Zero;

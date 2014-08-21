@@ -67,38 +67,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected override void Dispose (bool disposing)
 		{
 			ClearPlayers ();
-			if (photoSurface != null) {
-				photoSurface.Dispose ();
-				photoSurface = null;
-			}
-			if (backgroundSurface != null) {
-				backgroundSurface.Dispose ();
-				backgroundSurface = null;
-			}
-			if (homeNumberSurface != null) {
-				homeNumberSurface.Dispose ();
-				homeNumberSurface = null;
-			} 
-			if (awayNumberSurface != null) {
-				awayNumberSurface.Dispose ();
-				awayNumberSurface = null;
-			}
-			if (homeOutSurface != null) {
-				homeOutSurface.Dispose ();
-				homeOutSurface = null;
-			} 
-			if (awayOutSurface != null) {
-				awayOutSurface.Dispose ();
-				awayOutSurface = null;
-			}
-			if (homeInSurface != null) {
-				homeInSurface.Dispose ();
-				homeInSurface = null;
-			} 
-			if (awayInSurface != null) {
-				awayInSurface.Dispose ();
-				awayInSurface = null;
-			}
+			homeBench.Dispose ();
+			awayBench.Dispose ();
+			field.Dispose ();
+			photoSurface.Dispose ();
+			backgroundSurface.Dispose ();
+			homeNumberSurface.Dispose ();
+			awayNumberSurface.Dispose ();
+			homeOutSurface.Dispose ();
+			awayOutSurface.Dispose ();
+			homeInSurface.Dispose ();
+			awayInSurface.Dispose ();
 			base.Dispose (disposing);
 		}
 

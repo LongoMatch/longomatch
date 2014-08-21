@@ -87,6 +87,12 @@ namespace LongoMatch.Gui.Panel
 			Load (null);
 			
 		}
+		
+		public override void Destroy ()
+		{
+			teamtemplateeditor1.Destroy ();
+			base.Destroy ();
+		}
 
 		void Load (string templateName)
 		{

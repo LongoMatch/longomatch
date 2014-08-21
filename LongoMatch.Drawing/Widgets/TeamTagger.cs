@@ -49,8 +49,14 @@ namespace LongoMatch.Drawing.Widgets
 			ObjectsCanMove = false;
 			Objects.Add (tagger);
 		}
+		
+		protected override void Dispose (bool disposing)
+		{
+			base.Dispose (disposing);
+			tagger.Dispose ();
+		}
 
-			public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
+		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget.ReDraw ();

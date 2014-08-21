@@ -72,13 +72,13 @@ namespace LongoMatch.Gui.Component
 			Edited = false;
 		}
 
-		public override void Destroy ()
+		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.Tick -= HandleTick;
 			tagger.Dispose ();
-			base.Destroy ();
+			base.OnDestroyed ();
 		}
-		
+
 		public bool Edited {
 			get {
 				return edited || tagger.Edited || tagproperties.Edited;

@@ -52,6 +52,12 @@ namespace LongoMatch.Gui.Component
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			ConnectSignals ();
 		}
+		
+		protected override void OnDestroyed ()
+		{
+			teamtagger.Dispose ();
+			base.OnDestroyed ();
+		}
 
 		public bool Edited {
 			get {

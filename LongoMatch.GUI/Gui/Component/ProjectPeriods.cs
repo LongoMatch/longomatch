@@ -54,6 +54,8 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			playerbin2.Destroy ();
+			timerule.Dispose ();
+			timersTimenline.Dispose ();
 			base.OnDestroyed ();
 		}
 
