@@ -550,7 +550,6 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Table.TableChild w74 = ((global::Gtk.Table.TableChild)(this.capturetable [this.encodingcombobox]));
 			w74.LeftAttach = ((uint)(3));
 			w74.RightAttach = ((uint)(4));
-			w74.XOptions = ((global::Gtk.AttachOptions)(4));
 			w74.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.hbox6 = new global::Gtk.HBox ();
@@ -597,7 +596,6 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Table.TableChild w80 = ((global::Gtk.Table.TableChild)(this.capturetable [this.hbox7]));
 			w80.LeftAttach = ((uint)(1));
 			w80.RightAttach = ((uint)(2));
-			w80.XOptions = ((global::Gtk.AttachOptions)(4));
 			w80.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.imagecombobox = global::Gtk.ComboBox.NewText ();
@@ -608,7 +606,6 @@ namespace LongoMatch.Gui.Panel
 			w81.BottomAttach = ((uint)(2));
 			w81.LeftAttach = ((uint)(1));
 			w81.RightAttach = ((uint)(2));
-			w81.XOptions = ((global::Gtk.AttachOptions)(4));
 			w81.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
@@ -619,7 +616,6 @@ namespace LongoMatch.Gui.Panel
 			w82.BottomAttach = ((uint)(2));
 			w82.LeftAttach = ((uint)(3));
 			w82.RightAttach = ((uint)(4));
-			w82.XOptions = ((global::Gtk.AttachOptions)(4));
 			w82.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.qualitylabel = new global::Gtk.Label ();
@@ -636,16 +632,17 @@ namespace LongoMatch.Gui.Panel
 			// Container child capturetable.Gtk.Table+TableChild
 			this.sizelabel = new global::Gtk.Label ();
 			this.sizelabel.Name = "sizelabel";
-			this.sizelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format:");
+			this.sizelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Size:");
 			this.capturetable.Add (this.sizelabel);
 			global::Gtk.Table.TableChild w84 = ((global::Gtk.Table.TableChild)(this.capturetable [this.sizelabel]));
 			w84.TopAttach = ((uint)(1));
 			w84.BottomAttach = ((uint)(2));
+			w84.XOptions = ((global::Gtk.AttachOptions)(4));
 			w84.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child capturetable.Gtk.Table+TableChild
 			this.videoformatlabel = new global::Gtk.Label ();
 			this.videoformatlabel.Name = "videoformatlabel";
-			this.videoformatlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding format:");
+			this.videoformatlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Format:");
 			this.capturetable.Add (this.videoformatlabel);
 			global::Gtk.Table.TableChild w85 = ((global::Gtk.Table.TableChild)(this.capturetable [this.videoformatlabel]));
 			w85.LeftAttach = ((uint)(2));
@@ -681,7 +678,6 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Table.TableChild w89 = ((global::Gtk.Table.TableChild)(this.righttable [this.tagscombobox]));
 			w89.LeftAttach = ((uint)(1));
 			w89.RightAttach = ((uint)(2));
-			w89.XOptions = ((global::Gtk.AttachOptions)(4));
 			w89.YOptions = ((global::Gtk.AttachOptions)(0));
 			this.topbox.Add (this.righttable);
 			global::Gtk.Box.BoxChild w90 = ((global::Gtk.Box.BoxChild)(this.topbox [this.righttable]));
