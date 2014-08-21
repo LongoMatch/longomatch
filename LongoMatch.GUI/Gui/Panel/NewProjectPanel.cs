@@ -102,6 +102,11 @@ namespace LongoMatch.Gui.Panel
 		}
 		
 		void ApplyStyle () {
+			/* Keep the central box aligned in the center of the widget */
+			SizeGroup grp = new  SizeGroup (SizeGroupMode.Horizontal);
+			grp.AddWidget (lefttable);
+			grp.AddWidget (righttable);
+			
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
 			headerhbox.HeightRequest = StyleConf.NewHeaderHeight;
 			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
