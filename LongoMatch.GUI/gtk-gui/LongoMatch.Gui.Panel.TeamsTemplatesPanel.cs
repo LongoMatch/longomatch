@@ -4,7 +4,7 @@ namespace LongoMatch.Gui.Panel
 {
 	public partial class TeamsTemplatesPanel
 	{
-		private global::Gtk.VBox mainvbox;
+		private global::Gtk.VBox teameditorvbox;
 		private global::Gtk.EventBox headereventbox;
 		private global::Gtk.HBox headerhbox;
 		private global::Gtk.Image logoimage;
@@ -12,11 +12,11 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Button backrectbutton;
 		private global::Gtk.Alignment contentalignment;
 		private global::Gtk.VBox contentvbox;
-		private global::Gtk.HBox hbox7;
+		private global::Gtk.HBox teameditorbuttonbar;
 		private global::Gtk.Alignment templateimagealignment;
 		private global::Gtk.Image teamimage;
-		private global::Gtk.VBox vbox7;
-		private global::Gtk.Label label4;
+		private global::Gtk.VBox editteamvbox;
+		private global::Gtk.Label editteamlabel;
 		private global::Gtk.HButtonBox teambuttonbox;
 		private global::Gtk.Button newteamtemplatebutton;
 		private global::Gtk.Image newteamimage;
@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.TreeView teamseditortreeview;
 		private global::Gtk.VSeparator vseparator2;
 		private global::LongoMatch.Gui.Component.TeamTemplateEditor teamtemplateeditor1;
-		private global::Gtk.HButtonBox hbuttonbox3;
 
 		protected virtual void Build ()
 		{
@@ -40,10 +39,10 @@ namespace LongoMatch.Gui.Panel
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Panel.TeamsTemplatesPanel";
 			// Container child LongoMatch.Gui.Panel.TeamsTemplatesPanel.Gtk.Container+ContainerChild
-			this.mainvbox = new global::Gtk.VBox ();
-			this.mainvbox.Name = "mainvbox";
-			this.mainvbox.Spacing = 6;
-			// Container child mainvbox.Gtk.Box+BoxChild
+			this.teameditorvbox = new global::Gtk.VBox ();
+			this.teameditorvbox.Name = "teameditorvbox";
+			this.teameditorvbox.Spacing = 6;
+			// Container child teameditorvbox.Gtk.Box+BoxChild
 			this.headereventbox = new global::Gtk.EventBox ();
 			this.headereventbox.Name = "headereventbox";
 			// Container child headereventbox.Gtk.Container+ContainerChild
@@ -98,12 +97,12 @@ namespace LongoMatch.Gui.Panel
 			w11.Expand = false;
 			w11.Fill = false;
 			this.headereventbox.Add (this.headerhbox);
-			this.mainvbox.Add (this.headereventbox);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.headereventbox]));
+			this.teameditorvbox.Add (this.headereventbox);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.headereventbox]));
 			w13.Position = 0;
 			w13.Expand = false;
 			w13.Fill = false;
-			// Container child mainvbox.Gtk.Box+BoxChild
+			// Container child teameditorvbox.Gtk.Box+BoxChild
 			this.contentalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.contentalignment.Name = "contentalignment";
 			this.contentalignment.LeftPadding = ((uint)(12));
@@ -113,10 +112,10 @@ namespace LongoMatch.Gui.Panel
 			this.contentvbox.Name = "contentvbox";
 			this.contentvbox.Spacing = 6;
 			// Container child contentvbox.Gtk.Box+BoxChild
-			this.hbox7 = new global::Gtk.HBox ();
-			this.hbox7.Name = "hbox7";
-			this.hbox7.Spacing = 6;
-			// Container child hbox7.Gtk.Box+BoxChild
+			this.teameditorbuttonbar = new global::Gtk.HBox ();
+			this.teameditorbuttonbar.Name = "teameditorbuttonbar";
+			this.teameditorbuttonbar.Spacing = 6;
+			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
 			this.templateimagealignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.templateimagealignment.Name = "templateimagealignment";
 			this.templateimagealignment.LeftPadding = ((uint)(12));
@@ -125,24 +124,24 @@ namespace LongoMatch.Gui.Panel
 			this.teamimage = new global::Gtk.Image ();
 			this.teamimage.Name = "teamimage";
 			this.templateimagealignment.Add (this.teamimage);
-			this.hbox7.Add (this.templateimagealignment);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.templateimagealignment]));
+			this.teameditorbuttonbar.Add (this.templateimagealignment);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.templateimagealignment]));
 			w15.Position = 0;
 			w15.Expand = false;
 			w15.Fill = false;
-			// Container child hbox7.Gtk.Box+BoxChild
-			this.vbox7 = new global::Gtk.VBox ();
-			this.vbox7.Name = "vbox7";
-			this.vbox7.Spacing = 6;
-			// Container child vbox7.Gtk.Box+BoxChild
-			this.label4 = new global::Gtk.Label ();
-			this.label4.Name = "label4";
-			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Edit team");
-			this.vbox7.Add (this.label4);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.label4]));
+			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
+			this.editteamvbox = new global::Gtk.VBox ();
+			this.editteamvbox.Name = "editteamvbox";
+			this.editteamvbox.Spacing = 6;
+			// Container child editteamvbox.Gtk.Box+BoxChild
+			this.editteamlabel = new global::Gtk.Label ();
+			this.editteamlabel.Name = "editteamlabel";
+			this.editteamlabel.Xalign = 0F;
+			this.editteamlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Edit team");
+			this.editteamvbox.Add (this.editteamlabel);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.editteamvbox [this.editteamlabel]));
 			w16.Position = 0;
-			// Container child vbox7.Gtk.Box+BoxChild
+			// Container child editteamvbox.Gtk.Box+BoxChild
 			this.teambuttonbox = new global::Gtk.HButtonBox ();
 			this.teambuttonbox.Name = "teambuttonbox";
 			this.teambuttonbox.Spacing = 12;
@@ -191,26 +190,26 @@ namespace LongoMatch.Gui.Panel
 			w22.Position = 2;
 			w22.Expand = false;
 			w22.Fill = false;
-			this.vbox7.Add (this.teambuttonbox);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.teambuttonbox]));
+			this.editteamvbox.Add (this.teambuttonbox);
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.editteamvbox [this.teambuttonbox]));
 			w23.Position = 1;
 			w23.Expand = false;
 			w23.Fill = false;
-			this.hbox7.Add (this.vbox7);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.vbox7]));
+			this.teameditorbuttonbar.Add (this.editteamvbox);
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.editteamvbox]));
 			w24.Position = 1;
 			w24.Expand = false;
 			w24.Fill = false;
-			// Container child hbox7.Gtk.Box+BoxChild
+			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
 			this.vseparator3 = new global::Gtk.VSeparator ();
 			this.vseparator3.Name = "vseparator3";
-			this.hbox7.Add (this.vseparator3);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.vseparator3]));
+			this.teameditorbuttonbar.Add (this.vseparator3);
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.vseparator3]));
 			w25.Position = 2;
 			w25.Expand = false;
 			w25.Fill = false;
-			this.contentvbox.Add (this.hbox7);
-			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox7]));
+			this.contentvbox.Add (this.teameditorbuttonbar);
+			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.teameditorbuttonbar]));
 			w26.Position = 0;
 			w26.Expand = false;
 			w26.Fill = false;
@@ -259,19 +258,10 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
 			w32.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
-			this.mainvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.contentalignment]));
+			this.teameditorvbox.Add (this.contentalignment);
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.teameditorvbox [this.contentalignment]));
 			w34.Position = 1;
-			// Container child mainvbox.Gtk.Box+BoxChild
-			this.hbuttonbox3 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox3.Name = "hbuttonbox3";
-			this.hbuttonbox3.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-			this.mainvbox.Add (this.hbuttonbox3);
-			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.hbuttonbox3]));
-			w35.Position = 2;
-			w35.Expand = false;
-			w35.Fill = false;
-			this.Add (this.mainvbox);
+			this.Add (this.teameditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
