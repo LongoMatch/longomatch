@@ -44,6 +44,7 @@ namespace LongoMatch.Gui.Component
 		PlaysTagger tagger;
 		Categories template;
 		TaggerButton selected;
+		bool internalButtons;
 		bool edited;
 
 		public ButtonsWidget()
@@ -104,13 +105,15 @@ namespace LongoMatch.Gui.Component
 				tagger.TagMode = value;
 				// Properties only visible in edit mode
 				rightbox.Visible = tagMode == TagMode.Edit;
+				// Add buttons for cards/tags/etc.. can be handled remotely.
+				hbuttonbox2.Visible = tagMode == TagMode.Edit && internalButtons;
 			}
 		}
 
 		public bool ButtonsVisible {
 			set {
-				// Add buttons for cards/tags/etc.. can be handled remotely.
-				hbuttonbox2.Visible = value;
+				internalButtons = value;
+				Mode = tagMode;
 			}
 		}
 		
