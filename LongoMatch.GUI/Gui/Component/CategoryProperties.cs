@@ -82,6 +82,7 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			CanChangeHotkey = true;
+			Tagger = null;
 		}
 
 		public bool Edited {
@@ -109,9 +110,6 @@ namespace LongoMatch.Gui.Component
 				cat = value as Category;
 				card = value as PenaltyCard;
 				score = value as Score;
-				cattable.Visible = cat != null;
-				scoretable.Visible = score != null;
-				cardtable.Visible = card != null;
 				UpdateGui();
 			}
 			get {
@@ -150,6 +148,11 @@ namespace LongoMatch.Gui.Component
 		
 		private void  UpdateGui() {
 			ignore = true;
+			
+			cattable.Visible = cat != null;
+			scoretable.Visible = score != null;
+			cardtable.Visible = card != null;
+
 			if (tagger != null) {
 				nameentry.Text = tagger.Name;
 				colorbutton1.Color = Helpers.Misc.ToGdkColor(tagger.Color);

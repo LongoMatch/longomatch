@@ -1173,6 +1173,7 @@ Manual</property>
         <child>
           <widget class="Gtk.Table" id="cattable">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="NRows">7</property>
             <property name="NColumns">2</property>
             <property name="Homogeneous">True</property>
@@ -1531,6 +1532,7 @@ Sort by duration</property>
         <child>
           <widget class="Gtk.Table" id="cardtable">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="NColumns">2</property>
             <property name="Homogeneous">True</property>
             <property name="RowSpacing">6</property>
@@ -1586,6 +1588,7 @@ Circle</property>
         <child>
           <widget class="Gtk.Table" id="scoretable">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="NColumns">2</property>
             <property name="Homogeneous">True</property>
             <property name="RowSpacing">6</property>

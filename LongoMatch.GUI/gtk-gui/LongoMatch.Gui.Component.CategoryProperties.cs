@@ -491,6 +491,9 @@ namespace LongoMatch.Gui.Component
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.cattable.Hide ();
+			this.cardtable.Hide ();
+			this.scoretable.Hide ();
 			this.Show ();
 		}
 	}
