@@ -288,7 +288,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldlabel2 = new global::Gtk.Label ();
 			this.fieldlabel2.Name = "fieldlabel2";
-			this.fieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to add...");
+			this.fieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
 			this.vbox12.Add (this.fieldlabel2);
 			global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.vbox12 [this.fieldlabel2]));
 			w54.Position = 2;
@@ -373,7 +373,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldlabel2 = new global::Gtk.Label ();
 			this.hfieldlabel2.Name = "hfieldlabel2";
-			this.hfieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to add...");
+			this.hfieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
 			this.vbox14.Add (this.hfieldlabel2);
 			global::Gtk.Box.BoxChild w71 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.hfieldlabel2]));
 			w71.Position = 2;
@@ -458,7 +458,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goallabel2 = new global::Gtk.Label ();
 			this.goallabel2.Name = "goallabel2";
-			this.goallabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to add...");
+			this.goallabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
 			this.vbox16.Add (this.goallabel2);
 			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.vbox16 [this.goallabel2]));
 			w88.Position = 2;

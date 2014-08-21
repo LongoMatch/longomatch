@@ -48,8 +48,12 @@ namespace LongoMatch.Gui.Component
 		public TeamTemplateEditor ()
 		{
 			this.Build ();
+
+			playerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+
 			ConnectSignals ();
 		}
 		
@@ -86,6 +90,34 @@ namespace LongoMatch.Gui.Component
 				ignoreChanges = false;
 				Edited = false;
 			}
+		}
+
+		public bool VisibleButtons {
+			set {
+				hbuttonbox2.Visible = value;
+			}
+		}
+
+		public void AddPlayer () {
+			Player p = template.AddDefaultItem (template.List.Count);
+			teamtagger.Reload ();
+			teamtagger.Select (p);
+			Edited = true;
+		}
+
+		public void DeleteSelectedPlayers () {
+			if (selectedPlayers.Count == 0) {
+				return;
+			}
+
+			foreach (Player p in selectedPlayers) {
+				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
+				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					template.List.Remove (p);
+					Edited = true;
+				}
+			}
+			Team = template;
 		}
 		
 		void ConnectSignals () {
@@ -174,7 +206,8 @@ namespace LongoMatch.Gui.Component
 			if (p.Photo != null) {
 				playerImage = p.Photo.Value;
 			} else {
-				playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
+				//playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
+				playerImage = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
 		}
@@ -191,21 +224,6 @@ namespace LongoMatch.Gui.Component
 				loadedPlayer = null;
 			}
 			ignoreChanges = false;
-		}
-		
-		void DeleteSelectedPlayers () {
-			if (selectedPlayers.Count == 0) {
-				return;
-			}
-			
-			foreach (Player p in selectedPlayers) {
-				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
-				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-					template.List.Remove (p);
-					Edited = true;
-				}
-			}
-			Team = template;
 		}
 		
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
@@ -225,10 +243,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleNewPlayerClicked (object sender, EventArgs e)
 		{
-			Player p = template.AddDefaultItem (template.List.Count);
-			teamtagger.Reload ();
-			teamtagger.Select (p);
-			Edited = true;
+			AddPlayer ();
 		}
 
 		void HandleDeletePlayerClicked (object sender, EventArgs e)

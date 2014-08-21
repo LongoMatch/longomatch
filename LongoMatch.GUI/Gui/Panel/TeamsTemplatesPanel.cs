@@ -52,6 +52,7 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.TeamTemplatesProvider;
 			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
 			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 45, IconLookupFlags.ForceSvg);
+			playerheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-header", 45, IconLookupFlags.ForceSvg);
 			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 34, IconLookupFlags.ForceSvg);
 			deleteteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-delete", 34, IconLookupFlags.ForceSvg);
 			saveteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-save", 34, IconLookupFlags.ForceSvg);
@@ -70,8 +71,10 @@ namespace LongoMatch.Gui.Panel
 			saveteambutton.Clicked += (s, e) => {SaveLoadedTeam ();};
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
+			newplayerbutton1.Clicked += (object sender, EventArgs e) => { teamtemplateeditor1.AddPlayer (); };
 			deleteplayerbutton.Entered += HandleEnterPlayerButton;
 			deleteplayerbutton.Left += HandleLeftPlayerButton;
+			deleteplayerbutton.Clicked += (object sender, EventArgs e) => { teamtemplateeditor1.DeleteSelectedPlayers (); };
 
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
 			itersDict = new Dictionary<string, TreeIter>();
@@ -92,6 +95,7 @@ namespace LongoMatch.Gui.Panel
 			deleteteambutton.Visible = false;
 			
 			selectedTeams = new List<string>();
+			teamtemplateeditor1.VisibleButtons = false;
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 			
 			backrectbutton.Clicked += (sender, o) => {

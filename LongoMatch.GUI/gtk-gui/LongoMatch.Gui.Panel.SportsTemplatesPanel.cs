@@ -38,8 +38,8 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Image cardimage;
 		private global::Gtk.Button timerbutton;
 		private global::Gtk.Image timerimage;
-		private global::Gtk.Alignment propertiesimagealignment;
-		private global::Gtk.Image propertiesimage;
+		private global::Gtk.Alignment categoryheaderimagealignment;
+		private global::Gtk.Image categoryheaderimage;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.VBox templatesvbox;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
@@ -340,15 +340,16 @@ namespace LongoMatch.Gui.Panel
 			w38.Expand = false;
 			w38.Fill = false;
 			// Container child dashboardeditorbuttonbar.Gtk.Box+BoxChild
-			this.propertiesimagealignment = new global::Gtk.Alignment (1F, 0.5F, 0F, 0F);
-			this.propertiesimagealignment.Name = "propertiesimagealignment";
-			this.propertiesimagealignment.RightPadding = ((uint)(270));
-			// Container child propertiesimagealignment.Gtk.Container+ContainerChild
-			this.propertiesimage = new global::Gtk.Image ();
-			this.propertiesimage.Name = "propertiesimage";
-			this.propertiesimagealignment.Add (this.propertiesimage);
-			this.dashboardeditorbuttonbar.Add (this.propertiesimagealignment);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.propertiesimagealignment]));
+			this.categoryheaderimagealignment = new global::Gtk.Alignment (1F, 1F, 0F, 0F);
+			this.categoryheaderimagealignment.Name = "categoryheaderimagealignment";
+			this.categoryheaderimagealignment.RightPadding = ((uint)(300));
+			// Container child categoryheaderimagealignment.Gtk.Container+ContainerChild
+			this.categoryheaderimage = new global::Gtk.Image ();
+			this.categoryheaderimage.Name = "categoryheaderimage";
+			this.categoryheaderimage.Ypad = 5;
+			this.categoryheaderimagealignment.Add (this.categoryheaderimage);
+			this.dashboardeditorbuttonbar.Add (this.categoryheaderimagealignment);
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.categoryheaderimagealignment]));
 			w40.Position = 4;
 			this.contentvbox.Add (this.dashboardeditorbuttonbar);
 			global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.dashboardeditorbuttonbar]));

@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Panel
 			// Assign images
 			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
 			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 45, IconLookupFlags.ForceSvg);
-			propertiesimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 45, IconLookupFlags.ForceSvg);
+			categoryheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 45, IconLookupFlags.ForceSvg);
 			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 34, IconLookupFlags.ForceSvg);
 			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 34, IconLookupFlags.ForceSvg);
 			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 34, IconLookupFlags.ForceSvg);
