@@ -210,7 +210,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		void CategoryClicked (Category category)
 		{
-			if (Category.TagMode == TagMode.Predifined) {
+			if (Category.TagMode == TagMode.Predefined) {
 				catSelected = true;
 			}
 		}
@@ -222,7 +222,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				SelectedTags.Clear ();
 				SelectedTags.Add (tag);
-				if (Category.TagMode == TagMode.Predifined) {
+				if (Category.TagMode == TagMode.Predefined) {
 					catSelected = true;
 				}
 			}

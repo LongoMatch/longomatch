@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			tagger.AddNewTagEvent += HandleAddNewTagEvent;
 			drawingarea1.CanFocus = true;
 			drawingarea1.KeyPressEvent += HandleKeyPressEvent;
-			Mode = TagMode.Predifined;
+			Mode = TagMode.Predefined;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;

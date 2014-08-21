@@ -228,7 +228,7 @@ namespace LongoMatch.Gui.Component
 		void HandleTagModeChanged (object sender, EventArgs e)
 		{
 			tagger.TagMode = (TagMode) tagmodecombobox.Active;
-			if (tagger.TagMode == TagMode.Predifined) {
+			if (tagger.TagMode == TagMode.Predefined) {
 				lagtimebutton.Sensitive = true;
 				leadtimebutton.Value = lastLeadTime.Seconds;
 			} else {

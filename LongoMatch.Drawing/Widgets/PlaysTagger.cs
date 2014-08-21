@@ -265,7 +265,7 @@ namespace LongoMatch.Drawing.Widgets
 				return;
 			}
 			
-			if (tagger.Tagger.TagMode == TagMode.Predifined) {
+			if (tagger.Tagger.TagMode == TagMode.Predefined) {
 				stop = CurrentTime + tagger.Tagger.Stop;
 				start = CurrentTime - tagger.Tagger.Start;
 			} else {

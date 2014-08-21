@@ -50,7 +50,7 @@ namespace LongoMatch.Store
 			TagsPerRow = 2;
 			Color = Color.Red;
 			TextColor = Color.Grey2;
-			TagMode = TagMode.Predifined;
+			TagMode = TagMode.Predefined;
 			Width = 30;
 			Height = 20;
 		}

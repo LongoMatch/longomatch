@@ -49,7 +49,7 @@ namespace LongoMatch.Common
 	}
 
 	public enum TagMode {
-		Predifined,
+		Predefined,
 		Free,
 		Edit
 	}
