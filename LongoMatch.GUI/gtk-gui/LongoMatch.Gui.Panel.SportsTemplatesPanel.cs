@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Panel
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"27\"><b>ANALYSIS DASHBOARD EDITOR</b></span>");
+			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"22\"><b>ANALYSIS DASHBOARD EDITOR</b></span>");
 			this.titlelabel.UseMarkup = true;
 			this.titlelabel.Justify = ((global::Gtk.Justification)(2));
 			this.headerhbox.Add (this.titlelabel);
@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
 			this.templateimage = new global::Gtk.Image ();
 			this.templateimage.Name = "templateimage";
-			this.templateimage.Ypad = 5;
+			this.templateimage.Ypad = 10;
 			this.templateimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.templateimage);
 			this.dashboardeditorbuttonbar.Add (this.templateimagealignment);
@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Panel
 			this.editdashboardslabel = new global::Gtk.Label ();
 			this.editdashboardslabel.Name = "editdashboardslabel";
 			this.editdashboardslabel.Xalign = 0F;
-			this.editdashboardslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage dashboards</span>");
+			this.editdashboardslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">Manage dashboards</span>");
 			this.editdashboardslabel.UseMarkup = true;
 			this.vbox3.Add (this.editdashboardslabel);
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.editdashboardslabel]));
@@ -239,7 +239,7 @@ namespace LongoMatch.Gui.Panel
 			this.editbuttonslabel = new global::Gtk.Label ();
 			this.editbuttonslabel.Name = "editbuttonslabel";
 			this.editbuttonslabel.Xalign = 0F;
-			this.editbuttonslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage dashboard buttons</span>");
+			this.editbuttonslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">Manage dashboard buttons</span>");
 			this.editbuttonslabel.UseMarkup = true;
 			this.vbox17.Add (this.editbuttonslabel);
 			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.editbuttonslabel]));
@@ -346,7 +346,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child categoryheaderimagealignment.Gtk.Container+ContainerChild
 			this.categoryheaderimage = new global::Gtk.Image ();
 			this.categoryheaderimage.Name = "categoryheaderimage";
-			this.categoryheaderimage.Ypad = 5;
+			this.categoryheaderimage.Ypad = 10;
 			this.categoryheaderimagealignment.Add (this.categoryheaderimage);
 			this.dashboardeditorbuttonbar.Add (this.categoryheaderimagealignment);
 			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.categoryheaderimagealignment]));

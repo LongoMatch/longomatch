@@ -171,37 +171,37 @@ namespace LongoMatch.Gui.Panel
 		void HandleEnterTemplateButton (object sender, EventArgs e)
 		{
 			if (sender == newtemplatebutton) {
-				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New dashboard</span>");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">New dashboard</span>");
 			} else if (sender == deletetemplatebutton) {
-				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete dashboard</span>");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Delete dashboard</span>");
 			} else if (sender == savetemplatebutton) {
-				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Save dashboard</span>");
+				editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Save dashboard</span>");
 			}
 		}
 
 		void HandleLeftTemplateButton (object sender, EventArgs e)
 		{
-			editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage dashboards</span>");
+			editdashboardslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage dashboards</span>");
 		}
 
 		void HandleEnterTagButton (object sender, EventArgs e)
 		{
 			if (sender == addcategorybutton) {
-				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add category button</span>");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Add category button</span>");
 			} else if (sender == addtagbutton1) {
-				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add tag button</span>");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Add tag button</span>");
 			} else if (sender == scorebutton) {
-				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add score button</span>");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Add score button</span>");
 			} else if (sender == timerbutton) {
-				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add timer button</span>");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Add timer button</span>");
 			} else if (sender == cardbutton) {
-				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Add card button</span>");
+				editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Add card button</span>");
 			}
 		}
 
 		void HandleLeftTagButton (object sender, EventArgs e)
 		{
-			editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage dashboard buttons</span>");
+			editbuttonslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage dashboard buttons</span>");
 		}
 
 		void HandleSelectionChanged (object sender, EventArgs e)
