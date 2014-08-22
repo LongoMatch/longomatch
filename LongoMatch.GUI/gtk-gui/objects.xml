@@ -314,7 +314,11 @@
         <property name="Date" />
       </itemgroup>
     </itemgroups>
-    <signals />
+    <signals>
+      <itemgroup label="DatePicker Signals">
+        <signal name="ValueChanged" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
