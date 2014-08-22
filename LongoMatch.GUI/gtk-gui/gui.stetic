@@ -7361,7 +7361,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 559">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 560">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -7391,7 +7391,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;span font_desc="27"&gt;&lt;b&gt;TEAM EDITOR&lt;/b&gt;&lt;/span&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;span font_desc="22"&gt;&lt;b&gt;TEAM EDITOR&lt;/b&gt;&lt;/span&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -7452,7 +7452,7 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="teamimage">
                             <property name="MemberName" />
-                            <property name="Ypad">5</property>
+                            <property name="Ypad">10</property>
                             <property name="Yalign">1</property>
                           </widget>
                         </child>
@@ -7472,7 +7472,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editteamslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage teams&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage teams&lt;/span&gt;</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -7584,7 +7584,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editplayerslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage players&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage players&lt;/span&gt;</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -7666,7 +7666,7 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="playerheaderimage">
                             <property name="MemberName" />
-                            <property name="Ypad">5</property>
+                            <property name="Ypad">10</property>
                           </widget>
                         </child>
                       </widget>
@@ -7744,7 +7744,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TeamTemplateEditor" design-size="950 521">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TeamTemplateEditor" design-size="1232 521">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -7793,9 +7793,9 @@ You can continue with the current capture, cancel it or save your project.
                                       <widget class="Gtk.EventBox" id="shieldeventbox">
                                         <property name="MemberName" />
                                         <child>
-                                          <widget class="Gtk.VBox" id="vbox4">
+                                          <widget class="Gtk.VBox" id="shieldvbox">
                                             <property name="MemberName" />
-                                            <property name="Spacing">6</property>
+                                            <property name="Spacing">2</property>
                                             <child>
                                               <widget class="Gtk.Image" id="shieldimage">
                                                 <property name="MemberName" />
@@ -7810,7 +7810,8 @@ You can continue with the current capture, cancel it or save your project.
                                             <child>
                                               <widget class="Gtk.Label" id="teamshieldlabel1">
                                                 <property name="MemberName" />
-                                                <property name="LabelProp" translatable="yes">Team shield</property>
+                                                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Team shield&lt;/span&gt;</property>
+                                                <property name="UseMarkup">True</property>
                                               </widget>
                                               <packing>
                                                 <property name="Position">1</property>
@@ -7822,7 +7823,8 @@ You can continue with the current capture, cancel it or save your project.
                                             <child>
                                               <widget class="Gtk.Label" id="teamshieldlabel2">
                                                 <property name="MemberName" />
-                                                <property name="LabelProp" translatable="yes">click to change...</property>
+                                                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;click to change...&lt;/span&gt;</property>
+                                                <property name="UseMarkup">True</property>
                                               </widget>
                                               <packing>
                                                 <property name="Position">2</property>
@@ -7856,7 +7858,7 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="GtkLabel4">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Team name</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Team name&lt;/span&gt;</property>
                                     <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
@@ -7925,18 +7927,17 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label1">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Number of players</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Number of players&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">1</property>
                                     <property name="BottomAttach">2</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="XOptions">Fill</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">False</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="XExpand">True</property>
                                     <property name="XFill">True</property>
                                     <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
+                                    <property name="YExpand">True</property>
                                     <property name="YFill">True</property>
                                     <property name="YShrink">False</property>
                                   </packing>
@@ -7945,7 +7946,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label2">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Tactics</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Tactics&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">2</property>
@@ -8084,9 +8086,9 @@ You can continue with the current capture, cancel it or save your project.
                                           <widget class="Gtk.EventBox" id="playereventbox">
                                             <property name="MemberName" />
                                             <child>
-                                              <widget class="Gtk.VBox" id="vbox2">
+                                              <widget class="Gtk.VBox" id="playervbox">
                                                 <property name="MemberName" />
-                                                <property name="Spacing">6</property>
+                                                <property name="Spacing">2</property>
                                                 <child>
                                                   <widget class="Gtk.Image" id="playerimage">
                                                     <property name="MemberName" />
@@ -8101,7 +8103,8 @@ You can continue with the current capture, cancel it or save your project.
                                                 <child>
                                                   <widget class="Gtk.Label" id="playerimagelabel1">
                                                     <property name="MemberName" />
-                                                    <property name="LabelProp" translatable="yes">Player picture</property>
+                                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Player picture&lt;/span&gt;</property>
+                                                    <property name="UseMarkup">True</property>
                                                   </widget>
                                                   <packing>
                                                     <property name="Position">1</property>
@@ -8113,7 +8116,8 @@ You can continue with the current capture, cancel it or save your project.
                                                 <child>
                                                   <widget class="Gtk.Label" id="playerimagelabel2">
                                                     <property name="MemberName" />
-                                                    <property name="LabelProp" translatable="yes">click to change...</property>
+                                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;click to change...&lt;/span&gt;</property>
+                                                    <property name="UseMarkup">True</property>
                                                   </widget>
                                                   <packing>
                                                     <property name="Position">2</property>
@@ -8146,33 +8150,10 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="RowSpacing">6</property>
                                 <property name="ColumnSpacing">6</property>
                                 <child>
-                                  <widget class="Gtk.HBox" id="hbox3">
+                                  <widget class="LongoMatch.Gui.Component.DatePicker" id="bdaydatepicker">
                                     <property name="MemberName" />
-                                    <property name="Spacing">6</property>
-                                    <child>
-                                      <widget class="Gtk.Label" id="bdaylabel">
-                                        <property name="MemberName" />
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">0</property>
-                                        <property name="AutoSize">False</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="Gtk.Button" id="datebutton">
-                                        <property name="MemberName" />
-                                        <property name="CanFocus">True</property>
-                                        <property name="Type">TextOnly</property>
-                                        <property name="Label" translatable="yes">_Calendar</property>
-                                        <property name="UseUnderline">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="Position">1</property>
-                                        <property name="AutoSize">True</property>
-                                        <property name="Expand">False</property>
-                                        <property name="Fill">False</property>
-                                      </packing>
-                                    </child>
+                                    <property name="Events">ButtonPressMask</property>
+                                    <property name="Date">0</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">6</property>
@@ -8222,7 +8203,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label11">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Position</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Position&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">2</property>
@@ -8242,7 +8224,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label12">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Name</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Name&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="AutoSize">False</property>
@@ -8259,7 +8242,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label3">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Number</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Number&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">3</property>
@@ -8279,7 +8263,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label5">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Height</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Height&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">4</property>
@@ -8299,7 +8284,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label6">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Weight</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Weight&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">5</property>
@@ -8319,7 +8305,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label7">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Birth Date</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Birth Date&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">6</property>
@@ -8339,7 +8326,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="label8">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">Nationality</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Nationality&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">1</property>
@@ -8382,7 +8370,8 @@ You can continue with the current capture, cancel it or save your project.
                                   <widget class="Gtk.Label" id="maillabel">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">E-mail</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;E-mail&lt;/span&gt;</property>
+                                    <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">7</property>
@@ -9294,7 +9283,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1497 918">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1727 918">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -9324,7 +9313,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="titlelabel">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">&lt;span font_desc="27"&gt;&lt;b&gt;ANALYSIS DASHBOARD EDITOR&lt;/b&gt;&lt;/span&gt;</property>
+                    <property name="LabelProp" translatable="yes">&lt;span font_desc="22"&gt;&lt;b&gt;ANALYSIS DASHBOARD EDITOR&lt;/b&gt;&lt;/span&gt;</property>
                     <property name="UseMarkup">True</property>
                     <property name="Justify">Center</property>
                   </widget>
@@ -9385,7 +9374,7 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="templateimage">
                             <property name="MemberName" />
-                            <property name="Ypad">5</property>
+                            <property name="Ypad">10</property>
                             <property name="Yalign">1</property>
                           </widget>
                         </child>
@@ -9405,7 +9394,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editdashboardslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage dashboards&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage dashboards&lt;/span&gt;</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -9516,7 +9505,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editbuttonslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Manage dashboard buttons&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage dashboard buttons&lt;/span&gt;</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -9661,7 +9650,7 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Image" id="categoryheaderimage">
                             <property name="MemberName" />
-                            <property name="Ypad">5</property>
+                            <property name="Ypad">10</property>
                           </widget>
                         </child>
                       </widget>
@@ -9949,17 +9938,6 @@ You can continue with the current capture, cancel it or save your project.
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1305 494">
-    <action-group name="Timeline">
-      <action id="positionMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -9990,6 +9968,17 @@ You can continue with the current capture, cancel it or save your project.
         <property name="Type">Radio</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-convert</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+    </action-group>
+    <action-group name="Timeline">
+      <action id="positionMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
@@ -10377,7 +10366,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DatePicker" design-size="300 29">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DatePicker" design-size="300 34">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
