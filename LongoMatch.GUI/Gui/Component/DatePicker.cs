@@ -22,11 +22,15 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class DatePicker : Gtk.Bin
 	{
+		public event EventHandler ValueChanged;
+
 		DateTime date;
+
 		public DatePicker ()
 		{
 			this.Build ();
 			datebutton.Clicked += HandleClicked;
+			dateentry.Changed += HandleChanged;
 			Date = DateTime.Now;
 		}
 
@@ -37,6 +41,14 @@ namespace LongoMatch.Gui.Component
 			}
 			get {
 				return date;
+			}
+		}
+
+		void HandleChanged (object sender, EventArgs e)
+		{
+			// Proxy event to potential listeners
+			if (this.ValueChanged != null) {
+				this.ValueChanged (this, EventArgs.Empty);
 			}
 		}
 
