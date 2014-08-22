@@ -79,6 +79,12 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
+		public FitMode FitMode {
+			set {
+				tagger.FitMode = value;
+			}
+		}
+
 		public bool Edited {
 			get {
 				return edited || tagger.Edited || tagproperties.Edited;

@@ -10003,48 +10003,14 @@ You can continue with the current capture, cancel it or save your project.
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.HBox" id="hbox1">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Toolbar" id="codingtoolbar">
-                <property name="MemberName" />
-                <property name="ShowArrow">False</property>
-                <node name="codingtoolbar" type="Toolbar">
-                  <node type="Toolitem" action="autoTaggingMode" />
-                  <node type="Toolitem" action="timelineMode" />
-                  <node type="Toolitem" action="positionMode" />
-                </node>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.Notebook" id="notebook">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">0</property>
             <property name="TabPos">Left</property>
+            <property name="ShowBorder">False</property>
             <child>
-              <widget class="Gtk.HPaned" id="hpaned1">
+              <widget class="Gtk.HPaned" id="dashboardhpaned">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Position">276</property>
@@ -10076,12 +10042,30 @@ You can continue with the current capture, cancel it or save your project.
               </widget>
             </child>
             <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">page1</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
               <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label3">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">page2</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
               </packing>
             </child>
             <child>
@@ -10094,13 +10078,7 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="label19">
+              <widget class="Gtk.Label" id="label5">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">page3</property>
               </widget>
@@ -10110,7 +10088,7 @@ You can continue with the current capture, cancel it or save your project.
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">0</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>

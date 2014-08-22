@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui.Helpers;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -34,19 +35,28 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		List<Player> selectedPlayers;
 		Play loadedPlay;
-		
+		List<Window> activeWindows;
+		int currentPage;
+		Gdk.Pixbuf timelineIco, timelineActiveIco;
+		Gdk.Pixbuf posIco, posAtiveIco;
+		Gdk.Pixbuf dashboardIco, dashboardActiveIco;
+
 		public CodingWidget ()
 		{
 			this.Build ();
 			
-			notebook.ShowTabs = false;
-			notebook.ShowBorder = false;
-
-			autoTaggingMode.Activated += HandleViewToggled;
-			timelineMode.Activated += HandleViewToggled;
-			positionMode.Activated += HandleViewToggled;
-			autoTaggingMode.Active = true;
+			LoadIcons ();
 			
+			notebook.ShowBorder = false;
+			notebook.Group = this.Handle;
+			notebook.SwitchPage += HandleSwitchPage;
+			Notebook.WindowCreationHook = CreateNewWindow;
+			activeWindows = new List<Window> ();
+			SetTabProps (dashboardhpaned, false);
+			SetTabProps (timeline, false);
+			SetTabProps (playspositionviewer1, false);
+			notebook.Page = currentPage = 0;
+
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
@@ -60,12 +70,15 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox);
 			
-			//buttonswidget.NewTagEvent += HandleNewTagEvent;
 			buttonswidget.Mode = TagMode.Free;
+			buttonswidget.FitMode = FitMode.Fit;
 		}
 
 		protected override void OnDestroyed ()
 		{
+			foreach (Window w in activeWindows) {
+				w.Destroy ();
+			}
 			Config.EventsBroker.Tick -= HandleTick;
 			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
 			buttonswidget.Destroy ();
@@ -74,7 +87,8 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter) {
+		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter)
+		{
 			this.projectType = projectType;
 			autoTaggingMode.Active = true;
 			buttonswidget.Visible = true;
@@ -91,39 +105,105 @@ namespace LongoMatch.Gui.Component
 			}
 			playspositionviewer1.LoadProject (project);
 		}
-		
-		public void AddPlay(Play play) {
+
+		public void AddPlay (Play play)
+		{
 			if (projectType == ProjectType.FileProject) {
-				timeline.AddPlay(play);
+				timeline.AddPlay (play);
 			}
 			playspositionviewer1.AddPlay (play);
 		}
-		
-		public void DeletePlays (List<Play> plays) {
+
+		public void DeletePlays (List<Play> plays)
+		{
 			if (projectType == ProjectType.FileProject) {
-				timeline.RemovePlays(plays);
+				timeline.RemovePlays (plays);
 			}
 			playspositionviewer1.RemovePlays (plays);
 		}
 
-		public void UpdateCategories () {
+		public void UpdateCategories ()
+		{
 			buttonswidget.Refresh ();
 		}
-		
-		void HandleViewToggled (object sender, EventArgs e)
+
+		public void LoadIcons ()
 		{
-			if (!(sender as RadioAction).Active) {
+			int s = StyleConf.NotebookTabIconSize;
+			IconLookupFlags f = IconLookupFlags.ForceSvg;
+ 
+			timelineIco = IconTheme.Default.LoadIcon ("longomatch-tab-timeline", s, f);
+			timelineActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-timeline", s, f);
+			dashboardIco = IconTheme.Default.LoadIcon ("longomatch-tab-dashboard", s, f);
+			dashboardActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-dashboard", s, f);
+			posIco = IconTheme.Default.LoadIcon ("longomatch-tab-position", s, f);
+			posAtiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-position", s, f);
+		}
+
+		void SetTabProps (Widget widget, bool active)
+		{
+			Gdk.Pixbuf icon;
+			Gtk.Image img;
+
+			img = notebook.GetTabLabel (widget) as Gtk.Image;
+			if (img == null) {
+				img = new Gtk.Image ();
+				notebook.SetTabLabel (widget, img);
+			}
+
+			if (widget == timeline) {
+				icon = active ? timelineActiveIco : timelineIco;
+			} else if (widget == dashboardhpaned) {
+				icon = active ? dashboardActiveIco : dashboardIco;
+			} else if (widget == playspositionviewer1) {
+				icon = active ? posAtiveIco : posIco;
+			} else {
 				return;
 			}
-			if (autoTaggingMode.Active) {
-				notebook.Page = 0;
-			} else if (timelineMode.Active) {
-				notebook.Page = 1;
-			} else if (positionMode.Active) {
-				notebook.CurrentPage = 2;
-			}
+			img.Pixbuf = icon;
+			notebook.SetTabDetachable (widget, true);
 		}
-		
+
+		Notebook CreateNewWindow (Notebook source, Widget page, int x, int y)
+		{
+			Window window;
+			Notebook notebook;
+
+			window = new Window (WindowType.Toplevel);
+			if (page == timeline) {
+				window.Title = Catalog.GetString ("Timeline");
+			} else if (page == dashboardhpaned) {
+				window.Title = Catalog.GetString ("Analysis dashboard");
+			} else if (page == playspositionviewer1) {
+				window.Title = Catalog.GetString ("Zonal tags viewer");
+			}
+			window.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Menu);
+			notebook = new Notebook ();
+			notebook.ShowTabs = false;
+			//notebook.Group = source.Group;
+			window.Add (notebook);
+			window.SetDefaultSize (300, 300);
+			window.Move (x, y);
+			window.ShowAll ();
+			activeWindows.Add (window);
+			window.DeleteEvent += (o, args) => {
+				Widget pa = notebook.CurrentPageWidget;
+				activeWindows.Remove (window);
+				notebook.Remove (pa);
+				source.AppendPage (pa, null);
+				SetTabProps (pa, source.NPages == 0);
+				notebook.Destroy ();
+			};
+			return notebook;
+		}
+
+		void HandleSwitchPage (object o, SwitchPageArgs args)
+		{
+			SetTabProps (notebook.GetNthPage (currentPage), false);
+			SetTabProps (notebook.GetNthPage ((int)args.PageNum), true);
+			currentPage = (int)args.PageNum;
+		}
+
 		void HandlePlaySelected (Play play)
 		{
 			loadedPlay = play;
@@ -133,12 +213,6 @@ namespace LongoMatch.Gui.Component
 		void HandleTick (Time currentTime)
 		{
 			timeline.CurrentTime = currentTime;
-		}
-
-		void HandleNewTagEvent (Category category, List<Player> players)
-		{
-			Config.EventsBroker.EmitNewTag (category, selectedPlayers);
-			teamtagger.ClearSelection ();
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
@@ -151,6 +225,5 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 	}
-
 }
 
