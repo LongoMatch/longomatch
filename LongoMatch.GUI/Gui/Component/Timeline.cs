@@ -69,6 +69,8 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			timerule.Dispose ();
+			timeline.Dispose ();
+			labels.Dispose ();
 			base.OnDestroyed ();
 		}
 		

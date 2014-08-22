@@ -130,10 +130,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void Clear (bool resetDrawing = true)
 		{
 			ClearSelection ();
-			foreach (CanvasObject co in Objects) {
-				co.Dispose ();
-			}
-			Objects.Clear ();
+			Clear ();
 			if (drawing != null && resetDrawing) {
 				drawing.Drawables.Clear ();
 			}

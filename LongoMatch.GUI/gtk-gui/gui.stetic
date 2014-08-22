@@ -9934,17 +9934,6 @@ You can continue with the current capture, cancel it or save your project.
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1341 494">
-    <action-group name="Timeline">
-      <action id="positionMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -9981,6 +9970,17 @@ You can continue with the current capture, cancel it or save your project.
         <property name="Group">codingmode</property>
       </action>
     </action-group>
+    <action-group name="Timeline">
+      <action id="positionMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+    </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -9990,7 +9990,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Notebook" id="notebook">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">0</property>
             <property name="TabPos">Left</property>
             <property name="ShowBorder">False</property>
             <child>

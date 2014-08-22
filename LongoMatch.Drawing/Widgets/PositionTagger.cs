@@ -78,14 +78,14 @@ namespace LongoMatch.Drawing.Widgets
 
 		public List<Point> Points {
 			set {
-				Objects.Clear ();
+				Clear ();
 				Objects.Add (new PositionObject (value, Background.Width, Background.Height));
 			}
 		}
 
 		public List<Play> Plays {
 			set {
-				Objects.Clear ();
+				Clear ();
 				foreach (Play p in value) {
 					AddPlay (p);
 				}

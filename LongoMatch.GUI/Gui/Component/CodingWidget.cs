@@ -84,6 +84,7 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
+			teamtagger.Dispose ();
 			base.OnDestroyed ();
 		}
 
