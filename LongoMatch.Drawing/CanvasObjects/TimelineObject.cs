@@ -22,6 +22,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store.Drawables;
+using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -31,16 +32,27 @@ namespace LongoMatch.Drawing.CanvasObjects
 		List<TimeNodeObject> nodes;
 		double secondsPerPixel;
 		protected Time maxTime;
+		protected ISurface selectionBorderL, selectionBorderR;
 
 		public TimelineObject (Time maxTime, double offsetY, Color background)
 		{
 			this.background = background;
 			this.nodes = new List<TimeNodeObject> ();
 			this.maxTime = maxTime;
+			selectionBorderL = LoadBorder (StyleConf.TimelineSelectionLeft);
+			selectionBorderR = LoadBorder (StyleConf.TimelineSelectionRight);
+
 			Visible = true;
 			CurrentTime = new Time (0);
 			OffsetY = offsetY;
 			SecondsPerPixel = 0.1;
+		}
+		
+		protected override void Dispose (bool disposing)
+		{
+			selectionBorderL.Dispose ();
+			selectionBorderR.Dispose ();
+			base.Dispose (disposing);
 		}
 
 		public double SecondsPerPixel {
@@ -153,6 +165,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			s.Drawable.Move (s, p, start);
 		}
+		
+		ISurface LoadBorder (string name)
+		{
+			Image img = Image.LoadFromFile (Path.Combine (Config.IconsDir, name));
+			img.Scale (StyleConf.TimelineCategoryHeight, StyleConf.TimelineCategoryHeight);
+			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img);
+		}
 	}
 
 	public class CategoryTimeline: TimelineObject
@@ -169,6 +188,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void AddPlay (Play play)
 		{
 			PlayObject po = new PlayObject (play);
+			po.SelectionLeft = selectionBorderL; 
+			po.SelectionRight = selectionBorderR; 
 			po.OffsetY = OffsetY;
 			po.SecondsPerPixel = SecondsPerPixel;
 			po.MaxTime = maxTime;

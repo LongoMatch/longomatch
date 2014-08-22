@@ -56,6 +56,8 @@ namespace LongoMatch.Common
 		public const int TimelineLabelHSpacing = 10;
 		public const int TimelineLabelVSpacing = 2;
 		public const int TimelineLineSize = 6;
+		public const string TimelineSelectionLeft = "hicolor/scalable/actions/longomatch-timeline-select-left.svg";
+		public const string TimelineSelectionRight = "hicolor/scalable/actions/longomatch-timeline-select-right.svg";
 		
 		public const string PlayerBackground = "player/background.svg";
 		public const string PlayerHomeNumber = "player/home-number.svg";

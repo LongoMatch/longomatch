@@ -30,6 +30,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 		}
 
+		public ISurface SelectionLeft {
+			get;
+			set;
+		}
+		
+		public ISurface SelectionRight {
+			get;
+			set;
+		}
+		
 		public override string Description {
 			get {
 				return Play.Name;
@@ -88,6 +98,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				DrawLine (tk, start, stop, lineWidth);
 				DrawBorders (tk, start, stop, lineWidth);
+			}
+			if (Selected) {
+				tk.DrawSurface (SelectionLeft, new Point (start - SelectionLeft.Width / 2, OffsetY));
+				tk.DrawSurface (SelectionRight, new Point (stop - SelectionRight.Width / 2, OffsetY));
 			}
 			tk.End ();
 		}
