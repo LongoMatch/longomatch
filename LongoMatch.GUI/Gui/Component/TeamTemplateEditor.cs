@@ -127,21 +127,21 @@ namespace LongoMatch.Gui.Component
 			
 			shieldeventbox.ButtonPressEvent += HandleShieldButtonPressEvent;
 			playereventbox.ButtonPressEvent += HandlePlayerButtonPressEvent;
-			
+
+
 			teamnameentry.Changed += HandleEntryChanged;
 			nameentry.Changed += HandleEntryChanged;
 			positionentry.Changed += HandleEntryChanged;
-			numberspinbutton.Changed += HandleEntryChanged;
-			heightspinbutton.Changed += HandleEntryChanged;
-			weightspinbutton.Changed += HandleEntryChanged;
+			numberspinbutton.ValueChanged += HandleEntryChanged;
+			heightspinbutton.ValueChanged += HandleEntryChanged;
+			weightspinbutton.ValueChanged += HandleEntryChanged;
 			nationalityentry.Changed += HandleEntryChanged;
 			mailentry.Changed += HandleEntryChanged;
+			bdaydatepicker.ValueChanged += HandleEntryChanged;
 			
 			applybutton.Clicked += (s,e) => {ParseTactics();}; 
 			tacticsentry.Activated += (s, e) => {ParseTactics();};
-			
-			datebutton.Clicked += HandleCalendarbuttonClicked; 
-			
+
 			Edited = false;
 		}
 
@@ -159,14 +159,17 @@ namespace LongoMatch.Gui.Component
 			} else if (sender == numberspinbutton) {
 				loadedPlayer.Number = (sender as SpinButton).ValueAsInt;
 			} else if (sender == heightspinbutton) {
-				loadedPlayer.Height = (sender as SpinButton).ValueAsInt;
+				loadedPlayer.Height = (float)(sender as SpinButton).Value;
 			} else if (sender == weightspinbutton) {
 				loadedPlayer.Weight = (sender as SpinButton).ValueAsInt;
 			} else if (sender == nationalityentry) {
 				loadedPlayer.Nationality = (sender as Entry).Text;
 			} else if (sender == mailentry) {
 				loadedPlayer.Mail = (sender as Entry).Text;
+			} else if (sender == bdaydatepicker) {
+				loadedPlayer.Birthday = (sender as DatePicker).Date;
 			}
+
 			Edited = true;
 			drawingarea.QueueDraw ();
 		}
@@ -178,13 +181,14 @@ namespace LongoMatch.Gui.Component
 		
 		void LoadPlayer (Player p) {
 			loadedPlayer = p;
-			nameentry.Text = p.Name;
-			positionentry.Text = p.Position;
+			nameentry.Text = p.Name != null ? p.Name : "";
+			positionentry.Text = p.Position != null ? p.Position : "";
 			numberspinbutton.Value = p.Number;
 			heightspinbutton.Value = p.Height;
 			weightspinbutton.Value = p.Weight;
 			nationalityentry.Text = p.Number.ToString();
-			bdaylabel.Text = p.Birthday.ToShortDateString();
+			bdaydatepicker.Date = p.Birthday;
+			mailentry.Text = p.Mail != null ? p.Mail : "";
 			playerimage.Pixbuf = PlayerPhoto (p);
 		}
 		
@@ -296,12 +300,6 @@ namespace LongoMatch.Gui.Component
 				template.Shield = shield;
 				Edited = true;
 			}
-		}
-
-		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
-		{
-			loadedPlayer.Birthday = Config.GUIToolkit.SelectDate (loadedPlayer.Birthday, this);
-			bdaylabel.Text = loadedPlayer.Birthday.ToShortDateString ();
 		}
 	}
 }
