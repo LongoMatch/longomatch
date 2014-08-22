@@ -7,8 +7,8 @@ style "longomatch-notebook-tab-label"
 style "longomatch-notebook"
 {
 
-  xthickness	= 3
-  ythickness	= 2
+  xthickness	= 0
+  ythickness	= 0
 
   bg[NORMAL] = @active_color
   bg[ACTIVE] = @active_color

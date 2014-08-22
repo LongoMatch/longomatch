@@ -72,7 +72,8 @@ namespace LongoMatch.Common
 		public const int PlayerArrowOffset = 14; 
 		public const int PlayerArrowSize = 20; 
 
-		public static int NotebookTabIconSize = 18;
+		public const int NotebookTabIconSize = 18;
+		public const int NotebookTabSize = NotebookTabIconSize + 14;
 
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;

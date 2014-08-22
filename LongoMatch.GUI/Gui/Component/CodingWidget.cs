@@ -148,6 +148,8 @@ namespace LongoMatch.Gui.Component
 			img = notebook.GetTabLabel (widget) as Gtk.Image;
 			if (img == null) {
 				img = new Gtk.Image ();
+				img.WidthRequest = StyleConf.NotebookTabSize;
+				img.HeightRequest = StyleConf.NotebookTabSize;
 				notebook.SetTabLabel (widget, img);
 			}
 
