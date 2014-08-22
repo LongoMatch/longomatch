@@ -125,10 +125,10 @@ namespace LongoMatch.Gui.Panel
 				TreeIter iter;
 				
 				if (template.Shield != null) {
-					img = template.Shield.Value;
+					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value;
 				} else {
 					img = IconTheme.Default.LoadIcon (Constants.LOGO_ICON,
-					                                  Constants.MAX_SHIELD_ICON_SIZE,
+					                                  StyleConf.TeamsShieldIconSize,
 					                                  IconLookupFlags.ForceSvg);
 				}
 				iter = teams.AppendValues (img, template.Name, template.TeamName);
@@ -147,31 +147,31 @@ namespace LongoMatch.Gui.Panel
 		void HandleEnterTeamButton (object sender, EventArgs e)
 		{
 			if (sender == newteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New team</span>");
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">New team</span>");
 			} else if (sender == deleteteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete team</span>");
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Delete team</span>");
 			} else if (sender == saveteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Save team</span>");
+				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Save team</span>");
 			}
 		}
 
 		void HandleLeftTeamButton (object sender, EventArgs e)
 		{
-			editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage teams</span>");
+			editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage teams</span>");
 		}
 
 		void HandleEnterPlayerButton (object sender, EventArgs e)
 		{
 			if (sender == newplayerbutton1) {
-				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">New player</span>");
+				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">New player</span>");
 			} else if (sender == deleteplayerbutton) {
-				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Delete player</span>");
+				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Delete player</span>");
 			}
 		}
 
 		void HandleLeftPlayerButton (object sender, EventArgs e)
 		{
-			editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"10\">Manage players</span>");
+			editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage players</span>");
 		}
 
 		void SaveLoadedTeam () {
@@ -182,7 +182,7 @@ namespace LongoMatch.Gui.Panel
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
 				teamseditortreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
-				                              loadedTeam.Shield.Value);
+				                              loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value);
 			}
 		}
 		

@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Panel
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"27\"><b>TEAM EDITOR</b></span>");
+			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"22\"><b>TEAM EDITOR</b></span>");
 			this.titlelabel.UseMarkup = true;
 			this.titlelabel.Justify = ((global::Gtk.Justification)(2));
 			this.headerhbox.Add (this.titlelabel);
@@ -132,7 +132,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
 			this.teamimage = new global::Gtk.Image ();
 			this.teamimage.Name = "teamimage";
-			this.teamimage.Ypad = 5;
+			this.teamimage.Ypad = 10;
 			this.teamimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.teamimage);
 			this.teameditorbuttonbar.Add (this.templateimagealignment);
@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Panel
 			this.editteamslabel = new global::Gtk.Label ();
 			this.editteamslabel.Name = "editteamslabel";
 			this.editteamslabel.Xalign = 0F;
-			this.editteamslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage teams</span>");
+			this.editteamslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">Manage teams</span>");
 			this.editteamslabel.UseMarkup = true;
 			this.editteamsvbox.Add (this.editteamslabel);
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.editteamsvbox [this.editteamslabel]));
@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Panel
 			this.editplayerslabel = new global::Gtk.Label ();
 			this.editplayerslabel.Name = "editplayerslabel";
 			this.editplayerslabel.Xalign = 0F;
-			this.editplayerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Manage players</span>");
+			this.editplayerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">Manage players</span>");
 			this.editplayerslabel.UseMarkup = true;
 			this.editplayersvbox.Add (this.editplayerslabel);
 			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.editplayersvbox [this.editplayerslabel]));
@@ -292,7 +292,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child playerheaderalignment.Gtk.Container+ContainerChild
 			this.playerheaderimage = new global::Gtk.Image ();
 			this.playerheaderimage.Name = "playerheaderimage";
-			this.playerheaderimage.Ypad = 5;
+			this.playerheaderimage.Ypad = 10;
 			this.playerheaderalignment.Add (this.playerheaderimage);
 			this.teameditorbuttonbar.Add (this.playerheaderalignment);
 			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.playerheaderalignment]));
