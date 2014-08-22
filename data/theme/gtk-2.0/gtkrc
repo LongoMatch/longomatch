@@ -265,6 +265,8 @@ style "longomatch-combobox" {
 }
 
 include "buttons.rc"
+include "notebook.rc"
+
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -277,6 +279,11 @@ widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
 widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
 #widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-combobox-button"
 #widget_class "*<GtkComboBox>*<GtkEntry>"         style "longomatch-combobox-entry"
+
+
+class "GtkNotebook"                              style "longomatch-notebook"
+widget_class "*<GtkNotebook>*<GtkLabel>"                style "longomatch-notebook-tab-label"
+
 
 widget "*editorbuttonbar.*" style "longomatch-editor"
 widget "*dashboardeditorvbox.*.drawingarea" style "longomatch-drawingarea"
