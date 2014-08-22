@@ -46,6 +46,8 @@ namespace LongoMatch.Common
 		public static Color NewTeamsFontColor = Color.White;
 		public const int NewTeamsSpacing = 60;
 		public const int NewTaggerSpacing = 35;
+
+		public const int TeamsShieldIconSize = 45;
 		
 		public const string TimelineNeedleResource = "hicolor/scalable/actions/longomatch-timeline-needle-big.svg";
 		public const string TimelineNeedleUP = "hicolor/scalable/actions/longomatch-timeline-needle-up.svg";
