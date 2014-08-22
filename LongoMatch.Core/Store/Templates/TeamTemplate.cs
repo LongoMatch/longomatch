@@ -134,7 +134,7 @@ namespace LongoMatch.Store.Templates
 		public Player AddDefaultItem (int i) {
 			Player p = new Player {
 				Name = "Player " + (i+1).ToString(),
-				Birthday = new DateTime(),
+				Birthday = new DateTime(DateTime.Now.Year - 25, 6, 1),
 				Height = 1.80f,
 				Weight = 80,
 				Number = i+1,
