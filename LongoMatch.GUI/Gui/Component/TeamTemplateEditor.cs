@@ -186,7 +186,7 @@ namespace LongoMatch.Gui.Component
 			numberspinbutton.Value = p.Number;
 			heightspinbutton.Value = p.Height;
 			weightspinbutton.Value = p.Weight;
-			nationalityentry.Text = p.Number.ToString();
+			nationalityentry.Text = p.Nationality != null ? p.Nationality : "";
 			bdaydatepicker.Date = p.Birthday;
 			mailentry.Text = p.Mail != null ? p.Mail : "";
 			playerimage.Pixbuf = PlayerPhoto (p);
