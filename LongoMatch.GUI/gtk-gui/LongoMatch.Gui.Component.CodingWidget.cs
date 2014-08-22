@@ -10,7 +10,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.RadioAction autoTaggingMode;
 		private global::Gtk.Action zoomFitAction;
 		private global::Gtk.RadioAction convertAction;
-		private global::Gtk.VBox vbox;
+		private global::Gtk.EventBox lightbackgroundeventbox;
 		private global::Gtk.Notebook notebook;
 		private global::Gtk.HPaned dashboardhpaned;
 		private global::Gtk.DrawingArea teamsdrawingarea;
@@ -48,14 +48,13 @@ namespace LongoMatch.Gui.Component
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
-			this.vbox = new global::Gtk.VBox ();
-			this.vbox.Name = "vbox";
-			this.vbox.Spacing = 6;
-			// Container child vbox.Gtk.Box+BoxChild
+			this.lightbackgroundeventbox = new global::Gtk.EventBox ();
+			this.lightbackgroundeventbox.Name = "lightbackgroundeventbox";
+			// Container child lightbackgroundeventbox.Gtk.Container+ContainerChild
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 0;
+			this.notebook.CurrentPage = 1;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			this.notebook.ShowBorder = false;
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -115,10 +114,8 @@ namespace LongoMatch.Gui.Component
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
 			this.notebook.SetTabLabel (this.playspositionviewer1, this.label5);
 			this.label5.ShowAll ();
-			this.vbox.Add (this.notebook);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox [this.notebook]));
-			w10.Position = 0;
-			this.Add (this.vbox);
+			this.lightbackgroundeventbox.Add (this.notebook);
+			this.Add (this.lightbackgroundeventbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

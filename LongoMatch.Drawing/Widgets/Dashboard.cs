@@ -163,9 +163,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
+			tk.Context = context;
+			tk.Begin ();
+			tk.Clear (Config.Style.PaletteBackground);
 			if (TagMode == TagMode.Edit) {
-				tk.Context = context;
-				tk.Begin ();
 				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 				/* Draw grid */
 				tk.LineWidth = 1;
@@ -179,8 +180,8 @@ namespace LongoMatch.Drawing.Widgets
 				for (int i = 0; i < templateWidth; i += Constants.CATEGORY_TPL_GRID) {
 					tk.DrawLine (new Point (i, 0), new Point (i, templateHeight));
 				}
-				tk.End ();
 			}
+			tk.End ();
 			
 			base.Draw (context, area);
 		}

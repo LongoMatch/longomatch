@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 			
 			Config.EventsBroker.Tick += HandleTick;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
-			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox);
+			LongoMatch.Gui.Helpers.Misc.DisableFocus (this);
 			
 			buttonswidget.Mode = TagMode.Free;
 			buttonswidget.FitMode = FitMode.Fit;

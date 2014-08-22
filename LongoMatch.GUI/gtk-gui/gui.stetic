@@ -4052,9 +4052,8 @@ You can continue with the current capture, cancel it or save your project.
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.HBox" id="hbox1">
+      <widget class="Gtk.EventBox" id="lightbackgroundeventbox">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
         <child>
           <widget class="Gtk.Notebook" id="notebook2">
             <property name="MemberName" />
@@ -4150,7 +4149,7 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
-              <widget class="Gtk.VBox" id="vbox2">
+              <widget class="Gtk.VBox" id="vbox3">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
@@ -4221,10 +4220,6 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
           </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-          </packing>
         </child>
       </widget>
     </child>
@@ -6512,6 +6507,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Label" translatable="yes">New project using a video file</property>
+                        <property name="Active">True</property>
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
@@ -9937,7 +9933,18 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1305 494">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1341 494">
+    <action-group name="Timeline">
+      <action id="positionMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+    </action-group>
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -9974,28 +9981,16 @@ You can continue with the current capture, cancel it or save your project.
         <property name="Group">codingmode</property>
       </action>
     </action-group>
-    <action-group name="Timeline">
-      <action id="positionMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.VBox" id="vbox">
+      <widget class="Gtk.EventBox" id="lightbackgroundeventbox">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
         <child>
           <widget class="Gtk.Notebook" id="notebook">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
+            <property name="CurrentPage">1</property>
             <property name="TabPos">Left</property>
             <property name="ShowBorder">False</property>
             <child>
@@ -10076,10 +10071,6 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
           </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-          </packing>
         </child>
       </widget>
     </child>

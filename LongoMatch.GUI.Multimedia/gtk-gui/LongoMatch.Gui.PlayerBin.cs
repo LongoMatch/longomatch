@@ -13,6 +13,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.DrawingArea blackboarddrawingarea;
 		private global::Gtk.VBox vbox5;
 		private global::Gtk.VScale vscale1;
+		private global::Gtk.EventBox lightbackgroundeventbox;
 		private global::Gtk.HBox controlsbox;
 		private global::Gtk.HBox buttonsbox;
 		private global::Gtk.Button closebutton;
@@ -110,6 +111,9 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.mainbox]));
 			w8.Position = 0;
 			// Container child vbox3.Gtk.Box+BoxChild
+			this.lightbackgroundeventbox = new global::Gtk.EventBox ();
+			this.lightbackgroundeventbox.Name = "lightbackgroundeventbox";
+			// Container child lightbackgroundeventbox.Gtk.Container+ContainerChild
 			this.controlsbox = new global::Gtk.HBox ();
 			this.controlsbox.Name = "controlsbox";
 			this.controlsbox.Spacing = 6;
@@ -376,11 +380,12 @@ namespace LongoMatch.Gui
 			w87.Position = 6;
 			w87.Expand = false;
 			w87.Fill = false;
-			this.vbox3.Add (this.controlsbox);
-			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.controlsbox]));
-			w88.Position = 1;
-			w88.Expand = false;
-			w88.Fill = false;
+			this.lightbackgroundeventbox.Add (this.controlsbox);
+			this.vbox3.Add (this.lightbackgroundeventbox);
+			global::Gtk.Box.BoxChild w89 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.lightbackgroundeventbox]));
+			w89.Position = 1;
+			w89.Expand = false;
+			w89.Fill = false;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

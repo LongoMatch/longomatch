@@ -437,6 +437,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Image.ScaleFactor ((int)width, (int)height, (int)Width, (int)Height,
 			                   out scaleX, out scaleY, out offset);
 			tk.Begin ();
+			tk.Clear (Config.Style.PaletteBackground);
 			tk.TranslateAndScale (Position + offset, new Point (scaleX, scaleY));
 			homeBench.Draw (tk, area);
 			awayBench.Draw (tk, area);
