@@ -127,10 +127,10 @@ namespace LongoMatch.Gui.Panel
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.SubstitutionMode = true;
 			teams = Config.TeamTemplatesProvider.Templates;
-			hometeamscombobox.Load (teams, false);
+			hometeamscombobox.Load (teams);
 			hometeamscombobox.Changed += (sender, e) => {
 				LoadTemplate (hometeamscombobox.ActiveTeam, Team.LOCAL);};
-			awayteamscombobox.Load (teams, true);
+			awayteamscombobox.Load (teams);
 			awayteamscombobox.Changed += (sender, e) => {
 				LoadTemplate (awayteamscombobox.ActiveTeam, Team.VISITOR);};
 			hometeamscombobox.Active = 0;

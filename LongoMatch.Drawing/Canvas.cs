@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing
 				Dispose (true);
 			}
 		}
-
+		
 		public void Dispose ()
 		{
 			Dispose (true);

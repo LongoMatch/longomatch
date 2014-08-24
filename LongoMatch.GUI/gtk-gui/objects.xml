@@ -343,4 +343,12 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

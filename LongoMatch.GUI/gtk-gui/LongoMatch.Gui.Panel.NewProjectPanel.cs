@@ -40,9 +40,9 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Label seasonlabel;
 		private global::Gtk.VBox centerbox;
 		private global::Gtk.HBox hbox15;
-		private global::LongoMatch.Gui.Component.TeamsComboBox hometeamscombobox;
+		private global::LongoMatch.Gui.Component.HomeTeamsComboBox hometeamscombobox;
 		private global::Gtk.Image vsimage;
-		private global::LongoMatch.Gui.Component.TeamsComboBox awayteamscombobox;
+		private global::LongoMatch.Gui.Component.AwayTeamsComboBox awayteamscombobox;
 		private global::Gtk.Label filelabel;
 		private global::Gtk.Table filetable;
 		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser1;
@@ -221,7 +221,6 @@ namespace LongoMatch.Gui.Panel
 			this.fromfileradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("New project using a video file"));
 			this.fromfileradiobutton.CanFocus = true;
 			this.fromfileradiobutton.Name = "fromfileradiobutton";
-			this.fromfileradiobutton.Active = true;
 			this.fromfileradiobutton.DrawIndicator = true;
 			this.fromfileradiobutton.UseUnderline = true;
 			this.fromfileradiobutton.FocusOnClick = false;
@@ -418,8 +417,7 @@ namespace LongoMatch.Gui.Panel
 			this.hbox15.HeightRequest = 60;
 			this.hbox15.Name = "hbox15";
 			// Container child hbox15.Gtk.Box+BoxChild
-			this.hometeamscombobox = new global::LongoMatch.Gui.Component.TeamsComboBox ();
-			this.hometeamscombobox.Events = ((global::Gdk.EventMask)(256));
+			this.hometeamscombobox = new global::LongoMatch.Gui.Component.HomeTeamsComboBox ();
 			this.hometeamscombobox.Name = "hometeamscombobox";
 			this.hbox15.Add (this.hometeamscombobox);
 			global::Gtk.Box.BoxChild w53 = ((global::Gtk.Box.BoxChild)(this.hbox15 [this.hometeamscombobox]));
@@ -434,7 +432,7 @@ namespace LongoMatch.Gui.Panel
 			w54.Expand = false;
 			w54.Fill = false;
 			// Container child hbox15.Gtk.Box+BoxChild
-			this.awayteamscombobox = new global::LongoMatch.Gui.Component.TeamsComboBox ();
+			this.awayteamscombobox = new global::LongoMatch.Gui.Component.AwayTeamsComboBox ();
 			this.awayteamscombobox.Name = "awayteamscombobox";
 			this.hbox15.Add (this.awayteamscombobox);
 			global::Gtk.Box.BoxChild w55 = ((global::Gtk.Box.BoxChild)(this.hbox15 [this.awayteamscombobox]));

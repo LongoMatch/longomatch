@@ -1,0 +1,263 @@
+style "longomatch-teams-combobox" = "longomatch-default" {
+  xthickness = 2
+  ythickness = 2
+
+  base[NORMAL]        = @bg_light_color
+  bg[NORMAL]        = @bg_light_color
+
+  fg[NORMAL]      = @text_color
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+}
+
+style "longomatch-teams-combobox-arrow"
+{
+  # Arrows
+
+  engine "pixmap"
+  {
+    image
+    {
+      function         = ARROW
+      overlay_file     = "Arrows/arrow-up-down.png"
+      overlay_border   = { 0, 0, 0, 0 }
+      overlay_stretch  = FALSE
+      arrow_direction  = DOWN
+    }
+  }
+}
+
+
+style "longomatch-home-teams-combobox-button"
+{
+  xthickness = 16
+  ythickness = 2
+  fg[ACTIVE] = @text_color
+
+  engine "pixmap"
+  {
+
+  # LTR version
+  image
+  {
+    function    = BOX
+    state       = NORMAL
+    file        = "Entry/team-combo-button-blue.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = PRELIGHT
+    file        = "Entry/team-combo-button-blue-prelight.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = INSENSITIVE
+    file        = "Entry/team-combo-button-blue.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = ACTIVE
+    file        = "Entry/team-combo-button-blue-pressed.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+
+  # RTL version
+  image
+  {
+    function    = BOX
+    state       = NORMAL
+    file        = "Entry/team-combo-button-blue-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = PRELIGHT
+    file        = "Entry/team-combo-button-blue-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = INSENSITIVE
+    file        = "Entry/team-combo-button-blue-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = ACTIVE
+    file        = "Entry/team-combo-button-blue-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  }
+}
+
+style "longomatch-home-teams-combobox" = "longomatch-teams-combobox"
+{
+  xthickness   = 3
+  ythickness   = 4
+
+  engine "pixmap"
+  {
+    # LTR version
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      file        = "Entry/team-combo-entry-blue.png"
+      border      = { 4, 4, 4, 4 }
+      stretch     = TRUE
+      direction   = LTR
+    }
+    # RTL version
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      file        = "Entry/team-combo-entry-blue-rtl.png"
+      border      = { 4, 4, 5, 4 }
+      stretch     = TRUE
+      direction               = RTL
+    }
+  }
+}
+
+style "longomatch-away-teams-combobox-button"
+{
+  xthickness = 16
+  ythickness = 2
+  fg[ACTIVE] = @text_color
+
+  engine "pixmap"
+  {
+
+  # LTR version
+  image
+  {
+    function    = BOX
+    state       = NORMAL
+    file        = "Entry/team-combo-button-red.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = PRELIGHT
+    file        = "Entry/team-combo-button-red-prelight.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = INSENSITIVE
+    file        = "Entry/team-combo-button-red.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+  image
+  {
+    function    = BOX
+    state       = ACTIVE
+    file        = "Entry/team-combo-button-red-pressed.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = LTR
+  }
+
+  # RTL version
+  image
+  {
+    function    = BOX
+    state       = NORMAL
+    file        = "Entry/team-combo-button-red-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = PRELIGHT
+    file        = "Entry/team-combo-button-red-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = INSENSITIVE
+    file        = "Entry/team-combo-button-red-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  image
+  {
+    function    = BOX
+    state       = ACTIVE
+    file        = "Entry/team-combo-button-red-rtl.png"
+    border      = { 4, 4, 5, 4 }
+    stretch     = TRUE
+    direction   = RTL
+  }
+  }
+}
+
+style "longomatch-away-teams-combobox" = "longomatch-teams-combobox"
+{
+  xthickness   = 3
+  ythickness   = 4
+
+  engine "pixmap"
+  {
+    # LTR version
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      file        = "Entry/team-combo-entry-red.png"
+      border      = { 4, 4, 4, 4 }
+      stretch     = TRUE
+      direction   = LTR
+    }
+    # RTL version
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      file        = "Entry/team-combo-entry-red-rtl.png"
+      border      = { 4, 4, 5, 4 }
+      stretch     = TRUE
+      direction               = RTL
+    }
+  }
+}

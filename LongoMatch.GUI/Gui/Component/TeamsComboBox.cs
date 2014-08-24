@@ -33,11 +33,11 @@ namespace LongoMatch.Gui.Component
 		CellRendererPixbuf pixrender;
 		CellRendererText texrender;
 		
-		public TeamsComboBox (bool leftToRigt = true)
+		public TeamsComboBox ()
 		{
 		}
 
-		public void Load (List<TeamTemplate> teams, bool leftToRight)
+		public void Load (List<TeamTemplate> teams)
 		{
 			Clear ();
 			pixrender = new CellRendererPixbuf ();
@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			texrender.Font = StyleConf.NewTeamsFont;
 			texrender.Alignment = Pango.Alignment.Center;
 
-			if (leftToRight) {
+			if (Direction == TextDirection.Ltr) {
 				PackStart (pixrender, false);
 				PackEnd (texrender, true);
 			} else {
@@ -79,6 +79,24 @@ namespace LongoMatch.Gui.Component
 				GetActiveIter (out iter);
 				return store.GetValue (iter, 2) as TeamTemplate;
 			}
+		}
+	}
+	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
+	public class HomeTeamsComboBox: TeamsComboBox
+	{
+		public HomeTeamsComboBox () {
+			Direction = TextDirection.Rtl;
+		}
+	}
+	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
+	public class AwayTeamsComboBox: TeamsComboBox
+	{
+		public AwayTeamsComboBox () {
+			Direction = TextDirection.Ltr;
 		}
 	}
 }
