@@ -15,12 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using Newtonsoft.Json;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store.Playlists
 {
+	[Serializable]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
 		public PlaylistPlayElement (Play play, MediaFile file=null)
