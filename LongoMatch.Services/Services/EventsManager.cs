@@ -171,7 +171,7 @@ namespace LongoMatch.Services
 			return frame;
 		}
 
-		private void AddNewPlay (Category category, Time start, Time stop, List<Player> players,
+		private void AddNewPlay (AnalysisCategory category, Time start, Time stop, List<Player> players,
 		                         List<Tag> tags, Image miniature)
 		{
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
@@ -209,7 +209,7 @@ namespace LongoMatch.Services
 		{
 			Image frame;
 
-			if (player == null || openedProject == null)
+			if (player == null || openedProject == null || !(tagger is AnalysisCategory))
 				return;
 			
 			start.MSeconds = Math.Max (0, start.MSeconds);
@@ -225,9 +225,7 @@ namespace LongoMatch.Services
 				}
 			}
 			frame = CaptureFrame (start);
-			if (tagger is Category) {
-				AddNewPlay (tagger as Category, start, stop, players, tags, frame);
-			}
+			AddNewPlay (tagger as AnalysisCategory, start, stop, players, tags, frame);
 		}
 
 		void HandlePlaybackRateChanged (float rate)

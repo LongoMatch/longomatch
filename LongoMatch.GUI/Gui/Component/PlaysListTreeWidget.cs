@@ -121,17 +121,17 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private TreeStore GetModel(Project project){
-			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
+			Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter>();
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof (TaggerButton), typeof(TimeNode));
 
-			foreach(Category cat in project.Categories.CategoriesList) {
-				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
+			foreach(TaggerButton cat in project.Categories.List) {
+				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat, null);
 				itersDic.Add(cat, iter);
 			}
 			
 			var queryPlaysByCategory = project.PlaysGroupedByCategory;
 			foreach(var playsGroup in queryPlaysByCategory) {
-				Category cat = playsGroup.Key;
+				TaggerButton cat = playsGroup.Key;
 				if(!itersDic.ContainsKey(cat))
 					continue;
 				foreach(Play play in playsGroup) {
@@ -141,11 +141,11 @@ namespace LongoMatch.Gui.Component
 			return dataFileListStore;
 		}
 
-		private string CategoryPath(Category cat) {
-			return project.Categories.CategoriesList.IndexOf(cat).ToString();
+		private string CategoryPath(TaggerButton cat) {
+			return project.Categories.List.IndexOf(cat).ToString();
 		}
 		
-		protected virtual void OnEditProperties(Category cat) {
+		protected virtual void OnEditProperties(AnalysisCategory cat) {
 			EditCategoryDialog dialog = new EditCategoryDialog(project, cat);
 			dialog.Run();
 			dialog.Destroy();

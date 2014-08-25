@@ -168,7 +168,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 		
-		void HandleShowMenu (List<Play> plays, Category cat, Time time)
+		void HandleShowMenu (List<Play> plays, AnalysisCategory cat, Time time)
 		{
 			menu.ShowTimelineMenu (project, plays, cat, time);
 		}

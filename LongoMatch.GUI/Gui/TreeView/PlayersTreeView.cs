@@ -64,8 +64,6 @@ namespace LongoMatch.Gui.Component
 			                        "</ui>");
 
 			playersMenu = manager.GetWidget("/PlayersMenu") as Menu;
-
-			edit.Activated += OnEdit;
 		}
 
 		protected override int SortFunction(TreeModel model, TreeIter a, TreeIter b) {

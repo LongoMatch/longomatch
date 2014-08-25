@@ -24,10 +24,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CategoryLabel: CanvasObject, ICanvasObject
 	{
-		Category category;
+		TaggerButton category;
 		double width;
 
-		public CategoryLabel (Category category, double width, double height,
+		public CategoryLabel (TaggerButton category, double width, double height,
 		                            double offsetY)
 		{
 			this.category = category;
@@ -53,7 +53,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public double OffsetY {
 			set;
-			protected get;
+			get;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)

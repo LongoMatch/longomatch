@@ -36,7 +36,7 @@ namespace LongoMatch.Store
 	/// tagged in this category
 	/// </summary>
 	[Serializable]
-	public class Category:TaggerButton, IIDObject
+	public class Category: AnalysisCategory, IIDObject
 	{
 
 		#region Constructors
@@ -58,30 +58,6 @@ namespace LongoMatch.Store
 
 		#region  Properties
 
-		/// <summary>
-		/// Unique ID for this category
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// A key combination to create plays in this category
-		/// </summary>
-		public HotKey HotKey {
-			get;
-			set;
-		}
-
-		//// <summary>
-		/// Sort method used to sort plays for this category
-		/// </summary>
-		public SortMethodType SortMethod {
-			get;
-			set;
-		}
-
 		public List<Tag> Tags  {
 			get;
 			set;
@@ -97,61 +73,6 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public bool TagGoalPosition {
-			get;
-			set;
-		}
-		
-		public bool TagFieldPosition {
-			get;
-			set;
-		}
-		
-		public bool TagHalfFieldPosition {
-			get;
-			set;
-		}
-		
-		public bool FieldPositionIsDistance {
-			get;
-			set;
-		}
-		
-		public bool HalfFieldPositionIsDistance {
-			get;
-			set;
-		}
-		
-		/// <summary>
-		/// Sort method string used for the UI
-		/// </summary>
-		[JsonIgnore]
-		public string SortMethodString {
-			get {
-				switch(SortMethod) {
-				case SortMethodType.SortByName:
-					return Catalog.GetString("Sort by name");
-				case SortMethodType.SortByStartTime:
-					return Catalog.GetString("Sort by start time");
-				case SortMethodType.SortByStopTime:
-					return Catalog.GetString("Sort by stop time");
-				case SortMethodType.SortByDuration:
-					return Catalog.GetString("Sort by duration");
-				default:
-					return Catalog.GetString("Sort by name");
-				}
-			}
-			set {
-				if(value == Catalog.GetString("Sort by start time"))
-					SortMethod = SortMethodType.SortByStartTime;
-				else if(value == Catalog.GetString("Sort by stop time"))
-					SortMethod = SortMethodType.SortByStopTime;
-				else if(value == Catalog.GetString("Sort by duration"))
-					SortMethod = SortMethodType.SortByDuration;
-				else
-					SortMethod = SortMethodType.SortByName;
-			}
-		}
 		#endregion
 		
 	}

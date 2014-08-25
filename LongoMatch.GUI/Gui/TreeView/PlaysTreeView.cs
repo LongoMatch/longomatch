@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Component
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
 			editProp.Activated += delegate(object sender, EventArgs e) {
-				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category);
+				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as AnalysisCategory);
 			};
 		}
 
@@ -138,7 +138,7 @@ namespace LongoMatch.Gui.Component
 			TimeNode tna, tnb;
 			TreeIter parent;
 			int depth;
-			Category category;
+			AnalysisCategory category;
 
 			if(model == null)
 				return 0;
@@ -162,7 +162,7 @@ namespace LongoMatch.Gui.Component
 				return int.Parse(model.GetPath(a).ToString())
 				       - int.Parse(model.GetPath(b).ToString());
 
-			category = model.GetValue(parent,0) as Category;
+			category = model.GetValue(parent,0) as AnalysisCategory;
 			tna = model.GetValue(a, 0)as TimeNode;
 			tnb = model.GetValue(b, 0) as TimeNode;
 
@@ -181,11 +181,11 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void OnSortActivated(object o, EventArgs args) {
-			Category category;
+			AnalysisCategory category;
 			RadioAction sender;
 
 			sender = o as RadioAction;
-			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as Category;
+			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as AnalysisCategory;
 
 			if(sender == sortByName)
 				category.SortMethod = SortMethodType.SortByName;
@@ -234,10 +234,11 @@ namespace LongoMatch.Gui.Component
 
 				if(paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
+				
 					if (selectedTimeNode != null) {
 						ShowMenu ();
 					} else {
-						SetupSortMenu((GetValueFromPath(paths[0]) as Category).SortMethod);
+						SetupSortMenu((GetValueFromPath(paths[0]) as AnalysisCategory).SortMethod);
 						categoriesMenu.Popup();
 					}
 				}

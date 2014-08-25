@@ -59,8 +59,6 @@ namespace LongoMatch.Store
 			VisitorTeamTemplate = new TeamTemplate();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
-			ScoreTimeline = new List<ScoreEvent>();
-			PenaltyCardsTimeline = new List<PenaltyCardEvent> ();
 			Playlists = new List<Playlist> ();
 		}
 		#endregion
@@ -76,16 +74,6 @@ namespace LongoMatch.Store
 		}
 		
 		public List<Play> Timeline {
-			get;
-			set;
-		}
-		
-		public List<ScoreEvent> ScoreTimeline {
-			get;
-			set;
-		}
-		
-		public List<PenaltyCardEvent> PenaltyCardsTimeline {
 			get;
 			set;
 		}
@@ -145,7 +133,21 @@ namespace LongoMatch.Store
 		}
 		
 		[JsonIgnore]
-		public IEnumerable<IGrouping<Category, Play>> PlaysGroupedByCategory {
+		public List<Play> ScorePlays {
+			get {
+				return Timeline.OfType<ScoreEvent>().Select (t => (Play) t).ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<Play> PenaltyCardsPlays {
+			get {
+				return Timeline.OfType<PenaltyCardEvent>().Select (t => (Play) t).ToList();
+			}
+		}
+
+		[JsonIgnore]
+		public IEnumerable<IGrouping<TaggerButton, Play>> PlaysGroupedByCategory {
 			get {
 				return Timeline.GroupBy(play => play.Category);
 			}
@@ -184,7 +186,7 @@ namespace LongoMatch.Store
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
-		public Play AddPlay(Category category, Time start, Time stop, Image miniature) {
+		public Play AddPlay(AnalysisCategory category, Time start, Time stop, Image miniature) {
 			string count= String.Format("{0:000}", PlaysInCategory (category).Count + 1);
 			string name = String.Format("{0} {1}",category.Name, count);
 
@@ -240,12 +242,12 @@ namespace LongoMatch.Store
 			}
 		}
 		
-		public List<Play> PlaysInCategory(Category category) {
+		public List<Play> PlaysInCategory(TaggerButton category) {
 			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
 		}
 
 		public int GetScore (Team team) {
-			return ScoreTimeline.Where (s => PlayTaggedTeam (s) == team).Sum(s => s.Score.Points); 
+			return Timeline.OfType<ScoreEvent>().Where (s => PlayTaggedTeam (s) == team).Sum(s => s.Score.Points); 
 		}
 		
 		public Team PlayTaggedTeam (Play play) {

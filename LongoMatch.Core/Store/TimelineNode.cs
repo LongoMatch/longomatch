@@ -24,7 +24,7 @@ namespace LongoMatch.Store
     /* FIXME: Code duplicated from Play, unfortunately we can't
       * modify the class hierachy */
 	[Serializable]
-	public class TimelineNode: TimeNode, ITimelineNode
+	public class TimelineNode: TimeNode
 	{
 		public TimelineNode ()
 		{

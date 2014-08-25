@@ -31,20 +31,20 @@ namespace LongoMatch.Common
 		
 		public event FilterUpdatedHandler FilterUpdated;
 		
-		Dictionary<Category, List<Tag>> categoriesFilter;
+		Dictionary<TaggerButton, List<Tag>> categoriesFilter;
 		List<Player> playersFilter;
 		Project project;
 		
 		public PlaysFilter (Project project)
 		{
 			this.project = project;
-			categoriesFilter = new Dictionary<Category, List<Tag>>();
+			categoriesFilter = new Dictionary<TaggerButton, List<Tag>>();
 			playersFilter = new List<Player>(); 
 			ClearAll();
 			UpdateFilters();
 		}
 		
-		public List<Category> VisibleCategories {
+		public List<TaggerButton> VisibleCategories {
 			get;
 			protected set;
 		}
@@ -89,7 +89,7 @@ namespace LongoMatch.Common
 			Update();
 		}
 		
-		public void FilterCategory (Category cat, bool visible) {
+		public void FilterCategory (TaggerButton cat, bool visible) {
 			if (visible) {
 				if (!categoriesFilter.ContainsKey (cat))
 					categoriesFilter[cat] = new List<Tag> ();
@@ -100,7 +100,7 @@ namespace LongoMatch.Common
 			Update();
 		}
 
-		public void FilterCategoryTag (Category cat, Tag tag, bool visible) {
+		public void FilterCategoryTag (TaggerButton cat, Tag tag, bool visible) {
 			List<Tag> tags;
 
 			if (visible) {
@@ -148,7 +148,7 @@ namespace LongoMatch.Common
 		
 		void UpdateVisibleCategories () {
 			if (categoriesFilter.Count == 0) {
-				VisibleCategories = project.Categories.CategoriesList;
+				VisibleCategories = project.Categories.List;
 			} else {
 				VisibleCategories = categoriesFilter.Keys.ToList();
 			}

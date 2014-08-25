@@ -36,11 +36,11 @@ namespace LongoMatch.Drawing.Widgets
 		PlaysFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
-		Dictionary<Category, CategoryTimeline> categories;
+		Dictionary<AnalysisCategory, CategoryTimeline> categories;
 
 		public PlaysTimeline (IWidget widget): base(widget)
 		{
-			categories = new Dictionary<Category, CategoryTimeline> ();
+			categories = new Dictionary<AnalysisCategory, CategoryTimeline> ();
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
@@ -52,7 +52,13 @@ namespace LongoMatch.Drawing.Widgets
 			Clear ();
 			categories.Clear ();
 			duration = project.Description.File.Duration;
-			widget.Height = project.Categories.List.Count * StyleConf.TimelineCategoryHeight;
+			widget.Height = project.Categories.CategoriesList.Count * StyleConf.TimelineCategoryHeight;
+			if (project.Categories.Scores.Count > 0) {
+				widget.Height += StyleConf.TimelineCategoryHeight;
+			}
+			if (project.Categories.PenaltyCards.Count > 0) {
+				widget.Height += StyleConf.TimelineCategoryHeight;
+			}
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
@@ -99,25 +105,60 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		Color ColorForRow (int row)
+		{
+			Color c;
+
+			if (row % 2 == 0) {
+				c = Config.Style.PaletteBackground;
+			} else {
+				c = Config.Style.PaletteBackgroundLight;
+			}
+			return c;
+		}
+
 		void FillCanvas ()
 		{
-			for (int i=0; i<project.Categories.CategoriesList.Count; i++) {
-				Category cat;
-				CategoryTimeline tl;
-				Color c;
-				
-				if (i % 2 == 0) {
-					c = Config.Style.PaletteBackground;
-				} else {
-					c = Config.Style.PaletteBackgroundLight;
+			CategoryTimeline tl;
+			int i = 0;
+
+			List<Category> cats = project.Categories.CategoriesList; 
+			List<Score> scores = project.Categories.Scores; 
+			List<PenaltyCard> cards = project.Categories.PenaltyCards; 
+
+			if (scores.Count > 0) {
+				tl = new CategoryTimeline (project.ScorePlays, duration,
+				                           i * StyleConf.TimelineCategoryHeight,
+				                           ColorForRow (i));
+				Objects.Add (tl);
+				i++;
+				foreach (Score s in scores) {
+					categories [s] = tl;
 				}
-				
-				cat = project.Categories.CategoriesList [i];
-				tl = new CategoryTimeline (project.PlaysInCategory (cat),
-				                           duration, i * StyleConf.TimelineCategoryHeight, c);
+			}
+
+			if (cards.Count > 0) {
+				tl = new CategoryTimeline (project.PenaltyCardsPlays, duration,
+				                           i * StyleConf.TimelineCategoryHeight,
+				                           ColorForRow (i));
+				Objects.Add (tl);
+				i++;
+				foreach (PenaltyCard pc in cards) {
+					categories [pc] = tl;
+				}
+			}
+			
+			for (i = i; i < cats.Count; i++) {
+				AnalysisCategory cat;
+				cat = cats [i];
+				tl = new CategoryTimeline (project.PlaysInCategory (cat), duration,
+				                           i * StyleConf.TimelineCategoryHeight,
+				                           ColorForRow (i));
 				categories [cat] = tl;
 				Objects.Add (tl);
+				Console.WriteLine (i);
 			}
+
 			UpdateVisibleCategories ();
 			Update ();
 		}
@@ -125,14 +166,21 @@ namespace LongoMatch.Drawing.Widgets
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
-			foreach (Category cat in categories.Keys) {
+			foreach (CategoryTimeline ct in categories.Values) {
+				ct.Visible = false;
+				ct.OffsetY = -1;
+			}
+			
+			foreach (AnalysisCategory cat in categories.Keys) {
 				TimelineObject timeline = categories [cat];
 				if (playsFilter.VisibleCategories.Contains (cat)) {
-					timeline.OffsetY = i * timeline.Height;
-					timeline.Visible = true;
-					i++;
+					if (timeline.OffsetY == -1) {
+						timeline.OffsetY = i * timeline.Height;
+						i++;
+					}
+					timeline.Visible |= true;
 				} else {
-					timeline.Visible = false;
+					timeline.Visible |= false;
 				}
 			}
 			widget.ReDraw ();
@@ -169,11 +217,17 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			Category cat = null;
+			AnalysisCategory cat = null;
 			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
 			
-			foreach (Category c in categories.Keys) {
-				TimelineObject tl = categories [c];
+			foreach (AnalysisCategory ac in categories.Keys) {
+				TimelineObject tl;
+				Category c = ac as Category;
+				if (ac == null)
+					continue;
+				
+			
+				tl = categories [c];
 				if (!tl.Visible)
 					continue;
 				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
@@ -182,7 +236,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 			
-			if (cat != null && ShowMenuEvent != null) {
+			if ((cat != null || plays.Count > 0) && ShowMenuEvent != null) {
 				ShowMenuEvent (plays, cat,
 				               Utils.PosToTime (coords, SecondsPerPixel));
 			}

@@ -48,6 +48,7 @@ namespace LongoMatch.Gui.Component
 		SizeGroup sizegroup;
 
 		TaggerButton tagger;
+		AnalysisCategory posTagger;
 		Category cat;
 		PenaltyCard card;
 		Score score;
@@ -107,6 +108,7 @@ namespace LongoMatch.Gui.Component
 		public TaggerButton Tagger {
 			set {
 				tagger = value;
+				posTagger = value as AnalysisCategory;
 				cat = value as Category;
 				card = value as PenaltyCard;
 				score = value as Score;
@@ -146,33 +148,39 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		private void  UpdateGui() {
+		private void  UpdateGui ()
+		{
 			ignore = true;
 			
 			cattable.Visible = cat != null;
+			postable.Visible = posTagger != null;
 			scoretable.Visible = score != null;
 			cardtable.Visible = card != null;
 
 			if (tagger != null) {
 				nameentry.Text = tagger.Name;
-				colorbutton1.Color = Helpers.Misc.ToGdkColor(tagger.Color);
-				colorbutton2.Color = Helpers.Misc.ToGdkColor(tagger.TextColor);
+				colorbutton1.Color = Helpers.Misc.ToGdkColor (tagger.Color);
+				colorbutton2.Color = Helpers.Misc.ToGdkColor (tagger.TextColor);
 				lastLeadTime = tagger.Start;
 				tagmodecombobox.Active = (int)tagger.TagMode;
 				leadtimebutton.Value = tagger.Start.Seconds;
 				lagtimebutton.Value = tagger.Stop.Seconds;
+				sortmethodcombobox.Active = (int)tagger.SortMethod;
+				if (tagger.HotKey != null && tagger.HotKey.Defined)
+					hotKeyLabel.Text = tagger.HotKey.ToString ();
+				else
+					hotKeyLabel.Text = Catalog.GetString ("none");
+			}
+			if (posTagger != null) {
+				SetPositionCombo (fieldcombobox, posTagger.TagFieldPosition,
+				                  posTagger.FieldPositionIsDistance);
+				SetPositionCombo (hfieldcombobox, posTagger.TagHalfFieldPosition,
+				                  posTagger.HalfFieldPositionIsDistance);
+				SetPositionCombo (goalcombobox, posTagger.TagGoalPosition, false);
 			}
 			if(cat != null) {
 				tagscheckbutton.Active = cat.ShowSubcategories;
 				tprbutton.Value = cat.TagsPerRow;
-				sortmethodcombobox.Active = (int)cat.SortMethod;
-				SetPositionCombo (fieldcombobox, cat.TagFieldPosition, cat.FieldPositionIsDistance);
-				SetPositionCombo (hfieldcombobox, cat.TagHalfFieldPosition, cat.HalfFieldPositionIsDistance);
-				SetPositionCombo (goalcombobox, cat.TagGoalPosition, false);
-				if(cat.HotKey.Defined)
-					hotKeyLabel.Text = cat.HotKey.ToString();
-				else
-					hotKeyLabel.Text = Catalog.GetString("none");
 			}
 			if (score != null) {
 				pointsbutton.Value = score.Points;
@@ -205,13 +213,13 @@ namespace LongoMatch.Gui.Component
 			
 			ReadPositionCombo (sender as ComboBox, out tag, out trayectory);
 			if (sender == fieldcombobox) {
-				cat.TagFieldPosition = tag;
-				cat.FieldPositionIsDistance = trayectory;
+				posTagger.TagFieldPosition = tag;
+				posTagger.FieldPositionIsDistance = trayectory;
 			} else if (sender == hfieldcombobox) {
-				cat.TagHalfFieldPosition = tag;
-				cat.HalfFieldPositionIsDistance = trayectory;
+				posTagger.TagHalfFieldPosition = tag;
+				posTagger.HalfFieldPositionIsDistance = trayectory;
 			} else {
-				cat.TagGoalPosition = tag;
+				posTagger.TagGoalPosition = tag;
 			}
 			Edited = true;
 		}
@@ -273,7 +281,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleSortMethodChanged(object sender, System.EventArgs e)
 		{
-			cat.SortMethodString = sortmethodcombobox.ActiveText;
+			tagger.SortMethodString = sortmethodcombobox.ActiveText;
 			Edited = true;
 		}
 		

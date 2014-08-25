@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Common;
 using Newtonsoft.Json;
+using Mono.Unix;
 
 namespace LongoMatch.Store
 {
@@ -34,6 +35,13 @@ namespace LongoMatch.Store
 			TextColor = Color.Grey2;
 			Start = new Time {Seconds = 10};
 			Stop = new Time {Seconds = 10};
+			HotKey = new HotKey();
+			ID = new Guid();
+		}
+		
+		public Guid ID {
+			get;
+			set;
 		}
 		
 		public string Name {
@@ -92,6 +100,16 @@ namespace LongoMatch.Store
 			set;
 		}
 
+		public HotKey HotKey {
+			get;
+			set;
+		}
+
+		public SortMethodType SortMethod {
+			get;
+			set;
+		}
+
 		
 		[JsonIgnore]
 		public Color LightColor {
@@ -105,13 +123,68 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		[JsonIgnore]
+		public string SortMethodString {
+			get {
+				switch(SortMethod) {
+				case SortMethodType.SortByName:
+					return Catalog.GetString("Sort by name");
+				case SortMethodType.SortByStartTime:
+					return Catalog.GetString("Sort by start time");
+				case SortMethodType.SortByStopTime:
+					return Catalog.GetString("Sort by stop time");
+				case SortMethodType.SortByDuration:
+					return Catalog.GetString("Sort by duration");
+				default:
+					return Catalog.GetString("Sort by name");
+				}
+			}
+			set {
+				if(value == Catalog.GetString("Sort by start time"))
+					SortMethod = SortMethodType.SortByStartTime;
+				else if(value == Catalog.GetString("Sort by stop time"))
+					SortMethod = SortMethodType.SortByStopTime;
+				else if(value == Catalog.GetString("Sort by duration"))
+					SortMethod = SortMethodType.SortByDuration;
+				else
+					SortMethod = SortMethodType.SortByName;
+			}
+		}
 	}
 	
-	public class EventButton: TaggerButton {
+	public class AnalysisCategory: TaggerButton {
+		public bool TagGoalPosition {
+			get;
+			set;
+		}
+		
+		public bool TagFieldPosition {
+			get;
+			set;
+		}
+		
+		public bool TagHalfFieldPosition {
+			get;
+			set;
+		}
+		
+		public bool FieldPositionIsDistance {
+			get;
+			set;
+		}
+		
+		public bool HalfFieldPositionIsDistance {
+			get;
+			set;
+		}
+	}
+
+	public class AnalysisEventCategory: AnalysisCategory {
 		public Time EventTime {
 			get;
 			set;
 		}
 	}
+	
 }
 

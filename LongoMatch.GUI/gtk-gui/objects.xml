@@ -170,15 +170,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoriesTreeView Signals">
-        <signal name="CategoryClicked" />
-        <signal name="CategoriesSelected" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />

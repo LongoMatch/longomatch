@@ -34,7 +34,7 @@ namespace LongoMatch.Store
 	/// </summary>
 
 	[Serializable]
-	public class  Play : PixbufTimeNode, ITimelineNode, IIDObject
+	public class  Play : PixbufTimeNode, IIDObject
 	{
 
 		#region Constructors
@@ -57,7 +57,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Category in which this play is tagged
 		/// </summary>
-		public Category Category {
+		public AnalysisCategory Category {
 			get;
 			set;
 		}

@@ -21,6 +21,7 @@ using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
 using LongoMatch.Drawing.CanvasObjects;
+using Mono.Unix;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -28,11 +29,11 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		Project project;
 		PlaysFilter filter;
-		Dictionary<Category, CategoryLabel> categories;
+		Dictionary<TaggerButton, CategoryLabel> categories;
 
 		public CategoriesLabels (IWidget widget): base (widget)
 		{
-			categories = new Dictionary<Category, CategoryLabel> ();
+			categories = new Dictionary<TaggerButton, CategoryLabel> ();
 		}
 
 		public double Scroll {
@@ -58,38 +59,67 @@ namespace LongoMatch.Drawing.Widgets
 
 		void FillCanvas ()
 		{
+			CategoryLabel l;
 			int i = 0, w, h;
 			
 			w = StyleConf.TimelineLabelsWidth;
 			h = StyleConf.TimelineCategoryHeight;
 			widget.Width = w;
 			
+			/* Add the scores label */
+			if (project.Categories.Scores.Count > 0) {
+				l = new CategoryLabel (new TaggerButton { Name = Catalog.GetString ("Score") },
+				                       w, h, i * h);
+				Objects.Add (l);
+				i++;
+				foreach (Score s in project.Categories.Scores) {
+					categories [s] = l;
+				}
+			}
+			
+			/* Add the penalty cards label */
+			if (project.Categories.PenaltyCards.Count > 0) {
+				l = new CategoryLabel (new TaggerButton {Name = Catalog.GetString ("Penalty cards")},
+				                       w, h, i * h);
+				Objects.Add (l);
+				i++;
+				foreach (PenaltyCard pc in project.Categories.PenaltyCards) {
+					categories [pc] = l;
+				}
+			}
+
 			/* Start from bottom to top  with categories */
-			foreach (Category cat in project.Categories.CategoriesList) {
-				CategoryLabel l;
-				
+			foreach (TaggerButton cat in project.Categories.CategoriesList) {
 				/* Add the category label */
 				l = new CategoryLabel (cat, w, h, i * h);
 				categories [cat] = l;
 				Objects.Add (l);
 				i++;
 			}
+
 		}
 
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
 
-			foreach (Category cat in categories.Keys) {
+			foreach (CategoryLabel ct in categories.Values) {
+				ct.Visible = false;
+				ct.OffsetY = -1;
+			}
+
+			foreach (TaggerButton cat in categories.Keys) {
 				CategoryLabel label = categories [cat];
 
 				if (filter.VisibleCategories.Contains (cat)) {
-					label.OffsetY = i * label.Height;
-					label.Visible = true;
-					if (i % 2 == 0) {
-						label.Even = true;
+					label.Visible |= true;
+					if (label.OffsetY == -1) {
+						label.OffsetY = i * label.Height;
+						if (i % 2 == 0) {
+							label.Even = true;
+						}
+						i++;
 					}
-					i++;
 				} else {
 					label.Visible = false;
 				}

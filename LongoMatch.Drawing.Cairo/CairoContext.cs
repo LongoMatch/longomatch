@@ -23,7 +23,7 @@ namespace LongoMatch.Drawing.Cairo
 {
 	public class CairoContext: IContext
 	{
-		public CairoContext (Window window)
+		public CairoContext (Drawable window)
 		{
 			Value = CairoHelper.Create (window);
 		}

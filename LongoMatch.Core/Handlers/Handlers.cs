@@ -38,7 +38,7 @@ namespace LongoMatch.Handlers
 	public delegate void NewTagHandler (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
-	public delegate void CategoryChangedHandler(Category cat);
+	public delegate void CategoryChangedHandler(AnalysisCategory cat);
 	/* A list of plays needs to be deleted */
 	public delegate void PlaysDeletedHandler(List<Play> plays);
 	/* Tag a play */
@@ -142,7 +142,7 @@ namespace LongoMatch.Handlers
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	
-	public delegate void ShowTimelineMenuHandler (List<Play> plays, Category cat, Time time);
+	public delegate void ShowTimelineMenuHandler (List<Play> plays, AnalysisCategory cat, Time time);
 	public delegate void ShowTaggerMenuHandler (List<Play> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
 	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable);

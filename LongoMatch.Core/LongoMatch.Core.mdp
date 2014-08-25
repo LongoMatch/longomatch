@@ -56,7 +56,6 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDatabase.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimelineNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces/GUI" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IRenderingStateBar.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayerBin.cs" />

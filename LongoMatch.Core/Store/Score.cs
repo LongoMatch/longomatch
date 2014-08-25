@@ -22,7 +22,7 @@ using LongoMatch.Common;
 namespace LongoMatch.Store
 {
 	[Serializable]
-	public class Score: EventButton
+	public class Score: AnalysisEventCategory
 	{
 		public Score ()
 		{

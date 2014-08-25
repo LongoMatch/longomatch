@@ -21,7 +21,7 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
-	public class PenaltyCard: EventButton
+	public class PenaltyCard: AnalysisEventCategory
 	{
 		public PenaltyCard ()
 		{

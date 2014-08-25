@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Menus
 		MenuItem edit, newPlay, del, addPLN, snapshot, render;
 		MenuItem duplicate, moveCat, drawings;
 		List<Play> plays;
-		Category cat;
+		AnalysisCategory cat;
 		Time time;
 		Project project;
 	
@@ -52,12 +52,12 @@ namespace LongoMatch.Gui.Menus
 			ShowMenu (project, plays, null, null, null, false);
 		}
 		
-		public void ShowTimelineMenu (Project project, List<Play> plays, Category cat, Time time)
+		public void ShowTimelineMenu (Project project, List<Play> plays, AnalysisCategory cat, Time time)
 		{
 			ShowMenu (project, plays, cat, time, null, false);
 		}
 		
-		private void ShowMenu (Project project, List<Play> plays, Category cat, Time time,
+		private void ShowMenu (Project project, List<Play> plays, AnalysisCategory cat, Time time,
 		                     List<Category> categories, bool editableName)
 		{
 			this.plays = plays;
