@@ -62,6 +62,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Menu/PlaysMenu.cs \
 	Gui/Panel/NewProjectPanel.cs \
 	Gui/Panel/OpenProjectPanel.cs \
+	Gui/Panel/PanelHeader.cs \
 	Gui/Panel/PreferencesPanel.cs \
 	Gui/Panel/ProjectsManagerPanel.cs \
 	Gui/Panel/SportsTemplatesPanel.cs \
@@ -130,6 +131,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
 	gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs \
 	gtk-gui/LongoMatch.Gui.Panel.OpenProjectPanel.cs \
+	gtk-gui/LongoMatch.Gui.Panel.PanelHeader.cs \
 	gtk-gui/LongoMatch.Gui.Panel.PreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs \
 	gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs \

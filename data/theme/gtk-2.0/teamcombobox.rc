@@ -2,10 +2,10 @@ style "longomatch-teams-combobox" = "longomatch-default" {
   xthickness = 2
   ythickness = 2
 
-  base[NORMAL]        = @bg_light_color
+  base[NORMAL]      = @bg_light_color
   bg[NORMAL]        = @bg_light_color
 
-  fg[NORMAL]      = @text_color
+  fg[NORMAL]        = @text_color
   text[NORMAL]      = @text_color
   text[INSENSITIVE] = darker (@text_color)
 }

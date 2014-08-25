@@ -5,9 +5,8 @@ namespace LongoMatch.Gui.Panel
 	public partial class OpenProjectPanel
 	{
 		private global::Gtk.VBox vbox4;
+		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget;
-		private global::Gtk.HButtonBox hbuttonbox;
-		private global::Gtk.Button backbutton;
 
 		protected virtual void Build ()
 		{
@@ -20,46 +19,21 @@ namespace LongoMatch.Gui.Panel
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
+			this.panelheader1 = new global::LongoMatch.Gui.Panel.PanelHeader ();
+			this.panelheader1.Events = ((global::Gdk.EventMask)(256));
+			this.panelheader1.Name = "panelheader1";
+			this.vbox4.Add (this.panelheader1);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.panelheader1]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
 			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectListWidget ();
 			this.projectlistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget.Name = "projectlistwidget";
 			this.vbox4.Add (this.projectlistwidget);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.projectlistwidget]));
-			w1.Position = 0;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.hbuttonbox = new global::Gtk.HButtonBox ();
-			this.hbuttonbox.Name = "hbuttonbox";
-			this.hbuttonbox.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-			// Container child hbuttonbox.Gtk.ButtonBox+ButtonBoxChild
-			this.backbutton = new global::Gtk.Button ();
-			this.backbutton.CanFocus = true;
-			this.backbutton.Name = "backbutton";
-			this.backbutton.UseUnderline = true;
-			// Container child backbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w2 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w3 = new global::Gtk.HBox ();
-			w3.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w4 = new global::Gtk.Image ();
-			w4.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-go-back", global::Gtk.IconSize.Dialog);
-			w3.Add (w4);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w6 = new global::Gtk.Label ();
-			w6.LabelProp = global::Mono.Unix.Catalog.GetString ("Back");
-			w6.UseUnderline = true;
-			w3.Add (w6);
-			w2.Add (w3);
-			this.backbutton.Add (w2);
-			this.hbuttonbox.Add (this.backbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox [this.backbutton]));
-			w10.Expand = false;
-			w10.Fill = false;
-			this.vbox4.Add (this.hbuttonbox);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbuttonbox]));
-			w11.Position = 1;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.projectlistwidget]));
+			w2.Position = 1;
 			this.Add (this.vbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

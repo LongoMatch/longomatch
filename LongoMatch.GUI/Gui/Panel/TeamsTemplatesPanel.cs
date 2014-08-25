@@ -50,7 +50,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
 			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 45, IconLookupFlags.ForceSvg);
 			playerheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-header", 45, IconLookupFlags.ForceSvg);
 			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 34, IconLookupFlags.ForceSvg);
@@ -97,14 +96,15 @@ namespace LongoMatch.Gui.Panel
 			selectedTeams = new List<string>();
 			teamtemplateeditor1.VisibleButtons = false;
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
-			
-			backrectbutton.Clicked += (sender, o) => {
+
+			panelheader1.ApplyVisible = false;
+			panelheader1.Title = "TEAM EDITOR";
+			panelheader1.BackClicked += (sender, o) => {
 				PromptSave ();
 				if (BackEvent != null)
 					BackEvent();
 			};
 			Load (null);
-			
 		}
 		
 		public override void Destroy ()

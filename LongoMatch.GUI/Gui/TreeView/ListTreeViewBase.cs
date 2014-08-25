@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			Selection.SelectFunction = SelectFunction;
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 			HeadersVisible = false;
-
+			
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
 			nameCell = new Gtk.CellRendererText();

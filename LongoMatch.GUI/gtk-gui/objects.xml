@@ -351,4 +351,13 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Panel.PanelHeader" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PanelHeader Signals">
+        <signal name="ApplyClicked" />
+        <signal name="BackClicked" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 			// Container child notebook2.Gtk.Notebook+NotebookChild
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
+			this.notebook1.Name = "notebook1";
 			this.notebook1.CurrentPage = 2;
 			this.notebook1.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child notebook1.Gtk.Notebook+NotebookChild

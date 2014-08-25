@@ -57,13 +57,15 @@ namespace LongoMatch.Gui.Panel
 			localSpinButton.ValueChanged += HandleChanged;
 			visitorSpinButton.ValueChanged += HandleChanged;
 			filebutton.Clicked += HandleFileClicked;
-			backbutton.Clicked += HandleBackClicked;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
 			templatebutton.Clicked += HandleTeamTemplateClicked;
 			calendarbutton.Clicked += HandleCalendarClicked;
 			notebook1.Page = 0;
+			panelheader1.Title = "PROJECTS MANAGER";
+			panelheader1.ApplyVisible = false;
+			panelheader1.BackClicked += HandleBackClicked;
 		}
 
 		void LoadProject (Project project) {

@@ -47,7 +47,6 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.CategoriesTemplatesProvider;
 
 			// Assign images
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", 45, IconLookupFlags.ForceSvg);
 			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 45, IconLookupFlags.ForceSvg);
 			categoryheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 45, IconLookupFlags.ForceSvg);
 			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 34, IconLookupFlags.ForceSvg);
@@ -59,6 +58,13 @@ namespace LongoMatch.Gui.Panel
 			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 34, IconLookupFlags.ForceSvg);
 			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 34, IconLookupFlags.ForceSvg);
 			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
+			
+			panelheader1.ApplyVisible = false;
+			panelheader1.Title = "ANALYSIS DASHBOARD EDITOR";
+			panelheader1.BackClicked += (sender, o) => {
+				if (BackEvent != null)
+					BackEvent();
+			};
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
@@ -107,10 +113,6 @@ namespace LongoMatch.Gui.Panel
 			newtemplatebutton.Clicked += HandleNewTeamClicked;
 			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save ();
-			backrectbutton.Clicked += (sender, o) => {
-				if (BackEvent != null)
-					BackEvent();
-			};
 			Load (null);
 		}
 

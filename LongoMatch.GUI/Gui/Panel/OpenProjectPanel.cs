@@ -36,7 +36,9 @@ namespace LongoMatch.Gui.Panel
 			
 			projectlistwidget.ProjectSelected += HandleProjectSelected;
 			projectlistwidget.SelectionMode = SelectionMode.Single;
-			backbutton.Clicked += HandleClicked;
+			panelheader1.ApplyVisible = false;
+			panelheader1.BackClicked += HandleClicked;
+			panelheader1.Title = "OPEN PROJECT";
 		}
 
 		public List<ProjectDescription> Projects{

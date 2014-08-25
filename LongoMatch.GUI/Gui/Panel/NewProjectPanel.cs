@@ -64,18 +64,16 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			this.mtoolkit = Config.MultimediaToolkit;
 			this.gtoolkit = Config.GUIToolkit;
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", StyleConf.NewHeaderHeight - 10,
-			                                               IconLookupFlags.ForceSvg);
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
-			nextroundedbutton.Clicked += HandleNextClicked;
-			backrectbutton.Clicked += HandleBackClicked;
+			
+			panelheader1.ApplyClicked += HandleNextClicked;
+			panelheader1.BackClicked += HandleBackClicked;
 			ConnectSignals ();
 			FillCategories ();
 			FillFormats ();
 			FillDevices (mtoolkit.VideoDevices);
 			LoadTeams ();
-			titlelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 			if (project == null) {
 				notebook1.Page = 0;
 				datepicker1.Date = DateTime.Now;
@@ -108,7 +106,6 @@ namespace LongoMatch.Gui.Panel
 			grp.AddWidget (righttable);
 			
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
-			headerhbox.HeightRequest = StyleConf.NewHeaderHeight;
 			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
 			lefttable.RowSpacing = filetable.RowSpacing =
 				outputfiletable.RowSpacing = righttable.RowSpacing = StyleConf.NewTableHSpacing;
@@ -117,7 +114,6 @@ namespace LongoMatch.Gui.Panel
 			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
-			titlelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 		}
 		
 		void LoadTeams () {
@@ -141,7 +137,6 @@ namespace LongoMatch.Gui.Panel
 			savebutton.Clicked += HandleSavebuttonClicked;
 			urientry.Changed += HandleEntryChanged;
 			outfileEntry.Changed += HandleEntryChanged;
-			createbutton.Clicked += HandleCreateProject;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			mediafilechooser1.ChangedEvent += (sender, e) => {mediaFile = mediafilechooser1.File;};
 		}
@@ -250,11 +245,11 @@ namespace LongoMatch.Gui.Panel
 		void UpdateTitle ()
 		{
 			if (notebook1.Page == 0) {
-				titlelabel.Markup = Catalog.GetString ("<b>PROJECT TYPE</b>");
+				panelheader1.Title = "PROJECT TYPE";
 			} else if (notebook1.Page == 1) {
-				titlelabel.Markup = Catalog.GetString ("<b>PROJECT PROPERTIES</b>");
+				panelheader1.Title = "PROJECT PROPERTIES";
 			} else if (notebook1.Page == 2) {
-				titlelabel.Markup = Catalog.GetString ("<b>PERIODS SYNCHRONIZATION</b>");
+				panelheader1.Title = "PERIODS SYNCHRONIZATION";
 			}
 		}
 		
@@ -377,17 +372,6 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleCreateProject (object sender, EventArgs e)
-		{
-			if (CreateProject ()) {
-				if (projectType == ProjectType.EditProject) {
-					projectType = ProjectType.FileProject;
-					Config.EventsBroker.EmitCreateThumbnails (project);
-				}
-				Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
-			}
-		}
-
 		void HandleBackClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == PROJECT_TYPE) {
@@ -396,8 +380,6 @@ namespace LongoMatch.Gui.Panel
 				}
 			} else {
 				notebook1.Page --;
-				nextroundedbutton.Visible = true;
-				createbutton.Visible = false;
 			}
 			UpdateTitle ();
 		}
@@ -411,23 +393,21 @@ namespace LongoMatch.Gui.Panel
 				if (!CreateProject ()) {
 					return;
 				}
+			} else if (notebook1.Page == PROJECT_PERIODS) {
+				if (CreateProject ()) {
+					if (projectType == ProjectType.EditProject) {
+						projectType = ProjectType.FileProject;
+						Config.EventsBroker.EmitCreateThumbnails (project);
+					}
+					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
+				}
+				return;
 			}
 
 			notebook1.Page ++;
 
-			if (notebook1.Page == PROJECT_DETAILS) {
-				switch (projectType) {
-				case ProjectType.CaptureProject:
-				case ProjectType.FakeCaptureProject:
-				case ProjectType.URICaptureProject:
-					nextroundedbutton.Visible = false;
-					createbutton.Visible = true;
-					break;
-				}
-			} else if (notebook1.Page == PROJECT_PERIODS) {
+			if (notebook1.Page == PROJECT_PERIODS) {
 				projectperiods1.Project = project;
-				nextroundedbutton.Visible = false;
-				createbutton.Visible = true;
 			}
 			UpdateTitle ();
 		}
