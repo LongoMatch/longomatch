@@ -556,6 +556,7 @@
                           <widget class="Gtk.ScrolledWindow" id="propertiesscrolledwindow">
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
+                            <property name="HscrollbarPolicy">Never</property>
                             <property name="ShadowType">In</property>
                             <child>
                               <widget class="Gtk.Viewport" id="GtkViewport1">

@@ -515,6 +515,7 @@ namespace LongoMatch.Gui.Component
 			this.propertiesscrolledwindow = new global::Gtk.ScrolledWindow ();
 			this.propertiesscrolledwindow.CanFocus = true;
 			this.propertiesscrolledwindow.Name = "propertiesscrolledwindow";
+			this.propertiesscrolledwindow.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
 			this.propertiesscrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child propertiesscrolledwindow.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w104 = new global::Gtk.Viewport ();
