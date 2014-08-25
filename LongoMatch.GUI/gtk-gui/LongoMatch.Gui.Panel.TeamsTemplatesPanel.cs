@@ -68,7 +68,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child contentalignment.Gtk.Container+ContainerChild
 			this.contentvbox = new global::Gtk.VBox ();
 			this.contentvbox.Name = "contentvbox";
-			this.contentvbox.Spacing = 6;
 			// Container child contentvbox.Gtk.Box+BoxChild
 			this.teameditorbuttonbar = new global::Gtk.HBox ();
 			this.teameditorbuttonbar.Name = "teameditorbuttonbar";
@@ -81,7 +80,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child templateimagealignment.Gtk.Container+ContainerChild
 			this.teamimage = new global::Gtk.Image ();
 			this.teamimage.Name = "teamimage";
-			this.teamimage.Ypad = 10;
 			this.teamimage.Yalign = 1F;
 			this.templateimagealignment.Add (this.teamimage);
 			this.teameditorbuttonbar.Add (this.templateimagealignment);
@@ -93,6 +91,7 @@ namespace LongoMatch.Gui.Panel
 			this.editteamsvbox = new global::Gtk.VBox ();
 			this.editteamsvbox.Name = "editteamsvbox";
 			this.editteamsvbox.Spacing = 2;
+			this.editteamsvbox.BorderWidth = ((uint)(6));
 			// Container child editteamsvbox.Gtk.Box+BoxChild
 			this.editteamslabel = new global::Gtk.Label ();
 			this.editteamslabel.Name = "editteamslabel";
@@ -178,6 +177,7 @@ namespace LongoMatch.Gui.Panel
 			this.editplayersvbox = new global::Gtk.VBox ();
 			this.editplayersvbox.Name = "editplayersvbox";
 			this.editplayersvbox.Spacing = 2;
+			this.editplayersvbox.BorderWidth = ((uint)(6));
 			// Container child editplayersvbox.Gtk.Box+BoxChild
 			this.editplayerslabel = new global::Gtk.Label ();
 			this.editplayerslabel.Name = "editplayerslabel";
@@ -237,11 +237,11 @@ namespace LongoMatch.Gui.Panel
 			// Container child teameditorbuttonbar.Gtk.Box+BoxChild
 			this.playerheaderalignment = new global::Gtk.Alignment (1F, 1F, 0F, 0F);
 			this.playerheaderalignment.Name = "playerheaderalignment";
-			this.playerheaderalignment.RightPadding = ((uint)(300));
+			this.playerheaderalignment.RightPadding = ((uint)(12));
 			// Container child playerheaderalignment.Gtk.Container+ContainerChild
 			this.playerheaderimage = new global::Gtk.Image ();
 			this.playerheaderimage.Name = "playerheaderimage";
-			this.playerheaderimage.Ypad = 10;
+			this.playerheaderimage.Ypad = 14;
 			this.playerheaderalignment.Add (this.playerheaderimage);
 			this.teameditorbuttonbar.Add (this.playerheaderalignment);
 			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.teameditorbuttonbar [this.playerheaderalignment]));

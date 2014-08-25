@@ -133,7 +133,7 @@ namespace LongoMatch.Gui.Component
 			// Container child shieldvbox.Gtk.Box+BoxChild
 			this.teamshieldlabel2 = new global::Gtk.Label ();
 			this.teamshieldlabel2.Name = "teamshieldlabel2";
-			this.teamshieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">click to change...</span>");
+			this.teamshieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
 			this.teamshieldlabel2.UseMarkup = true;
 			this.shieldvbox.Add (this.teamshieldlabel2);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.shieldvbox [this.teamshieldlabel2]));
@@ -337,7 +337,7 @@ namespace LongoMatch.Gui.Component
 			// Container child playervbox.Gtk.Box+BoxChild
 			this.playerimagelabel2 = new global::Gtk.Label ();
 			this.playerimagelabel2.Name = "playerimagelabel2";
-			this.playerimagelabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">click to change...</span>");
+			this.playerimagelabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
 			this.playerimagelabel2.UseMarkup = true;
 			this.playervbox.Add (this.playerimagelabel2);
 			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.playervbox [this.playerimagelabel2]));

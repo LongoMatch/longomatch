@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Component
 			// Container child fieldeventbox.Gtk.Container+ContainerChild
 			this.vbox12 = new global::Gtk.VBox ();
 			this.vbox12.Name = "vbox12";
-			this.vbox12.Spacing = 6;
+			this.vbox12.Spacing = 2;
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldimage = new global::Gtk.Image ();
 			this.fieldimage.WidthRequest = 71;
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldlabel1 = new global::Gtk.Label ();
 			this.fieldlabel1.Name = "fieldlabel1";
-			this.fieldlabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("Field");
+			this.fieldlabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Field</span>");
 			this.fieldlabel1.UseMarkup = true;
 			this.fieldlabel1.Wrap = true;
 			this.fieldlabel1.Justify = ((global::Gtk.Justification)(2));
@@ -288,7 +288,8 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldlabel2 = new global::Gtk.Label ();
 			this.fieldlabel2.Name = "fieldlabel2";
-			this.fieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
+			this.fieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.fieldlabel2.UseMarkup = true;
 			this.vbox12.Add (this.fieldlabel2);
 			global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.vbox12 [this.fieldlabel2]));
 			w54.Position = 2;
@@ -350,7 +351,7 @@ namespace LongoMatch.Gui.Component
 			// Container child hfieldeventbox.Gtk.Container+ContainerChild
 			this.vbox14 = new global::Gtk.VBox ();
 			this.vbox14.Name = "vbox14";
-			this.vbox14.Spacing = 6;
+			this.vbox14.Spacing = 2;
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldimage = new global::Gtk.Image ();
 			this.hfieldimage.WidthRequest = 71;
@@ -364,7 +365,8 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldlabel1 = new global::Gtk.Label ();
 			this.hfieldlabel1.Name = "hfieldlabel1";
-			this.hfieldlabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("Half field");
+			this.hfieldlabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Half field</span>");
+			this.hfieldlabel1.UseMarkup = true;
 			this.vbox14.Add (this.hfieldlabel1);
 			global::Gtk.Box.BoxChild w70 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.hfieldlabel1]));
 			w70.Position = 1;
@@ -373,7 +375,8 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldlabel2 = new global::Gtk.Label ();
 			this.hfieldlabel2.Name = "hfieldlabel2";
-			this.hfieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
+			this.hfieldlabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.hfieldlabel2.UseMarkup = true;
 			this.vbox14.Add (this.hfieldlabel2);
 			global::Gtk.Box.BoxChild w71 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.hfieldlabel2]));
 			w71.Position = 2;
@@ -435,7 +438,7 @@ namespace LongoMatch.Gui.Component
 			// Container child goaleventbox.Gtk.Container+ContainerChild
 			this.vbox16 = new global::Gtk.VBox ();
 			this.vbox16.Name = "vbox16";
-			this.vbox16.Spacing = 6;
+			this.vbox16.Spacing = 2;
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goalimage = new global::Gtk.Image ();
 			this.goalimage.WidthRequest = 71;
@@ -449,7 +452,8 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goallabel1 = new global::Gtk.Label ();
 			this.goallabel1.Name = "goallabel1";
-			this.goallabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("Goal");
+			this.goallabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Goal</span>");
+			this.goallabel1.UseMarkup = true;
 			this.vbox16.Add (this.goallabel1);
 			global::Gtk.Box.BoxChild w87 = ((global::Gtk.Box.BoxChild)(this.vbox16 [this.goallabel1]));
 			w87.Position = 1;
@@ -458,7 +462,8 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goallabel2 = new global::Gtk.Label ();
 			this.goallabel2.Name = "goallabel2";
-			this.goallabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("click to change...");
+			this.goallabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.goallabel2.UseMarkup = true;
 			this.vbox16.Add (this.goallabel2);
 			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.vbox16 [this.goallabel2]));
 			w88.Position = 2;

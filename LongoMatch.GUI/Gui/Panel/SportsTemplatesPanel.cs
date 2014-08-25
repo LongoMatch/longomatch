@@ -47,24 +47,24 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.CategoriesTemplatesProvider;
 
 			// Assign images
-			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 45, IconLookupFlags.ForceSvg);
-			categoryheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 45, IconLookupFlags.ForceSvg);
-			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 34, IconLookupFlags.ForceSvg);
-			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 34, IconLookupFlags.ForceSvg);
-			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 34, IconLookupFlags.ForceSvg);
-			addcategoryimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-category", 34, IconLookupFlags.ForceSvg);
-			addtagimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-tag", 34, IconLookupFlags.ForceSvg);
-			scoreimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-score", 34, IconLookupFlags.ForceSvg);
-			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 34, IconLookupFlags.ForceSvg);
-			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 34, IconLookupFlags.ForceSvg);
-			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
-			
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = "ANALYSIS DASHBOARD EDITOR";
 			panelheader1.BackClicked += (sender, o) => {
 				if (BackEvent != null)
 					BackEvent();
 			};
+
+			templateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-header", 54, IconLookupFlags.ForceSvg);
+			categoryheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-category-header", 47, IconLookupFlags.ForceSvg);
+			newtemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-add", 36, IconLookupFlags.ForceSvg);
+			deletetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-delete", 36, IconLookupFlags.ForceSvg);
+			savetemplateimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-template-save", 36, IconLookupFlags.ForceSvg);
+			addcategoryimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-category", 36, IconLookupFlags.ForceSvg);
+			addtagimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-tag", 36, IconLookupFlags.ForceSvg);
+			scoreimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-score", 36, IconLookupFlags.ForceSvg);
+			cardimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-card", 36, IconLookupFlags.ForceSvg);
+			timerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-tag-timer", 36, IconLookupFlags.ForceSvg);
+			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 54, IconLookupFlags.ForceSvg);
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
