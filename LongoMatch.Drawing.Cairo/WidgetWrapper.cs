@@ -55,6 +55,27 @@ namespace LongoMatch.Drawing.Cairo
 			widget.ButtonReleaseEvent += HandleButtonReleaseEvent;
 			widget.MotionNotifyEvent += HandleMotionNotifyEvent;
 		}
+		
+		public void Dispose ()
+		{
+			Dispose (true);
+			System.GC.SuppressFinalize (this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (disposing) {
+				if (moveTimerID != 0) {
+					GLib.Source.Remove (moveTimerID);
+					moveTimerID = 0;
+				}
+				if (hoverTimerID != 0) {
+					GLib.Source.Remove (hoverTimerID);
+					
+					hoverTimerID = 0;
+				}
+			}
+		}
 
 		public uint MoveWaitMS {
 			get;

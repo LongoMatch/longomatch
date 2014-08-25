@@ -138,6 +138,13 @@ namespace LongoMatch.Drawing
 			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
 
+		protected override void Dispose (bool disposing)
+		{
+			if (disposing)
+				widget.Dispose ();
+			base.Dispose (disposing);
+		}
+
 		public int ClickRepeatMS {
 			get;
 			set;
