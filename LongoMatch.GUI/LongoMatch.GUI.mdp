@@ -36,7 +36,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoEditionProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoryProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysListTreeWidget.cs" />
