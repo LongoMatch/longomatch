@@ -73,7 +73,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/TreeView/FilterBaseView.cs \
 	Gui/TreeView/ListTreeViewBase.cs \
 	Gui/TreeView/PlayListTreeView.cs \
-	Gui/TreeView/PlayerPropertiesTreeView.cs \
 	Gui/TreeView/PlayersFilterTreeView.cs \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
