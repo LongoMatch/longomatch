@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using Gdk;
 
 namespace LongoMatch.Gui.Component
 {
@@ -35,18 +36,31 @@ namespace LongoMatch.Gui.Component
 		PlaysFilter filter;
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
+		Pixbuf listIco, listActiveIco;
+		Pixbuf playlistIco, playlistActiveIco;
+		Pixbuf filtersIco, filtersActiveIco;
+		int currentPage;
+
 		
 		public PlaysSelectionWidget ()
 		{
 			this.Build ();
+			
+			LoadIcons ();
+
 			localPlayersList.Team = Team.LOCAL;
 			visitorPlayersList.Team = Team.VISITOR;
 			AddFilters();
 			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
-			notebook1.Page = 0;
-			notebook2.Page = 0;
+			playsnotebook.Page = 0;
+			notebook.Page = currentPage = 0;
+			
+			notebook.SwitchPage += HandleSwitchPage;
+			SetTabProps (playsnotebook, false);
+			SetTabProps (playlistwidget, false);
+			SetTabProps (filtersvbox, false);
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
@@ -86,7 +100,52 @@ namespace LongoMatch.Gui.Component
 			UpdateTeamsModels();
 		}
 		#endregion
-		
+
+		void LoadIcons ()
+		{
+			int s = StyleConf.NotebookTabIconSize;
+			IconLookupFlags f = IconLookupFlags.ForceSvg;
+ 
+			listIco = IconTheme.Default.LoadIcon ("longomatch-tab-dashboard", s, f);
+			listActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-dashboard", s, f);
+			filtersIco = IconTheme.Default.LoadIcon ("longomatch-tab-filter", s, f);
+			filtersActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-filter", s, f);
+			playlistIco = IconTheme.Default.LoadIcon ("longomatch-tab-playlist", s, f);
+			playlistActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-playlist", s, f);
+		}
+
+		void SetTabProps (Widget widget, bool active)
+		{
+			Gdk.Pixbuf icon;
+			Gtk.Image img;
+
+			img = notebook.GetTabLabel (widget) as Gtk.Image;
+			if (img == null) {
+				img = new Gtk.Image ();
+				img.WidthRequest = StyleConf.NotebookTabSize;
+				img.HeightRequest = StyleConf.NotebookTabSize;
+				notebook.SetTabLabel (widget, img);
+			}
+
+			if (widget == playsnotebook) {
+				icon = active ? listActiveIco : listIco;
+			} else if (widget == filtersvbox) {
+				icon = active ? filtersActiveIco : filtersIco;
+			} else if (widget == playlistwidget) {
+				icon = active ? playlistActiveIco : playlistIco;
+			} else {
+				return;
+			}
+			img.Pixbuf = icon;
+		}
+
+		void HandleSwitchPage (object o, SwitchPageArgs args)
+		{
+			SetTabProps (notebook.GetNthPage (currentPage), false);
+			SetTabProps (notebook.GetNthPage ((int)args.PageNum), true);
+			currentPage = (int)args.PageNum;
+		}
+
 		void DisableFocus (Container w) {
 			w.CanFocus = false;
 			foreach (Widget child in w.AllChildren) {
