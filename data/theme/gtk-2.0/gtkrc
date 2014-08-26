@@ -259,11 +259,13 @@ include "notebook.rc"
 include "teamcombobox.rc"
 include "combobox.rc"
 include "checkbox.rc"
+include "handles.rc"
 
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
 class "GtkButton"                                style "longomatch-square-button"
+class "GtkPaned"                                style "longomatch-handles"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
 class "GtkCheckButton"                              style "longomatch-checkbox"
