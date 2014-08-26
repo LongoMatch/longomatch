@@ -10,6 +10,8 @@ style "longomatch-notebook"
   xthickness	= 0
   ythickness	= 0
 
+  GtkNotebook::tab-overlap = 2
+
   bg[NORMAL] = @active_color
   bg[ACTIVE] = @active_color
   engine "pixmap" 
