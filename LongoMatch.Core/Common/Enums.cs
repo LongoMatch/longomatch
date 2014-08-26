@@ -192,6 +192,12 @@ namespace LongoMatch.Common
 		Bold
 	}
 	
+	public enum FontAlignment {
+		Left,
+		Right,
+		Center,
+	}
+	
 	public enum ButtonType {
 		None,
 		Left,

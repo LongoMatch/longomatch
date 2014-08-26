@@ -18,6 +18,7 @@
 using Gdk;
 using Cairo;
 using LongoMatch.Interfaces.Drawing;
+using Pango;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -25,15 +26,16 @@ namespace LongoMatch.Drawing.Cairo
 	{
 		public CairoContext (Drawable window)
 		{
-			Value = CairoHelper.Create (window);
+			Value = Gdk.CairoHelper.Create (window);
+			PangoLayout = Pango.CairoHelper.CreateLayout (Value as global::Cairo.Context);
 		}
 
 		public CairoContext (global::Cairo.Surface surface)
 		{
-			Value = new Context (surface);
+			Value = new global::Cairo.Context (surface);
 		}
 
-		public CairoContext (Context context)
+		public CairoContext (global::Cairo.Context context)
 		{
 			Value = context;
 		}
@@ -42,10 +44,15 @@ namespace LongoMatch.Drawing.Cairo
 			get;
 			protected set;
 		}
+		
+		public Layout PangoLayout {
+			get;
+			protected set;
+		}
 
 		public void Dispose ()
 		{
-			(Value as Context).Dispose ();
+			(Value as global::Cairo.Context).Dispose ();
 		}
 	}
 }

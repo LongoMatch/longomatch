@@ -44,6 +44,7 @@ namespace LongoMatch.Interfaces.Drawing
 		string FontFamily {set;}
 		FontSlant FontSlant {set;}
 		FontWeight FontWeight {set;}
+		FontAlignment FontAlignment {set;}
 		int FontSize {set;}
 		LineStyle LineStyle {set;}
 		

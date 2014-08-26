@@ -19,15 +19,15 @@ using System;
 using Cairo;
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
+using FontSlant = LongoMatch.Common.FontSlant;
+using FontWeight = LongoMatch.Common.FontWeight;
+using FontAlignment = LongoMatch.Common.FontAlignment;
 using Color = LongoMatch.Common.Color;
-using FontSlant = Cairo.FontSlant;
-using FontWeight = Cairo.FontWeight;
 using Image = LongoMatch.Common.Image;
-using LFontSlant = LongoMatch.Common.FontSlant;
-using LFontWeight = LongoMatch.Common.FontWeight;
 using LineStyle = LongoMatch.Common.LineStyle;
 using Point = LongoMatch.Common.Point;
 using Gdk;
+using Pango;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -35,8 +35,9 @@ namespace LongoMatch.Drawing.Cairo
 	{
 		IContext context;
 		Color savedStrokeColor, savedFillColor;
-		FontSlant fSlant, savedFSlant;
-		FontWeight fWeight, savedFWeight;
+		Style fSlant, savedFSlant;
+		Weight fWeight, savedFWeight;
+		Pango.Alignment fAlignment, savedAlignment;
 		int savedLineWidth, savedFontSize;
 		bool savedClear;
 		LineStyle savedLineStyle;
@@ -50,9 +51,10 @@ namespace LongoMatch.Drawing.Cairo
 			LineWidth = 2;
 			FontSize = 12;
 			FontFamily = "Verdana";
-			FontWeight = LFontWeight.Normal;
-			FontSlant = LFontSlant.Normal;
+			FontWeight = FontWeight.Normal;
+			FontSlant = FontSlant.Normal;
 			LineStyle = LineStyle.Normal;
+			FontAlignment = FontAlignment.Center;
 			ClearOperation = false;
 		}
 
@@ -88,30 +90,46 @@ namespace LongoMatch.Drawing.Cairo
 			protected get;
 		}
 
-		public LFontSlant FontSlant {
+		public FontSlant FontSlant {
 			set {
 				switch (value) {
-				case LFontSlant.Italic:
-					fSlant = FontSlant.Italic;
+				case FontSlant.Italic:
+					fSlant = Style.Italic;
 					break;
-				case LFontSlant.Normal:
-					fSlant = FontSlant.Normal;
+				case FontSlant.Normal:
+					fSlant = Style.Normal;
 					break;
-				case LFontSlant.Oblique:
-					fSlant = FontSlant.Oblique;
+				case FontSlant.Oblique:
+					fSlant = Style.Oblique;
 					break;
 				}
 			}
 		}
 
-		public LFontWeight FontWeight {
+		public FontWeight FontWeight {
 			set {
 				switch (value) {
-				case LFontWeight.Bold:
-					fWeight = FontWeight.Bold;
+				case FontWeight.Bold:
+					fWeight = Weight.Semibold;
 					break;
-				case LFontWeight.Normal:
-					fWeight = FontWeight.Normal;
+				case FontWeight.Normal:
+					fWeight = Weight.Normal;
+					break;
+				}
+			}
+		}
+		
+		public FontAlignment FontAlignment {
+			set {
+				switch (value) {
+				case FontAlignment.Left:
+					fAlignment = Pango.Alignment.Left;
+					break;
+				case FontAlignment.Center:
+					fAlignment = Pango.Alignment.Center;
+					break;
+				case FontAlignment.Right:
+					fAlignment = Pango.Alignment.Right;
 					break;
 				}
 			}
@@ -152,6 +170,7 @@ namespace LongoMatch.Drawing.Cairo
 			savedFillColor = FillColor;
 			savedFSlant = fSlant;
 			savedFWeight = fWeight;
+			savedAlignment = fAlignment;
 			savedLineWidth = LineWidth;
 			savedFontSize = FontSize;
 			savedFontFamily = FontFamily;
@@ -176,6 +195,7 @@ namespace LongoMatch.Drawing.Cairo
 			FillColor = savedFillColor;
 			fSlant = savedFSlant;
 			fWeight = savedFWeight;
+			fAlignment = savedAlignment;
 			LineWidth = savedLineWidth;
 			FontSize = savedFontSize;
 			FontFamily = savedFontFamily;
@@ -318,28 +338,31 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawText (Point point, double width, double height, string text)
 		{
-			TextExtents extents;
-			FontExtents fextents;
-			double x, y;
+			Layout layout;
+			Pango.Rectangle inkRect, logRect;
 			
 			if (text == null) {
 				return;
 			}
+
+			layout = (context as CairoContext).PangoLayout;
+			layout.FontDescription = FontDescription.FromString (
+				String.Format ("{0} {1}px", FontFamily, FontSize));
+			layout.FontDescription.Weight = fWeight;
+			layout.FontDescription.Style = fSlant;
+			layout.Width = Pango.Units.FromPixels ((int) width);
+			layout.Alignment = fAlignment;
+			layout.SetMarkup (text); 
 			SetColor (StrokeColor);
-			CContext.SelectFontFace (FontFamily, fSlant, fWeight);
-			CContext.SetFontSize (FontSize);
-			extents = CContext.TextExtents (text);
-			fextents = CContext.FontExtents;
-			x = point.X + width / 2 - (extents.Width / 2 + extents.XBearing);
-			y = point.Y + height / 2 - (extents.Height / 2 + extents.YBearing);
-			CContext.MoveTo (x, y);
-			CContext.ShowText (text);
-			StrokeAndFill ();
+			Pango.CairoHelper.UpdateLayout (CContext, layout);
+			layout.GetPixelExtents (out inkRect, out logRect);
+			CContext.MoveTo (point.X, point.Y + height / 2 - (double)logRect.Height / 2);
+			Pango.CairoHelper.ShowLayout (CContext, layout);
 		}
 
 		public void DrawImage (Image image)
 		{
-			CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
+			Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
 			CContext.Paint ();
 		}
 
@@ -358,7 +381,7 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Save ();
 			CContext.Translate (start.X + offset.X, start.Y + offset.Y);
 			CContext.Scale (scaleX, scaleY);
-			CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
+			Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
 			CContext.Paint ();
 			CContext.Restore ();
 		}
@@ -418,7 +441,7 @@ namespace LongoMatch.Drawing.Cairo
 			
 			pm = new Pixmap (null, (int)width, (int)height, 24);
 			disableScalling = true;
-			using (CairoContext c = new CairoContext (CairoHelper.Create (pm))) {
+			using (CairoContext c = new CairoContext (Gdk.CairoHelper.Create (pm))) {
 				canvas.Draw (c, new Area (new Point (0, 0), width, height));
 			}
 			img = new Image (Gdk.Pixbuf.FromDrawable (pm, Colormap.System, 0, 0, 0, 0,
@@ -432,7 +455,7 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			ImageSurface pngSurface = new ImageSurface (Format.ARGB32, (int)width, (int)height);
 			disableScalling = true;
-			using (CairoContext c = new CairoContext (new Context(pngSurface))) {
+			using (CairoContext c = new CairoContext (new global::Cairo.Context(pngSurface))) {
 				canvas.Draw (c, new Area (new Point (0, 0), width, height));
 			}
 			pngSurface.WriteToPng (filename);
@@ -440,9 +463,9 @@ namespace LongoMatch.Drawing.Cairo
 			pngSurface.Dispose ();
 		}
 
-		Context CContext {
+		global::Cairo.Context CContext {
 			get {
-				return context.Value as Context;
+				return context.Value as global::Cairo.Context;
 			}
 		}
 
