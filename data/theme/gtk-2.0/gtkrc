@@ -266,6 +266,7 @@ include "teamcombobox.rc"
 include "combobox.rc"
 include "checkbox.rc"
 include "handles.rc"
+include "radiobutton.rc"
 
 
 class "GtkWidget"                                style "longomatch-default"
@@ -277,6 +278,7 @@ class "GtkAspectFrame"                           style "longomatch-aspect-frame"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
 class "GtkCheckButton"                              style "longomatch-checkbox"
+class "GtkRadioButton"                              style "longomatch-radiobutton"
 # Text color for the menu items in the bar and the menus
 widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
 widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
