@@ -130,7 +130,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void Clear (bool resetDrawing = true)
 		{
 			ClearSelection ();
-			Clear ();
+			ClearObjects ();
 			if (drawing != null && resetDrawing) {
 				drawing.Drawables.Clear ();
 			}

@@ -47,7 +47,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void LoadProject (Project project, PlaysFilter filter)
 		{
-			Clear ();
+			ClearObjects ();
 			this.project = project;
 			this.filter = filter;
 			if (project != null) {

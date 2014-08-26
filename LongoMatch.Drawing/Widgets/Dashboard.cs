@@ -188,7 +188,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		void LoadTemplate ()
 		{
-			Clear ();
+			ClearObjects ();
 			foreach (TagButton tag in template.CommonTags) {
 				TagObject to = new TagObject (tag);
 				to.ClickedEvent += HandleTaggerClickedEvent;

@@ -62,20 +62,20 @@ namespace LongoMatch.Drawing
 		protected virtual void Dispose (bool disposing)
 		{
 			if (disposing) {
-				Clear ();
+				ClearObjects ();
 				Objects = null;
 				disposed = true;
 			}
 		}
 
-		protected void Clear ()
+		protected void ClearObjects ()
 		{
-				if (Objects != null) {
-					foreach (CanvasObject co in Objects) {
-						co.Dispose ();
-					}
+			if (Objects != null) {
+				foreach (CanvasObject co in Objects) {
+					co.Dispose ();
 				}
-				Objects.Clear ();
+			}
+			Objects.Clear ();
 		}
 
 		public List<ICanvasObject> Objects {

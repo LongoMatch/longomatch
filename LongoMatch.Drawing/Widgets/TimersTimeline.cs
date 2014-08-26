@@ -32,7 +32,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers = true)
 		{
-			Clear ();
+			ClearObjects ();
 			this.timers = new Dictionary<Timer, TimerTimeline> ();
 			this.duration = duration;
 			FillCanvas (timers, splitTimers);

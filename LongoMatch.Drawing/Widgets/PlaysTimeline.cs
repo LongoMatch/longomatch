@@ -49,7 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void LoadProject (Project project, PlaysFilter filter)
 		{
 			this.project = project;
-			Clear ();
+			ClearObjects ();
 			categories.Clear ();
 			duration = project.Description.File.Duration;
 			widget.Height = project.Categories.CategoriesList.Count * StyleConf.TimelineCategoryHeight;
