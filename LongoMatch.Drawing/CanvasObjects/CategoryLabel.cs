@@ -90,6 +90,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 12;
 			tk.FillColor = Config.Style.PaletteWidgets;
+			tk.FontAlignment = FontAlignment.Left;
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.DrawText (new Point (to, y), width - to, Height, category.Name);
 			tk.End ();

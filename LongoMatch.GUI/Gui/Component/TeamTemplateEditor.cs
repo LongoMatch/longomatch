@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			playerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+			playerframe.Sensitive = false;
 
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
@@ -131,6 +132,8 @@ namespace LongoMatch.Gui.Component
 
 			teamnameentry.Changed += HandleEntryChanged;
 			nameentry.Changed += HandleEntryChanged;
+			lastnameentry.Changed += HandleEntryChanged;
+			nicknameentry.Changed += HandleEntryChanged;
 			positionentry.Changed += HandleEntryChanged;
 			numberspinbutton.ValueChanged += HandleEntryChanged;
 			heightspinbutton.ValueChanged += HandleEntryChanged;
@@ -154,6 +157,10 @@ namespace LongoMatch.Gui.Component
 				template.TeamName = (sender as Entry).Text;
 			} else if (sender == nameentry) {
 				loadedPlayer.Name = (sender as Entry).Text;
+			} else if (sender == lastnameentry) {
+				loadedPlayer.LastName = (sender as Entry).Text;
+			} else if (sender == nicknameentry) {
+				loadedPlayer.NickName = (sender as Entry).Text;
 			} else if (sender == positionentry) {
 				loadedPlayer.Position = (sender as Entry).Text;
 			} else if (sender == numberspinbutton) {
@@ -181,14 +188,16 @@ namespace LongoMatch.Gui.Component
 		
 		void LoadPlayer (Player p) {
 			loadedPlayer = p;
-			nameentry.Text = p.Name != null ? p.Name : "";
-			positionentry.Text = p.Position != null ? p.Position : "";
+			nameentry.Text = p.Name ?? "";
+			lastnameentry.Text = p.LastName ?? "";
+			nicknameentry.Text = p.NickName ?? "";
+			positionentry.Text = p.Position ?? "";
 			numberspinbutton.Value = p.Number;
 			heightspinbutton.Value = p.Height;
 			weightspinbutton.Value = p.Weight;
-			nationalityentry.Text = p.Nationality != null ? p.Nationality : "";
+			nationalityentry.Text = p.Nationality ?? "";
 			bdaydatepicker.Date = p.Birthday;
-			mailentry.Text = p.Mail != null ? p.Mail : "";
+			mailentry.Text = p.Mail ?? "";
 			playerimage.Pixbuf = PlayerPhoto (p);
 		}
 		

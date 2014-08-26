@@ -53,7 +53,7 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public string FirstName {
+		public string LastName {
 			get;
 			set;
 		}
@@ -141,7 +141,14 @@ namespace LongoMatch.Store
 		
 		public override string ToString ()
 		{
-			return String.Format("{0} - {1}", Number, Name);
+			string displayName;
+			
+			if (NickName != null) {
+				displayName = NickName;
+			} else {
+				displayName = Name + " " + LastName;
+			}
+			return String.Format("{0} - {1}", Number, displayName);
 		}
 
 		#endregion
