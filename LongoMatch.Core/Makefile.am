@@ -49,7 +49,6 @@ SOURCES = Common/Area.cs \
 	Interfaces/IRenderingJobsManager.cs \
 	Interfaces/ITemplates.cs \
 	Interfaces/ITemplatesService.cs \
-	Interfaces/ITimelineNode.cs \
 	Interfaces/Multimedia/ICapturer.cs \
 	Interfaces/Multimedia/IDiscoverer.cs \
 	Interfaces/Multimedia/IFramesCapturer.cs \

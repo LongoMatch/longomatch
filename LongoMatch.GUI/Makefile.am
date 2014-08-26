@@ -70,7 +70,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Panel/WelcomePanel.cs \
 	Gui/TransparentDrawingArea.cs \
 	Gui/TreeView/CategoriesFilterTreeView.cs \
-	Gui/TreeView/CategoriesTreeView.cs \
 	Gui/TreeView/FilterBaseView.cs \
 	Gui/TreeView/ListTreeViewBase.cs \
 	Gui/TreeView/PlayListTreeView.cs \
