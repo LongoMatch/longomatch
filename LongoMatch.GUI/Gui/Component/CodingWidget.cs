@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Handlers;
@@ -72,6 +73,7 @@ namespace LongoMatch.Gui.Component
 			
 			buttonswidget.Mode = TagMode.Free;
 			buttonswidget.FitMode = FitMode.Fit;
+			buttonswidget.NewTagEvent += HandleNewTagEvent;
 		}
 
 		protected override void OnDestroyed ()
@@ -220,13 +222,14 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
-			if (loadedPlay != null) {
-				loadedPlay.Players = players;
-				Config.EventsBroker.EmitTeamTagsChanged ();
-			} else {
-				selectedPlayers = players;
-			}
+			selectedPlayers = players.ToList();
 		}
+		
+		void HandleNewTagEvent (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop)
+		{
+			Config.EventsBroker.EmitNewTag (tagger, selectedPlayers, tags, start, stop);
+		}
+
 	}
 }
 

@@ -253,13 +253,17 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void HandleNewTagEvent (TaggerButton button, List<Player> players,
-		                        List<Tag> tags, Time start, Time stop)
+		                      List<Tag> tags, Time start, Time stop)
 		{
 			if (button is TagButton || button is Timer) {
 				return;
 			}
 			
-			Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
+			/* Forward event until we have players integrted in the dashboard layout */
+			if (NewTagEvent != null) {
+				NewTagEvent (button , players, tags, start, stop);
+			}
+			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
 
 		void HandleAddNewTagEvent (TaggerButton taggerbutton)
