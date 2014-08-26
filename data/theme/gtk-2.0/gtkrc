@@ -254,6 +254,12 @@ style "longomatch-combobox" {
    }
 }
 
+style "longomatch-aspect-frame"
+{
+  xthickness = 0
+  ythickness = 0
+}
+
 include "buttons.rc"
 include "notebook.rc"
 include "teamcombobox.rc"
@@ -266,6 +272,8 @@ class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
 class "GtkButton"                                style "longomatch-square-button"
 class "GtkPaned"                                style "longomatch-handles"
+#Remove borders completely
+class "GtkAspectFrame"                           style "longomatch-aspect-frame"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
 class "GtkCheckButton"                              style "longomatch-checkbox"
