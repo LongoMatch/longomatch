@@ -3009,7 +3009,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image90">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">stock:gtk-go-down Menu</property>
+                                <property name="Pixbuf">stock:longomatch-angle Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3040,7 +3040,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image83">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-cross.png</property>
+                                <property name="Pixbuf">stock:longomatch-mark Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3073,7 +3073,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image79">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-circle-unfilled.png</property>
+                                <property name="Pixbuf">stock:longomatch-circle Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3106,7 +3106,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image86">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-ellipse.png</property>
+                                <property name="Pixbuf">stock:longomatch-circle-fill Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3138,7 +3138,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                             <child>
                               <widget class="Gtk.Image" id="image81">
                                 <property name="MemberName" />
-                                <property name="Pixbuf">resource:draw-eraser.png</property>
+                                <property name="Pixbuf">stock:longomatch-eraser Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3169,7 +3169,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image82">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-arrow.png</property>
+                                <property name="Pixbuf">stock:longomatch-arrow Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3200,7 +3200,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image88">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-number.png</property>
+                                <property name="Pixbuf">stock:longomatch-counter Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3233,7 +3233,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image91">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-freehand.png</property>
+                                <property name="Pixbuf">stock:longomatch-pencil Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3264,7 +3264,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image89">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">stock:stock_person Menu</property>
+                                <property name="Pixbuf">stock:longomatch-person Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3295,7 +3295,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image84">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-rectangle-unfilled.png</property>
+                                <property name="Pixbuf">stock:longomatch-square Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3326,7 +3326,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image85">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-rectangle.png</property>
+                                <property name="Pixbuf">stock:longomatch-square-fill Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3357,7 +3357,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image80">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-pointer.png</property>
+                                <property name="Pixbuf">stock:longomatch-select Menu</property>
                               </widget>
                             </child>
                           </widget>
@@ -3386,7 +3386,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                               <widget class="Gtk.Image" id="image87">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
-                                <property name="Pixbuf">resource:draw-text.png</property>
+                                <property name="Pixbuf">stock:longomatch-text Menu</property>
                               </widget>
                             </child>
                           </widget>

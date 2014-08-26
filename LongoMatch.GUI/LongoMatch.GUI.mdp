@@ -159,17 +159,6 @@
     <File subtype="Directory" buildaction="Compile" name="Gui/Menu" />
     <File subtype="Code" buildaction="Compile" name="Gui/Menu/PlaysMenu.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/GtkGlue.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-arrow.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-circle-unfilled.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-cross.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-ellipse.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-eraser.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-freehand.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-number.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-pointer.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-rectangle.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-rectangle-unfilled.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-text.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/dash-line.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-double-dot.svg" />

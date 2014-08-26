@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child anglebutton.Gtk.Container+ContainerChild
 			this.image90 = new global::Gtk.Image ();
 			this.image90.Name = "image90";
-			this.image90.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-go-down", global::Gtk.IconSize.Menu);
+			this.image90.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-angle", global::Gtk.IconSize.Menu);
 			this.anglebutton.Add (this.image90);
 			this.toolstable.Add (this.anglebutton);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.toolstable [this.anglebutton]));
@@ -129,7 +129,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child crossbutton.Gtk.Container+ContainerChild
 			this.image83 = new global::Gtk.Image ();
 			this.image83.Name = "image83";
-			this.image83.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-cross.png");
+			this.image83.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-mark", global::Gtk.IconSize.Menu);
 			this.crossbutton.Add (this.image83);
 			this.toolstable.Add (this.crossbutton);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.toolstable [this.crossbutton]));
@@ -150,7 +150,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child ellipsebutton.Gtk.Container+ContainerChild
 			this.image79 = new global::Gtk.Image ();
 			this.image79.Name = "image79";
-			this.image79.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-circle-unfilled.png");
+			this.image79.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-circle", global::Gtk.IconSize.Menu);
 			this.ellipsebutton.Add (this.image79);
 			this.toolstable.Add (this.ellipsebutton);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.toolstable [this.ellipsebutton]));
@@ -171,7 +171,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child ellipsefilledbutton.Gtk.Container+ContainerChild
 			this.image86 = new global::Gtk.Image ();
 			this.image86.Name = "image86";
-			this.image86.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-ellipse.png");
+			this.image86.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-circle-fill", global::Gtk.IconSize.Menu);
 			this.ellipsefilledbutton.Add (this.image86);
 			this.toolstable.Add (this.ellipsefilledbutton);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.toolstable [this.ellipsefilledbutton]));
@@ -192,7 +192,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child eraserbutton.Gtk.Container+ContainerChild
 			this.image81 = new global::Gtk.Image ();
 			this.image81.Name = "image81";
-			this.image81.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-eraser.png");
+			this.image81.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-eraser", global::Gtk.IconSize.Menu);
 			this.eraserbutton.Add (this.image81);
 			this.toolstable.Add (this.eraserbutton);
 			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.toolstable [this.eraserbutton]));
@@ -211,7 +211,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child linebutton.Gtk.Container+ContainerChild
 			this.image82 = new global::Gtk.Image ();
 			this.image82.Name = "image82";
-			this.image82.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-arrow.png");
+			this.image82.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-arrow", global::Gtk.IconSize.Menu);
 			this.linebutton.Add (this.image82);
 			this.toolstable.Add (this.linebutton);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.toolstable [this.linebutton]));
@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child numberbutton.Gtk.Container+ContainerChild
 			this.image88 = new global::Gtk.Image ();
 			this.image88.Name = "image88";
-			this.image88.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-number.png");
+			this.image88.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-counter", global::Gtk.IconSize.Menu);
 			this.numberbutton.Add (this.image88);
 			this.toolstable.Add (this.numberbutton);
 			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.toolstable [this.numberbutton]));
@@ -251,7 +251,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child penbutton.Gtk.Container+ContainerChild
 			this.image91 = new global::Gtk.Image ();
 			this.image91.Name = "image91";
-			this.image91.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-freehand.png");
+			this.image91.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-pencil", global::Gtk.IconSize.Menu);
 			this.penbutton.Add (this.image91);
 			this.toolstable.Add (this.penbutton);
 			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.toolstable [this.penbutton]));
@@ -270,7 +270,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child playerbutton.Gtk.Container+ContainerChild
 			this.image89 = new global::Gtk.Image ();
 			this.image89.Name = "image89";
-			this.image89.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "stock_person", global::Gtk.IconSize.Menu);
+			this.image89.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-person", global::Gtk.IconSize.Menu);
 			this.playerbutton.Add (this.image89);
 			this.toolstable.Add (this.playerbutton);
 			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.toolstable [this.playerbutton]));
@@ -289,7 +289,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child rectanglebutton.Gtk.Container+ContainerChild
 			this.image84 = new global::Gtk.Image ();
 			this.image84.Name = "image84";
-			this.image84.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-rectangle-unfilled.png");
+			this.image84.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-square", global::Gtk.IconSize.Menu);
 			this.rectanglebutton.Add (this.image84);
 			this.toolstable.Add (this.rectanglebutton);
 			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.toolstable [this.rectanglebutton]));
@@ -308,7 +308,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child rectanglefilledbutton.Gtk.Container+ContainerChild
 			this.image85 = new global::Gtk.Image ();
 			this.image85.Name = "image85";
-			this.image85.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-rectangle.png");
+			this.image85.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-square-fill", global::Gtk.IconSize.Menu);
 			this.rectanglefilledbutton.Add (this.image85);
 			this.toolstable.Add (this.rectanglefilledbutton);
 			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.toolstable [this.rectanglefilledbutton]));
@@ -327,7 +327,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child selectbutton.Gtk.Container+ContainerChild
 			this.image80 = new global::Gtk.Image ();
 			this.image80.Name = "image80";
-			this.image80.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-pointer.png");
+			this.image80.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-select", global::Gtk.IconSize.Menu);
 			this.selectbutton.Add (this.image80);
 			this.toolstable.Add (this.selectbutton);
 			global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.toolstable [this.selectbutton]));
@@ -344,7 +344,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child textbutton.Gtk.Container+ContainerChild
 			this.image87 = new global::Gtk.Image ();
 			this.image87.Name = "image87";
-			this.image87.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("draw-text.png");
+			this.image87.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-text", global::Gtk.IconSize.Menu);
 			this.textbutton.Add (this.image87);
 			this.toolstable.Add (this.textbutton);
 			global::Gtk.Table.TableChild w28 = ((global::Gtk.Table.TableChild)(this.toolstable [this.textbutton]));
