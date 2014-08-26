@@ -258,6 +258,7 @@ include "buttons.rc"
 include "notebook.rc"
 include "teamcombobox.rc"
 include "combobox.rc"
+include "checkbox.rc"
 
 
 class "GtkWidget"                                style "longomatch-default"
@@ -265,6 +266,7 @@ class "GtkEntry"                                 style "longomatch-entry"
 class "GtkButton"                                style "longomatch-square-button"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
+class "GtkCheckButton"                              style "longomatch-checkbox"
 # Text color for the menu items in the bar and the menus
 widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
 widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
