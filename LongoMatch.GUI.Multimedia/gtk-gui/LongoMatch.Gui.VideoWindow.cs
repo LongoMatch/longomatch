@@ -4,7 +4,7 @@ namespace LongoMatch.Gui
 {
 	public partial class VideoWindow
 	{
-		private global::Gtk.EventBox eventbox;
+		private global::Gtk.EventBox videoeventbox;
 
 		protected virtual void Build ()
 		{
@@ -13,9 +13,9 @@ namespace LongoMatch.Gui
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.VideoWindow";
 			// Container child LongoMatch.Gui.VideoWindow.Gtk.Container+ContainerChild
-			this.eventbox = new global::Gtk.EventBox ();
-			this.eventbox.Name = "eventbox";
-			this.Add (this.eventbox);
+			this.videoeventbox = new global::Gtk.EventBox ();
+			this.videoeventbox.Name = "videoeventbox";
+			this.Add (this.videoeventbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

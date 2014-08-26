@@ -30,6 +30,7 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
+		EventBox backgroundBox;
 		PlaysSelectionWidget playsSelection;
 		PlayerCapturerBin playercapturer;
 		CodingWidget codingwidget;
@@ -140,6 +141,8 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void CreateCommonUI () {
+			backgroundBox = new EventBox ();
+			backgroundBox.Name = "lightbackgroundeventbox";
 			videowidgetsbox = new HBox ();
 			playsSelection = new PlaysSelectionWidget ();
 			codingwidget = new CodingWidget();
@@ -155,6 +158,7 @@ namespace LongoMatch.Gui.Component
 				playercapturer.PeriodsNames = openedProject.Categories.GamePeriods;
 				playercapturer.PeriodsTimers = openedProject.Periods;
 			}
+			backgroundBox.Show ();
 			playsSelection.Show ();
 			codingwidget.Show ();
 			playercapturer.Show ();
@@ -182,7 +186,8 @@ namespace LongoMatch.Gui.Component
 			videowidgetsbox.Add (playercapturer);
 			vbox.PackStart (videowidgetsbox, false, true, 0);
 			vbox.PackEnd (codingwidget, true, true, 0);
-			Add (centralpane);
+			backgroundBox.Add (centralpane);
+			Add (backgroundBox);
 		}
 
 		void CreatePreviewUI () {
@@ -206,7 +211,8 @@ namespace LongoMatch.Gui.Component
 			uppane.Pack2 (rightpane, true, true);
 			videowidgetsbox.Add (playercapturer);
 			rightpane.Pack1 (videowidgetsbox, true, true);
-			Add (centralpane);
+			backgroundBox.Add (centralpane);
+			Add (backgroundBox);
 		}
 		
 		void ClearWidgets() {

@@ -56,7 +56,6 @@ namespace LongoMatch.Gui
 			// Container child videobox.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
 			this.hbox2.Name = "hbox2";
-			this.hbox2.Spacing = 6;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.videowindow = new global::LongoMatch.Gui.VideoWindow ();
 			this.videowindow.Events = ((global::Gdk.EventMask)(256));

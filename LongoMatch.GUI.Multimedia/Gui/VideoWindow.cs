@@ -39,12 +39,12 @@ namespace LongoMatch.Gui
 			Window.DoubleBuffered = false;
 			Window.Realized += HandleRealized;
 			Window.ExposeEvent += HandleExposeEvent;
-			eventbox.ButtonPressEvent += HandleButtonPressEvent;
-			eventbox.ScrollEvent += HandleScrollEvent;
-			eventbox.BorderWidth = 0;
+			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
+			videoeventbox.ScrollEvent += HandleScrollEvent;
+			videoeventbox.BorderWidth = 0;
 
 			frame.Add (Window);
-			eventbox.Add (frame);
+			videoeventbox.Add (frame);
 			ShowAll ();
 		}
 

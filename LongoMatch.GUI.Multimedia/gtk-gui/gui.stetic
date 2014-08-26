@@ -95,7 +95,6 @@
                     <child>
                       <widget class="Gtk.HBox" id="hbox2">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
                         <child>
                           <widget class="LongoMatch.Gui.VideoWindow" id="videowindow">
                             <property name="MemberName" />
@@ -626,7 +625,7 @@
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.EventBox" id="eventbox">
+      <widget class="Gtk.EventBox" id="videoeventbox">
         <property name="MemberName" />
         <child>
           <placeholder />
