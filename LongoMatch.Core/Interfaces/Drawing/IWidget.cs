@@ -21,7 +21,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Interfaces.Drawing
 {
-	public interface IWidget
+	public interface IWidget: IDisposable
 	{
 		event DrawingHandler DrawEvent;
 		event ButtonPressedHandler ButtonPressEvent;
