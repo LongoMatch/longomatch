@@ -148,15 +148,15 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 			
-			for (i = i; i < cats.Count; i++) {
+			for (int j = 0; j < cats.Count; j++) {
 				AnalysisCategory cat;
-				cat = cats [i];
+				cat = cats [j];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat), duration,
 				                           i * StyleConf.TimelineCategoryHeight,
 				                           ColorForRow (i));
 				categories [cat] = tl;
 				Objects.Add (tl);
-				Console.WriteLine (i);
+				i++;
 			}
 
 			UpdateVisibleCategories ();
@@ -223,10 +223,9 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (AnalysisCategory ac in categories.Keys) {
 				TimelineObject tl;
 				Category c = ac as Category;
-				if (ac == null)
+				if (c == null)
 					continue;
-				
-			
+
 				tl = categories [c];
 				if (!tl.Visible)
 					continue;
