@@ -23,6 +23,7 @@ namespace LongoMatch.Common
 	{
 		public const int WelcomeBorder = 30;
 		public const int WelcomeIconSize = 80;
+		public const int WelcomeIconImageSize = 36;
 		public const int WelcomeLogoWidth = 450;
 		public const int WelcomeLogoHeight = 99;
 		public const int WelcomeIconsHSpacing = 105;

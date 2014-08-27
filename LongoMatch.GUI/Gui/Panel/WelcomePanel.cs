@@ -31,17 +31,17 @@ namespace LongoMatch.Gui.Panel
 	{
 	
 		static WelcomeButton [] buttons = {
-			new WelcomeButton ("longomatch-new", Catalog.GetString ("New"),
+			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
 			                   new Action (() => Config.EventsBroker.EmitNewProject (null))),
-			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
+			new WelcomeButton ("longomatch-project-open", Catalog.GetString ("Open"),
 			                   new Action (() => Config.EventsBroker.EmitOpenProject ())),
-			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
+			new WelcomeButton ("longomatch-project-import", Catalog.GetString ("Import"),
 			                   new Action (() => Config.EventsBroker.EmitImportProject ())),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageProjects ())),
-			new WelcomeButton ("longomatch-sportconfig", Catalog.GetString ("Analysis\nmanager"),
+			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageCategories ())),
-			new WelcomeButton ("longomatch-teamconfig", Catalog.GetString ("Team\nmanager"),
+			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Team\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageTeams ())),
 			                   
 		};
@@ -135,7 +135,7 @@ namespace LongoMatch.Gui.Panel
 			Label label;
 			
 			image = new Gtk.Image (
-				IconTheme.Default.LoadIcon (b.name, StyleConf.WelcomeIconSize, 0));
+				IconTheme.Default.LoadIcon (b.name, StyleConf.WelcomeIconImageSize, 0));
 
 			button = new Button ();
 			button.Clicked += (sender, e) => (b.func());
