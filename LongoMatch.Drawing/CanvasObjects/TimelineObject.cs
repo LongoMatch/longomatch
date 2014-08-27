@@ -50,6 +50,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 		
 		protected override void Dispose (bool disposing)
 		{
+			foreach (TimeNodeObject tn in nodes) {
+				tn.Dispose ();
+			}
 			selectionBorderL.Dispose ();
 			selectionBorderR.Dispose ();
 			base.Dispose (disposing);

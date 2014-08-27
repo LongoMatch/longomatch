@@ -45,6 +45,14 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
+		
+		protected override void Dispose (bool disposing)
+		{
+			foreach (CategoryTimeline ct in categories.Values) {
+				ct.Dispose ();
+			}
+			base.Dispose (disposing);
+		}
 
 		public void LoadProject (Project project, PlaysFilter filter)
 		{
