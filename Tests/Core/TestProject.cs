@@ -72,22 +72,22 @@ namespace Tests.Core
 			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
 			p.AddPlay (p.Categories.CategoriesList[6], new Time (1000), new Time (2000), null);
 			
-			IEnumerable<IGrouping<AnalysisCategory, Play>> g = p.PlaysGroupedByCategory;
+			IEnumerable<IGrouping<TaggerButton, Play>> g = p.PlaysGroupedByCategory;
 			Assert.AreEqual (g.Count(), 4);
-			IGrouping<Category, Play> gr = g.ElementAt (0);
-			Assert.AreEqual (gr.Key, p.Categories.CategoriesList[0]);
+			IGrouping<TaggerButton, Play> gr = g.ElementAt (0);
+			Assert.AreEqual (gr.Key, p.Categories.List[0]);
 			Assert.AreEqual (gr.Count(), 2);
 			
 			gr = g.ElementAt (1);
-			Assert.AreEqual (gr.Key, p.Categories.CategoriesList[1]);
+			Assert.AreEqual (gr.Key, p.Categories.List[1]);
 			Assert.AreEqual (gr.Count(), 1);
 			
 			gr = g.ElementAt (2);
-			Assert.AreEqual (gr.Key, p.Categories.CategoriesList[2]);
+			Assert.AreEqual (gr.Key, p.Categories.List[2]);
 			Assert.AreEqual (gr.Count(), 3);
 			
 			gr = g.ElementAt (3);
-			Assert.AreEqual (gr.Key, p.Categories.CategoriesList[6]);
+			Assert.AreEqual (gr.Key, p.Categories.List[6]);
 			Assert.AreEqual (gr.Count(), 1);
 		}
 		

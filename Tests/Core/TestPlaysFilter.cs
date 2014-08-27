@@ -60,7 +60,7 @@ namespace Tests.Core
 			Project p = CreateProject ();
 			PlaysFilter filter = new PlaysFilter (p);
 			
-			Assert.AreEqual (10, filter.VisibleCategories.Count);
+			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
@@ -96,7 +96,7 @@ namespace Tests.Core
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
 			filter.FilterCategory (p.Categories.CategoriesList[2], false);
-			Assert.AreEqual (10, filter.VisibleCategories.Count);
+			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
 		
@@ -189,14 +189,14 @@ namespace Tests.Core
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			filter.ClearCategoriesFilter ();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
-			Assert.AreEqual (10, filter.VisibleCategories.Count);
+			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			
 			filter.FilterCategoryTag (p.Categories.CategoriesList[0], p.Categories.CategoriesList[0].Tags[0], true);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			filter.ClearAll ();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
-			Assert.AreEqual (10, filter.VisibleCategories.Count);
+			Assert.AreEqual (17, filter.VisibleCategories.Count);
 		}
 	}
 }
