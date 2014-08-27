@@ -277,22 +277,27 @@ class "GtkPaned"                                style "longomatch-handles"
 class "GtkAspectFrame"                           style "longomatch-aspect-frame"
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
-class "GtkCheckButton"                              style "longomatch-checkbox"
-class "GtkRadioButton"                              style "longomatch-radiobutton"
+
+class "GtkCheckButton"                           style "longomatch-checkbox"
+class "GtkCheckMenuItem"                         style "longomatch-checkbox"
+class "GtkRadioButton"                           style "longomatch-radiobutton"
+
 # Text color for the menu items in the bar and the menus
 widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
 widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
-widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
+widget_class "*<GtkComboBox>*"                    style "longomatch-combobox"
 #widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-combobox-button"
 #widget_class "*<GtkComboBox>*<GtkEntry>"         style "longomatch-combobox-entry"
-#widget_class "*<GtkComboBoxEntry>*<GtkEntry>"   style "longomatch-combobox-entry"
-#widget_class "*<GtkComboBoxEntry>*<GtkButton>"  style "longomatch-combobox-msbutton"
+widget_class "*<GtkComboBox>*<GtkButton>"  style "longomatch-combobox-button"
+widget_class "*<GtkComboBox>*<GtkArrow>" style "longomatch-combobox-arrow"
+
+
+
 widget_class "*HomeTeamsComboBox*" style "longomatch-home-teams-combobox"
 widget_class "*HomeTeamsComboBox*<GtkButton>" style "longomatch-home-teams-combobox-button"
 widget_class "*AwayTeamsComboBox*" style "longomatch-away-teams-combobox"
 widget_class "*AwayTeamsComboBox*<GtkButton>" style "longomatch-away-teams-combobox-button"
 widget_class "*TeamsComboBox*<GtkArrow>" style "longomatch-teams-combobox-arrow"
-
 
 
 class "GtkNotebook"                              style "longomatch-notebook"

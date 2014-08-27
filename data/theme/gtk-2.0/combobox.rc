@@ -1,6 +1,37 @@
 style "longomatch-combobox" = "longomatch-default" {
   xthickness = 2
   ythickness = 2
+
+  base[NORMAL]      = @bg_light_color
+  bg[NORMAL]        = @bg_light_color
+
+  fg[NORMAL]        = @text_color
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+
+  engine "pixmap"
+  {
+    # LTR version
+    image
+    {
+      function   = SHADOW
+      shadow     = IN
+      file       = "Entry/combo-entry-border-bg.png"
+      border     = { 4, 4, 5, 4 }
+      stretch    = TRUE
+      direction  = LTR
+    }
+    # RTL version
+    image
+    {
+      function   = SHADOW
+      shadow     = IN
+      file       = "Entry/combo-entry-border-bg-rtl.png"
+      border     = { 4, 4, 5, 4 }
+      stretch    = TRUE
+      direction  = RTL
+    }
+  }
 }
 
 style "longomatch-combobox-arrow"
@@ -20,46 +51,9 @@ style "longomatch-combobox-arrow"
   }
 }
 
-style "longomatch-combobox-entry" = "longomatch-combobox" {
-  xthickness = 3
-  ythickness = 4
-
-  engine "pixmap"
-  {
-    # LTR version
-    image
-    {
-      function   = SHADOW
-      detail     = "entry"
-      shadow     = IN
-      file       = "Entry/combo-entry-border-bg.png"
-      border     = { 4, 4, 5, 4 }
-      stretch    = TRUE
-      direction  = LTR
-    }
-    # RTL version
-    image
-    {
-      function   = SHADOW
-      detail     = "entry"
-      shadow     = IN
-      file       = "Entry/combo-entry-border-bg-rtl.png"
-      border     = { 4, 4, 5, 4 }
-      stretch    = TRUE
-      direction  = RTL
-    }
-     image
-     {
-       function        = FLAT_BOX
-       detail          = "entry_bg"
-       overlay_file    = "Entry/filechooser-entry-fill.png"
-       overlay_border  = { 0, 0, 0, 0 }
-       overlay_stretch = TRUE
-     }
-  }
-}
-
-style "longomatch-combobox-button" {
+style "longomatch-combobox-button" = "longomatch-combo
+"
+{
   fg[ACTIVE] = @text_color
 
   engine "pixmap"
@@ -70,7 +64,7 @@ style "longomatch-combobox-button" {
     {
       function    = BOX
       file        = "Entry/combo-entry-button.png"
-      border      = { 10, 10, 10, 10 }
+      border      = { 4, 4, 4, 4 }
       stretch     = TRUE
       direction   = LTR
     }
