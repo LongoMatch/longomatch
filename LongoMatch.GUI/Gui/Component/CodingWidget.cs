@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			teamtagger.Compact = true;
 
 			teamsdrawingarea.HeightRequest = 200;
 			teamsdrawingarea.WidthRequest = 300;

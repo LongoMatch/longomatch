@@ -96,6 +96,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public bool Compact {
+			get;
+			set;
+		}
+
 		public bool SubstitutionMode {
 			get {
 				return substitutionMode;
@@ -169,7 +174,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
 		{
 			int[] homeF = null, awayF = null;
-			int playerSize, colSize, border;
+			int playerSize, benchPlayerSize, colSize, border, benchWidth, playersPerRow;
 
 			this.homeTeam = homeTeam;
 			this.awayTeam = awayTeam;
@@ -208,15 +213,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 
 			colSize = ColumnSize;
-			playerSize = colSize * 80 / 100;
+			playerSize = colSize * 90 / 100;
 
+			BenchWidth (colSize, field.Height, playerSize);
 			field.LoadTeams (background, homeF, awayF, homePlayingPlayers,
 			                 awayPlayingPlayers, playerSize, NTeams);
 			homeBench.BenchPlayers = homeBenchPlayers;
 			awayBench.BenchPlayers = awayBenchPlayers;
-			homeBench.PlayersSize = awayBench.PlayersSize = playerSize;
-			homeBench.PlayersPerRow = awayBench.PlayersPerRow = 2;
-			homeBench.Width = awayBench.Width = colSize * 2;
 			homeBench.Height = awayBench.Height = field.Height;
 			
 			border = Config.Style.TeamTaggerBenchBorder;
@@ -225,6 +228,36 @@ namespace LongoMatch.Drawing.CanvasObjects
 			awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
 
 			Update ();
+		}
+
+		void BenchWidth (int colSize, int height, int playerSize)
+		{
+			int maxPlayers, playersPerColumn, playersPerRow;
+			double ncolSize;
+			
+			ncolSize = colSize;
+			
+			maxPlayers = Math.Max (
+				homeBenchPlayers != null ? homeBenchPlayers.Count : 0,
+				awayBenchPlayers != null ? awayBenchPlayers.Count : 0);
+			playersPerColumn = height / colSize;
+			if (Compact) {
+				/* Try with 4/4, 3/4 and 2/4 of the original column size
+				 * to fit all players in a single column */ 
+				for (int i=4; i>1; i--) {
+					ncolSize = (double)colSize * i / 4;
+					playersPerColumn = (int)(height / ncolSize);
+					playersPerRow = (int)Math.Ceiling ((double)maxPlayers / playersPerColumn);
+					if (playersPerRow == 1) {
+						break;
+					}
+				}
+			}
+
+			homeBench.PlayersSize = awayBench.PlayersSize = (int)(ncolSize * 90 / 100);
+			homeBench.PlayersPerRow = awayBench.PlayersPerRow =
+				(int)Math.Ceiling ((double)maxPlayers / playersPerColumn);
+			homeBench.Width = awayBench.Width = (int)ncolSize * homeBench.PlayersPerRow;
 		}
 
 		void ClearPlayers ()
@@ -242,7 +275,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 			}
 		}
-		
+
 		ISurface CreateSurface (string name)
 		{
 			
@@ -344,7 +377,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 					Team = team, Background = backgroundSurface,
 					Number =  number, In = sin, Out = sout,
 					SubstitutionMode =  SubstitutionMode,
-					Photo = photoSurface };
+					Photo = photoSurface
+				};
 				po.ClickedEvent += HandleClickedEvent;
 				playerObjects.Add (po);
 			}

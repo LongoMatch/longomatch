@@ -66,6 +66,12 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tagger.Reload ();
 		}
+		
+		public bool Compact {
+			set {
+				tagger.Compact = value;
+			}
+		}
 
 		public bool SubstitutionMode {
 			set {
