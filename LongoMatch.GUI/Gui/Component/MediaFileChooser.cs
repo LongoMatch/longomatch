@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.IO;
 using Mono.Unix;
 using LongoMatch.Store;
 using LongoMatch.Gui.Helpers;
@@ -26,31 +27,62 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileChooser : Gtk.Bin
 	{
 		public event EventHandler ChangedEvent;
-		MediaFile file;
+		MediaFile mediaFile;
+		string file;
 
 		public MediaFileChooser ()
 		{
 			this.Build ();
+			MediaFileMode = true;
+			UpdateFile ();
 			addbutton.Clicked += HandleClicked;
 		}
 
-		public MediaFile File {
+		public bool MediaFileMode {
+			get;
+			set;
+		}
+		
+		public string File {
+			set {
+				file = value;
+				UpdateFile ();
+			}
 			get {
 				return file;
 			}
+		}
+		
+		public MediaFile MediaFile {
+			get {
+				return mediaFile;
+			}
 			set {
-				file = value;
-				if (file != null) {
-					fileentry.Text = file.FilePath;
-				} else {
-					fileentry.Text = Catalog.GetString ("Select file...");
-				}
+				mediaFile = value;
+				UpdateFile ();
+			}
+		}
+		
+		void UpdateFile ()
+		{
+			if (mediaFile != null) {
+				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
+			} else if (file != null) {
+				fileentry.Text = System.IO.Path.GetFileName (file);
+			} else {
+				fileentry.Text = Catalog.GetString ("Select file...");
 			}
 		}
 		
 		void HandleClicked (object sender, EventArgs e)
 		{
-			File = Misc.OpenFile (this);
+			if (MediaFileMode) {
+				MediaFile = Misc.OpenFile (this);
+			} else {
+				File = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
+				                                   "Capture.mp4", Config.VideosDir, "MP4",
+				                                   new string[] { "*.mp4" });
+			}
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);
 			}

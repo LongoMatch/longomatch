@@ -152,12 +152,11 @@ namespace LongoMatch.Gui.Panel
 
 		void ConnectSignals ()
 		{
-			savebutton.Clicked += HandleSavebuttonClicked;
 			urientry.Changed += HandleEntryChanged;
-			outfileEntry.Changed += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			mediafilechooser1.ChangedEvent += (sender, e) => {
-				mediaFile = mediafilechooser1.File;};
+				mediaFile = mediafilechooser1.MediaFile;};
+			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 		}
 
 		void FillProjectDetails ()
@@ -201,9 +200,11 @@ namespace LongoMatch.Gui.Panel
 			} else if (projectType == ProjectType.URICaptureProject) {
 				urimode = true;
 			}
+			filelabel.Visible = filemode;
 			filetable.Visible = filemode;
 			outputfiletable.Visible = capturemode || urimode;
-			capturetable.Visible = capturemode || urimode;
+			rcapturetable.Visible = capturemode || urimode;
+			lcapturetable.Visible = capturemode || urimode;
 			urientry.Visible = urimode;
 			urilabel.Visible = urimode;
 			device.Visible = capturemode;
@@ -278,7 +279,7 @@ namespace LongoMatch.Gui.Panel
 			
 			if (projectType == ProjectType.FileProject ||
 				projectType == ProjectType.EditProject) {
-				if (mediafilechooser1.File == null) {
+				if (mediafilechooser1.MediaFile == null) {
 					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
 					return false;
 				}
@@ -291,7 +292,7 @@ namespace LongoMatch.Gui.Panel
 			
 			if (projectType == ProjectType.CaptureProject ||
 				projectType == ProjectType.URICaptureProject) {
-				if (outfileEntry.Text == "") {
+				if (String.IsNullOrEmpty (capturemediafilechooser.File)) {
 					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
 					return false;
 				}
@@ -317,12 +318,12 @@ namespace LongoMatch.Gui.Panel
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();
 				
-			encSettings.OutputFile = outfileEntry.Text;
+			encSettings.OutputFile = capturemediafilechooser.File;
 			
 			if (project.Description.File == null) {
 				project.Description.File = new MediaFile ();
 				project.Description.File.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
-				project.Description.File.FilePath = outfileEntry.Text;
+				project.Description.File.FilePath = capturemediafilechooser.File;
 			}
 			if (projectType == ProjectType.CaptureProject) {
 				Device device = videoDevices [devicecombobox.Active];
@@ -356,18 +357,6 @@ namespace LongoMatch.Gui.Panel
 			return true;
 		}
 
-		void HandleSavebuttonClicked (object sender, System.EventArgs e)
-		{
-			string filename;
-				
-			filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
-			                                       "Capture.mp4", Config.VideosDir, "MP4",
-			                                       new string[] { "*.mp4" });
-			if (filename != null) {
-				outfileEntry.Text = System.IO.Path.ChangeExtension (filename, "mp4");
-			}
-		}
-
 		void HandleEntryChanged (object sender, EventArgs e)
 		{
 			if (urientry.Text != "") {
@@ -375,7 +364,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				urilabel.ModifyFg (StateType.Normal, red);
 			}
-			if (outfileEntry.Text != "") {
+			if (String.IsNullOrEmpty (capturemediafilechooser.File)) {
 				outputfilelabel.ModifyFg (StateType.Normal);
 			} else {
 				outputfilelabel.ModifyFg (StateType.Normal, red);

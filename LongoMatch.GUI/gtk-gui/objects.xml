@@ -161,15 +161,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayerPropertiesTreeView Signals">
-        <signal name="PlayerClicked" />
-        <signal name="PlayersSelected" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -292,7 +283,12 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="MediaFileChooser Properties">
+        <property name="MediaFileMode" />
+        <property name="File" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="MediaFileChooser Signals">
         <signal name="ChangedEvent" />
