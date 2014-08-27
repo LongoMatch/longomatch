@@ -10060,7 +10060,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-zoom-out Menu</property>
+                    <property name="Icon">stock:longomatch-zoom-out Menu</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                   </widget>
@@ -10076,7 +10076,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-zoom-in Menu</property>
+                    <property name="Icon">stock:longomatch-zoom-in Menu</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                   </widget>

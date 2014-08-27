@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Component
 			w4.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-zoom-out", global::Gtk.IconSize.Menu);
+			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-zoom-out", global::Gtk.IconSize.Menu);
 			w4.Add (w5);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w7 = new global::Gtk.Label ();
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Component
 			w13.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w14 = new global::Gtk.Image ();
-			w14.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-zoom-in", global::Gtk.IconSize.Menu);
+			w14.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-zoom-in", global::Gtk.IconSize.Menu);
 			w13.Add (w14);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w16 = new global::Gtk.Label ();
