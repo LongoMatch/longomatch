@@ -82,7 +82,11 @@ namespace LongoMatch.Services
 		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element)
 		{
 			Switch (null, playlist, element);
+			if (element != null) {
+				playlist.SetActive (element);
+			}
 			player.LoadPlayListPlay (playlist, element);
+			
 		}
 
 		void HandlePlaySelected (Play play)
@@ -93,7 +97,7 @@ namespace LongoMatch.Services
 		void HandleNext (Playlist playlist)
 		{
 			if (playlist != null && playlist.HasNext ()) {
-				HandlePlaylistElementSelected (playlist, playlist.Next ()); 
+				Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Next());
 			}
 		}
 		
@@ -116,7 +120,7 @@ namespace LongoMatch.Services
 				}
 				/* Load the next playlist element */
 				if (playlist.HasPrev ()) {
-					HandlePlaylistElementSelected (playlist, playlist.Prev ());
+					Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Prev());
 				}
 			}
 		}
