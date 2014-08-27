@@ -48,17 +48,20 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void LoadProject (Project project, PlaysFilter filter)
 		{
+			int height;
+
 			this.project = project;
 			ClearObjects ();
 			categories.Clear ();
 			duration = project.Description.File.Duration;
-			widget.Height = project.Categories.CategoriesList.Count * StyleConf.TimelineCategoryHeight;
+			height = project.Categories.CategoriesList.Count * StyleConf.TimelineCategoryHeight;
 			if (project.Categories.Scores.Count > 0) {
-				widget.Height += StyleConf.TimelineCategoryHeight;
+				height += StyleConf.TimelineCategoryHeight;
 			}
 			if (project.Categories.PenaltyCards.Count > 0) {
-				widget.Height += StyleConf.TimelineCategoryHeight;
+				height += StyleConf.TimelineCategoryHeight;
 			}
+			widget.Height = height;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
