@@ -20,11 +20,14 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
 using LongoMatch.Store;
 using LongoMatch.Store.Playlists;
+using System.IO;
 
 namespace LongoMatch.Drawing
 {
 	public class PlayslistCellRenderer
 	{
+	
+		public static ISurface EyeSurface = null;
 	
 		public static void RenderSeparationLine (IDrawingToolkit tk, IContext context, Area backgroundArea)
 		{
@@ -127,8 +130,8 @@ namespace LongoMatch.Drawing
 		}
 		
 		public static void RenderPlay (Color color, Image ss, bool selected, string desc,
-		                               int count, bool isExpanded, IDrawingToolkit tk,
-		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
+		                             int count, bool isExpanded, IDrawingToolkit tk,
+		                             IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
 			double textWidth;
@@ -147,9 +150,7 @@ namespace LongoMatch.Drawing
 			
 			tk.LineWidth = 0;
 			if (state.HasFlag (CellState.Prelit)) {
-				tk.FillColor = Config.Style.PaletteBackgroundLight;
-			} else if (state.HasFlag (CellState.Selected)) {
-				tk.FillColor = Config.Style.PaletteBackground;
+				tk.FillColor = Config.Style.PaletteBackgroundDarkBright;
 			} else {
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 			}
@@ -161,7 +162,8 @@ namespace LongoMatch.Drawing
 			tk.DrawRectangle (selectPoint, StyleConf.ListSelectedWidth, backgroundArea.Height);
 			tk.FillColor = Config.Style.PaletteBackgroundDark;
 			tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 1); 
-			if (selected) {
+			if (state.HasFlag (CellState.Selected)) {
+				tk.FillColor = Config.Style.PaletteBackground;
 				tk.FillColor = Config.Style.PaletteActive;
 				tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 2); 
 			}
@@ -172,6 +174,15 @@ namespace LongoMatch.Drawing
 			tk.FontAlignment = FontAlignment.Left;
 			tk.DrawText (textPoint, textWidth, cellArea.Height, desc);
 			
+			if (selected) {
+				if (EyeSurface == null) {
+					EyeSurface = Config.DrawingToolkit.CreateSurface (
+						Path.Combine (Config.IconsDir, StyleConf.ListEyeIconPath));
+				}
+				tk.DrawSurface (EyeSurface, new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset,
+				                                       imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height /2));
+			}
+
 			if (ss != null) {
 				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss, true);
 			}

@@ -57,6 +57,8 @@ namespace LongoMatch.Common
 		public const int ListCategoryHeight = 50;
 		public const int ListCountRadio = 10;
 		public const int ListCountWidth = 20;
+		public const int ListEyeIconOffset = 10;
+		public const string ListEyeIconPath = "hicolor/scalable/actions/longomatch-eye.svg";
 
 		public const int TeamsShieldIconSize = 45;
 		
@@ -100,6 +102,8 @@ namespace LongoMatch.Common
 		public Color PaletteBackgroundLight { get; set; }
 
 		public Color PaletteBackgroundDark { get; set; }
+
+		public Color PaletteBackgroundDarkBright { get; set; }
 
 		public Color PaletteWidgets { get; set; }
 
