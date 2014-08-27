@@ -29,6 +29,7 @@ SOURCES = Canvas.cs \
 	CanvasObjects/TimelineObject.cs \
 	CanvasObjects/TimerObject.cs \
 	Constants.cs \
+	PlayslistCellRenderer.cs \
 	Utils.cs \
 	Widgets/Blackboard.cs \
 	Widgets/CategoriesLabels.cs \

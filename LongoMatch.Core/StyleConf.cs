@@ -49,6 +49,13 @@ namespace LongoMatch.Common
 		public const int NewTeamsSpacing = 60;
 		public const int NewTaggerSpacing = 35;
 
+		public const int ListSelectedWidth = 16;
+		public const int ListTextWidth = 200;
+		public const int ListImageWidth = 50;
+		public const int ListCategoryHeight = 50;
+		public const int ListCountRadio = 10;
+		public const int ListCountWidth = 20;
+
 		public const int TeamsShieldIconSize = 45;
 		
 		public const string TimelineNeedleResource = "hicolor/scalable/actions/longomatch-timeline-needle-big.svg";

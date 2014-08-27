@@ -106,7 +106,6 @@ namespace LongoMatch.Gui.Component
 
 			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;
 
-			edit.Activated += OnEdit;
 			sortByName.Activated += OnSortActivated;
 			sortByStart.Activated += OnSortActivated;
 			sortByStop.Activated += OnSortActivated;
@@ -203,19 +202,13 @@ namespace LongoMatch.Gui.Component
 			// Don't allow multiselect for categories
 			if(!selected && selection.GetSelectedRows().Length > 0) {
 				if(selection.GetSelectedRows().Length == 1 &&
-				                GetValueFromPath(selection.GetSelectedRows()[0]) is Category)
+				                GetValueFromPath(selection.GetSelectedRows()[0]) is AnalysisCategory)
 					return false;
-				return !(GetValueFromPath(path) is Category);
+				return !(GetValueFromPath(path) is AnalysisCategory);
 			}
 			// Always unselect
 			else
 				return true;
-		}
-
-		override protected void OnNameCellEdited(object o, Gtk.EditedArgs args)
-		{
-			base.OnNameCellEdited(o, args);
-			Model.SetSortFunc(0, SortFunction);
 		}
 
 		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)

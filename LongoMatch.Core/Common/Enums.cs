@@ -249,5 +249,14 @@ namespace LongoMatch.Common
 		Fit,
 		Original
 	}
+	
+	[Flags]
+	public enum CellState {
+		Selected = 1,
+		Prelit = 2,
+		Insensitive = 4,
+		Sorted = 8,
+		Focused = 16
+	}
 }
 

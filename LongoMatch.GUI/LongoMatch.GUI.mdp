@@ -27,7 +27,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/HotKeySelectorDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/TreeView" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayersTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayerPropertiesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayListTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlaysTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SnapshotsDialog.cs" />

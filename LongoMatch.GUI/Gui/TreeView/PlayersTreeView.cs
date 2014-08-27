@@ -87,12 +87,6 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		override protected void OnNameCellEdited(object o, Gtk.EditedArgs args)
-		{
-			base.OnNameCellEdited(o, args);
-			Model.SetSortFunc(0, SortFunction);
-		}
-
 		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)
 		{
 			TreePath[] paths = Selection.GetSelectedRows();

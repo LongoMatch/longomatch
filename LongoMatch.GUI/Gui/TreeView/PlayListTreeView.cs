@@ -47,19 +47,11 @@ namespace LongoMatch.Gui.Component
 			EnableGridLines = TreeViewGridLines.None;
 			EnableTreeLines = false;
 			
-			TreeViewColumn imageColumn = new TreeViewColumn ();
-			imageColumn.Title = Catalog.GetString ("Image");
-			CellRendererPixbuf imageCell = new CellRendererPixbuf ();
-			imageColumn.PackStart (imageCell, true);
-			imageColumn.SetCellDataFunc (imageCell, new TreeCellDataFunc (RenderImage));
-			AppendColumn (imageColumn);
-			
-			TreeViewColumn nameColumn = new TreeViewColumn ();
-			nameColumn.Title = Catalog.GetString ("Name");
-			CellRendererText nameCell = new CellRendererText ();
-			nameColumn.PackStart (nameCell, true);
-			nameColumn.SetCellDataFunc (nameCell, new TreeCellDataFunc (RenderName));
-			AppendColumn (nameColumn);
+			TreeViewColumn custColumn = new TreeViewColumn ();
+			CellRenderer cr = new PlaysCellRenderer ();
+			custColumn.PackStart (cr, true);
+			custColumn.SetCellDataFunc (cr, RenderElement); 
+			AppendColumn (custColumn);
 		}
 
 		public Project Project {
@@ -88,34 +80,12 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
 
-		void RenderName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
+		void RenderElement (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			var obj = model.GetValue (iter, 0);
-			
-			if (obj is IPlaylistElement) {
-				IPlaylistElement ple = obj as IPlaylistElement;
-				(cell as Gtk.CellRendererText).Text = ple.Description;
-				if (ple.Selected) {
-					(cell as Gtk.CellRendererText).Foreground = "blue";
-				} else {
-					(cell as Gtk.CellRendererText).Foreground = "black";
-				}
-			} else {
-				(cell as Gtk.CellRendererText).Text = (obj as Playlist).Name;
-				(cell as Gtk.CellRendererText).Foreground = "black";
-			}
-		}
-
-		void RenderImage (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
-		{
-			var obj = model.GetValue (iter, 0);
-			
-			if (obj is IPlaylistElement) {
-				IPlaylistElement ple = obj as IPlaylistElement;
-				(cell as CellRendererPixbuf).Pixbuf = ple.Miniature.Value;
-			} else {
-				(cell as CellRendererPixbuf).Pixbuf = null;
-			}
+			var item = model.GetValue (iter, 0);
+			PlaysCellRenderer c = cell as PlaysCellRenderer;
+			c.Item = item;
+			c.Count = model.IterNChildren (iter);
 		}
 
 		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element)

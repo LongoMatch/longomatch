@@ -24,12 +24,14 @@ using Gtk;
 using Mono.Unix;
 
 using LongoMatch.Common;
-using LongoMatch.Handlers;
 using LongoMatch.Store;
-using LongoMatch.Gui.Helpers;
+using LongoMatch.Drawing;
 using Image = LongoMatch.Common.Image;
+using Point = LongoMatch.Common.Point;
 using Color = Gdk.Color;
 using LongoMatch.Gui.Menus;
+using LongoMatch.Drawing.Cairo;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Gui.Component
 {
@@ -37,15 +39,12 @@ namespace LongoMatch.Gui.Component
 
 	public abstract class ListTreeViewBase:TreeView
 	{
-		protected Gtk.CellRendererText nameCell;
-		protected Gtk.TreeViewColumn nameColumn;
 		protected bool editing;
 		protected bool enableCategoryMove = false;
 		protected PlaysMenu playsMenu;
 		
 		TreeModelFilter modelFilter;
 		PlaysFilter filter;
-		Dictionary<MenuItem, Category> catsDict;
 
 		public event EventHandler NewRenderingJob;
 
@@ -56,21 +55,14 @@ namespace LongoMatch.Gui.Component
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 			HeadersVisible = false;
 			
-			nameColumn = new Gtk.TreeViewColumn();
-			nameColumn.Title = "Name";
-			nameCell = new Gtk.CellRendererText();
-			nameCell.Edited += OnNameCellEdited;
-			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
-			nameColumn.PackStart(nameCell, true);
-			nameColumn.PackEnd(miniatureCell, true);
-
-			nameColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
-			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
+			TreeViewColumn custColumn = new TreeViewColumn ();
+			CellRenderer cr = new PlaysCellRenderer ();
+			custColumn.PackStart (cr, true);
+			custColumn.SetCellDataFunc (cr, RenderElement); 
 
 			playsMenu = new PlaysMenu ();
 			playsMenu.EditNameEvent += OnEdit;
-			AppendColumn(nameColumn);
-
+			AppendColumn(custColumn);
 		}
 
 		public bool Colors {
@@ -140,103 +132,18 @@ namespace LongoMatch.Gui.Component
 			return modelFilter.GetValue(iter,0);
 		}
 		
-		protected void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			var item = model.GetValue(iter, 0);
-			var c = cell as CellRendererPixbuf;
-
-			if(item is Play) {
-				Image img = (item as Play).Miniature;
-				c.Pixbuf = img != null ? img.Value : null;
-				if(Colors) {
-					c.CellBackgroundGdk = Helpers.Misc.ToGdkColor((item as Play).Category.Color);
-				} else {
-					c.CellBackground = "white";
-				}
-			}
-			else if(item is Player) {
-				Image img = (item as Player).Photo;
-				c.Pixbuf = img != null ? img.Value : null;
-				c.CellBackground = "white";
-			}
-			else {
-				c.Pixbuf = null;
-				c.CellBackground = "white";
-			}
-		}
-
-		protected void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			object o = model.GetValue(iter, 0);
-			var c = cell as CellRendererText;
-
-			/* Handle special case in which we replace the text in the cell by the name of the TimeNode
-			 * We need to check if we are editing and only change it for the path that's currently beeing edited */
-			if(editing && Selection.IterIsSelected(iter)) {
-				if(o is Player)
-					c.Markup = GLib.Markup.EscapeText ((o as Player).Name);
-				else
-					c.Markup = GLib.Markup.EscapeText ((o as Category).Name);
-				return;
-			}
-
-			if(o is Play) {
-				var mtn = o as Play;
-				if(Colors) {
-					Color col = Helpers.Misc.ToGdkColor(mtn.Category.Color);
-					c.CellBackgroundGdk = col;
-					c.BackgroundGdk = col;
-				} else {
-					c.Background = "white";
-					c.CellBackground = "white";
-				}
-				c.Markup = GLib.Markup.EscapeText (mtn.ToString());
-			} else if(o is Player) {
-				c.Background = "white";
-				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as Player).ToString()),
-				                         modelFilter.IterNChildren(iter));
-			} else if(o is Category) {
-				c.Background = "white";
-				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as Category).Name),
-				                         modelFilter.IterNChildren(iter));
-			}
-		}
-
 		protected bool FilterFunction(TreeModel model, TreeIter iter) {
 			if (Filter == null)
 				return true;
 			object o = model.GetValue(iter, 0);
 			return Filter.IsVisible(o);
 		}	
-		
-		protected virtual void OnNameCellEdited(object o, Gtk.EditedArgs args)
-		{
-			Gtk.TreeIter iter;
-			object item;
-
-			modelFilter.GetIter(out iter, new Gtk.TreePath(args.Path));
-			item = modelFilter.GetValue(iter,0);
-
-			if(item is TimeNode) {
-				(item as TimeNode).Name = args.NewText;
-				Config.EventsBroker.EmitTimeNodeChanged (
-					(item as TimeNode), args.NewText);
-			} else if(item is Player) {
-				(item as Player).Name = args.NewText;
-			}
-			editing = false;
-			nameCell.Editable=false;
-
-		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
 			Gtk.TreeIter iter;
 			modelFilter.GetIter(out iter, args.Path);
 			object item = modelFilter.GetValue(iter, 0);
-
 			if(!(item is Play))
 				return;
 
@@ -246,17 +153,61 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEdit (object obj, EventArgs args) {
 			TreePath[] paths = Selection.GetSelectedRows();
 
-			editing = true;
-			nameCell.Editable = true;
-			SetCursor(paths[0],  nameColumn, true);
+			//editing = true;
+			//nameCell.Editable = true;
+			//SetCursor(paths[0],  nameColumn, true);
 		}
 
 		protected void OnFilterUpdated() {
 			modelFilter.Refilter();
 		}
 		
+		protected void RenderElement (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
+		{
+			var item = model.GetValue (iter, 0);
+			PlaysCellRenderer c = cell as PlaysCellRenderer;
+			c.Item = item;
+			c.Count = model.IterNChildren (iter);
+		}
+
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);
 		protected abstract int SortFunction(TreeModel model, TreeIter a, TreeIter b);
 		
+	}
+	
+	public class PlaysCellRenderer: CellRenderer {
+
+		public object Item {
+			get;
+			set;
+		}
+		
+		public int Count {
+			get;
+			set;
+		}
+		
+		public override void GetSize (Widget widget, ref Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
+		{
+			x_offset = 0;
+			y_offset = 0;
+			width = StyleConf.ListSelectedWidth + StyleConf.ListTextWidth + StyleConf.ListImageWidth;
+			height = StyleConf.ListCategoryHeight;
+		}
+
+		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
+		                              Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
+		{
+			CellState state = (CellState) flags;
+			
+			using (IContext context = new CairoContext (window)) {
+				Area bkg = new Area (new Point (backgroundArea.X, backgroundArea.Y),
+				                     backgroundArea.Width, backgroundArea.Height);
+				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
+				                      cellArea.Width, cellArea.Height);
+				PlayslistCellRenderer.Render (Item, Count, IsExpanded, Config.DrawingToolkit,
+				                              context, bkg, cell, state);
+			}
+		}
 	}
 }
