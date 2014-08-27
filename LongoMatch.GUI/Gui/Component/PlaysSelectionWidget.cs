@@ -68,6 +68,7 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.Clear();
 			visitorPlayersList.Clear();
 			playsList1.Destroy ();
+			playlistwidget.Destroy ();
 			base.OnDestroyed ();
 		}
 		

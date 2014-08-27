@@ -120,12 +120,36 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private TreeStore GetModel(Project project){
-			Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof (TaggerButton), typeof(TimeNode));
+		private TreeStore GetModel (Project project)
+		{
+			Gtk.TreeIter iter;
+			Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter> ();
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof(object));
 
-			foreach(TaggerButton cat in project.Categories.List) {
-				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat, null);
+			/* Add scores */
+			if (project.Categories.Scores.Count > 0) {
+				iter = dataFileListStore.AppendValues (
+					new AnalysisCategory { Name = Catalog.GetString ("Score"),
+					SortMethod = SortMethodType.SortByStartTime,
+					Color = Config.Style.PaletteActive}, null);
+				foreach (Score s in project.Categories.Scores) {
+					itersDic.Add(s, iter);
+				}
+			}
+			
+			/* Add penalty cards*/
+			if (project.Categories.PenaltyCards.Count > 0) {
+				iter = dataFileListStore.AppendValues (
+					new AnalysisCategory { Name = Catalog.GetString ("Penalty Cards"),
+					SortMethod = SortMethodType.SortByStartTime,
+					Color = Config.Style.PaletteActive}, null);
+				foreach (PenaltyCard pc in project.Categories.PenaltyCards) {
+					itersDic.Add(pc, iter);
+				}
+			}
+			
+			foreach(TaggerButton cat in project.Categories.CategoriesList) {
+				iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
 			}
 			
@@ -135,7 +159,7 @@ namespace LongoMatch.Gui.Component
 				if(!itersDic.ContainsKey(cat))
 					continue;
 				foreach(Play play in playsGroup) {
-					dataFileListStore.AppendValues(itersDic[cat],play);
+					dataFileListStore.AppendValues(itersDic[cat], play);
 				}
 			}
 			return dataFileListStore;
