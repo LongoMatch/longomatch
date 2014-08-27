@@ -6397,165 +6397,227 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Notebook" id="notebook1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">0</property>
             <property name="ShowBorder">False</property>
             <property name="Scrollable">True</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox4">
+              <widget class="Gtk.Alignment" id="alignment2">
                 <property name="MemberName" />
-                <property name="Spacing">6</property>
+                <property name="Xscale">0</property>
+                <property name="Yscale">0</property>
                 <child>
-                  <widget class="Gtk.HSeparator" id="hseparator1">
+                  <widget class="Gtk.HBox" id="hbox11">
                     <property name="MemberName" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HBox" id="hbox20">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
+                    <property name="Homogeneous">True</property>
                     <child>
-                      <widget class="Gtk.RadioButton" id="fromfileradiobutton">
+                      <widget class="Gtk.VBox" id="vbox12">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Label" translatable="yes">New project using a video file</property>
-                        <property name="Active">True</property>
-                        <property name="DrawIndicator">True</property>
-                        <property name="HasLabel">True</property>
-                        <property name="UseUnderline">True</property>
-                        <property name="FocusOnClick">False</property>
-                        <property name="Group">project</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Alignment" id="alignment4">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <property name="Yscale">0</property>
+                            <child>
+                              <widget class="Gtk.Button" id="filebutton">
+                                <property name="MemberName" />
+                                <property name="WidthRequest">100</property>
+                                <property name="HeightRequest">100</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="fileimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label2">
+                            <property name="MemberName" />
+                            <property name="WidthRequest">180</property>
+                            <property name="LabelProp" translatable="yes">Video file</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
                         <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Image" id="image61">
+                      <widget class="Gtk.VBox" id="vbox13">
                         <property name="MemberName" />
-                        <property name="Pixbuf">resource:video.png</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Alignment" id="alignment3">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <property name="Yscale">0</property>
+                            <child>
+                              <widget class="Gtk.Button" id="capturebutton">
+                                <property name="MemberName" />
+                                <property name="WidthRequest">100</property>
+                                <property name="HeightRequest">100</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="captureimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label4">
+                            <property name="MemberName" />
+                            <property name="WidthRequest">180</property>
+                            <property name="LabelProp" translatable="yes">Capture device</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
                         <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
                       </packing>
                     </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HBox" id="hbox2">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.RadioButton" id="liveradiobutton">
+                      <widget class="Gtk.VBox" id="vbox14">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Label" translatable="yes">Live project using a capture device</property>
-                        <property name="DrawIndicator">True</property>
-                        <property name="HasLabel">True</property>
-                        <property name="UseUnderline">True</property>
-                        <property name="Group">project</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Alignment" id="alignment5">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <property name="Yscale">0</property>
+                            <child>
+                              <widget class="Gtk.Button" id="fakebutton">
+                                <property name="MemberName" />
+                                <property name="WidthRequest">100</property>
+                                <property name="HeightRequest">100</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="fakeimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label5">
+                            <property name="MemberName" />
+                            <property name="WidthRequest">180</property>
+                            <property name="LabelProp" translatable="yes">Fake capture device</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
-                        <property name="Position">0</property>
+                        <property name="Position">2</property>
                         <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Image" id="image63">
+                      <widget class="Gtk.VBox" id="vbox15">
                         <property name="MemberName" />
-                        <property name="Pixbuf">resource:camera-video.png</property>
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Alignment" id="alignment6">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <property name="Yscale">0</property>
+                            <child>
+                              <widget class="Gtk.Button" id="ipbutton">
+                                <property name="MemberName" />
+                                <property name="WidthRequest">100</property>
+                                <property name="HeightRequest">100</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="ipimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label6">
+                            <property name="MemberName" />
+                            <property name="WidthRequest">180</property>
+                            <property name="LabelProp" translatable="yes">Ip camera</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HBox" id="hbox4">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="Gtk.RadioButton" id="fakeliveradiobutton">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Label" translatable="yes">Live project using a fake capture device</property>
-                        <property name="DrawIndicator">True</property>
-                        <property name="HasLabel">True</property>
-                        <property name="UseUnderline">True</property>
-                        <property name="Group">project</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
+                        <property name="Position">3</property>
                         <property name="AutoSize">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Image" id="image62">
-                        <property name="MemberName" />
-                        <property name="Pixbuf">resource:camera-video.png</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
                       </packing>
                     </child>
                   </widget>
-                  <packing>
-                    <property name="Position">3</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HBox" id="ipcamerabox">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="Gtk.RadioButton" id="uriliveradiobutton">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Label" translatable="yes">Live project using an IP camera</property>
-                        <property name="DrawIndicator">True</property>
-                        <property name="HasLabel">True</property>
-                        <property name="UseUnderline">True</property>
-                        <property name="Group">project</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Image" id="image64">
-                        <property name="MemberName" />
-                        <property name="Pixbuf">resource:camera-video.png</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">4</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
                 </child>
               </widget>
             </child>

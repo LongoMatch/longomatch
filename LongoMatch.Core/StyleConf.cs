@@ -33,6 +33,8 @@ namespace LongoMatch.Common
 		public const int WelcomeTextHeight = 20;
 		public const int WelcomeMinWidthBorder = 30;
 
+		public const int ProjectTypeIconSize = 80;
+
 		public const int HeaderFontSize = 20;
 		public const int HeaderHeight = 60;
 

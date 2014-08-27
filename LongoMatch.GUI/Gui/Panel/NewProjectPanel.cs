@@ -28,7 +28,6 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 using Mono.Unix;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Interfaces.GUI;
-
 using Device = LongoMatch.Common.Device;
 using Color = Gdk.Color;
 using LongoMatch.Drawing.Widgets;
@@ -40,11 +39,10 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewProjectPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
-		
+
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
-		
 		Project project;
 		ProjectType projectType;
 		CaptureSettings captureSettings;
@@ -58,7 +56,7 @@ namespace LongoMatch.Gui.Panel
 		TeamTemplate hometemplate, awaytemplate;
 		Categories analysisTemplate;
 		TeamTagger teamtagger;
-		
+
 		public NewProjectPanel (Project project)
 		{
 			this.Build ();
@@ -69,6 +67,7 @@ namespace LongoMatch.Gui.Panel
 			
 			panelheader1.ApplyClicked += HandleNextClicked;
 			panelheader1.BackClicked += HandleBackClicked;
+			LoadIcons ();
 			ConnectSignals ();
 			FillCategories ();
 			FillFormats ();
@@ -83,7 +82,7 @@ namespace LongoMatch.Gui.Panel
 				projectType = ProjectType.EditProject;
 				FillProjectDetails ();
 			}
-			UpdateTitle();
+			UpdateTitle ();
 			Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
@@ -91,15 +90,16 @@ namespace LongoMatch.Gui.Panel
 			Color.Parse ("red", ref red);
 			ApplyStyle ();
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			teamtagger.Dispose ();
 			projectperiods1.Destroy ();
 			base.OnDestroyed ();
 		}
-		
-		void ApplyStyle () {
+
+		void ApplyStyle ()
+		{
 			/* Keep the central box aligned in the center of the widget */
 			SizeGroup grp = new  SizeGroup (SizeGroupMode.Horizontal);
 			grp.AddWidget (lefttable);
@@ -115,8 +115,25 @@ namespace LongoMatch.Gui.Panel
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
 		}
-		
-		void LoadTeams () {
+
+		void LoadIcons ()
+		{
+			int s = StyleConf.ProjectTypeIconSize;
+			IconLookupFlags f = IconLookupFlags.ForceSvg;
+ 
+			fileimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-video-file", s, f);
+			captureimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-video-device", s, f);
+			fakeimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-video-device-fake", s, f);
+			ipimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-video-device-ip", s, f);
+
+			filebutton.Clicked += HandleProjectTypeSet;
+			capturebutton.Clicked += HandleProjectTypeSet;
+			fakebutton.Clicked += HandleProjectTypeSet;
+			ipbutton.Clicked += HandleProjectTypeSet;
+		}
+
+		void LoadTeams ()
+		{
 			List<TeamTemplate> teams;
 			
 			drawingarea.HeightRequest = 200;
@@ -132,19 +149,22 @@ namespace LongoMatch.Gui.Panel
 			hometeamscombobox.Active = 0;
 			awayteamscombobox.Active = 0;
 		}
-		
-		void ConnectSignals () {
+
+		void ConnectSignals ()
+		{
 			savebutton.Clicked += HandleSavebuttonClicked;
 			urientry.Changed += HandleEntryChanged;
 			outfileEntry.Changed += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
-			mediafilechooser1.ChangedEvent += (sender, e) => {mediaFile = mediafilechooser1.File;};
+			mediafilechooser1.ChangedEvent += (sender, e) => {
+				mediaFile = mediafilechooser1.File;};
 		}
 
-		void FillProjectDetails () {
+		void FillProjectDetails ()
+		{
 			seasonentry.Text = project.Description.Season;
 			competitionentry.Text = project.Description.Competition;
-			datelabel2.Text = project.Description.MatchDate.ToShortDateString();
+			datelabel2.Text = project.Description.MatchDate.ToShortDateString ();
 			datepicker1.Date = project.Description.MatchDate;
 			hometeamscombobox.Sensitive = false;
 			awayteamscombobox.Sensitive = false;
@@ -155,34 +175,30 @@ namespace LongoMatch.Gui.Panel
 			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
 			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR);
 		}
-		
-		void FillCategories() {
-			int i=0;
+
+		void FillCategories ()
+		{
+			int i = 0;
 			int index = 0;
 
 			foreach (string template in Config.CategoriesTemplatesProvider.TemplatesNames) {
-				tagscombobox.AppendText(template);
+				tagscombobox.AppendText (template);
 				if (template == Config.DefaultTemplate)
 					index = i;
 				i++;
 			}
 			tagscombobox.Active = index;
 		}
-		
+
 		void SetProjectType ()
 		{
 			bool filemode = false, urimode = false, capturemode = false;
 			
-			if (fromfileradiobutton.Active) {
-				projectType = ProjectType.FileProject;
+			if (projectType == ProjectType.FileProject) {
 				filemode = true;
-			} else if (liveradiobutton.Active) {
-				projectType = ProjectType.CaptureProject;
+			} else if (projectType == ProjectType.CaptureProject) {
 				capturemode = true;
-			} else if (fakeliveradiobutton.Active) {
-				projectType = ProjectType.FakeCaptureProject;
-			} else if (uriliveradiobutton.Active) {
-				projectType = ProjectType.URICaptureProject;
+			} else if (projectType == ProjectType.URICaptureProject) {
 				urimode = true;
 			}
 			filetable.Visible = filemode;
@@ -193,46 +209,49 @@ namespace LongoMatch.Gui.Panel
 			device.Visible = capturemode;
 			devicecombobox.Visible = capturemode;
 		}
-		
-		void FillFormats() {
+
+		void FillFormats ()
+		{
 			videoStandardList = Misc.FillImageFormat (imagecombobox, Config.CaptureVideoStandard);
 			encProfileList = Misc.FillEncodingFormat (encodingcombobox, Config.CaptureEncodingProfile);
 			qualList = Misc.FillQuality (qualitycombobox, Config.CaptureEncodingQuality);
 		}
-		
-		public void FillDevices(List<Device> devices) {
+
+		public void FillDevices (List<Device> devices)
+		{
 			videoDevices = devices;
 
-			foreach(Device device in devices) {
+			foreach (Device device in devices) {
 				string deviceElement, deviceName;
 
 				if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-					deviceElement = Catalog.GetString("DirectShow source");
+					deviceElement = Catalog.GetString ("DirectShow source");
 				} else {
-					if(device.DeviceType == CaptureSourceType.DV)
-						deviceElement = Catalog.GetString(Catalog.GetString("DV source"));
+					if (device.DeviceType == CaptureSourceType.DV)
+						deviceElement = Catalog.GetString (Catalog.GetString ("DV source"));
 					else if (device.DeviceType == CaptureSourceType.System) {
-						deviceElement = Catalog.GetString(Catalog.GetString("System source"));
+						deviceElement = Catalog.GetString (Catalog.GetString ("System source"));
 					} else {
-						deviceElement = Catalog.GetString(Catalog.GetString("GConf source"));
+						deviceElement = Catalog.GetString (Catalog.GetString ("GConf source"));
 					}
 				}
-				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
-				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
+				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
+				devicecombobox.AppendText (deviceName + " (" + deviceElement + ")");
 				devicecombobox.Active = 0;
 			}
 		}
-		
-		
-		void LoadTemplate (string name, Team team) {
+
+		void LoadTemplate (string name, Team team)
+		{
 			TeamTemplate template;
 			if (name != null) {
 				template = Config.TeamTemplatesProvider.Load (name);
 				LoadTemplate (template, team);
 			}
 		}
-		
-		void LoadTemplate (TeamTemplate template, Team team) {
+
+		void LoadTemplate (TeamTemplate template, Team team)
+		{
 			if (team == Team.LOCAL) {
 				hometemplate = Cloner.Clone (template);
 			} else {
@@ -241,7 +260,7 @@ namespace LongoMatch.Gui.Panel
 			teamtagger.LoadTeams (hometemplate, awaytemplate,
 			                      analysisTemplate.FieldBackground);
 		}
-		
+
 		void UpdateTitle ()
 		{
 			if (notebook1.Page == 0) {
@@ -252,7 +271,7 @@ namespace LongoMatch.Gui.Panel
 				panelheader1.Title = "PERIODS SYNCHRONIZATION";
 			}
 		}
-		
+
 		bool CreateProject ()
 		{
 			TreeIter iter;
@@ -271,7 +290,7 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			if (projectType == ProjectType.CaptureProject ||
-			    projectType == ProjectType.URICaptureProject) {
+				projectType == ProjectType.URICaptureProject) {
 				if (outfileEntry.Text == "") {
 					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
 					return false;
@@ -295,40 +314,40 @@ namespace LongoMatch.Gui.Panel
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
 			
-			encSettings = new EncodingSettings();
-			captureSettings = new CaptureSettings();
+			encSettings = new EncodingSettings ();
+			captureSettings = new CaptureSettings ();
 				
 			encSettings.OutputFile = outfileEntry.Text;
 			
 			if (project.Description.File == null) {
 				project.Description.File = new MediaFile ();
-				project.Description.File.Fps = (ushort) (Config.FPS_N / Config.FPS_D);
+				project.Description.File.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
 				project.Description.File.FilePath = outfileEntry.Text;
 			}
 			if (projectType == ProjectType.CaptureProject) {
-				Device device = videoDevices[devicecombobox.Active];
+				Device device = videoDevices [devicecombobox.Active];
 				captureSettings.CaptureSourceType = device.DeviceType;
 				captureSettings.DeviceID = device.ID;
 				captureSettings.SourceElement = device.SourceElement;
 			} else if (projectType == ProjectType.URICaptureProject) {
 				captureSettings.CaptureSourceType = CaptureSourceType.URI;
 				captureSettings.DeviceID = urientry.Text;
-			}else if (projectType == ProjectType.FakeCaptureProject) {
+			} else if (projectType == ProjectType.FakeCaptureProject) {
 				captureSettings.CaptureSourceType = CaptureSourceType.None;
 				project.Description.File.FilePath = Constants.FAKE_PROJECT;
 			}
 				
 			/* Get quality info */
-			qualitycombobox.GetActiveIter(out iter);
-			encSettings.EncodingQuality = (EncodingQuality) qualList.GetValue(iter, 1);
+			qualitycombobox.GetActiveIter (out iter);
+			encSettings.EncodingQuality = (EncodingQuality)qualList.GetValue (iter, 1);
 			
 			/* Get size info */
-			imagecombobox.GetActiveIter(out iter);
-			encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
+			imagecombobox.GetActiveIter (out iter);
+			encSettings.VideoStandard = (VideoStandard)videoStandardList.GetValue (iter, 1);
 			
 			/* Get encoding profile info */
-			encodingcombobox.GetActiveIter(out iter);
-			encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
+			encodingcombobox.GetActiveIter (out iter);
+			encSettings.EncodingProfile = (EncodingProfile)encProfileList.GetValue (iter, 1);
 			
 			encSettings.Framerate_n = Config.FPS_N;
 			encSettings.Framerate_d = Config.FPS_D;
@@ -336,16 +355,16 @@ namespace LongoMatch.Gui.Panel
 			captureSettings.EncodingSettings = encSettings;
 			return true;
 		}
-		
-		void HandleSavebuttonClicked(object sender, System.EventArgs e)
+
+		void HandleSavebuttonClicked (object sender, System.EventArgs e)
 		{
 			string filename;
 				
-			filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Output file"),
+			filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
 			                                       "Capture.mp4", Config.VideosDir, "MP4",
-			                                       new string[] {"*.mp4"});
+			                                       new string[] { "*.mp4" });
 			if (filename != null) {
-				outfileEntry.Text = System.IO.Path.ChangeExtension(filename, "mp4");
+				outfileEntry.Text = System.IO.Path.ChangeExtension (filename, "mp4");
 			}
 		}
 
@@ -366,10 +385,24 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSportsTemplateChanged (object sender, EventArgs e)
 		{
-			analysisTemplate = Config.CategoriesTemplatesProvider.Load(tagscombobox.ActiveText);
+			analysisTemplate = Config.CategoriesTemplatesProvider.Load (tagscombobox.ActiveText);
 			if (teamtagger != null) {
 				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
 			}
+		}
+
+		void HandleProjectTypeSet (object sender, EventArgs e)
+		{
+			if (sender == filebutton) {
+				projectType = ProjectType.FileProject;
+			} else if (sender == capturebutton) {
+				projectType = ProjectType.CaptureProject;
+			} else if (sender == fakebutton) {
+				projectType = ProjectType.FakeCaptureProject;
+			} else if (sender == ipbutton) {
+				projectType = ProjectType.URICaptureProject;
+			}
+			HandleNextClicked (this, e);
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
@@ -405,6 +438,8 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			notebook1.Page ++;
+
+			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
 
 			if (notebook1.Page == PROJECT_PERIODS) {
 				projectperiods1.Project = project;
