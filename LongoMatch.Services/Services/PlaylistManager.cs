@@ -36,21 +36,13 @@ namespace LongoMatch.Services
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
 		Play loadedPlay;
+		PlaysFilter filter;
 
 		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
 		{
 			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
 			BindEvents ();
-		}
-
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
-		{
-			openedProject = project;
-			if (project != null) {
-				player = analysisWindow.Player;
-			}
 		}
 
 		void BindEvents ()
@@ -61,24 +53,63 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
 			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
-			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			Config.EventsBroker.LoadPlayEvent += HandleLoadPlayEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
+			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
+			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
 		}
 
+		void LoadPlay (Play play, Time seekTime, bool playing)
+		{
+			play.Selected = true;
+			player.LoadPlay (openedProject.Description.File, play,
+			                 seekTime, playing);
+			loadedPlay = play;
+			if (playing) {
+				player.Play ();
+			}
+		}
+		
 		void Switch (Play play, Playlist playlist, IPlaylistElement element)
 		{
 			if (loadedElement != null) {
 				loadedElement.Selected = false;
 			}
-			if (element != null) {
-				element.Selected = true;
+			if (loadedPlay != null) {
+				loadedPlay.Selected = false;
 			}
-			
+
 			loadedPlay = play;
 			loadedPlaylist = playlist;
 			loadedElement = element;
+
+			if (element != null) {
+				element.Selected = true;
+			}
+			if (play != null) {
+				play.Selected = true;
+			}
+		}
+
+		void HandlePlayChanged (TimeNode tNode, object val)
+		{
+			/* FIXME: Tricky, create a new handler for categories */
+			if (tNode is Play && val is Time) {
+				LoadPlay (tNode as Play, val as Time, false);
+			}
+			filter.Update ();
 		}
 		
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
+		{
+			openedProject = project;
+			if (project != null) {
+				player = analysisWindow.Player;
+				this.filter = filter;
+			}
+		}
+
 		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element)
 		{
 			Switch (null, playlist, element);
@@ -86,12 +117,15 @@ namespace LongoMatch.Services
 				playlist.SetActive (element);
 			}
 			player.LoadPlayListPlay (playlist, element);
-			
 		}
 
-		void HandlePlaySelected (Play play)
+		void HandleLoadPlayEvent (Play play)
 		{
 			Switch (play, null, null);
+			if (play != null) {
+				LoadPlay (play, play.Start, true);
+			}
+			Config.EventsBroker.EmitPlayLoaded (play);
 		}
 
 		void HandleNext (Playlist playlist)
@@ -122,6 +156,15 @@ namespace LongoMatch.Services
 				if (playlist.HasPrev ()) {
 					Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Prev());
 				}
+			}
+		}
+		
+		void HandlePlaybackRateChanged (float rate)
+		{
+			if (loadedElement != null && loadedElement is PlaylistPlayElement) {
+				(loadedElement as PlaylistPlayElement).Rate = rate;
+			} else if (loadedPlay != null) {
+				loadedPlay.Rate = rate;
 			}
 		}
 

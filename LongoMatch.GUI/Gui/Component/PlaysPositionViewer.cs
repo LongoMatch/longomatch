@@ -39,18 +39,10 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
-			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 			menu = new PlaysMenu ();
 		}
 		
-		protected override bool OnDestroyEvent (Gdk.Event evnt)
-		{
-			return base.OnDestroyEvent (evnt);
-			field.Destroy ();
-			hfield.Destroy ();
-			goal.Destroy ();
-		}
-
 		public void LoadProject (Project project) {
 			this.project = project;
 			if (project != null) {
@@ -77,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 		
-		void HandlePlaySelected (Play play)
+		void HandlePlayLoaded (Play play)
 		{
 			if (play != null) {
 				field.Tagger.SelectPlay (play);
@@ -100,8 +92,11 @@ namespace LongoMatch.Gui.Component
 
 		protected override void OnDestroyed ()
 		{
+			field.Destroy ();
+			hfield.Destroy ();
+			goal.Destroy ();
+			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
-			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
 		}
 	}
 }

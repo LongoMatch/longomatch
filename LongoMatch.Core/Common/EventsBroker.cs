@@ -30,7 +30,8 @@ namespace LongoMatch.Common
 	
 		public event NewTagHandler NewTagEvent;
 		public event PlaysDeletedHandler PlaysDeleted;
-		public event PlaySelectedHandler PlaySelected;
+		public event LoadPlayHandler LoadPlayEvent;
+		public event PlayLoadedHandler PlayLoadedEvent;
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
@@ -96,10 +97,16 @@ namespace LongoMatch.Common
 				PlaysDeleted(plays);
 		}
 		
-		public void EmitPlaySelected(Play play)
+		public void EmitLoadPlay (Play play)
 		{
-			if (PlaySelected != null)
-				PlaySelected(play);
+			if (LoadPlayEvent != null)
+				LoadPlayEvent (play);
+		}
+		
+		public void EmitPlayLoaded (Play play)
+		{
+			if (PlayLoadedEvent != null)
+				PlayLoadedEvent (play);
 		}
 		
 		public void EmitSnapshotSeries(Play play)

@@ -199,7 +199,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (selections.Count > 0) {
 				PlayObject po = selections.Last ().Drawable as PlayObject;
-				Config.EventsBroker.EmitPlaySelected (po.Play);
+				Config.EventsBroker.EmitLoadPlay (po.Play);
 			}
 		}
 

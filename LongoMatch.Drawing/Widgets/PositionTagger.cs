@@ -118,7 +118,7 @@ namespace LongoMatch.Drawing.Widgets
 				Play p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
-					Config.EventsBroker.EmitPlaySelected (p);
+					Config.EventsBroker.EmitLoadPlay (p);
 				}
 			}
 		}

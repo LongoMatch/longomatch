@@ -32,8 +32,10 @@ namespace LongoMatch.Handlers
 {
 
 	/*Tagging Events*/
-	/* A Play was selected */
-	public delegate void PlaySelectedHandler(Play play);
+	/* A Play needs to be loaded */
+	public delegate void LoadPlayHandler(Play play);
+	/* A Play was loaded */
+	public delegate void PlayLoadedHandler(Play play);
 	/* A new play needs to be create for a specific category at the current play time */
 	public delegate void NewTagHandler (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop);
 	//A play was edited

@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 			playspositionviewer1.HeightRequest = 200;
 			
 			Config.EventsBroker.Tick += HandleTick;
-			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (this);
 			
 			buttonswidget.Mode = TagMode.Free;
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 				w.Destroy ();
 			}
 			Config.EventsBroker.Tick -= HandleTick;
-			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
+			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -209,7 +209,7 @@ namespace LongoMatch.Gui.Component
 			currentPage = (int)args.PageNum;
 		}
 
-		void HandlePlaySelected (Play play)
+		void HandlePlayLoaded (Play play)
 		{
 			loadedPlay = play;
 			timeline.SelectedTimeNode = play;

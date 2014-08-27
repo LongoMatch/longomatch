@@ -38,12 +38,12 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			this.buf = textview1.Buffer;
 			buf.Changed += new EventHandler(OnEdition);
-			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
+			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 
@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlaySelected (Play play)
+		void HandlePlayLoaded (Play play)
 		{
 			Play = play;
 		}

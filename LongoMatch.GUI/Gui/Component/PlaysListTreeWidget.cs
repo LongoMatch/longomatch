@@ -46,8 +46,15 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
+			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
+			base.OnDestroyed ();
+		}
+
 		public PlaysFilter Filter {
 			set{
 				treeview.Filter = value;
@@ -194,6 +201,10 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			Config.EventsBroker.EmitRenderPlaylist (playlist);
+		}
+		
+		void HandlePlayLoaded (Play play) {
+			treeview.QueueDraw ();
 		}
 	}
 }

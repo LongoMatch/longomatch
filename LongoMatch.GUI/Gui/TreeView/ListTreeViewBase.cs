@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Component
 			if(!(item is Play))
 				return;
 
-			Config.EventsBroker.EmitPlaySelected (item as Play);
+			Config.EventsBroker.EmitLoadPlay (item as Play);
 		}
 
 		protected virtual void OnEdit (object obj, EventArgs args) {

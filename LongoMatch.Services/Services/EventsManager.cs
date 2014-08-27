@@ -33,7 +33,7 @@ namespace LongoMatch.Services
 	public class EventsManager
 	{
 		/* Current play loaded. null if no play is loaded */
-		TimeNode loadedPlay = null;
+		Play loadedPlay = null;
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
@@ -79,23 +79,24 @@ namespace LongoMatch.Services
 		private void ConnectSignals ()
 		{
 			Config.EventsBroker.NewTagEvent += OnNewTag;
-			Config.EventsBroker.TimeNodeChanged += OnTimeNodeChanged;
 			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
-			Config.EventsBroker.PlaySelected += OnPlaySelected;
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
-			//Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {
-			//	loadedPlay = tn;};
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
+			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
 			
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 
-			Config.EventsBroker.DrawFrame += OnDrawFrame;
-			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
+			Config.EventsBroker.DrawFrame += HandleDrawFrame;
 			Config.EventsBroker.Detach += HandleDetach;
+		}
+
+		void HandlePlayLoaded (Play play)
+		{
+			loadedPlay = play;
 		}
 
 		void HandleDetach ()
@@ -111,6 +112,28 @@ namespace LongoMatch.Services
 		void HandleShowProjectStatsEvent (Project project)
 		{
 			guiToolkit.ShowProjectStats (project);
+		}
+
+		void HandleDrawFrame (Play play, int drawingIndex)
+		{
+			Image pixbuf;
+			FrameDrawing drawing = null;
+
+			player.Pause ();
+			if (play == null) {
+				play = loadedPlay as Play;
+			}
+			if (play != null) {
+				if (drawingIndex == -1) {
+					drawing = new FrameDrawing ();
+					drawing.Render = player.CurrentTime;
+				} else {
+					drawing = play.Drawings [drawingIndex];
+				}
+				player.Seek (drawing.Render, true);
+			}
+			pixbuf = player.CurrentFrame;
+			guiToolkit.DrawingTool (pixbuf, play, drawing);
 		}
 
 		void RenderPlay (Project project, Play play, MediaFile file)
@@ -144,16 +167,6 @@ namespace LongoMatch.Services
 				Log.Exception (ex);
 			}
 			
-		}
-
-		void LoadPlay (Play play, Time seekTime, bool playing)
-		{
-			player.LoadPlay (openedProject.Description.File, play,
-			                 seekTime, playing);
-			loadedPlay = play;
-			if (playing) {
-				player.Play ();
-			}
 		}
 
 		private Image CaptureFrame (Time tagtime)
@@ -228,33 +241,6 @@ namespace LongoMatch.Services
 			AddNewPlay (tagger as AnalysisCategory, start, stop, players, tags, frame);
 		}
 
-		void HandlePlaybackRateChanged (float rate)
-		{
-			if (loadedPlay != null) {
-				loadedPlay.Rate = rate;
-			}
-		}
-
-		void OnPlaySelected (Play play)
-		{
-			if (play != null) {
-				LoadPlay (play, play.Start, true);
-			} else {
-				loadedPlay = null;
-			}
-		}
-
-		protected virtual void OnTimeNodeChanged (TimeNode tNode, object val)
-		{
-			/* FIXME: Tricky, create a new handler for categories */
-			if (tNode is Play && val is Time) {
-				LoadPlay (tNode as Play, val as Time, false);
-			} else if (tNode is Category) {
-				analysisWindow.UpdateCategories ();
-			}
-			filter.Update ();
-		}
-
 		protected virtual void OnPlaysDeleted (List<Play> plays)
 		{
 			Log.Debug (plays.Count + " plays deleted");
@@ -285,28 +271,6 @@ namespace LongoMatch.Services
 		{
 			player.Pause ();
 			guiToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
-		}
-
-		protected virtual void OnDrawFrame (Play play, int drawingIndex)
-		{
-			Image pixbuf;
-			FrameDrawing drawing = null;
-
-			player.Pause ();
-			if (play == null) {
-				play = loadedPlay as Play;
-			}
-			if (play != null) {
-				if (drawingIndex == -1) {
-					drawing = new FrameDrawing ();
-					drawing.Render = player.CurrentTime;
-				} else {
-					drawing = play.Drawings [drawingIndex];
-				}
-				player.Seek (drawing.Render, true);
-			}
-			pixbuf = player.CurrentFrame;
-			guiToolkit.DrawingTool (pixbuf, play, drawing);
 		}
 
 		protected virtual void OnPlayCategoryChanged (Play play, Category cat)
