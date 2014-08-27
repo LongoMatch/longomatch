@@ -21,6 +21,7 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
+	[Serializable]
 	public class PenaltyCard: AnalysisEventCategory
 	{
 		public PenaltyCard ()
