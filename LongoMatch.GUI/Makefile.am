@@ -142,17 +142,6 @@ RESOURCES = gtk-gui/gui.stetic \
 	$(top_srcdir)/images/video.png \
 	$(top_srcdir)/images/camera-video.png \
 	$(top_srcdir)/images/background.png \
-	$(top_srcdir)/images/tools/draw-arrow.png \
-	$(top_srcdir)/images/tools/draw-circle-unfilled.png \
-	$(top_srcdir)/images/tools/draw-cross.png \
-	$(top_srcdir)/images/tools/draw-ellipse.png \
-	$(top_srcdir)/images/tools/draw-eraser.png \
-	$(top_srcdir)/images/tools/draw-freehand.png \
-	$(top_srcdir)/images/tools/draw-number.png \
-	$(top_srcdir)/images/tools/draw-pointer.png \
-	$(top_srcdir)/images/tools/draw-rectangle.png \
-	$(top_srcdir)/images/tools/draw-rectangle-unfilled.png \
-	$(top_srcdir)/images/tools/draw-text.png \
 	$(top_srcdir)/images/tools/dash-line.svg \
 	$(top_srcdir)/images/tools/line.svg \
 	$(top_srcdir)/images/tools/line-double-dot.svg \
