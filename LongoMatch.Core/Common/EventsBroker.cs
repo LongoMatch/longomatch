@@ -77,7 +77,8 @@ namespace LongoMatch.Common
 		public event CreateThumbnailsHandler CreateThumbnailsEvent;
 		
 		/* Player and Capturer */
-		public event TickHandler Tick;
+		public event TickHandler PlayerTick;
+		public event TickHandler CapturerTick;
 		public event ErrorHandler MultimediaError;
 		public event ErrorHandler CaptureError;
 		public event CaptureFinishedHandler CaptureFinished;
@@ -279,10 +280,17 @@ namespace LongoMatch.Common
 			}
 		}
 
-		public void EmitTick (Time currentTime)
+		public void EmitCapturerTick (Time currentTime)
 		{
-			if (Tick != null) {
-				Tick (currentTime);
+			if (CapturerTick != null) {
+				CapturerTick (currentTime);
+			}
+		}
+		
+		public void EmitPlayerTick (Time currentTime)
+		{
+			if (PlayerTick != null) {
+				PlayerTick (currentTime);
 			}
 		}
 		

@@ -68,17 +68,21 @@ namespace LongoMatch.Gui.Component
 			addscorebutton.Clicked += HandleAddClicked;
 			addtagbutton.Clicked += HandleAddClicked;
 			addcardbutton.Clicked += HandleAddClicked;
-			Config.EventsBroker.Tick += HandleTick;
 			Edited = false;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.Tick -= HandleTick;
 			tagger.Dispose ();
 			base.OnDestroyed ();
 		}
 
+		public Time CurrentTime {
+			set {
+				tagger.CurrentTime = value;
+			}
+		}
+		
 		public FitMode FitMode {
 			set {
 				tagger.FitMode = value;

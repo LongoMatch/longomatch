@@ -609,7 +609,7 @@ namespace LongoMatch.Gui
 				Tick (currentTime);
 			}
 			
-			Config.EventsBroker.EmitTick (currentTime);
+			Config.EventsBroker.EmitPlayerTick (currentTime);
 			return true;
 		}
 

@@ -68,7 +68,8 @@ namespace LongoMatch.Gui.Component
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 			
-			Config.EventsBroker.Tick += HandleTick;
+			Config.EventsBroker.PlayerTick += HandleTick;
+			Config.EventsBroker.CapturerTick += HandleCapturerTick;
 			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (this);
 			
@@ -82,7 +83,8 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-			Config.EventsBroker.Tick -= HandleTick;
+			Config.EventsBroker.PlayerTick -= HandleTick;
+			Config.EventsBroker.CapturerTick -= HandleCapturerTick;
 			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
@@ -212,9 +214,20 @@ namespace LongoMatch.Gui.Component
 			timeline.SelectedTimeNode = play;
 		}
 
+		void HandleCapturerTick (Time currentTime)
+		{
+			if (projectType != ProjectType.FileProject) {
+				timeline.CurrentTime = currentTime;
+				buttonswidget.CurrentTime = currentTime;
+			}
+		}
+
 		void HandleTick (Time currentTime)
 		{
-			timeline.CurrentTime = currentTime;
+			if (projectType == ProjectType.FileProject) {
+				timeline.CurrentTime = currentTime;
+				buttonswidget.CurrentTime = currentTime;
+			}
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)

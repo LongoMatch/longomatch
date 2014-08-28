@@ -48,6 +48,7 @@ namespace LongoMatch.Drawing.Widgets
 			TagMode = TagMode.Edit;
 			widget.SizeChangedEvent += SizeChanged;
 			FitMode = FitMode.Fit;
+			CurrentTime = new Time (0);
 			AddTag = new Tag ("", "");
 		}
 
