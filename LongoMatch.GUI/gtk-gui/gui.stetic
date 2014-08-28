@@ -9891,42 +9891,6 @@ You can continue with the current capture, cancel it or save your project.
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1341 494">
-    <action-group name="Default">
-      <action id="timelineMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
-        <property name="Tooltip" translatable="yes">Timeline view</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-      <action id="autoTaggingMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-select-color</property>
-        <property name="Tooltip" translatable="yes">Automatic tagging view</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">True</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-      <action id="zoomFitAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-zoom-fit</property>
-      </action>
-      <action id="convertAction">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-convert</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

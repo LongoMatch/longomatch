@@ -4,12 +4,6 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class CodingWidget
 	{
-		private global::Gtk.UIManager UIManager;
-		private global::Gtk.RadioAction timelineMode;
-		private global::Gtk.RadioAction autoTaggingMode;
-		private global::Gtk.Action zoomFitAction;
-		private global::Gtk.RadioAction convertAction;
-		private global::Gtk.RadioAction positionMode;
 		private global::Gtk.Notebook notebook;
 		private global::Gtk.HPaned dashboardhpaned;
 		private global::Gtk.DrawingArea teamsdrawingarea;
@@ -25,26 +19,7 @@ namespace LongoMatch.Gui.Component
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Component.CodingWidget
-			Stetic.BinContainer w1 = global::Stetic.BinContainer.Attach (this);
-			this.UIManager = new global::Gtk.UIManager ();
-			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Default");
-			this.timelineMode = new global::Gtk.RadioAction ("timelineMode", null, global::Mono.Unix.Catalog.GetString ("Timeline view"), "gtk-justify-fill", 0);
-			this.timelineMode.Group = new global::GLib.SList (global::System.IntPtr.Zero);
-			w2.Add (this.timelineMode, null);
-			this.autoTaggingMode = new global::Gtk.RadioAction ("autoTaggingMode", null, global::Mono.Unix.Catalog.GetString ("Automatic tagging view"), "gtk-select-color", 0);
-			this.autoTaggingMode.Group = this.timelineMode.Group;
-			w2.Add (this.autoTaggingMode, null);
-			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
-			w2.Add (this.zoomFitAction, null);
-			this.convertAction = new global::Gtk.RadioAction ("convertAction", null, null, "gtk-convert", 0);
-			this.convertAction.Group = this.autoTaggingMode.Group;
-			w2.Add (this.convertAction, null);
-			this.UIManager.InsertActionGroup (w2, 0);
-			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
-			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
-			this.positionMode.Group = this.autoTaggingMode.Group;
-			w3.Add (this.positionMode, null);
-			this.UIManager.InsertActionGroup (w3, 1);
+			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
 			this.notebook = new global::Gtk.Notebook ();
@@ -62,8 +37,8 @@ namespace LongoMatch.Gui.Component
 			this.teamsdrawingarea = new global::Gtk.DrawingArea ();
 			this.teamsdrawingarea.Name = "teamsdrawingarea";
 			this.dashboardhpaned.Add (this.teamsdrawingarea);
-			global::Gtk.Paned.PanedChild w4 = ((global::Gtk.Paned.PanedChild)(this.dashboardhpaned [this.teamsdrawingarea]));
-			w4.Resize = false;
+			global::Gtk.Paned.PanedChild w1 = ((global::Gtk.Paned.PanedChild)(this.dashboardhpaned [this.teamsdrawingarea]));
+			w1.Resize = false;
 			// Container child dashboardhpaned.Gtk.Paned+PanedChild
 			this.hbox5 = new global::Gtk.HBox ();
 			this.hbox5.Name = "hbox5";
@@ -74,8 +49,8 @@ namespace LongoMatch.Gui.Component
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;
 			this.hbox5.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
-			w5.Position = 0;
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
+			w2.Position = 0;
 			this.dashboardhpaned.Add (this.hbox5);
 			this.notebook.Add (this.dashboardhpaned);
 			// Notebook tab
@@ -89,8 +64,8 @@ namespace LongoMatch.Gui.Component
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
 			this.notebook.Add (this.timeline);
-			global::Gtk.Notebook.NotebookChild w8 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.timeline]));
-			w8.Position = 1;
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.timeline]));
+			w5.Position = 1;
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
@@ -102,8 +77,8 @@ namespace LongoMatch.Gui.Component
 			this.playspositionviewer1.Events = ((global::Gdk.EventMask)(256));
 			this.playspositionviewer1.Name = "playspositionviewer1";
 			this.notebook.Add (this.playspositionviewer1);
-			global::Gtk.Notebook.NotebookChild w9 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playspositionviewer1]));
-			w9.Position = 2;
+			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playspositionviewer1]));
+			w6.Position = 2;
 			// Notebook tab
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
@@ -114,7 +89,6 @@ namespace LongoMatch.Gui.Component
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			w1.SetUiManager (UIManager);
 			this.Hide ();
 		}
 	}

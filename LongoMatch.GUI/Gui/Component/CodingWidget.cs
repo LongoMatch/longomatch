@@ -94,17 +94,13 @@ namespace LongoMatch.Gui.Component
 		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter)
 		{
 			this.projectType = projectType;
-			autoTaggingMode.Active = true;
 			buttonswidget.Visible = true;
 			if (project != null) {
 				buttonswidget.Template = project.Categories;
 			}
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Categories.FieldBackground);
-			if (projectType != ProjectType.FileProject) {
-				timelineMode.Visible = false;
-			} else {
-				timelineMode.Visible = true;
+			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
 			}
 			playspositionviewer1.LoadProject (project);
