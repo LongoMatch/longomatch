@@ -17,29 +17,20 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
+using System.Collections.Generic;
 using Gtk;
-
-using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Gui.Helpers;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Video;
-using LongoMatch.Video.Common;
-using LongoMatch.Video.Capturer;
-using LongoMatch.Video.Utils;
-using Mono.Unix;
-using LongoMatch.Store;
 using LongoMatch.Multimedia.Utils;
-using System.Collections.Generic;
+using LongoMatch.Store;
+using Mono.Unix;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Gui
 {
-
-
 	[System.ComponentModel.Category("CesarPlayer")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin, ICapturerBin
@@ -53,9 +44,9 @@ namespace LongoMatch.Gui
 		Time ellapsedTime;
 		List<string> periods;
 
-		public CapturerBin()
+		public CapturerBin ()
 		{
-			this.Build();
+			this.Build ();
 			recbutton.Visible = false;
 			stopbutton.Visible = false;
 			finishbutton.Visible = false;
@@ -65,7 +56,7 @@ namespace LongoMatch.Gui
 			ConnectSignals ();
 			ellapsedTime = new Time (0);
 		}
-		
+
 		public CapturerType Mode {
 			set {
 				type = value;
@@ -73,15 +64,15 @@ namespace LongoMatch.Gui
 			}
 			
 		}
-		
+
 		public bool Capturing {
 			get;
 			protected set;
 		}
-		
+
 		public Time CurrentTime {
 			get {
-				if(capturer == null)
+				if (capturer == null)
 					return new Time (-1);
 				return capturer.CurrentTime;
 			}
@@ -92,34 +83,35 @@ namespace LongoMatch.Gui
 				return settings;
 			}
 		}
-		
+
 		public List<string> PeriodsNames {
 			set {
 				periods = value;
-				UpdateLabel (value[0]);
+				UpdateLabel (value [0]);
 			}
 			get {
 				return periods;
 			}
 		}
-		
+
 		public List<Period> Periods {
 			set;
 			get;
 		}
 
-		public void StartPeriod () {
-			if(capturer == null)
+		public void StartPeriod ()
+		{
+			if (capturer == null)
 				return;
 				
 			if (currentPeriod != null) {
 				throw new Exception ("Period already started");
 			}
 
-			currentPeriod = new Period {Name = periods[periodIndex]};
+			currentPeriod = new Period { Name = periods[periodIndex] };
 			currentPeriod.StartTimer (ellapsedTime);
 			Log.Information (String.Format ("Start new period {0} at {1}",
-			                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+			                                currentPeriod.Name, ellapsedTime.ToSecondsString ()));
 			Capturing = true;
 			recbutton.Visible = false;
 			stopbutton.Visible = true;
@@ -135,8 +127,9 @@ namespace LongoMatch.Gui
 			UpdateLabel (currentPeriod.Name);
 			Periods.Add (currentPeriod);
 		}
-		
-		public void StopPeriod () {
+
+		public void StopPeriod ()
+		{
 			string msg;
 			
 			msg = Catalog.GetString ("Do you want to stop the current period?");
@@ -149,32 +142,34 @@ namespace LongoMatch.Gui
 			}
 			
 			Log.Information (String.Format ("Stop period {0} at {1}",
-			                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+			                                currentPeriod.Name, ellapsedTime.ToSecondsString ()));
 			periodIndex ++;
 			Capturing = false;
 			capturer.TogglePause ();
 			currentPeriod.StopTimer (ellapsedTime);
-			UpdateLabel (periods[periodIndex]);
+			UpdateLabel (periods [periodIndex]);
 			currentPeriod = null;
 			recbutton.Visible = true;
 			stopbutton.Visible = false;
 		}
-		
-		public void Stop () {
+
+		public void Stop ()
+		{
 			if (currentPeriod != null) {
 				Log.Information (String.Format ("Stop period {0} at {1}",
-				                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+				                                currentPeriod.Name, ellapsedTime.ToSecondsString ()));
 				currentPeriod.StopTimer (ellapsedTime);
 			}
 			Log.Information ("Stop capture");
 			capturer.Stop ();
 		}
 
-		public void Run (CaptureSettings settings) {
+		public void Run (CaptureSettings settings)
+		{
 			/* Close any previous instance of the capturer */
 			Close ();
 
-			capturer = Config.MultimediaToolkit.GetCapturer(type);
+			capturer = Config.MultimediaToolkit.GetCapturer (type);
 			capturer.EllapsedTime += OnTick;
 			this.settings = settings;
 			if (type != CapturerType.Live) {
@@ -185,15 +180,16 @@ namespace LongoMatch.Gui
 				videodrawingarea.DoubleBuffered = false;
 			}
 			if (type == CapturerType.Fake || videodrawingarea.IsRealized) {
-				Configure();
-				capturer.Run();
+				Configure ();
+				capturer.Run ();
 			} else {
 				delayStart = true;
 			}
 			Periods = new List<Period> ();
 		}
 
-		public void Close() {
+		public void Close ()
+		{
 			bool stop = Capturing;
 
 			/* resetting common properties */
@@ -202,22 +198,22 @@ namespace LongoMatch.Gui
 			recbutton.Visible = false;
 			Capturing = false;
 
-			if(capturer == null)
+			if (capturer == null)
 				return;
 
 			/* stopping and closing capturer */
 			try {
 				if (Capturing) {
-					capturer.Stop();
+					capturer.Stop ();
 				}
-				capturer.Close();
+				capturer.Close ();
 				if (type == CapturerType.Live) {
 					/* release and dispose live capturer */
 					capturer.Error -= OnError;
 					capturer.DeviceChange -= OnDeviceChange;
-					capturer.Dispose();
+					capturer.Dispose ();
 				}
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
 			capturer = null;
@@ -225,12 +221,12 @@ namespace LongoMatch.Gui
 
 		public Image CurrentMiniatureFrame {
 			get {
-				if(capturer == null)
+				if (capturer == null)
 					return null;
 
 				Image image = capturer.CurrentFrame;
 
-				if(image.Value == null)
+				if (image.Value == null)
 					return null;
 				image.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 				return image;
@@ -241,7 +237,7 @@ namespace LongoMatch.Gui
 		{
 			recbutton.Clicked += (sender, e) => StartPeriod ();
 			stopbutton.Clicked += (sender, e) => StopPeriod ();
-			finishbutton.Clicked += (sender, e) =>  {
+			finishbutton.Clicked += (sender, e) => {
 				string msg = Catalog.GetString ("Do you want to finish the current capture?");
 				if (!MessagesHelpers.QuestionMessage (this, msg)) {
 					return;
@@ -249,7 +245,7 @@ namespace LongoMatch.Gui
 				Config.EventsBroker.EmitCaptureFinished (false);
 			};
 			cancelbutton.Clicked += (sender, e) => Config.EventsBroker.EmitCaptureFinished (true);
-			videodrawingarea.Realized += (sender, e) =>  {
+			videodrawingarea.Realized += (sender, e) => {
 				if (delayStart) {
 					Configure ();
 					capturer.Run ();
@@ -257,20 +253,23 @@ namespace LongoMatch.Gui
 			};
 		}
 
-		void UpdateLabel (string name) {
+		void UpdateLabel (string name)
+		{
 			frame1.Label = Catalog.GetString ("Period") + " " + name;
 		}
-		
-		string FormatTime (Period period, Time time) {
+
+		string FormatTime (Period period, Time time)
+		{
 			return String.Format ("{0} {1}: {2}  ", Catalog.GetString ("Period"),
 			                      period.Name, time.ToSecondsString ());
 		}
-		
-		void Configure () {
+
+		void Configure ()
+		{
 			VideoMuxerType muxer;
 			IntPtr windowHandle = IntPtr.Zero;
 			
-			if(capturer == null)
+			if (capturer == null)
 				return;
 			
 			recbutton.Visible = true;
@@ -297,8 +296,7 @@ namespace LongoMatch.Gui
 				recbutton.Sensitive = false;
 				msg = Catalog.GetString ("Device disconnected. " + "The capture will be paused");
 				MessagesHelpers.WarningMessage (this, msg);
-			}
-			else {
+			} else {
 				recbutton.Sensitive = true;
 				msg = Catalog.GetString ("Device reconnected." + "Do you want to restart the capture?");
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
@@ -307,7 +305,8 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnTick(Time ellapsedTime) {
+		void OnTick (Time ellapsedTime)
+		{
 			string text = "";
 			Time duration = new Time (0);
 
@@ -322,17 +321,18 @@ namespace LongoMatch.Gui
 					text += FormatTime (period, ellapsedTime - duration);
 					break;
 				}
- 			}
-			timelabel.Markup = String.Format("<span font=\"30px bold\">{0}</span> ",  text);
+			}
+			timelabel.Markup = String.Format ("<span font=\"30px bold\">{0}</span> ", text);
 		}
-		
-		void OnError (string message) {
+
+		void OnError (string message)
+		{
 			Application.Invoke (delegate {
 				Config.EventsBroker.EmitCaptureError (message);
 			});
 		}
 
-		void OnDeviceChange(int deviceID)
+		void OnDeviceChange (int deviceID)
 		{
 			Application.Invoke (delegate {
 				DeviceChanged (deviceID);
