@@ -150,11 +150,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			SelectedPlayers.Clear ();
 			substitutionPlayer = null;
-			foreach (PlayerObject player in homePlayers) {
-				player.Active = false;
+			if (homePlayers != null) {
+				foreach (PlayerObject player in homePlayers) {
+					player.Active = false;
+				}
 			}
-			foreach (PlayerObject player in awayPlayers) {
-				player.Active = false;
+			if (awayPlayers != null) {
+				foreach (PlayerObject player in awayPlayers) {
+					player.Active = false;
+				}
 			}
 		}
 
@@ -189,6 +193,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				field.Width = 300;
 				field.Height = 250;
 			}
+			ResetSelection ();
 			ClearPlayers ();
 			homePlayingPlayers = awayPlayingPlayers = null;
 

@@ -87,11 +87,19 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			Selection sel = tagger.GetSelection (coords, 0);
+			List<Player> players = tagger.SelectedPlayers;
+
+			if (players.Count == 0) {
+				Selection sel = tagger.GetSelection (coords, 0, true);
+				if (sel != null) {
+					players = new List<Player> { (sel.Drawable as PlayerObject).Player };
+				}
+			} else {
+				players = tagger.SelectedPlayers;
+			}
 			
-			if (sel != null && ShowMenuEvent != null) {
-				PlayerObject po = sel.Drawable as PlayerObject;
-				ShowMenuEvent (new List<Player> { po.Player });
+			if (players.Count > 0 && ShowMenuEvent != null) {
+				ShowMenuEvent (players);
 			}
 		}
 

@@ -138,6 +138,7 @@ namespace LongoMatch.Gui.Panel
 			
 			drawingarea.HeightRequest = 200;
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
 			teamtagger.SubstitutionMode = true;
 			teams = Config.TeamTemplatesProvider.Templates;
 			hometeamscombobox.Load (teams);
@@ -434,6 +435,21 @@ namespace LongoMatch.Gui.Panel
 				projectperiods1.Project = project;
 			}
 			UpdateTitle ();
+		}
+
+		void HandleShowMenuEvent (List<Player> players)
+		{
+			Menu menu = new Menu ();
+			MenuItem item = new MenuItem ("Remove for this match");
+			item.Activated += (sender, e) => {
+					hometemplate.RemovePlayers (players, false);
+					awaytemplate.RemovePlayers (players, false);
+					teamtagger.Reload ();
+					drawingarea.QueueDraw ();
+			};
+			menu.Add (item);
+			menu.ShowAll ();
+			menu.Popup ();
 		}
 	}
 }

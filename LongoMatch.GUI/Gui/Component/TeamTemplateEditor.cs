@@ -183,7 +183,7 @@ namespace LongoMatch.Gui.Component
 
 		void FillFormation () {
 			tacticsentry.Text = template.FormationStr;
-			nplayerslabel.Text = template.PlayingPlayers.ToString();
+			nplayerslabel.Text = template.StartingPlayers.ToString();
 		}
 		
 		void LoadPlayer (Player p) {

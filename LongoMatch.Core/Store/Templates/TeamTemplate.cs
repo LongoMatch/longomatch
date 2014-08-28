@@ -68,7 +68,7 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		[JsonIgnore]
-		public int PlayingPlayers {
+		public int StartingPlayers {
 			get {
 				return Formation.Sum();
 			}
@@ -110,19 +110,42 @@ namespace LongoMatch.Store.Templates
 		[JsonIgnore]
 		public List<Player> StartingPlayersList {
 			get {
-				int count = Math.Min (PlayingPlayers, List.Count);
-				return List.GetRange (0, count);
+				List<Player> playingPlayers = PlayingPlayersList;
+				int count = Math.Min (StartingPlayers, StartingPlayers);
+				return playingPlayers.GetRange (0, count);
 			}
 		}
 
 		[JsonIgnore]
 		public List<Player> BenchPlayersList {
 			get {
-				int playing = PlayingPlayers;
-				if (List.Count > playing) {
-					return List.GetRange (playing, List.Count - playing);
+				List<Player> playingPlayers = PlayingPlayersList;
+				int starting = StartingPlayers;
+				if (playingPlayers.Count > starting) {
+					return playingPlayers.GetRange (starting, playingPlayers.Count - starting);
 				} else {
 					return new List<Player> ();
+				}
+			}
+		}
+
+		public void RemovePlayers (List<Player> players, bool delete)
+		{
+			List<Player> bench, starters;
+			
+			bench = BenchPlayersList;
+			starters = StartingPlayersList;
+
+			foreach (Player p in players) {
+				if (List.Contains (p)) {
+					if (starters.Contains (p) && bench.Count > 0) {
+						List.Swap (p, bench [0]);
+					}
+					List.Remove (p);
+					if (!delete) {
+						List.Add (p);
+						p.Playing = false;
+					}
 				}
 			}
 		}
