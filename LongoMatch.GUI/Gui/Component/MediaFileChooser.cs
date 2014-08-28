@@ -79,9 +79,10 @@ namespace LongoMatch.Gui.Component
 			if (MediaFileMode) {
 				MediaFile = Misc.OpenFile (this);
 			} else {
-				File = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
-				                                   "Capture.mp4", Config.VideosDir, "MP4",
-				                                   new string[] { "*.mp4" });
+				string filename = String.Format ("LongoMatch-{0}.mp4",
+				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
+				File = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"), filename,
+				                                   Config.VideosDir, "MP4", new string[] { "*.mp4" });
 			}
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);
