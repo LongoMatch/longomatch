@@ -404,6 +404,9 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				notebook1.Page --;
 			}
+			if (notebook1.Page == PROJECT_TYPE) {
+				project = null;
+			}
 			UpdateTitle ();
 		}
 
@@ -414,6 +417,12 @@ namespace LongoMatch.Gui.Panel
 			}
 			if (notebook1.Page == PROJECT_DETAILS) {
 				if (!CreateProject ()) {
+					return;
+				}
+				if (projectType == ProjectType.CaptureProject ||
+				    projectType == ProjectType.FakeCaptureProject ||
+				    projectType == ProjectType.URICaptureProject) {
+					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
