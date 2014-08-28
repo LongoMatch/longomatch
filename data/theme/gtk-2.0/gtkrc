@@ -99,7 +99,7 @@ style "longomatch-drawingarea" {
   bg[NORMAL]        = @bg_dark_color
 }
 
-style "longomatch-editor-treeview" {
+style "longomatch-treeview" {
   # Background color
   base[NORMAL]       = @bg_dark_color
   # Line color when active (default)
@@ -281,6 +281,7 @@ class "GtkMenuBar"                               style "longomatch-menubar"
 class "GtkCheckButton"                           style "longomatch-checkbox"
 class "GtkCheckMenuItem"                         style "longomatch-checkbox"
 class "GtkRadioButton"                           style "longomatch-radiobutton"
+class "GtkTreeView"                              style "longomatch-treeview"
 
 # Text color for the menu items in the bar and the menus
 widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
@@ -291,25 +292,20 @@ widget_class "*<GtkComboBox>*"                    style "longomatch-combobox"
 widget_class "*<GtkComboBox>*<GtkButton>"  style "longomatch-combobox-button"
 widget_class "*<GtkComboBox>*<GtkArrow>" style "longomatch-combobox-arrow"
 
-
-
 widget_class "*HomeTeamsComboBox*" style "longomatch-home-teams-combobox"
 widget_class "*HomeTeamsComboBox*<GtkButton>" style "longomatch-home-teams-combobox-button"
 widget_class "*AwayTeamsComboBox*" style "longomatch-away-teams-combobox"
 widget_class "*AwayTeamsComboBox*<GtkButton>" style "longomatch-away-teams-combobox-button"
 widget_class "*TeamsComboBox*<GtkArrow>" style "longomatch-teams-combobox-arrow"
 
-
 class "GtkNotebook"                              style "longomatch-notebook"
 widget_class "*<GtkNotebook>*<GtkLabel>"                style "longomatch-notebook-tab-label"
-
 
 widget "*editorbuttonbar.*" style "longomatch-editor"
 widget "*dashboardeditorvbox.*.drawingarea" style "longomatch-drawingarea"
 widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
-widget "*editortreeview" style "longomatch-editor-treeview"
 widget "*mediafilechooser*entry*" style "longomatch-filechooser-entry"
 widget "*datepicker*button*" style "longomatch-filechooser-button"
 widget "*datepicker*entry*" style "longomatch-filechooser-entry"
