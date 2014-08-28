@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Helpers
 			filter.AddPattern("*.png");
 			filter.AddPattern("*.jpg");
 			filter.AddPattern("*.jpeg");
+			filter.AddPattern("*.svg");
 			return filter;
 		}
 

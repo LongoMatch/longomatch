@@ -89,9 +89,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Gettext.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Exceptions.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainController.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/field_background.svg" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/goal_background.svg" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/half_field_background.svg" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/ICapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IPlayer.cs" />

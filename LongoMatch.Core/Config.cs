@@ -183,19 +183,19 @@ namespace LongoMatch
 		#region Properties
 		static public Image FieldBackground {
 			get {
-				return new Image (Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
+				return new Image (Path.Combine (Config.ImagesDir, Constants.FIELD_BACKGROUND));
 			}
 		}
 		
 		static public Image HalfFieldBackground {
 			get {
-				return new Image (Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
+				return new Image (Path.Combine (Config.ImagesDir, Constants.HALF_FIELD_BACKGROUND));
 			}
 		}
 		
 		static public Image GoalBackground {
 			get {
-				return new Image (Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
+				return new Image (Path.Combine (Config.ImagesDir, Constants.GOAL_BACKGROUND));
 			}
 		}
 		

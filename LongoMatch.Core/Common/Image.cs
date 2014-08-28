@@ -107,6 +107,12 @@ namespace LongoMatch.Common
 		
 		
 #if HAVE_GTK
+		
+		public Image (string filename)
+		{
+			this.image = new SImage (filename);
+		}
+		
 		public virtual byte[] Serialize () {
 			if (image == null)
 				return null;

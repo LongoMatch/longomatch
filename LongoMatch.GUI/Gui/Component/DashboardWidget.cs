@@ -62,6 +62,9 @@ namespace LongoMatch.Gui.Component
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
+			resetfieldbutton.Clicked += HandleResetField;
+			resethfieldbutton.Clicked += HandleResetField;
+			resetgoalbutton.Clicked += HandleResetField;
 			tagproperties.EditedEvent += (sender, e) => {drawingarea.QueueDraw();};
 			addcatbutton.Clicked += HandleAddClicked;
 			addtimerbutton.Clicked += HandleAddClicked;
@@ -94,7 +97,7 @@ namespace LongoMatch.Gui.Component
 				return edited || tagger.Edited || tagproperties.Edited;
 			}
 			set {
-				edited = value;
+				edited = tagger.Edited = tagproperties.Edited = value;
 			}
 		}
 
@@ -164,6 +167,21 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
+		void UpdateBackground (Image background, int index)
+		{
+			if (index == 0) {
+				template.FieldBackground = background;
+				fieldimage.Pixbuf = background.Scale (50, 50).Value;
+			} else if (index == 1) {
+				template.HalfFieldBackground = background;
+				hfieldimage.Pixbuf = background.Scale (50, 50).Value;
+			} else if (index == 2) {
+				template.GoalBackground = background;
+				goalimage.Pixbuf = background.Scale (50, 50).Value;
+			}
+			Edited = true;
+		}
+		
 		void HandleTaggersSelectedEvent (List<TaggerButton> taggers)
 		{
 			if (taggers.Count == 1) {
@@ -189,14 +207,11 @@ namespace LongoMatch.Gui.Component
 			background.ScaleInplace (Constants.MAX_BACKGROUND_WIDTH,
 			                         Constants.MAX_BACKGROUND_HEIGHT);
 			if (o == fieldeventbox) {
-				template.FieldBackground = background;
-				fieldimage.Pixbuf = background.Scale (50, 50).Value;
+				UpdateBackground (background, 0);
 			} else if (o == hfieldeventbox) {
-				template.HalfFieldBackground = background;
-				hfieldimage.Pixbuf = background.Scale (50, 50).Value;
+				UpdateBackground (background, 1);
 			} else if (o == goaleventbox) {
-				template.GoalBackground = background;
-				goalimage.Pixbuf = background.Scale (50, 50).Value;
+				UpdateBackground (background, 2);
 			}
 			Edited = true;
 		}
@@ -279,5 +294,17 @@ namespace LongoMatch.Gui.Component
 				tagger.Refresh (null);
 			}
 		}
+		
+		void HandleResetField (object sender, EventArgs e)
+		{
+			if (sender == resetfieldbutton) {
+				UpdateBackground (Config.FieldBackground, 0);
+			} else if (sender == resethfieldbutton) {
+				UpdateBackground (Config.HalfFieldBackground, 1);
+			} else if (sender == resetgoalbutton) {
+				UpdateBackground (Config.GoalBackground, 2);
+			}
+		}
+
 	}
 }

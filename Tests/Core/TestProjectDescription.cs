@@ -29,7 +29,7 @@ namespace Tests.Core
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, new Image (null));
+			                              "aac", 320, 240, 1.3, null);
 			ProjectDescription pd = new ProjectDescription ();
 			Utils.CheckSerialization (pd);
 			

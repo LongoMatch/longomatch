@@ -34,7 +34,7 @@ namespace Tests.Core
 			p.LocalTeamTemplate = TeamTemplate.DefaultTemplate (5);
 			p.VisitorTeamTemplate = TeamTemplate.DefaultTemplate (5);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, new Image (null));
+			                              "aac", 320, 240, 1.3, null);
 			ProjectDescription pd = new ProjectDescription ();
 			pd.File = mf;
 			p.Description = pd;
