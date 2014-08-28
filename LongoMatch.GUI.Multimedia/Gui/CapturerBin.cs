@@ -323,6 +323,7 @@ namespace LongoMatch.Gui
 				}
 			}
 			timelabel.Markup = String.Format ("<span font=\"30px bold\">{0}</span> ", text);
+			Config.EventsBroker.EmitCapturerTick (ellapsedTime);
 		}
 
 		void OnError (string message)
