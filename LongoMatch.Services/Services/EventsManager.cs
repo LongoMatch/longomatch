@@ -63,7 +63,9 @@ namespace LongoMatch.Services
 			if (project == null)
 				return;
 				
-			framesCapturer.Open (openedProject.Description.File.FilePath);
+			if (projectType == ProjectType.FileProject) {
+				framesCapturer.Open (openedProject.Description.File.FilePath);
+			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
