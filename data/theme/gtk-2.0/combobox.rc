@@ -44,6 +44,9 @@ style "longomatch-combobox-children"
   GtkFrame::shadow-type = GTK_SHADOW_NONE
   GtkEntry::shadow-type = GTK_SHADOW_NONE
 
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+
   engine "pixmap"
   {
     image
