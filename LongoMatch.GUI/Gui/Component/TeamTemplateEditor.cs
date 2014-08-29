@@ -91,6 +91,7 @@ namespace LongoMatch.Gui.Component
 				ignoreChanges = false;
 				Edited = false;
 				// Start with disabled widget until something get selected
+				ClearPlayerFrame ();
 				playerframe.Sensitive = false;
 			}
 		}
@@ -200,6 +201,24 @@ namespace LongoMatch.Gui.Component
 			bdaydatepicker.Date = p.Birthday;
 			mailentry.Text = p.Mail ?? "";
 			playerimage.Pixbuf = PlayerPhoto (p);
+		}
+
+		void ClearPlayerFrame () {
+			ignoreChanges = true;
+
+			nameentry.Text = "";
+			lastnameentry.Text = "";
+			nicknameentry.Text = "";
+			positionentry.Text = "";
+			numberspinbutton.Value = 0;
+			heightspinbutton.Value = 0;
+			weightspinbutton.Value = 0;
+			nationalityentry.Text = "";
+			bdaydatepicker.Date = new DateTime ();
+			mailentry.Text = "";
+			playerimage.Pixbuf = playerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+
+			ignoreChanges = false;
 		}
 		
 		void ParseTactics () {
