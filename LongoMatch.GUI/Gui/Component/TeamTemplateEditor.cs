@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 
 			ConnectSignals ();
 
-			ClearPlayerFrame ();
+			ClearPlayer ();
 		}
 		
 		protected override void OnDestroyed ()
@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Component
 				FillFormation ();
 				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
-				ClearPlayerFrame ();
+				ClearPlayer ();
 				ignoreChanges = false;
 				Edited = false;
 			}
@@ -208,7 +208,7 @@ namespace LongoMatch.Gui.Component
 			ignoreChanges = false;
 		}
 
-		void ClearPlayerFrame () {
+		void ClearPlayer () {
 			ignoreChanges = true;
 
 			playerframe.Sensitive = false;
@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Component
 			if (players.Count == 1) {
 				LoadPlayer (players[0]);
 			} else {
-				ClearPlayerFrame ();
+				ClearPlayer ();
 			}
 
 			ignoreChanges = false;
