@@ -338,14 +338,19 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawText (Point point, double width, double height, string text)
 		{
-			Layout layout;
+			Layout layout = null;
 			Pango.Rectangle inkRect, logRect;
 			
 			if (text == null) {
 				return;
 			}
 
-			layout = (context as CairoContext).PangoLayout;
+			if (context is CairoContext) {
+				layout = (context as CairoContext).PangoLayout;
+			}
+			if (layout == null) {
+				layout = Pango.CairoHelper.CreateLayout (CContext);
+			}
 			layout.FontDescription = FontDescription.FromString (
 				String.Format ("{0} {1}px", FontFamily, FontSize));
 			layout.FontDescription.Weight = fWeight;
