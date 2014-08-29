@@ -45,7 +45,9 @@ namespace LongoMatch.Gui.Panel
 			treeview.EnableTreeLines = false;
 			AddPanels ();
 			treeview.SetCursor (new TreePath("0"), null, false);
-			backbutton.Clicked += (e, s) => {
+			panelheader1.ApplyVisible = false;
+			panelheader1.Title = Catalog.GetString ("PREFERENCES");
+			panelheader1.BackClicked += (sender, e) => {
 				if (BackEvent != null) {
 					BackEvent ();
 				};

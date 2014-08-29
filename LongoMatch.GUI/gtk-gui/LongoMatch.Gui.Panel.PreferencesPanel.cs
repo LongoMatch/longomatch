@@ -5,13 +5,12 @@ namespace LongoMatch.Gui.Panel
 	public partial class PreferencesPanel
 	{
 		private global::Gtk.VBox vbox2;
+		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
 		private global::Gtk.HPaned hpaned1;
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.TreeView treeview;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.VBox propsvbox;
-		private global::Gtk.HButtonBox hbuttonbox2;
-		private global::Gtk.Button backbutton;
 
 		protected virtual void Build ()
 		{
@@ -23,6 +22,15 @@ namespace LongoMatch.Gui.Panel
 			this.vbox2 = new global::Gtk.VBox ();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.panelheader1 = new global::LongoMatch.Gui.Panel.PanelHeader ();
+			this.panelheader1.Events = ((global::Gdk.EventMask)(256));
+			this.panelheader1.Name = "panelheader1";
+			this.vbox2.Add (this.panelheader1);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.panelheader1]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
@@ -39,8 +47,8 @@ namespace LongoMatch.Gui.Panel
 			this.treeview.Name = "treeview";
 			this.scrolledwindow1.Add (this.treeview);
 			this.hpaned1.Add (this.scrolledwindow1);
-			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.scrolledwindow1]));
-			w2.Resize = false;
+			global::Gtk.Paned.PanedChild w3 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.scrolledwindow1]));
+			w3.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
@@ -50,46 +58,12 @@ namespace LongoMatch.Gui.Panel
 			this.propsvbox.Name = "propsvbox";
 			this.propsvbox.Spacing = 6;
 			this.hbox1.Add (this.propsvbox);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.propsvbox]));
-			w3.Position = 0;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.propsvbox]));
+			w4.Position = 0;
 			this.hpaned1.Add (this.hbox1);
 			this.vbox2.Add (this.hpaned1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hpaned1]));
-			w5.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbuttonbox2 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox2.Name = "hbuttonbox2";
-			this.hbuttonbox2.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-			// Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
-			this.backbutton = new global::Gtk.Button ();
-			this.backbutton.CanFocus = true;
-			this.backbutton.Name = "backbutton";
-			this.backbutton.UseUnderline = true;
-			// Container child backbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w6 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w7 = new global::Gtk.HBox ();
-			w7.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w8 = new global::Gtk.Image ();
-			w8.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-go-back", global::Gtk.IconSize.Dialog);
-			w7.Add (w8);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w10 = new global::Gtk.Label ();
-			w10.LabelProp = global::Mono.Unix.Catalog.GetString ("Back");
-			w10.UseUnderline = true;
-			w7.Add (w10);
-			w6.Add (w7);
-			this.backbutton.Add (w6);
-			this.hbuttonbox2.Add (this.backbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.backbutton]));
-			w14.Expand = false;
-			w14.Fill = false;
-			this.vbox2.Add (this.hbuttonbox2);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbuttonbox2]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hpaned1]));
+			w6.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

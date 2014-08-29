@@ -55,6 +55,7 @@ namespace LongoMatch.Gui.Panel
 			WidthRequest = MinWidth;
 			buttonWidgets = new List<Widget>();
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
+			preferencesbutton.Clicked += HandlePreferencesClicked;
 			Create ();
 			Name = "WelcomePanel";
 		}
@@ -93,6 +94,11 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
+		void HandlePreferencesClicked (object sender, EventArgs e)
+		{
+			Config.EventsBroker.EmitEditPreferences ();
+		}
+
 		void Create ()
 		{
 			int padding;
