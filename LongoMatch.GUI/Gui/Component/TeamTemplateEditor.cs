@@ -143,7 +143,6 @@ namespace LongoMatch.Gui.Component
 			bdaydatepicker.ValueChanged += HandleEntryChanged;
 			
 			applybutton.Clicked += (s,e) => {ParseTactics();}; 
-			tacticsentry.Activated += (s, e) => {ParseTactics();};
 
 			Edited = false;
 		}
