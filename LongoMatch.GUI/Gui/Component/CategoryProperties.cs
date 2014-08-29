@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Component
 		public CategoryProperties()
 		{
 			this.Build();
+
 			nameentry.Changed += HandleNameentryChanged;
 			colorbutton1.ColorSet += HandleColorSet;
 			colorbutton2.ColorSet += HandleColorSet;
@@ -73,6 +74,11 @@ namespace LongoMatch.Gui.Component
 			goalcombobox.Changed += HandlePositionChanged;
 			shapecombobox.Changed += HandleShapeChanged;
 			pointsbutton.Changed += HandlePointsChanged;
+
+			postable.NoShowAll = true;
+			cattable.NoShowAll = true;
+			scoretable.NoShowAll = true;
+
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 			sizegroup.IgnoreHidden = false;
 			foreach (Widget w in vbox3.Children) {
@@ -82,8 +88,11 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			}
+
 			CanChangeHotkey = true;
 			Tagger = null;
+
+			UpdateGui ();
 		}
 
 		public bool Edited {
@@ -170,6 +179,16 @@ namespace LongoMatch.Gui.Component
 					hotKeyLabel.Text = tagger.HotKey.ToString ();
 				else
 					hotKeyLabel.Text = Catalog.GetString ("none");
+			} else {
+				nameentry.Text = "";
+				colorbutton1.Color = new Gdk.Color(0,0,0);
+				colorbutton2.Color = new Gdk.Color(0,0,0);
+				lastLeadTime = new Time ();
+				tagmodecombobox.Active = 0;
+				leadtimebutton.Value = 0;
+				lagtimebutton.Value = 0;
+				sortmethodcombobox.Active = 0;
+				hotKeyLabel.Text = Catalog.GetString ("none");
 			}
 			if (posTagger != null) {
 				SetPositionCombo (fieldcombobox, posTagger.TagFieldPosition,
@@ -194,6 +213,9 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleChangeHotkey(object sender, System.EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
 			HotKey prevHotKey =  cat.HotKey;
@@ -209,6 +231,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePositionChanged (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			bool tag = false, trayectory = false;
 			
 			ReadPositionCombo (sender as ComboBox, out tag, out trayectory);
@@ -226,18 +251,27 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTagsPerRowValueChanged (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			cat.TagsPerRow = tprbutton.ValueAsInt;
 			Edited = true;
 		}
 		
 		void HandleTagsToggled (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			cat.ShowSubcategories = tagscheckbutton.Active;
 			Edited = true;
 		}
 
 		void HandleTagModeChanged (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			tagger.TagMode = (TagMode) tagmodecombobox.Active;
 			if (tagger.TagMode == TagMode.Predefined) {
 				lagtimebutton.Sensitive = true;
@@ -252,6 +286,9 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleColorSet (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			LongoMatch.Common.Color c = Helpers.Misc.ToLgmColor((sender as ColorButton).Color);
 			if (sender == colorbutton1) {
 				tagger.Color = c;
@@ -263,36 +300,54 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleLeadTimeChanged(object sender, System.EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			tagger.Start = new Time{Seconds=(int)leadtimebutton.Value};
 			Edited = true;
 		}
 
 		void HandleLagTimeChanged(object sender, System.EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			tagger.Stop = new Time{Seconds=(int)lagtimebutton.Value};
 			Edited = true;
 		}
 
 		void HandleNameentryChanged(object sender, System.EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			tagger.Name = nameentry.Text;
 			Edited = true;
 		}
 
 		void HandleSortMethodChanged(object sender, System.EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			tagger.SortMethodString = sortmethodcombobox.ActiveText;
 			Edited = true;
 		}
 		
 		void HandleShapeChanged (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			card.Shape = (CardShape) shapecombobox.Active;
 			Edited = true;
 		}
 		
 		void HandlePointsChanged (object sender, EventArgs e)
 		{
+			if (ignore == true)
+				return;
+
 			score.Points = pointsbutton.ValueAsInt;
 			Edited = true;
 		}
