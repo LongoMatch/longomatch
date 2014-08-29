@@ -1,42 +1,48 @@
+
 style "longomatch-combobox" = "longomatch-default" {
   xthickness = 2
   ythickness = 2
 
-  base[NORMAL]      = @bg_light_color
-  bg[NORMAL]        = @bg_light_color
+  # Force combobox to drow its own shadow
+  GtkComboBox::shadow-type = GTK_SHADOW_IN
 
-  fg[NORMAL]        = @text_color
+  base[NORMAL]        = @bg_dark_color
+  base[INSENSITIVE]   = darker (@bg_dark_color)
+
   text[NORMAL]      = @text_color
   text[INSENSITIVE] = darker (@text_color)
 
+  # Rounded border
   engine "pixmap"
   {
-    # LTR version
+    # This shadow gives a rounded corner rectangle in the background of the combobox
     image
     {
       function   = SHADOW
       shadow     = IN
       file       = "Entry/combo-entry-border-bg.png"
-      border     = { 4, 4, 5, 4 }
+      border     = { 4, 4, 4, 4 }
       stretch    = TRUE
-      direction  = LTR
-    }
-    # RTL version
-    image
-    {
-      function   = SHADOW
-      shadow     = IN
-      file       = "Entry/combo-entry-border-bg-rtl.png"
-      border     = { 4, 4, 5, 4 }
-      stretch    = TRUE
-      direction  = RTL
     }
   }
 }
 
-style "longomatch-combobox-arrow"
+style "longomatch-teams-combobox" = "longomatch-combobox" {
+  xthickness   = 0
+  ythickness   = 4
+
+  # Used for the Cell View background
+  base[NORMAL]      = @bg_light_color
+}
+
+style "longomatch-combobox-children"
 {
-  # Arrows
+  # We don't want our children drawing a shadow
+  xthickness   = 0
+  ythickness   = 0
+
+  GtkFrame::shadow-type = GTK_SHADOW_NONE
+  GtkEntry::shadow-type = GTK_SHADOW_NONE
 
   engine "pixmap"
   {
@@ -48,35 +54,62 @@ style "longomatch-combobox-arrow"
       overlay_stretch  = FALSE
       arrow_direction  = DOWN
     }
+    # Default background for the ToggleButtons, same color than the combo bg
+    image
+    {
+      function         = BOX
+      file             = "Buttons/null_bg.png"
+      border           = { 0, 0, 0, 0 }
+      stretch          = TRUE
+    }
   }
 }
 
-style "longomatch-combobox-button" = "longomatch-combo
-"
+style "longomatch-teams-combobox-children" = "longomatch-combobox-children"
 {
-  fg[ACTIVE] = @text_color
-
   engine "pixmap"
   {
-
-    # LTR version
+    # Specific bg for the teams combo which has a lighter background
     image
     {
-      function    = BOX
-      file        = "Entry/combo-entry-button.png"
-      border      = { 4, 4, 4, 4 }
-      stretch     = TRUE
-      direction   = LTR
-    }
-
-    # RTL version
-    image
-    {
-      function    = BOX
-      file        = "Entry/combo-entry-button-rtl.png"
-      border      = { 4, 4, 5, 4 }
-      stretch     = TRUE
-      direction   = RTL
+      function         = BOX
+      file             = "Buttons/null_bg_light.png"
+      border           = { 0, 0, 0, 0 }
+      stretch          = TRUE
     }
   }
 }
+
+style "longomatch-home-teams-combobox" = "longomatch-teams-combobox"
+{
+  engine "pixmap"
+  {
+    # Customize background image
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      detail      = "combobox"
+      file        = "Entry/team-combo-entry-blue.png"
+      border      = { 4, 4, 4, 4 }
+      stretch     = TRUE
+    }
+  }
+}
+
+style "longomatch-away-teams-combobox" = "longomatch-teams-combobox"
+{
+  engine "pixmap"
+  {
+    image
+    {
+      function    = SHADOW
+      shadow      = IN
+      detail      = "combobox"
+      file        = "Entry/team-combo-entry-red.png"
+      border      = { 4, 4, 4, 4 }
+      stretch     = TRUE
+    }
+  }
+}
+

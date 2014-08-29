@@ -208,52 +208,6 @@ style "longomatch-filechooser-button"
    }
 }
 
-style "longomatch-combobox" {
-
-  font = "Ubuntu 12"
-  xthickness = 2
-  ythickness = 2
-
-  base[NORMAL]        = @bg_dark_color
-  base[INSENSITIVE]   = darker (@bg_dark_color)
-
-  text[NORMAL]      = @text_color
-  text[INSENSITIVE] = darker (@text_color)
-
-  engine "clearlooks"
-  {
-    radius = 1.0
-  }
-   base[NORMAL] = @bg_color
-   base[INSENSITIVE] = @bg_color
-
-   xthickness = 15
-   ythickness = 4
-
-   engine "pixmap"
-   {
-     image
-     {
-       function  = SHADOW
-       detail    = "entry"
-       state     = NORMAL
-       shadow    = IN
-       file      = "Entry/file-input-left.png"
-       border    = { 15, 4, 15, 15 }
-       stretch   = TRUE
-     }
-     image
-     {
-       function        = FLAT_BOX
-       detail          = "entry_bg"
-       state           = NORMAL
-       overlay_file    = "Entry/filechooser-entry-fill.png"
-       overlay_border  = { 0, 0, 0, 0 }
-       overlay_stretch = TRUE
-     }
-   }
-}
-
 style "longomatch-aspect-frame"
 {
   xthickness = 0
@@ -262,41 +216,35 @@ style "longomatch-aspect-frame"
 
 include "buttons.rc"
 include "notebook.rc"
-include "teamcombobox.rc"
 include "combobox.rc"
 include "checkbox.rc"
 include "handles.rc"
 include "radiobutton.rc"
 
-
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
 class "GtkButton"                                style "longomatch-square-button"
-class "GtkPaned"                                style "longomatch-handles"
+class "GtkPaned"                                 style "longomatch-handles"
 #Remove borders completely
 class "GtkAspectFrame"                           style "longomatch-aspect-frame"
-# Background for the menubar
-class "GtkMenuBar"                               style "longomatch-menubar"
-
 class "GtkCheckButton"                           style "longomatch-checkbox"
 class "GtkCheckMenuItem"                         style "longomatch-checkbox"
 class "GtkRadioButton"                           style "longomatch-radiobutton"
 class "GtkTreeView"                              style "longomatch-treeview"
 
+# Background for the menubar
+class "GtkMenuBar"                               style "longomatch-menubar"
 # Text color for the menu items in the bar and the menus
 widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
 widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
-widget_class "*<GtkComboBox>*"                    style "longomatch-combobox"
-#widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-combobox-button"
-#widget_class "*<GtkComboBox>*<GtkEntry>"         style "longomatch-combobox-entry"
-widget_class "*<GtkComboBox>*<GtkButton>"  style "longomatch-combobox-button"
-widget_class "*<GtkComboBox>*<GtkArrow>" style "longomatch-combobox-arrow"
-
-widget_class "*HomeTeamsComboBox*" style "longomatch-home-teams-combobox"
-widget_class "*HomeTeamsComboBox*<GtkButton>" style "longomatch-home-teams-combobox-button"
-widget_class "*AwayTeamsComboBox*" style "longomatch-away-teams-combobox"
-widget_class "*AwayTeamsComboBox*<GtkButton>" style "longomatch-away-teams-combobox-button"
-widget_class "*TeamsComboBox*<GtkArrow>" style "longomatch-teams-combobox-arrow"
+# Comboboxes get a nice rounded border with green arrows
+widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
+# Custom combos for team vs team
+widget_class "*HomeTeamsComboBox*"               style "longomatch-home-teams-combobox"
+widget_class "*AwayTeamsComboBox*"               style "longomatch-away-teams-combobox"
+# Order matters here
+widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-children"
+widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
 
 class "GtkNotebook"                              style "longomatch-notebook"
 widget_class "*<GtkNotebook>*<GtkLabel>"                style "longomatch-notebook-tab-label"
