@@ -86,7 +86,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			if (BenchPlayers == null) {
+			if (BenchPlayers == null || Position == null) {
 				return;
 			}
 			tk.Begin ();
@@ -111,7 +111,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			Selection selection = null;
 
-			if (BenchPlayers == null) {
+			if (BenchPlayers == null || Position == null) {
 				return selection;
 			}
 			
