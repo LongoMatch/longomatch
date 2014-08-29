@@ -49,13 +49,12 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			playerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
-			playerframe.Sensitive = false;
-
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 
 			ConnectSignals ();
+
+			ClearPlayerFrame ();
 		}
 		
 		protected override void OnDestroyed ()
@@ -88,11 +87,10 @@ namespace LongoMatch.Gui.Component
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
 				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
-				ignoreChanges = false;
-				Edited = false;
 				// Start with disabled widget until something get selected
 				ClearPlayerFrame ();
-				playerframe.Sensitive = false;
+				ignoreChanges = false;
+				Edited = false;
 			}
 		}
 
@@ -189,7 +187,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void LoadPlayer (Player p) {
+			ignoreChanges = true;
+
 			loadedPlayer = p;
+
 			nameentry.Text = p.Name ?? "";
 			lastnameentry.Text = p.LastName ?? "";
 			nicknameentry.Text = p.NickName ?? "";
@@ -201,10 +202,18 @@ namespace LongoMatch.Gui.Component
 			bdaydatepicker.Date = p.Birthday;
 			mailentry.Text = p.Mail ?? "";
 			playerimage.Pixbuf = PlayerPhoto (p);
+
+			playerframe.Sensitive = true;
+
+			ignoreChanges = false;
 		}
 
 		void ClearPlayerFrame () {
 			ignoreChanges = true;
+
+			playerframe.Sensitive = false;
+
+			loadedPlayer = null;
 
 			nameentry.Text = "";
 			lastnameentry.Text = "";
@@ -247,15 +256,15 @@ namespace LongoMatch.Gui.Component
 		
 		void PlayersSelected (List<Player> players) {
 			ignoreChanges = true;
-			playerframe.Sensitive = players.Count == 1;
+
 			selectedPlayers = players;
 			deletebutton.Sensitive = players.Count != 0;
-			playerframe.Sensitive = players.Count != 0;
 			if (players.Count == 1) {
 				LoadPlayer (players[0]);
 			} else {
-				loadedPlayer = null;
+				ClearPlayerFrame ();
 			}
+
 			ignoreChanges = false;
 		}
 		
