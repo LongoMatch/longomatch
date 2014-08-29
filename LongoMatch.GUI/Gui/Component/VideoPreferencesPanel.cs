@@ -54,23 +54,38 @@ namespace LongoMatch.Gui.Component
 			renderqualcombo.Changed += HandleQualityChanged;
 			captureimagecombo.Changed += HandleImageChanged;
 			
-			enableSound  = new CheckButton();
+			enableSound = new CheckButton ();
 			rendertable.Attach (enableSound, 1, 2, 3, 4,
-			               AttachOptions.Fill,
-			               AttachOptions.Fill, 0, 0);
+			                    AttachOptions.Fill,
+			                    AttachOptions.Fill, 0, 0);
 			enableSound.CanFocus = false;
-			enableSound.Show();
+			enableSound.Show ();
 			enableSound.Active = Config.EnableAudio;
-			enableSound.Toggled += (sender, e) => {Config.EnableAudio = enableSound.Active;};
+			enableSound.Toggled += (sender, e) => {
+				Config.EnableAudio = enableSound.Active;};
 
-			overlayTitle  = new CheckButton();
+			overlayTitle = new CheckButton ();
 			rendertable.Attach (overlayTitle, 1, 2, 4, 5,
-			               AttachOptions.Fill,
-			               AttachOptions.Fill, 0, 0);
+			                    AttachOptions.Fill,
+			                    AttachOptions.Fill, 0, 0);
 			overlayTitle.CanFocus = false;
-			overlayTitle.Show();
+			overlayTitle.Show ();
 			overlayTitle.Active = Config.OverlayTitle;
-			overlayTitle.Toggled += (sender, e) => {Config.OverlayTitle = overlayTitle.Active;};
+			overlayTitle.Toggled += (sender, e) => {
+				Config.OverlayTitle = overlayTitle.Active;};
+			
+			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
+			foreach (Widget w in capturetable) {
+				if (w is Label) {
+					sgroup.AddWidget (w);
+				}
+			}
+			foreach (Widget w in rendertable) {
+				if (w is Label) {
+					sgroup.AddWidget (w);
+				}
+			}
+			sgroup.AddWidget (fameratelabel);
 		}
 
 		void HandleFPSChanged (object sender, EventArgs e)

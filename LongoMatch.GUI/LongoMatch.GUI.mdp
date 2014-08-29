@@ -71,7 +71,6 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/video.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
     <File subtype="Code" buildaction="Compile" name="Gui/GUIToolkit.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
