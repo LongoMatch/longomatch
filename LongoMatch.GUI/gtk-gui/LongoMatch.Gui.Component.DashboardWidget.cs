@@ -532,6 +532,7 @@ namespace LongoMatch.Gui.Component
 			w104.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport1.Gtk.Container+ContainerChild
 			this.tagproperties = new global::LongoMatch.Gui.Component.CategoryProperties ();
+			this.tagproperties.Sensitive = false;
 			this.tagproperties.Events = ((global::Gdk.EventMask)(256));
 			this.tagproperties.Name = "tagproperties";
 			this.tagproperties.Edited = false;

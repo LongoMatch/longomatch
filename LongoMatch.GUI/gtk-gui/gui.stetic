@@ -565,6 +565,7 @@
                                 <child>
                                   <widget class="LongoMatch.Gui.Component.CategoryProperties" id="tagproperties">
                                     <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
                                     <property name="Events">ButtonPressMask</property>
                                     <property name="Edited">False</property>
                                   </widget>

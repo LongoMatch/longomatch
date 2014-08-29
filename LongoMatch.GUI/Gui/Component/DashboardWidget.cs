@@ -82,6 +82,9 @@ namespace LongoMatch.Gui.Component
 			Edited = false;
 			Mode = TagMode.Predefined;
 			FitMode = FitMode.Original;
+
+			// Initialize to a sane default value.
+			tagproperties.Sensitive = false;
 		}
 
 		protected override void OnDestroyed ()
