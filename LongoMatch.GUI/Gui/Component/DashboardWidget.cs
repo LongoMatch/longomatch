@@ -138,6 +138,7 @@ namespace LongoMatch.Gui.Component
 				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
 				Edited = false;
 				// Start with disabled widget until something get selected
+				tagproperties.Tagger = null;
 				tagproperties.Sensitive = false;
 			}
 		}
@@ -230,6 +231,7 @@ namespace LongoMatch.Gui.Component
 				tagproperties.Sensitive = true;
 			} else {
 				selected = null;
+				tagproperties.Tagger = null;
 				tagproperties.Sensitive = false;
 			}
 		}
