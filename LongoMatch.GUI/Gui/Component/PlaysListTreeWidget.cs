@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 	{
 
 		Project project;
+		Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter> ();
 
 		public PlaysListTreeWidget()
 		{
@@ -103,11 +104,12 @@ namespace LongoMatch.Gui.Component
 
 			var cat = play.Category;
 			var model = (TreeStore)treeview.Model;
-			model.GetIterFromString(out categoryIter, CategoryPath(cat));
+			categoryIter = itersDic[cat];
 			var playIter = model.AppendValues(categoryIter,play);
 			var playPath = model.GetPath(playIter);
 			treeview.Selection.UnselectAll();
 			treeview.ExpandToPath(playPath);
+			treeview.ScrollToCell (playPath, null, true, 0, 0);
 			treeview.Selection.SelectIter(playIter);
 		}
 
@@ -130,9 +132,9 @@ namespace LongoMatch.Gui.Component
 		private TreeStore GetModel (Project project)
 		{
 			Gtk.TreeIter iter;
-			Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter> ();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof(object));
 
+			itersDic = new Dictionary<TaggerButton, TreeIter> ();
 			/* Add scores */
 			if (project.Categories.Scores.Count > 0) {
 				iter = dataFileListStore.AppendValues (
@@ -172,10 +174,6 @@ namespace LongoMatch.Gui.Component
 			return dataFileListStore;
 		}
 
-		private string CategoryPath(TaggerButton cat) {
-			return project.Categories.List.IndexOf(cat).ToString();
-		}
-		
 		protected virtual void OnEditProperties(AnalysisCategory cat) {
 			EditCategoryDialog dialog = new EditCategoryDialog(project, cat);
 			dialog.Run();
