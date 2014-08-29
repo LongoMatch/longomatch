@@ -138,7 +138,7 @@ namespace LongoMatch.Gui.Component
 			/* Add scores */
 			if (project.Categories.Scores.Count > 0) {
 				iter = dataFileListStore.AppendValues (
-					new AnalysisCategory { Name = Catalog.GetString ("Score"),
+					new Score { Name = Catalog.GetString ("Score"),
 					SortMethod = SortMethodType.SortByStartTime,
 					Color = Config.Style.PaletteActive}, null);
 				foreach (Score s in project.Categories.Scores) {
@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Component
 			/* Add penalty cards*/
 			if (project.Categories.PenaltyCards.Count > 0) {
 				iter = dataFileListStore.AppendValues (
-					new AnalysisCategory { Name = Catalog.GetString ("Penalty Cards"),
+					new PenaltyCard { Name = Catalog.GetString ("Penalty Cards"),
 					SortMethod = SortMethodType.SortByStartTime,
 					Color = Config.Style.PaletteActive}, null);
 				foreach (PenaltyCard pc in project.Categories.PenaltyCards) {

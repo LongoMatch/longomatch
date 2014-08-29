@@ -231,8 +231,11 @@ namespace LongoMatch.Gui.Component
 					if (selectedTimeNode != null) {
 						ShowMenu ();
 					} else {
-						SetupSortMenu((GetValueFromPath(paths[0]) as AnalysisCategory).SortMethod);
-						categoriesMenu.Popup();
+						AnalysisCategory cat = GetValueFromPath(paths[0]) as AnalysisCategory;
+						if (!(cat is Score) && !(cat is PenaltyCard)) {
+							SetupSortMenu(cat.SortMethod);
+							categoriesMenu.Popup();
+						} 
 					}
 				}
 				else if(paths.Length > 1) {

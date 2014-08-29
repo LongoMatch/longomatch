@@ -30,40 +30,13 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
 
-		private Menu playersMenu;
-
-
 		public PlayersTreeView() {
 			this.Team = Team.LOCAL;
-			SetPlayersMenu();
 		}
 
 		public Team Team {
 			set;
 			get;
-		}
-
-		private void SetPlayersMenu() {
-			Action edit;
-			UIManager manager;
-			ActionGroup g;
-
-			manager= new UIManager();
-			g = new ActionGroup("PlayersMenuGroup");
-
-			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
-
-			g.Add(edit, null);
-
-			manager.InsertActionGroup(g,0);
-
-			manager.AddUiFromString("<ui>"+
-			                        "  <popup action='PlayersMenu'>"+
-			                        "    <menuitem action='EditAction'/>"+
-			                        "  </popup>"+
-			                        "</ui>");
-
-			playersMenu = manager.GetWidget("/PlayersMenu") as Menu;
 		}
 
 		protected override int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
@@ -105,8 +78,6 @@ namespace LongoMatch.Gui.Component
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
 					if(selectedTimeNode is Play) {
 						ShowMenu ();
-					} else {
-						playersMenu.Popup();
 					}
 				}
 				else if(paths.Length > 1) {
