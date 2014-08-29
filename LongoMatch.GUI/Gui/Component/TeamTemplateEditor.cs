@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Component
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
-				teamtagger.LoadTeams (template, null, null);
+				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
 				ignoreChanges = false;
 				Edited = false;
 			}

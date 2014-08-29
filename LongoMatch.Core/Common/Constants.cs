@@ -100,6 +100,7 @@ Xavier Queralt Mateu (ca)";
 		public const string BACKGROUND = "background.png";
 		public const string FIELD_BACKGROUND = "fields/field-full.svg";
 		public const string HALF_FIELD_BACKGROUND = "fields/field-half.svg";
+		public const string HHALF_FIELD_BACKGROUND = "fields/field-full-teameditor.svg";
 		public const string GOAL_BACKGROUND = "fields/field-goal.svg";
 		public const string LINE_NORMAL = "line.svg";
 		public const string LINE_DASHED = "dash-line.svg";

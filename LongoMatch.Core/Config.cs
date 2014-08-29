@@ -193,6 +193,12 @@ namespace LongoMatch
 			}
 		}
 		
+		static public Image HHalfFieldBackground {
+			get {
+				return new Image (Path.Combine (Config.ImagesDir, Constants.HHALF_FIELD_BACKGROUND));
+			}
+		}
+		
 		static public Image GoalBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.GOAL_BACKGROUND));
