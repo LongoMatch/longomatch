@@ -454,7 +454,6 @@ namespace LongoMatch.Gui.Panel
 					hometemplate.RemovePlayers (players, false);
 					awaytemplate.RemovePlayers (players, false);
 					teamtagger.Reload ();
-					drawingarea.QueueDraw ();
 			};
 			menu.Add (item);
 			menu.ShowAll ();
