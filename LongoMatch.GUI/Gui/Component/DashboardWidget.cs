@@ -44,7 +44,10 @@ namespace LongoMatch.Gui.Component
 		Dashboard tagger;
 		Categories template;
 		TaggerButton selected;
-		bool internalButtons, edited, inFitModeChange;
+		Gtk.Image editimage;
+		ToggleToolButton editbutton;
+		RadioToolButton d11button, fillbutton, fitbutton;
+		bool internalButtons, edited, ignoreChanges;
 
 		public DashboardWidget()
 		{
@@ -68,21 +71,11 @@ namespace LongoMatch.Gui.Component
 			addscorebutton.Clicked += HandleAddClicked;
 			addtagbutton.Clicked += HandleAddClicked;
 			addcardbutton.Clicked += HandleAddClicked;
-			editbutton.Clicked += HandleClicked;
 
-			fitbutton.Toggled += HandleFitModeToggled;
-			fillbutton.Toggled += HandleFitModeToggled;
-			d11button.Toggled += HandleFitModeToggled;
-			fitimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-fit",
-			                                              22, IconLookupFlags.ForceSvg);
-			fillimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-fill",
-			                                               22, IconLookupFlags.ForceSvg);
-			d11image.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-11",
-			                                              22, IconLookupFlags.ForceSvg);
+			FillToolbar ();
+			FitMode = FitMode.Original;
 			Edited = false;
 			Mode = TagMode.Predefined;
-			FitMode = FitMode.Original;
-
 			// Initialize to a sane default value.
 			tagproperties.Sensitive = false;
 		}
@@ -101,15 +94,17 @@ namespace LongoMatch.Gui.Component
 		
 		public FitMode FitMode {
 			set {
-				inFitModeChange = true;
-				fillbutton.Active = value == FitMode.Fill;
-				fitbutton.Active = value == FitMode.Fit;
-				d11button.Active = value == FitMode.Original;
-				inFitModeChange = false;
+				ignoreChanges = true;
 				if (value == FitMode.Original) {
+					d11button.Active = true;
 					dashscrolledwindow.HscrollbarPolicy = PolicyType.Automatic;
 					dashscrolledwindow.VscrollbarPolicy = PolicyType.Automatic;
 				} else {
+					if (value == FitMode.Fill) {
+						fillbutton.Active = true;
+					} else if (value == FitMode.Fit) {
+						fitbutton.Active = true;
+					}
 					drawingarea.WidthRequest = -1;
 					drawingarea.HeightRequest = -1;
 					dashscrolledwindow.HscrollbarPolicy = PolicyType.Never;
@@ -117,6 +112,7 @@ namespace LongoMatch.Gui.Component
 				}
 				tagger.FitMode = value;
 				tagger.Refresh ();
+				ignoreChanges = false;
 			}
 		}
 
@@ -145,19 +141,22 @@ namespace LongoMatch.Gui.Component
 
 		public TagMode Mode {
 			set {
+				ignoreChanges = true;
 				tagMode = value;
 				tagger.TagMode = value;
 				// Properties only visible in edit mode
 				rightbox.Visible = tagMode == TagMode.Edit;
 				// Add buttons for cards/tags/etc.. can be handled remotely.
 				hbuttonbox2.Visible = tagMode == TagMode.Edit && internalButtons;
-				if (Mode == TagMode.Edit) {
+				editbutton.Active = value == TagMode.Edit;
+				if (value == TagMode.Edit) {
 					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit_active",
 					                                               22, IconLookupFlags.ForceSvg);
 				} else {
 					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit",
 					                                               22, IconLookupFlags.ForceSvg);
 				}
+				ignoreChanges = false;
 			}
 			get {
 				return tagMode;
@@ -208,6 +207,36 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
+		void FillToolbar () {
+			Toolbar toolbar = new Toolbar ();
+			toolbar.Orientation = Orientation.Vertical;
+			toolbar.ToolbarStyle = ToolbarStyle.Icons;
+			
+			editimage = new Gtk.Image (IconTheme.Default.LoadIcon ("longomatch-dash-edit_active",
+			                                                       22, IconLookupFlags.ForceSvg));
+			editbutton = new ToggleToolButton ();
+			editbutton.IconWidget = editimage;
+			editbutton.Active = true;
+			editbutton.Toggled += HandleEditToggled;
+			toolbar.Add (editbutton);
+			toolbar.Add (new SeparatorToolItem ());
+			
+			fitbutton = new RadioToolButton ((GLib.SList) null);
+			fitbutton.IconName = "longomatch-dash-fit";
+			fitbutton.Toggled += HandleFitModeToggled;
+			toolbar.Add (fitbutton);
+			fillbutton = new RadioToolButton (fitbutton);
+			fillbutton.IconName = "longomatch-dash-fill";
+			fillbutton.Toggled += HandleFitModeToggled;
+			toolbar.Add (fillbutton);
+			d11button = new RadioToolButton (fitbutton);
+			d11button.IconName = "longomatch-dash-11";
+			d11button.Toggled += HandleFitModeToggled;
+			toolbar.Add (d11button);
+			toolbar.ShowAll ();
+			hbox2.PackEnd (toolbar, false, false, 0);
+		}
+
 		void UpdateBackground (Image background, int index)
 		{
 			if (index == 0) {
@@ -223,6 +252,18 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 		
+		void HandleEditToggled (object sender, EventArgs e)
+		{
+			if (ignoreChanges) {
+				return;
+			}
+			if (editbutton.Active) {
+				Mode = TagMode.Edit;
+			} else {
+				Mode = TagMode.Predefined;
+			}
+		}
+
 		void HandleTaggersSelectedEvent (List<TaggerButton> taggers)
 		{
 			if (taggers.Count == 1) {
@@ -359,7 +400,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFitModeToggled (object sender, EventArgs e)
 		{
-			if (inFitModeChange || !(sender as ToggleButton).Active) {
+			if (ignoreChanges || !(sender as RadioToolButton).Active) {
 				return;
 			}
 			
@@ -372,6 +413,5 @@ namespace LongoMatch.Gui.Component
 			}
 			
 		}
-
 	}
 }

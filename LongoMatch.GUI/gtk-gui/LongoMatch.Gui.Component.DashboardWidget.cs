@@ -48,16 +48,6 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button resetgoalbutton;
 		private global::Gtk.ScrolledWindow propertiesscrolledwindow;
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
-		private global::Gtk.VBox vbox4;
-		private global::Gtk.ToggleButton editbutton;
-		private global::Gtk.Image editimage;
-		private global::Gtk.HSeparator hseparator1;
-		private global::Gtk.ToggleButton fitbutton;
-		private global::Gtk.Image fitimage;
-		private global::Gtk.ToggleButton fillbutton;
-		private global::Gtk.Image fillimage;
-		private global::Gtk.ToggleButton d11button;
-		private global::Gtk.Image d11image;
 
 		protected virtual void Build ()
 		{
@@ -551,85 +541,6 @@ namespace LongoMatch.Gui.Component
 			w111.Position = 1;
 			w111.Expand = false;
 			w111.Fill = false;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.vbox4 = new global::Gtk.VBox ();
-			this.vbox4.Name = "vbox4";
-			this.vbox4.Spacing = 6;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.editbutton = new global::Gtk.ToggleButton ();
-			this.editbutton.CanFocus = true;
-			this.editbutton.Name = "editbutton";
-			this.editbutton.Relief = ((global::Gtk.ReliefStyle)(2));
-			// Container child editbutton.Gtk.Container+ContainerChild
-			this.editimage = new global::Gtk.Image ();
-			this.editimage.Name = "editimage";
-			this.editbutton.Add (this.editimage);
-			this.editbutton.Label = null;
-			this.vbox4.Add (this.editbutton);
-			global::Gtk.Box.BoxChild w113 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.editbutton]));
-			w113.Position = 0;
-			w113.Expand = false;
-			w113.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.hseparator1 = new global::Gtk.HSeparator ();
-			this.hseparator1.Name = "hseparator1";
-			this.vbox4.Add (this.hseparator1);
-			global::Gtk.Box.BoxChild w114 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hseparator1]));
-			w114.Position = 1;
-			w114.Expand = false;
-			w114.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.fitbutton = new global::Gtk.ToggleButton ();
-			this.fitbutton.CanFocus = true;
-			this.fitbutton.Name = "fitbutton";
-			this.fitbutton.FocusOnClick = false;
-			this.fitbutton.Relief = ((global::Gtk.ReliefStyle)(2));
-			this.fitbutton.Active = true;
-			// Container child fitbutton.Gtk.Container+ContainerChild
-			this.fitimage = new global::Gtk.Image ();
-			this.fitimage.Name = "fitimage";
-			this.fitbutton.Add (this.fitimage);
-			this.fitbutton.Label = null;
-			this.vbox4.Add (this.fitbutton);
-			global::Gtk.Box.BoxChild w116 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.fitbutton]));
-			w116.Position = 2;
-			w116.Expand = false;
-			w116.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.fillbutton = new global::Gtk.ToggleButton ();
-			this.fillbutton.CanFocus = true;
-			this.fillbutton.Name = "fillbutton";
-			this.fillbutton.Relief = ((global::Gtk.ReliefStyle)(2));
-			// Container child fillbutton.Gtk.Container+ContainerChild
-			this.fillimage = new global::Gtk.Image ();
-			this.fillimage.Name = "fillimage";
-			this.fillbutton.Add (this.fillimage);
-			this.fillbutton.Label = null;
-			this.vbox4.Add (this.fillbutton);
-			global::Gtk.Box.BoxChild w118 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.fillbutton]));
-			w118.Position = 3;
-			w118.Expand = false;
-			w118.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.d11button = new global::Gtk.ToggleButton ();
-			this.d11button.CanFocus = true;
-			this.d11button.Name = "d11button";
-			this.d11button.Relief = ((global::Gtk.ReliefStyle)(2));
-			// Container child d11button.Gtk.Container+ContainerChild
-			this.d11image = new global::Gtk.Image ();
-			this.d11image.Name = "d11image";
-			this.d11button.Add (this.d11image);
-			this.d11button.Label = null;
-			this.vbox4.Add (this.d11button);
-			global::Gtk.Box.BoxChild w120 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.d11button]));
-			w120.Position = 4;
-			w120.Expand = false;
-			w120.Fill = false;
-			this.hbox2.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.vbox4]));
-			w121.Position = 2;
-			w121.Expand = false;
-			w121.Fill = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
