@@ -65,6 +65,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void Reload ()
 		{
 			tagger.Reload ();
+			widget.ReDraw ();
 		}
 		
 		public bool Compact {
