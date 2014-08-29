@@ -90,6 +90,8 @@ namespace LongoMatch.Gui.Component
 				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
 				ignoreChanges = false;
 				Edited = false;
+				// Start with disabled widget until something get selected
+				playerframe.Sensitive = false;
 			}
 		}
 
