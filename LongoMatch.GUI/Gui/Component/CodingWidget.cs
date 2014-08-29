@@ -75,6 +75,7 @@ namespace LongoMatch.Gui.Component
 			
 			buttonswidget.Mode = TagMode.Free;
 			buttonswidget.FitMode = FitMode.Fit;
+			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
 		}
 

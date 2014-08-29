@@ -57,6 +57,9 @@ namespace LongoMatch.Drawing.Widgets
 				template = value;
 				LoadTemplate ();
 			}
+			get {
+				return template;
+			}
 		}
 
 		public Tag AddTag {
@@ -96,9 +99,13 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
-		public void Refresh (TaggerButton b)
+		public void Refresh (TaggerButton b = null)
 		{
 			TaggerObject to;
+			
+			if (Template == null) {
+				return;
+			}
 			
 			LoadTemplate ();
 			to = (TaggerObject)Objects.FirstOrDefault (o => (o as TaggerObject).Tagger == b);
@@ -231,14 +238,17 @@ namespace LongoMatch.Drawing.Widgets
 
 		void SizeChanged ()
 		{
-			templateHeight = template.CanvasHeight;
-			templateWidth = template.CanvasWidth;
+			templateHeight = template.CanvasHeight + 10;
+			templateWidth = template.CanvasWidth + 10;
 			if (FitMode == FitMode.Original) {
 				widget.Width = templateWidth;
 				widget.Height = templateHeight;
+				scaleX = scaleY = 1;
+				translation = new Point (0, 0);
 			} else if (FitMode == FitMode.Fill) {
 				scaleX = (double)widget.Width / templateWidth;
 				scaleY = (double)widget.Height / templateHeight;
+				translation = new Point (0, 0);
 			} else if (FitMode == FitMode.Fit) {
 				Image.ScaleFactor (templateWidth, templateHeight,
 				                   (int)widget.Width, (int)widget.Height,

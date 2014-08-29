@@ -44,21 +44,18 @@ namespace LongoMatch.Gui.Component
 		Dashboard tagger;
 		Categories template;
 		TaggerButton selected;
-		bool internalButtons;
-		bool edited;
+		bool internalButtons, edited, inFitModeChange;
 
 		public DashboardWidget()
 		{
 			this.Build();
 			tagger = new Dashboard (new WidgetWrapper (drawingarea));
-			tagger.FitMode = FitMode.Original;
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.AddNewTagEvent += HandleAddNewTagEvent;
 			drawingarea.CanFocus = true;
 			drawingarea.KeyPressEvent += HandleKeyPressEvent;
-			Mode = TagMode.Predefined;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
@@ -71,7 +68,20 @@ namespace LongoMatch.Gui.Component
 			addscorebutton.Clicked += HandleAddClicked;
 			addtagbutton.Clicked += HandleAddClicked;
 			addcardbutton.Clicked += HandleAddClicked;
+			editbutton.Clicked += HandleClicked;
+
+			fitbutton.Toggled += HandleFitModeToggled;
+			fillbutton.Toggled += HandleFitModeToggled;
+			d11button.Toggled += HandleFitModeToggled;
+			fitimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-fit",
+			                                              22, IconLookupFlags.ForceSvg);
+			fillimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-fill",
+			                                               22, IconLookupFlags.ForceSvg);
+			d11image.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-11",
+			                                              22, IconLookupFlags.ForceSvg);
 			Edited = false;
+			Mode = TagMode.Predefined;
+			FitMode = FitMode.Original;
 		}
 
 		protected override void OnDestroyed ()
@@ -88,7 +98,22 @@ namespace LongoMatch.Gui.Component
 		
 		public FitMode FitMode {
 			set {
+				inFitModeChange = true;
+				fillbutton.Active = value == FitMode.Fill;
+				fitbutton.Active = value == FitMode.Fit;
+				d11button.Active = value == FitMode.Original;
+				inFitModeChange = false;
+				if (value == FitMode.Original) {
+					dashscrolledwindow.HscrollbarPolicy = PolicyType.Automatic;
+					dashscrolledwindow.VscrollbarPolicy = PolicyType.Automatic;
+				} else {
+					drawingarea.WidthRequest = -1;
+					drawingarea.HeightRequest = -1;
+					dashscrolledwindow.HscrollbarPolicy = PolicyType.Never;
+					dashscrolledwindow.VscrollbarPolicy = PolicyType.Never;
+				}
 				tagger.FitMode = value;
+				tagger.Refresh ();
 			}
 		}
 
@@ -120,6 +145,16 @@ namespace LongoMatch.Gui.Component
 				rightbox.Visible = tagMode == TagMode.Edit;
 				// Add buttons for cards/tags/etc.. can be handled remotely.
 				hbuttonbox2.Visible = tagMode == TagMode.Edit && internalButtons;
+				if (Mode == TagMode.Edit) {
+					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit_active",
+					                                               22, IconLookupFlags.ForceSvg);
+				} else {
+					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit",
+					                                               22, IconLookupFlags.ForceSvg);
+				}
+			}
+			get {
+				return tagMode;
 			}
 		}
 
@@ -294,7 +329,16 @@ namespace LongoMatch.Gui.Component
 				tagger.Refresh (null);
 			}
 		}
-		
+
+		void HandleClicked (object sender, EventArgs e)
+		{
+			if (Mode == TagMode.Edit) {
+				Mode = TagMode.Predefined;
+			} else {
+				Mode = TagMode.Edit;
+			}
+		}
+
 		void HandleResetField (object sender, EventArgs e)
 		{
 			if (sender == resetfieldbutton) {
@@ -304,6 +348,22 @@ namespace LongoMatch.Gui.Component
 			} else if (sender == resetgoalbutton) {
 				UpdateBackground (Config.GoalBackground, 2);
 			}
+		}
+
+		void HandleFitModeToggled (object sender, EventArgs e)
+		{
+			if (inFitModeChange || !(sender as ToggleButton).Active) {
+				return;
+			}
+			
+			if (sender == fitbutton) {
+				FitMode = FitMode.Fit;
+			} else if (sender == fillbutton) {
+				FitMode = FitMode.Fill;
+			} else if (sender == d11button) {
+				FitMode = FitMode.Original;
+			}
+			
 		}
 
 	}
