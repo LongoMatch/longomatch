@@ -137,6 +137,8 @@ namespace LongoMatch.Gui.Component
 				hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
 				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
 				Edited = false;
+				// Start with disabled widget until something get selected
+				tagproperties.Sensitive = false;
 			}
 		}
 
