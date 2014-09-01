@@ -1,6 +1,9 @@
 themedir = @datadir@/@PACKAGE@/theme
 nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Arrows/arrow-up-down.png \
+	gtk-2.0/Buttons/button-entry-default.svg \
+	gtk-2.0/Buttons/button-entry-prelight.svg \
+	gtk-2.0/Buttons/button-entry-pressed.svg \
 	gtk-2.0/Buttons/button-rect-default.svg \
 	gtk-2.0/Buttons/button-rect-prelight.svg \
 	gtk-2.0/Buttons/button-rect-pressed.svg \
@@ -10,9 +13,6 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Buttons/button-square-default.svg \
 	gtk-2.0/Buttons/button-square-prelight.svg \
 	gtk-2.0/Buttons/button-square-pressed.svg \
-	gtk-2.0/Buttons/filechooser-default.png \
-	gtk-2.0/Buttons/filechooser-prelight.png \
-	gtk-2.0/Buttons/filechooser-pressed.png \
 	gtk-2.0/Buttons/null_bg.png \
 	gtk-2.0/Buttons/null_bg_light.png \
 	gtk-2.0/Check-Radio/checkbox-checked-insensitive.png \
@@ -23,9 +23,8 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Check-Radio/option-checked.png \
 	gtk-2.0/Check-Radio/option-unchecked-insensitive.png \
 	gtk-2.0/Check-Radio/option-unchecked.png \
+	gtk-2.0/Entry/combo-entry-border-bg-insensitive.png \
 	gtk-2.0/Entry/combo-entry-border-bg.png \
-	gtk-2.0/Entry/file-input-left.png \
-	gtk-2.0/Entry/filechooser-entry-fill.png \
 	gtk-2.0/Entry/team-combo-entry-blue.png \
 	gtk-2.0/Entry/team-combo-entry-red.png \
 	gtk-2.0/Handles/handle-h.png \
