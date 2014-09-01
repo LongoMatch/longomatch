@@ -1,0 +1,77 @@
+
+style "longomatch-default-entry" = "longomatch-default" {
+
+  font = "Ubuntu 12"
+  xthickness = 2
+  ythickness = 2
+
+  base[NORMAL]        = @bg_dark_color
+  base[INSENSITIVE]   = darker (@bg_dark_color)
+
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+}
+
+style "longomatch-entry" = "longomatch-default-entry" {
+  engine "clearlooks"
+  {
+    radius = 1.0
+  }
+}
+
+style "longomatch-custom-entry" = "longomatch-default-entry" {
+  xthickness = 2
+  ythickness = 2
+
+  engine "pixmap"
+  {
+     image
+     {
+       function        = FLAT_BOX
+       state           = NORMAL
+       detail          = "eventbox"
+       file            = "Entry/combo-entry-border-bg.png"
+       border          = { 4, 4, 4, 4 }
+       stretch         = TRUE
+     }
+     image
+     {
+       function        = FLAT_BOX
+       state           = INSENSITIVE
+       detail          = "eventbox"
+       file            = "Entry/combo-entry-border-bg-insensitive.png"
+       border          = { 4, 4, 4, 4 }
+       stretch         = TRUE
+     }
+  }
+}
+
+style "longomatch-custom-entry-children" {
+  engine "pixmap"
+  {
+    image
+    {
+      function  = BOX
+      state     = NORMAL
+      file      = "Buttons/button-entry-default.svg"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+    image
+    {
+      function  = BOX
+      state     = PRELIGHT
+      file      = "Buttons/button-entry-prelight.svg"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+    image
+    {
+      function  = BOX
+      state     = SELECTED
+      file      = "Buttons/button-entry-pressed.svg"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+  }
+}

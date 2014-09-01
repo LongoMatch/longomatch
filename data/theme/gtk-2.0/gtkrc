@@ -66,24 +66,6 @@ style "longomatch-default"
   }
 }
 
-style "longomatch-entry" = "longomatch-default" {
-
-  font = "Ubuntu 12"
-  xthickness = 2
-  ythickness = 2
-
-  base[NORMAL]        = @bg_dark_color
-  base[INSENSITIVE]   = darker (@bg_dark_color)
-
-  text[NORMAL]      = @text_color
-  text[INSENSITIVE] = darker (@text_color)
-
-  engine "clearlooks"
-  {
-    radius = 1.0
-  }
-}
-
 style "longomatch-header" {
   base[NORMAL]      = @bg_light_color
   bg[NORMAL]        = @bg_light_color
@@ -134,80 +116,6 @@ style "longomatch-menuitem" {
   bg[PRELIGHT]       = @bg_color
 }
 
-style "longomatch-filechooser-entry"
-{
-   base[NORMAL] = @bg_color
-   base[INSENSITIVE] = @bg_color
-
-   xthickness = 15
-   ythickness = 4
-
-   engine "pixmap"
-   {
-     image
-     {
-       function  = SHADOW
-       detail    = "entry"
-       state     = NORMAL
-       shadow    = IN
-       file      = "Entry/file-input-left.png"
-       border    = { 15, 4, 15, 15 }
-       stretch   = TRUE
-     }
-     image
-     {
-       function        = FLAT_BOX
-       detail          = "entry_bg"
-       state           = NORMAL
-       overlay_file    = "Entry/filechooser-entry-fill.png"
-       overlay_border  = { 0, 0, 0, 0 }
-       overlay_stretch = TRUE
-     }
-   }
-}
-
-style "longomatch-filechooser-button"
-{
-   ythickness = 3
-   xthickness = 10
-
-   engine "pixmap"
-   {
-    image
-    {
-      function  = BOX
-      state     = NORMAL
-      file      = "Buttons/filechooser-default.png"
-      border    = { 4, 4, 4, 4 }
-      stretch   = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = PRELIGHT
-      file       = "Buttons/filechooser-prelight.png"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = ACTIVE
-      file       = "Buttons/filechooser-pressed.png"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-    image
-    {
-      function   = BOX
-      state      = INSENSITIVE
-      file       = "Buttons/filechooser-default.png"
-      border     = { 4, 4, 4, 4 }
-      stretch    = TRUE
-    }
-   }
-}
-
 style "longomatch-aspect-frame"
 {
   xthickness = 0
@@ -220,6 +128,7 @@ include "combobox.rc"
 include "checkbox.rc"
 include "handles.rc"
 include "radiobutton.rc"
+include "entry.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -247,16 +156,15 @@ widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-chil
 widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
 
 class "GtkNotebook"                              style "longomatch-notebook"
-widget_class "*<GtkNotebook>*<GtkLabel>"                style "longomatch-notebook-tab-label"
+widget_class "*<GtkNotebook>*<GtkLabel>"         style "longomatch-notebook-tab-label"
+
+widget "*entryeventbox"                          style "longomatch-custom-entry"
+widget "*entryeventbox.*"                        style "longomatch-custom-entry-children"
 
 widget "*editorbuttonbar.*" style "longomatch-editor"
 widget "*dashboardeditorvbox.*.drawingarea" style "longomatch-drawingarea"
 widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
-widget "*mediafilechooser*entry*" style "longomatch-filechooser-entry"
-widget "*datepicker*button*" style "longomatch-filechooser-button"
-widget "*datepicker*entry*" style "longomatch-filechooser-entry"
-widget "*mediafilechooser*button*" style "longomatch-filechooser-button"
 widget "*lightbackgroundeventbox*" style "longomatch-light-background"
 widget "*videoeventbox*" style "longomatch-default"
