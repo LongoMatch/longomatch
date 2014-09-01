@@ -152,6 +152,7 @@ namespace LongoMatch.Store
 		}
 	}
 	
+	[Serializable]
 	public class AnalysisCategory: TaggerButton {
 		public bool TagGoalPosition {
 			get;
@@ -179,6 +180,7 @@ namespace LongoMatch.Store
 		}
 	}
 
+	[Serializable]
 	public class AnalysisEventCategory: AnalysisCategory {
 		public Time EventTime {
 			get;
