@@ -26,6 +26,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-control-volume-off.svg \
 	hicolor/scalable/actions/longomatch-counter.svg \
 	hicolor/scalable/actions/longomatch-dash-11.svg \
+	hicolor/scalable/actions/longomatch-dash-center-view.svg \
 	hicolor/scalable/actions/longomatch-dash-edit.svg \
 	hicolor/scalable/actions/longomatch-dash-edit_active.svg \
 	hicolor/scalable/actions/longomatch-dash-fill.svg \
