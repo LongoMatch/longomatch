@@ -95,6 +95,13 @@ namespace LongoMatch.Services
 
 			Config.EventsBroker.DrawFrame += HandleDrawFrame;
 			Config.EventsBroker.Detach += HandleDetach;
+			
+			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
+		}
+
+		void HandleShowFullScreenEvent (bool fullscreen)
+		{
+			guiToolkit.FullScreen = fullscreen;
 		}
 
 		void HandlePlayLoaded (Play play)

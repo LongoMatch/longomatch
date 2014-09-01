@@ -63,12 +63,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public bool Fullscreen {
-			set {
-				playercapturer.FullScreen = value;
-			}
-		}
-		
 		public void AddPlay(Play play) {
 			playsSelection.AddPlay(play);
 			codingwidget.AddPlay (play);

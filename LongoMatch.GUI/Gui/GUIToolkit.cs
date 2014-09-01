@@ -64,6 +64,17 @@ namespace LongoMatch.Gui
 				return mainWindow.RenderingStateBar;
 			}
 		}
+
+		public bool FullScreen {
+			set {
+				if (mainWindow != null) {
+					if (value)
+						mainWindow.GdkWindow.Fullscreen ();
+					else 
+						mainWindow.GdkWindow.Unfullscreen ();
+				}
+			}
+		}
 		
 		public Version Version {
 			get;

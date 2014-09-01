@@ -34,6 +34,7 @@ namespace LongoMatch.Interfaces.GUI
 		IMainController MainController {get;}
 		IRenderingStateBar RenderingStateBar {get;}
 		Version Version {get;}
+		bool FullScreen {set;}
 	
 		void Quit ();
 		

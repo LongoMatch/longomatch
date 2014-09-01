@@ -34,8 +34,6 @@ namespace LongoMatch.Interfaces.GUI
 		void DeletePlays (List<Play> plays);
 		void DetachPlayer ();
 		
-		bool Fullscreen {set;}
-		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}
 	}

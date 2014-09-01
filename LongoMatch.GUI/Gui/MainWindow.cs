@@ -192,6 +192,9 @@ namespace LongoMatch.Gui
 			ImportProjectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitImportProject ();
 			};
+			FullScreenAction.Activated += (object sender, EventArgs e) => {
+				Config.EventsBroker.EmitShowFullScreen (FullScreenAction.Active);
+			};
 		}
 		
 		void RemovePanel () {
