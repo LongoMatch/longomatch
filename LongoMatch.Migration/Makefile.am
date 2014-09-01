@@ -45,9 +45,6 @@ SOURCES = Common/Color.cs \
 	MainWindow.cs \
 	Program.cs \
 	Properties/AssemblyInfo.cs \
-	Tests/CateogiresTest.cs \
-	Tests/TestProject.cs \
-	Tests/TestTeam.cs \
 	gtk-gui/MainWindow.cs \
 	gtk-gui/generated.cs
 
