@@ -2,13 +2,98 @@ iconsdir = @datadir@/@PACKAGE@/icons/
 
 nobase_dist_icons_DATA = \
 	hicolor/scalable/apps/longomatch.svg \
-	hicolor/scalable/actions/longomatch-import.svg \
-	hicolor/scalable/actions/longomatch-new.svg \
-	hicolor/scalable/actions/longomatch-open.svg \
-	hicolor/scalable/actions/longomatch-preferences.svg \
-	hicolor/scalable/actions/longomatch-project.svg \
-	hicolor/scalable/actions/longomatch-sportconfig.svg \
-	hicolor/scalable/actions/longomatch-teamconfig.svg \
+	hicolor/scalable/actions/longomatch-angle.svg\
+	hicolor/scalable/actions/longomatch-apply.svg\
+	hicolor/scalable/actions/longomatch-arrow.svg\
+	hicolor/scalable/actions/longomatch-back.svg\
+	hicolor/scalable/actions/longomatch-browse.svg\
+	hicolor/scalable/actions/longomatch-calendar.svg\
+	hicolor/scalable/actions/longomatch-category-header.svg\
+	hicolor/scalable/actions/longomatch-circle-fill.svg\
+	hicolor/scalable/actions/longomatch-circle.svg\
+	hicolor/scalable/actions/longomatch-control-attach.svg\
+	hicolor/scalable/actions/longomatch-control-back.svg\
+	hicolor/scalable/actions/longomatch-control-detach.svg\
+	hicolor/scalable/actions/longomatch-control-draw.svg\
+	hicolor/scalable/actions/longomatch-control-ff.svg\
+	hicolor/scalable/actions/longomatch-control-pause.svg\
+	hicolor/scalable/actions/longomatch-control-play.svg\
+	hicolor/scalable/actions/longomatch-control-record.svg\
+	hicolor/scalable/actions/longomatch-control-rw.svg\
+	hicolor/scalable/actions/longomatch-control-volume-hi.svg\
+	hicolor/scalable/actions/longomatch-control-volume-low.svg\
+	hicolor/scalable/actions/longomatch-control-volume-med.svg\
+	hicolor/scalable/actions/longomatch-control-volume-off.svg\
+	hicolor/scalable/actions/longomatch-counter.svg\
+	hicolor/scalable/actions/longomatch-dash-11.svg\
+	hicolor/scalable/actions/longomatch-dash-center-view.svg\
+	hicolor/scalable/actions/longomatch-dash-edit_active.svg\
+	hicolor/scalable/actions/longomatch-dash-edit.svg\
+	hicolor/scalable/actions/longomatch-dash-fill.svg\
+	hicolor/scalable/actions/longomatch-dash-fit.svg\
+	hicolor/scalable/actions/longomatch-eraser.svg\
+	hicolor/scalable/actions/longomatch-eye.svg\
+	hicolor/scalable/actions/longomatch-field-full.svg\
+	hicolor/scalable/actions/longomatch-field-goal.svg\
+	hicolor/scalable/actions/longomatch-field-half.svg\
+	hicolor/scalable/actions/longomatch-mark.svg\
+	hicolor/scalable/actions/longomatch-pencil.svg\
+	hicolor/scalable/actions/longomatch-person.svg\
+	hicolor/scalable/actions/longomatch-player-add.svg\
+	hicolor/scalable/actions/longomatch-player-delete.svg\
+	hicolor/scalable/actions/longomatch-player-header.svg\
+	hicolor/scalable/actions/longomatch-player-pic.svg\
+	hicolor/scalable/actions/longomatch-preferences.svg\
+	hicolor/scalable/actions/longomatch-project-export.svg\
+	hicolor/scalable/actions/longomatch-project-import.svg\
+	hicolor/scalable/actions/longomatch-project-new.svg\
+	hicolor/scalable/actions/longomatch-project-open.svg\
+	hicolor/scalable/actions/longomatch-project-save.svg\
+	hicolor/scalable/actions/longomatch-project.svg\
+	hicolor/scalable/actions/longomatch-select.svg\
+	hicolor/scalable/actions/longomatch-square-fill.svg\
+	hicolor/scalable/actions/longomatch-square.svg\
+	hicolor/scalable/actions/longomatch-tab-active-dashboard.svg\
+	hicolor/scalable/actions/longomatch-tab-active-filter.svg\
+	hicolor/scalable/actions/longomatch-tab-active-playlist.svg\
+	hicolor/scalable/actions/longomatch-tab-active-position.svg\
+	hicolor/scalable/actions/longomatch-tab-active-timeline.svg\
+	hicolor/scalable/actions/longomatch-tab-dashboard.svg\
+	hicolor/scalable/actions/longomatch-tab-filter.svg\
+	hicolor/scalable/actions/longomatch-tab-playlist.svg\
+	hicolor/scalable/actions/longomatch-tab-position.svg\
+	hicolor/scalable/actions/longomatch-tab-timeline.svg\
+	hicolor/scalable/actions/longomatch-tag-card.svg\
+	hicolor/scalable/actions/longomatch-tag-category.svg\
+	hicolor/scalable/actions/longomatch-tag-delete.svg\
+	hicolor/scalable/actions/longomatch-tag-score.svg\
+	hicolor/scalable/actions/longomatch-tag.svg\
+	hicolor/scalable/actions/longomatch-tag-tag.svg\
+	hicolor/scalable/actions/longomatch-tag-timer.svg\
+	hicolor/scalable/actions/longomatch-team-add.svg\
+	hicolor/scalable/actions/longomatch-team-config.svg\
+	hicolor/scalable/actions/longomatch-team-delete.svg\
+	hicolor/scalable/actions/longomatch-team-header.svg\
+	hicolor/scalable/actions/longomatch-team-save.svg\
+	hicolor/scalable/actions/longomatch-team-shield.svg\
+	hicolor/scalable/actions/longomatch-template-add.svg\
+	hicolor/scalable/actions/longomatch-template-config.svg\
+	hicolor/scalable/actions/longomatch-template-delete.svg\
+	hicolor/scalable/actions/longomatch-template-header.svg\
+	hicolor/scalable/actions/longomatch-template-save.svg\
+	hicolor/scalable/actions/longomatch-text.svg\
+	hicolor/scalable/actions/longomatch-timeline-needle-big.svg\
+	hicolor/scalable/actions/longomatch-timeline-needle-up.svg\
+	hicolor/scalable/actions/longomatch-timeline-select-left.svg\
+	hicolor/scalable/actions/longomatch-timeline-select-right.svg\
+	hicolor/scalable/actions/longomatch-video-device-fake.svg\
+	hicolor/scalable/actions/longomatch-video-device-ip.svg\
+	hicolor/scalable/actions/longomatch-video-device.svg\
+	hicolor/scalable/actions/longomatch-video-file.svg\
+	hicolor/scalable/actions/longomatch-vs.svg\
+	hicolor/scalable/actions/longomatch-zoom-in.svg\
+	hicolor/scalable/actions/longomatch-zoom-out.svg\
+	hicolor/scalable/actions/longomat-project.svg\
 	hicolor/index.theme
 
 #EXTRA_DIST = longomatch.ico
