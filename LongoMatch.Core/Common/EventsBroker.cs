@@ -29,6 +29,7 @@ namespace LongoMatch.Common
 	{
 	
 		public event NewTagHandler NewTagEvent;
+		public event NewPlayHandler NewPlayEvent;
 		public event PlaysDeletedHandler PlaysDeleted;
 		public event LoadPlayHandler LoadPlayEvent;
 		public event PlayLoadedHandler PlayLoadedEvent;
@@ -90,6 +91,11 @@ namespace LongoMatch.Common
 		                        List<Tag> tags = null, Time start = null, Time stop = null) {
 			if (NewTagEvent != null)
 				NewTagEvent (tagger, players, tags, start, stop);
+		}
+		
+		public void EmitNewPlay (Play play) {
+			if (NewPlayEvent != null)
+				NewPlayEvent (play);
 		}
 
 		public void EmitPlaysDeleted(List<Play> plays)

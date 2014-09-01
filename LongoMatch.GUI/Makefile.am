@@ -49,6 +49,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/EntryDialog.cs \
 	Gui/Dialog/FramesCaptureProgressDialog.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
+	Gui/Dialog/PlayEditor.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \
 	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
@@ -119,6 +120,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \

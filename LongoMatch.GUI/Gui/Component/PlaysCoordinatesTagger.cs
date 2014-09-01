@@ -42,6 +42,9 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.EmitSignals = false;
 			hfield.Tagger.EmitSignals = false;
 			goal.Tagger.EmitSignals = false;
+			field.Tagger.Accuracy = 20;
+			hfield.Tagger.Accuracy = 20;
+			goal.Tagger.Accuracy = 20;
 		}
 
 		public void LoadBackgrounds (Project project) {
@@ -57,6 +60,7 @@ namespace LongoMatch.Gui.Component
 			field.Visible = play.Category.TagFieldPosition;
 			hfield.Visible = play.Category.TagHalfFieldPosition;
 			goal.Visible = play.Category.TagGoalPosition;
+			vbox2.Visible = hfield.Visible || goal.Visible;
 			
 			play.AddDefaultPositions ();
 

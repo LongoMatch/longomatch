@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Component
 	{
 		TeamTagger teamtagger;
 		ProjectType projectType;
+		Project project;
 		List<Player> selectedPlayers;
 		Play loadedPlay;
 		List<Window> activeWindows;
@@ -77,6 +78,13 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.FitMode = FitMode.Fit;
 			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
+			
+			TagPositions = true;
+		}
+
+		public bool TagPositions {
+			get;
+			set;
 		}
 
 		protected override void OnDestroyed ()
@@ -97,6 +105,7 @@ namespace LongoMatch.Gui.Component
 		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter)
 		{
 			this.projectType = projectType;
+			this.project = project;
 			buttonswidget.Visible = true;
 			if (project != null) {
 				buttonswidget.Template = project.Categories;
@@ -236,9 +245,18 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList();
 		}
 		
-		void HandleNewTagEvent (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop)
+		void HandleNewTagEvent (TaggerButton tagger, List<Player> players, List<Tag> tags, Time start, Time stop)
 		{
-			Config.EventsBroker.EmitNewTag (tagger, selectedPlayers, tags, start, stop);
+			if (tagger is AnalysisCategory) {
+				AnalysisCategory cat = tagger as AnalysisCategory;
+				Play play = project.AddPlay (cat, start, stop, null);
+				play.Players = selectedPlayers ?? new List<Player> ();
+				play.Tags = tags ?? new List<Tag> ();
+				if (cat.TagFieldPosition || cat.TagGoalPosition || cat.TagHalfFieldPosition) {
+					Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
+				}
+				Config.EventsBroker.EmitNewPlay (play);
+			}
 		}
 
 	}

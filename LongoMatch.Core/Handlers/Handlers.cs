@@ -38,6 +38,8 @@ namespace LongoMatch.Handlers
 	public delegate void PlayLoadedHandler(Play play);
 	/* A new play needs to be create for a specific category at the current play time */
 	public delegate void NewTagHandler (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop);
+	/* Add a new play to the current project */
+	public delegate void NewPlayHandler (Play play);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
 	public delegate void CategoryChangedHandler(AnalysisCategory cat);

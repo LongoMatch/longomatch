@@ -81,6 +81,7 @@ namespace LongoMatch.Services
 		private void ConnectSignals ()
 		{
 			Config.EventsBroker.NewTagEvent += OnNewTag;
+			Config.EventsBroker.NewPlayEvent += HandleNewPlay;
 			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
@@ -186,24 +187,14 @@ namespace LongoMatch.Services
 			return frame;
 		}
 
-		private void AddNewPlay (AnalysisCategory category, Time start, Time stop, List<Player> players,
-		                         List<Tag> tags, Image miniature)
+		private void AddNewPlay (Play play)
 		{
-			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-			                          start, stop, category));
-			
-			/* Add the new created play to the project and update the GUI*/
-			var play = openedProject.AddPlay (category, start, stop, miniature);
-			if (players != null) {
-				play.Players = players;
-			}
-			if (tags != null) {
-				play.Tags = tags;
+			/* Clip play boundaries */
+			play.Start.MSeconds = Math.Max (0, play.Start.MSeconds);
+			if (projectType == ProjectType.FileProject) {
+				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 			}
 
-			/* Tag subcategories of the new play */
-			if (!Config.FastTagging)
-				guiToolkit.TagPlay (play, openedProject);
 			analysisWindow.AddPlay (play);
 			filter.Update ();
 			if (projectType == ProjectType.FileProject) {
@@ -227,11 +218,6 @@ namespace LongoMatch.Services
 			if (player == null || openedProject == null || !(tagger is AnalysisCategory))
 				return;
 			
-			start.MSeconds = Math.Max (0, start.MSeconds);
-			if (projectType == ProjectType.FileProject) {
-				stop.MSeconds = Math.Min (player.StreamLength.MSeconds, stop.MSeconds);
-			}
-			
 			if (projectType == ProjectType.CaptureProject ||
 				projectType == ProjectType.URICaptureProject) {
 				if (!capturer.Capturing) {
@@ -240,7 +226,38 @@ namespace LongoMatch.Services
 				}
 			}
 			frame = CaptureFrame (start);
-			AddNewPlay (tagger as AnalysisCategory, start, stop, players, tags, frame);
+			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
+			                          start.ToMSecondsString(), stop.ToMSecondsString(),
+			                          tagger.Name));
+			/* Add the new created play to the project and update the GUI*/
+			var play = openedProject.AddPlay (tagger as AnalysisCategory, start, stop, frame);
+			if (players != null) {
+				play.Players = players;
+			}
+			if (tags != null) {
+				play.Tags = tags;
+			}
+			AddNewPlay (play);
+		}
+
+		public void HandleNewPlay (Play play)
+		{
+			if (player == null || openedProject == null)
+				return;
+			
+			if (projectType == ProjectType.CaptureProject ||
+				projectType == ProjectType.URICaptureProject) {
+				if (!capturer.Capturing) {
+					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
+					return;
+				}
+			}
+			play.Miniature = CaptureFrame (play.Start);
+			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
+			                          play.Start.ToMSecondsString(), play.Stop.ToMSecondsString(),
+			                          play.Category.Name));
+			openedProject.Timeline.Add (play);
+			AddNewPlay (play);
 		}
 
 		protected virtual void OnPlaysDeleted (List<Play> plays)

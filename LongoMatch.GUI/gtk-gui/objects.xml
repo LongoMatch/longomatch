@@ -234,7 +234,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="CodingWidget Properties">
+        <property name="TagPositions" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.ProjectPeriods" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -244,6 +248,64 @@
   <object type="LongoMatch.Gui.Component.PeriodsRecoder" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="MediaFileChooser Properties">
+        <property name="MediaFileMode" />
+        <property name="File" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="MediaFileChooser Signals">
+        <signal name="ChangedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.DatePicker" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="DatePicker Properties">
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="DatePicker Signals">
+        <signal name="ValueChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="DashboardWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="DashboardWidget Signals">
+        <signal name="NewTagEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Panel.PanelHeader" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PanelHeader Signals">
+        <signal name="BackClicked" />
+        <signal name="ApplyClicked" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -278,35 +340,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.TeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="MediaFileChooser Properties">
-        <property name="MediaFileMode" />
-        <property name="File" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="MediaFileChooser Signals">
-        <signal name="ChangedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.DatePicker" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="DatePicker Properties">
-        <property name="Date" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="DatePicker Signals">
-        <signal name="ValueChanged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -315,35 +348,6 @@
         <signal name="ExposeEvent" />
         <signal name="ButtonPressEvent" />
         <signal name="ScrollEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="DashboardWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="DashboardWidget Signals">
-        <signal name="NewTagEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Panel.PanelHeader" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PanelHeader Signals">
-        <signal name="ApplyClicked" />
-        <signal name="BackClicked" />
       </itemgroup>
     </signals>
   </object>
