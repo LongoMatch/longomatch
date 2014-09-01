@@ -135,12 +135,12 @@ namespace LongoMatch.Gui.Component
 			int s = StyleConf.NotebookTabIconSize;
 			IconLookupFlags f = IconLookupFlags.ForceSvg;
  
-			timelineIco = IconTheme.Default.LoadIcon ("longomatch-tab-timeline", s, f);
-			timelineActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-timeline", s, f);
-			dashboardIco = IconTheme.Default.LoadIcon ("longomatch-tab-dashboard", s, f);
-			dashboardActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-dashboard", s, f);
-			posIco = IconTheme.Default.LoadIcon ("longomatch-tab-position", s, f);
-			posAtiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-position", s, f);
+			timelineIco = Helpers.Misc.LoadIcon ("longomatch-tab-timeline", s, f);
+			timelineActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-timeline", s, f);
+			dashboardIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
+			dashboardActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
+			posIco = Helpers.Misc.LoadIcon ("longomatch-tab-position", s, f);
+			posAtiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-position", s, f);
 		}
 
 		void SetTabProps (Widget widget, bool active)

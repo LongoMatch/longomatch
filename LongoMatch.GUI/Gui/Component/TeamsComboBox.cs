@@ -59,7 +59,7 @@ namespace LongoMatch.Gui.Component
 				int size = StyleConf.NewTeamsIconSize;
 
 				if (t.Shield == null) {
-					shield = IconTheme.Default.LoadIcon (Constants.LOGO_ICON, size,
+					shield = Helpers.Misc.LoadIcon (Constants.LOGO_ICON, size,
 					                                     IconLookupFlags.ForceSvg);
 				} else {
 					shield = t.Shield.Scale (size, size).Value;

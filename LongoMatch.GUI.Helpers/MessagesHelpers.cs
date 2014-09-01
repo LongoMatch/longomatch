@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Helpers
 			                                     MessageType.Question, ButtonsType.YesNo,
 			                                     question);
 				
-			md.Icon =  Misc.LoadIcon(md, "longomatch", IconSize.Button);
+			md.Icon =  Misc.LoadIcon("longomatch", IconSize.Button, 0);
 			md.Title = title;
 			var res = md.Run();
 			md.Destroy();
@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Helpers
 			                                     type,
 			                                     ButtonsType.Ok,
 			                                     errorMessage);
-			md.Icon = Misc.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
+			md.Icon = Misc.LoadIcon("longomatch", Gtk.IconSize.Dialog, 0);
 			ret = md.Run();
 			md.Destroy();
 			return ret;
@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Helpers
             dialog.AddButton (Catalog.GetString("Add"), ResponseType.Ok);
 			dialog.VBox.PackStart (label, false, false, 0);
 			dialog.VBox.PackStart (entry, true, true, 0);
-			dialog.Icon = Misc.LoadIcon (parent, "longomatch", Gtk.IconSize.Dialog);
+			dialog.Icon = Misc.LoadIcon ("longomatch", Gtk.IconSize.Dialog, 0);
 			dialog.ShowAll ();
 			if (dialog.Run () == (int) ResponseType.Ok) {
 				ret = entry.Text;

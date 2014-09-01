@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using Helpers = LongoMatch.Gui.Helpers;
 using Gdk;
 
 namespace LongoMatch.Gui.Component
@@ -107,12 +108,12 @@ namespace LongoMatch.Gui.Component
 			int s = StyleConf.NotebookTabIconSize;
 			IconLookupFlags f = IconLookupFlags.ForceSvg;
  
-			listIco = IconTheme.Default.LoadIcon ("longomatch-tab-dashboard", s, f);
-			listActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-dashboard", s, f);
-			filtersIco = IconTheme.Default.LoadIcon ("longomatch-tab-filter", s, f);
-			filtersActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-filter", s, f);
-			playlistIco = IconTheme.Default.LoadIcon ("longomatch-tab-playlist", s, f);
-			playlistActiveIco = IconTheme.Default.LoadIcon ("longomatch-tab-active-playlist", s, f);
+			listIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
+			listActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
+			filtersIco = Helpers.Misc.LoadIcon ("longomatch-tab-filter", s, f);
+			filtersActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-filter", s, f);
+			playlistIco = Helpers.Misc.LoadIcon ("longomatch-tab-playlist", s, f);
+			playlistActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-playlist", s, f);
 		}
 
 		void SetTabProps (Widget widget, bool active)

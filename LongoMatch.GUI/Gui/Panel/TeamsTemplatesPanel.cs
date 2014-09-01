@@ -50,14 +50,14 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
-			teamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-header", 45, IconLookupFlags.ForceSvg);
-			playerheaderimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-header", 45, IconLookupFlags.ForceSvg);
-			newteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-add", 34, IconLookupFlags.ForceSvg);
-			deleteteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-delete", 34, IconLookupFlags.ForceSvg);
-			saveteamimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-team-save", 34, IconLookupFlags.ForceSvg);
-			newplayerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-add", 34, IconLookupFlags.ForceSvg);
-			deleteplayerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-delete", 34, IconLookupFlags.ForceSvg);
-			vseparatorimage.Pixbuf = IconTheme.Default.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
+			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", 45, IconLookupFlags.ForceSvg);
+			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", 45, IconLookupFlags.ForceSvg);
+			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-add", 34, IconLookupFlags.ForceSvg);
+			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-delete", 34, IconLookupFlags.ForceSvg);
+			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-save", 34, IconLookupFlags.ForceSvg);
+			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-add", 34, IconLookupFlags.ForceSvg);
+			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-delete", 34, IconLookupFlags.ForceSvg);
+			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", 34, IconLookupFlags.ForceSvg);
 
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Panel
 				if (template.Shield != null) {
 					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value;
 				} else {
-					img = IconTheme.Default.LoadIcon (Constants.LOGO_ICON,
+					img = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
 					                                  StyleConf.TeamsShieldIconSize,
 					                                  IconLookupFlags.ForceSvg);
 				}

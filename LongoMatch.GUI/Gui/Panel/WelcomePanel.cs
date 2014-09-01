@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Panel
 			int padding;
 
 			Gtk.Image prefImage = new Gtk.Image (
-				IconTheme.Default.LoadIcon ("longomatch-preferences",
+				Helpers.Misc.LoadIcon ("longomatch-preferences",
 			                            StyleConf.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Panel
 			Label label;
 			
 			image = new Gtk.Image (
-				IconTheme.Default.LoadIcon (b.name, StyleConf.WelcomeIconImageSize, 0));
+				Helpers.Misc.LoadIcon (b.name, StyleConf.WelcomeIconImageSize, 0));
 
 			button = new Button ();
 			button.Clicked += (sender, e) => (b.func());

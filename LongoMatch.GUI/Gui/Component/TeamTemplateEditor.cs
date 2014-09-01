@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Component
 				if (template.Shield != null) {
 					shieldimage.Pixbuf = template.Shield.Value;
 				} else {
-					shieldimage.Pixbuf = IconTheme.Default.LoadIcon (Constants.LOGO_ICON,
+					shieldimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
 					                                                 Constants.MAX_SHIELD_ICON_SIZE,
 					                                                 IconLookupFlags.ForceSvg);
 				}
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Text = "";
 			bdaydatepicker.Date = new DateTime ();
 			mailentry.Text = "";
-			playerimage.Pixbuf = playerimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+			playerimage.Pixbuf = playerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
 
 			ignoreChanges = false;
 		}
@@ -249,7 +249,7 @@ namespace LongoMatch.Gui.Component
 				playerImage = p.Photo.Value;
 			} else {
 				//playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
-				playerImage = IconTheme.Default.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+				playerImage = Helpers.Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
 		}

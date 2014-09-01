@@ -10374,11 +10374,13 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="WidthRequest">80</property>
                 <property name="HeightRequest">40</property>
                 <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:longomatch-back Dialog</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
+                <property name="Type">Custom</property>
                 <property name="BorderWidth">10</property>
+                <child>
+                  <widget class="Gtk.Image" id="backrectbuttonimage">
+                    <property name="MemberName" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="PackType">End</property>

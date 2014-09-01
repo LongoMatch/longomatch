@@ -41,7 +41,9 @@ namespace LongoMatch.Gui.Panel
 					BackClicked (this, null);
 				}
 			};
-			logoimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch", StyleConf.HeaderHeight - 10,
+			logoimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch", 45,
+			                                               IconLookupFlags.ForceSvg);
+			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-back", 40,
 			                                               IconLookupFlags.ForceSvg);
 			headerhbox.HeightRequest = StyleConf.HeaderHeight;
 		}

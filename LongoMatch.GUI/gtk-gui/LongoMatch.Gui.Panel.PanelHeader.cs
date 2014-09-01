@@ -10,6 +10,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Label titlelabel;
 		private global::Gtk.Button applyroundedbutton;
 		private global::Gtk.Button backrectbutton;
+		private global::Gtk.Image backrectbuttonimage;
 
 		protected virtual void Build ()
 		{
@@ -77,28 +78,18 @@ namespace LongoMatch.Gui.Panel
 			this.backrectbutton.HeightRequest = 40;
 			this.backrectbutton.CanFocus = true;
 			this.backrectbutton.Name = "backrectbutton";
-			this.backrectbutton.UseUnderline = true;
 			this.backrectbutton.BorderWidth = ((uint)(10));
 			// Container child backrectbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w13 = new global::Gtk.HBox ();
-			w13.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w14 = new global::Gtk.Image ();
-			w14.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-back", global::Gtk.IconSize.Dialog);
-			w13.Add (w14);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w16 = new global::Gtk.Label ();
-			w13.Add (w16);
-			w12.Add (w13);
-			this.backrectbutton.Add (w12);
+			this.backrectbuttonimage = new global::Gtk.Image ();
+			this.backrectbuttonimage.Name = "backrectbuttonimage";
+			this.backrectbutton.Add (this.backrectbuttonimage);
+			this.backrectbutton.Label = null;
 			this.headerhbox.Add (this.backrectbutton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.backrectbutton]));
-			w20.PackType = ((global::Gtk.PackType)(1));
-			w20.Position = 3;
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.backrectbutton]));
+			w13.PackType = ((global::Gtk.PackType)(1));
+			w13.Position = 3;
+			w13.Expand = false;
+			w13.Fill = false;
 			this.headereventbox.Add (this.headerhbox);
 			this.Add (this.headereventbox);
 			if ((this.Child != null)) {

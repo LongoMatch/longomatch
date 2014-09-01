@@ -26,6 +26,7 @@ using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Gui;
+using Helpers = LongoMatch.Gui.Helpers;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
@@ -150,11 +151,11 @@ namespace LongoMatch.Gui.Component
 				hbuttonbox2.Visible = tagMode == TagMode.Edit && internalButtons;
 				editbutton.Active = value == TagMode.Edit;
 				if (value == TagMode.Edit) {
-					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit_active",
-					                                               22, IconLookupFlags.ForceSvg);
+					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
+					                                  22, IconLookupFlags.ForceSvg);
 				} else {
-					editimage.Pixbuf = IconTheme.Default.LoadIcon ("longomatch-dash-edit",
-					                                               22, IconLookupFlags.ForceSvg);
+					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit",
+					                                  22, IconLookupFlags.ForceSvg);
 				}
 				ignoreChanges = false;
 			}
@@ -212,8 +213,8 @@ namespace LongoMatch.Gui.Component
 			toolbar.Orientation = Orientation.Vertical;
 			toolbar.ToolbarStyle = ToolbarStyle.Icons;
 			
-			editimage = new Gtk.Image (IconTheme.Default.LoadIcon ("longomatch-dash-edit_active",
-			                                                       22, IconLookupFlags.ForceSvg));
+			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
+			                                          22, IconLookupFlags.ForceSvg));
 			editbutton = new ToggleToolButton ();
 			editbutton.IconWidget = editimage;
 			editbutton.Active = true;

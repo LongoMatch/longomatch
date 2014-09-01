@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Linq;
+using System.Collections;
 using System.IO;
 using Gtk;
 using Gdk;
@@ -35,6 +36,8 @@ namespace LongoMatch.Gui.Helpers
 	public class Misc
 	{
 		public static string lastFilename;
+
+		public static Hashtable missingIcons = new Hashtable ();
 		
 		public static FileFilter GetFileFilter() {
 			FileFilter filter = new FileFilter();
@@ -167,35 +170,86 @@ namespace LongoMatch.Gui.Helpers
 			qualityBox.Active = active;
 			return qualityStore;
 		}
-		
-		public static Gdk.Pixbuf LoadIcon (Gtk.Widget widget, string name, Gtk.IconSize size)
+
+		/// <summary>
+		/// Loads the missing icon for a given Gtk.IconSize.
+		/// </summary>
+		/// <returns>The missing icon. This function uses a cache internally.</returns>
+		/// <param name="size">Size as a Gtk.IconSize.</param>
+		public static Gdk.Pixbuf LoadMissingIcon (Gtk.IconSize size)
+		{
+			int sz, sy;
+			global::Gtk.Icon.SizeLookup (size, out  sz, out  sy);
+			return LoadMissingIcon (sz);
+		}
+
+		/// <summary>
+		/// Loads the missing icon for a given size in pixels.
+		/// </summary>
+		/// <returns>The missing icon. This function uses a cache internally.</returns>
+		/// <param name="sz">Size in pixels.</param>
+		public static Gdk.Pixbuf LoadMissingIcon (int sz)
+		{
+			if (!missingIcons.ContainsKey (sz)) {
+				Gdk.Pixmap pmap = new Gdk.Pixmap (Gdk.Screen.Default.RootWindow, sz, sz);
+				Gdk.GC gc = new Gdk.GC (pmap);
+				gc.RgbFgColor = new Gdk.Color (255, 255, 255);
+				pmap.DrawRectangle (gc, true, 0, 0, sz, sz);
+				gc.RgbFgColor = new Gdk.Color (0, 0, 0);
+				pmap.DrawRectangle (gc, false, 0, 0, (sz - 1), (sz - 1));
+				gc.SetLineAttributes (3, Gdk.LineStyle.Solid, Gdk.CapStyle.Round, Gdk.JoinStyle.Round);
+				gc.RgbFgColor = new Gdk.Color (255, 0, 0);
+				pmap.DrawLine (gc, (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)), ((sz - 1) - (sz / 4)));
+				pmap.DrawLine (gc, ((sz - 1) - (sz / 4)), (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)));
+				missingIcons[sz] = Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
+			}
+			return (Gdk.Pixbuf) missingIcons [sz];
+		}
+
+		/// <summary>
+		/// Loads the icon for a given name and size.
+		/// </summary>
+		/// <returns>The icon as a Gdk.Pixbuf or missing image icon if not found.</returns>
+		/// <param name="name">Icon Name.</param>
+		/// <param name="size">Icon Size in pixels.</param>
+		/// <param name="flags">Lookup Flags like ForceSVG.</param>
+		public static Gdk.Pixbuf LoadIcon (string name, int size, IconLookupFlags flags)
+		{
+			try {
+			  return IconTheme.Default.LoadIcon (name, size, flags);
+			} catch (System.Exception) {
+				return LoadMissingIcon (size);
+			}
+		}
+
+		/// <summary>
+		/// Loads the icon for a given name and size.
+		/// </summary>
+		/// <returns>The icon as a Gdk.Pixbuf or missing image icon if not found.</returns>
+		/// <param name="name">Icon Name.</param>
+		/// <param name="size">Icon Size as a Gtk.IconSize.</param>
+		/// <param name="flags">Lookup Flags like ForceSVG.</param>
+		public static Gdk.Pixbuf LoadIcon (string name, Gtk.IconSize size, IconLookupFlags flags)
+		{
+			int sz, sy;
+			global::Gtk.Icon.SizeLookup (size, out  sz, out  sy);
+			return LoadIcon (name, sz, flags);
+		}
+
+		/// <summary>
+		/// Loads the stock icon for a given name and size.
+		/// </summary>
+		/// <returns>The stock icon.</returns>
+		/// <param name="widget">Widget to get the icon for. Themes can modify the stock icon for a specific widget.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="size">Size as Gtk.IconSize.</param>
+		public static Gdk.Pixbuf LoadStockIcon (Gtk.Widget widget, string name, Gtk.IconSize size)
 		{
 			Gdk.Pixbuf res = widget.RenderIcon (name, size, null);
 			if ((res != null)) {
 				return res;
 			} else {
-				int sz;
-				int sy;
-				global::Gtk.Icon.SizeLookup (size, out  sz, out  sy);
-				try {
-					return Gtk.IconTheme.Default.LoadIcon (name, sz, 0);
-				} catch (System.Exception) {
-					if ((name != "gtk-missing-image")) {
-						return LoadIcon (widget, "gtk-missing-image", size);
-					} else {
-						Gdk.Pixmap pmap = new Gdk.Pixmap (Gdk.Screen.Default.RootWindow, sz, sz);
-						Gdk.GC gc = new Gdk.GC (pmap);
-						gc.RgbFgColor = new Gdk.Color (255, 255, 255);
-						pmap.DrawRectangle (gc, true, 0, 0, sz, sz);
-						gc.RgbFgColor = new Gdk.Color (0, 0, 0);
-						pmap.DrawRectangle (gc, false, 0, 0, (sz - 1), (sz - 1));
-						gc.SetLineAttributes (3, Gdk.LineStyle.Solid, Gdk.CapStyle.Round, Gdk.JoinStyle.Round);
-						gc.RgbFgColor = new Gdk.Color (255, 0, 0);
-						pmap.DrawLine (gc, (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)), ((sz - 1) - (sz / 4)));
-						pmap.DrawLine (gc, ((sz - 1) - (sz / 4)), (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)));
-						return Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
-					}
-				}
+				return LoadMissingIcon (size);
 			}
 		}
 		
