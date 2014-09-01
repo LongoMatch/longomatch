@@ -318,6 +318,10 @@ namespace LongoMatch.Gui.Component
 			Menu menu;
 			MenuItem delbut, deltag;
 			
+			if (Mode != TagMode.Edit) {
+				return;
+			}
+			
 			menu = new Menu ();
 			delbut = new MenuItem (Catalog.GetString ("Delete"));
 			delbut.Activated += (sender, e) => {RemoveButton (taggerbutton);};
