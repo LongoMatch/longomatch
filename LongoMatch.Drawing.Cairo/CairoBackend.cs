@@ -363,6 +363,7 @@ namespace LongoMatch.Drawing.Cairo
 			layout.GetPixelExtents (out inkRect, out logRect);
 			CContext.MoveTo (point.X, point.Y + height / 2 - (double)logRect.Height / 2);
 			Pango.CairoHelper.ShowLayout (CContext, layout);
+			CContext.NewPath();
 		}
 
 		public void DrawImage (Image image)
