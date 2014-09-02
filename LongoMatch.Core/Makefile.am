@@ -105,8 +105,6 @@ SOURCES = Common/Area.cs \
 	Store/Timer.cs \
 	StyleConf.cs
 
-RESOURCES = $(top_srcdir)/images/field_background.svg \
-	$(top_srcdir)/images/goal_background.svg \
-	$(top_srcdir)/images/half_field_background.svg
+RESOURCES = 
 
 include $(top_srcdir)/build/build.mk

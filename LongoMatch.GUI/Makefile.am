@@ -142,7 +142,6 @@ SOURCES = Gui/Cairo.cs \
 
 RESOURCES = gtk-gui/gui.stetic \
 	$(top_srcdir)/images/video.png \
-	$(top_srcdir)/images/camera-video.png \
 	$(top_srcdir)/images/background.png \
 	$(top_srcdir)/images/tools/dash-line.svg \
 	$(top_srcdir)/images/tools/line.svg \
