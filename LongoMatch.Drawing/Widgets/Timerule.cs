@@ -69,9 +69,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
-			double height = widget.Height;
-			double width = widget.Width;
-			double tpos;
+			int startX, start, stop;
+			double tpos, height, width;
 			
 			if (Duration == null) {
 				return;
@@ -83,6 +82,9 @@ namespace LongoMatch.Drawing.Widgets
 				needle = tk.CreateSurface (img.Width, img.Height, img);
 			}
 
+			height = widget.Height;
+			width = widget.Width;
+
 			tk.Context = context;
 			tk.Begin ();
 			tk.Clear (Config.Style.PaletteBackgroundDark);
@@ -92,19 +94,25 @@ namespace LongoMatch.Drawing.Widgets
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = 12;
-			tk.DrawLine (new Point (0, height), new Point (width, height));
-		
+			tk.DrawLine (new Point (area.Start.X, height),
+			             new Point (area.Start.X + area.Width, height));
+
+			startX = (int) (area.Start.X + Scroll);
+			start = (startX - (startX % TIME_SPACING)) + TIME_SPACING;
+			stop = (int) (startX + area.Width);
+
 			/* Draw big lines each 10 * secondsPerPixel */
-			for (int i=0; i <= Duration.Seconds / SecondsPerPixel; i += TIME_SPACING) {
+			for (int i=start; i <= stop; i += TIME_SPACING) {
 				double pos = i - Scroll;
 				tk.DrawLine (new Point (pos, height),
 				             new Point (pos, height - BIG_LINE_HEIGHT));
 				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 0), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 4,
 				             new Time { Seconds = (int) (i * SecondsPerPixel) }.ToSecondsString ());
 			}
-			
+
+			start = (startX - (startX % (TIME_SPACING / 10))) + (TIME_SPACING/10);
 			/* Draw small lines each 1 * secondsPerPixel */
-			for (int i=0; i<= Duration.Seconds / SecondsPerPixel; i+= TIME_SPACING / 10) {
+			for (int i=start; i<= stop; i+= TIME_SPACING / 10) {
 				double pos;
 				
 				if (i % TIME_SPACING == 0)

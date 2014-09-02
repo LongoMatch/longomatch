@@ -107,8 +107,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = background;
 			tk.LineWidth = 0;
 			
-			tk.DrawRectangle (new Point (0, OffsetY), Width,
-			                  Height);
+			tk.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
