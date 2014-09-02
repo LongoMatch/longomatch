@@ -38,7 +38,7 @@ namespace LongoMatch.Drawing.Widgets
 		DrawTool tool;
 		FrameDrawing drawing;
 		ISurface backbuffer;
-		bool handdrawing;
+		bool handdrawing, inObjectCreation;
 
 		public Blackboard (IWidget widget): base(widget)
 		{
@@ -119,6 +119,7 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				tool = value;
 				widget.SetCursorForTool (tool);
+				UpdateSelection (null);
 			}
 		}
 
@@ -175,10 +176,14 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			Drawable drawable = null;
 			SelectionPosition pos = SelectionPosition.BottomRight;
-			bool resize = true, copycolor = true;
+			bool resize = true, copycolor = true, sele = true;
 
-			if (sel != null || Tool == DrawTool.Selection)
+			if (Tool == DrawTool.Selection)
 				return;
+			
+			if (sel != null) {
+				ClearSelection ();
+			}
 				
 			switch (Tool) {
 			case DrawTool.Line:
@@ -249,10 +254,13 @@ namespace LongoMatch.Drawing.Widgets
 				if (Tool == DrawTool.Counter) {
 					UpdateCounters ();
 				}
-				if (resize) {
-					UpdateSelection (new Selection (selo, pos, 5));
-				} else {
-					UpdateSelection (new Selection (selo, SelectionPosition.All, 5));
+				if (sele) {
+					if (resize) {
+						UpdateSelection (new Selection (selo, pos, 5));
+					} else {
+						UpdateSelection (new Selection (selo, SelectionPosition.All, 5));
+					}
+					inObjectCreation = true;
 				}
 				widget.ReDraw ();
 			}
@@ -263,6 +271,10 @@ namespace LongoMatch.Drawing.Widgets
 			Selection sel = Selections.FirstOrDefault ();
 			if (sel != null) {
 				(sel.Drawable as ICanvasDrawableObject).IDrawableObject.Reorder ();
+			}
+			if (inObjectCreation) {
+				UpdateSelection (null);
+				inObjectCreation = false;
 			}
 			handdrawing = false;
 		}
