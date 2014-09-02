@@ -43,6 +43,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
 			tk.StrokeColor = Drawable.TextColor;
 			tk.FontSize = Drawable.TextSize;
+			tk.FontAlignment = FontAlignment.Center;
 			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
 			             Drawable.Value);
 			DrawSelectionArea (tk);
