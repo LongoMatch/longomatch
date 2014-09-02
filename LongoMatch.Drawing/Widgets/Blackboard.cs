@@ -48,6 +48,7 @@ namespace LongoMatch.Drawing.Widgets
 			Color = Color.Red1;
 			LineStyle = LineStyle.Normal;
 			LineType = LineType.Arrow;
+			FontSize = 12;
 			tool = DrawTool.Selection;
 		}
 
@@ -91,6 +92,11 @@ namespace LongoMatch.Drawing.Widgets
 			set;
 		}
 
+		public int FontSize {
+			get;
+			set;
+		}
+		
 		public LineStyle LineStyle {
 			get;
 			set;
@@ -217,11 +223,12 @@ namespace LongoMatch.Drawing.Widgets
 					if (text.Value == null) {
 						return;
 					}
-					text.TopRight.X += text.Value.Length * 12;
-					text.BottomRight.X += text.Value.Length * 12;
+					text.TopRight.X += text.Value.Length * FontSize;
+					text.BottomRight.X += text.Value.Length * FontSize;
 					text.TextColor = TextColor.Copy ();
 					text.FillColor = text.StrokeColor = TextBackgroundColor.Copy ();
-					resize = copycolor = false;
+					text.TextSize = FontSize;
+					resize = copycolor = sele = false;
 					drawable = text;
 					break;
 				}

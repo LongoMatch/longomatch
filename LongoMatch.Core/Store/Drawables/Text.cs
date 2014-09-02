@@ -24,6 +24,7 @@ namespace LongoMatch.Store.Drawables
 	public class Text: Rectangle
 	{
 		public Text () {
+			TextSize = 12;
 		}
 
 		public Text (Point origin, double width, double height, String text): base (origin, width, height)
@@ -37,6 +38,11 @@ namespace LongoMatch.Store.Drawables
 		}
 		
 		public Color TextColor {
+			get;
+			set;
+		}
+		
+		public int TextSize {
 			get;
 			set;
 		}

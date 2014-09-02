@@ -41,9 +41,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
 			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
-			tk.DrawArea (Drawable.TopLeft, Drawable.TopRight,
-			             Drawable.BottomRight, Drawable.BottomLeft);
 			tk.StrokeColor = Drawable.TextColor;
+			tk.FontSize = Drawable.TextSize;
 			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
 			             Drawable.Value);
 			DrawSelectionArea (tk);

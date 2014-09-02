@@ -79,6 +79,8 @@ namespace LongoMatch.Gui.Dialog
 			blackboard.Color = Color.Red1;
 			blackboard.TextColor = Color.White;
 			blackboard.TextBackgroundColor = Color.Grey2;
+			textspinbutton.Value = 12;
+			textspinbutton.ValueChanged += HandleTextSizeChanged;
 
 			widthcombobox.Changed += HandleLineWidthChanged;
 			widthcombobox.Active = 1;
@@ -183,6 +185,18 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
+		void HandleTextSizeChanged (object sender, EventArgs e)
+		{
+			if (selectedDrawable is Text) {
+				Text t = (selectedDrawable as Text);
+				t.TextSize = textspinbutton.ValueAsInt;
+				QueueDraw (); 
+			} else {
+				blackboard.FontSize = textspinbutton.ValueAsInt;
+			}
+			
+		}
+		
 		void HandleTextColorSet (object sender, EventArgs e)
 		{
 			if (selectedDrawable is Text) {
@@ -343,6 +357,7 @@ namespace LongoMatch.Gui.Dialog
 				if (drawable is Text) {
 					textcolorbutton.Color = Misc.ToGdkColor ((selectedDrawable as Text).TextColor);
 					backgroundcolorbutton.Color = Misc.ToGdkColor (selectedDrawable.FillColor);
+					textspinbutton.Value = (selectedDrawable as Text).TextSize;
 				} else {
 					colorbutton.Color =  Misc.ToGdkColor (selectedDrawable.StrokeColor);
 				}
