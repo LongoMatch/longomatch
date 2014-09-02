@@ -148,19 +148,6 @@ namespace LongoMatch.Gui.Component
 			currentPage = (int)args.PageNum;
 		}
 
-		void DisableFocus (Container w) {
-			w.CanFocus = false;
-			foreach (Widget child in w.AllChildren) {
-				Console.WriteLine (child);
-				if (child is Container) {
-					DisableFocus (child as Container);
-				} else {
-					if (!(child is TreeView))
-					child.CanFocus = false;
-				}
-			}
-		}
-
 		void AddFilters() {
 			ScrolledWindow s1 = new ScrolledWindow();
 			ScrolledWindow s2 = new ScrolledWindow();
