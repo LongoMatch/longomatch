@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Component
 			w2.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w3 = new global::Gtk.Image ();
-			w3.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-zoom-fit", global::Gtk.IconSize.Menu);
+			w3.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-dash-center-view", global::Gtk.IconSize.Menu);
 			w2.Add (w3);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w5 = new global::Gtk.Label ();
@@ -53,7 +53,6 @@ namespace LongoMatch.Gui.Component
 			this.hbox2.Add (this.focusbutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.focusbutton]));
 			w9.Position = 0;
-			w9.Fill = false;
 			this.vbox4.Add (this.hbox2);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox2]));
 			w10.Position = 0;

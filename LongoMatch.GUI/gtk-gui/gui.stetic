@@ -9755,14 +9755,13 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Button" id="focusbutton">
                     <property name="MemberName" />
                     <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-zoom-fit Menu</property>
+                    <property name="Icon">stock:longomatch-dash-center-view Menu</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
                     <property name="AutoSize">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
