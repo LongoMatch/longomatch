@@ -204,9 +204,13 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			if (DrawEvent != null) {
 				using (CairoContext c = new CairoContext (widget.GdkWindow)) {
+					global::Cairo.Context cc = c.Value as global::Cairo.Context;
 					if (area == null) {
-						area = new Area (new Point (0, 0), Width, Height);
+						Rectangle r = widget.GdkWindow.ClipRegion.Clipbox;
+						area = new Area (new Point (r.X, r.Y), r.Width, r.Height);
 					}
+					cc.Rectangle (area.Start.X, area.Start.Y, area.Width, area.Height);
+					cc.Clip ();
 					DrawEvent (c, area);
 				}
 			}
