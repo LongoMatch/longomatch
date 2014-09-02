@@ -41,9 +41,9 @@ namespace LongoMatch.Drawing.Widgets
 		public TeamTagger (IWidget widget): base (widget)
 		{
 			Accuracy = 0;
-			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
 			tagger = new PlayersTaggerObject ();
+			tagger.SelectionMode = MultiSelectionMode.Single;
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			ObjectsCanMove = false;
@@ -80,6 +80,18 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public new MultiSelectionMode SelectionMode {
+			set {
+				tagger.SelectionMode = value;
+			}
+		}
+
+		public void Select (List<Player> players)
+		{
+			tagger.Select (players);
+			widget.ReDraw ();
+		}
+		
 		public void Select (Player p)
 		{
 			tagger.Select (p);

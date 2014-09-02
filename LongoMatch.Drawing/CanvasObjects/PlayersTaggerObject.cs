@@ -96,6 +96,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public MultiSelectionMode SelectionMode {
+			set;
+			get;
+		}
+		
 		public bool Compact {
 			get;
 			set;
@@ -128,7 +133,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			field.Update ();
 		}
 		
-		public void Select (Player player)
+		public void Select (List<Player> players)
+		{
+			ResetSelection ();
+			foreach (Player p in players) {
+				Select (p, true);
+			}
+			if (PlayersSelectionChangedEvent != null) {
+				PlayersSelectionChangedEvent (SelectedPlayers);
+			}
+		}
+
+		public void Select (Player player, bool silent=false)
 		{
 			PlayerObject po;
 
@@ -137,10 +153,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				po = awayPlayers.FirstOrDefault (p => p.Player == player);
 			}
 			if (po != null) {
-				ResetSelection ();
+				if (!silent) {
+					ResetSelection ();
+				}
 				SelectedPlayers.Add (player);
 				po.Active = true;
-				if (PlayersSelectionChangedEvent != null) {
+				if (!silent && PlayersSelectionChangedEvent != null) {
 					PlayersSelectionChangedEvent (SelectedPlayers);
 				}
 			}
@@ -426,9 +444,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void ClickPressed (Point point, ButtonModifier modif)
 		{
 			Selection selection = null;
-			
-			if (modif == ButtonModifier.None && !SubstitutionMode) {
-				ResetSelection ();
+
+			if (!SubstitutionMode && SelectionMode != MultiSelectionMode.Multiple) {
+				if (SelectionMode == MultiSelectionMode.Single || modif == ButtonModifier.None) {
+					ResetSelection ();
+				}
 			}
 			
 			point = Utils.ToUserCoords (point, offset, scaleX, scaleY);
