@@ -4,10 +4,8 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class NotesWidget
 	{
-		private global::Gtk.VBox vbox2;
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.TextView textview1;
-		private global::Gtk.Button savebutton;
 
 		protected virtual void Build ()
 		{
@@ -16,10 +14,6 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.NotesWidget";
 			// Container child LongoMatch.Gui.Component.NotesWidget.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
 			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow1.CanFocus = true;
 			this.scrolledwindow1.Name = "scrolledwindow1";
@@ -33,28 +27,11 @@ namespace LongoMatch.Gui.Component
 			this.textview1.Name = "textview1";
 			w1.Add (this.textview1);
 			this.scrolledwindow1.Add (w1);
-			this.vbox2.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
-			w4.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.savebutton = new global::Gtk.Button ();
-			this.savebutton.Sensitive = false;
-			this.savebutton.CanFocus = true;
-			this.savebutton.Name = "savebutton";
-			this.savebutton.UseStock = true;
-			this.savebutton.UseUnderline = true;
-			this.savebutton.Label = "gtk-save";
-			this.vbox2.Add (this.savebutton);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.savebutton]));
-			w5.Position = 1;
-			w5.Expand = false;
-			w5.Fill = false;
-			this.Add (this.vbox2);
+			this.Add (this.scrolledwindow1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Show ();
-			this.savebutton.Clicked += new global::System.EventHandler (this.OnSavebuttonClicked);
 		}
 	}
 }

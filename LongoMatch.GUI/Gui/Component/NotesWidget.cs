@@ -63,18 +63,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected virtual void OnEdition(object sender, EventArgs args) {
-			if(Notes != play.Notes) {
-				savebutton.Sensitive = true;
-			}
-		}
-
-		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)
+		protected virtual void OnEdition (object sender, EventArgs args)
 		{
-			if(play != null) {
-				play.Notes=Notes;
-				Config.EventsBroker.EmitTimeNodeChanged (play, null);
-				savebutton.Sensitive = false;
+			if (play != null) {
+				play.Notes = Notes;
 			}
 		}
 

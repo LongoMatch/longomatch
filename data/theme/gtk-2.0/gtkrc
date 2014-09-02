@@ -141,6 +141,7 @@ class "GtkCheckMenuItem"                         style "longomatch-checkbox"
 class "GtkRadioButton"                           style "longomatch-radiobutton"
 class "GtkTreeView"                              style "longomatch-treeview"
 class "GtkIconView"                              style "longomatch-treeview"
+class "GtkTextView"                              style "longomatch-treeview"
 
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"

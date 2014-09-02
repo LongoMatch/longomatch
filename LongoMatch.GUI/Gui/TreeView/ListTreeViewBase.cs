@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 			custColumn.SetCellDataFunc (cr, RenderElement); 
 
 			playsMenu = new PlaysMenu ();
-			playsMenu.EditNameEvent += OnEdit;
+			playsMenu.EditPlayEvent += HandleEditPlayEvent;
 			AppendColumn(custColumn);
 		}
 
@@ -150,12 +150,10 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitLoadPlay (item as Play);
 		}
 
-		protected virtual void OnEdit (object obj, EventArgs args) {
-			TreePath[] paths = Selection.GetSelectedRows();
-
-			//editing = true;
-			//nameCell.Editable = true;
-			//SetCursor(paths[0],  nameColumn, true);
+		void HandleEditPlayEvent (object sender, EventArgs e)
+		{
+			Config.GUIToolkit.EditPlay (SelectedPlay, Project, true, true, true, true);
+			Config.EventsBroker.EmitTeamTagsChanged ();
 		}
 
 		protected void OnFilterUpdated() {

@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Menus
 	public class PlaysMenu: Gtk.Menu
 	{
 	
-		public event EventHandler EditNameEvent;
+		public event EventHandler EditPlayEvent;
 
 		MenuItem edit, newPlay, del, addPLN, snapshot, render;
 		MenuItem duplicate, moveCat, drawings;
@@ -171,10 +171,10 @@ namespace LongoMatch.Gui.Menus
 			Add (newPlay);
 			newPlay.Activated += HandleNePlayActivated;
 
-			edit = new MenuItem (Catalog.GetString ("Edit name"));
+			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
-				if (EditNameEvent != null) {
-					EditNameEvent (this, null);
+				if (EditPlayEvent != null) {
+					EditPlayEvent (this, null);
 				}
 			};
 			Add (edit);

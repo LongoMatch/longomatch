@@ -6,7 +6,6 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.HBox mainbox;
 		private global::LongoMatch.Gui.Component.CoordinatesTagger field;
-		private global::Gtk.VBox vbox2;
 		private global::LongoMatch.Gui.Component.CoordinatesTagger hfield;
 		private global::LongoMatch.Gui.Component.CoordinatesTagger goal;
 
@@ -28,26 +27,19 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.field]));
 			w1.Position = 0;
 			// Container child mainbox.Gtk.Box+BoxChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
 			this.hfield = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
 			this.hfield.Events = ((global::Gdk.EventMask)(256));
 			this.hfield.Name = "hfield";
-			this.vbox2.Add (this.hfield);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hfield]));
-			w2.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.mainbox.Add (this.hfield);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.hfield]));
+			w2.Position = 1;
+			// Container child mainbox.Gtk.Box+BoxChild
 			this.goal = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
 			this.goal.Events = ((global::Gdk.EventMask)(256));
 			this.goal.Name = "goal";
-			this.vbox2.Add (this.goal);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.goal]));
-			w3.Position = 1;
-			this.mainbox.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.vbox2]));
-			w4.Position = 1;
+			this.mainbox.Add (this.goal);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.goal]));
+			w3.Position = 2;
 			this.Add (this.mainbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

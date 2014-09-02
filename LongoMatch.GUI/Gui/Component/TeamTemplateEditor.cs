@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 
 			ConnectSignals ();

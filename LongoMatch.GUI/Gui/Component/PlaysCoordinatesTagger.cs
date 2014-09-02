@@ -60,7 +60,6 @@ namespace LongoMatch.Gui.Component
 			field.Visible = play.Category.TagFieldPosition;
 			hfield.Visible = play.Category.TagHalfFieldPosition;
 			goal.Visible = play.Category.TagGoalPosition;
-			vbox2.Visible = hfield.Visible || goal.Visible;
 			
 			play.AddDefaultPositions ();
 
