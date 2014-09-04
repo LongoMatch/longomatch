@@ -28,10 +28,6 @@ namespace LongoMatch.Interfaces
 		string Name {get; set;}
 	}
 	
-	public interface ITemplate<T>: ITemplate {
-		List<T> List {get;set;}
-	}
-	
 	public interface ITemplateProvider
 	{
 		void CheckDefaultTemplate();
@@ -42,15 +38,15 @@ namespace LongoMatch.Interfaces
 		void Create (string templateName, params object [] list);
 	}
 	
-	public interface ITemplateProvider<T, U>: ITemplateProvider where T: ITemplate<U>
+	public interface ITemplateProvider<T>: ITemplateProvider where T: ITemplate
 	{
 		List<T> Templates {get;}
 		T Load (string name);
-		void Save (ITemplate<U> template);
-		void Update (ITemplate<U> template);
+		void Save (ITemplate template);
+		void Update (ITemplate template);
 	}
 	
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, TaggerButton> {}
-	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player> {}
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard> {}
+	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate> {}
 }
 

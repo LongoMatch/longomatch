@@ -26,7 +26,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class PlayObject: TimeNodeObject
 	{
-		public PlayObject (Play play):base (play)
+		public PlayObject (TimelineEvent play):base (play)
 		{
 		}
 
@@ -46,9 +46,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Play Play {
+		public TimelineEvent Play {
 			get {
-				return TimeNode as Play;
+				return TimeNode as TimelineEvent;
 			}
 		}
 
@@ -58,8 +58,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			y = OffsetY + Height / 2;
 			tk.LineWidth = lineWidth;
-			tk.FillColor = Play.Category.Color;
-			tk.StrokeColor = Play.Category.Color;
+			tk.FillColor = Play.EventType.Color;
+			tk.StrokeColor = Play.EventType.Color;
 			if (stop - start <= lineWidth) {
 				tk.LineWidth = 0;
 				tk.DrawCircle (new Point (start + (stop - start) / 2, y), 3);

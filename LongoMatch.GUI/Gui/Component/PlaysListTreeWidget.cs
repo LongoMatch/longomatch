@@ -21,14 +21,10 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.Gui.Dialog;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 using LongoMatch.Common;
+using LongoMatch.Store;
 using LongoMatch.Store.Playlists;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
@@ -40,13 +36,14 @@ namespace LongoMatch.Gui.Component
 	{
 
 		Project project;
-		Dictionary<TaggerButton, TreeIter> itersDic = new Dictionary<TaggerButton, TreeIter> ();
+		Dictionary<EventType, TreeIter> itersDic;
 
 		public PlaysListTreeWidget()
 		{
 			this.Build();
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
+			itersDic = new Dictionary<EventType, TreeIter> ();
 			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
 		}
 		
@@ -62,7 +59,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void RemovePlays(List<Play> plays) {
+		public void RemovePlays(List<TimelineEvent> plays) {
 			TreeIter iter, child;
 			TreeStore model;
 			List<TreeIter> removeIters;
@@ -82,7 +79,7 @@ namespace LongoMatch.Gui.Component
 
 				model.IterChildren(out child, iter);
 				do {
-					Play play = (Play) model.GetValue(child,0);
+					TimelineEvent play = (TimelineEvent) model.GetValue(child,0);
 					if(plays.Contains(play)) {
 						removeIters.Add(child);
 					}
@@ -96,13 +93,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay(Play play) {
+		public void AddPlay(TimelineEvent play) {
 			TreeIter categoryIter;
 
 			if(project == null)
 				return;
 
-			var cat = play.Category;
+			var cat = play.EventType;
 			var model = (TreeStore)treeview.Model;
 			categoryIter = itersDic[cat];
 			var playIter = model.AppendValues(categoryIter,play);
@@ -134,50 +131,29 @@ namespace LongoMatch.Gui.Component
 			Gtk.TreeIter iter;
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof(object));
 
-			itersDic = new Dictionary<TaggerButton, TreeIter> ();
-			/* Add scores */
-			if (project.Categories.Scores.Count > 0) {
-				iter = dataFileListStore.AppendValues (
-					new Score { Name = Catalog.GetString ("Score"),
-					SortMethod = SortMethodType.SortByStartTime,
-					Color = Config.Style.PaletteActive}, null);
-				foreach (Score s in project.Categories.Scores) {
-					itersDic.Add(s, iter);
-				}
+			itersDic.Clear ();
+
+			foreach(EventType evType in project.EventTypes) {
+				iter = dataFileListStore.AppendValues(evType);
+				itersDic.Add(evType, iter);
 			}
 			
-			/* Add penalty cards*/
-			if (project.Categories.PenaltyCards.Count > 0) {
-				iter = dataFileListStore.AppendValues (
-					new PenaltyCard { Name = Catalog.GetString ("Penalty Cards"),
-					SortMethod = SortMethodType.SortByStartTime,
-					Color = Config.Style.PaletteActive}, null);
-				foreach (PenaltyCard pc in project.Categories.PenaltyCards) {
-					itersDic.Add(pc, iter);
-				}
-			}
-			
-			foreach(TaggerButton cat in project.Categories.CategoriesList) {
-				iter = dataFileListStore.AppendValues(cat);
-				itersDic.Add(cat, iter);
-			}
-			
-			var queryPlaysByCategory = project.PlaysGroupedByCategory;
+			var queryPlaysByCategory = project.PlaysGroupedByEventType;
 			foreach(var playsGroup in queryPlaysByCategory) {
-				TaggerButton cat = playsGroup.Key;
+				EventType cat = playsGroup.Key;
 				if(!itersDic.ContainsKey(cat))
 					continue;
-				foreach(Play play in playsGroup) {
+				foreach(TimelineEvent play in playsGroup) {
 					dataFileListStore.AppendValues(itersDic[cat], play);
 				}
 			}
 			return dataFileListStore;
 		}
 
-		protected virtual void OnEditProperties(AnalysisCategory cat) {
-			EditCategoryDialog dialog = new EditCategoryDialog(project, cat);
-			dialog.Run();
-			dialog.Destroy();
+		protected virtual void OnEditProperties(EventType eventType) {
+			//EditCategoryDialog dialog = new EditCategoryDialog (project, eventType);
+			//dialog.Run();
+			//dialog.Destroy();
 		}
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
@@ -193,7 +169,7 @@ namespace LongoMatch.Gui.Component
 				PlaylistPlayElement element;
 				
 				treeview.Model.GetIter(out iter, path);
-				element = new PlaylistPlayElement (treeview.Model.GetValue(iter, 0) as Play,
+				element = new PlaylistPlayElement (treeview.Model.GetValue(iter, 0) as TimelineEvent,
 				                                   project.Description.File);
 				playlist.Elements.Add (element);
 			}
@@ -201,7 +177,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitRenderPlaylist (playlist);
 		}
 		
-		void HandlePlayLoaded (Play play) {
+		void HandlePlayLoaded (TimelineEvent play) {
 			treeview.QueueDraw ();
 		}
 	}

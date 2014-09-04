@@ -79,16 +79,16 @@ namespace LongoMatch.Plugins
 
 		public void Export ()
 		{
-			foreach (Category cat in project.Categories.List) {
+			foreach (Categoryoutton cat in project.Dashboard.List) {
 				ExportCategory (cat);
 			}
 			File.WriteAllLines (filename, output);
 		}
 
-		void ExportCategory (Category cat)
+		void ExportCategory (CategoryButton cat)
 		{
 			string headers;
-			List<Play> plays;
+			List<TimelineEvent> plays;
 			
 			output.Add ("CATEGORY: " + cat.Name);
 			plays = project.PlaysInCategory (cat);
@@ -99,7 +99,7 @@ namespace LongoMatch.Plugins
 				headers += String.Format (";{0}", tag.Value);
 			}
 			
-			foreach (Play play in plays.OrderBy(p=>p.Start)) {
+			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
 				string line;
 				
 				line = String.Format ("{0};{1};{2};{3}", play.Name,

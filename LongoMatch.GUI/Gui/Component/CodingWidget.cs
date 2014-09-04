@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		Project project;
 		List<Player> selectedPlayers;
-		Play loadedPlay;
+		TimelineEvent loadedPlay;
 		List<Window> activeWindows;
 		int currentPage;
 		Gdk.Pixbuf timelineIco, timelineActiveIco;
@@ -108,17 +108,17 @@ namespace LongoMatch.Gui.Component
 			this.project = project;
 			buttonswidget.Visible = true;
 			if (project != null) {
-				buttonswidget.Template = project.Categories;
+				buttonswidget.Template = project.Dashboard;
 			}
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-			                      project.Categories.FieldBackground);
+			                      project.Dashboard.FieldBackground);
 			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
 			}
 			playspositionviewer1.LoadProject (project);
 		}
 
-		public void AddPlay (Play play)
+		public void AddPlay (TimelineEvent play)
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.AddPlay (play);
@@ -126,7 +126,7 @@ namespace LongoMatch.Gui.Component
 			playspositionviewer1.AddPlay (play);
 		}
 
-		public void DeletePlays (List<Play> plays)
+		public void DeletePlays (List<TimelineEvent> plays)
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.RemovePlays (plays);
@@ -218,7 +218,7 @@ namespace LongoMatch.Gui.Component
 			currentPage = (int)args.PageNum;
 		}
 
-		void HandlePlayLoaded (Play play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
 			loadedPlay = play;
 			timeline.SelectedTimeNode = play;
@@ -245,19 +245,17 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList();
 		}
 		
-		void HandleNewTagEvent (TaggerButton tagger, List<Player> players, List<Tag> tags, Time start, Time stop)
+		void HandleNewTagEvent (EventType eventType, List<Player> players, List<Tag> tags,
+		                        Time start, Time stop, Score score, PenaltyCard card)
 		{
-			if (tagger is AnalysisCategory) {
-				AnalysisCategory cat = tagger as AnalysisCategory;
-				Play play = project.AddPlay (cat, start, stop, null);
-				play.Players = selectedPlayers ?? new List<Player> ();
-				play.Tags = tags ?? new List<Tag> ();
-				if (cat.TagFieldPosition || cat.TagGoalPosition || cat.TagHalfFieldPosition) {
-					Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
-				}
-				teamtagger.ClearSelection ();
-				Config.EventsBroker.EmitNewPlay (play);
+			TimelineEvent play = project.AddEvent (eventType, start, stop, null, score, card, false);
+			play.Players = selectedPlayers ?? new List<Player> ();
+			play.Tags = tags ?? new List<Tag> ();
+			if (eventType.TagFieldPosition || eventType.TagGoalPosition || eventType.TagHalfFieldPosition) {
+				Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
 			}
+			teamtagger.ClearSelection ();
+			Config.EventsBroker.EmitNewPlay (play);
 		}
 
 	}

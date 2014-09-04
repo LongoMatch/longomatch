@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component.Stats
 		public CategoriesViewer ()
 		{
 			this.Build ();
-			store = new ListStore(typeof(Category), typeof(string));
+			store = new ListStore(typeof(EventType), typeof(string));
 			treeview.AppendColumn ("Desc", new Gtk.CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
 			treeview.Model = store;

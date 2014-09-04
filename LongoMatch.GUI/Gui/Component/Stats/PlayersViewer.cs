@@ -54,14 +54,14 @@ namespace LongoMatch.Gui.Component.Stats
 			filter = new PlaysFilter (project);
 			pstats.Filter = filter;
 			categoriesviewer.LoadStats (pstats, project);
-			AddTeam (project.LocalTeamTemplate, project.Categories);
-			AddTeam (project.VisitorTeamTemplate, project.Categories);
+			AddTeam (project.LocalTeamTemplate, project.Dashboard);
+			AddTeam (project.VisitorTeamTemplate, project.Dashboard);
 			filter.Update();
 			store.GetIter (out first, new TreePath ("0:0"));
 			treeview1.Selection.SelectIter (first);
 		}
 		
-		void AddTeam (TeamTemplate tpl, Categories cats) {
+		void AddTeam (TeamTemplate tpl, Dashboard cats) {
 			TreeIter teamIter;
 			
 			teamIter = store.AppendValues (tpl.TeamName, null);

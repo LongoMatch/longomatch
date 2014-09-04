@@ -18,13 +18,12 @@
 //
 //
 
-using Gdk;
+using System;
 using Gtk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.Store;
-using System;
+using EventType = LongoMatch.Store.EventType;
 
 namespace LongoMatch.Gui.Component
 {
@@ -39,7 +38,7 @@ namespace LongoMatch.Gui.Component
 
 		//Categories menu
 		Menu categoriesMenu;
-		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
+		RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 
 		public PlaysTreeView() {
 			enableCategoryMove = true;
@@ -111,7 +110,7 @@ namespace LongoMatch.Gui.Component
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
 			editProp.Activated += delegate(object sender, EventArgs e) {
-				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as AnalysisCategory);
+				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as EventType);
 			};
 		}
 
@@ -137,7 +136,7 @@ namespace LongoMatch.Gui.Component
 			TimeNode tna, tnb;
 			TreeIter parent;
 			int depth;
-			AnalysisCategory category;
+			EventType eventType;
 
 			if(model == null)
 				return 0;
@@ -161,11 +160,11 @@ namespace LongoMatch.Gui.Component
 				return int.Parse(model.GetPath(a).ToString())
 				       - int.Parse(model.GetPath(b).ToString());
 
-			category = model.GetValue(parent,0) as AnalysisCategory;
+			eventType = model.GetValue(parent,0) as EventType;
 			tna = model.GetValue(a, 0)as TimeNode;
 			tnb = model.GetValue(b, 0) as TimeNode;
 
-			switch(category.SortMethod) {
+			switch(eventType.SortMethod) {
 			case(SortMethodType.SortByName):
 				return String.Compare(tna.Name, tnb.Name);
 			case(SortMethodType.SortByStartTime):
@@ -180,20 +179,20 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void OnSortActivated(object o, EventArgs args) {
-			AnalysisCategory category;
+			EventType eventType;
 			RadioAction sender;
 
 			sender = o as RadioAction;
-			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as AnalysisCategory;
+			eventType = GetValueFromPath(Selection.GetSelectedRows()[0]) as EventType;
 
 			if(sender == sortByName)
-				category.SortMethod = SortMethodType.SortByName;
+				eventType.SortMethod = SortMethodType.SortByName;
 			else if(sender == sortByStart)
-				category.SortMethod = SortMethodType.SortByStartTime;
+				eventType.SortMethod = SortMethodType.SortByStartTime;
 			else if(sender == sortByStop)
-				category.SortMethod = SortMethodType.SortByStopTime;
+				eventType.SortMethod = SortMethodType.SortByStopTime;
 			else
-				category.SortMethod = SortMethodType.SortByDuration;
+				eventType.SortMethod = SortMethodType.SortByDuration;
 			// Redorder plays
 			Model.SetSortFunc(0, SortFunction);
 		}
@@ -202,9 +201,9 @@ namespace LongoMatch.Gui.Component
 			// Don't allow multiselect for categories
 			if(!selected && selection.GetSelectedRows().Length > 0) {
 				if(selection.GetSelectedRows().Length == 1 &&
-				                GetValueFromPath(selection.GetSelectedRows()[0]) is AnalysisCategory)
+				                GetValueFromPath(selection.GetSelectedRows()[0]) is EventType)
 					return false;
-				return !(GetValueFromPath(path) is AnalysisCategory);
+				return !(GetValueFromPath(path) is EventType);
 			}
 			// Always unselect
 			else
@@ -215,7 +214,7 @@ namespace LongoMatch.Gui.Component
 		{
 			TreePath[] paths = Selection.GetSelectedRows();
 
-			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			if((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
@@ -231,11 +230,9 @@ namespace LongoMatch.Gui.Component
 					if (selectedTimeNode != null) {
 						ShowMenu ();
 					} else {
-						AnalysisCategory cat = GetValueFromPath(paths[0]) as AnalysisCategory;
-						if (!(cat is Score) && !(cat is PenaltyCard)) {
-							SetupSortMenu(cat.SortMethod);
-							categoriesMenu.Popup();
-						} 
+						EventType eventType = GetValueFromPath(paths[0]) as EventType;
+						SetupSortMenu(eventType.SortMethod);
+						categoriesMenu.Popup();
 					}
 				}
 				else if(paths.Length > 1) {

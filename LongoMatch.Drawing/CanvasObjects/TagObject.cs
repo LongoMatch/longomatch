@@ -47,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 2;
 			tk.StrokeColor = TagButton.TextColor;
 			tk.FillColor = TagButton.TextColor;
-			tk.DrawText (Position, TagButton.Width, TagButton.Height, TagButton.Name);
+			tk.DrawText (Position, TagButton.Width, TagButton.Height, TagButton.Tag.Value);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

@@ -31,7 +31,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
-		Categories categories;
+		Dashboard categories;
+		Project project;
 		
 		public CategoriesFilterTreeView (): base()
 		{
@@ -40,17 +41,25 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public override void SetFilter (PlaysFilter filter, Project project) {
-			this.categories = project.Categories;
+			this.project = project;
+			this.categories = project.Dashboard;
 			base.SetFilter(filter, project);
 		}
 		
-		protected override void FillTree () {
-			store = new TreeStore (typeof (object), typeof (bool));
+		protected override void FillTree ()
+		{
+			store = new TreeStore (typeof(object), typeof(bool));
 			
-			foreach (Category cat in  categories.CategoriesList) {
+			foreach (EventType evType in project.EventTypes) {
 				TreeIter catIter;
 				
-				catIter = store.AppendValues(cat, filter.VisibleCategories.Contains(cat));
+				catIter = store.AppendValues (evType, true);
+
+				if (evType is AnalysisEventType) {
+					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
+						store.AppendValues(catIter, tag, true);
+					}
+				}
 			}
 			Model = store;
 		}
@@ -59,19 +68,19 @@ namespace LongoMatch.Gui.Component
 			TreeIter child, parent;
 			
 			object o = store.GetValue(iter, 0);
+			store.IterParent (out parent, iter);
 			
-			if (o is StringObject) {
-				StringObject so = o as StringObject;
+			if (o is Tag) {
+				EventType evType = store.GetValue (parent, 0) as EventType;
+				filter.FilterCategoryTag (evType, o as Tag, active);
 			} else {
 				/* don't do anything here and let the children do the filtering */
 			}
 			store.SetValue(iter, 1, active);
 			
 			/* Check its parents */
-			if (active && checkParents) {
-				if (store.IterParent(out parent, iter)) {
-					UpdateSelectionPriv (parent, active, true, false);
-				}
+			if (active && checkParents && store.IterIsValid (parent)) {
+				UpdateSelectionPriv (parent, active, true, false);
 			}
 			
 			/* Check/Uncheck all children */
@@ -96,12 +105,12 @@ namespace LongoMatch.Gui.Component
 			object obj = store.GetValue(iter, 0);
 			string text = "";
 			
-			if (obj is Category) {
-				Category cat = obj as Category;
-				text = cat.Name;
+			if (obj is EventType) {
+				EventType evType = obj as EventType;
+				text = evType.Name;
 			}
-			else if (obj is StringObject){
-				text = (obj as StringObject).Value;
+			else if (obj is Tag){
+				text = (obj as Tag).Value;
 			}
 			
 			(cell as CellRendererText).Text = text;
@@ -116,12 +125,6 @@ namespace LongoMatch.Gui.Component
 				store.IterNext(ref iter);
 			}
 		}
-	}
-	
-	class StringObject
-	{
-		public string Value {get;set;}
-		public Category Category {get;set;}
 	}
 }
 

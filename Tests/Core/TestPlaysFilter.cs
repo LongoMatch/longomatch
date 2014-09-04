@@ -28,9 +28,9 @@ namespace Tests.Core
 	{
 	
 		Project CreateProject () {
-			Play pl;
+			TimelineEvent pl;
 			Project p = new Project ();
-			p.Categories = Categories.DefaultTemplate (10);
+			p.Dashboard = Dashboard.DefaultTemplate (10);
 			p.LocalTeamTemplate = TeamTemplate.DefaultTemplate (5);
 			p.VisitorTeamTemplate = TeamTemplate.DefaultTemplate (5);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
@@ -40,15 +40,15 @@ namespace Tests.Core
 			p.Description = pd;
 			
 			/* No tags, no players */
-			pl = new Play {Category = p.Categories.CategoriesList[0]};
+			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[0]};
 			p.Timeline.Add (pl);
 			/* tags, but no players */
-			pl = new Play {Category = p.Categories.CategoriesList[1]};
-			pl.Tags.Add (p.Categories.CategoriesList[1].Tags[0]);
+			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[1]};
+			pl.Tags.Add (p.Dashboard.CategoriesList[1].Tags[0]);
 			p.Timeline.Add (pl);
 			/* tags and players */
-			pl = new Play {Category = p.Categories.CategoriesList[2]};
-			pl.Tags.Add (p.Categories.CategoriesList[2].Tags[1]);
+			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[2]};
+			pl.Tags.Add (p.Dashboard.CategoriesList[2].Tags[1]);
 			pl.Players.Add (p.LocalTeamTemplate.List[0]);
 			p.Timeline.Add (pl);
 			return p;
@@ -71,31 +71,31 @@ namespace Tests.Core
 			Project p = CreateProject ();
 			PlaysFilter filter = new PlaysFilter (p);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[0], true);
+			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[1], true);
+			filter.FilterEventType (p.Dashboard.CategoriesList[1], true);
 			Assert.AreEqual (2, filter.VisibleCategories.Count);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 
-			filter.FilterCategory (p.Categories.CategoriesList[2], true);
+			filter.FilterEventType (p.Dashboard.CategoriesList[2], true);
 			Assert.AreEqual (3, filter.VisibleCategories.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[0], true);
+			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
 			Assert.AreEqual (3, filter.VisibleCategories.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[0], false);
+			filter.FilterEventType (p.Dashboard.CategoriesList[0], false);
 			Assert.AreEqual (2, filter.VisibleCategories.Count);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 
-			filter.FilterCategory (p.Categories.CategoriesList[1], false);
+			filter.FilterEventType (p.Dashboard.CategoriesList[1], false);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[2], false);
+			filter.FilterEventType (p.Dashboard.CategoriesList[2], false);
 			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
@@ -108,36 +108,36 @@ namespace Tests.Core
 			
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Categories.CategoriesList[0], p.Categories.CategoriesList[0].Tags[0], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 
-			filter.FilterCategoryTag (p.Categories.CategoriesList[1], p.Categories.CategoriesList[1].Tags[0], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], true);
 			Assert.AreEqual (2, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Categories.CategoriesList[2], p.Categories.CategoriesList[2].Tags[0], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], true);
 			Assert.AreEqual (3, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 
-			filter.FilterCategoryTag (p.Categories.CategoriesList[2], p.Categories.CategoriesList[2].Tags[1], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Categories.CategoriesList[0], p.Categories.CategoriesList[0].Tags[0], false);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], false);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Categories.CategoriesList[1], p.Categories.CategoriesList[1].Tags[0], false);
-			filter.FilterCategoryTag (p.Categories.CategoriesList[1], p.Categories.CategoriesList[1].Tags[1], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], false);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
 			
 			/* One tag filtered now, but not the one of this play */
-			filter.FilterCategoryTag (p.Categories.CategoriesList[2], p.Categories.CategoriesList[2].Tags[1], false);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], false);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			/* No more tags filtered, if the category matches we are ok */
-			filter.FilterCategoryTag (p.Categories.CategoriesList[2], p.Categories.CategoriesList[2].Tags[0], false);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], false);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
@@ -184,14 +184,14 @@ namespace Tests.Core
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
 			
-			filter.FilterCategory (p.Categories.CategoriesList[0], true);
+			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			filter.ClearCategoriesFilter ();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			
-			filter.FilterCategoryTag (p.Categories.CategoriesList[0], p.Categories.CategoriesList[0].Tags[0], true);
+			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			filter.ClearAll ();

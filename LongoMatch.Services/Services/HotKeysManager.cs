@@ -32,12 +32,12 @@ namespace LongoMatch.Services
 {
 	public class HotKeysManager
 	{
-		Dictionary<HotKey, TaggerButton> dic;
+		Dictionary<HotKey, DashboardButton> dic;
 		bool ignoreKeys;
 
 		public HotKeysManager ()
 		{
-			dic = new Dictionary<HotKey,TaggerButton> ();
+			dic = new Dictionary<HotKey,DashboardButton> ();
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed += KeyListener;
 		}
@@ -52,7 +52,7 @@ namespace LongoMatch.Services
 			
 			dic.Clear ();
 			ignoreKeys = false;
-			foreach (TaggerButton cat in project.Categories.List) {
+			foreach (DashboardButton cat in project.Dashboard.List) {
 				if (cat.HotKey.Defined &&
 					!dic.ContainsKey (cat.HotKey))
 					dic.Add (cat.HotKey, cat);
@@ -65,13 +65,13 @@ namespace LongoMatch.Services
 				return;
 			
 #if HAVE_GTK
-			TaggerButton cat = null;
+			DashboardButton button = null;
 			HotKey hotkey = new HotKey ();
 
 			hotkey.Key = key;
 			hotkey.Modifier = (int)((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
-			if (dic.TryGetValue (hotkey, out cat)) {
-				Config.EventsBroker.EmitNewTag (cat);
+			if (dic.TryGetValue (hotkey, out button)) {
+				Config.EventsBroker.EmitPressButton (button);
 #endif
 			}
 		}

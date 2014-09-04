@@ -92,12 +92,12 @@ namespace LongoMatch.Gui.Component
 			UpdateTeamsModels();
 		}
 		
-		public void AddPlay(Play play) {
+		public void AddPlay(TimelineEvent play) {
 			playsList.AddPlay(play);
 			UpdateTeamsModels();
 		}
 		
-		public void RemovePlays (List<Play> plays) {
+		public void RemovePlays (List<TimelineEvent> plays) {
 			playsList.RemovePlays(plays);
 			UpdateTeamsModels();
 		}
@@ -167,24 +167,6 @@ namespace LongoMatch.Gui.Component
 				return;
 			localPlayersList.SetTeam(project.LocalTeamTemplate, project.Timeline);
 			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.Timeline);
-		}
-		
-		protected void OnCategoriesFiltersbuttonClicked (object sender, System.EventArgs e)
-		{
-			if (catfiltersbutton.Active) {
-				catfiltersbutton.Label = Catalog.GetString("Disable categories filters");
-			} else {
-				catfiltersbutton.Label = Catalog.GetString("Enable categories filters");
-			}
-		}
-		
-		protected void OnPlayersFiltersbuttonClicked (object sender, System.EventArgs e)
-		{
-			if (playersfiltersbutton.Active) {
-				playersfiltersbutton.Label = Catalog.GetString("Disable players filters");
-			} else {
-				playersfiltersbutton.Label = Catalog.GetString("Enable players filters");
-			}
 		}
 	}
 }

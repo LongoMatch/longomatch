@@ -63,7 +63,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void AddPlay(Play play) {
+		public void AddPlay(TimelineEvent play) {
 			playsSelection.AddPlay(play);
 			codingwidget.AddPlay (play);
 		}
@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget.UpdateCategories ();
 		}
 		
-		public void DeletePlays (List<Play> plays) {
+		public void DeletePlays (List<TimelineEvent> plays) {
 			playsSelection.RemovePlays(plays);
 			codingwidget.DeletePlays (plays);
 		}
@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Component
 				} else {
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
 				}
-				playercapturer.PeriodsNames = openedProject.Categories.GamePeriods;
+				playercapturer.PeriodsNames = openedProject.Dashboard.GamePeriods;
 				playercapturer.PeriodsTimers = openedProject.Periods;
 			}
 			backgroundBox.Show ();

@@ -33,8 +33,8 @@ namespace LongoMatch.Gui.Menus
 
 		MenuItem edit, newPlay, del, addPLN, snapshot, render;
 		MenuItem duplicate, moveCat, drawings;
-		List<Play> plays;
-		AnalysisCategory cat;
+		List<TimelineEvent> plays;
+		EventType eventType;
 		Time time;
 		Project project;
 	
@@ -44,29 +44,29 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 		
-		public void ShowListMenu (Project project, List<Play> plays) {
-			ShowMenu (project, plays, null, null, project.Categories.CategoriesList, true);
+		public void ShowListMenu (Project project, List<TimelineEvent> plays) {
+			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		public void ShowMenu (Project project, List<Play> plays) {
+		public void ShowMenu (Project project, List<TimelineEvent> plays) {
 			ShowMenu (project, plays, null, null, null, false);
 		}
 		
-		public void ShowTimelineMenu (Project project, List<Play> plays, AnalysisCategory cat, Time time)
+		public void ShowTimelineMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time)
 		{
-			ShowMenu (project, plays, cat, time, null, false);
+			ShowMenu (project, plays, eventType, time, null, false);
 		}
 		
-		private void ShowMenu (Project project, List<Play> plays, AnalysisCategory cat, Time time,
-		                     List<Category> categories, bool editableName)
+		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
+		                     List<EventType> eventTypes, bool editableName)
 		{
 			this.plays = plays;
-			this.cat = cat;
+			this.eventType = eventType;
 			this.time = time;
 			this.project = project;
 
-			if (cat != null) {
-				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new play"), cat.Name);
+			if (eventType != null) {
+				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new play"), eventType.Name);
 				GtkGlue.MenuItemSetLabel (newPlay, label); 
 				newPlay.Visible = true;
 			} else {
@@ -74,11 +74,11 @@ namespace LongoMatch.Gui.Menus
 			}
 			
 			if (plays == null)
-				plays = new List<Play> ();
+				plays = new List<TimelineEvent> ();
 			
 			edit.Visible = editableName;
 			snapshot.Visible = plays.Count == 1;
-			moveCat.Visible = plays.Count == 1 && categories != null;
+			moveCat.Visible = plays.Count == 1 && eventTypes != null;
 			drawings.Visible = plays.Count == 1 && plays [0].Drawings.Count > 0;
 			del.Visible = plays.Count > 0;
 			addPLN.Visible = plays.Count > 0;
@@ -98,8 +98,8 @@ namespace LongoMatch.Gui.Menus
 			
 			if (moveCat.Visible) {
 				Menu catMenu = new Menu ();
-				foreach (Category c in categories) {
-					if (plays [0].Category == c)
+				foreach (EventType c in eventTypes) {
+					if (plays [0].EventType == c)
 						continue;
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
@@ -209,13 +209,15 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNePlayActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitNewTag (cat, null, null, time - cat.Start, time + cat.Stop);
+			Config.EventsBroker.EmitNewTag (eventType, null, null,
+			                                time - new Time {Seconds = 10},
+			                                time + new Time {Seconds = 10});
 		}
 		
-		void EmitRenderPlaylist (List<Play> plays)
+		void EmitRenderPlaylist (List<TimelineEvent> plays)
 		{
 			Playlist pl = new Playlist();
-			foreach (Play p in plays) {
+			foreach (TimelineEvent p in plays) {
 				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.File));
 			}
 			Config.EventsBroker.EmitRenderPlaylist (pl);

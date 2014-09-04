@@ -27,9 +27,9 @@ namespace LongoMatch.Stats
 	public class CategoryStats: Stat
 	{
 		List <SubCategoryStat> subcatStats;
-		Category cat;
+		EventType cat;
 		
-		public CategoryStats (Category cat, int totalCount, int localTeamCount, int visitorTeamCount):
+		public CategoryStats (EventType cat, int totalCount, int localTeamCount, int visitorTeamCount):
 			base (cat.Name, totalCount, localTeamCount, visitorTeamCount)
 		{
 			subcatStats = new List<SubCategoryStat>();
@@ -42,7 +42,7 @@ namespace LongoMatch.Stats
 			}
 		}
 		
-		public Category Category {
+		public EventType Category {
 			get {
 				return cat;
 			}

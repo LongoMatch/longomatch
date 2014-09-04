@@ -21,8 +21,6 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
 using LongoMatch.Store.Playlists;
 using LongoMatch.Interfaces;
 using LongoMatch.Gui.Dialog;
@@ -147,7 +145,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3)) {
+			if ((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3)) {
 				TreePath path;
 				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path);
 				if (path != null) {

@@ -48,7 +48,7 @@ namespace LongoMatch.Interfaces.GUI
 		void SeekToPreviousFrame();
 		void FramerateUp();
 		void FramerateDown();
-		void LoadPlay (MediaFile file, Play play, Time seekTime, bool playing);
+		void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing);
 		void LoadPlayListPlay (Playlist playlist, IPlaylistElement play);
 		void CloseSegment();
 	}

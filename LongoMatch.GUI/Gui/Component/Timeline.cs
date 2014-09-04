@@ -111,12 +111,12 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		public void AddPlay(Play play) {
+		public void AddPlay(TimelineEvent play) {
 			timeline.AddPlay (play);
 			QueueDraw ();
 		}
 
-		public void RemovePlays(List<Play> plays) {
+		public void RemovePlays(List<TimelineEvent> plays) {
 			timeline.RemovePlays (plays);
 			QueueDraw ();
 		}
@@ -168,9 +168,9 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 		
-		void HandleShowMenu (List<Play> plays, AnalysisCategory cat, Time time)
+		void HandleShowMenu (List<TimelineEvent> plays, EventType eventType, Time time)
 		{
-			menu.ShowTimelineMenu (project, plays, cat, time);
+			menu.ShowTimelineMenu (project, plays, eventType, time);
 		}
 	}
 }

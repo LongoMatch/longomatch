@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Panel
 
 		ListStore templates;
 		List<string> selectedTemplate;
-		Categories loadedTemplate;
+		Dashboard loadedTemplate;
 		
 		ICategoriesTemplatesProvider provider;
 		
@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Panel
 			bool first = true;
 			
 			templates.Clear ();
-			foreach (Categories template in provider.Templates) {
+			foreach (Dashboard template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
 				
@@ -278,8 +278,8 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (dialog.SelectedTemplate, dialog.Text);
 				} else {
-					Categories template;
-					template = Categories.DefaultTemplate (dialog.Count);
+					Dashboard template;
+					template = Dashboard.DefaultTemplate (dialog.Count);
 					template.Name = dialog.Text;
 					provider.Save (template);
 				}

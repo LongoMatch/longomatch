@@ -15,18 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
-using Gtk;
-using Gdk;
-
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 using LongoMatch.Common;
-
-using Point = LongoMatch.Common.Point;
-using Image = LongoMatch.Common.Image;
 using LongoMatch.Stats;
+using LongoMatch.Store;
+using Image = LongoMatch.Common.Image;
+using Point = LongoMatch.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -56,10 +49,10 @@ namespace LongoMatch.Gui.Component
 		public void LoadStats (CategoryStats stats) {
 		}
 		
-		public void LoadPlay (Play play) {
-			field.Visible = play.Category.TagFieldPosition;
-			hfield.Visible = play.Category.TagHalfFieldPosition;
-			goal.Visible = play.Category.TagGoalPosition;
+		public void LoadPlay (TimelineEvent play) {
+			field.Visible = play.EventType.TagFieldPosition;
+			hfield.Visible = play.EventType.TagHalfFieldPosition;
+			goal.Visible = play.EventType.TagGoalPosition;
 			
 			play.AddDefaultPositions ();
 

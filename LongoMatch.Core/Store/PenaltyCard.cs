@@ -17,22 +17,31 @@
 //
 using System;
 using LongoMatch.Common;
-using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
 	[Serializable]
-	public class PenaltyCard: AnalysisEventCategory
+	public class PenaltyCard
 	{
 		public PenaltyCard ()
 		{
 		}
-		
+
 		public PenaltyCard (string name, Color color, CardShape shape)
 		{
 			Name = name;
 			Color = color;
 			Shape = shape;
+		}
+
+		public string Name {
+			get;
+			set;
+		}
+
+		public Color Color {
+			get;
+			set;
 		}
 
 		public CardShape Shape {

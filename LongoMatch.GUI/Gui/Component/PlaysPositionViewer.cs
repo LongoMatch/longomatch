@@ -55,21 +55,21 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void AddPlay (Play play) {
+		public void AddPlay (TimelineEvent play) {
 			field.Tagger.AddPlay (play);
 			hfield.Tagger.AddPlay (play);
 			goal.Tagger.AddPlay (play);
 			QueueDraw ();
 		}
 		
-		public void RemovePlays (List<Play> plays) {
+		public void RemovePlays (List<TimelineEvent> plays) {
 			field.Tagger.RemovePlays (plays);
 			hfield.Tagger.RemovePlays (plays);
 			goal.Tagger.RemovePlays (plays);
 			QueueDraw ();
 		}
 		
-		void HandlePlayLoaded (Play play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
 			if (play != null) {
 				field.Tagger.SelectPlay (play);
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (List<Play> plays)
+		void HandleShowMenuEvent (List<TimelineEvent> plays)
 		{
 			if (plays == null || plays.Count == 0) {
 				return;

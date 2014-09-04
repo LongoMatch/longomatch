@@ -25,12 +25,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class CardObject: TaggerObject
 	{
 
-		public CardObject (PenaltyCard card): base (card)
+		public CardObject (PenaltyCardButton card): base (card)
 		{
-			Card = card;
+			Button = card;
 		}
 
-		public PenaltyCard Card {
+		public PenaltyCardButton Button {
 			get;
 			set;
 		}
@@ -43,18 +43,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FillColor = Color;
 			tk.StrokeColor = Color;
 			tk.LineWidth = 0;
-			switch (Card.Shape) {
+			switch (Button.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
-				tk.DrawRoundedRectangle (Card.Position, Card.Width, Card.Height, 3);
+				tk.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
 				break;
 			case CardShape.Circle:
-				tk.DrawCircle (new Point (Card.Position.X + Card.Width / 2,
-				                          Card.Position.Y + Card.Height / 2),
-				               Math.Min (Card.Width, Card.Height) / 2);
+				tk.DrawCircle (new Point (Button.Position.X + Button.Width / 2,
+				                          Button.Position.Y + Button.Height / 2),
+				               Math.Min (Button.Width, Button.Height) / 2);
 				break;
 			case CardShape.Triangle:
-				tk.DrawTriangle (new Point (Card.Position.X + Card.Width / 2, Card.Position.Y),
-				                 Card.Width, Card.Height, SelectionPosition.Top);
+				tk.DrawTriangle (new Point (Button.Position.X + Button.Width / 2, Button.Position.Y),
+				                 Button.Width, Button.Height, SelectionPosition.Top);
 				break;
 			}
 
@@ -62,7 +62,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 2;
 			tk.StrokeColor = Color.Grey2;
 			tk.FillColor = Color.Grey2;
-			tk.DrawText (Position, Card.Width, Card.Height, Card.Name);
+			tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

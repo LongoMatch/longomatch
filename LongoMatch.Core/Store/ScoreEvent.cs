@@ -20,7 +20,7 @@ using System;
 namespace LongoMatch.Store
 {
 	[Serializable]
-	public class ScoreEvent: Play
+	public class ScoreEvent: Event
 	{
 		public ScoreEvent ()
 		{

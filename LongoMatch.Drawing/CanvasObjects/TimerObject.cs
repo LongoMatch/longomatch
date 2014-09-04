@@ -28,14 +28,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		Time currentTime;
 
-		public TimerObject (Timer timer): base (timer)
+		public TimerObject (TimerButton timer): base (timer)
 		{
-			Timer = timer;
+			Button = timer;
 			Toggle = true;
 			CurrentTime = new Time (0);
 		}
 
-		public Timer Timer {
+		public TimerButton Button {
 			get;
 			set;
 		}
@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set {
 				if (CurrentTimeNode != null) {
 					if (value < CurrentTimeNode.Start) {
-						Timer.CancelTimer ();
+						Button.Timer.CancelTimer ();
 						CurrentTimeNode = null;
 					}
 				}
@@ -78,10 +78,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tn = CurrentTimeNode;
 			if (tn == null) {
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
-				CurrentTimeNode = Timer.StartTimer (CurrentTime);
+				CurrentTimeNode = Button.Timer.StartTimer (CurrentTime);
 			} else {
 				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
-				Timer.StopTimer (CurrentTime);
+				Button.Timer.StopTimer (CurrentTime);
 				tn.Stop = CurrentTime;
 				CurrentTimeNode = null;
 			}
@@ -92,9 +92,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double h;
 
 			if (CurrentTimeNode == null || Mode == TagMode.Edit) {
-				h = Timer.Height;
+				h = Button.Height;
 			} else {
-				h = Timer.Height / 2;
+				h = Button.Height / 2;
 			}
 			
 			tk.Begin ();
@@ -104,12 +104,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.StrokeColor = Timer.TextColor;
-			tk.FillColor = Timer.TextColor;
+			tk.StrokeColor = Button.TextColor;
+			tk.FillColor = Button.TextColor;
 			tk.FontWeight = FontWeight.Bold;
-			tk.DrawText (Position, Timer.Width, h, Timer.Name);
+			tk.DrawText (Position, Button.Width, h, Button.Timer.Name);
 			if (CurrentTimeNode != null && Mode != TagMode.Edit) {
-				tk.DrawText (new Point (Position.X, Position.Y + h), Timer.Width, h,
+				tk.DrawText (new Point (Position.X, Position.Y + h), Button.Width, h,
 				             PartialTime.ToSecondsString ());
 			}
 			DrawSelectionArea (tk);

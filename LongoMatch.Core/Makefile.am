@@ -63,8 +63,8 @@ SOURCES = Common/Area.cs \
 	Stats/ProjectStats.cs \
 	Stats/Stat.cs \
 	Stats/SubCategoryStat.cs \
-	Store/Category.cs \
 	Store/Coordinates.cs \
+	Store/DashboardButton.cs \
 	Store/Drawables/Angle.cs \
 	Store/Drawables/Counter.cs \
 	Store/Drawables/Cross.cs \
@@ -76,14 +76,14 @@ SOURCES = Common/Area.cs \
 	Store/Drawables/Rectangle.cs \
 	Store/Drawables/Selection.cs \
 	Store/Drawables/Text.cs \
+	Store/Event.cs \
+	Store/EventType.cs \
 	Store/FrameDrawing.cs \
 	Store/HotKey.cs \
 	Store/MediaFile.cs \
 	Store/PenaltyCard.cs \
-	Store/PenaltyCardEvent.cs \
 	Store/Period.cs \
 	Store/PixbufTimeNode.cs \
-	Store/Play.cs \
 	Store/Player.cs \
 	Store/Playlists/Playlist.cs \
 	Store/Playlists/PlaylistDrawing.cs \
@@ -93,11 +93,8 @@ SOURCES = Common/Area.cs \
 	Store/Project.cs \
 	Store/ProjectDescription.cs \
 	Store/Score.cs \
-	Store/ScoreEvent.cs \
 	Store/Tag.cs \
-	Store/TagButton.cs \
-	Store/TaggerButton.cs \
-	Store/Templates/CategoriesTemplate.cs \
+	Store/Templates/Dashboard.cs \
 	Store/Templates/TeamTemplate.cs \
 	Store/Time.cs \
 	Store/TimeNode.cs \

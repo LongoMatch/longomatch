@@ -30,7 +30,7 @@ namespace Tests.Core
 		[Test()]
 		public void TestSerialization ()
 		{
-			Categories cat = new Categories ();
+			Dashboard cat = new Dashboard ();
 			
 			Utils.CheckSerialization (cat);
 			
@@ -38,13 +38,13 @@ namespace Tests.Core
 			cat.GamePeriods = new List<string> ();
 			cat.GamePeriods.Add ("1");
 			cat.GamePeriods.Add ("2");
-			cat.List.Add ( new Category {Name = "cat1"});
-			cat.List.Add ( new Category {Name = "cat2"});
-			cat.List.Add ( new Category {Name = "cat3"});
+			cat.List.Add ( new CategoryButton {Name = "cat1"});
+			cat.List.Add ( new CategoryButton {Name = "cat2"});
+			cat.List.Add ( new CategoryButton {Name = "cat3"});
 			
 			Utils.CheckSerialization (cat);
 			
-			Categories newcat = Utils.SerializeDeserialize (cat);
+			Dashboard newcat = Utils.SerializeDeserialize (cat);
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
 			Assert.AreEqual (cat.GamePeriods.Count, newcat.GamePeriods.Count);

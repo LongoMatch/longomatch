@@ -35,7 +35,7 @@ namespace LongoMatch.Services
 		Project openedProject;
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
-		Play loadedPlay;
+		TimelineEvent loadedPlay;
 		PlaysFilter filter;
 
 		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
@@ -59,7 +59,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
 		}
 
-		void LoadPlay (Play play, Time seekTime, bool playing)
+		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			play.Selected = true;
 			player.LoadPlay (openedProject.Description.File, play,
@@ -70,7 +70,7 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		void Switch (Play play, Playlist playlist, IPlaylistElement element)
+		void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element)
 		{
 			if (loadedElement != null) {
 				loadedElement.Selected = false;
@@ -94,8 +94,8 @@ namespace LongoMatch.Services
 		void HandlePlayChanged (TimeNode tNode, object val)
 		{
 			/* FIXME: Tricky, create a new handler for categories */
-			if (tNode is Play && val is Time) {
-				LoadPlay (tNode as Play, val as Time, false);
+			if (tNode is TimelineEvent && val is Time) {
+				LoadPlay (tNode as TimelineEvent, val as Time, false);
 			}
 			filter.Update ();
 		}
@@ -119,7 +119,7 @@ namespace LongoMatch.Services
 			player.LoadPlayListPlay (playlist, element);
 		}
 
-		void HandleLoadPlayEvent (Play play)
+		void HandleLoadPlayEvent (TimelineEvent play)
 		{
 			Switch (play, null, null);
 			if (play != null) {
@@ -146,7 +146,7 @@ namespace LongoMatch.Services
 			if (loadedElement != null) {
 				/* Select the previous element if we haven't played 500ms */
 				if (loadedElement is PlaylistPlayElement) {
-					Play play = (loadedElement as PlaylistPlayElement).Play;
+					TimelineEvent play = (loadedElement as PlaylistPlayElement).Play;
 					if ((player.CurrentTime - play.Start).MSeconds > 500) {
 						player.Seek (play.Start, true);
 						return;

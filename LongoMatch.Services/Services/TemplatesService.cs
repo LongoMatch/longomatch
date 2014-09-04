@@ -36,7 +36,7 @@ namespace LongoMatch.Services
 			dict = new Dictionary<Type, ITemplateProvider> ();
 			dict.Add (typeof(TeamTemplate),
 			         new TeamTemplatesProvider (Config.TeamsDir));
-			dict.Add (typeof(Categories), new CategoriesTemplatesProvider (Config.AnalysisDir));
+			dict.Add (typeof(Dashboard), new CategoriesTemplatesProvider (Config.AnalysisDir));
 			CheckDefaultTemplates ();
 		}
 
@@ -46,10 +46,10 @@ namespace LongoMatch.Services
 				t.CheckDefaultTemplate ();
 		}
 
-		public ITemplateProvider<T, U> GetTemplateProvider<T, U> () where T: ITemplate<U>
+		public ITemplateProvider<T> GetTemplateProvider<T> () where T: ITemplate
 		{
 			if (dict.ContainsKey (typeof(T)))
-				return (ITemplateProvider<T, U>)dict [typeof(T)];
+				return (ITemplateProvider<T>)dict [typeof(T)];
 			return null;
 		}
 
@@ -61,12 +61,12 @@ namespace LongoMatch.Services
 
 		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
 			get {
-				return (ICategoriesTemplatesProvider)dict [typeof(Categories)]; 
+				return (ICategoriesTemplatesProvider)dict [typeof(Dashboard)]; 
 			}
 		}
 	}
 
-	public class TemplatesProvider<T, U>: ITemplateProvider<T, U> where T: ITemplate<U>
+	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate
 	{
 		readonly string basePath;
 		readonly string extension;
@@ -134,7 +134,7 @@ namespace LongoMatch.Services
 			return template;
 		}
 
-		public void Save (ITemplate<U> template)
+		public void Save (ITemplate template)
 		{
 			string filename = GetPath (template.Name);
 			
@@ -153,7 +153,7 @@ namespace LongoMatch.Services
 			template.Save (filename);
 		}
 
-		public void Update (ITemplate<U> template)
+		public void Update (ITemplate template)
 		{
 			string filename = GetPath (template.Name);
 			
@@ -190,20 +190,20 @@ namespace LongoMatch.Services
 			if (list.Length == 0)
 				list = new object[] { 0 };
 			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
-			ITemplate<U> t = (ITemplate<U>)methodDefaultTemplate.Invoke (null, list);
+			ITemplate t = (ITemplate)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
 			Save (t);
 		}
 	}
 
-	public class TeamTemplatesProvider: TemplatesProvider<TeamTemplate, Player>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider: TemplatesProvider<TeamTemplate>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT)
 		{
 		}
 	}
 
-	public class CategoriesTemplatesProvider : TemplatesProvider<Categories, TaggerButton>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT)
 		{

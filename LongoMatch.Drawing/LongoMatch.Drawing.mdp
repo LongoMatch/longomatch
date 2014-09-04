@@ -51,8 +51,8 @@
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/BenchObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/FieldObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObjects/PlayersTaggerObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="Widgets/Dashboard.cs" />
     <File subtype="Code" buildaction="Compile" name="PlayslistCellRenderer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Widgets/DashboardCanvas.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

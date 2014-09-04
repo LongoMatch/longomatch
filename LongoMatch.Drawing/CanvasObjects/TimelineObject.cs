@@ -179,15 +179,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class CategoryTimeline: TimelineObject
 	{
 
-		public CategoryTimeline (List<Play> plays, Time maxTime, double offsetY, Color background):
+		public CategoryTimeline (List<TimelineEvent> plays, Time maxTime, double offsetY, Color background):
 			base (maxTime, offsetY, background)
 		{
-			foreach (Play p in plays) {
+			foreach (TimelineEvent p in plays) {
 				AddPlay (p);
 			}
 		}
 
-		public void AddPlay (Play play)
+		public void AddPlay (TimelineEvent play)
 		{
 			PlayObject po = new PlayObject (play);
 			po.SelectionLeft = selectionBorderL; 

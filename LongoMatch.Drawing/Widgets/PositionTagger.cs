@@ -32,7 +32,7 @@ namespace LongoMatch.Drawing.Widgets
 	
 		public event ShowTaggerMenuHandler ShowMenuEvent;
 
-		Play playSelected;
+		TimelineEvent playSelected;
 
 		public PositionTagger (IWidget widget): base (widget)
 		{
@@ -41,7 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
-		public PositionTagger (IWidget widget, List<Play> plays, Image background, FieldPositionType position): base (widget)
+		public PositionTagger (IWidget widget, List<TimelineEvent> plays, Image background, FieldPositionType position): base (widget)
 		{
 			Background = background;
 			Plays = plays;
@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.Widgets
 			set;
 		}
 
-		public void SelectPlay (Play play)
+		public void SelectPlay (TimelineEvent play)
 		{
 			PositionObject po;
 			
@@ -83,16 +83,16 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public List<Play> Plays {
+		public List<TimelineEvent> Plays {
 			set {
 				ClearObjects ();
-				foreach (Play p in value) {
+				foreach (TimelineEvent p in value) {
 					AddPlay (p);
 				}
 			}
 		}
 
-		public void AddPlay (Play play)
+		public void AddPlay (TimelineEvent play)
 		{
 			PositionObject po;
 			Coordinates coords;
@@ -107,7 +107,7 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Add (po);
 		}
 
-		public void RemovePlays (List<Play> plays)
+		public void RemovePlays (List<TimelineEvent> plays)
 		{
 			Objects.RemoveAll (o => plays.Contains ((o as PositionObject).Play));
 		}
@@ -115,7 +115,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionChanged (List<Selection> selections)
 		{
 			if (selections.Count > 0) {
-				Play p = (selections.Last ().Drawable as PositionObject).Play;
+				TimelineEvent p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
 					Config.EventsBroker.EmitLoadPlay (p);
@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void ShowMenu (Point coords)
 		{
 			if (ShowMenuEvent != null) {
-				List<Play> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
+				List<TimelineEvent> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
 				ShowMenuEvent (plays);
 			}
 		}

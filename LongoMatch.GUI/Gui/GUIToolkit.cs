@@ -199,7 +199,7 @@ namespace LongoMatch.Gui
 			return jobs;
 		}
 		
-		public void ExportFrameSeries(Project openedProject, Play play, string snapshotsDir) {
+		public void ExportFrameSeries(Project openedProject, TimelineEvent play, string snapshotsDir) {
 			SnapshotsDialog sd;
 			uint interval;
 			string seriesName;
@@ -226,14 +226,14 @@ namespace LongoMatch.Gui
 				sd.Destroy();
 		}
 		
-		public void EditPlay (Play play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes) {
+		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes) {
 			PlayEditor dialog = new PlayEditor ();
 			dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
 			dialog.Run();
 			dialog.Destroy();
 		}
 
-		public void DrawingTool (Image image, Play play, FrameDrawing drawing) {
+		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing) {
 			DrawingTool dialog = new DrawingTool();
 			dialog.Show ();
 

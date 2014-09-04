@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			if((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3))
 				playersMenu.Popup();
 			return base.OnButtonPressEvent (evnt);
 		}

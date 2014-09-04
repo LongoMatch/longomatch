@@ -18,26 +18,18 @@
 
 using System;
 using System.Collections.Generic;
-using Gtk;
-using Mono.Unix;
-
-using LongoMatch.Handlers;
-using LongoMatch.Gui;
-using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-using LongoMatch.Interfaces;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {
 
-
 	public partial class EditCategoryDialog : Gtk.Dialog
 	{
-		private List<HotKey> hkList;
+		List<HotKey> hkList;
 
-		public EditCategoryDialog(Project project, TaggerButton tagger)
+		public EditCategoryDialog(Project project, DashboardButton tagger)
 		{
 			this.Build();
 			timenodeproperties2.Tagger = tagger;
@@ -52,16 +44,16 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		protected virtual void OnHotKeyChanged(HotKey prevHotKey, Category category) {
-			if(hkList.Contains(category.HotKey)) {
+		protected virtual void OnHotKeyChanged(HotKey prevHotKey, DashboardButton button) {
+			if(hkList.Contains(button.HotKey)) {
 				MessagesHelpers.WarningMessage(this,
 				                               Catalog.GetString("This hotkey is already in use."));
-				category.HotKey=prevHotKey;
-				timenodeproperties2.Tagger = category; //Update Gui
+				button.HotKey=prevHotKey;
+				timenodeproperties2.Tagger = button; //Update Gui
 			}
-			else if(category.HotKey.Defined) {
+			else if(button.HotKey.Defined) {
 				hkList.Remove(prevHotKey);
-				hkList.Add(category.HotKey);
+				hkList.Add(button.HotKey);
 			}
 		}
 	}

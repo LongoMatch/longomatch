@@ -25,13 +25,13 @@ namespace Tests.Core
 	[TestFixture()]
 	public class TestPlay
 	{
-		Category cat1;
+		CategoryButton cat1;
 		
-		public Play CreatePlay () {
-			Play play = new Play();
-			cat1 = new Category {Name="Cat1"};
+		public TimelineEvent CreatePlay () {
+			TimelineEvent play = new TimelineEvent();
+			cat1 = new CategoryButton {Name="Cat1"};
 			
-			play.Category = cat1;
+			play.EventType = cat1;
 			play.Notes = "notes";
 			play.Selected = true;
 			play.Team = LongoMatch.Common.Team.LOCAL;
@@ -54,13 +54,13 @@ namespace Tests.Core
 		[Test()]
 		public void TestCase ()
 		{
-			Play p = new Play ();
+			TimelineEvent p = new TimelineEvent ();
 			Utils.CheckSerialization (p);
 			
 			p = CreatePlay ();
 			var newp = Utils.SerializeDeserialize (p);
 			
-			Assert.AreEqual (p.Category.ID, newp.Category.ID);
+			Assert.AreEqual (p.EventType.ID, newp.EventType.ID);
 			Assert.AreEqual (p.Notes, newp.Notes);
 			Assert.AreEqual (p.Team, newp.Team);
 			Assert.AreEqual (p.FieldPosition, newp.FieldPosition);

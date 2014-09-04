@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayEditor : Gtk.Dialog
 	{
 		TeamTagger teamtagger;
-		Play play;
+		TimelineEvent play;
 
 		public PlayEditor ()
 		{
@@ -46,13 +46,13 @@ namespace LongoMatch.Gui.Dialog
 			base.OnDestroyed ();
 		}
 
-		public void LoadPlay (Play play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		public void LoadPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
 		{
 			this.play = play;
 			notesframe.Visible = editNotes;
-			tagger.Visible = editPos && (play.Category.TagFieldPosition ||
-			                             play.Category.TagHalfFieldPosition ||
-			                             play.Category.TagGoalPosition);
+			tagger.Visible = editPos && (play.EventType.TagFieldPosition ||
+			                             play.EventType.TagHalfFieldPosition ||
+			                             play.EventType.TagGoalPosition);
 			drawingarea3.Visible = editPlayers;
 			nameframe.Visible = editTags;
 
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 			if (editPlayers) {
 				teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-				                      project.Categories.FieldBackground);
+				                      project.Dashboard.FieldBackground);
 				teamtagger.Select (play.Players);
 			}
 		}

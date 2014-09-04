@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Panel
 			localSpinButton.Value = pd.LocalGoals;
 			visitorSpinButton.Value = pd.VisitorGoals;
 			datelabel.Text = pd.MatchDate.ToShortDateString ();
-			templatelabel.Text = project.Categories.Name;
+			templatelabel.Text = project.Dashboard.Name;
 			
 			if (f.Preview != null) {
 				fileimage.Pixbuf = f.Preview.Value;

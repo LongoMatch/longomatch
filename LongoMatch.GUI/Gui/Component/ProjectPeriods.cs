@@ -66,13 +66,13 @@ namespace LongoMatch.Gui.Component
 				
 				playerbin2.ShowControls = false;
 				
-				gamePeriods = value.Categories.GamePeriods;
+				gamePeriods = value.Dashboard.GamePeriods;
 
 				start = new Time (0);
 				duration = value.Description.File.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
 				List<Period> periods = new List<Period> ();
-				gamePeriods = value.Categories.GamePeriods;
+				gamePeriods = value.Dashboard.GamePeriods;
 				
 				timerule.Duration = duration;
 				SetZoom ();

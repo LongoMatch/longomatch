@@ -28,12 +28,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public abstract class TaggerObject: CanvasButtonObject, ICanvasSelectableObject 
 	{
 
-		public TaggerObject (TaggerButton tagger)
+		public TaggerObject (DashboardButton tagger)
 		{
 			Tagger = tagger;
 		}
 
-		public TaggerButton Tagger {
+		public DashboardButton Tagger {
 			get;
 			set;
 		}
@@ -51,7 +51,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public Color Color {
 			get {
 				if (!Active) {
-					return Tagger.Color;
+					return Tagger.BackgroundColor;
 				} else {
 					return Tagger.DarkColor;
 				}
@@ -145,9 +145,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			tk.LineWidth = 0;
 			if (Active && !ignoreActive) {
-				tk.DrawButton (Tagger.Position, Tagger.Width, Tagger.Height, 3, Tagger.Color, Tagger.DarkColor);
+				tk.DrawButton (Tagger.Position, Tagger.Width, Tagger.Height, 3, Tagger.BackgroundColor, Tagger.DarkColor);
 			} else {
-				tk.DrawButton (Tagger.Position, Tagger.Width, Tagger.Height, 3, Tagger.LightColor, Tagger.Color);
+				tk.DrawButton (Tagger.Position, Tagger.Width, Tagger.Height, 3, Tagger.BackgroundColor, Tagger.BackgroundColor);
 			}
 		}
 

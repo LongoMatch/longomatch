@@ -29,9 +29,9 @@ namespace LongoMatch.Interfaces.GUI
 	{	
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter);
 		void CloseOpenedProject ();
-		void AddPlay(Play play);
+		void AddPlay(TimelineEvent play);
 		void UpdateCategories ();
-		void DeletePlays (List<Play> plays);
+		void DeletePlays (List<TimelineEvent> plays);
 		void DetachPlayer ();
 		
 		IPlayerBin Player{get;}

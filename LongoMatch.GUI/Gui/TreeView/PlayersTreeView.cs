@@ -64,7 +64,7 @@ namespace LongoMatch.Gui.Component
 		{
 			TreePath[] paths = Selection.GetSelectedRows();
 
-			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			if((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Component
 
 				if(paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
-					if(selectedTimeNode is Play) {
+					if(selectedTimeNode is TimelineEvent) {
 						ShowMenu ();
 					}
 				}

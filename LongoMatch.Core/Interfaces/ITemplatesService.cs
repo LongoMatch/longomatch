@@ -24,7 +24,7 @@ namespace LongoMatch.Interfaces
 {
 	public interface ITemplatesService
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		ITemplateProvider<T> GetTemplateProvider<T>() where T: ITemplate;
 		
 		ITeamTemplatesProvider TeamTemplateProvider {get;}
 		

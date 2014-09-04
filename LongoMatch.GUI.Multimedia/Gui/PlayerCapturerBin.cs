@@ -214,7 +214,7 @@ namespace LongoMatch.Gui
 			playerbin.LoadPlayListPlay (playlist, play);
 		}
 		
-		public void LoadPlay (MediaFile file, Play play, Time seekTime, bool playing) {
+		public void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				backtolivebutton.Visible = true;
 				ShowPlayer ();

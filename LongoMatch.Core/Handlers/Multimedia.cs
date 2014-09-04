@@ -32,7 +32,7 @@ namespace LongoMatch.Handlers
 	public delegate void PrevButtonClickedHandler();
 	public delegate void ProgressHandler(float progress);
 	public delegate void FramesProgressHandler(int actual, int total, Image frame);
-	public delegate void DrawFrameHandler (Play play, int drawingIndex);
+	public delegate void DrawFrameHandler (TimelineEvent play, int drawingIndex);
 	public delegate void EllpasedTimeHandler(Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
 	

@@ -58,7 +58,7 @@ namespace LongoMatch.Interfaces.GUI
 		IBusyDialog BusyDialog(string message, object parent=null);
 			
 		List<EditionJob> ConfigureRenderingJob (Playlist playlist);
-		void ExportFrameSeries(Project openenedProject, Play play, string snapshotDir);
+		void ExportFrameSeries(Project openenedProject, TimelineEvent play, string snapshotDir);
 		
 		void OpenProject (Project project, ProjectType projectType, 
 		                  CaptureSettings props, PlaysFilter filter,
@@ -79,9 +79,9 @@ namespace LongoMatch.Interfaces.GUI
 		
 		void ManageJobs ();
 		
-		void EditPlay (Play play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
+		void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
 
-		void DrawingTool(Image pixbuf, Play play, FrameDrawing drawing);
+		void DrawingTool(Image pixbuf, TimelineEvent play, FrameDrawing drawing);
 		
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 		

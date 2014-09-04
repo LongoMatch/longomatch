@@ -25,12 +25,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class ScoreObject: TaggerObject
 	{
-		public ScoreObject (Score score): base (score)
+		public ScoreObject (ScoreButton score): base (score)
 		{
-			Score = score;
+			Button = score;
 		}
 
-		public Score Score {
+		public ScoreButton Button {
 			get;
 			set;
 		}
@@ -44,9 +44,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.StrokeColor = Score.TextColor;
-			tk.FillColor = Score.TextColor;
-			tk.DrawText (Position, Score.Width, Score.Height, Score.Name);
+			tk.StrokeColor = Button.TextColor;
+			tk.FillColor = Button.TextColor;
+			tk.DrawText (Position, Button.Width, Button.Height, Button.Score.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

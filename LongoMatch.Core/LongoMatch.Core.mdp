@@ -19,16 +19,14 @@
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/HotKey.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PixbufTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Play.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Player.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Project.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/ProjectDescription.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Time.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Templates/Dashboard.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplates.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
@@ -127,14 +125,11 @@
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IProjectsImporter.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Score.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/ScoreEvent.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PenaltyCard.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/PenaltyCardEvent.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IDiscoverer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/TaggerButton.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/TagButton.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/DashboardButton.cs" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
@@ -146,6 +141,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/Playlists/PlaylistDrawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Playlists/PlaylistImage.cs" />
     <File subtype="Code" buildaction="Compile" name="StyleConf.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/EventType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TimelineEvent.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

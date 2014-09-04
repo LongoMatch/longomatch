@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	public partial class NotesWidget : Gtk.Bin
 	{
 		TextBuffer buf;
-		Play play;
+		TimelineEvent play;
 
 		public NotesWidget()
 		{
@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public Play Play {
+		public TimelineEvent Play {
 			set {
 				play = value;
 				Notes = play.Notes;
@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayLoaded (Play play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
 			Play = play;
 		}

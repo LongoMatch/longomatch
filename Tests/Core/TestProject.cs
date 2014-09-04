@@ -32,7 +32,7 @@ namespace Tests.Core
 	
 		Project CreateProject () {
 			Project p = new Project ();
-			p.Categories = Categories.DefaultTemplate (10);
+			p.Dashboard = Dashboard.DefaultTemplate (10);
 			p.LocalTeamTemplate = TeamTemplate.DefaultTemplate (10);
 			p.VisitorTeamTemplate = TeamTemplate.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
@@ -52,7 +52,7 @@ namespace Tests.Core
 			
 			p = CreateProject ();
 			Utils.CheckSerialization (p);
-			p.AddPlay (new Play());
+			p.AddEvent (new TimelineEvent());
 			Utils.CheckSerialization (p);
 			
 			Project newp = Utils.SerializeDeserialize (p);
@@ -64,30 +64,30 @@ namespace Tests.Core
 		[Test ()]
 		public void TestPlaysGrouping () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[1], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[6], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[1], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[6], new Time (1000), new Time (2000), null);
 			
-			IEnumerable<IGrouping<TaggerButton, Play>> g = p.PlaysGroupedByCategory;
+			IEnumerable<IGrouping<DashboardButton, TimelineEvent>> g = p.PlaysGroupedByEventType;
 			Assert.AreEqual (g.Count(), 4);
-			IGrouping<TaggerButton, Play> gr = g.ElementAt (0);
-			Assert.AreEqual (gr.Key, p.Categories.List[0]);
+			IGrouping<DashboardButton, TimelineEvent> gr = g.ElementAt (0);
+			Assert.AreEqual (gr.Key, p.Dashboard.List[0]);
 			Assert.AreEqual (gr.Count(), 2);
 			
 			gr = g.ElementAt (1);
-			Assert.AreEqual (gr.Key, p.Categories.List[1]);
+			Assert.AreEqual (gr.Key, p.Dashboard.List[1]);
 			Assert.AreEqual (gr.Count(), 1);
 			
 			gr = g.ElementAt (2);
-			Assert.AreEqual (gr.Key, p.Categories.List[2]);
+			Assert.AreEqual (gr.Key, p.Dashboard.List[2]);
 			Assert.AreEqual (gr.Count(), 3);
 			
 			gr = g.ElementAt (3);
-			Assert.AreEqual (gr.Key, p.Categories.List[6]);
+			Assert.AreEqual (gr.Key, p.Dashboard.List[6]);
 			Assert.AreEqual (gr.Count(), 1);
 		}
 		
@@ -99,28 +99,28 @@ namespace Tests.Core
 		[Test ()]
 		public void TestAddPlay () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
 			Assert.AreEqual (p.Timeline.Count, 1);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
 			Assert.AreEqual (p.Timeline.Count, 2);
-			p.AddPlay (new Play());
+			p.AddEvent (new TimelineEvent());
 			Assert.AreEqual (p.Timeline.Count, 3);
-			p.AddPlay (new Play());
+			p.AddEvent (new TimelineEvent());
 			Assert.AreEqual (p.Timeline.Count, 4);
 		}
 		
 		[Test ()]
 		public void TestRemovePlays () {
-			Play p1, p2, p3;
-			List<Play> plays = new List<Play> ();
+			TimelineEvent p1, p2, p3;
+			List<TimelineEvent> plays = new List<TimelineEvent> ();
 			Project p = CreateProject ();
 			
-			p1 = new Play();
-			p2 = new Play();
-			p3 = new Play();
-			p.AddPlay (p1);
-			p.AddPlay (p2);
-			p.AddPlay (p3);
+			p1 = new TimelineEvent();
+			p2 = new TimelineEvent();
+			p3 = new TimelineEvent();
+			p.AddEvent (p1);
+			p.AddEvent (p2);
+			p.AddEvent (p3);
 			plays.Add(p1);
 			plays.Add(p2);
 			p.RemovePlays (plays);
@@ -131,33 +131,33 @@ namespace Tests.Core
 		[Test ()] 
 		public void TestRemoveCategory () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[3], new Time (1000), new Time (2000), null);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[3], new Time (1000), new Time (2000), null);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
 			Assert.AreEqual(p.Timeline.Count, 2);
-			Assert.AreEqual(p.Categories.CategoriesList.Count, 9);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
-			p.RemoveCategory(p.Categories.CategoriesList[0]);
+			Assert.AreEqual(p.Dashboard.CategoriesList.Count, 9);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
+			p.RemoveCategory(p.Dashboard.CategoriesList[0]);
 			Assert.Throws<Exception>(
-				delegate {p.RemoveCategory(p.Categories.CategoriesList[0]);});
+				delegate {p.RemoveCategory(p.Dashboard.CategoriesList[0]);});
 		}
 		
 		[Test ()] 
 		public void TestRemovePlayer () {
-			Play play = new Play();
+			TimelineEvent play = new TimelineEvent();
 			Project project = CreateProject ();
 			Player player = project.LocalTeamTemplate.List[0];
 			play.Players.Add (player);
-			project.AddPlay (play);
+			project.AddEvent (play);
 			project.RemovePlayer (project.LocalTeamTemplate, player);
 			Assert.AreEqual (project.LocalTeamTemplate.List.Count, 9);
 			Assert.IsFalse (play.Players.Contains (player));
@@ -171,15 +171,15 @@ namespace Tests.Core
 		[Test ()] 
 		public void TestPlaysInCategory () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories.CategoriesList[3], new Time (1000), new Time (2000), null);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories.CategoriesList[0]).Count, 3);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories.CategoriesList[1]).Count, 0);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories.CategoriesList[2]).Count, 1);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories.CategoriesList[3]).Count, 1);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Dashboard.CategoriesList[3], new Time (1000), new Time (2000), null);
+			Assert.AreEqual (p.PlaysInCategory (p.Dashboard.CategoriesList[0]).Count, 3);
+			Assert.AreEqual (p.PlaysInCategory (p.Dashboard.CategoriesList[1]).Count, 0);
+			Assert.AreEqual (p.PlaysInCategory (p.Dashboard.CategoriesList[2]).Count, 1);
+			Assert.AreEqual (p.PlaysInCategory (p.Dashboard.CategoriesList[3]).Count, 1);
 		}
 
 		[Test ()] 

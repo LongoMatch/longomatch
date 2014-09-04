@@ -29,11 +29,11 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		Project project;
 		PlaysFilter filter;
-		Dictionary<TaggerButton, CategoryLabel> categories;
+		Dictionary<EventType, CategoryLabel> eventsLabels;
 
 		public CategoriesLabels (IWidget widget): base (widget)
 		{
-			categories = new Dictionary<TaggerButton, CategoryLabel> ();
+			eventsLabels = new Dictionary<EventType, CategoryLabel> ();
 		}
 
 		public double Scroll {
@@ -66,60 +66,28 @@ namespace LongoMatch.Drawing.Widgets
 			h = StyleConf.TimelineCategoryHeight;
 			widget.Width = w;
 			
-			/* Add the scores label */
-			if (project.Categories.Scores.Count > 0) {
-				l = new CategoryLabel (new TaggerButton { Name = Catalog.GetString ("Score") },
-				                       w, h, i * h);
-				Objects.Add (l);
-				i++;
-				foreach (Score s in project.Categories.Scores) {
-					categories [s] = l;
-				}
-			}
-			
-			/* Add the penalty cards label */
-			if (project.Categories.PenaltyCards.Count > 0) {
-				l = new CategoryLabel (new TaggerButton {Name = Catalog.GetString ("Penalty cards")},
-				                       w, h, i * h);
-				Objects.Add (l);
-				i++;
-				foreach (PenaltyCard pc in project.Categories.PenaltyCards) {
-					categories [pc] = l;
-				}
-			}
-
-			/* Start from bottom to top  with categories */
-			foreach (TaggerButton cat in project.Categories.CategoriesList) {
+			foreach (EventType eventType in project.EventTypes) {
 				/* Add the category label */
-				l = new CategoryLabel (cat, w, h, i * h);
-				categories [cat] = l;
+				l = new CategoryLabel (eventType, w, h, i * h);
+				eventsLabels [eventType] = l;
 				Objects.Add (l);
 				i++;
 			}
-
 		}
 
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
 
-			foreach (CategoryLabel ct in categories.Values) {
-				ct.Visible = false;
-				ct.OffsetY = -1;
-			}
-
-			foreach (TaggerButton cat in categories.Keys) {
-				CategoryLabel label = categories [cat];
-
-				if (filter.VisibleCategories.Contains (cat)) {
-					label.Visible |= true;
-					if (label.OffsetY == -1) {
-						label.OffsetY = i * label.Height;
-						if (i % 2 == 0) {
-							label.Even = true;
-						}
-						i++;
+			foreach (EventType type in project.EventTypes) {
+				CategoryLabel label = eventsLabels [type];
+				if (filter.VisibleEventTypes.Contains (type)) {
+					label.OffsetY = i * label.Height;
+					label.Visible = true;
+					if (i % 2 == 0) {
+						label.Even = true;
 					}
+					i++;
 				} else {
 					label.Visible = false;
 				}

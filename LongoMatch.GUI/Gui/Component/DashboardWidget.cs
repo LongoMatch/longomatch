@@ -42,9 +42,9 @@ namespace LongoMatch.Gui.Component
 		public event NewTagHandler NewTagEvent;
 
 		TagMode tagMode;
-		Dashboard tagger;
-		Categories template;
-		TaggerButton selected;
+		DashboardCanvas tagger;
+		Dashboard template;
+		DashboardButton selected;
 		Gtk.Image editimage;
 		ToggleToolButton editbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Component
 		public DashboardWidget()
 		{
 			this.Build();
-			tagger = new Dashboard (new WidgetWrapper (drawingarea));
+			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
@@ -126,7 +126,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Categories Template {
+		public Dashboard Template {
 			set {
 				template = value;
 				tagger.Template = value;
@@ -171,35 +171,37 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void Refresh (TaggerButton b = null) {
+		public void Refresh (DashboardButton b = null) {
 			tagger.Refresh (b);
 		}
 
 		public void AddButton (string buttontype) {
-			TaggerButton tagger = null;
+			DashboardButton button = null;
 
 			if (buttontype == "Card") {
-				tagger = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle);
+				button = new PenaltyCardButton {
+					PenaltyCard = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle)};
 			} else if (buttontype == "Score") {
-				tagger = new Score ("Score", 1);
+				button = new ScoreButton {
+					Score = new Score ("Score", 1)};
 			} else if (buttontype == "Timer") {
-				tagger = new Timer {Name = "Timer"};
+				button = new TimerButton {Timer = new Timer {Name = "Timer"}};
 			} else if (buttontype == "Tag") {
-				tagger = new TagButton {Name = "Tag"};
+				button = new TagButton {Tag = new Tag ("Tag", Constants.COMMON_TAG)};
 			} else if (buttontype == "Category") {
-				tagger = template.AddDefaultItem (template.List.Count);
+				button = template.AddDefaultItem (template.List.Count);
 			} else {
 				return;
 			}
 
-			if (!(tagger is Category)) {
-				template.List.Add (tagger);
+			if (buttontype != "Category") {
+				template.List.Add (button);
 			}
-			tagger.Position = new Point (template.CanvasWidth, 0);
-			Refresh (tagger);
+			button.Position = new Point (template.CanvasWidth, 0);
+			Refresh (button);
 		}
 		
-		void RemoveButton (TaggerButton button) {
+		void RemoveButton (DashboardButton button) {
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 				button.Name + "?";
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
@@ -265,7 +267,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleTaggersSelectedEvent (List<TaggerButton> taggers)
+		void HandleTaggersSelectedEvent (List<DashboardButton> taggers)
 		{
 			if (taggers.Count == 1) {
 				selected = taggers[0];
@@ -313,7 +315,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleShowMenuEvent (TaggerButton taggerbutton, Tag tag)
+		void HandleShowMenuEvent (DashboardButton taggerbutton, Tag tag)
 		{
 			Menu menu;
 			MenuItem delbut, deltag;
@@ -332,7 +334,7 @@ namespace LongoMatch.Gui.Component
 				                                      Catalog.GetString ("Delete tag:"),
 				                                      tag.Value));
 				deltag.Activated += (sender, e) => {
-					(taggerbutton as Category).Tags.Remove (tag);
+					(taggerbutton as AnalysisEventButton).AnalysisEventType.Tags.Remove (tag);
 					Edited = true;
 					tagger.Refresh (taggerbutton);
 				};
@@ -359,26 +361,22 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleNewTagEvent (TaggerButton button, List<Player> players,
-		                      List<Tag> tags, Time start, Time stop)
+		void HandleNewTagEvent (EventType evntType, List<Player> players, List<Tag> tags,
+		                        Time start, Time stop, Score score, PenaltyCard card)
 		{
-			if (button is TagButton || button is Timer) {
-				return;
-			}
-			
 			/* Forward event until we have players integrted in the dashboard layout */
 			if (NewTagEvent != null) {
-				NewTagEvent (button , players, tags, start, stop);
+				NewTagEvent (evntType , players, tags, start, stop, score, card);
 			}
 			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
 
-		void HandleAddNewTagEvent (TaggerButton taggerbutton)
+		void HandleAddNewTagEvent (DashboardButton taggerbutton)
 		{
 			string res = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Name"),
 			                                           Catalog.GetString ("New tag"));
-			if (res != null && res != "") {
-				(taggerbutton as Category).Tags.Add (new Tag (res));
+			if (!string.IsNullOrEmpty (res)) {
+				(taggerbutton as AnalysisEventButton).AnalysisEventType.Tags.Add (new Tag (res));
 				tagger.Refresh (null);
 			}
 		}

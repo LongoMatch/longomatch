@@ -36,11 +36,11 @@ namespace LongoMatch.Drawing.Widgets
 		PlaysFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
-		Dictionary<AnalysisCategory, CategoryTimeline> categories;
+		Dictionary<EventType, CategoryTimeline> eventsTimelines;
 
 		public PlaysTimeline (IWidget widget): base(widget)
 		{
-			categories = new Dictionary<AnalysisCategory, CategoryTimeline> ();
+			eventsTimelines = new Dictionary<EventType, CategoryTimeline> ();
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
@@ -48,7 +48,7 @@ namespace LongoMatch.Drawing.Widgets
 		
 		protected override void Dispose (bool disposing)
 		{
-			foreach (CategoryTimeline ct in categories.Values) {
+			foreach (CategoryTimeline ct in eventsTimelines.Values) {
 				ct.Dispose ();
 			}
 			base.Dispose (disposing);
@@ -60,13 +60,13 @@ namespace LongoMatch.Drawing.Widgets
 
 			this.project = project;
 			ClearObjects ();
-			categories.Clear ();
+			eventsTimelines.Clear ();
 			duration = project.Description.File.Duration;
-			height = project.Categories.CategoriesList.Count * StyleConf.TimelineCategoryHeight;
-			if (project.Categories.Scores.Count > 0) {
+			height = project.EventTypes.Count * StyleConf.TimelineCategoryHeight;
+			if (project.Dashboard.Scores.Count > 0) {
 				height += StyleConf.TimelineCategoryHeight;
 			}
-			if (project.Categories.PenaltyCards.Count > 0) {
+			if (project.Dashboard.PenaltyCards.Count > 0) {
 				height += StyleConf.TimelineCategoryHeight;
 			}
 			widget.Height = height;
@@ -77,7 +77,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public Time CurrentTime {
 			set {
-				foreach (CategoryTimeline tl in categories.Values) {
+				foreach (CategoryTimeline tl in eventsTimelines.Values) {
 					tl.CurrentTime = value;
 				}
 			}
@@ -93,15 +93,15 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void AddPlay (Play play)
+		public void AddPlay (TimelineEvent play)
 		{
-			categories [play.Category].AddPlay (play);
+			eventsTimelines [play.EventType].AddPlay (play);
 		}
 
-		public void RemovePlays (List<Play> plays)
+		public void RemovePlays (List<TimelineEvent> plays)
 		{
-			foreach (Play p in plays) {
-				categories [p.Category].RemoveNode (p);
+			foreach (TimelineEvent p in plays) {
+				eventsTimelines [p.EventType].RemoveNode (p);
 				Selections.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
 			}
 		}
@@ -110,7 +110,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width + 10;
-			foreach (TimelineObject tl in categories.Values) {
+			foreach (TimelineObject tl in eventsTimelines.Values) {
 				tl.Width = width + 10;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
@@ -133,43 +133,14 @@ namespace LongoMatch.Drawing.Widgets
 			CategoryTimeline tl;
 			int i = 0;
 
-			List<Category> cats = project.Categories.CategoriesList; 
-			List<Score> scores = project.Categories.Scores; 
-			List<PenaltyCard> cards = project.Categories.PenaltyCards; 
-
-			if (scores.Count > 0) {
-				tl = new CategoryTimeline (project.ScorePlays, duration,
+			foreach (EventType type in project.EventTypes) {
+				tl = new CategoryTimeline (project.EventsByType (type), duration,
 				                           i * StyleConf.TimelineCategoryHeight,
 				                           ColorForRow (i));
-				Objects.Add (tl);
-				i++;
-				foreach (Score s in scores) {
-					categories [s] = tl;
-				}
-			}
-
-			if (cards.Count > 0) {
-				tl = new CategoryTimeline (project.PenaltyCardsPlays, duration,
-				                           i * StyleConf.TimelineCategoryHeight,
-				                           ColorForRow (i));
-				Objects.Add (tl);
-				i++;
-				foreach (PenaltyCard pc in cards) {
-					categories [pc] = tl;
-				}
-			}
-			
-			for (int j = 0; j < cats.Count; j++) {
-				AnalysisCategory cat;
-				cat = cats [j];
-				tl = new CategoryTimeline (project.PlaysInCategory (cat), duration,
-				                           i * StyleConf.TimelineCategoryHeight,
-				                           ColorForRow (i));
-				categories [cat] = tl;
+				eventsTimelines [type] = tl;
 				Objects.Add (tl);
 				i++;
 			}
-
 			UpdateVisibleCategories ();
 			Update ();
 		}
@@ -177,21 +148,14 @@ namespace LongoMatch.Drawing.Widgets
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
-			foreach (CategoryTimeline ct in categories.Values) {
-				ct.Visible = false;
-				ct.OffsetY = -1;
-			}
-			
-			foreach (AnalysisCategory cat in categories.Keys) {
-				TimelineObject timeline = categories [cat];
-				if (playsFilter.VisibleCategories.Contains (cat)) {
-					if (timeline.OffsetY == -1) {
-						timeline.OffsetY = i * timeline.Height;
-						i++;
-					}
-					timeline.Visible |= true;
+			foreach (EventType type in project.EventTypes) {
+				CategoryTimeline timeline = eventsTimelines [type];
+				if (playsFilter.VisibleEventTypes.Contains (type)) {
+					timeline.OffsetY = i * timeline.Height;
+					timeline.Visible = true;
+					i++;
 				} else {
-					timeline.Visible |= false;
+					timeline.Visible = false;
 				}
 			}
 			widget.ReDraw ();
@@ -200,7 +164,7 @@ namespace LongoMatch.Drawing.Widgets
 		void RedrawSelection (Selection sel)
 		{
 			PlayObject po = sel.Drawable as PlayObject;
-			widget.ReDraw (categories [po.Play.Category]);
+			widget.ReDraw (eventsTimelines [po.Play.EventType]);
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)
@@ -228,34 +192,30 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			AnalysisCategory cat = null;
-			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
+			EventType ev = null;
+			List<TimelineEvent> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
 			
-			foreach (AnalysisCategory ac in categories.Keys) {
+			foreach (EventType evType in eventsTimelines.Keys) {
 				TimelineObject tl;
-				Category c = ac as Category;
-				if (c == null)
-					continue;
 
-				tl = categories [c];
+				tl = eventsTimelines [evType];
 				if (!tl.Visible)
 					continue;
 				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
-					cat = c;
+					ev = evType;
 					break;
 				}
 			}
 			
-			if ((cat != null || plays.Count > 0) && ShowMenuEvent != null) {
-				ShowMenuEvent (plays, cat,
-				               Utils.PosToTime (coords, SecondsPerPixel));
+			if ((ev != null || plays.Count > 0) && ShowMenuEvent != null) {
+				ShowMenuEvent (plays, ev, Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 
 		protected override void SelectionMoved (Selection sel)
 		{
 			Time moveTime;
-			Play play = (sel.Drawable as PlayObject).Play;
+			TimelineEvent play = (sel.Drawable as PlayObject).Play;
 			
 			if (sel.Position == SelectionPosition.Right) {
 				moveTime = play.Stop;

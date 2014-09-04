@@ -22,11 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.LongoMatch.Core.Common;
+using LongoMatch.LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>
@@ -34,11 +34,11 @@ namespace LongoMatch.Store
 	/// </summary>
 
 	[Serializable]
-	public class  Play : PixbufTimeNode, IIDObject
+	public class  TimelineEvent : PixbufTimeNode, IIDObject
 	{
 
 		#region Constructors
-		public Play() {
+		public TimelineEvent() {
 			Drawings = new List<FrameDrawing>();
 			Players = new List<Player> ();
 			Tags = new List<Tag>();
@@ -57,7 +57,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Category in which this play is tagged
 		/// </summary>
-		public AnalysisCategory Category {
+		public EventType EventType {
 			get;
 			set;
 		}
@@ -160,26 +160,26 @@ namespace LongoMatch.Store
 		}
 
 		public void AddDefaultPositions () {
-			if (Category.TagFieldPosition) {
+			if (EventType.TagFieldPosition) {
 				if (FieldPosition == null) {
 					FieldPosition = new Coordinates ();
 					FieldPosition.Points.Add (new Point (0.5, 0.5));
 				}
-				if (Category.FieldPositionIsDistance) {
+				if (EventType.FieldPositionIsDistance) {
 					FieldPosition.Points.Add (new Point (0.5, 0.1));
 				}
 			}
-			if (Category.TagHalfFieldPosition) {
+			if (EventType.TagHalfFieldPosition) {
 				if (HalfFieldPosition == null) {
 					HalfFieldPosition = new Coordinates ();
 					HalfFieldPosition.Points.Add (new Point (0.5, 0.5));
 				}
-				if (Category.HalfFieldPositionIsDistance) {
+				if (EventType.HalfFieldPositionIsDistance) {
 					HalfFieldPosition.Points.Add (new Point (0.5, 0.1));
 				}
 			}
 			
-			if (Category.TagGoalPosition) {
+			if (EventType.TagGoalPosition) {
 				if (GoalPosition == null) {
 					GoalPosition = new Coordinates ();
 					GoalPosition.Points.Add (new Point (0.5, 0.5));
@@ -222,4 +222,23 @@ namespace LongoMatch.Store
 		}
 		#endregion
 	}
+	
+	[Serializable]
+	public class PenaltyCardEvent: TimelineEvent
+	{
+		public PenaltyCard PenaltyCard {
+			get;
+			set;
+		}
+	}
+	
+	[Serializable]
+	public class ScoreEvent: TimelineEvent
+	{
+		public Score Score {
+			get;
+			set;
+		}
+	}
+
 }

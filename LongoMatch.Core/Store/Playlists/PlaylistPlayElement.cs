@@ -25,7 +25,7 @@ namespace LongoMatch.Store.Playlists
 	[Serializable]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
-		public PlaylistPlayElement (Play play, MediaFile file=null)
+		public PlaylistPlayElement (TimelineEvent play, MediaFile file=null)
 		{
 			Play = play;
 			Title = play.Name;
@@ -33,7 +33,7 @@ namespace LongoMatch.Store.Playlists
 			File = file;
 		}
 		
-		public Play Play {
+		public TimelineEvent Play {
 			get;
 			set;
 		}

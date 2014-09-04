@@ -109,16 +109,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected Play SelectedPlay {
+		protected TimelineEvent SelectedPlay {
 			get {
-				return GetValueFromPath(Selection.GetSelectedRows()[0]) as Play;
+				return GetValueFromPath(Selection.GetSelectedRows()[0]) as TimelineEvent;
 			}
 		}
 		
-		protected List<Play> SelectedPlays {
+		protected List<TimelineEvent> SelectedPlays {
 			get {
 				return Selection.GetSelectedRows().Select (
-					p => GetValueFromPath(p) as Play).ToList ();
+					p => GetValueFromPath(p) as TimelineEvent).ToList ();
 			}
 		}
 		
@@ -144,10 +144,10 @@ namespace LongoMatch.Gui.Component
 			Gtk.TreeIter iter;
 			modelFilter.GetIter(out iter, args.Path);
 			object item = modelFilter.GetValue(iter, 0);
-			if(!(item is Play))
+			if(!(item is TimelineEvent))
 				return;
 
-			Config.EventsBroker.EmitLoadPlay (item as Play);
+			Config.EventsBroker.EmitLoadPlay (item as TimelineEvent);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)

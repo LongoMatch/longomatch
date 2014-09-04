@@ -17,19 +17,19 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Store.Templates;
+using LongoMatch.LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
-using LongoMatch.Common;
+using LongoMatch.LongoMatch.Core.Common;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
+using LongoMatch.LongoMatch.Core.Handlers;
+using LongoMatch.LongoMatch.Core.Store;
+using LongoMatch.LongoMatch.Core.Store.Drawables;
+using LongoMatch.LongoMatch.Core.Interfaces.LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class Dashboard: SelectionCanvas
+	public class DashboardCanvas: SelectionCanvas
 	{
 	
 		public event TaggersSelectedHandler TaggersSelectedEvent;
@@ -37,12 +37,12 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
 		public event NewTagHandler NewTagEvent;
 
-		Categories template;
+		LongoMatch.LongoMatch.Core.Store.Templates.Dashboard template;
 		TagMode tagMode;
 		Time currentTime;
 		int templateWidth, templateHeight;
 
-		public Dashboard (IWidget widget): base (widget)
+		public DashboardCanvas (IWidget widget): base (widget)
 		{
 			Accuracy = 5;
 			TagMode = TagMode.Edit;
@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddTag = new Tag ("", "");
 		}
 
-		public Categories Template {
+		public LongoMatch.LongoMatch.Core.Store.Templates.Dashboard Template {
 			set {
 				template = value;
 				LoadTemplate ();
@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
-		public void Refresh (TaggerButton b = null)
+		public void Refresh (DashboardButton b = null)
 		{
 			TaggerObject to;
 			
@@ -141,7 +141,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void SelectionChanged (List<Selection> sel)
 		{
-			List<TaggerButton> taggers;
+			List<DashboardButton> taggers;
 			
 			taggers = sel.Select (s => (s.Drawable as TaggerObject).Tagger).ToList ();
 			if (TagMode == TagMode.Edit) {
@@ -158,7 +158,7 @@ namespace LongoMatch.Drawing.Widgets
 			
 			if (sel != null) {
 				int i = Constants.CATEGORY_TPL_GRID;
-				TaggerButton tb = (sel.Drawable as TaggerObject).Tagger;
+				DashboardButton tb = (sel.Drawable as TaggerObject).Tagger;
 				tb.Position.X = Utils.Round (tb.Position.X, i);
 				tb.Position.Y = Utils.Round (tb.Position.Y, i);
 				tb.Width = (int)Utils.Round (tb.Width, i);
@@ -197,14 +197,14 @@ namespace LongoMatch.Drawing.Widgets
 		void LoadTemplate ()
 		{
 			ClearObjects ();
-			foreach (TagButton tag in template.CommonTags) {
+			foreach (TagButton tag in template.List.OfType<TagButton>()) {
 				TagObject to = new TagObject (tag);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
 				Objects.Add (to);
 			}
 			
-			foreach (Category cat in template.CategoriesList) {
+			foreach (AnalysisEventButton cat in template.List.OfType<AnalysisEventButton>()) {
 				CategoryObject co = new CategoryObject (cat);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
@@ -212,20 +212,20 @@ namespace LongoMatch.Drawing.Widgets
 				Objects.Add (co);
 			}
 
-			foreach (PenaltyCard c in template.PenaltyCards) {
+			foreach (PenaltyCardButton c in template.List.OfType<PenaltyCardButton>()) {
 				CardObject co = new CardObject (c);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				Objects.Add (co);
 			}
-			foreach (Score s in template.Scores) {
+			foreach (ScoreButton s in template.List.OfType<ScoreButton>()) {
 				ScoreObject co = new ScoreObject (s);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				Objects.Add (co);
 			}
 
-			foreach (Timer t in template.Timers) {
+			foreach (TimerButton t in template.List.OfType<TimerButton>()) {
 				TimerObject to = new TimerObject (t);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
@@ -259,14 +259,18 @@ namespace LongoMatch.Drawing.Widgets
 		void HandleTaggerClickedEvent (CanvasObject co)
 		{
 			TaggerObject tagger;
+			EventButton button;
 			Time start = null, stop = null;
 			List<Tag> tags = null;
+			PenaltyCard card = null;
+			Score score = null;
 			
 			tagger = co as TaggerObject;
-			if (NewTagEvent == null || tagger is TimerObject ||
-				tagger is TagObject) {
+			if (NewTagEvent == null || !(tagger.Tagger is EventButton)) {
 				return;
 			}
+
+			button = tagger.Tagger as EventButton;
 			
 			if (TagMode == TagMode.Edit) {
 				if (tagger is CategoryObject) {
@@ -277,12 +281,12 @@ namespace LongoMatch.Drawing.Widgets
 				return;
 			}
 			
-			if (tagger.Tagger.TagMode == TagMode.Predefined) {
-				stop = CurrentTime + tagger.Tagger.Stop;
-				start = CurrentTime - tagger.Tagger.Start;
+			if (button.TagMode == TagMode.Predefined) {
+				stop = CurrentTime + button.Stop;
+				start = CurrentTime - button.Start;
 			} else {
 				stop = CurrentTime;
-				start = tagger.Start - tagger.Tagger.Start;
+				start = tagger.Start - button.Start;
 			}
 			
 			if (tagger is CategoryObject) {
@@ -295,7 +299,14 @@ namespace LongoMatch.Drawing.Widgets
 					to.Active = false;
 				}
 			}
-			NewTagEvent (tagger.Tagger, null, tags, start, stop);
+			if (button is PenaltyCardButton) {
+				card = (button as PenaltyCardButton).PenaltyCard;
+			}
+			if (button is ScoreButton) {
+				score = (button as ScoreButton).Score;
+			}
+			
+			NewTagEvent (button.EventType, null, tags, start, stop, score, card);
 		}
 	}
 }

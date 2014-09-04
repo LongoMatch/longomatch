@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
@@ -54,7 +55,7 @@ namespace LongoMatch.Gui.Panel
 		IGUIToolkit gtoolkit;
 		Color red;
 		TeamTemplate hometemplate, awaytemplate;
-		Categories analysisTemplate;
+		Dashboard analysisTemplate;
 		TeamTagger teamtagger;
 
 		public NewProjectPanel (Project project)
@@ -171,7 +172,7 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Visible = false;
 			analysislabel.Visible = false;
 			filetable.Visible = true;
-			analysisTemplate = project.Categories;
+			analysisTemplate = project.Dashboard;
 			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
 			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR);
 		}
@@ -305,7 +306,7 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 			project = new Project ();
-			project.Categories = analysisTemplate;
+			project.Dashboard = analysisTemplate;
 			project.LocalTeamTemplate = hometemplate;
 			project.VisitorTeamTemplate = awaytemplate;
 			project.Description = new ProjectDescription ();
@@ -315,6 +316,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.Season = seasonentry.Text;
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
+			project.UpdateEventTypes ();
 			
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();

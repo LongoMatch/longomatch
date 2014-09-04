@@ -33,28 +33,31 @@ namespace LongoMatch.Handlers
 
 	/*Tagging Events*/
 	/* A Play needs to be loaded */
-	public delegate void LoadPlayHandler(Play play);
+	public delegate void LoadPlayHandler(TimelineEvent play);
 	/* A Play was loaded */
-	public delegate void PlayLoadedHandler(Play play);
+	public delegate void PlayLoadedHandler(TimelineEvent play);
 	/* A new play needs to be create for a specific category at the current play time */
-	public delegate void NewTagHandler (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop);
+	public delegate void NewTagHandler (EventType eventType, List<Player> players,
+	                                    List<Tag> tags, Time start, Time stop, Score score,
+	                                    PenaltyCard card);
 	/* Add a new play to the current project */
-	public delegate void NewPlayHandler (Play play);
+	public delegate void NewPlayHandler (TimelineEvent play);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
-	public delegate void CategoryChangedHandler(AnalysisCategory cat);
+	public delegate void CategoryChangedHandler(EventType cat);
+
 	/* A list of plays needs to be deleted */
-	public delegate void PlaysDeletedHandler(List<Play> plays);
+	public delegate void PlaysDeletedHandler(List<TimelineEvent> plays);
 	/* Tag a play */
-	public delegate void TagPlayHandler(Play play);
+	public delegate void TagPlayHandler(TimelineEvent play);
 	/* Change the Play's category */
-	public delegate void PlayCategoryChangedHandler(Play play, Category cat);
+	public delegate void PlayCategoryChangedHandler(TimelineEvent play, EventType cat);
 	/* DUplicate play */
-	public delegate void DuplicatePlaysHandler (List<Play> plays);
+	public delegate void DuplicatePlaysHandler (List<TimelineEvent> plays);
 	/* Category Selected */
-	public delegate void TaggersSelectedHandler (List<TaggerButton> taggerbuttons);
-	public delegate void TaggerSelectedHandler (TaggerButton taggerbutton);
-	public delegate void ShowButtonsTaggerMenuHandler (TaggerButton taggerbutton, Tag tag);
+	public delegate void TaggersSelectedHandler (List<DashboardButton> taggerbuttons);
+	public delegate void TaggerSelectedHandler (DashboardButton taggerbutton);
+	public delegate void ShowButtonsTaggerMenuHandler (DashboardButton taggerbutton, Tag tag);
 	
 	/* Penalty Card */
 	public delegate void PenaltyCardHandler (PenaltyCard card);
@@ -103,7 +106,7 @@ namespace LongoMatch.Handlers
 	public delegate void PlaylistsChangedHandler (object sender);
 
 	/* Create snapshots for a play */
-	public delegate void SnapshotSeriesHandler(Play tNode);
+	public delegate void SnapshotSeriesHandler(TimelineEvent tNode);
 	
 	/* Convert a video file */
 	public delegate void ConvertVideoFilesHandler (List<MediaFile> inputFiles, EncodingSettings encSettings);
@@ -115,8 +118,8 @@ namespace LongoMatch.Handlers
 	public delegate void NewVersionHandler(Version version, string URL);
 
 	/* Edit Category */
-	public delegate void CategoryHandler(Category category);
-	public delegate void CategoriesHandler(List<Category> categoriesList);
+	public delegate void CategoryHandler(DashboardButton button);
+	public delegate void CategoriesHandler(List<DashboardButton> buttonsList);
 	
 	/* Edit player properties */
 	public delegate void PlayerPropertiesHandler(Player player);
@@ -146,8 +149,8 @@ namespace LongoMatch.Handlers
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	
-	public delegate void ShowTimelineMenuHandler (List<Play> plays, AnalysisCategory cat, Time time);
-	public delegate void ShowTaggerMenuHandler (List<Play> plays);
+	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays, EventType cat, Time time);
+	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
 	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable);
 	public delegate void DrawableChangedHandler (IBlackboardObject drawable);

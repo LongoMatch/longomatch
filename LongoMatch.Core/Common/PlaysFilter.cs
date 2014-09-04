@@ -19,10 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using LongoMatch.Interfaces;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Common
 {
@@ -31,20 +29,20 @@ namespace LongoMatch.Common
 		
 		public event FilterUpdatedHandler FilterUpdated;
 		
-		Dictionary<TaggerButton, List<Tag>> categoriesFilter;
+		Dictionary<EventType, List<Tag>> eventsFilter;
 		List<Player> playersFilter;
 		Project project;
 		
 		public PlaysFilter (Project project)
 		{
 			this.project = project;
-			categoriesFilter = new Dictionary<TaggerButton, List<Tag>>();
+			eventsFilter = new Dictionary<EventType, List<Tag>>();
 			playersFilter = new List<Player>(); 
 			ClearAll();
 			UpdateFilters();
 		}
 		
-		public List<TaggerButton> VisibleCategories {
+		public List<EventType> VisibleEventTypes {
 			get;
 			protected set;
 		}
@@ -54,13 +52,13 @@ namespace LongoMatch.Common
 			protected set;
 		}
 		
-		public List<Play> VisiblePlays {
+		public List<TimelineEvent> VisiblePlays {
 			get;
 			protected set;
 		}
 		
 		public void ClearCategoriesFilter (bool update=true) {
-			categoriesFilter.Clear();
+			eventsFilter.Clear();
 			if (update)
 				Update ();
 		}
@@ -89,28 +87,28 @@ namespace LongoMatch.Common
 			Update();
 		}
 		
-		public void FilterCategory (TaggerButton cat, bool visible) {
+		public void FilterEventType (EventType evType, bool visible) {
 			if (visible) {
-				if (!categoriesFilter.ContainsKey (cat))
-					categoriesFilter[cat] = new List<Tag> ();
+				if (!eventsFilter.ContainsKey (evType))
+					eventsFilter[evType] = new List<Tag> ();
 			} else {
-				if (categoriesFilter.ContainsKey (cat))
-					categoriesFilter.Remove (cat);
+				if (eventsFilter.ContainsKey (evType))
+					eventsFilter.Remove (evType);
 			}
 			Update();
 		}
 
-		public void FilterCategoryTag (TaggerButton cat, Tag tag, bool visible) {
+		public void FilterCategoryTag (EventType evType, Tag tag, bool visible) {
 			List<Tag> tags;
 
 			if (visible) {
-				FilterCategory (cat, true);
-				tags = categoriesFilter[cat];
+				FilterEventType (evType, true);
+				tags = eventsFilter[evType];
 				if (!tags.Contains (tag))
 					tags.Add (tag);
 			} else {
-				if (categoriesFilter.ContainsKey(cat)) {
-					tags = categoriesFilter[cat];
+				if (eventsFilter.ContainsKey(evType)) {
+					tags = eventsFilter[evType];
 					if (tags.Contains (tag))
 						tags.Remove (tag);
 				}
@@ -121,8 +119,8 @@ namespace LongoMatch.Common
 		public bool IsVisible(object o) {
 			if (o is Player) {
 				return VisiblePlayers.Contains(o as Player);
-			} else if (o is Play) {
-				return VisiblePlays.Contains (o as Play);
+			} else if (o is TimelineEvent) {
+				return VisiblePlays.Contains (o as TimelineEvent);
 			}
 			return true;
 		}
@@ -147,23 +145,23 @@ namespace LongoMatch.Common
 		}
 		
 		void UpdateVisibleCategories () {
-			if (categoriesFilter.Count == 0) {
-				VisibleCategories = project.Categories.List;
+			if (eventsFilter.Count == 0) {
+				VisibleEventTypes = project.EventTypes;
 			} else {
-				VisibleCategories = categoriesFilter.Keys.ToList();
+				VisibleEventTypes = eventsFilter.Keys.ToList();
 			}
 		}
 		
 		void UpdateVisiblePlays () {
 			bool cat_match=true, player_match=true;
-			VisiblePlays = new List<Play>();
+			VisiblePlays = new List<TimelineEvent>();
 				
-			foreach (Play play in project.Timeline) {
+			foreach (TimelineEvent play in project.Timeline) {
 				cat_match = false;
-				if (VisibleCategories.Contains (play.Category)) {
+				if (VisibleEventTypes.Contains (play.EventType)) {
 					cat_match = true;
-					if (categoriesFilter.ContainsKey (play.Category)) {
-						List<Tag> tags = categoriesFilter[play.Category];
+					if (eventsFilter.ContainsKey (play.EventType)) {
+						List<Tag> tags = eventsFilter[play.EventType];
 						if (tags.Count == 0 || tags.Intersect (play.Tags).Count() > 0) {
 							cat_match = true;
 						} else {

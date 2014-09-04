@@ -22,14 +22,15 @@ using System;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CategoryLabel: CanvasObject, ICanvasObject
+	public class TimerLabel: CanvasObject, ICanvasObject
 	{
-		EventType eventType;
 		double width;
 
-		public CategoryLabel (EventType eventType, double width, double height, double offsetY)
+		public TimerLabel (string name, Color color, double width, double height,
+		                   double offsetY)
 		{
-			this.eventType = eventType;
+			Name = name;
+			Color = color;
 			this.Height = height;
 			this.width = width;
 			OffsetY = offsetY;
@@ -53,6 +54,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public double OffsetY {
 			set;
 			get;
+		}
+
+		public string Name {
+			get;
+			set;
+		}
+		
+		public Color Color {
+			get;
+			set;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -79,19 +90,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 0;
 			tk.DrawRectangle (new Point (0, y), width, Height);
 			
-			/* Draw a rectangle with the category color */
-			tk.FillColor = eventType.Color;
-			tk.StrokeColor = eventType.Color;
+			/* Draw a rectangle with the color */
+			tk.FillColor = Color;
+			tk.StrokeColor = Color;
 			tk.DrawRectangle (new Point (hs, y + vs), rectSize, rectSize); 
 			
-			/* Draw category name */
+			/* Draw the name */
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 12;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawText (new Point (to, y), width - to, Height, eventType.Name);
+			tk.DrawText (new Point (to, y), width - to, Height, Name);
 			tk.End ();
 		}
 	}

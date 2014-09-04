@@ -118,7 +118,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderAnalysisCategory (AnalysisCategory cat, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
 		                                           IContext context, Area backgroundArea, Area cellArea)
 		{
 			tk.Context = context;
@@ -191,14 +191,20 @@ namespace LongoMatch.Drawing
 		}
 		
 		public static void Render (object item, int count, bool isExpanded, IDrawingToolkit tk,
-		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
+		                         IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
-			if (item is AnalysisCategory) {
-				RenderAnalysisCategory (item as AnalysisCategory, count, isExpanded, tk,
+			if (item is EventType) {
+				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
 				                        context, backgroundArea, cellArea);
-			} else if (item is Play) {
-				Play p = item as Play;
-				RenderPlay (p.Category.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
+			} else if (item is TimelineEvent) {
+				Color color;
+				TimelineEvent p = item as TimelineEvent;
+				if (p is PenaltyCardEvent) {
+					color = (p as PenaltyCardEvent).PenaltyCard.Color;
+				} else {
+					color = p.EventType.Color;
+				}
+				RenderPlay (color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);
@@ -206,8 +212,10 @@ namespace LongoMatch.Drawing
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
-				RenderPlay (p.Play.Category.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Play.EventType.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
+			} else {
+				Log.Error ("No renderer for type " + item.GetType());
 			}
 		}
 	}

@@ -54,7 +54,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Play Play {
+		public TimelineEvent Play {
 			get;
 			set;
 		}
@@ -115,7 +115,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			tk.Begin ();
 			if (Play != null) {
-				color = Play.Category.Color;
+				color = Play.EventType.Color;
 			} else {
 				color = Constants.TAGGER_POINT_COLOR;
 			}

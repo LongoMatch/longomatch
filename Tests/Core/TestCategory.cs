@@ -33,11 +33,11 @@ namespace Tests.Core
 		public void TestSerialization ()
 		{
 			string jsonString;
-			Category cat;
+			CategoryButton cat;
 			MemoryStream stream;
 			StreamReader reader;
 			
-			cat = new Category();
+			cat = new CategoryButton();
 			cat.Color = new Color (255, 0, 0);
  			cat.HotKey = new HotKey {Key=2, Modifier=4};
 			cat.Name = "test";
@@ -61,7 +61,7 @@ namespace Tests.Core
 			jsonString = reader.ReadToEnd();
 			Assert.False (jsonString.Contains ("SortMethodString"));
 			stream.Seek (0, SeekOrigin.Begin);
-			Category newcat = Serializer.Load<Category> (stream, SerializationType.Json);
+			CategoryButton newcat = Serializer.Load<CategoryButton> (stream, SerializationType.Json);
 			
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);

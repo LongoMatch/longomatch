@@ -121,7 +121,7 @@ namespace LongoMatch.Stats
 		void UpdateGameUnitsStats () {
 		}
 		
-		void CountPlaysInTeam (List<Play> plays, out int localTeamCount, out int visitorTeamCount) {
+		void CountPlaysInTeam (List<TimelineEvent> plays, out int localTeamCount, out int visitorTeamCount) {
 			localTeamCount = plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).Count();
 			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
 		}
@@ -129,44 +129,44 @@ namespace LongoMatch.Stats
 		public void UpdateStats () {
 			catStats.Clear();
 			
-			Field = project.Categories.FieldBackground;
-			HalfField = project.Categories.HalfFieldBackground;
-			Goal = project.Categories.GoalBackground;
+			Field = project.Dashboard.FieldBackground;
+			HalfField = project.Dashboard.HalfFieldBackground;
+			Goal = project.Dashboard.GoalBackground;
 			
-			foreach (Category cat in project.Categories.List) {
-				CategoryStats stats;
-				List<Play> plays, homePlays, awayPlays, untagged;
-				int localTeamCount, visitorTeamCount;
-				
-				plays = project.PlaysInCategory (cat);
-				if (filter != null) {
-					plays = plays.Where(p => filter.IsVisible (p)).ToList();
-				}
-				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
-				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
-				
-				/* Get the plays where the team is not tagged but we have at least one player from a team tagged */
-				untagged = plays.Where (p=> p.Team ==  Team.NONE).ToList();
-				homePlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.LocalTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
-				awayPlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.VisitorTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
-				
-				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
-				
-				/* Fill zonal tagging stats */
-				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-				catStats.Add (stats);
+			foreach (AnalysisEventType evt in project.EventTypes.OfType<AnalysisEventType> ()) {
+//				CategoryStats stats;
+//				List<Event> plays, homePlays, awayPlays, untagged;
+//				int localTeamCount, visitorTeamCount;
+//				
+//				plays = project.PlaysInCategory (cat);
+//				if (filter != null) {
+//					plays = plays.Where(p => filter.IsVisible (p)).ToList();
+//				}
+//				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
+//				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
+//				
+//				/* Get the plays where the team is not tagged but we have at least one player from a team tagged */
+//				untagged = plays.Where (p=> p.Team ==  Team.NONE).ToList();
+//				homePlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.LocalTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
+//				awayPlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.VisitorTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
+//				
+//				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
+//				
+//				/* Fill zonal tagging stats */
+//				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+//				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+//				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
+//				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+//				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+//				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
+//				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+//				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+//				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
+//				catStats.Add (stats);
 			}
 		}
 		
-		void GetSubcategoryStats (List<Play> subcatPlays, SubCategoryStat subcatStat, string desc,
+		void GetSubcategoryStats (List<TimelineEvent> subcatPlays, SubCategoryStat subcatStat, string desc,
 			int totalCount, out int localTeamCount, out int visitorTeamCount)
 		{
 			int count;
@@ -178,8 +178,8 @@ namespace LongoMatch.Stats
 			subcatStat.AddOptionStat(pStat);
 		}
 		
-		void GetPlayersStats (Project project, List<Play> subcatPlays, string optionName,
-			SubCategoryStat subcatStat, Category cat)
+		void GetPlayersStats (Project project, List<TimelineEvent> subcatPlays, string optionName,
+			SubCategoryStat subcatStat, EventType cat)
 		{
 //			foreach (SubCategory subcat in cat.SubCategories) {
 //				Dictionary<Player, int> localPlayerCount = new Dictionary<Player, int>();
@@ -206,7 +206,7 @@ namespace LongoMatch.Stats
 //			}
 		}
 		
-		int GetPlayerCount(List<Play> plays, Player player)
+		int GetPlayerCount(List<TimelineEvent> plays, Player player)
 		{
 			return plays.Where(p => p.Players.Contains(player)).Count();
 		}

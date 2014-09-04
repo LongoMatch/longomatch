@@ -87,36 +87,37 @@ namespace LongoMatch.Common
 		public event DetachPlayerHandler Detach;
 		public event PlaybackRateChangedHandler PlaybackRateChanged;
 
-		public void EmitNewTag (TaggerButton tagger, List<Player> players = null,
-		                        List<Tag> tags = null, Time start = null, Time stop = null) {
+		public void EmitNewTag (EventType eventType, List<Player> players = null,
+		                        List<Tag> tags = null, Time start = null, Time stop = null,
+		                        Score score = null, PenaltyCard card = null) {
 			if (NewTagEvent != null)
-				NewTagEvent (tagger, players, tags, start, stop);
+				NewTagEvent (eventType, players, tags, start, stop, score, card);
 		}
 		
-		public void EmitNewPlay (Play play) {
+		public void EmitNewPlay (TimelineEvent play) {
 			if (NewPlayEvent != null)
 				NewPlayEvent (play);
 		}
 
-		public void EmitPlaysDeleted(List<Play> plays)
+		public void EmitPlaysDeleted(List<TimelineEvent> plays)
 		{
 			if (PlaysDeleted != null)
 				PlaysDeleted(plays);
 		}
 		
-		public void EmitLoadPlay (Play play)
+		public void EmitLoadPlay (TimelineEvent play)
 		{
 			if (LoadPlayEvent != null)
 				LoadPlayEvent (play);
 		}
 		
-		public void EmitPlayLoaded (Play play)
+		public void EmitPlayLoaded (TimelineEvent play)
 		{
 			if (PlayLoadedEvent != null)
 				PlayLoadedEvent (play);
 		}
 		
-		public void EmitSnapshotSeries(Play play)
+		public void EmitSnapshotSeries(TimelineEvent play)
 		{
 			if (SnapshotSeries != null)
 				SnapshotSeries(play);
@@ -152,18 +153,18 @@ namespace LongoMatch.Common
 				TimeNodeChanged(tn, val);
 		}
 		
-		public virtual void EmitPlayCategoryChanged(Play play, Category cat)
+		public virtual void EmitPlayCategoryChanged(TimelineEvent play, EventType cat)
 		{
 			if(PlayCategoryChanged != null)
 				PlayCategoryChanged(play, cat);
 		}
 		
-		public void EmitTagPlay(Play play) {
+		public void EmitTagPlay(TimelineEvent play) {
 			if (TagPlay != null)
 				TagPlay (play);
 		}
 
-		public void EmitDuplicatePlay (List<Play> plays)
+		public void EmitDuplicatePlay (List<TimelineEvent> plays)
 		{
 			if (DuplicatePlays != null)
 				DuplicatePlays (plays);
@@ -349,7 +350,7 @@ namespace LongoMatch.Common
 			}
 		}
 
-		public void EmitDrawFrame (Play play, int drawingIndex)
+		public void EmitDrawFrame (TimelineEvent play, int drawingIndex)
 		{
 			if (DrawFrame != null) {
 				DrawFrame (play, drawingIndex);
@@ -372,6 +373,9 @@ namespace LongoMatch.Common
 		public void EmitPlaylistsChanged (object sender) {
 			if (PlaylistsChangedEvent != null)
 				PlaylistsChangedEvent (sender);
+		}
+		
+		public void EmitPressButton (DashboardButton button) {
 		}
 	}
 }

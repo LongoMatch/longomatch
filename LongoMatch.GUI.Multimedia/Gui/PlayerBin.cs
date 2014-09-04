@@ -53,7 +53,7 @@ namespace LongoMatch.Gui
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
 		IPlayer player;
-		Play loadedPlay;
+		TimelineEvent loadedPlay;
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
 		Time length, lastTime;
@@ -216,7 +216,7 @@ namespace LongoMatch.Gui
 
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
-				Play play = ple.Play;
+				TimelineEvent play = ple.Play;
 				LoadSegment (ple.File, play.Start, play.Stop, play.Start, true, play.Rate);
 			} else if (element is PlaylistImage) {
 				//LoadStillImage (element as PlaylistImage);
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void LoadPlay (MediaFile file, Play play, Time seekTime, bool playing)
+		public void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing)
 		{
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;

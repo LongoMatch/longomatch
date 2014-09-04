@@ -17,8 +17,6 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label label3;
 		private global::Gtk.VBox filtersvbox;
 		private global::Gtk.Notebook filtersnotebook;
-		private global::Gtk.ToggleButton catfiltersbutton;
-		private global::Gtk.ToggleButton playersfiltersbutton;
 		private global::Gtk.Label label2;
 
 		protected virtual void Build ()
@@ -111,61 +109,9 @@ namespace LongoMatch.Gui.Component
 			this.filtersvbox.Add (this.filtersnotebook);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.filtersnotebook]));
 			w6.Position = 0;
-			// Container child filtersvbox.Gtk.Box+BoxChild
-			this.catfiltersbutton = new global::Gtk.ToggleButton ();
-			this.catfiltersbutton.CanFocus = true;
-			this.catfiltersbutton.Name = "catfiltersbutton";
-			this.catfiltersbutton.UseUnderline = true;
-			// Container child catfiltersbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w8 = new global::Gtk.HBox ();
-			w8.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w9 = new global::Gtk.Image ();
-			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-find", global::Gtk.IconSize.Menu);
-			w8.Add (w9);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w11 = new global::Gtk.Label ();
-			w11.LabelProp = global::Mono.Unix.Catalog.GetString ("Activate categories filters");
-			w11.UseUnderline = true;
-			w8.Add (w11);
-			w7.Add (w8);
-			this.catfiltersbutton.Add (w7);
-			this.filtersvbox.Add (this.catfiltersbutton);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.catfiltersbutton]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
-			// Container child filtersvbox.Gtk.Box+BoxChild
-			this.playersfiltersbutton = new global::Gtk.ToggleButton ();
-			this.playersfiltersbutton.CanFocus = true;
-			this.playersfiltersbutton.Name = "playersfiltersbutton";
-			this.playersfiltersbutton.UseUnderline = true;
-			// Container child playersfiltersbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w16 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w17 = new global::Gtk.HBox ();
-			w17.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w18 = new global::Gtk.Image ();
-			w18.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-find", global::Gtk.IconSize.Menu);
-			w17.Add (w18);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w20 = new global::Gtk.Label ();
-			w20.LabelProp = global::Mono.Unix.Catalog.GetString ("Activate players filters");
-			w20.UseUnderline = true;
-			w17.Add (w20);
-			w16.Add (w17);
-			this.playersfiltersbutton.Add (w16);
-			this.filtersvbox.Add (this.playersfiltersbutton);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.playersfiltersbutton]));
-			w24.Position = 2;
-			w24.Expand = false;
-			w24.Fill = false;
 			this.notebook.Add (this.filtersvbox);
-			global::Gtk.Notebook.NotebookChild w25 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
-			w25.Position = 2;
+			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
+			w7.Position = 2;
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
@@ -178,8 +124,6 @@ namespace LongoMatch.Gui.Component
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
-			this.catfiltersbutton.Clicked += new global::System.EventHandler (this.OnCategoriesFiltersbuttonClicked);
-			this.playersfiltersbutton.Clicked += new global::System.EventHandler (this.OnPlayersFiltersbuttonClicked);
 		}
 	}
 }

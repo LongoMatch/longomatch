@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class DrawingTool : Gtk.Dialog
 	{
-		Play play;
+		TimelineEvent play;
 		Blackboard blackboard;
 		FrameDrawing drawing;
 		Drawable selectedDrawable;
@@ -289,7 +289,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
-		public void LoadPlay (Play play, Image frame, FrameDrawing drawing) {
+		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing) {
 			this.play = play;
 			this.drawing = drawing;
 			blackboard.Background = frame;

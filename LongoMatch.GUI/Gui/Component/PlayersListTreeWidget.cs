@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam(TeamTemplate template, List<Play> plays) {
+		public void SetTeam(TeamTemplate template, List<TimelineEvent> plays) {
 			TreeStore team;
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
 			
@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Component
 				PlaylistPlayElement element;
 				
 				playerstreeview.Model.GetIter(out iter, path);
-				element = new PlaylistPlayElement (playerstreeview.Model.GetValue(iter, 0) as Play,
+				element = new PlaylistPlayElement (playerstreeview.Model.GetValue(iter, 0) as TimelineEvent,
 				                                   Project.Description.File);
 				playlist.Elements.Add (element);
 			}

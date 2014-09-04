@@ -30,14 +30,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 		Dictionary <Rectangle, object> rects;
 		bool catSelected;
 
-		public CategoryObject (Category category): base (category)
+		public CategoryObject (AnalysisEventButton category): base (category)
 		{
-			Category = category;
+			Button = category;
 			rects = new Dictionary <Rectangle, object> ();
 			SelectedTags = new List<Tag> ();
 		}
 
-		public Category Category {
+		public AnalysisEventButton Button {
 			get;
 			set;
 		}
@@ -51,10 +51,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				/* Header */
 				int rows = 1;
-				int tagsPerRow = Math.Max (1, Category.TagsPerRow);
+				int tagsPerRow = Math.Max (1, Button.TagsPerRow);
 
 				/* Recorder */
-				if (Category.TagMode == TagMode.Free) {
+				if (Button.TagMode == TagMode.Free) {
 					rows ++;
 				}
 				rows += (int)Math.Ceiling ((float)TagsCount / tagsPerRow);
@@ -64,7 +64,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		int TagsCount {
 			get {
-				int tagsCount = Category.Tags.Count;
+				int tagsCount = Button.AnalysisEventType.Tags.Count;
 				if (Mode == TagMode.Edit) {
 					tagsCount ++;
 				}
@@ -102,8 +102,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			foreach (Rectangle rect in rects.Keys) {
 				Selection subsel = rect.GetSelection (p, 0);
 				if (subsel != null) {
-					if (rects [rect] is Category) {
-						CategoryClicked (rects [rect] as Category);
+					if (rects [rect] is AnalysisEventButton) {
+						CategoryClicked (rects [rect] as AnalysisEventButton);
 					} else if (rects [rect] is Tag) {
 						TagClicked (rects [rect] as Tag);
 					} else {
@@ -130,11 +130,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			int tagsPerRow, tagsCount, row = 0;
 
 			rects.Clear ();
-			position = Category.Position;
-			heightPerRow = Category.Height / NRows;
-			catWidth = Category.Width;
+			position = Button.Position;
+			heightPerRow = Button.Height / NRows;
+			catWidth = Button.Width;
 			tagsCount = TagsCount;
-			tagsPerRow = Math.Max (1, Category.TagsPerRow);
+			tagsPerRow = Math.Max (1, Button.TagsPerRow);
 			rowwidth = catWidth / tagsPerRow;
 
 			tk.Begin ();
@@ -147,13 +147,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FillColor = LongoMatch.Common.Color.Grey2;
 			tk.LineWidth = 2;
 			if (catSelected && Mode != TagMode.Edit) {
-				tk.StrokeColor = Category.DarkColor;
-				tk.DrawText (position, catWidth, heightPerRow, Category.Name);
+				tk.StrokeColor = Button.DarkColor;
+				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			} else {
 				tk.StrokeColor = LongoMatch.Common.Color.Grey2;
-				tk.DrawText (position, catWidth, heightPerRow, Category.Name);
+				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			}
-			rects.Add (new Rectangle (position, catWidth, heightPerRow), Category);
+			rects.Add (new Rectangle (position, catWidth, heightPerRow), Button);
 			yptr += heightPerRow;
 
 			/* Draw tags */
@@ -172,7 +172,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 						rowwidth = catWidth / (tagsCount - i);
 					}
 				}
-				tk.StrokeColor = Category.DarkColor;
+				tk.StrokeColor = Button.DarkColor;
 				tk.LineWidth = 1;
 				if (col == 0) {
 					/* Horizontal line */
@@ -181,13 +181,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 					/* Vertical line */
 					tk.DrawLine (pos, new Point (pos.X, pos.Y + heightPerRow));
 				}
-				tk.StrokeColor = Category.TextColor;
-				if (i < Category.Tags.Count) {
-					tag = Category.Tags [i];
+				tk.StrokeColor = Button.TextColor;
+				if (i < Button.AnalysisEventType.Tags.Count) {
+					tag = Button.AnalysisEventType.Tags [i];
 					if (Mode == TagMode.Edit || !SelectedTags.Contains (tag)) {
 						tk.DrawText (pos, rowwidth, heightPerRow, tag.Value);
 					} else {
-						tk.StrokeColor = Category.DarkColor;
+						tk.StrokeColor = Button.DarkColor;
 						tk.DrawText (pos, rowwidth, heightPerRow, tag.Value);
 					}
 				} else {
@@ -198,7 +198,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			yptr += heightPerRow * (row + 1);
 
-			if (Category.TagMode == TagMode.Free) {
+			if (Button.TagMode == TagMode.Free) {
 				/* Draw Tagger */
 				tk.DrawLine (new Point (position.X, position.Y + yptr),
 				                         new Point (position.X + catWidth, position.Y + yptr));
@@ -208,9 +208,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 
-		void CategoryClicked (Category category)
+		void CategoryClicked (AnalysisEventButton category)
 		{
-			if (Category.TagMode == TagMode.Predefined) {
+			if (Button.TagMode == TagMode.Predefined) {
 				catSelected = true;
 			}
 		}
@@ -222,7 +222,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				SelectedTags.Clear ();
 				SelectedTags.Add (tag);
-				if (Category.TagMode == TagMode.Predefined) {
+				if (Button.TagMode == TagMode.Predefined) {
 					catSelected = true;
 				}
 			}

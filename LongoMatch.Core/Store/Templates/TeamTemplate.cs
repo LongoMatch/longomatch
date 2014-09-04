@@ -28,7 +28,7 @@ using LongoMatch.Interfaces;
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
-	public class TeamTemplate: ITemplate<Player>
+	public class TeamTemplate: ITemplate
 	{
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;

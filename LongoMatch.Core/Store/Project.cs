@@ -53,13 +53,14 @@ namespace LongoMatch.Store
 		#region Constructors
 		public Project() {
 			ID = System.Guid.NewGuid();
-			Timeline = new List<Play>();
-			Categories = new Categories();
+			Timeline = new List<TimelineEvent>();
+			Dashboard = new Dashboard();
 			LocalTeamTemplate = new TeamTemplate();
 			VisitorTeamTemplate = new TeamTemplate();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
 			Playlists = new List<Playlist> ();
+			EventTypes = new List<EventType> ();
 		}
 		#endregion
 
@@ -73,7 +74,7 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public List<Play> Timeline {
+		public List<TimelineEvent> Timeline {
 			get;
 			set;
 		}
@@ -90,11 +91,17 @@ namespace LongoMatch.Store
 			}
 		}
 
+		[JsonProperty(Order = -7)]
+		public List<EventType> EventTypes {
+			get;
+			set;
+		}
+
 		/// <value>
 		/// Categories template
 		/// </value>
 		[JsonProperty(Order = -10)]
-		public Categories Categories {
+		public Dashboard Dashboard {
 			get;
 			set;
 		}
@@ -133,25 +140,26 @@ namespace LongoMatch.Store
 		}
 		
 		[JsonIgnore]
-		public List<Play> ScorePlays {
+		public List<TimelineEvent> ScorePlays {
 			get {
-				return Timeline.OfType<ScoreEvent>().Select (t => (Play) t).ToList();
+				return Timeline.OfType<ScoreEvent>().Select (t => (TimelineEvent) t).ToList();
 			}
 		}
 		
 		[JsonIgnore]
-		public List<Play> PenaltyCardsPlays {
+		public List<TimelineEvent> PenaltyCardsPlays {
 			get {
-				return Timeline.OfType<PenaltyCardEvent>().Select (t => (Play) t).ToList();
+				return Timeline.OfType<PenaltyCardEvent>().Select (t => (TimelineEvent) t).ToList();
 			}
 		}
 
 		[JsonIgnore]
-		public IEnumerable<IGrouping<TaggerButton, Play>> PlaysGroupedByCategory {
+		public IEnumerable<IGrouping<EventType, TimelineEvent>> PlaysGroupedByEventType {
 			get {
-				return Timeline.GroupBy(play => play.Category);
+				return Timeline.GroupBy(play => play.EventType);
 			}
 		}
+		
 		#endregion
 
 		#region Public Methods
@@ -160,49 +168,42 @@ namespace LongoMatch.Store
 		/// </summary>
 		public void Clear() {
 			Timeline.Clear();
-			Categories.List.Clear();
+			Dashboard.List.Clear();
 			VisitorTeamTemplate.List.Clear();
 			LocalTeamTemplate.List.Clear();
 			Periods.Clear();
 			Timers.Clear();
 		}
 
+		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Image miniature,
+		                             Score score, PenaltyCard card, bool addToTimeline=true)
+		{
+			TimelineEvent evt;
+			string count = String.Format ("{0:000}", EventsByType (type).Count + 1);
+			string name = String.Format ("{0} {1}", type.Name, count);
 
-		/// <summary>
-		/// Adds a new play to a given category
-		/// </summary>
-		/// <param name="dataSection">
-		/// A <see cref="System.Int32"/>: category index
-		/// </param>
-		/// <param name="start">
-		/// A <see cref="Time"/>: start time of the play
-		/// </param>
-		/// <param name="stop">
-		/// A <see cref="Time"/>: stop time of the play
-		/// </param>
-		/// <param name="thumbnail">
-		/// A <see cref="Pixbuf"/>: snapshot of the play
-		/// </param>
-		/// <returns>
-		/// A <see cref="MediaTimeNode"/>: created play
-		/// </returns>
-		public Play AddPlay(AnalysisCategory category, Time start, Time stop, Image miniature) {
-			string count= String.Format("{0:000}", PlaysInCategory (category).Count + 1);
-			string name = String.Format("{0} {1}",category.Name, count);
+			if (type is PenaltyCardEventType) {
+				evt = new PenaltyCardEvent { PenaltyCard = card };
+			} else if (type is ScoreEventType) {
+				evt = new ScoreEvent { Score = score };
+			} else {
+				evt = new TimelineEvent ();
+			}
+			
+			evt.Name = name;
+			evt.Start = start;
+			evt.Stop = stop;
+			evt.EventType = type;
+			evt.Notes = "";
+			evt.Miniature = miniature;
 
-			var play = new Play {
-				Name = name,
-				Start = start,
-				Stop = stop,
-				Category = category,
-				Notes = "",
-				Miniature = miniature,
-			};
-			Timeline.Add(play);
-			return play;
+			if (addToTimeline) {
+				Timeline.Add(evt);
+			}
+			return evt;
 		}
 		
-		public void AddPlay (Play play) {
+		public void AddEvent (TimelineEvent play) {
 			Timeline.Add(play);
 		}
 		
@@ -215,42 +216,28 @@ namespace LongoMatch.Store
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemovePlays(List<Play> plays) {
-			foreach(Play play in plays)
+		public void RemovePlays(List<TimelineEvent> plays) {
+			foreach(TimelineEvent play in plays)
 				Timeline.Remove(play);
 		}
 
-		/// <summary>
-		/// Delete a category
-		/// </summary>
-		/// <param name="sectionIndex">
-		/// A <see cref="System.Int32"/>: category index
-		/// </param>
-		public void RemoveCategory(Category category) {
-			if(Categories.CategoriesList.Count == 1)
-				throw new Exception("You can't remove the last Category");
-			Categories.List.Remove(category);
-			Timeline.RemoveAll(p => p.Category.ID == category.ID);
+		public void UpdateEventTypes ()
+		{
+			IEnumerable<EventType> types = Dashboard.List.OfType<EventButton>().Select(b => b.EventType);
+			EventTypes.AddRange (types.Except (EventTypes));
+			types = Timeline.Select (t => t.EventType).Distinct().Except (EventTypes);
+			EventTypes.AddRange (types.Except (EventTypes));
 		}
-		
-		public void RemovePlayer(TeamTemplate template, Player player) {
-			if(template.List.Count == 1)
-				throw new Exception("You can't remove the last Player");
-			template.List.Remove(player);
-			foreach (var play in Timeline) {
-				play.Players.RemoveAll (p => p == player);
-			}
-		}
-		
-		public List<Play> PlaysInCategory(TaggerButton category) {
-			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
+
+		public List<TimelineEvent> EventsByType (EventType evType) {
+			return Timeline.Where(p => p.EventType.ID == evType.ID).ToList();
 		}
 
 		public int GetScore (Team team) {
 			return Timeline.OfType<ScoreEvent>().Where (s => PlayTaggedTeam (s) == team).Sum(s => s.Score.Points); 
 		}
 		
-		public Team PlayTaggedTeam (Play play) {
+		public Team PlayTaggedTeam (TimelineEvent play) {
 			bool home=false, away=false;
 			
 			if (play.Team == Team.LOCAL || play.Team == Team.BOTH ||
@@ -276,11 +263,11 @@ namespace LongoMatch.Store
 		public Image GetBackground (FieldPositionType pos) {
 			switch (pos) {
 			case FieldPositionType.Field:
-				return Categories.FieldBackground;
+				return Dashboard.FieldBackground;
 			case FieldPositionType.HalfField:
-				return Categories.HalfFieldBackground;
+				return Dashboard.HalfFieldBackground;
 			case FieldPositionType.Goal:
-				return Categories.GoalBackground;
+				return Dashboard.GoalBackground;
 			}
 			return null;
 		}

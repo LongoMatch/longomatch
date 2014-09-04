@@ -225,7 +225,7 @@ namespace LongoMatch.Services
 		bool ProcessPlay (PlaylistPlayElement element)
 		{
 			Time lastTS;
-			Play play;
+			TimelineEvent play;
 
 			play = element.Play;
 			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));

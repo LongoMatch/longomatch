@@ -20,16 +20,20 @@ using System.Linq;
 using LongoMatch.Store;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
-	public class Timer: TaggerButton
+	[Serializable]
+	public class Timer
 	{
 		public Timer ()
 		{
 			Nodes = new List<TimeNode>();
+		}
+
+		public string Name {
+			get;
+			set;
 		}
 		
 		public List<TimeNode> Nodes {
