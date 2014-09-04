@@ -25,12 +25,12 @@ using System.Linq;
 using Newtonsoft.Json;
 using Mono.Unix;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

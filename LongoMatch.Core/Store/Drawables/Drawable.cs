@@ -17,10 +17,10 @@
 //
 using System;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 
-namespace LongoMatch.Store.Drawables
+namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
 	public abstract class Drawable: IBlackboardObject

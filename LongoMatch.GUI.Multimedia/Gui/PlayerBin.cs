@@ -21,18 +21,19 @@ using System;
 using System.Linq;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Utils;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
-using Image = LongoMatch.Common.Image;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {

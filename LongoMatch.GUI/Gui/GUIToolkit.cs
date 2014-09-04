@@ -19,18 +19,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Gtk;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Interfaces;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Gui
 {

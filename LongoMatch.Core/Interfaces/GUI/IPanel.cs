@@ -16,9 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 
-namespace LongoMatch.Interfaces.GUI
+namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IPanel
 	{

@@ -22,7 +22,7 @@ using Mono.Unix;
 
 using LongoMatch.Common;
 using LongoMatch.Store;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui.Component
 {

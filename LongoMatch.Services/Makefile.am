@@ -3,7 +3,7 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_SERVICES)
 
-SOURCES = Services/Core.cs \
+SOURCES = Services/CoreServices.cs \
 	Services/DataBaseManager.cs \
 	Services/EventsManager.cs \
 	Services/FileDB.cs \

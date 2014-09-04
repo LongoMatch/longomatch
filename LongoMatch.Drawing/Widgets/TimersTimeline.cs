@@ -1,10 +1,10 @@
 using System.Linq;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
 using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.Widgets

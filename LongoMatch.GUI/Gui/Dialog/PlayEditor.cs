@@ -17,8 +17,8 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Widgets;
 using System.Collections.Generic;
 using LongoMatch.Drawing.Cairo;

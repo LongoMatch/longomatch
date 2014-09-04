@@ -20,8 +20,8 @@
 
 using System;
 using Gtk;
-using LongoMatch.Store;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui.Component
 {

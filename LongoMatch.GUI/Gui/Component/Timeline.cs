@@ -17,11 +17,11 @@
 //
 using System;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Store;
-using LongoMatch.Handlers;
-using LongoMatch.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing;
 using Gtk;

@@ -21,11 +21,11 @@
 using System;
 using System.Threading;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Multimedia.Utils;
 using Gtk;
 
@@ -46,7 +46,7 @@ namespace LongoMatch.Video.Utils
 		private const int THUMBNAIL_MAX_HEIGHT=250;
 		private const int THUMBNAIL_MAX_WIDTH=300;
 
-		public event LongoMatch.Handlers.FramesProgressHandler Progress;
+		public event LongoMatch.Core.Handlers.FramesProgressHandler Progress;
 
 		public FramesSeriesCapturer(string videoFile, Time start, Time stop, uint interval, string outputDir)
 		{
@@ -72,7 +72,7 @@ namespace LongoMatch.Video.Utils
 
 		public void CaptureFrames() {
 			Time pos;
-			LongoMatch.Common.Image frame;
+			LongoMatch.Core.Common.Image frame;
 			int i = 0;
 
 			System.IO.Directory.CreateDirectory(outputDir);

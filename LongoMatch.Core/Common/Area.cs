@@ -16,9 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Common;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	public class Area

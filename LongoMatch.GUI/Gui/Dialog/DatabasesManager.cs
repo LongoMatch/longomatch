@@ -20,7 +20,7 @@ using System.Linq;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog

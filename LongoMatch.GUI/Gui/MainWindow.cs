@@ -26,18 +26,18 @@ using GLib;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Video.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 
 namespace LongoMatch.Gui

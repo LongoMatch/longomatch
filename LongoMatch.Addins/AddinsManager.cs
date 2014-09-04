@@ -16,16 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.IO;
-using Mono.Addins;
-
-using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Interfaces.Multimedia;
-using System.Collections.Generic;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
+using Mono.Addins;
 
 [assembly:AddinRoot ("LongoMatch", "1.0")]
 

@@ -27,7 +27,7 @@ using Pango;
 using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Gui.Base;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Store;
 
 

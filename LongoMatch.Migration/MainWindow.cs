@@ -20,7 +20,7 @@ using System.IO;
 using Gtk;
 using System.Collections.Generic;
 using LongoMatch.DB;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 public partial class MainWindow: Gtk.Window
 {	

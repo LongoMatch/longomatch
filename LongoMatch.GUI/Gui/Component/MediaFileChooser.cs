@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 using Mono.Unix;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component

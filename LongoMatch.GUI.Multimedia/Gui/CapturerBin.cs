@@ -20,14 +20,14 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Utils;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using Mono.Unix;
-using Image = LongoMatch.Common.Image;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {

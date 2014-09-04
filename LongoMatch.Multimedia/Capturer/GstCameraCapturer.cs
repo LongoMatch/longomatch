@@ -23,11 +23,11 @@ using System.Runtime.InteropServices;
 using Mono.Unix;
 using GLib;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Video.Common;
-using LongoMatch.Store;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Video.Capturer {
 

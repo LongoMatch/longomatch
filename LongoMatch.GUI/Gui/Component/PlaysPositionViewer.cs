@@ -16,8 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using System.Collections.Generic;
 

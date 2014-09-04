@@ -16,7 +16,7 @@
   <Contents>
     <File subtype="Code" buildaction="Compile" name="Services/TemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/RenderingJobsManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Services/Core.cs" />
+    <File subtype="Code" buildaction="Compile" name="Services/CoreServices.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/HotKeysManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/EventsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/PlaylistManager.cs" />

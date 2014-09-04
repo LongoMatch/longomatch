@@ -17,7 +17,7 @@
 //
 using System;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Core.Interfaces
 {
 	public interface IIDObject
 	{

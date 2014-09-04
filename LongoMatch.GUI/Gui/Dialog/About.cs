@@ -19,7 +19,7 @@ using System;
 using System.Reflection;
 using Gtk;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {

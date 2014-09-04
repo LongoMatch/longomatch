@@ -18,9 +18,9 @@
 using System;
 using NUnit.Framework;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
 using System.Linq;
 

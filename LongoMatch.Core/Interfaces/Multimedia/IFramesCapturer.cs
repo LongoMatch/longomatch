@@ -20,10 +20,10 @@
 
 using System;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Interfaces.Multimedia
+namespace LongoMatch.Core.Interfaces.Multimedia
 {
 
 

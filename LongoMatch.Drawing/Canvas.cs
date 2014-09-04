@@ -18,10 +18,10 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing

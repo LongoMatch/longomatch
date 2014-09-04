@@ -18,7 +18,7 @@
 
 using System;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 
 	public struct CaptureSettings

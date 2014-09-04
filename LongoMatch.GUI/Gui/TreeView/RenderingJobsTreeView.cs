@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using Gtk;
 using Stetic;
 using Mono.Unix;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
 
 namespace LongoMatch.Gui.Component

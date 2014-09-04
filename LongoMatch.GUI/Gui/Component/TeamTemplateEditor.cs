@@ -20,13 +20,13 @@ using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
-using LongoMatch.Store.Templates;
-using LongoMatch.Store;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
 using Mono.Unix;
 
-using Image = LongoMatch.Common.Image;
-using Color = LongoMatch.Common.Color;
-using LongoMatch.Common;
+using Image = LongoMatch.Core.Common.Image;
+using Color = LongoMatch.Core.Common.Color;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Drawing.Widgets;

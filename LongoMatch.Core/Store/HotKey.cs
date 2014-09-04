@@ -25,14 +25,14 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
 using Newtonsoft.Json;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
 
 #if HAVE_GTK
 using Gdk;
 #endif
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

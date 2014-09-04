@@ -17,9 +17,9 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Store.Templates;
 using Gdk;
 
 namespace LongoMatch.Gui.Component

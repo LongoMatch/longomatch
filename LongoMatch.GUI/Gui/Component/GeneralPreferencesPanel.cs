@@ -18,7 +18,7 @@
 using System;
 using Mono.Unix;
 using Gtk;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using System.Globalization;
 
 namespace LongoMatch.Gui.Component

@@ -17,15 +17,15 @@
 //
 using System;
 using Cairo;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
-using FontSlant = LongoMatch.Common.FontSlant;
-using FontWeight = LongoMatch.Common.FontWeight;
-using FontAlignment = LongoMatch.Common.FontAlignment;
-using Color = LongoMatch.Common.Color;
-using Image = LongoMatch.Common.Image;
-using LineStyle = LongoMatch.Common.LineStyle;
-using Point = LongoMatch.Common.Point;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using FontSlant = LongoMatch.Core.Common.FontSlant;
+using FontWeight = LongoMatch.Core.Common.FontWeight;
+using FontAlignment = LongoMatch.Core.Common.FontAlignment;
+using Color = LongoMatch.Core.Common.Color;
+using Image = LongoMatch.Core.Common.Image;
+using LineStyle = LongoMatch.Core.Common.LineStyle;
+using Point = LongoMatch.Core.Common.Point;
 using Gdk;
 using Pango;
 

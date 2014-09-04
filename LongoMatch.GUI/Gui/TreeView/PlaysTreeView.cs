@@ -20,10 +20,10 @@
 
 using System;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
-using EventType = LongoMatch.Store.EventType;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using EventType = LongoMatch.Core.Store.EventType;
 
 namespace LongoMatch.Gui.Component
 {

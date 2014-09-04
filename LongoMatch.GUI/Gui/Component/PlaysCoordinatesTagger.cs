@@ -15,11 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Common;
-using LongoMatch.Stats;
-using LongoMatch.Store;
-using Image = LongoMatch.Common.Image;
-using Point = LongoMatch.Common.Point;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Stats;
+using LongoMatch.Core.Store;
+using Image = LongoMatch.Core.Common.Image;
+using Point = LongoMatch.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {

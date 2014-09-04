@@ -76,7 +76,6 @@ SOURCES = Common/Area.cs \
 	Store/Drawables/Rectangle.cs \
 	Store/Drawables/Selection.cs \
 	Store/Drawables/Text.cs \
-	Store/Event.cs \
 	Store/EventType.cs \
 	Store/FrameDrawing.cs \
 	Store/HotKey.cs \
@@ -98,6 +97,7 @@ SOURCES = Common/Area.cs \
 	Store/Templates/TeamTemplate.cs \
 	Store/Time.cs \
 	Store/TimeNode.cs \
+	Store/TimelineEvent.cs \
 	Store/TimelineNode.cs \
 	Store/Timer.cs \
 	StyleConf.cs

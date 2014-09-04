@@ -18,9 +18,9 @@
 
 using System;
 using Newtonsoft.Json;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

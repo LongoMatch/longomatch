@@ -20,7 +20,7 @@ using Cairo;
 using LongoMatch.Gui.Helpers;
 
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class CairoUtils
 	{

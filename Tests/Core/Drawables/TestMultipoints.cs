@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Drawables;
 
 namespace Tests.Core.Drawables
 {

@@ -19,7 +19,7 @@
 //
 using System;
 using LongoMatch.Video.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui
 {

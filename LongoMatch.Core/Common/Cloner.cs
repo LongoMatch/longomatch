@@ -18,9 +18,7 @@
 using System;
 using System.IO;
 
-using LongoMatch.Common;
-
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public static class Cloner
 	{

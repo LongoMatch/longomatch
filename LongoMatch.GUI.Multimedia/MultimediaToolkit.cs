@@ -18,8 +18,8 @@
 //
 //
 using LongoMatch.Video.Utils;
-using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Store;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
 
 using Remuxer = LongoMatch.Video.Utils;
 

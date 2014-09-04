@@ -19,7 +19,7 @@ using System;
 using Mono.Addins;
 
 using LongoMatch;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {

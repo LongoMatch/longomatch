@@ -23,12 +23,12 @@ using System.Linq;
 using Newtonsoft.Json;
 
 using Mono.Unix;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
-using Image = LongoMatch.Common.Image;
+using Image = LongoMatch.Core.Common.Image;
 
-namespace LongoMatch.Store.Templates
+namespace LongoMatch.Core.Store.Templates
 {
 
 	/// <summary>

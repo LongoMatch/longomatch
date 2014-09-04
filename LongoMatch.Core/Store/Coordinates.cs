@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	public class Coordinates

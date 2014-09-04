@@ -17,9 +17,9 @@
 //
 using System;
 using NUnit.Framework;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Common;
-using Text = LongoMatch.Store.Drawables.Text;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Common;
+using Text = LongoMatch.Core.Store.Drawables.Text;
 
 
 namespace Tests.Core.Drawables

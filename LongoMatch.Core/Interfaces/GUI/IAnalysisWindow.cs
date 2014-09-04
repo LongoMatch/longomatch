@@ -18,12 +18,12 @@
 using System;
 using System.Collections.Generic;
 
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.Interfaces.GUI
+namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IAnalysisWindow
 	{	

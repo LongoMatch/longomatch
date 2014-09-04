@@ -21,10 +21,10 @@
 using System;
 using Gdk;
 
-using LongoMatch.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 
-namespace LongoMatch.Interfaces.Multimedia
+namespace LongoMatch.Core.Interfaces.Multimedia
 {
 
 

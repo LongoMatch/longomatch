@@ -19,10 +19,10 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 
-using LongoMatch.Common;
-using LongoMatch.Stats;
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Stats;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component.Stats
 {

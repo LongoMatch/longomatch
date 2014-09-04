@@ -19,11 +19,11 @@
 using System;
 using Newtonsoft.Json;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	[Serializable]

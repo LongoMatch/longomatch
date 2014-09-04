@@ -17,8 +17,8 @@
 //
 using System;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Store;
-using LongoMatch.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component

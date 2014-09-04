@@ -19,7 +19,7 @@
 //
 
 using System;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui.Popup
 {

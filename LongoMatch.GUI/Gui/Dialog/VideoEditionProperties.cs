@@ -24,7 +24,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video.Common;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 

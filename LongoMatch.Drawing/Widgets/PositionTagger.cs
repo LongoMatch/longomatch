@@ -17,13 +17,13 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Drawing.Widgets
 {

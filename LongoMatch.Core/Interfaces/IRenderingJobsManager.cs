@@ -17,9 +17,9 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Core.Interfaces
 {
 	public interface IRenderingJobsManager
 	{

@@ -17,11 +17,11 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Stats;
+using LongoMatch.Core.Stats;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component.Stats
 {

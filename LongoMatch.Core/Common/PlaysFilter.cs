@@ -19,10 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using LongoMatch.Handlers;
-using LongoMatch.Store;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class PlaysFilter
 	{

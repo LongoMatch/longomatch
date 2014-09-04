@@ -19,9 +19,9 @@
 using System;
 using Newtonsoft.Json;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	[Serializable]

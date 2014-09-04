@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Store.Playlists
+namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
 	public class PlaylistDrawing: IPlaylistElement

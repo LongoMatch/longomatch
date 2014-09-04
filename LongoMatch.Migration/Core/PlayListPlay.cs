@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	/// <summary>
 	/// Represents a video segment used by <see cref="LongoMatch.Playlist.Playlist"/>.

@@ -20,11 +20,11 @@
 using System.Linq;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
-using LongoMatch.Store.Playlists;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Store;
 using Mono.Unix;
 
 namespace LongoMatch.Gui.Component

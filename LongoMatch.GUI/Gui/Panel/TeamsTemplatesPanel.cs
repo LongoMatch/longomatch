@@ -22,15 +22,15 @@ using Gtk;
 using Mono.Unix;
 using Stetic;
 
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Common;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces.GUI;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Panel
 {

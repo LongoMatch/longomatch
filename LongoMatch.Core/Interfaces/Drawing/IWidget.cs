@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Handlers.Drawing;
-using LongoMatch.Common;
+using LongoMatch.Core.Handlers.Drawing;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Interfaces.Drawing
+namespace LongoMatch.Core.Interfaces.Drawing
 {
 	public interface IWidget: IDisposable
 	{

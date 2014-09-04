@@ -18,9 +18,9 @@
 using System;
 using Gtk;
 
-using LongoMatch.Stats;
-using LongoMatch.Store;
-using LongoMatch.Common;
+using LongoMatch.Core.Stats;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component.Stats
 {

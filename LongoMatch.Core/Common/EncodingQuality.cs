@@ -19,7 +19,7 @@ using System;
 using Mono.Unix;
 using System.Collections.Generic;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	
 	[Serializable]

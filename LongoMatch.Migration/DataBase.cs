@@ -26,10 +26,10 @@ using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
 using Db4objects.Db4o.Ext;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {

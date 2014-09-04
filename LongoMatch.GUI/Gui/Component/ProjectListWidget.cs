@@ -25,9 +25,9 @@ using System.Linq;
 using Mono.Unix;
 using Gtk;
 
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
 using LongoMatch.Video.Utils;
 using Gdk;
 

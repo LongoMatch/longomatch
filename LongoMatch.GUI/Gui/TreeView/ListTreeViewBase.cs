@@ -23,15 +23,15 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
-using Image = LongoMatch.Common.Image;
-using Point = LongoMatch.Common.Point;
+using Image = LongoMatch.Core.Common.Image;
+using Point = LongoMatch.Core.Common.Point;
 using Color = Gdk.Color;
 using LongoMatch.Gui.Menus;
 using LongoMatch.Drawing.Cairo;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Gui.Component
 {

@@ -20,7 +20,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class Gettext
 	{

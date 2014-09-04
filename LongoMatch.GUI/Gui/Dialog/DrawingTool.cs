@@ -20,18 +20,18 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui.Component;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Interfaces.Drawing;
 using Misc = LongoMatch.Gui.Helpers.Misc;
-using Color = LongoMatch.Common.Color;
-using Drawable = LongoMatch.Store.Drawables.Drawable;
-using Image = LongoMatch.Common.Image;
+using Color = LongoMatch.Core.Common.Color;
+using Drawable = LongoMatch.Core.Store.Drawables.Drawable;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Dialog
 {

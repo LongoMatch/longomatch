@@ -17,15 +17,15 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
-using LongoMatch.LongoMatch.Core.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.LongoMatch.Core.Handlers;
-using LongoMatch.LongoMatch.Core.Store;
-using LongoMatch.LongoMatch.Core.Store.Drawables;
-using LongoMatch.LongoMatch.Core.Interfaces.LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
 		public event NewTagHandler NewTagEvent;
 
-		LongoMatch.LongoMatch.Core.Store.Templates.Dashboard template;
+		LongoMatch.Core.Store.Templates.Dashboard template;
 		TagMode tagMode;
 		Time currentTime;
 		int templateWidth, templateHeight;
@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddTag = new Tag ("", "");
 		}
 
-		public LongoMatch.LongoMatch.Core.Store.Templates.Dashboard Template {
+		public LongoMatch.Core.Store.Templates.Dashboard Template {
 			set {
 				template = value;
 				LoadTemplate ();

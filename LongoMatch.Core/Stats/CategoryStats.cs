@@ -18,11 +18,11 @@
 using System;
 using System.Collections.Generic;
 
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Core.Stats
 {
 	public class CategoryStats: Stat
 	{

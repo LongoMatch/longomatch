@@ -18,11 +18,11 @@
 using System;
 using System.IO;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Drawing;
 
 namespace LongoMatch
 {

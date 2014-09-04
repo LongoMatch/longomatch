@@ -22,10 +22,10 @@ using Mono.Unix;
 using GLib;
 using Gtk;
 
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Utils;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Video.Utils
 {

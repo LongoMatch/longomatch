@@ -21,10 +21,10 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.Store.Playlists;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {

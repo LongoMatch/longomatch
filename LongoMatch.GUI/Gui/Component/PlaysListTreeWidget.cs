@@ -21,9 +21,9 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component

@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store.Drawables
+namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
 	public class Line: Drawable

@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog

@@ -16,14 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
 #if HAVE_GTK
 using SImage = Gdk.Pixbuf;
 #endif
 
-namespace LongoMatch.Store.Playlists
+namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
 	public class PlaylistImage: IPlaylistElement

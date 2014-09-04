@@ -19,10 +19,10 @@ using System;
 using System.IO;
 using LongoMatch;
 using LongoMatch.DB;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
 using Mono.Unix;
 
 #if OSTYPE_WINDOWS
@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 #endif
 namespace LongoMatch.Services
 {
-	public class Core
+	public class CoreServices
 	{
 		static DataBaseManager dbManager;
 		static EventsManager eManager;

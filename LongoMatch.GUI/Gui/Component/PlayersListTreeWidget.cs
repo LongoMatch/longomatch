@@ -19,11 +19,11 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Store.Templates;
 
 
 namespace LongoMatch.Gui.Component

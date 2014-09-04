@@ -17,7 +17,7 @@
 // 
 using System;
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Core.Stats
 {
 	public class Stat
 	{

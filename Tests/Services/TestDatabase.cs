@@ -21,7 +21,7 @@ using System.IO;
 using NUnit.Framework;
 
 using LongoMatch.DB;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 namespace Tests.Services
 {

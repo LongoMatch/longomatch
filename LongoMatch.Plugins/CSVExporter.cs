@@ -21,10 +21,10 @@ using System.Linq;
 using Mono.Addins;
 using Mono.Unix;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
 using System.IO;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Plugins
 {

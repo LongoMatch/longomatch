@@ -23,9 +23,9 @@ using Cairo;
 using Pango;
 using Color = Cairo.Color;
 
-using LongoMatch.Common;
-using LongoMatch.Stats;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Stats;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {

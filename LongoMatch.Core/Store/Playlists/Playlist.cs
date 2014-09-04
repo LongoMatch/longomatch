@@ -19,9 +19,9 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Store.Playlists
+namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
 	public class Playlist

@@ -18,10 +18,10 @@
 
 using System;
 using Newtonsoft.Json;
-using LongoMatch.Store;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

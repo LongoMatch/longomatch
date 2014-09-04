@@ -25,7 +25,7 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Popup;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;

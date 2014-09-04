@@ -31,7 +31,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace LongoMatch
+namespace LongoMatch.Core.Common
 {
 	public delegate void LogNotifyHandler(LogNotifyArgs args);
 

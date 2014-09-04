@@ -20,15 +20,15 @@
 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.Handlers
+namespace LongoMatch.Core.Handlers
 {
 
 	/*Tagging Events*/

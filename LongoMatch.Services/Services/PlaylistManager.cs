@@ -17,11 +17,11 @@
 // 
 using System.Collections.Generic;
 using System.Threading;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using Mono.Unix;
 using Timer = System.Threading.Timer;
 

@@ -18,8 +18,9 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using LongoMatch.Video;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Multimedia.Utils
 {

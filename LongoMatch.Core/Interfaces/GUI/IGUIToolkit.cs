@@ -19,15 +19,15 @@ using System;
 using Gtk;
 using System.Collections.Generic;
 
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Stats;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Stats;
+using LongoMatch.Core.Interfaces.Multimedia;
 
-namespace LongoMatch.Interfaces.GUI
+namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IGUIToolkit
 	{

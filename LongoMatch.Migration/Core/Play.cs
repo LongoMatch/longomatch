@@ -22,11 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

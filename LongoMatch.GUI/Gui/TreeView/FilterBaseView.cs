@@ -20,9 +20,9 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {

@@ -17,7 +17,7 @@
 //
 using Gdk;
 using Cairo;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces.Drawing;
 using Pango;
 
 namespace LongoMatch.Drawing.Cairo

@@ -20,7 +20,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	public class Period: Timer
 	{

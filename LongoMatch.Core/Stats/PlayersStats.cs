@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Core.Stats
 {
 	public class PlayersStats
 	{

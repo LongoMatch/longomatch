@@ -19,8 +19,8 @@ using System;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using System.IO;
 using System.Collections.Generic;
 

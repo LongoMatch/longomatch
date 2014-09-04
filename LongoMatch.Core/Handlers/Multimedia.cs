@@ -18,10 +18,10 @@
 
 using System;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Handlers
+namespace LongoMatch.Core.Handlers
 {
 	public delegate void PlayListSegmentDoneHandler();
 	public delegate void SegmentClosedHandler();

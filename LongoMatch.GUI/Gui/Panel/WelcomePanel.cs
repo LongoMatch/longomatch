@@ -16,8 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Handlers;
-using LongoMatch.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Common;
 using Mono.Unix;
 using Gtk;
 

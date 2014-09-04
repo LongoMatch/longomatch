@@ -21,16 +21,16 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui;
 using Helpers = LongoMatch.Gui.Helpers;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
-using Image = LongoMatch.Common.Image;
+using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
@@ -282,7 +282,7 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			LongoMatch.Common.Image background;
+			LongoMatch.Core.Common.Image background;
 			Gdk.Pixbuf pix = Helpers.Misc.OpenImage (this);
 			
 			if (pix == null) {

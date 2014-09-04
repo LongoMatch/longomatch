@@ -18,13 +18,13 @@
 using System;
 using System.Linq;
 using System.Runtime.Remoting;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {

@@ -17,13 +17,13 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
 using Mono.Unix;
-using LongoMatch.Store.Playlists;
+using LongoMatch.Core.Store.Playlists;
 
 namespace LongoMatch.Services
 {

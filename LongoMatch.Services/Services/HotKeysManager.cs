@@ -19,9 +19,9 @@
 //
 //
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
 
 #if HAVE_GTK
 using Gdk;

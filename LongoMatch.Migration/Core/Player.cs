@@ -17,10 +17,10 @@
 //
 
 using System;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	/// <summary>
 	/// Player of a team

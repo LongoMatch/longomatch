@@ -18,7 +18,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 
 	[JsonConverter (typeof (LongoMatchConverter))]

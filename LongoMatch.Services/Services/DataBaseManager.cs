@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mono.Unix;
-using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Store;
-using LongoMatch.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.DB
 {

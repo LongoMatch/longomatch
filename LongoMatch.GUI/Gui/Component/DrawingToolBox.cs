@@ -19,7 +19,7 @@
 using System;
 using Gtk;
 using Gdk;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Common;
 using Color = Gdk.Color;
 

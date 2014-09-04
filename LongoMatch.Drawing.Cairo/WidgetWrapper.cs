@@ -17,12 +17,12 @@
 //
 using Gtk;
 using Gdk;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Handlers.Drawing;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Handlers.Drawing;
 using Rectangle = Gdk.Rectangle;
-using Point = LongoMatch.Common.Point;
-using CursorType = LongoMatch.Common.CursorType;
+using Point = LongoMatch.Core.Common.Point;
+using CursorType = LongoMatch.Core.Common.CursorType;
 using GCursorType = Gdk.CursorType;
 
 namespace LongoMatch.Drawing.Cairo
@@ -34,7 +34,7 @@ namespace LongoMatch.Drawing.Cairo
 		public event ButtonReleasedHandler ButtonReleasedEvent;
 		public event MotionHandler MotionEvent;
 		public event ShowTooltipHandler ShowTooltipEvent;
-		public event LongoMatch.Handlers.Drawing.SizeChangedHandler SizeChangedEvent;
+		public event LongoMatch.Core.Handlers.Drawing.SizeChangedHandler SizeChangedEvent;
 
 		DrawingArea widget;
 		int currentWidth, currentHeight;

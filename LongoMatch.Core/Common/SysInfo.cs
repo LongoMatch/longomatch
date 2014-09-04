@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class SysInfo
 	{

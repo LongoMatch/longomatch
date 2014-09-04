@@ -17,11 +17,11 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Mono.Unix;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	public class EventType

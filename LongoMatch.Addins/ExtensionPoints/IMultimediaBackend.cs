@@ -20,7 +20,7 @@
 
 using System;
 using Mono.Addins;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 
 namespace LongoMatch.Addins.ExtensionPoints 

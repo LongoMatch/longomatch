@@ -17,7 +17,7 @@
 // 
 using System;
 
-namespace LongoMatch.Interfaces.GUI
+namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IRenderingStateBar
 	{

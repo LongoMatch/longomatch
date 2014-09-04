@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 
 

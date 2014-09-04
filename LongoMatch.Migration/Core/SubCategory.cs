@@ -21,10 +21,10 @@ using System.Linq;
 using Mono.Unix;
 using Newtonsoft.Json;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	/// <summary>
 	/// A sub category is used to extend the tags of a category.

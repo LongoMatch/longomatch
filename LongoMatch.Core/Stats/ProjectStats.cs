@@ -19,12 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Core.Stats
 {
 	public class ProjectStats: IDisposable
 	{

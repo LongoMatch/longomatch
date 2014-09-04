@@ -19,9 +19,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Playlists;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using Mono.Unix;
 
 namespace LongoMatch.Gui.Menus

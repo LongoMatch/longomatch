@@ -22,9 +22,9 @@ namespace LongoMatch.Video.Editor
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
-	using LongoMatch.Interfaces;
-	using LongoMatch.Common;
-	using LongoMatch.Interfaces.Multimedia;
+	using LongoMatch.Core.Interfaces;
+	using LongoMatch.Core.Common;
+	using LongoMatch.Core.Interfaces.Multimedia;
 	using LongoMatch.Video.Common;
 
 	public class GstVideoSplitter : GLib.Object, IVideoEditor
@@ -33,8 +33,8 @@ namespace LongoMatch.Video.Editor
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_editor_new (out IntPtr err);
 
-		public event LongoMatch.Handlers.ProgressHandler Progress;
-		public event LongoMatch.Handlers.ErrorHandler Error;
+		public event LongoMatch.Core.Handlers.ProgressHandler Progress;
+		public event LongoMatch.Core.Handlers.ErrorHandler Error;
 
 		public unsafe GstVideoSplitter () : base(IntPtr.Zero)
 		{

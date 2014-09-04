@@ -18,8 +18,8 @@
 
 using Gdk;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {

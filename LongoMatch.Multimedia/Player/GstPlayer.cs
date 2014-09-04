@@ -18,12 +18,12 @@
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
-using LongoMatch.Store;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Video.Player
 {

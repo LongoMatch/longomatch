@@ -22,8 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
-using LongoMatch.LongoMatch.Core.Common;
-using LongoMatch.LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store

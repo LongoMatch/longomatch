@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Gui;
-using LongoMatch.Store;
-using LongoMatch.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Panel
 {

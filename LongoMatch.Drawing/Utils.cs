@@ -17,11 +17,11 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Store;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 using System.Runtime.Remoting;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing
 {

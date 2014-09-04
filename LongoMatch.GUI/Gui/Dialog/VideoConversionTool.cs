@@ -20,11 +20,11 @@ using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Gui;
 using LongoMatch.Video.Utils;
-using LongoMatch.Store;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog

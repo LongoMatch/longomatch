@@ -19,12 +19,12 @@
 //
 
 using System;
-using LongoMatch.Common;
-using LongoMatch.Store;
-using Image = LongoMatch.Common.Image;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Handlers;
 
-namespace LongoMatch.Interfaces.Multimedia
+namespace LongoMatch.Core.Interfaces.Multimedia
 {
 
 

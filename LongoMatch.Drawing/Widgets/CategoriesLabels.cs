@@ -17,9 +17,9 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Common;
 using LongoMatch.Drawing.CanvasObjects;
 using Mono.Unix;
 

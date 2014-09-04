@@ -17,7 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {

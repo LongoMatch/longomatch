@@ -18,7 +18,7 @@
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	using System;
 	using System.IO;

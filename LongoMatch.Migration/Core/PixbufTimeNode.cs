@@ -21,9 +21,9 @@
 using System;
 using System.IO;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>

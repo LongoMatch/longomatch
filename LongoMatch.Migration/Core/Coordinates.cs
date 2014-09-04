@@ -20,7 +20,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	[JsonObject]

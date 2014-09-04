@@ -17,7 +17,7 @@
 //
 using System;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	public class Score

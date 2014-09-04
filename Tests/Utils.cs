@@ -17,7 +17,7 @@
 //
 using System;
 using System.IO;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using NUnit.Framework;
 
 namespace Tests

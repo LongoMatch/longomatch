@@ -18,7 +18,7 @@
 using System;
 using Mono.Unix;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class DBLockedException: Exception
 	{

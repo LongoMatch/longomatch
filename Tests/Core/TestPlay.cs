@@ -17,8 +17,8 @@
 //
 using System;
 using NUnit.Framework;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace Tests.Core
 {
@@ -34,7 +34,7 @@ namespace Tests.Core
 			play.EventType = cat1;
 			play.Notes = "notes";
 			play.Selected = true;
-			play.Team = LongoMatch.Common.Team.LOCAL;
+			play.Team = LongoMatch.LongoMatch.Core.Common.Team.LOCAL;
 			play.FieldPosition = new Coordinates();
 			play.FieldPosition.Points.Add (new Point (1, 2));
 			play.HalfFieldPosition = new Coordinates ();

@@ -17,10 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Store;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -144,13 +144,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			DrawButton (tk, true);
 
 			/* Draw header */
-			tk.FillColor = LongoMatch.Common.Color.Grey2;
+			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;
 			tk.LineWidth = 2;
 			if (catSelected && Mode != TagMode.Edit) {
 				tk.StrokeColor = Button.DarkColor;
 				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			} else {
-				tk.StrokeColor = LongoMatch.Common.Color.Grey2;
+				tk.StrokeColor = LongoMatch.Core.Common.Color.Grey2;
 				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			}
 			rects.Add (new Rectangle (position, catWidth, heightPerRow), Button);

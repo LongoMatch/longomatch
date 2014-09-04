@@ -23,13 +23,13 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
-using LongoMatch.Common;
-using LColor = LongoMatch.Common.Color; 
+using LongoMatch.Core.Common;
+using LColor = LongoMatch.Core.Common.Color; 
 using Color = Gdk.Color;
 using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Gui.Helpers
 {

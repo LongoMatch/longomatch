@@ -17,10 +17,10 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store.Drawables
+namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
 	public class Rectangle: Quadrilateral

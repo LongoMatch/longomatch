@@ -17,7 +17,7 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component

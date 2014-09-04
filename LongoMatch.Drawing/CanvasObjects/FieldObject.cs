@@ -17,10 +17,10 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Core.Interfaces.Drawing;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {

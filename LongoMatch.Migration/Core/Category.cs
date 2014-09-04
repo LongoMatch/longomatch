@@ -25,11 +25,11 @@ using System.Runtime.Serialization;
 using Mono.Unix;
 using Newtonsoft.Json;
 
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
-using Image = LongoMatch.Common.Image;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Image = LongoMatch.Core.Common.Image;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	/// <summary>
@@ -185,10 +185,10 @@ namespace LongoMatch.Store
 			Position = (Int32) info.GetValue("position", typeof (Int32));
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
 			Color = System.Drawing.Color.FromArgb(
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("red", typeof(ushort))),
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("green", typeof(ushort))),
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
-			LColor = LongoMatch.Common.Color.ColorFromUShort ((ushort)info.GetValue("red", typeof(ushort)),
+				LongoMatch.Core.Common.Color.UShortToByte((ushort)info.GetValue("red", typeof(ushort))),
+				LongoMatch.Core.Common.Color.UShortToByte((ushort)info.GetValue("green", typeof(ushort))),
+				LongoMatch.Core.Common.Color.UShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
+			LColor = LongoMatch.Core.Common.Color.ColorFromUShort ((ushort)info.GetValue("red", typeof(ushort)),
 			                                                  (ushort)info.GetValue("green", typeof(ushort)),
 			                                                  (ushort)info.GetValue("blue", typeof(ushort)));
 			try {

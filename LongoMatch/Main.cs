@@ -21,11 +21,11 @@ using System.IO;
 using System.Reflection;
 using Gtk;
 using LongoMatch.Addins;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
@@ -38,7 +38,7 @@ namespace LongoMatch
 		
 		public static void Main (string[] args)
 		{
-			Core.Init ();
+			CoreServices.Init ();
 
 			InitGtk ();
 
@@ -61,7 +61,7 @@ namespace LongoMatch
 				manager.LoadExportProjectAddins (guiToolkit.MainController);
 				manager.LoadMultimediaBackendsAddins (multimediaToolkit);
 				try {
-					Core.Start (guiToolkit, multimediaToolkit);
+					CoreServices.Start (guiToolkit, multimediaToolkit);
 				} catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
 						"the application will closed.");
@@ -69,7 +69,7 @@ namespace LongoMatch
 					Log.Exception (locked);
 					return;
 				}
-				manager.LoadImportProjectAddins (Core.ProjectsImporter);
+				manager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 				Application.Run ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);

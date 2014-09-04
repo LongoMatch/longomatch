@@ -17,12 +17,12 @@
 // 
 using System;
 
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
 using System.Collections.Generic;
 
-namespace LongoMatch.Interfaces.GUI
+namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface ICapturerBin
 	{

@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 
 using LongoMatch.Store;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui.Component
 {

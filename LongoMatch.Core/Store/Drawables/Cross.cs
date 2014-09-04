@@ -18,9 +18,9 @@
 using System;
 using System.Linq;
 using Newtonsoft.Json;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Store.Drawables
+namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
 	public class Cross: Drawable

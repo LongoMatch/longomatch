@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
-using LongoMatch.Common;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
 using Helpers = LongoMatch.Gui.Helpers;
 using Gdk;
 

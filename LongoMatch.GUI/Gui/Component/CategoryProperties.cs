@@ -22,10 +22,10 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Common;
-using LongoMatch.Store;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;
-using Point = LongoMatch.Common.Point;
+using Point = LongoMatch.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -290,7 +290,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			LongoMatch.Common.Color c = Helpers.Misc.ToLgmColor((sender as ColorButton).Color);
+			LongoMatch.Core.Common.Color c = Helpers.Misc.ToLgmColor((sender as ColorButton).Color);
 			if (sender == colorbutton1) {
 				button.BackgroundColor = c;
 			} else {

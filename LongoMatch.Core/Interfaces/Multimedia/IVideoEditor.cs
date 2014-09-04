@@ -20,10 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 
-namespace LongoMatch.Interfaces.Multimedia
+namespace LongoMatch.Core.Interfaces.Multimedia
 {
 
 	public interface IVideoEditor

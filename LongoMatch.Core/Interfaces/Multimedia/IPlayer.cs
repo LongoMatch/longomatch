@@ -19,12 +19,12 @@
 //
 
 using System;
-using LongoMatch.Store;
-using LongoMatch.Handlers;
-using Image = LongoMatch.Common.Image;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Handlers;
+using Image = LongoMatch.Core.Common.Image;
 
 
-namespace LongoMatch.Interfaces.Multimedia
+namespace LongoMatch.Core.Interfaces.Multimedia
 {
 	public interface IPlayer: IDisposable
 	{

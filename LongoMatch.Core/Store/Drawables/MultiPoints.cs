@@ -18,9 +18,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Store.Drawables
+namespace LongoMatch.Core.Store.Drawables
 {
 	public class MultiPoints: Rectangle
 	{

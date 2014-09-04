@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Core.Interfaces
 {
 	public interface IDataBaseManager
 	{

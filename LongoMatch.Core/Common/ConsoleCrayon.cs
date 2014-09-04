@@ -28,7 +28,7 @@
 
 using System;
 
-namespace LongoMatch
+namespace LongoMatch.Core.Common
 {
 	public static class ConsoleCrayon
 	{

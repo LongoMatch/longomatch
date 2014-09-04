@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public static class ExtensionMethods
 	{

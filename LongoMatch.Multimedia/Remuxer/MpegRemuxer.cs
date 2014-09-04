@@ -19,8 +19,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using LongoMatch.Handlers;
-using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Video.Remuxer
 {

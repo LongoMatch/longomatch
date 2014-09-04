@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Core.Stats
 {
 	public class PercentualStat: Stat
 	{

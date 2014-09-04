@@ -23,14 +23,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Interfaces;
 using System.Reflection;
-using LongoMatch.Store.Templates;
+using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json.Converters;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 using System.Globalization;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Core.Common
 {
 	public class SerializableObject
 	{

@@ -17,7 +17,7 @@
 //
 using NUnit.Framework;
 using System;
-using LongoMatch.Store;
+using LongoMatch.Core.Store;
 
 namespace Tests.Core
 {

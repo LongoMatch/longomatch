@@ -17,10 +17,10 @@
 //
 using System;
 using Newtonsoft.Json;
-using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Store.Playlists
+namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
 	public class PlaylistPlayElement: IPlaylistElement

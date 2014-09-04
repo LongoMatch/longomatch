@@ -15,8 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Store;
-using LongoMatch.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Video.Common
 {

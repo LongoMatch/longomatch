@@ -18,8 +18,8 @@
 using System;
 using Mono.Addins;
 
-using LongoMatch.Store;
-using LongoMatch.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {

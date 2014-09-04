@@ -21,10 +21,10 @@
 using System;
 using Mono.Unix;
 
-using LongoMatch.Common;
+using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Core.Store
 {
 
 	[Serializable]
