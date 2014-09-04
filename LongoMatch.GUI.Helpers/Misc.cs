@@ -213,7 +213,7 @@ namespace LongoMatch.Gui.Helpers
 		/// <param name="name">Icon Name.</param>
 		/// <param name="size">Icon Size in pixels.</param>
 		/// <param name="flags">Lookup Flags like ForceSVG.</param>
-		public static Gdk.Pixbuf LoadIcon (string name, int size, IconLookupFlags flags)
+		public static Gdk.Pixbuf LoadIcon (string name, int size, IconLookupFlags flags = IconLookupFlags.ForceSvg)
 		{
 			try {
 				IconInfo icon_info = Gtk.IconTheme.Default.LookupIcon (name, size, flags);
