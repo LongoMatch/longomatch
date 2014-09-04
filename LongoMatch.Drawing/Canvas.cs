@@ -74,8 +74,8 @@ namespace LongoMatch.Drawing
 				foreach (CanvasObject co in Objects) {
 					co.Dispose ();
 				}
+				Objects.Clear ();
 			}
-			Objects.Clear ();
 		}
 
 		public List<ICanvasObject> Objects {
