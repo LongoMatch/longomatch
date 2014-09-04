@@ -24,7 +24,7 @@ using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using System.IO;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Plugins
 {
@@ -79,24 +79,26 @@ namespace LongoMatch.Plugins
 
 		public void Export ()
 		{
-			foreach (Categoryoutton cat in project.Dashboard.List) {
-				ExportCategory (cat);
+			foreach (EventType eventType in project.EventTypes) {
+				ExportCategory (eventType);
 			}
 			File.WriteAllLines (filename, output);
 		}
 
-		void ExportCategory (CategoryButton cat)
+		void ExportCategory (EventType evt)
 		{
 			string headers;
 			List<TimelineEvent> plays;
 			
-			output.Add ("CATEGORY: " + cat.Name);
-			plays = project.PlaysInCategory (cat);
+			output.Add ("CATEGORY: " + evt.Name);
+			plays = project.EventsByType (evt);
 			
 			/* Write Headers for this category */
 			headers = "Name;Start;Stop;Team";
-			foreach (Tag tag in cat.Tags) {
-				headers += String.Format (";{0}", tag.Value);
+			if (evt is AnalysisEventType) {
+				foreach (Tag tag in (evt as AnalysisEventType).Tags) {
+					headers += String.Format (";{0}", tag.Value);
+				}
 			}
 			
 			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
@@ -108,10 +110,11 @@ namespace LongoMatch.Plugins
 				                      play.Team);
 				
 				/* Strings Tags */
-				foreach (Tag tag in cat.Tags) {
-					line += ";" + (play.Tags.Contains (tag) ? "1" : "0");
+				if (evt is AnalysisEventType) {
+					foreach (Tag tag in (evt as AnalysisEventType).Tags) {
+						line += ";" + (play.Tags.Contains (tag) ? "1" : "0");
+					}
 				}
-				
 				output.Add (line);
 			}
 			output.Add ("");
