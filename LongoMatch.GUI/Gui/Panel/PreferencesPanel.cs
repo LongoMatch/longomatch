@@ -56,13 +56,13 @@ namespace LongoMatch.Gui.Panel
 		
 		void AddPanels () {
 			AddPane (Catalog.GetString ("General"),
-			         Stetic.IconLoader.LoadIcon(this, "longomatch-preferences", IconSize.Dialog),
+			         Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
 			         new GeneralPreferencesPanel());
 			AddPane (Catalog.GetString ("Video"),
-			         Stetic.IconLoader.LoadIcon(this, "longomatch-control-record", IconSize.Dialog),
+			         Helpers.Misc.LoadIcon ("longomatch-control-record", IconSize.Dialog, 0),
 			         new VideoPreferencesPanel());
 			AddPane (Catalog.GetString ("Live analysis"),
-			         Stetic.IconLoader.LoadIcon(this, "longomatch-video-device", IconSize.Dialog),
+			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
 			         new LiveAnalysisPreferences());
 		}
 		
