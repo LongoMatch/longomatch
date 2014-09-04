@@ -216,7 +216,9 @@ namespace LongoMatch.Gui.Helpers
 		public static Gdk.Pixbuf LoadIcon (string name, int size, IconLookupFlags flags)
 		{
 			try {
-			  return IconTheme.Default.LoadIcon (name, size, flags);
+				IconInfo icon_info = Gtk.IconTheme.Default.LookupIcon (name, size, flags);
+				Gdk.Pixbuf res = new Gdk.Pixbuf (icon_info.Filename, size, size, true);
+			    return res;
 			} catch (System.Exception) {
 				return LoadMissingIcon (size);
 			}
