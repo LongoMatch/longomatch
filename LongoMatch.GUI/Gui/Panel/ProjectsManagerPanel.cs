@@ -94,12 +94,14 @@ namespace LongoMatch.Gui.Panel
 			if (lt.Shield != null) {
 				homeimage.Pixbuf = lt.Shield.Value;
 			} else {
-				homeimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+				homeimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
+				                                          Constants.MAX_SHIELD_ICON_SIZE);
 			}
 			if (vt.Shield != null) {
 				awayimage.Pixbuf = vt.Shield.Value;
 			} else {
-				awayimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+				awayimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
+				                                          Constants.MAX_SHIELD_ICON_SIZE);
 			}
 			
 			loadedProject = project;
