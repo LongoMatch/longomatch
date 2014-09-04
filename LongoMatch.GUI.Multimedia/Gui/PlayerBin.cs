@@ -100,9 +100,7 @@ namespace LongoMatch.Gui
 		#endregion
 		protected override void OnDestroyed ()
 		{
-			ReconfigureTimeout (0);
-			player.Dispose ();
-			blackboard.Dispose ();
+			Close ();
 			base.OnDestroyed ();
 		}
 		#region Properties
@@ -236,11 +234,13 @@ namespace LongoMatch.Gui
 
 		public void Close ()
 		{
+			player.Error -= OnError;
+			player.StateChange -= OnStateChanged;
+			player.Eos -= OnEndOfStream;
+			player.ReadyToSeek -= OnReadyToSeek;
 			ReconfigureTimeout (0);
-			player.Close ();
-			file = null;
-			timescale.Value = 0;
-			UnSensitive ();
+			player.Dispose ();
+			blackboard.Dispose ();
 		}
 
 		public void Seek (Time time, bool accurate)
