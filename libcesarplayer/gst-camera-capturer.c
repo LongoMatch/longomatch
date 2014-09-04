@@ -1370,8 +1370,10 @@ gst_camera_capturer_enum_devices (const gchar * device_name)
 
 finish:
   {
-    gst_element_set_state (device, GST_STATE_NULL);
-    gst_object_unref (GST_OBJECT (device));
+    if (device != NULL) {
+      gst_element_set_state (device, GST_STATE_NULL);
+      gst_object_unref (GST_OBJECT (device));
+    }
     return list;
   }
 }
