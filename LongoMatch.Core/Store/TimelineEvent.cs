@@ -73,6 +73,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Get/Set wheter this play is actually loaded. Used in  <see cref="LongoMatch.Gui.Component.TimeScale">
 		/// </summary>
+		[JsonIgnore]
 		public bool Selected {
 			get;
 			set;
