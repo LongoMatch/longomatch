@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void SetProject (Project project, PlaysFilter filter) {
+		public void SetProject (Project project, EventsFilter filter) {
 			this.project = project;
 			timeline.LoadProject (project, filter);
 			labels.LoadProject (project, filter);

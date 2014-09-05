@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Menus
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
 					item.Activated += (sender, e) => {
-						Config.EventsBroker.EmitPlayCategoryChanged (plays [0], c);
+						Config.EventsBroker.EmitMoveToEventType (plays [0], c);
 					}; 
 				}
 				catMenu.ShowAll ();
@@ -183,11 +183,11 @@ namespace LongoMatch.Gui.Menus
 			Add (moveCat);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => Config.EventsBroker.EmitPlaysDeleted (plays);
+			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
 			Add (del);
 			
 			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicatePlay (plays);
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
 			Add (duplicate);
 
 			drawings = new MenuItem (Catalog.GetString ("Drawings"));

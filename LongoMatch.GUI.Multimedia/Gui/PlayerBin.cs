@@ -301,7 +301,7 @@ namespace LongoMatch.Gui
 			//timescale.Sensitive = true;
 			loadedPlay = null;
 			ImageLoaded = false;
-			Config.EventsBroker.EmitLoadPlay (null);
+			Config.EventsBroker.EmitLoadEvent (null);
 		}
 
 		public void SetSensitive ()

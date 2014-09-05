@@ -43,7 +43,7 @@ namespace LongoMatch.Services
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
+		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			if (project == null) {
 				ignoreKeys = true;

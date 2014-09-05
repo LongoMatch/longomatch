@@ -32,10 +32,10 @@ namespace LongoMatch.Drawing.Widgets
 	public class DashboardCanvas: SelectionCanvas
 	{
 	
-		public event TaggersSelectedHandler TaggersSelectedEvent;
-		public event TaggerSelectedHandler AddNewTagEvent;
+		public event ButtonsSelectedHandlers TaggersSelectedEvent;
+		public event ButtonSelectedHandler AddNewTagEvent;
 		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
-		public event NewTagHandler NewTagEvent;
+		public event NewEventHandler NewTagEvent;
 
 		LongoMatch.Core.Store.Templates.Dashboard template;
 		TagMode tagMode;

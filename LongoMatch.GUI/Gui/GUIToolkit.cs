@@ -333,7 +333,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void OpenProject (Project project, ProjectType projectType, 
-		                         CaptureSettings props, PlaysFilter filter,
+		                         CaptureSettings props, EventsFilter filter,
 			                     out IAnalysisWindow analysisWindow)
 		{
 			Log.Information ("Open project");

@@ -68,7 +68,7 @@ namespace LongoMatch.Services
 			get;
 		}
 
-		public PlaysFilter PlaysFilter {
+		public EventsFilter PlaysFilter {
 			get;
 			set;
 		}
@@ -169,7 +169,7 @@ namespace LongoMatch.Services
 			
 			Log.Debug ("Loading project " + project.ID + " " + projectType);
 				
-			PlaysFilter = new PlaysFilter (project);
+			PlaysFilter = new EventsFilter (project);
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
 			                        out analysisWindow);
 			Player = analysisWindow.Player;

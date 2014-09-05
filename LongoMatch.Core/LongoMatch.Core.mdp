@@ -78,7 +78,7 @@
     <File subtype="Code" buildaction="Compile" name="Stats/PercentualStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/Stat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PlayersStats.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/PlaysFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/EventsFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IRemuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoConverter.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SysInfo.cs" />

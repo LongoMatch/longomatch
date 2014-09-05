@@ -44,16 +44,16 @@ namespace LongoMatch.Gui.Component
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 			itersDic = new Dictionary<EventType, TreeIter> ();
-			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 		}
 		
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 
-		public PlaysFilter Filter {
+		public EventsFilter Filter {
 			set{
 				treeview.Filter = value;
 			}

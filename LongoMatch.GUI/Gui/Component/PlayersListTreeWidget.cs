@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public PlaysFilter Filter {
+		public EventsFilter Filter {
 			set{
 				playerstreeview.Filter = value;
 			}

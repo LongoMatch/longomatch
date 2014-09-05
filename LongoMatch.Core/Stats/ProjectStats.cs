@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Stats
 	public class ProjectStats: IDisposable
 	{
 		List<CategoryStats> catStats;
-		PlaysFilter filter;
+		EventsFilter filter;
 		Project project;
 		
 		public ProjectStats (Project project)
@@ -111,7 +111,7 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 		
-		public PlaysFilter Filter {
+		public EventsFilter Filter {
 			set {
 				filter = value;
 				UpdateStats ();

@@ -37,7 +37,7 @@ namespace LongoMatch.Services
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
-		PlaysFilter filter;
+		EventsFilter filter;
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
 		IPlayerBin player;
@@ -53,7 +53,7 @@ namespace LongoMatch.Services
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                               PlaysFilter filter, IAnalysisWindow analysisWindow)
+		                               EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
@@ -86,12 +86,12 @@ namespace LongoMatch.Services
 		private void ConnectSignals ()
 		{
 			Config.EventsBroker.NewTagEvent += OnNewTag;
-			Config.EventsBroker.NewPlayEvent += HandleNewPlay;
-			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
-			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
-			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
+			Config.EventsBroker.NewTimelineEventEvent += HandleNewPlay;
+			Config.EventsBroker.EventsDeletedEvent += OnPlaysDeleted;
+			Config.EventsBroker.MoveToEventTypeEvent += OnPlayCategoryChanged;
+			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
-			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;

@@ -36,7 +36,7 @@ namespace LongoMatch.Services
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
 		TimelineEvent loadedPlay;
-		PlaysFilter filter;
+		EventsFilter filter;
 
 		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
 		{
@@ -53,7 +53,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
 			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
-			Config.EventsBroker.LoadPlayEvent += HandleLoadPlayEvent;
+			Config.EventsBroker.LoadEventEvent += HandleLoadPlayEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
 			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
 			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
@@ -101,7 +101,7 @@ namespace LongoMatch.Services
 		}
 		
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
+		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			openedProject = project;
 			if (project != null) {
@@ -125,7 +125,7 @@ namespace LongoMatch.Services
 			if (play != null) {
 				LoadPlay (play, play.Start, true);
 			}
-			Config.EventsBroker.EmitPlayLoaded (play);
+			Config.EventsBroker.EmitEventLoaded (play);
 		}
 
 		void HandleNext (Playlist playlist)

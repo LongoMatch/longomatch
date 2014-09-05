@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 		protected Project project;
 		protected string firstColumnName = "";
 		protected TreeStore store;
-		protected PlaysFilter filter;
+		protected EventsFilter filter;
 		
 		public FilterTreeViewBase ()
 		{
@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			CreateMenu();
 		}
 		
-		public virtual void SetFilter (PlaysFilter filter, Project project) {
+		public virtual void SetFilter (EventsFilter filter, Project project) {
 			this.project  = project;
 			this.filter = filter;
 			FillTree();

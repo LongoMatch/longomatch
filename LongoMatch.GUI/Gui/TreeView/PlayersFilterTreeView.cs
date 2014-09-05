@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			HeadersVisible = false;
 		}
 		
-		public override void SetFilter (PlaysFilter filter, Project project) {
+		public override void SetFilter (EventsFilter filter, Project project) {
 			this.local = project.LocalTeamTemplate;
 			this.visitor = project.VisitorTeamTemplate;
 			localTeam.Name = local.TeamName;

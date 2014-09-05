@@ -33,7 +33,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTimelineMenuHandler ShowMenuEvent;
 
 		Project project;
-		PlaysFilter playsFilter;
+		EventsFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
@@ -54,7 +54,7 @@ namespace LongoMatch.Drawing.Widgets
 			base.Dispose (disposing);
 		}
 
-		public void LoadProject (Project project, PlaysFilter filter)
+		public void LoadProject (Project project, EventsFilter filter)
 		{
 			int height;
 
@@ -171,7 +171,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (selections.Count > 0) {
 				PlayObject po = selections.Last ().Drawable as PlayObject;
-				Config.EventsBroker.EmitLoadPlay (po.Play);
+				Config.EventsBroker.EmitLoadEvent (po.Play);
 			}
 		}
 

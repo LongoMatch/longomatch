@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			HeadersVisible = false;
 		}
 		
-		public override void SetFilter (PlaysFilter filter, Project project) {
+		public override void SetFilter (EventsFilter filter, Project project) {
 			this.project = project;
 			this.categories = project.Dashboard;
 			base.SetFilter(filter, project);
@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			
 			if (o is Tag) {
 				EventType evType = store.GetValue (parent, 0) as EventType;
-				filter.FilterCategoryTag (evType, o as Tag, active);
+				filter.FilterEventTag (evType, o as Tag, active);
 			} else {
 				/* don't do anything here and let the children do the filtering */
 			}

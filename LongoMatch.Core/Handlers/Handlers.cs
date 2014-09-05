@@ -17,7 +17,6 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
@@ -30,130 +29,102 @@ using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Handlers
 {
-
-	/*Tagging Events*/
-	/* A Play needs to be loaded */
-	public delegate void LoadPlayHandler(TimelineEvent play);
-	/* A Play was loaded */
-	public delegate void PlayLoadedHandler(TimelineEvent play);
+	/* An events needs to be loaded */
+	public delegate void LoadEventHandler (TimelineEvent evt);
+	/* An event was loaded */
+	public delegate void EventLoadedHandler (TimelineEvent evt);
 	/* A new play needs to be create for a specific category at the current play time */
-	public delegate void NewTagHandler (EventType eventType, List<Player> players,
-	                                    List<Tag> tags, Time start, Time stop, Score score,
-	                                    PenaltyCard card);
+	public delegate void NewEventHandler (EventType eventType,List<Player> players,
+	                                      List<Tag> tags,Time start,Time stop,Score score,
+	                                      PenaltyCard card);
 	/* Add a new play to the current project */
-	public delegate void NewPlayHandler (TimelineEvent play);
-	//A play was edited
-	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
-	public delegate void CategoryChangedHandler(EventType cat);
-
+	public delegate void NewTimelineEventHandler (TimelineEvent evt);
+	/* An event was edited */
+	public delegate void TimeNodeChangedHandler (TimeNode tNode,object val);
+	/* Edit EventType properties */
+	public delegate void EditEventTypeHandler (EventType cat);
 	/* A list of plays needs to be deleted */
-	public delegate void PlaysDeletedHandler(List<TimelineEvent> plays);
+	public delegate void DeleteEventsHandler (List<TimelineEvent> events);
 	/* Tag a play */
-	public delegate void TagPlayHandler(TimelineEvent play);
+	public delegate void TagEventHandler (TimelineEvent evt);
 	/* Change the Play's category */
-	public delegate void PlayCategoryChangedHandler(TimelineEvent play, EventType cat);
-	/* DUplicate play */
-	public delegate void DuplicatePlaysHandler (List<TimelineEvent> plays);
-	/* Category Selected */
-	public delegate void TaggersSelectedHandler (List<DashboardButton> taggerbuttons);
-	public delegate void TaggerSelectedHandler (DashboardButton taggerbutton);
-	public delegate void ShowButtonsTaggerMenuHandler (DashboardButton taggerbutton, Tag tag);
-	
-	/* Penalty Card */
-	public delegate void PenaltyCardHandler (PenaltyCard card);
-	/* Score */
-	public delegate void ScoreHandler (Score score);
-	
+	public delegate void MoveEventHandler (TimelineEvent play,EventType eventType);
+	/* Duplicate play */
+	public delegate void DuplicateEventsHandler (List<TimelineEvent> events);
+	/* Dashboard buttons selected */
+	public delegate void ButtonsSelectedHandlers (List<DashboardButton> taggerbuttons);
+	public delegate void ButtonSelectedHandler (DashboardButton taggerbutton);
+	/* Show dashborad menu */
+	public delegate void ShowButtonsTaggerMenuHandler (DashboardButton taggerbutton,Tag tag);
+	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
-	
 	/* Project Events */
-	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
-	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter,
+	public delegate void SaveProjectHandler (Project project,ProjectType projectType);
+	public delegate void OpenedProjectChangedHandler (Project project,ProjectType projectType,EventsFilter filter,
 	                                                 IAnalysisWindow analysisWindow);
-	public delegate void OpenProjectIDHandler(Guid project_id);
-	public delegate void OpenProjectHandler();
-	public delegate void CloseOpenendProjectHandler();
-	public delegate void NewProjectHandler(Project project);
-	public delegate void OpenNewProjectHandler(Project project, ProjectType projectType, CaptureSettings captureSettings);
+	public delegate void OpenProjectIDHandler (Guid project_id);
+	public delegate void OpenProjectHandler ();
+	public delegate void CloseOpenendProjectHandler ();
+	public delegate void NewProjectHandler (Project project);
+	public delegate void OpenNewProjectHandler (Project project,ProjectType projectType,CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (Project project);
 	public delegate void QuitApplicationHandler ();
 	public delegate void CreateThumbnailsHandler (Project project);
-	
 	/* GUI */
-	public delegate void ManageJobsHandler();
-	public delegate void ManageTeamsHandler();
-	public delegate void ManageCategoriesHandler();
-	public delegate void ManageProjects();
-	public delegate void ManageDatabases();
-	public delegate void EditPreferences();
-	
-
+	public delegate void ManageJobsHandler ();
+	public delegate void ManageTeamsHandler ();
+	public delegate void ManageDashboardsHandler ();
+	public delegate void ManageProjects ();
+	public delegate void ManageDatabases ();
+	public delegate void EditPreferences ();
 	/*Playlist Events*/
 	/* Create a new playlist */
 	public delegate Playlist NewPlaylistHandler (Project project);
 	/* Add a new rendering job */
-	public delegate void RenderPlaylistHandler(Playlist playlist);
+	public delegate void RenderPlaylistHandler (Playlist playlist);
 	/* A play list element is selected */
-	public delegate void PlaylistElementSelectedHandler (Playlist playlist, IPlaylistElement element);
+	public delegate void PlaylistElementSelectedHandler (Playlist playlist,IPlaylistElement element);
 	/* Add a play to a playlist */
-	public delegate void AddPlaylistElementHandler (Playlist playlist, List<IPlaylistElement> element);
+	public delegate void AddPlaylistElementHandler (Playlist playlist,List<IPlaylistElement> element);
 	/* Play next playlist element */
 	public delegate void NextPlaylistElementHandler (Playlist playlist);
 	/* Play previous playlist element */
 	public delegate void PreviousPlaylistElementHandler (Playlist playlist);
 	/* Playlists have been edited */
 	public delegate void PlaylistsChangedHandler (object sender);
-
 	/* Create snapshots for a play */
-	public delegate void SnapshotSeriesHandler(TimelineEvent tNode);
-	
+	public delegate void SnapshotSeriesHandler (TimelineEvent tNode);
 	/* Convert a video file */
-	public delegate void ConvertVideoFilesHandler (List<MediaFile> inputFiles, EncodingSettings encSettings);
-	
+	public delegate void ConvertVideoFilesHandler (List<MediaFile> inputFiles,EncodingSettings encSettings);
 	/* A date was selected */
-	public delegate void DateSelectedHandler(DateTime selectedDate);
-	
+	public delegate void DateSelectedHandler (DateTime selectedDate);
 	/* A new version of the software exists */
-	public delegate void NewVersionHandler(Version version, string URL);
-
-	/* Edit Category */
-	public delegate void CategoryHandler(DashboardButton button);
-	public delegate void CategoriesHandler(List<DashboardButton> buttonsList);
-	
+	public delegate void NewVersionHandler (Version version,string URL);
 	/* Edit player properties */
-	public delegate void PlayerPropertiesHandler(Player player);
-	public delegate void PlayersPropertiesHandler(List<Player> players);
-	
+	public delegate void PlayerPropertiesHandler (Player player);
+	public delegate void PlayersPropertiesHandler (List<Player> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (Player p1, Player p2, TeamTemplate team);
+	public delegate void PlayersSubstitutionHandler (Player p1,Player p2,TeamTemplate team);
 	public delegate void PlayersSelectionChangedHandler (List<Player> players);
-	
 	/* A list of projects have been selected */
-	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
-	public delegate void ProjectSelectedHandler(ProjectDescription project);
-	
-	public delegate void KeyHandler (object sender, int key, int modifier);
-
-	/* The plays filter was updated */	
+	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);
+	public delegate void ProjectSelectedHandler (ProjectDescription project);
+	public delegate void KeyHandler (object sender,int key,int modifier);
+	/* The plays filter was updated */
 	public delegate void FilterUpdatedHandler ();
-	
 	public delegate void DetachPlayerHandler ();
-	
 	/* Show project stats */
-	public delegate void ShowProjectStats(Project project);
-	
+	public delegate void ShowProjectStats (Project project);
 	public delegate void ShowFullScreenHandler (bool fullscreen);
 	public delegate void PlaylistVisibiltyHandler (bool visible);
 	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
-	
-	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays, EventType cat, Time time);
+	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays,EventType cat,Time time);
 	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
 	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable);
 	public delegate void DrawableChangedHandler (IBlackboardObject drawable);
-
 	public delegate void BackEventHandle ();
 }

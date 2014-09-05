@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component.Stats
 	{
 		TreeStore store;
 		ProjectStats pstats;
-		PlaysFilter filter;
+		EventsFilter filter;
 		Player current;
 		
 		public PlayersViewer ()
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component.Stats
 			
 			store.Clear();
 			pstats = stats;
-			filter = new PlaysFilter (project);
+			filter = new EventsFilter (project);
 			pstats.Filter = filter;
 			categoriesviewer.LoadStats (pstats, project);
 			AddTeam (project.LocalTeamTemplate, project.Dashboard);

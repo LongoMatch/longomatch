@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Component
 			
 			Config.EventsBroker.PlayerTick += HandleTick;
 			Config.EventsBroker.CapturerTick += HandleCapturerTick;
-			Config.EventsBroker.PlayLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (this);
 			
 			buttonswidget.Mode = TagMode.Free;
@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 			}
 			Config.EventsBroker.PlayerTick -= HandleTick;
 			Config.EventsBroker.CapturerTick -= HandleCapturerTick;
-			Config.EventsBroker.PlayLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter)
+		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)
 		{
 			this.projectType = projectType;
 			this.project = project;
@@ -255,7 +255,7 @@ namespace LongoMatch.Gui.Component
 				Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
 			}
 			teamtagger.ResetSelection ();
-			Config.EventsBroker.EmitNewPlay (play);
+			Config.EventsBroker.EmitNewEvent (play);
 		}
 
 	}

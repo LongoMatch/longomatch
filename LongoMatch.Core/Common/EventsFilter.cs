@@ -24,7 +24,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Common
 {
-	public class PlaysFilter
+	public class EventsFilter
 	{
 		
 		public event FilterUpdatedHandler FilterUpdated;
@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Common
 		List<Player> playersFilter;
 		Project project;
 		
-		public PlaysFilter (Project project)
+		public EventsFilter (Project project)
 		{
 			this.project = project;
 			eventsFilter = new Dictionary<EventType, List<Tag>>();
@@ -57,7 +57,7 @@ namespace LongoMatch.Core.Common
 			protected set;
 		}
 		
-		public void ClearCategoriesFilter (bool update=true) {
+		public void ClearEventTypesFilter (bool update=true) {
 			eventsFilter.Clear();
 			if (update)
 				Update ();
@@ -70,7 +70,7 @@ namespace LongoMatch.Core.Common
 		}
 
 		public void ClearAll (bool update=true) {
-			ClearCategoriesFilter(false);
+			ClearEventTypesFilter(false);
 			ClearPlayersFilter(false);
 			if (update)
 				Update ();
@@ -98,7 +98,7 @@ namespace LongoMatch.Core.Common
 			Update();
 		}
 
-		public void FilterCategoryTag (EventType evType, Tag tag, bool visible) {
+		public void FilterEventTag (EventType evType, Tag tag, bool visible) {
 			List<Tag> tags;
 
 			if (visible) {

@@ -58,7 +58,7 @@ namespace Tests.Core
 		public void TestEmptyFilter ()
 		{
 			Project p = CreateProject ();
-			PlaysFilter filter = new PlaysFilter (p);
+			EventsFilter filter = new EventsFilter (p);
 			
 			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
@@ -69,7 +69,7 @@ namespace Tests.Core
 		public void TestFilterCategory ()
 		{
 			Project p = CreateProject ();
-			PlaysFilter filter = new PlaysFilter (p);
+			EventsFilter filter = new EventsFilter (p);
 			
 			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
@@ -104,40 +104,40 @@ namespace Tests.Core
 		public void TestFilterCategoryTags ()
 		{
 			Project p = CreateProject ();
-			PlaysFilter filter = new PlaysFilter (p);
+			EventsFilter filter = new EventsFilter (p);
 			
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], true);
 			Assert.AreEqual (2, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], true);
 			Assert.AreEqual (3, filter.VisibleCategories.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], false);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], false);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], false);
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[1], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], false);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
 			
 			/* One tag filtered now, but not the one of this play */
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], false);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], false);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			/* No more tags filtered, if the category matches we are ok */
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], false);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], false);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
@@ -150,7 +150,7 @@ namespace Tests.Core
 		public void TestFilterPlayers ()
 		{
 			Project p = CreateProject ();
-			PlaysFilter filter = new PlaysFilter (p);
+			EventsFilter filter = new EventsFilter (p);
 			
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
@@ -175,7 +175,7 @@ namespace Tests.Core
 		public void TestClearFilters ()
 		{
 			Project p = CreateProject ();
-			PlaysFilter filter = new PlaysFilter (p);
+			EventsFilter filter = new EventsFilter (p);
 
 			filter.FilterPlayer (p.LocalTeamTemplate.List[0], true);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
@@ -191,7 +191,7 @@ namespace Tests.Core
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			Assert.AreEqual (17, filter.VisibleCategories.Count);
 			
-			filter.FilterCategoryTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
+			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 			Assert.AreEqual (1, filter.VisibleCategories.Count);
 			filter.ClearAll ();

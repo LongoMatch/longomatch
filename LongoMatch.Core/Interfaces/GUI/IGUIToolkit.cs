@@ -61,7 +61,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		void ExportFrameSeries(Project openenedProject, TimelineEvent play, string snapshotDir);
 		
 		void OpenProject (Project project, ProjectType projectType, 
-		                  CaptureSettings props, PlaysFilter filter,
+		                  CaptureSettings props, EventsFilter filter,
 		                  out IAnalysisWindow analysisWindow);
 		void CloseProject ();
 			                     

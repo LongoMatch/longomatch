@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	public class PlaysTreeView : ListTreeViewBase
 	{
 		
-		public event CategoryChangedHandler EditProperties;
+		public event EditEventTypeHandler EditProperties;
 
 		//Categories menu
 		Menu categoriesMenu;

@@ -28,16 +28,16 @@ namespace LongoMatch.Core.Common
 	public class EventsBroker
 	{
 	
-		public event NewTagHandler NewTagEvent;
-		public event NewPlayHandler NewPlayEvent;
-		public event PlaysDeletedHandler PlaysDeleted;
-		public event LoadPlayHandler LoadPlayEvent;
-		public event PlayLoadedHandler PlayLoadedEvent;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
+		public event NewEventHandler NewTagEvent;
+		public event NewTimelineEventHandler NewTimelineEventEvent;
+		public event DeleteEventsHandler EventsDeletedEvent;
+		public event LoadEventHandler LoadEventEvent;
+		public event EventLoadedHandler EventLoadedEvent;
+		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
-		public event TagPlayHandler TagPlay;
-		public event DuplicatePlaysHandler DuplicatePlays;
+		public event TagEventHandler TagEventEvent;
+		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 		
 		/* Playlist */
@@ -68,7 +68,7 @@ namespace LongoMatch.Core.Common
 		public event QuitApplicationHandler QuitApplicationEvent;
 		public event ManageJobsHandler ManageJobsEvent; 
 		public event ManageTeamsHandler ManageTeamsEvent;
-		public event ManageCategoriesHandler ManageCategoriesEvent;
+		public event ManageDashboardsHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
 		public event ManageDatabases ManageDatabasesEvent;
 		public event EditPreferences EditPreferencesEvent;
@@ -94,27 +94,27 @@ namespace LongoMatch.Core.Common
 				NewTagEvent (eventType, players, tags, start, stop, score, card);
 		}
 		
-		public void EmitNewPlay (TimelineEvent play) {
-			if (NewPlayEvent != null)
-				NewPlayEvent (play);
+		public void EmitNewEvent (TimelineEvent evt) {
+			if (NewTimelineEventEvent != null)
+				NewTimelineEventEvent (evt);
 		}
 
-		public void EmitPlaysDeleted(List<TimelineEvent> plays)
+		public void EmitEventsDeleted(List<TimelineEvent> events)
 		{
-			if (PlaysDeleted != null)
-				PlaysDeleted(plays);
+			if (EventsDeletedEvent != null)
+				EventsDeletedEvent(events);
 		}
 		
-		public void EmitLoadPlay (TimelineEvent play)
+		public void EmitLoadEvent (TimelineEvent evt)
 		{
-			if (LoadPlayEvent != null)
-				LoadPlayEvent (play);
+			if (LoadEventEvent != null)
+				LoadEventEvent (evt);
 		}
 		
-		public void EmitPlayLoaded (TimelineEvent play)
+		public void EmitEventLoaded (TimelineEvent play)
 		{
-			if (PlayLoadedEvent != null)
-				PlayLoadedEvent (play);
+			if (EventLoadedEvent != null)
+				EventLoadedEvent (play);
 		}
 		
 		public void EmitSnapshotSeries(TimelineEvent play)
@@ -153,21 +153,21 @@ namespace LongoMatch.Core.Common
 				TimeNodeChanged(tn, val);
 		}
 		
-		public virtual void EmitPlayCategoryChanged(TimelineEvent play, EventType cat)
+		public virtual void EmitMoveToEventType(TimelineEvent evnt, EventType eventType)
 		{
-			if(PlayCategoryChanged != null)
-				PlayCategoryChanged(play, cat);
+			if(MoveToEventTypeEvent != null)
+				MoveToEventTypeEvent(evnt, eventType);
 		}
 		
-		public void EmitTagPlay(TimelineEvent play) {
-			if (TagPlay != null)
-				TagPlay (play);
+		public void EmitTagEvent(TimelineEvent evt) {
+			if (TagEventEvent != null)
+				TagEventEvent (evt);
 		}
 
-		public void EmitDuplicatePlay (List<TimelineEvent> plays)
+		public void EmitDuplicateEvent (List<TimelineEvent> events)
 		{
-			if (DuplicatePlays != null)
-				DuplicatePlays (plays);
+			if (DuplicateEventsEvent != null)
+				DuplicateEventsEvent (events);
 		}
 		
 		public void EmitKeyPressed(object sender, int key, int modifier) {
@@ -280,7 +280,7 @@ namespace LongoMatch.Core.Common
 		}
 		
 		public  void EmitOpenedProjectChanged (Project project, ProjectType projectType,
-		                                       PlaysFilter filter, IAnalysisWindow analysisWindow)
+		                                       EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			if (OpenedProjectChanged != null) {
 				OpenedProjectChanged (project, projectType, filter, analysisWindow);

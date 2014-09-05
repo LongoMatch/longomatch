@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 		protected PlaysMenu playsMenu;
 		
 		TreeModelFilter modelFilter;
-		PlaysFilter filter;
+		EventsFilter filter;
 
 		public event EventHandler NewRenderingJob;
 
@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public PlaysFilter Filter {
+		public EventsFilter Filter {
 			set {
 				filter = value;
 				filter.FilterUpdated += OnFilterUpdated;
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Component
 			if(!(item is TimelineEvent))
 				return;
 
-			Config.EventsBroker.EmitLoadPlay (item as TimelineEvent);
+			Config.EventsBroker.EmitLoadEvent (item as TimelineEvent);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)

@@ -15,13 +15,13 @@ SOURCES = Common/Area.cs \
 	Common/EncodingSettings.cs \
 	Common/Enums.cs \
 	Common/EventsBroker.cs \
+	Common/EventsFilter.cs \
 	Common/Exceptions.cs \
 	Common/ExtensionMethods.cs \
 	Common/Gettext.cs \
 	Common/Image.cs \
 	Common/Job.cs \
 	Common/Log.cs \
-	Common/PlaysFilter.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \
 	Common/VideoStandards.cs \

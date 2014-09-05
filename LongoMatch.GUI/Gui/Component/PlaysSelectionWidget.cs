@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	{
 	
 		Project project;
-		PlaysFilter filter;
+		EventsFilter filter;
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
 		Pixbuf listIco, listActiveIco;
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 		
 		#region Plubic Methods
 		
-		public void SetProject(Project project, PlaysFilter filter) {
+		public void SetProject(Project project, EventsFilter filter) {
 			this.project = project;
 			this.filter = filter;
 			playsList.Filter = filter;

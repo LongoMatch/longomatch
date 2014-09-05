@@ -105,7 +105,7 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append(item);
 		}
 		
-		public IAnalysisWindow SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
+		public IAnalysisWindow SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
 			

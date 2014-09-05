@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class DashboardWidget : Gtk.Bin
 	{
-		public event NewTagHandler NewTagEvent;
+		public event NewEventHandler NewTagEvent;
 
 		TagMode tagMode;
 		DashboardCanvas tagger;

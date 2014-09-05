@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 			ClearWidgets();
 		}
 		
-		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
+		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			openedProject = project;
 			this.projectType = projectType;

@@ -28,7 +28,7 @@ namespace LongoMatch.Drawing.Widgets
 	public class CategoriesLabels: Canvas
 	{
 		Project project;
-		PlaysFilter filter;
+		EventsFilter filter;
 		Dictionary<EventType, CategoryLabel> eventsLabels;
 
 		public CategoriesLabels (IWidget widget): base (widget)
@@ -45,7 +45,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void LoadProject (Project project, PlaysFilter filter)
+		public void LoadProject (Project project, EventsFilter filter)
 		{
 			ClearObjects ();
 			this.project = project;
