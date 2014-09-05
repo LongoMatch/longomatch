@@ -29,7 +29,6 @@
       <Entry build="True" name="LongoMatch.Addins" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Plugins" configuration="Debug" />
       <Entry build="True" name="OxyPlotMono" configuration="Debug" />
-      <Entry build="True" name="Tests" configuration="Debug" />
       <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Drawing" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Debug" />
@@ -46,7 +45,6 @@
       <Entry build="True" name="LongoMatch.Addins" configuration="Release" />
       <Entry build="True" name="LongoMatch.Plugins" configuration="Release" />
       <Entry build="True" name="OxyPlotMono" configuration="Release" />
-      <Entry build="True" name="Tests" configuration="Release" />
       <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Release" />
       <Entry build="True" name="LongoMatch.Drawing" configuration="Release" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Release" />
@@ -64,7 +62,6 @@
     <Execute type="None" entry="LongoMatch.Addins" />
     <Execute type="None" entry="LongoMatch.Plugins" />
     <Execute type="None" entry="OxyPlotMono" />
-    <Execute type="None" entry="Tests" />
     <Execute type="None" entry="LongoMatch.GUI.Helpers" />
     <Execute type="None" entry="LongoMatch.Drawing" />
     <Execute type="None" entry="LongoMatch.Drawing.Cairo" />
@@ -81,7 +78,6 @@
     <Entry filename="LongoMatch.Addins/LongoMatch.Addins.mdp" />
     <Entry filename="LongoMatch.Plugins/LongoMatch.Plugins.mdp" />
     <Entry filename="oxyplot/OxyPlotMono/OxyPlotMono.csproj" />
-    <Entry filename="Tests/Tests.mdp" />
     <Entry filename="LongoMatch.GUI.Helpers/LongoMatch.GUI.Helpers.mdp" />
     <Entry filename="LongoMatch.Drawing/LongoMatch.Drawing.mdp" />
     <Entry filename="LongoMatch.Drawing.Cairo/LongoMatch.Drawing.Cairo.mdp" />
