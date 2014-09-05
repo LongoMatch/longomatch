@@ -335,8 +335,10 @@ namespace LongoMatch.Services
 		void OpenNewProject (Project project, ProjectType projectType,
 		                     CaptureSettings captureSettings)
 		{
-			if (project != null)
+			if (project != null) {
+				Config.DatabaseManager.ActiveDB.AddProject (project);
 				SetProject (project, projectType, captureSettings);
+			}
 		}
 
 		void OpenProject ()
