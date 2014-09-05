@@ -89,7 +89,7 @@ namespace LongoMatch.Core.Store
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToSecondsString()
+		public  string ToSecondsString(bool includeHour=false)
 		{
 			int _h, _m, _s, _time;
 
@@ -98,7 +98,7 @@ namespace LongoMatch.Core.Store
 			_m = ((_time % 3600) / 60);
 			_s = ((_time % 3600) % 60);
 
-			if(_h > 0)
+			if(_h > 0 || includeHour)
 				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
 				                     _s.ToString("d2"));
 
@@ -111,12 +111,12 @@ namespace LongoMatch.Core.Store
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToMSecondsString()
+		public  string ToMSecondsString(bool includeHour=false)
 		{
 			int _ms ;
 			_ms = ((MSeconds % 3600000)%60000)%1000;
 
-			return String.Format("{0},{1}", ToSecondsString(), _ms.ToString("d3"));
+			return String.Format("{0},{1}", ToSecondsString(includeHour), _ms.ToString("d3"));
 		}
 
 		public override bool Equals(object o)

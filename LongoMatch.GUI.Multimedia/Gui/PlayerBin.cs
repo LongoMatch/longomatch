@@ -488,7 +488,7 @@ namespace LongoMatch.Gui
 				seekType = SeekType.Keyframe;
 			}
 			seeker.Seek (seekType, seekPos);
-			timelabel.Text = seekPos.ToMSecondsString () + "/" + duration.ToMSecondsString ();
+			timelabel.Text = seekPos.ToMSecondsString (true) + "/" + duration.ToMSecondsString (true);
 		}
 
 		void CreatePlayer ()
@@ -588,8 +588,8 @@ namespace LongoMatch.Gui
 				}
 				ct = currentTime - segment.Start;
 				cp = (float)ct.MSeconds / (float)(dur.MSeconds);
-				slength = dur.ToMSecondsString ();
-				timelabel.Text = ct.ToMSecondsString () + "/" + slength;
+				slength = dur.ToMSecondsString (true);
+				timelabel.Text = ct.ToMSecondsString (true) + "/" + slength;
 				timescale.Value = cp;
 				if (loadedPlay != null && loadedPlay.Drawings.Count > 0) {
 					FrameDrawing fd = loadedPlay.Drawings.FirstOrDefault (f => f.Render > lastTime && f.Render <= currentTime);
@@ -599,7 +599,7 @@ namespace LongoMatch.Gui
 				}
 			} else {
 				slength = length.ToMSecondsString ();
-				timelabel.Text = currentTime.ToMSecondsString () + "/" + slength;
+				timelabel.Text = currentTime.ToMSecondsString (true) + "/" + slength;
 				if (timescale.Visible) {
 					timescale.Value = (double)currentTime.MSeconds / length.MSeconds;
 				}
