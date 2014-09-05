@@ -551,6 +551,10 @@ namespace LongoMatch.Gui
 		void HandleExposeEvent (object sender, ExposeEventArgs args)
 		{
 			player.Expose ();
+			/* The player draws over the eventbox when it's resized
+			 * so make sure that we queue a draw in the event box after
+			 * the expose */
+			lightbackgroundeventbox.QueueDraw ();
 		}
 
 		void OnStateChanged (bool playing)
