@@ -254,7 +254,7 @@ namespace LongoMatch.Gui.Component
 			if (eventType.TagFieldPosition || eventType.TagGoalPosition || eventType.TagHalfFieldPosition) {
 				Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
 			}
-			teamtagger.ClearSelection ();
+			teamtagger.ResetSelection ();
 			Config.EventsBroker.EmitNewPlay (play);
 		}
 

@@ -86,6 +86,12 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public void ResetSelection ()
+		{
+			tagger.ResetSelection ();
+			widget.ReDraw ();
+		} 
+
 		public void Select (List<Player> players)
 		{
 			tagger.Select (players);
