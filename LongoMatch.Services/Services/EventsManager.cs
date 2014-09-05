@@ -49,21 +49,26 @@ namespace LongoMatch.Services
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			ConnectSignals ();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
+		                               PlaysFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
 			this.filter = filter;
 			
-			if (project == null)
+			if (project == null) {
+				if (framesCapturer != null) {
+					framesCapturer.Dispose ();
+					framesCapturer = null;
+				}
 				return;
-				
+			}
+
 			if (projectType == ProjectType.FileProject) {
+				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
 				framesCapturer.Open (openedProject.Description.File.FilePath);
 			}
 			this.analysisWindow = analysisWindow;
