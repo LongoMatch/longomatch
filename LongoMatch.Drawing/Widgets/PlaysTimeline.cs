@@ -63,12 +63,6 @@ namespace LongoMatch.Drawing.Widgets
 			eventsTimelines.Clear ();
 			duration = project.Description.File.Duration;
 			height = project.EventTypes.Count * StyleConf.TimelineCategoryHeight;
-			if (project.Dashboard.Scores.Count > 0) {
-				height += StyleConf.TimelineCategoryHeight;
-			}
-			if (project.Dashboard.PenaltyCards.Count > 0) {
-				height += StyleConf.TimelineCategoryHeight;
-			}
 			widget.Height = height;
 			playsFilter = filter;
 			FillCanvas ();

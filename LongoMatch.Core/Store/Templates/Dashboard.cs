@@ -55,7 +55,7 @@ namespace LongoMatch.Core.Store.Templates
 			HalfFieldBackground = Config.HalfFieldBackground;
 			GoalBackground = Config.GoalBackground;
 			ID = Guid.NewGuid ();
-			List = new ObservableCollection<DashboardButton>();
+			List = new List<DashboardButton>();
 		}
 		
 		public Guid ID {
@@ -63,7 +63,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 		
-		public ObservableCollection<DashboardButton> List {
+		public List<DashboardButton> List {
 			get;
 			set;
 		}
@@ -96,20 +96,6 @@ namespace LongoMatch.Core.Store.Templates
 		public Image GoalBackground {
 			get;
 			set;
-		}
-		
-		[JsonIgnore]
-		public List<Score> Scores {
-			get {
-				return List.OfType<Score>().ToList();
-			}
-		}
-		
-		[JsonIgnore]
-		public List<PenaltyCard> PenaltyCards {
-			get {
-				return List.OfType<PenaltyCard>().ToList();
-			}
 		}
 		
 		[JsonIgnore]

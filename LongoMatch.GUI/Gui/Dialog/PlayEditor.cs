@@ -22,11 +22,13 @@ using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Widgets;
 using System.Collections.Generic;
 using LongoMatch.Drawing.Cairo;
+using Gtk;
 
 namespace LongoMatch.Gui.Dialog
 {
 	public partial class PlayEditor : Gtk.Dialog
 	{
+		const int TAGS_PER_ROW = 5;
 		TeamTagger teamtagger;
 		TimelineEvent play;
 
@@ -51,10 +53,11 @@ namespace LongoMatch.Gui.Dialog
 			this.play = play;
 			notesframe.Visible = editNotes;
 			tagger.Visible = editPos && (play.EventType.TagFieldPosition ||
-			                             play.EventType.TagHalfFieldPosition ||
-			                             play.EventType.TagGoalPosition);
+				play.EventType.TagHalfFieldPosition ||
+				play.EventType.TagGoalPosition);
 			drawingarea3.Visible = editPlayers;
 			nameframe.Visible = editTags;
+			tagstable.Visible = editTags;
 
 			nameentry.Text = play.Name;
 			if (editPos) {
@@ -70,12 +73,49 @@ namespace LongoMatch.Gui.Dialog
 				                      project.Dashboard.FieldBackground);
 				teamtagger.Select (play.Players);
 			}
-		}
 		
+			if (editTags) {
+				FillTags (project, play);
+			}
+		}
+
+		void FillTags (Project project, TimelineEvent evt)
+		{
+			List<Tag> tags;
+			
+			if (!(evt.EventType is AnalysisEventType)) {
+				return;
+			}
+			tags = (evt.EventType as AnalysisEventType).Tags.ToList ();
+			tags.AddRange (project.Dashboard.List.OfType<TagButton> ().Select (t => t.Tag).ToList ());
+			tags = tags.Union (evt.Tags).ToList ();
+			
+			tagstable.NRows = (uint)(tags.Count / TAGS_PER_ROW);
+			for (int i=0; i < tags.Count; i++) {
+				uint row_top, row_bottom, col_left, col_right;
+				Tag t = tags [i];
+				ToggleButton tb = new ToggleButton (t.Value);
+				tb.Active = evt.Tags.Contains (t);
+				tb.Toggled += (sender, e) => {
+					if (tb.Active) {
+						evt.Tags.Add (t);
+					} else {
+						evt.Tags.Remove (t);
+					}
+				};
+				row_top = (uint)(i / tagstable.NColumns);
+				row_bottom = (uint)row_top + 1;
+				col_left = (uint)i % tagstable.NColumns;
+				col_right = (uint)col_left + 1;
+				tagstable.Attach (tb, col_left, col_right, row_top, row_bottom);
+				tb.Show ();
+			}
+			
+		}
+
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
-			play.Players = players.ToList(); 
+			play.Players = players.ToList (); 
 		}
-		
 	}
 }
