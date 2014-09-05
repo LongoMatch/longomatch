@@ -2388,7 +2388,7 @@ Circle</property>
             <child>
               <widget class="Gtk.Label" id="label1">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" context="yes">Play, like the play of a game|Play:</property>
+                <property name="LabelProp" translatable="yes">Event:</property>
               </widget>
               <packing>
                 <property name="AutoSize">True</property>
@@ -4290,7 +4290,7 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.Label" id="playsList1">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Plays</property>
+                <property name="LabelProp" translatable="yes">Events</property>
               </widget>
               <packing>
                 <property name="type">tab</property>
@@ -4335,7 +4335,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">  Plays Selection   </property>
+            <property name="LabelProp" translatable="yes">  Events   </property>
             <property name="Justify">Center</property>
             <property name="Angle">90</property>
           </widget>
