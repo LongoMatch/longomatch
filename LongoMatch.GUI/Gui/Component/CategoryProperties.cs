@@ -17,11 +17,9 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using Gtk;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;
@@ -29,9 +27,7 @@ using Point = LongoMatch.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
-
-	public delegate void HotKeyChangeHandler(HotKey prevHotKey, DashboardButton button);
-
+	public delegate void HotKeyChangeHandler (HotKey prevHotKey,DashboardButton button);
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial  class CategoryProperties : Gtk.Bin
@@ -39,8 +35,8 @@ namespace LongoMatch.Gui.Component
 
 		public event HotKeyChangeHandler HotKeyChanged;
 		public event EventHandler EditedEvent;
-		SizeGroup sizegroup;
 
+		SizeGroup sizegroup;
 		DashboardButton button;
 		TimedDashboardButton timedButton;
 		EventButton eventButton;
@@ -51,13 +47,13 @@ namespace LongoMatch.Gui.Component
 		Time lastLeadTime;
 		bool edited, ignore;
 
-		public CategoryProperties()
+		public CategoryProperties ()
 		{
-			this.Build();
+			this.Build ();
 
 			nameentry.Changed += HandleNameentryChanged;
 			colorbutton1.ColorSet += HandleColorSet;
-			colorbutton2.ColorSet += HandleColorSet;
+			textcolorbutton.ColorSet += HandleColorSet;
 			tagmodecombobox.Changed += HandleTagModeChanged;
 			tagscheckbutton.Toggled += HandleTagsToggled;
 			tprbutton.ValueChanged += HandleTagsPerRowValueChanged;
@@ -110,6 +106,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public EventType EventType {
+			set {
+				EventButton button = new EventButton { EventType = value };
+				Tagger = button;
+				timetable.Visible = false;
+				texttable.Visible = false;
+			}
+		}
+
 		public DashboardButton Tagger {
 			set {
 				button = value;
@@ -119,19 +124,20 @@ namespace LongoMatch.Gui.Component
 				cardButton = value as PenaltyCardButton;
 				scoreButton = value as ScoreButton;
 				tagButton = value as TagButton;
-				UpdateGui();
+				UpdateGui ();
 			}
 			get {
 				return catButton;
 			}
 		}
-		
+
 		public Project Project {
 			set;
 			get;
 		}
-		
-		void SetPositionCombo (ComboBox box, bool tagField, bool asTrayectory) {
+
+		void SetPositionCombo (ComboBox box, bool tagField, bool asTrayectory)
+		{
 			if (!tagField) {
 				box.Active = 0;
 			} else if (!asTrayectory) {
@@ -141,8 +147,9 @@ namespace LongoMatch.Gui.Component
 			}
 			Edited = true;
 		}
-		
-		void ReadPositionCombo (ComboBox box, out bool tagField, out bool asTrayectory) {
+
+		void ReadPositionCombo (ComboBox box, out bool tagField, out bool asTrayectory)
+		{
 			if (box.Active == 0) {
 				tagField = true;
 				asTrayectory = false;
@@ -154,7 +161,7 @@ namespace LongoMatch.Gui.Component
 				asTrayectory = false;
 			}
 		}
-		
+
 		private void  UpdateGui ()
 		{
 			ignore = true;
@@ -168,7 +175,7 @@ namespace LongoMatch.Gui.Component
 			if (button != null) {
 				nameentry.Text = button.Name;
 				colorbutton1.Color = Helpers.Misc.ToGdkColor (button.BackgroundColor);
-				colorbutton2.Color = Helpers.Misc.ToGdkColor (button.TextColor);
+				textcolorbutton.Color = Helpers.Misc.ToGdkColor (button.TextColor);
 				if (button.HotKey != null && button.HotKey.Defined)
 					hotKeyLabel.Text = button.HotKey.ToString ();
 				else
@@ -176,7 +183,7 @@ namespace LongoMatch.Gui.Component
 			} else {
 				nameentry.Text = "";
 				colorbutton1.Color = new Gdk.Color (0, 0, 0);
-				colorbutton2.Color = new Gdk.Color (0, 0, 0);
+				textcolorbutton.Color = new Gdk.Color (0, 0, 0);
 				lastLeadTime = new Time ();
 				tagmodecombobox.Active = 0;
 				leadtimebutton.Value = 0;
@@ -211,22 +218,22 @@ namespace LongoMatch.Gui.Component
 			ignore = false;
 			Edited = false;
 		}
-		
-		void HandleChangeHotkey(object sender, System.EventArgs e)
+
+		void HandleChangeHotkey (object sender, System.EventArgs e)
 		{
 			if (ignore)
 				return;
 
-			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
-			dialog.TransientFor=(Gtk.Window)this.Toplevel;
-			HotKey prevHotKey =  catButton.HotKey;
-			if(dialog.Run() == (int)ResponseType.Ok) {
-				catButton.HotKey=dialog.HotKey;
-				UpdateGui();
+			HotKeySelectorDialog dialog = new HotKeySelectorDialog ();
+			dialog.TransientFor = (Gtk.Window)this.Toplevel;
+			HotKey prevHotKey = button.HotKey;
+			if (dialog.Run () == (int)ResponseType.Ok) {
+				button.HotKey = dialog.HotKey;
+				UpdateGui ();
 			}
-			dialog.Destroy();
-			if(HotKeyChanged != null)
-				HotKeyChanged(prevHotKey,catButton);
+			dialog.Destroy ();
+			if (HotKeyChanged != null)
+				HotKeyChanged (prevHotKey, button);
 			Edited = true;
 		}
 
@@ -258,7 +265,7 @@ namespace LongoMatch.Gui.Component
 			catButton.TagsPerRow = tprbutton.ValueAsInt;
 			Edited = true;
 		}
-		
+
 		void HandleTagsToggled (object sender, EventArgs e)
 		{
 			if (ignore)
@@ -273,7 +280,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			timedButton.TagMode = (TagMode) tagmodecombobox.Active;
+			timedButton.TagMode = (TagMode)tagmodecombobox.Active;
 			if (timedButton.TagMode == TagMode.Predefined) {
 				lagtimebutton.Sensitive = true;
 				leadtimebutton.Value = lastLeadTime.Seconds;
@@ -284,13 +291,13 @@ namespace LongoMatch.Gui.Component
 			}
 			Edited = true;
 		}
-		
+
 		void HandleColorSet (object sender, EventArgs e)
 		{
 			if (ignore)
 				return;
 
-			LongoMatch.Core.Common.Color c = Helpers.Misc.ToLgmColor((sender as ColorButton).Color);
+			LongoMatch.Core.Common.Color c = Helpers.Misc.ToLgmColor ((sender as ColorButton).Color);
 			if (sender == colorbutton1) {
 				button.BackgroundColor = c;
 			} else {
@@ -298,26 +305,26 @@ namespace LongoMatch.Gui.Component
 			}
 			Edited = true;
 		}
-		
-		void HandleLeadTimeChanged(object sender, System.EventArgs e)
+
+		void HandleLeadTimeChanged (object sender, System.EventArgs e)
 		{
 			if (ignore)
 				return;
 
-			timedButton.Start = new Time{Seconds=(int)leadtimebutton.Value};
+			timedButton.Start = new Time { Seconds=(int)leadtimebutton.Value };
 			Edited = true;
 		}
 
-		void HandleLagTimeChanged(object sender, System.EventArgs e)
+		void HandleLagTimeChanged (object sender, System.EventArgs e)
 		{
 			if (ignore)
 				return;
 
-			timedButton.Stop = new Time{Seconds=(int)lagtimebutton.Value};
+			timedButton.Stop = new Time { Seconds=(int)lagtimebutton.Value };
 			Edited = true;
 		}
 
-		void HandleNameentryChanged(object sender, System.EventArgs e)
+		void HandleNameentryChanged (object sender, System.EventArgs e)
 		{
 			if (ignore)
 				return;
@@ -326,7 +333,7 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 
-		void HandleSortMethodChanged(object sender, System.EventArgs e)
+		void HandleSortMethodChanged (object sender, System.EventArgs e)
 		{
 			if (ignore)
 				return;
@@ -334,16 +341,16 @@ namespace LongoMatch.Gui.Component
 			catButton.EventType.SortMethodString = sortmethodcombobox.ActiveText;
 			Edited = true;
 		}
-		
+
 		void HandleShapeChanged (object sender, EventArgs e)
 		{
 			if (ignore)
 				return;
 
-			cardButton.PenaltyCard.Shape = (CardShape) shapecombobox.Active;
+			cardButton.PenaltyCard.Shape = (CardShape)shapecombobox.Active;
 			Edited = true;
 		}
-		
+
 		void HandlePointsChanged (object sender, EventArgs e)
 		{
 			if (ignore)
@@ -352,6 +359,5 @@ namespace LongoMatch.Gui.Component
 			scoreButton.Score.Points = pointsbutton.ValueAsInt;
 			Edited = true;
 		}
-
 	}
 }

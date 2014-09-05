@@ -330,7 +330,6 @@ namespace LongoMatch.Gui
 			this.controlsbox.Add (this.timelabel);
 			global::Gtk.Box.BoxChild w69 = ((global::Gtk.Box.BoxChild)(this.controlsbox [this.timelabel]));
 			w69.Position = 4;
-			w69.Expand = false;
 			// Container child controlsbox.Gtk.Box+BoxChild
 			this.volumebutton = new global::Gtk.Button ();
 			this.volumebutton.Name = "volumebutton";

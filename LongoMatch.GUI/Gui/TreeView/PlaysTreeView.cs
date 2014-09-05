@@ -59,20 +59,19 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void SetCategoriesMenu() {
-			Gtk.Action edit, editProp, sortMenu;
+			Gtk.Action editProp, sortMenu;
 			UIManager manager;
 			ActionGroup g;
 
 			manager= new UIManager();
 			g = new ActionGroup("CategoriesMenuGroup");
 
-			edit = new Gtk.Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
+			editProp = new Gtk.Action("EditPropAction", Mono.Unix.Catalog.GetString("Edit properties"), null, "gtk-edit");
 			sortMenu = new Gtk.Action("SortMenuAction", Mono.Unix.Catalog.GetString("Sort Method"), null, null);
 			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
-			editProp = new Gtk.Action("EditPropAction", Mono.Unix.Catalog.GetString("Edit properties"), null, "gtk-edit");
 
 			sortByName.Group = new GLib.SList(System.IntPtr.Zero);
 			sortByStart.Group = sortByName.Group;
@@ -80,26 +79,24 @@ namespace LongoMatch.Gui.Component
 			sortByDuration.Group = sortByName.Group;
 
 
-			g.Add(edit, null);
+			g.Add(editProp, null);
 			g.Add(sortMenu, null);
 			g.Add(sortByName, null);
 			g.Add(sortByStart, null);
 			g.Add(sortByStop, null);
 			g.Add(sortByDuration, null);
-			g.Add(editProp, null);
 
 			manager.InsertActionGroup(g,0);
 
 			manager.AddUiFromString("<ui>"+
 			                        "  <popup action='CategoryMenu'>"+
-			                        "    <menuitem action='EditAction'/>"+
+			                        "    <menuitem action='EditPropAction'/>"+
 			                        "    <menu action='SortMenuAction'>"+
 			                        "      <menuitem action='SortByNameAction'/>"+
 			                        "      <menuitem action='SortByStartAction'/>"+
 			                        "      <menuitem action='SortByStopAction'/>"+
 			                        "      <menuitem action='SortByDurationAction'/>"+
 			                        "    </menu>"+
-			                        "    <menuitem action='EditPropAction'/>"+
 			                        "  </popup>"+
 			                        "</ui>");
 

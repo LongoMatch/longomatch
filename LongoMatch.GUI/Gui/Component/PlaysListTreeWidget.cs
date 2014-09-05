@@ -151,9 +151,9 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnEditProperties(EventType eventType) {
-			//EditCategoryDialog dialog = new EditCategoryDialog (project, eventType);
-			//dialog.Run();
-			//dialog.Destroy();
+			EditCategoryDialog dialog = new EditCategoryDialog (project, eventType);
+			dialog.Run();
+			dialog.Destroy();
 		}
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)

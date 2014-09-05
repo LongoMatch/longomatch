@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.EditCategoryDialog
 			this.Name = "LongoMatch.Gui.Dialog.EditCategoryDialog";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Category Details");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Properties");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
@@ -28,6 +28,7 @@ namespace LongoMatch.Gui.Dialog
 			w1.Add (this.timenodeproperties2);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.timenodeproperties2]));
 			w2.Position = 0;
+			w2.Expand = false;
 			// Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.ActionArea
 			global::Gtk.HButtonBox w3 = this.ActionArea;
 			w3.Name = "dialog1_ActionArea";
@@ -49,8 +50,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 522;
-			this.DefaultHeight = 631;
+			this.DefaultWidth = 324;
+			this.DefaultHeight = 619;
 			this.Show ();
 		}
 	}

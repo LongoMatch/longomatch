@@ -37,6 +37,14 @@ namespace LongoMatch.Gui.Dialog
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
 		}
 
+		public EditCategoryDialog(Project project, EventType eventType)
+		{
+			this.Build();
+			timenodeproperties2.EventType = eventType;
+			timenodeproperties2.Project = project;
+			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
+		}
+
 		public List<HotKey> HotKeysList {
 			set {
 				hkList = value;
@@ -55,6 +63,13 @@ namespace LongoMatch.Gui.Dialog
 				hkList.Remove(prevHotKey);
 				hkList.Add(button.HotKey);
 			}
+		}
+		
+		protected override void OnRealized ()
+		{
+			base.OnRealized ();
+			Resize (Allocation.Width, ActionArea.Allocation.Height +
+			        timenodeproperties2.Allocation.Height);
 		}
 	}
 }
