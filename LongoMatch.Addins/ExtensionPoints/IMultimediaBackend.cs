@@ -29,5 +29,6 @@ namespace LongoMatch.Addins.ExtensionPoints
 	public interface IMultimediaBackend
 	{
 		void RegisterElements (IMultimediaToolkit mtoolkit);
+		void Shutdown ();
 	}
 }

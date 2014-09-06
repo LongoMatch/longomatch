@@ -79,6 +79,13 @@ namespace LongoMatch.Addins
 				}
 			}
 		}
+		
+		public void ShutdownMultimediaBackends ()
+		{
+			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
+				backend.Shutdown ();
+			}
+		}
 	}
 }
 

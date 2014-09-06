@@ -38,6 +38,7 @@ namespace LongoMatch
 		
 		public static void Main (string[] args)
 		{
+			AddinsManager manager = null;
 			CoreServices.Init ();
 
 			InitGtk ();
@@ -51,7 +52,7 @@ namespace LongoMatch
 			Version version = Assembly.GetExecutingAssembly ().GetName ().Version;
 
 			try {
-				AddinsManager manager = new AddinsManager (Config.PluginsConfigDir, Config.PluginsDir);
+				manager = new AddinsManager (Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
@@ -73,6 +74,10 @@ namespace LongoMatch
 				Application.Run ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
+			} finally {
+				if (manager != null) {
+					manager.ShutdownMultimediaBackends ();
+				}
 			}
 		}
 
