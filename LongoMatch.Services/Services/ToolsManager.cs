@@ -125,11 +125,9 @@ namespace LongoMatch.Services
 			capturer.Open (project.Description.File.FilePath);
 			foreach (TimelineEvent play in project.Timeline) {
 				try {
-					capturer.Seek (play.Start + ((play.Stop - play.Start) / 2),
-					               true);
-					play.Miniature = capturer.GetCurrentFrame (
-						Constants.MAX_THUMBNAIL_SIZE,
-						Constants.MAX_THUMBNAIL_SIZE);
+					play.Miniature = capturer.GetFrame (play.Start + ((play.Stop - play.Start) / 2),
+					                                    true, Constants.MAX_THUMBNAIL_SIZE,
+					                                    Constants.MAX_THUMBNAIL_SIZE);
 					dialog.Pulse ();
 
 				} catch (Exception ex) {

@@ -77,17 +77,16 @@ namespace LongoMatch.Video.Utils
 
 			System.IO.Directory.CreateDirectory(outputDir);
 
-			pos = start;
+			pos = new Time {MSeconds = start.MSeconds};
 			if(Progress != null) {
 				Application.Invoke (delegate {
 					Progress(0,totalFrames,null);
 				});
 			}
+
 			while(pos <= stop) {
 				if(!cancel) {
-					capturer.Seek (pos, true);
-					capturer.Pause();
-					frame = capturer.GetCurrentFrame();
+					frame = capturer.GetFrame(pos, true);
 					if(frame != null) {
 						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"));
 						frame.ScaleInplace(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
@@ -107,6 +106,7 @@ namespace LongoMatch.Video.Utils
 					break;
 				}
 			}
+			capturer.Dispose ();
 		}
 	}
 }

@@ -133,6 +133,7 @@ namespace LongoMatch.Services
 		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
+			Time pos;
 
 			player.Pause ();
 			if (play == null) {
@@ -145,9 +146,16 @@ namespace LongoMatch.Services
 				} else {
 					drawing = play.Drawings [drawingIndex];
 				}
-				player.Seek (drawing.Render, true);
+				pos = drawing.Render;
+			} else {
+				pos = player.CurrentTime;
 			}
-			pixbuf = player.CurrentFrame;
+
+			if (framesCapturer != null) {
+				pixbuf = framesCapturer.GetFrame (pos, true, -1, -1);
+			} else {
+				pixbuf = player.CurrentFrame;
+			}
 			guiToolkit.DrawingTool (pixbuf, play, drawing);
 		}
 
@@ -193,8 +201,8 @@ namespace LongoMatch.Services
 				projectType == ProjectType.URICaptureProject) {
 				frame = capturer.CurrentMiniatureFrame;
 			} else if (projectType == ProjectType.FileProject) {
-				framesCapturer.Seek (tagtime, true);
-				frame = player.CurrentMiniatureFrame;
+				frame = framesCapturer.GetFrame (tagtime, true, Constants.MAX_THUMBNAIL_SIZE,
+				                                 Constants.MAX_THUMBNAIL_SIZE);
 			}
 			return frame;
 		}

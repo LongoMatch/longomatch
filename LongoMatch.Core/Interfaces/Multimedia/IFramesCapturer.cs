@@ -30,9 +30,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	public interface IFramesCapturer
 	{
 		bool Open (string uri);
-		bool Seek (Time time, bool accurate);
-		void Pause ();
 		void Dispose();
-		Image GetCurrentFrame (int outwidth=-1, int outheight=-1);
+		Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1);
 	}
 }

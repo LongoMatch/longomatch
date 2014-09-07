@@ -44,7 +44,6 @@ namespace LongoMatch.Services
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit; 
 			this.stateBar = guiToolkit.RenderingStateBar;
-			capturer = multimediaToolkit.GetFramesCapturer ();
 			jobs = new List<Job> ();
 			pendingJobs = new List<Job> ();
 			stateBar.Cancel += (sender, e) => CancelCurrentJob ();
@@ -251,9 +250,10 @@ namespace LongoMatch.Services
 			Image frame, final_image;
 			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			
+			capturer = multimediaToolkit.GetFramesCapturer ();
 			capturer.Open (filename);
-			capturer.Seek (drawing.Render, true);
-			frame = capturer.GetCurrentFrame ();
+			frame = capturer.GetFrame (drawing.Render, true);
+			capturer.Dispose ();
 			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
 			final_image.Save (path);
 			return path;

@@ -27,7 +27,7 @@ using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Video.Player
 {
-	public class GstPlayer : GLib.Object, IPlayer, IFramesCapturer
+	public class GstPlayer : GLib.Object, IPlayer
 	{
 
 		public event ErrorHandler Error;
@@ -520,11 +520,18 @@ namespace LongoMatch.Video.Player
 		}
 	}
 
-	public class GstFramesCapturer: GstPlayer
+	public class GstFramesCapturer: GstPlayer , IFramesCapturer
 	{
 	
 		public unsafe GstFramesCapturer () : base (PlayerUseType.Capture)
 		{
+		}
+		
+		public Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1)
+		{
+			Seek (pos, accurate);
+			Pause ();
+			return GetCurrentFrame (outwidth, outheight);
 		}
 	}
 }

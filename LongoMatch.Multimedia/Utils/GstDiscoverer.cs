@@ -76,8 +76,8 @@ namespace LongoMatch.Video.Utils
 					factory = new MultimediaFactory ();
 					thumbnailer = factory.GetFramesCapturer ();
 					thumbnailer.Open (filePath);
-					thumbnailer.Seek (new Time { Seconds = 2 }, false);
-					preview = thumbnailer.GetCurrentFrame (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+					preview = thumbnailer.GetFrame (new Time { Seconds = 2 }, false,
+					THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 					thumbnailer.Dispose ();
 				}
 			}
