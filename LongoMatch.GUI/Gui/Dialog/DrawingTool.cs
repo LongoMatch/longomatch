@@ -55,6 +55,20 @@ namespace LongoMatch.Gui.Dialog
 			
 			selectbutton.Active = true;
 
+			selectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-select", 20, IconLookupFlags.ForceSvg);
+			eraserbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-eraser", 20, IconLookupFlags.ForceSvg);
+			penbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-pencil", 20, IconLookupFlags.ForceSvg);
+			textbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-text", 20, IconLookupFlags.ForceSvg);
+			linebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-arrow", 20, IconLookupFlags.ForceSvg);
+			crossbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-mark", 20, IconLookupFlags.ForceSvg);
+			rectanglebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-square", 20, IconLookupFlags.ForceSvg);
+			ellipsebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-circle", 20, IconLookupFlags.ForceSvg);
+			rectanglefilledbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-square-fill", 20, IconLookupFlags.ForceSvg);
+			ellipsefilledbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-circle-fill", 20, IconLookupFlags.ForceSvg);
+			playerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-person", 20, IconLookupFlags.ForceSvg);
+			numberbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-counter", 20, IconLookupFlags.ForceSvg);
+			anglebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-angle", 20, IconLookupFlags.ForceSvg);
+
 			selectbutton.Toggled += HandleToolClicked;
 			eraserbutton.Toggled += HandleToolClicked;
 			penbutton.Toggled += HandleToolClicked;
