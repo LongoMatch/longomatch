@@ -76,7 +76,10 @@ namespace LongoMatch
 				ProcessExecutionError (ex);
 			} finally {
 				if (manager != null) {
-					manager.ShutdownMultimediaBackends ();
+					try {
+						manager.ShutdownMultimediaBackends ();
+					} catch (Exception ex) {
+					}
 				}
 			}
 		}
