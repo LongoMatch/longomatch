@@ -8776,7 +8776,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.ProjectsManagerPanel" design-size="1070 557">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.ProjectsManagerPanel" design-size="1094 557">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
