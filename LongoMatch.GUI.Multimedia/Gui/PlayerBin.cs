@@ -59,7 +59,7 @@ namespace LongoMatch.Gui
 		Playlist loadedPlaylist;
 		Time length, lastTime;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
-		bool ignoreTick, stillimageLoaded;
+		bool ignoreTick, stillimageLoaded, delayedOpen;
 		MediaFile file;
 		double previousVLevel = 1;
 		double[] seeksQueue;
@@ -165,7 +165,12 @@ namespace LongoMatch.Gui
 		#region Public methods
 		public void Open (MediaFile file)
 		{
-			Open (file, true);
+			if (videowindow.Ready) {
+				Open (file, true);
+			} else {
+				this.file = file;
+				delayedOpen = true;
+			}
 		}
 
 		public void Play ()
@@ -324,12 +329,12 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void Open (MediaFile file, bool seek)
+		void Open (MediaFile file, bool seek, bool force=false)
 		{
 			ResetGui ();
 			CloseSegment ();
 			videowindow.Ratio = (float) (file.VideoWidth * file.Par / file.VideoHeight);
-			if (file != this.file) {
+			if (file != this.file || force) {
 				readyToSeek = false;
 				this.file = file;
 				try {
@@ -501,7 +506,7 @@ namespace LongoMatch.Gui
 			player.ReadyToSeek += OnReadyToSeek;
 			videowindow.ButtonPressEvent += OnVideoboxButtonPressEvent;
 			videowindow.ScrollEvent += OnVideoboxScrollEvent;
-			videowindow.Realized += HandleRealized;
+			videowindow.ReadyEvent += HandleReady;
 			videowindow.ExposeEvent += HandleExposeEvent;
 			videowindow.CanFocus = true;
 		}
@@ -793,9 +798,15 @@ namespace LongoMatch.Gui
 			Config.EventsBroker.EmitDrawFrame (null, -1);
 		}
 
-		void HandleRealized (object sender, EventArgs e)
+		void HandleReady (object sender, EventArgs e)
 		{
-			player.WindowHandle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
+			IntPtr handle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
+			player.WindowHandle = handle;
+			if (delayedOpen) {
+				Open (file, true, true);
+				delayedOpen = false;
+				player.Expose ();
+			}
 		}
 
 		void HandleSeekEvent (SeekType type, Time start, float rate)

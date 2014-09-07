@@ -24,7 +24,7 @@ namespace LongoMatch.Gui
 	public partial class VideoWindow : Gtk.Bin
 	{
 		AspectFrame frame;
-		public new event EventHandler Realized;
+		public new event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
 		public new event ButtonPressEventHandler ButtonPressEvent;
 		public new event ScrollEventHandler ScrollEvent;
@@ -37,7 +37,6 @@ namespace LongoMatch.Gui
 
 			Window = new DrawingArea ();
 			Window.DoubleBuffered = false;
-			Window.Realized += HandleRealized;
 			Window.ExposeEvent += HandleExposeEvent;
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
@@ -46,6 +45,11 @@ namespace LongoMatch.Gui
 			frame.Add (Window);
 			videoeventbox.Add (frame);
 			ShowAll ();
+		}
+
+		public bool Ready {
+			get;
+			set;
 		}
 
 		void HandleScrollEvent (object o, ScrollEventArgs args)
@@ -58,6 +62,12 @@ namespace LongoMatch.Gui
 
 		void HandleExposeEvent (object o, ExposeEventArgs args)
 		{
+			if (!Ready) {
+				if (ReadyEvent != null) {
+					ReadyEvent (o, null);
+				}
+				Ready = true;
+			}
 			if (ExposeEvent != null) {
 				ExposeEvent (o, args);
 			}
@@ -72,9 +82,6 @@ namespace LongoMatch.Gui
 
 		void HandleRealized (object sender, EventArgs e)
 		{
-			if (Realized != null) {
-				Realized (sender, e);
-			}
 			
 		}
 		
