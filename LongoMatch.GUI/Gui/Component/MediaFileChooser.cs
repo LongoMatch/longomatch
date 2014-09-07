@@ -67,8 +67,10 @@ namespace LongoMatch.Gui.Component
 		{
 			if (mediaFile != null) {
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
+				fileentry.TooltipText = mediaFile.FilePath;
 			} else if (file != null) {
 				fileentry.Text = System.IO.Path.GetFileName (file);
+				fileentry.TooltipText = file;
 			} else {
 				fileentry.Text = Catalog.GetString ("Select file...");
 			}
