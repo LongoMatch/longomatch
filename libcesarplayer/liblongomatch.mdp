@@ -1,7 +1,7 @@
 <Project name="libcesarplayer" fileversion="2.0" language="C" Target="Bin" Description="Gstreamer backend libraries for LongoMatch" ctype="CProject">
   <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="../bin" output="libcesarplayer.dll" />
+      <Output directory="../bin" output="libcesarplayer" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="None" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP OSTYPE_LINUX" ctype="CCompilationParameters" />
