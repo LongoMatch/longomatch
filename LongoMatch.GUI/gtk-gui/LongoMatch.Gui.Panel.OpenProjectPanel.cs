@@ -6,6 +6,7 @@ namespace LongoMatch.Gui.Panel
 	{
 		private global::Gtk.VBox vbox4;
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
+		private global::Gtk.Alignment contentalignment;
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget;
 
 		protected virtual void Build ()
@@ -28,12 +29,18 @@ namespace LongoMatch.Gui.Panel
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
+			this.contentalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.contentalignment.Name = "contentalignment";
+			this.contentalignment.LeftPadding = ((uint)(12));
+			this.contentalignment.RightPadding = ((uint)(12));
+			// Container child contentalignment.Gtk.Container+ContainerChild
 			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectListWidget ();
 			this.projectlistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget.Name = "projectlistwidget";
-			this.vbox4.Add (this.projectlistwidget);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.projectlistwidget]));
-			w2.Position = 1;
+			this.contentalignment.Add (this.projectlistwidget);
+			this.vbox4.Add (this.contentalignment);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.contentalignment]));
+			w3.Position = 1;
 			this.Add (this.vbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

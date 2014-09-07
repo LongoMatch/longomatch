@@ -10,6 +10,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Notebook notebook1;
 		private global::Gtk.HBox hbox4;
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
+		private global::Gtk.Alignment projectpropertiesalignment;
 		private global::Gtk.VBox rbox;
 		private global::Gtk.VBox descbox;
 		private global::Gtk.Frame frame5;
@@ -101,6 +102,10 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectlistwidget1]));
 			w2.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
+			this.projectpropertiesalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.projectpropertiesalignment.Name = "projectpropertiesalignment";
+			this.projectpropertiesalignment.BottomPadding = ((uint)(12));
+			// Container child projectpropertiesalignment.Gtk.Container+ContainerChild
 			this.rbox = new global::Gtk.VBox ();
 			this.rbox.Name = "rbox";
 			this.rbox.Spacing = 6;
@@ -320,6 +325,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child table1.Gtk.Table+TableChild
 			this.templatelabel = new global::Gtk.Label ();
 			this.templatelabel.Name = "templatelabel";
+			this.templatelabel.Xalign = 0F;
 			this.table1.Add (this.templatelabel);
 			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.table1 [this.templatelabel]));
 			w24.TopAttach = ((uint)(2));
@@ -462,11 +468,12 @@ namespace LongoMatch.Gui.Panel
 			w43.Position = 1;
 			w43.Expand = false;
 			w43.Fill = false;
-			this.hbox4.Add (this.rbox);
-			global::Gtk.Box.BoxChild w44 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.rbox]));
-			w44.Position = 1;
-			w44.Expand = false;
-			w44.Fill = false;
+			this.projectpropertiesalignment.Add (this.rbox);
+			this.hbox4.Add (this.projectpropertiesalignment);
+			global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectpropertiesalignment]));
+			w45.Position = 1;
+			w45.Expand = false;
+			w45.Fill = false;
 			this.notebook1.Add (this.hbox4);
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
@@ -474,17 +481,17 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1.SetTabLabel (this.hbox4, this.label1);
 			this.label1.ShowAll ();
 			// Notebook tab
-			global::Gtk.Label w46 = new global::Gtk.Label ();
-			w46.Visible = true;
-			this.notebook1.Add (w46);
+			global::Gtk.Label w47 = new global::Gtk.Label ();
+			w47.Visible = true;
+			this.notebook1.Add (w47);
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.notebook1.SetTabLabel (w46, this.label3);
+			this.notebook1.SetTabLabel (w47, this.label3);
 			this.label3.ShowAll ();
 			this.contentalignment.Add (this.notebook1);
 			this.vbox3.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.contentalignment]));
-			w48.Position = 1;
+			global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.contentalignment]));
+			w49.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
