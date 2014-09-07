@@ -607,7 +607,7 @@ namespace LongoMatch.Gui
 					}
 				}
 			} else {
-				slength = length.ToMSecondsString ();
+				slength = length.ToMSecondsString (true);
 				timelabel.Text = currentTime.ToMSecondsString (true) + "/" + slength;
 				if (timescale.Visible) {
 					timescale.Value = (double)currentTime.MSeconds / length.MSeconds;
