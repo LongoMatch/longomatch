@@ -47,6 +47,11 @@ namespace LongoMatch.Gui.Panel
 			this.DB = Config.DatabaseManager.ActiveDB;
 			this.gkit = Config.GUIToolkit;
 			this.Build ();
+
+			savebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-project-save", 34, IconLookupFlags.ForceSvg);
+			exportbuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-project-export", 34, IconLookupFlags.ForceSvg);
+			deletebuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-project-delete", 34, IconLookupFlags.ForceSvg);
+
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
 			projectlistwidget1.Fill (DB.GetAllProjects());
@@ -60,7 +65,6 @@ namespace LongoMatch.Gui.Panel
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
-			templatebutton.Clicked += HandleTeamTemplateClicked;
 			datepicker.ValueChanged += HandleDateChanged;
 			mediafilechooser.ChangedEvent += HandleFileChanged;
 
@@ -145,7 +149,6 @@ namespace LongoMatch.Gui.Panel
 			} else if (sender == visitorSpinButton) {
 				loadedProject.Description.VisitorGoals = (int) (sender as SpinButton).Value;
 			}
-			
 		}
 
 		void HandleProjectsSelected (List<ProjectDescription> projects)
@@ -186,10 +189,6 @@ namespace LongoMatch.Gui.Panel
 				return;
 
 			loadedProject.Description.MatchDate = datepicker.Date;
-		}
-		
-		void HandleTeamTemplateClicked (object sender, EventArgs e)
-		{
 		}
 
 		void HandleDeleteClicked (object sender, EventArgs e)

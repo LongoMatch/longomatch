@@ -8951,6 +8951,9 @@ You can continue with the current capture, cancel it or save your project.
                                           <placeholder />
                                         </child>
                                         <child>
+                                          <placeholder />
+                                        </child>
+                                        <child>
                                           <widget class="Gtk.Entry" id="competitionentry">
                                             <property name="MemberName" />
                                             <property name="CanFocus">True</property>
@@ -9177,31 +9180,6 @@ You can continue with the current capture, cancel it or save your project.
                                           </packing>
                                         </child>
                                         <child>
-                                          <widget class="Gtk.Button" id="templatebutton">
-                                            <property name="MemberName" />
-                                            <property name="CanFocus">True</property>
-                                            <property name="Type">TextAndIcon</property>
-                                            <property name="Icon">stock:gtk-edit Menu</property>
-                                            <property name="Label" translatable="yes">Edit template</property>
-                                            <property name="UseUnderline">True</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="TopAttach">2</property>
-                                            <property name="BottomAttach">3</property>
-                                            <property name="LeftAttach">2</property>
-                                            <property name="RightAttach">3</property>
-                                            <property name="AutoSize">True</property>
-                                            <property name="XOptions">Fill</property>
-                                            <property name="YOptions">Fill</property>
-                                            <property name="XExpand">False</property>
-                                            <property name="XFill">True</property>
-                                            <property name="XShrink">False</property>
-                                            <property name="YExpand">False</property>
-                                            <property name="YFill">True</property>
-                                            <property name="YShrink">False</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <widget class="Gtk.Label" id="templatelabel">
                                             <property name="MemberName" />
                                           </widget>
@@ -9277,7 +9255,7 @@ You can continue with the current capture, cancel it or save your project.
                                             <child>
                                               <widget class="Gtk.Alignment" id="mediafilechooseralignment">
                                                 <property name="MemberName" />
-                                                <property name="Xscale">0</property>
+                                                <property name="Xscale">0.5</property>
                                                 <property name="Xalign">0</property>
                                                 <child>
                                                   <widget class="LongoMatch.Gui.Component.MediaFileChooser" id="mediafilechooser">
@@ -9349,11 +9327,14 @@ You can continue with the current capture, cancel it or save your project.
                               <widget class="Gtk.Button" id="savebutton">
                                 <property name="MemberName" />
                                 <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Save</property>
                                 <property name="CanFocus">True</property>
-                                <property name="Type">TextAndIcon</property>
-                                <property name="Icon">stock:gtk-save Dialog</property>
-                                <property name="Label" translatable="yes">Save</property>
-                                <property name="UseUnderline">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="savebuttonimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
                               </widget>
                               <packing>
                                 <property name="Expand">False</property>
@@ -9364,11 +9345,14 @@ You can continue with the current capture, cancel it or save your project.
                               <widget class="Gtk.Button" id="exportbutton">
                                 <property name="MemberName" />
                                 <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Export</property>
                                 <property name="CanFocus">True</property>
-                                <property name="Type">TextAndIcon</property>
-                                <property name="Icon">stock:gtk-save-as Dialog</property>
-                                <property name="Label" translatable="yes">Export</property>
-                                <property name="UseUnderline">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="exportbuttonimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
                               </widget>
                               <packing>
                                 <property name="Position">1</property>
@@ -9380,11 +9364,15 @@ You can continue with the current capture, cancel it or save your project.
                               <widget class="Gtk.Button" id="deletebutton">
                                 <property name="MemberName" />
                                 <property name="Sensitive">False</property>
+                                <property name="Tooltip">Delete</property>
                                 <property name="CanFocus">True</property>
-                                <property name="Type">TextAndIcon</property>
-                                <property name="Icon">stock:gtk-delete Dialog</property>
-                                <property name="Label">Delete</property>
-                                <property name="UseUnderline">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="deletebuttonimage">
+                                    <property name="MemberName" />
+                                    <property name="Tooltip" translatable="yes" />
+                                  </widget>
+                                </child>
                               </widget>
                               <packing>
                                 <property name="Position">2</property>
