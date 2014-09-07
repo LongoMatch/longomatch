@@ -385,7 +385,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child hbox15.Gtk.Box+BoxChild
 			this.vsimage = new global::Gtk.Image ();
 			this.vsimage.Name = "vsimage";
-			this.vsimage.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-vs", global::Gtk.IconSize.Dialog);
 			this.hbox15.Add (this.vsimage);
 			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox15 [this.vsimage]));
 			w33.Position = 1;

@@ -6971,7 +6971,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Image" id="vsimage">
                                     <property name="MemberName" />
-                                    <property name="Pixbuf">stock:longomatch-vs Dialog</property>
                                   </widget>
                                   <packing>
                                     <property name="Position">1</property>

@@ -126,6 +126,7 @@ namespace LongoMatch.Gui.Panel
 			captureimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device", s, f);
 			fakeimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device-fake", s, f);
 			ipimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device-ip", s, f);
+			vsimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-vs", 50, f);
 
 			filebutton.Clicked += HandleProjectTypeSet;
 			capturebutton.Clicked += HandleProjectTypeSet;
