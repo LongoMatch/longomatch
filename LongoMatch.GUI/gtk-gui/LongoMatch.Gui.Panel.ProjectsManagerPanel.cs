@@ -400,7 +400,7 @@ namespace LongoMatch.Gui.Panel
 			this.mediafilechooser = new global::LongoMatch.Gui.Component.MediaFileChooser ();
 			this.mediafilechooser.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilechooser.Name = "mediafilechooser";
-			this.mediafilechooser.MediaFileMode = false;
+			this.mediafilechooser.MediaFileMode = true;
 			this.mediafilechooseralignment.Add (this.mediafilechooser);
 			this.vbox1.Add (this.mediafilechooseralignment);
 			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.mediafilechooseralignment]));
