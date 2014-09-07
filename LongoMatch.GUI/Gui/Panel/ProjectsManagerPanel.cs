@@ -52,16 +52,18 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.Fill (DB.GetAllProjects());
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
+
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
 			localSpinButton.ValueChanged += HandleChanged;
 			visitorSpinButton.ValueChanged += HandleChanged;
-			filebutton.Clicked += HandleFileClicked;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
 			templatebutton.Clicked += HandleTeamTemplateClicked;
-			calendarbutton.Clicked += HandleCalendarClicked;
+			datepicker.ValueChanged += HandleDateChanged;
+			mediafilechooser.ChangedEvent += HandleFileChanged;
+
 			notebook1.Page = 0;
 			panelheader1.Title = "PROJECTS MANAGER";
 			panelheader1.ApplyVisible = false;
@@ -78,7 +80,8 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Text = pd.Competition;
 			localSpinButton.Value = pd.LocalGoals;
 			visitorSpinButton.Value = pd.VisitorGoals;
-			datelabel.Text = pd.MatchDate.ToShortDateString ();
+			datepicker.Date = pd.MatchDate;
+			mediafilechooser.MediaFile = f;
 			templatelabel.Text = project.Dashboard.Name;
 			
 			if (f.Preview != null) {
@@ -108,13 +111,12 @@ namespace LongoMatch.Gui.Panel
 			descbox.Visible = true;
 		}
 		
-		void HandleFileClicked (object sender, EventArgs e)
+		void HandleFileChanged (object sender, EventArgs e)
 		{
-			MediaFile file= LongoMatch.Gui.Helpers.Misc.OpenFile (this);
-			if (file != null) {
-				loadedProject.Description.File = file;
-				fileimage.Pixbuf = file.Preview.Value;
-				medialabel.Markup = file.Description;
+			if (mediafilechooser.MediaFile != null && loadedProject != null) {
+				loadedProject.Description.File = mediafilechooser.MediaFile;
+				fileimage.Pixbuf = loadedProject.Description.File.Preview.Value;
+				medialabel.Markup = loadedProject.Description.File.Description;
 			}
 		}
 
@@ -178,13 +180,12 @@ namespace LongoMatch.Gui.Panel
 			}			
 		}
 
-		void HandleCalendarClicked (object sender, EventArgs e)
+		void HandleDateChanged (object sender, EventArgs e)
 		{
-			DateTime date;
-			
-			date = gkit.SelectDate (loadedProject.Description.MatchDate, this);
-			loadedProject.Description.MatchDate = date;
-			datelabel.Text = date.ToShortDateString ();
+			if (loadedProject == null)
+				return;
+
+			loadedProject.Description.MatchDate = datepicker.Date;
 		}
 		
 		void HandleTeamTemplateClicked (object sender, EventArgs e)
