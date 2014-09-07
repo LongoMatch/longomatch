@@ -186,11 +186,6 @@ namespace LongoMatch.Gui.Component
 			(Model as TreeStore).Remove (ref selectedIter);
 		}
 
-		protected override bool OnKeyPressEvent (EventKey evnt)
-		{
-			return false;
-		}
-
 		void FillElementAndPlaylist (TreeIter iter, out Playlist playlist, out IPlaylistElement element)
 		{
 			TreeIter parent;

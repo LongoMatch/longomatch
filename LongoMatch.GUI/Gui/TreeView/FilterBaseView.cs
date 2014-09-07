@@ -128,6 +128,13 @@ namespace LongoMatch.Gui.Component
 		protected abstract void UpdateSelection (TreeIter iter, bool active); 
 		protected abstract void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter);
 		protected abstract void Select(bool select_all);
+		
+		protected override bool OnKeyPressEvent (EventKey evnt)
+		{
+			return false;
+		}
+
+
 	}
 }
 

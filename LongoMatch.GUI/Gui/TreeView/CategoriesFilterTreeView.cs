@@ -128,6 +128,11 @@ namespace LongoMatch.Gui.Component
 			filter.Silent = false;
 			filter.Update ();
 		}
+		
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
+		}
 	}
 }
 

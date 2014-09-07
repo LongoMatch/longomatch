@@ -117,6 +117,13 @@ namespace LongoMatch.Gui.Component
 			UpdateSelection(localIter, select_all);
 			UpdateSelection(visitorIter, select_all);
 		}
+		
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
+		}
+
+
 	}
 }
 
