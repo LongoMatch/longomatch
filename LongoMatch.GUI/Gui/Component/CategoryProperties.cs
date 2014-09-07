@@ -203,9 +203,9 @@ namespace LongoMatch.Gui.Component
 				SetPositionCombo (hfieldcombobox, eventButton.EventType.TagHalfFieldPosition,
 				                  eventButton.EventType.HalfFieldPositionIsDistance);
 				SetPositionCombo (goalcombobox, eventButton.EventType.TagGoalPosition, false);
+				sortmethodcombobox.Active = (int)eventButton.EventType.SortMethod;
 			}
 			if (catButton != null) {
-				sortmethodcombobox.Active = (int)catButton.AnalysisEventType.SortMethod;
 				tagscheckbutton.Active = catButton.ShowSubcategories;
 				tprbutton.Value = catButton.TagsPerRow;
 			}
@@ -338,7 +338,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			catButton.EventType.SortMethodString = sortmethodcombobox.ActiveText;
+			eventButton.EventType.SortMethodString = sortmethodcombobox.ActiveText;
 			Edited = true;
 		}
 
