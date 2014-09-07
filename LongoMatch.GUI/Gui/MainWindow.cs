@@ -119,8 +119,8 @@ namespace LongoMatch.Gui
 			}
 			MakeActionsSensitive(true, projectType);
 			analysisWindow = new AnalysisComponent();
-			analysisWindow.SetProject (project, projectType, props, filter);
 			SetPanel (analysisWindow as Widget);
+			analysisWindow.SetProject (project, projectType, props, filter);
 			return analysisWindow;
 		}
 		

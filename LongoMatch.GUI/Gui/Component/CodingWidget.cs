@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Component
 			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
 			}
-			playspositionviewer1.LoadProject (project);
+			playspositionviewer1.LoadProject (project, filter);
 		}
 
 		public void AddPlay (TimelineEvent play)

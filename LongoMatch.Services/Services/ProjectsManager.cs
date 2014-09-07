@@ -177,9 +177,6 @@ namespace LongoMatch.Services
 			OpenedProject = project;
 			OpenedProjectType = projectType;
 		
-			if (Player != null) {
-			}
-			
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if (!File.Exists (project.Description.File.FilePath)) {

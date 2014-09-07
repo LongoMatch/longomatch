@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
-		Dashboard categories;
 		Project project;
 		
 		public CategoriesFilterTreeView (): base()
@@ -42,7 +41,6 @@ namespace LongoMatch.Gui.Component
 		
 		public override void SetFilter (EventsFilter filter, Project project) {
 			this.project = project;
-			this.categories = project.Dashboard;
 			base.SetFilter(filter, project);
 		}
 		
@@ -54,9 +52,11 @@ namespace LongoMatch.Gui.Component
 				TreeIter catIter;
 				
 				catIter = store.AppendValues (evType, true);
+				filter.FilterEventType (evType, true);
 
 				if (evType is AnalysisEventType) {
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
+						filter.FilterEventTag (evType, tag, true);
 						store.AppendValues(catIter, tag, true);
 					}
 				}
@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 				EventType evType = store.GetValue (parent, 0) as EventType;
 				filter.FilterEventTag (evType, o as Tag, active);
 			} else {
-				/* don't do anything here and let the children do the filtering */
+				filter.FilterEventType (o as EventType, active);
 			}
 			store.SetValue(iter, 1, active);
 			
@@ -119,11 +119,14 @@ namespace LongoMatch.Gui.Component
 		protected override void Select(bool select_all) {
 			TreeIter iter;
 			
+			filter.Silent = true;
 			store.GetIterFirst(out iter);
 			while (store.IterIsValid(iter)){
 				UpdateSelection(iter, select_all);
 				store.IterNext(ref iter);
 			}
+			filter.Silent = false;
+			filter.Update ();
 		}
 	}
 }

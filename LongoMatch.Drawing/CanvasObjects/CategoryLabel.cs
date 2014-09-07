@@ -45,7 +45,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public bool Even {
+		public Color BackgroundColor {
 			get;
 			set;
 		}
@@ -57,15 +57,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color color;
 			double hs, vs, to, rectSize;
 			double y;
-			
-			if (Even) {
-				color = Config.Style.PaletteBackground;
-			} else {
-				color = Config.Style.PaletteBackgroundLight;
-			}
 			
 			hs = StyleConf.TimelineLabelHSpacing;
 			vs = StyleConf.TimelineLabelVSpacing;
@@ -74,8 +67,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			y = OffsetY - Math.Floor (Scroll);
 			tk.Begin ();
-			tk.FillColor = color;
-			tk.StrokeColor = color;
+			tk.FillColor = BackgroundColor;
+			tk.StrokeColor = BackgroundColor;
 			tk.LineWidth = 0;
 			tk.DrawRectangle (new Point (0, y), width, Height);
 			

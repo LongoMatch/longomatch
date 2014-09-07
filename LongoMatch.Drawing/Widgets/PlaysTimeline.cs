@@ -110,18 +110,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		Color ColorForRow (int row)
-		{
-			Color c;
-
-			if (row % 2 == 0) {
-				c = Config.Style.PaletteBackground;
-			} else {
-				c = Config.Style.PaletteBackgroundLight;
-			}
-			return c;
-		}
-
 		void FillCanvas ()
 		{
 			CategoryTimeline tl;
@@ -130,7 +118,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (EventType type in project.EventTypes) {
 				tl = new CategoryTimeline (project.EventsByType (type), duration,
 				                           i * StyleConf.TimelineCategoryHeight,
-				                           ColorForRow (i));
+				                           Utils.ColorForRow (i), playsFilter);
 				eventsTimelines [type] = tl;
 				Objects.Add (tl);
 				i++;
@@ -147,6 +135,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (playsFilter.VisibleEventTypes.Contains (type)) {
 					timeline.OffsetY = i * timeline.Height;
 					timeline.Visible = true;
+					timeline.BackgroundColor = Utils.ColorForRow (i);
 					i++;
 				} else {
 					timeline.Visible = false;

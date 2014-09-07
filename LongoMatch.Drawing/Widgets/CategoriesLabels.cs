@@ -84,9 +84,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (filter.VisibleEventTypes.Contains (type)) {
 					label.OffsetY = i * label.Height;
 					label.Visible = true;
-					if (i % 2 == 0) {
-						label.Even = true;
-					}
+					label.BackgroundColor = Utils.ColorForRow (i);
 					i++;
 				} else {
 					label.Visible = false;

@@ -29,6 +29,7 @@ namespace LongoMatch.Gui.Component
 	
 		PlaysMenu menu;
 		Project project;
+		EventsFilter filter;
 
 		public PlaysPositionViewer ()
 		{
@@ -43,7 +44,7 @@ namespace LongoMatch.Gui.Component
 			menu = new PlaysMenu ();
 		}
 		
-		public void LoadProject (Project project) {
+		public void LoadProject (Project project, EventsFilter filter) {
 			this.project = project;
 			if (project != null) {
 				field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
@@ -52,6 +53,9 @@ namespace LongoMatch.Gui.Component
 				field.Tagger.Plays = project.Timeline;
 				hfield.Tagger.Plays = project.Timeline;
 				goal.Tagger.Plays = project.Timeline;
+				field.Tagger.Filter = filter;
+				hfield.Tagger.Filter = filter;
+				goal.Tagger.Filter = filter;
 			}
 		}
 		

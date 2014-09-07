@@ -58,11 +58,13 @@ namespace LongoMatch.Gui.Component
 			store.SetValue(visitorIter, 1, false);
 			
 			foreach (Player player in local.PlayingPlayersList) {
-				store.AppendValues (localIter, player, filter.VisiblePlayers.Contains(player));
+				filter.FilterPlayer (player, true);
+				store.AppendValues (localIter, player, true);
 			}
 			
 			foreach (Player player in visitor.PlayingPlayersList) {
-				store.AppendValues (visitorIter, player, filter.VisiblePlayers.Contains(player));
+				filter.FilterPlayer (player, true);
+				store.AppendValues (visitorIter, player, true);
 			}
 			Model = store;
 		}

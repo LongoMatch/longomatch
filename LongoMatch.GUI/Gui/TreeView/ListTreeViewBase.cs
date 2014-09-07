@@ -157,7 +157,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnFilterUpdated() {
-			modelFilter.Refilter();
+			Refilter ();
 		}
 		
 		protected void RenderElement (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

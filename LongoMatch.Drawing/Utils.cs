@@ -27,6 +27,19 @@ namespace LongoMatch.Drawing
 {
 	public class Utils
 	{
+	
+		public static Color ColorForRow (int row)
+		{
+			Color c;
+
+			if (row % 2 == 0) {
+				c = Config.Style.PaletteBackground;
+			} else {
+				c = Config.Style.PaletteBackgroundLight;
+			}
+			return c;
+		}
+
 		public static double Round (double n, int multiple)
 		{
 			if (n % multiple > multiple / 2) {
@@ -84,17 +97,17 @@ namespace LongoMatch.Drawing
 			surface.Dispose ();
 			return img;
 		}
-		
+
 		public static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd)
 		{
 			return RenderFrameDrawing (tk, width, height, fd, null);
 		}
-		
+
 		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
 		{
 			return RenderFrameDrawing (tk, image.Width, image.Height, fd, image);
 		}
-		
+
 		public static Point ToUserCoords (Point p, Point offset, double scaleX, double scaleY)
 		{
 			return new Point ((p.X - offset.X) / scaleX,

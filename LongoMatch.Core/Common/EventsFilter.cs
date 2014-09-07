@@ -42,6 +42,11 @@ namespace LongoMatch.Core.Common
 			UpdateFilters();
 		}
 		
+		public bool Silent {
+			set;
+			get;
+		}
+
 		public List<EventType> VisibleEventTypes {
 			get;
 			protected set;
@@ -183,7 +188,7 @@ namespace LongoMatch.Core.Common
 		}
 		
 		void EmitFilterUpdated () {
-			if (FilterUpdated != null)
+			if (!Silent && FilterUpdated != null)
 				FilterUpdated ();
 		}
 	}

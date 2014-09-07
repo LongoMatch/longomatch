@@ -28,7 +28,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public abstract class TimelineObject: CanvasObject, ICanvasSelectableObject
 	{
-		Color background;
 		List<TimeNodeObject> nodes;
 		double secondsPerPixel;
 		protected Time maxTime;
@@ -36,7 +35,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public TimelineObject (Time maxTime, double offsetY, Color background)
 		{
-			this.background = background;
+			this.BackgroundColor = background;
 			this.nodes = new List<TimeNodeObject> ();
 			this.maxTime = maxTime;
 			selectionBorderL = LoadBorder (StyleConf.TimelineSelectionLeft);
@@ -70,6 +69,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public Color BackgroundColor {
+			get;
+			set;
+		}
+
 		public Time CurrentTime {
 			set;
 			protected get;
@@ -101,10 +105,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 			nodes.RemoveAll (po => po.TimeNode == node);
 		}
 		
+		protected virtual bool TimeNodeObjectIsVisible (TimeNodeObject tn)
+		{
+			return true;
+		}
+		
 		protected virtual void DrawBackground (IDrawingToolkit tk, Area area)
 		{
-			tk.FillColor = background;
-			tk.StrokeColor = background;
+			tk.FillColor = BackgroundColor;
+			tk.StrokeColor = BackgroundColor;
 			tk.LineWidth = 0;
 			
 			tk.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
@@ -120,13 +129,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Begin ();
 			DrawBackground (tk, area);
 			foreach (TimeNodeObject p in nodes) {
+				if (!TimeNodeObjectIsVisible (p))
+					continue;
 				if (p.Selected) {
 					selected.Add (p);
 					continue;
 				}
+				p.OffsetY = OffsetY;
 				p.Draw (tk, area);
 			}
 			foreach (TimeNodeObject p in selected) {
+				p.OffsetY = OffsetY;
 				p.Draw (tk, area);
 			}
 
@@ -178,13 +191,20 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 	public class CategoryTimeline: TimelineObject
 	{
+		EventsFilter filter;
 
-		public CategoryTimeline (List<TimelineEvent> plays, Time maxTime, double offsetY, Color background):
+		public CategoryTimeline (List<TimelineEvent> plays, Time maxTime, double offsetY, Color background, EventsFilter filter):
 			base (maxTime, offsetY, background)
 		{
+			this.filter = filter;
 			foreach (TimelineEvent p in plays) {
 				AddPlay (p);
 			}
+		}
+
+		protected override bool TimeNodeObjectIsVisible (TimeNodeObject tn)
+		{
+			return filter.IsVisible ((tn as PlayObject).Play);
 		}
 
 		public void AddPlay (TimelineEvent play)

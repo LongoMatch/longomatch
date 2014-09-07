@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing.Widgets
 	
 		public event ShowTaggerMenuHandler ShowMenuEvent;
 
+		EventsFilter filter;
 		TimelineEvent playSelected;
 
 		public PositionTagger (IWidget widget): base (widget)
@@ -48,6 +49,19 @@ namespace LongoMatch.Drawing.Widgets
 			FieldPosition = position;
 		}
 
+		public EventsFilter Filter {
+			get {
+				return filter;
+			}
+			set {
+				if (filter != null) {
+					filter.FilterUpdated -= HandleFilterUpdated;
+				}
+				filter = value;
+				filter.FilterUpdated += HandleFilterUpdated;
+			}
+		}
+		
 		public FieldPositionType FieldPosition {
 			get;
 			set;
@@ -104,12 +118,23 @@ namespace LongoMatch.Drawing.Widgets
 			po = new PositionObject (coords.Points, Background.Width,
 			                         Background.Height);
 			po.Play = play;
+			if (Filter != null) {
+				po.Visible = Filter.IsVisible (play);
+			}
 			Objects.Add (po);
 		}
 
 		public void RemovePlays (List<TimelineEvent> plays)
 		{
 			Objects.RemoveAll (o => plays.Contains ((o as PositionObject).Play));
+		}
+
+		void HandleFilterUpdated ()
+		{
+			foreach (PositionObject po in Objects) {
+				po.Visible = Filter.IsVisible (po.Play);
+			}
+			widget.ReDraw ();
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)
