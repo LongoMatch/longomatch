@@ -43,8 +43,8 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 		
 		public void LoadStats (ProjectStats pstats, Project project) {
-			categoryviewer1.HomeName = pstats.LocalTeam;
-			categoryviewer1.AwayName = pstats.VisitorTeam;
+			//categoryviewer1.HomeName = pstats.LocalTeam;
+			//categoryviewer1.AwayName = pstats.VisitorTeam;
 			categoryviewer1.LoadBackgrounds (project);
 			this.pstats = pstats;
 			ReloadStats();
@@ -59,9 +59,9 @@ namespace LongoMatch.Gui.Component.Stats
 				selected = store.GetPath (iter);
 			
 			store.Clear();
-			foreach (CategoryStats cstats in pstats.CategoriesStats) {
-				store.AppendValues (cstats, cstats.Name);
-			}
+			//foreach (EventTypeStats cstats in pstats.CategoriesStats) {
+			//	store.AppendValues (cstats, cstats.Name);
+			//}
 			
 			/* Keep the selected category for when we reload the stats changing players */
 			if (selected != null) {
@@ -70,16 +70,16 @@ namespace LongoMatch.Gui.Component.Stats
 				store.GetIterFirst(out iter);
 			}
 			treeview.Selection.SelectIter(iter);
-			categoryviewer1.LoadStats (store.GetValue (iter, 0) as CategoryStats);
+			categoryviewer1.LoadStats (store.GetValue (iter, 0) as EventTypeStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
-			CategoryStats stats;
+			EventTypeStats stats;
 			TreeIter iter;
 			
 			treeview.Selection.GetSelected(out iter);
-			stats = store.GetValue(iter, 0) as CategoryStats;
+			stats = store.GetValue(iter, 0) as EventTypeStats;
 			categoryviewer1.LoadStats (stats);
 		}
 	}

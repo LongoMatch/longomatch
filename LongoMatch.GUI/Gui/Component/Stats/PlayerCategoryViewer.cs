@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component.Stats
 			tagger.LoadBackgrounds (project);
 		}
 
-		public void LoadStats (CategoryStats stats) {
+		public void LoadStats (EventTypeStats stats) {
 			tagger.LoadStats (stats);
 			
 			foreach (Widget child in vbox1.AllChildren) {

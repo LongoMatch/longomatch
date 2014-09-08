@@ -28,87 +28,29 @@ namespace LongoMatch.Core.Stats
 {
 	public class ProjectStats: IDisposable
 	{
-		List<CategoryStats> catStats;
+		List<EventTypeStats> catStats;
 		EventsFilter filter;
 		Project project;
 		
 		public ProjectStats (Project project)
 		{
-			catStats = new List<CategoryStats>();
+			catStats = new List<EventTypeStats>();
 			this.project = project;
-			
-			ProjectName = project.Description.Title;
-			Date = project.Description.MatchDate;
-			LocalTeam = project.LocalTeamTemplate.TeamName;
-			VisitorTeam = project.VisitorTeamTemplate.TeamName;
-			Competition = project.Description.Competition;
-			Season = project.Description.Season;
-			Results = String.Format("{0}-{1}", project.Description.LocalGoals, project.Description.VisitorGoals);
-			UpdateStats ();
-			UpdateGameUnitsStats ();
+			CreateStats ();
 		}
 		
-		public void Dispose () {
-			if (HalfField != null)
-				HalfField.Dispose ();
-			if (Field != null)
-				Field.Dispose ();
-			if (Goal != null)
-				Goal.Dispose ();
-			catStats.Clear ();
+		public void Dispose ()
+		{
 		}
 		
-		public string ProjectName {
-			set;
+		public Project Project {
 			get;
+			protected set;
 		}
-		
-		public string Competition {
+
+		public List<EventTypeStats> EventTypeStats {
 			get;
-			set;
-		}
-		
-		public string Season {
-			get;
-			set;
-		}
-		
-		public string LocalTeam {
-			get;
-			set;
-		}
-		
-		public string VisitorTeam {
-			get;
-			set;
-		}
-		
-		public DateTime Date {
-			get;
-			set;
-		}
-		
-		public string Results {
-			get;
-			set;
-		}
-		
-		public Image Field {
-			get; set;
-		}
-		
-		public Image HalfField {
-			get; set;
-		}
-		
-		public Image Goal {
-			get; set;
-		}
-	
-		public List<CategoryStats> CategoriesStats {
-			get {
-				return catStats;
-			}
+			protected set;
 		}
 		
 		public EventsFilter Filter {
@@ -118,69 +60,40 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 		
-		void UpdateGameUnitsStats () {
-		}
-		
-		void CountPlaysInTeam (List<TimelineEvent> plays, out int localTeamCount, out int visitorTeamCount) {
-			localTeamCount = plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).Count();
-			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
-		}
-
-		public void UpdateStats () {
-			catStats.Clear();
+		public void CreateStats () {
+			EventTypeStats = new List <EventTypeStats> ();
 			
-			Field = project.Dashboard.FieldBackground;
-			HalfField = project.Dashboard.HalfFieldBackground;
-			Goal = project.Dashboard.GoalBackground;
-			
-			foreach (AnalysisEventType evt in project.EventTypes.OfType<AnalysisEventType> ()) {
-//				CategoryStats stats;
-//				List<Event> plays, homePlays, awayPlays, untagged;
-//				int localTeamCount, visitorTeamCount;
-//				
-//				plays = project.PlaysInCategory (cat);
-//				if (filter != null) {
-//					plays = plays.Where(p => filter.IsVisible (p)).ToList();
-//				}
-//				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
-//				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
-//				
-//				/* Get the plays where the team is not tagged but we have at least one player from a team tagged */
-//				untagged = plays.Where (p=> p.Team ==  Team.NONE).ToList();
-//				homePlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.LocalTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
-//				awayPlays.AddRange (untagged.Where (p => p.Players.Where (pt => project.VisitorTeamTemplate.List.Contains(pt)).Count() != 0).ToList());
-//				
-//				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
-//				
-//				/* Fill zonal tagging stats */
-//				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-//				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-//				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-//				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-//				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-//				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-//				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
-//				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
-//				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
-//				catStats.Add (stats);
+			foreach (EventType evt in project.EventTypes) {
+				EventTypeStats evstats = new EventTypeStats (project, filter, evt);
+				evstats.Update ();
 			}
 		}
-		
-		void GetSubcategoryStats (List<TimelineEvent> subcatPlays, SubCategoryStat subcatStat, string desc,
-			int totalCount, out int localTeamCount, out int visitorTeamCount)
+
+		public void UpdateStats ()
 		{
-			int count;
-			
-			count = subcatPlays.Count(); 
-			CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
-			PercentualStat pStat = new PercentualStat(desc, count, localTeamCount,
-				visitorTeamCount, totalCount);
-			subcatStat.AddOptionStat(pStat);
+			foreach (EventTypeStats e in EventTypeStats) {
+				e.Update();
+			}
 		}
-		
-		void GetPlayersStats (Project project, List<TimelineEvent> subcatPlays, string optionName,
-			SubCategoryStat subcatStat, EventType cat)
-		{
+
+//		void GetSubcategoryStats (List<TimelineEvent> subcatPlays, SubCategoryStat subcatStat, string desc,
+//			int totalCount, out int localTeamCount, out int visitorTeamCount)
+//		{
+//			int count;
+//			
+//			count = subcatPlays.Count(); 
+//			CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
+//			PercentualStat pStat = new PercentualStat(totalCount);
+//			pStat.Name = desc;
+//			pStat.TotalCount = count;
+//			pStat.LocalTeamCount = localTeamCount;
+//			pStat.VisitorTeamCount = visitorTeamCount;
+//			subcatStat.AddOptionStat(pStat);
+//		}
+//		
+//		void GetPlayersStats (Project project, List<TimelineEvent> subcatPlays, string optionName,
+//			SubCategoryStat subcatStat, EventType cat)
+//		{
 //			foreach (SubCategory subcat in cat.SubCategories) {
 //				Dictionary<Player, int> localPlayerCount = new Dictionary<Player, int>();
 //				Dictionary<Player, int> visitorPlayerCount = new Dictionary<Player, int>();
@@ -204,12 +117,8 @@ namespace LongoMatch.Core.Stats
 //					subcatStat.AddPlayersStats(optionName, subcat.Name, Team.VISITOR, visitorPlayerCount);
 //				}
 //			}
-		}
-		
-		int GetPlayerCount(List<TimelineEvent> plays, Player player)
-		{
-			return plays.Where(p => p.Players.Contains(player)).Count();
-		}
+//		}
+//		
 	}
 }
 

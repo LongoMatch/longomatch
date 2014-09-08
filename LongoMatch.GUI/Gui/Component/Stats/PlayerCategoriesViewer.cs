@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component.Stats
 				selected = store.GetPath (iter);
 			
 			store.Clear();
-			foreach (CategoryStats cstats in pstats.CategoriesStats) {
+			foreach (EventTypeStats cstats in pstats.EventTypeStats) {
 				store.AppendValues (cstats, cstats.Name);
 			}
 			
@@ -66,16 +66,16 @@ namespace LongoMatch.Gui.Component.Stats
 				store.GetIterFirst(out iter);
 			}
 			treeview.Selection.SelectIter(iter);
-			categoryviewer.LoadStats (store.GetValue (iter, 0) as CategoryStats);
+			categoryviewer.LoadStats (store.GetValue (iter, 0) as EventTypeStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
-			CategoryStats stats;
+			EventTypeStats stats;
 			TreeIter iter;
 			
 			treeview.Selection.GetSelected(out iter);
-			stats = store.GetValue(iter, 0) as CategoryStats;
+			stats = store.GetValue(iter, 0) as EventTypeStats;
 			categoryviewer.LoadStats (stats);
 		}	
 	}

@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 		
-		public void LoadStats (CategoryStats stats) {
+		public void LoadStats (EventTypeStats stats) {
 		}
 		
 		public void LoadPlay (TimelineEvent play) {

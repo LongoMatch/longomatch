@@ -25,8 +25,7 @@ namespace LongoMatch.Core.Stats
 	{
 		int parentTotal;
 		
-		public PercentualStat (string name, int totalCount, int localTeamCount,
-			int visitorTeamCount, int parentTotal): base (name, totalCount, localTeamCount, visitorTeamCount)
+		public PercentualStat (int parentTotal)
 		{
 			this.parentTotal = parentTotal;
 		}

@@ -68,8 +68,8 @@ namespace LongoMatch.Gui.Component
 		
 		void UpdateGui () {
 		
-			homelabel.Text = stats.LocalTeam;
-			awaylabel.Text = stats.VisitorTeam;
+			homelabel.Text = stats.Project.Description.LocalName;;
+			awaylabel.Text = stats.Project.Description.VisitorName;
 			GetMaxSize(out catsMaxSize, out subcatsMaxSize);
 			if (project.LocalTeamTemplate.Shield != null)
 				homeimage.Pixbuf = project.LocalTeamTemplate.Shield.Value;
@@ -78,14 +78,14 @@ namespace LongoMatch.Gui.Component
 			
 			subcats = new List<Widget>();
 			cats = new List<Widget>();
-			foreach (CategoryStats cstats in stats.CategoriesStats) {
+			foreach (EventTypeStats cstats in stats.EventTypeStats) {
 				AddCategory (cstats);
 			}			
 			mainbox.ShowAll();
 			UpdateSubcatsVisibility ();
 		}
 		
-		void AddCategory (CategoryStats cstats) {
+		void AddCategory (EventTypeStats cstats) {
 			Widget w = new StatsWidget (cstats, null, null, catsMaxSize);
 			cats.Add (w);
 			cstatsbox.PackStart(w, false, true, 0);
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Component
 			cstatsbox.PackStart (new HSeparator (), false, false, 0);
 		}
 		
-		void AddSubcategory (SubCategoryStat sstats, CategoryStats parent) {
+		void AddSubcategory (SubCategoryStat sstats, EventTypeStats parent) {
 			foreach (PercentualStat ostats in sstats.OptionStats) {
 				StatsWidget w = new StatsWidget (ostats, parent, sstats, subcatsMaxSize);
 				subcats.Add (w);
@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Component
 			
 			normal = full = 0;
 			
-			foreach (CategoryStats cstat in stats.CategoriesStats) {
+			foreach (EventTypeStats cstat in stats.EventTypeStats) {
 				int width, height;
 				layout.SetMarkup (String.Format("<b>{0}</b>", GLib.Markup.EscapeText (cstat.Name)));
 				layout.GetPixelSize (out width, out height);
