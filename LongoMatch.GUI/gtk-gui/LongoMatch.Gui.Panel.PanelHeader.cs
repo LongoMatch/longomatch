@@ -9,6 +9,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Image logoimage;
 		private global::Gtk.Label titlelabel;
 		private global::Gtk.Button applyroundedbutton;
+		private global::Gtk.Image applyroundedbuttonimage;
 		private global::Gtk.Button backrectbutton;
 		private global::Gtk.Image backrectbuttonimage;
 
@@ -51,27 +52,17 @@ namespace LongoMatch.Gui.Panel
 			this.applyroundedbutton.HeightRequest = 40;
 			this.applyroundedbutton.CanFocus = true;
 			this.applyroundedbutton.Name = "applyroundedbutton";
-			this.applyroundedbutton.UseUnderline = true;
 			// Container child applyroundedbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w4 = new global::Gtk.HBox ();
-			w4.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-apply", global::Gtk.IconSize.Dialog);
-			w4.Add (w5);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w7 = new global::Gtk.Label ();
-			w4.Add (w7);
-			w3.Add (w4);
-			this.applyroundedbutton.Add (w3);
+			this.applyroundedbuttonimage = new global::Gtk.Image ();
+			this.applyroundedbuttonimage.Name = "applyroundedbuttonimage";
+			this.applyroundedbutton.Add (this.applyroundedbuttonimage);
+			this.applyroundedbutton.Label = null;
 			this.headerhbox.Add (this.applyroundedbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.applyroundedbutton]));
-			w11.PackType = ((global::Gtk.PackType)(1));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.applyroundedbutton]));
+			w4.PackType = ((global::Gtk.PackType)(1));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
 			this.backrectbutton = new global::Gtk.Button ();
 			this.backrectbutton.WidthRequest = 80;
@@ -85,11 +76,11 @@ namespace LongoMatch.Gui.Panel
 			this.backrectbutton.Add (this.backrectbuttonimage);
 			this.backrectbutton.Label = null;
 			this.headerhbox.Add (this.backrectbutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.backrectbutton]));
-			w13.PackType = ((global::Gtk.PackType)(1));
-			w13.Position = 3;
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.headerhbox [this.backrectbutton]));
+			w6.PackType = ((global::Gtk.PackType)(1));
+			w6.Position = 3;
+			w6.Expand = false;
+			w6.Fill = false;
 			this.headereventbox.Add (this.headerhbox);
 			this.Add (this.headereventbox);
 			if ((this.Child != null)) {

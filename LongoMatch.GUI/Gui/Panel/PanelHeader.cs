@@ -45,6 +45,8 @@ namespace LongoMatch.Gui.Panel
 			                                               IconLookupFlags.ForceSvg);
 			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-back", 40,
 			                                               IconLookupFlags.ForceSvg);
+			applyroundedbuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-apply", 40,
+			                                                         IconLookupFlags.ForceSvg);
 			headerhbox.HeightRequest = StyleConf.HeaderHeight;
 		}
 		
