@@ -260,7 +260,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			TaggerObject tagger;
 			EventButton button;
-			Time start = null, stop = null;
+			Time start = null, stop = null, eventTime = null;
 			List<Tag> tags = null;
 			PenaltyCard card = null;
 			Score score = null;
@@ -284,9 +284,11 @@ namespace LongoMatch.Drawing.Widgets
 			if (button.TagMode == TagMode.Predefined) {
 				stop = CurrentTime + button.Stop;
 				start = CurrentTime - button.Start;
+				eventTime = CurrentTime;
 			} else {
 				stop = CurrentTime;
 				start = tagger.Start - button.Start;
+				eventTime = tagger.Start;
 			}
 			
 			if (tagger is CategoryObject) {
@@ -306,7 +308,7 @@ namespace LongoMatch.Drawing.Widgets
 				score = (button as ScoreButton).Score;
 			}
 			
-			NewTagEvent (button.EventType, null, tags, start, stop, score, card);
+			NewTagEvent (button.EventType, null, tags, start, stop, eventTime, score, card);
 		}
 	}
 }

@@ -33,6 +33,8 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimeNode
 	{
+		Time start, stop, eventTime;
+
 		#region Constructors
 		public TimeNode() {
 			Rate = 1;
@@ -52,16 +54,42 @@ namespace LongoMatch.Core.Store
 		/// Start Time
 		/// </summary>
 		public Time Start {
-			get;
-			set;
+			get {
+				return start;
+			}
+			set {
+				start = value;
+				if (start > eventTime) {
+					eventTime = start;
+				}
+			}
 		}
 
 		/// <summary>
 		/// Stop time
 		/// </summary>
 		public Time Stop {
-			get;
-			set;
+			get {
+				return stop;
+			}
+			set {
+				stop = value;
+				if (stop < eventTime) {
+					eventTime = stop;
+				}
+			}
+		}
+
+		/// <summary>
+		/// The time at which the event takes place
+		/// </summary>
+		public Time EventTime {
+			get {
+				return eventTime;
+			}
+			set {
+				eventTime = value;
+			}
 		}
 
 		/// <summary>

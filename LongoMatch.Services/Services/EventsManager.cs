@@ -231,7 +231,7 @@ namespace LongoMatch.Services
 		}
 
 		public void OnNewTag (EventType evType, List<Player> players, List<Tag> tags,
-		                      Time start, Time stop, Score score, PenaltyCard card)
+		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			Image frame;
 
@@ -250,7 +250,7 @@ namespace LongoMatch.Services
 			                          start.ToMSecondsString(), stop.ToMSecondsString(),
 			                          evType.Name));
 			/* Add the new created play to the project and update the GUI*/
-			var play = openedProject.AddEvent (evType, start, stop, frame, score, card);
+			var play = openedProject.AddEvent (evType, start, stop, eventTime, frame, score, card);
 			if (players != null) {
 				play.Players = players;
 			}
@@ -317,7 +317,7 @@ namespace LongoMatch.Services
 			List<TimelineEvent> plays = new List<TimelineEvent> ();
 			plays.Add (play);
 			OnPlaysDeleted (plays);
-			var newplay = openedProject.AddEvent (evType, play.Start, play.Stop, play.Miniature, null, null);
+			var newplay = openedProject.AddEvent (evType, play.Start, play.Stop, play.EventTime, play.Miniature, null, null);
 			newplay.Name = play.Name;
 			newplay.Notes = play.Notes;
 			newplay.Drawings = play.Drawings;

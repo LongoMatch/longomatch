@@ -246,9 +246,9 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void HandleNewTagEvent (EventType eventType, List<Player> players, List<Tag> tags,
-		                        Time start, Time stop, Score score, PenaltyCard card)
+		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
-			TimelineEvent play = project.AddEvent (eventType, start, stop, null, score, card, false);
+			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
 			play.Players = selectedPlayers ?? new List<Player> ();
 			play.Tags = tags ?? new List<Tag> ();
 			if (eventType.TagFieldPosition || eventType.TagGoalPosition || eventType.TagHalfFieldPosition) {

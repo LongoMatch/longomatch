@@ -175,7 +175,7 @@ namespace LongoMatch.Core.Store
 			Timers.Clear();
 		}
 
-		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Image miniature,
+		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
 		                             Score score, PenaltyCard card, bool addToTimeline=true)
 		{
 			TimelineEvent evt;
@@ -193,6 +193,7 @@ namespace LongoMatch.Core.Store
 			evt.Name = name;
 			evt.Start = start;
 			evt.Stop = stop;
+			evt.EventTime = eventTime;
 			evt.EventType = type;
 			evt.Notes = "";
 			evt.Miniature = miniature;

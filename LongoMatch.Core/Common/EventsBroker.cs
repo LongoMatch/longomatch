@@ -89,9 +89,9 @@ namespace LongoMatch.Core.Common
 
 		public void EmitNewTag (EventType eventType, List<Player> players = null,
 		                        List<Tag> tags = null, Time start = null, Time stop = null,
-		                        Score score = null, PenaltyCard card = null) {
+		                        Time eventTime = null, Score score = null, PenaltyCard card = null) {
 			if (NewTagEvent != null)
-				NewTagEvent (eventType, players, tags, start, stop, score, card);
+				NewTagEvent (eventType, players, tags, start, stop, eventTime, score, card);
 		}
 		
 		public void EmitNewEvent (TimelineEvent evt) {
