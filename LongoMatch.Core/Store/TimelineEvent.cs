@@ -152,6 +152,13 @@ namespace LongoMatch.Core.Store
 						Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
 			}
 		}
+
+		[JsonIgnore]
+		public virtual Color Color {
+			get {
+				return EventType.Color;
+			}
+		}
 		#endregion
 
 		#region Public methods
@@ -231,6 +238,13 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		[JsonIgnore]
+		public override Color Color {
+			get {
+				return PenaltyCard != null ? PenaltyCard.Color : EventType.Color;
+			}
+		}
 	}
 	
 	[Serializable]
@@ -239,6 +253,13 @@ namespace LongoMatch.Core.Store
 		public Score Score {
 			get;
 			set;
+		}
+
+		[JsonIgnore]
+		public override Color Color {
+			get {
+				return Score != null ? Score.Color : EventType.Color;
+			}
 		}
 	}
 

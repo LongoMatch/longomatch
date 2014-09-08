@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
@@ -30,6 +31,11 @@ namespace LongoMatch.Core.Store
 		{
 			Name = name;
 			Points = points;
+		}
+
+		public Color Color {
+			get;
+			set;
 		}
 
 		public string Name {

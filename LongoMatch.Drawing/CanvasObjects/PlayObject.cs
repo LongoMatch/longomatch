@@ -58,8 +58,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			y = OffsetY + Height / 2;
 			tk.LineWidth = lineWidth;
-			tk.FillColor = Play.EventType.Color;
-			tk.StrokeColor = Play.EventType.Color;
+			tk.FillColor = Play.Color;
+			tk.StrokeColor = Play.Color;
 			if (stop - start <= lineWidth) {
 				tk.LineWidth = 0;
 				tk.DrawCircle (new Point (start + (stop - start) / 2, y), 3);

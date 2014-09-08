@@ -115,7 +115,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			tk.Begin ();
 			if (Play != null) {
-				color = Play.EventType.Color;
+				color = Play.Color;
 			} else {
 				color = Constants.TAGGER_POINT_COLOR;
 			}

@@ -197,14 +197,8 @@ namespace LongoMatch.Drawing
 				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
 				                        context, backgroundArea, cellArea);
 			} else if (item is TimelineEvent) {
-				Color color;
 				TimelineEvent p = item as TimelineEvent;
-				if (p is PenaltyCardEvent) {
-					color = (p as PenaltyCardEvent).PenaltyCard.Color;
-				} else {
-					color = p.EventType.Color;
-				}
-				RenderPlay (color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);

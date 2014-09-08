@@ -281,6 +281,18 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		public override Color BackgroundColor {
+			get {
+				return Score != null ? Score.Color : null;
+			}
+			set {
+				if (Score != null) {
+					Score.Color = value;
+				}
+			}
+		}
+
+
 		[JsonIgnore]
 		public ScoreEventType ScoreEventType {
 			get {
