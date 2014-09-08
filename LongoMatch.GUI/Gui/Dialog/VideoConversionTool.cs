@@ -72,6 +72,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		void FillStandards () {
 			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
+			stdStore.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080);
 			stdStore.AppendValues(VideoStandards.P720.Name, VideoStandards.P720);
 			stdStore.AppendValues(VideoStandards.P480.Name, VideoStandards.P480);
 			sizecombobox.Model = stdStore;
