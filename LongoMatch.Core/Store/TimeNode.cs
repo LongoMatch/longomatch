@@ -59,7 +59,7 @@ namespace LongoMatch.Core.Store
 			}
 			set {
 				start = value;
-				if (start > eventTime) {
+				if (eventTime != null && start > eventTime) {
 					eventTime = start;
 				}
 			}
@@ -74,7 +74,7 @@ namespace LongoMatch.Core.Store
 			}
 			set {
 				stop = value;
-				if (stop < eventTime) {
+				if (eventTime != null && stop < eventTime) {
 					eventTime = stop;
 				}
 			}
