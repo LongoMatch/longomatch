@@ -179,14 +179,18 @@ namespace LongoMatch.Core.Store
 		                             Score score, PenaltyCard card, bool addToTimeline=true)
 		{
 			TimelineEvent evt;
-			string count = String.Format ("{0:000}", EventsByType (type).Count + 1);
-			string name = String.Format ("{0} {1}", type.Name, count);
+			string count;
+			string name;
 
+			count = String.Format ("{0:000}", EventsByType (type).Count + 1);
 			if (type is PenaltyCardEventType) {
+				name = String.Format ("{0} {1}", card.Name, count);
 				evt = new PenaltyCardEvent { PenaltyCard = card };
 			} else if (type is ScoreEventType) {
+				name = String.Format ("{0} {1}", score.Name, count);
 				evt = new ScoreEvent { Score = score };
 			} else {
+				name = String.Format ("{0} {1}", type.Name, count);
 				evt = new TimelineEvent ();
 			}
 			
