@@ -31,6 +31,7 @@ namespace LongoMatch.Core.Store
 		{
 			Name = name;
 			Points = points;
+			Color = Color.Red;
 		}
 
 		public Color Color {
