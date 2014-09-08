@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Panel
 		Dashboard analysisTemplate;
 		TeamTagger teamtagger;
 
-		public NewProjectPanel (Project oroject)
+		public NewProjectPanel (Project project)
 		{
 			this.Build ();
 			this.mtoolkit = Config.MultimediaToolkit;
