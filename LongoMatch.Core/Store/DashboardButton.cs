@@ -124,6 +124,17 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		public override string Name {
+			get {
+				return Tag != null ? Tag.Value : null;
+			}
+			set {
+				if (Tag != null) {
+					Tag.Value = value;
+				}
+			}
+		}
 	}
 
 	[Serializable]
@@ -132,6 +143,17 @@ namespace LongoMatch.Core.Store
 		public Timer Timer {
 			get;
 			set;
+		}
+
+		public override string Name {
+			get {
+				return Timer != null ? Timer.Name : null;
+			}
+			set {
+				if (Timer != null) {
+					Timer.Name = value;
+				}
+			}
 		}
 	}
 
