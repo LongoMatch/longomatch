@@ -74,7 +74,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Color.cs" />
     <File subtype="Directory" buildaction="Compile" name="Stats" />
     <File subtype="Code" buildaction="Compile" name="Stats/ProjectStats.cs" />
-    <File subtype="Code" buildaction="Compile" name="Stats/CategoryStats.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PercentualStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/Stat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PlayersStats.cs" />
@@ -143,6 +142,7 @@
     <File subtype="Code" buildaction="Compile" name="StyleConf.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/EventType.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimelineEvent.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/EventTypeStats.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

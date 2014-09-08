@@ -57,7 +57,7 @@ SOURCES = Common/Area.cs \
 	Interfaces/Multimedia/IRemuxer.cs \
 	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
-	Stats/CategoryStats.cs \
+	Stats/EventTypeStats.cs \
 	Stats/PercentualStat.cs \
 	Stats/PlayersStats.cs \
 	Stats/ProjectStats.cs \
