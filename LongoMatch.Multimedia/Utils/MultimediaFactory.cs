@@ -76,7 +76,7 @@ namespace LongoMatch.Video
 
 		public IVideoConverter GetVideoConverter (string filename)
 		{
-			return GetDefaultElement<IVideoConverter> (typeof(IVideoConverter));
+			return GetDefaultElement<IVideoConverter> (typeof(IVideoConverter), filename);
 		}
 
 		public IDiscoverer GetDiscoverer ()
