@@ -45,8 +45,8 @@ namespace LongoMatch
 
 			/* Init GStreamer */
 			GStreamer.Init ();
-			if (!GStreamer.CheckInstallation ())
-				return;
+			//if (!GStreamer.CheckInstallation ())
+			//	return;
 
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (OnException);
 			Version version = Assembly.GetExecutingAssembly ().GetName ().Version;
