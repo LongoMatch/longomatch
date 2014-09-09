@@ -8,6 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.Entry dateentry;
 		private global::Gtk.Button datebutton;
+		private global::Gtk.Image datebuttonimage;
 
 		protected virtual void Build ()
 		{
@@ -36,26 +37,16 @@ namespace LongoMatch.Gui.Component
 			this.datebutton = new global::Gtk.Button ();
 			this.datebutton.CanFocus = true;
 			this.datebutton.Name = "datebutton";
-			this.datebutton.UseUnderline = true;
 			// Container child datebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w2 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w3 = new global::Gtk.HBox ();
-			w3.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w4 = new global::Gtk.Image ();
-			w4.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-calendar", global::Gtk.IconSize.Button);
-			w3.Add (w4);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w6 = new global::Gtk.Label ();
-			w3.Add (w6);
-			w2.Add (w3);
-			this.datebutton.Add (w2);
+			this.datebuttonimage = new global::Gtk.Image ();
+			this.datebuttonimage.Name = "datebuttonimage";
+			this.datebutton.Add (this.datebuttonimage);
+			this.datebutton.Label = null;
 			this.hbox2.Add (this.datebutton);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.datebutton]));
-			w10.Position = 1;
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.datebutton]));
+			w3.Position = 1;
+			w3.Expand = false;
+			w3.Fill = false;
 			this.dateentryeventbox.Add (this.hbox2);
 			this.Add (this.dateentryeventbox);
 			if ((this.Child != null)) {

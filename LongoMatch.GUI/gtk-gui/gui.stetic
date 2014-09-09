@@ -10356,7 +10356,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileChooser" design-size="300 33">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileChooser" design-size="300 64">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -10383,10 +10383,12 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="Gtk.Button" id="addbutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:longomatch-browse Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
+                <property name="Type">Custom</property>
+                <child>
+                  <widget class="Gtk.Image" id="addbuttonimage">
+                    <property name="MemberName" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="Position">1</property>
@@ -10400,7 +10402,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DatePicker" design-size="300 34">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DatePicker" design-size="300 64">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -10427,10 +10429,12 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="Gtk.Button" id="datebutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:longomatch-calendar Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
+                <property name="Type">Custom</property>
+                <child>
+                  <widget class="Gtk.Image" id="datebuttonimage">
+                    <property name="MemberName" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="Position">1</property>

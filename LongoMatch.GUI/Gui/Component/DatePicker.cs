@@ -29,6 +29,9 @@ namespace LongoMatch.Gui.Component
 		public DatePicker ()
 		{
 			this.Build ();
+
+			datebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-calendar", Gtk.IconSize.Button, 0);
+
 			datebutton.Clicked += HandleClicked;
 			dateentry.Changed += HandleChanged;
 			Date = DateTime.Now;

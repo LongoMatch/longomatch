@@ -33,6 +33,9 @@ namespace LongoMatch.Gui.Component
 		public MediaFileChooser ()
 		{
 			this.Build ();
+
+			addbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-browse", Gtk.IconSize.Button, 0);
+
 			MediaFileMode = true;
 			UpdateFile ();
 			addbutton.Clicked += HandleClicked;
