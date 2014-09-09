@@ -234,9 +234,7 @@
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
                     <property name="Yalign">0</property>
-                    <property name="LeftPadding">6</property>
-                    <property name="TopPadding">6</property>
-                    <property name="RightPadding">6</property>
+                    <property name="BorderWidth">6</property>
                     <child>
                       <widget class="Gtk.VBox" id="vbox10">
                         <property name="MemberName" />
@@ -347,7 +345,7 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.VBox" id="vbox13">
+                              <widget class="Gtk.VBox" id="hfieldvbox">
                                 <property name="MemberName" />
                                 <property name="Spacing">6</property>
                                 <child>
@@ -563,11 +561,17 @@
                                 <property name="MemberName" />
                                 <property name="ShadowType">None</property>
                                 <child>
-                                  <widget class="LongoMatch.Gui.Component.CategoryProperties" id="tagproperties">
+                                  <widget class="Gtk.Alignment" id="tagpropertiesalignment">
                                     <property name="MemberName" />
-                                    <property name="Sensitive">False</property>
-                                    <property name="Events">ButtonPressMask</property>
-                                    <property name="Edited">False</property>
+                                    <property name="BorderWidth">6</property>
+                                    <child>
+                                      <widget class="LongoMatch.Gui.Component.CategoryProperties" id="tagproperties">
+                                        <property name="MemberName" />
+                                        <property name="Sensitive">False</property>
+                                        <property name="Events">ButtonPressMask</property>
+                                        <property name="Edited">False</property>
+                                      </widget>
+                                    </child>
                                   </widget>
                                 </child>
                               </widget>

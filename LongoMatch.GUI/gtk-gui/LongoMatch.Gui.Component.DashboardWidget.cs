@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label fieldlabel1;
 		private global::Gtk.Label fieldlabel2;
 		private global::Gtk.Button resetfieldbutton;
-		private global::Gtk.VBox vbox13;
+		private global::Gtk.VBox hfieldvbox;
 		private global::Gtk.Frame hfieldframe;
 		private global::Gtk.Alignment halffieldalignment;
 		private global::Gtk.EventBox hfieldeventbox;
@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label goallabel2;
 		private global::Gtk.Button resetgoalbutton;
 		private global::Gtk.ScrolledWindow propertiesscrolledwindow;
+		private global::Gtk.Alignment tagpropertiesalignment;
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
 
 		protected virtual void Build ()
@@ -232,9 +233,7 @@ namespace LongoMatch.Gui.Component
 			// Container child propertiesframe.Gtk.Container+ContainerChild
 			this.propertiesalignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.propertiesalignment.Name = "propertiesalignment";
-			this.propertiesalignment.LeftPadding = ((uint)(6));
-			this.propertiesalignment.TopPadding = ((uint)(6));
-			this.propertiesalignment.RightPadding = ((uint)(6));
+			this.propertiesalignment.BorderWidth = ((uint)(6));
 			// Container child propertiesalignment.Gtk.Container+ContainerChild
 			this.vbox10 = new global::Gtk.VBox ();
 			this.vbox10.Name = "vbox10";
@@ -333,10 +332,10 @@ namespace LongoMatch.Gui.Component
 			w68.Expand = false;
 			w68.Fill = false;
 			// Container child positionsbox.Gtk.Box+BoxChild
-			this.vbox13 = new global::Gtk.VBox ();
-			this.vbox13.Name = "vbox13";
-			this.vbox13.Spacing = 6;
-			// Container child vbox13.Gtk.Box+BoxChild
+			this.hfieldvbox = new global::Gtk.VBox ();
+			this.hfieldvbox.Name = "hfieldvbox";
+			this.hfieldvbox.Spacing = 6;
+			// Container child hfieldvbox.Gtk.Box+BoxChild
 			this.hfieldframe = new global::Gtk.Frame ();
 			this.hfieldframe.Name = "hfieldframe";
 			this.hfieldframe.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -385,12 +384,12 @@ namespace LongoMatch.Gui.Component
 			this.hfieldeventbox.Add (this.vbox14);
 			this.halffieldalignment.Add (this.hfieldeventbox);
 			this.hfieldframe.Add (this.halffieldalignment);
-			this.vbox13.Add (this.hfieldframe);
-			global::Gtk.Box.BoxChild w75 = ((global::Gtk.Box.BoxChild)(this.vbox13 [this.hfieldframe]));
+			this.hfieldvbox.Add (this.hfieldframe);
+			global::Gtk.Box.BoxChild w75 = ((global::Gtk.Box.BoxChild)(this.hfieldvbox [this.hfieldframe]));
 			w75.Position = 0;
 			w75.Expand = false;
 			w75.Fill = false;
-			// Container child vbox13.Gtk.Box+BoxChild
+			// Container child hfieldvbox.Gtk.Box+BoxChild
 			this.resethfieldbutton = new global::Gtk.Button ();
 			this.resethfieldbutton.CanFocus = true;
 			this.resethfieldbutton.Name = "resethfieldbutton";
@@ -409,13 +408,13 @@ namespace LongoMatch.Gui.Component
 			w77.Add (w80);
 			w76.Add (w77);
 			this.resethfieldbutton.Add (w76);
-			this.vbox13.Add (this.resethfieldbutton);
-			global::Gtk.Box.BoxChild w84 = ((global::Gtk.Box.BoxChild)(this.vbox13 [this.resethfieldbutton]));
+			this.hfieldvbox.Add (this.resethfieldbutton);
+			global::Gtk.Box.BoxChild w84 = ((global::Gtk.Box.BoxChild)(this.hfieldvbox [this.resethfieldbutton]));
 			w84.Position = 1;
 			w84.Expand = false;
 			w84.Fill = false;
-			this.positionsbox.Add (this.vbox13);
-			global::Gtk.Box.BoxChild w85 = ((global::Gtk.Box.BoxChild)(this.positionsbox [this.vbox13]));
+			this.positionsbox.Add (this.hfieldvbox);
+			global::Gtk.Box.BoxChild w85 = ((global::Gtk.Box.BoxChild)(this.positionsbox [this.hfieldvbox]));
 			w85.Position = 1;
 			w85.Expand = false;
 			w85.Fill = false;
@@ -521,26 +520,31 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Viewport w104 = new global::Gtk.Viewport ();
 			w104.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport1.Gtk.Container+ContainerChild
+			this.tagpropertiesalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.tagpropertiesalignment.Name = "tagpropertiesalignment";
+			this.tagpropertiesalignment.BorderWidth = ((uint)(6));
+			// Container child tagpropertiesalignment.Gtk.Container+ContainerChild
 			this.tagproperties = new global::LongoMatch.Gui.Component.CategoryProperties ();
 			this.tagproperties.Sensitive = false;
 			this.tagproperties.Events = ((global::Gdk.EventMask)(256));
 			this.tagproperties.Name = "tagproperties";
 			this.tagproperties.Edited = false;
-			w104.Add (this.tagproperties);
+			this.tagpropertiesalignment.Add (this.tagproperties);
+			w104.Add (this.tagpropertiesalignment);
 			this.propertiesscrolledwindow.Add (w104);
 			this.vbox10.Add (this.propertiesscrolledwindow);
-			global::Gtk.Box.BoxChild w107 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
-			w107.Position = 1;
+			global::Gtk.Box.BoxChild w108 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
+			w108.Position = 1;
 			this.propertiesalignment.Add (this.vbox10);
 			this.propertiesframe.Add (this.propertiesalignment);
 			this.rightbox.Add (this.propertiesframe);
-			global::Gtk.Box.BoxChild w110 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
-			w110.Position = 0;
+			global::Gtk.Box.BoxChild w111 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
+			w111.Position = 0;
 			this.hbox2.Add (this.rightbox);
-			global::Gtk.Box.BoxChild w111 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
-			w111.Position = 1;
-			w111.Expand = false;
-			w111.Fill = false;
+			global::Gtk.Box.BoxChild w112 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			w112.Position = 1;
+			w112.Expand = false;
+			w112.Fill = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
