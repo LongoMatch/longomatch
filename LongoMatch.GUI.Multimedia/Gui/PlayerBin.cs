@@ -76,14 +76,14 @@ namespace LongoMatch.Gui
 		{
 			this.Build ();
 
-			closebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-back", Gtk.IconSize.Button, 0);
-			drawbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-draw", Gtk.IconSize.Button, 0);
-			playbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-play", Gtk.IconSize.Button, 0);
-			pausebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-pause", Gtk.IconSize.Button, 0);
-			prevbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-rw", Gtk.IconSize.Button, 0);
-			nextbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-ff", Gtk.IconSize.Button, 0);
-			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi", Gtk.IconSize.Button, 0);
-			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach", Gtk.IconSize.Button, 0);
+			closebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-back", IconSize.Button, 0);
+			drawbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-draw", IconSize.Button, 0);
+			playbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-play", IconSize.Button, 0);
+			pausebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-pause", IconSize.Button, 0);
+			prevbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-rw", IconSize.Button, 0);
+			nextbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-ff", IconSize.Button, 0);
+			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi", IconSize.Button, 0);
+			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach", IconSize.Button, 0);
 
 			vwin = new VolumeWindow ();
 			ConnectSignals ();
@@ -679,9 +679,7 @@ namespace LongoMatch.Gui
 
 		void SetVolumeIcon (string name)
 		{
-			Gtk.Image img;
-			img = ((volumebutton.Child as Bin).Child as Box).Children[0] as Gtk.Image;
-			img.Pixbuf = Stetic.IconLoader.LoadIcon (this, name, IconSize.Button);
+			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon (name, IconSize.Button, 0);
 		}
 		
 		void OnVolumeChanged (double level)
