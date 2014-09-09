@@ -40,7 +40,6 @@ CesarPlayer/bin/
 CesarPlayer/cesarplayer.pc
 CesarPlayer/AssemblyInfo.cs
 LongoMatch/longomatch.desktop.in
-LongoMatch/AssemblyInfo.cs
 LongoMatch/Makefile.in
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop
