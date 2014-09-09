@@ -9,7 +9,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Label label3;
 		private global::Gtk.Button preferencesbutton;
 		private global::Gtk.Alignment alignment1;
-		private global::Gtk.Fixed fixedwidget;
+		private global::Gtk.Table tablewidget;
 
 		protected virtual void Build ()
 		{
@@ -52,12 +52,11 @@ namespace LongoMatch.Gui.Panel
 			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
-			this.fixedwidget = new global::Gtk.Fixed ();
-			this.fixedwidget.WidthRequest = 450;
-			this.fixedwidget.HeightRequest = 300;
-			this.fixedwidget.Name = "fixedwidget";
-			this.fixedwidget.HasWindow = false;
-			this.alignment1.Add (this.fixedwidget);
+			this.tablewidget = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
+			this.tablewidget.Name = "tablewidget";
+			this.tablewidget.RowSpacing = ((uint)(6));
+			this.tablewidget.ColumnSpacing = ((uint)(6));
+			this.alignment1.Add (this.tablewidget);
 			this.vbox1.Add (this.alignment1);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.alignment1]));
 			w5.Position = 1;

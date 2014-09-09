@@ -650,8 +650,8 @@
       </action>
       <action id="CategoriesTemplatesManagerAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Categories Templates Manager</property>
-        <property name="ShortLabel" translatable="yes">Templates Manager</property>
+        <property name="Label" translatable="yes">Analysis Dashboards Manager</property>
+        <property name="ShortLabel" translatable="yes">Dashboards Manager</property>
       </action>
       <action id="ViewAction">
         <property name="Type">Action</property>
@@ -696,8 +696,8 @@
       </action>
       <action id="TeamsTemplatesManagerAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Teams Templates Manager</property>
-        <property name="ShortLabel" translatable="yes">Teams Templates Manager</property>
+        <property name="Label" translatable="yes">Teams Manager</property>
+        <property name="ShortLabel" translatable="yes">Teams Manager</property>
       </action>
       <action id="HelpAction1">
         <property name="Type">Action</property>
@@ -6475,11 +6475,39 @@ You can continue with the current capture, cancel it or save your project.
             <property name="Xscale">0</property>
             <property name="Yscale">0</property>
             <child>
-              <widget class="Gtk.Fixed" id="fixedwidget">
+              <widget class="Gtk.Table" id="tablewidget">
                 <property name="MemberName" />
-                <property name="WidthRequest">450</property>
-                <property name="HeightRequest">300</property>
-                <property name="HasWindow">False</property>
+                <property name="NRows">3</property>
+                <property name="NColumns">3</property>
+                <property name="RowSpacing">6</property>
+                <property name="ColumnSpacing">6</property>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
               </widget>
             </child>
           </widget>
