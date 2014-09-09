@@ -7381,7 +7381,7 @@ You can continue with the current capture, cancel it or save your project.
                             <child>
                               <widget class="Gtk.Label" id="analysislabel">
                                 <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">Analisys Template:</property>
+                                <property name="LabelProp" translatable="yes">Analysis Template:</property>
                               </widget>
                               <packing>
                                 <property name="AutoSize">True</property>
@@ -9122,7 +9122,7 @@ You can continue with the current capture, cancel it or save your project.
                                               <widget class="Gtk.Label" id="label9">
                                                 <property name="MemberName" />
                                                 <property name="Xalign">1</property>
-                                                <property name="LabelProp" translatable="yes">Analisys Template:</property>
+                                                <property name="LabelProp" translatable="yes">Analysis Template:</property>
                                               </widget>
                                               <packing>
                                                 <property name="TopAttach">2</property>

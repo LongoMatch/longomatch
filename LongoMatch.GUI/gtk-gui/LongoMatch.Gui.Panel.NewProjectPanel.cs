@@ -609,7 +609,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child righttable.Gtk.Table+TableChild
 			this.analysislabel = new global::Gtk.Label ();
 			this.analysislabel.Name = "analysislabel";
-			this.analysislabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Analisys Template:");
+			this.analysislabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Analysis Template:");
 			this.righttable.Add (this.analysislabel);
 			global::Gtk.Table.TableChild w59 = ((global::Gtk.Table.TableChild)(this.righttable [this.analysislabel]));
 			w59.XOptions = ((global::Gtk.AttachOptions)(4));
