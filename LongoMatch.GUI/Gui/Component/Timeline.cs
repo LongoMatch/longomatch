@@ -51,6 +51,9 @@ namespace LongoMatch.Gui.Component
 			this.timerule = new Timerule (new WidgetWrapper (timerulearea));
 			this.timeline = new PlaysTimeline (new WidgetWrapper(timelinearea));
 			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
+
+			focusbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-center-view", Gtk.IconSize.Menu, 0);
+
 			focusbutton.CanFocus = false;
 			focusbutton.Clicked += HandleFocusClicked;
 			focusscale.CanFocus = false;
