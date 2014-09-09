@@ -69,8 +69,8 @@ namespace LongoMatch.Gui
 			this.ProjectsManagerAction = new global::Gtk.Action ("ProjectsManagerAction", global::Mono.Unix.Catalog.GetString ("Projects Manager"), null, null);
 			this.ProjectsManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Database Manager");
 			w1.Add (this.ProjectsManagerAction, null);
-			this.CategoriesTemplatesManagerAction = new global::Gtk.Action ("CategoriesTemplatesManagerAction", global::Mono.Unix.Catalog.GetString ("Categories Templates Manager"), null, null);
-			this.CategoriesTemplatesManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Templates Manager");
+			this.CategoriesTemplatesManagerAction = new global::Gtk.Action ("CategoriesTemplatesManagerAction", global::Mono.Unix.Catalog.GetString ("Analysis Dashboards Manager"), null, null);
+			this.CategoriesTemplatesManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Dashboards Manager");
 			w1.Add (this.CategoriesTemplatesManagerAction, null);
 			this.ViewAction = new global::Gtk.Action ("ViewAction", global::Mono.Unix.Catalog.GetString ("_View"), null, null);
 			this.ViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_View");
@@ -93,8 +93,8 @@ namespace LongoMatch.Gui
 			this.ExportProjectToCSVFileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export Project To CSV File");
 			this.ExportProjectToCSVFileAction.Visible = false;
 			w1.Add (this.ExportProjectToCSVFileAction, null);
-			this.TeamsTemplatesManagerAction = new global::Gtk.Action ("TeamsTemplatesManagerAction", global::Mono.Unix.Catalog.GetString ("Teams Templates Manager"), null, null);
-			this.TeamsTemplatesManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Teams Templates Manager");
+			this.TeamsTemplatesManagerAction = new global::Gtk.Action ("TeamsTemplatesManagerAction", global::Mono.Unix.Catalog.GetString ("Teams Manager"), null, null);
+			this.TeamsTemplatesManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Teams Manager");
 			w1.Add (this.TeamsTemplatesManagerAction, null);
 			this.HelpAction1 = new global::Gtk.Action ("HelpAction1", global::Mono.Unix.Catalog.GetString ("_Help"), null, "gtk-help");
 			this.HelpAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Help");

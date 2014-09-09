@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Panel
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = "TEAM EDITOR";
+			panelheader1.Title = "TEAMS MANAGER";
 			panelheader1.BackClicked += (sender, o) => {
 				PromptSave ();
 				if (BackEvent != null)

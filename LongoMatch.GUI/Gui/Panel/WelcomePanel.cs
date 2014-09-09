@@ -39,9 +39,9 @@ namespace LongoMatch.Gui.Panel
 			                   new Action (() => Config.EventsBroker.EmitImportProject ())),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageProjects ())),
-			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nmanager"),
+			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nDashboards\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageCategories ())),
-			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Team\nmanager"),
+			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams\nmanager"),
 			                   new Action (() => Config.EventsBroker.EmitManageTeams ())),
 			                   
 		};
@@ -51,8 +51,7 @@ namespace LongoMatch.Gui.Panel
 		public WelcomePanel ()
 		{
 			this.Build ();
-			HeightRequest = MinHeight;
-			WidthRequest = MinWidth;
+
 			buttonWidgets = new List<Widget>();
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
 			preferencesbutton.Clicked += HandlePreferencesClicked;
@@ -60,37 +59,9 @@ namespace LongoMatch.Gui.Panel
 			Name = "WelcomePanel";
 		}
 
-		int MinWidth {
+		uint NRows {
 			get {
-				return Math.Max (StyleConf.WelcomeLogoWidth,
-				                 StyleConf.WelcomeIconSize * 3 +
-				                 StyleConf.WelcomeIconsHSpacing * 2) +
-					StyleConf.WelcomeMinWidthBorder;
-			}
-		}
-		
-		int MinHeight {
-			get {
-				return  HeaderHeight + StyleConf.WelcomeLogoHeight +
-					(IconHeight + StyleConf.WelcomeIconsVSpacing) * NRows + 20;
-			}
-		}
-		
-		int IconHeight {
-			get {
-				return StyleConf.WelcomeLogoHeight + StyleConf.WelcomeIconsTextSpacing +
-					StyleConf.WelcomeTextHeight;
-			}
-		}
-		
-		int HeaderHeight {
-			get {
-				return StyleConf.WelcomeBorder * 2 + StyleConf.WelcomeIconSize;
-			}
-		}
-		int NRows {
-			get {
-				return (int)Math.Ceiling ((float)buttons.Length / StyleConf.WelcomeIconsPerRow);
+				return (uint) (buttons.Length / StyleConf.WelcomeIconsPerRow);
 			}
 		}
 		
@@ -101,7 +72,9 @@ namespace LongoMatch.Gui.Panel
 
 		void Create ()
 		{
-			int padding;
+			// One extra row for our logo
+			tablewidget.NRows = (uint) NRows + 1;
+			tablewidget.NColumns = StyleConf.WelcomeIconsPerRow;
 
 			Gtk.Image prefImage = new Gtk.Image (
 				Helpers.Misc.LoadIcon ("longomatch-preferences",
@@ -110,34 +83,33 @@ namespace LongoMatch.Gui.Panel
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
 
+			// Our logo
 			logoImage = new Gtk.Image ();
 			logoImage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("longomatch-dark-bg.svg");
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
-			fixedwidget.Put (logoImage, 0, 0);
+			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,
+			                    AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Expand | AttachOptions.Fill, 0, StyleConf.WelcomeIconsVSpacing / 2);
 
-			padding = StyleConf.WelcomeLogoHeight + StyleConf.WelcomeIconsVSpacing;
-			for (int i=0; i < buttons.Length; i++) {
+			for (uint i=0; i < buttons.Length; i++) {
 				Widget b;
-				int x, y;
-				
-				x = (StyleConf.WelcomeIconsHSpacing + StyleConf.WelcomeIconSize) *
-					(i % StyleConf.WelcomeIconsPerRow);
-				y = (StyleConf.WelcomeIconsVSpacing + StyleConf.WelcomeIconSize) *
-					(i / StyleConf.WelcomeIconsPerRow);
+				uint c, l;
+
+				c = i % StyleConf.WelcomeIconsPerRow;
+				l = i / StyleConf.WelcomeIconsPerRow + 1;
 
 				b = CreateButton (buttons[i]);
-				fixedwidget.Put (b, x, y + padding);
+				tablewidget.Attach (b, c, c + 1, l, l + 1,
+				                    AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Expand | AttachOptions.Fill, 0, StyleConf.WelcomeIconsVSpacing / 2);
 				buttonWidgets.Add (b);
 			}
-			fixedwidget.HeightRequest = StyleConf.WelcomeLogoHeight +
-					(IconHeight + StyleConf.WelcomeIconsVSpacing) * NRows; 
 		}
 		
 		Widget CreateButton (WelcomeButton b) {
 			Button button;
 			VBox box;
 			Gtk.Image image;
+			Gtk.Alignment alignment;
 			Label label;
 			
 			image = new Gtk.Image (
@@ -149,15 +121,17 @@ namespace LongoMatch.Gui.Panel
 			button.WidthRequest = StyleConf.WelcomeIconSize;
 			button.Add (image);
 
+			alignment = new Alignment (0.5f, 0.5f, 0.0f, 0.0f);
+			alignment.Add (button);
+
 			label = new Label (b.text);
 			label.LineWrap = true;
 			label.LineWrapMode = Pango.WrapMode.Word;
 			label.Justify = Justification.Center;
 
 			box = new VBox (false, StyleConf.WelcomeIconsTextSpacing);
-			box.PackStart (button, false, false, 0);
+			box.PackStart (alignment, false, false, 0);
 			box.PackStart (label, false, false, 0);
-			box.HeightRequest = IconHeight;
 			box.ShowAll ();
 			box.Name = b.name + "roundedbutton";
 			return box;
