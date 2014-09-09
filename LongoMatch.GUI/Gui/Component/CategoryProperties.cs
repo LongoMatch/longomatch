@@ -151,14 +151,14 @@ namespace LongoMatch.Gui.Component
 		void ReadPositionCombo (ComboBox box, out bool tagField, out bool asTrayectory)
 		{
 			if (box.Active == 0) {
-				tagField = true;
+				tagField = false;
 				asTrayectory = false;
 			} else if (box.Active == 1) {
 				tagField = true;
-				asTrayectory = true;
-			} else {
-				tagField = false;
 				asTrayectory = false;
+			} else {
+				tagField = true;
+				asTrayectory = true;
 			}
 		}
 
