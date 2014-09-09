@@ -88,6 +88,10 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				tagMode = value;
 				ObjectsCanMove = tagMode == TagMode.Edit;
+				foreach (TaggerObject to in Objects) {
+					to.Mode = value;
+				}
+				ClearSelection ();
 			}
 			get {
 				return tagMode;
