@@ -72,6 +72,8 @@ namespace LongoMatch.Gui.Dialog
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
+			this.DefaultWidth = 800;
+			this.DefaultHeight = 1;
 			this.Gravity = ((global::Gdk.Gravity)(5));
 			this.SkipPagerHint = true;
 			this.SkipTaskbarHint = true;
@@ -700,8 +702,6 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 977;
-			this.DefaultHeight = 935;
 			this.savetoprojectbutton.Hide ();
 			this.closebutton.Hide ();
 			this.Show ();

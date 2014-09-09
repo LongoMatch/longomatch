@@ -2943,6 +2943,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
     <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
+    <property name="DefaultWidth">800</property>
+    <property name="DefaultHeight">1</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
@@ -2995,6 +2997,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                             <property name="Tooltip" translatable="yes">Angle tool</property>
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes" />
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">False</property>
                             <property name="HasLabel">False</property>
                             <property name="UseUnderline">True</property>
