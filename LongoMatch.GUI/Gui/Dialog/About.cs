@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 			Copyright = Constants.COPYRIGHT;
 			Website = Constants.WEBSITE;
 			License = Constants.LICENSE;
-			Authors = new string[] {"Andoni Morales Alastruey"};
+			Authors = new string[] {"Andoni Morales Alastruey", "Fluendo" };
 			Artists = new string[] {"Bencomo González Marrero"};
 			TranslatorCredits = Constants.TRANSLATORS;
 			SetUrlHook(delegate(Gtk.AboutDialog dialog, string url) {
