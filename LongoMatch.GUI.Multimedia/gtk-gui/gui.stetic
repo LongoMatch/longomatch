@@ -190,11 +190,13 @@
                       <widget class="Gtk.Button" id="closebutton">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-back Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="closebuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -206,11 +208,13 @@
                     <child>
                       <widget class="Gtk.Button" id="drawbutton">
                         <property name="MemberName" />
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-draw Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="drawbuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -222,11 +226,13 @@
                     <child>
                       <widget class="Gtk.Button" id="playbutton">
                         <property name="MemberName" />
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-play Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="playbuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -238,11 +244,13 @@
                     <child>
                       <widget class="Gtk.Button" id="pausebutton">
                         <property name="MemberName" />
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-pause Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="pausebuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">3</property>
@@ -255,11 +263,13 @@
                       <widget class="Gtk.Button" id="prevbutton">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-rw Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="prevbuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">4</property>
@@ -273,11 +283,13 @@
                         <property name="MemberName" />
                         <property name="Visible">False</property>
                         <property name="Sensitive">False</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:longomatch-control-ff Button</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
+                        <property name="Type">Custom</property>
                         <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="nextbuttonimage">
+                            <property name="MemberName" />
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">5</property>
@@ -379,11 +391,13 @@
                 <child>
                   <widget class="Gtk.Button" id="volumebutton">
                     <property name="MemberName" />
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:longomatch-control-volume-hi Button</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
                     <property name="Relief">None</property>
+                    <child>
+                      <widget class="Gtk.Image" id="volumebuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">5</property>
@@ -395,11 +409,13 @@
                 <child>
                   <widget class="Gtk.Button" id="detachbutton">
                     <property name="MemberName" />
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:longomatch-control-detach Button</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
                     <property name="Relief">None</property>
+                    <child>
+                      <widget class="Gtk.Image" id="detachbuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">6</property>
