@@ -41,6 +41,13 @@
 #define EXPORT
 #endif
 
+typedef enum {
+  GST_AUTOPLUG_SELECT_TRY,
+  GST_AUTOPLUG_SELECT_EXPOSE,
+  GST_AUTOPLUG_SELECT_SKIP
+} GstAutoplugSelectResult;
+
+
 EXPORT void lgm_init_backend (int argc, char **argv);
 EXPORT guintptr lgm_get_window_handle (GdkWindow *window);
 EXPORT void lgm_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
@@ -57,3 +64,5 @@ EXPORT GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quali
     GQuark quark, GError **err);
 EXPORT GstElement * lgm_create_muxer (VideoMuxerType type,
     GQuark quark, GError **err);
+EXPORT GstAutoplugSelectResult lgm_filter_video_decoders (GstElement* object,
+    GstPad* arg0, GstCaps* arg1, GstElementFactory* arg2, gpointer user_data);

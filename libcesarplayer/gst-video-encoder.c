@@ -395,6 +395,8 @@ gst_video_encoder_create_source (GstVideoEncoder *gve, gchar *location)
   gve->priv->source_bin = gst_element_factory_make ("uridecodebin", NULL);
   g_object_set (gve->priv->source_bin, "uri", location, NULL);
   g_signal_connect (gve->priv->source_bin, "pad-added", G_CALLBACK (cb_new_pad), gve);
+  g_signal_connect (gve->priv->source_bin, "autoplug-select",
+      G_CALLBACK (lgm_filter_video_decoders), gve);
   gst_bin_add (GST_BIN(gve->priv->main_pipeline), gve->priv->source_bin);
   gst_element_sync_state_with_parent (gve->priv->source_bin);
   gve->priv->audio_drained = FALSE;

@@ -462,6 +462,8 @@ gst_camera_capturer_prepare_uri_source (GstCameraCapturer *gcc)
   bin = gcc->priv->source_decoder_bin;
   decodebin = gst_element_factory_make ("uridecodebin", NULL);
   g_object_set (decodebin, "uri", gcc->priv->device_id, NULL);
+  g_signal_connect (decodebin, "autoplug-select",
+      G_CALLBACK (lgm_filter_video_decoders), gcc);
   identity = gst_element_factory_make ("identity", "video-pad");
 
   gst_bin_add_many (GST_BIN (bin), decodebin, identity, NULL);

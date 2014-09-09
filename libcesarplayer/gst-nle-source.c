@@ -605,6 +605,8 @@ gst_nle_source_next (GstNleSource * nlesrc)
   uridecodebin = gst_element_factory_make ("uridecodebin", NULL);
   gst_bin_add (GST_BIN (nlesrc->decoder), uridecodebin);
 
+  g_signal_connect (uridecodebin, "autoplug-select",
+      G_CALLBACK (lgm_filter_video_decoders), nlesrc);
   g_signal_connect (uridecodebin, "pad-added",
       G_CALLBACK (gst_nle_source_pad_added_cb), nlesrc);
   g_signal_connect (uridecodebin, "no-more-pads",
