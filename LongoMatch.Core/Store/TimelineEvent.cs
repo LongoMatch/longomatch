@@ -259,6 +259,8 @@ namespace LongoMatch.Core.Store
 		public override Color Color {
 			get {
 				return Score != null ? Score.Color : EventType.Color;
+			}
+		}
 		
 		[JsonIgnore]
 		public override string Description {
