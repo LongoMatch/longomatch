@@ -144,7 +144,7 @@ namespace LongoMatch.Core.Store
 		}
 		
 		[JsonIgnore]
-		public string Description {
+		public virtual string Description {
 			get {
 				return 
 					Name + "\n" +
@@ -259,6 +259,13 @@ namespace LongoMatch.Core.Store
 		public override Color Color {
 			get {
 				return Score != null ? Score.Color : EventType.Color;
+		
+		[JsonIgnore]
+		public override string Description {
+			get {
+				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
+				                      TagsDescription (), Start.ToMSecondsString(),
+				                      Stop.ToMSecondsString());
 			}
 		}
 	}
