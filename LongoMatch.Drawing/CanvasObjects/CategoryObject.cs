@@ -146,13 +146,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			/* Draw header */
 			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;
 			tk.LineWidth = 2;
-			if (catSelected && Mode != TagMode.Edit) {
-				tk.StrokeColor = Button.DarkColor;
-				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
-			} else {
-				tk.StrokeColor = LongoMatch.Core.Common.Color.Grey2;
-				tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
-			}
+			tk.StrokeColor = Button.TextColor;
+			tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			rects.Add (new Rectangle (position, catWidth, heightPerRow), Button);
 			yptr += heightPerRow;
 
