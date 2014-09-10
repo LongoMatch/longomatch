@@ -475,7 +475,7 @@
                             <property name="MemberName" />
                             <property name="Tooltip" translatable="yes">Start capturing new period</property>
                             <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:gtk-media-record Dialog</property>
+                            <property name="Icon">stock:gtk-media-record Menu</property>
                             <property name="Label" translatable="yes" />
                             <property name="UseUnderline">True</property>
                           </widget>
@@ -492,7 +492,7 @@
                             <property name="Visible">False</property>
                             <property name="Tooltip" translatable="yes">Stop capturing current period</property>
                             <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:gtk-media-stop Dialog</property>
+                            <property name="Icon">stock:gtk-media-stop Menu</property>
                             <property name="Label" translatable="yes" />
                             <property name="UseUnderline">True</property>
                           </widget>
@@ -509,7 +509,7 @@
                             <property name="Visible">False</property>
                             <property name="Tooltip" translatable="yes">End capture</property>
                             <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:gtk-ok Dialog</property>
+                            <property name="Icon">stock:gtk-ok Menu</property>
                             <property name="Label" translatable="yes" />
                             <property name="UseUnderline">True</property>
                           </widget>
@@ -526,7 +526,7 @@
                             <property name="Tooltip" translatable="yes">Close current capture</property>
                             <property name="CanFocus">True</property>
                             <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:gtk-stop Dialog</property>
+                            <property name="Icon">stock:gtk-stop Menu</property>
                             <property name="Label" translatable="yes" />
                             <property name="UseUnderline">True</property>
                           </widget>

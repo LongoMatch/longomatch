@@ -61,7 +61,7 @@ namespace LongoMatch.Gui
 			w3.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w4 = new global::Gtk.Image ();
-			w4.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Dialog);
+			w4.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Menu);
 			w3.Add (w4);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w6 = new global::Gtk.Label ();
@@ -85,7 +85,7 @@ namespace LongoMatch.Gui
 			w12.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w13 = new global::Gtk.Image ();
-			w13.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-stop", global::Gtk.IconSize.Dialog);
+			w13.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-stop", global::Gtk.IconSize.Menu);
 			w12.Add (w13);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w15 = new global::Gtk.Label ();
@@ -109,7 +109,7 @@ namespace LongoMatch.Gui
 			w21.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w22 = new global::Gtk.Image ();
-			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-ok", global::Gtk.IconSize.Dialog);
+			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-ok", global::Gtk.IconSize.Menu);
 			w21.Add (w22);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w24 = new global::Gtk.Label ();
@@ -134,7 +134,7 @@ namespace LongoMatch.Gui
 			w30.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w31 = new global::Gtk.Image ();
-			w31.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-stop", global::Gtk.IconSize.Dialog);
+			w31.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-stop", global::Gtk.IconSize.Menu);
 			w30.Add (w31);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w33 = new global::Gtk.Label ();
