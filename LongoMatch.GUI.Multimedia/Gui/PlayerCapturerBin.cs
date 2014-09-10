@@ -24,6 +24,7 @@ using LongoMatch.Core.Store;
 using System.Collections.Generic;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Gui
 {
@@ -160,6 +161,15 @@ namespace LongoMatch.Gui
 		
 #region Player
 
+		public IFramesCapturer FramesCapturer {
+			set {
+				playerbin.FramesCapturer = value;
+			}
+			get {
+				return playerbin.FramesCapturer;
+			}
+		}
+		
 		public bool SeekingEnabled {
 			set {
 				playerbin.SeekingEnabled = value;

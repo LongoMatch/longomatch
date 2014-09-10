@@ -20,6 +20,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -34,6 +35,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		bool Opened {get;}
 		bool SeekingEnabled {set;}
 		bool Sensitive {set; get;}
+		IFramesCapturer FramesCapturer {get;set;}
 
 		void Open (MediaFile file);
 		void Close();

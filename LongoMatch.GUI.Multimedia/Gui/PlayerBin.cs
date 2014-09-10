@@ -141,6 +141,11 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public IFramesCapturer FramesCapturer {
+			get;
+			set;
+		}
+		
 		public Image CurrentMiniatureFrame {
 			get {
 				return player.GetCurrentFrame (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_WIDTH);
@@ -452,10 +457,14 @@ namespace LongoMatch.Gui
 		void LoadPlayDrawing (FrameDrawing drawing)
 		{
 			Pause ();
-			ignoreTick = true;
-			player.Seek (drawing.Render, true);
-			ignoreTick = false;
-			LoadImage (player.GetCurrentFrame (), drawing);
+			if (FramesCapturer != null) {
+				LoadImage (FramesCapturer.GetFrame (drawing.Render, true), drawing);
+			} else {
+				ignoreTick = true;
+				player.Seek (drawing.Render, true);
+				ignoreTick = false;
+				LoadImage (player.GetCurrentFrame (), drawing);
+			}
 		}
 
 		void SetScaleValue (int value)

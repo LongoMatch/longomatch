@@ -73,6 +73,7 @@ namespace LongoMatch.Services
 			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
+			player.FramesCapturer = framesCapturer;
 			capturer = analysisWindow.Capturer;
 		}
 
