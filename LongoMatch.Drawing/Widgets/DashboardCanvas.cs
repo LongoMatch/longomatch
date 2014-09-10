@@ -295,15 +295,15 @@ namespace LongoMatch.Drawing.Widgets
 				eventTime = tagger.Start;
 			}
 			
+			tags = new List<Tag> ();
 			if (tagger is CategoryObject) {
-				tags = new List<Tag> ();
 				tags.AddRange ((tagger as CategoryObject).SelectedTags);
-				foreach (TagObject to in Objects.OfType<TagObject>()) {
-					if (to.Active) {
-						tags.Add (to.TagButton.Tag);
-					}
-					to.Active = false;
+			}
+			foreach (TagObject to in Objects.OfType<TagObject>()) {
+				if (to.Active) {
+					tags.Add (to.TagButton.Tag);
 				}
+				to.Active = false;
 			}
 			if (button is PenaltyCardButton) {
 				card = (button as PenaltyCardButton).PenaltyCard;
