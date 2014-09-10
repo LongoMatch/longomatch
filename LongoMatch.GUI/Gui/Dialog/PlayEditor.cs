@@ -83,10 +83,11 @@ namespace LongoMatch.Gui.Dialog
 		{
 			List<Tag> tags;
 			
-			if (!(evt.EventType is AnalysisEventType)) {
-				return;
+			if (evt.EventType is AnalysisEventType) {
+				tags = (evt.EventType as AnalysisEventType).Tags.ToList ();
+			} else {
+				tags = new List<Tag> ();
 			}
-			tags = (evt.EventType as AnalysisEventType).Tags.ToList ();
 			tags.AddRange (project.Dashboard.List.OfType<TagButton> ().Select (t => t.Tag).ToList ());
 			tags = tags.Union (evt.Tags).ToList ();
 			
