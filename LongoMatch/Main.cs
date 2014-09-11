@@ -86,28 +86,19 @@ namespace LongoMatch
 
 		static void InitGtk ()
 		{
-			string dataDir, gtkRC, iconsDir, styleConf;
-			IconTheme theme;
+			string gtkRC, iconsDir, styleConf;
 			
-			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
-				dataDir = "../data";
-			} else {
-				dataDir = Path.Combine (Config.baseDirectory, "share",
-				                        Constants.SOFTWARE_NAME.ToLower ());
-			}
-			Config.dataDir = dataDir;
-			
-			gtkRC = Path.Combine (dataDir, "theme", "gtk-2.0", "gtkrc");
+			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
 			if (File.Exists (gtkRC)) {
 				Rc.AddDefaultFile (gtkRC);
 			}
 			
-			styleConf = Path.Combine (dataDir, "theme", "longomatch-dark.json");
+			styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
 			Config.Style = StyleConf.Load (styleConf);
 
 			Application.Init ();
 
-			iconsDir = Path.Combine (dataDir, "icons");
+			iconsDir = Path.Combine (Config.dataDir, "icons");
 			if (Directory.Exists (iconsDir)) {
 				IconTheme.Default.PrependSearchPath (iconsDir);
 			}

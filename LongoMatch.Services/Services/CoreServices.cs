@@ -133,13 +133,20 @@ namespace LongoMatch.Services
 		static void SetupBaseDir ()
 		{
 			string home;
-			
-			Config.baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "../");
-			if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME))) {
-				Config.baseDirectory = System.IO.Path.Combine (Config.baseDirectory, "../");
+
+			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
+				Config.baseDirectory = ".";
+				Config.dataDir = "../data";
+			} else {
+				Config.baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "../");
+				if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME))) {
+					Config.baseDirectory = System.IO.Path.Combine (Config.baseDirectory, "../");
+				}
+				if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME)))
+					Log.Warning ("Prefix directory not found");
+				Config.dataDir = Path.Combine (Config.baseDirectory, "share",
+				                               Constants.SOFTWARE_NAME.ToLower ());
 			}
-			if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME)))
-				Log.Warning ("Prefix directory not found");
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
