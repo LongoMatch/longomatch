@@ -3,30 +3,28 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>12.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5177E0D5-38FE-475F-B13A-16C9EEF00EA8}</ProjectGuid>
+    <ProjectGuid>{4D20F396-53C0-4298-9121-9F68C101CCAB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch.Migration</RootNamespace>
-    <AssemblyName>LongoMatch.Migration</AssemblyName>
+    <AssemblyName>LongoMatch</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <DefineConstants>DEBUG;HAVE_GTK</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>HAVE_GTK</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,10 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <Package>glib-sharp-2.0</Package>
     </Reference>
-    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>glade-sharp-2.0</Package>
-    </Reference>
     <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
       <Package>gtk-sharp-2.0</Package>
@@ -55,16 +49,90 @@
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Posix" />
+    <Reference Include="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
+      <Private>False</Private>
+      <Package>newtonsoft-json</Package>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Db4objects.Db4o, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb">
+      <Private>False</Private>
+      <Package>db4o</Package>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="nunit.framework, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\default.lct">
+      <LogicalName>default.lct</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\default.ltt">
+      <LogicalName>default.ltt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\project.lgm">
+      <LogicalName>project.lgm</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow.cs" />
     <Compile Include="gtk-gui\MainWindow.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Category.cs" />
+    <Compile Include="Core\Player.cs" />
+    <Compile Include="Core\ProjectDescription.cs" />
+    <Compile Include="Core\Timer.cs" />
+    <Compile Include="Core\MediaFile.cs" />
+    <Compile Include="Core\Project.cs" />
+    <Compile Include="Core\Period.cs" />
+    <Compile Include="Core\TimelineNode.cs" />
+    <Compile Include="Core\GameUnit.cs" />
+    <Compile Include="Core\Drawing.cs" />
+    <Compile Include="Core\Point.cs" />
+    <Compile Include="Core\Coordinates.cs" />
+    <Compile Include="Core\Time.cs" />
+    <Compile Include="Core\TimeNode.cs" />
+    <Compile Include="Core\PixbufTimeNode.cs" />
+    <Compile Include="Core\TagStore.cs" />
+    <Compile Include="Core\SubCategory.cs" />
+    <Compile Include="Core\Play.cs" />
+    <Compile Include="Core\HotKey.cs" />
+    <Compile Include="Core\PlayListPlay.cs" />
+    <Compile Include="Core\Tag.cs" />
+    <Compile Include="Core\GameUnitsList.cs" />
+    <Compile Include="Core\Templates\TeamTemplate.cs" />
+    <Compile Include="Core\Templates\CategoriesTemplate.cs" />
+    <Compile Include="Core\Interfaces\ITemplates.cs" />
+    <Compile Include="Core\Interfaces\ISubCategory.cs" />
+    <Compile Include="Core\Interfaces\ITag.cs" />
+    <Compile Include="Common\Color.cs" />
+    <Compile Include="Common\Image.cs" />
+    <Compile Include="Core\Interfaces\ITimelineNode.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Log.cs" />
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\SerializableObject.cs" />
+    <Compile Include="Common\ConsoleCrayon.cs" />
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Tests\CateogiresTest.cs" />
+    <Compile Include="Core\Templates\SubCategoryTemplate.cs" />
+    <Compile Include="Tests\TestTeam.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="Tests\TestProject.cs" />
+    <Compile Include="DataBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Core\Templates\" />
+    <Folder Include="Core\Interfaces\" />
+    <Folder Include="Common\" />
+    <Folder Include="Tests\" />
+  </ItemGroup>
 </Project>

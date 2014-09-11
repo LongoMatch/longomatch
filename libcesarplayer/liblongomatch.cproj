@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{513A86B7-13B9-4209-91C3-3840E68CF2F8}</ProjectGuid>
+    <Packages>
+      <Packages xmlns="">
+        <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-audio-0.10.pc" name="GStreamer Audio library" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-video-0.10.pc" name="GStreamer Video Library" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/gstreamer-app-0.10.pc" name="GStreamer APP" IsProject="False" />
+      </Packages>
+    </Packages>
+    <Compiler>
+      <Compiler ctype="GccCompiler" xmlns="" />
+    </Compiler>
+    <Language>C</Language>
+    <Target>Bin</Target>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin</OutputPath>
+    <WarningLevel>None</WarningLevel>
+    <SourceDirectory>.</SourceDirectory>
+    <DefineSymbols>DEBUG MONODEVELOP OSTYPE_LINUX</DefineSymbols>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OutputName>libcesarplayer</OutputName>
+    <CodeGeneration>
+      <CodeGeneration ctype="CCompilationParameters" xmlns="" />
+    </CodeGeneration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin</OutputPath>
+    <WarningLevel>None</WarningLevel>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OutputName>libcesarplayer.dll</OutputName>
+    <OptimizationLevel>3</OptimizationLevel>
+    <DefineSymbols>MONODEVELOP OSTYPE_LINUX</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <CodeGeneration>
+      <CodeGeneration ctype="CCompilationParameters" xmlns="" />
+    </CodeGeneration>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="common.h" />
+    <None Include="gst-camera-capturer.h" />
+    <None Include="gstscreenshot.h" />
+    <None Include="gst-smart-video-scaler.h" />
+    <None Include="gst-video-editor.h" />
+    <None Include="gstvideowidget.h" />
+    <None Include="macros.h" />
+    <None Include="video-utils.h" />
+    <None Include="baconvideowidget-marshal.h" />
+    <None Include="gst-remuxer.h" />
+    <None Include="gst-video-encoder.h" />
+    <None Include="lgm-video-player.h" />
+    <None Include="gst-nle-source.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gst-camera-capturer.c" />
+    <Compile Include="gstscreenshot.c" />
+    <Compile Include="gst-smart-video-scaler.c" />
+    <Compile Include="gst-video-editor.c" />
+    <Compile Include="gstvideowidget.c" />
+    <Compile Include="video-utils.c" />
+    <Compile Include="baconvideowidget-marshal.c" />
+    <Compile Include="gst-remuxer.c" />
+    <Compile Include="gst-video-encoder.c" />
+    <Compile Include="lgm-video-player.c" />
+    <Compile Include="gst-nle-source.c" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
+          <BuildFilesVar />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

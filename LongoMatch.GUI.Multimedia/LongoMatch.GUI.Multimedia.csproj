@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>longomatch</RootNamespace>
+    <ApplicationIcon>.</ApplicationIcon>
+    <CodePage>65001</CodePage>
+    <AssemblyName>LongoMatch.GUI.Multimedia</AssemblyName>
+    <AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\CesarPlayer</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Execution>
+      <Execution clr-version="Net_2_0" xmlns="" />
+    </Execution>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Execution>
+      <Execution clr-version="Net_2_0" xmlns="" />
+    </Execution>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Gui\" />
+    <Folder Include="Gui\Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Gui\CapturerBin.cs" />
+    <Compile Include="Gui\PlayerBin.cs" />
+    <Compile Include="Gui\VolumeWindow.cs" />
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs" />
+    <Compile Include="Gui\PlayerCapturerBin.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerCapturerBin.cs" />
+    <Compile Include="Gui\Utils\Remuxer.cs" />
+    <Compile Include="MultimediaToolkit.cs" />
+    <Compile Include="Gui\Utils\FramesCapturer.cs" />
+    <Compile Include="Gui\VideoWindow.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.VideoWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
+      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
+      <Name>LongoMatch.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>LongoMatch.GUI.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.csproj">
+      <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
+      <Name>LongoMatch.Drawing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>LongoMatch.Drawing.Cairo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Deployment.LinuxDeployData generatePcFile="False" />
+        <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">
+          <BuildFilesVar Name="FILES" />
+          <DeployFilesVar />
+          <ResourcesVar Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar Name="REFERENCES" />
+          <AsmRefVar Name="REFERENCES" />
+          <ProjectRefVar Name="REFERENCES" />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

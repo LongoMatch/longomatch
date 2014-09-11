@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>LongoMatch</RootNamespace>
+    <AssemblyName>LongoMatchGtk</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnvironmentVariables>
+      <EnvironmentVariables xmlns="">
+        <Variable name="LGM_DEBUG" value="3" />
+        <Variable name="LGM_UNINSTALLED" value="1" />
+      </EnvironmentVariables>
+    </EnvironmentVariables>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <EnvironmentVariables>
+      <EnvironmentVariables xmlns="">
+        <Variable name="LGM_DEBUG" value="3" />
+      </EnvironmentVariables>
+    </EnvironmentVariables>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
+      <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
+      <Name>LongoMatch.GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
+      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
+      <Name>LongoMatch.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
+      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+      <Name>LongoMatch.Addins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj">
+      <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
+      <Name>LongoMatch.GUI.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>LongoMatch.GUI.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>LongoMatch.Drawing.Cairo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
