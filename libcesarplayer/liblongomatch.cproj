@@ -73,7 +73,7 @@
     <Compile Include="gst-remuxer.c" />
     <Compile Include="gst-video-encoder.c" />
     <Compile Include="gst-nle-source.c" />
-    <Compile Include="video-utils.mm" />
     <Compile Include="lgm-video-player.c" />
+    <Compile Include="video-utils.m" />
   </ItemGroup>
 </Project>

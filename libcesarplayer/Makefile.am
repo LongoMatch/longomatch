@@ -45,7 +45,7 @@ libcesarplayer_la_SOURCES = \
 	gst-video-encoder.h\
 	gst-nle-source.c\
 	gst-nle-source.h\
-	video-utils.mm\
+	video-utils.m\
 	video-utils.h\
 	macros.h
 
