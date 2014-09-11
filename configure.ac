@@ -10,7 +10,7 @@ AC_CONFIG_MACRO_DIR([build/m4])
 AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock \${ACLOCAL_FLAGS}"])
 
 AC_PROG_CC
-
+AC_PROG_OBJCXX
 AM_PROG_LIBTOOL
 
 dnl pkg-config
