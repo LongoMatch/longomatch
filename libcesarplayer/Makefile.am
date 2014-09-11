@@ -7,8 +7,9 @@ AM_CPPFLAGS = \
 	$(CESARPLAYER_CFLAGS)
 
 if OSTYPE_OS_X
+else
 AM_CPPFLAGS += \
-	-x objective-c
+	-x c
 endif
 
 AM_CFLAGS =\
