@@ -56,8 +56,6 @@ namespace LongoMatch.Gui
 		public MainWindow(IGUIToolkit guiToolkit) :
 		base(Constants.SOFTWARE_NAME)
 		{
-			Screen screen;
-			
 			this.Build();
 			this.guiToolKit = guiToolkit;
 			
@@ -67,9 +65,15 @@ namespace LongoMatch.Gui
 			
 			ConnectSignals();
 			ConnectMenuSignals();
-			
-			screen = Display.Default.DefaultScreen;
-			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
+
+			// Default screen
+			Screen screen = Display.Default.DefaultScreen;
+			// Which monitor is our window on
+			int monitor = screen.GetMonitorAtWindow (this.GdkWindow);
+			// Monitor size
+			Rectangle monitor_geometry = screen.GetMonitorGeometry (monitor);
+			// Resize to a convenient size
+			this.Resize(monitor_geometry.Width * 80 / 100, monitor_geometry.Height * 80 / 100);
 		}
 
 		#endregion
