@@ -136,7 +136,6 @@ LongoMatch.Drawing.Cairo/Makefile
 LongoMatch.Migration/Makefile
 LongoMatch.Multimedia/Makefile
 LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
-LongoMatch.GUI/LongoMatch.GUI.dll.config
 LongoMatch.GUI.Helpers/Makefile
 LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
