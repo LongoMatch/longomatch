@@ -26,7 +26,6 @@ main (int argc, char *argv[])
   guint width, height, fps_n, fps_d, par_n, par_d;
   gchar *container, *audio_codec, *video_codec;
   GstDiscovererResult res;
-  gchar *uri;
   GError *err = NULL;
 
   lgm_init_backend (0, NULL);

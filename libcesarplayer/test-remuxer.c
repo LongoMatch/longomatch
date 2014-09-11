@@ -34,6 +34,7 @@ percent_done_cb (GstRemuxer *remuxer, gfloat percent, GMainLoop *loop)
   } else {
     g_print("----> %f%%", percent);
   }
+  return TRUE;
 }
 
 static gboolean
@@ -41,6 +42,7 @@ error_cb (GstRemuxer *remuxer, gchar *error, GMainLoop *loop)
 {
     g_print("ERROR: %s\n", error);
     g_main_loop_quit (loop);
+    return TRUE;
 }
 
 int
