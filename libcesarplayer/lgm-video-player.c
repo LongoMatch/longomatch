@@ -23,14 +23,6 @@
 
 /* gtk+/gnome */
 #include <gdk/gdk.h>
-#if defined (GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#elif defined (GDK_WINDOWING_QUARTZ)
-#include <gdk/gdkquartz.h>
-#endif
-#include <gtk/gtk.h>
 
 #include <gio/gio.h>
 #include <glib/gi18n.h>
@@ -174,7 +166,7 @@ lgm_element_msg_sync_cb (GstBus * bus, GstMessage * msg, gpointer data)
       if (lvp->priv->xoverlay != NULL) {
         gst_object_unref (lvp->priv->xoverlay);
       }
-      lvp->priv->xoverlay = gst_object_ref (GST_X_OVERLAY (sender));
+      lvp->priv->xoverlay = (GstXOverlay *) gst_object_ref (GST_X_OVERLAY (sender));
       lgm_set_window_handle(lvp->priv->xoverlay, lvp->priv->window_handle);
       g_mutex_unlock (&lvp->priv->overlay_lock);
     }
@@ -391,7 +383,7 @@ poll_for_state_change_full (LgmVideoPlayer * lvp, GstElement * element,
   GstMessageType events;
 
   bus = gst_element_get_bus (element);
-  events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
+  events = (GstMessageType) (GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
 
   while (TRUE) {
     GstMessage *message;
@@ -407,11 +399,11 @@ poll_for_state_change_full (LgmVideoPlayer * lvp, GstElement * element,
     switch (GST_MESSAGE_TYPE (message)) {
       case GST_MESSAGE_STATE_CHANGED:
       {
-        GstState old, new, pending;
+        GstState old, new_state, pending;
 
         if (src == element) {
-          gst_message_parse_state_changed (message, &old, &new, &pending);
-          if (new == state) {
+          gst_message_parse_state_changed (message, &old, &new_state, &pending);
+          if (new_state == state) {
             gst_message_unref (message);
             goto success;
           }
@@ -920,7 +912,7 @@ lgm_video_player_new (LgmUseType type, GError ** err)
   GstPad *pad;
   gint flags;
 
-  lvp = g_object_new (lgm_video_player_get_type (), NULL);
+  lvp = (LgmVideoPlayer *) g_object_new (lgm_video_player_get_type (), NULL);
 
   lvp->priv->use_type = type;
   GST_INFO ("use_type = %d", type);
@@ -1075,7 +1067,7 @@ lgm_video_player_class_init (LgmVideoPlayerClass * klass)
   GObjectClass *object_class;
 
   object_class = (GObjectClass *) klass;
-  parent_class = g_type_class_peek_parent (klass);
+  parent_class = (GstElementClass *) g_type_class_peek_parent (klass);
   g_type_class_add_private (object_class, sizeof (LgmVideoPlayerPrivate));
 
   if (_lgm_debug_cat == NULL) {
