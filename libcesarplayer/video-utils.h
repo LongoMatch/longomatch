@@ -41,6 +41,8 @@
 #define EXPORT
 #endif
 
+ G_BEGIN_DECLS
+
 typedef enum {
   GST_AUTOPLUG_SELECT_TRY,
   GST_AUTOPLUG_SELECT_EXPOSE,
@@ -66,3 +68,5 @@ EXPORT GstElement * lgm_create_muxer (VideoMuxerType type,
     GQuark quark, GError **err);
 EXPORT GstAutoplugSelectResult lgm_filter_video_decoders (GstElement* object,
     GstPad* arg0, GstCaps* arg1, GstElementFactory* arg2, gpointer user_data);
+
+G_END_DECLS

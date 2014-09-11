@@ -174,7 +174,7 @@ lgm_discover_uri (
   } else {
     audios = gst_discoverer_info_get_audio_streams (info);
     if (audios != NULL) {
-      ainfo = audios->data;
+      ainfo = (GstDiscovererAudioInfo *) audios->data;
     }
   }
 
@@ -195,7 +195,7 @@ lgm_discover_uri (
   } else {
     videos = gst_discoverer_info_get_video_streams (info);
     if (videos != NULL) {
-      vinfo = videos->data;
+      vinfo = (GstDiscovererVideoInfo *) videos->data;
     }
   }
 
