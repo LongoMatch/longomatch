@@ -20,20 +20,21 @@ def mdptoam(mdp):
     with open (mdp) as f:
         l = f.read()
         try:
-            assembly = re.findall('assembly="([^"]*)"', l)[0]
+            assembly = re.findall('<AssemblyName>([^"]*)</AssemblyName>', l)[0]
         except:
             assembly = ""
         try:
-            target = re.findall('target="([^"]*)"', l)[0].lower()
+            target = re.findall('<OutputType>([^"]*)</OutputType>', l)[0]
         except:
             assembly = "library"
         try:
-            files = re.findall('subtype="Code" buildaction="Compile" name="([^"]*)"', l)
+            files = re.findall('<Compile Include="([^"]*)" />', l)
+            files = [x.replace('\\', '/') for x in files]
         except:
             files = []
         try:
-            resources = re.findall('subtype="Code" buildaction="EmbedAsResource" name="([^"]*)"', l)
-            resources = [x.replace("../", "$(top_srcdir)/") for x in resources]
+            resources = re.findall('<EmbeddedResource Include="([^"]*)">', l)
+            resources = [x.replace('\\', '/').replace("../", "$(top_srcdir)/") for x in resources]
         except:
             resources = []
     files.sort()
@@ -73,7 +74,7 @@ def main():
         if not os.path.isdir(d):
             continue
         for f in os.listdir(os.path.join(p, d)):
-            if not f.endswith(".mdp"):
+            if not f.endswith(".csproj"):
                 continue
             mdps.append(os.path.join(d, f))
     for mdp in mdps:
