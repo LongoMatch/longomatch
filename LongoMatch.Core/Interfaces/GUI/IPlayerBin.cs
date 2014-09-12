@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		bool Opened {get;}
 		bool SeekingEnabled {set;}
 		bool Sensitive {set; get;}
+		bool Playing { get; }
 		IFramesCapturer FramesCapturer {get;set;}
 
 		void Open (MediaFile file);

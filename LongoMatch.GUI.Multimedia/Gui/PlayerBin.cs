@@ -176,6 +176,13 @@ namespace LongoMatch.Gui
 				vscale1.Visible = value;
 			}
 		}
+		
+		public bool Playing {
+			get {
+				return player != null ? player.Playing : false;
+			}
+		}
+		
 		#endregion
 		#region Public methods
 		public void Open (MediaFile file)

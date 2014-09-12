@@ -82,32 +82,39 @@ namespace LongoMatch.Gui.Component
 				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
  		
-		public void DetachPlayer () {
-			playercapturer.Pause();
+		public void DetachPlayer ()
+		{
+			bool isPlaying = playercapturer.Playing;
+			
+			/* Pause the player here to prevent the sink drawing while the windows
+			 * are beeing changed */
+			playercapturer.Pause ();
 			if (!detachedPlayer) {
 				EventBox box;
-				Log.Debug("Detaching player");
+				Log.Debug ("Detaching player");
 				
-				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
-				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
-				playerWindow.DeleteEvent += (o, args) => DetachPlayer();
-				box = new EventBox();
+				playerWindow = new Gtk.Window (Constants.SOFTWARE_NAME);
+				playerWindow.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Button);
+				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
+				box = new EventBox ();
 				
-				box.KeyPressEvent += (o, args) => OnKeyPressEvent(args.Event);
-				playerWindow.Add(box);
+				box.KeyPressEvent += (o, args) => OnKeyPressEvent (args.Event);
+				playerWindow.Add (box);
 				
-				box.Show();
-				playerWindow.Show();
+				box.Show ();
+				playerWindow.Show ();
 				
-				playercapturer.Reparent(box);
+				playercapturer.Reparent (box);
 				videowidgetsbox.Visible = false;
 			} else {
-				Log.Debug("Attaching player again");
+				Log.Debug ("Attaching player again");
 				videowidgetsbox.Visible = true;
-				playercapturer.Reparent(this.videowidgetsbox);
-				playerWindow.Destroy();
+				playercapturer.Reparent (this.videowidgetsbox);
+				playerWindow.Destroy ();
 			}
-			playercapturer.Play();
+			if (isPlaying) {
+				playercapturer.Play();
+			}
 			detachedPlayer = !detachedPlayer;
 		}
 		

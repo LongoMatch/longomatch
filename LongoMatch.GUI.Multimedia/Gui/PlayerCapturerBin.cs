@@ -161,6 +161,12 @@ namespace LongoMatch.Gui
 		
 #region Player
 
+		public bool Playing {
+			get {
+				return playerbin.Playing;
+			}
+		}
+		
 		public IFramesCapturer FramesCapturer {
 			set {
 				playerbin.FramesCapturer = value;
