@@ -31,8 +31,6 @@
 #endif
 
 #include <glib-object.h>
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
 
 #include "common.h"
 
@@ -52,7 +50,7 @@ typedef struct GstVideoEditorPrivate GstVideoEditorPrivate;
 
 struct _GstVideoEditorClass
 {
-  GtkHBoxClass parent_class;
+  GObjectClass parent_class;
 
   void (*error) (GstVideoEditor * gve, const char *message);
   void (*percent_completed) (GstVideoEditor * gve, float percent);
@@ -60,7 +58,7 @@ struct _GstVideoEditorClass
 
 struct _GstVideoEditor
 {
-  GtkHBox parent_instance;
+  GObject parent_instance;
   GstVideoEditorPrivate *priv;
 };
 

@@ -30,7 +30,6 @@
 #endif
 
 #include <glib-object.h>
-#include <gtk/gtk.h>
 #include "common.h"
 
 G_BEGIN_DECLS

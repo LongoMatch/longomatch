@@ -31,7 +31,6 @@
 #include <gst/interfaces/xoverlay.h>
 #include <gst/pbutils/pbutils.h>
 #include <gdk/gdk.h>
-#include <gtk/gtk.h>
 #include "common.h"
 
 

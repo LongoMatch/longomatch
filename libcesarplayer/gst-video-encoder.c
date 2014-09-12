@@ -21,7 +21,6 @@
 */
 
 #include <gst/gst.h>
-#include <gtk/gtk.h>
 
 #include "gst-video-encoder.h"
 #include "video-utils.h"

@@ -114,7 +114,7 @@ struct GstCameraCapturerPrivate
   gulong sig_bus_sync;
 };
 
-static GtkWidgetClass *parent_class = NULL;
+static GObjectClass *parent_class = NULL;
 
 static GThread *gui_thread;
 
