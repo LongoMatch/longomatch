@@ -53,6 +53,13 @@ namespace LongoMatch.Gui.Component
 		public DashboardWidget()
 		{
 			this.Build();
+
+			addcatbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", IconSize.Button, IconLookupFlags.ForceSvg);
+			addtimerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", IconSize.Button, IconLookupFlags.ForceSvg);
+			addcardbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", IconSize.Button, IconLookupFlags.ForceSvg);
+			addscorebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", IconSize.Button, IconLookupFlags.ForceSvg);
+			addtagbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", IconSize.Button, IconLookupFlags.ForceSvg);
+
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;

@@ -115,10 +115,12 @@
                   <widget class="Gtk.Button" id="addcatbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-add Menu</property>
-                    <property name="Label" translatable="yes">Add category</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="addcatbuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Expand">False</property>
@@ -129,10 +131,12 @@
                   <widget class="Gtk.Button" id="addtimerbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:stock_alarm Menu</property>
-                    <property name="Label" translatable="yes">Add timer</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="addtimerbuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -144,10 +148,12 @@
                   <widget class="Gtk.Button" id="addscorebutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:gtk-zoom-100 Menu</property>
-                    <property name="Label" translatable="yes">Add score</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="addscorebuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">2</property>
@@ -159,10 +165,12 @@
                   <widget class="Gtk.Button" id="addcardbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:stock_media-stop Menu</property>
-                    <property name="Label" translatable="yes">Add penalty card</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="addcardbuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">3</property>
@@ -174,10 +182,12 @@
                   <widget class="Gtk.Button" id="addtagbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:stock_zoom-in Menu</property>
-                    <property name="Label" translatable="yes">Add tag</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="addtagbuttonimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">4</property>
