@@ -147,7 +147,9 @@ namespace LongoMatch.Core.Common
 			} else if (value is Point) {
 				Point p = value as Point;
 				if (p != null) {
-					writer.WriteValue(String.Format ("{0} {1}", p.X, p.Y));
+					writer.WriteValue(String.Format ("{0} {1}",
+					                                 p.X.ToString (NumberFormatInfo.InvariantInfo),
+					                                 p.Y.ToString (NumberFormatInfo.InvariantInfo)));
 				}
 			}
 		}
@@ -172,7 +174,8 @@ namespace LongoMatch.Core.Common
 					return new HotKey {Key = int.Parse(hk[0]), Modifier = int.Parse(hk[1])};
 				} else if (objectType == typeof (Point)) {
 					string[] ps = ((string)reader.Value).Split (' '); 
-					return new Point (double.Parse(ps[0]), double.Parse(ps[1]));
+					return new Point (double.Parse(ps[0], NumberFormatInfo.InvariantInfo),
+					                  double.Parse(ps[1], NumberFormatInfo.InvariantInfo));
 				}
 			}
 			return null;
