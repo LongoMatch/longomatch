@@ -175,6 +175,11 @@ namespace LongoMatch.Core.Store
 			Timers.Clear();
 		}
 
+		public void UpdateScore () {
+			Description.LocalGoals = GetScore (Team.LOCAL);
+			Description.VisitorGoals = GetScore (Team.VISITOR);
+		}
+
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
 		                             Score score, PenaltyCard card, bool addToTimeline=true)
 		{
@@ -203,13 +208,20 @@ namespace LongoMatch.Core.Store
 			evt.Miniature = miniature;
 
 			if (addToTimeline) {
-				Timeline.Add(evt);
+				Timeline.Add (evt);
+				if (evt is ScoreEvent) {
+					UpdateScore ();
+				}
 			}
 			return evt;
 		}
 		
-		public void AddEvent (TimelineEvent play) {
-			Timeline.Add(play);
+		public void AddEvent (TimelineEvent play)
+		{
+			Timeline.Add (play);
+			if (play is ScoreEvent) {
+				UpdateScore ();
+			}
 		}
 		
 		/// <summary>
@@ -221,9 +233,19 @@ namespace LongoMatch.Core.Store
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemovePlays(List<TimelineEvent> plays) {
-			foreach(TimelineEvent play in plays)
-				Timeline.Remove(play);
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
+			bool updateScore = false;
+
+			foreach (TimelineEvent play in plays) {
+				Timeline.Remove (play);
+				if (play is ScoreEvent) {
+					updateScore = true;
+				}
+			}
+			if (updateScore) {
+				UpdateScore ();
+			}
 		}
 
 		public void UpdateEventTypes ()

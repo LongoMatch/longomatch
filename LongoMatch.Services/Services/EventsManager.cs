@@ -277,7 +277,7 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
 			                          play.Start.ToMSecondsString(), play.Stop.ToMSecondsString(),
 			                          play.EventType.Name));
-			openedProject.Timeline.Add (play);
+			openedProject.AddEvent (play);
 			AddNewPlay (play);
 		}
 
