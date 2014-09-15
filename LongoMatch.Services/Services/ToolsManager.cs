@@ -47,7 +47,7 @@ namespace LongoMatch.Services
 			ProjectImporters = new List<ProjectImporter> ();
 			
 			RegisterImporter (Project.Import, Constants.PROJECT_NAME,
-			                  new string[] { Constants.PROJECT_EXT }, false);
+			                  new string[] {"*"+Constants.PROJECT_EXT }, false);
 
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
