@@ -46,7 +46,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 2;
 			tk.StrokeColor = Button.TextColor;
 			tk.FillColor = Button.TextColor;
-			tk.DrawText (Position, Button.Width, Button.Height, Button.Score.Name);
+			tk.DrawText (DrawPosition, Button.Width, Button.Height, Button.Score.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

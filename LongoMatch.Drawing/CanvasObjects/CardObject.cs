@@ -40,8 +40,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Begin ();
 
 			/* Draw Rectangle */
-			tk.FillColor = Color;
-			tk.StrokeColor = Color;
+			tk.FillColor = CurrentBackgroundColor;
+			tk.StrokeColor = CurrentBackgroundColor;
 			tk.LineWidth = 0;
 			switch (Button.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
@@ -62,7 +62,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 2;
 			tk.StrokeColor = Color.Grey2;
 			tk.FillColor = Color.Grey2;
-			tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
+			tk.DrawText (DrawPosition, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

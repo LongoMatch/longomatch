@@ -107,9 +107,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = Button.TextColor;
 			tk.FillColor = Button.TextColor;
 			tk.FontWeight = FontWeight.Bold;
-			tk.DrawText (Position, Button.Width, h, Button.Timer.Name);
+			tk.DrawText (DrawPosition, Button.Width, h, Button.Timer.Name);
 			if (CurrentTimeNode != null && Mode != TagMode.Edit) {
-				tk.DrawText (new Point (Position.X, Position.Y + h), Button.Width, h,
+				tk.DrawText (new Point (DrawPosition.X, Position.Y + h), Button.Width, h,
 				             PartialTime.ToSecondsString ());
 			}
 			DrawSelectionArea (tk);

@@ -47,6 +47,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public override Color BackgroundColor {
+			get {
+				return Tagger.BackgroundColor;
+			}
+		}
+
 		public override int NRows {
 			get {
 				/* Header */
@@ -141,7 +147,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FontWeight = FontWeight.Bold;
 
 			/* Draw Rectangle */
-			DrawButton (tk, true);
+			DrawButton (tk);
 
 			/* Draw header */
 			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;
