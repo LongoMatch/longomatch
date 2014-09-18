@@ -34,6 +34,7 @@ namespace LongoMatch.Video.Player
 		public event StateChangeHandler StateChange;
 		public event TickHandler Tick;
 		public event ReadyToSeekHandler ReadyToSeek;
+		public event EosHandler Eos;
 
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr lgm_video_player_get_type ();
@@ -131,6 +132,11 @@ namespace LongoMatch.Video.Player
 			this.GlibReadyToSeek += (sender, e) => {
 				if (ReadyToSeek != null)
 					ReadyToSeek ();
+			};
+
+			this.GlibEos += (sender, e) => {
+				if  (Eos != null)
+					Eos ();
 			};
 		}
 		#pragma warning disable 0169
@@ -267,7 +273,7 @@ namespace LongoMatch.Video.Player
 		}
 
 		[GLib.Signal("eos")]
-		public event System.EventHandler Eos {
+		public event System.EventHandler GlibEos {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "eos");
 				sig.AddDelegate (value);

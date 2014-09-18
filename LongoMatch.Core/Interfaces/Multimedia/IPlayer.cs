@@ -30,7 +30,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	{
 		// Events
 		event         ErrorHandler Error;
-		event         System.EventHandler Eos;
+		event         EosHandler Eos;
 		event         StateChangeHandler StateChange;
 		event         ReadyToSeekHandler ReadyToSeek;
 

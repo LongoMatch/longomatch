@@ -724,7 +724,7 @@ namespace LongoMatch.Gui
 			Pause ();
 		}
 
-		void OnEndOfStream (object o, EventArgs args)
+		void OnEndOfStream ()
 		{
 			Application.Invoke (delegate {
 				player.Seek (new Time (0), true);
