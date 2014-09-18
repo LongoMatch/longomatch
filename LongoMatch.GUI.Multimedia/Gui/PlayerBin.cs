@@ -360,7 +360,7 @@ namespace LongoMatch.Gui
 				readyToSeek = false;
 				this.file = file;
 				try {
-					Log.Debug ("Openning new file " + file.FilePath);
+					Log.Debug ("Opening new file " + file.FilePath);
 					player.Open (file.FilePath);
 				} catch (Exception ex) {
 					Log.Exception (ex);
