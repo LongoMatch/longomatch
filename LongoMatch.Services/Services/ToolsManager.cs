@@ -87,7 +87,7 @@ namespace LongoMatch.Services
 			ProjectImporters.Add (importer);
 		}
 
-		public static void AddVideoFile (Project project)
+		public static void AddVideoFile (Project project, bool createThumbnails)
 		{
 			string videofile;
 			IGUIToolkit guiToolkit = Config.GUIToolkit;
@@ -107,7 +107,9 @@ namespace LongoMatch.Services
 					guiToolkit.ErrorMessage (ex.Message);
 					return;
 				}
-				CreateThumbnails (project);
+				if (createThumbnails) {
+					CreateThumbnails (project);
+				}
 			}
 		}
 
@@ -205,9 +207,10 @@ namespace LongoMatch.Services
 			if (importer.NeedsEdition) {
 				Config.EventsBroker.EmitNewProject (project);
 			} else {
-				if (project.Description.File == null ||
-					!File.Exists (project.Description.File.FilePath)) {
-					AddVideoFile (project);
+				if (project.Description.File == null) {
+					AddVideoFile (project, true);
+				} else if (!File.Exists (project.Description.File.FilePath)) {
+					AddVideoFile (project, false);
 				}
 				/* If the project exists ask if we want to overwrite it */
 				if (DB.Exists (project)) {

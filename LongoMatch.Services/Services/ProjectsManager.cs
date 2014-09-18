@@ -356,7 +356,7 @@ namespace LongoMatch.Services
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				ToolsManager.AddVideoFile (project);
+				ToolsManager.AddVideoFile (project, true);
 			}
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
