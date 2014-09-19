@@ -120,14 +120,14 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 	}
-	
+
 	[Serializable]
 	public class PenaltyCardEventType: EventType
 	{
 		public PenaltyCardEventType ()
 		{
 			ID = Constants.PenaltyCardID;
-			Name = Catalog.GetString ("Penalty card");
+			Name = Catalog.GetString ("Penalties");
 		}
 
 		public override bool Equals (object obj)
