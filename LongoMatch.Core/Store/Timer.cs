@@ -20,6 +20,7 @@ using System.Linq;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
@@ -29,6 +30,7 @@ namespace LongoMatch.Core.Store
 		public Timer ()
 		{
 			Nodes = new List<TimeNode>();
+			Team = Team.NONE;
 		}
 
 		public string Name {
@@ -37,6 +39,11 @@ namespace LongoMatch.Core.Store
 		}
 		
 		public List<TimeNode> Nodes {
+			get;
+			set;
+		}
+
+		public Team Team {
 			get;
 			set;
 		}
