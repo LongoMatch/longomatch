@@ -152,7 +152,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			/* Draw header */
 			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;
 			tk.LineWidth = 2;
-			tk.StrokeColor = Button.TextColor;
+			if (catSelected) {
+				tk.StrokeColor = Button.DarkColor;
+			} else {
+				tk.StrokeColor = Button.TextColor;
+			}
 			tk.DrawText (position, catWidth, heightPerRow, Button.EventType.Name);
 			rects.Add (new Rectangle (position, catWidth, heightPerRow), Button);
 			yptr += heightPerRow;
