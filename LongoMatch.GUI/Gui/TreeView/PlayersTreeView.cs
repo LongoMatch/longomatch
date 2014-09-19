@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			if(oa is Player)
 				return (oa as Player).Number.CompareTo((ob as Player).Number);
 			else
-				return (oa as TimeNode).Name.CompareTo((ob as TimeNode).Name);
+				return (oa as TimeNode).Start.CompareTo((ob as TimeNode).Start);
 		}
 
 		override protected bool OnKeyPressEvent(Gdk.EventKey evnt)
