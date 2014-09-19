@@ -56,8 +56,7 @@ namespace LongoMatch.Gui.Component
 
 				if (evType is AnalysisEventType) {
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
-						filter.FilterEventTag (evType, tag, true);
-						store.AppendValues(catIter, tag, true);
+						store.AppendValues(catIter, tag, false);
 					}
 				}
 			}
