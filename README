@@ -62,61 +62,34 @@ Bugzilla:
 	https://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
 
 
-*******************************
-Windows Development Environment
-*******************************
-
-Getting the external dependencies
-=================================
+********************************************
+Development Environment for OS X and Windows
+********************************************
 
 LongoMatch has a strong dependency on GStreamer, GTK+ and Mono, and the lack of a good packages
-manager for Free Software applications on Windows makes it hard to depend on external installers,
-such as the ones provided by GTK+ or Mono. For GStreamer the situation is even worst, as there were
-no installer available until GStreamer WinBuilds appeared, project started by the LongoMatch team.
-Since it's very hard to control which versions are installed in the users' machine and this part is
-critical, at least on the GStreamer side, for the stability of LongoMatch, the external dependencies
-need to be packaged in the installer for a fine-grained control of all them.
+manager for Free Software applications on Windows and OS X makes it hard to depend on external installers.
+In these platforms all the dependencies must be built from scratch, using cerbero's build system.
+To setup your system you will need to install some external dependencie for the build system, depending
+on your target Operating System:
 
-GTK+
----
-  * Download the GTK+ bundle for the version 2.16 and install it in c:\gtk:
-    http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/gtk+-bundle_2.16.6-20100912_win32.zip
-
-Mono
-----
-  * Download Mono 2.6.7 and install it in c:\mono:
-    http://ftp.novell.com/pub/mono/archive/2.6.7/windows-installer/2/mono-2.6.7-gtksharp-2.12.10-win32-2.exe
-
-GStreamer
---------
-  * Download the latest GStreamer version and the SDK available from:
-    http://code.google.com/p/ossbuild/
-  * Create a folder named c:\gstreamer
-  * Copy c:\Program Files\OSSBuild\GStreamer\$VERSION\* to c:\gstreamer
-  * Copy c:\Program Files\OSSBuild\GStreamer\$VERSION\sdk\include to c:\gstreamer\include
-
-Getting the build environment (MSYS/MinGW)
-==========================================
-
-  * Download from ossbuild the MSYS/MinGW environment with all the compiler tools:
-    http://code.google.com/p/ossbuild/downloads/detail?name=msys_v11.7z&can=2&q=
-  * Install Python 2.6
-  * Install git for Windows from:
-    http://code.google.com/p/msysgit/
+  * Install the build depdendencies as explained in "Build requirements" here:
+    http://docs.gstreamer.com/display/GstSDK/Building+from+source+using+Cerbero
+  * On Windows, install Mono 3.2.3:
+    http://download.mono-project.com/archive/3.2.3/windows-installer/mono-3.2.3-gtksharp-2.12.11-win32-0.exe
 
 Compiling LongoMatch
 ====================
 
-  * Fetch the sources
-    $ git clone git://git.gnome.org/longomatch /c/longomatch
-  * Open a MSYS terminal (c:\msys\msys.bat)
-  * Inside the terminal run:
-    $ cd /c/longomatch/win32
-    $ python deploy_win32.py
-  * This will create a deployment folder in win32/dist with all the dependencies
-  * Compile LongoMatch:
-    $ make -f Makefile.win32 clean
-    $ make -f Makefile.win32
-    $ make -f Makefile.win32 install
-  * LongoMatch is now compiled and ready to be distributed in the folder win32/dist/
+  * Clone cerbero's build system if you haven't done it before in the previous steps:
+    $ mkdir ~/git/
+    $ cd ~/git
+    $ git clone git://anongit.freedesktop.org/gstreamer-sdk/cerbero
+  * Clone in a subdirectory cerbero-extras repository:
+    $ cd ~/git/cerbero/
+    $ git clone git@github.com:ylatuya/cerbero-extras.git
+  * Bootstrap te build system:
+    $ ./cerbero-uninstalled -c cerbero-extras/longomatch.cbc bootstrap
+  * Package longomatch:
+    $ ./cerbero-uninstalled -c cerbero-extras/longomatch.cbc package longomatch
 
+And wait patiently until the build completes. It can takes from a couple of hours in Linux/OS X to a full day in Windows
