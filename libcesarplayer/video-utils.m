@@ -248,14 +248,46 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       break;
 
     case VIDEO_ENCODER_H264: {
+      GstElement *parse;
       gchar *stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir(),
           "x264.log", NULL);
-      encoder = gst_element_factory_make ("x264enc", "video-encoder");
-      g_object_set (encoder, "key-int-max", 25, "pass", 17,
-          "speed-preset", 3, "stats-file", stats_file,
-          "bitrate", quality, NULL);
-      g_free (stats_file),
-      name = "X264 video encoder";
+      encoder = gst_element_factory_make ("fluvah264enc", "video-encoder");
+      parse = gst_element_factory_make ("h264parse", NULL);
+      if (!encoder || !parse) {
+        if (encoder) gst_object_unref (encoder);
+        if (parse) gst_object_unref (parse);
+	    encoder = gst_element_factory_make ("x264enc", "video-encoder");
+	    g_object_set (encoder, "key-int-max", 25, "pass", 17,
+	        "speed-preset", 3, "stats-file", stats_file,
+	        "bitrate", quality, NULL);
+	    name = "X264 video encoder";
+	  }
+      else {
+        GstPad *encoder_sink_pad, *parse_src_pad;
+        GstElement *bin = gst_bin_new (NULL);
+
+        g_object_set (encoder, "bitrate", quality, "keyframe-period", 1000,
+        	"rate-control", 1, "entropy-mode", 1, NULL);
+
+        gst_bin_add_many (GST_BIN (bin), encoder, parse, NULL);
+        gst_element_link (encoder, parse);
+
+        encoder_sink_pad = gst_element_get_static_pad (encoder, "sink");
+        parse_src_pad = gst_element_get_static_pad (parse, "src");
+
+        gst_element_add_pad (bin,
+            gst_ghost_pad_new ("sink", encoder_sink_pad));
+        gst_element_add_pad (bin,
+            gst_ghost_pad_new ("src", parse_src_pad));
+        
+        gst_object_unref (encoder_sink_pad);
+        gst_object_unref (parse_src_pad);
+
+        encoder = bin;
+        
+        name = "Fluendo H264 video encoder";
+      }
+      g_free (stats_file);
       break;
     }
 
