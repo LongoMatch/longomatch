@@ -49,6 +49,7 @@ namespace LongoMatch.Core.Store
 	public class Project : IComparable, IIDObject
 	{
 		ProjectDescription description;
+		SubstitutionEventType subsType;
 
 		#region Constructors
 		public Project() {
@@ -160,6 +161,19 @@ namespace LongoMatch.Core.Store
 			}
 		}
 		
+		[JsonIgnore]
+		public SubstitutionEventType SubstitutionsEventType {
+			get {
+				if (subsType == null) {
+					subsType = EventTypes.OfType<SubstitutionEventType> ().FirstOrDefault ();
+					if (subsType == null) {
+						subsType = new SubstitutionEventType ();
+						subsType.SortMethod = SortMethodType.SortByStartTime;
+					}
+				}
+				return subsType;
+			}
+		}
 		#endregion
 
 		#region Public Methods
@@ -262,10 +276,117 @@ namespace LongoMatch.Core.Store
 
 		public void UpdateEventTypes ()
 		{
-			IEnumerable<EventType> types = Dashboard.List.OfType<EventButton>().Select(b => b.EventType);
+			IEnumerable<EventType> types = Dashboard.List.OfType<EventButton> ().Select (b => b.EventType);
 			EventTypes.AddRange (types.Except (EventTypes));
-			types = Timeline.Select (t => t.EventType).Distinct().Except (EventTypes);
+			types = Timeline.Select (t => t.EventType).Distinct ().Except (EventTypes);
 			EventTypes.AddRange (types.Except (EventTypes));
+			if (!EventTypes.Contains (SubstitutionsEventType)) {
+				EventTypes.Add (SubstitutionsEventType);
+			}
+		}
+
+		public SubstitutionEvent SubsitutePlayer (TeamTemplate template, Player playerIn, Player playerOut,
+		                                          SubstitutionReason reason, Time subsTime)
+		{
+			Team team;
+			LineupEvent lineup;
+			SubstitutionEvent se;
+			
+			if (template == LocalTeamTemplate) {
+				team = Team.LOCAL;
+			} else {
+				team = Team.VISITOR;
+			}
+			lineup = Timeline.OfType<LineupEvent> ().FirstOrDefault ();
+			if (lineup == null) {
+				throw new SubstitutionException (Catalog.GetString ("No lineup events found"));
+			}
+			if (subsTime < lineup.EventTime) {
+				throw new SubstitutionException (Catalog.GetString ("A substitution can't happen before the lineup event"));
+			}
+			se = new SubstitutionEvent ();
+			se.EventType = SubstitutionsEventType;
+			se.In = playerIn;
+			se.Out = playerOut;
+			se.Reason = reason;
+			se.EventTime = subsTime;
+			se.Team = team;
+			Timeline.Add (se);
+			return se;
+		}
+
+		public void CurrentLineup (Time currentTime,
+		                         out List<Player> homeFieldPlayers,
+		                         out List<Player> homeBenchPlayers,
+		                         out List<Player> awayFieldPlayers,
+		                         out List<Player> awayBenchPlayers)
+		{
+			TeamTemplate homeTeam, awayTeam;
+			LineupEvent lineup;
+			List<Player> homeTeamPlayers, awayTeamPlayers;
+
+			lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
+			if (lineup == null) {
+				lineup = CreateLineupEvent ();
+			}
+
+			homeTeamPlayers = lineup.HomeStartingPlayers.Concat (lineup.HomeBenchPlayers).ToList ();
+			awayTeamPlayers = lineup.AwayStartingPlayers.Concat (lineup.AwayBenchPlayers).ToList ();
+
+			foreach (SubstitutionEvent ev in Timeline.OfType<SubstitutionEvent> ().
+			         Where (e => e.EventTime <= currentTime)) {
+				if (ev.In != null && ev.Out != null) {
+					if (ev.Team == Team.LOCAL) {
+						homeTeamPlayers.Swap (ev.In, ev.Out);
+					} else {
+						awayTeamPlayers.Swap (ev.In, ev.Out);
+					}
+				}
+			}
+
+			homeTeam = new TeamTemplate {
+				Formation = LocalTeamTemplate.Formation,
+				List = homeTeamPlayers
+			};
+			awayTeam = new TeamTemplate {
+				Formation = VisitorTeamTemplate.Formation,
+				List = awayTeamPlayers
+			};
+			
+			homeFieldPlayers = homeTeam.StartingPlayersList;
+			homeBenchPlayers = homeTeam.BenchPlayersList;
+			awayFieldPlayers = awayTeam.StartingPlayersList;
+			awayBenchPlayers = awayTeam.BenchPlayersList;
+		}
+
+		public bool LineupChanged (Time start, Time stop)
+		{
+			return Timeline.OfType<SubstitutionEvent> ().
+				Count (s => s.EventTime > start && s.EventTime <= stop) > 0;
+		}
+		
+		public LineupEvent CreateLineupEvent ()
+		{
+			Time startTime;
+			LineupEvent lineup;
+
+			if (Periods.Count == 0) {
+				startTime = new Time (0);
+			} else {
+				startTime = Periods[0].PeriodNode.Start;
+			}
+
+			lineup = new LineupEvent {
+				Name = Catalog.GetString ("Lineup ") + LocalTeamTemplate.TeamName,
+				EventType = SubstitutionsEventType,
+				HomeStartingPlayers = LocalTeamTemplate.StartingPlayersList,
+				HomeBenchPlayers = LocalTeamTemplate.BenchPlayersList,
+				AwayStartingPlayers = VisitorTeamTemplate.StartingPlayersList,
+				AwayBenchPlayers = VisitorTeamTemplate.BenchPlayersList, 
+				EventTime = startTime};
+			Timeline.Add (lineup);
+
+			return lineup;
 		}
 
 		public List<TimelineEvent> EventsByType (EventType evType) {

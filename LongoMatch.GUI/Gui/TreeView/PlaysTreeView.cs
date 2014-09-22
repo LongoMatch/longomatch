@@ -194,17 +194,33 @@ namespace LongoMatch.Gui.Component
 			Model.SetSortFunc(0, SortFunction);
 		}
 
-		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected) {
-			// Don't allow multiselect for categories
-			if(!selected && selection.GetSelectedRows().Length > 0) {
-				if(selection.GetSelectedRows().Length == 1 &&
-				                GetValueFromPath(selection.GetSelectedRows()[0]) is EventType)
+		override protected bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected)
+		{
+			TreePath[] selectedRows;
+
+			selectedRows = selection.GetSelectedRows ();
+			if (!selected && selectedRows.Length > 0) {
+				object currentSelected;
+				object firstSelected;
+
+				firstSelected = GetValueFromPath (selectedRows [0]);
+				// No multiple selection for event types and substitution events
+				if (selectedRows.Length == 1) {
+					if (firstSelected is EventType) {
+						return false;
+					} else if (firstSelected is StatEvent) {
+						return false;
+					}
+				}
+				
+				currentSelected = GetValueFromPath (path);
+				if (currentSelected is EventType || currentSelected is StatEvent) {
 					return false;
-				return !(GetValueFromPath(path) is EventType);
+				}
+				return true;
 			}
 			// Always unselect
-			else
-				return true;
+			return true;
 		}
 
 		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)

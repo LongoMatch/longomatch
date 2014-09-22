@@ -258,5 +258,14 @@ namespace LongoMatch.Core.Common
 		Sorted = 8,
 		Focused = 16
 	}
+	
+	public enum SubstitutionReason {
+		PlayersSubstitution,
+		PositionChange,
+		BenchPositionChange,
+		Injury,
+		TemporalExclusion,
+		Exclusion,
+	}
 }
 

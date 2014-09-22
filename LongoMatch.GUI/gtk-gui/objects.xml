@@ -1,7 +1,32 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="CategoryProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="HotKeyChanged" />
+        <signal name="EditedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
     <itemgroups />
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="DashboardWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="DashboardWidget Signals">
+        <signal name="NewTagEvent" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -37,19 +62,6 @@
       <itemgroup label="ProjectListWidget Signals">
         <signal name="ProjectsSelected" />
         <signal name="ProjectSelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="CategoryProperties Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
-        <signal name="EditedEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -125,6 +137,10 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.Component.Stats.CategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -146,30 +162,6 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TeamTemplateEditor Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="TeamTemplateEditor Signals">
-        <signal name="TemplateSaved" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
@@ -209,6 +201,18 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TeamTemplateEditor Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TeamTemplateEditor Signals">
+        <signal name="TemplateSaved" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.Panel.ProjectsManagerPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -233,6 +237,10 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CodingWidget Properties">
@@ -246,6 +254,10 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.PeriodsRecoder" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
@@ -283,18 +295,6 @@
     <signals>
       <itemgroup label="DatePicker Signals">
         <signal name="ValueChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="DashboardWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="DashboardWidget Signals">
-        <signal name="NewTagEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -348,10 +348,10 @@
     </itemgroups>
     <signals>
       <itemgroup label="VideoWindow Signals">
+        <signal name="ReadyEvent" />
         <signal name="ExposeEvent" />
         <signal name="ButtonPressEvent" />
         <signal name="ScrollEvent" />
-        <signal name="ReadyEvent" />
       </itemgroup>
     </signals>
   </object>

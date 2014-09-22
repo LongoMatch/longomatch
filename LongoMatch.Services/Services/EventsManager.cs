@@ -27,6 +27,7 @@ using Mono.Unix;
 using System.IO;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services
 {
@@ -93,6 +94,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
@@ -103,6 +105,21 @@ namespace LongoMatch.Services
 			Config.EventsBroker.Detach += HandleDetach;
 			
 			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
+		}
+
+		void HandlePlayerSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		{
+			if (openedProject != null) {
+				TimelineEvent evt;
+
+				try {
+					evt = openedProject.SubsitutePlayer (team, p1, p2, reason, time);
+					analysisWindow.AddPlay (evt);
+					filter.Update ();
+				} catch (SubstitutionException ex) {
+					guiToolkit.ErrorMessage (ex.Message);
+				}
+			}
 		}
 
 		void HandleShowFullScreenEvent (bool fullscreen)

@@ -105,7 +105,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayerPropertiesHandler (Player player);
 	public delegate void PlayersPropertiesHandler (List<Player> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (Player p1,Player p2,TeamTemplate team);
+	public delegate void PlayersSubstitutionHandler (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time);
 	public delegate void PlayersSelectionChangedHandler (List<Player> players);
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);

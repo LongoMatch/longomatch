@@ -24,6 +24,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class ButtonObject: CanvasButtonObject, IMovableObject
 	{
+		const int BORDER_SIZE = 4;
+
+		public ButtonObject () {
+			BackgroundColor = Config.Style.PaletteBackground;
+			BorderColor = Config.Style.PaletteBackgroundDark;
+		}
+		
 		public virtual Point Position {
 			get;
 			set;
@@ -35,6 +42,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public virtual double Height {
+			get;
+			set;
+		}
+
+		public string Text {
 			get;
 			set;
 		}
@@ -57,6 +69,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 					return BackgroundColor;
 				}
 			}
+		}
+
+		public Image BackgroundImage {
+			get;
+			set;
+		}
+
+		public Image BackgroundImageActive {
+			get;
+			set;
 		}
 
 		public TagMode Mode {
@@ -146,7 +168,20 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
+			
 			tk.Begin ();
+			DrawButton (tk);
+			DrawSelectionArea (tk);
+			
+			if (Active && BackgroundImageActive != null) {
+				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive, true);
+			} else if (BackgroundImage != null) {
+				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage, true);
+			}
+			if (Text != null) {
+				tk.DrawText (Position, Width, Height, Text);
+			}
 			tk.End ();
 		}
 	}

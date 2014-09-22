@@ -37,5 +37,11 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+	
+	public class SubstitutionException: Exception {
+		public SubstitutionException (string error): base (error)
+		{
+		}
+	}
 }
 

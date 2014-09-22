@@ -110,11 +110,8 @@
     <Compile Include="Common\SerializableObject.cs" />
     <Compile Include="Common\ConsoleCrayon.cs" />
     <Compile Include="Common\Config.cs" />
-    <Compile Include="Tests\CateogiresTest.cs" />
     <Compile Include="Core\Templates\SubCategoryTemplate.cs" />
-    <Compile Include="Tests\TestTeam.cs" />
     <Compile Include="Converter.cs" />
-    <Compile Include="Tests\TestProject.cs" />
     <Compile Include="DataBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -26,6 +26,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui.Helpers;
 using Mono.Unix;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -62,6 +63,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teamtagger.Compact = true;
 
 			teamsdrawingarea.HeightRequest = 200;
@@ -110,8 +112,10 @@ namespace LongoMatch.Gui.Component
 			if (project != null) {
 				buttonswidget.Template = project.Dashboard;
 			}
+			teamtagger.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Dashboard.FieldBackground);
+			teamtagger.CurrentTime = new Time (0);
 			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
 			}
@@ -229,6 +233,7 @@ namespace LongoMatch.Gui.Component
 			if (projectType != ProjectType.FileProject) {
 				timeline.CurrentTime = currentTime;
 				buttonswidget.CurrentTime = currentTime;
+				teamtagger.CurrentTime = currentTime;
 			}
 		}
 
@@ -237,6 +242,7 @@ namespace LongoMatch.Gui.Component
 			if (projectType == ProjectType.FileProject) {
 				timeline.CurrentTime = currentTime;
 				buttonswidget.CurrentTime = currentTime;
+				teamtagger.CurrentTime = currentTime;
 			}
 		}
 
@@ -258,6 +264,11 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitNewEvent (play);
 		}
 
+		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+		                                     SubstitutionReason reason, Time time)
+		{
+			Config.EventsBroker.EmitSubstitutionEvent (team, p1, p2, reason, time);
+		}
 	}
 }
 

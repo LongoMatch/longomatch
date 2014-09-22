@@ -101,6 +101,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			foreach (PlayerObject po in BenchPlayers) {
 				po.Playing = false;
 				po.SubstitutionMode = SubstitutionMode;
+				po.Size = PlayersSize;
 				po.Draw (tk, area);
 			}
 			

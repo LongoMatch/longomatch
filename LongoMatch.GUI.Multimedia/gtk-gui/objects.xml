@@ -40,10 +40,10 @@
     </itemgroups>
     <signals>
       <itemgroup label="VideoWindow Signals">
+        <signal name="ReadyEvent" />
         <signal name="ExposeEvent" />
         <signal name="ButtonPressEvent" />
         <signal name="ScrollEvent" />
-        <signal name="ReadyEvent" />
       </itemgroup>
     </signals>
   </object>

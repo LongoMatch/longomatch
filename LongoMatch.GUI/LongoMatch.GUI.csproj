@@ -183,6 +183,8 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PanelHeader.cs" />
     <Compile Include="Gui\Dialog\PlayEditor.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayEditor.cs" />
+    <Compile Include="Gui\Dialog\SubstitutionsEditor.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SubstitutionsEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

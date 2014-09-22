@@ -122,6 +122,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			newTime = Utils.PosToTime (p, SecondsPerPixel);
 
+			if (TimeNode is StatEvent) {
+				TimeNode.EventTime = newTime;
+				return;
+			}
+
 			switch (sel.Position) {
 			case SelectionPosition.Left:
 				{

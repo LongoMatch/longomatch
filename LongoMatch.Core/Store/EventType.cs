@@ -166,5 +166,28 @@ namespace LongoMatch.Core.Store
 			return ID.GetHashCode ();
 		}
 	}
+
+	[Serializable]
+	public class SubstitutionEventType: EventType
+	{
+		public SubstitutionEventType ()
+		{
+			ID = Constants.SubsID;
+			Name = Catalog.GetString ("Substitution");
+		}
+
+		public override bool Equals (object obj)
+		{
+			SubstitutionEventType sc = obj as SubstitutionEventType;
+			if (sc == null)
+				return false;
+			return sc.ID == ID;
+		}
+
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode ();
+		}
+	}
 }
 

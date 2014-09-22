@@ -251,12 +251,18 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing)
+		public void LoadPlay (MediaFile file, TimelineEvent evt, Time seekTime, bool playing)
 		{
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
-			loadedPlay = play;
-			LoadSegment (file, play.Start, play.Stop, seekTime, playing, play.Rate);
+			loadedPlay = evt;
+			if (evt.Start != null && evt.Start != null) {
+				LoadSegment (file, evt.Start, evt.Stop, seekTime, playing, evt.Rate);
+			} else if (evt.EventTime != null) {
+				Seek (evt.EventTime, true);
+			} else {
+				Log.Error ("Event does not have timing info: " + evt);
+			}
 		}
 
 		public void Close ()

@@ -45,7 +45,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A short description of the time node
 		/// </summary>
-		public string Name {
+		public virtual string Name {
 			get;
 			set;
 		}
@@ -53,7 +53,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Start Time
 		/// </summary>
-		public Time Start {
+		public virtual Time Start {
 			get {
 				return start;
 			}
@@ -68,7 +68,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Stop time
 		/// </summary>
-		public Time Stop {
+		public virtual Time Stop {
 			get {
 				return stop;
 			}

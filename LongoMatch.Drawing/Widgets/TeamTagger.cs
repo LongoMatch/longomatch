@@ -33,10 +33,9 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
+		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 		PlayersTaggerObject tagger;
-		MultiSelectionMode prevMode;
-		bool inSubs;
 
 		public TeamTagger (IWidget widget): base (widget)
 		{
@@ -46,6 +45,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.SelectionMode = MultiSelectionMode.Single;
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
 		}
@@ -67,6 +67,12 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Reload ();
 			widget.ReDraw ();
 		}
+
+		public Project Project {
+			set {
+				tagger.Project = value;
+			}
+		}
 		
 		public bool Compact {
 			set {
@@ -74,12 +80,24 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public Time CurrentTime {
+			set {
+				tagger.CurrentTime = value;
+			}
+		}
+		
 		public bool SubstitutionMode {
 			set {
 				tagger.SubstitutionMode = value;
 			}
 		}
 
+		public bool ShowSubstitutionButtons {
+			set {
+				tagger.ShowSubsitutionButtons = value;
+			}
+		}
+		
 		public new MultiSelectionMode SelectionMode {
 			set {
 				tagger.SelectionMode = value;
@@ -104,6 +122,11 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
+		public void Substitute (Player p1, Player p2, TeamTemplate team)
+		{
+			tagger.Substitute (p1, p2, team);
+		}
+
 		protected override void ShowMenu (Point coords)
 		{
 			List<Player> players = tagger.SelectedPlayers;
@@ -122,18 +145,18 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-
 		void HandleSizeChangedEvent ()
 		{
 			tagger.Width = widget.Width;
 			tagger.Height = widget.Height;
 		}
 
-		void HandlePlayersSubstitutionEvent (Player p1, Player p2, TeamTemplate team)
+		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
-			team.List.Swap (p1, p2);
-			tagger.Substitute (p1, p2, team);
 			widget.ReDraw ();
+			if (PlayersSubstitutionEvent != null) {
+				PlayersSubstitutionEvent (team, p1, p2, reason, time);
+			}
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)

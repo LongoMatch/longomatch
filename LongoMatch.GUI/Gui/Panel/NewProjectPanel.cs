@@ -142,6 +142,8 @@ namespace LongoMatch.Gui.Panel
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
 			teamtagger.SubstitutionMode = true;
+			teamtagger.ShowSubstitutionButtons = false;
+			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = Config.TeamTemplatesProvider.Templates;
 			hometeamscombobox.Load (teams);
 			hometeamscombobox.Changed += (sender, e) => {
@@ -364,6 +366,19 @@ namespace LongoMatch.Gui.Panel
 			captureSettings.EncodingSettings = encSettings;
 			return true;
 		}
+		
+		void StartProject ()
+		{
+			if (CreateProject ()) {
+				if (projectType == ProjectType.EditProject) {
+					projectType = ProjectType.FileProject;
+					Config.EventsBroker.EmitCreateThumbnails (project);
+				} else {
+					project.CreateLineupEvent ();
+				}
+				Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
+			}
+		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
 		{
@@ -429,17 +444,12 @@ namespace LongoMatch.Gui.Panel
 				if (projectType == ProjectType.CaptureProject ||
 				    projectType == ProjectType.FakeCaptureProject ||
 				    projectType == ProjectType.URICaptureProject) {
+				    project.CreateLineupEvent ();
 					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
-				if (CreateProject ()) {
-					if (projectType == ProjectType.EditProject) {
-						projectType = ProjectType.FileProject;
-						Config.EventsBroker.EmitCreateThumbnails (project);
-					}
-					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
-				}
+				StartProject ();
 				return;
 			}
 
@@ -465,6 +475,13 @@ namespace LongoMatch.Gui.Panel
 			menu.Add (item);
 			menu.ShowAll ();
 			menu.Popup ();
+		}
+		
+		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+		                                     SubstitutionReason reason, Time time)
+		{
+			team.List.Swap (p1, p2);
+			teamtagger.Substitute (p1, p2, team);
 		}
 	}
 }

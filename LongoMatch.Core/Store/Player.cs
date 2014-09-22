@@ -148,7 +148,7 @@ namespace LongoMatch.Core.Store
 			} else {
 				displayName = Name + " " + LastName;
 			}
-			return String.Format("{0} - {1}", Number, displayName);
+			return String.Format("{0}-{1}", Number, displayName);
 		}
 
 		#endregion

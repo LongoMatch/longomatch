@@ -52,12 +52,13 @@ namespace LongoMatch.Gui.Component
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 
 			ConnectSignals ();
 
 			ClearPlayer ();
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			teamtagger.Dispose ();
@@ -340,6 +341,14 @@ namespace LongoMatch.Gui.Component
 				Edited = true;
 			}
 		}
+		
+		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+		                                     SubstitutionReason reason, Time time)
+		{
+			team.List.Swap (p1, p2);
+			teamtagger.Substitute (p1, p2, team);
+		}
+		
 	}
 }
 

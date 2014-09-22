@@ -17,7 +17,6 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,6 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
 	/// Represents a Play in the game.
 	/// </summary>
@@ -38,22 +36,21 @@ namespace LongoMatch.Core.Store
 	{
 
 		#region Constructors
-		public TimelineEvent() {
-			Drawings = new List<FrameDrawing>();
+		public TimelineEvent ()
+		{
+			Drawings = new List<FrameDrawing> ();
 			Players = new List<Player> ();
-			Tags = new List<Tag>();
+			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
 		}
 		#endregion
-
 		#region Properties
-
 		public Guid ID {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Category in which this play is tagged
 		/// </summary>
@@ -86,20 +83,20 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-
 		/* FIXME: Keep this until we support multiple drawings */
 		[JsonIgnore]
 		public FrameDrawing KeyFrameDrawing {
 			get {
-				if(Drawings.Count > 0)
-					return Drawings.First();
+				if (Drawings.Count > 0)
+					return Drawings.First ();
 				else
 					return null;
-			} set {
+			}
+			set {
 				if (Drawings.Count == 0)
 					Drawings.Add (value);
 				else
-					Drawings[0] = value;
+					Drawings [0] = value;
 			}
 		}
 
@@ -117,7 +114,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public Team Team {
 			get;
 			set;
@@ -127,7 +124,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public Coordinates FieldPosition {
 			get;
 			set;
@@ -137,19 +134,19 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public Coordinates GoalPosition {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public virtual string Description {
 			get {
 				return 
-					Name + "\n" +
-						TagsDescription () + "\n" +
-						Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
+					(Name + "\n" +
+					TagsDescription () + "\n" +
+					TimesDesription ());
 			}
 		}
 
@@ -160,14 +157,25 @@ namespace LongoMatch.Core.Store
 			}
 		}
 		#endregion
-
 		#region Public methods
-		
-		public string TagsDescription () {
+		public string TagsDescription ()
+		{
 			return String.Join ("-", Tags.Select (t => t.Value));
 		}
 
-		public void AddDefaultPositions () {
+		public string TimesDesription ()
+		{
+			if (Start != null && Stop != null) {
+				return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString ();
+			} else if (EventType != null) {
+				return EventTime.ToMSecondsString ();
+			} else {
+				return "";
+			}
+		}
+
+		public void AddDefaultPositions ()
+		{
 			if (EventType.TagFieldPosition) {
 				if (FieldPosition == null) {
 					FieldPosition = new Coordinates ();
@@ -194,8 +202,9 @@ namespace LongoMatch.Core.Store
 				}
 			}
 		}
-		
-		public Coordinates CoordinatesInFieldPosition (FieldPositionType pos) {
+
+		public Coordinates CoordinatesInFieldPosition (FieldPositionType pos)
+		{
 			switch (pos) {
 			case FieldPositionType.Field:
 				return FieldPosition;
@@ -206,8 +215,9 @@ namespace LongoMatch.Core.Store
 			}
 			return null;
 		}
-		
-		public void UpdateCoordinates (FieldPositionType pos, List<Point> points) {
+
+		public void UpdateCoordinates (FieldPositionType pos, List<Point> points)
+		{
 			Coordinates co = new Coordinates ();
 			co.Points = points;
 			
@@ -223,14 +233,14 @@ namespace LongoMatch.Core.Store
 				break;
 			}
 		}
-		
-		public override string ToString()
+
+		public override string ToString ()
 		{
 			return Description;
 		}
 		#endregion
 	}
-	
+
 	[Serializable]
 	public class PenaltyCardEvent: TimelineEvent
 	{
@@ -246,7 +256,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 	}
-	
+
 	[Serializable]
 	public class ScoreEvent: TimelineEvent
 	{
@@ -261,15 +271,102 @@ namespace LongoMatch.Core.Store
 				return Score != null ? Score.Color : EventType.Color;
 			}
 		}
-		
+
 		[JsonIgnore]
 		public override string Description {
 			get {
 				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
-				                      TagsDescription (), Start.ToMSecondsString(),
-				                      Stop.ToMSecondsString());
+				                      TagsDescription (), Start.ToMSecondsString (),
+				                      Stop.ToMSecondsString ());
 			}
 		}
 	}
 
+	[Serializable]
+	public class StatEvent: TimelineEvent
+	{
+		public override Time Start {
+			get {
+				return EventTime;
+			}
+			set {
+				EventTime = value;
+			}
+		}
+		
+		public override Time Stop {
+			get {
+				return EventTime;
+			}
+			set {
+				EventTime = value;
+			}
+		}
+	}
+	
+	[Serializable]
+	public class SubstitutionEvent: StatEvent
+	{
+		public Player In {
+			get;
+			set;
+		}
+
+		public Player Out {
+			get;
+			set;
+		}
+		
+		public override string Name {
+			get {
+				return Reason.ToString();
+			}
+			set {
+			}
+		}
+
+		public SubstitutionReason Reason {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public override string Description {
+			get {
+				string desc = "";
+				if (In != null && Out != null) {
+					desc = String.Format ("{0} ⟲ {1}", In, Out);
+				} else if (In != null) {
+					desc = "↷ " + In;
+				} else if (Out != null) {
+					desc = "↶ " + Out;
+				}
+				return desc += "\n" + EventTime.ToMSecondsString ();
+			}
+		}
+	}
+
+	[Serializable]
+	public class LineupEvent: StatEvent
+	{
+		public List<Player> HomeStartingPlayers {
+			get;
+			set;
+		}
+		
+		public List<Player> HomeBenchPlayers {
+			get;
+			set;
+		}
+		
+		public List<Player> AwayStartingPlayers {
+			get;
+			set;
+		}
+		
+		public List<Player> AwayBenchPlayers {
+			get;
+			set;
+		}
+	}
 }

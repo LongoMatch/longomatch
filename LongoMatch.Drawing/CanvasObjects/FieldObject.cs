@@ -28,8 +28,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		int[] homeFormation;
 		int[] awayFormation;
-		List<PlayerObject> homePlayingPlayers;
-		List<PlayerObject> awayPlayingPlayers;
 		int playerSize;
 		Image background;
 
@@ -58,6 +56,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public List<PlayerObject> HomePlayingPlayers {
+			get;
+			set;
+		}
+
+		public List<PlayerObject> AwayPlayingPlayers {
+			get;
+			set;
+		}
+
 		public void LoadTeams (Image backgroundImg, int[] homeF, int[] awayF,
 		                       List<PlayerObject> homeT, List<PlayerObject> awayT,
 		                       int size, int nteams)
@@ -65,8 +73,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			background = backgroundImg;
 			homeFormation = homeF;
 			awayFormation = awayF;
-			homePlayingPlayers = homeT;
-			awayPlayingPlayers = awayT;
+			HomePlayingPlayers = homeT;
+			AwayPlayingPlayers = awayT;
 			playerSize = size;
 			NTeams = nteams;
 			Update ();
@@ -75,10 +83,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void Update ()
 		{
 			if (homeFormation != null) {
-				UpdateTeam (homePlayingPlayers, homeFormation, Team.LOCAL);
+				UpdateTeam (HomePlayingPlayers, homeFormation, Team.LOCAL);
 			}
 			if (awayFormation != null) {
-				UpdateTeam (awayPlayingPlayers, awayFormation, Team.VISITOR);
+				UpdateTeam (AwayPlayingPlayers, awayFormation, Team.VISITOR);
 			}
 		}
 
@@ -135,15 +143,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (background != null) {
 				tk.DrawImage (background);
 			}
-			if (homePlayingPlayers != null) {
-				foreach (PlayerObject po in homePlayingPlayers) {
+			if (HomePlayingPlayers != null) {
+				foreach (PlayerObject po in HomePlayingPlayers) {
 					po.Playing = true;
+					po.SubstitutionMode = SubstitutionMode;
+					po.Size = playerSize;
 					po.Draw (tk, area);
 				}
 			}
-			if (awayPlayingPlayers != null) {
-				foreach (PlayerObject po in awayPlayingPlayers) {
+			if (AwayPlayingPlayers != null) {
+				foreach (PlayerObject po in AwayPlayingPlayers) {
 					po.Playing = true;
+					po.SubstitutionMode = SubstitutionMode;
+					po.Size = playerSize;
 					po.Draw (tk, area);
 				}
 			}
@@ -156,15 +168,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			point = Utils.ToUserCoords (point, Position, 1, 1);
 
-			if (homePlayingPlayers != null) {
-				foreach (PlayerObject po in homePlayingPlayers) {
+			if (HomePlayingPlayers != null) {
+				foreach (PlayerObject po in HomePlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;
 				}
 			}
-			if (selection == null && awayPlayingPlayers != null) {
-				foreach (PlayerObject po in awayPlayingPlayers) {
+			if (selection == null && AwayPlayingPlayers != null) {
+				foreach (PlayerObject po in AwayPlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;

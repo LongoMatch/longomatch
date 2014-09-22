@@ -54,6 +54,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/StatsViewer.cs \
+	Gui/Dialog/SubstitutionsEditor.cs \
 	Gui/Dialog/UpdateDialog.cs \
 	Gui/Dialog/VideoConversionTool.cs \
 	Gui/Dialog/VideoEditionProperties.cs \
@@ -125,6 +126,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \

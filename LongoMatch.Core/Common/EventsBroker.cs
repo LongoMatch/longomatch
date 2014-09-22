@@ -22,6 +22,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Common
 {
@@ -39,6 +40,7 @@ namespace LongoMatch.Core.Common
 		public event TagEventHandler TagEventEvent;
 		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
+		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
@@ -376,6 +378,14 @@ namespace LongoMatch.Core.Common
 		}
 		
 		public void EmitPressButton (DashboardButton button) {
+		}
+		
+		public void EmitSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+		                                   SubstitutionReason reason, Time time)
+		{
+			if (PlayerSubstitutionEvent != null) {
+				PlayerSubstitutionEvent (team, p1, p2, reason, time);
+			}
 		}
 	}
 }

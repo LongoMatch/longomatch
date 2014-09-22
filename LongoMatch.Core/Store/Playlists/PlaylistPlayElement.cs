@@ -61,7 +61,7 @@ namespace LongoMatch.Core.Store.Playlists
 		[JsonIgnore]
 		public string Description {
 			get {
-				return Title;
+				return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString ();
 			}
 		}
 

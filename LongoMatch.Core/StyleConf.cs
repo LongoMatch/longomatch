@@ -87,6 +87,9 @@ namespace LongoMatch.Core.Common
 		public const int PlayerNumberOffset  = 17;
 		public const int PlayerArrowOffset = 14; 
 		public const int PlayerArrowSize = 20; 
+		
+		public const string SubsLock = "hicolor/scalable/actions/longomatch-player-swap-lock.svg";
+		public const string SubsUnlock = "hicolor/scalable/actions/longomatch-player-swap-unlock.svg";
 
 		public const int NotebookTabIconSize = 18;
 		public const int NotebookTabSize = NotebookTabIconSize + 14;

@@ -126,5 +126,6 @@ Xavier Queralt Mateu (ca)";
 		
 		public static Guid PenaltyCardID = new Guid ("da4df338-3392-11e4-be8d-0811963e3880");
 		public static Guid ScoreID = new Guid ("dc4df338-3392-11e4-be8d-0811963e3880");
+		public static Guid SubsID = new Guid ("db4df338-3392-11e4-be8d-0811963e3880");
 	}
 }

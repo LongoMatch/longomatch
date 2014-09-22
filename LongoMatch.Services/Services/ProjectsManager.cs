@@ -358,6 +358,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Importing fake live project");
 				ToolsManager.AddVideoFile (project, true);
 			}
+			project.UpdateEventTypes ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 

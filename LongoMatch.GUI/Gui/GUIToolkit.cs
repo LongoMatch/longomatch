@@ -226,11 +226,21 @@ namespace LongoMatch.Gui
 				sd.Destroy();
 		}
 		
-		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes) {
-			PlayEditor dialog = new PlayEditor ();
-			dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
-			dialog.Run();
-			dialog.Destroy();
+		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		{
+			if (play is StatEvent) {
+				SubstitutionsEditor dialog = new SubstitutionsEditor ();
+				dialog.Load (project, play as StatEvent);
+				if (dialog.Run () == (int)ResponseType.Ok) {
+					dialog.SaveChanges ();
+				}
+				dialog.Destroy ();
+			} else {
+				PlayEditor dialog = new PlayEditor ();
+				dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
+				dialog.Run();
+				dialog.Destroy();
+			}
 		}
 
 		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing) {

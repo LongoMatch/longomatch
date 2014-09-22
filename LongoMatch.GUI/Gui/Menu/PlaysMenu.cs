@@ -60,6 +60,8 @@ namespace LongoMatch.Gui.Menus
 		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
 		                     List<EventType> eventTypes, bool editableName)
 		{
+			bool isLineup = false, isSubstitution = false;
+
 			this.plays = plays;
 			this.eventType = eventType;
 			this.time = time;
@@ -73,17 +75,28 @@ namespace LongoMatch.Gui.Menus
 				newPlay.Visible = false;
 			}
 			
-			if (plays == null)
+			if (plays == null) {
 				plays = new List<TimelineEvent> ();
-			
-			edit.Visible = editableName;
-			snapshot.Visible = plays.Count == 1;
-			moveCat.Visible = plays.Count == 1 && eventTypes != null;
-			drawings.Visible = plays.Count == 1 && plays [0].Drawings.Count > 0;
-			del.Visible = plays.Count > 0;
-			addPLN.Visible = plays.Count > 0;
-			render.Visible = plays.Count > 0;
-			duplicate.Visible = plays.Count > 0;
+			} else if (plays.Count == 1) {
+				isLineup = plays [0] is LineupEvent;
+				isSubstitution = plays [0] is SubstitutionEvent;
+			}
+
+			if (isLineup || isSubstitution) {
+				edit.Visible = true;
+				del.Visible = isSubstitution;
+				snapshot.Visible = moveCat.Visible = drawings.Visible =
+					addPLN.Visible = render.Visible = duplicate.Visible = false;
+			} else {
+				edit.Visible = editableName;
+				snapshot.Visible = plays.Count == 1;
+				moveCat.Visible = plays.Count == 1 && eventTypes != null;
+				drawings.Visible = plays.Count == 1 && plays [0].Drawings.Count > 0;
+				del.Visible = plays.Count > 0;
+				addPLN.Visible = plays.Count > 0;
+				render.Visible = plays.Count > 0;
+				duplicate.Visible = plays.Count > 0;
+			}
 
 			if (plays.Count > 0) {
 				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count);
@@ -209,9 +222,10 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNePlayActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitNewTag (eventType, null, null,
-			                                time - new Time {Seconds = 10},
-			                                time + new Time {Seconds = 10});
+			Config.EventsBroker.EmitNewTag (eventType,
+			                                eventTime: time,
+			                                start: time - new Time {Seconds = 10},
+			                                stop: time + new Time {Seconds = 10});
 		}
 		
 		void EmitRenderPlaylist (List<TimelineEvent> plays)
