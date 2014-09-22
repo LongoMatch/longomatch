@@ -357,7 +357,7 @@ namespace LongoMatch.Drawing.Cairo
 			layout.FontDescription.Style = fSlant;
 			layout.Width = Pango.Units.FromPixels ((int) width);
 			layout.Alignment = fAlignment;
-			layout.SetMarkup (text); 
+			layout.SetMarkup (GLib.Markup.EscapeText (text));
 			SetColor (StrokeColor);
 			Pango.CairoHelper.UpdateLayout (CContext, layout);
 			layout.GetPixelExtents (out inkRect, out logRect);
