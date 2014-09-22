@@ -336,7 +336,7 @@ namespace LongoMatch.Drawing.Cairo
 			DrawCircle (point, LineWidth);
 		}
 
-		public void DrawText (Point point, double width, double height, string text)
+		public void DrawText (Point point, double width, double height, string text, bool escape=false)
 		{
 			Layout layout = null;
 			Pango.Rectangle inkRect, logRect;
@@ -345,6 +345,10 @@ namespace LongoMatch.Drawing.Cairo
 				return;
 			}
 
+			if (escape) {
+				text = GLib.Markup.EscapeText (text);
+			}
+			
 			if (context is CairoContext) {
 				layout = (context as CairoContext).PangoLayout;
 			}

@@ -57,7 +57,8 @@ namespace LongoMatch.Drawing
 			tk.DrawRectangle (new Point (countX1, countY), StyleConf.ListCountWidth, 2 * StyleConf.ListCountRadio);
 			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 			tk.FontAlignment = FontAlignment.Center;
-			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth, 2 * StyleConf.ListCountRadio, count.ToString ());
+			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
+			             2 * StyleConf.ListCountRadio, count.ToString (), true);
 		}
 
 		static void RenderBackgroundAndText (bool isExpanded, IDrawingToolkit tk, Area backgroundArea, Point textP, double textW, string text)
@@ -82,7 +83,7 @@ namespace LongoMatch.Drawing
 			tk.FontSize = 14;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (textP, textW, backgroundArea.Height, text);
+			tk.DrawText (textP, textW, backgroundArea.Height, text, true);
 		}
 
 		public static void RenderPlayer (Player player, int count, bool isExpanded, IDrawingToolkit tk,
@@ -123,7 +124,8 @@ namespace LongoMatch.Drawing
 		{
 			tk.Context = context;
 			tk.Begin ();
-			RenderBackgroundAndText (isExpanded, tk, backgroundArea, cellArea.Start, cellArea.Width, cat.Name);
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, cellArea.Start, cellArea.Width,
+			                         cat.Name);
 			RenderCount (cat.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
@@ -172,7 +174,7 @@ namespace LongoMatch.Drawing
 			tk.FontWeight = FontWeight.Normal;
 			tk.StrokeColor = Config.Style.PaletteSelected;
 			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (textPoint, textWidth, cellArea.Height, desc);
+			tk.DrawText (textPoint, textWidth, cellArea.Height, desc, true);
 			
 			if (selected) {
 				if (EyeSurface == null) {

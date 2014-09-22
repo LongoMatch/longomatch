@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		void DrawPoint (Point point);
 		void DrawCircle (Point center, double radius);
 		void DrawEllipse (Point center, double axisX, double axisY);
-		void DrawText (Point point, double width, double height, string text);
+		void DrawText (Point point, double width, double height, string text, bool escape=false);
 		void DrawImage (Image image); 
 		void DrawImage (Point start, double width, double height, Image image, bool scale); 
 		void DrawArrow(Point start, Point stop, int lenght, double degrees, bool closed);
