@@ -231,17 +231,21 @@ namespace LongoMatch.Services
 			
 			lastTS = play.Start;
 			foreach (FrameDrawing fd in play.Drawings) {
+				if (fd.Render < play.Start || fd.Render > play.Stop) {
+					Log.Warning ("Drawing is not in the segments boundaries " +
+					             fd.Render.ToMSecondsString ());
+					continue;
+				}
 				string image_path = CreateStillImage (element.File.FilePath, fd);
 				videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
 				                       fd.Render.MSeconds - lastTS.MSeconds,
 				                       element.Rate, play.Name, element.File.HasAudio);
-				videoEditor.AddImageSegment (image_path, fd.Render.MSeconds,
-				                            fd.Pause.MSeconds, play.Name);
+				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name);
 				lastTS = fd.Render;
 			}
 			videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
-			                       play.Stop.MSeconds - lastTS.MSeconds,
-			                       element.Rate, play.Name, element.File.HasAudio);
+			                        play.Stop.MSeconds - lastTS.MSeconds,
+			                        element.Rate, play.Name, element.File.HasAudio);
 			return true;
 		}
 
