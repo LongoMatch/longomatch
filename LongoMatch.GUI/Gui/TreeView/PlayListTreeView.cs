@@ -125,6 +125,12 @@ namespace LongoMatch.Gui.Component
 
 			menu = new Menu ();
 
+			render = new MenuItem (Catalog.GetString ("Render"));
+			render.Activated += (sender, e) => {
+				Config.EventsBroker.EmitRenderPlaylist (playlist);
+			};
+			menu.Append (render);
+
 			delete = new MenuItem (Catalog.GetString ("Delete"));
 			delete.Activated += (sender, e) => {
 				project.Playlists.Remove (playlist);
@@ -132,12 +138,6 @@ namespace LongoMatch.Gui.Component
 				Config.EventsBroker.EmitPlaylistsChanged (this);
 			};
 			menu.Append (delete);
-			
-			render = new MenuItem (Catalog.GetString ("Render"));
-			render.Activated += (sender, e) => {
-				Config.EventsBroker.EmitRenderPlaylist (playlist);
-			};
-			menu.Append (render);
 			
 			menu.ShowAll ();
 			menu.Popup ();
