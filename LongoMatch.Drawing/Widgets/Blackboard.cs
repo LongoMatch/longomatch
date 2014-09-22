@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void DeleteSelection ()
 		{
 			foreach (ICanvasDrawableObject o in Selections.Select (s => s.Drawable)) {
-				Objects.Remove (o);
+				RemoveObject (o);
 				drawing.Drawables.Remove ((Drawable)o.IDrawableObject);
 			}
 			ClearSelection ();
@@ -168,7 +168,7 @@ namespace LongoMatch.Drawing.Widgets
 		ICanvasSelectableObject Add (IBlackboardObject drawable)
 		{
 			ICanvasSelectableObject cso = Utils.CanvasFromDrawableObject (drawable);
-			Objects.Add (cso);
+			AddObject (cso);
 			return cso;
 		}
 

@@ -18,14 +18,15 @@
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Core.Handlers.Drawing;
 using System;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public abstract class CanvasObject: ICanvasObject
 	{
-		public delegate void CanvasHandler (CanvasObject co);
 		public event CanvasHandler ClickedEvent;
+		public event RedrawHandler RedrawEvent;
 		
 		bool disposed;
 
@@ -88,6 +89,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		protected void EmitRedrawEvent (CanvasObject co, Area area)
+		{
+			if (RedrawEvent != null) {
+				RedrawEvent (co, area);
+			}
+		}
+		
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 

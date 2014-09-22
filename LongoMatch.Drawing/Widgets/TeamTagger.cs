@@ -47,7 +47,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			ObjectsCanMove = false;
-			Objects.Add (tagger);
+			AddObject (tagger);
 		}
 		
 		protected override void Dispose (bool disposing)

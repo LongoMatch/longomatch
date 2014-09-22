@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing.Widgets
 				/* Add the category label */
 				l = new CategoryLabel (eventType, w, h, i * h);
 				eventsLabels [eventType] = l;
-				Objects.Add (l);
+				AddObject (l);
 				i++;
 			}
 		}

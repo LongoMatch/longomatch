@@ -205,7 +205,7 @@ namespace LongoMatch.Drawing.Widgets
 				TagObject to = new TagObject (tag);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
-				Objects.Add (to);
+				AddObject (to);
 			}
 			
 			foreach (AnalysisEventButton cat in template.List.OfType<AnalysisEventButton>()) {
@@ -213,27 +213,27 @@ namespace LongoMatch.Drawing.Widgets
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				co.AddTag = AddTag;
-				Objects.Add (co);
+				AddObject (co);
 			}
 
 			foreach (PenaltyCardButton c in template.List.OfType<PenaltyCardButton>()) {
 				CardObject co = new CardObject (c);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
-				Objects.Add (co);
+				AddObject (co);
 			}
 			foreach (ScoreButton s in template.List.OfType<ScoreButton>()) {
 				ScoreObject co = new ScoreObject (s);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
-				Objects.Add (co);
+				AddObject (co);
 			}
 
 			foreach (TimerButton t in template.List.OfType<TimerButton>()) {
 				TimerObject to = new TimerObject (t);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
-				Objects.Add (to);
+				AddObject (to);
 			}
 			Edited = false;
 			SizeChanged ();
@@ -260,7 +260,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandleTaggerClickedEvent (CanvasObject co)
+		void HandleTaggerClickedEvent (ICanvasObject co)
 		{
 			TaggerObject tagger;
 			EventButton button;

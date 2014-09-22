@@ -79,7 +79,7 @@ namespace LongoMatch.Drawing.Widgets
 				foreach (Timer t in timers) {
 					this.timers [t] = tl;
 				}
-				Objects.Add (tl);
+				AddObject (tl);
 			} else {
 				widget.Height = timers.Count * Constants.TIMER_HEIGHT;
 			}

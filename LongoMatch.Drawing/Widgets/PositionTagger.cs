@@ -93,7 +93,7 @@ namespace LongoMatch.Drawing.Widgets
 		public List<Point> Points {
 			set {
 				ClearObjects ();
-				Objects.Add (new PositionObject (value, Background.Width, Background.Height));
+				AddObject (new PositionObject (value, Background.Width, Background.Height));
 			}
 		}
 
@@ -121,12 +121,16 @@ namespace LongoMatch.Drawing.Widgets
 			if (Filter != null) {
 				po.Visible = Filter.IsVisible (play);
 			}
-			Objects.Add (po);
+			AddObject (po);
 		}
 
 		public void RemovePlays (List<TimelineEvent> plays)
 		{
-			Objects.RemoveAll (o => plays.Contains ((o as PositionObject).Play));
+			List<ICanvasObject> objects;
+
+			foreach (ICanvasObject co in Objects.Where (o => plays.Contains ((o as PositionObject).Play))) {
+				RemoveObject (co);
+			}
 		}
 
 		void HandleFilterUpdated ()

@@ -16,10 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Handlers.Drawing;
 
 namespace LongoMatch.Core.Interfaces.Drawing
 {
@@ -31,6 +30,9 @@ namespace LongoMatch.Core.Interfaces.Drawing
 	
 	public interface ICanvasObject: IDisposable
 	{
+		event CanvasHandler ClickedEvent;
+		event RedrawHandler RedrawEvent;
+
 		void Draw (IDrawingToolkit tk, Area area);
 		bool Visible {set; get;}
 		string Description {set; get;}

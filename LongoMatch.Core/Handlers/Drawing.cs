@@ -27,5 +27,8 @@ namespace LongoMatch.Core.Handlers.Drawing
 	public delegate void MotionHandler (Point coords);
 	public delegate void ShowTooltipHandler (Point coords);
 	public delegate void SizeChangedHandler ();
+	public delegate void CanvasHandler (ICanvasObject co);
+	public delegate void RedrawHandler (ICanvasObject co, Area area);
+
 }
 

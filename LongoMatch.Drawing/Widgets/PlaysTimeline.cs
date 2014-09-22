@@ -120,7 +120,7 @@ namespace LongoMatch.Drawing.Widgets
 				                           i * StyleConf.TimelineCategoryHeight,
 				                           Utils.ColorForRow (i), playsFilter);
 				eventsTimelines [type] = tl;
-				Objects.Add (tl);
+				AddObject (tl);
 				i++;
 			}
 			UpdateVisibleCategories ();

@@ -71,7 +71,8 @@ namespace LongoMatch.Drawing
 		protected void ClearObjects ()
 		{
 			if (Objects != null) {
-				foreach (CanvasObject co in Objects) {
+				foreach (ICanvasObject co in Objects) {
+					co.RedrawEvent -= HandleRedrawEvent;
 					co.Dispose ();
 				}
 				Objects.Clear ();
@@ -83,11 +84,27 @@ namespace LongoMatch.Drawing
 			set;
 		}
 
+		public void AddObject (ICanvasObject co) {
+			Objects.Add (co);
+			co.RedrawEvent += HandleRedrawEvent;
+		}
+
+		public void RemoveObject (ICanvasObject co)
+		{
+			co.RedrawEvent -= HandleRedrawEvent;
+			Objects.Remove (co);
+		}
+
 		protected Point ToUserCoords (Point p)
 		{
 			return new Point ((p.X - translation.X) / scaleX,
 			                  (p.Y - translation.Y) / scaleY);
 		
+		}
+
+		void HandleRedrawEvent (ICanvasObject co, Area area)
+		{
+			widget.ReDraw (area);
 		}
 
 		public virtual void Draw (IContext context, Area area)
