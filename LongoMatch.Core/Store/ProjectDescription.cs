@@ -159,5 +159,9 @@ namespace LongoMatch.Core.Store
 			else
 				throw new ArgumentException("object is not a ProjectDescription and cannot be compared");
 		}
+
+		public void SetMediaFile (MediaFile file) {
+			File = file;
+		}
 	}
 }

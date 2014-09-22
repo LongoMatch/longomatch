@@ -289,7 +289,7 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			if (project != null) {
-				project.Description.File = mediaFile;
+				project.UpdateMediaFile (mediaFile);
 				return true;
 			}
 			
@@ -312,11 +312,11 @@ namespace LongoMatch.Gui.Panel
 			project.VisitorTeamTemplate = awaytemplate;
 			project.Description = new ProjectDescription ();
 			project.Description.Competition = competitionentry.Text;
-			project.Description.File = mediaFile;
 			project.Description.MatchDate = datepicker1.Date;
 			project.Description.Season = seasonentry.Text;
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
+			project.UpdateMediaFile (mediaFile);
 			project.UpdateEventTypes ();
 			
 			encSettings = new EncodingSettings ();
@@ -325,9 +325,13 @@ namespace LongoMatch.Gui.Panel
 			encSettings.OutputFile = capturemediafilechooser.File;
 			
 			if (project.Description.File == null) {
-				project.Description.File = new MediaFile ();
-				project.Description.File.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
-				project.Description.File.FilePath = capturemediafilechooser.File;
+				MediaFile file = new MediaFile ();
+				file.FilePath = capturemediafilechooser.File;
+				file.VideoWidth = encSettings.VideoStandard.Width;
+				file.VideoHeight = encSettings.VideoStandard.Height;
+				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
+				file.Par = 1;
+				project.UpdateMediaFile (file);
 			}
 			if (projectType == ProjectType.CaptureProject) {
 				Device device = videoDevices [devicecombobox.Active];

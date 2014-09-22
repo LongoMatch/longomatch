@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleFileChanged (object sender, EventArgs e)
 		{
 			if (mediafilechooser.MediaFile != null && loadedProject != null) {
-				loadedProject.Description.File = mediafilechooser.MediaFile;
+				loadedProject.UpdateMediaFile (mediafilechooser.MediaFile);
 				fileimage.Pixbuf = loadedProject.Description.File.Preview.Value;
 				medialabel.Markup = loadedProject.Description.File.Description;
 			}

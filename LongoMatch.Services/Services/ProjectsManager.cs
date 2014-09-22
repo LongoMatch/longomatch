@@ -143,7 +143,7 @@ namespace LongoMatch.Services
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug ("Reloading saved file: " + filePath);
-				project.Description.File = multimediaToolkit.DiscoverFile (filePath);
+				project.UpdateMediaFile (multimediaToolkit.DiscoverFile (filePath));
 				DB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);

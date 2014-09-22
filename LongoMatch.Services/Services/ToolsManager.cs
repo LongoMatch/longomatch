@@ -102,7 +102,7 @@ namespace LongoMatch.Services
 				return;
 			} else {
 				try {
-					project.Description.File = multimediaToolkit.DiscoverFile (videofile);
+					project.UpdateMediaFile (multimediaToolkit.DiscoverFile (videofile));
 				} catch (Exception ex) {
 					guiToolkit.ErrorMessage (ex.Message);
 					return;
