@@ -60,15 +60,16 @@ namespace LongoMatch.Core.Common
 	
 	public class EncodingQualities
 	{
-		public static EncodingQuality Low = new EncodingQuality ("Low (500 kbps)", 500, 128);
-		public static EncodingQuality Medium = new EncodingQuality ("Medium (1000 kbps)", 1000, 128);
-		public static EncodingQuality High = new EncodingQuality ("High (2000 kbps)", 2000, 128);
-		public static EncodingQuality VeryHigh = new EncodingQuality ("High (4000 kbps)", 4000, 128);
+		public static EncodingQuality Lowest = new EncodingQuality ("Lowest (500 kbps)", 500, 128);
+		public static EncodingQuality Low = new EncodingQuality ("Low (1000 kbps)", 1000, 128);
+		public static EncodingQuality Medium = new EncodingQuality ("Medium (2000 kbps)", 2000, 128);
+		public static EncodingQuality High = new EncodingQuality ("High (4000 kbps)", 4000, 128);
 		public static EncodingQuality Highest = new EncodingQuality ("Highest (6000 kbps)", 6000, 128);
 		
 		public static List<EncodingQuality> All {
 			get {
-				List<EncodingQuality> list = new List<EncodingQuality>();
+				List<EncodingQuality> list = new List<EncodingQuality> ();
+				list.Add (Lowest);
 				list.Add (Low);
 				list.Add (Medium);
 				list.Add (High);
