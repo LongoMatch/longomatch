@@ -37,6 +37,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Build ();
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea3));
 			teamtagger.Compact = true;
+			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 		}
