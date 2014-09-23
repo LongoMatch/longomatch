@@ -31,9 +31,9 @@ namespace LongoMatch.Core.Common
 		public static CaptureSettings DefaultSettings() {
 			CaptureSettings settings = new CaptureSettings();
 			settings.CaptureSourceType = CaptureSourceType.System;
-			settings.EncodingSettings = new EncodingSettings(VideoStandards.P480_4_3,
-			                                                 EncodingProfiles.MP4,
-			                                                 EncodingQualities.Medium,
+			settings.EncodingSettings = new EncodingSettings(Config.CaptureVideoStandard,
+			                                                 Config.CaptureEncodingProfile,
+			                                                 Config.CaptureEncodingQuality,
 			                                                 25, 1, "", true, false, 20);
 			return settings;
 		}
