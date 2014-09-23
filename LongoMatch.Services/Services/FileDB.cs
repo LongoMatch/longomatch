@@ -143,15 +143,18 @@ namespace LongoMatch.DB
 
 		public Project GetProject (Guid id)
 		{
-			try {
-				string projectFile = Path.Combine (dbDirPath, id.ToString ());
-				if (File.Exists (projectFile)) {
+			Project ret;
+			string projectFile = Path.Combine (dbDirPath, id.ToString ());
+
+			if (File.Exists (projectFile)) {
+				try {
 					return Serializer.Load<Project> (projectFile);
+				} catch (Exception ex) {
+					throw new ProjectDeserializationException (ex);
 				}
-			} catch (Exception ex) {
-				Log.Exception (ex);
+			} else {
+				throw new ProjectNotFoundException (projectFile);
 			}
-			return null;
 		}
 
 		public bool AddProject (Project project)

@@ -43,5 +43,22 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+	
+	public class ProjectDeserializationException: Exception
+	{
+		public ProjectDeserializationException (Exception innerException):
+			base (Catalog.GetString("Project loading failed:") + innerException,
+			      innerException)
+		{
+		}
+	}
+	
+	public class ProjectNotFoundException: Exception
+	{
+		public ProjectNotFoundException (string file):
+			base (Catalog.GetString("Project file not found:\n") + file)
+		{
+		}
+	}
 }
 

@@ -350,7 +350,13 @@ namespace LongoMatch.Services
 		{
 			Project project = null;
 			
-			project = DB.GetProject (projectID);
+			try {
+				project = DB.GetProject (projectID);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				guiToolkit.ErrorMessage (ex.Message);
+				return;
+			}
 
 			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
