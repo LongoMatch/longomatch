@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			
-			if (Config.FPS_N == 30000) {
+			if (Config.FPS_N == 30) {
 				fpscombobox.Active = 1;
 			} else {
 				fpscombobox.Active = 0;
