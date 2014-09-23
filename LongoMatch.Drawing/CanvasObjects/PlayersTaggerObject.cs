@@ -41,9 +41,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		const int SUBSTITUTION_BUTTONS_HEIGHT = 40;
 		const int SUBSTITUTION_BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury;
-		/* Cached surfaces reused by player objects */
-		ISurface backgroundSurface, homeNumberSurface, awayNumberSurface, photoSurface;
-		ISurface homeInSurface, homeOutSurface, awayInSurface, awayOutSurface;
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
 		Dictionary<Player, PlayerObject> playerToPlayerObject;
@@ -69,7 +66,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			field = new FieldObject ();
 			SelectedPlayers = new List<Player> ();
 			lastTime = null;
-			LoadSurfaces ();
 			LoadSubsButtons ();
 		}
 
@@ -79,14 +75,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			homeBench.Dispose ();
 			awayBench.Dispose ();
 			field.Dispose ();
-			photoSurface.Dispose ();
-			backgroundSurface.Dispose ();
-			homeNumberSurface.Dispose ();
-			awayNumberSurface.Dispose ();
-			homeOutSurface.Dispose ();
-			awayOutSurface.Dispose ();
-			homeInSurface.Dispose ();
-			awayInSurface.Dispose ();
 			subPlayers.Dispose ();
 			subInjury.Dispose ();
 			base.Dispose (disposing);
@@ -367,23 +355,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			playerToPlayerObject.Clear ();
 		}
 
-		ISurface CreateSurface (string name)
-		{
-			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name));
-		}
-
-		void LoadSurfaces ()
-		{
-			photoSurface = CreateSurface (StyleConf.PlayerPhoto);
-			backgroundSurface = CreateSurface (StyleConf.PlayerBackground);
-			homeNumberSurface = CreateSurface (StyleConf.PlayerHomeNumber);
-			awayNumberSurface = CreateSurface (StyleConf.PlayerAwayNumber);
-			homeOutSurface = CreateSurface (StyleConf.PlayerHomeOut);
-			awayOutSurface = CreateSurface (StyleConf.PlayerAwayOut);
-			homeInSurface = CreateSurface (StyleConf.PlayerHomeIn);
-			awayInSurface = CreateSurface (StyleConf.PlayerAwayIn);
-		}
-
 		void LoadSubsButtons () {
 			subPlayers = new ButtonObject ();
 			string  path = Path.Combine (Config.IconsDir, StyleConf.SubsUnlock);
@@ -461,27 +432,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			List<PlayerObject> playerObjects;
 			Color color = null;
-			ISurface number, sin, sout;
 
 			if (team == Team.LOCAL) {
 				color = Config.Style.HomeTeamColor;
-				number = homeNumberSurface;
-				sin = homeInSurface;
-				sout = homeOutSurface;
 			} else {
 				color = Config.Style.AwayTeamColor;
-				number = awayNumberSurface;
-				sin = awayInSurface;
-				sout = awayOutSurface;
 			}
 
 			playerObjects = new List<PlayerObject> ();
 			foreach (Player p in players) {
-				PlayerObject po = new PlayerObject { Player = p, Color = color,
-					Team = team, Background = backgroundSurface,
-					Number =  number, In = sin, Out = sout,
-					SubstitutionMode =  SubstitutionMode,
-					Photo = photoSurface
+				PlayerObject po = new PlayerObject { Player = p,
+					Color = color,
+					Team = team,
 				};
 				po.ClickedEvent += HandlePlayerClickedEvent;
 				playerObjects.Add (po);

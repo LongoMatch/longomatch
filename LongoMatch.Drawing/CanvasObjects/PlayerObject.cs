@@ -22,11 +22,22 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.Widgets;
+using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class PlayerObject: CanvasButtonObject, ICanvasSelectableObject
 	{
+		static ISurface Photo;
+		static ISurface Background;
+		static ISurface HomeNumber;
+		static ISurface AwayNumber;
+		static ISurface HomeOut;
+		static ISurface AwayOut;
+		static ISurface HomeIn;
+		static ISurface AwayIn;
+		static bool surfacesCached = false;
+
 		public PlayerObject ()
 		{
 			Init ();
@@ -38,42 +49,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Init (position);
 		}
 
-		void Init (Point pos = null) {
-			if (pos == null) {
-				pos = new Point (0, 0);
-			}
-			Position = pos;
-			DrawPhoto = true;
-			Color = Constants.PLAYER_SELECTED_COLOR;
-			Size = (int)PlayersIconSize.Medium;
-			Toggle = true;
-		}
-
-		public ISurface Photo {
-			set;
-			protected get;
-		}
-
-		public ISurface Background {
-			set;
-			protected get;
-		}
-		
-		public ISurface Number {
-			set;
-			protected get;
-		}
-		
-		public ISurface Out {
-			set;
-			protected get;
-		}
-		
-		public ISurface In {
-			set;
-			protected get;
-		}
-		
 		public bool SubstitutionMode {
 			get;
 			set;
@@ -147,11 +122,25 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Point zero, p;
 			double numberWidth, numberHeight;
 			double size, scale;
+			ISurface number, sin, sout;
+
+			if (Player == null)
+				return;
 
 			zero = new Point (0, 0);
 			size = Background.Height - StyleConf.PlayerLineWidth;
-			scale = Width / size; 
+			scale = (double) Width / Background.Height; 
 			
+			if (Team == Team.LOCAL) {
+				number = HomeNumber;
+				sin = HomeIn;
+				sout = HomeOut;
+			} else {
+				number = AwayNumber;
+				sin = AwayIn;
+				sout = AwayOut;
+			}
+
 			tk.Begin ();
 			tk.TranslateAndScale (Position - new Point (Size / 2, Size / 2),
 			                      new Point (scale, scale));
@@ -170,19 +159,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			p = new Point (StyleConf.PlayerNumberOffset, size - numberHeight);
 			
 			/* Draw background */
-			tk.DrawSurface (Number, zero);
+			tk.DrawSurface (number, zero);
 			
 			/* Draw Arrow */
 			if (SubstitutionMode && (Highlighted || Active)) {
 				ISurface arrow;
 				
 				if (Playing) {
-					arrow = Out;
+					arrow = sout;
 				} else {
-					arrow = In;
+					arrow = sin;
 				}
-				tk.DrawSurface (arrow, new Point (Background.Width / 2 - In.Width / 2,
-				                                  Background.Height / 2 - In.Height / 2));
+				tk.DrawSurface (arrow, new Point (Background.Width / 2 - arrow.Width / 2,
+				                                  Background.Height / 2 - arrow.Height / 2));
 			}
 			
 			/* Draw number */
@@ -207,6 +196,39 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			tk.End ();
 		}
+		
+		void Init (Point pos = null) {
+			if (pos == null) {
+				pos = new Point (0, 0);
+			}
+			Position = pos;
+			DrawPhoto = true;
+			Color = Constants.PLAYER_SELECTED_COLOR;
+			Size = (int)PlayersIconSize.Medium;
+			Toggle = true;
+			LoadSurfaces ();
+		}
+
+		void LoadSurfaces ()
+		{
+			if (!surfacesCached) {
+				Photo = CreateSurface (StyleConf.PlayerPhoto);
+				Background = CreateSurface (StyleConf.PlayerBackground);
+				HomeNumber = CreateSurface (StyleConf.PlayerHomeNumber);
+				AwayNumber = CreateSurface (StyleConf.PlayerAwayNumber);
+				HomeOut = CreateSurface (StyleConf.PlayerHomeOut);
+				AwayOut = CreateSurface (StyleConf.PlayerAwayOut);
+				HomeIn = CreateSurface (StyleConf.PlayerHomeIn);
+				AwayIn = CreateSurface (StyleConf.PlayerAwayIn);
+				surfacesCached = true;
+			}
+		}
+
+		ISurface CreateSurface (string name)
+		{
+			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name));
+		}
+
 	}
 }
 
