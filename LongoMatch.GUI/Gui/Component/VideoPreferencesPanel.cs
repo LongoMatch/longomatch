@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			captureenccombo.Changed += HandleEncodingChanged;  
 			
 			renderqualcombo.Changed += HandleQualityChanged;
-			captureimagecombo.Changed += HandleImageChanged;
+			capturequalcombo.Changed += HandleQualityChanged;
 			
 			enableSound = new CheckButton ();
 			rendertable.Attach (enableSound, 1, 2, 3, 4,
