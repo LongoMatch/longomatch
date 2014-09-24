@@ -15,17 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using Mono.Addins;
-
-using LongoMatch;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IConfigModifier
+	public interface IConfigModifier: ILongoMatchPlugin
 	{
-		void ModifyConfig();
+		void ModifyConfig ();
 	}
 }

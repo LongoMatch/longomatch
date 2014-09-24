@@ -24,54 +24,61 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using Mono.Addins;
 
-[assembly:AddinRoot ("LongoMatch", "1.0")]
-
+[assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
 {
-	public class AddinsManager {
+	public class AddinsManager
+	{
 	
 		public AddinsManager (string configPath, string searchPath)
 		{
-			Log.Information("Initializing addins at path: " + searchPath);
+			Log.Information ("Initializing addins at path: " + searchPath);
 			AddinManager.Initialize (configPath, searchPath);
-			AddinManager.Registry.Update();
+			AddinManager.Registry.Update ();
 		}
-		
-		public void LoadConfigModifierAddins() {
+
+		public void LoadConfigModifierAddins ()
+		{
 			foreach (IConfigModifier configModifier in AddinManager.GetExtensionObjects<IConfigModifier> ()) {
 				try {
-					configModifier.ModifyConfig();
+					configModifier.ModifyConfig ();
 				} catch (Exception ex) {
 					Log.Error ("Error loading config modifier");
 					Log.Exception (ex);
 				}
 			}
 		}
-		
-		public void LoadExportProjectAddins(IMainController mainWindow) {
+
+		public void LoadExportProjectAddins (IMainController mainWindow)
+		{
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
 				try {
-					mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
-					                          new Action<Project, IGUIToolkit>(exportProject.ExportProject));
+					Log.Information ("Adding export entry from plugin: " + exportProject.Name);
+					mainWindow.AddExportEntry (exportProject.GetMenuEntryName (), exportProject.GetMenuEntryShortName (),
+					                          new Action<Project, IGUIToolkit> (exportProject.ExportProject));
 				} catch (Exception ex) {
 					Log.Error ("Error adding export entry");
 					Log.Exception (ex);
 				}
 			}
 		}
-		
-		public void LoadImportProjectAddins(IProjectsImporter importer) {
+
+		public void LoadImportProjectAddins (IProjectsImporter importer)
+		{
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
+				Log.Information ("Adding import entry from plugin: " + importProject.Name);
 				importer.RegisterImporter (new Func<string, Project> (importProject.ImportProject),
 				                           importProject.FilterName,
 				                           importProject.FilterExtensions,
 				                           importProject.NeedsEdition);
 			}
 		}
-		
-		public void LoadMultimediaBackendsAddins(IMultimediaToolkit mtoolkit) {
+
+		public void LoadMultimediaBackendsAddins (IMultimediaToolkit mtoolkit)
+		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
-				try{
+				try {
+					Log.Information ("Adding multimedia backend from plugin: " + backend.Name);
 					backend.RegisterElements (mtoolkit);
 				} catch (Exception ex) {
 					Log.Error ("Error registering multimedia backend");
@@ -79,7 +86,7 @@ namespace LongoMatch.Addins
 				}
 			}
 		}
-		
+
 		public void ShutdownMultimediaBackends ()
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {

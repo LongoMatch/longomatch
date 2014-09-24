@@ -15,21 +15,21 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using Mono.Addins;
-
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IImportProject
+	public interface IImportProject: ILongoMatchPlugin
 	{
-		string FilterName {get;}
-		string[] FilterExtensions {get;}
-		bool NeedsEdition {get;}
-		Project ImportProject(string filename);
+		string FilterName { get; }
+
+		string[] FilterExtensions { get; }
+
+		bool NeedsEdition { get; }
+
+		Project ImportProject (string filename);
 	}
 }
 

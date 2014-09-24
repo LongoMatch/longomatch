@@ -17,18 +17,16 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
-using System;
 using Mono.Addins;
 using LongoMatch.Core.Interfaces.Multimedia;
 
-
-namespace LongoMatch.Addins.ExtensionPoints 
+namespace LongoMatch.Addins.ExtensionPoints
 {
-    [TypeExtensionPoint]
-	public interface IMultimediaBackend
+	[TypeExtensionPoint]
+	public interface IMultimediaBackend: ILongoMatchPlugin
 	{
 		void RegisterElements (IMultimediaToolkit mtoolkit);
+
 		void Shutdown ();
 	}
 }

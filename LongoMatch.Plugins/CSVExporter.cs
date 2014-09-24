@@ -31,6 +31,18 @@ namespace LongoMatch.Plugins
 	[Extension]
 	public class CSVExporter:IExportProject
 	{
+		public string Name {
+			get {
+				return Catalog.GetString ("CSV export plugin");
+			}
+		}
+
+		public string Description {
+			get {
+				return Catalog.GetString ("Export project into CSV format");
+			}
+		}
+
 		public string GetMenuEntryName ()
 		{
 			Log.Information ("Registering new export entry");
