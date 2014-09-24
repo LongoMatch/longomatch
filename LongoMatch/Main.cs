@@ -54,6 +54,7 @@ namespace LongoMatch
 			try {
 				manager = new AddinsManager (Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins ();
+				manager.RegisterGStreamerPlugins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
 				IMultimediaToolkit multimediaToolkit = new MultimediaToolkit ();

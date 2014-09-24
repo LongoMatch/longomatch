@@ -37,6 +37,21 @@ namespace LongoMatch.Addins
 			AddinManager.Registry.Update ();
 		}
 
+		public bool RegisterGStreamerPlugins ()
+		{
+			IGStreamerPluginsProvider[] gstPluginsProvider = AddinManager.GetExtensionObjects<IGStreamerPluginsProvider> ();
+			
+			if (gstPluginsProvider.Length == 0) {
+				return false;
+			}
+
+			foreach (IGStreamerPluginsProvider provider in gstPluginsProvider) {
+				Log.Information ("Registering GStreamer plugins from plugin: " + provider.Name);
+				provider.RegisterPlugins ();
+			}
+			return true; 
+		}
+
 		public void LoadConfigModifierAddins ()
 		{
 			foreach (IConfigModifier configModifier in AddinManager.GetExtensionObjects<IConfigModifier> ()) {
