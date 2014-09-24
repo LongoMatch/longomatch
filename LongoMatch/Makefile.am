@@ -1,4 +1,4 @@
-ASSEMBLY = LongoMatchGtk
+ASSEMBLY = LongoMatch
 TARGET = exe
 LINK = $(REF_DEP_LONGOMATCH)
 

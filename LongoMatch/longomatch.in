@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec mono "@expanded_libdir@/@PACKAGE@/LongoMatchGtk.exe" "$@"
+exec mono "@expanded_libdir@/@PACKAGE@/LongoMatch.exe" "$@"

@@ -7,7 +7,7 @@ Project("{2857B73E-F847-4B02-9238-064979017E93}") = "liblongomatch", "libcesarpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Core", "LongoMatch.Core\LongoMatch.Core.csproj", "{B70912B2-7ED5-450E-97BD-45A3D45A0358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatchGtk", "LongoMatch\LongoMatchGtk.csproj", "{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Multimedia", "LongoMatch.Multimedia\LongoMatch.Multimedia.csproj", "{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}"
 EndProject
@@ -99,7 +99,7 @@ Global
 		{E75E30DC-C1CF-4683-9A36-65B91EF10095}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = LongoMatch\LongoMatchGtk.csproj
+		StartupItem = LongoMatch\LongoMatch.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical

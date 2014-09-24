@@ -6,7 +6,7 @@
     <ProjectGuid>{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
-    <AssemblyName>LongoMatchGtk</AssemblyName>
+    <AssemblyName>LongoMatch</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
