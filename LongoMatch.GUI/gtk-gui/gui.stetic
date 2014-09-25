@@ -874,26 +874,11 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Statusbar" id="statusbar1">
+          <widget class="LongoMatch.Gui.Component.RenderingStateBar" id="renderingstatebar1">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="LongoMatch.Gui.Component.RenderingStateBar" id="renderingstatebar1">
-                <property name="MemberName" />
-                <property name="Visible">False</property>
-                <property name="Events">ButtonPressMask</property>
-                <property name="Fraction">0</property>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
+            <property name="Visible">False</property>
+            <property name="Events">ButtonPressMask</property>
+            <property name="Fraction">0</property>
           </widget>
           <packing>
             <property name="Position">2</property>
@@ -4089,47 +4074,75 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.RenderingStateBar" design-size="204 28">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.RenderingStateBar" design-size="734 29">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.HBox" id="hbox1">
+      <widget class="Gtk.VBox" id="vbox2">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Button" id="statebutton">
+          <widget class="Gtk.Statusbar" id="statusbar3">
             <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes" />
-            <property name="UseUnderline">True</property>
+            <property name="Spacing">6</property>
+            <property name="HasResizeGrip">False</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="hbox1">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Button" id="statebutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="UseUnderline">True</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ProgressBar" id="progressbar">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="cancellbutton">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-cancel Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="UseUnderline">True</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.ProgressBar" id="progressbar">
-            <property name="MemberName" />
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="cancellbutton">
-            <property name="MemberName" />
-            <property name="Visible">False</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextAndIcon</property>
-            <property name="Icon">stock:gtk-cancel Menu</property>
-            <property name="Label" translatable="yes" />
-            <property name="UseUnderline">True</property>
-          </widget>
-          <packing>
-            <property name="Position">2</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>

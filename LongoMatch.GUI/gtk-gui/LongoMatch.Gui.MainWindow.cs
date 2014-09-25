@@ -38,7 +38,6 @@ namespace LongoMatch.Gui
 		private global::Gtk.MenuBar menubar1;
 		private global::Gtk.HBox centralbox;
 		private global::LongoMatch.Gui.Panel.WelcomePanel welcomepanel;
-		private global::Gtk.Statusbar statusbar1;
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
 
 		protected virtual void Build ()
@@ -180,24 +179,15 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.centralbox]));
 			w5.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.statusbar1 = new global::Gtk.Statusbar ();
-			this.statusbar1.Name = "statusbar1";
-			this.statusbar1.Spacing = 6;
-			// Container child statusbar1.Gtk.Box+BoxChild
 			this.renderingstatebar1 = new global::LongoMatch.Gui.Component.RenderingStateBar ();
 			this.renderingstatebar1.Events = ((global::Gdk.EventMask)(256));
 			this.renderingstatebar1.Name = "renderingstatebar1";
 			this.renderingstatebar1.Fraction = 0;
-			this.statusbar1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
+			this.vbox1.Add (this.renderingstatebar1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.renderingstatebar1]));
 			w6.Position = 2;
 			w6.Expand = false;
 			w6.Fill = false;
-			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
-			w7.Position = 2;
-			w7.Expand = false;
-			w7.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

@@ -4,6 +4,8 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class RenderingStateBar
 	{
+		private global::Gtk.VBox vbox2;
+		private global::Gtk.Statusbar statusbar3;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Button statebutton;
 		private global::Gtk.ProgressBar progressbar;
@@ -16,6 +18,15 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.RenderingStateBar";
 			// Container child LongoMatch.Gui.Component.RenderingStateBar.Gtk.Container+ContainerChild
+			this.vbox2 = new global::Gtk.VBox ();
+			this.vbox2.Name = "vbox2";
+			this.vbox2.Spacing = 6;
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.statusbar3 = new global::Gtk.Statusbar ();
+			this.statusbar3.Name = "statusbar3";
+			this.statusbar3.Spacing = 6;
+			this.statusbar3.HasResizeGrip = false;
+			// Container child statusbar3.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
@@ -58,7 +69,17 @@ namespace LongoMatch.Gui.Component
 			w11.Position = 2;
 			w11.Expand = false;
 			w11.Fill = false;
-			this.Add (this.hbox1);
+			this.statusbar3.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.statusbar3 [this.hbox1]));
+			w12.Position = 2;
+			w12.Expand = false;
+			w12.Fill = false;
+			this.vbox2.Add (this.statusbar3);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.statusbar3]));
+			w13.Position = 0;
+			w13.Expand = false;
+			w13.Fill = false;
+			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

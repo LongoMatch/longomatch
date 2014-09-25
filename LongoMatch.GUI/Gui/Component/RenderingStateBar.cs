@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool JobRunning {
 			set {
-				this.Visible = value;
+				Visible = value;
 			}
 		}
 		
