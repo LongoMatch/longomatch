@@ -92,7 +92,7 @@ namespace LongoMatch.Gui
 			UnSensitive ();
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
-			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox3);
+			LongoMatch.Gui.Helpers.Misc.SetFocus (vbox3, false);
 			videowindow.CanFocus = true;
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;

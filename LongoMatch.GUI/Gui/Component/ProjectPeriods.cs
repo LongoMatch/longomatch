@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Component
 			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
 			                                Catalog.GetString ("Synchronize the game periods"),
 			                                "  ⬇</b>");
-			Misc.DisableFocus (this);
+			Misc.SetFocus (this, false);
 		}
 		
 		protected override void OnDestroyed ()

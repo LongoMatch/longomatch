@@ -49,6 +49,7 @@ namespace LongoMatch.Gui.Component
 		ToggleToolButton editbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
+		Project project;
 
 		public DashboardWidget()
 		{
@@ -133,6 +134,14 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public Project Project {
+			set {
+				project = value;
+				Template = project.Dashboard;
+				positionsbox.Visible = false;
+			}
+		}
+
 		public Dashboard Template {
 			set {
 				template = value;
@@ -164,6 +173,7 @@ namespace LongoMatch.Gui.Component
 					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit",
 					                                  22, IconLookupFlags.ForceSvg);
 				}
+				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == TagMode.Edit);
 				ignoreChanges = false;
 			}
 			get {
@@ -385,15 +395,6 @@ namespace LongoMatch.Gui.Component
 			if (!string.IsNullOrEmpty (res)) {
 				(taggerbutton as AnalysisEventButton).AnalysisEventType.Tags.Add (new Tag (res));
 				tagger.Refresh (null);
-			}
-		}
-
-		void HandleClicked (object sender, EventArgs e)
-		{
-			if (Mode == TagMode.Edit) {
-				Mode = TagMode.Predefined;
-			} else {
-				Mode = TagMode.Edit;
 			}
 		}
 

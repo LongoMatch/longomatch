@@ -255,14 +255,14 @@ namespace LongoMatch.Gui.Helpers
 			}
 		}
 		
-		public static void DisableFocus (Container w, params Type[] skipTypes) {
-			w.CanFocus = false;
+		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes) {
+			w.CanFocus = canFocus;
 			foreach (Widget child in w.AllChildren) {
 				if (child is Container) {
-					DisableFocus (child as Container);
+					SetFocus (child as Container, canFocus);
 				} else {
 					if (!skipTypes.Contains (child.GetType())) {
-						child.CanFocus = false;
+						child.CanFocus = canFocus;
 					}
 				}
 			}

@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlayerTick += HandleTick;
 			Config.EventsBroker.CapturerTick += HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			LongoMatch.Gui.Helpers.Misc.DisableFocus (this);
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			
 			buttonswidget.Mode = TagMode.Free;
 			buttonswidget.FitMode = FitMode.Fit;
@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Component
 			this.project = project;
 			buttonswidget.Visible = true;
 			if (project != null) {
-				buttonswidget.Template = project.Dashboard;
+				buttonswidget.Project = project;
 			}
 			teamtagger.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
