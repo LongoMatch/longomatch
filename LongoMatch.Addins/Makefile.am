@@ -7,6 +7,7 @@ SOURCES = AddinsManager.cs \
 	ExtensionPoints/IConfigModifier.cs \
 	ExtensionPoints/IExportProject.cs \
 	ExtensionPoints/IImportProject.cs \
+	ExtensionPoints/ILongoMatchPlugin.cs \
 	ExtensionPoints/IMultimediaBackend.cs
 
 RESOURCES = 
