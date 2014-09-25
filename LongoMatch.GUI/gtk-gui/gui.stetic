@@ -9070,71 +9070,6 @@ You can continue with the current capture, cancel it or save your project.
                                               </packing>
                                             </child>
                                             <child>
-                                              <widget class="Gtk.HBox" id="hbox9">
-                                                <property name="MemberName" />
-                                                <property name="Spacing">6</property>
-                                                <child>
-                                                  <widget class="Gtk.SpinButton" id="localSpinButton">
-                                                    <property name="MemberName">localSpinButton</property>
-                                                    <property name="CanFocus">True</property>
-                                                    <property name="Upper">1000</property>
-                                                    <property name="PageIncrement">10</property>
-                                                    <property name="StepIncrement">1</property>
-                                                    <property name="ClimbRate">1</property>
-                                                    <property name="Numeric">True</property>
-                                                  </widget>
-                                                  <packing>
-                                                    <property name="Position">0</property>
-                                                    <property name="AutoSize">False</property>
-                                                    <property name="Fill">False</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <widget class="Gtk.Label" id="label2">
-                                                    <property name="MemberName" />
-                                                    <property name="LabelProp" translatable="yes">-</property>
-                                                  </widget>
-                                                  <packing>
-                                                    <property name="Position">1</property>
-                                                    <property name="AutoSize">True</property>
-                                                    <property name="Expand">False</property>
-                                                    <property name="Fill">False</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <widget class="Gtk.SpinButton" id="visitorSpinButton">
-                                                    <property name="MemberName">visitorSpinButton</property>
-                                                    <property name="CanFocus">True</property>
-                                                    <property name="Upper">1000</property>
-                                                    <property name="PageIncrement">10</property>
-                                                    <property name="StepIncrement">1</property>
-                                                    <property name="ClimbRate">1</property>
-                                                    <property name="Numeric">True</property>
-                                                  </widget>
-                                                  <packing>
-                                                    <property name="Position">2</property>
-                                                    <property name="AutoSize">False</property>
-                                                    <property name="Fill">False</property>
-                                                  </packing>
-                                                </child>
-                                              </widget>
-                                              <packing>
-                                                <property name="TopAttach">1</property>
-                                                <property name="BottomAttach">2</property>
-                                                <property name="LeftAttach">1</property>
-                                                <property name="RightAttach">2</property>
-                                                <property name="AutoSize">False</property>
-                                                <property name="XOptions">Fill</property>
-                                                <property name="YOptions">Fill</property>
-                                                <property name="XExpand">False</property>
-                                                <property name="XFill">True</property>
-                                                <property name="XShrink">False</property>
-                                                <property name="YExpand">False</property>
-                                                <property name="YFill">True</property>
-                                                <property name="YShrink">False</property>
-                                              </packing>
-                                            </child>
-                                            <child>
                                               <widget class="Gtk.Label" id="label11">
                                                 <property name="MemberName" />
                                                 <property name="Xalign">1</property>
@@ -9185,6 +9120,26 @@ You can continue with the current capture, cancel it or save your project.
                                               <packing>
                                                 <property name="TopAttach">2</property>
                                                 <property name="BottomAttach">3</property>
+                                                <property name="AutoSize">True</property>
+                                                <property name="XOptions">Fill</property>
+                                                <property name="YOptions">Fill</property>
+                                                <property name="XExpand">False</property>
+                                                <property name="XFill">True</property>
+                                                <property name="XShrink">False</property>
+                                                <property name="YExpand">False</property>
+                                                <property name="YFill">True</property>
+                                                <property name="YShrink">False</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <widget class="Gtk.Label" id="scorelabel">
+                                                <property name="MemberName" />
+                                              </widget>
+                                              <packing>
+                                                <property name="TopAttach">1</property>
+                                                <property name="BottomAttach">2</property>
+                                                <property name="LeftAttach">1</property>
+                                                <property name="RightAttach">2</property>
                                                 <property name="AutoSize">True</property>
                                                 <property name="XOptions">Fill</property>
                                                 <property name="YOptions">Fill</property>
@@ -9311,7 +9266,6 @@ You can continue with the current capture, cancel it or save your project.
                                                 <child>
                                                   <widget class="Gtk.Alignment" id="mediafilechooseralignment">
                                                     <property name="MemberName" />
-                                                    <property name="Xscale">0.5</property>
                                                     <property name="Xalign">0</property>
                                                     <child>
                                                       <widget class="LongoMatch.Gui.Component.MediaFileChooser" id="mediafilechooser">

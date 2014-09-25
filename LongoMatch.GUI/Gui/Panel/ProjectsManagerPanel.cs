@@ -60,8 +60,6 @@ namespace LongoMatch.Gui.Panel
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
-			localSpinButton.ValueChanged += HandleChanged;
-			visitorSpinButton.ValueChanged += HandleChanged;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
@@ -82,8 +80,7 @@ namespace LongoMatch.Gui.Panel
 			
 			seasonentry.Text = pd.Season;
 			competitionentry.Text = pd.Competition;
-			localSpinButton.Value = pd.LocalGoals;
-			visitorSpinButton.Value = pd.VisitorGoals;
+			scorelabel.Text = String.Format ("{0} - {1}", pd.LocalGoals, pd.VisitorGoals);
 			datepicker.Date = pd.MatchDate;
 			mediafilechooser.MediaFile = f;
 			templatelabel.Text = project.Dashboard.Name;
@@ -144,10 +141,6 @@ namespace LongoMatch.Gui.Panel
 				loadedProject.Description.Competition = (sender as Entry).Text;
 			} else if (sender == seasonentry) {
 				loadedProject.Description.Season = (sender as Entry).Text;
-			} else if (sender == localSpinButton) {
-				loadedProject.Description.LocalGoals = (int) (sender as SpinButton).Value;
-			} else if (sender == visitorSpinButton) {
-				loadedProject.Description.VisitorGoals = (int) (sender as SpinButton).Value;
 			}
 		}
 
