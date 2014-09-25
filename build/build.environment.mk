@@ -141,6 +141,13 @@ REF_DEP_OXYPLOT = \
                      $(LINK_SYSTEM) \
                      $(LINK_SYSTEM_CORE)
 
+REF_DEP_LONGOMATCH_PLUGINS_GSTREAMER = \
+                     $(LINK_MONO_ADDINS) \
+                     $(LINK_MONO_POSIX) \
+                     $(LINK_GLIB) \
+                     $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_ADDINS)
+
 
 DIR_BIN = $(top_builddir)/bin
 
