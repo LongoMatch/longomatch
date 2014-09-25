@@ -16,15 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Gui;
-using LongoMatch.Video.Utils;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
@@ -33,61 +31,96 @@ namespace LongoMatch.Gui.Dialog
 	{
 		ListStore store;
 		ListStore stdStore;
-		string outputFile;
-		
+		ListStore bitStore;
+		uint maxHeight;
+		VideoStandard selectedVideoStandard;
+		VideoStandard[] supportedVideoStandards;
+
 		public VideoConversionTool ()
 		{
 			this.Build ();
 			SetTreeView ();
-			FillStandards();
 			buttonOk.Sensitive = false;
-			Files = new List<MediaFile>();
+			Files = new List<MediaFile> ();
+			supportedVideoStandards = VideoStandards.Transcode;
+			maxHeight = supportedVideoStandards [0].Height;
+			mediafilechooser1.FileChooserMode = FileChooserMode.File;
+			mediafilechooser1.ChangedEvent += HandleFileChanges;
+			FillStandards ();
+			FillBitrates ();
+			addbutton.Clicked += OnAddbuttonClicked;
+			removebutton.Clicked += OnRemovebuttonClicked;
+			buttonOk.Clicked += OnButtonOkClicked;
 		}
-		
+
 		public List<MediaFile> Files {
 			get;
 			set;
 		}
-		
+
 		public EncodingSettings EncodingSettings {
 			get;
 			set;
 		}
-		
-		void CheckStatus () {
-			buttonOk.Sensitive = outputFile != null && Files.Count != 0;
+
+		void CheckStatus ()
+		{
+			buttonOk.Sensitive = mediafilechooser1.CurrentPath != null && Files.Count != 0;
 		}
-		
-		void SetTreeView () {
-			TreeViewColumn mediaFileCol = new TreeViewColumn();
-			mediaFileCol.Title = Catalog.GetString("Input files");
-			CellRendererText mediaFileCell = new CellRendererText();
-			mediaFileCol.PackStart(mediaFileCell, true);
-			mediaFileCol.SetCellDataFunc(mediaFileCell, new TreeCellDataFunc(RenderMediaFile));
-			treeview1.AppendColumn(mediaFileCol);
+
+		void SetTreeView ()
+		{
+			TreeViewColumn mediaFileCol = new TreeViewColumn ();
+			mediaFileCol.Title = Catalog.GetString ("Input files");
+			CellRendererText mediaFileCell = new CellRendererText ();
+			mediaFileCol.PackStart (mediaFileCell, true);
+			mediaFileCol.SetCellDataFunc (mediaFileCell, new TreeCellDataFunc (RenderMediaFile));
+			treeview1.AppendColumn (mediaFileCol);
 			
-			store = new ListStore(typeof(MediaFile));
+			store = new ListStore (typeof(MediaFile));
 			treeview1.Model = store;
+			
 		}
-		
-		void FillStandards () {
-			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
-			stdStore.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080);
-			stdStore.AppendValues(VideoStandards.P720.Name, VideoStandards.P720);
-			stdStore.AppendValues(VideoStandards.P480.Name, VideoStandards.P480);
+
+		void FillStandards ()
+		{
+			int index = 0, active = 0;
+
+			stdStore = new ListStore (typeof(string), typeof(VideoStandard));
+			foreach (VideoStandard std in supportedVideoStandards) {
+				if (std.Height <= maxHeight) {
+					stdStore.AppendValues (std.Name, std);
+					if (std == selectedVideoStandard) {
+						active = index; 
+					}
+					index ++;
+				}
+			}
 			sizecombobox.Model = stdStore;
-			sizecombobox.Active = 0;
+			sizecombobox.Active = active;
 		}
-		
+
+		void FillBitrates ()
+		{
+			bitStore = new ListStore (typeof(string), typeof(EncodingQuality));
+			foreach (EncodingQuality qual in EncodingQualities.Transcode) {
+				bitStore.AppendValues (qual.Name, qual);
+			}
+			bitratecombobox.Model = bitStore;
+			bitratecombobox.Active = 1;
+		}
+
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
-			var msg = Catalog.GetString("Add file");
+			TreeIter iter;
+
+			var msg = Catalog.GetString ("Add file");
 			List<string> paths = FileChooserHelper.OpenFiles (this, msg, null,
 			                                                  Config.HomeDir, null, null);
-			List<string> errors = new List<string>();
+			List<string> errors = new List<string> ();
 			foreach (string path in paths) {
 				try {
-					MediaFile file = Config.MultimediaToolkit.DiscoverFile(path, false);
+					MediaFile file = Config.MultimediaToolkit.DiscoverFile (path, false);
 					store.AppendValues (file);
 					Files.Add (file);
 				} catch (Exception) {
@@ -95,12 +128,22 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 			if (errors.Count != 0) {
-				string s = Catalog.GetString("Error adding files:");
+				string s = Catalog.GetString ("Error adding files:");
 				foreach (string p in errors) {
 					s += '\n' + p;
 				}
 				GUIToolkit.Instance.ErrorMessage (s);
 			}
+			CheckStatus ();
+
+			maxHeight = Files.Max (f => f.VideoHeight);
+			sizecombobox.GetActiveIter (out iter);
+			selectedVideoStandard = stdStore.GetValue (iter, 1) as VideoStandard;
+			FillStandards ();
+		}
+
+		void HandleFileChanges (object sender, EventArgs e)
+		{
 			CheckStatus ();
 		}
 
@@ -111,43 +154,50 @@ namespace LongoMatch.Gui.Dialog
 			treeview1.Selection.GetSelected (out iter);
 			Files.Remove (store.GetValue (iter, 0) as MediaFile);
 			CheckStatus ();
-			store.Remove(ref iter);
+			store.Remove (ref iter);
 		}
 
-		protected void OnOpenbuttonClicked (object sender, System.EventArgs e)
+		private void RenderMediaFile (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			string path = FileChooserHelper.SaveFile(this, Catalog.GetString("Add file"),
-			                                         "NewVideo.mp4",
-			                                         Config.VideosDir,
-			                                         Catalog.GetString("MP4 file"),
-			                                        new string[] {"mp4"});
-			outputFile = System.IO.Path.ChangeExtension (path, "mp4");
-			filelabel.Text = outputFile;
-			CheckStatus ();
-		}
-		
-		private void RenderMediaFile(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			MediaFile file = (MediaFile) store.GetValue(iter, 0);
+			MediaFile file = (MediaFile)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = String.Format("{0} {1}x{2} (Video:'{3}' Audio:'{4}')",
-			                                                    System.IO.Path.GetFileName (file.FilePath),
-			                                                    file.VideoWidth, file.VideoHeight,
-			                                                    file.VideoCodec, file.AudioCodec);
+			(cell as Gtk.CellRendererText).Text = String.Format ("{0} {1}x{2} (Video:'{3}' Audio:'{4}')",
+			                                                     System.IO.Path.GetFileName (file.FilePath),
+			                                                     file.VideoWidth, file.VideoHeight,
+			                                                     file.VideoCodec, file.AudioCodec);
 		}
 
 		protected void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			EncodingSettings encSettings;
+			EncodingQuality qual;
 			TreeIter iter;
 			VideoStandard std;
+			uint fps_n, fps_d;
 			
-			sizecombobox.GetActiveIter(out iter);
-			std = (VideoStandard) stdStore.GetValue(iter, 1);
+			sizecombobox.GetActiveIter (out iter);
+			std = (VideoStandard)stdStore.GetValue (iter, 1);
+
+			bitratecombobox.GetActiveIter (out iter);
+			qual = bitStore.GetValue (iter, 1) as EncodingQuality;
 			
-			encSettings = new EncodingSettings(std, EncodingProfiles.MP4,
-			                                   EncodingQualities.High,
-			                                   25, 1, outputFile, true, false, 0);
+			var rates = new HashSet<uint> (Files.Select (f => (uint)f.Fps));
+			if (rates.Count == 1) {
+				fps_n = rates.First ();
+				fps_d = 1;
+			} else {
+				fps_n = Config.FPS_N;
+				fps_d = Config.FPS_D;
+			}
+			
+			if (fps_n == 50) {
+				fps_n = 25;
+			} else if (fps_n == 60) {
+				fps_n = 30;
+			}
+			encSettings = new EncodingSettings (std, EncodingProfiles.MP4, qual, fps_n, fps_d,
+			                                    mediafilechooser1.CurrentPath, true, false, 0);
+			
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);
 		}

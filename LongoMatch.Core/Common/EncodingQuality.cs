@@ -77,6 +77,12 @@ namespace LongoMatch.Core.Common
 				return list;
 			}
 		}
+
+		public static EncodingQuality[] Transcode {
+			get {
+					return new EncodingQuality[] {Highest, High, Medium};
+			}
+		}
 	}
 }
 

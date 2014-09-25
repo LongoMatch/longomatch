@@ -96,6 +96,16 @@ namespace LongoMatch.Core.Common
 				return list;
 			}
 		}
+
+		public static VideoStandard[] Transcode {
+			get {
+				return new VideoStandard[] {
+					VideoStandards.P1080,
+					VideoStandards.P720,
+					VideoStandards.P480,
+				};
+			}
+		}
 	}
 	
 }
