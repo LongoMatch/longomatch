@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
 using Mono.Unix;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -27,35 +27,47 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileChooser : Gtk.Bin
 	{
 		public event EventHandler ChangedEvent;
+
 		MediaFile mediaFile;
-		string file;
+		string path;
 
 		public MediaFileChooser ()
 		{
 			this.Build ();
 
 			addbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-browse", Gtk.IconSize.Button, 0);
-
-			MediaFileMode = true;
+			FilterName = "MP4";
+			FilterExtensions = new string[] { "*.mp4" }; 
+			FileChooserMode = FileChooserMode.MediaFile;
 			UpdateFile ();
 			addbutton.Clicked += HandleClicked;
 		}
 
-		public bool MediaFileMode {
+		public FileChooserMode FileChooserMode {
 			get;
 			set;
 		}
-		
-		public string File {
+
+		public string CurrentPath {
 			set {
-				file = value;
+				path = value;
 				UpdateFile ();
 			}
 			get {
-				return file;
+				return path;
 			}
 		}
-		
+
+		public string FilterName {
+			get;
+			set;
+		}
+
+		public string[] FilterExtensions {
+			get;
+			set;
+		}
+
 		public MediaFile MediaFile {
 			get {
 				return mediaFile;
@@ -65,29 +77,37 @@ namespace LongoMatch.Gui.Component
 				UpdateFile ();
 			}
 		}
-		
+
 		void UpdateFile ()
 		{
 			if (mediaFile != null) {
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
 				fileentry.TooltipText = mediaFile.FilePath;
-			} else if (file != null) {
-				fileentry.Text = System.IO.Path.GetFileName (file);
-				fileentry.TooltipText = file;
+			} else if (path != null) {
+				fileentry.Text = System.IO.Path.GetFileName (path);
+				fileentry.TooltipText = path;
 			} else {
 				fileentry.Text = Catalog.GetString ("Select file...");
 			}
 		}
-		
+
 		void HandleClicked (object sender, EventArgs e)
 		{
-			if (MediaFileMode) {
+			if (FileChooserMode == FileChooserMode.MediaFile) {
 				MediaFile = Misc.OpenFile (this);
-			} else {
+			} else if (FileChooserMode == FileChooserMode.File) {
 				string filename = String.Format ("LongoMatch-{0}.mp4",
 				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
-				File = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"), filename,
-				                                   Config.VideosDir, "MP4", new string[] { "*.mp4" });
+				CurrentPath = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"), filename,
+				                                          Config.LastRenderDir, FilterName, FilterExtensions);
+				if (CurrentPath != null) {
+					Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
+				}
+			} else if (FileChooserMode == FileChooserMode.Directory) {
+				string filename = String.Format ("LongoMatch-{0}",
+				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
+				CurrentPath = FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"), filename,
+				                                              Config.LastRenderDir, null, null);
 			}
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);

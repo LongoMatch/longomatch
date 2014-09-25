@@ -420,7 +420,6 @@ namespace LongoMatch.Gui.Panel
 			this.mediafilechooser1 = new global::LongoMatch.Gui.Component.MediaFileChooser ();
 			this.mediafilechooser1.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilechooser1.Name = "mediafilechooser1";
-			this.mediafilechooser1.MediaFileMode = true;
 			this.filetable.Add (this.mediafilechooser1);
 			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.filetable [this.mediafilechooser1]));
 			w37.YOptions = ((global::Gtk.AttachOptions)(4));
@@ -428,7 +427,6 @@ namespace LongoMatch.Gui.Panel
 			this.mediafilechooser2 = new global::LongoMatch.Gui.Component.MediaFileChooser ();
 			this.mediafilechooser2.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilechooser2.Name = "mediafilechooser2";
-			this.mediafilechooser2.MediaFileMode = true;
 			this.filetable.Add (this.mediafilechooser2);
 			global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.filetable [this.mediafilechooser2]));
 			w38.LeftAttach = ((uint)(1));
@@ -446,7 +444,6 @@ namespace LongoMatch.Gui.Panel
 			this.capturemediafilechooser = new global::LongoMatch.Gui.Component.MediaFileChooser ();
 			this.capturemediafilechooser.Events = ((global::Gdk.EventMask)(256));
 			this.capturemediafilechooser.Name = "capturemediafilechooser";
-			this.capturemediafilechooser.MediaFileMode = false;
 			this.outputfiletable.Add (this.capturemediafilechooser);
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.outputfiletable [this.capturemediafilechooser]));
 			w40.LeftAttach = ((uint)(1));

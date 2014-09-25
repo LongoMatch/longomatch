@@ -267,5 +267,11 @@ namespace LongoMatch.Core.Common
 		TemporalExclusion,
 		Exclusion,
 	}
+	
+	public enum FileChooserMode {
+		MediaFile,
+		File,
+		Directory,
+	}
 }
 

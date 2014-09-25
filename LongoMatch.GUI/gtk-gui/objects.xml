@@ -276,8 +276,8 @@
   <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="MediaFileChooser Properties">
-        <property name="MediaFileMode" />
-        <property name="File" />
+        <property name="FilterName" />
+        <property name="CurrentPath" />
       </itemgroup>
     </itemgroups>
     <signals>

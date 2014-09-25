@@ -297,7 +297,7 @@ namespace LongoMatch.Gui.Panel
 			
 			if (projectType == ProjectType.CaptureProject ||
 				projectType == ProjectType.URICaptureProject) {
-				if (String.IsNullOrEmpty (capturemediafilechooser.File)) {
+				if (String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
 					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
 					return false;
 				}
@@ -324,11 +324,11 @@ namespace LongoMatch.Gui.Panel
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();
 				
-			encSettings.OutputFile = capturemediafilechooser.File;
+			encSettings.OutputFile = capturemediafilechooser.CurrentPath;
 			
 			if (project.Description.File == null) {
 				MediaFile file = new MediaFile ();
-				file.FilePath = capturemediafilechooser.File;
+				file.FilePath = capturemediafilechooser.CurrentPath;
 				file.VideoWidth = encSettings.VideoStandard.Width;
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
@@ -387,7 +387,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				urilabel.ModifyFg (StateType.Normal, red);
 			}
-			if (String.IsNullOrEmpty (capturemediafilechooser.File)) {
+			if (String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
 				outputfilelabel.ModifyFg (StateType.Normal);
 			} else {
 				outputfilelabel.ModifyFg (StateType.Normal, red);
