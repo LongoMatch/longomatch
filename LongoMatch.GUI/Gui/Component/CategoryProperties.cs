@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		public event HotKeyChangeHandler HotKeyChanged;
 		public event EventHandler EditedEvent;
 
-		SizeGroup sizegroup;
+		SizeGroup sizegroupLeft, sizegroupRight;
 		DashboardButton button;
 		TimedDashboardButton timedButton;
 		EventButton eventButton;
@@ -71,12 +71,22 @@ namespace LongoMatch.Gui.Component
 			cattable.NoShowAll = true;
 			scoretable.NoShowAll = true;
 
-			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
-			sizegroup.IgnoreHidden = false;
+			sizegroupLeft = new SizeGroup (SizeGroupMode.Horizontal);
+			sizegroupLeft.IgnoreHidden = false;
 			foreach (Widget w in vbox3.Children) {
 				foreach (Widget t in (w as Table).Children) {
 					if ((t is Label)) {
-						sizegroup.AddWidget (t);
+						sizegroupLeft.AddWidget (t);
+					}
+				}
+			}
+			
+			sizegroupRight = new SizeGroup (SizeGroupMode.Horizontal);
+			sizegroupRight.IgnoreHidden = false;
+			foreach (Widget w in vbox3.Children) {
+				foreach (Widget t in (w as Table).Children) {
+					if (!(t is Label)) {
+						sizegroupRight.AddWidget (t);
 					}
 				}
 			}
