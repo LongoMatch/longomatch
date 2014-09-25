@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			sizegroup.IgnoreHidden = false;
 			foreach (Widget w in vbox3.Children) {
 				foreach (Widget t in (w as Table).Children) {
-					if (!(t is Label)) {
+					if ((t is Label)) {
 						sizegroup.AddWidget (t);
 					}
 				}
