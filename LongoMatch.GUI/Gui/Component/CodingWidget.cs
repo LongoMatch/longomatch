@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Component
 		Gdk.Pixbuf timelineIco, timelineActiveIco;
 		Gdk.Pixbuf posIco, posAtiveIco;
 		Gdk.Pixbuf dashboardIco, dashboardActiveIco;
+		bool sizeAllocated;
 
 		public CodingWidget ()
 		{
@@ -81,6 +82,7 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
 			
+			dashboardhpaned.SizeAllocated += HandleSizeAllocated;
 			TagPositions = true;
 		}
 
@@ -269,6 +271,16 @@ namespace LongoMatch.Gui.Component
 		{
 			Config.EventsBroker.EmitSubstitutionEvent (team, p1, p2, reason, time);
 		}
+		
+		void HandleSizeAllocated (object o, SizeAllocatedArgs args)
+		{
+			if (!sizeAllocated) {
+				dashboardhpaned.Position = dashboardhpaned.MaxPosition / 2;
+				sizeAllocated = true;
+			}
+			
+		}
+
 	}
 }
 
