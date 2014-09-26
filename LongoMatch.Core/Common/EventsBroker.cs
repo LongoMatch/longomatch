@@ -41,6 +41,7 @@ namespace LongoMatch.Core.Common
 		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
+		public event DashboardEditedHandler DashboardEditedEvent;
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
@@ -385,6 +386,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (PlayerSubstitutionEvent != null) {
 				PlayerSubstitutionEvent (team, p1, p2, reason, time);
+			}
+		}
+		
+		public void EmitDashboardEdited ()
+		{
+			if (DashboardEditedEvent != null) {
+				DashboardEditedEvent ();
 			}
 		}
 	}

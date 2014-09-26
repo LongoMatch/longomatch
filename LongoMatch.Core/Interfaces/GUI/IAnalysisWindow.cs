@@ -28,6 +28,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 	public interface IAnalysisWindow
 	{	
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter);
+		void ReloadProject ();
 		void CloseOpenedProject ();
 		void AddPlay(TimelineEvent play);
 		void UpdateCategories ();

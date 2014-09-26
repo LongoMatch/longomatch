@@ -95,6 +95,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
+			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
@@ -342,5 +343,12 @@ namespace LongoMatch.Services
 			analysisWindow.AddPlay (newplay);
 			Save (openedProject);
 		}
+
+		void HandleDashboardEditedEvent ()
+		{
+			openedProject.UpdateEventTypes ();
+			analysisWindow.ReloadProject ();
+		}
+
 	}
 }

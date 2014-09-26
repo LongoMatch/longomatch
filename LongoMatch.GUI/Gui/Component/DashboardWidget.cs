@@ -168,12 +168,21 @@ namespace LongoMatch.Gui.Component
 				editbutton.Active = value == TagMode.Edit;
 				if (value == TagMode.Edit) {
 					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
-					                                  22, IconLookupFlags.ForceSvg);
+					                                          22, IconLookupFlags.ForceSvg);
 				} else {
 					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit",
-					                                  22, IconLookupFlags.ForceSvg);
+					                                          22, IconLookupFlags.ForceSvg);
 				}
 				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == TagMode.Edit);
+				if (project != null) {
+					if (value == TagMode.Edit) {
+						Edited = false;
+					} else {
+						if (Edited)
+							Config.EventsBroker.EmitDashboardEdited ();
+					}
+					
+				}
 				ignoreChanges = false;
 			}
 			get {

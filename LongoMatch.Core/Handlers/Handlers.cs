@@ -51,6 +51,9 @@ namespace LongoMatch.Core.Handlers
 	public delegate void MoveEventHandler (TimelineEvent play,EventType eventType);
 	/* Duplicate play */
 	public delegate void DuplicateEventsHandler (List<TimelineEvent> events);
+	/* Emited when the dashboard is edited and might have new EventTypes */
+	public delegate void DashboardEditedHandler ();
+	
 	/* Dashboard buttons selected */
 	public delegate void ButtonsSelectedHandlers (List<DashboardButton> taggerbuttons);
 	public delegate void ButtonSelectedHandler (DashboardButton taggerbutton);

@@ -28,6 +28,7 @@ namespace LongoMatch.Gui.Component
 	{
 		static Project openedProject;
 		ProjectType projectType;
+		EventsFilter filter;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
 		EventBox backgroundBox;
@@ -41,10 +42,9 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 			detachedPlayer = false;
-
 			ConnectSignals();
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			playercapturer.Destroy ();
@@ -130,6 +130,7 @@ namespace LongoMatch.Gui.Component
 		{
 			openedProject = project;
 			this.projectType = projectType;
+			this.filter = filter;
 			
 			if(projectType == ProjectType.FakeCaptureProject) {
 				CreateCodingUI ();
@@ -140,7 +141,12 @@ namespace LongoMatch.Gui.Component
 			codingwidget.SetProject (project, projectType, filter);
 			playsSelection.SetProject (project, filter);
 		}
-		
+
+		public void ReloadProject () {
+			codingwidget.SetProject (openedProject, projectType, filter);
+			playsSelection.SetProject (openedProject, filter);
+		}
+
 		void CreateCommonUI () {
 			backgroundBox = new EventBox ();
 			backgroundBox.Name = "lightbackgroundeventbox";
@@ -227,7 +233,6 @@ namespace LongoMatch.Gui.Component
 				playercapturer.Destroy();
 			}
 		}
-		
 	}
 }
 
