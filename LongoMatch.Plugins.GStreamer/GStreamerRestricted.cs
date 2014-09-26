@@ -63,23 +63,12 @@ namespace LongoMatch.Plugins.GStreamer
 
 			pluginsDir = Path.Combine (assemblyDir, "gstreamer-0.10");
 			Log.Information ("Registering plugins in directory " + pluginsDir);
-			UpdateLibraryPath ("LD_LIBRARY_PATH", pluginsDir);
-			UpdateLibraryPath ("DYLD_FALLBACK_LIBRARY_PATH", pluginsDir);
+			EnvironmentUtils.AddLibraryPath (pluginsDir);
 			IntPtr p = GLib.Marshaller.StringToPtrGStrdup (pluginsDir);
 			IntPtr reg = gst_registry_get_default ();
 			gst_registry_scan_path (reg, p);
 			GLib.Marshaller.Free (p);
 		}
 
-		void UpdateLibraryPath (string envVariable, string pluginsDir)
-		{
-			string ldLibraryPath = System.Environment.GetEnvironmentVariable (envVariable);
-			if (ldLibraryPath == null) {
-				ldLibraryPath = pluginsDir;
-			} else {
-				ldLibraryPath += ":" + pluginsDir;
-			}
-			System.Environment.SetEnvironmentVariable (envVariable, ldLibraryPath);
-		}
 	}
 }

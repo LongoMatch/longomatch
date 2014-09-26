@@ -95,6 +95,8 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-video-file.svg \
 	hicolor/scalable/actions/longomatch-vs.svg \
 	hicolor/scalable/actions/longomatch-zoom-in.svg \
+	hicolor/scalable/actions/longomatch-zoom-less.svg \
+	hicolor/scalable/actions/longomatch-zoom-more.svg \
 	hicolor/scalable/actions/longomatch-zoom-out.svg \
 	hicolor/scalable/actions/vertical-separator.png \
 	hicolor/scalable/apps/longomatch.svg

@@ -89,6 +89,9 @@ namespace LongoMatch
 		{
 			string gtkRC, iconsDir, styleConf;
 			
+			EnvironmentUtils.AddLibraryPath (
+				Config.RelativeToPrefix (Path.Combine ("lib", "gdk-pixbuf-2.0", "2.10.0", "loaders")));
+
 			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
 			if (File.Exists (gtkRC)) {
 				Rc.AddDefaultFile (gtkRC);
