@@ -14,7 +14,7 @@ SOURCES = Common/Area.cs \
 	Common/EncodingQuality.cs \
 	Common/EncodingSettings.cs \
 	Common/Enums.cs \
-	Common/Environment.cs \
+	Common/EnvironmentUtils.cs \
 	Common/EventsBroker.cs \
 	Common/EventsFilter.cs \
 	Common/Exceptions.cs \

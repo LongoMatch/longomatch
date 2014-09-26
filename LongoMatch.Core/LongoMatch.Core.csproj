@@ -125,7 +125,7 @@
     <Compile Include="Store\EventType.cs" />
     <Compile Include="Store\TimelineEvent.cs" />
     <Compile Include="Stats\EventTypeStats.cs" />
-    <Compile Include="Common\Environment.cs" />
+    <Compile Include="Common\EnvironmentUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
