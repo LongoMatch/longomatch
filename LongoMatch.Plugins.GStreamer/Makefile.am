@@ -9,5 +9,7 @@ SOURCES = Assembly.cs \
 
 RESOURCES = 
 
+DLLCONFIG = LongoMatch.Plugins.GStreamer.dll.config
+
 include $(top_srcdir)/build/build.mk
 
