@@ -63,8 +63,10 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			this.mtoolkit = Config.MultimediaToolkit;
 			this.gtoolkit = Config.GUIToolkit;
+			capturemediafilechooser.FileChooserMode = FileChooserMode.File;
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
+			
 			
 			panelheader1.ApplyClicked += HandleNextClicked;
 			panelheader1.BackClicked += HandleBackClicked;
