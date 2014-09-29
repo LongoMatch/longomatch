@@ -121,7 +121,7 @@ namespace LongoMatch.Gui.Component
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 0F;
-			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable audio (experimental)");
+			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable audio");
 			this.rendertable.Add (this.label8);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label8]));
 			w7.TopAttach = ((uint)(3));
