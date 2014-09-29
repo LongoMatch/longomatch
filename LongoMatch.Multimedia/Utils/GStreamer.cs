@@ -41,8 +41,7 @@ namespace LongoMatch.Multimedia.Utils
 		public const string MPEG2_TS = "MPEG-2 Transport Stream";
 		public const string ASF = "Advanced Streaming Format (ASF)";
 		public const string FLV = "Flash";
-		private const string GST_DIRECTORY = ".gstreamer-0.10";
-		private const string REGISTRY_PATH = "registry.bin";
+		const string REGISTRY_PATH = "longomatch_gst_registry.bin";
 
 		public static void Init ()
 		{
@@ -75,30 +74,15 @@ namespace LongoMatch.Multimedia.Utils
 
 		private static void SetUpEnvironment ()
 		{
-			string gstDirectory, registryPath;
-			
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-				return;
-			
-			gstDirectory = GetGstDirectory ();
-			registryPath = GetRegistryPath ();
-			
-			if (!Directory.Exists (gstDirectory))
-				Directory.CreateDirectory (gstDirectory);
-			
 			/* Use a custom path for the registry in Windows */
-			Environment.SetEnvironmentVariable ("GST_REGISTRY", registryPath);
-			Environment.SetEnvironmentVariable ("GST_PLUGIN_PATH", Config.RelativeToPrefix ("lib\\gstreamer-0.10"));
-		}
-
-		private static string GetGstDirectory ()
-		{
-			return Path.Combine (Config.HomeDir, GST_DIRECTORY);
+			Environment.SetEnvironmentVariable ("GST_REGISTRY", GetRegistryPath ());
+			Environment.SetEnvironmentVariable ("GST_PLUGIN_PATH",
+			                                    Config.RelativeToPrefix (Path.Combine("lib", "gstreamer-0.10")));
 		}
 
 		private static string GetRegistryPath ()
 		{
-			return Path.Combine (GetGstDirectory (), REGISTRY_PATH);
+			return Path.Combine (Config.ConfigDir, REGISTRY_PATH);
 		}
 
 		private static bool CheckBasicPlugins ()
