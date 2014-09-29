@@ -328,28 +328,6 @@ namespace LongoMatch.Gui.Panel
 				
 			encSettings.OutputFile = capturemediafilechooser.CurrentPath;
 			
-			if (project.Description.File == null) {
-				MediaFile file = new MediaFile ();
-				file.FilePath = capturemediafilechooser.CurrentPath;
-				file.VideoWidth = encSettings.VideoStandard.Width;
-				file.VideoHeight = encSettings.VideoStandard.Height;
-				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
-				file.Par = 1;
-				project.UpdateMediaFile (file);
-			}
-			if (projectType == ProjectType.CaptureProject) {
-				Device device = videoDevices [devicecombobox.Active];
-				captureSettings.CaptureSourceType = device.DeviceType;
-				captureSettings.DeviceID = device.ID;
-				captureSettings.SourceElement = device.SourceElement;
-			} else if (projectType == ProjectType.URICaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.URI;
-				captureSettings.DeviceID = urientry.Text;
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.None;
-				project.Description.File.FilePath = Constants.FAKE_PROJECT;
-			}
-				
 			/* Get quality info */
 			qualitycombobox.GetActiveIter (out iter);
 			encSettings.EncodingQuality = (EncodingQuality)qualList.GetValue (iter, 1);
@@ -366,6 +344,30 @@ namespace LongoMatch.Gui.Panel
 			encSettings.Framerate_d = Config.FPS_D;
 			
 			captureSettings.EncodingSettings = encSettings;
+
+			if (project.Description.File == null) {
+				MediaFile file = new MediaFile ();
+				file.FilePath = capturemediafilechooser.CurrentPath;
+				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
+				file.Par = 1;
+				project.UpdateMediaFile (file);
+			}
+			if (projectType == ProjectType.CaptureProject) {
+				Device device = videoDevices [devicecombobox.Active];
+				captureSettings.CaptureSourceType = device.DeviceType;
+				captureSettings.DeviceID = device.ID;
+				captureSettings.SourceElement = device.SourceElement;
+				project.Description.File.VideoHeight = encSettings.VideoStandard.Height;
+				project.Description.File.VideoWidth = encSettings.VideoStandard.Width;
+			} else if (projectType == ProjectType.URICaptureProject) {
+				captureSettings.CaptureSourceType = CaptureSourceType.URI;
+				captureSettings.DeviceID = urientry.Text;
+				project.Description.File.VideoHeight = encSettings.VideoStandard.Height;
+				project.Description.File.VideoWidth = encSettings.VideoStandard.Width;
+			} else if (projectType == ProjectType.FakeCaptureProject) {
+				captureSettings.CaptureSourceType = CaptureSourceType.None;
+				project.Description.File.FilePath = Constants.FAKE_PROJECT;
+			}
 			return true;
 		}
 		
