@@ -9826,14 +9826,14 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HPaned" id="hpaned1">
+          <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Position">164</property>
+            <property name="Spacing">6</property>
             <child>
               <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
+                <property name="HscrollbarPolicy">Never</property>
                 <property name="ShadowType">In</property>
                 <child>
                   <widget class="Gtk.TreeView" id="treeview">
@@ -9843,27 +9843,23 @@ You can continue with the current capture, cancel it or save your project.
                 </child>
               </widget>
               <packing>
-                <property name="Resize">False</property>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.HBox" id="hbox1">
+              <widget class="Gtk.VBox" id="propsvbox">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.VBox" id="propsvbox">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                  </packing>
+                  <placeholder />
                 </child>
               </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+              </packing>
             </child>
           </widget>
           <packing>
