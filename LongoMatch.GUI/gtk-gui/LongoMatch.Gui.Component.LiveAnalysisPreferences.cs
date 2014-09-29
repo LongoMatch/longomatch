@@ -5,12 +5,10 @@ namespace LongoMatch.Gui.Component
 	public partial class LiveAnalysisPreferences
 	{
 		private global::Gtk.Table table1;
-		private global::Gtk.HBox hbox1;
-		private global::Gtk.Label dirlabel;
-		private global::Gtk.Button dirbutton;
 		private global::Gtk.Label label1;
 		private global::Gtk.Label label3;
 		private global::Gtk.Label label4;
+		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser1;
 
 		protected virtual void Build ()
 		{
@@ -22,79 +20,57 @@ namespace LongoMatch.Gui.Component
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(2)), true);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
-			this.table1.ColumnSpacing = ((uint)(6));
+			this.table1.ColumnSpacing = ((uint)(20));
 			this.table1.BorderWidth = ((uint)(20));
-			// Container child table1.Gtk.Table+TableChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.dirlabel = new global::Gtk.Label ();
-			this.dirlabel.Name = "dirlabel";
-			this.dirlabel.Wrap = true;
-			this.dirlabel.Ellipsize = ((global::Pango.EllipsizeMode)(1));
-			this.dirlabel.MaxWidthChars = 20;
-			this.hbox1.Add (this.dirlabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirlabel]));
-			w1.Position = 0;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.dirbutton = new global::Gtk.Button ();
-			this.dirbutton.CanFocus = true;
-			this.dirbutton.Name = "dirbutton";
-			this.dirbutton.UseStock = true;
-			this.dirbutton.UseUnderline = true;
-			this.dirbutton.Label = "gtk-open";
-			this.hbox1.Add (this.dirbutton);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirbutton]));
-			w2.Position = 1;
-			w2.Expand = false;
-			w2.Fill = false;
-			this.table1.Add (this.hbox1);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox1]));
-			w3.TopAttach = ((uint)(1));
-			w3.BottomAttach = ((uint)(2));
-			w3.LeftAttach = ((uint)(1));
-			w3.RightAttach = ((uint)(2));
-			w3.XOptions = ((global::Gtk.AttachOptions)(4));
-			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Review plays in the same window");
 			this.table1.Add (this.label1);
-			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
-			w4.TopAttach = ((uint)(2));
-			w4.BottomAttach = ((uint)(3));
-			w4.XOptions = ((global::Gtk.AttachOptions)(4));
-			w4.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
+			w1.TopAttach = ((uint)(2));
+			w1.BottomAttach = ((uint)(3));
+			w1.XOptions = ((global::Gtk.AttachOptions)(4));
+			w1.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
 			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Output directory");
 			this.table1.Add (this.label3);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
-			w5.TopAttach = ((uint)(1));
-			w5.BottomAttach = ((uint)(2));
-			w5.XOptions = ((global::Gtk.AttachOptions)(4));
-			w5.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
+			w2.TopAttach = ((uint)(1));
+			w2.BottomAttach = ((uint)(2));
+			w2.XOptions = ((global::Gtk.AttachOptions)(4));
+			w2.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Render new plays automatically\n(Requires a powerful CPU)");
+			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Render new events automatically\n(Requires a powerful CPU)");
 			this.label4.UseMarkup = true;
 			this.table1.Add (this.label4);
-			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.label4]));
-			w6.XOptions = ((global::Gtk.AttachOptions)(4));
-			w6.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label4]));
+			w3.XOptions = ((global::Gtk.AttachOptions)(4));
+			w3.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
+			this.mediafilechooser1 = new global::LongoMatch.Gui.Component.MediaFileChooser ();
+			this.mediafilechooser1.Events = ((global::Gdk.EventMask)(256));
+			this.mediafilechooser1.Name = "mediafilechooser1";
+			this.table1.Add (this.mediafilechooser1);
+			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.mediafilechooser1]));
+			w4.TopAttach = ((uint)(1));
+			w4.BottomAttach = ((uint)(2));
+			w4.LeftAttach = ((uint)(1));
+			w4.RightAttach = ((uint)(2));
+			w4.XOptions = ((global::Gtk.AttachOptions)(4));
+			w4.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.Add (this.table1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
-			this.dirbutton.Clicked += new global::System.EventHandler (this.OnDirbuttonClicked);
 		}
 	}
 }

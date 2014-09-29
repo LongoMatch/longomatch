@@ -20,6 +20,7 @@ using Gtk;
 using Mono.Unix;
 
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -50,17 +51,15 @@ namespace LongoMatch.Gui.Component
 			reviewcb.Active = Config.ReviewPlaysInSameWindow;
 			reviewcb.Toggled += (sender, e) => {Config.ReviewPlaysInSameWindow = reviewcb.Active;};
 			
-			dirlabel.Text = Config.AutoRenderDir;
+			mediafilechooser1.FileChooserMode = FileChooserMode.Directory;
+			mediafilechooser1.CurrentPath = Config.AutoRenderDir;
+			mediafilechooser1.ChangedEvent += HandleChangedEvent;
+			
 		}
-		
-		protected void OnDirbuttonClicked (object sender, EventArgs e)
+
+		void HandleChangedEvent (object sender, EventArgs e)
 		{
-			string folderDir = FileChooserHelper.SelectFolder(this, Catalog.GetString ("Select a folder"),
-			                                                  "Live", Config.VideosDir, null, null);
-			if (folderDir != null) {
-				dirlabel.Text = folderDir;
-				Config.AutoRenderDir = folderDir;
-			}
+			Config.AutoRenderDir = mediafilechooser1.CurrentPath;
 		}
 	}
 }
