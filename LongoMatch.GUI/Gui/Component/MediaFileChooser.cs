@@ -87,7 +87,11 @@ namespace LongoMatch.Gui.Component
 				fileentry.Text = System.IO.Path.GetFileName (path);
 				fileentry.TooltipText = path;
 			} else {
-				fileentry.Text = Catalog.GetString ("Select file...");
+				if (FileChooserMode == FileChooserMode.Directory) {
+					fileentry.Text = Catalog.GetString ("Select folder...");
+				} else {
+					fileentry.Text = Catalog.GetString ("Select file...");
+				}
 			}
 		}
 
