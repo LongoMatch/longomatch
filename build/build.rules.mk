@@ -27,11 +27,10 @@ DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep 
 
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
-	$(ASSEMBLY_FILE).mdb \
-	$(DLLCONFIG)
+	$(ASSEMBLY_FILE).mdb
 
 moduledir = $(INSTALL_DIR_RESOLVED)
-module_SCRIPTS = $(OUTPUT_FILES)
+module_SCRIPTS = $(OUTPUT_FILES) $(DLLCONFIG)
 
 @INTLTOOL_DESKTOP_RULE@
 desktopdir = $(datadir)/applications
