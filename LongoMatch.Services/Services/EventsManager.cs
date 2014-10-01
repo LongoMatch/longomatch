@@ -175,7 +175,11 @@ namespace LongoMatch.Services
 			} else {
 				pixbuf = player.CurrentFrame;
 			}
-			guiToolkit.DrawingTool (pixbuf, play, drawing);
+			if (pixbuf == null) {
+				guiToolkit.ErrorMessage (Catalog.GetString ("Error capturing video frame"));
+			} else {
+				guiToolkit.DrawingTool (pixbuf, play, drawing);
+			}
 		}
 
 		void RenderPlay (Project project, TimelineEvent play, MediaFile file)
