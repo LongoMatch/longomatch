@@ -39,7 +39,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
+			tk.LineWidth = 1;
 			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
 			tk.StrokeColor = Drawable.TextColor;
 			tk.FontSize = Drawable.TextSize;
