@@ -486,7 +486,7 @@ namespace LongoMatch.Drawing.Cairo
 				CContext.SetDash (new double[] { }, 0);
 				break;	
 			default:
-				CContext.SetDash (new double[] { 10, 10 }, 10);
+				CContext.SetDash (new double[] { 10 * LineWidth / 2 , 10 * LineWidth / 2 }, 0);
 				break;
 			}
 		}
