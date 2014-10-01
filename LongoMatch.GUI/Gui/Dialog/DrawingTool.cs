@@ -243,6 +243,7 @@ namespace LongoMatch.Gui.Dialog
 						playerText.Value = p.ToString ();
 						d.Respond (ResponseType.Ok);
 					}
+					tagger.ResetSelection ();
 				};
 				d.VBox.PackStart (da, true, true, 0);
 				d.ShowAll ();
