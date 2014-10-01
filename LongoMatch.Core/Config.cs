@@ -77,7 +77,7 @@ namespace LongoMatch
 		
 		public static string ConfigFile {
 			get {
-				string filename = Constants.SOFTWARE_NAME.ToLower() + ".config";
+				string filename = Constants.SOFTWARE_NAME.ToLower() + "-1.0.config";
 				return Path.Combine(Config.ConfigDir, filename);
 			}
 		}
@@ -154,7 +154,7 @@ namespace LongoMatch
 		
 		public static string PluginsConfigDir {
 			get {
-				return Path.Combine(configDirectory, "addins");
+				return Path.Combine(configDirectory, "addins-1.0");
 			}
 		}
 
