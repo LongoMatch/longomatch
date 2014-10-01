@@ -15,11 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-
 using System;
 using Gtk;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Core.Store;
@@ -35,20 +33,20 @@ using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Dialog
 {
-
 	public partial class DrawingTool : Gtk.Dialog
 	{
 		TimelineEvent play;
 		Blackboard blackboard;
 		FrameDrawing drawing;
 		Drawable selectedDrawable;
+		double scaleFactor;
 
-		public DrawingTool()
+		public DrawingTool ()
 		{
-			this.Build();
+			this.Build ();
 			savebutton.Clicked += OnSavebuttonClicked;
 			savetoprojectbutton.Clicked += OnSavetoprojectbuttonClicked;
-			blackboard = new Blackboard(new WidgetWrapper (drawingarea));
+			blackboard = new Blackboard (new WidgetWrapper (drawingarea));
 			blackboard.ConfigureObjectEvent += HandleConfigureObjectEvent;
 			blackboard.ShowMenuEvent += HandleShowMenuEvent;
 			blackboard.DrawableChangedEvent += HandleDrawableChangedEvent;
@@ -94,27 +92,60 @@ namespace LongoMatch.Gui.Dialog
 			blackboard.TextColor = Color.White;
 			blackboard.TextBackgroundColor = Color.Grey2;
 			textspinbutton.Value = 12;
-			textspinbutton.ValueChanged += HandleTextSizeChanged;
-
-			widthcombobox.Changed += HandleLineWidthChanged;
-			widthcombobox.Active = 1;
+			textspinbutton.ValueChanged += (sender, e) => {
+				UpdateTextSize ();};
+			linesizespinbutton.ValueChanged += (sender, e) => {
+				UpdateLineWidth ();};
+			linesizespinbutton.Value = 4;
 			
 			clearbutton.Clicked += HandleClearClicked;
 			FillLineStyle ();
 			FillLineType ();
 		}
-		
+
 		public override void Destroy ()
 		{
-			blackboard.Dispose();
+			blackboard.Dispose ();
 			base.Destroy ();
 		}
-		
-		void FillLineStyle () {
+
+		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing)
+		{
+			this.play = play;
+			this.drawing = drawing;
+			scaleFactor = frame.Width / 500;
+			blackboard.Background = frame;
+			savetoprojectbutton.Visible = true;
+			blackboard.Drawing = drawing;
+		}
+
+		public void LoadFrame (Image frame)
+		{
+			drawing = new FrameDrawing ();
+			scaleFactor = frame.Width / 500;
+			blackboard.Background = frame;
+			blackboard.Drawing = drawing;
+			savetoprojectbutton.Visible = false;
+			UpdateLineWidth ();
+			UpdateTextSize ();
+		}
+
+		int ScalledSize (int size)
+		{
+			return (int)(size * scaleFactor);
+		}
+
+		int OriginalSize (int size)
+		{
+			return (int)(size / scaleFactor);
+		}
+
+		void FillLineStyle ()
+		{
 			ListStore formatStore;
-			CellRendererPixbuf renderer = new CellRendererPixbuf();
+			CellRendererPixbuf renderer = new CellRendererPixbuf ();
 			
-			formatStore = new ListStore(typeof(Gdk.Pixbuf), typeof (LineStyle));
+			formatStore = new ListStore (typeof(Gdk.Pixbuf), typeof(LineStyle));
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_NORMAL),
 			                          LineStyle.Normal);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_DASHED),
@@ -126,12 +157,13 @@ namespace LongoMatch.Gui.Dialog
 			stylecombobox.Active = 0;
 			stylecombobox.Changed += HandleLineStyleChanged;
 		}
-		
-		void FillLineType () {
+
+		void FillLineType ()
+		{
 			ListStore formatStore;
-			CellRendererPixbuf renderer = new CellRendererPixbuf();
+			CellRendererPixbuf renderer = new CellRendererPixbuf ();
 			
-			formatStore = new ListStore(typeof(Gdk.Pixbuf), typeof (LineStyle));
+			formatStore = new ListStore (typeof(Gdk.Pixbuf), typeof(LineStyle));
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_NORMAL),
 			                          LineType.Simple);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_ARROW),
@@ -150,13 +182,38 @@ namespace LongoMatch.Gui.Dialog
 			typecombobox.Changed += HandleLineTypeChanged;
 		}
 
+		void UpdateTextSize ()
+		{
+			if (selectedDrawable is Text) {
+				Text t = (selectedDrawable as Text);
+				t.TextSize = ScalledSize (textspinbutton.ValueAsInt);
+				QueueDraw (); 
+			} else {
+				blackboard.FontSize = ScalledSize (textspinbutton.ValueAsInt);
+			}
+			
+		}
+
+		void UpdateLineWidth ()
+		{
+			int width;
+			
+			width = ScalledSize (linesizespinbutton.ValueAsInt);
+			if (selectedDrawable != null) {
+				selectedDrawable.LineWidth = width;
+				QueueDraw ();
+			} else {
+				blackboard.LineWidth = width;
+			}
+		}
+
 		void HandleLineStyleChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
 			LineStyle style;
 				
-			stylecombobox.GetActiveIter(out iter);
-			style = (LineStyle) stylecombobox.Model.GetValue(iter, 1);
+			stylecombobox.GetActiveIter (out iter);
+			style = (LineStyle)stylecombobox.Model.GetValue (iter, 1);
 			if (selectedDrawable != null) {
 				selectedDrawable.Style = style;
 				QueueDraw ();
@@ -170,8 +227,8 @@ namespace LongoMatch.Gui.Dialog
 			TreeIter iter;
 			LineType type;
 				
-			typecombobox.GetActiveIter(out iter);
-			type = (LineType) typecombobox.Model.GetValue(iter, 1);
+			typecombobox.GetActiveIter (out iter);
+			type = (LineType)typecombobox.Model.GetValue (iter, 1);
 			if (selectedDrawable != null && selectedDrawable is Line) {
 				(selectedDrawable as Line).Type = type;
 				QueueDraw ();
@@ -184,33 +241,25 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string msg = Catalog.GetString ("Do you want to clear the drawing?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
-				blackboard.Clear();
+				blackboard.Clear ();
 			}
 		}
 
 		void HandleBackgroundColorSet (object sender, EventArgs e)
 		{
+			Color c;
+			
+			c = Misc.ToLgmColor (backgroundcolorbutton.Color,
+			                     backgroundcolorbutton.Alpha);
 			if (selectedDrawable is Text) {
 				Text t = (selectedDrawable as Text);
-				t.FillColor = t.StrokeColor = Misc.ToLgmColor (backgroundcolorbutton.Color);
+				t.FillColor = t.StrokeColor = c;
 				QueueDraw (); 
 			} else {
-				blackboard.TextBackgroundColor = Misc.ToLgmColor (backgroundcolorbutton.Color);
+				blackboard.TextBackgroundColor = c;
 			}
 		}
 
-		void HandleTextSizeChanged (object sender, EventArgs e)
-		{
-			if (selectedDrawable is Text) {
-				Text t = (selectedDrawable as Text);
-				t.TextSize = textspinbutton.ValueAsInt;
-				QueueDraw (); 
-			} else {
-				blackboard.FontSize = textspinbutton.ValueAsInt;
-			}
-			
-		}
-		
 		void HandleTextColorSet (object sender, EventArgs e)
 		{
 			if (selectedDrawable is Text) {
@@ -226,7 +275,7 @@ namespace LongoMatch.Gui.Dialog
 			if (selectedDrawable != null) {
 				selectedDrawable.StrokeColor = Misc.ToLgmColor (colorbutton.Color);
 				if (selectedDrawable.FillColor != null) {
-					Color c =  Misc.ToLgmColor (colorbutton.Color);
+					Color c = Misc.ToLgmColor (colorbutton.Color);
 					c.A = selectedDrawable.FillColor.A;
 					selectedDrawable.FillColor = c;
 				}
@@ -236,34 +285,10 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void HandleLineWidthChanged (object sender, EventArgs e)
-		{
-			TreeIter iter;
-			string swidth;
-			int width;
-			
-			widthcombobox.GetActiveIter (out iter);
-			swidth = (string) widthcombobox.Model.GetValue (iter, 0);
-			width = int.Parse (swidth.Split (' ')[0]);
-			if (selectedDrawable != null) {
-				selectedDrawable.LineWidth = width;
-				QueueDraw ();
-			} else {
-				blackboard.LineWidth = width;
-			}
-		}
-
-		public void LoadFrame (Image frame) {
-			drawing = new FrameDrawing ();
-			blackboard.Background = frame;
-			blackboard.Drawing = drawing;
-			savetoprojectbutton.Visible = false;
-		}
-		
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			if (evnt.Key == Gdk.Key.Delete) {
-				blackboard.DeleteSelection();
+				blackboard.DeleteSelection ();
 			}
 			return base.OnKeyPressEvent (evnt);
 		}
@@ -302,27 +327,20 @@ namespace LongoMatch.Gui.Dialog
 				blackboard.Tool = DrawTool.Player;
 			}
 		}
-		
-		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing) {
-			this.play = play;
-			this.drawing = drawing;
-			blackboard.Background = frame;
-			savetoprojectbutton.Visible = true;
-			blackboard.Drawing = drawing;
-		}
-		
-		void EditText (Text text) {
+
+		void EditText (Text text)
+		{
 			text.Value = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Text"),
 			                                           null, text.Value);
 			QueueDraw ();
 		}
 
-		void OnSavebuttonClicked(object sender, System.EventArgs e)
+		void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
 			string filename;
 			
-			filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Save File as..."),
-			                                       null, Config.SnapshotsDir, "PNG Images", new string[] {"*.png"});
+			filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Save File as..."),
+			                                       null, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");
 				blackboard.Save (filename);
@@ -331,7 +349,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void OnSavetoprojectbuttonClicked(object sender, System.EventArgs e)
+		void OnSavetoprojectbuttonClicked (object sender, System.EventArgs e)
 		{
 			if (!play.Drawings.Contains (drawing)) {
 				play.Drawings.Add (drawing);
@@ -342,7 +360,7 @@ namespace LongoMatch.Gui.Dialog
 			drawing = null;
 			Respond (ResponseType.Accept);
 		}
-		
+
 		void HandleConfigureObjectEvent (IBlackboardObject drawable)
 		{
 			if (drawable is Text) {
@@ -360,25 +378,27 @@ namespace LongoMatch.Gui.Dialog
 				colorbutton.Color = Misc.ToGdkColor (blackboard.Color);
 				textcolorbutton.Color = Misc.ToGdkColor (blackboard.TextColor);
 				backgroundcolorbutton.Color = Misc.ToGdkColor (blackboard.TextBackgroundColor);
-				widthcombobox.Active = blackboard.LineWidth / 2 - 1;
+				backgroundcolorbutton.Alpha = Color.ByteToUShort (blackboard.TextBackgroundColor.A);
+				linesizespinbutton.Value = OriginalSize (blackboard.LineWidth);
 				if (blackboard.LineStyle == LineStyle.Normal) {
 					stylecombobox.Active = 0;
 				} else {
 					stylecombobox.Active = 1;
 				}
-				typecombobox.Active = (int) blackboard.LineType;
+				typecombobox.Active = (int)blackboard.LineType;
 			} else {
 				if (drawable is Text) {
 					textcolorbutton.Color = Misc.ToGdkColor ((selectedDrawable as Text).TextColor);
 					backgroundcolorbutton.Color = Misc.ToGdkColor (selectedDrawable.FillColor);
-					textspinbutton.Value = (selectedDrawable as Text).TextSize;
+					backgroundcolorbutton.Alpha = Color.ByteToUShort (selectedDrawable.FillColor.A);
+					textspinbutton.Value = OriginalSize ((selectedDrawable as Text).TextSize);
 				} else {
-					colorbutton.Color =  Misc.ToGdkColor (selectedDrawable.StrokeColor);
+					colorbutton.Color = Misc.ToGdkColor (selectedDrawable.StrokeColor);
 				}
 				if (drawable is Line) {
-					typecombobox.Active = (int) (drawable as Line).Type; 
+					typecombobox.Active = (int)(drawable as Line).Type; 
 				}
-				widthcombobox.Active = selectedDrawable.LineWidth / 2 - 1;
+				linesizespinbutton.Value = OriginalSize (selectedDrawable.LineWidth);
 				if (selectedDrawable.Style == LineStyle.Normal) {
 					stylecombobox.Active = 0;
 				} else {
@@ -391,16 +411,19 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Menu m = new Menu ();
 			MenuItem item = new MenuItem (Catalog.GetString ("Delete"));
-			item.Activated += (sender, e) => {blackboard.DeleteSelection ();};
+			item.Activated += (sender, e) => {
+				blackboard.DeleteSelection ();};
 			m.Add (item);
 			if (drawable is Text) {
 				MenuItem edit = new MenuItem (Catalog.GetString ("Edit"));
-				edit.Activated += (sender, e) => {EditText (drawable as Text);};
+				edit.Activated += (sender, e) => {
+					EditText (drawable as Text);};
 				m.Add (edit);
 			}
 			m.ShowAll ();
-			m.Popup();
+			m.Popup ();
 		}
+
 		void HandleDeleteEvent (object o, DeleteEventArgs args)
 		{
 			string msg = Catalog.GetString ("Do you want to close the current drawing?");

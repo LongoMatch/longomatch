@@ -215,13 +215,12 @@ namespace LongoMatch.Drawing.Widgets
 			case DrawTool.Counter:
 				drawable = new Counter (start, 3 * LineWidth, 0);
 				drawable.FillColor = Color.Copy ();
-				drawable.FillColor.A = byte.MaxValue / 2;
 				(drawable as Counter).TextColor = Color.Grey2;
 				resize = false;
 				break;
 			case DrawTool.Text:
 				{
-					Text text = new Text (start, 1, 20, "");
+					Text text = new Text (start, 1, FontSize * 1.5, "");
 					if (ConfigureObjectEvent != null) {
 						ConfigureObjectEvent (text);
 					}
