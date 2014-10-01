@@ -213,7 +213,7 @@ namespace LongoMatch.Drawing.Widgets
 				drawable.FillColor.A = byte.MaxValue / 2;
 				break;
 			case DrawTool.Counter:
-				drawable = new Counter (start, 10, 10, 0);
+				drawable = new Counter (start, 3 * LineWidth, 0);
 				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				(drawable as Counter).TextColor = Color.Grey2;

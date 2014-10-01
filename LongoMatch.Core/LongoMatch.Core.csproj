@@ -125,6 +125,7 @@
     <Compile Include="Store\EventType.cs" />
     <Compile Include="Store\TimelineEvent.cs" />
     <Compile Include="Stats\EventTypeStats.cs" />
+    <Compile Include="Store\Drawables\Circle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

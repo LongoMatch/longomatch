@@ -66,6 +66,7 @@ SOURCES = Common/Area.cs \
 	Store/Coordinates.cs \
 	Store/DashboardButton.cs \
 	Store/Drawables/Angle.cs \
+	Store/Drawables/Circle.cs \
 	Store/Drawables/Counter.cs \
 	Store/Drawables/Cross.cs \
 	Store/Drawables/Drawable.cs \

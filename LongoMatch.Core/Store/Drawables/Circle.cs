@@ -17,24 +17,43 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Drawables
 {
-	[Serializable]
-	public class Counter: Circle
+	public class Circle: Ellipse
 	{
-		public Counter () {
+		public Circle ()
+		{
+		}
+		public Circle (Point center, double radius):
+			base (center, radius, radius)
+		{
 		}
 		
-		public Counter (Point center, double radius, int count):
-			base (center, radius)
-		{
-			Count = count;
-		}
-
-		public int Count {
+		public double Radius {
 			get;
 			set;
+		}
+		
+		[JsonIgnore]
+		public override double AxisY {
+			get {
+				return Radius;
+			}
+			set {
+				Radius = value;
+			}
+		}
+		
+		[JsonIgnore]
+		public override double AxisX {
+			get {
+				return Radius;
+			}
+			set {
+				Radius = value;
+			}
 		}
 	}
 }

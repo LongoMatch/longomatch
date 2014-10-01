@@ -42,12 +42,12 @@ namespace LongoMatch.Core.Store.Drawables
 			set;
 		}
 		
-		public double AxisX {
+		public virtual double AxisX {
 			get;
 			set;
 		}
 		
-		public double AxisY {
+		public virtual double AxisY {
 			get;
 			set;
 		}

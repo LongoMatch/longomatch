@@ -44,9 +44,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
-			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
+			tk.DrawCircle (Drawable.Center, Drawable.Radius);
 			tk.StrokeColor = Drawable.TextColor;
 			tk.FontAlignment = FontAlignment.Center;
+			tk.FontSize = (int) Drawable.AxisX;
 			tk.DrawText (darea.Start, darea.Width, darea.Height,
 			             Drawable.Count.ToString ());
 			DrawSelectionArea (tk);
