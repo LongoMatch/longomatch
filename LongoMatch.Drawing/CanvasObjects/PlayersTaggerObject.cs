@@ -62,6 +62,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Position = new Point (0, 0);
 			homeBench = new BenchObject ();
 			awayBench = new BenchObject ();
+			offset = new Point (0, 0);
+			scaleX = scaleY = 1;
 			playerToPlayerObject = new Dictionary<Player, PlayerObject>();
 			field = new FieldObject ();
 			SelectedPlayers = new List<Player> ();
