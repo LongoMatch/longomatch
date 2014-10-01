@@ -45,10 +45,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineStyle = LineStyle.Normal;
 			if (Drawable.Type == LineType.Arrow ||
 				Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Start, Drawable.Stop, 10, 0.3, true);
+				tk.DrawArrow (Drawable.Start, Drawable.Stop, 5 * Drawable.LineWidth / 2, 0.3, true);
 			}
 			if (Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Stop, Drawable.Start, 10, 0.3, true);
+				tk.DrawArrow (Drawable.Stop, Drawable.Start, 5 * Drawable.LineWidth / 2, 0.3, true);
 			}
 			if (Drawable.Type == LineType.Dot ||
 				Drawable.Type == LineType.DoubleDot) {

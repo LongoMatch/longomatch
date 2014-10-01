@@ -426,7 +426,7 @@ namespace LongoMatch.Drawing.Cairo
 				CContext.LineTo (vx2, vy2);
 				CContext.ClosePath ();
 			}
-			StrokeAndFill ();
+			StrokeAndFill (false);
 		}
 
 		public void DrawSurface (ISurface surface, Point p = null)
@@ -491,7 +491,7 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
-		void StrokeAndFill ()
+		void StrokeAndFill (bool roundCaps = true)
 		{
 			SetDash ();
 			if (ClearOperation) {
@@ -499,8 +499,13 @@ namespace LongoMatch.Drawing.Cairo
 			} else {
 				CContext.Operator = Operator.Over;
 			}
-			CContext.LineCap = LineCap.Round;
-			CContext.LineJoin = LineJoin.Round;
+			if (roundCaps) {
+				CContext.LineCap = LineCap.Round;
+				CContext.LineJoin = LineJoin.Round;
+			} else {
+				CContext.LineCap = LineCap.Butt;
+				CContext.LineJoin = LineJoin.Miter;
+			}
 			CContext.LineWidth = LineWidth;
 			SetColor (StrokeColor);
 			CContext.StrokePreserve ();
