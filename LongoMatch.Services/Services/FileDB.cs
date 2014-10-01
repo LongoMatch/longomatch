@@ -117,7 +117,7 @@ namespace LongoMatch.DB
 					string temppath = Path.Combine (backupDir.FullName, file.Name);
 					file.CopyTo (temppath, false);
 				}
-				projectsDB.LastBackup = DateTime.Now;
+				projectsDB.LastBackup = DateTime.UtcNow;
 				projectsDB.Save ();
 				return true;
 			} catch (Exception ex) {
@@ -163,7 +163,7 @@ namespace LongoMatch.DB
 			
 			try {
 				projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
-				project.Description.LastModified = DateTime.Now;
+				project.Description.LastModified = DateTime.UtcNow;
 				projectsDB.Add (project.Description);
 				try {
 					if (File.Exists (projectFile))
@@ -198,7 +198,7 @@ namespace LongoMatch.DB
 
 		public bool UpdateProject (Project project)
 		{
-			project.Description.LastModified = DateTime.Now;
+			project.Description.LastModified = DateTime.UtcNow;
 			return AddProject (project);
 		}
 
@@ -231,7 +231,7 @@ namespace LongoMatch.DB
 			ProjectsDict = new Dictionary <Guid, ProjectDescription> ();
 			Version = new System.Version (Constants.DB_MAYOR_VERSION,
 			                              Constants.DB_MINOR_VERSION);
-			LastBackup = DateTime.Now;
+			LastBackup = DateTime.UtcNow;
 		}
 
 		public LiteDB ()
