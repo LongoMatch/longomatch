@@ -219,10 +219,11 @@ namespace LongoMatch.Drawing.Widgets
 				resize = false;
 				break;
 			case DrawTool.Text:
+			case DrawTool.Player:
 				{
 					Text text = new Text (start, 1, FontSize * 1.5, "");
 					if (ConfigureObjectEvent != null) {
-						ConfigureObjectEvent (text);
+						ConfigureObjectEvent (text, Tool);
 					}
 					if (text.Value == null) {
 						return;

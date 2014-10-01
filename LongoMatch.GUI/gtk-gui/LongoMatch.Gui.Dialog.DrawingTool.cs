@@ -701,6 +701,7 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.anglebutton.Hide ();
 			this.savetoprojectbutton.Hide ();
 			this.closebutton.Hide ();
 			this.Show ();

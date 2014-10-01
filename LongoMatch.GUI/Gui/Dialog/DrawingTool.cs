@@ -39,6 +39,9 @@ namespace LongoMatch.Gui.Dialog
 		Blackboard blackboard;
 		FrameDrawing drawing;
 		Drawable selectedDrawable;
+		Gtk.Dialog playerDialog;
+		Text playerText;
+		Project project;
 		double scaleFactor;
 
 		public DrawingTool ()
@@ -81,16 +84,21 @@ namespace LongoMatch.Gui.Dialog
 			anglebutton.Toggled += HandleToolClicked;
 			numberbutton.Toggled += HandleToolClicked;
 			
-			colorbutton.Color = Misc.ToGdkColor (Color.Red1);
+			FillLineStyle ();
+			FillLineType ();
+
 			colorbutton.ColorSet += HandleColorSet;
-			textcolorbutton.Color = Misc.ToGdkColor (Color.White); 
+			colorbutton.Color = Misc.ToGdkColor (Color.Red1);
 			textcolorbutton.ColorSet += HandleTextColorSet;
-			backgroundcolorbutton.Color = Misc.ToGdkColor (Color.Grey2); 
-			backgroundcolorbutton.ColorSet += HandleBackgroundColorSet;
+			textcolorbutton.Color = Misc.ToGdkColor (Color.White); 
 			backgroundcolorbutton.UseAlpha = true;
+			backgroundcolorbutton.Alpha = 0;
+			backgroundcolorbutton.ColorSet += HandleBackgroundColorSet;
+			backgroundcolorbutton.Color = Misc.ToGdkColor (Color.Green1); 
 			blackboard.Color = Color.Red1;
-			blackboard.TextColor = Color.White;
-			blackboard.TextBackgroundColor = Color.Grey2;
+			blackboard.TextColor = Color.Grey2;
+			blackboard.TextBackgroundColor = new Color (Color.Green1.R, Color.Green1.G,
+			                                            Color.Green1.B, 0);
 			textspinbutton.Value = 12;
 			textspinbutton.ValueChanged += (sender, e) => {
 				UpdateTextSize ();};
@@ -99,8 +107,6 @@ namespace LongoMatch.Gui.Dialog
 			linesizespinbutton.Value = 4;
 			
 			clearbutton.Clicked += HandleClearClicked;
-			FillLineStyle ();
-			FillLineType ();
 		}
 
 		public override void Destroy ()
@@ -109,18 +115,20 @@ namespace LongoMatch.Gui.Dialog
 			base.Destroy ();
 		}
 
-		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing)
+		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing, Project project)
 		{
 			this.play = play;
 			this.drawing = drawing;
+			this.project = project;
 			scaleFactor = frame.Width / 500;
 			blackboard.Background = frame;
 			savetoprojectbutton.Visible = true;
 			blackboard.Drawing = drawing;
 		}
 
-		public void LoadFrame (Image frame)
+		public void LoadFrame (Image frame, Project project)
 		{
+			this.project = project;
 			drawing = new FrameDrawing ();
 			scaleFactor = frame.Width / 500;
 			blackboard.Background = frame;
@@ -205,6 +213,45 @@ namespace LongoMatch.Gui.Dialog
 			} else {
 				blackboard.LineWidth = width;
 			}
+		}
+
+		void EditText (Text text)
+		{
+			text.Value = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Text"),
+			                                           null, text.Value);
+			QueueDraw ();
+		}
+
+		void EditPlayer (Text text)
+		{
+			playerText = text;
+			if (playerDialog == null) {
+				Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select player"),
+				                               this, DialogFlags.Modal | DialogFlags.DestroyWithParent,
+				                               Gtk.Stock.Cancel, ResponseType.Cancel);
+				d.WidthRequest = 600;
+				d.HeightRequest = 400;
+				
+				DrawingArea da = new DrawingArea ();
+				TeamTagger tagger = new TeamTagger (new WidgetWrapper (da));
+				tagger.ShowSubstitutionButtons = false;
+				tagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
+				                  project.Dashboard.FieldBackground);
+				tagger.PlayersSelectionChangedEvent += players => {
+					if (players.Count == 1) {
+						Player p = players [0];
+						playerText.Value = p.ToString ();
+						d.Respond (ResponseType.Ok);
+					}
+				};
+				d.VBox.PackStart (da, true, true, 0);
+				d.ShowAll ();
+				playerDialog = d;
+			}
+			if (playerDialog.Run () != (int)ResponseType.Ok) {
+				text.Value = null;
+			}
+			playerDialog.Hide ();
 		}
 
 		void HandleLineStyleChanged (object sender, EventArgs e)
@@ -328,13 +375,6 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void EditText (Text text)
-		{
-			text.Value = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Text"),
-			                                           null, text.Value);
-			QueueDraw ();
-		}
-
 		void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
 			string filename;
@@ -361,10 +401,14 @@ namespace LongoMatch.Gui.Dialog
 			Respond (ResponseType.Accept);
 		}
 
-		void HandleConfigureObjectEvent (IBlackboardObject drawable)
+		void HandleConfigureObjectEvent (IBlackboardObject drawable, DrawTool tool)
 		{
 			if (drawable is Text) {
-				EditText (drawable as Text);
+				if (tool == DrawTool.Text) {
+					EditText (drawable as Text);
+				} else if (tool == DrawTool.Player) {
+					EditPlayer (drawable as Text);
+				}
 			}
 		}
 

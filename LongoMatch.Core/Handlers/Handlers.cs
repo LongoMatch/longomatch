@@ -127,7 +127,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays,EventType cat,Time time);
 	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
-	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable);
+	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable, DrawTool tool);
 	public delegate void DrawableChangedHandler (IBlackboardObject drawable);
 	public delegate void BackEventHandle ();
 }

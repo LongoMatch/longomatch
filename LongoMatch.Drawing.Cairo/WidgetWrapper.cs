@@ -186,6 +186,9 @@ namespace LongoMatch.Drawing.Cairo
 			case DrawTool.Eraser:
 				cursor = "eraser";
 				break;
+			case DrawTool.Player:
+				cursor = "player";
+				break;
 			case DrawTool.Selection:
 			default:
 				cursor = null;

@@ -2928,6 +2928,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                         <child>
                           <widget class="Gtk.RadioButton" id="anglebutton">
                             <property name="MemberName" />
+                            <property name="Visible">False</property>
                             <property name="Tooltip" translatable="yes">Angle tool</property>
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes" />

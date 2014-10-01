@@ -178,7 +178,7 @@ namespace LongoMatch.Services
 			if (pixbuf == null) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error capturing video frame"));
 			} else {
-				guiToolkit.DrawingTool (pixbuf, play, drawing);
+				guiToolkit.DrawingTool (pixbuf, play, drawing, openedProject);
 			}
 		}
 

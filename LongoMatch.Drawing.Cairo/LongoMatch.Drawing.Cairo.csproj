@@ -57,6 +57,10 @@
     <EmbeddedResource Include="..\images\tools\draw-cross.png">
       <LogicalName>cross</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\images\cursors\player">
+      <Link>player</Link>
+      <LogicalName>player</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\images\cursors\angle" />

@@ -15,6 +15,7 @@ RESOURCES = $(top_srcdir)/images/cursors/text \
 	$(top_srcdir)/images/cursors/ellipse \
 	$(top_srcdir)/images/cursors/arrow \
 	$(top_srcdir)/images/tools/draw-eraser.png \
-	$(top_srcdir)/images/tools/draw-cross.png
+	$(top_srcdir)/images/tools/draw-cross.png \
+	$(top_srcdir)/images/cursors/player
 
 include $(top_srcdir)/build/build.mk
