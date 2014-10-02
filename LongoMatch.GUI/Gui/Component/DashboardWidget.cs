@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Component
 					dashscrolledwindow.VscrollbarPolicy = PolicyType.Never;
 				}
 				tagger.FitMode = value;
-				tagger.Refresh ();
+				drawingarea.QueueResize ();
 				ignoreChanges = false;
 			}
 		}

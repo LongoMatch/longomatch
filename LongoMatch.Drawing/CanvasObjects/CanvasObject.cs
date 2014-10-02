@@ -92,6 +92,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 		
+		public void ResetDrawArea ()
+		{
+			DrawArea = null;
+		}
+		
 		protected Area DrawArea {
 			get;
 			set;

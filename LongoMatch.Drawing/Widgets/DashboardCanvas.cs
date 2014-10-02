@@ -37,10 +37,11 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
 		public event NewEventHandler NewTagEvent;
 
-		LongoMatch.Core.Store.Templates.Dashboard template;
+		Dashboard template;
 		TagMode tagMode;
 		Time currentTime;
 		int templateWidth, templateHeight;
+		FitMode fitMode;
 
 		public DashboardCanvas (IWidget widget): base (widget)
 		{
@@ -52,7 +53,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddTag = new Tag ("", "");
 		}
 
-		public LongoMatch.Core.Store.Templates.Dashboard Template {
+		public Dashboard Template {
 			set {
 				template = value;
 				LoadTemplate ();
@@ -99,8 +100,19 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		public FitMode FitMode {
-			set;
-			get;
+			set {
+				fitMode = value;
+				Refresh ();
+				/* When changing the fit mode we don't know yet the final
+				 * size of the widget, so the stored DrawArea is for the old
+				 * size. We need to wait until the next resize event to get it right */
+				foreach (TaggerObject to in Objects) {
+					to.ResetDrawArea ();
+				}
+			}
+			get {
+				return fitMode;
+			}
 		}
 
 		public void Refresh (DashboardButton b = null)
@@ -244,6 +256,8 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			templateHeight = template.CanvasHeight + 10;
 			templateWidth = template.CanvasWidth + 10;
+			/* When going from Original to Fill or Fit, we can't know the new 
+			 * size of the shrinked object until we have a resize */
 			if (FitMode == FitMode.Original) {
 				widget.Width = templateWidth;
 				widget.Height = templateHeight;
