@@ -72,6 +72,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		void DrawArrow(Point start, Point stop, int lenght, double degrees, bool closed);
 		void Save (ICanvas canvas, double width, double height, string filename);
 		Image Copy (ICanvas canvas, double width, double height);
+		Area UserToDevice (Area area);
 	}
 }
 

@@ -112,7 +112,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double relSize;
 			
 			relSize = Math.Max (1, (double)Width / 200);
-			
+
 			tk.Begin ();
 			if (Play != null) {
 				color = Play.Color;

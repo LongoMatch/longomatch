@@ -55,6 +55,14 @@ namespace LongoMatch.Core.Store.Drawables
 				Radius = value;
 			}
 		}
+
+		[JsonIgnore]
+		public override Area Area {
+			get {
+				return new Area (new Point (Center.X - Radius, Center.Y - Radius),
+				                 Radius * 2, Radius * 2);
+			}
+		}
 	}
 }
 

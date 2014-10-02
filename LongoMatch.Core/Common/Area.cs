@@ -16,9 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Common
 {
+	[DataContract]
 	[Serializable]
 	public class Area
 	{
@@ -28,48 +31,111 @@ namespace LongoMatch.Core.Common
 			Width = width;
 			Height = height;
 		}
-		
+
+		[DataMember]
 		public Point Start {
 			get;
 			set;
 		}
-		
+
+		[DataMember]
 		public double Width {
 			get;
 			set;
 		}
-		
+
+		[DataMember]
 		public double Height {
 			get;
 			set;
 		}
-		
+
+		public double Left {
+			get {
+				return Start.X;
+			}
+		}
+
+		public double Top {
+			get {
+				return Start.Y;
+			}
+		}
+
+		public double Right {
+			get {
+				return Start.X + Width;
+			}
+		}
+
+		public double Bottom {
+			get {
+				return Start.Y + Height;
+			}
+		}
+
+		public Point TopLeft {
+			get {
+				return new Point (Left, Top);
+			}
+		}
+
+		public Point TopRight {
+			get {
+				return new Point (Right, Top);
+			}
+		}
+
+		public Point BottomLeft {
+			get {
+				return new Point (Left, Bottom);
+			}
+		}
+
+		public Point BottomRight {
+			get {
+				return new Point (Right, Bottom);
+			}
+		}
+
 		public Point Center {
 			get {
 				return new Point (Start.X + Width / 2, Start.Y + Height / 2);
 			}
 		}
-		
+
 		public Point[] Vertices {
 			get {
 				return new Point[] {
-					new Point (Start.X, Start.Y),
-					new Point (Start.X + Width, Start.Y),
-					new Point (Start.X + Width, Start.Y + Height),
-					new Point (Start.X, Start.Y + Height)};
+					TopLeft,
+					TopRight,
+					BottomRight,
+					BottomLeft,
+				};
 			}
 		}
 
 		public Point[] VerticesCenter {
 			get {
-				Point [] points = Vertices;
+				Point[] points = Vertices;
 
-				points[0].X += Width / 2;
-				points[1].Y += Height / 2;
-				points[2].X = points[0].X;
-				points[3].Y = points[1].Y;
+				points [0].X += Width / 2;
+				points [1].Y += Height / 2;
+				points [2].X = points [0].X;
+				points [3].Y = points [1].Y;
 				return points;
 			}
+		}
+
+		public bool IntersectsWith (Area area)
+		{
+			return !((Left >= area.Right) || (Right <= area.Left) ||
+				(Top >= area.Bottom) || (Bottom <= area.Top));
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[Area: Start={0}, Width={1}, Height={2}]", Start, Width, Height);
 		}
 	}
 }

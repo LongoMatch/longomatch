@@ -143,6 +143,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tagsPerRow = Math.Max (1, Button.TagsPerRow);
 			rowwidth = catWidth / tagsPerRow;
 
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			}
+
 			tk.Begin ();
 			tk.FontWeight = FontWeight.Bold;
 

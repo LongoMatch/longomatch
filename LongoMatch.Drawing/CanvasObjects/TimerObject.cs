@@ -42,13 +42,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public Time CurrentTime {
 			set {
+				bool update = false;
+
 				if (CurrentTimeNode != null) {
 					if (value < CurrentTimeNode.Start) {
 						Button.Timer.CancelTimer ();
 						CurrentTimeNode = null;
 					}
 				}
+				if (value != null && currentTime != null &&
+				    currentTime.Seconds != value.Seconds) {
+					update = true;
+				}
 				currentTime = value;
+				if (update && CurrentTimeNode != null) {
+					EmitRedrawEvent (this, DrawArea);
+				}
 			}
 			get {
 				return currentTime;
@@ -97,8 +106,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 				h = Button.Height / 2;
 			}
 			
-			tk.Begin ();
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			};
 
+			tk.Begin ();
 			/* Draw Rectangle */
 			DrawButton (tk);
 			

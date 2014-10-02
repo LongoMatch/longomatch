@@ -126,6 +126,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			selected = new List<TimeNodeObject> ();
 
+			if (!UpdateDrawArea (tk, area, new Area (new Point (0, OffsetY), Width, Height))) {
+				return;
+			};
+
 			tk.Begin ();
 			DrawBackground (tk, area);
 			foreach (TimeNodeObject p in nodes) {

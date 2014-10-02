@@ -405,6 +405,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			p2.Position = p1.Position;
 			p1.Position = tmpPos;
 			ResetSelection ();
+			EmitRedrawEvent (this, null);
 		}
 
 		int ColumnSize {
@@ -448,6 +449,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					Team = team,
 				};
 				po.ClickedEvent += HandlePlayerClickedEvent;
+				po.RedrawEvent += (co, area) => {EmitRedrawEvent (this, area);};
 				playerObjects.Add (po);
 				playerToPlayerObject.Add (p, po);
 			}

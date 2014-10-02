@@ -9,6 +9,7 @@ DEFAULT_INSTALL_DIR = $(pkglibdir)
 LINK_SYSTEM = -r:System
 LINK_SYSTEM_CORE = -r:System.Core
 LINK_SYSTEM_DRAWING = -r:System.Drawing
+LINK_SYSTEM_SERIALIZATION = -r:System.Runtime.Serialization
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_POSIX = -r:Mono.Posix
 LINK_MONO_ADDINS = $(MONO_ADDINS_LIBS)
@@ -42,6 +43,7 @@ REF_DEP_LONGOMATCH_PLUGINS = \
 
 REF_DEP_LONGOMATCH_CORE = \
                      $(LINK_SYSTEM_DRAWING) \
+                     $(LINK_SYSTEM_SERIALIZATION) \
                      $(LINK_MONO_POSIX) \
                      $(LINK_GLIB) \
                      $(LINK_JSON) \

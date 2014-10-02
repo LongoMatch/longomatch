@@ -170,6 +170,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
 			
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			}
 			tk.Begin ();
 			DrawButton (tk);
 			DrawSelectionArea (tk);

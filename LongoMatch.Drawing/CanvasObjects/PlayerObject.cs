@@ -119,7 +119,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Point zero, p;
+			Point zero, start, p;
 			double numberWidth, numberHeight;
 			double size, scale;
 			ISurface number, sin, sout;
@@ -142,8 +142,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 
 			tk.Begin ();
-			tk.TranslateAndScale (Position - new Point (Size / 2, Size / 2),
-			                      new Point (scale, scale));
+			start = new Point (Size / 2, Size / 2);
+			tk.TranslateAndScale (Position - start, new Point (scale, scale));
+
+			if (!UpdateDrawArea (tk, area, new Area (zero, Background.Height, Background.Height))) {
+				tk.End();
+				return;
+			};
 
 			/* Background */
 			tk.DrawSurface (Background, zero);

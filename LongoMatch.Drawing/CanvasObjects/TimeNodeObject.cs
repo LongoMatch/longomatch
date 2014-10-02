@@ -153,6 +153,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			double linepos;
 
+			if (!UpdateDrawArea (tk, area,
+			                     new Area (new Point (StartX, OffsetY), StopX - StartX, Height))) {
+				return;
+			};
+
 			tk.Begin ();
 			if (needle == null) {
 				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleUP); 

@@ -87,6 +87,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double start, stop;
 			int lineWidth = StyleConf.TimelineLineSize;
 
+			if (!UpdateDrawArea (tk, area,
+			                     new Area (new Point (StartX, OffsetY), StopX - StartX, Height))) {
+				return;
+			};
+
 			tk.Begin ();
 			
 			start = StartX;

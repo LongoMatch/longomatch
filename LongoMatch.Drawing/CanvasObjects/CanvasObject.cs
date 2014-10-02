@@ -29,6 +29,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public event RedrawHandler RedrawEvent;
 		
 		bool disposed;
+		bool highlighted;
+		bool selected;
 
 		protected CanvasObject ()
 		{
@@ -65,13 +67,34 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public virtual bool Highlighted {
-			get;
-			set;
+			get {
+				return highlighted;
+			}
+			set {
+				bool changed = value != highlighted;
+				highlighted = value;
+				if (changed) {
+					EmitRedrawEvent (this, DrawArea);
+				}
+			}
 		}
 
 		public virtual bool Selected {
-			set;
+			get {
+				return selected;
+			}
+			set {
+				bool changed = value != selected;
+				selected = value;
+				if (changed) {
+					EmitRedrawEvent (this, DrawArea);
+				}
+			}
+		}
+		
+		protected Area DrawArea {
 			get;
+			set;
 		}
 
 		public virtual void ClickPressed (Point p, ButtonModifier modif)
@@ -95,12 +118,28 @@ namespace LongoMatch.Drawing.CanvasObjects
 				RedrawEvent (co, area);
 			}
 		}
+
+		protected bool NeedsRedraw (Area area)
+		{
+			return DrawArea == null || area == null || area.IntersectsWith (DrawArea);
+		}
+		
+		protected virtual bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
+		{
+			if (NeedsRedraw (redrawArea)) {
+				DrawArea = tk.UserToDevice (drawArea);
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 
 	public abstract class CanvasButtonObject: CanvasObject
 	{
+		bool active;
 	
 		public bool Toggle {
 			get;
@@ -108,8 +147,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public bool Active {
-			get;
-			set;
+			get {
+				return active;
+			}
+			set {
+				bool changed = active != value;
+				active = value;
+				if (changed) {
+					EmitRedrawEvent (this, DrawArea);
+				}
+			}
 		}
 
 		public override void ClickPressed (Point p, ButtonModifier modif)
@@ -129,6 +176,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public abstract class CanvasDrawableObject<T>: CanvasObject, ICanvasDrawableObject where T: IBlackboardObject
 	{
 		
+		int selectionSize = 3;
+
 		public IBlackboardObject IDrawableObject {
 			get {
 				return Drawable;
@@ -148,7 +197,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return Drawable.Selected;
 			}
 			set {
+				bool changed = value != Drawable.Selected;
 				Drawable.Selected = value;
+				if (changed) {
+					EmitRedrawEvent (this, DrawArea);
+				}
 			}
 		}
 
@@ -172,14 +225,32 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
-			tk.DrawRectangle (new Point (p.X - 3, p.Y - 3), 6, 6);
+			tk.LineWidth = 0;
+			tk.DrawRectangle (new Point (p.X - selectionSize,
+			                             p.Y - selectionSize),
+			                  selectionSize * 2, selectionSize * 2);
 		}
 
 		protected void DrawCenterSelection (IDrawingToolkit tk, Point p)
 		{
 			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
+			tk.LineWidth = 0;
 			tk.LineStyle = LineStyle.Normal;
-			tk.DrawCircle (p, 3);
+			tk.DrawCircle (p, selectionSize);
+		}
+		
+		protected override bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
+		{
+			if (NeedsRedraw (redrawArea)) {
+				DrawArea = tk.UserToDevice (drawArea);
+				DrawArea.Start.X -= selectionSize + 2;
+				DrawArea.Start.Y -= selectionSize + 2;
+				DrawArea.Width += selectionSize * 2 + 4;
+				DrawArea.Height += selectionSize * 2 + 4;
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		protected void DrawSelectionArea (IDrawingToolkit tk)

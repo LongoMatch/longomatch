@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using Gtk;
 using Gdk;
 using LongoMatch.Core.Common;
@@ -55,7 +56,7 @@ namespace LongoMatch.Drawing.Cairo
 			widget.ButtonReleaseEvent += HandleButtonReleaseEvent;
 			widget.MotionNotifyEvent += HandleMotionNotifyEvent;
 		}
-		
+
 		public void Dispose ()
 		{
 			Dispose (true);
@@ -81,7 +82,7 @@ namespace LongoMatch.Drawing.Cairo
 			get;
 			set;
 		}
-		
+
 		public double Width {
 			get {
 				return currentWidth;
@@ -110,8 +111,9 @@ namespace LongoMatch.Drawing.Cairo
 				widget.GdkWindow.InvalidateRegion (region, true);
 			} else {
 				widget.GdkWindow.InvalidateRect (
-					new Gdk.Rectangle ((int)area.Start.X, (int)area.Start.Y,
-				                    (int)area.Width, (int)area.Height),
+					new Gdk.Rectangle ((int)area.Start.X - 1, (int)area.Start.Y - 1,
+				                   (int)Math.Ceiling (area.Width) + 2,
+				                   (int)Math.Ceiling (area.Height) + 2),
 					true);
 			}
 			widget.GdkWindow.ProcessUpdates (true);

@@ -37,6 +37,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
+				return;
+			};
+
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;

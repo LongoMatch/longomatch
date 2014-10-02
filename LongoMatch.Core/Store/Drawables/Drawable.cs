@@ -19,6 +19,7 @@ using System;
 
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Drawables
 {
@@ -54,6 +55,7 @@ namespace LongoMatch.Core.Store.Drawables
 			set;
 		}
 		
+		[JsonIgnore]
 		public virtual Area Area {
 			get;
 			protected set;

@@ -53,6 +53,14 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		public override Area Area {
+			get {
+				return new Area (new Point (Math.Min (Start.X, Stop.X), Math.Min (Start.Y, Stop.Y)),
+				                 Math.Abs (Stop.X - Start.X), Math.Abs (Stop.Y - Start.Y));
+			}
+		}
+
+		[JsonIgnore]
 		public Point Center {
 			get {
 				return new Point (Start.X + (Stop.X - Start.X) / 2,

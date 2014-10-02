@@ -37,8 +37,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			}
+
 			tk.Begin ();
-	
+
 			/* Draw Rectangle */
 			DrawButton (tk);
 			

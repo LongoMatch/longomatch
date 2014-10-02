@@ -216,7 +216,6 @@ namespace LongoMatch.Drawing
 					current.Highlighted = true;
 				}
 				highlighted = current;
-				widget.ReDraw ();
 			}
 		}
 
@@ -241,12 +240,10 @@ namespace LongoMatch.Drawing
 			foreach (Selection sel in Selections) {
 				ICanvasSelectableObject po = sel.Drawable as ICanvasSelectableObject;
 				po.Selected = false;
-				widget.ReDraw (po);
 			}
 			foreach (ICanvasSelectableObject cso in Objects) {
 				cso.Selected = false;
 			}
-			widget.ReDraw ();
 			Selections.Clear ();
 		}
 
@@ -276,7 +273,6 @@ namespace LongoMatch.Drawing
 			if (notify) {
 				SelectionChanged (Selections);
 			}
-			widget.ReDraw (so);
 		}
 
 		Selection GetSelection (Point coords, bool inMotion=false)
@@ -335,7 +331,6 @@ namespace LongoMatch.Drawing
 				StartMove (sel);
 				moving = Selections.Count > 0 && ObjectsCanMove;
 			}
-			widget.ReDraw ();
 		}
 
 		protected virtual void HandleRightButton (Point coords, ButtonModifier modif)
@@ -371,7 +366,6 @@ namespace LongoMatch.Drawing
 			if (clickedSel != null) {
 				(clickedSel.Drawable as ICanvasSelectableObject).ClickReleased ();
 				clickedSel = null;
-				widget.ReDraw ();
 			}
 			StopMove ();
 		}

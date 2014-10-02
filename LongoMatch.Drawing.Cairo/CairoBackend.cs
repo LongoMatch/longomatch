@@ -187,6 +187,25 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		public Area UserToDevice (Area a)
+		{
+			double x, y, d1, d2;
+			
+			x = a.Start.X;
+			y = a.Start.Y;
+			CContext.UserToDevice (ref x, ref y);
+			Area ua = new Area (new Point (x, y), 0, 0);
+			d1 = 0;
+			d2 = a.Width;
+			CContext.UserToDeviceDistance (ref d1, ref d2);
+			ua.Width = d2 - d1;
+			d1 = 0;
+			d2 = a.Height;
+			CContext.UserToDeviceDistance (ref d1, ref d2);
+			ua.Height = d2 - d1;
+			return ua;
+		}
+
 		public void End ()
 		{
 			CContext.Restore ();
@@ -305,8 +324,8 @@ namespace LongoMatch.Drawing.Cairo
 			
 			x = start.X + LineWidth / 2;
 			y = start.Y + LineWidth / 2;
-			height -= LineWidth / 2;
-			width -= LineWidth / 2;
+			height -= LineWidth;
+			width -= LineWidth;
 
 			if ((radius > height / 2) || (radius > width / 2))
 				radius = Math.Min (height / 2, width / 2);

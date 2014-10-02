@@ -74,6 +74,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 				backbuffer = tk.CreateSurface (Background.Width, Background.Height,
 				                               drawing.Freehand);
+				Accuracy = Background.Width / 100;
 			}
 		}
 

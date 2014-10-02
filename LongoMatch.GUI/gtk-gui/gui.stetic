@@ -2871,7 +2871,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="977 935">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="977 964">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Drawing Tool</property>
     <property name="Icon">stock:longomatch Menu</property>

@@ -40,6 +40,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Area darea;
 			
 			darea = Drawable.Area;
+			if (!UpdateDrawArea (tk, area, darea)) {
+				return;
+			};
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;

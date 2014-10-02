@@ -38,11 +38,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			}
+
 			tk.Begin ();
-			
 			/* Draw Rectangle */
 			DrawButton (tk);
-			
 			/* Draw header */
 			tk.LineWidth = 2;
 			tk.StrokeColor = TagButton.TextColor;
