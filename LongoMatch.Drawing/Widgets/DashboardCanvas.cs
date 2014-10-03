@@ -103,12 +103,6 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				fitMode = value;
 				Refresh ();
-				/* When changing the fit mode we don't know yet the final
-				 * size of the widget, so the stored DrawArea is for the old
-				 * size. We need to wait until the next resize event to get it right */
-				foreach (TaggerObject to in Objects) {
-					to.ResetDrawArea ();
-				}
 			}
 			get {
 				return fitMode;
@@ -249,7 +243,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			Edited = false;
 			SizeChanged ();
-			widget.ReDraw ();
 		}
 
 		void SizeChanged ()
@@ -272,6 +265,10 @@ namespace LongoMatch.Drawing.Widgets
 				                   (int)widget.Width, (int)widget.Height,
 				                   out scaleX, out scaleY, out translation);
 			}
+			foreach (TaggerObject to in Objects) {
+				to.ResetDrawArea ();
+			}
+			widget.ReDraw ();
 		}
 
 		void HandleTaggerClickedEvent (ICanvasObject co)
