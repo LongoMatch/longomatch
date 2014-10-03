@@ -32,6 +32,7 @@ using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
 using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
@@ -399,12 +400,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleAddNewTagEvent (DashboardButton taggerbutton)
 		{
-			string res = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Name"),
-			                                           Catalog.GetString ("New tag"));
-			if (!string.IsNullOrEmpty (res)) {
-				(taggerbutton as AnalysisEventButton).AnalysisEventType.Tags.Add (new Tag (res));
-				tagger.Refresh (null);
-			}
+			AnalysisEventType evt = (taggerbutton as AnalysisEventButton).AnalysisEventType;
+			EventTypeTagsEditor dialog = new EventTypeTagsEditor ();
+			dialog.EventType = evt;
+			dialog.Run ();
+			dialog.Destroy ();
+			Edited = true;
 		}
 
 		void HandleResetField (object sender, EventArgs e)

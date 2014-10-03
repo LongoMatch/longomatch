@@ -47,6 +47,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
 	Gui/Dialog/EndCaptureDialog.cs \
 	Gui/Dialog/EntryDialog.cs \
+	Gui/Dialog/EventTypeTagsEditor.cs \
 	Gui/Dialog/FramesCaptureProgressDialog.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
 	Gui/Dialog/PlayEditor.cs \
@@ -119,6 +120,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs \

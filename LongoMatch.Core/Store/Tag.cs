@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class Tag
 	{
-		public Tag (string value, string grp="") {
+		public Tag (string value, string grp="Default") {
 			Group = grp;
 			Value = value;
 		}

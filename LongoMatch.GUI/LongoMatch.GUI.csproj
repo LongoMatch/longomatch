@@ -185,6 +185,8 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayEditor.cs" />
     <Compile Include="Gui\Dialog\SubstitutionsEditor.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SubstitutionsEditor.cs" />
+    <Compile Include="Gui\Dialog\EventTypeTagsEditor.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
