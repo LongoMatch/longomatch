@@ -32,6 +32,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs
@@ -72,6 +73,7 @@ LongoMatch.GUI/Gui/Component/TimeScale.cs
 LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs
 LongoMatch.GUI/Gui/Dialog/DrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs
+LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs
 LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs
 LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
