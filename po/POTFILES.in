@@ -24,7 +24,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.SubcategoiesTagsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs
