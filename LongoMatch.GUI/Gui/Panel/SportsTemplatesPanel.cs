@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Panel
 			selectedTemplate = new List<string>();
 			newtemplatebutton.Clicked += HandleNewTeamClicked;
 			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
-			savetemplatebutton.Clicked += (sender, e) => Save ();
+			savetemplatebutton.Clicked += (sender, e) => Save (false);
 			Load (null);
 		}
 
@@ -148,17 +148,18 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
-		void Save () {
+		void Save (bool prompt) {
 			if (loadedTemplate != null && buttonswidget.Edited) {
 				string msg = Catalog.GetString ("Do you want to save the current template");
-			    if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+				if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 					provider.Update (loadedTemplate);
-			    }
+					buttonswidget.Edited = false;
+				}
 			}
 		}
 		
 		void LoadTemplate (string templateName) {
-			Save ();
+			Save (true);
 			
 			try {
 				loadedTemplate = provider.Load (templateName);
@@ -246,26 +247,28 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTeamClicked (object sender, EventArgs e)
 		{
 			bool create = false;
+			bool force = false;
 			
-			EntryDialog dialog = new EntryDialog();
+			EntryDialog dialog = new EntryDialog ();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = true;
-			dialog.Text = Catalog.GetString("New team");
+			dialog.Text = Catalog.GetString ("New team");
 			dialog.CountText = Catalog.GetString ("Categories:");
 			dialog.AvailableTemplates = provider.TemplatesNames;
 			
 			while (dialog.Run() == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString("The template name is empty."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
 					continue;
 				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString("The template can't be named 'default'."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
-				} else if(provider.Exists(dialog.Text)) {
-					var msg = Catalog.GetString("The template already exists. " +
-					                            "Do you want to overwrite it ?");
+				} else if (provider.Exists (dialog.Text)) {
+					var msg = Catalog.GetString ("The template already exists. " +
+						"Do you want to overwrite it ?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
+						force = true;
 						break;
 					}
 				} else {
@@ -275,6 +278,12 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			if (create) {
+				if (force) {
+					try {
+						provider.Delete (dialog.Text);
+					} catch {
+					}
+				}
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (dialog.SelectedTemplate, dialog.Text);
 				} else {
