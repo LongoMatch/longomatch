@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.Widgets
 			this.project = project;
 			ClearObjects ();
 			eventsTimelines.Clear ();
-			duration = project.Description.File.Duration;
+			duration = project.Description.FileSet.Duration;
 			height = project.EventTypes.Count * StyleConf.TimelineCategoryHeight;
 			widget.Height = height;
 			playsFilter = filter;

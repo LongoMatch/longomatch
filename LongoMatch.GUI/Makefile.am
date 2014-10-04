@@ -14,6 +14,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/MediaFileChooser.cs \
+	Gui/Component/MediaFileSetSelection.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PeriodsRecoder.cs \
 	Gui/Component/PlayListWidget.cs \
@@ -91,6 +92,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs \
+	gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PeriodsRecoder.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \

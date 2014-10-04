@@ -22,6 +22,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -63,20 +64,22 @@ namespace LongoMatch.Gui.Component
 			set {
 				Time start, pDuration;
 				List<string> gamePeriods;
+				MediaFile file;
 				
 				playerbin2.ShowControls = false;
 				
 				gamePeriods = value.Dashboard.GamePeriods;
 
+				file = value.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
 				start = new Time (0);
-				duration = value.Description.File.Duration;
+				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
 				List<Period> periods = new List<Period> ();
 				gamePeriods = value.Dashboard.GamePeriods;
 				
 				timerule.Duration = duration;
 				SetZoom ();
-				playerbin2.Open (value.Description.File);
+				playerbin2.Open (value.Description.FileSet);
 				
 				foreach (string s in gamePeriods) {
 					Period period = new Period {Name = s};

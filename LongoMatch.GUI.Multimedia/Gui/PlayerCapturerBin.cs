@@ -206,8 +206,8 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public void Open (MediaFile file) {
-			playerbin.Open (file);
+		public void Open (MediaFileSet fileSet) {
+			playerbin.Open (fileSet);
 		}
 		
 		public void Play () {
@@ -230,13 +230,13 @@ namespace LongoMatch.Gui
 			playerbin.LoadPlayListPlay (playlist, play);
 		}
 		
-		public void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing) {
+		public void LoadPlay (MediaFileSet fileSet, TimelineEvent play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				backtolivebutton.Visible = true;
 				ShowPlayer ();
-				LoadBackgroundPlayer(file);
+				LoadBackgroundPlayer(fileSet);
 			}
-			playerbin.LoadPlay (file, play, seekTime, playing);
+			playerbin.LoadPlay (fileSet, play, seekTime, playing);
 		}
 		
 		public void Seek (Time time, bool accurate) {
@@ -294,7 +294,7 @@ namespace LongoMatch.Gui
 			};
 		}
 		
-		void LoadBackgroundPlayer (MediaFile file) {
+		void LoadBackgroundPlayer (MediaFileSet file) {
 			if (backLoaded)
 				return;
 				

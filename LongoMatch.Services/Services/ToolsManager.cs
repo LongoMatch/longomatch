@@ -87,32 +87,6 @@ namespace LongoMatch.Services
 			ProjectImporters.Add (importer);
 		}
 
-		public static void AddVideoFile (Project project, bool createThumbnails)
-		{
-			string videofile;
-			IGUIToolkit guiToolkit = Config.GUIToolkit;
-			IMultimediaToolkit multimediaToolkit = Config.MultimediaToolkit;
-
-			guiToolkit.InfoMessage (Catalog.GetString ("This project doesn't have any file associated.\n" +
-				"Select one in the next window"));
-			videofile = guiToolkit.OpenFile (Catalog.GetString ("Select a video file"), null,
-			                                 Config.HomeDir);
-			if (videofile == null) {
-				guiToolkit.ErrorMessage (Catalog.GetString ("Could not import project, you need a video file"));
-				return;
-			} else {
-				try {
-					project.UpdateMediaFile (multimediaToolkit.DiscoverFile (videofile));
-				} catch (Exception ex) {
-					guiToolkit.ErrorMessage (ex.Message);
-					return;
-				}
-				if (createThumbnails) {
-					CreateThumbnails (project);
-				}
-			}
-		}
-
 		public static void CreateThumbnails (Project project)
 		{
 			IBusyDialog dialog;
@@ -124,7 +98,7 @@ namespace LongoMatch.Services
 
 			/* Create all the thumbnails */
 			capturer = Config.MultimediaToolkit.GetFramesCapturer ();
-			capturer.Open (project.Description.File.FilePath);
+			capturer.Open (project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
 			foreach (TimelineEvent play in project.Timeline) {
 				try {
 					play.Miniature = capturer.GetFrame (play.Start + ((play.Stop - play.Start) / 2),
@@ -207,16 +181,16 @@ namespace LongoMatch.Services
 			if (importer.NeedsEdition) {
 				Config.EventsBroker.EmitNewProject (project);
 			} else {
-				if (project.Description.File == null) {
-					AddVideoFile (project, true);
-				} else if (!File.Exists (project.Description.File.FilePath)) {
-					AddVideoFile (project, false);
+				if (!project.Description.FileSet.CheckFiles ()) {
+					if (!guiToolkit.SelectMediaFiles (project)) {
+						guiToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
+						return;
+					}
 				}
 				/* If the project exists ask if we want to overwrite it */
 				if (DB.Exists (project)) {
-					var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for the file:") +
-						project.Description.File.FilePath + "\n" +
-						Catalog.GetString ("Do you want to overwrite it?"), null);
+					var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
+						project.ID + "\n" +	Catalog.GetString ("Do you want to overwrite it?"), null);
 					if (!res)
 						return;
 					DB.UpdateProject (project);

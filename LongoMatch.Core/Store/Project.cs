@@ -188,18 +188,6 @@ namespace LongoMatch.Core.Store
 			Periods.Clear();
 			Timers.Clear();
 		}
-		
-		public void UpdateMediaFile (MediaFile file)
-		{
-			Description.SetMediaFile (file);
-			foreach (Playlist playlist in Playlists) {
-				foreach (IPlaylistElement play in playlist.Elements) {
-					if (play is PlaylistPlayElement) {
-						(play as PlaylistPlayElement).File = file;
-					}
-				}
-			}
-		}
 
 		public void UpdateScore () {
 			Description.LocalGoals = GetScore (Team.LOCAL);
@@ -431,7 +419,7 @@ namespace LongoMatch.Core.Store
 			}
 			return null;
 		}
-		
+
 		public bool Equals(Project project) {
 			if(project == null)
 				return false;

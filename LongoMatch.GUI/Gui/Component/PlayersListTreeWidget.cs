@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Component
 				
 				playerstreeview.Model.GetIter(out iter, path);
 				element = new PlaylistPlayElement (playerstreeview.Model.GetValue(iter, 0) as TimelineEvent,
-				                                   Project.Description.File);
+				                                   Project.Description.FileSet);
 				playlist.Elements.Add (element);
 			}
 			

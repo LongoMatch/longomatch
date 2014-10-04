@@ -41,19 +41,15 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Title of the project
 		/// </summary>
-		[JsonIgnore]
 		public String Title {
-			get {
-				if (File == null)
-					return "";
-				return System.IO.Path.GetFileNameWithoutExtension(File.FilePath);
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
 		/// Media file asigned to this project
 		/// </summary>
-		public MediaFile File {
+		public MediaFileSet FileSet {
 			get;
 			set;
 		}
@@ -130,19 +126,6 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 		
-		/// <summary>
-		/// String representing the video format like "widhtxheight@fps"
-		/// </summary>
-		[JsonIgnore]
-		public String Format {
-			get {
-				if (File == null)
-					return "";
-				return String.Format("{0}x{1}@{2}fps",
-				                     File.VideoWidth, File.VideoHeight, File.Fps);
-			}
-		}
-		
 		public DateTime LastModified {
 			get;
 			set;
@@ -151,17 +134,9 @@ namespace LongoMatch.Core.Store
 		public int CompareTo(object obj) {
 			if(obj is ProjectDescription) {
 				ProjectDescription project = (ProjectDescription) obj;
-				
-				if (File == null || project.File == null)
-					return ID.CompareTo(project.ID);
-				return this.File.FilePath.CompareTo(project.File.FilePath);
+				return ID.CompareTo(project.ID);
 			}
-			else
-				throw new ArgumentException("object is not a ProjectDescription and cannot be compared");
-		}
-
-		public void SetMediaFile (MediaFile file) {
-			File = file;
+			throw new ArgumentException("object is not a ProjectDescription and cannot be compared");
 		}
 	}
 }

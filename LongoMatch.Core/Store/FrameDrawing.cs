@@ -70,5 +70,10 @@ namespace LongoMatch.Core.Store
 			set;
 			get;
 		}
+
+		public MediaFileAngle Angle {
+			get;
+			set;
+		}
 	}
 }

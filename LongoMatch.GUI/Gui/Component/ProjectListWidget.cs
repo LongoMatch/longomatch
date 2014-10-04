@@ -79,8 +79,8 @@ namespace LongoMatch.Gui.Component
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects)
 			{
-				if (pdesc.File.Preview != null) {
-					image = pdesc.File.Preview.Value;
+				if (pdesc.FileSet.Preview != null) {
+					image = pdesc.FileSet.Preview.Value;
 				} else  {
 					image = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk, IconSize.Dialog);
 				}
@@ -110,7 +110,6 @@ namespace LongoMatch.Gui.Component
 			ret += String.Format ("\n {0} - {1} ({2}-{3})", project.LocalName,
 			                      project.VisitorName, project.LocalGoals,
 			                      project.VisitorGoals);
-			ret += "\n" + project.Format;
 			return ret;
 		}
 		

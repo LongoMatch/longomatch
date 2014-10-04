@@ -28,6 +28,7 @@ using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Interfaces.Multimedia;
 using Mono.Unix;
 using LongoMatch.Video;
+using LongoMatch.Gui.Component;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -64,7 +65,10 @@ namespace LongoMatch.Gui.Panel
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
 			datepicker.ValueChanged += HandleDateChanged;
-			mediafilechooser.ChangedEvent += HandleFileChanged;
+			mediafilechooser1.ChangedEvent += HandleFileChanged;
+			mediafilechooser2.ChangedEvent += HandleFileChanged;
+			mediafilechooser3.ChangedEvent += HandleFileChanged;
+			mediafilechooser4.ChangedEvent += HandleFileChanged;
 
 			notebook1.Page = 0;
 			panelheader1.Title = "PROJECTS MANAGER";
@@ -74,7 +78,7 @@ namespace LongoMatch.Gui.Panel
 
 		void LoadProject (Project project) {
 			ProjectDescription pd = project.Description;
-			MediaFile f = pd.File;
+			MediaFile f = pd.FileSet.GetAngle (MediaFileAngle.Angle1);
 			TeamTemplate lt = project.LocalTeamTemplate;
 			TeamTemplate vt = project.VisitorTeamTemplate;
 			
@@ -82,16 +86,15 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Text = pd.Competition;
 			scorelabel.Text = String.Format ("{0} - {1}", pd.LocalGoals, pd.VisitorGoals);
 			datepicker.Date = pd.MatchDate;
-			mediafilechooser.MediaFile = f;
 			templatelabel.Text = project.Dashboard.Name;
-			
+	
 			if (f.Preview != null) {
-				fileimage.Pixbuf = f.Preview.Value;
+				fileimage1.Pixbuf = f.Preview.Value;
 			} else {
-				fileimage.Pixbuf = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk,
+				fileimage1.Pixbuf = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk,
 				                                               IconSize.Dialog);
 			}
-			medialabel.Markup = f.Description;
+			medialabel1.Markup = f.Description;
 			
 			homelabel.Text = lt.TeamName;
 			awaylabel.Text = vt.TeamName;
@@ -109,15 +112,51 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			loadedProject = project;
+			
+			UpdateFile (mediafilechooser1, project.Description.FileSet.GetAngle (MediaFileAngle.Angle1),
+			            MediaFileAngle.Angle1, fileimage1, medialabel1);
+			UpdateFile (mediafilechooser2, project.Description.FileSet.GetAngle (MediaFileAngle.Angle2),
+			            MediaFileAngle.Angle2, fileimage2, medialabel2);
+			UpdateFile (mediafilechooser3, project.Description.FileSet.GetAngle (MediaFileAngle.Angle3),
+			            MediaFileAngle.Angle3, fileimage3, medialabel3);
+			UpdateFile (mediafilechooser4, project.Description.FileSet.GetAngle (MediaFileAngle.Angle4),
+			            MediaFileAngle.Angle4, fileimage4, medialabel4);
+			
 			descbox.Visible = true;
 		}
 		
+		void UpdateFile (MediaFileChooser mediafilechooser, MediaFile file, MediaFileAngle view,
+		               Gtk.Image image, Label label)
+		{
+			if (file != null) {
+				loadedProject.Description.FileSet.SetAngle (view, file);
+				image.Pixbuf = file.Preview.Value;
+				label.Markup = file.Description;
+			} else {
+				loadedProject.Description.FileSet.SetAngle (view, null);
+				image.Pixbuf = null;
+				label.Markup = null;
+			}
+		}
+
 		void HandleFileChanged (object sender, EventArgs e)
 		{
-			if (mediafilechooser.MediaFile != null && loadedProject != null) {
-				loadedProject.UpdateMediaFile (mediafilechooser.MediaFile);
-				fileimage.Pixbuf = loadedProject.Description.File.Preview.Value;
-				medialabel.Markup = loadedProject.Description.File.Description;
+			if (loadedProject == null) {
+				return;
+			}
+
+			if (sender == mediafilechooser1) {
+				UpdateFile (mediafilechooser1, mediafilechooser1.MediaFile,
+				            MediaFileAngle.Angle1, fileimage1, medialabel1);
+			} else if (sender == mediafilechooser2) {
+				UpdateFile (mediafilechooser2, mediafilechooser2.MediaFile,
+				            MediaFileAngle.Angle2, fileimage2, medialabel2);
+			} else if (sender == mediafilechooser3) {
+				UpdateFile (mediafilechooser3, mediafilechooser3.MediaFile,
+				            MediaFileAngle.Angle3, fileimage3, medialabel3);
+			} else if (sender == mediafilechooser4) {
+				UpdateFile (mediafilechooser4, mediafilechooser4.MediaFile,
+				            MediaFileAngle.Angle4, fileimage4, medialabel4);
 			}
 		}
 

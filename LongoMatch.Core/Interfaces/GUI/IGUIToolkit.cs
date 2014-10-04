@@ -89,6 +89,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 		
 		EndCaptureResponse EndCapture (string filepath);
 
+		bool SelectMediaFiles (Project project);
+
 	}
 }
 

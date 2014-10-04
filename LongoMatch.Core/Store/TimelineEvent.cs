@@ -43,6 +43,8 @@ namespace LongoMatch.Core.Store
 			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
+			ActiveViews = new List<MediaFileAngle>();
+			ActiveViews.Add (MediaFileAngle.Angle1);
 		}
 		#endregion
 		#region Properties
@@ -136,6 +138,11 @@ namespace LongoMatch.Core.Store
 		}
 
 		public Coordinates GoalPosition {
+			get;
+			set;
+		}
+
+		public List<MediaFileAngle> ActiveViews {
 			get;
 			set;
 		}

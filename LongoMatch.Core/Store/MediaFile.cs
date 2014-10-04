@@ -17,22 +17,22 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-
 	[Serializable]
 	public class MediaFile
 	{
-		public MediaFile() {}
+		public MediaFile ()
+		{
+			Offset = new Time (0);
+		}
 
-		public MediaFile(string filePath,
+		public MediaFile (string filePath,
 		                 long length,
 		                 ushort fps,
 		                 bool hasAudio,
@@ -57,6 +57,7 @@ namespace LongoMatch.Core.Store
 			Fps = fps;
 			Preview = preview;
 			Par = par;
+			Offset = new Time (0);
 		}
 
 		public string FilePath {
@@ -78,7 +79,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public string Container {
 			get;
 			set;
@@ -108,17 +109,29 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public double Par {
 			get;
 			set;
 		}
-		
+
 		public Image Preview {
 			get;
 			set;
 		}
-		
+
+		public Time Offset {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public string ShortDescription {
+			get {
+				return String.Format ("{0}x{1}@{2}fps", VideoWidth, VideoHeight, Fps);
+			}
+		}
+
 		[JsonIgnore]
 		public string Description {
 			get {
@@ -135,6 +148,10 @@ namespace LongoMatch.Core.Store
 					return desc;
 				}
 			}
+		}
+
+		public bool Exists () {
+			return System.IO.File.Exists (FilePath);
 		}
 	}
 }

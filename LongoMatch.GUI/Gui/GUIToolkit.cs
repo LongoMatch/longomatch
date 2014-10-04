@@ -215,8 +215,7 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy();
 				outDir = System.IO.Path.Combine(snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer(openedProject.Description.File.FilePath,
-				                               play.Start, play.Stop, interval, outDir);
+				var fsc = new FramesSeriesCapturer (openedProject.Description.FileSet, play, interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor = mainWindow as Gtk.Window;
 				fcpd.Run();
@@ -374,6 +373,35 @@ namespace LongoMatch.Gui
 			return (EndCaptureResponse)res;
 		}
 		
+		public bool SelectMediaFiles (Project project)
+		{
+			bool ret = false;
+			MediaFileSetSelection fileselector = new MediaFileSetSelection ();
+			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select video files"),
+			                               mainWindow.Toplevel as Gtk.Window,
+			                               DialogFlags.Modal | DialogFlags.DestroyWithParent,
+			                               Gtk.Stock.Cancel, ResponseType.Cancel,
+			                               Gtk.Stock.Ok, ResponseType.Ok);
+			fileselector.Show ();
+			fileselector.FileSet = project.Description.FileSet;
+			d.VBox.Add (fileselector);
+			WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
+			while (d.Run () == (int)ResponseType.Ok) {
+				if (!fileselector.FileSet.CheckFiles ()) {
+					WarningMessage (Catalog.GetString ("Some video files are still missing for this project."), d);
+					continue;
+				}
+				if (fileselector.FileSet.GetAngle (MediaFileAngle.Angle1) == null) {
+					WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
+					continue;
+				}
+				ret = true;
+				break;
+			}
+			d.Destroy ();
+			return ret;
+		}
+
 		public void Quit () {
 			Log.Information ("Quit application");
 			Gtk.Application.Quit ();

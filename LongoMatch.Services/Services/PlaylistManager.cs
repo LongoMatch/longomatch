@@ -62,7 +62,7 @@ namespace LongoMatch.Services
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			play.Selected = true;
-			player.LoadPlay (openedProject.Description.File, play,
+			player.LoadPlay (openedProject.Description.FileSet, play,
 			                 seekTime, playing);
 			loadedPlay = play;
 			if (playing) {

@@ -134,7 +134,7 @@ namespace LongoMatch.Services
 		void SaveCaptureProject (Project project)
 		{
 			Guid projectID = project.ID;
-			string filePath = project.Description.File.FilePath;
+			string filePath = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath;
 
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
@@ -143,7 +143,8 @@ namespace LongoMatch.Services
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug ("Reloading saved file: " + filePath);
-				project.UpdateMediaFile (multimediaToolkit.DiscoverFile (filePath));
+				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1,
+				                                      multimediaToolkit.DiscoverFile (filePath));
 				DB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -179,14 +180,14 @@ namespace LongoMatch.Services
 		
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
-				if (!File.Exists (project.Description.File.FilePath)) {
-					guiToolkit.WarningMessage (Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
-						+ Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
-					CloseOpenedProject (true);
-					return false;
+				if (!project.Description.FileSet.CheckFiles ()) {
+					if (!guiToolkit.SelectMediaFiles (project)) {
+						CloseOpenedProject (true);
+						return false;
+					}
 				}
 				try {
-					Player.Open (project.Description.File);
+					Player.Open (project.Description.FileSet);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
@@ -253,7 +254,7 @@ namespace LongoMatch.Services
 			} else {
 				EndCaptureResponse res;
 				
-				res = guiToolkit.EndCapture (OpenedProject.Description.File.FilePath);
+				res = guiToolkit.EndCapture (OpenedProject.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
@@ -358,11 +359,20 @@ namespace LongoMatch.Services
 				return;
 			}
 
-			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
+			if (project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				ToolsManager.AddVideoFile (project, true);
+				if (guiToolkit.SelectMediaFiles (project)) {
+					try {
+						DB.UpdateProject (project);
+					} catch (Exception e) {
+						Log.Exception (e);
+					}
+				} else {
+					guiToolkit.ErrorMessage (Catalog.GetString ("No valid video files associated. The project will be closed")); 
+					return;
+				}
 			}
 			project.UpdateEventTypes ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());

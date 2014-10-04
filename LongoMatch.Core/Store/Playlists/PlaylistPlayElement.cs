@@ -16,6 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -25,35 +27,41 @@ namespace LongoMatch.Core.Store.Playlists
 	[Serializable]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
-		public PlaylistPlayElement (TimelineEvent play, MediaFile file=null)
+		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset=null)
 		{
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
-			File = file;
+			Angles = play.ActiveViews.ToList ();
+			FileSet = fileset;
 		}
-		
+
 		public TimelineEvent Play {
 			get;
 			set;
 		}
-		
+
 		public bool Selected {
 			get;
 			set;
 		}
-		
+
 		public string Title {
 			get;
 			set;
 		}
-		
+
 		public double Rate {
 			get;
 			set;
 		}
-		
-		public MediaFile File {
+
+		public MediaFileSet FileSet {
+			get;
+			set;
+		}
+
+		public List<MediaFileAngle> Angles {
 			get;
 			set;
 		}

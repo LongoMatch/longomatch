@@ -111,8 +111,8 @@ namespace LongoMatch.Gui.Component
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 			focusscale.Value = 6;
-			projectFile = project.Description.File;
-			timerule.Duration = project.Description.File.Duration;
+			projectFile = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
+			timerule.Duration = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			QueueDraw ();
 		}

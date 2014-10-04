@@ -38,7 +38,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		bool Playing { get; }
 		IFramesCapturer FramesCapturer {get;set;}
 
-		void Open (MediaFile file);
+		void Open (MediaFileSet fileSet);
 		void Close();
 		void Play ();
 		void Pause ();
@@ -51,7 +51,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		void SeekToPreviousFrame();
 		void FramerateUp();
 		void FramerateDown();
-		void LoadPlay (MediaFile file, TimelineEvent play, Time seekTime, bool playing);
+		void LoadPlay (MediaFileSet file, TimelineEvent play, Time seekTime, bool playing);
 		void LoadPlayListPlay (Playlist playlist, IPlaylistElement play);
 		void CloseSegment();
 	}

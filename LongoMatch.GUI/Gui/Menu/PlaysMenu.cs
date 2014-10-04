@@ -159,7 +159,7 @@ namespace LongoMatch.Gui.Menus
 					item.Activated += (sender, e) => {
 						IEnumerable<IPlaylistElement> elements;
 						
-						elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.File));
+						elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
 						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList());
 					}; 
 				}
@@ -168,7 +168,7 @@ namespace LongoMatch.Gui.Menus
 				plMenu.Append (item);
 				item.Activated += (sender, e) => {
 					IEnumerable<IPlaylistElement> elements;
-					elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.File));
+					elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
 					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList());
 				}; 
 				
@@ -232,7 +232,7 @@ namespace LongoMatch.Gui.Menus
 		{
 			Playlist pl = new Playlist();
 			foreach (TimelineEvent p in plays) {
-				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.File));
+				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.FileSet));
 			}
 			Config.EventsBroker.EmitRenderPlaylist (pl);
 		}

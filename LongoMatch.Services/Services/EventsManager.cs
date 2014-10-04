@@ -70,7 +70,7 @@ namespace LongoMatch.Services
 
 			if (projectType == ProjectType.FileProject) {
 				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
-				framesCapturer.Open (openedProject.Description.File.FilePath);
+				framesCapturer.Open (openedProject.Description.FileSet.GetAngle(MediaFileAngle.Angle1).FilePath);
 			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
@@ -182,7 +182,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void RenderPlay (Project project, TimelineEvent play, MediaFile file)
+		void RenderPlay (Project project, TimelineEvent play)
 		{
 			Playlist playlist;
 			EncodingSettings settings;
@@ -204,8 +204,7 @@ namespace LongoMatch.Services
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
 				playlist = new Playlist ();
-				element = new PlaylistPlayElement (play);
-				element.File = file;
+				element = new PlaylistPlayElement (play, project.Description.FileSet);
 				playlist.Elements.Add (element);
 				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);
@@ -248,7 +247,7 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.CaptureProject ||
 				projectType == ProjectType.URICaptureProject) {
 				if (Config.AutoRenderPlaysInLive) {
-					RenderPlay (openedProject, play, openedProject.Description.File);
+					RenderPlay (openedProject, play);
 				}
 			}
 		}

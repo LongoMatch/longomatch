@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -225,27 +226,32 @@ namespace LongoMatch.Services
 		{
 			Time lastTS;
 			TimelineEvent play;
+			MediaFile file;
+			IEnumerable<FrameDrawing> drawings;
 
 			play = element.Play;
 			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
 			
 			lastTS = play.Start;
-			foreach (FrameDrawing fd in play.Drawings) {
+			/* FIXME: for now we only support rendering the first angle in the list */
+			file = element.FileSet.GetAngle (element.Angles[0]);
+			drawings = play.Drawings.Where (d => d.Angles.Contains (element.Angles[0]));
+			foreach (FrameDrawing fd in drawings) {
 				if (fd.Render < play.Start || fd.Render > play.Stop) {
 					Log.Warning ("Drawing is not in the segments boundaries " +
 					             fd.Render.ToMSecondsString ());
 					continue;
 				}
-				string image_path = CreateStillImage (element.File.FilePath, fd);
-				videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
+				string image_path = CreateStillImage (file.FilePath, fd);
+				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 				                       fd.Render.MSeconds - lastTS.MSeconds,
-				                       element.Rate, play.Name, element.File.HasAudio);
+				                       element.Rate, play.Name, file.HasAudio);
 				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name);
 				lastTS = fd.Render;
 			}
-			videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
+			videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 			                        play.Stop.MSeconds - lastTS.MSeconds,
-			                        element.Rate, play.Name, element.File.HasAudio);
+			                        element.Rate, play.Name, file.HasAudio);
 			return true;
 		}
 

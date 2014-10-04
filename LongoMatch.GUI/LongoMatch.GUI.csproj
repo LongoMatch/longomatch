@@ -20,7 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
     <Execution>
-      <Execution clr-version="Net_2_0" xmlns="" />
+      <Execution clr-version="Net_2_0" />
     </Execution>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
@@ -32,7 +32,7 @@
     <WarningLevel>3</WarningLevel>
     <AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
     <Execution>
-      <Execution clr-version="Net_2_0" xmlns="" />
+      <Execution clr-version="Net_2_0" />
     </Execution>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
@@ -187,6 +187,8 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SubstitutionsEditor.cs" />
     <Compile Include="Gui\Dialog\EventTypeTagsEditor.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
+    <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

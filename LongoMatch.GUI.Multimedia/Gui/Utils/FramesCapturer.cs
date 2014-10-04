@@ -43,22 +43,26 @@ namespace LongoMatch.Video.Utils
 		string seriesName;
 		string outputDir;
 		bool cancel;
+		TimelineEvent evt;
+		MediaFileSet fileSet;
 		private const int THUMBNAIL_MAX_HEIGHT=250;
 		private const int THUMBNAIL_MAX_WIDTH=300;
 
 		public event LongoMatch.Core.Handlers.FramesProgressHandler Progress;
 
-		public FramesSeriesCapturer(string videoFile, Time start, Time stop, uint interval, string outputDir)
+		public FramesSeriesCapturer (MediaFileSet fileSet, TimelineEvent evt, uint interval, string outputDir)
 		{
 			MultimediaFactory mf= new MultimediaFactory();
 			this.capturer=mf.GetFramesCapturer();
-			this.capturer.Open(videoFile);
-			this.start= start;
-			this.stop = stop;
+			this.fileSet = fileSet;
+			this.evt = evt;
+			this.start= evt.Start;
+			this.stop = evt.Stop;
 			this.interval = interval;
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName(outputDir);
-			this.totalFrames = (int)Math.Floor((double)((stop - start).MSeconds / interval))+1;
+			this.totalFrames = ((int)Math.Floor((double)((stop - start).MSeconds / interval))+1) * evt.ActiveViews.Count;
+			this.cancel = false;
 		}
 
 		public void Cancel() {
@@ -70,40 +74,59 @@ namespace LongoMatch.Video.Utils
 			thread.Start();
 		}
 
-		public void CaptureFrames() {
+		public void CaptureFrames ()
+		{
 			Time pos;
 			LongoMatch.Core.Common.Image frame;
+			bool quit = false;
 			int i = 0;
+			int j = 0;
 
-			System.IO.Directory.CreateDirectory(outputDir);
+			System.IO.Directory.CreateDirectory (outputDir);
 
-			pos = new Time {MSeconds = start.MSeconds};
-			if(Progress != null) {
-				Application.Invoke (delegate {
-					Progress(0,totalFrames,null);
-				});
-			}
-
-			while(pos <= stop) {
-				if(!cancel) {
-					frame = capturer.GetFrame(pos, true);
-					if(frame != null) {
-						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"));
-						frame.ScaleInplace(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
-					}
-
-					if(Progress != null) {
-						Application.Invoke (delegate {
-							Progress(i+1, totalFrames, frame);
-						});
-					}
-					pos.MSeconds += (int) interval;
-					i++;
-				}
-				else {
-					System.IO.Directory.Delete(outputDir,true);
-					cancel=false;
+			Log.Debug ("Start frames series capture with interval: " + interval);
+			Log.Debug ("Total frames to be captured: " + totalFrames);
+			foreach (MediaFileAngle angle in evt.ActiveViews) {
+				if (quit) {
 					break;
+				}
+				Log.Debug ("Start frames series capture for angle " + angle);
+				MediaFile file = fileSet.GetAngle (angle);
+				capturer.Open (file.FilePath);
+				pos = new Time {MSeconds = start.MSeconds};
+				if(Progress != null) {
+					Application.Invoke (delegate {
+						Progress(i,totalFrames,null);
+					});
+				}
+				
+				j = 0;
+				while(pos <= stop) {
+					Log.Debug ("Capturing fame " + j);
+					if(!cancel) {
+						frame = capturer.GetFrame(pos + file.Offset, true);
+						if(frame != null) {
+							string path = String.Format("{0}_angle{1}_{2}.png", seriesName, angle, j);
+							frame.Save(System.IO.Path.Combine(outputDir, path));
+							frame.ScaleInplace(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+						}
+						
+						if(Progress != null) {
+							Application.Invoke (delegate {
+								Progress(i+1, totalFrames, frame);
+							});
+						}
+						pos.MSeconds += (int) interval;
+						i++;
+						j++;
+					}
+					else {
+						Log.Debug ("Capture cancelled, deleting output directory");
+						System.IO.Directory.Delete(outputDir,true);
+						cancel=false;
+						quit = true;
+						break;
+					}
 				}
 			}
 			capturer.Dispose ();

@@ -33,6 +33,7 @@ using Device = LongoMatch.Core.Common.Device;
 using Color = Gdk.Color;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
+using LongoMatch.Gui.Component;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -50,7 +51,6 @@ namespace LongoMatch.Gui.Panel
 		EncodingSettings encSettings;
 		List<Device> videoDevices;
 		ListStore teams, videoStandardList, encProfileList, qualList;
-		MediaFile mediaFile;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Color red;
@@ -79,6 +79,7 @@ namespace LongoMatch.Gui.Panel
 			if (project == null) {
 				notebook1.Page = 0;
 				datepicker1.Date = DateTime.Now;
+				mediafilesetselection1.FileSet = new MediaFileSet ();
 			} else {
 				notebook1.Page = 1;
 				this.project = project;
@@ -110,10 +111,10 @@ namespace LongoMatch.Gui.Panel
 			
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
 			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
-			lefttable.RowSpacing = filetable.RowSpacing =
-				outputfiletable.RowSpacing = righttable.RowSpacing = StyleConf.NewTableHSpacing;
+			lefttable.RowSpacing = outputfiletable.RowSpacing =
+				righttable.RowSpacing = StyleConf.NewTableHSpacing;
 			lefttable.ColumnSpacing = righttable.ColumnSpacing = StyleConf.NewTableHSpacing;
-			filetable.ColumnSpacing = outputfiletable.ColumnSpacing = StyleConf.NewTeamsSpacing; 
+			outputfiletable.ColumnSpacing = StyleConf.NewTeamsSpacing; 
 			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
@@ -161,9 +162,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			urientry.Changed += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
-			mediafilechooser1.ChangedEvent += (sender, e) => {
-				mediaFile = mediafilechooser1.MediaFile;};
-			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 		}
 
 		void FillProjectDetails ()
@@ -176,10 +174,11 @@ namespace LongoMatch.Gui.Panel
 			awayteamscombobox.Sensitive = false;
 			tagscombobox.Visible = false;
 			analysislabel.Visible = false;
-			filetable.Visible = true;
 			analysisTemplate = project.Dashboard;
 			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
 			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR);
+			mediafilesetselection1.Visible = true;
+			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
 
 		void FillCategories ()
@@ -207,8 +206,7 @@ namespace LongoMatch.Gui.Panel
 			} else if (projectType == ProjectType.URICaptureProject) {
 				urimode = true;
 			}
-			filelabel.Visible = filemode;
-			filetable.Visible = filemode;
+			mediafilesetselection1.Visible = filemode;
 			outputfiletable.Visible = capturemode || urimode;
 			rcapturetable.Visible = capturemode || urimode;
 			lcapturetable.Visible = capturemode || urimode;
@@ -283,17 +281,17 @@ namespace LongoMatch.Gui.Panel
 		bool CreateProject ()
 		{
 			TreeIter iter;
+			MediaFile file;
 			
 			if (projectType == ProjectType.FileProject ||
 				projectType == ProjectType.EditProject) {
-				if (mediafilechooser1.MediaFile == null) {
-					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
+				if (mediafilesetselection1.FileSet.GetAngle (MediaFileAngle.Angle1) == null) {
+					gtoolkit.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					return false;
 				}
 			}
 
 			if (project != null) {
-				project.UpdateMediaFile (mediaFile);
 				return true;
 			}
 			
@@ -320,7 +318,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.Season = seasonentry.Text;
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
-			project.UpdateMediaFile (mediaFile);
+			project.Description.FileSet = mediafilesetselection1.FileSet;
 			project.UpdateEventTypes ();
 			
 			encSettings = new EncodingSettings ();
@@ -345,28 +343,30 @@ namespace LongoMatch.Gui.Panel
 			
 			captureSettings.EncodingSettings = encSettings;
 
-			if (project.Description.File == null) {
-				MediaFile file = new MediaFile ();
+			file = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1); 
+			if (file == null) {
+				file = new MediaFile ();
 				file.FilePath = capturemediafilechooser.CurrentPath;
 				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
 				file.Par = 1;
-				project.UpdateMediaFile (file);
+				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1, file);
 			}
+			
 			if (projectType == ProjectType.CaptureProject) {
 				Device device = videoDevices [devicecombobox.Active];
 				captureSettings.CaptureSourceType = device.DeviceType;
 				captureSettings.DeviceID = device.ID;
 				captureSettings.SourceElement = device.SourceElement;
-				project.Description.File.VideoHeight = encSettings.VideoStandard.Height;
-				project.Description.File.VideoWidth = encSettings.VideoStandard.Width;
+				file.VideoHeight = encSettings.VideoStandard.Height;
+				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.URICaptureProject) {
 				captureSettings.CaptureSourceType = CaptureSourceType.URI;
 				captureSettings.DeviceID = urientry.Text;
-				project.Description.File.VideoHeight = encSettings.VideoStandard.Height;
-				project.Description.File.VideoWidth = encSettings.VideoStandard.Width;
+				file.VideoHeight = encSettings.VideoStandard.Height;
+				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				captureSettings.CaptureSourceType = CaptureSourceType.None;
-				project.Description.File.FilePath = Constants.FAKE_PROJECT;
+				file.FilePath = Constants.FAKE_PROJECT;
 			}
 			return true;
 		}
@@ -487,6 +487,7 @@ namespace LongoMatch.Gui.Panel
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
 		}
+		
 	}
 }
 

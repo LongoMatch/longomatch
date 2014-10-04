@@ -81,6 +81,7 @@ SOURCES = Common/Area.cs \
 	Store/FrameDrawing.cs \
 	Store/HotKey.cs \
 	Store/MediaFile.cs \
+	Store/MediaFileSet.cs \
 	Store/PenaltyCard.cs \
 	Store/Period.cs \
 	Store/PixbufTimeNode.cs \

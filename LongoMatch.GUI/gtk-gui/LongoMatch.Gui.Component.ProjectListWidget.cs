@@ -51,7 +51,6 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow2.CanFocus = true;
-			this.scrolledwindow2.Name = "scrolledwindow2";
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
 			this.iconview = new global::Gtk.IconView ();
 			this.iconview.CanFocus = true;

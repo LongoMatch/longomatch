@@ -355,4 +355,8 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.MediaFileSetSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

@@ -60,7 +60,9 @@ namespace LongoMatch.Gui
 		Time length, lastTime;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
 		bool ignoreTick, stillimageLoaded, delayedOpen;
-		MediaFile file;
+		MediaFileSet fileSet;
+		MediaFile activeFile;
+		MediaFileAngle angle;
 		double previousVLevel = 1;
 		double[] seeksQueue;
 		object[] pendingSeek;
@@ -116,7 +118,7 @@ namespace LongoMatch.Gui
 		#region Properties
 		public Time CurrentTime {
 			get {
-				return player.CurrentTime;
+				return player.CurrentTime - activeFile.Offset;
 			}
 		}
 
@@ -160,7 +162,7 @@ namespace LongoMatch.Gui
 
 		public bool Opened {
 			get {
-				return file != null;
+				return fileSet != null;
 			}
 		}
 
@@ -185,12 +187,12 @@ namespace LongoMatch.Gui
 		
 		#endregion
 		#region Public methods
-		public void Open (MediaFile file)
+		public void Open (MediaFileSet fileSet)
 		{
 			if (videowindow.Ready) {
-				Open (file, true);
+				Open (fileSet, true);
 			} else {
-				this.file = file;
+				this.fileSet = fileSet;
 				delayedOpen = true;
 			}
 		}
@@ -243,7 +245,7 @@ namespace LongoMatch.Gui
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
 				TimelineEvent play = ple.Play;
-				LoadSegment (ple.File, play.Start, play.Stop, play.Start, true, play.Rate);
+				LoadSegment (ple.FileSet, play.Start, play.Stop, play.Start, true, play.Rate);
 			} else if (element is PlaylistImage) {
 				//LoadStillImage (element as PlaylistImage);
 			} else if (element is PlaylistDrawing) {
@@ -251,13 +253,13 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void LoadPlay (MediaFile file, TimelineEvent evt, Time seekTime, bool playing)
+		public void LoadPlay (MediaFileSet fileSet, TimelineEvent evt, Time seekTime, bool playing)
 		{
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedPlay = evt;
 			if (evt.Start != null && evt.Start != null) {
-				LoadSegment (file, evt.Start, evt.Stop, seekTime, playing, evt.Rate);
+				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, playing, evt.Rate);
 			} else if (evt.EventTime != null) {
 				Seek (evt.EventTime, true);
 			} else {
@@ -279,14 +281,14 @@ namespace LongoMatch.Gui
 		public void Seek (Time time, bool accurate)
 		{
 			DrawingsVisible = false;
-			player.Seek (time, accurate);
+			player.Seek (time + activeFile.Offset, accurate);
 			OnTick ();
 		}
 
 		public void SeekToNextFrame ()
 		{
 			DrawingsVisible = false;
-			if (player.CurrentTime < segment.Stop) {
+			if (CurrentTime < segment.Stop) {
 				player.SeekToNextFrame ();
 				OnTick ();
 			}
@@ -295,7 +297,7 @@ namespace LongoMatch.Gui
 		public void SeekToPreviousFrame ()
 		{
 			DrawingsVisible = false;
-			if (player.CurrentTime > segment.Start) {
+			if (CurrentTime > segment.Start) {
 				seeker.Seek (SeekType.StepDown);
 			}
 		}
@@ -357,23 +359,27 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void Open (MediaFile file, bool seek, bool force=false)
+		void Open (MediaFileSet fileSet, bool seek, bool force=false)
 		{
+			MediaFile mf;
 			ResetGui ();
 			CloseSegment ();
-			videowindow.Ratio = (float) (file.VideoWidth * file.Par / file.VideoHeight);
-			if (file != this.file || force) {
+			if (fileSet != this.fileSet || force) {
 				readyToSeek = false;
-				this.file = file;
+				this.fileSet = fileSet;
+				angle = MediaFileAngle.Angle1;
+				activeFile = fileSet.GetAngle (angle);
+				videowindow.Ratio = (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight);
 				try {
-					Log.Debug ("Opening new file " + file.FilePath);
-					player.Open (file.FilePath);
+					Log.Debug ("Opening new file " + activeFile.FilePath);
+					player.Open (activeFile.FilePath);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					//We handle this error async
 				}
-			} else if (seek) {
-				player.Seek (new Time (0), true);
+			}
+			if (seek) {
+				Seek (new Time (0), true);
 			}
 			detachbutton.Sensitive = true;
 		}
@@ -416,14 +422,14 @@ namespace LongoMatch.Gui
 
 		}
 
-		void LoadSegment (MediaFile file, Time start, Time stop, Time seekTime,
+		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
 		                  bool playing, float rate = 1)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 			                          start.ToMSecondsString (),
 			                          stop.ToMSecondsString (), rate));
-			if (file != this.file) {
-				Open (file, false);
+			if (fileSet != this.fileSet) {
+				Open (fileSet, false);
 			}
 			Pause ();
 			segment.Start = start;
@@ -470,14 +476,11 @@ namespace LongoMatch.Gui
 		void LoadPlayDrawing (FrameDrawing drawing)
 		{
 			Pause ();
-			if (FramesCapturer != null) {
-				LoadImage (FramesCapturer.GetFrame (drawing.Render, true), drawing);
-			} else {
-				ignoreTick = true;
-				player.Seek (drawing.Render, true);
-				ignoreTick = false;
-				LoadImage (player.GetCurrentFrame (), drawing);
-			}
+			ignoreTick = true;
+			player.Seek (drawing.Render + activeFile.Offset, true);
+			ignoreTick = false;
+			/* FIXME: wait until seek is done */
+			LoadImage (CurrentFrame, drawing);
 		}
 
 		void SetScaleValue (int value)
@@ -733,7 +736,7 @@ namespace LongoMatch.Gui
 		void OnEndOfStream ()
 		{
 			Application.Invoke (delegate {
-				player.Seek (new Time (0), true);
+				Seek (new Time (0), true);
 				Pause ();
 			});
 		}
@@ -793,7 +796,7 @@ namespace LongoMatch.Gui
 
 		void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			if (file == null)
+			if (fileSet == null)
 				return;
 			/* FIXME: The pointer is grabbed when the event box is clicked.
 			 * Make sure to ungrab it in order to avoid clicks outisde the window
@@ -833,7 +836,7 @@ namespace LongoMatch.Gui
 			IntPtr handle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
 			player.WindowHandle = handle;
 			if (delayedOpen) {
-				Open (file, true, true);
+				Open (fileSet, true, true);
 				delayedOpen = false;
 				player.Expose ();
 			}
@@ -854,8 +857,7 @@ namespace LongoMatch.Gui
 			}
 			if (type == SeekType.Accurate || type == SeekType.Keyframe) {
 				player.Rate = (double)rate;
-				player.Seek (start, type == SeekType.Accurate);
-				OnTick ();
+				Seek (start, type == SeekType.Accurate);
 			}
 		}
 		#endregion

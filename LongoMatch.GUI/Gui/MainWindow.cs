@@ -116,8 +116,8 @@ namespace LongoMatch.Gui
 			this.projectType = projectType;
 			openedProject = project;
 			if (projectType == ProjectType.FileProject) {
-				Title = System.IO.Path.GetFileNameWithoutExtension(
-					openedProject.Description.File.FilePath) + " - " + Constants.SOFTWARE_NAME;
+				Title = openedProject.Description.Title +
+					" - " + Constants.SOFTWARE_NAME;
 			} else {
 				Title = Constants.SOFTWARE_NAME;
 			}

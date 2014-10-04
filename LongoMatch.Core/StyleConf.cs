@@ -116,6 +116,8 @@ namespace LongoMatch.Core.Common
 		public Color PaletteActive { get; set; }
 
 		public Color PaletteTool { get; set; }
+		
+		public Color PaletteText { get; set; }
 
 		public static StyleConf Load (string filename)
 		{

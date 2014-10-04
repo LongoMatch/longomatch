@@ -83,6 +83,11 @@ namespace LongoMatch.Gui.Component
 			if (mediaFile != null) {
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
 				fileentry.TooltipText = mediaFile.FilePath;
+				if (mediaFile.Exists ()) {
+					fileentry.ModifyText (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+				} else {
+					fileentry.ModifyText (Gtk.StateType.Normal, Misc.ToGdkColor (Color.Red1));
+				}
 			} else if (path != null) {
 				fileentry.Text = System.IO.Path.GetFileName (path);
 				fileentry.TooltipText = path;
@@ -98,7 +103,11 @@ namespace LongoMatch.Gui.Component
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (FileChooserMode == FileChooserMode.MediaFile) {
-				MediaFile = Misc.OpenFile (this);
+				MediaFile file = Misc.OpenFile (this);
+				if (MediaFile != null) {
+					file.Offset = MediaFile.Offset;
+				}
+				MediaFile = file;
 			} else if (FileChooserMode == FileChooserMode.File) {
 				string filename = String.Format ("LongoMatch-{0}.mp4",
 				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
