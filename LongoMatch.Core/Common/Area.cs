@@ -17,12 +17,11 @@
 //
 using System;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Common
 {
-	[DataContract]
 	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public class Area
 	{
 		public Area (Point start, double width, double height)
@@ -32,19 +31,19 @@ namespace LongoMatch.Core.Common
 			Height = height;
 		}
 
-		[DataMember]
+		[JsonProperty]
 		public Point Start {
 			get;
 			set;
 		}
 
-		[DataMember]
+		[JsonProperty]
 		public double Width {
 			get;
 			set;
 		}
 
-		[DataMember]
+		[JsonProperty]
 		public double Height {
 			get;
 			set;
