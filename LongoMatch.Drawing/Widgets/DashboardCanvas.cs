@@ -53,6 +53,11 @@ namespace LongoMatch.Drawing.Widgets
 			AddTag = new Tag ("", "");
 		}
 
+		public Project Project {
+			get;
+			set;
+		}
+
 		public Dashboard Template {
 			set {
 				template = value;
@@ -221,7 +226,6 @@ namespace LongoMatch.Drawing.Widgets
 				co.AddTag = AddTag;
 				AddObject (co);
 			}
-
 			foreach (PenaltyCardButton c in template.List.OfType<PenaltyCardButton>()) {
 				CardObject co = new CardObject (c);
 				co.ClickedEvent += HandleTaggerClickedEvent;
@@ -239,6 +243,13 @@ namespace LongoMatch.Drawing.Widgets
 				TimerObject to = new TimerObject (t);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
+				if (Project != null && t.BackgroundImage == null) {
+					if (t.Timer.Team == Team.LOCAL) {
+						to.BackgroundImage = Project.LocalTeamTemplate.Shield;
+					} else if (t.Timer.Team == Team.VISITOR) {
+						to.BackgroundImage = Project.VisitorTeamTemplate.Shield;
+					}
+				}
 				AddObject (to);
 			}
 			Edited = false;

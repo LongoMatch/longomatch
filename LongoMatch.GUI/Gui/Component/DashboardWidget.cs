@@ -138,6 +138,7 @@ namespace LongoMatch.Gui.Component
 		public Project Project {
 			set {
 				project = value;
+				tagger.Project = project;
 				Template = project.Dashboard;
 				positionsbox.Visible = false;
 			}

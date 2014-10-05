@@ -35,24 +35,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public override string Text {
+			get {
+				return Button.Name;
+			}
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
-				return;
-			}
-
-			tk.Begin ();
-
-			/* Draw Rectangle */
-			DrawButton (tk);
-			
-			/* Draw header */
-			tk.LineWidth = 2;
-			tk.StrokeColor = Button.TextColor;
-			tk.FillColor = Button.TextColor;
-			tk.DrawText (DrawPosition, Button.Width, Button.Height, Button.Score.Name);
-			DrawSelectionArea (tk);
-			tk.End ();
+			base.Draw (tk, area);
 		}
 	}
 }

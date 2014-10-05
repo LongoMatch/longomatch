@@ -29,6 +29,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public ButtonObject () {
 			BackgroundColor = Config.Style.PaletteBackground;
 			BorderColor = Config.Style.PaletteBackgroundDark;
+			TextColor = Config.Style.PaletteText;
 		}
 		
 		public virtual Point Position {
@@ -46,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public string Text {
+		public virtual string Text {
 			get;
 			set;
 		}
@@ -61,6 +62,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public virtual Color TextColor {
+			get;
+			set;
+		}
+		
 		protected Color CurrentBackgroundColor {
 			get {
 				if (!Active) {
@@ -71,12 +77,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Image BackgroundImage {
+		public virtual Image BackgroundImage {
 			get;
 			set;
 		}
 
-		public Image BackgroundImageActive {
+		public virtual Image BackgroundImageActive {
 			get;
 			set;
 		}
@@ -166,25 +172,36 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.DrawButton (DrawPosition, Width, Height, 3, BorderColor, CurrentBackgroundColor);
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		protected void DrawImage (IDrawingToolkit tk)
 		{
-			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
-			
-			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
-				return;
-			}
-			tk.Begin ();
-			DrawButton (tk);
-			DrawSelectionArea (tk);
-			
+			Point pos = new Point (DrawPosition.X + BORDER_SIZE / 2, DrawPosition.Y + BORDER_SIZE / 2);
+
 			if (Active && BackgroundImageActive != null) {
 				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive, true);
 			} else if (BackgroundImage != null) {
 				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage, true);
 			}
+		}
+
+		protected void DrawText (IDrawingToolkit tk)
+		{
 			if (Text != null) {
-				tk.DrawText (Position, Width, Height, Text);
+				tk.FillColor = TextColor;
+				tk.StrokeColor = TextColor;
+				tk.DrawText (DrawPosition, Width, Height, Text);
 			}
+		}
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+				return;
+			}
+			tk.Begin ();
+			DrawButton (tk);
+			DrawImage (tk);
+			DrawSelectionArea (tk);
+			DrawText (tk);
 			tk.End ();
 		}
 	}

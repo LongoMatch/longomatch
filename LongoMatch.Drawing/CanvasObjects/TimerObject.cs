@@ -27,6 +27,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class TimerObject: TaggerObject
 	{
 		Time currentTime;
+		Image backgroundImage;
 
 		public TimerObject (TimerButton timer): base (timer)
 		{
@@ -79,6 +80,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public override Image BackgroundImage {
+			get {
+				if (backgroundImage != null) {
+					return backgroundImage;
+				} else {
+					return Button.BackgroundImage;
+				}
+			}
+			set {
+				backgroundImage = value;
+			}
+		}
+
 		public override void ClickReleased ()
 		{
 			TimeNode tn;
@@ -113,6 +127,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Begin ();
 			/* Draw Rectangle */
 			DrawButton (tk);
+			DrawImage (tk);
 			
 			/* Draw header */
 			tk.LineWidth = 2;

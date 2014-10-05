@@ -152,6 +152,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			/* Draw Rectangle */
 			DrawButton (tk);
+			DrawImage (tk);
 
 			/* Draw header */
 			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;

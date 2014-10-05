@@ -71,6 +71,11 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public virtual Image BackgroundImage {
+			get;
+			set;
+		}
+
 		[JsonIgnore]
 		public Color LightColor {
 			get {

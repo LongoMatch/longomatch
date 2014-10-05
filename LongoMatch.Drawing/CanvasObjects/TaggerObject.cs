@@ -25,7 +25,7 @@ using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class TaggerObject: ButtonObject, ICanvasSelectableObject 
+	public class TaggerObject: ButtonObject, ICanvasSelectableObject
 	{
 
 		public TaggerObject (DashboardButton tagger)
@@ -46,22 +46,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 				Tagger.Position = value;
 			}
 		}
-		
+
 		public override double Width {
 			get {
 				return Tagger.Width;
 			}
 			set {
-				Tagger.Width = (int) value;
+				Tagger.Width = (int)value;
 			}
 		}
-		
+
 		public override double Height {
 			get {
 				return Tagger.Height;
 			}
 			set {
-				Tagger.Height = (int) value;
+				Tagger.Height = (int)value;
 			}
 		}
 
@@ -77,6 +77,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public override Color TextColor {
+			get {
+				return Tagger.TextColor;
+			}
+		}
+
+		public override Image BackgroundImage {
+			get {
+				return Tagger.BackgroundImage;
+			}
+		}
+
+		public override Image BackgroundImageActive {
+			get {
+				return Tagger.BackgroundImage;
+			}
+		}
+
 		public virtual int NRows {
 			get {
 				return 1;
@@ -87,7 +105,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-
 	}
 }
 
