@@ -73,6 +73,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		void Save (ICanvas canvas, double width, double height, string filename);
 		Image Copy (ICanvas canvas, double width, double height);
 		Area UserToDevice (Area area);
+		void Invoke (EventHandler handler);
 	}
 }
 

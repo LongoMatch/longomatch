@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using Mono.Unix;
@@ -118,6 +119,12 @@ namespace LongoMatch.Core.Store
 		public List<Tag> Tags {
 			get;
 			set;
+		}
+
+		public Dictionary<string, List<Tag>> TagsByGroup {
+			get {
+				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList());
+			}
 		}
 	}
 

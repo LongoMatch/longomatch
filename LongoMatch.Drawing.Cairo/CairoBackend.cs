@@ -17,17 +17,17 @@
 //
 using System;
 using Cairo;
+using Gdk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
+using Pango;
+using Color = LongoMatch.Core.Common.Color;
+using FontAlignment = LongoMatch.Core.Common.FontAlignment;
 using FontSlant = LongoMatch.Core.Common.FontSlant;
 using FontWeight = LongoMatch.Core.Common.FontWeight;
-using FontAlignment = LongoMatch.Core.Common.FontAlignment;
-using Color = LongoMatch.Core.Common.Color;
 using Image = LongoMatch.Core.Common.Image;
 using LineStyle = LongoMatch.Core.Common.LineStyle;
 using Point = LongoMatch.Core.Common.Point;
-using Gdk;
-using Pango;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -118,7 +118,7 @@ namespace LongoMatch.Drawing.Cairo
 				}
 			}
 		}
-		
+
 		public FontAlignment FontAlignment {
 			set {
 				switch (value) {
@@ -378,7 +378,7 @@ namespace LongoMatch.Drawing.Cairo
 				String.Format ("{0} {1}px", FontFamily, FontSize));
 			layout.FontDescription.Weight = fWeight;
 			layout.FontDescription.Style = fSlant;
-			layout.Width = Pango.Units.FromPixels ((int) width);
+			layout.Width = Pango.Units.FromPixels ((int)width);
 			layout.Alignment = fAlignment;
 			layout.SetMarkup (GLib.Markup.EscapeText (text));
 			SetColor (StrokeColor);
@@ -386,7 +386,7 @@ namespace LongoMatch.Drawing.Cairo
 			layout.GetPixelExtents (out inkRect, out logRect);
 			CContext.MoveTo (point.X, point.Y + height / 2 - (double)logRect.Height / 2);
 			Pango.CairoHelper.ShowLayout (CContext, layout);
-			CContext.NewPath();
+			CContext.NewPath ();
 		}
 
 		public void DrawImage (Image image)
@@ -542,6 +542,10 @@ namespace LongoMatch.Drawing.Cairo
 			} else {
 				CContext.SetSourceRGBA (0, 0, 0, 0);
 			}
+		}
+
+		public void Invoke (EventHandler handler) {
+			Gtk.Application.Invoke (handler);
 		}
 	}
 }
