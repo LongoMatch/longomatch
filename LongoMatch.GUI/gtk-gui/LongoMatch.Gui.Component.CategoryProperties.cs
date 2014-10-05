@@ -44,6 +44,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Table scoretable;
 		private global::Gtk.Label label17;
 		private global::Gtk.SpinButton pointsbutton;
+		private global::Gtk.Table timertable;
+		private global::Gtk.Label label18;
+		private global::Gtk.ComboBox teamcombobox;
 
 		protected virtual void Build ()
 		{
@@ -495,6 +498,38 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.scoretable]));
 			w39.Position = 6;
 			w39.Expand = false;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.timertable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), false);
+			this.timertable.Name = "timertable";
+			this.timertable.RowSpacing = ((uint)(6));
+			this.timertable.ColumnSpacing = ((uint)(6));
+			// Container child timertable.Gtk.Table+TableChild
+			this.label18 = new global::Gtk.Label ();
+			this.label18.Name = "label18";
+			this.label18.Xalign = 1F;
+			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Team</span>");
+			this.label18.UseMarkup = true;
+			this.timertable.Add (this.label18);
+			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.timertable [this.label18]));
+			w40.XOptions = ((global::Gtk.AttachOptions)(0));
+			w40.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child timertable.Gtk.Table+TableChild
+			this.teamcombobox = global::Gtk.ComboBox.NewText ();
+			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("None"));
+			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Home"));
+			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Away"));
+			this.teamcombobox.Name = "teamcombobox";
+			this.teamcombobox.Active = 0;
+			this.timertable.Add (this.teamcombobox);
+			global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.timertable [this.teamcombobox]));
+			w41.LeftAttach = ((uint)(1));
+			w41.RightAttach = ((uint)(2));
+			w41.YOptions = ((global::Gtk.AttachOptions)(4));
+			this.vbox3.Add (this.timertable);
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.timertable]));
+			w42.Position = 7;
+			w42.Expand = false;
+			w42.Fill = false;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -502,6 +537,7 @@ namespace LongoMatch.Gui.Component
 			this.cattable.Hide ();
 			this.cardtable.Hide ();
 			this.scoretable.Hide ();
+			this.timertable.Hide ();
 			this.Show ();
 		}
 	}

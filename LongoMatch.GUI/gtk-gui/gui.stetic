@@ -890,7 +890,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="318 545">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="318 561">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox3">
@@ -1665,6 +1665,62 @@ Circle</property>
             <property name="Position">6</property>
             <property name="AutoSize">False</property>
             <property name="Expand">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Table" id="timertable">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="NColumns">2</property>
+            <property name="RowSpacing">6</property>
+            <property name="ColumnSpacing">6</property>
+            <child>
+              <widget class="Gtk.Label" id="label18">
+                <property name="MemberName" />
+                <property name="Xalign">1</property>
+                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Team&lt;/span&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="AutoSize">False</property>
+                <property name="XOptions">0</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">False</property>
+                <property name="XFill">False</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ComboBox" id="teamcombobox">
+                <property name="MemberName" />
+                <property name="IsTextCombo">True</property>
+                <property name="Items" translatable="yes">None
+Home
+Away</property>
+                <property name="Active">0</property>
+              </widget>
+              <packing>
+                <property name="LeftAttach">1</property>
+                <property name="RightAttach">2</property>
+                <property name="AutoSize">False</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">7</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

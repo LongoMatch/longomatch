@@ -44,6 +44,7 @@ namespace LongoMatch.Gui.Component
 		PenaltyCardButton cardButton;
 		ScoreButton scoreButton;
 		TagButton tagButton;
+		TimerButton timerButton;
 		Time lastLeadTime;
 		bool edited, ignore;
 
@@ -66,6 +67,7 @@ namespace LongoMatch.Gui.Component
 			goalcombobox.Changed += HandlePositionChanged;
 			shapecombobox.Changed += HandleShapeChanged;
 			pointsbutton.Changed += HandlePointsChanged;
+			teamcombobox.Changed += HandleTeamChanged;
 
 			postable.NoShowAll = true;
 			cattable.NoShowAll = true;
@@ -80,7 +82,7 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			}
-			
+
 			sizegroupRight = new SizeGroup (SizeGroupMode.Horizontal);
 			sizegroupRight.IgnoreHidden = false;
 			foreach (Widget w in vbox3.Children) {
@@ -134,6 +136,7 @@ namespace LongoMatch.Gui.Component
 				cardButton = value as PenaltyCardButton;
 				scoreButton = value as ScoreButton;
 				tagButton = value as TagButton;
+				timerButton = value as TimerButton;
 				UpdateGui ();
 			}
 			get {
@@ -181,6 +184,7 @@ namespace LongoMatch.Gui.Component
 			postable.Visible = eventButton != null;
 			scoretable.Visible = scoreButton != null;
 			cardtable.Visible = cardButton != null;
+			timertable.Visible = timerButton != null;
 
 			if (button != null) {
 				nameentry.Text = button.Name;
@@ -224,6 +228,9 @@ namespace LongoMatch.Gui.Component
 			}
 			if (cardButton != null) {
 				shapecombobox.Active = (int)cardButton.PenaltyCard.Shape;
+			}
+			if (timerButton != null) {
+				teamcombobox.Active = (int)timerButton.Timer.Team;
 			}
 			ignore = false;
 			Edited = false;
@@ -367,6 +374,14 @@ namespace LongoMatch.Gui.Component
 				return;
 
 			scoreButton.Score.Points = pointsbutton.ValueAsInt;
+			Edited = true;
+		}
+
+		void HandleTeamChanged (object sender, EventArgs e)
+		{
+			if (ignore)
+				return;
+			timerButton.Timer.Team = (Team)teamcombobox.Active;
 			Edited = true;
 		}
 	}

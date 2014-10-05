@@ -276,8 +276,8 @@
   <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="MediaFileChooser Properties">
-        <property name="FilterName" />
         <property name="CurrentPath" />
+        <property name="FilterName" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -306,6 +306,10 @@
         <signal name="ApplyClicked" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.MediaFileSetSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -354,9 +358,5 @@
         <signal name="ScrollEvent" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.MediaFileSetSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
 </objects>
