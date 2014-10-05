@@ -74,7 +74,6 @@ namespace LongoMatch.Services
 			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
-			player.FramesCapturer = framesCapturer;
 			capturer = analysisWindow.Capturer;
 		}
 
@@ -148,7 +147,7 @@ namespace LongoMatch.Services
 			guiToolkit.ShowProjectStats (project);
 		}
 
-		void HandleDrawFrame (TimelineEvent play, int drawingIndex)
+		void HandleDrawFrame (TimelineEvent play, int drawingIndex, MediaFileAngle angle, bool current)
 		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
@@ -162,6 +161,7 @@ namespace LongoMatch.Services
 				if (drawingIndex == -1) {
 					drawing = new FrameDrawing ();
 					drawing.Render = player.CurrentTime;
+					drawing.Angle = angle;
 				} else {
 					drawing = play.Drawings [drawingIndex];
 				}
@@ -170,8 +170,9 @@ namespace LongoMatch.Services
 				pos = player.CurrentTime;
 			}
 
-			if (framesCapturer != null) {
-				pixbuf = framesCapturer.GetFrame (pos, true, -1, -1);
+			if (framesCapturer != null && !current) {
+				Time offset = openedProject.Description.FileSet.GetAngle (angle).Offset;
+				pixbuf = framesCapturer.GetFrame (pos + offset, true, -1, -1);
 			} else {
 				pixbuf = player.CurrentFrame;
 			}

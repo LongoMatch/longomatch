@@ -167,15 +167,6 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public IFramesCapturer FramesCapturer {
-			set {
-				playerbin.FramesCapturer = value;
-			}
-			get {
-				return playerbin.FramesCapturer;
-			}
-		}
-		
 		public bool SeekingEnabled {
 			set {
 				playerbin.SeekingEnabled = value;

@@ -143,11 +143,6 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public IFramesCapturer FramesCapturer {
-			get;
-			set;
-		}
-		
 		public Image CurrentMiniatureFrame {
 			get {
 				return player.GetCurrentFrame (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_WIDTH);
@@ -828,7 +823,7 @@ namespace LongoMatch.Gui
 
 		void OnDrawButtonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitDrawFrame (null, -1);
+			Config.EventsBroker.EmitDrawFrame (null, -1, angle, true);
 		}
 
 		void HandleReady (object sender, EventArgs e)

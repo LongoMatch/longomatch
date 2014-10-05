@@ -353,10 +353,10 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitDrawFrame (TimelineEvent play, int drawingIndex)
+		public void EmitDrawFrame (TimelineEvent play, int drawingIndex, MediaFileAngle angle, bool current)
 		{
 			if (DrawFrame != null) {
-				DrawFrame (play, drawingIndex);
+				DrawFrame (play, drawingIndex, angle, current);
 			}
 		}
 

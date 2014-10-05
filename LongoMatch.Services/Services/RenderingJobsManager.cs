@@ -235,7 +235,7 @@ namespace LongoMatch.Services
 			lastTS = play.Start;
 			/* FIXME: for now we only support rendering the first angle in the list */
 			file = element.FileSet.GetAngle (element.Angles[0]);
-			drawings = play.Drawings.Where (d => d.Angles.Contains (element.Angles[0]));
+			drawings = play.Drawings.Where (d => d.Angle == element.Angles[0]);
 			foreach (FrameDrawing fd in drawings) {
 				if (fd.Render < play.Start || fd.Render > play.Stop) {
 					Log.Warning ("Drawing is not in the segments boundaries " +
