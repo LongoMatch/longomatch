@@ -929,7 +929,7 @@
               <widget class="Gtk.Label" id="label1">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Name&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Name</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -948,7 +948,7 @@
               <widget class="Gtk.Label" id="label4">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Color&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Color</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1050,7 +1050,7 @@
               <widget class="Gtk.Label" id="label6">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;HotKey&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">HotKey</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1091,7 +1091,7 @@
               <widget class="Gtk.Label" id="textcolorlabel">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Text color&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Text color</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1127,7 +1127,7 @@
               <widget class="Gtk.Label" id="label7">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Lead time (s)&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Lead time (s)</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1148,7 +1148,7 @@
               <widget class="Gtk.Label" id="label8">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Lag time (s)&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Lag time (s)</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1219,7 +1219,7 @@
               <widget class="Gtk.Label" id="taglabel">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Tag mode&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Tag mode</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1342,7 +1342,7 @@ Tag as trayectory</property>
               <widget class="Gtk.Label" id="label10">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Field position&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Field position</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1361,7 +1361,7 @@ Tag as trayectory</property>
               <widget class="Gtk.Label" id="label11">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Half field position&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Half field position</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1382,7 +1382,7 @@ Tag as trayectory</property>
               <widget class="Gtk.Label" id="label12">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Goal position&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Goal position</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1403,7 +1403,7 @@ Tag as trayectory</property>
               <widget class="Gtk.Label" id="label9">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Sort Method&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Sort Method</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1464,7 +1464,7 @@ Sort by duration</property>
               <widget class="Gtk.Label" id="label15">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Tags per row&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Tags per row</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1485,7 +1485,7 @@ Sort by duration</property>
               <widget class="Gtk.Label" id="showtagslabel">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Show tags&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Show tags</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1567,7 +1567,7 @@ Sort by duration</property>
               <widget class="Gtk.Label" id="label16">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Shape&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Shape</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1622,7 +1622,7 @@ Circle</property>
               <widget class="Gtk.Label" id="label17">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Points&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Points</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -1678,7 +1678,7 @@ Circle</property>
               <widget class="Gtk.Label" id="label18">
                 <property name="MemberName" />
                 <property name="Xalign">1</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Team&lt;/span&gt;</property>
+                <property name="LabelProp" translatable="yes">Team</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -7483,7 +7483,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 587">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 622">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -7547,7 +7547,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editteamslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage teams&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">Manage teams</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -7660,7 +7660,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editplayerslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage players&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">Manage players</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -9718,7 +9718,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editdashboardslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage dashboards&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">Manage dashboards</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>
@@ -9830,7 +9830,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="editbuttonslabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes">&lt;span font_desc="8"&gt;Manage dashboard buttons&lt;/span&gt;</property>
+                            <property name="LabelProp" translatable="yes">Manage dashboard buttons</property>
                             <property name="UseMarkup">True</property>
                           </widget>
                           <packing>

@@ -19,11 +19,13 @@
 //
 using System;
 using Gtk;
+using Pango;
 using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;
 using Point = LongoMatch.Core.Common.Point;
+
 
 namespace LongoMatch.Gui.Component
 {
@@ -51,7 +53,6 @@ namespace LongoMatch.Gui.Component
 		public CategoryProperties ()
 		{
 			this.Build ();
-
 			nameentry.Changed += HandleNameentryChanged;
 			colorbutton1.ColorSet += HandleColorSet;
 			textcolorbutton.ColorSet += HandleColorSet;
@@ -78,6 +79,7 @@ namespace LongoMatch.Gui.Component
 			foreach (Widget w in vbox3.Children) {
 				foreach (Widget t in (w as Table).Children) {
 					if ((t is Label)) {
+						t.ModifyFont (FontDescription.FromString (Config.Style.Font + " 10"));
 						sizegroupLeft.AddWidget (t);
 					}
 				}

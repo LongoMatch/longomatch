@@ -19,18 +19,16 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using Mono.Unix;
-using Stetic;
-
-using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Dialog;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
+using Mono.Unix;
+using Pango;
+using LongoMatch.Gui.Dialog;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -104,6 +102,10 @@ namespace LongoMatch.Gui.Panel
 				if (BackEvent != null)
 					BackEvent();
 			};
+			
+			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+			editplayerslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+
 			Load (null);
 		}
 		
@@ -147,31 +149,31 @@ namespace LongoMatch.Gui.Panel
 		void HandleEnterTeamButton (object sender, EventArgs e)
 		{
 			if (sender == newteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">New team</span>");
+				editteamslabel.Markup = Catalog.GetString ("New team");
 			} else if (sender == deleteteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Delete team</span>");
+				editteamslabel.Markup = Catalog.GetString ("Delete team");
 			} else if (sender == saveteambutton) {
-				editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Save team</span>");
+				editteamslabel.Markup = Catalog.GetString ("Save team");
 			}
 		}
 
 		void HandleLeftTeamButton (object sender, EventArgs e)
 		{
-			editteamslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage teams</span>");
+			editteamslabel.Markup = Catalog.GetString ("Manage teams");
 		}
 
 		void HandleEnterPlayerButton (object sender, EventArgs e)
 		{
 			if (sender == newplayerbutton1) {
-				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">New player</span>");
+				editplayerslabel.Markup = Catalog.GetString ("New player");
 			} else if (sender == deleteplayerbutton) {
-				editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Delete player</span>");
+				editplayerslabel.Markup = Catalog.GetString ("Delete player");
 			}
 		}
 
 		void HandleLeftPlayerButton (object sender, EventArgs e)
 		{
-			editplayerslabel.Markup = Catalog.GetString ("<span font_desc=\"8\">Manage players</span>");
+			editplayerslabel.Markup = Catalog.GetString ("Manage players");
 		}
 
 		void SaveLoadedTeam () {

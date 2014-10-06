@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 1F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Name</span>");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Name");
 			this.label1.UseMarkup = true;
 			this.maintable.Add (this.label1);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.maintable [this.label1]));
@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Component
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 1F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Color</span>");
+			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Color");
 			this.label4.UseMarkup = true;
 			this.maintable.Add (this.label4);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.maintable [this.label4]));
@@ -152,7 +152,7 @@ namespace LongoMatch.Gui.Component
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
 			this.label6.Xalign = 1F;
-			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">HotKey</span>");
+			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("HotKey");
 			this.label6.UseMarkup = true;
 			this.texttable.Add (this.label6);
 			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.texttable [this.label6]));
@@ -174,7 +174,7 @@ namespace LongoMatch.Gui.Component
 			this.textcolorlabel = new global::Gtk.Label ();
 			this.textcolorlabel.Name = "textcolorlabel";
 			this.textcolorlabel.Xalign = 1F;
-			this.textcolorlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Text color</span>");
+			this.textcolorlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Text color");
 			this.textcolorlabel.UseMarkup = true;
 			this.texttable.Add (this.textcolorlabel);
 			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.texttable [this.textcolorlabel]));
@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Component
 			this.label7 = new global::Gtk.Label ();
 			this.label7.Name = "label7";
 			this.label7.Xalign = 1F;
-			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Lead time (s)</span>");
+			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("Lead time (s)");
 			this.label7.UseMarkup = true;
 			this.timetable.Add (this.label7);
 			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.timetable [this.label7]));
@@ -208,7 +208,7 @@ namespace LongoMatch.Gui.Component
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 1F;
-			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Lag time (s)</span>");
+			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Lag time (s)");
 			this.label8.UseMarkup = true;
 			this.timetable.Add (this.label8);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.timetable [this.label8]));
@@ -248,7 +248,7 @@ namespace LongoMatch.Gui.Component
 			this.taglabel = new global::Gtk.Label ();
 			this.taglabel.Name = "taglabel";
 			this.taglabel.Xalign = 1F;
-			this.taglabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Tag mode</span>");
+			this.taglabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Tag mode");
 			this.taglabel.UseMarkup = true;
 			this.timetable.Add (this.taglabel);
 			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.timetable [this.taglabel]));
@@ -317,7 +317,7 @@ namespace LongoMatch.Gui.Component
 			this.label10 = new global::Gtk.Label ();
 			this.label10.Name = "label10";
 			this.label10.Xalign = 1F;
-			this.label10.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Field position</span>");
+			this.label10.LabelProp = global::Mono.Unix.Catalog.GetString ("Field position");
 			this.label10.UseMarkup = true;
 			this.postable.Add (this.label10);
 			global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.postable [this.label10]));
@@ -327,7 +327,7 @@ namespace LongoMatch.Gui.Component
 			this.label11 = new global::Gtk.Label ();
 			this.label11.Name = "label11";
 			this.label11.Xalign = 1F;
-			this.label11.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Half field position</span>");
+			this.label11.LabelProp = global::Mono.Unix.Catalog.GetString ("Half field position");
 			this.label11.UseMarkup = true;
 			this.postable.Add (this.label11);
 			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.postable [this.label11]));
@@ -339,7 +339,7 @@ namespace LongoMatch.Gui.Component
 			this.label12 = new global::Gtk.Label ();
 			this.label12.Name = "label12";
 			this.label12.Xalign = 1F;
-			this.label12.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Goal position</span>");
+			this.label12.LabelProp = global::Mono.Unix.Catalog.GetString ("Goal position");
 			this.label12.UseMarkup = true;
 			this.postable.Add (this.label12);
 			global::Gtk.Table.TableChild w25 = ((global::Gtk.Table.TableChild)(this.postable [this.label12]));
@@ -351,7 +351,7 @@ namespace LongoMatch.Gui.Component
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 1F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Sort Method</span>");
+			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Sort Method");
 			this.label9.UseMarkup = true;
 			this.postable.Add (this.label9);
 			global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.postable [this.label9]));
@@ -387,7 +387,7 @@ namespace LongoMatch.Gui.Component
 			this.label15 = new global::Gtk.Label ();
 			this.label15.Name = "label15";
 			this.label15.Xalign = 1F;
-			this.label15.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Tags per row</span>");
+			this.label15.LabelProp = global::Mono.Unix.Catalog.GetString ("Tags per row");
 			this.label15.UseMarkup = true;
 			this.cattable.Add (this.label15);
 			global::Gtk.Table.TableChild w29 = ((global::Gtk.Table.TableChild)(this.cattable [this.label15]));
@@ -399,7 +399,7 @@ namespace LongoMatch.Gui.Component
 			this.showtagslabel = new global::Gtk.Label ();
 			this.showtagslabel.Name = "showtagslabel";
 			this.showtagslabel.Xalign = 1F;
-			this.showtagslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Show tags</span>");
+			this.showtagslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Show tags");
 			this.showtagslabel.UseMarkup = true;
 			this.cattable.Add (this.showtagslabel);
 			global::Gtk.Table.TableChild w30 = ((global::Gtk.Table.TableChild)(this.cattable [this.showtagslabel]));
@@ -445,7 +445,7 @@ namespace LongoMatch.Gui.Component
 			this.label16 = new global::Gtk.Label ();
 			this.label16.Name = "label16";
 			this.label16.Xalign = 1F;
-			this.label16.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Shape</span>");
+			this.label16.LabelProp = global::Mono.Unix.Catalog.GetString ("Shape");
 			this.label16.UseMarkup = true;
 			this.cardtable.Add (this.label16);
 			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.cardtable [this.label16]));
@@ -476,7 +476,7 @@ namespace LongoMatch.Gui.Component
 			this.label17 = new global::Gtk.Label ();
 			this.label17.Name = "label17";
 			this.label17.Xalign = 1F;
-			this.label17.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Points</span>");
+			this.label17.LabelProp = global::Mono.Unix.Catalog.GetString ("Points");
 			this.label17.UseMarkup = true;
 			this.scoretable.Add (this.label17);
 			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.scoretable [this.label17]));
@@ -507,7 +507,7 @@ namespace LongoMatch.Gui.Component
 			this.label18 = new global::Gtk.Label ();
 			this.label18.Name = "label18";
 			this.label18.Xalign = 1F;
-			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("<span font_desc=\"10\">Team</span>");
+			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("Team");
 			this.label18.UseMarkup = true;
 			this.timertable.Add (this.label18);
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.timertable [this.label18]));
