@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (FileChooserMode == FileChooserMode.MediaFile) {
 				MediaFile file = Misc.OpenFile (this);
-				if (MediaFile != null) {
+				if (file != null && MediaFile != null) {
 					file.Offset = MediaFile.Offset;
 				}
 				MediaFile = file;
