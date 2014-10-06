@@ -93,7 +93,7 @@ namespace LongoMatch.Gui
 			this.vbox5.Spacing = 6;
 			// Container child vbox5.Gtk.Box+BoxChild
 			this.vscale1 = new global::Gtk.VScale (null);
-			this.vscale1.WidthRequest = 30;
+			this.vscale1.WidthRequest = 36;
 			this.vscale1.Sensitive = false;
 			this.vscale1.Name = "vscale1";
 			this.vscale1.UpdatePolicy = ((global::Gtk.UpdateType)(1));

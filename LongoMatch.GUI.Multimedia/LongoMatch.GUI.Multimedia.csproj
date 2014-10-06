@@ -20,7 +20,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Execution>
-      <Execution clr-version="Net_2_0" xmlns="" />
+      <Execution clr-version="Net_2_0" />
     </Execution>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -32,7 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Execution>
-      <Execution clr-version="Net_2_0" xmlns="" />
+      <Execution clr-version="Net_2_0" />
     </Execution>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -80,6 +80,10 @@
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
@@ -106,7 +110,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties xmlns="">
+      <Properties>
         <Deployment.LinuxDeployData generatePcFile="False" />
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">
           <BuildFilesVar Name="FILES" />

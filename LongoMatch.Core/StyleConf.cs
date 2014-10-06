@@ -96,6 +96,8 @@ namespace LongoMatch.Core.Common
 
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;
+
+		public string Font = "Ubuntu";
 		
 		public Color HomeTeamColor { get; set; }
 

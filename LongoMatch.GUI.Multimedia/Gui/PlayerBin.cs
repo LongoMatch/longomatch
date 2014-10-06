@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using Gdk;
 using Gtk;
+using Pango;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
@@ -106,6 +107,7 @@ namespace LongoMatch.Gui
 			segment.Stop = new Time (int.MaxValue);
 			lastTime = new Time (0);
 			length = new Time (0);
+			vscale1.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
 			
 			CreatePlayer ();
 		}

@@ -141,7 +141,7 @@
                 <child>
                   <widget class="Gtk.VScale" id="vscale1">
                     <property name="MemberName" />
-                    <property name="WidthRequest">30</property>
+                    <property name="WidthRequest">36</property>
                     <property name="Sensitive">False</property>
                     <property name="UpdatePolicy">Discontinuous</property>
                     <property name="Inverted">True</property>
