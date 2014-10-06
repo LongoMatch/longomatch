@@ -171,33 +171,32 @@ namespace LongoMatch.Services
 				} else {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
 				}
+				if (importer.NeedsEdition) {
+					Config.EventsBroker.EmitNewProject (project);
+				} else {
+					if (!project.Description.FileSet.CheckFiles ()) {
+						if (!guiToolkit.SelectMediaFiles (project)) {
+							guiToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
+							return;
+						}
+					}
+					/* If the project exists ask if we want to overwrite it */
+					if (DB.Exists (project)) {
+						var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
+						                                      project.ID + "\n" +	Catalog.GetString ("Do you want to overwrite it?"), null);
+						if (!res)
+							return;
+						DB.UpdateProject (project);
+					} else {
+						DB.AddProject (project);
+					}
+					Config.EventsBroker.EmitOpenProjectID (project.ID);
+				}
 			} catch (Exception ex) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
-					"\n" + ex.Message);
+				                         "\n" + ex.Message);
 				Log.Exception (ex);
 				return;
-			}
-
-			if (importer.NeedsEdition) {
-				Config.EventsBroker.EmitNewProject (project);
-			} else {
-				if (!project.Description.FileSet.CheckFiles ()) {
-					if (!guiToolkit.SelectMediaFiles (project)) {
-						guiToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
-						return;
-					}
-				}
-				/* If the project exists ask if we want to overwrite it */
-				if (DB.Exists (project)) {
-					var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
-						project.ID + "\n" +	Catalog.GetString ("Do you want to overwrite it?"), null);
-					if (!res)
-						return;
-					DB.UpdateProject (project);
-				} else {
-					DB.AddProject (project);
-				}
-				Config.EventsBroker.EmitOpenProjectID (project.ID);
 			}
 		}
 	}
