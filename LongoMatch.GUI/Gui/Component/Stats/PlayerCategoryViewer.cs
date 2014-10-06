@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 
 		public void LoadStats (EventTypeStats stats) {
-			tagger.LoadStats (stats);
+			tagger.LoadStats (stats, Team.BOTH);
 			
 			foreach (Widget child in vbox1.AllChildren) {
 				if (!(child is PlaysCoordinatesTagger))

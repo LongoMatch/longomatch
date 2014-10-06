@@ -24,7 +24,15 @@ namespace LongoMatch.Core.Stats
 		public Stat ()
 		{
 		}
-		
+
+		public Stat (string name, int totalCount, int localTeamCount, int visitorTeamCount)
+		{
+			Name = name;
+			TotalCount = totalCount;
+			LocalTeamCount = localTeamCount;
+			VisitorTeamCount = visitorTeamCount;
+		}
+	
 		public string Name {
 			get;
 			set;

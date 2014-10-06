@@ -15,11 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
 using Image = LongoMatch.Core.Common.Image;
 using Point = LongoMatch.Core.Common.Point;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
@@ -46,7 +48,13 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 		
-		public void LoadStats (EventTypeStats stats) {
+		public void LoadStats (EventTypeStats stats, Team team)
+		{
+			Visible = false;
+			
+			UpdateTags (stats, team, FieldPositionType.Field, field);
+			UpdateTags (stats, team, FieldPositionType.HalfField, hfield);
+			UpdateTags (stats, team, FieldPositionType.Goal, goal);
 		}
 		
 		public void LoadPlay (TimelineEvent play) {
@@ -67,6 +75,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
+		void UpdateTags (EventTypeStats stats, Team team, FieldPositionType field, CoordinatesTagger tagger)
+		{
+			List<Coordinates> coords = stats.GetFieldCoordinates (team, field);
+			if (coords.Count > 0) {
+				Visible = true;
+			}
+			tagger.Tagger.Coordinates = coords;
+			tagger.Visible = coords.Count != 0;
+		}
+
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();

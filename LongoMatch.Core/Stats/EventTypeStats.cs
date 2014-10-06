@@ -18,7 +18,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
@@ -31,39 +30,76 @@ namespace LongoMatch.Core.Stats
 		EventType eventType;
 		Project project;
 		EventsFilter filter;
-		
+
 		public EventTypeStats (Project project, EventsFilter filter, EventType evType)
 		{
 			Name = evType.Name;
-			events = new List<TimelineEvent>();
+			events = new List<TimelineEvent> ();
 			this.project = project;
 			this.filter = filter;
 			this.eventType = evType;
 		}
-		
+
 		public void Update ()
 		{
 			events = project.EventsByType (eventType).Where (filter.IsVisible).ToList ();
 			homeEvents = events.Where (e => project.PlayTaggedTeam (e) == Team.LOCAL).ToList ();
-			awayEvents = events.Where (e => project.PlayTaggedTeam (e) == Team.LOCAL).ToList ();
+			awayEvents = events.Where (e => project.PlayTaggedTeam (e) == Team.VISITOR).ToList ();
 			TotalCount = events.Count;
 			LocalTeamCount = homeEvents.Count;
-			VisitorTeamCount = homeEvents.Count;
+			VisitorTeamCount = awayEvents.Count;
 			List<Tag> tags = events.SelectMany (e => e.Tags).Distinct ().ToList ();
+			SubcategoriesStats = new List<SubCategoryStat> ();
+			if (eventType is AnalysisEventType) {
+				var tagsByGroup = (eventType as AnalysisEventType).TagsByGroup;
+				foreach (string grp in tagsByGroup.Keys) {
+					SubCategoryStat substat = new SubCategoryStat (grp);
+					foreach (Tag t in tagsByGroup[grp]) {
+						int count, localTeamCount, visitorTeamCount;
+						count = events.Count (e => e.Tags.Contains (t));
+						localTeamCount = homeEvents.Count (e => e.Tags.Contains (t));
+						visitorTeamCount = awayEvents.Count (e => e.Tags.Contains (t));
+						PercentualStat pStat = new PercentualStat (t.Value, count, localTeamCount,
+						                                           visitorTeamCount, events.Count);
+						substat.OptionStats.Add (pStat);
+					}
+					SubcategoriesStats.Add (substat);
+				}
+			}
 		}
-		
+
 		public List<SubCategoryStat> SubcategoriesStats {
 			get;
 			protected set;
 		}
-		
+
 		public EventType Category {
 			get {
 				return eventType;
 			}
 		}
-		
+
+		public bool HasPositionTags (Team team)
+		{
+			List<TimelineEvent> evts = EventsForTeam (team);
+			return evts.Count (e => e.FieldPosition != null || e.HalfFieldPosition != null || e.GoalPosition != null) != 0; 
+		}
+
 		public List<Coordinates> GetFieldCoordinates (Team team, FieldPositionType pos)
+		{
+			List<TimelineEvent> evts = EventsForTeam (team);
+			
+			switch (pos) {
+			case FieldPositionType.Field:
+				return evts.Where (e => e.FieldPosition != null).Select (e => e.FieldPosition).ToList ();
+			case FieldPositionType.HalfField:
+				return evts.Where (e => e.HalfFieldPosition != null).Select (e => e.HalfFieldPosition).ToList ();
+			default:
+				return evts.Where (e => e.GoalPosition != null).Select (e => e.GoalPosition).ToList ();
+			}
+		}
+
+		List<TimelineEvent> EventsForTeam (Team team)
 		{
 			List<TimelineEvent> evts;
 			
@@ -78,14 +114,7 @@ namespace LongoMatch.Core.Stats
 				evts = events;
 				break;
 			}
-			switch (pos) {
-			case FieldPositionType.Field:
-				return evts.Select (e=>e.FieldPosition).ToList();
-			case FieldPositionType.HalfField:
-				return evts.Select (e=>e.HalfFieldPosition).ToList();
-			default:
-				return evts.Select (e=>e.GoalPosition).ToList();
-			}
+			return evts;
 		}
 	}
 }

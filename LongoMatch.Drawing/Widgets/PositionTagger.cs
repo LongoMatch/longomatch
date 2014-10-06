@@ -90,6 +90,15 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public List<Coordinates> Coordinates {
+			set {
+				ClearObjects ();
+				foreach (Coordinates coord in value) {
+					AddObject (new PositionObject (coord.Points, Background.Width, Background.Height));
+				}
+			}
+		}
+		
 		public List<Point> Points {
 			set {
 				ClearObjects ();

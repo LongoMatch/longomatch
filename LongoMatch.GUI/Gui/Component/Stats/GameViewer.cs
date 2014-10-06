@@ -67,9 +67,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void UpdateGui () {
-		
-			homelabel.Text = stats.Project.Description.LocalName;;
-			awaylabel.Text = stats.Project.Description.VisitorName;
+			homelabel.Markup = String.Format ("{0} <span font_desc=\"40\">{1}</span>",
+			                                  project.LocalTeamTemplate.TeamName, project.GetScore (Team.LOCAL));
+			awaylabel.Markup = String.Format ("<span font_desc=\"40\">{0}</span> {1}",
+			                                  project.GetScore (Team.VISITOR), project.VisitorTeamTemplate.TeamName);
 			GetMaxSize(out catsMaxSize, out subcatsMaxSize);
 			if (project.LocalTeamTemplate.Shield != null)
 				homeimage.Pixbuf = project.LocalTeamTemplate.Shield.Value;
@@ -159,6 +160,7 @@ namespace LongoMatch.Gui.Component
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Center;
+			ModifyText (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
 			this.textSize = textSize;
 			name_tpl = "{0}";
 			count_tpl = "{0} ({1}%)";
@@ -168,7 +170,8 @@ namespace LongoMatch.Gui.Component
 				HeightRequest = 25;
 			} else {
 				if (subcat != null) {
-					name_tpl = GLib.Markup.EscapeText (subcat.Name) + ": {0}";
+					name_tpl = GLib.Markup.EscapeText (subcat.Name);
+					name_tpl += name_tpl == "" ? "{0}" : ": {0}";
 				}
 				HeightRequest = 18;
 			}

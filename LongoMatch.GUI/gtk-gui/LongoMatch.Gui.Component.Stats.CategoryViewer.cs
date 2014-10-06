@@ -89,7 +89,6 @@ namespace LongoMatch.Gui.Component.Stats
 			this.vbox2.Add (this.allframe);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.allframe]));
 			w6.Position = 0;
-			w6.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.homeframe = new global::Gtk.Frame ();
 			this.homeframe.Name = "homeframe";
@@ -113,7 +112,6 @@ namespace LongoMatch.Gui.Component.Stats
 			this.vbox2.Add (this.homeframe);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.homeframe]));
 			w9.Position = 1;
-			w9.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.awayframe = new global::Gtk.Frame ();
 			this.awayframe.Name = "awayframe";
@@ -137,7 +135,6 @@ namespace LongoMatch.Gui.Component.Stats
 			this.vbox2.Add (this.awayframe);
 			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.awayframe]));
 			w12.Position = 2;
-			w12.Expand = false;
 			this.notebook1.Add (this.vbox2);
 			global::Gtk.Notebook.NotebookChild w13 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox2]));
 			w13.Position = 1;

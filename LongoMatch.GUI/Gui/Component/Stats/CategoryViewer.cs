@@ -50,20 +50,11 @@ namespace LongoMatch.Gui.Component.Stats
 			homeLabel.Text = HomeName;
 			awayLabel.Text = AwayName;
 			
-			alltagger.LoadStats (stats);
-			allframe.Visible = true;
-//			allframe.Visible = stats.FieldCoordinates.Count + stats.HalfFieldCoordinates.Count +
-//			    stats.GoalCoordinates.Count != 0;
+			alltagger.LoadStats (stats, Team.BOTH);
 			
-			hometagger.LoadStats (stats);
-			hometagger.Visible = true;
-//			homeframe.Visible = stats.HomeFieldCoordinates.Count + stats.HomeHalfFieldCoordinates.Count +
-//			    stats.HomeGoalCoordinates.Count != 0;
+			hometagger.LoadStats (stats, Team.LOCAL);
 			    
-			awaytagger.LoadStats (stats);
-			awaytagger.Visible = true;
-//			awayframe.Visible = stats.AwayFieldCoordinates.Count + stats.AwayHalfFieldCoordinates.Count +
-//			    stats.AwayGoalCoordinates.Count != 0;
+			awaytagger.LoadStats (stats, Team.VISITOR);
 			
 			foreach (Widget child in vbox1.AllChildren) {
 				if (child is SubCategoryViewer || child is HSeparator)

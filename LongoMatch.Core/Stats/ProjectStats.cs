@@ -36,6 +36,7 @@ namespace LongoMatch.Core.Stats
 		{
 			catStats = new List<EventTypeStats>();
 			this.project = project;
+			filter = new EventsFilter (project);
 			CreateStats ();
 		}
 		
@@ -66,6 +67,7 @@ namespace LongoMatch.Core.Stats
 			foreach (EventType evt in project.EventTypes) {
 				EventTypeStats evstats = new EventTypeStats (project, filter, evt);
 				evstats.Update ();
+				EventTypeStats.Add (evstats);
 			}
 		}
 
@@ -75,50 +77,6 @@ namespace LongoMatch.Core.Stats
 				e.Update();
 			}
 		}
-
-//		void GetSubcategoryStats (List<TimelineEvent> subcatPlays, SubCategoryStat subcatStat, string desc,
-//			int totalCount, out int localTeamCount, out int visitorTeamCount)
-//		{
-//			int count;
-//			
-//			count = subcatPlays.Count(); 
-//			CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
-//			PercentualStat pStat = new PercentualStat(totalCount);
-//			pStat.Name = desc;
-//			pStat.TotalCount = count;
-//			pStat.LocalTeamCount = localTeamCount;
-//			pStat.VisitorTeamCount = visitorTeamCount;
-//			subcatStat.AddOptionStat(pStat);
-//		}
-//		
-//		void GetPlayersStats (Project project, List<TimelineEvent> subcatPlays, string optionName,
-//			SubCategoryStat subcatStat, EventType cat)
-//		{
-//			foreach (SubCategory subcat in cat.SubCategories) {
-//				Dictionary<Player, int> localPlayerCount = new Dictionary<Player, int>();
-//				Dictionary<Player, int> visitorPlayerCount = new Dictionary<Player, int>();
-//				
-//				if (!(subcat is PlayerSubCategory))
-//					continue;
-//				
-//				playerSubcat = subcat as PlayerSubCategory;
-//				
-//				if (playerSubcat.Contains(Team.LOCAL) || playerSubcat.Contains(Team.BOTH)){
-//					foreach (Player player in project.LocalTeamTemplate.List) {
-//						localPlayerCount.Add(player, GetPlayerCount(subcatPlays, player, subcat as PlayerSubCategory));
-//					}
-//					subcatStat.AddPlayersStats(optionName, subcat.Name, Team.LOCAL, localPlayerCount);
-//				}
-//				
-//				if (playerSubcat.Contains(Team.VISITOR) || playerSubcat.Contains(Team.BOTH)){
-//					foreach (Player player in project.VisitorTeamTemplate.List) {
-//						visitorPlayerCount.Add(player, GetPlayerCount(subcatPlays, player, subcat as PlayerSubCategory));
-//					}
-//					subcatStat.AddPlayersStats(optionName, subcat.Name, Team.VISITOR, visitorPlayerCount);
-//				}
-//			}
-//		}
-//		
 	}
 }
 
