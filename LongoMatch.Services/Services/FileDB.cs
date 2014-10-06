@@ -157,7 +157,7 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public bool AddProject (Project project)
+		public void AddProject (Project project)
 		{
 			string projectFile;
 			
@@ -173,10 +173,8 @@ namespace LongoMatch.DB
 					Log.Exception (ex);
 					projectsDB.Delete (project.Description.ID);
 				}
-				return true;
 			} catch (Exception ex) {
-				Log.Exception (ex);
-				return false;
+				throw ex;
 			}
 		}
 

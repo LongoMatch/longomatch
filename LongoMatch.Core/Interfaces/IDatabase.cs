@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Interfaces
 
 		Project GetProject(Guid id);
 		
-		bool AddProject(Project project);
+		void AddProject(Project project);
 		
 		bool RemoveProject(Guid id);
 		
