@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Component
 				} else  {
 					image = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk, IconSize.Dialog);
 				}
-				store.AppendValues (Describe (pdesc), image, pdesc);
+				store.AppendValues (pdesc.Title, image, pdesc);
 			}
 			swallowSignals = false;
 		}
@@ -101,16 +101,6 @@ namespace LongoMatch.Gui.Component
 
 		public void ClearSearch() {
 			filterEntry.Text="";
-		}
-		
-		string Describe (ProjectDescription project) {
-			string ret;
-			
-			ret = project.Title;
-			ret += String.Format ("\n {0} - {1} ({2}-{3})", project.LocalName,
-			                      project.VisitorName, project.LocalGoals,
-			                      project.VisitorGoals);
-			return ret;
 		}
 		
 		ListStore CreateStore ()
