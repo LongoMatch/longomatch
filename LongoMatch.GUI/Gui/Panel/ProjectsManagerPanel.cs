@@ -128,6 +128,7 @@ namespace LongoMatch.Gui.Panel
 		void UpdateFile (MediaFileChooser mediafilechooser, MediaFile file, MediaFileAngle view,
 		               Gtk.Image image, Label label)
 		{
+			mediafilechooser.MediaFile = file;
 			if (file != null) {
 				loadedProject.Description.FileSet.SetAngle (view, file);
 				image.Pixbuf = file.Preview.Value;
