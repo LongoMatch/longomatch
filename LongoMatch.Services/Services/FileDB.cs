@@ -143,7 +143,6 @@ namespace LongoMatch.DB
 
 		public Project GetProject (Guid id)
 		{
-			Project ret;
 			string projectFile = Path.Combine (dbDirPath, id.ToString ());
 
 			if (File.Exists (projectFile)) {
@@ -161,20 +160,16 @@ namespace LongoMatch.DB
 		{
 			string projectFile;
 			
+			projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
+			project.Description.LastModified = DateTime.UtcNow;
+			projectsDB.Add (project.Description);
 			try {
-				projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
-				project.Description.LastModified = DateTime.UtcNow;
-				projectsDB.Add (project.Description);
-				try {
-					if (File.Exists (projectFile))
-						File.Delete (projectFile);
-					Serializer.Save (project, projectFile);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					projectsDB.Delete (project.Description.ID);
-				}
+				if (File.Exists (projectFile))
+					File.Delete (projectFile);
+				Serializer.Save (project, projectFile);
 			} catch (Exception ex) {
-				throw ex;
+				Log.Exception (ex);
+				projectsDB.Delete (project.Description.ID);
 			}
 		}
 
@@ -183,21 +178,16 @@ namespace LongoMatch.DB
 			string projectFile;
 			
 			projectFile = Path.Combine (dbDirPath, id.ToString ());
-			try {
-				if (File.Exists (projectFile)) {
-					File.Delete (projectFile);
-				}
-				return projectsDB.Delete (id);
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				return false;
+			if (File.Exists (projectFile)) {
+				File.Delete (projectFile);
 			}
+			return projectsDB.Delete (id);
 		}
 
-		public bool UpdateProject (Project project)
+		public void UpdateProject (Project project)
 		{
 			project.Description.LastModified = DateTime.UtcNow;
-			return AddProject (project);
+			AddProject (project);
 		}
 
 		void ReloadDB ()

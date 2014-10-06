@@ -31,7 +31,7 @@ namespace LongoMatch.Core.Interfaces
 		
 		bool RemoveProject(Guid id);
 		
-		bool UpdateProject(Project project);
+		void UpdateProject(Project project);
 		
 		bool Exists(Project project);
 		
