@@ -78,7 +78,6 @@ namespace LongoMatch.Core.Common
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
-		public event CreateThumbnailsHandler CreateThumbnailsEvent;
 		
 		/* Player and Capturer */
 		public event TickHandler PlayerTick;
@@ -364,12 +363,6 @@ namespace LongoMatch.Core.Common
 		{
 			if (PlaybackRateChanged != null) {
 				PlaybackRateChanged (val);
-			}
-		}
-		
-		public void EmitCreateThumbnails (Project project) {
-			if (CreateThumbnailsEvent != null) {
-				CreateThumbnailsEvent (project);
 			}
 		}
 		

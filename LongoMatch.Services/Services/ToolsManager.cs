@@ -71,7 +71,6 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.ExportProjectEvent += ExportProject;
 			Config.EventsBroker.ImportProjectEvent += ImportProject;
-			Config.EventsBroker.CreateThumbnailsEvent += CreateThumbnails;
 		}
 
 		public void RegisterImporter (Func<string, Project> importFunction,
@@ -85,33 +84,6 @@ namespace LongoMatch.Services
 				NeedsEdition=needsEdition
 			};
 			ProjectImporters.Add (importer);
-		}
-
-		public static void CreateThumbnails (Project project)
-		{
-			IBusyDialog dialog;
-			IFramesCapturer capturer;
-
-			dialog = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Creating video thumbnails. This can take a while."));
-			dialog.Show ();
-			dialog.Pulse ();
-
-			/* Create all the thumbnails */
-			capturer = Config.MultimediaToolkit.GetFramesCapturer ();
-			capturer.Open (project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
-			foreach (TimelineEvent play in project.Timeline) {
-				try {
-					play.Miniature = capturer.GetFrame (play.Start + ((play.Stop - play.Start) / 2),
-					                                    true, Constants.MAX_THUMBNAIL_SIZE,
-					                                    Constants.MAX_THUMBNAIL_SIZE);
-					dialog.Pulse ();
-
-				} catch (Exception ex) {
-					Log.Exception (ex);
-				}
-			}
-			capturer.Dispose ();
-			dialog.Destroy ();
 		}
 
 		List<ProjectImporter> ProjectImporters {

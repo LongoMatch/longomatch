@@ -376,7 +376,6 @@ namespace LongoMatch.Gui.Panel
 			if (CreateProject ()) {
 				if (projectType == ProjectType.EditProject) {
 					projectType = ProjectType.FileProject;
-					Config.EventsBroker.EmitCreateThumbnails (project);
 				} else {
 					project.CreateLineupEvent ();
 				}
