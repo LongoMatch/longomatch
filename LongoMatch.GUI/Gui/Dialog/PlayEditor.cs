@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Dialog
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			nameentry.Changed += HandleChanged;
 		}
 
 		protected override void OnDestroyed ()
@@ -113,6 +114,13 @@ namespace LongoMatch.Gui.Dialog
 				tb.Show ();
 			}
 			
+		}
+
+		void HandleChanged (object sender, EventArgs e)
+		{
+			if (play != null) {
+				play.Name = nameentry.Text;
+			}
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
