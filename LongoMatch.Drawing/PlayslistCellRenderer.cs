@@ -21,6 +21,8 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using System.IO;
+using System.Collections.Generic;
+using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing
 {
@@ -131,19 +133,17 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 		
-		public static void RenderPlay (Color color, Image ss, bool selected, string desc,
+		public static void RenderPlay (Color color, Image ss, List<Player> players, bool selected, string desc,
 		                             int count, bool isExpanded, IDrawingToolkit tk,
 		                             IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
 			double textWidth;
 			
-			
 			selectPoint = new Point (backgroundArea.Start.X, backgroundArea.Start.Y);
-			textPoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth + 10, selectPoint.Y);
-			imagePoint = new Point (backgroundArea.Start.X + backgroundArea.Width - StyleConf.ListImageWidth - 10,
-			                        selectPoint.Y);
-			textWidth = imagePoint.X - textPoint.X; 
+			textPoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator, selectPoint.Y);
+			imagePoint = new Point (textPoint.X + StyleConf.ListTextWidth + StyleConf.ListRowSeparator, selectPoint.Y);
+			textWidth = StyleConf.ListTextWidth; 
 			circlePoint = new Point (selectPoint.X + StyleConf.ListSelectedWidth / 2,
 			                         selectPoint.Y + backgroundArea.Height / 2);
 
@@ -182,11 +182,25 @@ namespace LongoMatch.Drawing
 						Path.Combine (Config.IconsDir, StyleConf.ListEyeIconPath));
 				}
 				tk.DrawSurface (EyeSurface, new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset,
-				                                       imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height /2));
+				                                       imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2));
 			}
 
 			if (ss != null) {
 				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss, true);
+			}
+			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+			if (players != null && players.Count > 0) {
+				foreach (Player p in players) {
+					PlayerObject po = new PlayerObject (p);
+					po.Position = new Point (imagePoint.X + StyleConf.ListImageWidth / 2,
+					                         imagePoint.Y + StyleConf.ListImageWidth / 2);
+					po.Size = StyleConf.ListImageWidth - 2;
+					tk.End ();
+					po.Draw (tk, null);
+					tk.Begin ();
+					po.Dispose ();
+					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+				}
 			}
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
@@ -200,7 +214,7 @@ namespace LongoMatch.Drawing
 				                        context, backgroundArea, cellArea);
 			} else if (item is TimelineEvent) {
 				TimelineEvent p = item as TimelineEvent;
-				RenderPlay (p.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Color, p.Miniature, p.Players, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);
@@ -208,7 +222,7 @@ namespace LongoMatch.Drawing
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
-				RenderPlay (p.Play.EventType.Color, p.Miniature, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Play.EventType.Color, p.Miniature, null, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType());

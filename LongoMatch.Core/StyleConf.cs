@@ -53,7 +53,8 @@ namespace LongoMatch.Core.Common
 		public const int NewTaggerSpacing = 35;
 
 		public const int ListSelectedWidth = 16;
-		public const int ListTextWidth = 200;
+		public const int ListRowSeparator = 10;
+		public const int ListTextWidth = 180;
 		public const int ListImageWidth = 50;
 		public const int ListCategoryHeight = 50;
 		public const int ListCountRadio = 10;

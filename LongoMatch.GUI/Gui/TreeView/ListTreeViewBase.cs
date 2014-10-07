@@ -189,12 +189,19 @@ namespace LongoMatch.Gui.Component
 		{
 			x_offset = 0;
 			y_offset = 0;
-			width = StyleConf.ListSelectedWidth + StyleConf.ListTextWidth + StyleConf.ListImageWidth;
+			width = StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator + StyleConf.ListTextWidth;
 			height = StyleConf.ListCategoryHeight;
+			if (Item is TimelineEvent) {
+				TimelineEvent evt = Item as TimelineEvent;
+				if (evt.Miniature != null) {
+					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+				}
+				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * evt.Players.Count;
+			}
 		}
 
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
-		                              Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
+		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
 			CellState state = (CellState) flags;
 			
