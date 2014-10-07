@@ -109,16 +109,21 @@ namespace LongoMatch.Drawing
 
 		public virtual void Draw (IContext context, Area area)
 		{
+			List<CanvasObject> highlighted = new List<CanvasObject> ();
 			tk.Context = context;
 			tk.Begin ();
 			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 			foreach (ICanvasObject co in Objects) {
-				if (co is ICanvasSelectableObject) {
-					if ((co as ICanvasSelectableObject).Selected) {
-						continue;
-					}
-				}
 				if (co.Visible) {
+					if (co is ICanvasSelectableObject) {
+						if ((co as ICanvasSelectableObject).Selected) {
+							continue;
+						}
+						if ((co as CanvasObject).Highlighted) {
+							highlighted.Add (co as CanvasObject);
+							continue;
+						}
+					}
 					co.Draw (tk, area);
 				}
 			}
@@ -126,6 +131,9 @@ namespace LongoMatch.Drawing
 				if (co.Selected && co.Visible) {
 					co.Draw (tk, area);
 				}
+			}
+			foreach (CanvasObject co in highlighted) {
+				co.Draw (tk, area);
 			}
 			tk.End ();
 			tk.Context = null;
