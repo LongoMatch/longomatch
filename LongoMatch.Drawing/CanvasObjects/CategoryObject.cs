@@ -99,6 +99,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			if (tagsByGroup.Keys.Count == 1) {
 				TimerCallback (null);
+				return;
 			}
 			if (timer == null) {
 				timer = new System.Threading.Timer (TimerCallback, null, TIMEOUT_MS, 0);
