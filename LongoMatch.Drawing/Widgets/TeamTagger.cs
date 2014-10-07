@@ -107,19 +107,16 @@ namespace LongoMatch.Drawing.Widgets
 		public void ResetSelection ()
 		{
 			tagger.ResetSelection ();
-			widget.ReDraw ();
 		} 
 
 		public void Select (List<Player> players)
 		{
 			tagger.Select (players);
-			widget.ReDraw ();
 		}
 		
 		public void Select (Player p)
 		{
 			tagger.Select (p);
-			widget.ReDraw ();
 		}
 
 		public void Substitute (Player p1, Player p2, TeamTemplate team)
