@@ -95,6 +95,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		Area Area {
+			get {
+				double ls = StyleConf.TimelineLineSize;
+				return new Area (new Point (StartX - ls, OffsetY),
+				                 (StopX - StartX) + 2 * ls, Height);
+			}
+		}
+
 		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			double accuracy;
@@ -153,8 +161,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			double linepos;
 
-			if (!UpdateDrawArea (tk, area,
-			                     new Area (new Point (StartX, OffsetY), StopX - StartX, Height))) {
+			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			};
 

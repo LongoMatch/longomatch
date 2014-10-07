@@ -82,6 +82,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		Area GetArea (double relSize)
+		{
+			if (Points != null) {
+				if (Points.Count == 1) {
+					return new Area (new Point (Start.X - relSize * 2, Start.Y - relSize * 2),
+					                 relSize * 4, relSize * 4);
+				} else {
+					Area a = new Line {Start = Start, Stop = Stop}.Area;
+					a.Start.X -= relSize * 3;
+					a.Start.Y -= relSize * 3;
+					a.Width += relSize * 6;
+					a.Height += relSize * 6;
+					return a;
+				}
+			}
+			return new Area (new Point (0, 0), 0, 0);
+		}
+
 		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
 			if (point.Distance (Start) < precision) {
@@ -110,8 +128,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			Color color, scolor;
 			double relSize;
+			Area objectArea;
 			
+
 			relSize = Math.Max (1, (double)Width / 200);
+
+			if (!UpdateDrawArea (tk, area, GetArea (relSize))) {
+				return;
+			}
 
 			tk.Begin ();
 			if (Play != null) {
@@ -119,15 +143,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				color = Constants.TAGGER_POINT_COLOR;
 			}
-			scolor = color;
 			
 			if (Selected) {
-				scolor = Constants.TAGGER_SELECTION_COLOR;
 				color = Constants.TAGGER_SELECTION_COLOR;
+			} else if (Highlighted) {
+				color = Config.Style.PaletteActive;
 			}
-			tk.FillColor = color;
-			tk.StrokeColor = scolor;
-			tk.LineWidth = (int)relSize;
+
+ 			tk.FillColor = color;
+			tk.StrokeColor = color;
+			tk.LineWidth = 0;
 			tk.DrawCircle (Start, (int)relSize * 2);
 			if (Points.Count == 2) {
 				tk.LineWidth = (int)relSize * 2;

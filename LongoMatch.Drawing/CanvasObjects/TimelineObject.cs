@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
@@ -98,11 +99,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void AddNode (TimeNodeObject o)
 		{
 			nodes.Add (o);
+			o.RedrawEvent += HandleRedrawEvent;
 		}
 
 		public void RemoveNode (TimeNode node)
 		{
-			nodes.RemoveAll (po => po.TimeNode == node);
+			TimeNodeObject to;
+			
+			to = nodes.FirstOrDefault (n => n.TimeNode == node);
+			if (to != null) {
+				to.RedrawEvent -= HandleRedrawEvent;
+				nodes.Remove (to);
+			}
 		}
 		
 		protected virtual bool TimeNodeObjectIsVisible (TimeNodeObject tn)
@@ -117,6 +125,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 0;
 			
 			tk.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
+		}
+
+		void HandleRedrawEvent (ICanvasObject co, Area area)
+		{
+			EmitRedrawEvent (co as CanvasObject, area);
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)

@@ -52,6 +52,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		Area Area {
+			get {
+				double ls = SelectionLeft.Width / 2;
+				return new Area (new Point (StartX - ls, OffsetY),
+				                 (StopX - StartX) + 2 * ls, Height);
+			}
+		}
+
 		void DrawLine (IDrawingToolkit tk, double start, double stop, int lineWidth)
 		{
 			double y;
@@ -78,8 +86,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			y1 = OffsetY + 6;
 			y2 = OffsetY + Height - 6;
-				tk.DrawLine (new Point (start, y1), new Point (start, y2));
-				tk.DrawLine (new Point (stop, y1), new Point (stop, y2));
+			tk.DrawLine (new Point (start, y1), new Point (start, y2));
+			tk.DrawLine (new Point (stop, y1), new Point (stop, y2));
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -87,8 +95,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double start, stop;
 			int lineWidth = StyleConf.TimelineLineSize;
 
-			if (!UpdateDrawArea (tk, area,
-			                     new Area (new Point (StartX, OffsetY), StopX - StartX, Height))) {
+			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			};
 
