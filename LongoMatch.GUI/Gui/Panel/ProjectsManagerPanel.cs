@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Panel
 			if (f.Preview != null) {
 				fileimage1.Pixbuf = f.Preview.Value;
 			} else {
-				fileimage1.Pixbuf = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk,
+				fileimage1.Pixbuf = Helpers.Misc.LoadStockIcon (this, Gtk.Stock.Harddisk,
 				                                               IconSize.Dialog);
 			}
 			medialabel1.Markup = f.Description;
