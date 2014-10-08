@@ -27,7 +27,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		const int BORDER_SIZE = 4;
 
 		public ButtonObject () {
-			BackgroundColor = Config.Style.PaletteBackground;
+			BackgroundColor = Config.Style.PaletteBackgroundLight;
+			BackgroundColorActive = Config.Style.PaletteActive;
 			BorderColor = Config.Style.PaletteBackgroundDark;
 			TextColor = Config.Style.PaletteText;
 		}
@@ -61,6 +62,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
+		
+		public virtual Color BackgroundColorActive {
+			get;
+			set;
+		}
 
 		public virtual Color TextColor {
 			get;
@@ -70,9 +76,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected Color CurrentBackgroundColor {
 			get {
 				if (!Active) {
-					return BorderColor;
-				} else {
 					return BackgroundColor;
+				} else {
+					return BackgroundColorActive;
 				}
 			}
 		}
@@ -169,7 +175,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected void DrawButton (IDrawingToolkit tk)
 		{
 			tk.LineWidth = 0;
-			tk.DrawButton (DrawPosition, Width, Height, 3, BorderColor, CurrentBackgroundColor);
+			tk.StrokeColor = BorderColor;
+			tk.FillColor = CurrentBackgroundColor;
+			tk.DrawRoundedRectangle (DrawPosition, Width, Height, 3);
 		}
 
 		protected void DrawImage (IDrawingToolkit tk)

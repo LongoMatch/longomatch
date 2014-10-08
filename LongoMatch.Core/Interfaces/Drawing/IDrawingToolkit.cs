@@ -60,8 +60,6 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		                   SelectionPosition orientation);
 		void DrawRectangle (Point start, double width, double height);
 		void DrawRoundedRectangle (Point start, double width, double height, double radius);
-		void DrawButton (Point start, double width, double height, double radius,
-		                 Color startColor, Color stopColor);
 		void DrawArea (params Point[] vertices);
 		void DrawPoint (Point point);
 		void DrawCircle (Point center, double radius);

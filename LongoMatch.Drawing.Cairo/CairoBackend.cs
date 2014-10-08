@@ -295,24 +295,6 @@ namespace LongoMatch.Drawing.Cairo
 			                                ByteToDouble (c.B));
 		}
 
-		public void DrawButton (Point start, double width, double height, double radius, Color startColor, Color stopColor)
-		{
-			LinearGradient p;
-			DrawRoundedRectangle (start, width, height, radius, false);
-			p = new LinearGradient (start.X, start.Y, start.X, start.Y + height);
-			p.AddColorStop (0, RGBToCairoColor (startColor));
-			p.AddColorStop (1, RGBToCairoColor (stopColor));
-			CContext.Pattern = p;
-			CContext.LineCap = LineCap.Round;
-			CContext.LineJoin = LineJoin.Round;
-			CContext.LineWidth = LineWidth;
-			CContext.FillPreserve ();
-			SetColor (StrokeColor);
-			CContext.StrokePreserve ();
-			CContext.Stroke ();
-			p.Dispose ();
-		}
-
 		public void DrawRoundedRectangle (Point start, double width, double height, double radius)
 		{
 			DrawRoundedRectangle (start, width, height, radius, true);

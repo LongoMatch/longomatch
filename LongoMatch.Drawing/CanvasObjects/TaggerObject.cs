@@ -67,6 +67,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override Color BackgroundColor {
 			get {
+				return Tagger.BackgroundColor;
+			}
+		}
+		
+		public override Color BackgroundColorActive {
+			get {
 				return Tagger.DarkColor;
 			}
 		}
