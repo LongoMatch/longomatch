@@ -51,6 +51,7 @@ namespace LongoMatch.Gui
 		Project openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
+		Widget stackPanel;
 
 		#region Constructors
 		public MainWindow(IGUIToolkit guiToolkit) :
@@ -85,15 +86,20 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public void SetPanel (Widget panel) {
+		public void SetPanel (Widget panel)
+		{
 			if (panel == null) {
 				ResetGUI ();
 			} else {
-				RemovePanel ();
+				if (currentPanel is IAnalysisWindow && panel is PreferencesPanel) {
+					RemovePanel (true);
+				} else {
+					RemovePanel (false);
+				}
 				currentPanel = panel;
 				panel.Show();
 				if (panel is IPanel) {
-					(panel as IPanel).BackEvent += ResetGUI;
+					(panel as IPanel).BackEvent += BackClicked;
 				}
 				centralbox.PackStart (panel, true, true, 0);
 				welcomepanel.Hide ();
@@ -200,23 +206,50 @@ namespace LongoMatch.Gui
 				Config.EventsBroker.EmitShowFullScreen (FullScreenAction.Active);
 			};
 		}
-		
-		void RemovePanel () {
-			if (currentPanel != null) {
-				if (currentPanel is IPanel) {
-					(currentPanel as IPanel).BackEvent -= ResetGUI;
-				}
-				currentPanel.Destroy ();
-				currentPanel.Dispose();
-				System.GC.Collect();
+
+		void DestroyPanel (Widget panel)
+		{
+			if (panel is IPanel) {
+				(panel as IPanel).BackEvent -= BackClicked;
 			}
-			currentPanel = null;
+			panel.Destroy ();
+			panel.Dispose();
+			System.GC.Collect();
+		}
+
+		void RemovePanel (bool stack)
+		{
+			if (currentPanel == null) {
+				return;
+			}
+			if (stack) {
+				stackPanel = currentPanel;
+				stackPanel.Visible = false;
+			} else {
+				DestroyPanel (currentPanel);
+				currentPanel = null;
+				if (stackPanel != null) {
+					DestroyPanel (stackPanel);
+					stackPanel = null;
+				}
+			}
+		}
+
+		void BackClicked ()
+		{
+			if (stackPanel != null) {
+				DestroyPanel (currentPanel);
+				currentPanel = stackPanel;
+				stackPanel.Visible = true;
+			} else {
+				ResetGUI ();
+			}
 		}
 		
 		private void ResetGUI() {
 			Title = Constants.SOFTWARE_NAME;
 			MakeActionsSensitive(false, projectType);
-			RemovePanel ();
+			RemovePanel (false);
 			welcomepanel.Show ();
 		}
 
