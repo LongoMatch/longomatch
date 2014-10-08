@@ -50,7 +50,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectEvent += OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent += () => PromptCloseProject ();
+			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
 			Config.EventsBroker.SaveProjectEvent += SaveProject;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			Config.EventsBroker.CaptureError += HandleCaptureError;

@@ -177,9 +177,10 @@ namespace LongoMatch.Core.Common
 				KeyPressed(sender, key, modifier);
 		}
 		
-		public void EmitCloseOpenedProject () {
+		public bool EmitCloseOpenedProject () {
 			if (CloseOpenedProjectEvent != null)
-				CloseOpenedProjectEvent ();
+				return CloseOpenedProjectEvent ();
+			return false;
 		}
 		
 		public void EmitShowProjectStats (Project project) {

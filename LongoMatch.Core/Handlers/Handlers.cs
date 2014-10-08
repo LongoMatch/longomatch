@@ -67,7 +67,7 @@ namespace LongoMatch.Core.Handlers
 	                                                 IAnalysisWindow analysisWindow);
 	public delegate void OpenProjectIDHandler (Guid project_id);
 	public delegate void OpenProjectHandler ();
-	public delegate void CloseOpenendProjectHandler ();
+	public delegate bool CloseOpenendProjectHandler ();
 	public delegate void NewProjectHandler (Project project);
 	public delegate void OpenNewProjectHandler (Project project,ProjectType projectType,CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();

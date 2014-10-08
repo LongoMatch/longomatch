@@ -99,7 +99,7 @@ namespace LongoMatch.Services
 			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
 			
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, ts);
+			toolsManager = new ToolsManager (guiToolkit);
 			ProjectsImporter = toolsManager;
 			
 			/* Start the events manager */

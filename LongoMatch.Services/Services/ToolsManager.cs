@@ -32,18 +32,12 @@ namespace LongoMatch.Services
 	public class ToolsManager: IProjectsImporter
 	{
 		
-		TemplatesService templatesService;
 		Project openedProject;
 		IGUIToolkit guiToolkit;
-		IMultimediaToolkit multimediaToolkit;
-		AddinsManager addinsManager;
 
-		public ToolsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
-		                     TemplatesService templatesService)
+		public ToolsManager (IGUIToolkit guiToolkit)
 		{
 			this.guiToolkit = guiToolkit;
-			this.multimediaToolkit = multimediaToolkit;
-			this.templatesService = templatesService;
 			ProjectImporters = new List<ProjectImporter> ();
 			
 			RegisterImporter (Project.Import, Constants.PROJECT_NAME,
@@ -58,15 +52,21 @@ namespace LongoMatch.Services
 			};
 			
 			Config.EventsBroker.ManageCategoriesEvent += () => {
-				guiToolkit.OpenCategoriesTemplatesManager ();
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenTeamsTemplatesManager ();
+				}
 			};
 			
 			Config.EventsBroker.ManageTeamsEvent += () => {
-				guiToolkit.OpenTeamsTemplatesManager ();
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenCategoriesTemplatesManager ();
+				}
 			};
 			
 			Config.EventsBroker.ManageProjectsEvent += () => {
-				guiToolkit.OpenProjectsManager (this.openedProject);
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenProjectsManager (this.openedProject);
+				}
 			};
 			
 			Config.EventsBroker.ExportProjectEvent += ExportProject;
