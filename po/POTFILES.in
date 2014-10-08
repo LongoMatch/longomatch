@@ -10,12 +10,14 @@ LongoMatch.Core/Store/MediaFile.cs
 LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/Dashboard.cs
 LongoMatch.Core/Store/Templates/TeamTemplate.cs
+LongoMatch.Drawing/CanvasObjects/CategoryObject.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PeriodsRecoder.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs
