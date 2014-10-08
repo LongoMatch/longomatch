@@ -88,6 +88,7 @@ namespace LongoMatch.Core.Common
 		public event DrawFrameHandler DrawFrame;
 		public event DetachPlayerHandler Detach;
 		public event PlaybackRateChangedHandler PlaybackRateChanged;
+		public event SeekEventHandler SeekEvent;
 
 		public void EmitNewTag (EventType eventType, List<Player> players = null, Team team = Team.NONE,
 		                        List<Tag> tags = null, Time start = null, Time stop = null,
@@ -387,6 +388,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (DashboardEditedEvent != null) {
 				DashboardEditedEvent ();
+			}
+		}
+		
+		public void EmitSeekEvent (Time time, bool accurate)
+		{
+			if (SeekEvent != null) {
+				SeekEvent (time, accurate);
 			}
 		}
 	}

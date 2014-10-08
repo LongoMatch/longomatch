@@ -9,12 +9,12 @@ SOURCES = Canvas.cs \
 	CanvasObjects/ButtonObject.cs \
 	CanvasObjects/CanvasObject.cs \
 	CanvasObjects/CardObject.cs \
-	CanvasObjects/CategoryLabel.cs \
 	CanvasObjects/CategoryObject.cs \
 	CanvasObjects/CounterObject.cs \
 	CanvasObjects/CrossObject.cs \
 	CanvasObjects/EllipseObject.cs \
 	CanvasObjects/FieldObject.cs \
+	CanvasObjects/LabelObject.cs \
 	CanvasObjects/LineObject.cs \
 	CanvasObjects/PlayObject.cs \
 	CanvasObjects/PlayerObject.cs \
@@ -33,11 +33,11 @@ SOURCES = Canvas.cs \
 	PlayslistCellRenderer.cs \
 	Utils.cs \
 	Widgets/Blackboard.cs \
-	Widgets/CategoriesLabels.cs \
 	Widgets/DashboardCanvas.cs \
 	Widgets/PlaysTimeline.cs \
 	Widgets/PositionTagger.cs \
 	Widgets/TeamTagger.cs \
+	Widgets/TimelineLabels.cs \
 	Widgets/TimersTimeline.cs \
 	Widgets/Timerule.cs
 

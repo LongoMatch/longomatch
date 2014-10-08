@@ -22,17 +22,26 @@ using System;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CategoryLabel: CanvasObject, ICanvasObject
+	public class LabelObject: CanvasObject, ICanvasObject
 	{
-		EventType eventType;
 		double width;
 
-		public CategoryLabel (EventType eventType, double width, double height, double offsetY)
+		public LabelObject (double width, double height, double offsetY)
 		{
-			this.eventType = eventType;
 			this.Height = height;
 			this.width = width;
 			OffsetY = offsetY;
+			Color = Color.Red1;
+		}
+
+		public virtual string Name {
+			get;
+			set;
+		}
+		
+		public virtual Color Color {
+			get;
+			set;
 		}
 
 		public double Height {
@@ -73,8 +82,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.DrawRectangle (new Point (0, y), width, Height);
 			
 			/* Draw a rectangle with the category color */
-			tk.FillColor = eventType.Color;
-			tk.StrokeColor = eventType.Color;
+			tk.FillColor = Color;
+			tk.StrokeColor = Color;
 			tk.DrawRectangle (new Point (hs, y + vs), rectSize, rectSize); 
 			
 			/* Draw category name */
@@ -84,8 +93,46 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawText (new Point (to, y), width - to, Height, eventType.Name);
+			tk.DrawText (new Point (to, y), width - to, Height, Name);
 			tk.End ();
+		}
+	}
+	
+	public class EventTypeLabelObject: LabelObject {
+		EventType eventType;
+
+		public EventTypeLabelObject (EventType eventType, double width, double height, double offsetY):
+			base (width, height, offsetY)
+		{
+			this.eventType = eventType;
+		}
+		
+		public override Color Color {
+			get {
+				return eventType.Color;
+			}
+		}
+		
+		public override string Name {
+			get {
+				return eventType.Name;
+			}
+		}
+	}
+	
+	public class TimerLabelObject: LabelObject {
+		Timer timer;
+
+		public TimerLabelObject (Timer timer, double width, double height, double offsetY):
+			base (width, height, offsetY)
+		{
+			this.timer = timer;
+		}
+		
+		public override string Name {
+			get {
+				return timer.Name;
+			}
 		}
 	}
 }

@@ -28,12 +28,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{
 		ISurface needle;
+		SelectionPosition movingPos;
 		const int MAX_TIME_SPAN = 1000;
 
 		public TimeNodeObject (TimeNode node)
 		{
 			TimeNode = node;
 			SelectWhole = true;
+			LineColor = Config.Style.PaletteBackgroundLight;
 		}
 		
 		protected override void Dispose (bool disposing)
@@ -51,6 +53,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public bool SelectWhole {
+			get;
+			set;
+		}
+
+		public Color LineColor {
+			get;
+			set;
+		}
+
+		public bool ShowName {
 			get;
 			set;
 		}
@@ -155,6 +167,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					break;
 				}
 			}
+			movingPos = sel.Position;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -163,34 +176,54 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
-			};
+			}
 
 			tk.Begin ();
 			if (needle == null) {
-				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleUP); 
+				string path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleUP); 
 				Image img = Image.LoadFromFile (path);
 				needle = tk.CreateSurface (img.Width, img.Height, img);
 			}
 			
-			tk.FillColor = Config.Style.PaletteBackgroundLight;
-			tk.StrokeColor = Config.Style.PaletteBackgroundLight;
+			if (Selected) {
+				tk.FillColor = Config.Style.PaletteActive;
+				tk.StrokeColor = Config.Style.PaletteActive;
+			} else {
+				tk.FillColor = LineColor;
+				tk.StrokeColor = LineColor;
+			}
 			tk.LineWidth = StyleConf.TimelineLineSize;
 			
 			linepos = OffsetY + Height - StyleConf.TimelineLineSize;
 			
-			tk.DrawLine (new Point (StartX, linepos),
-			             new Point (StopX, linepos));
-			tk.DrawSurface (needle, new Point (StartX - needle.Width / 2, linepos - 9)); 
-			tk.DrawSurface (needle, new Point (StopX - needle.Width / 2, linepos - 9)); 
+			if (StopX - StartX <= needle.Width / 2) {
+				double c = movingPos == SelectionPosition.Left ? StopX : StartX;
+				tk.DrawSurface (needle, new Point (c - needle.Width / 2, linepos - 9)); 
+			} else {
+				tk.DrawLine (new Point (StartX, linepos),
+				             new Point (StopX, linepos));
+				tk.DrawSurface (needle, new Point (StartX - needle.Width / 2, linepos - 9)); 
+				tk.DrawSurface (needle, new Point (StopX - needle.Width / 2, linepos - 9)); 
+			}
+			
 
-			tk.FontSize = 16;
-			tk.FontWeight = FontWeight.Bold;
-			tk.FillColor = Config.Style.PaletteActive;
-			tk.StrokeColor = Config.Style.PaletteActive;
-			tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
-			             Height - StyleConf.TimelineLineSize,
-			             TimeNode.Name);
+			if (ShowName) {
+				tk.FontSize = 16;
+				tk.FontWeight = FontWeight.Bold;
+				tk.FillColor = Config.Style.PaletteActive;
+				tk.StrokeColor = Config.Style.PaletteActive;
+				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
+				             Height - StyleConf.TimelineLineSize,
+				             TimeNode.Name);
+			}
 			tk.End ();
+		}
+	}
+	
+	public class TimerTimeNodeObject: TimeNodeObject
+	{
+		public TimerTimeNodeObject (TimeNode tn): base (tn)
+		{
 		}
 	}
 }

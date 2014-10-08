@@ -333,7 +333,6 @@ namespace LongoMatch.Gui
 			//timescale.Sensitive = true;
 			loadedPlay = null;
 			ImageLoaded = false;
-			Config.EventsBroker.EmitLoadEvent (null);
 		}
 
 		public void SetSensitive ()
@@ -747,7 +746,7 @@ namespace LongoMatch.Gui
 
 		void OnClosebuttonClicked (object sender, System.EventArgs e)
 		{
-			CloseSegment ();
+			Config.EventsBroker.EmitLoadEvent (null);
 			Play ();
 		}
 

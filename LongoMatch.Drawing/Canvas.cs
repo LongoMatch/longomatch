@@ -156,6 +156,7 @@ namespace LongoMatch.Drawing
 			ClickRepeatMS = 100;
 			MoveWithoutSelection = false;
 			ObjectsCanMove = true;
+			SingleSelectionObjects = new List<Type> ();
 			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
@@ -185,6 +186,11 @@ namespace LongoMatch.Drawing
 			set;
 		}
 
+		public List<Type> SingleSelectionObjects {
+			get;
+			set;
+		}
+		
 		protected bool MoveWithoutSelection {
 			get;
 			set;
@@ -267,8 +273,15 @@ namespace LongoMatch.Drawing
 				}
 				return;
 			}
-			
+
 			so = sel.Drawable as ICanvasSelectableObject;
+			if (Selections.Count > 0) {
+				if (SingleSelectionObjects.Contains (so.GetType ()) ||
+					SingleSelectionObjects.Contains (Selections [0].Drawable.GetType ())) {
+					return;
+				}
+			}
+
 			seldup = Selections.FirstOrDefault (s => s.Drawable == sel.Drawable);
 			
 			if (seldup != null) {

@@ -319,7 +319,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
 			project.Description.FileSet = mediafilesetselection1.FileSet;
-			project.UpdateEventTypes ();
+			project.UpdateEventTypesAndTimers ();
 			
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();

@@ -31,21 +31,27 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event ShowTimelineMenuHandler ShowMenuEvent;
+		public event ShowTimersMenuHandler ShowTimersMenuEvent;
 
 		Project project;
 		EventsFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
+		TimelineEvent loadedEvent;
+		TimerTimeline periodsTimeline;
+		Dictionary<TimelineObject, object> timelineToFilter;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
 
 		public PlaysTimeline (IWidget widget): base(widget)
 		{
 			eventsTimelines = new Dictionary<EventType, CategoryTimeline> ();
+			timelineToFilter = new Dictionary<TimelineObject, object> ();
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			SingleSelectionObjects.Add (typeof (TimerTimeNodeObject));
 		}
-		
+
 		protected override void Dispose (bool disposing)
 		{
 			foreach (CategoryTimeline ct in eventsTimelines.Values) {
@@ -71,7 +77,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public Time CurrentTime {
 			set {
-				foreach (CategoryTimeline tl in eventsTimelines.Values) {
+				foreach (TimelineObject tl in Objects) {
 					tl.CurrentTime = value;
 				}
 			}
@@ -87,9 +93,35 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public void LoadPlay (TimelineEvent play)
+		{
+			if (play == this.loadedEvent) {
+				return;
+			}
+
+			foreach (CategoryTimeline tl in eventsTimelines.Values) {
+				PlayObject loaded = tl.Load (play);
+				if (loaded != null) {
+					ClearSelection ();
+					UpdateSelection (new Selection (loaded, SelectionPosition.All, 0), false);
+					break;
+				}
+			}
+		}
+
 		public void AddPlay (TimelineEvent play)
 		{
 			eventsTimelines [play.EventType].AddPlay (play);
+		}
+
+		public void RemoveTimers (List<TimeNode> nodes)
+		{
+			foreach (TimerTimeline tl in Objects.OfType<TimerTimeline>()) {
+				foreach (TimeNode node in nodes) {
+					tl.RemoveNode (node);
+				}
+			}
+			widget.ReDraw ();
 		}
 
 		public void RemovePlays (List<TimelineEvent> plays)
@@ -104,23 +136,46 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width + 10;
-			foreach (TimelineObject tl in eventsTimelines.Values) {
+			foreach (TimelineObject tl in Objects) {
 				tl.Width = width + 10;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
 		}
 
+		void AddTimeline (TimelineObject tl, object filter)
+		{
+			AddObject (tl);
+			timelineToFilter[tl] = filter;
+			if (tl is CategoryTimeline) {
+				eventsTimelines [filter as EventType] = tl as CategoryTimeline;
+			} 
+		}
+
 		void FillCanvas ()
 		{
-			CategoryTimeline tl;
+			TimelineObject tl;
 			int i = 0;
 
+			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList(),
+			                        false, true, false, duration,
+			                        i * StyleConf.TimelineCategoryHeight,
+			                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+			AddTimeline (tl, null);
+			periodsTimeline = tl as TimerTimeline;
+			i++;
+
+			foreach (Timer t in project.Timers) {
+				tl = new TimerTimeline (new List<Timer> {t}, false, true, false, duration,
+				i * StyleConf.TimelineCategoryHeight,
+				Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+				AddTimeline (tl, t);
+			}
+			                        
 			foreach (EventType type in project.EventTypes) {
 				tl = new CategoryTimeline (project.EventsByType (type), duration,
 				                           i * StyleConf.TimelineCategoryHeight,
 				                           Utils.ColorForRow (i), playsFilter);
-				eventsTimelines [type] = tl;
-				AddObject (tl);
+				AddTimeline (tl, type);
 				i++;
 			}
 			UpdateVisibleCategories ();
@@ -130,9 +185,8 @@ namespace LongoMatch.Drawing.Widgets
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
-			foreach (EventType type in project.EventTypes) {
-				CategoryTimeline timeline = eventsTimelines [type];
-				if (playsFilter.VisibleEventTypes.Contains (type)) {
+			foreach (TimelineObject timeline in Objects) {
+				if (playsFilter.IsVisible (timelineToFilter[timeline])) {
 					timeline.OffsetY = i * timeline.Height;
 					timeline.Visible = true;
 					timeline.BackgroundColor = Utils.ColorForRow (i);
@@ -144,18 +198,51 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
-		void RedrawSelection (Selection sel)
+		void ShowTimersMenu (Point coords)
 		{
-			PlayObject po = sel.Drawable as PlayObject;
-			widget.ReDraw (eventsTimelines [po.Play.EventType]);
+			List<TimeNode> nodes = Selections.Select (p => (p.Drawable as TimeNodeObject).TimeNode).ToList ();
+			if (nodes.Count > 0 && ShowTimersMenuEvent != null) {
+				/* Periods are not deletable */
+				if (!periodsTimeline.HasNode (nodes[0])) {
+					ShowTimersMenuEvent (nodes);
+				}
+			}
+		}
+
+		void ShowPlaysMenu (Point coords) {
+			EventType ev = null;
+			List<TimelineEvent> plays;
+			
+			plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
+			
+			foreach (EventType evType in eventsTimelines.Keys) {
+				TimelineObject tl;
+
+				tl = eventsTimelines [evType];
+				if (!tl.Visible)
+					continue;
+				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
+					ev = evType;
+					break;
+				}
+			}
+			
+			if ((ev != null || plays.Count > 0) && ShowMenuEvent != null) {
+				ShowMenuEvent (plays, ev, Utils.PosToTime (coords, SecondsPerPixel));
+			}
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)
 		{
+			TimelineEvent ev = null;
 			if (selections.Count > 0) {
-				PlayObject po = selections.Last ().Drawable as PlayObject;
-				Config.EventsBroker.EmitLoadEvent (po.Play);
+				CanvasObject d = selections.Last ().Drawable as CanvasObject;
+				if (d is PlayObject) {
+					ev = (d as PlayObject).Play;
+					loadedEvent = ev;
+				}
 			}
+			Config.EventsBroker.EmitLoadEvent (ev);
 		}
 
 		protected override void StartMove (Selection sel)
@@ -175,39 +262,44 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			EventType ev = null;
-			List<TimelineEvent> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
-			
-			foreach (EventType evType in eventsTimelines.Keys) {
-				TimelineObject tl;
-
-				tl = eventsTimelines [evType];
-				if (!tl.Visible)
-					continue;
-				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
-					ev = evType;
-					break;
+			if (Selections.Count > 0) {
+				if (Selections.Last ().Drawable is PlayObject) {
+					ShowPlaysMenu (coords);
+				} else {
+					ShowTimersMenu (coords);
 				}
-			}
-			
-			if ((ev != null || plays.Count > 0) && ShowMenuEvent != null) {
-				ShowMenuEvent (plays, ev, Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 
 		protected override void SelectionMoved (Selection sel)
 		{
 			Time moveTime;
-			TimelineEvent play = (sel.Drawable as PlayObject).Play;
+			CanvasObject co;
+			TimelineEvent play;
 			
-			if (sel.Position == SelectionPosition.Right) {
-				moveTime = play.Stop;
-			} else {
-				moveTime = play.Start;
+			co = (sel.Drawable as CanvasObject);
+			
+			if (co is PlayObject) {
+				play = (co as PlayObject).Play;
+				
+				if (sel.Position == SelectionPosition.Right) {
+					moveTime = play.Stop;
+				} else {
+					moveTime = play.Start;
+				}
+				Config.EventsBroker.EmitTimeNodeChanged (play, moveTime);
+			} else if (co is TimeNodeObject) {
+				TimeNode to = (co as TimeNodeObject).TimeNode;
+				
+				if (sel.Position == SelectionPosition.Right) {
+					moveTime = to.Stop;
+				} else {
+					moveTime = to.Start;
+				}
+				Config.EventsBroker.EmitSeekEvent (moveTime, true);
 			}
-			Config.EventsBroker.EmitTimeNodeChanged (play, moveTime);
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			tk.Context = context;

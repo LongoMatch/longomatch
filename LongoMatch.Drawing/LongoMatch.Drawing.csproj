@@ -32,9 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.cs" />
-    <Compile Include="CanvasObjects\CategoryLabel.cs" />
     <Compile Include="Widgets\Timerule.cs" />
-    <Compile Include="Widgets\CategoriesLabels.cs" />
     <Compile Include="CanvasObjects\PlayObject.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Widgets\PlaysTimeline.cs" />
@@ -67,6 +65,8 @@
     <Compile Include="PlayslistCellRenderer.cs" />
     <Compile Include="Widgets\DashboardCanvas.cs" />
     <Compile Include="CanvasObjects\ButtonObject.cs" />
+    <Compile Include="CanvasObjects\LabelObject.cs" />
+    <Compile Include="Widgets\TimelineLabels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

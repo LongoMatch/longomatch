@@ -307,7 +307,6 @@ namespace LongoMatch.Services
 			openedProject.RemovePlays (plays);
 
 			if (projectType == ProjectType.FileProject) {
-				player.CloseSegment ();
 				Save (openedProject);
 			}
 			filter.Update ();
@@ -347,7 +346,7 @@ namespace LongoMatch.Services
 
 		void HandleDashboardEditedEvent ()
 		{
-			openedProject.UpdateEventTypes ();
+			openedProject.UpdateEventTypesAndTimers ();
 			analysisWindow.ReloadProject ();
 		}
 

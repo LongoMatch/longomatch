@@ -25,21 +25,21 @@ using Mono.Unix;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class CategoriesLabels: Canvas
+	public class TimelineLabels: Canvas
 	{
 		Project project;
 		EventsFilter filter;
-		Dictionary<EventType, CategoryLabel> eventsLabels;
+		Dictionary<LabelObject, object> labelToObject;
 
-		public CategoriesLabels (IWidget widget): base (widget)
+		public TimelineLabels (IWidget widget): base (widget)
 		{
-			eventsLabels = new Dictionary<EventType, CategoryLabel> ();
+			labelToObject = new Dictionary<LabelObject, object>();
 		}
 
 		public double Scroll {
 			set {
 				foreach (var o in Objects) {
-					CategoryLabel cl = o as CategoryLabel;
+					LabelObject cl = o as LabelObject;
 					cl.Scroll = value; 
 				}
 			}
@@ -57,20 +57,36 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		void AddLabel (LabelObject label, object obj)
+		{
+			Objects.Add (label);
+			labelToObject[label] = obj;
+		}
+
 		void FillCanvas ()
 		{
-			CategoryLabel l;
+			LabelObject l;
 			int i = 0, w, h;
 			
 			w = StyleConf.TimelineLabelsWidth;
 			h = StyleConf.TimelineCategoryHeight;
 			widget.Width = w;
-			
+
+			l = new LabelObject (w, h, i * h);
+			l.Name = Catalog.GetString ("Periods");
+			AddLabel (l, null);
+			i++;
+
+			foreach (Timer t in project.Timers) {
+				l = new TimerLabelObject (t, w, h, i * h);
+				AddLabel (l, t);
+				i++;
+			}
+
 			foreach (EventType eventType in project.EventTypes) {
 				/* Add the category label */
-				l = new CategoryLabel (eventType, w, h, i * h);
-				eventsLabels [eventType] = l;
-				AddObject (l);
+				l = new EventTypeLabelObject (eventType, w, h, i * h);
+				AddLabel (l, eventType);
 				i++;
 			}
 		}
@@ -78,10 +94,8 @@ namespace LongoMatch.Drawing.Widgets
 		void UpdateVisibleCategories ()
 		{
 			int i = 0;
-
-			foreach (EventType type in project.EventTypes) {
-				CategoryLabel label = eventsLabels [type];
-				if (filter.VisibleEventTypes.Contains (type)) {
+			foreach (LabelObject label in Objects) {
+				if (filter.IsVisible (labelToObject[label])) {
 					label.OffsetY = i * label.Height;
 					label.Visible = true;
 					label.BackgroundColor = Utils.ColorForRow (i);

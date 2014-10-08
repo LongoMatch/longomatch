@@ -195,7 +195,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                             Score score, PenaltyCard card, bool addToTimeline=true)
+		                               Score score, PenaltyCard card, bool addToTimeline=true)
 		{
 			TimelineEvent evt;
 			string count;
@@ -262,8 +262,20 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void UpdateEventTypes ()
+		public void CleanupTimers ()
 		{
+			foreach (Timer t in Timers) {
+				t.Nodes.RemoveAll (tn => tn.Start == null || tn.Stop == null);
+			}
+		}
+
+		public void UpdateEventTypesAndTimers ()
+		{
+			/* Timers */
+			IEnumerable<Timer> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer);
+			Timers.AddRange (timers.Except (Timers));
+			
+			/* Event Types */
 			IEnumerable<EventType> types = Dashboard.List.OfType<EventButton> ().Select (b => b.EventType);
 			EventTypes.AddRange (types.Except (EventTypes));
 			types = Timeline.Select (t => t.EventType).Distinct ().Except (EventTypes);

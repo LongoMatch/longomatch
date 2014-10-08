@@ -5850,6 +5850,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes">Histogram</property>
+                <property name="Active">True</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
@@ -10285,7 +10286,7 @@ You can continue with the current capture, cancel it or save your project.
       <widget class="Gtk.Notebook" id="notebook">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
-        <property name="CurrentPage">0</property>
+        <property name="CurrentPage">1</property>
         <property name="TabPos">Left</property>
         <property name="ShowBorder">False</property>
         <child>

@@ -57,6 +57,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
 			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
 			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
+			Config.EventsBroker.SeekEvent += HandleSeekEvent;
 		}
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
@@ -124,6 +125,8 @@ namespace LongoMatch.Services
 			Switch (play, null, null);
 			if (play != null) {
 				LoadPlay (play, play.Start, true);
+			} else {
+				player.CloseSegment ();
 			}
 			Config.EventsBroker.EmitEventLoaded (play);
 		}
@@ -199,6 +202,13 @@ namespace LongoMatch.Services
 				return;
 			foreach (Job job in jobs)
 				videoRenderer.AddJob (job);
+		}
+		
+		void HandleSeekEvent (Time pos, bool accurate)
+		{
+			if (player != null) {
+				player.Seek (pos, accurate);
+			}
 		}
 	}
 }

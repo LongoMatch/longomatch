@@ -228,7 +228,7 @@ namespace LongoMatch.Gui.Component
 		void HandlePlayLoaded (TimelineEvent play)
 		{
 			loadedPlay = play;
-			timeline.SelectedTimeNode = play;
+			timeline.LoadPlay (play);
 		}
 
 		void HandleCapturerTick (Time currentTime)

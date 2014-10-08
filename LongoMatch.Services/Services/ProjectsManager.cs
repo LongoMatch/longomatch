@@ -171,6 +171,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Loading project " + project.ID + " " + projectType);
 				
 			PlaysFilter = new EventsFilter (project);
+			project.CleanupTimers ();
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
 			                        out analysisWindow);
 			Player = analysisWindow.Player;
@@ -374,7 +375,7 @@ namespace LongoMatch.Services
 					return;
 				}
 			}
-			project.UpdateEventTypes ();
+			project.UpdateEventTypesAndTimers ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 

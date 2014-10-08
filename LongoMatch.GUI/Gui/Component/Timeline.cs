@@ -34,10 +34,9 @@ namespace LongoMatch.Gui.Component
 	public partial class Timeline : Gtk.Bin
 	{
 		const uint TIMEOUT_MS = 100;
-		
 		PlaysTimeline timeline;
 		Timerule timerule;
-		CategoriesLabels labels;
+		TimelineLabels labels;
 		MediaFile projectFile;
 		double secondsPerPixel;
 		uint timeoutID;
@@ -49,8 +48,8 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			this.timerule = new Timerule (new WidgetWrapper (timerulearea));
-			this.timeline = new PlaysTimeline (new WidgetWrapper(timelinearea));
-			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
+			this.timeline = new PlaysTimeline (new WidgetWrapper (timelinearea));
+			this.labels = new TimelineLabels (new WidgetWrapper (labelsarea));
 
 			focusbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-center-view", Gtk.IconSize.Menu, 0);
 
@@ -71,7 +70,7 @@ namespace LongoMatch.Gui.Component
 			zoominimage.HeightRequest = zoomoutimage.HeightRequest = focusscale.HeightRequest = 16;
 			menu = new PlaysMenu ();
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			timerule.Dispose ();
@@ -79,12 +78,7 @@ namespace LongoMatch.Gui.Component
 			labels.Dispose ();
 			base.OnDestroyed ();
 		}
-		
-		public TimeNode SelectedTimeNode {
-			set {
-			}
-		}
-		
+
 		public Time CurrentTime {
 			set {
 				nextCurrentTime = value;
@@ -93,13 +87,14 @@ namespace LongoMatch.Gui.Component
 				return currentTime;
 			}
 		}
-		
-		public void SetProject (Project project, EventsFilter filter) {
+
+		public void SetProject (Project project, EventsFilter filter)
+		{
 			this.project = project;
 			timeline.LoadProject (project, filter);
 			labels.LoadProject (project, filter);
 
-			if(project == null) {
+			if (project == null) {
 				if (timeoutID != 0) {
 					GLib.Source.Remove (timeoutID);
 					timeoutID = 0;
@@ -114,20 +109,29 @@ namespace LongoMatch.Gui.Component
 			projectFile = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
 			timerule.Duration = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
+			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
 			QueueDraw ();
 		}
 
-		public void AddPlay(TimelineEvent play) {
+		public void LoadPlay (TimelineEvent evt)
+		{
+			timeline.LoadPlay (evt);
+		}
+
+		public void AddPlay (TimelineEvent play)
+		{
 			timeline.AddPlay (play);
 			QueueDraw ();
 		}
 
-		public void RemovePlays(List<TimelineEvent> plays) {
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
 			timeline.RemovePlays (plays);
 			QueueDraw ();
 		}
-		
-		bool UpdateTime () {
+
+		bool UpdateTime ()
+		{
 			if (nextCurrentTime != currentTime) {
 				currentTime = nextCurrentTime;
 				timeline.CurrentTime = currentTime;
@@ -136,12 +140,12 @@ namespace LongoMatch.Gui.Component
 			}
 			return true;
 		}
-		
-		void HandleScrollEvent(object sender, System.EventArgs args)
+
+		void HandleScrollEvent (object sender, System.EventArgs args)
 		{
-			if(sender == scrolledwindow1.Vadjustment)
+			if (sender == scrolledwindow1.Vadjustment)
 				labels.Scroll = scrolledwindow1.Vadjustment.Value;
-			else if(sender == scrolledwindow1.Hadjustment)
+			else if (sender == scrolledwindow1.Hadjustment)
 				timerule.Scroll = scrolledwindow1.Hadjustment.Value;
 			QueueDraw ();
 		}
@@ -168,15 +172,30 @@ namespace LongoMatch.Gui.Component
 				secondsPer100Pixels = (value - 5) * 60;
 			}
 
-			secondsPerPixel = secondsPer100Pixels / 100 ;
+			secondsPerPixel = secondsPer100Pixels / 100;
 			timerule.SecondsPerPixel = secondsPerPixel;
 			timeline.SecondsPerPixel = secondsPerPixel;
 			QueueDraw ();
 		}
-		
+
 		void HandleShowMenu (List<TimelineEvent> plays, EventType eventType, Time time)
 		{
 			menu.ShowTimelineMenu (project, plays, eventType, time);
+		}
+
+		void HandleShowTimersMenu (List<TimeNode> nodes)
+		{
+			Menu m = new Menu ();
+			MenuItem item = new MenuItem (Catalog.GetString ("Delete"));
+			item.Activated += (object sender, EventArgs e) => {
+				foreach (Timer t in project.Timers) {
+					t.Nodes.RemoveAll (nodes.Contains);
+				}
+				timeline.RemoveTimers (nodes);
+			};
+			m.Add (item);
+			m.ShowAll ();
+			m.Popup ();
 		}
 	}
 }

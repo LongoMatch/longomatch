@@ -29,8 +29,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public abstract class TimelineObject: CanvasObject, ICanvasSelectableObject
 	{
-		List<TimeNodeObject> nodes;
 		double secondsPerPixel;
+		protected List<TimeNodeObject> nodes;
 		protected Time maxTime;
 		protected ISurface selectionBorderL, selectionBorderR;
 
@@ -223,6 +223,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public PlayObject Load (TimelineEvent evt)
+		{
+			return nodes.FirstOrDefault (n => (n as PlayObject).Play == evt) as PlayObject;
+		}
+
 		protected override bool TimeNodeObjectIsVisible (TimeNodeObject tn)
 		{
 			return filter.IsVisible ((tn as PlayObject).Play);
@@ -243,33 +248,74 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class TimerTimeline: TimelineObject
 	{
 
-		public TimerTimeline (List<Timer> timers, Time maxTime, double offsetY, Color background):
+		public TimerTimeline (List<Timer> timers, bool showName, bool selectWhole, bool showLine,
+		                      Time maxTime, double offsetY, Color background, Color lineColor):
 			base (maxTime, offsetY, background)
 		{
+			ShowName = showName;
+			SelectWhole = selectWhole;
+			ShowLine = showLine;
+			LineColor = lineColor;
+	
 			foreach (Timer t in timers) {
 				foreach (TimeNode tn in t.Nodes) {
-					TimeNodeObject to = new TimeNodeObject (tn);
-					to.OffsetY = OffsetY;
-					to.SecondsPerPixel = SecondsPerPixel;
-					to.MaxTime = maxTime;
-					to.SelectWhole = false;
-					AddNode (to);
+					AddTimeNode (tn);
 				}
 			}
 		}
+
+		Color LineColor {
+			get;
+			set;
+		}
+
+		bool ShowLine {
+			get;
+			set;
+		}
 		
+		bool ShowName {
+			get;
+			set;
+		}
+		
+		bool SelectWhole {
+			get;
+			set;
+		}
+
+		public bool HasNode (TimeNode tn)
+		{
+			return nodes.FirstOrDefault (n => n.TimeNode == tn) != null;
+		}
+
+		public void AddTimeNode (TimeNode tn)
+		{
+			TimerTimeNodeObject to = new TimerTimeNodeObject (tn);
+			to.OffsetY = OffsetY;
+			to.SecondsPerPixel = SecondsPerPixel;
+			to.MaxTime = maxTime;
+			to.SelectWhole = SelectWhole;
+			to.ShowName = ShowName;
+			to.LineColor = LineColor;
+			AddNode (to);
+		}
+
 		protected override void DrawBackground (IDrawingToolkit tk, Area area)
 		{
 			double linepos;
 			base.DrawBackground (tk, area);
 
-			linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+			if (ShowLine) {
+				Color c;
 
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-			tk.LineWidth = 4;
-			tk.DrawLine (new Point (0, linepos),
-			             new Point (Width, linepos));
+				linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+				tk.FillColor = Config.Style.PaletteBackgroundDark;
+				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+				tk.LineWidth = 4;
+				tk.DrawLine (new Point (0, linepos),
+				             new Point (Width, linepos));
+			}
 		}
 	}
 }
