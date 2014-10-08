@@ -178,6 +178,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
 				foreach (TimeNodeObject po in nodes) {
 					Selection tmp;
+					if (!po.Visible) {
+						continue;
+					}
 					tmp = po.GetSelection (point, precision);
 					if (tmp == null) {
 						continue;
