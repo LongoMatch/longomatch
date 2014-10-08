@@ -196,6 +196,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Text != null) {
 				tk.FillColor = TextColor;
 				tk.StrokeColor = TextColor;
+				tk.FontAlignment = FontAlignment.Center;
 				tk.DrawText (DrawPosition, Width, Height, Text);
 			}
 		}

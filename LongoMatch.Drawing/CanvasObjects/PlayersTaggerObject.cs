@@ -38,9 +38,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		 */
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
+		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 		const int SUBSTITUTION_BUTTONS_HEIGHT = 40;
 		const int SUBSTITUTION_BUTTONS_WIDTH = 60;
-		ButtonObject subPlayers, subInjury;
+		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
 		Dictionary<Player, PlayerObject> playerToPlayerObject;
@@ -53,7 +54,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		FieldObject field;
 		int NTeams;
 		Point offset;
-		bool substitutionMode;
+		bool substitutionMode, showSubsitutionButtons, showTeamsButtons;
 		double scaleX, scaleY;
 		Time lastTime, currentTime;
 
@@ -69,6 +70,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			SelectedPlayers = new List<Player> ();
 			lastTime = null;
 			LoadSubsButtons ();
+			LoadTeamsButtons ();
+			ShowSubsitutionButtons = false;
+			ShowTeamsButtons = false;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -148,18 +152,45 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 		
 		public bool ShowSubsitutionButtons {
-			get;
-			set;
+			get {
+				return showSubsitutionButtons;
+			}
+			set {
+				subPlayers.Visible = value;
+				/* FIXME: Not displayed for now */
+				subInjury.Visible = false;
+				showSubsitutionButtons = value;
+			}
 		}
 		
-		public bool ShowInjurySubsitutionButton {
-			get;
-			set;
+		public bool ShowTeamsButtons {
+			get {
+				return showTeamsButtons;
+			}
+			set {
+				showTeamsButtons = value;
+				homeButton.Visible = value;
+				awayButton.Visible = value;
+			}
 		}
 
 		public List<Player> SelectedPlayers {
 			get;
 			set;
+		}
+
+		public Team SelectedTeam {
+			get {
+				if (homeButton.Active && awayButton.Active) {
+					return Team.BOTH;
+				} else if (homeButton.Active) {
+					return Team.LOCAL;
+				} else if (awayButton.Active) {
+					return Team.VISITOR;
+				} else {
+					return Team.NONE;
+				}
+			}
 		}
 
 		public void Reload ()
@@ -174,12 +205,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			field.Update ();
 		}
 		
-		public void Select (List<Player> players)
+		public void Select (List<Player> players, Team team)
 		{
 			ResetSelection ();
 			foreach (Player p in players) {
 				Select (p, true);
 			}
+			homeButton.Active = team == Team.BOTH || team == Team.LOCAL;
+			awayButton.Active = team == Team.BOTH || team == Team.VISITOR;
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (SelectedPlayers);
 			}
@@ -219,6 +252,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 					player.Active = false;
 				}
 			}
+			homeButton.Active = false;
+			awayButton.Active = false;
 		}
 
 		public void Substitute (Player p1, Player p2, TeamTemplate team)
@@ -264,6 +299,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				homePlayers.AddRange (homePlayingPlayers);
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
+				homeButton.BackgroundImage = homeTeam.Shield;
 				NTeams ++;
 			}
 			if (awayTeam != null) {
@@ -272,6 +308,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				awayPlayers.AddRange (awayPlayingPlayers);
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
+				awayButton.BackgroundImage = awayTeam.Shield;
 				NTeams ++;
 			}
 
@@ -361,14 +398,31 @@ namespace LongoMatch.Drawing.CanvasObjects
 			subPlayers = new ButtonObject ();
 			string  path = Path.Combine (Config.IconsDir, StyleConf.SubsUnlock);
 			subPlayers.BackgroundImageActive = Image.LoadFromFile (path);
+			subPlayers.BackgroundColorActive = Config.Style.PaletteBackground;
 			path = Path.Combine (Config.IconsDir, StyleConf.SubsLock);
 			subPlayers.BackgroundImage = Image.LoadFromFile (path);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();
+			subInjury.BackgroundColorActive = Config.Style.PaletteBackground;
 			subInjury.Toggle = true;
 			subInjury.ClickedEvent += HandleSubsClicked;
 			subInjury.Visible = false;
+		}
+
+		void LoadTeamsButtons () {
+			homeButton = new ButtonObject ();
+			homeButton.Toggle = true;
+			homeButton.ClickedEvent += HandleTeamClickedEvent;
+			homeButton.Width = SUBSTITUTION_BUTTONS_WIDTH * 2 - 2;
+			homeButton.Height = SUBSTITUTION_BUTTONS_HEIGHT - 1;
+			homeButton.RedrawEvent += (co, area) => {EmitRedrawEvent (homeButton, area);};
+			awayButton = new ButtonObject ();
+			awayButton.Toggle = true;
+			awayButton.Width = SUBSTITUTION_BUTTONS_WIDTH * 2 - 2;
+			awayButton.Height = SUBSTITUTION_BUTTONS_HEIGHT - 1;
+			awayButton.ClickedEvent += HandleTeamClickedEvent;
+			awayButton.RedrawEvent += (co, area) => {EmitRedrawEvent (awayButton, area);};
 		}
 
 		void Substitute (PlayerObject p1, PlayerObject p2,
@@ -449,7 +503,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					Team = team,
 				};
 				po.ClickedEvent += HandlePlayerClickedEvent;
-				po.RedrawEvent += (co, area) => {EmitRedrawEvent (this, area);};
+				po.RedrawEvent += (co, area) => {EmitRedrawEvent (po, area);};
 				playerObjects.Add (po);
 				playerToPlayerObject.Add (p, po);
 			}
@@ -516,7 +570,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			Selection sel;
 			
-			if (!ShowSubsitutionButtons) {
+			if (!ShowSubsitutionButtons && !ShowTeamsButtons) {
 				return false;
 			}
 
@@ -542,11 +596,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			SubstitutionMode = !SubstitutionMode;
 		}
 
+		void HandleTeamClickedEvent (ICanvasObject co)
+		{
+			if (TeamSelectionChangedEvent != null)
+				TeamSelectionChangedEvent (SelectedTeam);
+		}
+
 		public override void ClickPressed (Point point, ButtonModifier modif)
 		{
 			Selection selection = null;
 
-			if (ButtonClickPressed (point, modif, subPlayers, subInjury)) {
+			if (ButtonClickPressed (point, modif, subPlayers, subInjury,
+			                        homeButton, awayButton)) {
 				return;
 			}
 			
@@ -609,20 +670,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Clear (Config.Style.PaletteBackground);
 
 			/* Draw substitution buttons */
-			if (ShowSubsitutionButtons) {
+			if (subPlayers.Visible) {
 				subPlayers.Position = new Point (Width / 2 - SUBSTITUTION_BUTTONS_WIDTH / 2,
 				                                 offset.Y - SUBSTITUTION_BUTTONS_HEIGHT);
 				subPlayers.Width = SUBSTITUTION_BUTTONS_WIDTH;
 				subPlayers.Height = SUBSTITUTION_BUTTONS_HEIGHT;
 				subPlayers.Draw (tk, area);
-				
-				//subInjury.Position = new Point (100, 0);
-				//subInjury.Width = 100;
-				//subInjury.Height = SUBSTITUTION_BUTTONS_HEIGHT;
-				//subInjury.Draw (tk, area);
+			}
+			if (homeButton.Visible) {
+				/* Draw local team button */
+				homeButton.Position = new Point (Position.X + offset.X, offset.Y - homeButton.Height);
+				homeButton.Draw (tk, area);
+			}
+			if (awayButton.Visible) {
+				awayButton.Position = new Point ((Position.X + Width - offset.X) - awayButton.Width,
+				                                 offset.Y - awayButton.Height);
+				awayButton.Draw (tk, area);
 			}
 
-			
 			tk.TranslateAndScale (Position + offset, new Point (scaleX, scaleY));
 			homeBench.Draw (tk, area);
 			awayBench.Draw (tk, area);

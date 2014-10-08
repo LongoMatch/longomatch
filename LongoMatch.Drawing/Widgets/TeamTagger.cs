@@ -33,6 +33,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
+		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 		PlayersTaggerObject tagger;
@@ -45,6 +46,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.SelectionMode = MultiSelectionMode.Single;
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
 			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
@@ -97,6 +99,12 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.ShowSubsitutionButtons = value;
 			}
 		}
+
+		public bool ShowTeamsButtons {
+			set {
+				tagger.ShowTeamsButtons = value;
+			}
+		}
 		
 		public new MultiSelectionMode SelectionMode {
 			set {
@@ -104,14 +112,20 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public Team SelectedTeam {
+			get {
+				return tagger.SelectedTeam;
+			}
+		}
+		
 		public void ResetSelection ()
 		{
 			tagger.ResetSelection ();
 		} 
 
-		public void Select (List<Player> players)
+		public void Select (List<Player> players, Team team)
 		{
-			tagger.Select (players);
+			tagger.Select (players, team);
 		}
 		
 		public void Select (Player p)
@@ -160,6 +174,13 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (players);
+			}
+		}
+		
+		void HandleTeamSelectionChangedEvent (Team team)
+		{
+			if (TeamSelectionChangedEvent != null) {
+				TeamSelectionChangedEvent (team);
 			}
 		}
 	}

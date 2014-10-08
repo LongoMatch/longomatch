@@ -334,7 +334,7 @@ namespace LongoMatch.Drawing.Widgets
 				score = (button as ScoreButton).Score;
 			}
 			
-			NewTagEvent (button.EventType, null, tags, start, stop, eventTime, score, card);
+			NewTagEvent (button.EventType, null, Team.NONE, tags, start, stop, eventTime, score, card);
 		}
 	}
 }

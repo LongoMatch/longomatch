@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Dialog
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			teamtagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
+			teamtagger.ShowTeamsButtons = true;
 			nameentry.Changed += HandleChanged;
 		}
 
@@ -73,7 +75,7 @@ namespace LongoMatch.Gui.Dialog
 			if (editPlayers) {
 				teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 				                      project.Dashboard.FieldBackground);
-				teamtagger.Select (play.Players);
+				teamtagger.Select (play.Players, play.Team);
 			}
 		
 			if (editTags) {
@@ -126,6 +128,11 @@ namespace LongoMatch.Gui.Dialog
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
 			play.Players = players.ToList (); 
+		}
+		
+		void HandleTeamSelectionChangedEvent (Team team)
+		{
+			play.Team = team;
 		}
 	}
 }

@@ -66,6 +66,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teamtagger.Compact = true;
+			teamtagger.ShowTeamsButtons = true;
 
 			teamsdrawingarea.HeightRequest = 200;
 			teamsdrawingarea.WidthRequest = 300;
@@ -253,10 +254,11 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList();
 		}
 		
-		void HandleNewTagEvent (EventType eventType, List<Player> players, List<Tag> tags,
+		void HandleNewTagEvent (EventType eventType, List<Player> players, Team team, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
+			play.Team = teamtagger.SelectedTeam;
 			play.Players = selectedPlayers ?? new List<Player> ();
 			play.Tags = tags ?? new List<Tag> ();
 			if (eventType.TagFieldPosition || eventType.TagGoalPosition || eventType.TagHalfFieldPosition) {
