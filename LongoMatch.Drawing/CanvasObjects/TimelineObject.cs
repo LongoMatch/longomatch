@@ -63,6 +63,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				secondsPerPixel = value;
 				foreach (TimeNodeObject to in nodes) {
 					to.SecondsPerPixel = secondsPerPixel;
+					to.ResetDrawArea ();
 				}
 			}
 			protected get {
