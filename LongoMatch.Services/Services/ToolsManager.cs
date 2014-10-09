@@ -53,13 +53,13 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.ManageCategoriesEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenTeamsTemplatesManager ();
+					guiToolkit.OpenCategoriesTemplatesManager ();
 				}
 			};
 			
 			Config.EventsBroker.ManageTeamsEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenCategoriesTemplatesManager ();
+					guiToolkit.OpenTeamsTemplatesManager ();
 				}
 			};
 			
