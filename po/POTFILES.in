@@ -11,6 +11,7 @@ LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/Dashboard.cs
 LongoMatch.Core/Store/Templates/TeamTemplate.cs
 LongoMatch.Drawing/CanvasObjects/CategoryObject.cs
+LongoMatch.Drawing/Widgets/TimelineLabels.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
@@ -71,6 +72,7 @@ LongoMatch.GUI/Gui/Component/Stats/PlayerSubcategoryViewer.cs
 LongoMatch.GUI/Gui/Component/Stats/Plotter.cs
 LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs
 LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs
+LongoMatch.GUI/Gui/Component/Timeline.cs
 LongoMatch.GUI/Gui/Component/TimeScale.cs
 LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs
 LongoMatch.GUI/Gui/Dialog/DrawingTool.cs
