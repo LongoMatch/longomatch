@@ -18,6 +18,7 @@
 //
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -105,6 +106,17 @@ namespace LongoMatch.Services
 			Config.EventsBroker.Detach += HandleDetach;
 			
 			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
+		}
+
+		void DeletePlays (List<TimelineEvent> plays, bool update=true)
+		{
+			Log.Debug (plays.Count + " plays deleted");
+			analysisWindow.DeletePlays (plays);
+			openedProject.RemovePlays (plays);
+			if (projectType == ProjectType.FileProject) {
+				Save (openedProject);
+			}
+			filter.Update ();
 		}
 
 		void HandlePlayerSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
@@ -302,14 +314,7 @@ namespace LongoMatch.Services
 
 		protected virtual void OnPlaysDeleted (List<TimelineEvent> plays)
 		{
-			Log.Debug (plays.Count + " plays deleted");
-			analysisWindow.DeletePlays (plays);
-			openedProject.RemovePlays (plays);
-
-			if (projectType == ProjectType.FileProject) {
-				Save (openedProject);
-			}
-			filter.Update ();
+			DeletePlays (plays);
 		}
 
 		void OnDuplicatePlays (List<TimelineEvent> plays)
@@ -319,6 +324,7 @@ namespace LongoMatch.Services
 				copy.ID = Guid.NewGuid ();
 				/* The category is also serialized and desarialized */
 				copy.EventType = play.EventType;
+				copy.Players = play.Players.ToList ();
 				openedProject.AddEvent (copy);
 				analysisWindow.AddPlay (copy);
 			}
@@ -333,15 +339,15 @@ namespace LongoMatch.Services
 
 		protected virtual void OnPlayCategoryChanged (TimelineEvent play, EventType evType)
 		{
-			List<TimelineEvent> plays = new List<TimelineEvent> ();
-			plays.Add (play);
-			OnPlaysDeleted (plays);
-			var newplay = openedProject.AddEvent (evType, play.Start, play.Stop, play.EventTime, play.Miniature, null, null);
-			newplay.Name = play.Name;
-			newplay.Notes = play.Notes;
-			newplay.Drawings = play.Drawings;
+			var newplay = Cloner.Clone (play);
+			newplay.ID = Guid.NewGuid ();
+			newplay.EventType = evType;
+			newplay.Players = play.Players;
+			DeletePlays (new List<TimelineEvent> {play}, false);
+			openedProject.AddEvent (newplay);
 			analysisWindow.AddPlay (newplay);
 			Save (openedProject);
+			filter.Update ();
 		}
 
 		void HandleDashboardEditedEvent ()
