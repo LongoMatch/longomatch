@@ -35,6 +35,7 @@ using LongoMatch.Multimedia.Utils;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
 using Image = LongoMatch.Core.Common.Image;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui
 {
@@ -386,6 +387,17 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		List<FrameDrawing> LoadedDrawings {
+			get {
+				if (loadedPlay != null) {
+					return loadedPlay.Drawings;
+				} else if (loadedPlaylistElement is PlaylistPlayElement) {
+					return (loadedPlaylistElement as PlaylistPlayElement).Play.Drawings;
+				}
+				return null;
+			}
+		}
+
 		bool ImageLoaded {
 			set {
 				stillimageLoaded = value;
@@ -631,8 +643,9 @@ namespace LongoMatch.Gui
 				slength = dur.ToMSecondsString (true);
 				timelabel.Text = ct.ToMSecondsString (true) + "/" + slength;
 				timescale.Value = cp;
-				if (loadedPlay != null && loadedPlay.Drawings.Count > 0) {
-					FrameDrawing fd = loadedPlay.Drawings.FirstOrDefault (f => f.Render > lastTime && f.Render <= currentTime);
+				var drawings = LoadedDrawings;
+				if (drawings != null) {
+					FrameDrawing fd = drawings.FirstOrDefault (f => f.Render > lastTime && f.Render <= currentTime);
 					if (fd != null) {
 						LoadPlayDrawing (fd);
 					}
