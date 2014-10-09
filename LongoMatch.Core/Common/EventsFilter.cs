@@ -63,24 +63,11 @@ namespace LongoMatch.Core.Common
 			protected set;
 		}
 
-		public void ClearEventTypesFilter (bool update=true)
-		{
-			eventsFilter.Clear ();
-			if (update)
-				Update ();
-		}
-
-		public void ClearPlayersFilter (bool update=true)
-		{
-			playersFilter.Clear ();
-			if (update)
-				Update ();
-		}
-
 		public void ClearAll (bool update=true)
 		{
-			ClearEventTypesFilter (false);
-			ClearPlayersFilter (false);
+			eventsFilter.Clear ();
+			playersFilter.Clear ();
+			periodsFilter.Clear ();
 			if (update)
 				Update ();
 		}
