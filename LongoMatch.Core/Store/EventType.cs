@@ -121,6 +121,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
 		public Dictionary<string, List<Tag>> TagsByGroup {
 			get {
 				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList());
