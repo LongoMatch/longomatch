@@ -121,7 +121,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				SelectedTags.Remove (tag);
 			} else {
 				SelectedTags.Add (tag);
-				if (Button.TagMode == TagMode.Predefined) {
+				if (Button.TagMode == TagMode.Predefined || Mode == TagMode.Edit) {
 					catSelected = true;
 					tagSelected = true;
 				}
@@ -299,8 +299,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (Button.TagMode == TagMode.Free) {
 				/* Draw Tagger */
+				tk.StrokeColor = Button.DarkColor;
+				tk.LineWidth = 1;
 				tk.DrawLine (new Point (pos.X, pos.Y + yptr),
 				             new Point (pos.X + catWidth, pos.Y + yptr));
+				tk.StrokeColor = Button.TextColor;
 				tk.DrawText (new Point (pos.X, pos.Y + yptr), catWidth, heightPerRow, "Record");
 			}
 			DrawSelectionArea (tk);
