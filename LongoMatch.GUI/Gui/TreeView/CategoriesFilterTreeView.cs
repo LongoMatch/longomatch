@@ -18,7 +18,6 @@
 using System;
 using Gtk;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
@@ -26,56 +25,64 @@ using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
-
-    [System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
 		Project project;
-		
+
 		public CategoriesFilterTreeView (): base()
 		{
-			firstColumnName = Catalog.GetString("Category");
+			firstColumnName = Catalog.GetString ("Category");
 			HeadersVisible = false;
 		}
-		
-		public override void SetFilter (EventsFilter filter, Project project) {
+
+		public override void SetFilter (EventsFilter filter, Project project)
+		{
 			this.project = project;
-			base.SetFilter(filter, project);
+			base.SetFilter (filter, project);
 		}
-		
+
 		protected override void FillTree ()
 		{
+			TreeIter catIter;
 			store = new TreeStore (typeof(object), typeof(bool));
 			
+			/* Periods */
+			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Periods")), false);
+			foreach (Period p in project.Periods) {
+				store.AppendValues (catIter, p, false);
+			}
+			
 			foreach (EventType evType in project.EventTypes) {
-				TreeIter catIter;
-				
 				catIter = store.AppendValues (evType, true);
 				filter.FilterEventType (evType, true);
 
 				if (evType is AnalysisEventType) {
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
-						store.AppendValues(catIter, tag, false);
+						store.AppendValues (catIter, tag, false);
 					}
 				}
 			}
 			Model = store;
 		}
-		
-		void UpdateSelectionPriv(TreeIter iter, bool active, bool checkParents=true, bool recurse=true) {
+
+		void UpdateSelectionPriv (TreeIter iter, bool active, bool checkParents=true, bool recurse=true)
+		{
 			TreeIter child, parent;
 			
-			object o = store.GetValue(iter, 0);
+			object o = store.GetValue (iter, 0);
 			store.IterParent (out parent, iter);
 			
 			if (o is Tag) {
 				EventType evType = store.GetValue (parent, 0) as EventType;
 				filter.FilterEventTag (evType, o as Tag, active);
-			} else {
+			} else if (o is EventType) {
 				filter.FilterEventType (o as EventType, active);
+			} else if (o is Period) {
+				filter.FilterPeriod (o as Period, active);
 			}
-			store.SetValue(iter, 1, active);
+			store.SetValue (iter, 1, active);
 			
 			/* Check its parents */
 			if (active && checkParents && store.IterIsValid (parent)) {
@@ -84,53 +91,71 @@ namespace LongoMatch.Gui.Component
 			
 			/* Check/Uncheck all children */
 			if (recurse) {
-				store.IterChildren(out child, iter);
+				store.IterChildren (out child, iter);
 				while (store.IterIsValid(child)) {
 					UpdateSelectionPriv (child, active, false, true);
-					store.IterNext(ref child);
+					store.IterNext (ref child);
 				}
 			}
 			
 			if (recurse && checkParents)
-				filter.Update();
+				filter.Update ();
 		}
-		
-		protected override void UpdateSelection(TreeIter iter, bool active) {
+
+		protected override void UpdateSelection (TreeIter iter, bool active)
+		{
 			UpdateSelectionPriv (iter, active, true, true);
 		}
- 
+
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			object obj = store.GetValue(iter, 0);
+			object obj = store.GetValue (iter, 0);
 			string text = "";
 			
 			if (obj is EventType) {
 				EventType evType = obj as EventType;
 				text = evType.Name;
-			}
-			else if (obj is Tag){
+			} else if (obj is Tag) {
 				text = (obj as Tag).Value;
+			} else if (obj is Period) {
+				text = (obj as Period).Name;
+			} else if (obj is StringObject) {
+				text = (obj as StringObject).Text;
 			}
 			
 			(cell as CellRendererText).Text = text;
 		}
-		
-		protected override void Select(bool select_all) {
+
+		protected override void Select (bool select_all)
+		{
 			TreeIter iter;
 			
 			filter.Silent = true;
-			store.GetIterFirst(out iter);
-			while (store.IterIsValid(iter)){
-				UpdateSelection(iter, select_all);
-				store.IterNext(ref iter);
+			store.GetIterFirst (out iter);
+			while (store.IterIsValid(iter)) {
+				UpdateSelection (iter, select_all);
+				store.IterNext (ref iter);
 			}
 			filter.Silent = false;
 			filter.Update ();
 		}
-		
+
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;
+		}
+
+		class StringObject
+		{
+			public StringObject (string text)
+			{
+				Text = text;
+			}
+
+			public string Text {
+				get;
+				set;
+			}
 		}
 	}
 }

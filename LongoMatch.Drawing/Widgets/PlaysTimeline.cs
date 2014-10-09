@@ -157,7 +157,7 @@ namespace LongoMatch.Drawing.Widgets
 			int i = 0;
 
 			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList(),
-			                        false, true, false, duration,
+			                        true, true, false, duration,
 			                        i * StyleConf.TimelineCategoryHeight,
 			                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
