@@ -1,0 +1,11 @@
+[main]
+host = https://www.transifex.com
+
+[longomatch.master]
+file_filter = po/<lang>.po
+source_file = po/longomatch.pot
+source_lang = en
+trans.eu_ES = po/eu.po
+trans.ro_RO = po/ro.po
+type= PO
+
