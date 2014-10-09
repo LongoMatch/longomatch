@@ -281,6 +281,7 @@ namespace LongoMatch.Gui.Panel
 			this.teamtemplateeditor1 = new global::LongoMatch.Gui.Component.TeamTemplateEditor ();
 			this.teamtemplateeditor1.Events = ((global::Gdk.EventMask)(256));
 			this.teamtemplateeditor1.Name = "teamtemplateeditor1";
+			this.teamtemplateeditor1.Edited = false;
 			this.hbox1.Add (this.teamtemplateeditor1);
 			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.teamtemplateeditor1]));
 			w28.Position = 1;

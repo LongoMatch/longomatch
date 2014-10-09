@@ -7794,6 +7794,7 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="LongoMatch.Gui.Component.TeamTemplateEditor" id="teamtemplateeditor1">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
+                        <property name="Edited">False</property>
                       </widget>
                       <packing>
                         <property name="Position">1</property>

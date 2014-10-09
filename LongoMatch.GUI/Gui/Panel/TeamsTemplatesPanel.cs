@@ -186,6 +186,7 @@ namespace LongoMatch.Gui.Panel
 				teamseditortreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
 				                              loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value);
 			}
+			teamtemplateeditor1.Edited = false;
 		}
 		
 		void PromptSave () {

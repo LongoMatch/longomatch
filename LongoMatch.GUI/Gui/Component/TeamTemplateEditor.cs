@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			get {
 				return edited;
 			}
-			protected set {
+			set {
 				edited = value;
 				savebutton.Sensitive = edited;
 			}
