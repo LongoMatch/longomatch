@@ -54,6 +54,11 @@ namespace LongoMatch.Gui.Component
 				store.AppendValues (catIter, p, false);
 			}
 			
+			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Timers")), false);
+			foreach (Timer t in project.Timers) {
+				store.AppendValues (catIter, t, false);
+			}
+			
 			foreach (EventType evType in project.EventTypes) {
 				catIter = store.AppendValues (evType, true);
 				filter.FilterEventType (evType, true);
@@ -81,6 +86,8 @@ namespace LongoMatch.Gui.Component
 				filter.FilterEventType (o as EventType, active);
 			} else if (o is Period) {
 				filter.FilterPeriod (o as Period, active);
+			} else if (o is Timer) {
+				filter.FilterTimer (o as Timer, active);
 			}
 			store.SetValue (iter, 1, active);
 			
@@ -117,8 +124,8 @@ namespace LongoMatch.Gui.Component
 				text = evType.Name;
 			} else if (obj is Tag) {
 				text = (obj as Tag).Value;
-			} else if (obj is Period) {
-				text = (obj as Period).Name;
+			} else if (obj is Timer) {
+				text = (obj as Timer).Name;
 			} else if (obj is StringObject) {
 				text = (obj as StringObject).Text;
 			}
