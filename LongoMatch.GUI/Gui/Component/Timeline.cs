@@ -73,6 +73,10 @@ namespace LongoMatch.Gui.Component
 
 		protected override void OnDestroyed ()
 		{
+			if (timeoutID != 0) {
+				GLib.Source.Remove (timeoutID);
+				timeoutID = 0;
+			}
 			timerule.Dispose ();
 			timeline.Dispose ();
 			labels.Dispose ();
