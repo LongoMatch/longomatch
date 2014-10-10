@@ -51,12 +51,6 @@
     <EmbeddedResource Include="..\images\cursors\arrow">
       <LogicalName>arrow</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\draw-eraser.png">
-      <LogicalName>eraser</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\draw-cross.png">
-      <LogicalName>cross</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\images\cursors\player">
       <Link>player</Link>
       <LogicalName>player</LogicalName>
@@ -64,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\images\cursors\angle" />
+    <None Include="..\images\cursors\cross">
+      <Link>cross</Link>
+    </None>
+    <None Include="..\images\cursors\eraser">
+      <Link>eraser</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
