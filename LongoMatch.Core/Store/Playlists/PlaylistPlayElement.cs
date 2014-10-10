@@ -32,7 +32,7 @@ namespace LongoMatch.Core.Store.Playlists
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
-			Angles = play.ActiveViews.ToList ();
+			Angles = new HashSet<MediaFileAngle> (play.ActiveViews);
 			FileSet = fileset;
 		}
 
@@ -61,7 +61,7 @@ namespace LongoMatch.Core.Store.Playlists
 			set;
 		}
 
-		public List<MediaFileAngle> Angles {
+		public HashSet<MediaFileAngle> Angles {
 			get;
 			set;
 		}

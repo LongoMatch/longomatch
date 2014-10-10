@@ -43,7 +43,7 @@ namespace LongoMatch.Core.Store
 			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			ActiveViews = new List<MediaFileAngle>();
+			ActiveViews = new HashSet<MediaFileAngle>();
 			ActiveViews.Add (MediaFileAngle.Angle1);
 		}
 		#endregion
@@ -142,7 +142,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public List<MediaFileAngle> ActiveViews {
+		public HashSet<MediaFileAngle> ActiveViews {
 			get;
 			set;
 		}
