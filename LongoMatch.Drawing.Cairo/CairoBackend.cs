@@ -145,15 +145,15 @@ namespace LongoMatch.Drawing.Cairo
 			set;
 		}
 
-		public ISurface CreateSurface (string filename)
+		public ISurface CreateSurface (string filename, bool warnOnDispose = true)
 		{
 			Image img = Image.LoadFromFile (filename);
-			return CreateSurface (img.Width, img.Height, img);
+			return CreateSurface (img.Width, img.Height, img, warnOnDispose);
 		}
 
-		public ISurface CreateSurface (int width, int height, Image image=null)
+		public ISurface CreateSurface (int width, int height, Image image=null, bool warnOnDispose = true)
 		{
-			return new Surface (width, height, image);
+			return new Surface (width, height, image, warnOnDispose);
 		}
 
 		public void Clear (Color color)

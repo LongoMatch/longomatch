@@ -48,8 +48,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		int FontSize {set;}
 		LineStyle LineStyle {set;}
 		
-		ISurface CreateSurface (string filename);
-		ISurface CreateSurface (int width, int height, Image image=null);
+		ISurface CreateSurface (string filename, bool warnOnDispose=true);
+		ISurface CreateSurface (int width, int height, Image image=null, bool wanrnOnDispose=true);
 		void DrawSurface (ISurface surface, Point p = null);
 		void Begin();
 		void End();

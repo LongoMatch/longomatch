@@ -25,10 +25,11 @@ namespace LongoMatch.Drawing.Cairo
 	public class Surface: ISurface
 	{
 		ImageSurface surface;
-		bool disposed;
+		bool disposed, warnOnDispose;
 
-		public Surface (int width, int height, Image image)
+		public Surface (int width, int height, Image image, bool warnOnDispose=true)
 		{
+			this.warnOnDispose = warnOnDispose;
 			surface = new ImageSurface (Format.ARGB32, width, height);
 			if (image != null) {
 				using (Context context = new Context(surface)) {
@@ -40,15 +41,16 @@ namespace LongoMatch.Drawing.Cairo
 
 		~Surface ()
 		{
-			if (! disposed) {
+			if (! disposed && warnOnDispose) {
 				Log.Error (String.Format ("Surface {0} was not disposed correctly", this));
 				Dispose (true);
 			}
 		}
 
-		public void Dispose(){
-			Dispose(true);
-			GC.SuppressFinalize(this);
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
 		}
 
 		protected virtual void Dispose (bool disposing)
@@ -84,13 +86,13 @@ namespace LongoMatch.Drawing.Cairo
 				return surface.Width;
 			}
 		}
-		
+
 		public int Height {
 			get {
 				return surface.Height;
 			}
 		}
-		
+
 		public Image Copy ()
 		{
 			string tempFile = System.IO.Path.GetTempFileName ();

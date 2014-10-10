@@ -231,7 +231,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		ISurface CreateSurface (string name)
 		{
-			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name));
+			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name), false);
 		}
 
 	}
