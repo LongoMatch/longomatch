@@ -35,7 +35,7 @@ namespace LongoMatch.Services
 	public class EventsManager
 	{
 		/* Current play loaded. null if no play is loaded */
-		TimelineEvent loadedPlay = null;
+		TimelineEvent loadedPlay;
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
@@ -94,6 +94,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			
@@ -143,6 +144,15 @@ namespace LongoMatch.Services
 		{
 			loadedPlay = play;
 		}
+		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
+		{
+			if (element is PlaylistPlayElement) {
+				loadedPlay = (element as PlaylistPlayElement).Play;
+			} else {
+				loadedPlay = null;
+			}
+		}
+
 
 		void HandleDetach ()
 		{
