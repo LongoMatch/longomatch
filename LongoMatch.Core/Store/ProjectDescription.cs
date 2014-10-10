@@ -30,8 +30,6 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class ProjectDescription :  IComparable, IIDObject
 	{
-		string title;
-
 		/// <summary>
 		/// Unique ID of the parent project
 		/// </summary>
@@ -43,17 +41,12 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Title of the project
 		/// </summary>
+		[JsonIgnore]
 		public String Title {
 			get {
-				if (title == null) {
-					return String.Format ("{0} - {1} ({2}-{3}) {4} {5}",
-					                      LocalName, VisitorName, LocalGoals, VisitorGoals,
-					                      Competition, Season);
-				}
-				return title;
-			}
-			set {
-				title = value;
+				return String.Format ("{0} - {1} ({2}-{3}) {4} {5}",
+				                      LocalName, VisitorName, LocalGoals, VisitorGoals,
+				                      Competition, Season);
 			}
 		}
 
