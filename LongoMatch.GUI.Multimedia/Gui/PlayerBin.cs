@@ -486,9 +486,8 @@ namespace LongoMatch.Gui
 		{
 			Pause ();
 			ignoreTick = true;
-			player.Seek (drawing.Render + activeFile.Offset, true);
+			player.Seek (drawing.Render + activeFile.Offset, true, true);
 			ignoreTick = false;
-			/* FIXME: wait until seek is done */
 			LoadImage (CurrentFrame, drawing);
 		}
 

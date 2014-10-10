@@ -46,7 +46,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		void Pause();
 		void Stop();
 		void Close();
-		bool Seek (Time time, bool accurate);
+		bool Seek (Time time, bool accurate = false, bool synchronous = false);
 		bool SeekToNextFrame();
 		bool SeekToPreviousFrame();
 		Image GetCurrentFrame (int width=-1, int height=-1);

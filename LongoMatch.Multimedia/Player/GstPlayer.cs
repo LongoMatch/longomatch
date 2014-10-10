@@ -433,7 +433,7 @@ namespace LongoMatch.Video.Player
 			return lgm_video_player_seek (Handle, position);
 		}
 
-		public bool Seek (Time time, bool accurate)
+		public bool Seek (Time time, bool accurate, bool synchronous)
 		{
 			return lgm_video_player_seek_time (Handle, time.NSeconds, accurate);
 		}
@@ -535,7 +535,7 @@ namespace LongoMatch.Video.Player
 		
 		public Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1)
 		{
-			Seek (pos, accurate);
+			Seek (pos, accurate, false);
 			Pause ();
 			return GetCurrentFrame (outwidth, outheight);
 		}
