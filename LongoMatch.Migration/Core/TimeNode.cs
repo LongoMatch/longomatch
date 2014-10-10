@@ -21,9 +21,9 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using LongoMatch.Core.Store;
+using LongoMatch.Store;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 
 	/// <summary>

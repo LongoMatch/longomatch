@@ -22,7 +22,7 @@ using Gdk;
 #endif
 
 
-namespace LongoMatch.Core.Common
+namespace LongoMatch.Common
 {
 	public class Constants {
 		public const string SOFTWARE_NAME = "LongoMatch";

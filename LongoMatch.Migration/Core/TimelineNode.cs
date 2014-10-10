@@ -17,9 +17,9 @@
 // 
 using System;
 using Newtonsoft.Json;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Interfaces;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
     /* FIXME: Code duplicated from Play, unfortunately we can't
       * modify the class hierachy */

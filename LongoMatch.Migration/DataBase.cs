@@ -26,10 +26,10 @@ using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
 using Db4objects.Db4o.Ext;
 
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.DB
 {
@@ -492,15 +492,15 @@ namespace LongoMatch.DB
 			Image image = null;
 			
 			if (backgroundName == Constants.FIELD_BACKGROUND) {
-				image = Config.FieldBackground;
+				image = LongoMatch.Common.Config.FieldBackground;
 				project.Categories.FieldBackground = image; 
 				coords =  project.AllPlays().Select(p => p.FieldPosition).ToList();
 			} else if (backgroundName == Constants.HALF_FIELD_BACKGROUND) {
-				image = Config.HalfFieldBackground;
+				image = LongoMatch.Common.Config.HalfFieldBackground;
 				project.Categories.HalfFieldBackground = image; 
 				coords = project.AllPlays().Select(p => p.HalfFieldPosition).ToList();
 			} else if (backgroundName == Constants.GOAL_BACKGROUND) {
-				image = Config.GoalBackground;
+				image = LongoMatch.Common.Config.GoalBackground;
 				project.Categories.GoalBackground = image;
 			}
 			

@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 
-using LongoMatch.Core.Store;
+using LongoMatch.Store;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 	[Serializable]
 	public class GameUnitsList: List<GameUnit>

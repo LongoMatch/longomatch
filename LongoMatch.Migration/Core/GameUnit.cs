@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 	[Serializable]
 	public class GameUnit: List<TimelineNode>

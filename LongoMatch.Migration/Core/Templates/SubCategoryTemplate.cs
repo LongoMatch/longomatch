@@ -18,12 +18,12 @@
 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Templates
+namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]

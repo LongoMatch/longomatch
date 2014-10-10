@@ -20,10 +20,10 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 [Serializable]
 	

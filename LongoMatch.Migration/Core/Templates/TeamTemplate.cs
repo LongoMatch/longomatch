@@ -22,10 +22,10 @@ using System.Linq;
 using Mono.Unix;
 using Newtonsoft.Json;
 
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
-namespace LongoMatch.Core.Store.Templates
+namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 	[JsonObject]

@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 	public class Period: Timer
 	{

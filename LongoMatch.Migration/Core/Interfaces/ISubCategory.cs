@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Interfaces
 {
 	public interface ISubCategory
 	{

@@ -20,11 +20,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 	[Serializable]
 	[JsonObject (MemberSerialization = MemberSerialization.OptIn)]

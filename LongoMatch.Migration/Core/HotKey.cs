@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
-using LongoMatch.Core.Common;
+using LongoMatch.Common;
 using Newtonsoft.Json;
 
 
@@ -32,7 +32,7 @@ using Newtonsoft.Json;
 using Gdk;
 #endif
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 
 	/// <summary>

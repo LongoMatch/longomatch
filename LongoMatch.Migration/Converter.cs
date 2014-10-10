@@ -18,12 +18,12 @@
 using System;
 using System.Linq;
 using System.IO;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Store;
+using LongoMatch.Common;
+using LongoMatch.Store.Templates;
+using LongoMatch.Store;
 using System.Collections.Generic;
 using LongoMatch.DB;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Migration
 {

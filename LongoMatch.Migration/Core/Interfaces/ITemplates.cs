@@ -17,10 +17,10 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 	
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Interfaces
 {
 	public interface ITemplate
 	{

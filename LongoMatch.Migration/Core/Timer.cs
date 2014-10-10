@@ -17,11 +17,11 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Core.Store;
+using LongoMatch.Store;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Store
 {
 	public class Timer
 	{

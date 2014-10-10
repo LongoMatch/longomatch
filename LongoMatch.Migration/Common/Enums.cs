@@ -17,7 +17,7 @@
 //
 using System;
 
-namespace LongoMatch.Core.Common
+namespace LongoMatch.Common
 {
 	public enum Team {
 		NONE = 0,

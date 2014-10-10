@@ -18,8 +18,8 @@
 using NUnit.Framework;
 using System;
 using System.Reflection;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Common;
+using LongoMatch.Store.Templates;
+using LongoMatch.Common;
 using System.IO;
 
 namespace LongoMatch.Migration.Tests
