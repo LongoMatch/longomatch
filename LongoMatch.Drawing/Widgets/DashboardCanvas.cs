@@ -84,6 +84,11 @@ namespace LongoMatch.Drawing.Widgets
 				foreach (TimerObject to in Objects.OfType<TimerObject>()) {
 					to.CurrentTime = value;
 				}
+				foreach (CategoryObject co in Objects.OfType<CategoryObject>()) {
+					if (co.Button.TagMode == TagMode.Free) {
+						co.CurrentTime = value;
+					}
+				}
 			}
 			get {
 				return currentTime;

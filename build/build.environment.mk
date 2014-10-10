@@ -91,6 +91,7 @@ REF_DEP_LONGOMATCH_DRAWING = \
                      $(LINK_SYSTEM) \
                      $(LINK_SYSTEM_CORE) \
                      $(LINK_MONO_POSIX) \
+                     $(LINK_GTK) \
                      $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_LONGOMATCH_DRAWING_CAIRO = \

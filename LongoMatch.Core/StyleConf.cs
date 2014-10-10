@@ -92,6 +92,11 @@ namespace LongoMatch.Core.Common
 		public const string SubsLock = "hicolor/scalable/actions/longomatch-player-swap-lock.svg";
 		public const string SubsUnlock = "hicolor/scalable/actions/longomatch-player-swap-unlock.svg";
 
+		public const string EditButton = "hicolor/scalable/actions/longomatch-apply.svg";
+		public const string ApplyButton = "hicolor/scalable/actions/longomatch-apply.svg";
+		public const string CancelButton = "hicolor/scalable/actions/longomatch-mark.svg";
+		public const string RecordButton = "hicolor/scalable/actions/longomatch-control-record.svg";
+
 		public const int NotebookTabIconSize = 18;
 		public const int NotebookTabSize = NotebookTabIconSize + 14;
 
