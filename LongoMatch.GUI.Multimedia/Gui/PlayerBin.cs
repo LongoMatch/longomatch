@@ -374,9 +374,10 @@ namespace LongoMatch.Gui
 					Log.Exception (ex);
 					//We handle this error async
 				}
-			}
-			if (seek) {
-				Seek (new Time (0), true);
+			} else {
+				if (seek) {
+					Seek (new Time (0), true);
+				}
 			}
 			detachbutton.Sensitive = true;
 		}
