@@ -9,6 +9,7 @@ SOURCES = CairoBackend.cs \
 	WidgetWrapper.cs
 
 RESOURCES = $(top_srcdir)/images/cursors/text \
+	$(top_srcdir)/images/cursors/cross \
 	$(top_srcdir)/images/cursors/rect \
 	$(top_srcdir)/images/cursors/number \
 	$(top_srcdir)/images/cursors/freehand \
