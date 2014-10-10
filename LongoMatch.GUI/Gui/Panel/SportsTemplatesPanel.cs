@@ -37,11 +37,9 @@ namespace LongoMatch.Gui.Panel
 		public event BackEventHandle BackEvent;
 
 		ListStore templates;
-		List<string> selectedTemplate;
 		Dashboard loadedTemplate;
-		
 		ICategoriesTemplatesProvider provider;
-		
+
 		public SportsTemplatesPanel ()
 		{
 			this.Build ();
@@ -52,7 +50,7 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = "ANALYSIS DASHBOARDS MANAGER";
 			panelheader1.BackClicked += (sender, o) => {
 				if (BackEvent != null)
-					BackEvent();
+					BackEvent ();
 			};
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", 54, IconLookupFlags.ForceSvg);
@@ -77,27 +75,34 @@ namespace LongoMatch.Gui.Panel
 
 			addcategorybutton.Entered += HandleEnterTagButton;
 			addcategorybutton.Left += HandleLeftTagButton;
-		    addcategorybutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Category"); };
+			addcategorybutton.Clicked += (object sender, EventArgs e) => {
+				buttonswidget.AddButton ("Category"); };
 			addtagbutton1.Entered += HandleEnterTagButton;
 			addtagbutton1.Left += HandleLeftTagButton;
-			addtagbutton1.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Tag"); };
+			addtagbutton1.Clicked += (object sender, EventArgs e) => {
+				buttonswidget.AddButton ("Tag"); };
 			scorebutton.Entered += HandleEnterTagButton;
 			scorebutton.Left += HandleLeftTagButton;
-			scorebutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Score"); };
+			scorebutton.Clicked += (object sender, EventArgs e) => {
+				buttonswidget.AddButton ("Score"); };
 			cardbutton.Entered += HandleEnterTagButton;
 			cardbutton.Left += HandleLeftTagButton;
-			cardbutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Card"); };
+			cardbutton.Clicked += (object sender, EventArgs e) => {
+				buttonswidget.AddButton ("Card"); };
 			timerbutton.Entered += HandleEnterTagButton;
 			timerbutton.Left += HandleLeftTagButton;
-			timerbutton.Clicked += (object sender, EventArgs e) => { buttonswidget.AddButton ("Timer"); };
+			timerbutton.Clicked += (object sender, EventArgs e) => {
+				buttonswidget.AddButton ("Timer"); };
 
-			templates = new ListStore (typeof(Pixbuf), typeof(string));
+			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof(Dashboard));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = templates;
 			dashboardseditortreeview.HeadersVisible = false;
-			//sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			dashboardseditortreeview.AppendColumn ("Text", new CellRendererText () { SizePoints = 14.0 }, "text", 1); 
+			var cell = new CellRendererText { SizePoints = 14.0 };
+			cell.Editable = true;
+			cell.Edited += HandleEdited;
+			dashboardseditortreeview.AppendColumn ("Text", cell, "text", 1); 
 			dashboardseditortreeview.SearchColumn = 0;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
@@ -110,7 +115,6 @@ namespace LongoMatch.Gui.Panel
 			newtemplatebutton.Visible = true;
 			deletetemplatebutton.Visible = false;
 			
-			selectedTemplate = new List<string>();
 			newtemplatebutton.Clicked += HandleNewTeamClicked;
 			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save (false);
@@ -126,8 +130,9 @@ namespace LongoMatch.Gui.Panel
 			buttonswidget.Destroy ();
 			base.OnDestroyed ();
 		}
-		
-		void Load (string templateName) {
+
+		void Load (string templateName)
+		{
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;
 			
@@ -141,7 +146,7 @@ namespace LongoMatch.Gui.Panel
 				else
 					img = Helpers.Misc.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
 					
-				iter = templates.AppendValues (img, template.Name);
+				iter = templates.AppendValues (img, template.Name, template);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
 				}
@@ -152,27 +157,15 @@ namespace LongoMatch.Gui.Panel
 				HandleSelectionChanged (null, null);
 			}
 		}
-		
-		void Save (bool prompt) {
+
+		void Save (bool prompt)
+		{
 			if (loadedTemplate != null && buttonswidget.Edited) {
 				string msg = Catalog.GetString ("Do you want to save the current template");
 				if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 					provider.Update (loadedTemplate);
 					buttonswidget.Edited = false;
 				}
-			}
-		}
-		
-		void LoadTemplate (string templateName) {
-			Save (true);
-			
-			try {
-				loadedTemplate = provider.Load (templateName);
-				buttonswidget.Template = loadedTemplate;
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				GUIToolkit.Instance.ErrorMessage (Catalog.GetString ("Could not load template"));
-				return;
 			}
 		}
 
@@ -215,35 +208,29 @@ namespace LongoMatch.Gui.Panel
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
-			TreePath[] pathArray;
+			Dashboard selected;
 			
-			selectedTemplate.Clear ();
-
-			pathArray = dashboardseditortreeview.Selection.GetSelectedRows ();
-			for(int i=0; i< pathArray.Length; i++) {
-				dashboardseditortreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTemplate.Add (dashboardseditortreeview.Model.GetValue (iter, 1) as string);
-			}
-			
-			deletetemplatebutton.Visible = selectedTemplate.Count >= 1;
-			buttonswidget.Sensitive = true;
-			
-			if (selectedTemplate.Count == 1) {
-				LoadTemplate (selectedTemplate[0]);
+			dashboardseditortreeview.Selection.GetSelected (out iter);
+			selected = templates.GetValue (iter, 2) as Dashboard;
+			deletetemplatebutton.Visible = selected != null;
+			buttonswidget.Sensitive = selected != null;
+			loadedTemplate = selected;
+			if (selected != null) {
+				Save (true);
+				buttonswidget.Template = selected;
 			}
 		}
-		
+
 		void HandleDeleteTeamClicked (object sender, EventArgs e)
 		{
-			foreach (string teamName in selectedTemplate) {
-				if (teamName == "default") {
-					MessagesHelpers.ErrorMessage (this,
-						Catalog.GetString ("The default template can't be deleted"));
-					continue;
-				}
-				string msg = Catalog.GetString("Do you really want to delete the template: ") + teamName;
-				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-					provider.Delete (teamName);
+			if (loadedTemplate != null) {
+				if (loadedTemplate.Name == "default") {
+					MessagesHelpers.ErrorMessage (this, Catalog.GetString ("The default template can't be deleted"));
+				} else {
+					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTemplate.Name;
+					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+						provider.Delete (loadedTemplate.Name);
+					}
 				}
 			}
 			Load ("default");
@@ -257,8 +244,8 @@ namespace LongoMatch.Gui.Panel
 			EntryDialog dialog = new EntryDialog ();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = true;
-			dialog.Text = Catalog.GetString ("New team");
-			dialog.CountText = Catalog.GetString ("Categories:");
+			dialog.Text = Catalog.GetString ("New dasboard");
+			dialog.CountText = Catalog.GetString ("Event types:");
 			dialog.AvailableTemplates = provider.TemplatesNames;
 			
 			while (dialog.Run() == (int)ResponseType.Ok) {
@@ -299,7 +286,26 @@ namespace LongoMatch.Gui.Panel
 				}
 				Load (dialog.Text);
 			}
-			dialog.Destroy();
+			dialog.Destroy ();
+		}
+
+		void HandleEdited (object o, EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+			templates.GetIter (out iter, new Gtk.TreePath (args.Path));
+ 
+			Dashboard template = (Dashboard)templates.GetValue (iter, 2);
+			if (template.Name != args.NewText) {
+				if (provider.TemplatesNames.Contains (args.NewText)) {
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A template with the same name already exists"), this);
+					args.RetVal = false;
+				} else {
+					provider.Delete (template.Name);
+					template.Name = args.NewText;
+					provider.Save (template);
+					templates.SetValue (iter, 1, template.Name);
+				}
+			}
 		}
 	}
 }
