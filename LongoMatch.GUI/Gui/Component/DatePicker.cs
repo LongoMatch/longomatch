@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 
 			datebutton.Clicked += HandleClicked;
 			dateentry.Changed += HandleChanged;
-			Date = DateTime.Now;
+			Date = DateTime.UtcNow;
 		}
 
 		public DateTime Date {
