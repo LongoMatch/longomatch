@@ -32,7 +32,6 @@ namespace LongoMatch.Services
 		IMultimediaToolkit multimediaToolkit;
 		IMainController mainController;
 		IAnalysisWindow analysisWindow;
-		IDatabase DB;
 
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
 		                        TemplatesService ts)
@@ -40,7 +39,6 @@ namespace LongoMatch.Services
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
 			mainController = guiToolkit.MainController;
-			DB = Config.DatabaseManager.ActiveDB;
 			ConnectSignals ();
 		}
 
@@ -145,7 +143,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1,
 				                                      multimediaToolkit.DiscoverFile (filePath));
-				DB.AddProject (project);
+				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				Log.Debug ("Backing up project to file");
@@ -304,13 +302,13 @@ namespace LongoMatch.Services
 			
 			if (projectType == ProjectType.FileProject) {
 				try {
-					DB.UpdateProject (project);
+					Config.DatabaseManager.ActiveDB.UpdateProject (project);
 				} catch (Exception e) {
 					Log.Exception (e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				try {
-					DB.AddProject (project);
+					Config.DatabaseManager.ActiveDB.AddProject (project);
 				} catch (Exception e) {
 					Log.Exception (e);
 				}
@@ -345,7 +343,7 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject (DB.GetAllProjects ());
+			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ());
 		}
 
 		void OpenProjectID (Guid projectID)
@@ -353,7 +351,7 @@ namespace LongoMatch.Services
 			Project project = null;
 			
 			try {
-				project = DB.GetProject (projectID);
+				project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				guiToolkit.ErrorMessage (ex.Message);
@@ -366,7 +364,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Importing fake live project");
 				if (guiToolkit.SelectMediaFiles (project)) {
 					try {
-						DB.UpdateProject (project);
+						Config.DatabaseManager.ActiveDB.UpdateProject (project);
 					} catch (Exception e) {
 						Log.Exception (e);
 					}
