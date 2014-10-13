@@ -74,7 +74,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				bool changed = value != highlighted;
 				highlighted = value;
 				if (changed) {
-					EmitRedrawEvent (this, DrawArea);
+					ReDraw ();
 				}
 			}
 		}
@@ -87,7 +87,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				bool changed = value != selected;
 				selected = value;
 				if (changed) {
-					EmitRedrawEvent (this, DrawArea);
+					ReDraw ();
 				}
 			}
 		}
@@ -100,6 +100,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected Area DrawArea {
 			get;
 			set;
+		}
+
+		public void ReDraw ()
+		{
+			EmitRedrawEvent (this, DrawArea);
 		}
 
 		public virtual void ClickPressed (Point p, ButtonModifier modif)
@@ -159,7 +164,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				bool changed = active != value;
 				active = value;
 				if (changed) {
-					EmitRedrawEvent (this, DrawArea);
+					ReDraw ();
 				}
 			}
 		}
@@ -205,7 +210,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				bool changed = value != Drawable.Selected;
 				Drawable.Selected = value;
 				if (changed) {
-					EmitRedrawEvent (this, DrawArea);
+					ReDraw ();
 				}
 			}
 		}

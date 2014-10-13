@@ -57,7 +57,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 				currentTime = value;
 				if (update && CurrentTimeNode != null) {
-					EmitRedrawEvent (this, DrawArea);
+					ReDraw ();
 				}
 			}
 			get {
