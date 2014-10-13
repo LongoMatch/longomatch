@@ -120,7 +120,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				h = Button.Height / 2;
 			}
 			
-			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			};
 

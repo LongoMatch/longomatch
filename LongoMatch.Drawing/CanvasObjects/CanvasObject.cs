@@ -267,10 +267,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return;
 			}
 			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.StrokeColor = Constants.SELECTION_AREA_COLOR;
+			tk.StrokeColor = Config.Style.PaletteActive;
 			tk.FillColor = null;
 			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = 1;
+			tk.LineWidth = 2;
 			tk.DrawRectangle (area.Start, area.Width, area.Height);
 			foreach (Point p in area.Vertices) {
 				DrawCornerSelection (tk, p);

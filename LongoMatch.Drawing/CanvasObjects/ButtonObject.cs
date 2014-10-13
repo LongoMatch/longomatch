@@ -25,6 +25,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class ButtonObject: CanvasButtonObject, IMovableObject
 	{
 		const int BORDER_SIZE = 4;
+		const int SELECTION_SIZE = 6;
 
 		public ButtonObject () {
 			BackgroundColor = Config.Style.PaletteBackgroundLight;
@@ -93,6 +94,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+
+		public virtual Area Area {
+			get {
+				return new Area (Position, Width + SELECTION_SIZE / 2 + 1,
+				                 Height + SELECTION_SIZE / 2 + 1);
+			}
+		}
+
 		public TagMode Mode {
 			get;
 			set;
@@ -125,7 +134,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			return s;
 		}
 
-		public void Move (Selection s, Point p, Point start)
+		public virtual void Move (Selection s, Point p, Point start)
 		{
 			switch (s.Position) {
 			case SelectionPosition.Right:
@@ -159,17 +168,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return;
 			}
 			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.StrokeColor = Constants.SELECTION_AREA_COLOR;
+			tk.StrokeColor = Config.Style.PaletteActive;
 			tk.FillColor = null;
 			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = 1;
+			tk.LineWidth = 2;
 			tk.DrawRectangle (DrawPosition, Width, Height);
 
 			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
-			tk.DrawRectangle (new Point (DrawPosition.X + Width - 3,
-			                             DrawPosition.Y + Height - 3),
-			                  6, 6);
+			tk.DrawRectangle (new Point (DrawPosition.X + Width - SELECTION_SIZE / 2,
+			                             DrawPosition.Y + Height - SELECTION_SIZE / 2),
+			                  SELECTION_SIZE, SELECTION_SIZE);
 		}
 
 		protected void DrawButton (IDrawingToolkit tk)
@@ -203,7 +212,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
 			tk.Begin ();

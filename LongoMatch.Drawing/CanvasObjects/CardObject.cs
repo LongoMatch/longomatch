@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
+			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
 			tk.Begin ();
