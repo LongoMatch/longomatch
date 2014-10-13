@@ -36,7 +36,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 	
 	public interface IDrawingToolkit
 	{
-		IContext Context {set;}
+		IContext Context {set; get;}
 		int LineWidth {set;}
 		bool ClearOperation {set;}
 		Color StrokeColor {set;}

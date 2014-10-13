@@ -31,10 +31,7 @@ namespace LongoMatch.Core.Store.Drawables
 		
 		public Rectangle (Point origin, double width, double height)
 		{
-			TopLeft = origin;
-			TopRight = new Point (origin.X + width, origin.Y);
-			BottomLeft = new Point (origin.X, origin.Y + height);
-			BottomRight = new Point (origin.X + width, origin.Y + height);
+			Update (origin, width, height);
 		}
 		
 		[JsonIgnore]
@@ -58,7 +55,13 @@ namespace LongoMatch.Core.Store.Drawables
 			}
 		}
 		
-		
+		public void Update (Point origin, double width, double height)
+		{
+			TopLeft = origin;
+			TopRight = new Point (origin.X + width, origin.Y);
+			BottomLeft = new Point (origin.X, origin.Y + height);
+			BottomRight = new Point (origin.X + width, origin.Y + height);
+		}
 		
 		public override void Reorder () {
 			Point [] array = new Point[] {TopLeft, TopRight, BottomLeft, BottomRight};

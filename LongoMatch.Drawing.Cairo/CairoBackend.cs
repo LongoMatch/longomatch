@@ -62,6 +62,9 @@ namespace LongoMatch.Drawing.Cairo
 			set {
 				context = value;
 			}
+			get {
+				return context;
+			}
 		}
 
 		public int LineWidth {
