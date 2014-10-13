@@ -16,18 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.IO;
 using Gtk;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Store;
+using Mono.Unix;
+using LongoMatch.Common;
 
 public partial class MainWindow: Gtk.Window
 {	
 
-	string baseDirectory;
-	string homeDirectory;
-	string configDirectory;
 	string buf;
 	List<string> teams, categories, dbs;
 	
@@ -35,36 +35,24 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		SetupBasedir ();
 		FindFiles ();
 		UpdateLabel ();
 		buf = "";
+		convertbutton.Clicked += HandleConvertClicked;
+		closebutton.Clicked += HandleCloseClicked;
 	}
+
 	
-	void SetupBasedir () {
-		string home;
-			
-		baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-		if (!System.IO.Directory.Exists(System.IO.Path.Combine(baseDirectory, "share", "longomatch"))) {
-			baseDirectory = System.IO.Path.Combine(baseDirectory, "../");
-		}
-		
-		home = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-		homeDirectory = System.IO.Path.Combine(home, "LongoMatch");
-		if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-			configDirectory = homeDirectory;
-		else
-			configDirectory = System.IO.Path.Combine(home,"." + "longomatch");
-	}
 	
-	void FindFiles () {
+	void FindFiles ()
+	{
 		string dbdir, templatesdir;
 		
-		dbs = new List<string>();
-		teams = new List<string>(); 
-		categories = new List<string>();
+		dbs = new List<string> ();
+		teams = new List<string> (); 
+		categories = new List<string> ();
 		
-		dbdir = System.IO.Path.Combine (configDirectory, "db");
+		dbdir = System.IO.Path.Combine (LongoMatch.Config.ConfigDir, "db");
 		if (Directory.Exists (dbdir)) {
 			foreach (string file in Directory.GetFiles (dbdir)) {
 				if (file.EndsWith ("1.db")) {
@@ -73,7 +61,7 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		
-		templatesdir = System.IO.Path.Combine (homeDirectory, "templates");
+		templatesdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "templates");
 		if (Directory.Exists (templatesdir)) {
 			foreach (string file in Directory.GetFiles (templatesdir)) {
 				if (file.EndsWith (".lct")) {
@@ -83,6 +71,15 @@ public partial class MainWindow: Gtk.Window
 					teams.Add (file);
 				}
 			}
+		}
+		
+		if (dbs.Count == 0 && teams.Count == 0 && categories.Count == 0) {
+			Gtk.MessageDialog dialog = new MessageDialog (this,
+			                                              DialogFlags.Modal | DialogFlags.DestroyWithParent,
+			                                              MessageType.Info, ButtonsType.Ok, 
+			                                              Catalog.GetString ("Nothing to migrate from the old version"));
+			dialog.Run();
+			Application.Quit ();
 		}
 	}
 	
@@ -98,30 +95,27 @@ public partial class MainWindow: Gtk.Window
 		a.RetVal = true;
 	}
 
-	protected void OnButton2Clicked (object sender, EventArgs e)
+	protected void HandleCloseClicked (object sender, EventArgs e)
 	{
 		Application.Quit();
 	}
 	
 	void UpdateText (string t) {
-		buf += t;
-		textview1.Buffer.Text = buf;
+		Application.Invoke (delegate {
+			buf += t;
+			textview1.Buffer.Text = buf;
+			progressbar1.Pulse ();
+		});
 	}
 
-	protected void OnButton1Clicked (object sender, EventArgs e)
+	void StartMigrationThread ()
 	{
-		string dbdir =  System.IO.Path.Combine (homeDirectory, "db"); 
-		string teamdir =  System.IO.Path.Combine (homeDirectory, "db", "teams"); 
-		string analysisdir =  System.IO.Path.Combine (homeDirectory, "db", "analysis"); 
-		bool withError;
+		string dbdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db");
+		string teamdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "teams");
+		string analysisdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "analysis");
+		bool withError = false;
 		MessageDialog d;
-		
-		scrolledwindow1.Visible = true ;
-		label2.Visible = false;
-		label3.Visible = false;
-		withError = false;
-		
-		textview1.Buffer.Text = buf;
+
 		if (!Directory.Exists (teamdir)) {
 			UpdateText ("Creating directory " + teamdir + "\n");
 			Directory.CreateDirectory (teamdir);
@@ -130,11 +124,30 @@ public partial class MainWindow: Gtk.Window
 			UpdateText ("Creating directory " + analysisdir + "\n");
 			Directory.CreateDirectory (analysisdir);
 		}
-		
-		foreach (string f in dbs) {
-			UpdateText ("Converting dabase " + f + "...");
+		foreach (string dbfile in dbs) {
+			UpdateText ("Converting dabase " + dbfile + "..." + "\n");
 			try {
-				LongoMatch.Migration.Converter.ConvertDB (f, dbdir);
+				string dboutputdir;
+				string dbname;
+				DataBase db;
+				dbname = System.IO.Path.GetFileName (dbfile).Split ('.') [0] + ".ldb";
+				dboutputdir = System.IO.Path.Combine (dbfile, System.IO.Path.Combine (dbdir, dbname));
+				if (!Directory.Exists (dboutputdir)) {
+					Directory.CreateDirectory (dboutputdir);
+				}
+				db = new DataBase (dbfile);
+				foreach (ProjectDescription pd in db.GetAllProjects ()) {
+					try {
+						Project p = db.GetProject (pd.UUID);
+						UpdateText ("Converting project " + p.Description.Title + "..." + "\n");
+						LongoMatch.Migration.Converter.ConvertProject (p, dboutputdir);
+					} catch (Exception ex) {
+						UpdateText ("ERROR\n");
+						UpdateText (ex.ToString ());
+						withError = true;
+					}
+				}
+				System.IO.File.Delete (System.IO.Path.Combine (dboutputdir, db.Name + ".ldb"));
 				UpdateText ("OK\n");
 			} catch (Exception ex) {
 				UpdateText ("ERROR\n");
@@ -143,6 +156,9 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		foreach (string f in teams) {
+			if (System.IO.Path.GetFileNameWithoutExtension (f) == "default") {
+				continue;
+			}
 			UpdateText ("Converting team template " + f + "...");
 			try {
 				string p = System.IO.Path.Combine (teamdir, System.IO.Path.GetFileName (f));
@@ -155,28 +171,45 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		foreach (string f in categories) {
+			if (System.IO.Path.GetFileNameWithoutExtension (f) == "default") {
+				continue;
+			}
 			UpdateText ("Converting analysis template " + f + "...");
 			try {
 				string p = System.IO.Path.Combine (analysisdir, System.IO.Path.GetFileName (f));
 				LongoMatch.Migration.Converter.ConvertCategories (f, p);
 				UpdateText ("OK\n");
-			} catch (Exception ex) {
+			}
+			catch (Exception ex) {
 				UpdateText ("ERROR\n");
 				UpdateText (ex.ToString ());
 				withError = true;
 			}
 		}
-		
-		if (!withError) {
-			d = new MessageDialog (this, DialogFlags.Modal, MessageType.Info,
-			                       ButtonsType.Ok, "Everything migrated correctly!");
-			d.Run();
-			Application.Quit();
-		} else {
-			button1.Visible = false;
-			d = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error,
-			                       ButtonsType.Ok, "Some errors where found migrating the old content.");
-			d.Run();
-		}
+		Application.Invoke (delegate {
+			if (!withError) {
+				d = new MessageDialog (this, DialogFlags.Modal, MessageType.Info, ButtonsType.Ok, "Everything migrated correctly!");
+				d.Run ();
+				Application.Quit ();
+			}
+			else {
+				convertbutton.Visible = false;
+				progressbar1.Visible = false;
+				d = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error, ButtonsType.Ok, "Some errors where found migrating the old content.");
+				d.Run ();
+				d.Destroy ();
+			}
+		});
+	}
+
+	protected void HandleConvertClicked (object sender, EventArgs e)
+	{
+		scrolledwindow1.Visible = true;
+		label2.Visible = false;
+		label3.Visible = false;
+		textview1.Buffer.Text = buf;
+		progressbar1.Visible = true;
+		System.Threading.Thread t = new System.Threading.Thread (StartMigrationThread);
+		t.Start ();
 	}
 }

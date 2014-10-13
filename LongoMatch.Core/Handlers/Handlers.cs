@@ -81,6 +81,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void ManageProjects ();
 	public delegate void ManageDatabases ();
 	public delegate void EditPreferences ();
+	public delegate void MigrateDBHandler ();
 	/*Playlist Events*/
 	/* Create a new playlist */
 	public delegate Playlist NewPlaylistHandler (Project project);

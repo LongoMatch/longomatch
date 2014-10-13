@@ -17,6 +17,7 @@
 //
 using System;
 using Gtk;
+using System.IO;
 
 namespace LongoMatch.Migration
 {
@@ -24,10 +25,52 @@ namespace LongoMatch.Migration
 	{
 		public static void Main (string[] args)
 		{
-			Application.Init ();
+			SetupBasedir ();
+			InitGtk ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			Application.Run ();
+		}
+		
+		static void SetupBasedir ()
+		{
+			string home, homeDirectory, baseDirectory, configDirectory;
+			
+			baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..");
+			home = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+			homeDirectory = System.IO.Path.Combine (home, "LongoMatch");
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				configDirectory = homeDirectory;
+			else {
+				configDirectory = System.IO.Path.Combine (home, "." + "longomatch");
+			}
+			LongoMatch.Config.ConfigDir = configDirectory;
+			LongoMatch.Config.homeDirectory = homeDirectory;
+			
+			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
+				LongoMatch.Config.baseDirectory = ".";
+				LongoMatch.Config.dataDir = "../data";
+			} else {
+				LongoMatch.Config.baseDirectory = baseDirectory;
+				LongoMatch.Config.dataDir = System.IO.Path.Combine (LongoMatch.Config.baseDirectory, "share", "longomatch");
+			}
+		}
+	
+		static	void InitGtk ()
+		{
+			string gtkRC, iconsDir;
+			
+			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
+			if (File.Exists (gtkRC)) {
+				Rc.AddDefaultFile (gtkRC);
+			}
+			
+			Application.Init ();
+			
+			iconsDir = Path.Combine (Config.dataDir, "icons");
+			if (Directory.Exists (iconsDir)) {
+				IconTheme.Default.PrependSearchPath (iconsDir);
+			}
 		}
 	}
 }

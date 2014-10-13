@@ -26,6 +26,8 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using Mono.Unix;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace LongoMatch.Services
 {
@@ -68,6 +70,8 @@ namespace LongoMatch.Services
 					guiToolkit.OpenProjectsManager (this.openedProject);
 				}
 			};
+			
+			Config.EventsBroker.MigrateDB += HandleMigrateDB;
 			
 			Config.EventsBroker.ExportProjectEvent += ExportProject;
 			Config.EventsBroker.ImportProjectEvent += ImportProject;
@@ -169,6 +173,25 @@ namespace LongoMatch.Services
 				                         "\n" + ex.Message);
 				Log.Exception (ex);
 				return;
+			}
+		}
+		
+		void HandleMigrateDB ()
+		{
+			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+			UriBuilder uri = new UriBuilder(codeBase);
+			string assemblyDir = Path.GetDirectoryName (Uri.UnescapeDataString(uri.Path));
+			string migrationExe = Path.Combine (assemblyDir, "migration", "LongoMatch.exe");
+			ProcessStartInfo startInfo = new ProcessStartInfo ();
+			startInfo.CreateNoWindow = true;
+			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				startInfo.UseShellExecute = false;
+			}
+			startInfo.FileName = "mono";
+			startInfo.Arguments = migrationExe;
+			startInfo.EnvironmentVariables.Add ("MONO_PATH", assemblyDir);
+			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo)) {
+				exeProcess.WaitForExit ();
 			}
 		}
 	}

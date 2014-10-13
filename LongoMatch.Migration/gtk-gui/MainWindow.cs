@@ -8,9 +8,10 @@ public partial class MainWindow
 	private global::Gtk.Label label3;
 	private global::Gtk.ScrolledWindow scrolledwindow1;
 	private global::Gtk.TextView textview1;
+	private global::Gtk.ProgressBar progressbar1;
 	private global::Gtk.HBox hbox1;
-	private global::Gtk.Button button2;
-	private global::Gtk.Button button1;
+	private global::Gtk.Button closebutton;
+	private global::Gtk.Button convertbutton;
 
 	protected virtual void Build ()
 	{
@@ -61,50 +62,58 @@ public partial class MainWindow
 		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.vbox2]));
 		w5.Position = 0;
 		// Container child vbox1.Gtk.Box+BoxChild
+		this.progressbar1 = new global::Gtk.ProgressBar ();
+		this.progressbar1.Name = "progressbar1";
+		this.vbox1.Add (this.progressbar1);
+		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.progressbar1]));
+		w6.Position = 1;
+		w6.Expand = false;
+		w6.Fill = false;
+		// Container child vbox1.Gtk.Box+BoxChild
 		this.hbox1 = new global::Gtk.HBox ();
 		this.hbox1.Name = "hbox1";
 		this.hbox1.Spacing = 6;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.button2 = new global::Gtk.Button ();
-		this.button2.CanFocus = true;
-		this.button2.Name = "button2";
-		this.button2.UseStock = true;
-		this.button2.UseUnderline = true;
-		this.button2.Label = "gtk-close";
-		this.hbox1.Add (this.button2);
-		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.button2]));
-		w6.Position = 0;
-		w6.Fill = false;
+		this.closebutton = new global::Gtk.Button ();
+		this.closebutton.CanFocus = true;
+		this.closebutton.Name = "closebutton";
+		this.closebutton.UseStock = true;
+		this.closebutton.UseUnderline = true;
+		this.closebutton.Label = "gtk-close";
+		this.hbox1.Add (this.closebutton);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.closebutton]));
+		w7.Position = 0;
+		w7.Fill = false;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.button1 = new global::Gtk.Button ();
-		this.button1.CanFocus = true;
-		this.button1.Name = "button1";
-		this.button1.UseUnderline = true;
-		// Container child button1.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		this.convertbutton = new global::Gtk.Button ();
+		this.convertbutton.CanFocus = true;
+		this.convertbutton.Name = "convertbutton";
+		this.convertbutton.UseUnderline = true;
+		// Container child convertbutton.Gtk.Container+ContainerChild
+		global::Gtk.Alignment w8 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w8 = new global::Gtk.HBox ();
-		w8.Spacing = 2;
+		global::Gtk.HBox w9 = new global::Gtk.HBox ();
+		w9.Spacing = 2;
 		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w9 = new global::Gtk.Image ();
-		w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-refresh", global::Gtk.IconSize.Menu);
+		global::Gtk.Image w10 = new global::Gtk.Image ();
+		w10.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-refresh", global::Gtk.IconSize.Menu);
+		w9.Add (w10);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w12 = new global::Gtk.Label ();
+		w12.LabelProp = global::Mono.Unix.Catalog.GetString ("Convert");
+		w12.UseUnderline = true;
+		w9.Add (w12);
 		w8.Add (w9);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w11 = new global::Gtk.Label ();
-		w11.LabelProp = global::Mono.Unix.Catalog.GetString ("Convert");
-		w11.UseUnderline = true;
-		w8.Add (w11);
-		w7.Add (w8);
-		this.button1.Add (w7);
-		this.hbox1.Add (this.button1);
-		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.button1]));
-		w15.Position = 1;
-		w15.Fill = false;
-		this.vbox1.Add (this.hbox1);
-		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		this.convertbutton.Add (w8);
+		this.hbox1.Add (this.convertbutton);
+		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.convertbutton]));
 		w16.Position = 1;
-		w16.Expand = false;
 		w16.Fill = false;
+		this.vbox1.Add (this.hbox1);
+		global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		w17.Position = 2;
+		w17.Expand = false;
+		w17.Fill = false;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
@@ -112,9 +121,8 @@ public partial class MainWindow
 		this.DefaultWidth = 664;
 		this.DefaultHeight = 285;
 		this.scrolledwindow1.Hide ();
+		this.progressbar1.Hide ();
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-		this.button2.Clicked += new global::System.EventHandler (this.OnButton2Clicked);
-		this.button1.Clicked += new global::System.EventHandler (this.OnButton1Clicked);
 	}
 }

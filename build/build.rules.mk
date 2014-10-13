@@ -64,7 +64,7 @@ build-debug:
 $(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
-	@mkdir -p $(top_builddir)/bin
+	@mkdir -p $(top_builddir)/bin/migration
 	$(AM_V_GEN) $(MCS) \
 		$(GMCS_FLAGS) \
 		$(ASSEMBLY_BUILD_FLAGS) \

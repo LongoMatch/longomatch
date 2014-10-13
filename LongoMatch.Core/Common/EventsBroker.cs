@@ -76,6 +76,7 @@ namespace LongoMatch.Core.Common
 		public event ManageDatabases ManageDatabasesEvent;
 		public event EditPreferences EditPreferencesEvent;
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
+		public event MigrateDBHandler MigrateDB;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
 		
@@ -395,6 +396,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (SeekEvent != null) {
 				SeekEvent (time, accurate);
+			}
+		}
+		
+		public void EmitMigrateDB ()
+		{
+			if (MigrateDB != null) {
+				MigrateDB ();
 			}
 		}
 	}

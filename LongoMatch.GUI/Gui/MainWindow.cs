@@ -311,6 +311,11 @@ namespace LongoMatch.Gui
 			info.Run();
 			info.Destroy();
 		}
+
+		protected void OnMigrationToolActionActivated(object sender, EventArgs e)
+		{
+			Config.EventsBroker.EmitMigrateDB ();
+		}
 		#endregion
 	}
 }

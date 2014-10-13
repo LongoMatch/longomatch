@@ -784,6 +784,12 @@
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Show project stats</property>
       </action>
+      <action id="MigrationToolAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Migration Tool</property>
+        <property name="ShortLabel" translatable="yes">Migration Tool</property>
+        <signal name="Activated" handler="OnMigrationToolActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -825,6 +831,7 @@
                     </node>
                     <node type="Separator" />
                     <node type="Menuitem" action="VideoConverterToolAction" />
+                    <node type="Menuitem" action="MigrationToolAction" />
                   </node>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />

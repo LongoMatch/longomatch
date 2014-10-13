@@ -126,6 +126,7 @@ REF_DEP_LONGOMATCH = \
                      $(LINK_LONGOMATCH_SERVICES)
 
 REF_DEP_LONGOMATCH_MIGRATION = \
+                     $(LINK_LONGOMATCH_CORE) \
                      $(LINK_SYSTEM) \
                      $(LINK_SYSTEM_CORE) \
                      $(LINK_SYSTEM_DRAWING) \

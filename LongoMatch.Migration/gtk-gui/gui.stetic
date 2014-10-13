@@ -5,7 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../bin/Debug/LongoMatch.exe" internal="true" />
+    <widget-library name="../../bin/migration/LongoMatch.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="664 285">
     <property name="MemberName" />
@@ -69,17 +69,28 @@
           </packing>
         </child>
         <child>
+          <widget class="Gtk.ProgressBar" id="progressbar1">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Button" id="button2">
+              <widget class="Gtk.Button" id="closebutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="UseStock">True</property>
                 <property name="Type">StockItem</property>
                 <property name="StockId">gtk-close</property>
-                <signal name="Clicked" handler="OnButton2Clicked" />
                 <property name="label">gtk-close</property>
               </widget>
               <packing>
@@ -89,14 +100,13 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Button" id="button1">
+              <widget class="Gtk.Button" id="convertbutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-refresh Menu</property>
                 <property name="Label" translatable="yes">Convert</property>
                 <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnButton1Clicked" />
               </widget>
               <packing>
                 <property name="Position">1</property>
@@ -106,7 +116,7 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
