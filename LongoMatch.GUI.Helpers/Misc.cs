@@ -49,33 +49,39 @@ namespace LongoMatch.Gui.Helpers
 			return filter;
 		}
 
-		public static Pixbuf OpenImage(Widget widget) {
+		public static Pixbuf OpenImage (Widget widget)
+		{
 			Gtk.Window toplevel = widget.Toplevel as Gtk.Window;
 			Pixbuf pimage = null;
 			StreamReader file;
 			FileChooserDialog fChooser;
 			string lastDir;
 			
-			 if (lastFilename != null) {
+			if (lastFilename != null) {
 				lastDir = Path.GetDirectoryName (lastFilename);
-			 } else {
+			} else {
 				lastDir = Config.HomeDir;
-			 }
+			}
 			
-			fChooser = new FileChooserDialog(Catalog.GetString("Choose an image"),
+			fChooser = new FileChooserDialog (Catalog.GetString ("Choose an image"),
 			                                 toplevel, FileChooserAction.Open,
-			                                 "gtk-cancel",ResponseType.Cancel,
-			                                 "gtk-open",ResponseType.Accept);
-			fChooser.AddFilter(GetFileFilter());
+			                                 "gtk-cancel", ResponseType.Cancel,
+			                                 "gtk-open", ResponseType.Accept);
+			fChooser.AddFilter (GetFileFilter ());
 			fChooser.SetCurrentFolder (lastDir);
-			if(fChooser.Run() == (int)ResponseType.Accept)	{
+			if (fChooser.Run () == (int)ResponseType.Accept) {
 				// For Win32 compatibility we need to open the image file
 				// using a StreamReader. Gdk.Pixbuf(string filePath) uses GLib to open the
 				// input file and doesn't support Win32 files path encoding
-				lastFilename = fChooser.Filename;
-				file = new StreamReader(fChooser.Filename);
-				pimage= new Gdk.Pixbuf(file.BaseStream);
-				file.Close();
+				try {
+					lastFilename = fChooser.Filename;
+					file = new StreamReader (fChooser.Filename);
+					pimage = new Gdk.Pixbuf (file.BaseStream);
+					file.Close ();
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Image file format not supported"), widget);
+				}
 			}
 			fChooser.Destroy();
 			return pimage;
