@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void DeleteSelectedPlayers () {
-			if (selectedPlayers.Count == 0) {
+			if (selectedPlayers == null || selectedPlayers.Count == 0) {
 				return;
 			}
 
@@ -348,7 +348,6 @@ namespace LongoMatch.Gui.Component
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
 		}
-		
 	}
 }
 
