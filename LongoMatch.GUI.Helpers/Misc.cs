@@ -237,7 +237,7 @@ namespace LongoMatch.Gui.Helpers
 		/// <param name="name">Icon Name.</param>
 		/// <param name="size">Icon Size as a Gtk.IconSize.</param>
 		/// <param name="flags">Lookup Flags like ForceSVG.</param>
-		public static Gdk.Pixbuf LoadIcon (string name, Gtk.IconSize size, IconLookupFlags flags)
+		public static Gdk.Pixbuf LoadIcon (string name, Gtk.IconSize size, IconLookupFlags flags = IconLookupFlags.ForceSvg)
 		{
 			int sz, sy;
 			global::Gtk.Icon.SizeLookup (size, out  sz, out  sy);

@@ -561,6 +561,60 @@
                           </packing>
                         </child>
                         <child>
+                          <widget class="Gtk.HBox" id="hbox1">
+                            <property name="MemberName" />
+                            <property name="Spacing">6</property>
+                            <child>
+                              <widget class="Gtk.Label" id="periodslabel">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">Periods</property>
+                              </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Entry" id="periodsentry">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="IsEditable">True</property>
+                                <property name="InvisibleChar">•</property>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Button" id="applybutton">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="applyimage">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">2</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
                           <widget class="Gtk.ScrolledWindow" id="propertiesscrolledwindow">
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
@@ -588,7 +642,7 @@
                             </child>
                           </widget>
                           <packing>
-                            <property name="Position">1</property>
+                            <property name="Position">2</property>
                             <property name="AutoSize">False</property>
                           </packing>
                         </child>
@@ -784,12 +838,6 @@
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Show project stats</property>
       </action>
-      <action id="MigrationToolAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Migration Tool</property>
-        <property name="ShortLabel" translatable="yes">Migration Tool</property>
-        <signal name="Activated" handler="OnMigrationToolActionActivated" />
-      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -831,7 +879,6 @@
                     </node>
                     <node type="Separator" />
                     <node type="Menuitem" action="VideoConverterToolAction" />
-                    <node type="Menuitem" action="MigrationToolAction" />
                   </node>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />

@@ -51,6 +51,11 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label goallabel1;
 		private global::Gtk.Label goallabel2;
 		private global::Gtk.Button resetgoalbutton;
+		private global::Gtk.HBox hbox1;
+		private global::Gtk.Label periodslabel;
+		private global::Gtk.Entry periodsentry;
+		private global::Gtk.Button applybutton;
+		private global::Gtk.Image applyimage;
 		private global::Gtk.ScrolledWindow propertiesscrolledwindow;
 		private global::Gtk.Alignment tagpropertiesalignment;
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
@@ -456,14 +461,55 @@ namespace LongoMatch.Gui.Component
 			w68.Expand = false;
 			w68.Fill = false;
 			// Container child vbox10.Gtk.Box+BoxChild
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.periodslabel = new global::Gtk.Label ();
+			this.periodslabel.Name = "periodslabel";
+			this.periodslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Periods");
+			this.hbox1.Add (this.periodslabel);
+			global::Gtk.Box.BoxChild w69 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.periodslabel]));
+			w69.Position = 0;
+			w69.Expand = false;
+			w69.Fill = false;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.periodsentry = new global::Gtk.Entry ();
+			this.periodsentry.CanFocus = true;
+			this.periodsentry.Name = "periodsentry";
+			this.periodsentry.IsEditable = true;
+			this.periodsentry.InvisibleChar = '•';
+			this.hbox1.Add (this.periodsentry);
+			global::Gtk.Box.BoxChild w70 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.periodsentry]));
+			w70.Position = 1;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.applybutton = new global::Gtk.Button ();
+			this.applybutton.CanFocus = true;
+			this.applybutton.Name = "applybutton";
+			// Container child applybutton.Gtk.Container+ContainerChild
+			this.applyimage = new global::Gtk.Image ();
+			this.applyimage.Name = "applyimage";
+			this.applybutton.Add (this.applyimage);
+			this.applybutton.Label = null;
+			this.hbox1.Add (this.applybutton);
+			global::Gtk.Box.BoxChild w72 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.applybutton]));
+			w72.Position = 2;
+			w72.Expand = false;
+			w72.Fill = false;
+			this.vbox10.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.hbox1]));
+			w73.Position = 1;
+			w73.Expand = false;
+			w73.Fill = false;
+			// Container child vbox10.Gtk.Box+BoxChild
 			this.propertiesscrolledwindow = new global::Gtk.ScrolledWindow ();
 			this.propertiesscrolledwindow.CanFocus = true;
 			this.propertiesscrolledwindow.Name = "propertiesscrolledwindow";
 			this.propertiesscrolledwindow.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
 			this.propertiesscrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child propertiesscrolledwindow.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w69 = new global::Gtk.Viewport ();
-			w69.ShadowType = ((global::Gtk.ShadowType)(0));
+			global::Gtk.Viewport w74 = new global::Gtk.Viewport ();
+			w74.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport1.Gtk.Container+ContainerChild
 			this.tagpropertiesalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.tagpropertiesalignment.Name = "tagpropertiesalignment";
@@ -475,21 +521,21 @@ namespace LongoMatch.Gui.Component
 			this.tagproperties.Name = "tagproperties";
 			this.tagproperties.Edited = false;
 			this.tagpropertiesalignment.Add (this.tagproperties);
-			w69.Add (this.tagpropertiesalignment);
-			this.propertiesscrolledwindow.Add (w69);
+			w74.Add (this.tagpropertiesalignment);
+			this.propertiesscrolledwindow.Add (w74);
 			this.vbox10.Add (this.propertiesscrolledwindow);
-			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
-			w73.Position = 1;
+			global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
+			w78.Position = 2;
 			this.propertiesalignment.Add (this.vbox10);
 			this.propertiesframe.Add (this.propertiesalignment);
 			this.rightbox.Add (this.propertiesframe);
-			global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
-			w76.Position = 0;
+			global::Gtk.Box.BoxChild w81 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
+			w81.Position = 0;
 			this.hbox2.Add (this.rightbox);
-			global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
-			w77.Position = 1;
-			w77.Expand = false;
-			w77.Fill = false;
+			global::Gtk.Box.BoxChild w82 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			w82.Position = 1;
+			w82.Expand = false;
+			w82.Fill = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

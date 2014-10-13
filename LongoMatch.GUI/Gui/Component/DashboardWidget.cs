@@ -20,19 +20,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Gui;
-using Helpers = LongoMatch.Gui.Helpers;
-using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
+using LongoMatch.Drawing.Widgets;
 using Mono.Unix;
-using Image = LongoMatch.Core.Common.Image;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Dialog;
+using Helpers = LongoMatch.Gui.Helpers;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
@@ -56,11 +55,12 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 
-			addcatbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", IconSize.Button, IconLookupFlags.ForceSvg);
-			addtimerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", IconSize.Button, IconLookupFlags.ForceSvg);
-			addcardbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", IconSize.Button, IconLookupFlags.ForceSvg);
-			addscorebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", IconSize.Button, IconLookupFlags.ForceSvg);
-			addtagbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", IconSize.Button, IconLookupFlags.ForceSvg);
+			addcatbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", IconSize.Button);
+			addtimerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", IconSize.Button);
+			addcardbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", IconSize.Button);
+			addscorebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", IconSize.Button);
+			addtagbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", IconSize.Button);
+			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
 
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
@@ -81,6 +81,7 @@ namespace LongoMatch.Gui.Component
 			addscorebutton.Clicked += HandleAddClicked;
 			addtagbutton.Clicked += HandleAddClicked;
 			addcardbutton.Clicked += HandleAddClicked;
+			applybutton.Clicked += HandleApplyClicked;
 
 			FillToolbar ();
 			FitMode = FitMode.Original;
@@ -150,6 +151,7 @@ namespace LongoMatch.Gui.Component
 				fieldimage.Pixbuf = value.FieldBackground.Scale (50, 50).Value;
 				hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
 				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
+				periodsentry.Text = String.Join ("-", template.GamePeriods);
 				Edited = false;
 				// Start with disabled widget until something get selected
 				tagproperties.Tagger = null;
@@ -438,6 +440,16 @@ namespace LongoMatch.Gui.Component
 		{
 			if (selected != null) {
 				tagger.RedrawButton (selected);
+			}
+		}
+		
+		void HandleApplyClicked (object sender, EventArgs e)
+		{
+			try {
+				template.GamePeriods = periodsentry.Text.Split ('-').ToList ();
+				Edited = true;
+			} catch {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
 			}
 		}
 	}
