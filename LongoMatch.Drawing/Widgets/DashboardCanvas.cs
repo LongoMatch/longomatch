@@ -42,6 +42,7 @@ namespace LongoMatch.Drawing.Widgets
 		Time currentTime;
 		int templateWidth, templateHeight;
 		FitMode fitMode;
+		bool modeChanged;
 
 		public DashboardCanvas (IWidget widget): base (widget)
 		{
@@ -97,6 +98,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public TagMode TagMode {
 			set {
+				modeChanged = true;
 				tagMode = value;
 				ObjectsCanMove = tagMode == TagMode.Edit;
 				foreach (TaggerObject to in Objects) {
@@ -113,9 +115,20 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				fitMode = value;
 				Refresh ();
+				modeChanged = true;
 			}
 			get {
 				return fitMode;
+			}
+		}
+
+		public void RedrawButton (DashboardButton b)
+		{
+			if (b is AnalysisEventButton) {
+				CategoryObject co = Objects.OfType<CategoryObject> ().FirstOrDefault (o => o.Button == b);
+				if (co != null) {
+					co.ReDraw ();
+				}
 			}
 		}
 
@@ -263,6 +276,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		void SizeChanged ()
 		{
+			FitMode prevFitMode = FitMode;
 			templateHeight = template.CanvasHeight + 10;
 			templateWidth = template.CanvasWidth + 10;
 			/* When going from Original to Fill or Fit, we can't know the new 
@@ -281,8 +295,11 @@ namespace LongoMatch.Drawing.Widgets
 				                   (int)widget.Width, (int)widget.Height,
 				                   out scaleX, out scaleY, out translation);
 			}
-			foreach (TaggerObject to in Objects) {
-				to.ResetDrawArea ();
+			if (modeChanged) {
+				modeChanged = false;
+				foreach (TaggerObject to in Objects) {
+					to.ResetDrawArea ();
+				}
 			}
 			widget.ReDraw ();
 		}

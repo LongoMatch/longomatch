@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			resetfieldbutton.Clicked += HandleResetField;
 			resethfieldbutton.Clicked += HandleResetField;
 			resetgoalbutton.Clicked += HandleResetField;
-			tagproperties.EditedEvent += (sender, e) => {drawingarea.QueueDraw();};
+			tagproperties.EditedEvent += HandlePropertiedEditedEvent;
 			addcatbutton.Clicked += HandleAddClicked;
 			addtimerbutton.Clicked += HandleAddClicked;
 			addscorebutton.Clicked += HandleAddClicked;
@@ -121,7 +121,6 @@ namespace LongoMatch.Gui.Component
 					dashscrolledwindow.VscrollbarPolicy = PolicyType.Never;
 				}
 				tagger.FitMode = value;
-				drawingarea.QueueResize ();
 				ignoreChanges = false;
 			}
 		}
@@ -333,7 +332,6 @@ namespace LongoMatch.Gui.Component
 		void HandleTick (Time currentTime)
 		{
 			tagger.CurrentTime = currentTime;
-			drawingarea.QueueDraw ();
 		}
 		
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
@@ -434,6 +432,13 @@ namespace LongoMatch.Gui.Component
 				FitMode = FitMode.Original;
 			}
 			
+		}
+		
+		void HandlePropertiedEditedEvent (object sender, EventArgs e)
+		{
+			if (selected != null) {
+				tagger.RedrawButton (selected);
+			}
 		}
 	}
 }
