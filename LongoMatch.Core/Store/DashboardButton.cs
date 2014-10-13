@@ -198,6 +198,7 @@ namespace LongoMatch.Core.Store
 	{
 		public AnalysisEventButton () {
 			TagsPerRow = 2;
+			ShowSubcategories = true;
 		}
 		
 		public bool ShowSubcategories {
