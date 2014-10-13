@@ -330,6 +330,21 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Update ();
 		}
 
+		public override void ResetDrawArea ()
+		{
+			base.ResetDrawArea ();
+			foreach (CanvasObject co in homePlayers) {
+				co.ResetDrawArea ();
+			}
+			foreach (CanvasObject co in awayPlayers) {
+				co.ResetDrawArea ();
+			}
+			subPlayers.ResetDrawArea ();
+			subInjury.ResetDrawArea ();
+			homeButton.ResetDrawArea ();
+			awayButton.ResetDrawArea ();
+		}
+
 		void UpdateLineup ()
 		{
 			List<Player> homeFieldL, awayFieldL, homeBenchL, awayBenchL;

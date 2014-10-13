@@ -40,6 +40,7 @@ namespace LongoMatch.Drawing
 			tk = Config.DrawingToolkit;
 			Objects = new List<ICanvasObject> ();
 			widget.DrawEvent += Draw;
+			widget.SizeChangedEvent += HandleSizeChangedEvent;
 			scaleX = 1;
 			scaleY = 1;
 			translation = new Point (0, 0);
@@ -105,6 +106,13 @@ namespace LongoMatch.Drawing
 		void HandleRedrawEvent (ICanvasObject co, Area area)
 		{
 			widget.ReDraw (area);
+		}
+
+		void HandleSizeChangedEvent ()
+		{
+			foreach (CanvasObject to in Objects) {
+				to.ResetDrawArea ();
+			}
 		}
 
 		public virtual void Draw (IContext context, Area area)
