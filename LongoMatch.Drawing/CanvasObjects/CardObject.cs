@@ -63,8 +63,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.StrokeColor = Color.Grey2;
-			tk.FillColor = Color.Grey2;
+			tk.StrokeColor = Button.TextColor;
+			tk.FillColor = Button.TextColor;
 			tk.DrawText (DrawPosition, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
