@@ -111,7 +111,7 @@ namespace LongoMatch.Core.Store.Templates
 		public List<Player> StartingPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;
-				int count = Math.Min (StartingPlayers, StartingPlayers);
+				int count = Math.Min (StartingPlayers, List.Count);
 				return playingPlayers.GetRange (0, count);
 			}
 		}
