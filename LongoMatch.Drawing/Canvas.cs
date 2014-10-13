@@ -142,7 +142,7 @@ namespace LongoMatch.Drawing
 
 	public class SelectionCanvas: Canvas
 	{
-		protected bool moving;
+		protected bool moving, moved;
 		protected Point start;
 		uint lastTime;
 		Selection clickedSel;
@@ -374,6 +374,7 @@ namespace LongoMatch.Drawing
 				widget.ReDraw (sel.Drawable);
 				SelectionMoved (sel);
 				start = coords;
+				moved = true;
 			} else {
 				CursorMoved (coords);
 				start = coords;
@@ -383,12 +384,14 @@ namespace LongoMatch.Drawing
 		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
 		{
 			moving = false;
-			
 			if (clickedSel != null) {
 				(clickedSel.Drawable as ICanvasSelectableObject).ClickReleased ();
 				clickedSel = null;
 			}
-			StopMove ();
+			if (moved) {
+				StopMove ();
+				moved = false;
+			}
 		}
 
 		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)
