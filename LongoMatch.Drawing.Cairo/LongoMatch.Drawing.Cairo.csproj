@@ -55,15 +55,15 @@
       <Link>player</Link>
       <LogicalName>player</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\images\cursors\eraser">
+      <Link>eraser</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\images\cursors\cross">
+      <Link>cross</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\images\cursors\angle" />
-    <None Include="..\images\cursors\cross">
-      <Link>cross</Link>
-    </None>
-    <None Include="..\images\cursors\eraser">
-      <Link>eraser</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
