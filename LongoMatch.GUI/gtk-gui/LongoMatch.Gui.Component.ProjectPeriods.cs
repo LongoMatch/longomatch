@@ -115,6 +115,7 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow2.HeightRequest = 50;
 			this.scrolledwindow2.CanFocus = true;
+			this.scrolledwindow2.Name = "scrolledwindow2";
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w23 = new global::Gtk.Viewport ();
 			w23.ShadowType = ((global::Gtk.ShadowType)(0));

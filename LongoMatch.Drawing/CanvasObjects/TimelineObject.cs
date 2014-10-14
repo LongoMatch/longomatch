@@ -50,9 +50,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		
 		protected override void Dispose (bool disposing)
 		{
-			foreach (TimeNodeObject tn in nodes) {
-				tn.Dispose ();
-			}
+			ClearObjects ();
 			selectionBorderL.Dispose ();
 			selectionBorderR.Dispose ();
 			base.Dispose (disposing);
@@ -109,7 +107,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			to = nodes.FirstOrDefault (n => n.TimeNode == node);
 			if (to != null) {
-				to.RedrawEvent -= HandleRedrawEvent;
+				RemoveObject (to, true);
+			}
+		}
+
+		protected void ClearObjects () {
+			foreach (TimeNodeObject tn in nodes) {
+				RemoveObject (tn, false);
+			}
+			nodes.Clear ();
+		}
+
+		protected void RemoveObject (TimeNodeObject to, bool full)
+		{
+			to.RedrawEvent -= HandleRedrawEvent;
+			to.Dispose ();
+			if (full) {
 				nodes.Remove (to);
 			}
 		}
@@ -256,11 +269,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			ShowLine = showLine;
 			LineColor = lineColor;
 	
-			foreach (Timer t in timers) {
-				foreach (TimeNode tn in t.Nodes) {
-					AddTimeNode (t, tn);
-				}
-			}
+			ReloadPeriods (timers);
 		}
 
 		Color LineColor {
@@ -288,6 +297,23 @@ namespace LongoMatch.Drawing.CanvasObjects
 			return nodes.FirstOrDefault (n => n.TimeNode == tn) != null;
 		}
 
+		public void AddTimer (Timer timer)
+		{
+			foreach (TimeNode tn in timer.Nodes) {
+				AddTimeNode (timer, tn);
+			}
+			ReDraw ();
+		}
+
+		public void RemoveTimer (Timer timer)
+		{
+			TimerTimeNodeObject to = (TimerTimeNodeObject) nodes.FirstOrDefault (t => (t as TimerTimeNodeObject).Timer == timer);
+			if (to != null) {
+				RemoveObject (to, true);
+			}
+			ReDraw ();
+		}
+
 		public void AddTimeNode (Timer t, TimeNode tn)
 		{
 			TimerTimeNodeObject to = new TimerTimeNodeObject (t, tn);
@@ -298,6 +324,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			to.ShowName = ShowName;
 			to.LineColor = LineColor;
 			AddNode (to);
+		}
+
+		public void ReloadPeriods (List<Timer> timers)
+		{
+			ClearObjects ();
+			foreach (Timer t in timers) {
+				AddTimer (t);
+			}
 		}
 
 		protected override void DrawBackground (IDrawingToolkit tk, Area area)

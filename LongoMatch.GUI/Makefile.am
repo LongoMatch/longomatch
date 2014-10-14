@@ -63,6 +63,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/GUIToolkit.cs \
 	Gui/GtkGlue.cs \
 	Gui/MainWindow.cs \
+	Gui/Menu/PeriodsMenu.cs \
 	Gui/Menu/PlaysMenu.cs \
 	Gui/Panel/NewProjectPanel.cs \
 	Gui/Panel/OpenProjectPanel.cs \

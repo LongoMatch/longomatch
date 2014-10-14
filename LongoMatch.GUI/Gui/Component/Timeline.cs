@@ -18,12 +18,9 @@
 using System;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Drawing.Cairo;
-using LongoMatch.Drawing;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui.Menus;
@@ -43,6 +40,7 @@ namespace LongoMatch.Gui.Component
 		Time currentTime, nextCurrentTime;
 		PlaysMenu menu;
 		Project project;
+		PeriodsMenu periodsmenu;
 
 		public Timeline ()
 		{
@@ -69,6 +67,8 @@ namespace LongoMatch.Gui.Component
 			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
 			zoominimage.HeightRequest = zoomoutimage.HeightRequest = focusscale.HeightRequest = 16;
 			menu = new PlaysMenu ();
+			periodsmenu = new PeriodsMenu ();
+			
 		}
 
 		protected override void OnDestroyed ()
@@ -114,6 +114,7 @@ namespace LongoMatch.Gui.Component
 			timerule.Duration = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
+			timeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 			QueueDraw ();
 		}
 
@@ -201,6 +202,12 @@ namespace LongoMatch.Gui.Component
 			m.ShowAll ();
 			m.Popup ();
 		}
+		
+		void HandleShowTimerMenuEvent (Timer timer, Time time)
+		{
+			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline);
+		}
+
 	}
 }
 

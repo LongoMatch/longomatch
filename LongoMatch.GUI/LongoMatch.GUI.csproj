@@ -190,7 +190,6 @@
     <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
     <Compile Include="Gui\Menu\PeriodsMenu.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Menu.PeriodsMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

@@ -21,20 +21,20 @@ using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Common;
-using Gtk;
+using LongoMatch.Gui.Menus;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectPeriods : Gtk.Bin
 	{
-		TimersTimeline timersTimenline;
+		TimersTimeline timersTimeline;
 		Timerule timerule;
 		Time duration;
 		Project project;
-		
+		PeriodsMenu menu;
+
 		public ProjectPeriods ()
 		{
 			this.Build ();
@@ -43,23 +43,24 @@ namespace LongoMatch.Gui.Component
 			playerbin2.Tick += HandleTick;
 			playerbin2.ShowControls = false;
 			timerule = new Timerule (new WidgetWrapper (drawingarea1));
-			timersTimenline = new TimersTimeline (new WidgetWrapper (drawingarea2));
+			timersTimeline = new TimersTimeline (new WidgetWrapper (drawingarea2));
 			drawingarea1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			drawingarea2.HeightRequest = LongoMatch.Drawing.Constants.TIMER_HEIGHT;
-			timersTimenline.TimeNodeChanged += HandleTimeNodeChanged;
-			timersTimenline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
+			timersTimeline.TimeNodeChanged += HandleTimeNodeChanged;
+			timersTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
 			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
-			                                Catalog.GetString ("Synchronize the game periods"),
-			                                "  ⬇</b>");
+			                                  Catalog.GetString ("Synchronize the game periods"),
+			                                  "  ⬇</b>");
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
+			menu = new PeriodsMenu ();
 		}
 
 		protected override void OnDestroyed ()
 		{
 			playerbin2.Destroy ();
 			timerule.Dispose ();
-			timersTimenline.Dispose ();
+			timersTimeline.Dispose ();
 			base.OnDestroyed ();
 		}
 
@@ -85,30 +86,31 @@ namespace LongoMatch.Gui.Component
 				playerbin2.Open (value.Description.FileSet);
 				
 				foreach (string s in gamePeriods) {
-					Period period = new Period {Name = s};
+					Period period = new Period { Name = s };
 					period.StartTimer (start);
 					period.StopTimer (start + pDuration);
 					periods.Add (period);
 					start += pDuration;
 				}
 				value.Periods = periods;
-				timersTimenline.LoadPeriods (periods, duration);
+				timersTimeline.LoadPeriods (periods, duration);
 			}
 		}
-		
-		void SetZoom () {
+
+		void SetZoom ()
+		{
 			if (duration != null) {
-				double spp = (double) duration.Seconds / drawingarea1.Allocation.Width;
-				int secondsPerPixel = (int) Math.Ceiling (spp);
+				double spp = (double)duration.Seconds / drawingarea1.Allocation.Width;
+				int secondsPerPixel = (int)Math.Ceiling (spp);
 				timerule.SecondsPerPixel = secondsPerPixel;
-				timersTimenline.SecondsPerPixel = secondsPerPixel;
+				timersTimeline.SecondsPerPixel = secondsPerPixel;
 			}
 		}
-		
+
 		void HandleTick (Time currentTime)
 		{
 			timerule.CurrentTime = currentTime;
-			timersTimenline.CurrentTime = currentTime;
+			timersTimeline.CurrentTime = currentTime;
 			drawingarea1.QueueDraw ();
 			drawingarea2.QueueDraw ();
 		}
@@ -125,52 +127,24 @@ namespace LongoMatch.Gui.Component
 			timerule.Scroll = scrolledwindow2.Hadjustment.Value;
 			drawingarea1.QueueDraw ();
 		}
-		
+
 		void HandleZooomActivated (object sender, EventArgs e)
 		{
 			if (sender == zoomoutbutton) {
 				timerule.SecondsPerPixel ++;
-				timersTimenline.SecondsPerPixel ++;
+				timersTimeline.SecondsPerPixel ++;
 			} else {
 				timerule.SecondsPerPixel = Math.Max (1, timerule.SecondsPerPixel - 1);
-				timersTimenline.SecondsPerPixel = Math.Max (1, timersTimenline.SecondsPerPixel - 1);
+				timersTimeline.SecondsPerPixel = Math.Max (1, timersTimeline.SecondsPerPixel - 1);
 			}
-			drawingarea1.QueueDraw();
-			drawingarea2.QueueDraw();
+			drawingarea1.QueueDraw ();
+			drawingarea2.QueueDraw ();
 		}
-		
+
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
-			Menu menu = new Menu ();
-			MenuItem additem = new MenuItem (Catalog.GetString ("Add period"));
-			additem.Activated += (sender, e) => {
-				string periodname = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
-				                                                    (project.Periods.Count + 1).ToString(),
-				                                                    this);
-				if (periodname != null) {
-					project.Dashboard.GamePeriods.Add (periodname);
-					Period p = new Period {Name = periodname};
-					p.Nodes.Add (new TimeNode {
-						Name = periodname,
-						Start = new Time {Seconds = time.Seconds - 10},
-						Stop = new Time {Seconds = time.Seconds + 10}});
-					project.Periods.Add (p);
-					timersTimenline.LoadPeriods (project.Periods, duration);
-				}
-			};
-			menu.Add (additem);
-			if (timer != null) {
-				MenuItem delitem = new MenuItem (Catalog.GetString ("Delete period"));
-				delitem.Activated += (sender, e) => {
-					project.Periods.Remove (timer as Period);
-					timersTimenline.LoadPeriods (project.Periods, duration);
-				};
-				menu.Add (delitem);
-			}
-			menu.ShowAll ();
-			menu.Popup ();
+			menu.ShowMenu (project, timer, time, timersTimeline.TimerTimeline);
 		}
-		
 	}
 }
 

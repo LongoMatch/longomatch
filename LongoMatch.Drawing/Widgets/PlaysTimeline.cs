@@ -39,7 +39,6 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time duration;
 		TimelineEvent loadedEvent;
-		TimerTimeline periodsTimeline;
 		Dictionary<TimelineObject, object> timelineToFilter;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
 
@@ -50,7 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			SingleSelectionObjects.Add (typeof (TimerTimeNodeObject));
+			SingleSelectionObjects.Add (typeof(TimerTimeNodeObject));
 		}
 
 		protected override void Dispose (bool disposing)
@@ -92,6 +91,11 @@ namespace LongoMatch.Drawing.Widgets
 			get {
 				return secondsPerPixel;
 			}
+		}
+
+		public TimerTimeline PeriodsTimeline {
+			get;
+			set;
 		}
 
 		public void LoadPlay (TimelineEvent play)
@@ -146,7 +150,7 @@ namespace LongoMatch.Drawing.Widgets
 		void AddTimeline (TimelineObject tl, object filter)
 		{
 			AddObject (tl);
-			timelineToFilter[tl] = filter;
+			timelineToFilter [tl] = filter;
 			if (tl is CategoryTimeline) {
 				eventsTimelines [filter as EventType] = tl as CategoryTimeline;
 			} 
@@ -157,18 +161,18 @@ namespace LongoMatch.Drawing.Widgets
 			TimelineObject tl;
 			int i = 0;
 
-			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList(),
+			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList (),
 			                        true, true, false, duration,
 			                        i * StyleConf.TimelineCategoryHeight,
 			                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
-			periodsTimeline = tl as TimerTimeline;
+			PeriodsTimeline = tl as TimerTimeline;
 			i++;
 
 			foreach (Timer t in project.Timers) {
-				tl = new TimerTimeline (new List<Timer> {t}, false, true, false, duration,
-				i * StyleConf.TimelineCategoryHeight,
-				Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+				tl = new TimerTimeline (new List<Timer> { t }, false, true, false, duration,
+				                        i * StyleConf.TimelineCategoryHeight,
+				                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
 			}
 			                        
@@ -187,7 +191,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			int i = 0;
 			foreach (TimelineObject timeline in Objects) {
-				if (playsFilter.IsVisible (timelineToFilter[timeline])) {
+				if (playsFilter.IsVisible (timelineToFilter [timeline])) {
 					timeline.OffsetY = i * timeline.Height;
 					timeline.Visible = true;
 					timeline.BackgroundColor = Utils.ColorForRow (i);
@@ -201,10 +205,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		void ShowTimersMenu (Point coords)
 		{
-			if (coords.Y >= periodsTimeline.OffsetY &&
-				coords.Y < periodsTimeline.OffsetY + periodsTimeline.Height) {
-				Timer t = Selections.FirstOrDefault.Select (p => (p.Drawable as TimerTimeNodeObject).Timer);
-				if (ShowTimerMenuEvent != nul) {
+			if (coords.Y >= PeriodsTimeline.OffsetY &&
+				coords.Y < PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
+				Timer t = Selections.Select (p => (p.Drawable as TimerTimeNodeObject).Timer).FirstOrDefault ();
+				if (ShowTimerMenuEvent != null) {
 					ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
 				}
 			} else {
@@ -215,7 +219,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void ShowPlaysMenu (Point coords) {
+		void ShowPlaysMenu (Point coords)
+		{
 			EventType ev = null;
 			List<TimelineEvent> plays;
 			
@@ -261,19 +266,17 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		protected override void StopMove ()
+		protected override void StopMove (bool moved)
 		{
 			widget.SetCursor (CursorType.Arrow);
 		}
 
 		protected override void ShowMenu (Point coords)
 		{
-			if (Selections.Count > 0) {
-				if (Selections.Last ().Drawable is PlayObject) {
-					ShowPlaysMenu (coords);
-				} else {
-					ShowTimersMenu (coords);
-				}
+			if (Selections.Count > 1 && Selections.Last ().Drawable is PlayObject) {
+				ShowPlaysMenu (coords);
+			} else {
+				ShowTimersMenu (coords);
 			}
 		}
 

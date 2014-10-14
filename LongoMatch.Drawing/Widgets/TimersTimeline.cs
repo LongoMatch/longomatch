@@ -16,6 +16,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		double secondsPerPixel;
+		TimerTimeline timertimeline;
 		Time duration;
 		Dictionary <Timer, TimerTimeline> timers;
 
@@ -28,16 +29,22 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void LoadPeriods (List<Period> periods, Time duration)
 		{
-			LoadTimers (periods.Select (p => p as Timer).ToList (), duration, false);
+			LoadTimers (periods.Select (p => p as Timer).ToList (), duration);
 		}
 
-		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers = true)
+		public void LoadTimers (List<Timer> timers, Time duration)
 		{
 			ClearObjects ();
 			this.timers = new Dictionary<Timer, TimerTimeline> ();
 			this.duration = duration;
-			FillCanvas (timers, splitTimers);
+			FillCanvas (timers);
 			widget.ReDraw ();
+		}
+
+		public TimerTimeline TimerTimeline {
+			get {
+				return timertimeline;
+			}
 		}
 
 		public Time CurrentTime {
@@ -72,20 +79,16 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void FillCanvas (List<Timer> timers, bool splitTimers)
+		void FillCanvas (List<Timer> timers)
 		{
-			if (!splitTimers) {
-				widget.Height = Constants.TIMER_HEIGHT;
-				TimerTimeline tl = new TimerTimeline (timers, true, true, true, duration, 0,
-				                                      Config.Style.PaletteBackground,
-				                                      Config.Style.PaletteBackgroundLight);
-				foreach (Timer t in timers) {
-					this.timers [t] = tl;
-				}
-				AddObject (tl);
-			} else {
-				widget.Height = timers.Count * Constants.TIMER_HEIGHT;
+			widget.Height = Constants.TIMER_HEIGHT;
+			timertimeline = new TimerTimeline (timers, true, true, true, duration, 0,
+			                                   Config.Style.PaletteBackground,
+			                                   Config.Style.PaletteBackgroundLight);
+			foreach (Timer t in timers) {
+				this.timers [t] = timertimeline;
 			}
+			AddObject (timertimeline);
 			Update ();
 		}
 
@@ -118,7 +121,7 @@ namespace LongoMatch.Drawing.Widgets
 				TimeNodeChanged (tn, moveTime);
 			}
 		}
-		
+
 		protected override void ShowMenu (Point coords)
 		{
 			if (ShowTimerMenuEvent != null) {
