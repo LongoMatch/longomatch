@@ -127,7 +127,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (b is AnalysisEventButton) {
 				CategoryObject co = Objects.OfType<CategoryObject> ().FirstOrDefault (o => o.Button == b);
 				if (co != null) {
-					co.ReDraw ();
+					co.ReDrawObject ();
 				}
 			}
 		}

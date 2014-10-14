@@ -141,6 +141,7 @@ namespace LongoMatch.Gui.Component
 				tagger.Project = project;
 				Template = project.Dashboard;
 				positionsbox.Visible = false;
+				periodsbox.Visible = false;
 			}
 		}
 
@@ -356,19 +357,6 @@ namespace LongoMatch.Gui.Component
 			delbut = new MenuItem (Catalog.GetString ("Delete"));
 			delbut.Activated += (sender, e) => {RemoveButton (taggerbutton);};
 			menu.Add (delbut);
-			
-			if (tag != null) {
-				deltag = new MenuItem (String.Format ("{0} \"{1}\"",
-				                                      Catalog.GetString ("Delete tag:"),
-				                                      tag.Value));
-				deltag.Activated += (sender, e) => {
-					(taggerbutton as AnalysisEventButton).AnalysisEventType.Tags.Remove (tag);
-					Edited = true;
-					tagger.Refresh (taggerbutton);
-				};
-				menu.Add (deltag);
-			}
-
 			menu.ShowAll ();
 			menu.Popup ();
 		}

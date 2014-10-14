@@ -561,7 +561,7 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.HBox" id="hbox1">
+                          <widget class="Gtk.HBox" id="periodsbox">
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
                             <child>

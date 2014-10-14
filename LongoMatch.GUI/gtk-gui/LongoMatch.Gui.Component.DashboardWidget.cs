@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label goallabel1;
 		private global::Gtk.Label goallabel2;
 		private global::Gtk.Button resetgoalbutton;
-		private global::Gtk.HBox hbox1;
+		private global::Gtk.HBox periodsbox;
 		private global::Gtk.Label periodslabel;
 		private global::Gtk.Entry periodsentry;
 		private global::Gtk.Button applybutton;
@@ -461,28 +461,28 @@ namespace LongoMatch.Gui.Component
 			w68.Expand = false;
 			w68.Fill = false;
 			// Container child vbox10.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.periodsbox = new global::Gtk.HBox ();
+			this.periodsbox.Name = "periodsbox";
+			this.periodsbox.Spacing = 6;
+			// Container child periodsbox.Gtk.Box+BoxChild
 			this.periodslabel = new global::Gtk.Label ();
 			this.periodslabel.Name = "periodslabel";
 			this.periodslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Periods");
-			this.hbox1.Add (this.periodslabel);
-			global::Gtk.Box.BoxChild w69 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.periodslabel]));
+			this.periodsbox.Add (this.periodslabel);
+			global::Gtk.Box.BoxChild w69 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.periodslabel]));
 			w69.Position = 0;
 			w69.Expand = false;
 			w69.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
+			// Container child periodsbox.Gtk.Box+BoxChild
 			this.periodsentry = new global::Gtk.Entry ();
 			this.periodsentry.CanFocus = true;
 			this.periodsentry.Name = "periodsentry";
 			this.periodsentry.IsEditable = true;
 			this.periodsentry.InvisibleChar = '•';
-			this.hbox1.Add (this.periodsentry);
-			global::Gtk.Box.BoxChild w70 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.periodsentry]));
+			this.periodsbox.Add (this.periodsentry);
+			global::Gtk.Box.BoxChild w70 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.periodsentry]));
 			w70.Position = 1;
-			// Container child hbox1.Gtk.Box+BoxChild
+			// Container child periodsbox.Gtk.Box+BoxChild
 			this.applybutton = new global::Gtk.Button ();
 			this.applybutton.CanFocus = true;
 			this.applybutton.Name = "applybutton";
@@ -491,13 +491,13 @@ namespace LongoMatch.Gui.Component
 			this.applyimage.Name = "applyimage";
 			this.applybutton.Add (this.applyimage);
 			this.applybutton.Label = null;
-			this.hbox1.Add (this.applybutton);
-			global::Gtk.Box.BoxChild w72 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.applybutton]));
+			this.periodsbox.Add (this.applybutton);
+			global::Gtk.Box.BoxChild w72 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.applybutton]));
 			w72.Position = 2;
 			w72.Expand = false;
 			w72.Fill = false;
-			this.vbox10.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.hbox1]));
+			this.vbox10.Add (this.periodsbox);
+			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.periodsbox]));
 			w73.Position = 1;
 			w73.Expand = false;
 			w73.Fill = false;
