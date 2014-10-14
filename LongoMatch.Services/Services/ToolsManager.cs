@@ -189,7 +189,7 @@ namespace LongoMatch.Services
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				startInfo.UseShellExecute = false;
 			}
-			startInfo.FileName = "mono";
+			startInfo.FileName = "mono-sgen";
 			startInfo.Arguments = migrationExe;
 			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
 				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + assemblyDir;
