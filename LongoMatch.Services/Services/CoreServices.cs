@@ -37,6 +37,12 @@ namespace LongoMatch.Services
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static RenderingJobsManager videoRenderer;
+		static ProjectsManager projectsManager;
+		static PlaylistManager plManager;
+		static ToolsManager toolsManager;
+		static TemplatesService ts;
+				
+
 		public static IProjectsImporter ProjectsImporter;
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
@@ -78,11 +84,6 @@ namespace LongoMatch.Services
 
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			ProjectsManager projectsManager;
-			PlaylistManager plManager;
-			ToolsManager toolsManager;
-			TemplatesService ts;
-				
 			ts = new TemplatesService ();
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
@@ -99,7 +100,7 @@ namespace LongoMatch.Services
 			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
 			
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit);
+			toolsManager = new ToolsManager (guiToolkit, dbManager);
 			ProjectsImporter = toolsManager;
 			
 			/* Start the events manager */

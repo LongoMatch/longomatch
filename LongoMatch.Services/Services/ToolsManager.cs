@@ -36,10 +36,12 @@ namespace LongoMatch.Services
 		
 		Project openedProject;
 		IGUIToolkit guiToolkit;
+		IDataBaseManager dbManager;
 
-		public ToolsManager (IGUIToolkit guiToolkit)
+		public ToolsManager (IGUIToolkit guiToolkit, IDataBaseManager dbManager)
 		{
 			this.guiToolkit = guiToolkit;
+			this.dbManager = dbManager;
 			ProjectImporters = new List<ProjectImporter> ();
 			
 			RegisterImporter (Project.Import, Constants.PROJECT_NAME,
@@ -196,6 +198,8 @@ namespace LongoMatch.Services
 			}
 			using (Process exeProcess = Process.Start(startInfo)) {
 				exeProcess.WaitForExit ();
+				dbManager.UpdateDatabases ();
+				dbManager.SetActiveByName (dbManager.ActiveDB.Name);
 			}
 		}
 	}

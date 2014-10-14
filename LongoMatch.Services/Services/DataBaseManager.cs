@@ -40,7 +40,7 @@ namespace LongoMatch.DB
 			this.guiToolkit = guiToolkit;
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
 			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {OpenedProject = p;};
-			FindDBS ();
+			UpdateDatabases ();
 		}
 
 		public Project OpenedProject {
@@ -105,6 +105,22 @@ namespace LongoMatch.DB
 			set;
 		}
 
+		public void UpdateDatabases ()
+		{
+			Databases = new List<IDatabase> ();
+			DirectoryInfo dbdir = new DirectoryInfo (DBDir);
+			
+			foreach (DirectoryInfo subdir in dbdir.GetDirectories()) {
+				if (subdir.FullName.EndsWith (".ldb")) {
+					IDatabase db = new DataBase (subdir.FullName);	
+					if (db != null) {
+						Log.Information ("Found database " + db.Name);
+						Databases.Add (db);
+					}
+				}
+			}
+		}
+
 		string NameToFile (string name)
 		{
 			return Path.Combine (DBDir, name + '.' + Extension);
@@ -131,21 +147,6 @@ namespace LongoMatch.DB
 			}
 		}
 
-		void FindDBS ()
-		{
-			Databases = new List<IDatabase> ();
-			DirectoryInfo dbdir = new DirectoryInfo (DBDir);
-			
-			foreach (DirectoryInfo subdir in dbdir.GetDirectories()) {
-				if (subdir.FullName.EndsWith (".ldb")) {
-					IDatabase db = new DataBase (subdir.FullName);	
-					if (db != null) {
-						Log.Information ("Found database " + db.Name);
-						Databases.Add (db);
-					}
-				}
-			}
-		}
 	}
 }
 

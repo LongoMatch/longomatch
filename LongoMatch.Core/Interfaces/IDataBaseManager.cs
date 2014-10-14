@@ -26,6 +26,7 @@ namespace LongoMatch.Core.Interfaces
 		IDatabase Add (string name);
 		bool Delete (IDatabase db);
 		IDatabase ActiveDB { get; set; }
+		void UpdateDatabases ();
 		List<IDatabase> Databases { get; set; }
 	}
 }
