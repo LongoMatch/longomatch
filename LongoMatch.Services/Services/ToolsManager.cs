@@ -178,9 +178,9 @@ namespace LongoMatch.Services
 		
 		void HandleMigrateDB ()
 		{
-			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-			UriBuilder uri = new UriBuilder(codeBase);
-			string assemblyDir = Path.GetDirectoryName (Uri.UnescapeDataString(uri.Path));
+			string codeBase = Assembly.GetExecutingAssembly ().CodeBase;
+			UriBuilder uri = new UriBuilder (codeBase);
+			string assemblyDir = Path.GetDirectoryName (Uri.UnescapeDataString (uri.Path));
 			string migrationExe = Path.Combine (assemblyDir, "migration", "LongoMatch.exe");
 			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
@@ -189,8 +189,12 @@ namespace LongoMatch.Services
 			}
 			startInfo.FileName = "mono";
 			startInfo.Arguments = migrationExe;
-			startInfo.EnvironmentVariables.Add ("MONO_PATH", assemblyDir);
-			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo)) {
+			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
+				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + assemblyDir;
+			} else {
+				startInfo.EnvironmentVariables.Add ("MONO_PATH", assemblyDir);
+			}
+			using (Process exeProcess = Process.Start(startInfo)) {
 				exeProcess.WaitForExit ();
 			}
 		}
