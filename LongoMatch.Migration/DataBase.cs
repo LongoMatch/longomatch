@@ -223,9 +223,6 @@ namespace LongoMatch.DB
 			} finally {
 				CloseDB(db);
 			}
-			if (ret != null && FixProjectCoordinates (ret)) {
-				UpdateProject (ret);
-			}
 			return ret;
 		}
 
@@ -484,58 +481,6 @@ namespace LongoMatch.DB
 			foreach (Type type in GetTypes()) {
 				Db4oFactory.Configure().ObjectClass(type).CascadeOnDelete(true);
 			}
-		}
-
-		void FixCoordinates (Project project, int old_width, string backgroundName)
-		{
-			List<Coordinates> coords = null;
-			Image image = null;
-			
-			if (backgroundName == Constants.FIELD_BACKGROUND) {
-				image = LongoMatch.Common.Config.FieldBackground;
-				project.Categories.FieldBackground = image; 
-				coords =  project.AllPlays().Select(p => p.FieldPosition).ToList();
-			} else if (backgroundName == Constants.HALF_FIELD_BACKGROUND) {
-				image = LongoMatch.Common.Config.HalfFieldBackground;
-				project.Categories.HalfFieldBackground = image; 
-				coords = project.AllPlays().Select(p => p.HalfFieldPosition).ToList();
-			} else if (backgroundName == Constants.GOAL_BACKGROUND) {
-				image = LongoMatch.Common.Config.GoalBackground;
-				project.Categories.GoalBackground = image;
-			}
-			
-			if (coords != null) {
-				int new_width;
-				
-				new_width = image.Width;
-				foreach (Coordinates c in coords) {
-					float scale = (float) new_width / old_width;
-					if (c == null)
-						continue;
-					foreach (Point p in c) {
-						p.X = (int) (p.X * scale);
-						p.Y = (int) (p.Y * scale);
-					}
-				}
-			}
-		}
-		
-		bool FixProjectCoordinates (Project project) {
-			bool save = false;
-			
-			if (project.Categories.FieldBackground == null) {
-				FixCoordinates (project, 2078, Constants.FIELD_BACKGROUND);
-				save = true;
-			}
-			if (project.Categories.HalfFieldBackground == null) {
-				FixCoordinates (project, 2078, Constants.HALF_FIELD_BACKGROUND);
-				save = true;
-			}
-			if (project.Categories.GoalBackground == null) {
-				FixCoordinates (project, 400, Constants.GOAL_BACKGROUND);
-				save = true;
-			}
-			return save;
 		}
 
 		/* Dummy class to allow having a single instance of BackupDateTime in the DB and make it
