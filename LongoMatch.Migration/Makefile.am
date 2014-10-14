@@ -55,4 +55,4 @@ RESOURCES = gtk-gui/gui.stetic \
 	Data/project.lgm
 
 include $(top_srcdir)/build/build.mk
-ASSEMBLY_FILE = $(top_builddir)/bin/migration/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
+ASSEMBLY_FILE := $(top_builddir)/bin/migration/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
