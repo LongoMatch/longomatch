@@ -30,6 +30,8 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class ProjectDescription :  IComparable, IIDObject
 	{
+		DateTime matchDate, lastModified;
+
 		/// <summary>
 		/// Unique ID of the parent project
 		/// </summary>
@@ -126,13 +128,21 @@ namespace LongoMatch.Core.Store
 		/// Date of the game
 		/// </summary>
 		public DateTime MatchDate {
-			get;
-			set;
+			get {
+				return matchDate;
+			}
+			set {
+				matchDate = value.ToUniversalTime();
+			}
 		}
 		
 		public DateTime LastModified {
-			get;
-			set;
+			get {
+				return lastModified;
+			}
+			set {
+				lastModified = value.ToUniversalTime();
+			}
 		}
 
 		public int CompareTo(object obj) {
