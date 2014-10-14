@@ -183,18 +183,24 @@ namespace LongoMatch.Services
 			string codeBase = Assembly.GetExecutingAssembly ().CodeBase;
 			UriBuilder uri = new UriBuilder (codeBase);
 			string assemblyDir = Path.GetDirectoryName (Uri.UnescapeDataString (uri.Path));
+			string monoPath = assemblyDir;
+			monoPath += Path.PathSeparator + Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
+			Console.WriteLine (monoPath);
 			string migrationExe = Path.Combine (assemblyDir, "migration", "LongoMatch.exe");
 			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
-			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				startInfo.UseShellExecute = false;
-			}
-			startInfo.FileName = "mono-sgen";
+			startInfo.UseShellExecute = false;
 			startInfo.Arguments = migrationExe;
-			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
-				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + assemblyDir;
+			startInfo.WorkingDirectory = Path.Combine (Config.baseDirectory, "bin");
+			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				startInfo.FileName = "mono";
 			} else {
-				startInfo.EnvironmentVariables.Add ("MONO_PATH", assemblyDir);
+				startInfo.FileName = "mono-sgen";
+			}
+			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
+				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + monoPath;
+			} else {
+				startInfo.EnvironmentVariables.Add ("MONO_PATH", monoPath);
 			}
 			using (Process exeProcess = Process.Start(startInfo)) {
 				exeProcess.WaitForExit ();
