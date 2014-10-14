@@ -114,7 +114,7 @@ namespace LongoMatch.Drawing.Widgets
 		public FitMode FitMode {
 			set {
 				fitMode = value;
-				Refresh ();
+				SizeChanged ();
 				modeChanged = true;
 			}
 			get {
@@ -124,11 +124,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void RedrawButton (DashboardButton b)
 		{
-			if (b is AnalysisEventButton) {
-				CategoryObject co = Objects.OfType<CategoryObject> ().FirstOrDefault (o => o.Button == b);
-				if (co != null) {
-					co.ReDrawObject ();
-				}
+			TaggerObject co = Objects.OfType<TaggerObject>().FirstOrDefault (o => o.Tagger == b);
+			if (co != null) {
+				co.ReDraw ();
 			}
 		}
 
@@ -276,6 +274,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		void SizeChanged ()
 		{
+			if (Template == null) {
+				return;
+			}
+			
 			FitMode prevFitMode = FitMode;
 			templateHeight = template.CanvasHeight + 10;
 			templateWidth = template.CanvasWidth + 10;

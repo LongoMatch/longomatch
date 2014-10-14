@@ -89,7 +89,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				if (Start != null && currentTime < Start) {
 					CancelClicked ();
 				} else {
-					ReDrawObject ();
+					ReDraw ();
 				}
 			}
 		}
@@ -100,10 +100,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public void ReDrawObject ()
+		public override void ReDraw ()
 		{
 			ResetBackbuffer ();
-			ReDraw ();
+			base.ReDraw ();
 		}
 
 		public override void ResetDrawArea ()
@@ -210,7 +210,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		void CancelClicked ()
 		{
 			Start = null;
-			ReDrawObject ();
+			ReDraw ();
 		}
 
 		void RecordClicked ()
@@ -224,7 +224,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				EmitCreateEvent ();
 				Start = null;
 			}
-			ReDrawObject ();
+			ReDraw ();
 		}
 
 		void UpdateGroups ()

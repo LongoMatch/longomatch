@@ -102,7 +102,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public void ReDraw ()
+		public virtual void ReDraw ()
 		{
 			EmitRedrawEvent (this, DrawArea);
 		}
