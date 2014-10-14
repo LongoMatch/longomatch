@@ -245,7 +245,7 @@ namespace LongoMatch.Drawing
 		{
 		}
 
-		protected virtual void StopMove ()
+		protected virtual void StopMove (bool moved)
 		{
 		}
 
@@ -396,10 +396,8 @@ namespace LongoMatch.Drawing
 				(clickedSel.Drawable as ICanvasSelectableObject).ClickReleased ();
 				clickedSel = null;
 			}
-			if (moved) {
-				StopMove ();
-				moved = false;
-			}
+			StopMove (moved);
+			moved = false;
 		}
 
 		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)

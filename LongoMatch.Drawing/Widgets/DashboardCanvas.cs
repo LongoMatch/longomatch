@@ -185,11 +185,11 @@ namespace LongoMatch.Drawing.Widgets
 			base.SelectionChanged (sel);
 		}
 
-		protected override void StopMove ()
+		protected override void StopMove (bool moved)
 		{
 			Selection sel = Selections.FirstOrDefault ();
 			
-			if (sel != null) {
+			if (sel != null && moved) {
 				int i = Constants.CATEGORY_TPL_GRID;
 				DashboardButton tb = (sel.Drawable as TaggerObject).Tagger;
 				tb.Position.X = Utils.Round (tb.Position.X, i);
@@ -199,7 +199,7 @@ namespace LongoMatch.Drawing.Widgets
 				widget.ReDraw ();
 			}
 
-			base.StopMove ();
+			base.StopMove (moved);
 		}
 
 		public override void Draw (IContext context, Area area)

@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		protected override void StopMove ()
+		protected override void StopMove (bool moved)
 		{
 			widget.SetCursor (CursorType.Arrow);
 		}

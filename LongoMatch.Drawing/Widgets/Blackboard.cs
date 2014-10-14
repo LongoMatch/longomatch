@@ -267,7 +267,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		protected override void StopMove ()
+		protected override void StopMove (bool moved)
 		{
 			Selection sel = Selections.FirstOrDefault ();
 			if (sel != null) {
