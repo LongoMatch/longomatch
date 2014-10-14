@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing.Widgets
 	
 		public event ShowTimelineMenuHandler ShowMenuEvent;
 		public event ShowTimersMenuHandler ShowTimersMenuEvent;
+		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		Project project;
 		EventsFilter playsFilter;
@@ -200,10 +201,15 @@ namespace LongoMatch.Drawing.Widgets
 
 		void ShowTimersMenu (Point coords)
 		{
-			List<TimeNode> nodes = Selections.Select (p => (p.Drawable as TimeNodeObject).TimeNode).ToList ();
-			if (nodes.Count > 0 && ShowTimersMenuEvent != null) {
-				/* Periods are not deletable */
-				if (!periodsTimeline.HasNode (nodes[0])) {
+			if (coords.Y >= periodsTimeline.OffsetY &&
+				coords.Y < periodsTimeline.OffsetY + periodsTimeline.Height) {
+				Timer t = Selections.FirstOrDefault.Select (p => (p.Drawable as TimerTimeNodeObject).Timer);
+				if (ShowTimerMenuEvent != nul) {
+					ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+				}
+			} else {
+				List<TimeNode> nodes = Selections.Select (p => (p.Drawable as TimeNodeObject).TimeNode).ToList ();
+				if (nodes.Count > 0 && ShowTimersMenuEvent != null) {
 					ShowTimersMenuEvent (nodes);
 				}
 			}

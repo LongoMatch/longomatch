@@ -128,6 +128,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays,EventType cat,Time time);
 	public delegate void ShowTimersMenuHandler (List<TimeNode> timenodes);
+	public delegate void ShowTimerMenuHandler (Timer timer, Time time);
 	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
 	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable, DrawTool tool);

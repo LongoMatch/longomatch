@@ -222,8 +222,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 	
 	public class TimerTimeNodeObject: TimeNodeObject
 	{
-		public TimerTimeNodeObject (TimeNode tn): base (tn)
+		public TimerTimeNodeObject (Timer t, TimeNode tn): base (tn)
 		{
+			Timer = t;
+		}
+		
+		public Timer Timer {
+			get;
+			set;
 		}
 	}
 }

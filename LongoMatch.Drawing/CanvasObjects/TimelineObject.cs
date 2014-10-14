@@ -258,7 +258,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	
 			foreach (Timer t in timers) {
 				foreach (TimeNode tn in t.Nodes) {
-					AddTimeNode (tn);
+					AddTimeNode (t, tn);
 				}
 			}
 		}
@@ -288,9 +288,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			return nodes.FirstOrDefault (n => n.TimeNode == tn) != null;
 		}
 
-		public void AddTimeNode (TimeNode tn)
+		public void AddTimeNode (Timer t, TimeNode tn)
 		{
-			TimerTimeNodeObject to = new TimerTimeNodeObject (tn);
+			TimerTimeNodeObject to = new TimerTimeNodeObject (t, tn);
 			to.OffsetY = OffsetY;
 			to.SecondsPerPixel = SecondsPerPixel;
 			to.MaxTime = maxTime;

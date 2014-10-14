@@ -23,6 +23,7 @@ using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Common;
+using Gtk;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,6 +33,7 @@ namespace LongoMatch.Gui.Component
 		TimersTimeline timersTimenline;
 		Timerule timerule;
 		Time duration;
+		Project project;
 		
 		public ProjectPeriods ()
 		{
@@ -45,13 +47,14 @@ namespace LongoMatch.Gui.Component
 			drawingarea1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			drawingarea2.HeightRequest = LongoMatch.Drawing.Constants.TIMER_HEIGHT;
 			timersTimenline.TimeNodeChanged += HandleTimeNodeChanged;
+			timersTimenline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
 			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
 			                                Catalog.GetString ("Synchronize the game periods"),
 			                                "  ⬇</b>");
-			Misc.SetFocus (this, false);
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			playerbin2.Destroy ();
@@ -67,7 +70,7 @@ namespace LongoMatch.Gui.Component
 				MediaFile file;
 				
 				playerbin2.ShowControls = false;
-				
+				this.project = value;
 				gamePeriods = value.Dashboard.GamePeriods;
 
 				file = value.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
@@ -135,6 +138,39 @@ namespace LongoMatch.Gui.Component
 			drawingarea1.QueueDraw();
 			drawingarea2.QueueDraw();
 		}
+		
+		void HandleShowTimerMenuEvent (Timer timer, Time time)
+		{
+			Menu menu = new Menu ();
+			MenuItem additem = new MenuItem (Catalog.GetString ("Add period"));
+			additem.Activated += (sender, e) => {
+				string periodname = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
+				                                                    (project.Periods.Count + 1).ToString(),
+				                                                    this);
+				if (periodname != null) {
+					project.Dashboard.GamePeriods.Add (periodname);
+					Period p = new Period {Name = periodname};
+					p.Nodes.Add (new TimeNode {
+						Name = periodname,
+						Start = new Time {Seconds = time.Seconds - 10},
+						Stop = new Time {Seconds = time.Seconds + 10}});
+					project.Periods.Add (p);
+					timersTimenline.LoadPeriods (project.Periods, duration);
+				}
+			};
+			menu.Add (additem);
+			if (timer != null) {
+				MenuItem delitem = new MenuItem (Catalog.GetString ("Delete period"));
+				delitem.Activated += (sender, e) => {
+					project.Periods.Remove (timer as Period);
+					timersTimenline.LoadPeriods (project.Periods, duration);
+				};
+				menu.Add (delitem);
+			}
+			menu.ShowAll ();
+			menu.Popup ();
+		}
+		
 	}
 }
 

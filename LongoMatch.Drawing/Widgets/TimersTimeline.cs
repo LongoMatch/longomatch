@@ -13,6 +13,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		double secondsPerPixel;
 		Time duration;
@@ -36,6 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 			this.timers = new Dictionary<Timer, TimerTimeline> ();
 			this.duration = duration;
 			FillCanvas (timers, splitTimers);
+			widget.ReDraw ();
 		}
 
 		public Time CurrentTime {
@@ -74,7 +76,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (!splitTimers) {
 				widget.Height = Constants.TIMER_HEIGHT;
-				TimerTimeline tl = new TimerTimeline (timers, true, false, true, duration, 0,
+				TimerTimeline tl = new TimerTimeline (timers, true, true, true, duration, 0,
 				                                      Config.Style.PaletteBackground,
 				                                      Config.Style.PaletteBackgroundLight);
 				foreach (Timer t in timers) {
@@ -114,6 +116,18 @@ namespace LongoMatch.Drawing.Widgets
 					moveTime = tn.Start;
 				}
 				TimeNodeChanged (tn, moveTime);
+			}
+		}
+		
+		protected override void ShowMenu (Point coords)
+		{
+			if (ShowTimerMenuEvent != null) {
+				Timer t = null;
+				if (Selections.Count > 0) {
+					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
+					t = to.Timer;
+				} 
+				ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}
