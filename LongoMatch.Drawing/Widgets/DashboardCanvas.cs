@@ -130,21 +130,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void Refresh (DashboardButton b = null)
-		{
-			TaggerObject to;
-			
-			if (Template == null) {
-				return;
-			}
-			
-			LoadTemplate ();
-			to = (TaggerObject)Objects.FirstOrDefault (o => (o as TaggerObject).Tagger == b);
-			if (to != null) {
-				UpdateSelection (new Selection (to, SelectionPosition.All, 0));
-			}
-		}
-
 		protected override void ShowMenu (Point coords)
 		{
 			Selection sel;
