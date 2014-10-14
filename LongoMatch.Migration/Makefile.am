@@ -1,6 +1,7 @@
 ASSEMBLY = LongoMatch
 TARGET = exe
 INSTALL_DIR = $(pkglibdir)/migration
+BUILD_DIR = bin/migration
 
 LINK = $(REF_DEP_LONGOMATCH_MIGRATION)
 
@@ -55,4 +56,3 @@ RESOURCES = gtk-gui/gui.stetic \
 	Data/project.lgm
 
 include $(top_srcdir)/build/build.mk
-ASSEMBLY_FILE := $(top_builddir)/bin/migration/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)

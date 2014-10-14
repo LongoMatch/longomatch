@@ -5,6 +5,9 @@ MONO_ADDINS_PATH =
 # Install Paths
 DEFAULT_INSTALL_DIR = $(pkglibdir)
 
+# Build Paths
+DEFAULT_BUILD_DIR = bin
+
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_SYSTEM_CORE = -r:System.Core

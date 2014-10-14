@@ -12,8 +12,10 @@ INSTALL_ICONS = $(top_srcdir)/build/private-icon-theme-installer "$(mkinstalldir
 THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png) $(wildcard $(srcdir)/ThemeIcons/scalable/*/*.svg)
 THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 
+BUILD_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_BUILD_DIR), $(BUILD_DIR)))
+
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
-ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
+ASSEMBLY_FILE := $(top_builddir)/$(BUILD_DIR_RESOLVED)/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
