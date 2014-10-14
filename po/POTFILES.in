@@ -66,7 +66,6 @@ LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
-LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectPeriods.cs
 LongoMatch.GUI/Gui/Component/Stats/PlayerSubcategoryViewer.cs
 LongoMatch.GUI/Gui/Component/Stats/Plotter.cs
@@ -85,6 +84,7 @@ LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
 LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/GUIToolkit.cs
+LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs
@@ -111,6 +111,7 @@ LongoMatch.Migration/Core/SubCategory.cs
 LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs
 LongoMatch.Migration/Core/Templates/TeamTemplate.cs
 LongoMatch.Migration/gtk-gui/MainWindow.cs
+LongoMatch.Migration/MainWindow.cs
 LongoMatch.Multimedia/Capturer/FakeCapturer.cs
 LongoMatch.Multimedia/Utils/GstDiscoverer.cs
 LongoMatch.Plugins/CSVExporter.cs
