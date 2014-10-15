@@ -46,6 +46,8 @@ namespace LongoMatch.Core.Store.Templates
 
 		const int CAT_WIDTH = 120;
 		const int CAT_HEIGHT = 80;
+		const int MIN_WIDTH = 320;
+		const int MIN_HEIGHT = 240;
 		
 		/// <summary>
 		/// Creates a new template
@@ -108,14 +110,20 @@ namespace LongoMatch.Core.Store.Templates
 		[JsonIgnore]
 		public int CanvasWidth {
 			get {
-				return (int) List.Max (c => c.Position.X + c.Width);
+				if (List.Count == 0) {
+					return MIN_WIDTH;
+				}
+				return Math.Max (MIN_WIDTH, (int) List.Max (c => c.Position.X + c.Width));
 			}
 		}
 		
 		[JsonIgnore]
 		public int CanvasHeight {
 			get {
-				return (int) List.Max (c => c.Position.Y + c.Height);
+				if (List.Count == 0) {
+					return MIN_HEIGHT;
+				}
+				return Math.Max (MIN_WIDTH, (int) List.Max (c => c.Position.Y + c.Height));
 			}
 		}
 		
