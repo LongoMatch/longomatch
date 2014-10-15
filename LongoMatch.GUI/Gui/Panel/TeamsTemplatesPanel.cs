@@ -36,14 +36,12 @@ namespace LongoMatch.Gui.Panel
 	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
-		
+
 		ListStore teams;
-		List<string> selectedTeams;
 		TeamTemplate loadedTeam;
 		Dictionary<string, TreeIter> itersDict;
-		
 		ITeamTemplatesProvider provider;
-		
+
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
@@ -65,21 +63,27 @@ namespace LongoMatch.Gui.Panel
 			deleteteambutton.Clicked += HandleDeleteTeamClicked;
 			saveteambutton.Entered += HandleEnterTeamButton;
 			saveteambutton.Left += HandleLeftTeamButton;
-			saveteambutton.Clicked += (s, e) => {SaveLoadedTeam ();};
+			saveteambutton.Clicked += (s, e) => {
+				SaveLoadedTeam ();};
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
-			newplayerbutton1.Clicked += (object sender, EventArgs e) => { teamtemplateeditor1.AddPlayer (); };
+			newplayerbutton1.Clicked += (object sender, EventArgs e) => {
+				teamtemplateeditor1.AddPlayer (); };
 			deleteplayerbutton.Entered += HandleEnterPlayerButton;
 			deleteplayerbutton.Left += HandleLeftPlayerButton;
-			deleteplayerbutton.Clicked += (object sender, EventArgs e) => { teamtemplateeditor1.DeleteSelectedPlayers (); };
+			deleteplayerbutton.Clicked += (object sender, EventArgs e) => {
+				teamtemplateeditor1.DeleteSelectedPlayers (); };
 
-			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
-			itersDict = new Dictionary<string, TreeIter>();
+			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof(TeamTemplate));
+			itersDict = new Dictionary<string, TreeIter> ();
 			
+			var cell = new CellRendererText ();
+			cell.Editable = true;
+			cell.Edited += HandleEdited;
 			teamseditortreeview.Model = teams;
 			teamseditortreeview.HeadersVisible = false;
 			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			teamseditortreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			teamseditortreeview.AppendColumn ("Text", cell, "text", 1); 
 			teamseditortreeview.SearchColumn = 1;
 			teamseditortreeview.TooltipColumn = 2;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
@@ -91,16 +95,16 @@ namespace LongoMatch.Gui.Panel
 			newteambutton.Visible = true;
 			deleteteambutton.Visible = false;
 			
-			selectedTeams = new List<string>();
 			teamtemplateeditor1.VisibleButtons = false;
-			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
+			teamtemplateeditor1.TemplateSaved += (s, e) => {
+				SaveLoadedTeam ();};
 
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = "TEAMS MANAGER";
 			panelheader1.BackClicked += (sender, o) => {
 				PromptSave ();
 				if (BackEvent != null)
-					BackEvent();
+					BackEvent ();
 			};
 			
 			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
@@ -108,7 +112,7 @@ namespace LongoMatch.Gui.Panel
 
 			Load (null);
 		}
-		
+
 		public override void Destroy ()
 		{
 			teamtemplateeditor1.Destroy ();
@@ -130,10 +134,10 @@ namespace LongoMatch.Gui.Panel
 					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value;
 				} else {
 					img = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
-					                                  StyleConf.TeamsShieldIconSize,
-					                                  IconLookupFlags.ForceSvg);
+					                             StyleConf.TeamsShieldIconSize,
+					                             IconLookupFlags.ForceSvg);
 				}
-				iter = teams.AppendValues (img, template.Name, template.TeamName);
+				iter = teams.AppendValues (img, template.Name, template);
 				itersDict.Add (template.Name, iter);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
@@ -176,20 +180,22 @@ namespace LongoMatch.Gui.Panel
 			editplayerslabel.Markup = Catalog.GetString ("Manage players");
 		}
 
-		void SaveLoadedTeam () {
+		void SaveLoadedTeam ()
+		{
 			if (loadedTeam == null)
 				return;
 
 			provider.Update (loadedTeam);
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
-				teamseditortreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
-				                              loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value);
+				teamseditortreeview.Model.SetValue (itersDict [loadedTeam.Name], 0,
+				                                    loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value);
 			}
 			teamtemplateeditor1.Edited = false;
 		}
-		
-		void PromptSave () {
+
+		void PromptSave ()
+		{
 			if (loadedTeam != null) {
 				if (teamtemplateeditor1.Edited) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
@@ -199,52 +205,39 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 		}
-		
-		void LoadTeam (string teamName) {
+
+		void LoadTeam (TeamTemplate team)
+		{
 			PromptSave ();
 			
-			try  {
-				loadedTeam = provider.Load (teamName);
-				teamtemplateeditor1.Team = loadedTeam;
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				GUIToolkit.Instance.ErrorMessage (Catalog.GetString ("Could not load template"));
-				return;
-			}
+			loadedTeam = team;
+			teamtemplateeditor1.Team = loadedTeam;
 		}
-		
+
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
+			TeamTemplate selected;
 			TreeIter iter;
-			TreePath[] pathArray;
-			
-			selectedTeams.Clear ();
 
-			pathArray = teamseditortreeview.Selection.GetSelectedRows ();
-			for(int i=0; i< pathArray.Length; i++) {
-				teamseditortreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTeams.Add (teamseditortreeview.Model.GetValue (iter, 1) as string);
-			}
-			
-			deleteteambutton.Visible = selectedTeams.Count >= 1;
-			teamtemplateeditor1.Visible = true;
-			
-			if (selectedTeams.Count == 1) {
-				LoadTeam (selectedTeams[0]);
+			teamseditortreeview.Selection.GetSelected (out iter);
+			selected = teams.GetValue (iter, 2) as TeamTemplate;
+			deleteteambutton.Visible = selected != null;
+			teamtemplateeditor1.Visible = selected != null;
+			if (selected != null) {
+				LoadTeam (selected);
 			}
 		}
-		
+
 		void HandleDeleteTeamClicked (object sender, EventArgs e)
 		{
-			foreach (string teamName in selectedTeams) {
-				if (teamName == "default") {
+			if (loadedTeam != null) {
+				if (loadedTeam.Name == "default") {
 					MessagesHelpers.ErrorMessage (this,
-						Catalog.GetString ("The default template can't be deleted"));
-					continue;
+					                              Catalog.GetString ("The default team can't be deleted"));
 				}
-				string msg = Catalog.GetString("Do you really want to delete the template: ") + teamName;
+				string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-					provider.Delete (teamName);
+					provider.Delete (loadedTeam.Name);
 				}
 			}
 			Load ("default");
@@ -254,22 +247,22 @@ namespace LongoMatch.Gui.Panel
 		{
 			bool create = false;
 			
-			EntryDialog dialog = new EntryDialog();
+			EntryDialog dialog = new EntryDialog ();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = true;
-			dialog.Text = Catalog.GetString("New team");
+			dialog.Text = Catalog.GetString ("New team");
 			dialog.AvailableTemplates = provider.TemplatesNames;
 			
 			while (dialog.Run() == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString("The template name is empty."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
 					continue;
 				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString("The template can't be named 'default'."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
-				} else if(provider.Exists(dialog.Text)) {
-					var msg = Catalog.GetString("The template already exists. " +
-					                            "Do you want to overwrite it ?");
+				} else if (provider.Exists (dialog.Text)) {
+					var msg = Catalog.GetString ("The template already exists. " +
+						"Do you want to overwrite it ?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						break;
@@ -292,7 +285,26 @@ namespace LongoMatch.Gui.Panel
 				}
 				Load (dialog.Text);
 			}
-			dialog.Destroy();
+			dialog.Destroy ();
+		}
+
+		void HandleEdited (object o, EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+			teams.GetIter (out iter, new Gtk.TreePath (args.Path));
+ 
+			TeamTemplate team = (TeamTemplate)teams.GetValue (iter, 2);
+			if (team.Name != args.NewText) {
+				if (provider.TemplatesNames.Contains (args.NewText)) {
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A team with the same name already exists"), this);
+					args.RetVal = false;
+				} else {
+					provider.Delete (team.Name);
+					team.Name = args.NewText;
+					provider.Save (team);
+					teams.SetValue (iter, 1, team.Name);
+				}
+			}
 		}
 	}
 }
