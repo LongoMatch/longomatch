@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -72,6 +73,7 @@ namespace LongoMatch.Services
 		readonly string extension;
 		readonly MethodInfo methodLoad;
 		readonly MethodInfo methodDefaultTemplate;
+		List<T> systemTemplates;
 
 		public TemplatesProvider (string basePath, string extension)
 		{
@@ -79,6 +81,7 @@ namespace LongoMatch.Services
 			this.extension = extension;
 			methodLoad = typeof(T).GetMethod ("Load");
 			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
+			systemTemplates = new List<T>();
 		}
 
 		private string GetPath (string templateName)
@@ -86,7 +89,7 @@ namespace LongoMatch.Services
 			return System.IO.Path.Combine (basePath, templateName) + extension;
 		}
 
-		public void CheckDefaultTemplate ()
+		public virtual void CheckDefaultTemplate ()
 		{
 			string path;
 			
@@ -122,16 +125,23 @@ namespace LongoMatch.Services
 				foreach (string path in Directory.GetFiles (basePath, "*" + extension)) {
 					l.Add (Path.GetFileNameWithoutExtension (path));
 				}
-				return l;
+				return l.Concat (systemTemplates.Select (t => t.Name)).ToList ();
 			}
 		}
 
 		public T Load (string name)
 		{
-			Log.Information ("Loading template " + name);
-			var template = (T)methodLoad.Invoke (null, new object[] { GetPath(name) });
-			template.Name = name;
-			return template;
+			T template;
+			
+			template = systemTemplates.FirstOrDefault (t => t.Name == name);
+			if (template != null) {
+				return template;
+			} else {
+				Log.Information ("Loading template " + name);
+				template = (T)methodLoad.Invoke (null, new object[] { GetPath(name) });
+				template.Name = name;
+				return template;
+			}
 		}
 
 		public void Save (ITemplate template)
@@ -160,6 +170,10 @@ namespace LongoMatch.Services
 			Log.Information ("Updating template " + filename);
 			/* Don't cach the Exception here to chain it up */
 			template.Save (filename);
+		}
+
+		public void Register (T template) {
+			systemTemplates.Add (template);
 		}
 
 		public void Copy (string orig, string copy)
@@ -207,6 +221,11 @@ namespace LongoMatch.Services
 	{
 		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT)
 		{
+		}
+
+		public override void CheckDefaultTemplate ()
+		{
+			/* Do nothing now that we have a plugin that creates the default template */
 		}
 	}
 }

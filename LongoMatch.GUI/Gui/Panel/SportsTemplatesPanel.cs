@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
@@ -94,15 +95,16 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Clicked += (object sender, EventArgs e) => {
 				buttonswidget.AddButton ("Timer"); };
 
-			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof(Dashboard));
+			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof(Dashboard), typeof(bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = templates;
 			dashboardseditortreeview.HeadersVisible = false;
 			var cell = new CellRendererText { SizePoints = 14.0 };
-			cell.Editable = true;
+			//cell.Editable = true;
 			cell.Edited += HandleEdited;
-			dashboardseditortreeview.AppendColumn ("Text", cell, "text", 1); 
+			var col = dashboardseditortreeview.AppendColumn ("Text", cell, "text", 1); 
+			col.AddAttribute (cell, "editable", 3);
 			dashboardseditortreeview.SearchColumn = 0;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
@@ -140,13 +142,18 @@ namespace LongoMatch.Gui.Panel
 			foreach (Dashboard template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
+				string name;
 				
 				if (template.Image != null)
 					img = template.Image.Value;
 				else
 					img = Helpers.Misc.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
-					
-				iter = templates.AppendValues (img, template.Name, template);
+				
+				name = template.Name;
+				if (template.Static) {
+					name += " (" + Catalog.GetString ("System") + ")";
+				}
+				iter = templates.AppendValues (img, name, template, !template.Static);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
 				}
@@ -158,13 +165,49 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void SaveStatic ()
+		{
+			string msg = Catalog.GetString ("System templates can't be edited, do you want to create a copy?");
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+				string newName;
+				while (true) {
+					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					                                          loadedTemplate.Name + " _copy", this);
+					if (newName == null)
+						break;
+					if (provider.TemplatesNames.Contains (newName)) {
+						msg = Catalog.GetString ("A template with the same name already exists"); 
+						Config.GUIToolkit.ErrorMessage (msg, this);
+					}
+					else {
+						break;
+					}
+				}
+				if (newName == null) {
+					return;
+				}
+				Dashboard newtemplate = loadedTemplate.Clone ();
+				newtemplate.Name = loadedTemplate.Name + "_copy";
+				newtemplate.Static = false;
+				provider.Save (newtemplate);
+				Load (newtemplate.Name);
+			}
+		}
+
 		void Save (bool prompt)
 		{
 			if (loadedTemplate != null && buttonswidget.Edited) {
-				string msg = Catalog.GetString ("Do you want to save the current template");
-				if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-					provider.Update (loadedTemplate);
-					buttonswidget.Edited = false;
+				if (loadedTemplate.Static) {
+					/* prompt=false when we click the save button */
+					if (!prompt) {
+						SaveStatic ();
+					}
+				} else {
+					string msg = Catalog.GetString ("Do you want to save the current template");
+					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+						provider.Update (loadedTemplate);
+						buttonswidget.Edited = false;
+					}
 				}
 			}
 		}
@@ -214,26 +257,23 @@ namespace LongoMatch.Gui.Panel
 			selected = templates.GetValue (iter, 2) as Dashboard;
 			deletetemplatebutton.Visible = selected != null;
 			buttonswidget.Sensitive = selected != null;
-			loadedTemplate = selected;
 			if (selected != null) {
 				Save (true);
+				deletetemplatebutton.Sensitive = !selected.Static;
 				buttonswidget.Template = selected;
 			}
+			loadedTemplate = selected;
 		}
 
 		void HandleDeleteTeamClicked (object sender, EventArgs e)
 		{
 			if (loadedTemplate != null) {
-				if (loadedTemplate.Name == "default") {
-					MessagesHelpers.ErrorMessage (this, Catalog.GetString ("The default template can't be deleted"));
-				} else {
-					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTemplate.Name;
-					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-						provider.Delete (loadedTemplate.Name);
-					}
+				string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTemplate.Name;
+				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					provider.Delete (loadedTemplate.Name);
 				}
 			}
-			Load ("default");
+			Load (provider.TemplatesNames.FirstOrDefault ());
 		}
 
 		void HandleNewTeamClicked (object sender, EventArgs e)
@@ -251,9 +291,6 @@ namespace LongoMatch.Gui.Panel
 			while (dialog.Run() == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
 					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
-					continue;
-				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The template already exists. " +

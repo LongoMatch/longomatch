@@ -5,7 +5,8 @@ INSTALL_DIR = $(pkglibdir)/plugins
 LINK = $(REF_DEP_LONGOMATCH_PLUGINS)
 
 SOURCES = Assembly.cs \
-	CSVExporter.cs
+	CSVExporter.cs \
+	SystemDashboards.cs
 
 RESOURCES = 
 

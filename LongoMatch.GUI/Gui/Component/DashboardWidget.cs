@@ -228,6 +228,7 @@ namespace LongoMatch.Gui.Component
 				template.List.Add (button);
 			}
 			button.Position = new Point (template.CanvasWidth, 0);
+			edited = true;
 			Refresh (button);
 		}
 		

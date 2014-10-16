@@ -34,6 +34,7 @@
     <Compile Include="ExtensionPoints\IMultimediaBackend.cs" />
     <Compile Include="ExtensionPoints\ILongoMatchPlugin.cs" />
     <Compile Include="ExtensionPoints\IGStreamerPluginsProvider.cs" />
+    <Compile Include="ExtensionPoints\IAnalsysDashboardsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">

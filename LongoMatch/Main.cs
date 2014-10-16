@@ -71,6 +71,7 @@ namespace LongoMatch
 					Log.Exception (locked);
 					return;
 				}
+				manager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				manager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 				Application.Run ();
 			} catch (Exception ex) {

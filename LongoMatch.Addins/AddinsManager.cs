@@ -23,6 +23,7 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using Mono.Addins;
+using LongoMatch.Core.Store.Templates;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -107,6 +108,17 @@ namespace LongoMatch.Addins
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
 				backend.Shutdown ();
 			}
+		}
+		
+		public void LoadDashboards (ICategoriesTemplatesProvider provider)
+		{
+			foreach (IAnalsysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalsysDashboardsProvider> ()) {
+				foreach (Dashboard dashboard in plugin.Dashboards) {
+					dashboard.Static = true;
+					provider.Register (dashboard);
+				}
+			}
+			
 		}
 	}
 }

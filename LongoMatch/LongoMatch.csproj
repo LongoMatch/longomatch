@@ -79,6 +79,14 @@
       <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
       <Name>LongoMatch.Drawing.Cairo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
+      <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
+      <Name>LongoMatch.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Plugins.GStreamer\LongoMatch.Plugins.GStreamer.csproj">
+      <Project>{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}</Project>
+      <Name>LongoMatch.Plugins.GStreamer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

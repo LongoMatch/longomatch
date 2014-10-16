@@ -64,6 +64,12 @@ namespace LongoMatch.Core.Store.Templates
 			get;
 			set;
 		}
+
+		[JsonIgnore]
+		public bool Static {
+			get;
+			set;
+		}
 		
 		public List<DashboardButton> List {
 			get;

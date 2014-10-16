@@ -44,6 +44,7 @@ namespace LongoMatch.Core.Interfaces
 		T Load (string name);
 		void Save (ITemplate template);
 		void Update (ITemplate template);
+		void Register (T template);
 	}
 	
 	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard> {}
