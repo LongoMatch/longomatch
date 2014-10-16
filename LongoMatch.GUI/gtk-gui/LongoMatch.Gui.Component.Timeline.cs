@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class Timeline
 	{
 		private global::Gtk.HBox hbox1;
-		private global::Gtk.VBox vbox4;
+		private global::Gtk.VBox leftbox;
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.Button focusbutton;
 		private global::Gtk.Image focusbuttonimage;
@@ -29,9 +29,9 @@ namespace LongoMatch.Gui.Component
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.vbox4 = new global::Gtk.VBox ();
-			this.vbox4.Name = "vbox4";
-			// Container child vbox4.Gtk.Box+BoxChild
+			this.leftbox = new global::Gtk.VBox ();
+			this.leftbox.Name = "leftbox";
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
 			this.hbox2.HeightRequest = 30;
 			this.hbox2.Name = "hbox2";
@@ -47,18 +47,18 @@ namespace LongoMatch.Gui.Component
 			this.hbox2.Add (this.focusbutton);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.focusbutton]));
 			w2.Position = 0;
-			this.vbox4.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox2]));
+			this.leftbox.Add (this.hbox2);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.hbox2]));
 			w3.Position = 0;
 			w3.Expand = false;
 			w3.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.labelsarea = new global::Gtk.DrawingArea ();
 			this.labelsarea.Name = "labelsarea";
-			this.vbox4.Add (this.labelsarea);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.labelsarea]));
+			this.leftbox.Add (this.labelsarea);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.labelsarea]));
 			w4.Position = 1;
-			// Container child vbox4.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.hbox3 = new global::Gtk.HBox ();
 			this.hbox3.Name = "hbox3";
 			this.hbox3.Spacing = 6;
@@ -96,13 +96,13 @@ namespace LongoMatch.Gui.Component
 			w7.Position = 2;
 			w7.Expand = false;
 			w7.Fill = false;
-			this.vbox4.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox3]));
+			this.leftbox.Add (this.hbox3);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.hbox3]));
 			w8.Position = 2;
 			w8.Expand = false;
 			w8.Fill = false;
-			this.hbox1.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
+			this.hbox1.Add (this.leftbox);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.leftbox]));
 			w9.Position = 0;
 			w9.Expand = false;
 			w9.Fill = false;

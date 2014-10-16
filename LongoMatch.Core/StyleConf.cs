@@ -67,7 +67,7 @@ namespace LongoMatch.Core.Common
 		public const string TimelineNeedleResource = "hicolor/scalable/actions/longomatch-timeline-needle-big.svg";
 		public const string TimelineNeedleUP = "hicolor/scalable/actions/longomatch-timeline-needle-up.svg";
 		public const int TimelineCategoryHeight = 20;
-		public const int TimelineLabelsWidth = 150;
+		public const int TimelineLabelsWidth = 200;
 		public const int TimelineLabelHSpacing = 10;
 		public const int TimelineLabelVSpacing = 2;
 		public const int TimelineLineSize = 6;

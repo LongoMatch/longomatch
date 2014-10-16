@@ -10188,7 +10188,7 @@ You can continue with the current capture, cancel it or save your project.
       <widget class="Gtk.HBox" id="hbox1">
         <property name="MemberName" />
         <child>
-          <widget class="Gtk.VBox" id="vbox4">
+          <widget class="Gtk.VBox" id="leftbox">
             <property name="MemberName" />
             <child>
               <widget class="Gtk.HBox" id="hbox2">
