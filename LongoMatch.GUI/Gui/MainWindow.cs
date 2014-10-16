@@ -74,7 +74,10 @@ namespace LongoMatch.Gui
 			// Monitor size
 			Rectangle monitor_geometry = screen.GetMonitorGeometry (monitor);
 			// Resize to a convenient size
-			this.Resize(monitor_geometry.Width * 80 / 100, monitor_geometry.Height * 80 / 100);
+			this.Resize (monitor_geometry.Width * 80 / 100, monitor_geometry.Height * 80 / 100);
+#if OSTYPE_OS_X
+			this.Move (monitor_geometry.Width * 10 / 100, monitor_geometry.Height * 10 / 100);
+#endif
 		}
 
 		#endregion
