@@ -194,6 +194,7 @@ namespace LongoMatch.Drawing.Widgets
 				tb.Position.Y = Utils.Round (tb.Position.Y, i);
 				tb.Width = (int)Utils.Round (tb.Width, i);
 				tb.Height = (int)Utils.Round (tb.Height, i);
+				(sel.Drawable as TaggerObject).ResetDrawArea ();
 				widget.ReDraw ();
 			}
 
