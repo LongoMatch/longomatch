@@ -172,7 +172,7 @@ namespace LongoMatch.Gui.Panel
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-					                                          loadedTemplate.Name + " _copy", this);
+					                                          loadedTemplate.Name + "_copy", this);
 					if (newName == null)
 						break;
 					if (provider.TemplatesNames.Contains (newName)) {
@@ -187,7 +187,7 @@ namespace LongoMatch.Gui.Panel
 					return;
 				}
 				Dashboard newtemplate = loadedTemplate.Clone ();
-				newtemplate.Name = loadedTemplate.Name + "_copy";
+				newtemplate.Name = newName;
 				newtemplate.Static = false;
 				provider.Save (newtemplate);
 				Load (newtemplate.Name);
