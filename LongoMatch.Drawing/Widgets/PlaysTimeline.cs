@@ -68,11 +68,11 @@ namespace LongoMatch.Drawing.Widgets
 			ClearObjects ();
 			eventsTimelines.Clear ();
 			duration = project.Description.FileSet.Duration;
-			height = project.EventTypes.Count * StyleConf.TimelineCategoryHeight;
-			widget.Height = height;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
+			height = Objects.Count * StyleConf.TimelineCategoryHeight;
+			widget.Height = height;
 		}
 
 		public Time CurrentTime {
