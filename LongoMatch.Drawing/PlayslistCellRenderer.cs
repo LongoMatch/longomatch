@@ -85,7 +85,7 @@ namespace LongoMatch.Drawing
 			tk.FontSize = 14;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (textP, textW, backgroundArea.Height, text, true);
+			tk.DrawText (textP, textW, backgroundArea.Height, text, false);
 		}
 
 		public static void RenderPlayer (Player player, int count, bool isExpanded, IDrawingToolkit tk,
