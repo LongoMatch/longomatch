@@ -24,7 +24,7 @@ namespace LongoMatch.Multimedia.Utils
 	public class VideoDevice
 	{
 		#if OSTYPE_OS_X
-		static string[] devices = new string[1] {"osxvideosrc"};
+		static string[] devices = new string[1] {"avfvideosrc"};
 		
 		#elif OSTYPE_WINDOWS
 				static string[] devices = new string[2] {"dshowvideosrc", "ksvideosrc"};

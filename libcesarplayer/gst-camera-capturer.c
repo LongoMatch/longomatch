@@ -1347,7 +1347,7 @@ gst_camera_capturer_enum_devices (const gchar * device_name)
   if (!g_strcmp0 (device_name, "dv1394src"))
     prop_name = "guid";
   else if (!g_strcmp0 (device_name, "v4l2src") ||
-      !g_strcmp0 (device_name, "osxvideosrc"))
+      !g_strcmp0 (device_name, "avfvideosrc"))
     prop_name = "device";
   else if (!g_strcmp0 (device_name, "filesrc"))
     prop_name = "location";
