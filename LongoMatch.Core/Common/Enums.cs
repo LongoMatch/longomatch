@@ -188,6 +188,7 @@ namespace LongoMatch.Core.Common
 	}
 	
 	public enum FontWeight {
+		Light,
 		Normal,
 		Bold
 	}

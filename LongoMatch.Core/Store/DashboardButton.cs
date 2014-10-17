@@ -32,7 +32,7 @@ namespace LongoMatch.Core.Store
 			Width = Constants.BUTTON_WIDTH;
 			Height = Constants.BUTTON_HEIGHT;
 			BackgroundColor = Color.Red;
-			TextColor = Color.Grey2;
+			TextColor = Config.Style.PaletteBackgroundLight;
 			HotKey = new HotKey ();
 		}
 
@@ -125,6 +125,10 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TagButton: DashboardButton
 	{
+		public TagButton () {
+			BackgroundColor = StyleConf.ButtonTagColor;
+		}
+		
 		public Tag Tag {
 			get;
 			set;
@@ -145,6 +149,10 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimerButton: DashboardButton
 	{
+		public TimerButton () {
+			BackgroundColor = StyleConf.ButtonTimerColor;
+		}
+		
 		public Timer Timer {
 			get;
 			set;

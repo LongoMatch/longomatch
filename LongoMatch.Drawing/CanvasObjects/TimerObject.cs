@@ -15,10 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 
@@ -27,18 +24,30 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class TimerObject: TaggerObject
 	{
 		Time currentTime;
-		Image backgroundImage;
+		static Image iconImage;
 
 		public TimerObject (TimerButton timer): base (timer)
 		{
 			Button = timer;
 			Toggle = true;
 			CurrentTime = new Time (0);
+			if (iconImage == null) {
+				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
+				                                               StyleConf.ButtonTimerIcon));
+			}
+			MinWidth = StyleConf.ButtonMinWidth;
+			MinHeight = StyleConf.ButtonHeaderHeight + StyleConf.ButtonTimerFontSize;
 		}
 
 		public TimerButton Button {
 			get;
 			set;
+		}
+
+		public override Image Icon {
+			get {
+				return iconImage;
+			}
 		}
 
 		public Time CurrentTime {
@@ -48,11 +57,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				if (CurrentTimeNode != null) {
 					if (value < CurrentTimeNode.Start) {
 						Button.Timer.CancelTimer ();
+						Active = false;
 						CurrentTimeNode = null;
 					}
 				}
 				if (value != null && currentTime != null &&
-				    currentTime.Seconds != value.Seconds) {
+					currentTime.Seconds != value.Seconds) {
 					update = true;
 				}
 				currentTime = value;
@@ -80,17 +90,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public override Image BackgroundImage {
-			get {
-				if (backgroundImage != null) {
-					return backgroundImage;
-				} else {
-					return Button.BackgroundImage;
-				}
-			}
-			set {
-				backgroundImage = value;
-			}
+		public Image TeamImage {
+			get;
+			set;
 		}
 
 		public override void ClickReleased ()
@@ -112,33 +114,41 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			double h;
-
-			if (CurrentTimeNode == null || Mode == TagMode.Edit) {
-				h = Button.Height;
-			} else {
-				h = Button.Height / 2;
-			}
-			
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
-			};
+			}
+
+			base.Draw (tk, area);
 
 			tk.Begin ();
-			/* Draw Rectangle */
-			DrawButton (tk);
-			DrawImage (tk);
 			
-			/* Draw header */
-			tk.LineWidth = 2;
-			tk.StrokeColor = Button.TextColor;
-			tk.FillColor = Button.TextColor;
-			tk.FontWeight = FontWeight.Bold;
-			tk.DrawText (DrawPosition, Button.Width, h, Button.Timer.Name);
-			if (CurrentTimeNode != null && Mode != TagMode.Edit) {
-				tk.DrawText (new Point (DrawPosition.X, Position.Y + h), Button.Width, h,
+			if (Active && Mode != TagMode.Edit) {
+				tk.LineWidth = 2;
+				tk.StrokeColor = Button.BackgroundColor;
+				tk.FillColor = Button.BackgroundColor;
+				tk.FontWeight = FontWeight.Normal;
+				tk.FontSize = StyleConf.ButtonHeaderFontSize;
+				tk.FontAlignment = FontAlignment.Left;
+				tk.DrawText (new Point (Position.X + StyleConf.ButtonHeaderWidth, Position.Y),
+				             Button.Width - StyleConf.ButtonHeaderWidth,
+				             StyleConf.ButtonHeaderHeight, Button.Timer.Name);
+				tk.FontWeight = FontWeight.Bold;
+				tk.FontSize = StyleConf.ButtonTimerFontSize;
+				tk.FontAlignment = FontAlignment.Center;
+				tk.DrawText (new Point (Position.X, Position.Y + StyleConf.ButtonHeaderHeight),
+				             Button.Width, Button.Height - StyleConf.ButtonHeaderHeight,
 				             PartialTime.ToSecondsString ());
+			} else {
+				Text = Button.Timer.Name;
+				DrawText (tk);
+				Text = null;
 			}
+			
+			if (TeamImage != null) {
+				tk.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
+				              iconImage.Height, TeamImage, true);
+			}
+
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

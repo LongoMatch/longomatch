@@ -33,7 +33,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event ButtonsSelectedHandlers TaggersSelectedEvent;
-		public event ButtonSelectedHandler AddNewTagEvent;
+		public event ButtonSelectedHandler EditButtonTagsEvent;
 		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
 		public event NewEventHandler NewTagEvent;
 
@@ -154,12 +154,7 @@ namespace LongoMatch.Drawing.Widgets
 			sel = Selections.LastOrDefault ();
 			if (sel != null) {
 				TaggerObject to = sel.Drawable as TaggerObject;
-				Tag tag = null;
-
-				if (to is CategoryObject) {
-					tag = (to as CategoryObject).GetTagForCoords (coords);
-				}
-				ShowMenuEvent (to.Tagger, tag);
+				ShowMenuEvent (to.Tagger, null);
 			}
 		}
 
@@ -239,8 +234,8 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (AnalysisEventButton cat in template.List.OfType<AnalysisEventButton>()) {
 				CategoryObject co = new CategoryObject (cat);
 				co.ClickedEvent += HandleTaggerClickedEvent;
+				co.EditButtonTagsEvent += (t) => EditButtonTagsEvent (t);
 				co.Mode = TagMode;
-				co.AddTag = AddTag;
 				AddObject (co);
 			}
 			foreach (PenaltyCardButton c in template.List.OfType<PenaltyCardButton>()) {
@@ -262,9 +257,9 @@ namespace LongoMatch.Drawing.Widgets
 				to.Mode = TagMode;
 				if (Project != null && t.BackgroundImage == null) {
 					if (t.Timer.Team == Team.LOCAL) {
-						to.BackgroundImage = Project.LocalTeamTemplate.Shield;
+						to.TeamImage = Project.LocalTeamTemplate.Shield;
 					} else if (t.Timer.Team == Team.VISITOR) {
-						to.BackgroundImage = Project.VisitorTeamTemplate.Shield;
+						to.TeamImage = Project.VisitorTeamTemplate.Shield;
 					}
 				}
 				AddObject (to);
@@ -324,11 +319,6 @@ namespace LongoMatch.Drawing.Widgets
 			button = tagger.Tagger as EventButton;
 			
 			if (TagMode == TagMode.Edit) {
-				if (tagger is CategoryObject) {
-					if ((tagger as CategoryObject).SelectedTags.Contains (AddTag)) {
-						AddNewTagEvent (tagger.Tagger);
-					}
-				}
 				return;
 			}
 			

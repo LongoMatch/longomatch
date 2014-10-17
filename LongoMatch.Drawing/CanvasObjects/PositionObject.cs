@@ -126,10 +126,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color color, scolor;
+			Color color;
 			double relSize;
-			Area objectArea;
-			
 
 			relSize = Math.Max (1, (double)Width / 200);
 

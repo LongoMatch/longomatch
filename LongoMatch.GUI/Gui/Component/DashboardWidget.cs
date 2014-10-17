@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
-			tagger.AddNewTagEvent += HandleAddNewTagEvent;
+			tagger.EditButtonTagsEvent += HandleAddNewTagEvent;
 			drawingarea.CanFocus = true;
 			drawingarea.KeyPressEvent += HandleKeyPressEvent;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
@@ -149,9 +149,12 @@ namespace LongoMatch.Gui.Component
 			set {
 				template = value;
 				tagger.Template = value;
-				fieldimage.Pixbuf = value.FieldBackground.Scale (50, 50).Value;
-				hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
-				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
+				try {
+					fieldimage.Pixbuf = value.FieldBackground.Scale (50, 50).Value;
+					hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
+					goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
+				} catch {
+				}
 				periodsentry.Text = String.Join ("-", template.GamePeriods);
 				Edited = false;
 				// Start with disabled widget until something get selected

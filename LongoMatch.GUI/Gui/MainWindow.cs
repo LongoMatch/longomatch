@@ -59,7 +59,6 @@ namespace LongoMatch.Gui
 		{
 			this.Build();
 			this.guiToolKit = guiToolkit;
-			
 			Title = Constants.SOFTWARE_NAME;
 			TagSubcategoriesAction.Active = !Config.FastTagging;
 			projectType = ProjectType.None;

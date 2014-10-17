@@ -24,7 +24,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CardObject: TaggerObject
 	{
-
 		public CardObject (PenaltyCardButton card): base (card)
 		{
 			Button = card;
@@ -65,7 +64,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 2;
 			tk.StrokeColor = Button.TextColor;
 			tk.FillColor = Button.TextColor;
-			tk.DrawText (DrawPosition, Button.Width, Button.Height, Button.PenaltyCard.Name);
+			tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

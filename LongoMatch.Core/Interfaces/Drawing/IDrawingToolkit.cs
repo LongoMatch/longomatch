@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		void DrawEllipse (Point center, double axisX, double axisY);
 		void DrawText (Point point, double width, double height, string text, bool escape=false);
 		void DrawImage (Image image); 
-		void DrawImage (Point start, double width, double height, Image image, bool scale); 
+		void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked=false); 
 		void DrawArrow(Point start, Point stop, int lenght, double degrees, bool closed);
 		void Save (ICanvas canvas, double width, double height, string filename);
 		Image Copy (ICanvas canvas, double width, double height);

@@ -340,8 +340,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			base.DrawBackground (tk, area);
 
 			if (ShowLine) {
-				Color c;
-
 				linepos = OffsetY + Height - StyleConf.TimelineLineSize;
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 				tk.StrokeColor = Config.Style.PaletteBackgroundDark;

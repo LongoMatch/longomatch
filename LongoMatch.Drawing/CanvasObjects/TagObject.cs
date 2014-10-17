@@ -25,15 +25,27 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class TagObject: TaggerObject
 	{
+		static Image iconImage;
+
 		public TagObject (TagButton tagger): base (tagger)
 		{
 			TagButton = tagger;
 			Toggle = true;
+			if (iconImage == null) {
+				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
+				                                               StyleConf.ButtonTagIcon));
+			}
 		}
 
 		public TagButton TagButton {
 			get;
 			set;
+		}
+
+		public override Image Icon {
+			get {
+				return iconImage;
+			}
 		}
 
 		public override string Text {

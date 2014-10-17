@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 1;
+			this.notebook.CurrentPage = 0;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			this.notebook.ShowBorder = false;
 			// Container child notebook.Gtk.Notebook+NotebookChild

@@ -101,6 +101,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public override bool Active {
+			get {
+				return base.Active;
+			}
+			set {
+				if (Mode != TagMode.Edit) {
+					base.Active = value;
+				}
+			}
+		}
+
 		public virtual int NRows {
 			get {
 				return 1;

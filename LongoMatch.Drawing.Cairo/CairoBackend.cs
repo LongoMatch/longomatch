@@ -112,6 +112,9 @@ namespace LongoMatch.Drawing.Cairo
 		public FontWeight FontWeight {
 			set {
 				switch (value) {
+				case FontWeight.Light:
+					fWeight = Weight.Light;
+					break;
 				case FontWeight.Bold:
 					fWeight = Weight.Semibold;
 					break;
@@ -283,7 +286,11 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawRectangle (Point start, double width, double height)
 		{
-			DrawRoundedRectangle (start, width, height, 0);
+			CContext.Rectangle (new global::Cairo.Rectangle (start.X + LineWidth / 2,
+			                                                 start.Y + LineWidth / 2,
+			                                                 width - LineWidth,
+			                                                 height - LineWidth));
+			StrokeAndFill (false);
 		}
 
 		static public double ByteToDouble (byte val)
@@ -380,7 +387,7 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Paint ();
 		}
 
-		public void DrawImage (Point start, double width, double height, Image image, bool scale)
+		public void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked=false)
 		{
 			double scaleX, scaleY;
 			Point offset;
@@ -395,8 +402,18 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Save ();
 			CContext.Translate (start.X + offset.X, start.Y + offset.Y);
 			CContext.Scale (scaleX, scaleY);
-			Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
-			CContext.Paint ();
+			if (masked) {
+				CContext.PushGroup ();
+				Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
+				CContext.Paint ();
+				var src = CContext.PopGroup ();
+				SetColor (FillColor);
+				CContext.Mask (src);
+				src.Dispose ();
+			} else {
+				Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
+				CContext.Paint ();
+			}
 			CContext.Restore ();
 		}
 

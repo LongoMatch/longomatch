@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public bool Active {
+		public virtual bool Active {
 			get {
 				return active;
 			}

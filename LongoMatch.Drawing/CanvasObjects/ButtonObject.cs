@@ -26,14 +26,23 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		const int BORDER_SIZE = 4;
 		const int SELECTION_SIZE = 6;
+		protected ISurface backBufferSurface;
 
 		public ButtonObject () {
 			BackgroundColor = Config.Style.PaletteBackgroundLight;
 			BackgroundColorActive = Config.Style.PaletteActive;
 			BorderColor = Config.Style.PaletteBackgroundDark;
 			TextColor = Config.Style.PaletteText;
+			MinWidth = 20;
+			MinHeight = 20;
 		}
 		
+		protected override void Dispose (bool disposing)
+		{
+			ResetBackbuffer ();
+			base.Dispose (disposing);
+		}
+
 		public virtual Point Position {
 			get;
 			set;
@@ -54,6 +63,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public virtual Image Icon {
+			get;
+			set;
+		}
+
 		public virtual Color BorderColor {
 			get;
 			set;
@@ -70,6 +84,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public virtual Color TextColor {
+			get;
+			set;
+		}
+
+		public int MinWidth {
+			get;
+			set;
+		}
+
+		public int MinHeight {
 			get;
 			set;
 		}
@@ -107,13 +131,23 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		protected Point DrawPosition {
-			get {
-				if (!Active) {
-					return Position;
-				} else {
-					return new Point (Position.X + 1, Position.Y + 1);
-				}
+		public override void ReDraw ()
+		{
+			ResetBackbuffer ();
+			base.ReDraw ();
+		}
+
+		public override void ResetDrawArea ()
+		{
+			ResetBackbuffer ();
+			base.ResetDrawArea ();
+		}
+
+		protected void ResetBackbuffer ()
+		{
+			if (backBufferSurface != null) {
+				backBufferSurface.Dispose ();
+				backBufferSurface = null;
 			}
 		}
 
@@ -160,6 +194,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			default:
 				throw new Exception ("Unsupported move for tagger object:  " + s.Position);
 			}
+			Width = Math.Max (MinWidth, Width);
+			Height = Math.Max (MinHeight, Height);
+			ResetBackbuffer ();
 		}
 
 		protected void DrawSelectionArea (IDrawingToolkit tk)
@@ -172,26 +209,41 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FillColor = null;
 			tk.LineStyle = LineStyle.Dashed;
 			tk.LineWidth = 2;
-			tk.DrawRectangle (DrawPosition, Width, Height);
+			tk.DrawRectangle (Position, Width, Height);
 
 			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
-			tk.DrawRectangle (new Point (DrawPosition.X + Width - SELECTION_SIZE / 2,
-			                             DrawPosition.Y + Height - SELECTION_SIZE / 2),
+			tk.DrawRectangle (new Point (Position.X + Width - SELECTION_SIZE / 2,
+			                             Position.Y + Height - SELECTION_SIZE / 2),
 			                  SELECTION_SIZE, SELECTION_SIZE);
 		}
 
 		protected void DrawButton (IDrawingToolkit tk)
 		{
-			tk.LineWidth = 0;
-			tk.StrokeColor = BorderColor;
-			tk.FillColor = CurrentBackgroundColor;
-			tk.DrawRoundedRectangle (DrawPosition, Width, Height, 3);
+			Color front, back;
+			
+			if (Active) {
+				tk.LineWidth = StyleConf.ButtonLineWidth;
+				front = BackgroundColor;
+				back = TextColor;
+			} else {
+				tk.LineWidth = 0;
+				front = TextColor;
+				back =  BackgroundColor;
+			}
+			tk.FillColor = back;
+			tk.StrokeColor = front;
+			tk.DrawRectangle (Position, Width, Height);
+			if (Icon != null) {
+				tk.FillColor = front;
+				tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
+				              Icon.Width, Icon.Height, Icon, false, true);
+			}
 		}
 
 		protected void DrawImage (IDrawingToolkit tk)
 		{
-			Point pos = new Point (DrawPosition.X + BORDER_SIZE / 2, DrawPosition.Y + BORDER_SIZE / 2);
+			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
 
 			if (Active && BackgroundImageActive != null) {
 				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive, true);
@@ -203,23 +255,49 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected void DrawText (IDrawingToolkit tk)
 		{
 			if (Text != null) {
-				tk.FillColor = TextColor;
-				tk.StrokeColor = TextColor;
+				if (Active) {
+					tk.FillColor = BackgroundColor;
+					tk.StrokeColor = BackgroundColor;
+				} else {
+					tk.FillColor = TextColor;
+					tk.StrokeColor = TextColor;
+				}
+				tk.FontSize = StyleConf.ButtonNameFontSize;
+				tk.FontWeight = FontWeight.Light;
 				tk.FontAlignment = FontAlignment.Center;
-				tk.DrawText (DrawPosition, Width, Height, Text);
+				tk.DrawText (Position, Width, Height, Text);
+			}
+		}
+
+		void CreateBackBufferSurface () {
+			IDrawingToolkit tk = Config.DrawingToolkit;
+
+			ResetBackbuffer ();
+			backBufferSurface = tk.CreateSurface ((int)Width, (int)Height);
+			using (IContext c = backBufferSurface.Context) {
+				tk.Context = c;
+				tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
+				                      new Point (1, 1));
+				DrawButton (tk);
+				DrawImage (tk);
+				DrawSelectionArea (tk);
+				DrawText (tk);
 			}
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			IContext ctx = tk.Context;
+
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
+			if (backBufferSurface == null) {
+				CreateBackBufferSurface ();
+			}
+			tk.Context = ctx;
 			tk.Begin ();
-			DrawButton (tk);
-			DrawImage (tk);
-			DrawSelectionArea (tk);
-			DrawText (tk);
+			tk.DrawSurface (backBufferSurface, Position);
 			tk.End ();
 		}
 	}

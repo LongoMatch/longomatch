@@ -83,6 +83,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			field.Dispose ();
 			subPlayers.Dispose ();
 			subInjury.Dispose ();
+			homeButton.Dispose ();
+			awayButton.Dispose ();
 			base.Dispose (disposing);
 		}
 
@@ -528,7 +530,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		void EmitSubsitutionEvent (PlayerObject player1, PlayerObject player2)
 		{
 			TeamTemplate team;
-			List<PlayerObject> bench, field;
+			List<PlayerObject> bench;
 
 			if (substitutionPlayer.Team == Team.LOCAL) {
 				team = homeTeam;

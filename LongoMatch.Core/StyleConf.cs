@@ -100,6 +100,26 @@ namespace LongoMatch.Core.Common
 		public const int NotebookTabIconSize = 18;
 		public const int NotebookTabSize = NotebookTabIconSize + 14;
 
+		public const int ButtonHeaderHeight = 22;
+		public const int ButtonHeaderWidth = 5 + 34 + 5;
+		public const int ButtonRecWidth = 40;
+		public const int ButtonLineWidth = 3;
+		public const int ButtonHeaderFontSize = 14;
+		public const int ButtonNameFontSize = 18;
+		public const int ButtonTimerFontSize = 24;
+		public const int ButtonButtonsFontSize = 10;
+		public const int ButtonMinWidth = 100;
+		public const string ButtonTimerIcon = "dashboard/longomatch-timer.svg";
+		public const string ButtonTagIcon = "dashboard/longomatch-tag.svg";
+		public const string ButtonScoreIcon = "dashboard/longomatch-score.svg";
+		public const string ButtonEventIcon = "dashboard/longomatch-event.svg";
+		public static Color ButtonTagColor = Color.Parse ("#d8ffc7");
+		public static Color ButtonTimerColor = Color.Parse ("#bebbff");
+		public static Color ButtonScoreColor = Color.Parse ("#d8ffc7");
+		public static Color ButtonPenaltyColor = Color.Parse ("#ffc7f0");
+		public static Color ButtonEventColor = Color.Parse ("#c7e9ff");
+		
+
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;
 

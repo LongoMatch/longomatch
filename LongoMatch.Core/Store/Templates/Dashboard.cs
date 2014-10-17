@@ -147,7 +147,7 @@ namespace LongoMatch.Core.Store.Templates
 		public AnalysisEventButton AddDefaultItem (int index) {
 			AnalysisEventButton button;
 			AnalysisEventType evtype;
-			Color c = Color.Red;
+			Color c = StyleConf.ButtonEventColor;
 			HotKey h = new HotKey();
 			
 			evtype = new AnalysisEventType {
@@ -206,24 +206,30 @@ namespace LongoMatch.Core.Store.Templates
 			template.List.Add (tagbutton);
 
 			cardButton = new PenaltyCardButton {
-				PenaltyCard = new PenaltyCard (Catalog.GetString ("Red"),
+				PenaltyCard = new PenaltyCard (Catalog.GetString ("Red card"),
 				                               Color.Red, CardShape.Rectangle),
 				Position = new Point (10 + (10 + CAT_WIDTH) * 2, 10)};
 			template.List.Add (cardButton);
 
 			cardButton = new PenaltyCardButton {
-				PenaltyCard = new PenaltyCard (Catalog.GetString ("Yellow"),
+				PenaltyCard = new PenaltyCard (Catalog.GetString ("Yellow card"),
 				                               Color.Yellow, CardShape.Rectangle),
 				Position = new Point (10 + (10 + CAT_WIDTH) * 3, 10)};
 			template.List.Add (cardButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score (Catalog.GetString ("Field goal"), 1),
+				Score = new Score {
+					Name = Catalog.GetString ("Field goal"),
+					Points = 1,
+					Color = StyleConf.ButtonScoreColor},
 				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10)};
 			template.List.Add (scoreButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score (Catalog.GetString ("Penalty goal"), 1),
+				Score = new Score {
+					Name = Catalog.GetString ("Penalty goal"),
+					Points = 1,
+					Color = StyleConf.ButtonScoreColor},
 				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10)};
 			template.List.Add (scoreButton);
 			

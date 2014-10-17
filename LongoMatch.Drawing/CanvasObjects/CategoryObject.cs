@@ -17,47 +17,50 @@
 //
 using System;
 using System.Collections.Generic;
+using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using Mono.Unix;
-using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CategoryObject: TaggerObject
 	{
+		public event ButtonSelectedHandler EditButtonTagsEvent;
 
-		static Image RecordSurface = null;
-		static Image CancelSurface = null;
-		static Image EditSurface = null;
-		static Image ApplySurface = null;
-		static bool surfacesCached = false;
-
-		Dictionary <Rectangle, object> rects;
+		static Image iconImage;
+		Dictionary <Rectangle, object> rects, buttonsRects;
 		Dictionary <string, List<Tag>> tagsByGroup;
-		bool catSelected, tagSelected;
+		bool recording, emitEvent, delayEvent, editClicked;
+		bool cancelClicked, applyClicked, moved;
 		int nrows;
 		const int TIMEOUT_MS = 800;
 		Time currentTime;
 		System.Threading.Timer timer;
-		object recordButton = new object ();
 		object cancelButton = new object ();
-		ISurface backBufferSurface;
-		Rectangle editRect, recordRect, cancelRect;
-		double catWidth, heightPerRow, recordY;
+		object editbutton = new object ();
+		object applyButton = new object ();
+		Rectangle editRect, cancelRect, applyRect;
+		double catWidth, heightPerRow;
 
 		public CategoryObject (AnalysisEventButton category): base (category)
 		{
 			Button = category;
 			rects = new Dictionary <Rectangle, object> ();
+			buttonsRects = new Dictionary <Rectangle, object> ();
 			SelectedTags = new List<Tag> ();
 			CurrentTime = new Time (0);
-			recordRect = new Rectangle ();
-			cancelRect = new Rectangle ();
-			editRect = new Rectangle ();
-			LoadSurfaces ();
+			cancelRect = new Rectangle (new Point (0, 0), 0, 0);
+			editRect = new Rectangle (new Point (0, 0), 0, 0);
+			applyRect = new Rectangle (new Point (0, 0), 0, 0);
+			if (iconImage == null) {
+				iconImage = new Image (Path.Combine (Config.ImagesDir,
+				                                     StyleConf.ButtonEventIcon));
+			}
+			MinWidth = 100;
+			MinHeight = HeaderHeight * 2;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -66,7 +69,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 				timer.Dispose ();
 				timer = null;
 			}
-			ResetBackbuffer ();
 			base.Dispose (disposing);
 		}
 
@@ -75,9 +77,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Tag AddTag {
-			get;
-			set;
+		public override Image Icon {
+			get {
+				return iconImage;
+			}
 		}
 
 		public Time CurrentTime {
@@ -87,7 +90,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set {
 				currentTime = value;
 				if (Start != null && currentTime < Start) {
-					CancelClicked ();
+					Clear ();
 				} else {
 					ReDraw ();
 				}
@@ -100,34 +103,39 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public override void ReDraw ()
-		{
-			ResetBackbuffer ();
-			base.ReDraw ();
+		bool ShowApplyButton {
+			get {
+				return ShowTags && tagsByGroup.Count > 1
+					&& Button.TagMode == TagMode.Predefined
+					&& Mode != TagMode.Edit;
+			}
 		}
-
-		public override void ResetDrawArea ()
-		{
-			ResetBackbuffer ();
-			base.ResetDrawArea ();
-		}
-
-		void ResetBackbuffer ()
-		{
-			if (backBufferSurface != null) {
-				backBufferSurface.Dispose ();
-				backBufferSurface = null;
+		
+		bool ShowTags {
+			get {
+				return Button.ShowSubcategories && Button.AnalysisEventType.Tags.Count != 0;
 			}
 		}
 
-		void LoadSurfaces ()
-		{
-			if (!surfacesCached) {
-				RecordSurface = CreateSurface (StyleConf.RecordButton);
-				CancelSurface = CreateSurface (StyleConf.CancelButton);
-				EditSurface = CreateSurface (StyleConf.EditButton);
-				ApplySurface = CreateSurface (StyleConf.ApplyButton);
-				surfacesCached = true;
+		int HeaderHeight {
+			get {
+				return iconImage.Height + 5;
+			}
+		}
+
+		int HeaderTextOffset {
+			get {
+				return iconImage.Width + 5;
+			}
+		}
+
+		double HeaderTextWidth {
+			get {
+				if (Button.TagMode == TagMode.Free) {
+					return Width - HeaderTextOffset - StyleConf.ButtonRecWidth; 
+				} else {
+					return Width - HeaderTextOffset;
+				}
 			}
 		}
 
@@ -140,29 +148,38 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			/* Header */
 			int tagsPerRow = Math.Max (1, Button.TagsPerRow);
-			nrows = 1;
+			nrows = 0;
 
-			/* Recorder */
-			if (Button.TagMode == TagMode.Free) {
-				nrows ++;
-			}
-			
 			if (Button.ShowSubcategories) {
 				foreach (List<Tag> tags in tagsByGroup.Values) {
 					nrows += (int)Math.Ceiling ((float)tags.Count / tagsPerRow);
 				}
 			}
-			if (Mode == TagMode.Edit) {
-				nrows ++;
-			}
+		}
+
+		void Clear ()
+		{
+			recording = false;
+			emitEvent = false;
+			cancelClicked = false;
+			Start = null;
+			SelectedTags.Clear ();
+			Active = false;
 		}
 
 		void EmitCreateEvent ()
 		{
 			EmitClickEvent ();
-			tagSelected = false;
-			catSelected = false;
-			SelectedTags.Clear ();
+			Clear ();
+		}
+
+		void StartRecording ()
+		{
+			recording = true;
+			if (Start == null) {
+				Start = CurrentTime;
+			}
+			Active = true;
 		}
 
 		void TimerCallback (Object state)
@@ -178,19 +195,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 				TimerCallback (null);
 				return;
 			}
-			if (timer == null) {
-				timer = new System.Threading.Timer (TimerCallback, null, TIMEOUT_MS, 0);
-			} else {
-				timer.Change (TIMEOUT_MS, 0);
-			} 
+			//if (timer == null) {
+			//	timer = new System.Threading.Timer (TimerCallback, null, TIMEOUT_MS, 0);
+			//} else {
+			//	timer.Change (TIMEOUT_MS, 0);
+			//} 
 		}
 
 		void CategoryClicked (AnalysisEventButton category)
 		{
 			if (Button.TagMode == TagMode.Predefined) {
-				catSelected = true;
+				emitEvent = true;
+				Active = true;
 			} else if (Button.TagMode == TagMode.Free) {
-				RecordClicked ();
+				if (!recording) {
+					StartRecording ();
+				} else {
+					emitEvent = true;
+				}
 			}
 		}
 
@@ -199,30 +221,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (SelectedTags.Contains (tag)) {
 				SelectedTags.Remove (tag);
 			} else {
+				SelectedTags.RemoveAll (t => t.Group == tag.Group);
 				SelectedTags.Add (tag);
-				if (Button.TagMode == TagMode.Predefined || Mode == TagMode.Edit) {
-					catSelected = true;
-					tagSelected = true;
-				}
 			}
-		}
-
-		void CancelClicked ()
-		{
-			Start = null;
-			ReDraw ();
-		}
-
-		void RecordClicked ()
-		{
-			if (Mode == TagMode.Edit) {
-				return;
-			}
-			if (Start == null) {
-				Start = CurrentTime;
+			if (Button.TagMode == TagMode.Free) {
+				StartRecording ();
 			} else {
-				EmitCreateEvent ();
-				Start = null;
+				Active = true;
+				delayEvent = true;
 			}
 			ReDraw ();
 		}
@@ -230,7 +236,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		void UpdateGroups ()
 		{
 			tagsByGroup = Button.AnalysisEventType.TagsByGroup;
-			
 		}
 
 		public List<Tag> SelectedTags {
@@ -238,68 +243,79 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Tag GetTagForCoords (Point p)
+		bool CheckRect (Point p, Rectangle rect, object obj)
 		{
-			Tag tag = null;
-
-			foreach (Rectangle rect in rects.Keys) {
-				Selection subsel = rect.GetSelection (p, 0);
-				if (subsel != null) {
-					if (rects [rect] is Tag) {
-						tag = rects [rect] as Tag;
-					}
-					break;
+			Selection subsel;
+		
+			if (obj == null) {
+				return false;
+			}
+			subsel = rect.GetSelection (p, 0);
+			if (subsel != null) {
+				if (obj is AnalysisEventButton) {
+					CategoryClicked (Button);
+				} else if (obj is Tag) {
+					TagClicked (obj as Tag);
+				} else if (obj == cancelButton) {
+					cancelClicked = true;
+				} else if (obj == editbutton) {
+					editClicked = true;
+				} else if (obj == applyButton) {
+					applyClicked = true;
 				}
+				return true;
 			}
-			if (tag != AddTag) {
-				return tag;
-			} else {
-				return null;
-			}
+			return false;
 		}
 
 		public override void ClickPressed (Point p, ButtonModifier modif)
 		{
-			foreach (Rectangle rect in rects.Keys) {
-				Selection subsel;
-				object obj = rects [rect];
-				if (obj == null) {
-					continue;
+			if (Mode == TagMode.Edit) {
+				editClicked = CheckRect (p, editRect, editbutton);
+				return;
+			}
+			foreach (Rectangle rect in buttonsRects.Keys) {
+				if (CheckRect (p, rect, buttonsRects [rect])) {
+					return;
 				}
-				subsel = rect.GetSelection (p, 0);
-				if (subsel != null) {
-					if (obj is AnalysisEventButton) {
-						CategoryClicked (Button);
-					} else if (obj is Tag) {
-						TagClicked (obj as Tag);
-					} else if (obj == recordButton) {
-						RecordClicked ();
-					} else if (obj == cancelButton) {
-						CancelClicked ();
-					}
-					break;
+			}
+			foreach (Rectangle rect in rects.Keys) {
+				if (CheckRect (p, rect, rects [rect])) {
+					return;
 				}
 			}
 		}
 
 		public override void ClickReleased ()
 		{
-			if (catSelected && !tagSelected) {
-				EmitClickEvent ();
-				SelectedTags.Clear ();
-				catSelected = false;
-			} else if (tagSelected) {
+			if (editClicked && !moved && EditButtonTagsEvent != null) {
+				EditButtonTagsEvent (Tagger);
+			} else if (cancelClicked) {
+				Clear ();
+			} else if (emitEvent) {
+				EmitCreateEvent ();
+			} else if (delayEvent) {
 				DelayTagClicked ();
+			} else if (applyClicked) {
+				if (SelectedTags.Count > 1) {
+					EmitCreateEvent ();
+				}
 			}
+			emitEvent = delayEvent = moved = editClicked = applyClicked = false;
 		}
 
 		void DrawTagsGroup (IDrawingToolkit tk, List<Tag> tags, ref double yptr)
 		{
 			double rowwidth;
+			Point start;
 			int tagsPerRow, row = 0;
 
 			tagsPerRow = Math.Max (1, Button.TagsPerRow);
 			rowwidth = catWidth / tagsPerRow;
+
+			start = new Point (Position.X, Position.Y + HeaderHeight);
+			tk.FontSize = 12;
+			tk.FontWeight = FontWeight.Light;
 
 			/* Draw tags */
 			for (int i=0; i < tags.Count; i++) {
@@ -309,23 +325,33 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 				row = i / tagsPerRow;
 				col = i % tagsPerRow;
-				pos = new Point (Button.Position.X + col * rowwidth,
-				                 Button.Position.Y + yptr + row * heightPerRow);
-
-				if (col == 0) {
-					if (i + tagsPerRow > tags.Count) {
-						rowwidth = catWidth / (tags.Count - i);
-					}
-				}
+				pos = new Point (start.X + col * rowwidth,
+				                 start.Y + yptr + row * heightPerRow);
 
 				tk.StrokeColor = Button.DarkColor;
 				tk.LineWidth = 1;
+				/* Draw last vertical line when the last row is not fully filled*/
 				if (col == 0) {
+					if (i + tagsPerRow > tags.Count) {
+						tk.LineStyle = LineStyle.Dashed;
+						var st = new Point (pos.X + rowwidth * ((i + 1) % tagsPerRow), pos.Y);
+						tk.DrawLine (st, new Point (st.X, st.Y + heightPerRow)); 
+						tk.LineStyle = LineStyle.Normal;
+					}
+				}
+
+				if (col == 0) {
+					if (row != 0) {
+						tk.LineStyle = LineStyle.Dashed;
+					}
 					/* Horizontal line */
 					tk.DrawLine (pos, new Point (pos.X + catWidth, pos.Y));
+					tk.LineStyle = LineStyle.Normal;
 				} else {
 					/* Vertical line */
+					tk.LineStyle = LineStyle.Dashed;
 					tk.DrawLine (pos, new Point (pos.X, pos.Y + heightPerRow));
+					tk.LineStyle = LineStyle.Normal;
 				}
 				tk.StrokeColor = Button.TextColor;
 				tag = tags [i];
@@ -335,25 +361,70 @@ namespace LongoMatch.Drawing.CanvasObjects
 			yptr += heightPerRow * (row + 1);
 		}
 
-		void DrawEditButton (IDrawingToolkit tk, ref double yptr)
+		void DrawHeader (IDrawingToolkit tk)
 		{
-			Point start;
-			Tag tag = AddTag;
+			Color textColor;
+			Point pos;
+			double width, height;
+			int fontSize;
+
+			if (Active) {
+				textColor = BackgroundColor;
+			} else {
+				textColor = TextColor;
+			}
+
+			width = HeaderTextWidth;
+			height = HeaderHeight;
+			pos = new Point (Position.X + HeaderTextOffset, Position.Y);
+			fontSize = StyleConf.ButtonHeaderFontSize;
+
+			if (ShowTags) {
+				rects.Add (new Rectangle (Position, Width, HeaderHeight), Button);
+				if (recording) {
+					/* Draw Timer instead */
+					return;
+				}
+			} else {
+				if (!recording) {
+					width = Width;
+					height = Height - HeaderHeight;
+					pos = new Point (Position.X, Position.Y + HeaderHeight);
+					fontSize = StyleConf.ButtonNameFontSize;
+				}
+				rects.Add (new Rectangle (Position, Width, Height), Button);
+			}
+			tk.FontSize = fontSize;
+			tk.StrokeColor = BackgroundColor;
+			tk.StrokeColor = textColor;
+			tk.FontWeight = FontWeight.Light;
+			tk.DrawText (pos, width, height, Button.AnalysisEventType.Name);
+		}
+
+		void DrawEditButton (IDrawingToolkit tk)
+		{
+			Point pos;
+			Color c;
+			double width, height;
 
 			if (Mode != TagMode.Edit) {
 				return;
 			}
-			tk.StrokeColor = Button.DarkColor;
-			tk.LineWidth = 1;
-			start = new Point (Button.Position.X, Button.Position.Y + yptr);
-			tk.DrawLine (start, new Point (start.X + catWidth, start.Y));
-			tk.StrokeColor = Button.TextColor;
-			tk.DrawImage (start, catWidth / 2, heightPerRow, EditSurface, true);
-			tk.DrawText (new Point (start.X + catWidth / 2, start.Y),
-			             catWidth / 2, heightPerRow, Catalog.GetString ("Edit"));
-			editRect.Update (start, catWidth, heightPerRow);
-			rects [editRect] = tag;
-			yptr += heightPerRow;
+
+			c = Config.Style.PaletteBackgroundDark;
+			width = StyleConf.ButtonRecWidth;
+			height = HeaderHeight;
+			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
+			                 Position.Y + Height - height);
+			tk.LineWidth = 0;
+			tk.FillColor = new Color (c.R, c.G, c.B, 200);
+			tk.StrokeColor = BackgroundColor;
+			tk.DrawRectangle (pos, width, height);
+			tk.StrokeColor = Color.Green1;
+			tk.FontSize = StyleConf.ButtonButtonsFontSize;
+			tk.DrawText (pos, width, height, "✐ EDIT");
+			editRect.Update (pos, width, height);
+			buttonsRects [editRect] = editbutton;
 		}
 
 		void DrawSelectedTags (IDrawingToolkit tk)
@@ -363,45 +434,117 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			foreach (Rectangle r in rects.Keys) {
 				object obj = rects [r];
-				if ((obj is Tag && SelectedTags.Contains (obj as Tag)) ||
-					obj is AnalysisEventButton && catSelected) {
-					double radius = (Math.Min (Math.Min (r.Height, r.Width), 20) / 2) - 2;
+				if (obj is Tag && SelectedTags.Contains (obj as Tag)) {
 					tk.LineWidth = 0;
-					tk.FillColor = Config.Style.PaletteActive;
-					tk.DrawCircle (new Point (r.TopLeft.X + radius, r.TopLeft.Y + radius), radius);
+					tk.FontWeight = FontWeight.Light;
+					tk.FillColor = TextColor;
+					tk.FontSize = 12;
+					tk.DrawRectangle (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height);
+					tk.StrokeColor = BackgroundColor;
+					tk.DrawText (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height,
+					             (obj as Tag).Value);
 				}
 			}
 		}
 
+		void DrawRecordTime (IDrawingToolkit tk)
+		{
+			if (recording && Mode != TagMode.Edit) {
+				if (ShowTags) {
+					tk.FontSize = 12;
+					tk.FontWeight = FontWeight.Normal;
+					tk.StrokeColor = BackgroundColor;
+					tk.DrawText (new Point (Position.X + HeaderTextOffset, Position.Y),
+					             HeaderTextWidth, HeaderHeight,
+					             (CurrentTime - Start).ToSecondsString ());
+				} else {
+					tk.FontSize = 24;
+					tk.FontWeight = FontWeight.Bold;
+					tk.StrokeColor = BackgroundColor;
+					tk.DrawText (new Point (Position.X, Position.Y + HeaderHeight),
+					             Width, Height - HeaderHeight,
+					             (CurrentTime - Start).ToSecondsString ());
+				}
+			}
+		}
+
+		void DrawApplyButton (IDrawingToolkit tk)
+		{
+			Point pos;
+			double width, height;
+
+			if (!ShowApplyButton || SelectedTags.Count == 0) {
+				rects [applyRect] = null;
+				return;
+			}
+			
+			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
+			                 Position.Y);
+			width = StyleConf.ButtonRecWidth;
+			height = HeaderHeight;
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.LineWidth = 0;
+			tk.DrawRectangle (pos, width, height);
+			tk.StrokeColor = Color.Green1;
+			tk.FontSize = 12;
+			tk.DrawText (pos, width, height, " ✔ ");
+			applyRect.Update (pos, width, height);
+			buttonsRects[applyRect] = applyButton; 
+		}
+
 		void DrawRecordButton (IDrawingToolkit tk)
 		{
-			Point pos = Button.Position;
-			/* Draw timer */
-			if (Button.TagMode == TagMode.Free) {
-				Point p = new Point (pos.X, pos.Y + recordY);
-				/* Draw Tagger */
-				tk.StrokeColor = Button.DarkColor;
-				tk.LineWidth = 1;
-				tk.DrawLine (p, new Point (pos.X + catWidth, pos.Y + recordY));
-				tk.StrokeColor = Button.TextColor;
-				if (Start == null) {
-					recordRect.Update (p, catWidth, heightPerRow);
-					rects [recordRect] = recordButton;
-					rects [cancelRect] = null;
-					tk.DrawImage (p, catWidth, heightPerRow, RecordSurface, true);
-				} else {
-					recordRect.Update (p, catWidth - 20, heightPerRow);
-					rects [recordRect] = recordButton;
-					tk.DrawImage (p, 20, heightPerRow, ApplySurface, true);
-					p.X += 20;
-					tk.DrawText (p, catWidth - 40, heightPerRow, (CurrentTime - Start).ToSecondsString ());
-					p = new Point (pos.X + catWidth - 20, p.Y);
-					cancelRect.Update (p, 20, heightPerRow);
-					rects [cancelRect] = cancelButton;
-					tk.StrokeColor = Button.DarkColor;
-					tk.LineWidth = 1;
-					tk.DrawLine (p, new Point (p.X, p.Y + heightPerRow));
-					tk.DrawImage (p, 20, heightPerRow, CancelSurface, true);
+			Point pos;
+			double width, height;
+
+			if (Button.TagMode != TagMode.Free) {
+				return;
+			}
+			
+			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
+			                 Position.Y);
+			
+			width = StyleConf.ButtonRecWidth;
+			height = HeaderHeight;
+			tk.FontSize = StyleConf.ButtonButtonsFontSize;
+			if (!recording) {
+				tk.FillColor = Config.Style.PaletteBackgroundDark;
+				tk.StrokeColor = BackgroundColor;
+				tk.LineWidth = StyleConf.ButtonLineWidth;
+				tk.DrawRectangle (pos, width, height);
+				tk.StrokeColor = Color.Red1;
+				tk.DrawText (pos, width, height, "● REC");
+			} else {
+				tk.FillColor = tk.StrokeColor = BackgroundColor;
+				tk.DrawRectangle (pos, width, height);
+				tk.StrokeColor = TextColor;
+				tk.DrawText (pos, width, height, "✕");
+				cancelRect.Update (pos, width, height);
+				buttonsRects [cancelRect] = cancelButton;
+			}
+		}
+
+		new void DrawButton (IDrawingToolkit tk)
+		{
+			if (!ShowTags) {
+				base.DrawButton (tk);
+			} else {
+				tk.FillColor = BackgroundColor;
+				tk.StrokeColor = TextColor;
+				tk.LineWidth = 0;
+				tk.DrawRectangle (Position, Width, Height);
+				if (Active) {
+					tk.FillColor = TextColor;
+					tk.DrawRectangle (Position, Width, HeaderHeight);
+				}
+				if (Icon != null) {
+					if (Active) {
+						tk.FillColor = BackgroundColor;
+					} else {
+						tk.FillColor = TextColor;
+					}
+					tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
+					              Icon.Width, Icon.Height, Icon, false, true);
 				}
 			}
 		}
@@ -409,14 +552,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 		void DrawBackbuffer (IDrawingToolkit tk)
 		{
 			Point pos;
-			double yptr = 0;
 
 			rects.Clear ();
+			buttonsRects.Clear ();
 			UpdateGroups ();
 			UpdateRows ();
-			heightPerRow = Button.Height / nrows;
-			catWidth = Button.Width;
-			pos = Button.Position;
+			heightPerRow = (Height - HeaderHeight) / nrows;
+			catWidth = Width;
+			pos = Position;
 
 			tk.Begin ();
 			tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
@@ -426,27 +569,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 			/* Draw Rectangle */
 			DrawButton (tk);
 			DrawImage (tk);
-
-			/* Draw header */
-			tk.FillColor = LongoMatch.Core.Common.Color.Grey2;
-			tk.LineWidth = 2;
-			tk.StrokeColor = Button.TextColor;
-			tk.DrawText (pos, catWidth, heightPerRow, Button.EventType.Name);
-			rects.Add (new Rectangle (pos, catWidth, heightPerRow), Button);
-			yptr += heightPerRow;
+			DrawHeader (tk);
+			DrawRecordButton (tk);
 
 			if (Button.ShowSubcategories) {
+				double yptr = 0;
 				foreach (List<Tag> tags in tagsByGroup.Values) {
 					DrawTagsGroup (tk, tags, ref yptr);
 				}
 			}
-
-			DrawEditButton (tk, ref yptr);
-
-			if (Button.TagMode == TagMode.Free) {
-				recordY = yptr;
-			}
-
+			DrawEditButton (tk);
 			tk.End ();
 		}
 
@@ -454,9 +586,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			IDrawingToolkit tk = Config.DrawingToolkit;
 
-			if (backBufferSurface != null) {
-				backBufferSurface.Dispose ();
-			}
+			ResetBackbuffer ();
 
 			backBufferSurface = tk.CreateSurface ((int)Width, (int)Height);
 			using (IContext c = backBufferSurface.Context) {
@@ -468,6 +598,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void Move (Selection s, Point p, Point start)
 		{
 			base.Move (s, p, start);
+			moved = true;
 			SelectedTags.Clear ();
 			switch (s.Position) {
 			case SelectionPosition.Right:
@@ -490,8 +621,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Context = ctx;
 			tk.Begin ();
 			tk.DrawSurface (backBufferSurface, Position);
-			DrawRecordButton (tk);
 			DrawSelectedTags (tk);
+			DrawRecordTime (tk);
+			DrawApplyButton (tk);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

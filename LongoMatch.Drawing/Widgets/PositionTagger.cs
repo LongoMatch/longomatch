@@ -135,9 +135,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void RemovePlays (List<TimelineEvent> plays)
 		{
-			List<ICanvasObject> objects;
-
-			foreach (ICanvasObject co in Objects.Where (o => plays.Contains ((o as PositionObject).Play)).ToList()) {
+			foreach (ICanvasObject co in 
+			         Objects.Where (o => plays.Contains ((o as PositionObject).Play)).ToList()) {
 				RemoveObject (co);
 			}
 		}

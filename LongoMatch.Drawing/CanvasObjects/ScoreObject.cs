@@ -25,14 +25,26 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class ScoreObject: TaggerObject
 	{
+		static Image iconImage;
+
 		public ScoreObject (ScoreButton score): base (score)
 		{
 			Button = score;
+			if (iconImage == null) {
+				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
+				                                               StyleConf.ButtonScoreIcon));
+			}
 		}
 
 		public ScoreButton Button {
 			get;
 			set;
+		}
+
+		public override Image Icon {
+			get {
+				return iconImage;
+			}
 		}
 
 		public override string Text {
