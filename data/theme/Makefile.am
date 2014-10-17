@@ -29,6 +29,14 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Entry/team-combo-entry-red.png \
 	gtk-2.0/Handles/handle-h.png \
 	gtk-2.0/Handles/handle-v.png \
+	gtk-2.0/Range/null.png \
+	gtk-2.0/Range/slider-active.png \
+	gtk-2.0/Range/slider-insensitive.png \
+	gtk-2.0/Range/slider.png \
+	gtk-2.0/Range/trough-horizontal-lower.png \
+	gtk-2.0/Range/trough-horizontal.png \
+	gtk-2.0/Range/trough-vertical-lower.png \
+	gtk-2.0/Range/trough-vertical.png \
 	gtk-2.0/Tabs/notebook-gap-horiz.png \
 	gtk-2.0/Tabs/notebook-gap-vert.png \
 	gtk-2.0/Tabs/notebook.png \
@@ -48,5 +56,6 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/handles.rc \
 	gtk-2.0/notebook.rc \
 	gtk-2.0/radiobutton.rc \
+	gtk-2.0/range.rc \
 	gtk-2.0/welcome.rc \
 	longomatch-dark.json
