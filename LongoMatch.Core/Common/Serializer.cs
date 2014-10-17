@@ -162,10 +162,7 @@ namespace LongoMatch.Core.Common
 					return new Time((int)t);
 				} else if (objectType == typeof (Color)) {
 					string rgbStr = (string) reader.Value;
-					return new Color(Byte.Parse (rgbStr.Substring(1,2), NumberStyles.HexNumber),
-					                 Byte.Parse (rgbStr.Substring(3,2), NumberStyles.HexNumber),
-					                 Byte.Parse (rgbStr.Substring(5,2), NumberStyles.HexNumber),
-					                 Byte.Parse (rgbStr.Substring(7,2), NumberStyles.HexNumber));
+					return Color.Parse (rgbStr);
 				} else if (objectType == typeof (Image)) {
 					byte[] buf = Convert.FromBase64String ((string)reader.Value); 
 					return Image.Deserialize (buf);

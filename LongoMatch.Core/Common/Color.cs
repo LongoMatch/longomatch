@@ -17,6 +17,7 @@
 // 
 using System;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace LongoMatch.Core.Common
 {
@@ -81,6 +82,25 @@ namespace LongoMatch.Core.Common
 		static public Color ColorFromUShort (ushort r, ushort g, ushort b, ushort a = ushort.MaxValue) {
 			return new Color (UShortToByte (r), UShortToByte (g),
 			                  UShortToByte (b), UShortToByte (a));
+		}
+
+		static public Color Parse (string colorHex)
+		{
+			byte r, g, b, a=Byte.MaxValue;
+			
+			if (!colorHex.StartsWith ("#")) {
+				return null;
+			}
+			if (colorHex.Length != 7 && colorHex.Length != 9) {
+				return null;
+			}
+			r = Byte.Parse (colorHex.Substring (1, 2), NumberStyles.HexNumber);
+			g = Byte.Parse (colorHex.Substring (3, 2), NumberStyles.HexNumber);
+			b = Byte.Parse (colorHex.Substring (5, 2), NumberStyles.HexNumber);
+			if (colorHex.Length == 9) {
+				a = Byte.Parse (colorHex.Substring (7, 2), NumberStyles.HexNumber);
+			}
+			return new Color (r, g, b, a);
 		}
 		
 		static public Color Black = new Color (0, 0, 0);
