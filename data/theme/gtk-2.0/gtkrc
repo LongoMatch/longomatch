@@ -129,6 +129,7 @@ include "checkbox.rc"
 include "handles.rc"
 include "radiobutton.rc"
 include "entry.rc"
+include "range.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -142,6 +143,7 @@ class "GtkRadioButton"                           style "longomatch-radiobutton"
 class "GtkTreeView"                              style "longomatch-treeview"
 class "GtkIconView"                              style "longomatch-treeview"
 class "GtkTextView"                              style "longomatch-treeview"
+class "GtkScale"                                 style "longomatch-range"
 
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
