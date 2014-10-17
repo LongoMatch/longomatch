@@ -63,12 +63,18 @@ namespace LongoMatch.Gui.Component
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;
+
 			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
 			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
-			zoominimage.HeightRequest = zoomoutimage.HeightRequest = focusscale.HeightRequest = 16;
+
+			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
+			scrolledwindow1.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
+				int spacing = (int) scrolledwindow1.StyleGetProperty ("scrollbar-spacing");
+				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
+			};
+
 			menu = new PlaysMenu ();
 			periodsmenu = new PeriodsMenu ();
-			
 		}
 
 		protected override void OnDestroyed ()

@@ -5,18 +5,31 @@ namespace LongoMatch.Gui.Component
 	public partial class Timeline
 	{
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.VBox leftbox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Button focusbutton;
+		
 		private global::Gtk.Image focusbuttonimage;
+		
 		private global::Gtk.DrawingArea labelsarea;
-		private global::Gtk.HBox hbox3;
+		
+		private global::Gtk.HBox zoomhbox;
+		
 		private global::Gtk.Image zoominimage;
+		
 		private global::Gtk.HScale focusscale;
+		
 		private global::Gtk.Image zoomoutimage;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::Gtk.DrawingArea timerulearea;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.DrawingArea timelinearea;
 
 		protected virtual void Build ()
@@ -43,7 +56,6 @@ namespace LongoMatch.Gui.Component
 			this.focusbuttonimage = new global::Gtk.Image ();
 			this.focusbuttonimage.Name = "focusbuttonimage";
 			this.focusbutton.Add (this.focusbuttonimage);
-			this.focusbutton.Label = null;
 			this.hbox2.Add (this.focusbutton);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.focusbutton]));
 			w2.Position = 0;
@@ -59,45 +71,45 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.labelsarea]));
 			w4.Position = 1;
 			// Container child leftbox.Gtk.Box+BoxChild
-			this.hbox3 = new global::Gtk.HBox ();
-			this.hbox3.Name = "hbox3";
-			this.hbox3.Spacing = 6;
-			// Container child hbox3.Gtk.Box+BoxChild
+			this.zoomhbox = new global::Gtk.HBox ();
+			this.zoomhbox.Name = "zoomhbox";
+			this.zoomhbox.Spacing = 6;
+			// Container child zoomhbox.Gtk.Box+BoxChild
 			this.zoominimage = new global::Gtk.Image ();
 			this.zoominimage.WidthRequest = 14;
 			this.zoominimage.HeightRequest = 8;
 			this.zoominimage.Name = "zoominimage";
-			this.hbox3.Add (this.zoominimage);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.zoominimage]));
+			this.zoomhbox.Add (this.zoominimage);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoominimage]));
 			w5.Position = 0;
 			w5.Expand = false;
 			w5.Fill = false;
-			// Container child hbox3.Gtk.Box+BoxChild
+			// Container child zoomhbox.Gtk.Box+BoxChild
 			this.focusscale = new global::Gtk.HScale (null);
-			this.focusscale.HeightRequest = 14;
 			this.focusscale.CanFocus = true;
 			this.focusscale.Name = "focusscale";
+			this.focusscale.Inverted = true;
 			this.focusscale.Adjustment.Upper = 100;
 			this.focusscale.Adjustment.PageIncrement = 10;
 			this.focusscale.Adjustment.StepIncrement = 1;
 			this.focusscale.DrawValue = false;
 			this.focusscale.Digits = 0;
 			this.focusscale.ValuePos = ((global::Gtk.PositionType)(2));
-			this.hbox3.Add (this.focusscale);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.focusscale]));
+			this.zoomhbox.Add (this.focusscale);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.focusscale]));
 			w6.Position = 1;
-			// Container child hbox3.Gtk.Box+BoxChild
+			// Container child zoomhbox.Gtk.Box+BoxChild
 			this.zoomoutimage = new global::Gtk.Image ();
 			this.zoomoutimage.WidthRequest = 14;
 			this.zoomoutimage.HeightRequest = 8;
 			this.zoomoutimage.Name = "zoomoutimage";
-			this.hbox3.Add (this.zoomoutimage);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.zoomoutimage]));
+			this.zoomhbox.Add (this.zoomoutimage);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomoutimage]));
 			w7.Position = 2;
 			w7.Expand = false;
 			w7.Fill = false;
-			this.leftbox.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.hbox3]));
+			this.leftbox.Add (this.zoomhbox);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.zoomhbox]));
 			w8.Position = 2;
 			w8.Expand = false;
 			w8.Fill = false;
