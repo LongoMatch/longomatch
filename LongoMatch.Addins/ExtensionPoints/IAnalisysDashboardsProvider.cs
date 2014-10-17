@@ -23,7 +23,7 @@ using Mono.Addins;
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IAnalsysDashboardsProvider: ILongoMatchPlugin
+	public interface IAnalisysDashboardsProvider: ILongoMatchPlugin
 	{
 		List<Dashboard> Dashboards {
 			get;

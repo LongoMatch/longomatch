@@ -112,7 +112,7 @@ namespace LongoMatch.Addins
 		
 		public void LoadDashboards (ICategoriesTemplatesProvider provider)
 		{
-			foreach (IAnalsysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalsysDashboardsProvider> ()) {
+			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
 				foreach (Dashboard dashboard in plugin.Dashboards) {
 					dashboard.Static = true;
 					provider.Register (dashboard);

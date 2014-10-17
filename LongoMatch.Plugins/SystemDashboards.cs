@@ -25,7 +25,7 @@ using Mono.Unix;
 namespace LongoMatch.Plugins
 {
 	[Extension]
-	public class SystemDashboards: IAnalsysDashboardsProvider
+	public class SystemDashboards: IAnalisysDashboardsProvider
 	{
 		public string Name {
 			get {
