@@ -42,7 +42,6 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 			detachedPlayer = false;
-			ConnectSignals();
 		}
 
 		protected override void OnDestroyed ()
@@ -77,11 +76,6 @@ namespace LongoMatch.Gui.Component
 			codingwidget.DeletePlays (plays);
 		}
 		
-		private void ConnectSignals() {
-			KeyPressEvent += (o, args) => (
-				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
- 		}
- 		
 		public void DetachPlayer ()
 		{
 			bool isPlaying = playercapturer.Playing;

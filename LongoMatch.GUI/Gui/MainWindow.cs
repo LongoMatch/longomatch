@@ -161,6 +161,12 @@ namespace LongoMatch.Gui
 		
 		#region Private Methods
 		
+		protected override bool OnKeyPressEvent (EventKey evnt)
+		{
+			Config.EventsBroker.EmitKeyPressed(this, (int)evnt.Key, (int)evnt.State);
+			return base.OnKeyPressEvent (evnt);
+		}
+
 		MenuItem ImportProjectActionMenu {
 			get {
 				return (MenuItem) this.UIManager.GetWidget("/menubar1/FileAction/ImportProjectAction");
