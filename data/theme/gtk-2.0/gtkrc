@@ -143,7 +143,10 @@ class "GtkRadioButton"                           style "longomatch-radiobutton"
 class "GtkTreeView"                              style "longomatch-treeview"
 class "GtkIconView"                              style "longomatch-treeview"
 class "GtkTextView"                              style "longomatch-treeview"
-class "GtkScale"                                 style "longomatch-range"
+# Painful bug in GTK forces us to define a style for each orientation.
+# Indeed when providing different images for different orientation, GTK will pick the wrong orientation when the scale reaches boundaries…
+class "GtkHScale"                                style "longomatch-hscale"
+class "GtkVScale"                                style "longomatch-vscale"
 
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"

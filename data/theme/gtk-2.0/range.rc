@@ -5,6 +5,10 @@ style "longomatch-range"
   GtkRange::activate-slider		= TRUE
   GtkRange::slider-width		= 20
   GtkScale::slider-length		= 20
+}
+
+style "longomatch-hscale"  = "longomatch-range"
+{
   engine "pixmap" 
   {
     image 
@@ -15,17 +19,6 @@ style "longomatch-range"
           file				= "Range/trough-horizontal-lower.png"
           border			= { 0, 0, 9, 9 }
           stretch			= TRUE
-          orientation			= HORIZONTAL
-    }
-    image 
-    {
-          function			= BOX
-          recolorable			= TRUE
-          detail			= "trough-lower"
-          file				= "Range/trough-vertical-lower.png"
-          border			= { 9, 9, 0, 0 }
-          stretch			= TRUE
-          orientation			= VERTICAL
     }
     image 
     {
@@ -35,7 +28,66 @@ style "longomatch-range"
           file				= "Range/trough-horizontal.png"
           border			= { 0, 0, 9, 9 }
           stretch			= TRUE
-          orientation			= HORIZONTAL
+    }
+    image 
+    {
+          function			= SLIDER
+          recolorable			= TRUE
+          state				= NORMAL
+          file				= "Range/null.png"
+          border			= { 0, 0, 0, 0 }
+          stretch			= TRUE
+          overlay_file			= "Range/slider.png"
+          overlay_stretch		= FALSE
+    }
+    image 
+    {
+          function			= SLIDER
+          recolorable			= TRUE
+          state				= PRELIGHT
+          file				= "Range/null.png"
+          border			= { 0, 0, 0, 0 }
+          stretch			= TRUE
+          overlay_file			= "Range/slider-active.png"
+          overlay_stretch		= FALSE
+    }
+    image 
+    {
+          function			= SLIDER
+          recolorable			= TRUE
+          state				= ACTIVE
+          file				= "Range/null.png"
+          border			= { 0, 0, 0, 0 }
+          stretch			= TRUE
+          overlay_file			= "Range/slider-active.png"
+          overlay_stretch		= FALSE
+    }
+    image 
+    {
+          function			= SLIDER
+          recolorable			= TRUE
+          state				= INSENSITIVE
+          file				= "Range/null.png"
+          border			= { 0, 0, 0, 0 }
+          stretch			= TRUE
+          overlay_file			= "Range/slider-insensitive.png"
+          overlay_stretch		= FALSE
+    }
+  }
+}
+
+style "longomatch-vscale"  = "longomatch-range"
+{
+  engine "pixmap" 
+  {
+    image 
+    {
+          function			= BOX
+          recolorable			= TRUE
+          detail			= "trough-lower"
+          file				= "Range/trough-vertical-lower.png"
+          border			= { 9, 9, 0, 0 }
+          stretch			= TRUE
     }
     image 
     {
@@ -45,11 +97,7 @@ style "longomatch-range"
           file				= "Range/trough-vertical.png"
           border			= { 9, 9, 0, 0 }
           stretch			= TRUE
-          orientation			= VERTICAL
     }
-
-############### the sliders ###############
-
     image 
     {
           function			= SLIDER
