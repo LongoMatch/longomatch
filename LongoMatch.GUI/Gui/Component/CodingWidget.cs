@@ -265,6 +265,7 @@ namespace LongoMatch.Gui.Component
 				Config.GUIToolkit.EditPlay (play, project, false, true, false, false);
 			}
 			teamtagger.ResetSelection ();
+			selectedPlayers = null;
 			Config.EventsBroker.EmitNewEvent (play);
 		}
 
