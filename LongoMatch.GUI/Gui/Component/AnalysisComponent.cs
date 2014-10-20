@@ -91,14 +91,16 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
 				box = new EventBox ();
-				
-				box.KeyPressEvent += (o, args) => OnKeyPressEvent (args.Event);
+				box.KeyPressEvent += (o, args) => Config.EventsBroker.EmitKeyPressed (this,
+				                                                                      (int) args.Event.Key,
+				                                                                      (int) args.Event.State);
 				playerWindow.Add (box);
 				
 				box.Show ();
+				box.CanFocus = true;
 				playerWindow.Show ();
-				
 				playercapturer.Reparent (box);
+				playerWindow.Focus = box;
 				videowidgetsbox.Visible = false;
 			} else {
 				Log.Debug ("Attaching player again");
