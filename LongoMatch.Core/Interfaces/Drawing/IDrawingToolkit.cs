@@ -72,6 +72,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		Image Copy (ICanvas canvas, double width, double height);
 		Area UserToDevice (Area area);
 		void Invoke (EventHandler handler);
+		void MeasureText(string text, out int width, out int height,
+		                 string fontFamily, int fontSize, FontWeight fontWeight);
 	}
 }
 

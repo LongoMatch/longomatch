@@ -15,16 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Linq;
-using System.Runtime.Remoting;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -97,7 +93,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 			set;
 		}
-		
+
 		public LineStyle LineStyle {
 			get;
 			set;
@@ -222,15 +218,18 @@ namespace LongoMatch.Drawing.Widgets
 			case DrawTool.Text:
 			case DrawTool.Player:
 				{
-					Text text = new Text (start, 1, FontSize * 1.5, "");
+					int width, heigth;
+					Text text = new Text (start, 1, 1, "");
 					if (ConfigureObjectEvent != null) {
 						ConfigureObjectEvent (text, Tool);
 					}
 					if (text.Value == null) {
 						return;
 					}
-					text.TopRight.X += text.Value.Length * FontSize;
-					text.BottomRight.X += text.Value.Length * FontSize;
+					Config.DrawingToolkit.MeasureText (text.Value, out width, out heigth,
+				                                   "Ubuntu", FontSize, FontWeight.Normal);
+					text.Update (new Point (start.X - width / 2, start.Y - heigth / 2),
+				             width, heigth);
 					text.TextColor = TextColor.Copy ();
 					text.FillColor = text.StrokeColor = TextBackgroundColor.Copy ();
 					text.TextSize = FontSize;

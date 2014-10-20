@@ -43,6 +43,7 @@ namespace LongoMatch.Drawing.Cairo
 		LineStyle savedLineStyle;
 		string savedFontFamily;
 		bool disableScalling;
+		Layout layout;
 
 		public CairoBackend ()
 		{
@@ -55,6 +56,10 @@ namespace LongoMatch.Drawing.Cairo
 			FontSlant = FontSlant.Normal;
 			LineStyle = LineStyle.Normal;
 			FontAlignment = FontAlignment.Center;
+			if (layout == null) {
+				layout = new Layout (Gdk.PangoHelper.ContextGet());
+			}
+
 			ClearOperation = false;
 		}
 
@@ -111,17 +116,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public FontWeight FontWeight {
 			set {
-				switch (value) {
-				case FontWeight.Light:
-					fWeight = Weight.Light;
-					break;
-				case FontWeight.Bold:
-					fWeight = Weight.Semibold;
-					break;
-				case FontWeight.Normal:
-					fWeight = Weight.Normal;
-					break;
-				}
+				fWeight = WeightToPangoWeight (value);
 			}
 		}
 
@@ -548,6 +543,35 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void Invoke (EventHandler handler) {
 			Gtk.Application.Invoke (handler);
+		}
+		
+		public void MeasureText(string text, out int width, out int height,
+		                        string fontFamily, int fontSize, FontWeight fontWeight) {
+			FontDescription desc =  new FontDescription();
+			desc.Family = fontFamily;
+			desc.Size = Pango.Units.FromPixels (fontSize);
+			desc.Weight = WeightToPangoWeight (fontWeight);
+			layout.FontDescription = desc;
+			layout.SetMarkup (GLib.Markup.EscapeText (text));
+			layout.GetPixelSize (out width, out height);
+		}
+
+		Weight WeightToPangoWeight (FontWeight value)
+		{
+			Weight weight = Weight.Normal;
+
+			switch (value) {
+			case FontWeight.Light:
+				weight = Weight.Light;
+				break;
+			case FontWeight.Bold:
+				weight = Weight.Semibold;
+				break;
+			case FontWeight.Normal:
+				weight = Weight.Normal;
+				break;
+			}
+			return weight;
 		}
 	}
 }
