@@ -60,6 +60,7 @@ namespace LongoMatch.Gui.Component
 			SetTabProps (playsnotebook, false);
 			SetTabProps (playlistwidget, false);
 			SetTabProps (filtersvbox, false);
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 		}
 
 		protected override void OnDestroyed ()
