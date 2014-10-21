@@ -165,6 +165,17 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		bool SaveTemplate (Dashboard dashboard)
+		{
+			try {
+				provider.Update (dashboard);
+				return true;
+			} catch (InvalidTemplateFilenameException ex) {
+				Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				return false;
+			}
+		}
+
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System templates can't be edited, do you want to create a copy?");
@@ -178,8 +189,7 @@ namespace LongoMatch.Gui.Panel
 					if (provider.TemplatesNames.Contains (newName)) {
 						msg = Catalog.GetString ("A template with the same name already exists"); 
 						Config.GUIToolkit.ErrorMessage (msg, this);
-					}
-					else {
+					} else {
 						break;
 					}
 				}
@@ -189,8 +199,9 @@ namespace LongoMatch.Gui.Panel
 				Dashboard newtemplate = loadedTemplate.Clone ();
 				newtemplate.Name = newName;
 				newtemplate.Static = false;
-				provider.Save (newtemplate);
-				Load (newtemplate.Name);
+				if (SaveTemplate (newtemplate)) {
+					Load (newtemplate.Name);
+				}
 			}
 		}
 
@@ -205,8 +216,9 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					string msg = Catalog.GetString ("Do you want to save the current template");
 					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-						provider.Update (loadedTemplate);
-						buttonswidget.Edited = false;
+						if (SaveTemplate (loadedTemplate)) {
+							buttonswidget.Edited = false;
+						}
 					}
 				}
 			}
@@ -314,12 +326,21 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 				if (dialog.SelectedTemplate != null) {
-					provider.Copy (dialog.SelectedTemplate, dialog.Text);
+					try {
+						provider.Copy (dialog.SelectedTemplate, dialog.Text);
+					} catch (InvalidTemplateFilenameException ex) {
+						Config.GUIToolkit.ErrorMessage (ex.Message, this);
+						dialog.Destroy ();
+						return;
+					}
 				} else {
 					Dashboard template;
 					template = Dashboard.DefaultTemplate (dialog.Count);
 					template.Name = dialog.Text;
-					provider.Save (template);
+					if (!SaveTemplate (template)) {
+						dialog.Destroy ();
+						return;
+					}
 				}
 				Load (dialog.Text);
 			}
@@ -337,10 +358,14 @@ namespace LongoMatch.Gui.Panel
 					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A template with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
-					provider.Delete (template.Name);
+					string prevName = template.Name;
 					template.Name = args.NewText;
-					provider.Save (template);
-					templates.SetValue (iter, 1, template.Name);
+					if (!SaveTemplate (template)) {
+						template.Name = prevName;
+					} else {
+						provider.Delete (template.Name);
+						templates.SetValue (iter, 1, template.Name);
+					}
 				}
 			}
 		}

@@ -17,6 +17,7 @@
 //
 using System;
 using Mono.Unix;
+using System.Collections.Generic;
 
 namespace LongoMatch.Core.Common
 {
@@ -60,5 +61,14 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+	
+	public class InvalidTemplateFilenameException: Exception
+	{
+		public InvalidTemplateFilenameException (List<char> invalidChars):
+			base (Catalog.GetString("The name contains invalid characters: ") + String.Join (" ", invalidChars))
+		{
+		}
+	}
+	
 }
 

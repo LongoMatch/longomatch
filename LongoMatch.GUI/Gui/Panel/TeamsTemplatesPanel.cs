@@ -149,6 +149,17 @@ namespace LongoMatch.Gui.Panel
 				HandleSelectionChanged (null, null);
 			}
 		}
+		
+		bool SaveTemplate (TeamTemplate template)
+		{
+			try {
+				provider.Update (template);
+				return true;
+			} catch (InvalidTemplateFilenameException ex) {
+				Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				return false;
+			}
+		}
 
 		void HandleEnterTeamButton (object sender, EventArgs e)
 		{
@@ -185,7 +196,9 @@ namespace LongoMatch.Gui.Panel
 			if (loadedTeam == null)
 				return;
 
-			provider.Update (loadedTeam);
+			if (!SaveTemplate (loadedTeam)) {
+				return;
+			}
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
 				teamseditortreeview.Model.SetValue (itersDict [loadedTeam.Name], 0,
@@ -281,7 +294,10 @@ namespace LongoMatch.Gui.Panel
 					team = TeamTemplate.DefaultTemplate (dialog.Count);
 					team.TeamName = dialog.Text;
 					team.Name = dialog.Text;
-					provider.Update (team);
+					if (!SaveTemplate (team)) {
+						dialog.Destroy ();
+						return;
+					}
 				}
 				Load (dialog.Text);
 			}
@@ -299,10 +315,14 @@ namespace LongoMatch.Gui.Panel
 					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
-					provider.Delete (team.Name);
+					string prevName = team.Name;
 					team.Name = args.NewText;
-					provider.Save (team);
-					teams.SetValue (iter, 1, team.Name);
+					if (!SaveTemplate (team)) {
+						team.Name = prevName;
+					} else {
+						provider.Delete (team.Name);
+						teams.SetValue (iter, 1, team.Name);
+					}
 				}
 			}
 		}

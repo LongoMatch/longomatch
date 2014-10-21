@@ -36,7 +36,7 @@ namespace LongoMatch.Services
 		{
 			dict = new Dictionary<Type, ITemplateProvider> ();
 			dict.Add (typeof(TeamTemplate),
-			         new TeamTemplatesProvider (Config.TeamsDir));
+			          new TeamTemplatesProvider (Config.TeamsDir));
 			dict.Add (typeof(Dashboard), new CategoriesTemplatesProvider (Config.AnalysisDir));
 			CheckDefaultTemplates ();
 		}
@@ -81,12 +81,7 @@ namespace LongoMatch.Services
 			this.extension = extension;
 			methodLoad = typeof(T).GetMethod ("Load");
 			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
-			systemTemplates = new List<T>();
-		}
-
-		private string GetPath (string templateName)
-		{
-			return System.IO.Path.Combine (basePath, templateName) + extension;
+			systemTemplates = new List<T> ();
 		}
 
 		public virtual void CheckDefaultTemplate ()
@@ -149,6 +144,7 @@ namespace LongoMatch.Services
 
 		public void Save (ITemplate template)
 		{
+			CheckInvalidChars (template.Name);
 			string filename = GetPath (template.Name);
 			
 			Log.Information ("Saving template " + filename);
@@ -168,14 +164,15 @@ namespace LongoMatch.Services
 
 		public void Update (ITemplate template)
 		{
+			CheckInvalidChars (template.Name);
 			string filename = GetPath (template.Name);
-			
 			Log.Information ("Updating template " + filename);
 			/* Don't cach the Exception here to chain it up */
 			template.Save (filename);
 		}
 
-		public void Register (T template) {
+		public void Register (T template)
+		{
 			systemTemplates.Add (template);
 		}
 
@@ -186,6 +183,7 @@ namespace LongoMatch.Services
 					"the name: ") + copy);
 			}
 			
+			CheckInvalidChars (copy);
 			Log.Information (String.Format ("Copying template {0} to {1}", orig, copy));
 			File.Copy (GetPath (orig), GetPath (copy));
 		}
@@ -210,6 +208,21 @@ namespace LongoMatch.Services
 			ITemplate t = (ITemplate)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
 			Save (t);
+		}
+
+		void CheckInvalidChars (string name)
+		{
+			List<char> invalidChars;
+			
+			invalidChars = name.Intersect (Path.GetInvalidFileNameChars ()).ToList ();
+			if (invalidChars.Count > 0) {
+				throw new InvalidTemplateFilenameException (invalidChars); 
+			}
+		}
+
+		string GetPath (string templateName)
+		{
+			return System.IO.Path.Combine (basePath, templateName) + extension;
 		}
 	}
 

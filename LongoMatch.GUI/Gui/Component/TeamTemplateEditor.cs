@@ -278,8 +278,13 @@ namespace LongoMatch.Gui.Component
 		void HandleSaveTemplateClicked (object sender, EventArgs e)
 		{
 			if (template != null) {
-				Config.TeamTemplatesProvider.Update (template);			
-				Edited = false;
+				try {
+					Config.TeamTemplatesProvider.Update (template);
+					Edited = false;
+				} catch (InvalidTemplateFilenameException ex) {
+					Config.GUIToolkit.ErrorMessage (ex.ToString (), this);
+					return;
+				}
 			}
 			if (TemplateSaved != null)
 				TemplateSaved (this, null);
