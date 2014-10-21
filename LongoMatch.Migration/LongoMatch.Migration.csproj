@@ -79,6 +79,16 @@
     <EmbeddedResource Include="Data\project.lgm">
       <LogicalName>project.lgm</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\data\images\fields\field-half.svg">
+      <Link>field-half.svg</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\data\images\fields\field-goal.svg">
+      <Link>field-goal.svg</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\data\images\fields\field-full.svg">
+      <Link>field-full.svg</Link>
+      <LogicalName>field-full.svg</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

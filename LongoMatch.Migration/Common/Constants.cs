@@ -97,9 +97,9 @@ Xavier Queralt Mateu (ca)";
 		public const string PROJECT_EXT = ".lgm";
 		
 		public const string BACKGROUND = "background.png";
-		public const string FIELD_BACKGROUND = "field_background.svg";
-		public const string HALF_FIELD_BACKGROUND = "half_field_background.svg";
-		public const string GOAL_BACKGROUND = "goal_background.svg";
+		public const string FIELD_BACKGROUND = "field-full.svg";
+		public const string HALF_FIELD_BACKGROUND = "field-half.svg";
+		public const string GOAL_BACKGROUND = "field-goal.svg";
 		
 		public const int DB_MAYOR_VERSION = 3;
 		public const int DB_MINOR_VERSION = 1;

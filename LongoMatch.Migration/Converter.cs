@@ -126,18 +126,30 @@ namespace LongoMatch.Migration
 		}
 
 		public static LongoMatch.Core.Store.Templates.Dashboard ConvertCategories (Categories cats,
-		                                                                           out Dictionary <TagSubCategory, List<LongoMatch.Core.Store.Tag>> dict,
-		                                                                           out Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict)
+		                                                                         out Dictionary <TagSubCategory, List<LongoMatch.Core.Store.Tag>> dict,
+		                                                                         out Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict)
 		{
 			dict = new Dictionary<TagSubCategory, List<LongoMatch.Core.Store.Tag>> ();
-			eventTypesDict = new Dictionary<Category, LongoMatch.Core.Store.EventType>();
+			eventTypesDict = new Dictionary<Category, LongoMatch.Core.Store.EventType> ();
 			int i = 0;
 			var dashboard = new LongoMatch.Core.Store.Templates.Dashboard ();
 			dashboard.Name = cats.Name;
 			dashboard.Image = ConvertImage (cats.Image);
-			dashboard.FieldBackground = ConvertImage (cats.FieldBackground);
-			dashboard.HalfFieldBackground = ConvertImage (cats.HalfFieldBackground);
-			dashboard.GoalBackground = ConvertImage (cats.GoalBackground);
+			if (cats.FieldBackground != null) {
+				dashboard.FieldBackground = ConvertImage (cats.FieldBackground);
+			} else {
+				dashboard.FieldBackground = Config.FieldBackground;
+			}
+			if (cats.HalfFieldBackground != null) {
+				dashboard.HalfFieldBackground = ConvertImage (cats.HalfFieldBackground);
+			} else {
+				dashboard.HalfFieldBackground = Config.HalfFieldBackground;
+			}
+			if (cats.GoalBackground != null) {
+				dashboard.GoalBackground = ConvertImage (cats.GoalBackground);
+			} else {
+				dashboard.HalfFieldBackground = Config.GoalBackground;
+			}
 			dashboard.ID = cats.ID;
 			dashboard.GamePeriods = new List<string> { "1", "2" };
 			

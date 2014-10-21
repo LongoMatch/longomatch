@@ -53,6 +53,9 @@ SOURCES = Common/Color.cs \
 RESOURCES = gtk-gui/gui.stetic \
 	Data/default.lct \
 	Data/default.ltt \
-	Data/project.lgm
+	Data/project.lgm \
+	$(top_srcdir)/data/images/fields/field-half.svg \
+	$(top_srcdir)/data/images/fields/field-goal.svg \
+	$(top_srcdir)/data/images/fields/field-full.svg
 
 include $(top_srcdir)/build/build.mk

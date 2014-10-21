@@ -54,6 +54,9 @@ namespace LongoMatch.Migration
 				LongoMatch.Config.baseDirectory = baseDirectory;
 				LongoMatch.Config.dataDir = System.IO.Path.Combine (LongoMatch.Config.baseDirectory, "share", "longomatch");
 			}
+			LongoMatch.Config.Load ();
+			var styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
+			LongoMatch.Config.Style = LongoMatch.Core.Common.StyleConf.Load (styleConf);
 		}
 	
 		static	void InitGtk ()
