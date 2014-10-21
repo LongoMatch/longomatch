@@ -17,33 +17,22 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Mono.Unix;
+using Gdk;
 using Gtk;
-
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
-using LongoMatch.Video.Utils;
-using Gdk;
-
-
 
 namespace LongoMatch.Gui.Component
 {
-
-
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectListWidget : Gtk.Bin
 	{
 		public event ProjectsSelectedHandler ProjectsSelected;
 		public event ProjectSelectedHandler ProjectSelected;
-		
+
 		const int COL_DISPLAY_NAME = 0;
 		const int COL_PIXBUF = 1;
 		const int COL_PROJECT_DESCRIPTION = 2;
@@ -52,9 +41,9 @@ namespace LongoMatch.Gui.Component
 		ListStore store;
 		bool swallowSignals;
 
-		public ProjectListWidget()
+		public ProjectListWidget ()
 		{
-			this.Build();
+			this.Build ();
 			
 			//GtkGlue.EntrySetIcon (filterEntry, GtkGlue.EntryIconPosition.Secondary, "gtk-clear");
 			store = CreateStore ();
@@ -63,6 +52,11 @@ namespace LongoMatch.Gui.Component
 			iconview.SelectionChanged += OnSelectionChanged;
 			iconview.ItemActivated += HandleItemActivated;
 			iconview.ItemWidth = 200;
+			sortcombobox.Changed += (sender, e) => {
+				/* Hack to make it actually resort */
+				store.SetSortColumnId (-2 , SortType.Ascending);
+				store.SetSortColumnId (0, SortType.Ascending);
+			};
 		}
 
 		public SelectionMode SelectionMode {
@@ -70,18 +64,17 @@ namespace LongoMatch.Gui.Component
 				iconview.SelectionMode = value;
 			}
 		}
-		
+
 		public void Fill (List<ProjectDescription> projects)
 		{
 			Pixbuf image;
 			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
-			foreach (ProjectDescription pdesc in projects)
-			{
+			foreach (ProjectDescription pdesc in projects) {
 				if (pdesc.FileSet.Preview != null) {
 					image = pdesc.FileSet.Preview.Value;
-				} else  {
+				} else {
 					image = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk, IconSize.Dialog);
 				}
 				store.AppendValues (pdesc.Title, image, pdesc);
@@ -89,9 +82,10 @@ namespace LongoMatch.Gui.Component
 			swallowSignals = false;
 		}
 
-		public void RemoveProjects(List<ProjectDescription> projects) {
+		public void RemoveProjects (List<ProjectDescription> projects)
+		{
 			foreach (ProjectDescription project in projects) {
-				this.projects.Remove(project);
+				this.projects.Remove (project);
 			}
 			Fill (this.projects);
 			if (ProjectsSelected != null) {
@@ -99,59 +93,93 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void ClearSearch() {
-			filterEntry.Text="";
+		public void ClearSearch ()
+		{
+			filterEntry.Text = "";
 		}
-		
+
 		ListStore CreateStore ()
 		{
-			store = new ListStore (typeof (string), typeof (Gdk.Pixbuf), typeof (ProjectDescription));
-			store.DefaultSortFunc = SortFunc;
-			store.SetSortColumnId (COL_DISPLAY_NAME, SortType.Ascending);
+			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(ProjectDescription));
+			store.SetSortFunc (0, SortFunc);
+			store.SetSortColumnId (0, SortType.Ascending);
 			filter = new Gtk.TreeModelFilter (store, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
 			iconview.Model = filter;
 			return store;
 		}
 
+		int CompareString (string s1, string s2)
+		{
+			if (s1 != null && s2 != null) {
+				return s1.CompareTo (s2);
+			} else if (s1 != null) {
+				return 1;
+			} else if (s2 != null) {
+				return - 1;
+			}
+			return 0;
+		}
+
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
-			ProjectDescription pa = (ProjectDescription) model.GetValue (a, COL_PROJECT_DESCRIPTION);
-			ProjectDescription pb = (ProjectDescription) model.GetValue (b, COL_PROJECT_DESCRIPTION);
+			ProjectDescription p1, p2;
 			
-			return (int) (pa.LastModified.Ticks - pb.LastModified.Ticks);
+			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
+			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
+
+			if (p1 == null) {
+				return -1;
+			} else if (p2 == null) {
+				return 1;
+			}
+			
+			if (sortcombobox.Active == 0) {
+				return CompareString (p1.Title, p2.Title);
+			} else if (sortcombobox.Active == 1) {
+				return (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+			} else if (sortcombobox.Active == 2) {
+				return (int)(p1.LastModified.Ticks - p2.LastModified.Ticks);
+			} else if (sortcombobox.Active == 3) {
+				return CompareString (p1.Season, p2.Season);
+			} else if (sortcombobox.Active == 4) {
+				return CompareString (p1.Competition, p2.Competition);
+			} else {
+				return p1.Title.CompareTo(p2.Title);
+			}
 		}
-		
-		protected virtual void OnFilterentryChanged(object sender, System.EventArgs e)
+
+		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
 		{
-			filter.Refilter();
+			filter.Refilter ();
 		}
 
-		private bool FilterTree(Gtk.TreeModel model, Gtk.TreeIter iter)
+		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			ProjectDescription project =(ProjectDescription) model.GetValue(iter, COL_PROJECT_DESCRIPTION);
+			ProjectDescription project = (ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION);
 
-			if(project == null)
-				return true;
-
-			if(filterEntry.Text == "")
+			if (project == null)
 				return true;
 
-			if(project.Title.IndexOf(filterEntry.Text) > -1)
+			if (filterEntry.Text == "")
 				return true;
-			else if(project.Season.IndexOf(filterEntry.Text) > -1)
+
+			if (project.Title.IndexOf (filterEntry.Text) > -1)
 				return true;
-			else if(project.Competition.IndexOf(filterEntry.Text) > -1)
+			else if (project.Season.IndexOf (filterEntry.Text) > -1)
 				return true;
-			else if(project.LocalName.IndexOf(filterEntry.Text) > -1)
+			else if (project.Competition.IndexOf (filterEntry.Text) > -1)
 				return true;
-			else if(project.VisitorName.IndexOf(filterEntry.Text) > -1)
+			else if (project.LocalName.IndexOf (filterEntry.Text) > -1)
+				return true;
+			else if (project.VisitorName.IndexOf (filterEntry.Text) > -1)
 				return true;
 			else
 				return false;
 		}
 
-		protected virtual void OnSelectionChanged(object o, EventArgs args) {
+		protected virtual void OnSelectionChanged (object o, EventArgs args)
+		{
 			TreeIter iter;
 			List<ProjectDescription> list;
 			TreePath[] pathArray;
@@ -159,13 +187,13 @@ namespace LongoMatch.Gui.Component
 			if (swallowSignals)
 				return;
 
-			if(ProjectsSelected != null) {
-				list = new List<ProjectDescription>();
+			if (ProjectsSelected != null) {
+				list = new List<ProjectDescription> ();
 				pathArray = iconview.SelectedItems;
 				
-				for(int i=0; i< pathArray.Length; i++) {
-					iconview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-					list.Add ((ProjectDescription) iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION));
+				for (int i=0; i< pathArray.Length; i++) {
+					iconview.Model.GetIterFromString (out iter, pathArray [i].ToString ());
+					list.Add ((ProjectDescription)iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION));
 				}
 				ProjectsSelected (list);
 			}

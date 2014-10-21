@@ -8,6 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Label filterlabel;
 		private global::Gtk.Entry filterEntry;
+		private global::Gtk.ComboBox sortcombobox;
 		private global::Gtk.ScrolledWindow scrolledwindow2;
 		private global::Gtk.IconView iconview;
 
@@ -43,11 +44,25 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Add (this.filterEntry);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterEntry]));
 			w2.Position = 1;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
-			w3.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.sortcombobox = global::Gtk.ComboBox.NewText ();
+			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by name"));
+			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by date"));
+			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by modification date"));
+			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by season"));
+			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by competition"));
+			this.sortcombobox.Name = "sortcombobox";
+			this.sortcombobox.Active = 0;
+			this.hbox1.Add (this.sortcombobox);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.sortcombobox]));
+			w3.Position = 2;
 			w3.Expand = false;
 			w3.Fill = false;
+			this.vbox2.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			w4.Position = 0;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow2.CanFocus = true;
@@ -58,8 +73,8 @@ namespace LongoMatch.Gui.Component
 			this.iconview.Name = "iconview";
 			this.scrolledwindow2.Add (this.iconview);
 			this.vbox2.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
-			w5.Position = 1;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
+			w6.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

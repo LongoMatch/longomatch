@@ -45,6 +45,24 @@
                 <property name="AutoSize">True</property>
               </packing>
             </child>
+            <child>
+              <widget class="Gtk.ComboBox" id="sortcombobox">
+                <property name="MemberName" />
+                <property name="IsTextCombo">True</property>
+                <property name="Items" translatable="yes">Sort by name
+Sort by date
+Sort by modification date
+Sort by season
+Sort by competition</property>
+                <property name="Active">0</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">0</property>
