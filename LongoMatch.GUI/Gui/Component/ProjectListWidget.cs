@@ -156,6 +156,7 @@ namespace LongoMatch.Gui.Component
 
 		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
+			StringComparison sc = StringComparison.InvariantCultureIgnoreCase;
 			ProjectDescription project = (ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION);
 
 			if (project == null)
@@ -164,15 +165,15 @@ namespace LongoMatch.Gui.Component
 			if (filterEntry.Text == "")
 				return true;
 
-			if (project.Title.IndexOf (filterEntry.Text) > -1)
+			if (project.Title.IndexOf (filterEntry.Text, sc) > -1)
 				return true;
-			else if (project.Season.IndexOf (filterEntry.Text) > -1)
+			else if (project.Season.IndexOf (filterEntry.Text, sc) > -1)
 				return true;
-			else if (project.Competition.IndexOf (filterEntry.Text) > -1)
+			else if (project.Competition.IndexOf (filterEntry.Text, sc) > -1)
 				return true;
-			else if (project.LocalName.IndexOf (filterEntry.Text) > -1)
+			else if (project.LocalName.IndexOf (filterEntry.Text, sc) > -1)
 				return true;
-			else if (project.VisitorName.IndexOf (filterEntry.Text) > -1)
+			else if (project.VisitorName.IndexOf (filterEntry.Text, sc) > -1)
 				return true;
 			else
 				return false;
