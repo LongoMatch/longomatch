@@ -91,6 +91,7 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
 				box = new EventBox ();
+				box.Name = "lightbackgroundeventbox";
 				box.KeyPressEvent += (o, args) => Config.EventsBroker.EmitKeyPressed (this,
 				                                                                      (int) args.Event.Key,
 				                                                                      (int) args.Event.State);
