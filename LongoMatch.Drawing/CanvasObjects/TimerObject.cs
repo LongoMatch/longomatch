@@ -36,7 +36,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				                                               StyleConf.ButtonTimerIcon));
 			}
 			MinWidth = StyleConf.ButtonMinWidth;
-			MinHeight = StyleConf.ButtonHeaderHeight + StyleConf.ButtonTimerFontSize;
+			MinHeight = iconImage.Height + StyleConf.ButtonTimerFontSize;
 		}
 
 		public TimerButton Button {
@@ -81,7 +81,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		Time PartialTime {
 			get {
-				if (Start == null) {
+				if (StartTime == null) {
 					return new Time (0);
 				} else {
 					return CurrentTime - StartTime;
@@ -110,6 +110,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		int TextHeaderX {
+			get {
+				return iconImage.Width + 5 * 2;
+			}
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Area)) {
@@ -121,20 +127,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Begin ();
 			
 			if (Active && Mode != TagMode.Edit) {
-				tk.LineWidth = 2;
+				tk.LineWidth = StyleConf.ButtonLineWidth;
 				tk.StrokeColor = Button.BackgroundColor;
 				tk.FillColor = Button.BackgroundColor;
 				tk.FontWeight = FontWeight.Normal;
 				tk.FontSize = StyleConf.ButtonHeaderFontSize;
 				tk.FontAlignment = FontAlignment.Left;
-				tk.DrawText (new Point (Position.X + StyleConf.ButtonHeaderWidth, Position.Y),
-				             Button.Width - StyleConf.ButtonHeaderWidth,
-				             StyleConf.ButtonHeaderHeight, Button.Timer.Name);
+				tk.DrawText (new Point (Position.X + TextHeaderX, Position.Y),
+				             Button.Width - TextHeaderX, iconImage.Height, Button.Timer.Name);
 				tk.FontWeight = FontWeight.Bold;
 				tk.FontSize = StyleConf.ButtonTimerFontSize;
 				tk.FontAlignment = FontAlignment.Center;
-				tk.DrawText (new Point (Position.X, Position.Y + StyleConf.ButtonHeaderHeight),
-				             Button.Width, Button.Height - StyleConf.ButtonHeaderHeight,
+				tk.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
+				             Button.Width, Button.Height - iconImage.Height,
 				             PartialTime.ToSecondsString ());
 			} else {
 				Text = Button.Timer.Name;
@@ -146,8 +151,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
 				              iconImage.Height, TeamImage, true);
 			}
-
-			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}
