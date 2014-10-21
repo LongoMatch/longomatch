@@ -122,6 +122,9 @@ namespace LongoMatch.Services
 		public List<string> TemplatesNames {
 			get {
 				List<string> l = new List<string> ();
+				if (!Directory.Exists (basePath)) {
+					Directory.CreateDirectory (basePath);
+				}
 				foreach (string path in Directory.GetFiles (basePath, "*" + extension)) {
 					l.Add (Path.GetFileNameWithoutExtension (path));
 				}
