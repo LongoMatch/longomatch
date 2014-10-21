@@ -162,8 +162,14 @@ namespace LongoMatch.Gui
 		
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
-			Config.EventsBroker.EmitKeyPressed(this, (int)evnt.Key, (int)evnt.State);
-			return base.OnKeyPressEvent (evnt);
+			bool ret = base.OnKeyPressEvent (evnt);
+			Console.WriteLine (Focus);
+			if (Focus is Entry) {
+				return ret;
+			} else {
+				Config.EventsBroker.EmitKeyPressed(this, (int)evnt.Key, (int)evnt.State);
+				return true;
+			}
 		}
 
 		MenuItem ImportProjectActionMenu {
