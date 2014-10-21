@@ -335,11 +335,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void ResetDrawArea ()
 		{
 			base.ResetDrawArea ();
-			foreach (CanvasObject co in homePlayers) {
-				co.ResetDrawArea ();
+			if (homePlayers != null) {
+				foreach (CanvasObject co in homePlayers) {
+					co.ResetDrawArea ();
+				}
 			}
-			foreach (CanvasObject co in awayPlayers) {
-				co.ResetDrawArea ();
+			if (awayPlayers != null) {
+				foreach (CanvasObject co in awayPlayers) {
+					co.ResetDrawArea ();
+				}
 			}
 			subPlayers.ResetDrawArea ();
 			subInjury.ResetDrawArea ();
