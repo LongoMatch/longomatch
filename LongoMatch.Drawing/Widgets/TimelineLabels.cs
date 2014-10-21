@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.Drawing;
@@ -67,7 +68,8 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			LabelObject l;
 			int i = 0, w, h;
-			
+			double requiredWidth;
+
 			w = StyleConf.TimelineLabelsWidth;
 			h = StyleConf.TimelineCategoryHeight;
 			widget.Width = w;
@@ -89,6 +91,12 @@ namespace LongoMatch.Drawing.Widgets
 				AddLabel (l, eventType);
 				i++;
 			}
+			
+			requiredWidth = labelToObject.Keys.Max (la => la.RequiredWidth);
+			foreach (LabelObject lo in labelToObject.Keys) {
+				lo.Width = requiredWidth;
+			}
+			widget.Width = requiredWidth;
 		}
 
 		void UpdateVisibleCategories ()

@@ -24,12 +24,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class LabelObject: CanvasObject, ICanvasObject
 	{
-		double width;
+		int DEFAULT_FONT_SIZE = 12;
 
 		public LabelObject (double width, double height, double offsetY)
 		{
-			this.Height = height;
-			this.width = width;
+			Height = height;
+			Width = width;
 			OffsetY = offsetY;
 			Color = Color.Red1;
 		}
@@ -44,9 +44,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public double Width {
+			get;
+			set;
+		}
+		
 		public double Height {
 			get;
 			set;
+		}
+
+		public double RequiredWidth {
+			get {
+				int width, height;
+				Config.DrawingToolkit.MeasureText (
+					Name, out width, out height, "Ubuntu",
+					DEFAULT_FONT_SIZE, FontWeight.Normal);
+				return TextOffset + width;
+			}
 		}
 
 		public double Scroll {
@@ -64,36 +79,45 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 		}
 
+		double RectSize {
+			get {
+				return Height - StyleConf.TimelineLabelVSpacing * 2;
+			}
+		}
+		
+		double TextOffset {
+			get {
+				return StyleConf.TimelineLabelHSpacing * 2 + RectSize;
+			}
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			double hs, vs, to, rectSize;
+			double hs, vs;
 			double y;
 			
 			hs = StyleConf.TimelineLabelHSpacing;
 			vs = StyleConf.TimelineLabelVSpacing;
-			rectSize = Height - vs * 2;
-			to = hs + rectSize + hs;
-			
 			y = OffsetY - Math.Floor (Scroll);
 			tk.Begin ();
 			tk.FillColor = BackgroundColor;
 			tk.StrokeColor = BackgroundColor;
 			tk.LineWidth = 0;
-			tk.DrawRectangle (new Point (0, y), width, Height);
+			tk.DrawRectangle (new Point (0, y), Width, Height);
 			
 			/* Draw a rectangle with the category color */
 			tk.FillColor = Color;
 			tk.StrokeColor = Color;
-			tk.DrawRectangle (new Point (hs, y + vs), rectSize, rectSize); 
+			tk.DrawRectangle (new Point (hs, y + vs), RectSize, RectSize); 
 			
 			/* Draw category name */
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontWeight = FontWeight.Bold;
-			tk.FontSize = 12;
+			tk.FontSize = DEFAULT_FONT_SIZE;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawText (new Point (to, y), width - to, Height, Name);
+			tk.DrawText (new Point (TextOffset, y), Width - TextOffset, Height, Name);
 			tk.End ();
 		}
 	}
