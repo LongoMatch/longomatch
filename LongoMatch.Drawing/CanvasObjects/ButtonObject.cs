@@ -280,7 +280,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 				                      new Point (1, 1));
 				DrawButton (tk);
 				DrawImage (tk);
-				DrawSelectionArea (tk);
 				DrawText (tk);
 			}
 		}
@@ -298,6 +297,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.Context = ctx;
 			tk.Begin ();
 			tk.DrawSurface (backBufferSurface, Position);
+			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}
