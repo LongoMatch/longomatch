@@ -15,34 +15,26 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
+using System.IO;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.Widgets;
-using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class PlayerObject: CanvasButtonObject, ICanvasSelectableObject
 	{
 		static ISurface Photo;
-		static ISurface Background;
-		static ISurface HomeNumber;
-		static ISurface AwayNumber;
-		static ISurface HomeOut;
-		static ISurface AwayOut;
-		static ISurface HomeIn;
-		static ISurface AwayIn;
+		static ISurface ArrowOut;
+		static ISurface ArrowIn;
 		static bool surfacesCached = false;
 
 		public PlayerObject ()
 		{
 			Init ();
 		}
-		
+
 		public PlayerObject (Player player, Point position = null)
 		{
 			Player = player;
@@ -53,12 +45,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public bool Playing {
 			get;
 			set;
 		}
-		
+
 		public Player Player {
 			get;
 			set;
@@ -95,7 +87,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return Size;
 			}
 		}
-		
+
 		public Team Team {
 			get;
 			set;
@@ -120,38 +112,39 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			Point zero, start, p;
-			double numberWidth, numberHeight;
+			double numberSize;
 			double size, scale;
-			ISurface number, sin, sout;
+			ISurface arrowin, arrowout;
 
 			if (Player == null)
 				return;
 
 			zero = new Point (0, 0);
-			size = Background.Height - StyleConf.PlayerLineWidth;
-			scale = (double) Width / Background.Height; 
+			size = StyleConf.PlayerSize;
+			scale = (double)Width / size; 
 			
 			if (Team == Team.LOCAL) {
-				number = HomeNumber;
-				sin = HomeIn;
-				sout = HomeOut;
+				arrowin = ArrowIn;
+				arrowout = ArrowOut;
 			} else {
-				number = AwayNumber;
-				sin = AwayIn;
-				sout = AwayOut;
+				arrowin = ArrowOut;
+				arrowout = ArrowIn;
 			}
 
 			tk.Begin ();
 			start = new Point (Size / 2, Size / 2);
 			tk.TranslateAndScale (Position - start, new Point (scale, scale));
 
-			if (!UpdateDrawArea (tk, area, new Area (zero, Background.Height, Background.Height))) {
-				tk.End();
+			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
+				tk.End ();
 				return;
-			};
+			}
+			;
 
 			/* Background */
-			tk.DrawSurface (Background, zero);
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.LineWidth = 0;
+			tk.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
 			
 			/* Image */
 			if (Player.Photo != null) {
@@ -159,50 +152,55 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				tk.DrawSurface (Photo, zero);
 			}
-			numberHeight = StyleConf.PlayerNumberHeight;
-			numberWidth = StyleConf.PlayerNumberWidth;
-			p = new Point (StyleConf.PlayerNumberOffset, size - numberHeight);
-			
-			/* Draw background */
-			tk.DrawSurface (number, zero);
+
+			/* Bottom line */
+			p = new Point (0, size - StyleConf.PlayerLineWidth);
+			tk.FillColor = Color;
+			tk.DrawRectangle (p, size, 3);
 			
 			/* Draw Arrow */
 			if (SubstitutionMode && (Highlighted || Active)) {
 				ISurface arrow;
-				
+				Point ap;
+
 				if (Playing) {
-					arrow = sout;
+					arrow = arrowout;
 				} else {
-					arrow = sin;
+					arrow = arrowin;
 				}
-				tk.DrawSurface (arrow, new Point (Background.Width / 2 - arrow.Width / 2,
-				                                  Background.Height / 2 - arrow.Height / 2));
+				ap = new Point (StyleConf.PlayerArrowX, StyleConf.PlayerArrowY);
+				tk.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
+				tk.DrawSurface (arrow, ap);
 			}
 			
 			/* Draw number */
+			p = new Point (StyleConf.PlayerNumberX, StyleConf.PlayerNumberY);
+			tk.FillColor = Color;
+			tk.DrawRectangle (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize);
+			
 			tk.FillColor = Color.White;
 			tk.StrokeColor = Color.White;
 			tk.FontWeight = FontWeight.Normal;
 			if (Player.Number >= 100) {
-				tk.FontSize = (int)(size / 4);
+				tk.FontSize = 14;
 			} else {
-				tk.FontSize = (int)(size / 3);
+				tk.FontSize = 18;
 			}
-			tk.DrawText (p, numberWidth, numberHeight, Player.Number.ToString ());
+			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
+			             Player.Number.ToString ());
 			
-			/* Selection line */
 			if (Active) {
-				tk.LineStyle = LineStyle.Normal;
-				tk.LineWidth = StyleConf.PlayerLineWidth;
-				tk.FillColor = null;
-				tk.StrokeColor = Config.Style.PaletteActive;
-				tk.DrawRoundedRectangle (zero, size + 1, size + 1, StyleConf.PlayerLineWidth);
+				Color c = Color.Copy ();
+				c.A = (byte)(c.A * 60 / 100);
+				tk.FillColor = c;
+				tk.DrawRectangle (zero, size, size);
 			}
 			
 			tk.End ();
 		}
-		
-		void Init (Point pos = null) {
+
+		void Init (Point pos = null)
+		{
 			if (pos == null) {
 				pos = new Point (0, 0);
 			}
@@ -218,13 +216,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			if (!surfacesCached) {
 				Photo = CreateSurface (StyleConf.PlayerPhoto);
-				Background = CreateSurface (StyleConf.PlayerBackground);
-				HomeNumber = CreateSurface (StyleConf.PlayerHomeNumber);
-				AwayNumber = CreateSurface (StyleConf.PlayerAwayNumber);
-				HomeOut = CreateSurface (StyleConf.PlayerHomeOut);
-				AwayOut = CreateSurface (StyleConf.PlayerAwayOut);
-				HomeIn = CreateSurface (StyleConf.PlayerHomeIn);
-				AwayIn = CreateSurface (StyleConf.PlayerAwayIn);
+				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
+				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
 				surfacesCached = true;
 			}
 		}
@@ -233,7 +226,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name), false);
 		}
-
 	}
 }
 
