@@ -342,7 +342,8 @@ namespace LongoMatch.Drawing.Cairo
 			DrawCircle (point, LineWidth);
 		}
 
-		public void DrawText (Point point, double width, double height, string text, bool escape=false)
+		public void DrawText (Point point, double width, double height, string text,
+		                    bool escape=false, bool ellipsize=false)
 		{
 			Layout layout = null;
 			Pango.Rectangle inkRect, logRect;
@@ -360,6 +361,11 @@ namespace LongoMatch.Drawing.Cairo
 			}
 			if (layout == null) {
 				layout = Pango.CairoHelper.CreateLayout (CContext);
+			}
+			if (ellipsize) {
+				layout.Ellipsize = EllipsizeMode.End;
+			} else {
+				layout.Ellipsize = EllipsizeMode.None;
 			}
 			layout.FontDescription = FontDescription.FromString (
 				String.Format ("{0} {1}px", FontFamily, FontSize));

@@ -140,7 +140,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.FontAlignment = FontAlignment.Center;
 				tk.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
 				             Button.Width, Button.Height - iconImage.Height,
-				             PartialTime.ToSecondsString ());
+				             PartialTime.ToSecondsString (), false, true);
 			} else {
 				Text = Button.Timer.Name;
 				DrawText (tk);

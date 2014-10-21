@@ -367,6 +367,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Point pos;
 			double width, height;
 			int fontSize;
+			bool ellipsize = true;
 
 			if (Active) {
 				textColor = BackgroundColor;
@@ -391,6 +392,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					height = Height - HeaderHeight;
 					pos = new Point (Position.X, Position.Y + HeaderHeight);
 					fontSize = StyleConf.ButtonNameFontSize;
+					ellipsize = false;
 				}
 				rects.Add (new Rectangle (Position, Width, Height), Button);
 			}
@@ -398,7 +400,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = BackgroundColor;
 			tk.StrokeColor = textColor;
 			tk.FontWeight = FontWeight.Light;
-			tk.DrawText (pos, width, height, Button.AnalysisEventType.Name);
+			tk.DrawText (pos, width, height, Button.AnalysisEventType.Name, false, ellipsize);
 		}
 
 		void DrawEditButton (IDrawingToolkit tk)
