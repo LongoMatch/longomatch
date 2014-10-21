@@ -559,6 +559,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 			}
 			ResetSelection ();
+			UpdateLineup ();
 		}
 
 		void HandlePlayerClickedEvent (ICanvasObject co)
