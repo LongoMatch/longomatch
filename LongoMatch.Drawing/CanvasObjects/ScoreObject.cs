@@ -52,11 +52,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return Button.Name;
 			}
 		}
-
-		public override void Draw (IDrawingToolkit tk, Area area)
-		{
-			base.Draw (tk, area);
-		}
 	}
 }
 

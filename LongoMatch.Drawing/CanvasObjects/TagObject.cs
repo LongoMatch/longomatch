@@ -53,10 +53,5 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return TagButton.Tag.Value;
 			}
 		}
-
-		public override void Draw (IDrawingToolkit tk, Area area)
-		{
-			base.Draw (tk, area);
-		}
 	}
 }
