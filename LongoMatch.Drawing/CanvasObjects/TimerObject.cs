@@ -54,11 +54,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set {
 				bool update = false;
 
-				if (CurrentTimeNode != null) {
-					if (value < CurrentTimeNode.Start) {
-						Button.Timer.CancelTimer ();
+				if (StartTime != null) {
+					if (value < StartTime) {
+						StartTime = null;
 						Active = false;
-						CurrentTimeNode = null;
 					}
 				}
 				if (value != null && currentTime != null &&
@@ -66,7 +65,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					update = true;
 				}
 				currentTime = value;
-				if (update && CurrentTimeNode != null) {
+				if (update && StartTime != null) {
 					ReDraw ();
 				}
 			}
@@ -75,17 +74,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		TimeNode CurrentTimeNode {
+		Time StartTime {
 			get;
 			set;
 		}
 
 		Time PartialTime {
 			get {
-				if (CurrentTimeNode == null) {
+				if (Start == null) {
 					return new Time (0);
 				} else {
-					return CurrentTime - CurrentTimeNode.Start;
+					return CurrentTime - StartTime;
 				}
 			}
 		}
@@ -97,18 +96,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void ClickReleased ()
 		{
-			TimeNode tn;
-
 			base.ClickReleased ();
-			tn = CurrentTimeNode;
-			if (tn == null) {
+			if (StartTime == null) {
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
-				CurrentTimeNode = Button.Timer.StartTimer (CurrentTime);
+				StartTime = CurrentTime;
 			} else {
 				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
-				Button.Timer.StopTimer (CurrentTime);
-				tn.Stop = CurrentTime;
-				CurrentTimeNode = null;
+				if (StartTime.MSeconds != CurrentTime.MSeconds) {
+					Button.Timer.StartTimer (StartTime);
+					Button.Timer.StopTimer (CurrentTime);
+				}
+				StartTime = null;
 			}
 		}
 
