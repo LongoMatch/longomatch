@@ -49,6 +49,10 @@ namespace LongoMatch.Plugins.GStreamer
 		public void RegisterPlugins ()
 		{
 			string gstdir = Path.Combine (Config.PluginsDir, "gstreamer-0.10");
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				Environment.SetEnvironmentVariable ("PATH",
+				                                    Environment.GetEnvironmentVariable ("PATH") + ";" + gstdir);
+			}
 			Log.Information ("Registering plugins in directory " + gstdir);
 			IntPtr p = GLib.Marshaller.StringToPtrGStrdup (gstdir);
 			IntPtr reg = gst_registry_get_default ();
