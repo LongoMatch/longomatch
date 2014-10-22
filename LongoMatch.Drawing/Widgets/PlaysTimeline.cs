@@ -129,6 +129,15 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
+		public void AddTimerNode (Timer timer, TimeNode tn)
+		{
+			TimerTimeline tl = Objects.OfType<TimerTimeline> ().FirstOrDefault (t => t.HasTimer (timer));
+			if (tl != null) {
+				tl.AddTimeNode (timer, tn);
+				widget.ReDraw ();
+			}
+		}
+
 		public void RemovePlays (List<TimelineEvent> plays)
 		{
 			foreach (TimelineEvent p in plays) {

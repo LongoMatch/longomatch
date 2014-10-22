@@ -34,6 +34,7 @@ namespace LongoMatch.Core.Common
 		public event DeleteEventsHandler EventsDeletedEvent;
 		public event LoadEventHandler LoadEventEvent;
 		public event EventLoadedHandler EventLoadedEvent;
+		public event TimerNodeAddedHandler TimerNodeAddedEvent;
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
@@ -403,6 +404,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (MigrateDB != null) {
 				MigrateDB ();
+			}
+		}
+		
+		public void EmitTimerNodeAddedEvent (Timer timer, TimeNode node)
+		{
+			if (TimerNodeAddedEvent != null) {
+				TimerNodeAddedEvent (timer, node);
 			}
 		}
 	}

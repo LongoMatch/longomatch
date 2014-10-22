@@ -260,10 +260,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class TimerTimeline: TimelineObject
 	{
 
+		List<Timer> timers;
+
 		public TimerTimeline (List<Timer> timers, bool showName, bool selectWhole, bool showLine,
 		                      Time maxTime, double offsetY, Color background, Color lineColor):
 			base (maxTime, offsetY, background)
 		{
+			this.timers = timers;
 			ShowName = showName;
 			SelectWhole = selectWhole;
 			ShowLine = showLine;
@@ -297,10 +300,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			return nodes.FirstOrDefault (n => n.TimeNode == tn) != null;
 		}
 
-		public void AddTimer (Timer timer)
+		public bool HasTimer (Timer timer)
+		{
+			return timers.Contains (timer);
+		}
+		
+		public void AddTimer (Timer timer, bool newtimer=true)
 		{
 			foreach (TimeNode tn in timer.Nodes) {
 				AddTimeNode (timer, tn);
+			}
+			if (newtimer) {
+				timers.Add (timer);
 			}
 			ReDraw ();
 		}
@@ -310,6 +321,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			TimerTimeNodeObject to = (TimerTimeNodeObject) nodes.FirstOrDefault (t => (t as TimerTimeNodeObject).Timer == timer);
 			if (to != null) {
 				RemoveObject (to, true);
+			}
+			if (timers.Contains (timer)) {
+				timers.Remove (timer);
 			}
 			ReDraw ();
 		}
@@ -330,7 +344,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			ClearObjects ();
 			foreach (Timer t in timers) {
-				AddTimer (t);
+				AddTimer (t, false);
 			}
 		}
 

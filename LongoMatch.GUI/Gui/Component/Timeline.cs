@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Component
 
 			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
 			scrolledwindow1.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
-				int spacing = (int) scrolledwindow1.StyleGetProperty ("scrollbar-spacing");
+				int spacing = (int)scrolledwindow1.StyleGetProperty ("scrollbar-spacing");
 				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
 			};
 
@@ -144,6 +144,11 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
+		public void AddTimerNode (Timer timer, TimeNode tn)
+		{
+			timeline.AddTimerNode (timer, tn);
+		}
+
 		bool UpdateTime ()
 		{
 			if (nextCurrentTime != currentTime) {
@@ -211,12 +216,11 @@ namespace LongoMatch.Gui.Component
 			m.ShowAll ();
 			m.Popup ();
 		}
-		
+
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
 			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline);
 		}
-
 	}
 }
 

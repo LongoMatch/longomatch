@@ -103,8 +103,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
 				if (StartTime.MSeconds != CurrentTime.MSeconds) {
-					Button.Timer.StartTimer (StartTime);
+					var tn = Button.Timer.StartTimer (StartTime);
 					Button.Timer.StopTimer (CurrentTime);
+					Config.EventsBroker.EmitTimerNodeAddedEvent (Button.Timer, tn);
 				}
 				StartTime = null;
 			}

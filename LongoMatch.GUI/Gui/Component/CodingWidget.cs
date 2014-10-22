@@ -76,6 +76,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlayerTick += HandleTick;
 			Config.EventsBroker.CapturerTick += HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.TimerNodeAddedEvent += HandleTimerNodeAddedEvent;
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			
 			buttonswidget.Mode = TagMode.Free;
@@ -100,6 +101,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlayerTick -= HandleTick;
 			Config.EventsBroker.CapturerTick -= HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.TimerNodeAddedEvent -= HandleTimerNodeAddedEvent;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -280,6 +282,11 @@ namespace LongoMatch.Gui.Component
 				sizeAllocated = true;
 			}
 			
+		}
+
+		void HandleTimerNodeAddedEvent (Timer timer, TimeNode tn)
+		{
+			timeline.AddTimerNode (timer, tn);
 		}
 
 	}
