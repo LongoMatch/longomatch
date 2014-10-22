@@ -10889,10 +10889,12 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.HBox" id="hbox4">
             <property name="MemberName" />
+            <property name="HeightRequest">80</property>
             <property name="Spacing">6</property>
             <child>
               <widget class="Gtk.Frame" id="nameframe">
                 <property name="MemberName" />
+                <property name="WidthRequest">200</property>
                 <property name="ShadowType">None</property>
                 <child>
                   <widget class="Gtk.Alignment" id="GtkAlignment3">
@@ -10984,57 +10986,9 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Table" id="tagstable">
+          <widget class="Gtk.VBox" id="tagsvbox">
             <property name="MemberName" />
-            <property name="NRows">3</property>
-            <property name="NColumns">6</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
+            <property name="Spacing">6</property>
             <child>
               <placeholder />
             </child>

@@ -133,6 +133,14 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 		
+		[JsonIgnore]
+		public Dictionary<string, List<Tag>> CommonTagsByGroup {
+			get {
+				return List.OfType<TagButton>().Select(t=>t.Tag).
+					GroupBy(t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());
+			}
+		}
+
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}
@@ -196,12 +204,12 @@ namespace LongoMatch.Core.Store.Templates
 			template.GamePeriods = periods; 
 
 			tagbutton = new TagButton {
-				Tag = new Tag (Catalog.GetString ("Attack"), Constants.COMMON_TAG),
+				Tag = new Tag (Catalog.GetString ("Attack"), ""),
 				Position = new Point (10, 10)};
 			template.List.Add (tagbutton);
 			
 			tagbutton = new TagButton {
-				Tag = new Tag (Catalog.GetString ("Deffense"), Constants.COMMON_TAG),
+				Tag = new Tag (Catalog.GetString ("Deffense"), ""),
 				Position = new Point (10 + (10 + CAT_WIDTH) * 1, 10)};
 			template.List.Add (tagbutton);
 

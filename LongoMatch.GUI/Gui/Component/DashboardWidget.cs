@@ -220,7 +220,7 @@ namespace LongoMatch.Gui.Component
 			} else if (buttontype == "Timer") {
 				button = new TimerButton {Timer = new Timer {Name = "Timer"}};
 			} else if (buttontype == "Tag") {
-				button = new TagButton {Tag = new Tag ("Tag", Constants.COMMON_TAG)};
+				button = new TagButton {Tag = new Tag ("Tag", "")};
 			} else if (buttontype == "Category") {
 				button = template.AddDefaultItem (template.List.Count);
 			} else {

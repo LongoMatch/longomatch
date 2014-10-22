@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Alignment GtkAlignment;
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
 		private global::Gtk.Label GtkLabel;
-		private global::Gtk.Table tagstable;
+		private global::Gtk.VBox tagsvbox;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger tagger;
 		private global::Gtk.DrawingArea drawingarea3;
 		private global::Gtk.Button buttonCancel;
@@ -39,10 +39,12 @@ namespace LongoMatch.Gui.Dialog
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.hbox4 = new global::Gtk.HBox ();
+			this.hbox4.HeightRequest = 80;
 			this.hbox4.Name = "hbox4";
 			this.hbox4.Spacing = 6;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.nameframe = new global::Gtk.Frame ();
+			this.nameframe.WidthRequest = 200;
 			this.nameframe.Name = "nameframe";
 			this.nameframe.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child nameframe.Gtk.Container+ContainerChild
@@ -105,12 +107,11 @@ namespace LongoMatch.Gui.Dialog
 			w9.Expand = false;
 			w9.Fill = false;
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.tagstable = new global::Gtk.Table (((uint)(3)), ((uint)(6)), false);
-			this.tagstable.Name = "tagstable";
-			this.tagstable.RowSpacing = ((uint)(6));
-			this.tagstable.ColumnSpacing = ((uint)(6));
-			w1.Add (this.tagstable);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(w1 [this.tagstable]));
+			this.tagsvbox = new global::Gtk.VBox ();
+			this.tagsvbox.Name = "tagsvbox";
+			this.tagsvbox.Spacing = 6;
+			w1.Add (this.tagsvbox);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(w1 [this.tagsvbox]));
 			w10.Position = 1;
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.tagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();

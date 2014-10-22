@@ -23,6 +23,7 @@ using LongoMatch.Drawing.Widgets;
 using System.Collections.Generic;
 using LongoMatch.Drawing.Cairo;
 using Gtk;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -61,7 +62,7 @@ namespace LongoMatch.Gui.Dialog
 				play.EventType.TagGoalPosition);
 			drawingarea3.Visible = editPlayers;
 			nameframe.Visible = editTags;
-			tagstable.Visible = editTags;
+			tagsvbox.Visible = editTags;
 
 			nameentry.Text = play.Name;
 			if (editPos) {
@@ -85,43 +86,75 @@ namespace LongoMatch.Gui.Dialog
 
 		void FillTags (Project project, TimelineEvent evt)
 		{
-			List<Tag> tags;
+			Dictionary<string, List<Tag>> tagsByGroup;
+			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
 			
 			if (evt.EventType is AnalysisEventType) {
-				tags = (evt.EventType as AnalysisEventType).Tags.ToList ();
+				tagsByGroup = (evt.EventType as AnalysisEventType).TagsByGroup; 
 			} else {
-				tags = new List<Tag> ();
+				tagsByGroup = new Dictionary<string, List<Tag>> ();
 			}
-			tags.AddRange (project.Dashboard.List.OfType<TagButton> ().Select (t => t.Tag).ToList ());
-			tags = tags.Union (evt.Tags).ToList ();
 			
-			tagstable.NRows = (uint)(tags.Count / TAGS_PER_ROW);
-			for (int i=0; i < tags.Count; i++) {
-				uint row_top, row_bottom, col_left, col_right;
-				Tag t = tags [i];
-				ToggleButton tb = new ToggleButton (t.Value);
-				tb.Active = evt.Tags.Contains (t);
-				tb.Toggled += (sender, e) => {
-					if (tb.Active) {
-						evt.Tags.Add (t);
+			tagsByGroup = tagsByGroup.Concat (project.Dashboard.CommonTagsByGroup)
+				.ToDictionary (x => x.Key, x => x.Value);
+
+			tagsvbox.PackStart (new HSeparator ());
+			foreach (string grp in tagsByGroup.Keys) {
+				HBox box = new HBox ();
+				Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
+				List<Tag> tags = tagsByGroup [grp];
+				Table tagstable = new Table ((uint)(tags.Count / TAGS_PER_ROW), TAGS_PER_ROW, true);
+				RadioButton first = null;
+				Tag noneTag = new Tag (Catalog.GetString ("None")); 
+				
+				label.WidthRequest = 200;
+				if (!String.IsNullOrEmpty (grp)) {
+					tags.Insert (0, noneTag);
+				}
+
+				for (int i=0; i < tags.Count; i++) {
+					uint row_top, row_bottom, col_left, col_right;
+					Tag t = tags [i];
+					CheckButton tb;
+					
+					if (String.IsNullOrEmpty (grp)) {
+						tb = new CheckButton (t.Value);
 					} else {
-						evt.Tags.Remove (t);
+						if (first == null) {
+							tb = first = new RadioButton (t.Value);
+						} else {
+							tb = new RadioButton (first, t.Value);
+						}
 					}
-				};
-				row_top = (uint)(i / tagstable.NColumns);
-				row_bottom = (uint)row_top + 1;
-				col_left = (uint)i % tagstable.NColumns;
-				col_right = (uint)col_left + 1;
-				tagstable.Attach (tb, col_left, col_right, row_top, row_bottom);
-				tb.Show ();
+					tb.Active = evt.Tags.Contains (t);
+					tb.Toggled += (sender, e) => {
+						if (tb.Active && t != noneTag) {
+							evt.Tags.Add (t);
+						} else {
+							evt.Tags.Remove (t);
+						}
+					};
+					row_top = (uint)(i / tagstable.NColumns);
+					row_bottom = (uint)row_top + 1;
+					col_left = (uint)i % tagstable.NColumns;
+					col_right = (uint)col_left + 1;
+					tagstable.Attach (tb, col_left, col_right, row_top, row_bottom);
+				}
+				sgroup.AddWidget (label);
+				box.PackStart (label, false, true, 0);
+				box.PackEnd (tagstable, true, true, 0);
+				box.Spacing = 5;
+				tagsvbox.PackStart (box, false, true, 0);
+				tagsvbox.PackStart (new HSeparator ());
 			}
-			
+			tagsvbox.ShowAll ();
 		}
 
 		void HandleChanged (object sender, EventArgs e)
 		{
 			if (play != null) {
 				play.Name = nameentry.Text;
+				nameentry.GrabFocus ();
 			}
 		}
 
