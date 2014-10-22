@@ -163,7 +163,6 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			bool ret = base.OnKeyPressEvent (evnt);
-			Console.WriteLine (Focus);
 			if (Focus is Entry) {
 				return ret;
 			} else {
