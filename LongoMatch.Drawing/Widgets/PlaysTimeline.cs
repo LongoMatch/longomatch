@@ -39,6 +39,7 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time duration;
 		TimelineEvent loadedEvent;
+		bool movingTimeNode;
 		Dictionary<TimelineObject, object> timelineToFilter;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
 
@@ -273,11 +274,19 @@ namespace LongoMatch.Drawing.Widgets
 			if (sel.Position != SelectionPosition.All) {
 				widget.SetCursor (CursorType.DoubleArrow);
 			}
+			if (sel.Drawable is TimeNodeObject) {
+				movingTimeNode = true;
+				Config.EventsBroker.EmitTogglePlayEvent (false);
+			}
 		}
 
 		protected override void StopMove (bool moved)
 		{
 			widget.SetCursor (CursorType.Arrow);
+			if (movingTimeNode) {
+				Config.EventsBroker.EmitTogglePlayEvent (true);
+				movingTimeNode = false;
+			}
 		}
 
 		protected override void ShowMenu (Point coords)

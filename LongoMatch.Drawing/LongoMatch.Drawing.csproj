@@ -67,6 +67,7 @@
     <Compile Include="CanvasObjects\ButtonObject.cs" />
     <Compile Include="CanvasObjects\LabelObject.cs" />
     <Compile Include="Widgets\TimelineLabels.cs" />
+    <Compile Include="CanvasObjects\NeedleObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

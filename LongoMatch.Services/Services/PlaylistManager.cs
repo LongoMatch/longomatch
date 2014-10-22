@@ -58,6 +58,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
 			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
 			Config.EventsBroker.SeekEvent += HandleSeekEvent;
+			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
 		}
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
@@ -210,5 +211,17 @@ namespace LongoMatch.Services
 				player.Seek (pos, accurate);
 			}
 		}
+		
+		void HandleTogglePlayEvent (bool playing)
+		{
+			if (player != null) {
+				if (playing) {
+					player.Play ();
+				} else {
+					player.Pause ();
+				}
+			}
+		}
+
 	}
 }

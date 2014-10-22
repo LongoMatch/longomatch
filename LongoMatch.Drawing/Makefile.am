@@ -16,6 +16,7 @@ SOURCES = Canvas.cs \
 	CanvasObjects/FieldObject.cs \
 	CanvasObjects/LabelObject.cs \
 	CanvasObjects/LineObject.cs \
+	CanvasObjects/NeedleObject.cs \
 	CanvasObjects/PlayObject.cs \
 	CanvasObjects/PlayerObject.cs \
 	CanvasObjects/PlayersTaggerObject.cs \

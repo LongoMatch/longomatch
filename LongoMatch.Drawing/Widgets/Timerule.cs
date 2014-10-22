@@ -21,35 +21,39 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces;
 using System.IO;
+using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class Timerule:Canvas
+	public class Timerule: SelectionCanvas
 	{
 		const int BIG_LINE_HEIGHT = 15;
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int TIME_SPACING = 100;
-		ISurface needle;
+		bool moving;
+		NeedleObject needle;
+		double scroll;
+		double secondsPerPixel;
+		Time currentTime;
 
 		public Timerule (IWidget widget):base (widget)
 		{
+			needle = new NeedleObject();
+			AddObject (needle);
 			SecondsPerPixel = 0.1;
 			CurrentTime = new Time (0);
 		}
 
-		protected override void Dispose (bool disposing)
-		{
-			base.Dispose (disposing);
-			if (needle != null) {
-				needle.Dispose ();
-				needle = null;
-			}
-		}
-
 		public double Scroll {
-			set;
-			protected get;
+			set {
+				scroll = value;
+				needle.ResetDrawArea ();
+			}
+			protected get {
+				return scroll;
+			}
 		}
 
 		public Time Duration {
@@ -58,13 +62,42 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		public Time CurrentTime {
-			get;
-			set;
+			get {
+				return currentTime;
+			}
+			set {
+				currentTime = value;
+				needle.ResetDrawArea ();
+			}
 		}
 
 		public double SecondsPerPixel {
-			set;
-			get;
+			set {
+				secondsPerPixel = value;
+				needle.ResetDrawArea ();
+			}
+			get {
+				return secondsPerPixel;
+			}
+		}
+
+		protected override void StartMove (Selection sel)
+		{
+			moving = true;
+			Config.EventsBroker.EmitTogglePlayEvent (false);
+		}
+
+		protected override void StopMove (bool moved)
+		{
+			moving = false;
+			Config.EventsBroker.EmitTogglePlayEvent (true);
+		}
+
+		protected override void SelectionMoved (Selection sel)
+		{
+			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X, 0),
+			                                                    SecondsPerPixel), false);
+			                                                    Console.WriteLine ("Moved to " + needle.X);
 		}
 
 		public override void Draw (IContext context, Area area)
@@ -76,12 +109,6 @@ namespace LongoMatch.Drawing.Widgets
 				return;
 			}
 			
-			if (needle == null) {
-				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
-				Image img = Image.LoadFromFile (path);
-				needle = tk.CreateSurface (img.Width, img.Height, img);
-			}
-
 			height = widget.Height;
 			width = widget.Width;
 
@@ -97,9 +124,9 @@ namespace LongoMatch.Drawing.Widgets
 			tk.DrawLine (new Point (area.Start.X, height),
 			             new Point (area.Start.X + area.Width, height));
 
-			startX = (int) (area.Start.X + Scroll);
+			startX = (int)(area.Start.X + Scroll);
 			start = (startX - (startX % TIME_SPACING)) + TIME_SPACING;
-			stop = (int) (startX + area.Width);
+			stop = (int)(startX + area.Width);
 
 			/* Draw big lines each 10 * secondsPerPixel */
 			for (int i=start; i <= stop; i += TIME_SPACING) {
@@ -110,7 +137,7 @@ namespace LongoMatch.Drawing.Widgets
 				             new Time { Seconds = (int) (i * SecondsPerPixel) }.ToSecondsString ());
 			}
 
-			start = (startX - (startX % (TIME_SPACING / 10))) + (TIME_SPACING/10);
+			start = (startX - (startX % (TIME_SPACING / 10))) + (TIME_SPACING / 10);
 			/* Draw small lines each 1 * secondsPerPixel */
 			for (int i=start; i<= stop; i+= TIME_SPACING / 10) {
 				double pos;
@@ -124,10 +151,13 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			
 			/* Draw position triangle */
-			tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
-			tpos -= Scroll;
-			tpos -= needle.Width / 2;
-			tk.DrawSurface (needle, new Point (tpos, widget.Height - needle.Height));
+			needle.TimelineHeight = height;
+			if (!moving) {
+				tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
+				tpos -= Scroll;
+				needle.X = tpos;
+			}
+			needle.Draw (tk, area);
 			tk.End ();
 			tk.Context = null;
 		}
