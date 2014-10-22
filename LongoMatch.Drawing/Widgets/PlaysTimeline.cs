@@ -282,7 +282,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			if (Selections.Count > 1 && Selections.Last ().Drawable is PlayObject) {
+			if (Selections.Count >= 1 && Selections.Last ().Drawable is PlayObject) {
 				ShowPlaysMenu (coords);
 			} else {
 				ShowTimersMenu (coords);
