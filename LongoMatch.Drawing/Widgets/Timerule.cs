@@ -95,9 +95,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X, 0),
+			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X + Scroll , 0),
 			                                                    SecondsPerPixel), false);
-			                                                    Console.WriteLine ("Moved to " + needle.X);
 		}
 
 		public override void Draw (IContext context, Area area)
