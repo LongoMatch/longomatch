@@ -29,6 +29,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 		const int COLS_PER_ROW = 5;
 		AnalysisEventType eventType;
+		Entry focusEntry;
 
 		public EventTypeTagsEditor ()
 		{
@@ -66,7 +67,7 @@ namespace LongoMatch.Gui.Dialog
 			Alignment alignment;
 			Table t;
 
-			count = (uint) g.tags.Count + 1;
+			count = (uint)g.tags.Count + 1;
 			rows = count / COLS_PER_ROW + 1;
 
 			alignment = new Alignment (0.5F, 0.5F, 1, 1);
@@ -118,7 +119,6 @@ namespace LongoMatch.Gui.Dialog
 				EventType.Tags.Remove (tag);
 				g.tags.Remove (tag);
 				g.container.Remove (g.table);
-				CreateTagsTable (g);
 				g.container.PackStart (CreateTagsTable (g), true, true, 0);
 				g.container.ShowAll ();
 			}
@@ -126,13 +126,15 @@ namespace LongoMatch.Gui.Dialog
 		
 		void AddTag (TagsGroup g)
 		{
-			Tag t = new Tag(Catalog.GetString ("New tag"), g.nameEntry.Text);
+			Tag t = new Tag (Catalog.GetString ("New tag"), g.nameEntry.Text);
 			EventType.Tags.Add (t);
 			g.tags.Add (t);
 			g.container.Remove (g.table);
-			CreateTagsTable (g);
 			g.container.PackStart (CreateTagsTable (g), true, true, 0);
 			g.container.ShowAll ();
+			if (focusEntry != null) {
+				focusEntry.GrabFocus ();
+			}
 		}
 
 		Box GroupBox (string name, TagsGroup g)
@@ -158,7 +160,7 @@ namespace LongoMatch.Gui.Dialog
 			return box;
 		}
 
-		Box CreateTagBox (Table t, Tag tag, int i, TagsGroup g)
+		void CreateTagBox (Table t, Tag tag, int i, TagsGroup g)
 		{
 			HBox box = new HBox (false, 2);
 			Entry tagEntry = new Entry (tag.Value);
@@ -171,11 +173,11 @@ namespace LongoMatch.Gui.Dialog
 			tagEntry.Changed += (o, e) => { 
 				tag.Value = tagEntry.Text;
 			};
+			focusEntry = tagEntry;
 
 			box.PackStart (tagEntry, true, true, 0);
 			box.PackStart (b, false, false, 0);
 			InsertInTable (t, box, i);
-			return box;
 		}
 
 		Button RemoveButton ()
