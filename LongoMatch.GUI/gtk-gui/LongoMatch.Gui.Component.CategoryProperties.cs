@@ -47,6 +47,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Table timertable;
 		private global::Gtk.Label label18;
 		private global::Gtk.ComboBox teamcombobox;
+		private global::Gtk.Table tagtable;
+		private global::Gtk.Entry groupentry;
+		private global::Gtk.Label label19;
 
 		protected virtual void Build ()
 		{
@@ -530,6 +533,37 @@ namespace LongoMatch.Gui.Component
 			w42.Position = 7;
 			w42.Expand = false;
 			w42.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.tagtable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), false);
+			this.tagtable.Name = "tagtable";
+			this.tagtable.RowSpacing = ((uint)(6));
+			this.tagtable.ColumnSpacing = ((uint)(6));
+			// Container child tagtable.Gtk.Table+TableChild
+			this.groupentry = new global::Gtk.Entry ();
+			this.groupentry.CanFocus = true;
+			this.groupentry.Name = "groupentry";
+			this.groupentry.IsEditable = true;
+			this.groupentry.InvisibleChar = '•';
+			this.tagtable.Add (this.groupentry);
+			global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.tagtable [this.groupentry]));
+			w43.LeftAttach = ((uint)(1));
+			w43.RightAttach = ((uint)(2));
+			w43.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child tagtable.Gtk.Table+TableChild
+			this.label19 = new global::Gtk.Label ();
+			this.label19.Name = "label19";
+			this.label19.Xalign = 1F;
+			this.label19.LabelProp = global::Mono.Unix.Catalog.GetString ("Group");
+			this.label19.UseMarkup = true;
+			this.tagtable.Add (this.label19);
+			global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.tagtable [this.label19]));
+			w44.XOptions = ((global::Gtk.AttachOptions)(0));
+			w44.YOptions = ((global::Gtk.AttachOptions)(4));
+			this.vbox3.Add (this.tagtable);
+			global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.tagtable]));
+			w45.Position = 8;
+			w45.Expand = false;
+			w45.Fill = false;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -538,6 +572,7 @@ namespace LongoMatch.Gui.Component
 			this.cardtable.Hide ();
 			this.scoretable.Hide ();
 			this.timertable.Hide ();
+			this.tagtable.Hide ();
 			this.Show ();
 		}
 	}

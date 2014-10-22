@@ -69,6 +69,7 @@ namespace LongoMatch.Gui.Component
 			shapecombobox.Changed += HandleShapeChanged;
 			pointsbutton.Changed += HandlePointsChanged;
 			teamcombobox.Changed += HandleTeamChanged;
+			groupentry.Changed += HandleGroupChanged;
 
 			postable.NoShowAll = true;
 			cattable.NoShowAll = true;
@@ -187,6 +188,7 @@ namespace LongoMatch.Gui.Component
 			scoretable.Visible = scoreButton != null;
 			cardtable.Visible = cardButton != null;
 			timertable.Visible = timerButton != null;
+			tagtable.Visible = tagButton != null;
 
 			if (button != null) {
 				nameentry.Text = button.Name;
@@ -233,6 +235,9 @@ namespace LongoMatch.Gui.Component
 			}
 			if (timerButton != null) {
 				teamcombobox.Active = (int)timerButton.Timer.Team;
+			}
+			if (tagButton != null) {
+				groupentry.Text = tagButton.Tag.Group;
 			}
 			ignore = false;
 			Edited = false;
@@ -384,6 +389,14 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 			timerButton.Timer.Team = (Team)teamcombobox.Active;
+			Edited = true;
+		}
+		
+		void HandleGroupChanged (object sender, EventArgs e)
+		{
+			if (ignore)
+				return;
+			tagButton.Tag.Group = groupentry.Text;
 			Edited = true;
 		}
 	}

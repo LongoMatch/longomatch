@@ -174,6 +174,7 @@ namespace LongoMatch.Core.Store
 				return subsType;
 			}
 		}
+
 		#endregion
 
 		#region Public Methods
