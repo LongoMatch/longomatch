@@ -260,14 +260,22 @@ namespace LongoMatch.Gui.Helpers
 				return LoadMissingIcon (size);
 			}
 		}
-		
+
+		static bool IsSkipedType (Widget w, Type[] skipTypes)
+		{
+			return skipTypes.Count (t => w.GetType().IsSubclassOf(t)) > 0;
+		}
+
 		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes) {
+			if (IsSkipedType (w, skipTypes)) {
+				return;
+			}
 			w.CanFocus = canFocus;
 			foreach (Widget child in w.AllChildren) {
 				if (child is Container) {
-					SetFocus (child as Container, canFocus);
+					SetFocus (child as Container, canFocus, skipTypes);
 				} else {
-					if (!skipTypes.Contains (child.GetType())) {
+					if (IsSkipedType (child, skipTypes)) {
 						child.CanFocus = canFocus;
 					}
 				}
