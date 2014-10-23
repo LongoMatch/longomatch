@@ -112,6 +112,7 @@ namespace LongoMatch.Gui.Component
 				Log.Debug ("Detaching player");
 				
 				playerWindow = new Gtk.Window (Constants.SOFTWARE_NAME);
+				playerWindow.SetDefaultSize (playercapturer.Allocation.Width, playercapturer.Allocation.Height);
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
 				box = new EventBox ();
