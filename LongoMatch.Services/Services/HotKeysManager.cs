@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using System;
 
 #if HAVE_GTK
 using Gdk;
@@ -33,6 +34,7 @@ namespace LongoMatch.Services
 	public class HotKeysManager
 	{
 		Dictionary<HotKey, DashboardButton> dic;
+		IAnalysisWindow analysisWindow;
 		bool ignoreKeys;
 
 		public HotKeysManager ()
@@ -45,6 +47,7 @@ namespace LongoMatch.Services
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
+			this.analysisWindow = analysisWindow;
 			if (project == null) {
 				ignoreKeys = true;
 				return;
@@ -59,21 +62,42 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void KeyListener (object sender, int key, int state)
+		public void KeyListener (object sender, HotKey key)
 		{
+			KeyAction action;
+
+			try {
+				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+			} catch (Exception ex) {
+				/* The dictionary contains 2 equal values for different keys */
+				Log.Exception (ex);
+				return;
+			}
+			
+			if (action != KeyAction.None && analysisWindow != null) {
+				switch (action) {
+				case KeyAction.ZoomIn:
+					analysisWindow.ZoomIn ();
+					return;
+				case KeyAction.ZoomOut:
+					analysisWindow.ZoomOut ();
+					return;
+				case KeyAction.ShowDashboard:
+					analysisWindow.ShowDashboard ();
+					return;
+				case KeyAction.ShowTimeline:
+					analysisWindow.ShowTimeline ();
+					return;
+				case KeyAction.ShowPositions:
+					analysisWindow.ShowZonalTags ();
+					return;
+				case KeyAction.FitTimeline:
+					analysisWindow.FitTimeline ();
+					return;
+				}
+			}
 			if (ignoreKeys)
 				return;
-			
-#if HAVE_GTK
-			DashboardButton button = null;
-			HotKey hotkey = new HotKey ();
-
-			hotkey.Key = key;
-			hotkey.Modifier = (int)((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
-			if (dic.TryGetValue (hotkey, out button)) {
-				Config.EventsBroker.EmitPressButton (button);
-#endif
-			}
 		}
 	}
 }

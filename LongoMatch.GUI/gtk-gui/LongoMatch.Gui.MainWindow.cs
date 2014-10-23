@@ -26,7 +26,6 @@ namespace LongoMatch.Gui
 		private global::Gtk.Action ExportProjectAction1;
 		private global::Gtk.Action Action;
 		private global::Gtk.Action ExportToProjectFileAction;
-		private global::Gtk.Action dialogInfoAction;
 		private global::Gtk.Action ImportFromFileAction;
 		private global::Gtk.ToggleAction TagSubcategoriesAction;
 		private global::Gtk.Action VideoConverterToolAction;
@@ -114,9 +113,6 @@ namespace LongoMatch.Gui
 			this.ExportToProjectFileAction = new global::Gtk.Action ("ExportToProjectFileAction", global::Mono.Unix.Catalog.GetString ("Export to project file"), null, null);
 			this.ExportToProjectFileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export to project file");
 			w1.Add (this.ExportToProjectFileAction, null);
-			this.dialogInfoAction = new global::Gtk.Action ("dialogInfoAction", global::Mono.Unix.Catalog.GetString ("Shortcuts"), null, "gtk-dialog-info");
-			this.dialogInfoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Shortcuts");
-			w1.Add (this.dialogInfoAction, null);
 			this.ImportFromFileAction = new global::Gtk.Action ("ImportFromFileAction", global::Mono.Unix.Catalog.GetString ("Import from file"), null, null);
 			this.ImportFromFileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Import from file");
 			w1.Add (this.ImportFromFileAction, null);
@@ -155,7 +151,7 @@ namespace LongoMatch.Gui
 			this.menubox.Name = "menubox";
 			this.menubox.Spacing = 6;
 			// Container child menubox.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='openAction' action='openAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='PreferencesAction' action='PreferencesAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='DatabasesManagerAction' action='DatabasesManagerAction'/><separator/><menuitem name='ShowProjectStatsAction' action='ShowProjectStatsAction'/><menu name='ExportProjectAction1' action='ExportProjectAction1'><menuitem name='ExportToProjectFileAction' action='ExportToProjectFileAction'/></menu><separator/><menuitem name='VideoConverterToolAction' action='VideoConverterToolAction'/><menuitem name='MigrationToolAction' action='MigrationToolAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><separator/><menuitem name='TagSubcategoriesAction' action='TagSubcategoriesAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/><menuitem name='dialogInfoAction' action='dialogInfoAction'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='openAction' action='openAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='PreferencesAction' action='PreferencesAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='DatabasesManagerAction' action='DatabasesManagerAction'/><separator/><menuitem name='ShowProjectStatsAction' action='ShowProjectStatsAction'/><menu name='ExportProjectAction1' action='ExportProjectAction1'><menuitem name='ExportToProjectFileAction' action='ExportToProjectFileAction'/></menu><separator/><menuitem name='VideoConverterToolAction' action='VideoConverterToolAction'/><menuitem name='MigrationToolAction' action='MigrationToolAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><separator/><menuitem name='TagSubcategoriesAction' action='TagSubcategoriesAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.menubox.Add (this.menubar1);
@@ -202,7 +198,6 @@ namespace LongoMatch.Gui
 			this.Show ();
 			this.AboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 			this.HelpAction1.Activated += new global::System.EventHandler (this.OnHelpAction1Activated);
-			this.dialogInfoAction.Activated += new global::System.EventHandler (this.OnDialogInfoActionActivated);
 			this.VideoConverterToolAction.Activated += new global::System.EventHandler (this.OnVideoConverterToolActionActivated);
 			this.MigrationToolAction.Activated += new global::System.EventHandler (this.OnMigrationToolActionActivated);
 		}

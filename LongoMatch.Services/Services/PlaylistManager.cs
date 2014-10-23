@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using LongoMatch.Core.Common;
@@ -24,6 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Mono.Unix;
 using Timer = System.Threading.Timer;
+using System;
 
 namespace LongoMatch.Services
 {
@@ -33,6 +35,7 @@ namespace LongoMatch.Services
 		IPlayerBin player;
 		IRenderingJobsManager videoRenderer;
 		Project openedProject;
+		ProjectType openedProjectType;
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
 		TimelineEvent loadedPlay;
@@ -59,6 +62,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
 			Config.EventsBroker.SeekEvent += HandleSeekEvent;
 			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 		}
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
@@ -106,6 +110,7 @@ namespace LongoMatch.Services
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			openedProject = project;
+			openedProjectType = projectType;
 			if (project != null) {
 				player = analysisWindow.Player;
 				this.filter = filter;
@@ -222,6 +227,76 @@ namespace LongoMatch.Services
 				}
 			}
 		}
+		
+		void HandleKeyPressed (object sender, HotKey key)
+		{
+			if (openedProject == null)
+				return;
+
+			if (openedProjectType != ProjectType.CaptureProject &&
+				openedProjectType != ProjectType.URICaptureProject &&
+				openedProjectType != ProjectType.FakeCaptureProject) {
+				KeyAction action;
+				if (player == null)
+					return;
+
+				try {
+					action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				} catch (Exception ex) {
+					/* The dictionary contains 2 equal values for different keys */
+					Log.Exception (ex);
+					return;
+				}
+				
+				if (action == KeyAction.None) {
+					return;
+				}
+
+				switch (action) {
+				case KeyAction.FrameUp:
+					player.SeekToPreviousFrame ();
+					return;
+				case KeyAction.FrameDown:
+					player.SeekToNextFrame ();
+					return;
+				case KeyAction.JumpUp:
+					player.StepForward ();
+					return;
+				case KeyAction.JumpDown:
+					player.StepBackward ();
+					return;
+				case KeyAction.DrawFrame:
+					TimelineEvent evt = loadedPlay;
+					if (evt == null && loadedElement is PlaylistPlayElement) {
+						evt = (loadedElement as PlaylistPlayElement).Play;
+					}
+					Config.EventsBroker.EmitDrawFrame (evt, -1, player.ActiveAngle, true);
+					return;
+				case KeyAction.TogglePlay:
+					player.TogglePlay ();
+					return;
+				case KeyAction.SpeedUp:
+					player.FramerateUp ();
+					return;
+				case KeyAction.SpeedDown:
+					player.FramerateDown ();
+					return;
+				case KeyAction.CloseEvent:
+					Config.EventsBroker.EmitLoadEvent (null);
+					return;
+				case KeyAction.Prev:
+					HandlePrev (loadedPlaylist);
+					return;
+				case KeyAction.Next:
+					HandleNext (loadedPlaylist);
+					return;
+				}
+			} else {
+				//if (Capturer == null)
+				//	return;
+			}
+		}
+		
 
 	}
 }

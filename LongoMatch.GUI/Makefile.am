@@ -53,7 +53,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
 	Gui/Dialog/PlayEditor.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \
-	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/StatsViewer.cs \
 	Gui/Dialog/SubstitutionsEditor.cs \
@@ -128,7 +127,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs \

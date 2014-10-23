@@ -23,6 +23,9 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LongoMatch
 {
@@ -402,11 +405,22 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+		
+		public static Hotkeys Hotkeys {
+			get {
+				return state.hotkeys;
+			}
+			set {
+				state.hotkeys = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
 	
 	[Serializable]
+	//[JsonConverter (typeof (LongoMatchConverter))]
 	public class ConfigState{
 		public bool fastTagging;
 		public bool autoSave;
@@ -427,6 +441,7 @@ namespace LongoMatch
 		public string lastRenderDir;
 		public bool reviewPlaysInSameWindow;
 		public string defaultTemplate;
+		public Hotkeys hotkeys;
 		
 		public ConfigState () {
 			/* Set default values */
@@ -449,6 +464,7 @@ namespace LongoMatch
 			lastRenderDir = null;
 			reviewPlaysInSameWindow = true;
 			defaultTemplate = null;
+			hotkeys = new Hotkeys ();
 		}
 	}
 }

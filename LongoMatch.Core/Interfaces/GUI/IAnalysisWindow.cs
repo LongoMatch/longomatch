@@ -34,6 +34,12 @@ namespace LongoMatch.Core.Interfaces.GUI
 		void UpdateCategories ();
 		void DeletePlays (List<TimelineEvent> plays);
 		void DetachPlayer ();
+		void ZoomIn ();
+		void ZoomOut ();
+		void FitTimeline ();
+		void ShowDashboard ();
+		void ShowTimeline ();
+		void ShowZonalTags ();
 		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}

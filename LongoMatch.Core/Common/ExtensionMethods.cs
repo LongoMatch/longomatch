@@ -42,5 +42,10 @@ namespace LongoMatch.Core.Common
 			}
 			return res.ToArray ();
 		}
+		
+		public static TKey GetKeyByValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TValue value)
+		{
+			return dict.SingleOrDefault(x => x.Value.Equals(value)).Key;
+		}
 	}
 }

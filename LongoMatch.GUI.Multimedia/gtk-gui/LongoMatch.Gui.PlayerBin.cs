@@ -266,7 +266,6 @@ namespace LongoMatch.Gui
 			this.timescale.Adjustment.Upper = 1;
 			this.timescale.Adjustment.PageIncrement = 1;
 			this.timescale.Adjustment.StepIncrement = 1;
-			this.timescale.Adjustment.Value = 1;
 			this.timescale.DrawValue = false;
 			this.timescale.Digits = 0;
 			this.timescale.ValuePos = ((global::Gtk.PositionType)(2));

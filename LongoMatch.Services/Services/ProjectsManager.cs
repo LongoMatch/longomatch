@@ -50,7 +50,6 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
 			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
 			Config.EventsBroker.SaveProjectEvent += SaveProject;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			Config.EventsBroker.CaptureError += HandleCaptureError;
 			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
 			Config.EventsBroker.MultimediaError += HandleMultimediaError;
@@ -401,46 +400,5 @@ namespace LongoMatch.Services
 			HandleCaptureFinished (false);
 		}
 
-		void HandleKeyPressed (object sender, int key, int modifier)
-		{
-			if (OpenedProject == null)
-				return;
-
-			if (OpenedProjectType != ProjectType.CaptureProject &&
-				OpenedProjectType != ProjectType.URICaptureProject &&
-				OpenedProjectType != ProjectType.FakeCaptureProject) {
-				if (Player == null)
-					return;
-
-				switch (key) {
-				case Constants.SEEK_FORWARD:
-					if (modifier == Constants.STEP)
-						Player.StepForward ();
-					else
-						Player.SeekToNextFrame ();
-					break;
-				case Constants.SEEK_BACKWARD:
-					if (modifier == Constants.STEP)
-						Player.StepBackward ();
-					else
-						Player.SeekToPreviousFrame ();
-					break;
-				case Constants.FRAMERATE_UP:
-					Player.FramerateUp ();
-					break;
-				case Constants.FRAMERATE_DOWN:
-					Player.FramerateDown ();
-					break;
-				case Constants.TOGGLE_PLAY:
-					Player.TogglePlay ();
-					break;
-				}
-			} else {
-				if (Capturer == null)
-					return;
-				switch (key) {
-				}
-			}
-		}
 	}
 }

@@ -129,6 +129,8 @@
     <Compile Include="Stats\EventTypeStats.cs" />
     <Compile Include="Store\Drawables\Circle.cs" />
     <Compile Include="Store\MediaFileSet.cs" />
+    <Compile Include="Common\Hotkeys.cs" />
+    <Compile Include="Common\Keyboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

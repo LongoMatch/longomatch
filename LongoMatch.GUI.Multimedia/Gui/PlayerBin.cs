@@ -131,6 +131,11 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public MediaFileAngle ActiveAngle {
+			get {
+				return angle;
+			}
+		}
 		public bool SeekingEnabled {
 			set {
 				timescale.Sensitive = value;

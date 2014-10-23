@@ -17,24 +17,13 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-//
-
-
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Mono.Unix;
 using Newtonsoft.Json;
 using LongoMatch.Core.Common;
 
-
-#if HAVE_GTK
-using Gdk;
-#endif
-
 namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
 	/// A key combination used to tag plays using the keyboard. <see cref="LongoMatch.Store.SectionsTimeNodes"/>
 	/// It can only be used with the Shith and Alt modifiers to avoid interfering with ohter shortcuts.
@@ -48,13 +37,12 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Creates a new undefined HotKey
 		/// </summary>
-		public HotKey()
+		public HotKey ()
 		{
 			Key = -1;
 			Modifier = -1;
 		}
 		#endregion
-
 		#region Properties
 		/// <summary>
 		/// Gdk Key
@@ -78,72 +66,60 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public Boolean Defined {
 			get {
-				return (Key!=-1 && Modifier != -1);
+				return (Key != -1 && Modifier != -1);
 			}
 		}
 		#endregion
-
 		#region Public Methods
-		public bool Equals (HotKey hotkeyComp) {
+		public bool Equals (HotKey hotkeyComp)
+		{
 			if (hotkeyComp == null)
 				return false;
 			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
 		}
 		#endregion
-
 		#region Operators
-		static public bool operator == (HotKey a, HotKey b) {
+		static public bool operator == (HotKey a, HotKey b)
+		{
 			// If both are null, or both are same instance, return true.
-			if (System.Object.ReferenceEquals(a, b))
-			{
+			if (System.Object.ReferenceEquals (a, b)) {
 				return true;
 			}
 
 			// If one is null, but not both, return false.
-			if (((object)a == null) || ((object)b == null))
-			{
+			if (((object)a == null) || ((object)b == null)) {
 				return false;
 			}
-			return a.Equals(b);
+			return a.Equals (b);
 		}
 
-		static public bool operator != (HotKey a, HotKey b) {
+		static public bool operator != (HotKey a, HotKey b)
+		{
 			return !(a == b);
 		}
 		#endregion
-
 		#region Overrides
-		public override bool Equals(object obj)
+		public override bool Equals (object obj)
 		{
-			if(obj is HotKey) {
-				HotKey hotkey= obj as HotKey;
-				return Equals(hotkey);
-			}
-			else
+			if (obj is HotKey) {
+				HotKey hotkey = obj as HotKey;
+				return Equals (hotkey);
+			} else
 				return false;
 		}
 
-		public override int GetHashCode()
+		public override int GetHashCode ()
 		{
 			return Key ^ Modifier;
 		}
 
-		public override string ToString()
+		public override string ToString ()
 		{
 			string modifierS = "";
 				
-			if(!Defined)
-				return Catalog.GetString("Not defined");
-
-#if HAVE_GTK
-			if(Modifier == (int)ModifierType.Mod1Mask)
-				modifierS = "<Alt>+";
-			else if(Modifier == (int)ModifierType.ShiftMask)
-				modifierS = "<Shift>+";
-			return string.Format("{0}{1}", modifierS,((Gdk.Key)Key).ToString().ToLower());
-#else
-			return string.Format("{0}{1}", modifierS,(Key.ToString()).ToLower());
-#endif
+			if (!Defined)
+				return Catalog.GetString ("Not defined");
+			return Keyboard.HotKeyName (this);
 		}
 		#endregion
 	}

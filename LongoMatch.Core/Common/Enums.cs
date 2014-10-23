@@ -281,5 +281,33 @@ namespace LongoMatch.Core.Common
 		Angle3,
 		Angle4,
 	}
+	
+	public enum KeyAction {
+		None,
+		TogglePlay,
+		FrameUp,
+		FrameDown,
+		SpeedUp,
+		SpeedDown,
+		JumpUp,
+		JumpDown,
+		Prev,
+		Next,
+		CloseEvent,
+		DrawFrame,
+		EditEvent,
+		DeleteEvent,
+		StartPeriod,
+		StopPeriod,
+		PauseClock,
+		LocalPlayer,
+		VisitorPlayer,
+		Substitution,
+		ShowDashboard,
+		ShowTimeline,
+		ShowPositions,
+		ZoomIn,
+		ZoomOut,
+		FitTimeline,
+	}
 }
-

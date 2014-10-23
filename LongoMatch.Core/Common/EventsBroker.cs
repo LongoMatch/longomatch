@@ -176,9 +176,9 @@ namespace LongoMatch.Core.Common
 				DuplicateEventsEvent (events);
 		}
 		
-		public void EmitKeyPressed(object sender, int key, int modifier) {
+		public void EmitKeyPressed(object sender, HotKey key) {
 			if (KeyPressed != null)
-				KeyPressed(sender, key, modifier);
+				KeyPressed(sender, key);
 		}
 		
 		public bool EmitCloseOpenedProject () {

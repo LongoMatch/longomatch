@@ -109,6 +109,27 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
+		public void ZoomIn () {
+			timeline.ZoomIn ();
+		}
+		
+		public void ZoomOut () {
+			timeline.ZoomOut ();
+		}
+		
+		public void FitTimeline () {
+			timeline.Fit ();
+		}
+		
+		public void ShowDashboard () {
+		}
+
+		public void ShowTimeline () {
+		}
+		
+		public void ShowZonalTags () {
+		}
+
 		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)
 		{
 			this.projectType = projectType;
@@ -205,7 +226,7 @@ namespace LongoMatch.Gui.Component
 			notebook.ShowTabs = false;
 			//notebook.Group = source.Group;
 			window.Add (notebook);
-			window.SetDefaultSize (300, 300);
+			window.SetDefaultSize (page.Allocation.Width, page.Allocation.Height);
 			window.Move (x, y);
 			window.ShowAll ();
 			activeWindows.Add (window);

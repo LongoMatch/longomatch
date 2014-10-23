@@ -19,8 +19,10 @@ SOURCES = Common/Area.cs \
 	Common/Exceptions.cs \
 	Common/ExtensionMethods.cs \
 	Common/Gettext.cs \
+	Common/Hotkeys.cs \
 	Common/Image.cs \
 	Common/Job.cs \
+	Common/Keyboard.cs \
 	Common/Log.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \

@@ -166,7 +166,7 @@ namespace LongoMatch.Gui
 			if (Focus is Entry) {
 				return ret;
 			} else {
-				Config.EventsBroker.EmitKeyPressed(this, (int)evnt.Key, (int)evnt.State);
+				Config.EventsBroker.EmitKeyPressed(this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
 				return true;
 			}
 		}
@@ -317,14 +317,6 @@ namespace LongoMatch.Gui
 			about.Destroy();
 		}
 		
-		protected void OnDialogInfoActionActivated (object sender, System.EventArgs e)
-		{
-			var info = new LongoMatch.Gui.Dialog.ShortcutsHelpDialog();
-			info.TransientFor = this;
-			info.Run();
-			info.Destroy();
-		}
-
 		protected void OnMigrationToolActionActivated(object sender, EventArgs e)
 		{
 			Config.EventsBroker.EmitMigrateDB ();

@@ -167,6 +167,12 @@ namespace LongoMatch.Gui
 			}
 		}
 		
+		public MediaFileAngle ActiveAngle {
+			get {
+				return playerbin.ActiveAngle;
+			}
+		}
+		
 		public bool SeekingEnabled {
 			set {
 				playerbin.SeekingEnabled = value;

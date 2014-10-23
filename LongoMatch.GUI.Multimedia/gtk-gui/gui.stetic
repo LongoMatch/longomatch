@@ -368,7 +368,6 @@
                     <property name="Upper">1</property>
                     <property name="PageIncrement">1</property>
                     <property name="StepIncrement">1</property>
-                    <property name="Value">1</property>
                     <property name="DrawValue">False</property>
                     <property name="Digits">0</property>
                     <property name="ValuePos">Top</property>

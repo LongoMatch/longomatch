@@ -116,7 +116,7 @@ namespace LongoMatch.Core.Handlers
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);
 	public delegate void ProjectSelectedHandler (ProjectDescription project);
-	public delegate void KeyHandler (object sender,int key,int modifier);
+	public delegate void KeyHandler (object sender, HotKey key);
 	/* The plays filter was updated */
 	public delegate void FilterUpdatedHandler ();
 	public delegate void DetachPlayerHandler ();

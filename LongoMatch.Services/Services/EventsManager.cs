@@ -107,6 +107,8 @@ namespace LongoMatch.Services
 			Config.EventsBroker.Detach += HandleDetach;
 			
 			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
+			
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 		}
 
 		void DeletePlays (List<TimelineEvent> plays, bool update=true)
@@ -366,5 +368,31 @@ namespace LongoMatch.Services
 			analysisWindow.ReloadProject ();
 		}
 
+		void HandleKeyPressed (object sender, HotKey key)
+		{
+			KeyAction action;
+
+			try {
+				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+			} catch (Exception ex) {
+				/* The dictionary contains 2 equal values for different keys */
+				Log.Exception (ex);
+				return;
+			}
+			
+			if (action == KeyAction.None) {
+				return;
+			}
+			
+			switch (action) {
+			case KeyAction.EditEvent:
+				Config.GUIToolkit.EditPlay (loadedPlay, openedProject, true, true, true, true);
+				break;
+			case KeyAction.DeleteEvent:
+				DeletePlays (new List<TimelineEvent> {loadedPlay});
+				break;
+			}
+			
+		}
 	}
 }

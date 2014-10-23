@@ -101,6 +101,18 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public void Fit () {
+			focusbutton.Click ();
+		}
+
+		public void ZoomIn () {
+			focusscale.Adjustment.Value -= focusscale.Adjustment.StepIncrement;
+		}
+		
+		public void ZoomOut () {
+			focusscale.Adjustment.Value += focusscale.Adjustment.StepIncrement;
+		}
+
 		public void SetProject (Project project, EventsFilter filter)
 		{
 			this.project = project;

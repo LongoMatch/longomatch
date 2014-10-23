@@ -103,8 +103,6 @@
     <Compile Include="Gui\TreeView\PlayersFilterTreeView.cs" />
     <Compile Include="Gui\TreeView\FilterBaseView.cs" />
     <Compile Include="Gui\TreeView\CategoriesFilterTreeView.cs" />
-    <Compile Include="Gui\Dialog\ShortcutsHelpDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs" />
     <Compile Include="Gui\Dialog\VideoConversionTool.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
     <Compile Include="Gui\Dialog\DatabasesManager.cs" />

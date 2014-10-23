@@ -36,6 +36,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		bool SeekingEnabled {set;}
 		bool Sensitive {set; get;}
 		bool Playing { get; }
+		MediaFileAngle ActiveAngle { get; }
 
 		void Open (MediaFileSet fileSet);
 		void Close();

@@ -76,6 +76,30 @@ namespace LongoMatch.Gui.Component
 			codingwidget.DeletePlays (plays);
 		}
 		
+		public void ZoomIn () {
+			codingwidget.ZoomIn ();
+		}
+		
+		public void ZoomOut () {
+			codingwidget.ZoomOut ();
+		}
+		
+		public void FitTimeline () {
+			codingwidget.FitTimeline ();
+		}
+		
+		public void ShowDashboard () {
+			codingwidget.ShowDashboard ();
+		}
+
+		public void ShowTimeline () {
+			codingwidget.ShowTimeline ();
+		}
+		
+		public void ShowZonalTags () {
+			codingwidget.ShowZonalTags ();
+		}
+
 		public void DetachPlayer ()
 		{
 			bool isPlaying = playercapturer.Playing;
@@ -92,9 +116,9 @@ namespace LongoMatch.Gui.Component
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
 				box = new EventBox ();
 				box.Name = "lightbackgroundeventbox";
-				box.KeyPressEvent += (o, args) => Config.EventsBroker.EmitKeyPressed (this,
-				                                                                      (int) args.Event.Key,
-				                                                                      (int) args.Event.State);
+				box.KeyPressEvent += (o, args) => {
+					Config.EventsBroker.EmitKeyPressed(this, Keyboard.ParseEvent (args.Event));
+				};
 				playerWindow.Add (box);
 				
 				box.Show ();
