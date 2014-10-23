@@ -119,6 +119,9 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				Save (openedProject);
 			}
+			if (loadedPlay != null && plays.Contains (loadedPlay)) {
+				Config.EventsBroker.EmitEventLoaded (null);
+			}
 			filter.Update ();
 		}
 
@@ -389,10 +392,11 @@ namespace LongoMatch.Services
 				Config.GUIToolkit.EditPlay (loadedPlay, openedProject, true, true, true, true);
 				break;
 			case KeyAction.DeleteEvent:
-				DeletePlays (new List<TimelineEvent> {loadedPlay});
+				if (loadedPlay != null) {
+					DeletePlays (new List<TimelineEvent> {loadedPlay});
+				}
 				break;
 			}
-			
 		}
 	}
 }
