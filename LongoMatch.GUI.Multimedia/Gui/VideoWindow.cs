@@ -41,6 +41,8 @@ namespace LongoMatch.Gui
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
+			// This is required to avoid video window visibility issues on Windows.
+			videoeventbox.VisibleWindow = false;
 
 			frame.Add (Window);
 			videoeventbox.Add (frame);
