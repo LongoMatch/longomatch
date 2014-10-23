@@ -43,7 +43,8 @@ namespace LongoMatch.Core.Common
 			} else if (evt.State == Gdk.ModifierType.ControlMask) {
 				modifier = (int)KeyvalFromName ("Control_L");
 			}
-			return new HotKey { Key = (int) evt.KeyValue, Modifier = modifier };
+			return new HotKey { Key = (int) Gdk.Keyval.ToLower (evt.KeyValue),
+				Modifier = modifier };
 		}
 
 		public static HotKey ParseName (string name)
