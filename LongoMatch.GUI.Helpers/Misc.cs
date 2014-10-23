@@ -275,7 +275,7 @@ namespace LongoMatch.Gui.Helpers
 				if (child is Container) {
 					SetFocus (child as Container, canFocus, skipTypes);
 				} else {
-					if (IsSkipedType (child, skipTypes)) {
+					if (!IsSkipedType (child, skipTypes)) {
 						child.CanFocus = canFocus;
 					}
 				}
