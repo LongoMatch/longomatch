@@ -16,7 +16,6 @@ gtk-alternative-button-order = 1
 
 style "longomatch-default"
 {
-  GtkWidget::interior-focus = 1
   GtkOptionMenu::indicator-size = { 9, 5 }
   GtkOptionMenu::indicator-spacing = { 7, 5, 2, 2 }
   GtkSpinButton::shadow-type = in
@@ -31,11 +30,10 @@ style "longomatch-default"
 
   GtkToolbar::shadow-type = GTK_SHADOW_NONE
 
-  GtkButton::focus-line-width = 0
+  GtkWidget::focus-line-width = 0
   GtkButton::focus-on-click = 0
-
-  GtkButton::focus-line-width = 0
-  GtkButton::focus-on-click = 0
+  GtkButton::interior-focus = 0
+  GtkButton::focus-padding = 0
 
   #xthickness = 0
   #ythickness = 0
@@ -155,6 +153,7 @@ widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
 widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
 # Comboboxes get a nice rounded border with green arrows
 widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
+widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-button-nofocus"
 # Custom combos for team vs team
 widget_class "*HomeTeamsComboBox*"               style "longomatch-home-teams-combobox"
 widget_class "*AwayTeamsComboBox*"               style "longomatch-away-teams-combobox"

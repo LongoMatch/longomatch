@@ -11,8 +11,10 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Buttons/button-rounded-prelight.svg \
 	gtk-2.0/Buttons/button-rounded-pressed.svg \
 	gtk-2.0/Buttons/button-square-default.svg \
+	gtk-2.0/Buttons/button-square-focus.svg \
 	gtk-2.0/Buttons/button-square-prelight.svg \
 	gtk-2.0/Buttons/button-square-pressed.svg \
+	gtk-2.0/Buttons/null.png \
 	gtk-2.0/Buttons/null_bg.png \
 	gtk-2.0/Buttons/null_bg_light.png \
 	gtk-2.0/Check-Radio/checkbox-checked-insensitive.png \

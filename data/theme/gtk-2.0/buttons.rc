@@ -1,3 +1,16 @@
+style "longomatch-button-nofocus" = "longomatch-default"
+{
+  engine "pixmap"
+  {
+    image
+    {
+      function   = FOCUS
+      file       = "Buttons/null.png"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+  }
+}
 
 style "longomatch-rounded-button" = "longomatch-default"
 {
@@ -34,6 +47,13 @@ style "longomatch-rounded-button" = "longomatch-default"
       function   = BOX
       state      = INSENSITIVE
       file       = "Buttons/button-rounded-default.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = FOCUS
+      file       = "Buttons/null.png"
       border     = { 4, 4, 4, 4 }
       stretch    = TRUE
     }
@@ -76,6 +96,13 @@ style "longomatch-rect-button" = "longomatch-default"
       border     = { 4, 4, 4, 4 }
       stretch    = TRUE
     }
+    image
+    {
+      function   = FOCUS
+      file       = "Buttons/null.png"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
   }
 }
 
@@ -112,6 +139,13 @@ style "longomatch-square-button" = "longomatch-default"
       function   = BOX
       state      = INSENSITIVE
       file       = "Buttons/button-square-default.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = FOCUS
+      file       = "Buttons/button-square-focus.svg"
       border     = { 4, 4, 4, 4 }
       stretch    = TRUE
     }
