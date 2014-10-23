@@ -295,7 +295,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else if (emitEvent) {
 				EmitCreateEvent ();
 			} else if (delayEvent) {
-				DelayTagClicked ();
+				if (SelectedTags.Count == tagsByGroup.Count) {
+					EmitCreateEvent ();
+				} else {
+					DelayTagClicked ();
+				}
 			} else if (applyClicked) {
 				if (SelectedTags.Count > 1) {
 					EmitCreateEvent ();
