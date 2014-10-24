@@ -1,6 +1,19 @@
 iconsdir = @datadir@/@PACKAGE@/icons
 nobase_dist_icons_DATA = Makefile.am \
 	hicolor/index.theme \
+	hicolor/scalable/actions/gtk-about.svg \
+	hicolor/scalable/actions/gtk-add.svg \
+	hicolor/scalable/actions/gtk-close.svg \
+	hicolor/scalable/actions/gtk-dialog-info.svg \
+	hicolor/scalable/actions/gtk-fullscreen.svg \
+	hicolor/scalable/actions/gtk-help.svg \
+	hicolor/scalable/actions/gtk-new.svg \
+	hicolor/scalable/actions/gtk-ok.svg \
+	hicolor/scalable/actions/gtk-open.svg \
+	hicolor/scalable/actions/gtk-quit.svg \
+	hicolor/scalable/actions/gtk-remove.svg \
+	hicolor/scalable/actions/gtk-save-as.svg \
+	hicolor/scalable/actions/gtk-save.svg \
 	hicolor/scalable/actions/longomat-project.svg \
 	hicolor/scalable/actions/longomatch-angle.svg \
 	hicolor/scalable/actions/longomatch-apply.svg \
