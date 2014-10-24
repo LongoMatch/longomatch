@@ -262,6 +262,7 @@ namespace LongoMatch.Gui.Component
 			editbutton.IconWidget = editimage;
 			editbutton.Active = true;
 			editbutton.Toggled += HandleEditToggled;
+			editbutton.TooltipText = Catalog.GetString ("Edit dashboard");
 			toolbar.Add (editbutton);
 			toolbar.Add (new SeparatorToolItem ());
 			
@@ -270,20 +271,24 @@ namespace LongoMatch.Gui.Component
 			                                        ("longomatch-popup", 22));
 			popupbutton.Active = true;
 			popupbutton.Toggled += HandlePopupToggled;
+			popupbutton.TooltipText = Catalog.GetString ("Disable popup window");
 			toolbar.Add (popupbutton);
 			toolbar.Add (new SeparatorToolItem ());
 			
 			fitbutton = new RadioToolButton ((GLib.SList) null);
 			fitbutton.IconName = "longomatch-dash-fit";
 			fitbutton.Toggled += HandleFitModeToggled;
+			fitbutton.TooltipText = Catalog.GetString ("Fit dashboard");
 			toolbar.Add (fitbutton);
 			fillbutton = new RadioToolButton (fitbutton);
 			fillbutton.IconName = "longomatch-dash-fill";
 			fillbutton.Toggled += HandleFitModeToggled;
+			fillbutton.TooltipText = Catalog.GetString ("Fill dashboard");
 			toolbar.Add (fillbutton);
 			d11button = new RadioToolButton (fitbutton);
 			d11button.IconName = "longomatch-dash-11";
 			d11button.Toggled += HandleFitModeToggled;
+			d11button.TooltipText = Catalog.GetString ("1:1 dashboard");
 			toolbar.Add (d11button);
 			toolbar.ShowAll ();
 			hbox2.PackEnd (toolbar, false, false, 0);
@@ -374,7 +379,7 @@ namespace LongoMatch.Gui.Component
 		void HandleShowMenuEvent (DashboardButton taggerbutton, Tag tag)
 		{
 			Menu menu;
-			MenuItem delbut, deltag;
+			MenuItem delbut;
 			
 			if (Mode != TagMode.Edit) {
 				return;
