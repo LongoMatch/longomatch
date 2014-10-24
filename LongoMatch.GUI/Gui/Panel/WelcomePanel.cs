@@ -89,7 +89,9 @@ namespace LongoMatch.Gui.Panel
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
 			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,
-			                    AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Expand | AttachOptions.Fill, 0, StyleConf.WelcomeIconsVSpacing / 2);
+			                    AttachOptions.Expand | AttachOptions.Fill,
+			                    AttachOptions.Expand | AttachOptions.Fill,
+			                    0, StyleConf.WelcomeIconsVSpacing / 2);
 
 			for (uint i=0; i < buttons.Length; i++) {
 				Widget b;
@@ -100,9 +102,12 @@ namespace LongoMatch.Gui.Panel
 
 				b = CreateButton (buttons[i]);
 				tablewidget.Attach (b, c, c + 1, l, l + 1,
-				                    AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Expand | AttachOptions.Fill, 0, StyleConf.WelcomeIconsVSpacing / 2);
+				                    AttachOptions.Expand | AttachOptions.Fill,
+				                    AttachOptions.Expand | AttachOptions.Fill,
+				                    0, StyleConf.WelcomeIconsVSpacing / 2);
 				buttonWidgets.Add (b);
 			}
+			
 		}
 		
 		Widget CreateButton (WelcomeButton b) {

@@ -17,54 +17,28 @@
 //
 
 using System;
-using System.Collections.Generic;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Store;
-using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {
 
 	public partial class EditCategoryDialog : Gtk.Dialog
 	{
-		List<HotKey> hkList;
 
 		public EditCategoryDialog(Project project, DashboardButton tagger)
 		{
 			this.Build();
 			timenodeproperties2.Tagger = tagger;
-			timenodeproperties2.Project = project;
-			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
+			timenodeproperties2.Dashboard = project.Dashboard;
 		}
 
 		public EditCategoryDialog(Project project, EventType eventType)
 		{
 			this.Build();
 			timenodeproperties2.EventType = eventType;
-			timenodeproperties2.Project = project;
-			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
+			timenodeproperties2.Dashboard = project.Dashboard;
 		}
 
-		public List<HotKey> HotKeysList {
-			set {
-				hkList = value;
-				timenodeproperties2.CanChangeHotkey = hkList != null;
-			}
-		}
-
-		protected virtual void OnHotKeyChanged(HotKey prevHotKey, DashboardButton button) {
-			if(hkList.Contains(button.HotKey)) {
-				MessagesHelpers.WarningMessage(this,
-				                               Catalog.GetString("This hotkey is already in use."));
-				button.HotKey=prevHotKey;
-				timenodeproperties2.Tagger = button; //Update Gui
-			}
-			else if(button.HotKey.Defined) {
-				hkList.Remove(prevHotKey);
-				hkList.Add(button.HotKey);
-			}
-		}
-		
 		protected override void OnRealized ()
 		{
 			base.OnRealized ();

@@ -25,17 +25,16 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;
 using Point = LongoMatch.Core.Common.Point;
+using LongoMatch.Core.Store.Templates;
 
 
 namespace LongoMatch.Gui.Component
 {
-	public delegate void HotKeyChangeHandler (HotKey prevHotKey,DashboardButton button);
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial  class CategoryProperties : Gtk.Bin
 	{
 
-		public event HotKeyChangeHandler HotKeyChanged;
 		public event EventHandler EditedEvent;
 
 		SizeGroup sizegroupLeft, sizegroupRight;
@@ -96,7 +95,6 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 
-			CanChangeHotkey = true;
 			Tagger = null;
 
 			UpdateGui ();
@@ -111,13 +109,6 @@ namespace LongoMatch.Gui.Component
 			}
 			get {
 				return edited;
-			}
-		}
-
-		public bool CanChangeHotkey {
-			set {
-				if (value == true)
-					changebuton.Sensitive = true;
 			}
 		}
 
@@ -147,7 +138,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Project Project {
+		public Dashboard Dashboard {
 			set;
 			get;
 		}
@@ -248,17 +239,16 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			HotKeySelectorDialog dialog = new HotKeySelectorDialog ();
-			dialog.TransientFor = (Gtk.Window)this.Toplevel;
-			HotKey prevHotKey = button.HotKey;
-			if (dialog.Run () == (int)ResponseType.Ok) {
-				button.HotKey = dialog.HotKey;
-				UpdateGui ();
+			HotKey hotkey = Config.GUIToolkit.SelectHotkey (button.HotKey);
+			if (hotkey != null) {
+				try {
+					Dashboard.ChangeHotkey (button, hotkey);
+					UpdateGui ();
+					Edited = true;
+				} catch (HotkeyAlreadyInUse ex) {
+					Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				}
 			}
-			dialog.Destroy ();
-			if (HotKeyChanged != null)
-				HotKeyChanged (prevHotKey, button);
-			Edited = true;
 		}
 
 		void HandlePositionChanged (object sender, EventArgs e)

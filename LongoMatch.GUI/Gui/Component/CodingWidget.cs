@@ -130,6 +130,11 @@ namespace LongoMatch.Gui.Component
 		public void ShowZonalTags () {
 		}
 
+		public void ClickButton (DashboardButton button)
+		{
+			buttonswidget.ClickButton (button);
+		}
+
 		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)
 		{
 			this.projectType = projectType;

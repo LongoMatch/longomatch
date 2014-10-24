@@ -169,6 +169,28 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public virtual Point Position {
+			get;
+			set;
+		}
+
+		public virtual double Width {
+			get;
+			set;
+		}
+
+		public virtual double Height {
+			get;
+			set;
+		}
+
+		public void Click () {
+			ClickPressed (new Point (Position.X + Width / 2, Position.Y + Height / 2),
+			              ButtonModifier.None);
+			
+			ClickReleased ();
+		}
+
 		public override void ClickPressed (Point p, ButtonModifier modif)
 		{
 			Active = !Active;

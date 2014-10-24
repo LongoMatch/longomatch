@@ -160,6 +160,7 @@ namespace LongoMatch.Gui.Component
 				// Start with disabled widget until something get selected
 				tagproperties.Tagger = null;
 				tagproperties.Sensitive = false;
+				tagproperties.Dashboard = value;
 			}
 		}
 
@@ -202,6 +203,11 @@ namespace LongoMatch.Gui.Component
 				internalButtons = value;
 				Mode = tagMode;
 			}
+		}
+
+		public void ClickButton (DashboardButton button)
+		{
+			tagger.Click (button);
 		}
 		
 		public void Refresh (DashboardButton b = null) {

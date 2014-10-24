@@ -100,6 +100,11 @@ namespace LongoMatch.Gui.Component
 			codingwidget.ShowZonalTags ();
 		}
 
+		public void ClickButton (DashboardButton button)
+		{
+			codingwidget.ClickButton (button);
+		}
+
 		public void DetachPlayer ()
 		{
 			bool isPlaying = playercapturer.Playing;

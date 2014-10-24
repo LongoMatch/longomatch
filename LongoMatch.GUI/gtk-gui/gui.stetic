@@ -1090,7 +1090,6 @@ Sort by competition</property>
                 <child>
                   <widget class="Gtk.Button" id="changebuton">
                     <property name="MemberName" />
-                    <property name="Sensitive">False</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextOnly</property>
                     <property name="Label" translatable="yes">Change</property>
@@ -6472,7 +6471,6 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.Button" id="preferencesbutton">
                 <property name="MemberName" />
-                <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
                 <child>
                   <placeholder />

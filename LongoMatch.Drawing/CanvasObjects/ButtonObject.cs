@@ -43,21 +43,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			base.Dispose (disposing);
 		}
 
-		public virtual Point Position {
-			get;
-			set;
-		}
-
-		public virtual double Width {
-			get;
-			set;
-		}
-
-		public virtual double Height {
-			get;
-			set;
-		}
-
 		public virtual string Text {
 			get;
 			set;

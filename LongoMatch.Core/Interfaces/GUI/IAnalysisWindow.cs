@@ -40,6 +40,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		void ShowDashboard ();
 		void ShowTimeline ();
 		void ShowZonalTags ();
+		void ClickButton (DashboardButton button);
 		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}

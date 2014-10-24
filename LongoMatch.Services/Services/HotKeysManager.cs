@@ -23,25 +23,40 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using System;
+using LongoMatch.Core.Store.Templates;
 
-#if HAVE_GTK
-using Gdk;
-using Gtk;
-
-#endif
 namespace LongoMatch.Services
 {
 	public class HotKeysManager
 	{
-		Dictionary<HotKey, DashboardButton> dic;
+		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
 		IAnalysisWindow analysisWindow;
-		bool ignoreKeys;
+		Dashboard dashboard;
 
 		public HotKeysManager ()
 		{
-			dic = new Dictionary<HotKey,DashboardButton> ();
+			dashboardHotkeys = new Dictionary<HotKey,DashboardButton> ();
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed += KeyListener;
+			Config.EventsBroker.KeyPressed += UIKeyListener;
+			Config.EventsBroker.KeyPressed += DashboardKeyListener;
+			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+		}
+
+		void ReloadHotkeys ()
+		{
+			dashboardHotkeys.Clear ();
+			if (dashboard == null) {
+				return;
+			}
+			foreach (DashboardButton button in dashboard.List) {
+				if (button.HotKey.Defined && !dashboardHotkeys.ContainsKey (button.HotKey))
+					dashboardHotkeys.Add (button.HotKey, button);
+			}
+		}
+
+		void HandleDashboardEditedEvent ()
+		{
+			ReloadHotkeys ();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
@@ -49,20 +64,14 @@ namespace LongoMatch.Services
 		{
 			this.analysisWindow = analysisWindow;
 			if (project == null) {
-				ignoreKeys = true;
-				return;
+				dashboard = null;
+			} else {
+				dashboard = project.Dashboard;
 			}
-			
-			dic.Clear ();
-			ignoreKeys = false;
-			foreach (DashboardButton cat in project.Dashboard.List) {
-				if (cat.HotKey.Defined &&
-					!dic.ContainsKey (cat.HotKey))
-					dic.Add (cat.HotKey, cat);
-			}
+			ReloadHotkeys ();
 		}
 
-		public void KeyListener (object sender, HotKey key)
+		public void UIKeyListener (object sender, HotKey key)
 		{
 			KeyAction action;
 
@@ -96,8 +105,29 @@ namespace LongoMatch.Services
 					return;
 				}
 			}
-			if (ignoreKeys)
+		}
+		
+		public void DashboardKeyListener (object sender, HotKey key)
+		{
+			KeyAction action;
+			DashboardButton button;
+
+			try {
+				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+			} catch (Exception ex) {
 				return;
+			}
+			if (action != KeyAction.None) {
+				/* Keep prevalence of general hotkeys over the dashboard ones */
+				return;
+			}
+			
+			if (!dashboardHotkeys.TryGetValue (key, out button)) {
+				return;
+			}
+			if (! (button is AnalysisEventButton)) {
+				analysisWindow.ClickButton (button);
+			}
 		}
 	}
 }
