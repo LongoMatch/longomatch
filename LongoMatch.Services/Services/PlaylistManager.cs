@@ -181,6 +181,9 @@ namespace LongoMatch.Services
 		{
 			if (playlist == null) {
 				playlist = HandleNewPlaylist (openedProject);
+				if (playlist == null) {
+					return;
+				}
 			}
 			playlist.Elements.AddRange (element);
 			Config.EventsBroker.EmitPlaylistsChanged (this);
