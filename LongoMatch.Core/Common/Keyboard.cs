@@ -49,7 +49,7 @@ namespace LongoMatch.Core.Common
 
 		public static HotKey ParseName (string name)
 		{
-			int key = -1, modifier = -1, i;
+			int key = 0, modifier = 0, i;
 			
 			if (name.Contains (">+")) {
 				i = name.IndexOf ('+');
@@ -63,7 +63,7 @@ namespace LongoMatch.Core.Common
 
 		public static string HotKeyName (HotKey hotkey)
 		{
-			if (hotkey.Modifier != -1) {
+			if (hotkey.Modifier != -1 && hotkey.Modifier != 0) {
 				return string.Format ("<{0}>+{1}", NameFromKeyval ((uint)hotkey.Modifier),
 				                      NameFromKeyval ((uint)hotkey.Key));
 			} else {

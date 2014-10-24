@@ -81,32 +81,32 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.ZoomOut] = Catalog.GetString ("Zoom timeline out");
 			
 			UpdateMapping (KeyAction.DeleteEvent, "<Shift_L>+d");
-			UpdateMapping (KeyAction.DrawFrame, "f");
-			UpdateMapping (KeyAction.EditEvent, "e");
-			UpdateMapping (KeyAction.FitTimeline, "t");
+			UpdateMapping (KeyAction.DrawFrame, "<Shift_L>+f");
+			UpdateMapping (KeyAction.EditEvent, "<Shift_L>+e");
+			UpdateMapping (KeyAction.FitTimeline, "<Shift_L>+t");
 			UpdateMapping (KeyAction.FrameDown, "Left");
 			UpdateMapping (KeyAction.FrameUp, "Right");
 			UpdateMapping (KeyAction.JumpUp, "<Shift_L>+Right");
 			UpdateMapping (KeyAction.JumpDown, "<Shift_L>+Left");
-			UpdateMapping (KeyAction.CloseEvent, "a");
-			UpdateMapping (KeyAction.LocalPlayer, "q");
-			UpdateMapping (KeyAction.VisitorPlayer, "w");
-			UpdateMapping (KeyAction.LocalPlayer, "n");
-			UpdateMapping (KeyAction.VisitorPlayer, "b");
-			UpdateMapping (KeyAction.PauseClock, "p");
-			UpdateMapping (KeyAction.ShowTimeline, "z");
-			UpdateMapping (KeyAction.ShowDashboard, "x");
-			UpdateMapping (KeyAction.ShowPositions, "c");
+			UpdateMapping (KeyAction.CloseEvent, "<Shift_L>+a");
+			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+q");
+			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+w");
+			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+n");
+			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+b");
+			UpdateMapping (KeyAction.PauseClock, "<Shift_L>+p");
+			UpdateMapping (KeyAction.ShowTimeline, "<Shift_L>+z");
+			UpdateMapping (KeyAction.ShowDashboard, "<Shift_L>+x");
+			UpdateMapping (KeyAction.ShowPositions, "<Shift_L>+c");
 			UpdateMapping (KeyAction.SpeedDown, "Down");
 			UpdateMapping (KeyAction.SpeedUp, "Up");
 			UpdateMapping (KeyAction.StartPeriod, "<Shift_L>+i");
-			UpdateMapping (KeyAction.StopPeriod, "<Shitft_L>+o");
-			UpdateMapping (KeyAction.Substitution, "s");
+			UpdateMapping (KeyAction.StopPeriod, "<Shift_L>+o");
+			UpdateMapping (KeyAction.Substitution, "<Shift_L>+s");
 			UpdateMapping (KeyAction.TogglePlay, "space");
 			UpdateMapping (KeyAction.ZoomIn, "plus");
 			UpdateMapping (KeyAction.ZoomOut, "minus");
-			UpdateMapping (KeyAction.Next, "plus");
-			UpdateMapping (KeyAction.Prev, "minus");
+			UpdateMapping (KeyAction.Next, "<Alt_L>+Right");
+			UpdateMapping (KeyAction.Prev, "<Alt_L>+Left");
 		}
 	}
 }
