@@ -32,7 +32,6 @@ namespace LongoMatch.Drawing.Widgets
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int TIME_SPACING = 100;
-		bool moving;
 		NeedleObject needle;
 		double scroll;
 		double secondsPerPixel;
@@ -83,13 +82,11 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void StartMove (Selection sel)
 		{
-			moving = true;
 			Config.EventsBroker.EmitTogglePlayEvent (false);
 		}
 
 		protected override void StopMove (bool moved)
 		{
-			moving = false;
 			Config.EventsBroker.EmitTogglePlayEvent (true);
 		}
 

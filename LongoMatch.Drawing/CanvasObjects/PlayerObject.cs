@@ -56,11 +56,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Point Position {
-			get;
-			set;
-		}
-
 		public int Size {
 			set;
 			get;
@@ -76,13 +71,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		int Width {
+		public override double Width {
 			get {
 				return Size;
 			}
 		}
 
-		int Height {
+		public override double Height {
 			get {
 				return Size;
 			}
@@ -112,7 +107,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			Point zero, start, p;
-			double numberSize;
 			double size, scale;
 			ISurface arrowin, arrowout;
 
