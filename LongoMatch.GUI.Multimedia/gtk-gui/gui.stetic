@@ -99,6 +99,7 @@
                           <widget class="LongoMatch.Gui.VideoWindow" id="videowindow">
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
+                            <property name="Visible">True</property>
                             <property name="Ready">False</property>
                           </widget>
                           <packing>
