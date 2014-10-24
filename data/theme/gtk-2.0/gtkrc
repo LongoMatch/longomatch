@@ -128,6 +128,7 @@ include "handles.rc"
 include "radiobutton.rc"
 include "entry.rc"
 include "range.rc"
+include "scrollbar.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -145,6 +146,7 @@ class "GtkTextView"                              style "longomatch-treeview"
 # Indeed when providing different images for different orientation, GTK will pick the wrong orientation when the scale reaches boundaries…
 class "GtkHScale"                                style "longomatch-hscale"
 class "GtkVScale"                                style "longomatch-vscale"
+class "GtkScrollbar"                             style "longomatch-scrollbar"
 
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
