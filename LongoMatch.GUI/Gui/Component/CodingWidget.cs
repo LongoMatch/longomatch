@@ -121,12 +121,15 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void ShowDashboard () {
+			SelectPage (dashboardhpaned);
 		}
 
 		public void ShowTimeline () {
+			SelectPage (timeline);
 		}
 		
 		public void ShowZonalTags () {
+			SelectPage (playspositionviewer1);
 		}
 
 		public void ClickButton (DashboardButton button)
@@ -184,6 +187,16 @@ namespace LongoMatch.Gui.Component
 			dashboardActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
 			posIco = Helpers.Misc.LoadIcon ("longomatch-tab-position", s, f);
 			posAtiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-position", s, f);
+		}
+
+		void SelectPage (Widget widget)
+		{
+			for (int i=0; i < notebook.NPages; i++) {
+				if (notebook.GetNthPage (i) == widget) {
+					notebook.Page = i;
+					break;
+				}
+			}
 		}
 
 		void SetTabProps (Widget widget, bool active)
