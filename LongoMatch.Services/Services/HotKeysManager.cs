@@ -32,6 +32,9 @@ namespace LongoMatch.Services
 		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
 		IAnalysisWindow analysisWindow;
 		Dashboard dashboard;
+		AnalysisEventButton pendingButton;
+		System.Threading.Timer timer;
+		const int TIMEOUT_MS = 1000;
 
 		public HotKeysManager ()
 		{
@@ -40,6 +43,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.KeyPressed += UIKeyListener;
 			Config.EventsBroker.KeyPressed += DashboardKeyListener;
 			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+			timer = new System.Threading.Timer (HandleTimeout);
 		}
 
 		void ReloadHotkeys ()
@@ -52,6 +56,16 @@ namespace LongoMatch.Services
 				if (button.HotKey.Defined && !dashboardHotkeys.ContainsKey (button.HotKey))
 					dashboardHotkeys.Add (button.HotKey, button);
 			}
+		}
+
+		void HandleTimeout (object state)
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				if (pendingButton != null) {
+					analysisWindow.ClickButton (pendingButton);
+					pendingButton = null;
+				}
+			});
 		}
 
 		void HandleDashboardEditedEvent ()
@@ -106,7 +120,7 @@ namespace LongoMatch.Services
 				}
 			}
 		}
-		
+
 		public void DashboardKeyListener (object sender, HotKey key)
 		{
 			KeyAction action;
@@ -114,7 +128,7 @@ namespace LongoMatch.Services
 
 			try {
 				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
-			} catch (Exception ex) {
+			} catch {
 				return;
 			}
 			if (action != KeyAction.None) {
@@ -122,11 +136,22 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			if (!dashboardHotkeys.TryGetValue (key, out button)) {
-				return;
-			}
-			if (! (button is AnalysisEventButton)) {
-				analysisWindow.ClickButton (button);
+			if (dashboardHotkeys.TryGetValue (key, out button)) {
+				if (button is AnalysisEventButton) {
+					AnalysisEventButton evButton = button as AnalysisEventButton;
+					/* Finish tagging for the pending button */
+					if (pendingButton != null) {
+						analysisWindow.ClickButton (button);
+					}
+					if (evButton.AnalysisEventType.Tags.Count == 0) {
+						analysisWindow.ClickButton (button);
+					} else {
+						pendingButton = evButton;
+						timer.Change (TIMEOUT_MS, 0);
+					}
+				} else {
+					analysisWindow.ClickButton (button);
+				}
 			}
 		}
 	}

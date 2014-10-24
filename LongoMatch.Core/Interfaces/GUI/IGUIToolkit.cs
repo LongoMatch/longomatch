@@ -93,6 +93,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		HotKey SelectHotkey (HotKey hotkey, object parent = null);
 
+		void Invoke (EventHandler handler);
 	}
 }
 

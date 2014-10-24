@@ -185,7 +185,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public void Click () {
-			ClickPressed (new Point (Position.X + Width / 2, Position.Y + Height / 2),
+			ClickPressed (new Point (Position.X + 1, Position.Y + 1),
 			              ButtonModifier.None);
 			
 			ClickReleased ();

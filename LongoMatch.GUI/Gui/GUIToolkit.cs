@@ -423,6 +423,10 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 			return hotkey;
 		}
+		
+		public void Invoke (EventHandler handler) {
+			Gtk.Application.Invoke (handler);
+		}
 	}
 }
 
