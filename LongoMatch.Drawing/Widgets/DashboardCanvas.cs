@@ -318,6 +318,20 @@ namespace LongoMatch.Drawing.Widgets
 			Score score = null;
 			
 			tagger = co as TaggerObject;
+			
+			if (tagger is TagObject) {
+				TagObject tag = tagger as TagObject;
+				if (tag.Active) {
+					/* All tag buttons from the same group that are active */
+					foreach (TagObject to in Objects.OfType<TagObject>().
+					         Where (t => t.TagButton.Tag.Group == tag.TagButton.Tag.Group &&
+					       t.Active && t != tagger)) {
+						to.Active = false;
+					}
+				}
+				return;
+			}
+
 			if (NewTagEvent == null || !(tagger.Tagger is EventButton)) {
 				return;
 			}
