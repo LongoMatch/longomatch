@@ -33,8 +33,6 @@ namespace LongoMatch.Gui.Component
 	public class PlayListTreeView : Gtk.TreeView
 	{
 		Project project;
-		Playlist selectedPlaylist;
-		IPlaylistElement selectedElement;
 		TreeIter selectedIter;
 		Playlist dragSourcePlaylist;
 		IPlaylistElement dragSourceElement;
@@ -162,28 +160,6 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			return base.OnButtonPressEvent (evnt);
-		}
-
-		protected void OnTitle (object o, EventArgs args)
-		{
-			PlaylistPlayElement ple;
-			EntryDialog ed;
-			
-			ple = selectedElement as PlaylistPlayElement;
-			ed = new EntryDialog ();
-			ed.Title = Catalog.GetString ("Edit Title");
-			ed.Text = ple.Title;
-			if (ed.Run () == (int)ResponseType.Ok) {
-				ple.Title = ed.Text;
-				this.QueueDraw ();
-			}
-			ed.Destroy ();
-		}
-
-		protected void OnDelete (object obj, EventArgs args)
-		{
-			selectedPlaylist.Remove (selectedElement);
-			(Model as TreeStore).Remove (ref selectedIter);
 		}
 
 		void FillElementAndPlaylist (TreeIter iter, out Playlist playlist, out IPlaylistElement element)

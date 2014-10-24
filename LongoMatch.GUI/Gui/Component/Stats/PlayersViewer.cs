@@ -62,9 +62,7 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 		
 		void AddTeam (TeamTemplate tpl, Dashboard cats) {
-			TreeIter teamIter;
-			
-			teamIter = store.AppendValues (tpl.TeamName, null);
+			store.AppendValues (tpl.TeamName, null);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)

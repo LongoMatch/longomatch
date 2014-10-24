@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Panel
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
 		List<Device> videoDevices;
-		ListStore teams, videoStandardList, encProfileList, qualList;
+		ListStore videoStandardList, encProfileList, qualList;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Color red;

@@ -80,7 +80,7 @@ namespace LongoMatch
 				if (manager != null) {
 					try {
 						manager.ShutdownMultimediaBackends ();
-					} catch (Exception ex) {
+					} catch {
 					}
 				}
 			}

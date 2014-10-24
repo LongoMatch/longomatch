@@ -28,13 +28,11 @@ namespace LongoMatch.Core.Stats
 {
 	public class ProjectStats: IDisposable
 	{
-		List<EventTypeStats> catStats;
 		EventsFilter filter;
 		Project project;
 		
 		public ProjectStats (Project project)
 		{
-			catStats = new List<EventTypeStats>();
 			this.project = project;
 			filter = new EventsFilter (project);
 			CreateStats ();

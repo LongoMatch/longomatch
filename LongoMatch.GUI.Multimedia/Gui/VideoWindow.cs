@@ -24,7 +24,7 @@ namespace LongoMatch.Gui
 	public partial class VideoWindow : Gtk.Bin
 	{
 		AspectFrame frame;
-		public new event EventHandler ReadyEvent;
+		public event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
 		public new event ButtonPressEventHandler ButtonPressEvent;
 		public new event ScrollEventHandler ScrollEvent;

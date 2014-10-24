@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
-		Project project;
 
 		public CategoriesFilterTreeView (): base()
 		{

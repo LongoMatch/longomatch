@@ -32,7 +32,6 @@ namespace LongoMatch.Video.Player
 
 		public event ErrorHandler Error;
 		public event StateChangeHandler StateChange;
-		public event TickHandler Tick;
 		public event ReadyToSeekHandler ReadyToSeek;
 		public event EosHandler Eos;
 

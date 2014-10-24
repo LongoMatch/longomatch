@@ -120,7 +120,7 @@ namespace LongoMatch.DB
 				projectsDB.LastBackup = DateTime.UtcNow;
 				projectsDB.Save ();
 				return true;
-			} catch (Exception ex) {
+			} catch {
 				return false;
 			}
 		}

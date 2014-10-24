@@ -37,7 +37,6 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		Project project;
 		List<Player> selectedPlayers;
-		TimelineEvent loadedPlay;
 		List<Window> activeWindows;
 		int currentPage;
 		Gdk.Pixbuf timelineIco, timelineActiveIco;
@@ -255,7 +254,6 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayLoaded (TimelineEvent play)
 		{
-			loadedPlay = play;
 			timeline.LoadPlay (play);
 		}
 

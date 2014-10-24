@@ -34,7 +34,6 @@ namespace LongoMatch.Gui.Component
 	{
 	
 		Project project;
-		EventsFilter filter;
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
 		Pixbuf listIco, listActiveIco;
@@ -78,7 +77,6 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project, EventsFilter filter) {
 			this.project = project;
-			this.filter = filter;
 			playsList.Filter = filter;
 			localPlayersList.Filter = filter;
 			visitorPlayersList.Filter = filter;

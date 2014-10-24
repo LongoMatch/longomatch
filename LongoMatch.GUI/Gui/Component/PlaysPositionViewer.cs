@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Component
 	
 		PlaysMenu menu;
 		Project project;
-		EventsFilter filter;
 
 		public PlaysPositionViewer ()
 		{

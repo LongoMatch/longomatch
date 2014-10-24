@@ -34,7 +34,6 @@ namespace LongoMatch.Gui.Component
 		PlaysTimeline timeline;
 		Timerule timerule;
 		TimelineLabels labels;
-		MediaFile projectFile;
 		double secondsPerPixel;
 		uint timeoutID;
 		Time currentTime, nextCurrentTime;
@@ -131,7 +130,6 @@ namespace LongoMatch.Gui.Component
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 			focusscale.Value = 6;
-			projectFile = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
 			timerule.Duration = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;

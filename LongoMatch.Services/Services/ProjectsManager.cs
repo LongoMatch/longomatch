@@ -30,7 +30,6 @@ namespace LongoMatch.Services
 	{
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
-		IMainController mainController;
 		IAnalysisWindow analysisWindow;
 
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
@@ -38,7 +37,6 @@ namespace LongoMatch.Services
 		{
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
-			mainController = guiToolkit.MainController;
 			ConnectSignals ();
 		}
 

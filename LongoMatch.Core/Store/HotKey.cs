@@ -115,8 +115,6 @@ namespace LongoMatch.Core.Store
 
 		public override string ToString ()
 		{
-			string modifierS = "";
-				
 			if (!Defined)
 				return Catalog.GetString ("Not defined");
 			return Keyboard.HotKeyName (this);

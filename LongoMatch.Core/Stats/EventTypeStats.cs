@@ -48,7 +48,6 @@ namespace LongoMatch.Core.Stats
 			TotalCount = events.Count;
 			LocalTeamCount = homeEvents.Count;
 			VisitorTeamCount = awayEvents.Count;
-			List<Tag> tags = events.SelectMany (e => e.Tags).Distinct ().ToList ();
 			SubcategoriesStats = new List<SubCategoryStat> ();
 			if (eventType is AnalysisEventType) {
 				var tagsByGroup = (eventType as AnalysisEventType).TagsByGroup;

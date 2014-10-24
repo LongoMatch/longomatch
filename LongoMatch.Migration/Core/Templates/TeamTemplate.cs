@@ -37,7 +37,6 @@ namespace LongoMatch.Store.Templates
 		private byte[] thumbnailBuf;
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;
-		Version version;
 		
 		public TeamTemplate () {
 			init (Guid.NewGuid ());
@@ -166,7 +165,6 @@ namespace LongoMatch.Store.Templates
 			Clear();
 			for(int i=1; i<=playersCount; i++)
 				AddDefaultItem(i-1);
-			version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 		}
 		
 		void init (Guid uuid) {

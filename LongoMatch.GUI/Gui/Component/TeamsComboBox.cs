@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Component
 	public class TeamsComboBox: Gtk.ComboBox
 	{
 		ListStore store;
-		Button internalButton;
 		CellRendererPixbuf pixrender;
 		CellRendererText texrender;
 		

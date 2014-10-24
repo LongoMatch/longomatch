@@ -363,7 +363,6 @@ namespace LongoMatch.Gui
 
 		void Open (MediaFileSet fileSet, bool seek, bool force=false)
 		{
-			MediaFile mf;
 			ResetGui ();
 			CloseSegment ();
 			if (fileSet != this.fileSet || force) {

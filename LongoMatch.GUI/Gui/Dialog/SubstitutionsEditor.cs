@@ -96,16 +96,10 @@ namespace LongoMatch.Gui.Dialog
 
 		public void LoadSubstitution (Project project, SubstitutionEvent substitution)
 		{
-			TeamTemplate team;
 			List<Player> hfp, hbp, afp, abp;
 
 			this.substitution = substitution;
 			project.CurrentLineup (substitution.EventTime, out hfp, out hbp, out afp, out abp);
-			if (substitution.Team == Team.LOCAL) {
-				team = homeTeam;
-			} else {
-				team = awayTeam;
-			}
 			playershbox.Visible = true;
 			tagger.SubstitutionMode = false;
 			tagger.ShowSubstitutionButtons = false;
