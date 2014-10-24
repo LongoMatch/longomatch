@@ -310,4 +310,12 @@ namespace LongoMatch.Core.Common
 		ZoomOut,
 		FitTimeline,
 	}
+
+	public enum ProjectSortMethod {
+		Name,
+		Date,
+		ModificationDate,
+		Season,
+		Competition
+	}
 }

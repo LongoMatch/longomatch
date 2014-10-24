@@ -23,6 +23,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -52,10 +53,12 @@ namespace LongoMatch.Gui.Component
 			iconview.SelectionChanged += OnSelectionChanged;
 			iconview.ItemActivated += HandleItemActivated;
 			iconview.ItemWidth = 200;
+			sortcombobox.Active = (int)Config.ProjectSortMethod;
 			sortcombobox.Changed += (sender, e) => {
 				/* Hack to make it actually resort */
 				store.SetSortColumnId (-2 , SortType.Ascending);
 				store.SetSortColumnId (0, SortType.Ascending);
+				Config.ProjectSortMethod = (ProjectSortMethod) sortcombobox.Active;
 			};
 		}
 

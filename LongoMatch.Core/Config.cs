@@ -415,6 +415,16 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+		
+		public static ProjectSortMethod ProjectSortMethod {
+			get {
+				return state.projectSortMethod;
+			}
+			set {
+				state.projectSortMethod = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
@@ -442,6 +452,7 @@ namespace LongoMatch
 		public bool reviewPlaysInSameWindow;
 		public string defaultTemplate;
 		public Hotkeys hotkeys;
+		public ProjectSortMethod projectSortMethod;
 		
 		public ConfigState () {
 			/* Set default values */
@@ -465,6 +476,7 @@ namespace LongoMatch
 			reviewPlaysInSameWindow = true;
 			defaultTemplate = null;
 			hotkeys = new Hotkeys ();
+			projectSortMethod = ProjectSortMethod.Date;
 		}
 	}
 }
