@@ -51,7 +51,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			rects = new Dictionary <Rectangle, object> ();
 			buttonsRects = new Dictionary <Rectangle, object> ();
 			SelectedTags = new List<Tag> ();
-			CurrentTime = new Time (0);
+			currentTime = new Time (0);
 			cancelRect = new Rectangle (new Point (0, 0), 0, 0);
 			editRect = new Rectangle (new Point (0, 0), 0, 0);
 			applyRect = new Rectangle (new Point (0, 0), 0, 0);
@@ -88,11 +88,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return currentTime;
 			}
 			set {
+				bool secsChanged = currentTime.Seconds != value.Seconds;
 				currentTime = value;
-				if (Start != null && currentTime < Start) {
-					Clear ();
-				} else {
-					ReDraw ();
+				if (Start != null) {
+					if (currentTime < Start) {
+						Clear ();
+					} else if (secsChanged) {
+						ReDraw ();
+					}
 				}
 			}
 		}
