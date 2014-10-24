@@ -34,7 +34,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				Image img = Image.LoadFromFile (path);
 				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 			}
-			Size = needle.Width;
+			Width = needle.Width;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -56,20 +56,26 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public double Size {
+		public double Width {
 			get;
 			set;
 		}
 
-		Point TopLeft {
+		public double Height {
 			get {
-				return new Point (X - Size / 2, TimelineHeight - needle.Height);
+				return needle.Height;
+			}
+		}
+		
+		public Point TopLeft {
+			get {
+				return new Point (X - Width / 2, TimelineHeight - needle.Height);
 			}
 		}
 		
 		Area Area {
 			get {
-				return new Area (TopLeft, Size, Size);
+				return new Area (TopLeft, Width, Width);
 			}
 		}
 		
@@ -86,7 +92,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		
 		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
-			if ((Math.Abs (point.X - X) < Size / 2 + precision)) {
+			if ((Math.Abs (point.X - X) < Width / 2 + precision)) {
 				return new Selection (this, SelectionPosition.All, 0);
 			} else {
 				return null;

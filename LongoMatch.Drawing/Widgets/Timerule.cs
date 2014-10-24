@@ -42,7 +42,7 @@ namespace LongoMatch.Drawing.Widgets
 			needle = new NeedleObject();
 			AddObject (needle);
 			SecondsPerPixel = 0.1;
-			CurrentTime = new Time (0);
+			currentTime = new Time (0);
 		}
 
 		public double Scroll {
@@ -65,8 +65,23 @@ namespace LongoMatch.Drawing.Widgets
 				return currentTime;
 			}
 			set {
+				Area area;
+				double start, stop, timeX;
+
+				timeX = Utils.TimeToPos (value, SecondsPerPixel) - Scroll;
+				if (needle.X < timeX) {
+					start = needle.X;
+					stop = timeX;
+				} else {
+					start = timeX;
+					stop = needle.X;
+				}
+				start -= needle.Width / 2;
+				stop += needle.Width / 2;
+				area = new Area (new Point (start - 1, needle.TopLeft.Y), stop - start + 2, needle.Height);
 				currentTime = value;
 				needle.ResetDrawArea ();
+				widget.ReDraw (area);
 			}
 		}
 
@@ -121,8 +136,8 @@ namespace LongoMatch.Drawing.Widgets
 			             new Point (area.Start.X + area.Width, height));
 
 			startX = (int)(area.Start.X + Scroll);
-			start = (startX - (startX % TIME_SPACING)) + TIME_SPACING;
-			stop = (int)(startX + area.Width);
+			start = (startX - (startX % TIME_SPACING));
+			stop = (int)(startX + area.Width + TIME_SPACING);
 
 			/* Draw big lines each 10 * secondsPerPixel */
 			for (int i=start; i <= stop; i += TIME_SPACING) {

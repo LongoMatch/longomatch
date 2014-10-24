@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		Project project;
 		EventsFilter playsFilter;
 		double secondsPerPixel;
-		Time duration;
+		Time duration, currentTime;
 		TimelineEvent loadedEvent;
 		bool movingTimeNode;
 		Dictionary<TimelineObject, object> timelineToFilter;
@@ -51,6 +51,7 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			SingleSelectionObjects.Add (typeof(TimerTimeNodeObject));
+			currentTime = new Time (0);
 		}
 
 		protected override void Dispose (bool disposing)
@@ -78,9 +79,22 @@ namespace LongoMatch.Drawing.Widgets
 
 		public Time CurrentTime {
 			set {
+				Area area;
+				double start, stop;
+
 				foreach (TimelineObject tl in Objects) {
 					tl.CurrentTime = value;
 				}
+				if (currentTime < value) {
+					start = Utils.TimeToPos (currentTime,SecondsPerPixel);
+					stop = Utils.TimeToPos (value, SecondsPerPixel);
+				} else {
+					start = Utils.TimeToPos (value, SecondsPerPixel);
+					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
+				}
+				area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
+				currentTime = value;
+				widget.ReDraw (area);
 			}
 		}
 

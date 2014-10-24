@@ -167,7 +167,6 @@ namespace LongoMatch.Gui.Component
 				currentTime = nextCurrentTime;
 				timeline.CurrentTime = currentTime;
 				timerule.CurrentTime = currentTime;
-				QueueDraw ();
 			}
 			return true;
 		}
