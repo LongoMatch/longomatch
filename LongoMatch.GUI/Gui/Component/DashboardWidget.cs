@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 		Dashboard template;
 		DashboardButton selected;
 		Gtk.Image editimage;
-		ToggleToolButton editbutton;
+		ToggleToolButton editbutton, popupbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
 		Project project;
@@ -161,6 +161,7 @@ namespace LongoMatch.Gui.Component
 				tagproperties.Tagger = null;
 				tagproperties.Sensitive = false;
 				tagproperties.Dashboard = value;
+				popupbutton.Active = value.DisablePopupWindow;
 			}
 		}
 
@@ -264,6 +265,14 @@ namespace LongoMatch.Gui.Component
 			toolbar.Add (editbutton);
 			toolbar.Add (new SeparatorToolItem ());
 			
+			popupbutton = new ToggleToolButton ();
+			popupbutton.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon
+			                                        ("longomatch-popup", 22));
+			popupbutton.Active = true;
+			popupbutton.Toggled += HandlePopupToggled;
+			toolbar.Add (popupbutton);
+			toolbar.Add (new SeparatorToolItem ());
+			
 			fitbutton = new RadioToolButton ((GLib.SList) null);
 			fitbutton.IconName = "longomatch-dash-fit";
 			fitbutton.Toggled += HandleFitModeToggled;
@@ -295,6 +304,14 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 		
+		void HandlePopupToggled (object sender, EventArgs e)
+		{
+			if (ignoreChanges) {
+				return;
+			}
+			template.DisablePopupWindow = popupbutton.Active;
+		}
+
 		void HandleEditToggled (object sender, EventArgs e)
 		{
 			if (ignoreChanges) {

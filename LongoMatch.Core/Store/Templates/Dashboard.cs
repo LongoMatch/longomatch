@@ -106,6 +106,11 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 		
+		public bool DisablePopupWindow {
+			get;
+			set;
+		}
+		
 		[JsonIgnore]
 		public List<Timer> Timers {
 			get {

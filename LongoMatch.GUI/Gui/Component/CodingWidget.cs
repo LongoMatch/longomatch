@@ -289,7 +289,9 @@ namespace LongoMatch.Gui.Component
 			play.Team = teamtagger.SelectedTeam;
 			play.Players = selectedPlayers ?? new List<Player> ();
 			play.Tags = tags ?? new List<Tag> ();
-			Config.GUIToolkit.EditPlay (play, project, true, true, true, true);
+			if (!project.Dashboard.DisablePopupWindow) {
+				Config.GUIToolkit.EditPlay (play, project, true, true, true, true);
+			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
 			Config.EventsBroker.EmitNewEvent (play);
