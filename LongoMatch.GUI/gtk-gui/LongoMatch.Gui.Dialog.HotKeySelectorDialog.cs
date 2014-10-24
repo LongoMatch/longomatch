@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Press a key combination using  Shift+key or Alt+key.\nHotkeys with a single key are also allowed with Ctrl+key.");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Press a key combination...");
 			w1.Add (this.label1);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.label1]));
 			w2.Position = 0;

@@ -65,7 +65,6 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.Next] = Catalog.GetString ("Jump to next event");
 			ActionsDescriptions [KeyAction.Prev] = Catalog.GetString ("Jump to prev event");
-			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause clock");
 			ActionsDescriptions [KeyAction.ShowDashboard] = Catalog.GetString ("Show dashboard");
 			ActionsDescriptions [KeyAction.ShowPositions] = Catalog.GetString ("Show zonal tags");
 			ActionsDescriptions [KeyAction.ShowTimeline] = Catalog.GetString ("Show timeline");
@@ -73,6 +72,7 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.SpeedDown] = Catalog.GetString ("Increase playback speed");
 			ActionsDescriptions [KeyAction.SpeedUp] = Catalog.GetString ("Decrease playback speed");
+			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause clock");
 			ActionsDescriptions [KeyAction.StartPeriod] = Catalog.GetString ("Start recording period");
 			ActionsDescriptions [KeyAction.StopPeriod] = Catalog.GetString ("Stop recording period");
 			ActionsDescriptions [KeyAction.Substitution] = Catalog.GetString ("Toggle substitutions mode");

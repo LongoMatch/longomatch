@@ -12,6 +12,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/DashboardWidget.cs \
 	Gui/Component/DatePicker.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
+	Gui/Component/HotkeysConfiguration.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/MediaFileChooser.cs \
 	Gui/Component/MediaFileSetSelection.cs \
@@ -90,6 +91,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
+	gtk-gui/LongoMatch.Gui.Component.HotkeysConfiguration.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs \

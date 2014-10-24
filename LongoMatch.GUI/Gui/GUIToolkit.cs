@@ -406,6 +406,23 @@ namespace LongoMatch.Gui
 			Log.Information ("Quit application");
 			Gtk.Application.Quit ();
 		}
+		
+		public HotKey SelectHotkey (HotKey hotkey, object parent = null)
+		{
+			HotKeySelectorDialog dialog;
+			Window w;
+			
+			w = parent != null ? (parent as Widget).Toplevel as Window : mainWindow;
+			dialog = new HotKeySelectorDialog ();
+			dialog.TransientFor = w;
+			if (dialog.Run () == (int)ResponseType.Ok) {
+				hotkey = dialog.HotKey;
+			} else {
+				hotkey = null;
+			}
+			dialog.Destroy ();
+			return hotkey;
+		}
 	}
 }
 

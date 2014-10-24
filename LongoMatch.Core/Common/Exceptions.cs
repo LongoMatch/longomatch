@@ -18,6 +18,7 @@
 using System;
 using Mono.Unix;
 using System.Collections.Generic;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Common
 {
@@ -70,5 +71,12 @@ namespace LongoMatch.Core.Common
 		}
 	}
 	
+	public class HotkeyAlreadyInUse: Exception
+	{
+		public HotkeyAlreadyInUse (HotKey hotkey):
+			base (Catalog.GetString("Hotkey already in use: " + hotkey))
+		{
+		}
+	}
 }
 

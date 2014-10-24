@@ -91,6 +91,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		bool SelectMediaFiles (Project project);
 
+		HotKey SelectHotkey (HotKey hotkey, object parent = null);
+
 	}
 }
 

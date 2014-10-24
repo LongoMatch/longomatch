@@ -16,64 +16,65 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using Gtk;
 using Gdk;
 using LongoMatch.Core.Store;
+using Keyboard = LongoMatch.Core.Common.Keyboard;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {
-
-
 	public partial class HotKeySelectorDialog : Gtk.Dialog
 	{
 		HotKey hotKey;
-
 		#region Constructors
-
-		public HotKeySelectorDialog()
+		public HotKeySelectorDialog ()
 		{
-			hotKey = new HotKey();
-			this.Build();
+			hotKey = new HotKey ();
+			this.Build ();
 		}
 		#endregion
-
 		#region Properties
-
 		public HotKey HotKey {
 			get {
 				return this.hotKey;
 			}
 		}
 		#endregion
-
 		#region Overrides
-
-		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+		bool IsSupportedModifier (Gdk.Key key)
 		{
-			Gdk.Key key = evnt.Key;
-			ModifierType modifier = evnt.State;
+			return key == Gdk.Key.Shift_L ||
+				key == Gdk.Key.Shift_R ||
+				key == Gdk.Key.Alt_L ||
+				key == Gdk.Key.Alt_R ||
+				key == Gdk.Key.Control_L ||
+				key == Gdk.Key.Control_R ||
+				key == (Gdk.Key) ModifierType.None;
+		}
 
-			// Only react to {Shift|Alt|Ctrl}+key
-			// Ctrl is a modifier to select single keys
-			// Combination are allowed with Alt and Shift (Ctrl is not allowed to avoid
-			// conflicts with menus shortcuts)
-			if((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask | ModifierType.ControlMask)) != 0
-			                && key != Gdk.Key.Shift_L
-			                && key != Gdk.Key.Shift_R
-			                && key != Gdk.Key.Alt_L
-			                && key != Gdk.Key.Control_L
-			                && key != Gdk.Key.Control_R)
-			{
-				hotKey.Key = (int)key;
-				hotKey.Modifier = (int) (modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask));
-				this.Respond(ResponseType.Ok);
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			if (evnt.Key == Gdk.Key.Escape || evnt.Key == Gdk.Key.Return) {
+				return base.OnKeyPressEvent (evnt);
 			}
 
-			return base.OnKeyPressEvent(evnt);
+			if (IsSupportedModifier (evnt.Key)) {
+				return true;
+			}
+
+			hotKey = Keyboard.ParseEvent (evnt);
+			if (hotKey.Modifier != -1 && !IsSupportedModifier ((Gdk.Key)hotKey.Modifier)) {
+				string msg = Keyboard.NameFromKeyval ((uint) hotKey.Modifier) +
+					Catalog.GetString ("is not a valid key modifier: Alt, Shift or Ctrl");
+				Config.GUIToolkit.WarningMessage (msg, this);
+				hotKey = null;
+				return true;
+			}
+			Respond (ResponseType.Ok);
+			return true;
 		}
 		#endregion
-
 	}
 }

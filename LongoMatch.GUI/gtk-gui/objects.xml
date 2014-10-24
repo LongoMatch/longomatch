@@ -7,7 +7,6 @@
     </itemgroups>
     <signals>
       <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
         <signal name="EditedEvent" />
       </itemgroup>
     </signals>
@@ -308,6 +307,10 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.MediaFileSetSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.HotkeysConfiguration" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>

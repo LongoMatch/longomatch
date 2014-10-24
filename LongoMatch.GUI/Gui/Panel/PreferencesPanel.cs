@@ -58,6 +58,9 @@ namespace LongoMatch.Gui.Panel
 			AddPane (Catalog.GetString ("General"),
 			         Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
 			         new GeneralPreferencesPanel());
+			AddPane (Catalog.GetString ("Keyboard shortcuts"),
+			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
+			         new HotkeysConfiguration ());
 			AddPane (Catalog.GetString ("Video"),
 			         Helpers.Misc.LoadIcon ("longomatch-control-record", IconSize.Dialog, 0),
 			         new VideoPreferencesPanel());

@@ -144,6 +144,15 @@ namespace LongoMatch.Core.Store.Templates
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}
+
+		public void ChangeHotkey (DashboardButton button, HotKey hotkey)
+		{
+			if (List.Count (d => d.HotKey == hotkey) > 0) {
+				throw new HotkeyAlreadyInUse (hotkey);
+			} else {
+				button.HotKey = hotkey;
+			}
+		}
 	
 		public void AddDefaultTags (AnalysisEventType ev) {
 			ev.Tags.Add (new Tag (Catalog.GetString ("Success"),
