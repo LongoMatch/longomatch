@@ -94,8 +94,8 @@ namespace LongoMatch.Core.Common
 			UpdateMapping (KeyAction.LocalPlayer, "<Shift_L>+n");
 			UpdateMapping (KeyAction.VisitorPlayer, "<Shift_L>+b");
 			UpdateMapping (KeyAction.PauseClock, "<Shift_L>+p");
-			UpdateMapping (KeyAction.ShowTimeline, "<Shift_L>+z");
-			UpdateMapping (KeyAction.ShowDashboard, "<Shift_L>+x");
+			UpdateMapping (KeyAction.ShowDashboard, "<Shift_L>+z");
+			UpdateMapping (KeyAction.ShowTimeline, "<Shift_L>+x");
 			UpdateMapping (KeyAction.ShowPositions, "<Shift_L>+c");
 			UpdateMapping (KeyAction.SpeedDown, "Down");
 			UpdateMapping (KeyAction.SpeedUp, "Up");
