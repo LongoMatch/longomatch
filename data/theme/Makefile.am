@@ -39,6 +39,24 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Range/trough-horizontal.png \
 	gtk-2.0/Range/trough-vertical-lower.png \
 	gtk-2.0/Range/trough-vertical.png \
+	gtk-2.0/Scrollbar/arrow-down-active.png \
+	gtk-2.0/Scrollbar/arrow-down-inactive.png \
+	gtk-2.0/Scrollbar/arrow-down.png \
+	gtk-2.0/Scrollbar/arrow-left-active.png \
+	gtk-2.0/Scrollbar/arrow-left-inactive.png \
+	gtk-2.0/Scrollbar/arrow-left.png \
+	gtk-2.0/Scrollbar/arrow-right-active.png \
+	gtk-2.0/Scrollbar/arrow-right-inactive.png \
+	gtk-2.0/Scrollbar/arrow-right.png \
+	gtk-2.0/Scrollbar/arrow-up-active.png \
+	gtk-2.0/Scrollbar/arrow-up-inactive.png \
+	gtk-2.0/Scrollbar/arrow-up.png \
+	gtk-2.0/Scrollbar/slider-horizontal-active.png \
+	gtk-2.0/Scrollbar/slider-horizontal.png \
+	gtk-2.0/Scrollbar/slider-vertical-active.png \
+	gtk-2.0/Scrollbar/slider-vertical.png \
+	gtk-2.0/Scrollbar/trough-horizontal.png \
+	gtk-2.0/Scrollbar/trough-vertical.png \
 	gtk-2.0/Tabs/notebook-gap-horiz.png \
 	gtk-2.0/Tabs/notebook-gap-vert.png \
 	gtk-2.0/Tabs/notebook.png \
@@ -59,5 +77,6 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/notebook.rc \
 	gtk-2.0/radiobutton.rc \
 	gtk-2.0/range.rc \
+	gtk-2.0/scrollbar.rc \
 	gtk-2.0/welcome.rc \
 	longomatch-dark.json
