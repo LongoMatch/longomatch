@@ -301,7 +301,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				homePlayers.AddRange (homePlayingPlayers);
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
-				homeButton.BackgroundImage = homeTeam.Shield;
+				if (homeTeam.Shield == null) {
+					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
+					homeButton.BackgroundImage = Image.LoadFromFile (path);
+				} else {
+					homeButton.BackgroundImage = homeTeam.Shield;
+				}
 				NTeams ++;
 			}
 			if (awayTeam != null) {
@@ -310,7 +315,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				awayPlayers.AddRange (awayPlayingPlayers);
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
-				awayButton.BackgroundImage = awayTeam.Shield;
+				if (awayTeam.Shield == null) {
+					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
+					awayButton.BackgroundImage = Image.LoadFromFile (path);
+				} else {
+					awayButton.BackgroundImage = awayTeam.Shield;
+				}
 				NTeams ++;
 			}
 

@@ -82,9 +82,8 @@ namespace LongoMatch.Gui.Component
 				if (template.Shield != null) {
 					shieldimage.Pixbuf = template.Shield.Value;
 				} else {
-					shieldimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
-					                                                 Constants.MAX_SHIELD_ICON_SIZE,
-					                                                 IconLookupFlags.ForceSvg);
+					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-default-shield",
+					                                            Constants.MAX_SHIELD_ICON_SIZE);
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();

@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using System.IO;
 
 namespace LongoMatch.Core.Store.Templates
 {
@@ -40,6 +41,8 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			ID = Guid.NewGuid();
 			List = new List<Player>();
+			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
+			Shield = Image.LoadFromFile (path);
 		}
 		
 		public Guid ID {

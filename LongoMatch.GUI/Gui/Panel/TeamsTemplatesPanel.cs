@@ -131,11 +131,11 @@ namespace LongoMatch.Gui.Panel
 				TreeIter iter;
 				
 				if (template.Shield != null) {
-					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value;
+					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize,
+					                             StyleConf.TeamsShieldIconSize).Value;
 				} else {
-					img = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
-					                             StyleConf.TeamsShieldIconSize,
-					                             IconLookupFlags.ForceSvg);
+					img = Helpers.Misc.LoadIcon ("longomatch-default-shield",
+					                             StyleConf.TeamsShieldIconSize);
 				}
 				iter = teams.AppendValues (img, template.Name, template);
 				itersDict.Add (template.Name, iter);
