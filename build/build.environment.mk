@@ -107,10 +107,7 @@ REF_DEP_LONGOMATCH_DRAWING_CAIRO = \
 
 REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_MONO_POSIX) \
-                     $(LINK_DB40) \
                      $(LINK_GLIB) \
-                     $(LINK_GTK) \
-                     $(LINK_CAIRO) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_ADDINS) \
                      $(LINK_LONGOMATCH_DRAWING)
