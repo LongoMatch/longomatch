@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 						                                GLib.Markup.EscapeText (hotkey.ToString()), this);
 					} else {
 						Config.Hotkeys.ActionsHotkeys[action] = hotkey;
-						keyLabel.Markup = GLib.Markup.EscapeText (key.ToString());
+						keyLabel.Markup = GLib.Markup.EscapeText (hotkey.ToString());
 					}
 				}
 			};
