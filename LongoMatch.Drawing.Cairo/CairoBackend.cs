@@ -190,20 +190,20 @@ namespace LongoMatch.Drawing.Cairo
 
 		public Area UserToDevice (Area a)
 		{
-			double x, y, d1, d2;
+			double x, y, x2, y2, x3, y3;
 			
 			x = a.Start.X;
 			y = a.Start.Y;
 			CContext.UserToDevice (ref x, ref y);
 			Area ua = new Area (new Point (x, y), 0, 0);
-			d1 = 0;
-			d2 = a.Width;
-			CContext.UserToDeviceDistance (ref d1, ref d2);
-			ua.Width = d2 - d1;
-			d1 = 0;
-			d2 = a.Height;
-			CContext.UserToDeviceDistance (ref d1, ref d2);
-			ua.Height = d2 - d1;
+			x2 = a.TopRight.X;
+			y2 = a.TopRight.Y;
+			CContext.UserToDevice (ref x2, ref y2);
+			ua.Width = x2 - x;
+			x3 = a.BottomLeft.X;
+			y3 = a.BottomLeft.Y;
+			CContext.UserToDevice (ref x3, ref y3);
+			ua.Height = y3 - y;
 			return ua;
 		}
 
