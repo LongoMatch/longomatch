@@ -180,7 +180,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFocusClicked (object sender, EventArgs e)
 		{
-			double pos = CurrentTime.Seconds / secondsPerPixel;
+			double pos = CurrentTime.TotalSeconds / secondsPerPixel;
 			double maxPos = timelinearea.Allocation.Width - scrolledwindow1.Allocation.Width;
 			
 			pos = Math.Min (pos, maxPos);

@@ -59,8 +59,8 @@ namespace LongoMatch.Gui.Menus
 					Period p = new Period {Name = periodname};
 					p.Nodes.Add (new TimeNode {
 						Name = periodname,
-						Start = new Time {Seconds = time.Seconds - 10},
-						Stop = new Time {Seconds = time.Seconds + 10}});
+						Start = new Time {TotalSeconds = time.TotalSeconds - 10},
+						Stop = new Time {TotalSeconds = time.TotalSeconds + 10}});
 					project.Periods.Add (p);
 					if (timertimeline != null) {
 						timertimeline.AddTimer (p);

@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					}
 				}
 				if (value != null && currentTime != null &&
-					currentTime.Seconds != value.Seconds) {
+					currentTime.TotalSeconds != value.TotalSeconds) {
 					update = true;
 				}
 				currentTime = value;

@@ -71,7 +71,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			if (duration == null)
 				return;
-			width = duration.Seconds / SecondsPerPixel;
+			width = duration.TotalSeconds / SecondsPerPixel;
 			widget.Width = width + 10;
 			foreach (TimelineObject tl in timers.Values) {
 				tl.Width = width + 10;

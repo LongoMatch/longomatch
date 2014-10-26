@@ -100,7 +100,7 @@ namespace LongoMatch.Gui.Component
 		void SetZoom ()
 		{
 			if (duration != null) {
-				double spp = (double)duration.Seconds / drawingarea1.Allocation.Width;
+				double spp = (double)duration.TotalSeconds / drawingarea1.Allocation.Width;
 				int secondsPerPixel = (int)Math.Ceiling (spp);
 				timerule.SecondsPerPixel = secondsPerPixel;
 				timersTimeline.SecondsPerPixel = secondsPerPixel;

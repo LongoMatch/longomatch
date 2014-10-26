@@ -102,8 +102,8 @@ namespace LongoMatch.Core.Store
 	{
 		public TimedDashboardButton () {
 			TagMode = TagMode.Predefined;
-			Start = new Time {Seconds = 10};
-			Stop = new Time {Seconds = 10};
+			Start = new Time {TotalSeconds = 10};
+			Stop = new Time {TotalSeconds = 10};
 		}
 		
 		public TagMode TagMode {

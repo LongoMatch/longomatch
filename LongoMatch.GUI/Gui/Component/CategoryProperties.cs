@@ -203,8 +203,8 @@ namespace LongoMatch.Gui.Component
 			if (timedButton != null) {
 				lastLeadTime = timedButton.Start;
 				tagmodecombobox.Active = (int)timedButton.TagMode;
-				leadtimebutton.Value = timedButton.Start.Seconds;
-				lagtimebutton.Value = timedButton.Stop.Seconds;
+				leadtimebutton.Value = timedButton.Start.TotalSeconds;
+				lagtimebutton.Value = timedButton.Stop.TotalSeconds;
 			}
 			if (eventButton != null) {
 				SetPositionCombo (fieldcombobox, eventButton.EventType.TagFieldPosition,
@@ -297,7 +297,7 @@ namespace LongoMatch.Gui.Component
 			timedButton.TagMode = (TagMode)tagmodecombobox.Active;
 			if (timedButton.TagMode == TagMode.Predefined) {
 				lagtimebutton.Sensitive = true;
-				leadtimebutton.Value = lastLeadTime.Seconds;
+				leadtimebutton.Value = lastLeadTime.TotalSeconds;
 			} else {
 				lagtimebutton.Sensitive = false;
 				lastLeadTime = timedButton.Start;
@@ -325,7 +325,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			timedButton.Start = new Time { Seconds=(int)leadtimebutton.Value };
+			timedButton.Start = new Time { TotalSeconds=(int)leadtimebutton.Value };
 			Edited = true;
 		}
 
@@ -334,7 +334,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			timedButton.Stop = new Time { Seconds=(int)lagtimebutton.Value };
+			timedButton.Stop = new Time { TotalSeconds=(int)lagtimebutton.Value };
 			Edited = true;
 		}
 

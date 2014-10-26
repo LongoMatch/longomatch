@@ -88,7 +88,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return currentTime;
 			}
 			set {
-				bool secsChanged = currentTime.Seconds != value.Seconds;
+				bool secsChanged = currentTime.TotalSeconds != value.TotalSeconds;
 				currentTime = value;
 				if (Start != null) {
 					if (currentTime < Start) {

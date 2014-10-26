@@ -225,8 +225,8 @@ namespace LongoMatch.Gui.Menus
 		{
 			Config.EventsBroker.EmitNewTag (eventType,
 			                                eventTime: time,
-			                                start: time - new Time {Seconds = 10},
-			                                stop: time + new Time {Seconds = 10});
+			                                start: time - new Time {TotalSeconds = 10},
+			                                stop: time + new Time {TotalSeconds = 10});
 		}
 		
 		void EmitRenderPlaylist (List<TimelineEvent> plays)

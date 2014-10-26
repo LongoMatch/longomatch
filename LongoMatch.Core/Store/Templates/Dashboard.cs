@@ -181,8 +181,8 @@ namespace LongoMatch.Core.Store.Templates
 
 			button = new  AnalysisEventButton {
 				EventType = evtype,
-				Start = new Time{Seconds = 10},
-				Stop = new Time {Seconds = 10},
+				Start = new Time{TotalSeconds = 10},
+				Stop = new Time {TotalSeconds = 10},
 				HotKey = h,
 				/* Leave the first row for the timers and score */
 				Position = new Point (10 + (index % 7) * (CAT_WIDTH + 10),
