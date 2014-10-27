@@ -127,26 +127,43 @@ namespace LongoMatch.Gui.Component
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
 			ProjectDescription p1, p2;
+			int ret;
 			
 			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
 			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
 
 			if (p1 == null) {
-				return -1;
+				return 0;
 			} else if (p2 == null) {
-				return 1;
+				return 0;
 			}
 			
 			if (sortcombobox.Active == 0) {
-				return CompareString (p1.Title, p2.Title);
+				ret = CompareString (p1.Title, p2.Title);
+				if (ret == 0) {
+					ret = (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+				}
+				return ret;
 			} else if (sortcombobox.Active == 1) {
-				return (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+				ret = (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+				if (ret == 0) {
+					ret = (CompareString (p1.Title, p2.Title));
+				}
+				return ret;
 			} else if (sortcombobox.Active == 2) {
 				return (int)(p1.LastModified.Ticks - p2.LastModified.Ticks);
 			} else if (sortcombobox.Active == 3) {
-				return CompareString (p1.Season, p2.Season);
+				ret = CompareString (p1.Season, p2.Season);
+				if (ret == 0) {
+					ret = CompareString (p1.Title, p2.Title);
+				}
+				return ret;
 			} else if (sortcombobox.Active == 4) {
-				return CompareString (p1.Competition, p2.Competition);
+				ret = CompareString (p1.Competition, p2.Competition);
+				if (ret == 0) {
+					ret = CompareString (p1.Title, p2.Title);
+				}
+				return ret;
 			} else {
 				return p1.Title.CompareTo(p2.Title);
 			}
