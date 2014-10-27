@@ -62,6 +62,12 @@ namespace LongoMatch.Services
 			}
 		}
 
+		public List<Job> PendingJobs {
+			get {
+				return pendingJobs;
+			}
+		}
+
 		public void AddJob (Job job)
 		{
 			if (job == null)

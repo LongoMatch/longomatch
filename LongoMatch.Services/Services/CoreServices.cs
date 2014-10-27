@@ -78,7 +78,7 @@ namespace LongoMatch.Services
 		{
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
-			Config.EventsBroker.QuitApplicationEvent += () => Config.GUIToolkit.Quit ();
+			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
 			StartServices (guiToolkit, multimediaToolkit);
 		}
 
@@ -182,6 +182,17 @@ namespace LongoMatch.Services
 		public static bool EnvironmentIsSet (string env)
 		{
 			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
+		}
+		
+		static void HandleQuitApplicationEvent ()
+		{
+			if (videoRenderer.PendingJobs.Count > 0) {
+				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");
+				if (!Config.GUIToolkit.QuestionMessage (msg, null)) {
+					return;
+				}
+			}
+			Config.GUIToolkit.Quit ();
 		}
 	}
 }

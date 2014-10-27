@@ -32,6 +32,7 @@ namespace LongoMatch.Core.Interfaces
 		void CancelAllJobs();
 		void AddJob(Job job);
 		List<Job> Jobs {get;}
+		List<Job> PendingJobs {get;}
 	}
 }
 
