@@ -59,7 +59,7 @@ namespace LongoMatch.Core.Store
 		/// Time in seconds
 		/// </summary>		
 		[JsonIgnore]
-		public int Seconds {
+		public int TotalSeconds {
 			get {
 				return MSeconds/SECONDS_TO_TIME;
 			}
@@ -80,6 +80,28 @@ namespace LongoMatch.Core.Store
 				MSeconds = (int) (value / TIME_TO_NSECONDS);
 			}
 		}
+		
+		[JsonIgnore]
+		public int Seconds {
+			get {
+				return (TotalSeconds % 3600) % 60;
+			}
+		}
+		
+		[JsonIgnore]
+		public int Minutes {
+			get {
+				return (TotalSeconds % 3600) / 60;
+			}
+		}
+		
+		[JsonIgnore]
+		public int Hours {
+			get {
+				return (TotalSeconds / 3600);
+			}
+		}
+
 		#endregion
 
 		#region Public methods
@@ -91,18 +113,11 @@ namespace LongoMatch.Core.Store
 		/// </returns>
 		public  string ToSecondsString(bool includeHour=false)
 		{
-			int _h, _m, _s, _time;
+			if(Hours > 0 || includeHour)
+				return String.Format("{0}:{1}:{2}", Hours, Minutes.ToString("d2"),
+				                     Seconds.ToString("d2"));
 
-			_time = MSeconds / 1000;
-			_h = (_time / 3600);
-			_m = ((_time % 3600) / 60);
-			_s = ((_time % 3600) % 60);
-
-			if(_h > 0 || includeHour)
-				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
-				                     _s.ToString("d2"));
-
-			return String.Format("{0}:{1}", _m, _s.ToString("d2"));
+			return String.Format("{0}:{1}", Minutes, Seconds.ToString("d2"));
 		}
 
 		/// <summary>
