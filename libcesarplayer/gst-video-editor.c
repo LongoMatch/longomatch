@@ -610,13 +610,6 @@ gst_video_editor_start (GstVideoEditor * gve)
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 0);
 }
 
-static void
-_set_state_threaded (GstVideoEditor *gve)
-{
-  gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
-  g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) - 1);
-}
-
 void
 gst_video_editor_cancel (GstVideoEditor * gve)
 {
@@ -627,7 +620,7 @@ gst_video_editor_cancel (GstVideoEditor * gve)
     g_source_remove (gve->priv->update_id);
     gve->priv->update_id = 0;
   }
-  g_thread_new ("cancel", (GThreadFunc) _set_state_threaded, gve);
+  gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
 }
 
 void

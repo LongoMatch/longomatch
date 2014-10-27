@@ -684,12 +684,27 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
     return res;
 
   switch (transition) {
+    case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
+      if (nlesrc->decoder) {
+        gst_element_set_state (nlesrc->decoder, GST_STATE_PAUSED);
+      }
+      break;
     case GST_STATE_CHANGE_PAUSED_TO_READY:
+      if (nlesrc->decoder) {
+        gst_element_set_state (nlesrc->decoder, GST_STATE_READY);
+      }
+      if (nlesrc->queue != NULL) {
+        g_list_free_full (nlesrc->queue, (GDestroyNotify) gst_nle_source_item_free);
+        nlesrc->queue = NULL;
+      }
+      break;
+    case GST_STATE_CHANGE_READY_TO_NULL:
       if (nlesrc->decoder) {
         gst_element_set_state (nlesrc->decoder, GST_STATE_NULL);
         gst_object_unref (nlesrc->decoder);
         nlesrc->decoder = NULL;
       }
+      break;
     default:
       break;
   }
