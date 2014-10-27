@@ -66,12 +66,10 @@ namespace LongoMatch.Gui
 			                                  StyleConf.PlayerCapturerIconSize);
 			pauseimage.Pixbuf = Misc.LoadIcon ("longomatch-pause-clock",
 			                                   StyleConf.PlayerCapturerIconSize);
-			pauseimage.Pixbuf = Misc.LoadIcon ("longomatch-resume-clock",
-			                                   StyleConf.PlayerCapturerIconSize);
+			resumeimage.Pixbuf = Misc.LoadIcon ("longomatch-resume-clock",
+			                                    StyleConf.PlayerCapturerIconSize);
 			saveimage.Pixbuf = Misc.LoadIcon ("longomatch-save",
 			                                  StyleConf.PlayerCapturerIconSize);
-			resumeimage.Pixbuf = Misc.LoadIcon ("longomatch-pause-clock",
-			                                    StyleConf.PlayerCapturerIconSize);
 			cancelimage.Pixbuf = Misc.LoadIcon ("longomatch-cancel-rec",
 			                                    StyleConf.PlayerCapturerIconSize);
 			Periods = new List<Period> ();
