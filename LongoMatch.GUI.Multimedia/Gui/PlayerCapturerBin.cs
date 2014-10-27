@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui
 {
@@ -49,8 +50,15 @@ namespace LongoMatch.Gui
 		{
 			this.Build ();
 			ConnectSignals();
+			replayhbox.HeightRequest = livebox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			replayimage.Pixbuf = Misc.LoadIcon ("longomatch-replay", StyleConf.PlayerCapturerIconSize);
+			liveimage.Pixbuf = Misc.LoadIcon ("longomatch-live", StyleConf.PlayerCapturerIconSize);
+			livelabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
+			replaylabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
+			livebox.Visible = replayhbox.Visible = false;
+			playerbin.CloseEvent += HandleCloseClicked;
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			playerbin.Destroy ();
@@ -63,31 +71,36 @@ namespace LongoMatch.Gui
 				mode = value;
 				if (mode == PlayerOperationMode.Player) {
 					ShowPlayer();
+					playerbin.Compact = false;
 				} else {
-					if (value == PlayerOperationMode.FakeCapturer) {
-						capturerbin.Mode = CapturerType.Fake;
-					} else {
-						capturerbin.Mode = CapturerType.Live;
-					}
 					ShowCapturer();
+					playerbin.Compact = true;
 				}
-				backtolivebutton.Visible = false;
 				Log.Debug ("CapturerPlayer setting mode " + value);
 				backLoaded = false;
 			}
 		}
 		
 		public void ShowPlayer () {
-			playerbin.Visible = true;
+			playerbox.Visible = true;
+			replayhbox.Visible = false;
 			if (mode == PlayerOperationMode.PreviewCapturer && Config.ReviewPlaysInSameWindow)
-				capturerbin.Visible = true;
+				capturerbox.Visible = true;
 			else
-				capturerbin.Visible = false;
+				capturerbox.Visible = false;
 		}
 		
 		public void ShowCapturer () {
-			playerbin.Visible = false;
-			capturerbin.Visible = true;
+			playerbox.Visible = false;
+			livebox.Visible = false;
+			capturerbox.Visible = true;
+		}
+
+		void HandleCloseClicked (object sender, EventArgs e)
+		{
+			livebox.Visible = replayhbox.Visible = false;
+			playerbin.Pause ();
+			ShowCapturer ();
 		}
 		
 #region Common
@@ -117,6 +130,7 @@ namespace LongoMatch.Gui
 #endregion
 
 #region Capturer
+
 		public CaptureSettings CaptureSettings {
 			get {
 				return capturerbin.CaptureSettings;
@@ -135,7 +149,10 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public List<Period> PeriodsTimers {
+		public List<Period> Periods {
+			get {
+				return capturerbin.Periods;
+			}
 			set {
 				capturerbin.Periods = value;
 			}
@@ -149,13 +166,20 @@ namespace LongoMatch.Gui
 			capturerbin.StopPeriod ();
 		}
 		
-		public void Stop () {
-			capturerbin.Stop ();
-		}
-		
 		public void Run (CaptureSettings settings) {
 			capturerbin.Run (settings);
 		}
+		
+		public void PausePeriod ()
+		{
+			capturerbin.PausePeriod ();
+		}
+
+		public void ResumePeriod ()
+		{
+			capturerbin.ResumePeriod ();
+		}
+
 #endregion
 		
 		
@@ -229,9 +253,9 @@ namespace LongoMatch.Gui
 		
 		public void LoadPlay (MediaFileSet fileSet, TimelineEvent play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
-				backtolivebutton.Visible = true;
 				ShowPlayer ();
 				LoadBackgroundPlayer(fileSet);
+				livebox.Visible = replayhbox.Visible = true;
 			}
 			playerbin.LoadPlay (fileSet, play, seekTime, playing);
 		}
@@ -279,7 +303,6 @@ namespace LongoMatch.Gui
 
 		protected void OnBacktolivebuttonClicked (object sender, System.EventArgs e)
 		{
-			backtolivebutton.Visible = false;
 			playerbin.Pause();
 			ShowCapturer ();
 		}

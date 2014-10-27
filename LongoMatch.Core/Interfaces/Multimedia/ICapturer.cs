@@ -55,5 +55,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		void Close();
 
 		void Dispose();
+		
+		void Expose ();
 	}
 }

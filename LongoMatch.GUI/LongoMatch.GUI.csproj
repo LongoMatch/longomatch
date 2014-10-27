@@ -165,8 +165,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
     <Compile Include="Gui\Component\ProjectPeriods.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectPeriods.cs" />
-    <Compile Include="Gui\Component\PeriodsRecoder.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PeriodsRecoder.cs" />
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
     <Compile Include="Gui\Menu\PlaysMenu.cs" />
@@ -190,6 +188,10 @@
     <Compile Include="Gui\Menu\PeriodsMenu.cs" />
     <Compile Include="Gui\Component\HotkeysConfiguration.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
+    <Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.FakeAnalysisComponent.cs" />
+    <Compile Include="Gui\Component\EventsListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.EventsListWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

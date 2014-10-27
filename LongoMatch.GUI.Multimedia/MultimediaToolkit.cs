@@ -28,10 +28,6 @@ namespace LongoMatch.Video
 
 	public class MultimediaToolkit:MultimediaFactory, IMultimediaToolkit
 	{
-
-		public MultimediaToolkit () {
-		}
-		
 		public string RemuxFile (MediaFile file, object window) {
 			LongoMatch.Video.Utils.Remuxer remuxer = new LongoMatch.Video.Utils.Remuxer (file);
 			return remuxer.Remux (window as Gtk.Window);

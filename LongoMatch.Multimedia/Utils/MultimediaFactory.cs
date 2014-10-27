@@ -84,14 +84,9 @@ namespace LongoMatch.Video
 			return GetDefaultElement<IDiscoverer> (typeof(IDiscoverer));
 		}
 
-		public ICapturer GetCapturer (CapturerType type)
+		public ICapturer GetCapturer ()
 		{
-			switch (type) {
-			case CapturerType.Live:
-				return GetDefaultElement<ICapturer> (typeof(ICapturer), "test.avi");
-			default:
-				return new FakeCapturer ();
-			}
+			return GetDefaultElement<ICapturer> (typeof(ICapturer), "test.avi");
 		}
 
 		public IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer)

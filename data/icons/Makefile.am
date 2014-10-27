@@ -21,6 +21,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-back.svg \
 	hicolor/scalable/actions/longomatch-browse.svg \
 	hicolor/scalable/actions/longomatch-calendar.svg \
+	hicolor/scalable/actions/longomatch-cancel-rec.svg \
 	hicolor/scalable/actions/longomatch-category-header.svg \
 	hicolor/scalable/actions/longomatch-circle-fill.svg \
 	hicolor/scalable/actions/longomatch-circle.svg \
@@ -50,7 +51,9 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-field-full.svg \
 	hicolor/scalable/actions/longomatch-field-goal.svg \
 	hicolor/scalable/actions/longomatch-field-half.svg \
+	hicolor/scalable/actions/longomatch-live.svg \
 	hicolor/scalable/actions/longomatch-mark.svg \
+	hicolor/scalable/actions/longomatch-pause-clock.svg \
 	hicolor/scalable/actions/longomatch-pencil.svg \
 	hicolor/scalable/actions/longomatch-person.svg \
 	hicolor/scalable/actions/longomatch-player-add.svg \
@@ -68,10 +71,15 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-project-open.svg \
 	hicolor/scalable/actions/longomatch-project-save.svg \
 	hicolor/scalable/actions/longomatch-project.svg \
+	hicolor/scalable/actions/longomatch-record.svg \
+	hicolor/scalable/actions/longomatch-replay.svg \
+	hicolor/scalable/actions/longomatch-resume-clock.svg \
+	hicolor/scalable/actions/longomatch-save.svg \
 	hicolor/scalable/actions/longomatch-select.svg \
 	hicolor/scalable/actions/longomatch-shortcut.svg \
 	hicolor/scalable/actions/longomatch-square-fill.svg \
 	hicolor/scalable/actions/longomatch-square.svg \
+	hicolor/scalable/actions/longomatch-stop.svg \
 	hicolor/scalable/actions/longomatch-tab-active-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-active-filter.svg \
 	hicolor/scalable/actions/longomatch-tab-active-playlist.svg \

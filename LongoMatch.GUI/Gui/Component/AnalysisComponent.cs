@@ -31,12 +31,7 @@ namespace LongoMatch.Gui.Component
 		EventsFilter filter;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
-		EventBox backgroundBox;
-		PlaysSelectionWidget playsSelection;
-		PlayerCapturerBin playercapturer;
-		CodingWidget codingwidget;
-		HBox videowidgetsbox;
-		
+
 		public AnalysisComponent ()
 		{
 			this.Build ();
@@ -49,54 +44,63 @@ namespace LongoMatch.Gui.Component
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
-		
-		public IPlayerBin Player{
+
+		public IPlayerBin Player {
 			get {
 				return playercapturer;
 			}
 		}
-		
-		public ICapturerBin Capturer{
+
+		public ICapturerBin Capturer {
 			get {
 				return playercapturer;
 			}
 		}
-		
-		public void AddPlay(TimelineEvent play) {
-			playsSelection.AddPlay(play);
+
+		public void AddPlay (TimelineEvent play)
+		{
+			playsSelection.AddPlay (play);
 			codingwidget.AddPlay (play);
 		}
-		
-		public void UpdateCategories () {
+
+		public void UpdateCategories ()
+		{
 			codingwidget.UpdateCategories ();
 		}
-		
-		public void DeletePlays (List<TimelineEvent> plays) {
-			playsSelection.RemovePlays(plays);
+
+		public void DeletePlays (List<TimelineEvent> plays)
+		{
+			playsSelection.RemovePlays (plays);
 			codingwidget.DeletePlays (plays);
 		}
-		
-		public void ZoomIn () {
+
+		public void ZoomIn ()
+		{
 			codingwidget.ZoomIn ();
 		}
-		
-		public void ZoomOut () {
+
+		public void ZoomOut ()
+		{
 			codingwidget.ZoomOut ();
 		}
-		
-		public void FitTimeline () {
+
+		public void FitTimeline ()
+		{
 			codingwidget.FitTimeline ();
 		}
-		
-		public void ShowDashboard () {
+
+		public void ShowDashboard ()
+		{
 			codingwidget.ShowDashboard ();
 		}
 
-		public void ShowTimeline () {
+		public void ShowTimeline ()
+		{
 			codingwidget.ShowTimeline ();
 		}
-		
-		public void ShowZonalTags () {
+
+		public void ShowZonalTags ()
+		{
 			codingwidget.ShowZonalTags ();
 		}
 
@@ -123,7 +127,7 @@ namespace LongoMatch.Gui.Component
 				box = new EventBox ();
 				box.Name = "lightbackgroundeventbox";
 				box.KeyPressEvent += (o, args) => {
-					Config.EventsBroker.EmitKeyPressed(this, Keyboard.ParseEvent (args.Event));
+					Config.EventsBroker.EmitKeyPressed (this, Keyboard.ParseEvent (args.Event));
 				};
 				playerWindow.Add (box);
 				
@@ -140,47 +144,27 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 			}
 			if (isPlaying) {
-				playercapturer.Play();
+				playercapturer.Play ();
 			}
 			detachedPlayer = !detachedPlayer;
 		}
-		
-		public void CloseOpenedProject () {
+
+		public void CloseOpenedProject ()
+		{
 			openedProject = null;
 			projectType = ProjectType.None;
 			if (detachedPlayer)
-				DetachPlayer();
-			ClearWidgets();
+				DetachPlayer ();
 		}
-		
-		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+
+		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			openedProject = project;
 			this.projectType = projectType;
 			this.filter = filter;
 			
-			if(projectType == ProjectType.FakeCaptureProject) {
-				CreateCodingUI ();
-			} else {
-				CreatePreviewUI ();
-			}
-			
 			codingwidget.SetProject (project, projectType, filter);
 			playsSelection.SetProject (project, filter);
-		}
-
-		public void ReloadProject () {
-			codingwidget.SetProject (openedProject, projectType, filter);
-			playsSelection.SetProject (openedProject, filter);
-		}
-
-		void CreateCommonUI () {
-			backgroundBox = new EventBox ();
-			backgroundBox.Name = "lightbackgroundeventbox";
-			videowidgetsbox = new HBox ();
-			playsSelection = new PlaysSelectionWidget ();
-			codingwidget = new CodingWidget();
-			playercapturer = new PlayerCapturerBin ();
 			if (projectType == ProjectType.FileProject) {
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			} else {
@@ -189,76 +173,15 @@ namespace LongoMatch.Gui.Component
 				} else {
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
 				}
-				playercapturer.PeriodsNames = openedProject.Dashboard.GamePeriods;
-				playercapturer.PeriodsTimers = openedProject.Periods;
+				playercapturer.PeriodsNames = project.Dashboard.GamePeriods;
+				playercapturer.Periods = project.Periods;
 			}
-			backgroundBox.Show ();
-			playsSelection.Show ();
-			codingwidget.Show ();
-			playercapturer.Show ();
-			videowidgetsbox.Show();
-		}
-		
-		void CreateCodingUI () {
-			HPaned centralpane, rightpane;
-			VBox vbox;
-			
-			ClearWidgets ();
-
-			centralpane = new HPaned();
-			rightpane = new HPaned ();
-			vbox = new VBox ();
-			centralpane.Show ();
-			rightpane.Show ();
-			vbox.Show();
-			
-			CreateCommonUI ();
-			
-			centralpane.Pack1 (playsSelection, true, true);
-			centralpane.Pack2 (rightpane, true, true);
-			rightpane.Pack1 (vbox, true, true);
-			videowidgetsbox.Add (playercapturer);
-			vbox.PackStart (videowidgetsbox, false, true, 0);
-			vbox.PackEnd (codingwidget, true, true, 0);
-			backgroundBox.Add (centralpane);
-			Add (backgroundBox);
 		}
 
-		void CreatePreviewUI () {
-			VPaned centralpane;
-			HPaned uppane, rightpane;
-			
-			ClearWidgets ();
-
-			centralpane = new VPaned();
-			uppane = new HPaned ();
-			rightpane = new HPaned();
-			centralpane.Show ();
-			uppane.Show ();
-			rightpane.Show ();
-			
-			CreateCommonUI ();
-			
-			centralpane.Pack1 (uppane, true, true);
-			centralpane.Pack2 (codingwidget, true, true);
-			uppane.Pack1 (playsSelection, true, true);
-			uppane.Pack2 (rightpane, true, true);
-			videowidgetsbox.Add (playercapturer);
-			rightpane.Pack1 (videowidgetsbox, true, true);
-			backgroundBox.Add (centralpane);
-			Add (backgroundBox);
-		}
-		
-		void ClearWidgets() {
-			if (Children.Length == 1) 
-				Children[0].Destroy();
-			if (playsSelection != null)
-				playsSelection.Destroy();
-			if (codingwidget != null)
-				codingwidget.Destroy();
-			if (playercapturer != null) {
-				playercapturer.Destroy();
-			}
+		public void ReloadProject ()
+		{
+			codingwidget.SetProject (openedProject, projectType, filter);
+			playsSelection.SetProject (openedProject, filter);
 		}
 	}
 }

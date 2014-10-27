@@ -11,13 +11,14 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/CoordinatesTagger.cs \
 	Gui/Component/DashboardWidget.cs \
 	Gui/Component/DatePicker.cs \
+	Gui/Component/EventsListWidget.cs \
+	Gui/Component/FakeAnalysisComponent.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/HotkeysConfiguration.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/MediaFileChooser.cs \
 	Gui/Component/MediaFileSetSelection.cs \
 	Gui/Component/NotesWidget.cs \
-	Gui/Component/PeriodsRecoder.cs \
 	Gui/Component/PlayListWidget.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
 	Gui/Component/PlaysCoordinatesTagger.cs \
@@ -89,6 +90,8 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
+	gtk-gui/LongoMatch.Gui.Component.EventsListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.FakeAnalysisComponent.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.HotkeysConfiguration.cs \
@@ -96,7 +99,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PeriodsRecoder.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs \

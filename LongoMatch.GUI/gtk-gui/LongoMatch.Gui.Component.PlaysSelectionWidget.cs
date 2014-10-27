@@ -5,13 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysSelectionWidget
 	{
 		private global::Gtk.Notebook notebook;
-		private global::Gtk.Notebook playsnotebook;
-		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playsList;
-		private global::Gtk.Label playsList1;
-		private global::LongoMatch.Gui.Component.PlayersListTreeWidget localPlayersList;
-		private global::Gtk.Label localPlaysList;
-		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
-		private global::Gtk.Label visitorPlaysList;
+		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
 		private global::Gtk.Label label1;
 		private global::LongoMatch.Gui.Component.PlayListWidget playlistwidget;
 		private global::Gtk.Label label3;
@@ -29,57 +23,20 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 2;
+			this.notebook.CurrentPage = 0;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.playsnotebook = new global::Gtk.Notebook ();
-			this.playsnotebook.CanFocus = true;
-			this.playsnotebook.Name = "playsnotebook";
-			this.playsnotebook.CurrentPage = 2;
-			this.playsnotebook.TabPos = ((global::Gtk.PositionType)(3));
-			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.playsList = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
-			this.playsList.Events = ((global::Gdk.EventMask)(256));
-			this.playsList.Name = "playsList";
-			this.playsnotebook.Add (this.playsList);
-			// Notebook tab
-			this.playsList1 = new global::Gtk.Label ();
-			this.playsList1.Name = "playsList1";
-			this.playsList1.LabelProp = global::Mono.Unix.Catalog.GetString ("Events");
-			this.playsnotebook.SetTabLabel (this.playsList, this.playsList1);
-			this.playsList1.ShowAll ();
-			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.localPlayersList = new global::LongoMatch.Gui.Component.PlayersListTreeWidget ();
-			this.localPlayersList.Events = ((global::Gdk.EventMask)(256));
-			this.localPlayersList.Name = "localPlayersList";
-			this.playsnotebook.Add (this.localPlayersList);
-			global::Gtk.Notebook.NotebookChild w2 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook [this.localPlayersList]));
-			w2.Position = 1;
-			// Notebook tab
-			this.localPlaysList = new global::Gtk.Label ();
-			this.localPlaysList.Name = "localPlaysList";
-			this.playsnotebook.SetTabLabel (this.localPlayersList, this.localPlaysList);
-			this.localPlaysList.ShowAll ();
-			// Container child playsnotebook.Gtk.Notebook+NotebookChild
-			this.visitorPlayersList = new global::LongoMatch.Gui.Component.PlayersListTreeWidget ();
-			this.visitorPlayersList.Events = ((global::Gdk.EventMask)(256));
-			this.visitorPlayersList.Name = "visitorPlayersList";
-			this.playsnotebook.Add (this.visitorPlayersList);
-			global::Gtk.Notebook.NotebookChild w3 = ((global::Gtk.Notebook.NotebookChild)(this.playsnotebook [this.visitorPlayersList]));
-			w3.Position = 2;
-			// Notebook tab
-			this.visitorPlaysList = new global::Gtk.Label ();
-			this.visitorPlaysList.Name = "visitorPlaysList";
-			this.playsnotebook.SetTabLabel (this.visitorPlayersList, this.visitorPlaysList);
-			this.visitorPlaysList.ShowAll ();
-			this.notebook.Add (this.playsnotebook);
+			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget ();
+			this.eventslistwidget.Events = ((global::Gdk.EventMask)(256));
+			this.eventslistwidget.Name = "eventslistwidget";
+			this.notebook.Add (this.eventslistwidget);
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("  Events   ");
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.label1.Angle = 90;
-			this.notebook.SetTabLabel (this.playsnotebook, this.label1);
+			this.notebook.SetTabLabel (this.eventslistwidget, this.label1);
 			this.label1.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.playlistwidget = new global::LongoMatch.Gui.Component.PlayListWidget ();
@@ -87,8 +44,8 @@ namespace LongoMatch.Gui.Component
 			this.playlistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.playlistwidget.Name = "playlistwidget";
 			this.notebook.Add (this.playlistwidget);
-			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playlistwidget]));
-			w5.Position = 1;
+			global::Gtk.Notebook.NotebookChild w2 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playlistwidget]));
+			w2.Position = 1;
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
@@ -104,14 +61,14 @@ namespace LongoMatch.Gui.Component
 			this.filtersnotebook = new global::Gtk.Notebook ();
 			this.filtersnotebook.CanFocus = true;
 			this.filtersnotebook.Name = "filtersnotebook";
-			this.filtersnotebook.CurrentPage = 0;
+			this.filtersnotebook.CurrentPage = 1;
 			this.filtersnotebook.TabPos = ((global::Gtk.PositionType)(3));
 			this.filtersvbox.Add (this.filtersnotebook);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.filtersnotebook]));
-			w6.Position = 0;
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.filtersnotebook]));
+			w3.Position = 0;
 			this.notebook.Add (this.filtersvbox);
-			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
-			w7.Position = 2;
+			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
+			w4.Position = 2;
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";

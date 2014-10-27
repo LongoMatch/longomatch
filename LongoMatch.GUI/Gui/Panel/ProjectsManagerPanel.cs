@@ -242,7 +242,7 @@ namespace LongoMatch.Gui.Panel
 				
 			deletedProjects = new List<ProjectDescription>();
 			foreach (ProjectDescription selectedProject in selectedProjects) {
-				if(openedProject == loadedProject) {
+				if (openedProject != null && openedProject.ID == selectedProject.ID) {
 					MessagesHelpers.WarningMessage (this,
 					                                Catalog.GetString("This Project is actually in use.")+"\n"+
 					                                Catalog.GetString("Close it first to allow its removal from the database"));

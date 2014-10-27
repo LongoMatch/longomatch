@@ -55,7 +55,7 @@ namespace LongoMatch.Services
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                               EventsFilter filter, IAnalysisWindow analysisWindow)
+		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
@@ -71,7 +71,7 @@ namespace LongoMatch.Services
 
 			if (projectType == ProjectType.FileProject) {
 				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
-				framesCapturer.Open (openedProject.Description.FileSet.GetAngle(MediaFileAngle.Angle1).FilePath);
+				framesCapturer.Open (openedProject.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
 			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
@@ -149,6 +149,7 @@ namespace LongoMatch.Services
 		{
 			loadedPlay = play;
 		}
+
 		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
 		{
 			if (element is PlaylistPlayElement) {
@@ -157,7 +158,6 @@ namespace LongoMatch.Services
 				loadedPlay = null;
 			}
 		}
-
 
 		void HandleDetach ()
 		{
@@ -294,7 +294,7 @@ namespace LongoMatch.Services
 				}
 			}
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-			                          start.ToMSecondsString(), stop.ToMSecondsString(),
+			                          start.ToMSecondsString (), stop.ToMSecondsString (),
 			                          evType.Name));
 			/* Add the new created play to the project and update the GUI*/
 			var play = openedProject.AddEvent (evType, start, stop, eventTime, null, score, card);
@@ -310,18 +310,24 @@ namespace LongoMatch.Services
 
 		public void HandleNewPlay (TimelineEvent play)
 		{
-			if (player == null || openedProject == null)
+			if (openedProject == null)
 				return;
 			
 			if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject) {
+				projectType == ProjectType.URICaptureProject ||
+				projectType == ProjectType.FakeCaptureProject) {
 				if (!capturer.Capturing) {
 					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
 				}
 			}
+
+			if (!openedProject.Dashboard.DisablePopupWindow) {
+				Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
+			}
+
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-			                          play.Start.ToMSecondsString(), play.Stop.ToMSecondsString(),
+			                          play.Start.ToMSecondsString (), play.Stop.ToMSecondsString (),
 			                          play.EventType.Name));
 			openedProject.AddEvent (play);
 			AddNewPlay (play);
@@ -358,7 +364,7 @@ namespace LongoMatch.Services
 			newplay.ID = Guid.NewGuid ();
 			newplay.EventType = evType;
 			newplay.Players = play.Players;
-			DeletePlays (new List<TimelineEvent> {play}, false);
+			DeletePlays (new List<TimelineEvent> { play }, false);
 			openedProject.AddEvent (newplay);
 			analysisWindow.AddPlay (newplay);
 			Save (openedProject);
@@ -393,7 +399,7 @@ namespace LongoMatch.Services
 				break;
 			case KeyAction.DeleteEvent:
 				if (loadedPlay != null) {
-					DeletePlays (new List<TimelineEvent> {loadedPlay});
+					DeletePlays (new List<TimelineEvent> { loadedPlay });
 				}
 				break;
 			}

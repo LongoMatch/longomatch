@@ -1597,6 +1597,17 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
 }
 
 void
+gst_camera_capturer_expose (GstCameraCapturer * gcc)
+{
+  g_return_if_fail (gcc != NULL);
+
+  if (gcc->priv->xoverlay != NULL &&
+      GST_IS_X_OVERLAY (gcc->priv->xoverlay)) {
+    gst_x_overlay_expose (gcc->priv->xoverlay);
+  }
+}
+
+void
 gst_camera_capturer_configure (GstCameraCapturer *gcc,
     const gchar * filename, CaptureSourceType source,
     const gchar *source_element, const gchar *device_id,

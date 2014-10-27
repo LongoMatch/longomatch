@@ -34,6 +34,8 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersListTreeWidget : Gtk.Bin
 	{
 
+		TreeStore team;
+
 		public PlayersListTreeWidget()
 		{
 			this.Build();
@@ -57,8 +59,44 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public void AddEvent (TimelineEvent evt)
+		{
+			TreeIter piter;
+
+			if (evt.Players == null) {
+				return;
+			}
+			team.GetIterFirst (out piter);
+			while (team.IterIsValid (piter)) {
+				Player player = team.GetValue (piter, 0) as Player;
+				if (evt.Players.Contains (player)) {
+					team.AppendValues (piter, evt);
+				}
+				team.IterNext (ref piter);
+			}
+		}
+		
+		public void RemoveEvents (List<TimelineEvent> events)
+		{
+			TreeIter piter;
+
+			team.GetIterFirst (out piter);
+			while (team.IterIsValid (piter)) {
+				TreeIter evtIter;
+
+				team.IterChildren (out evtIter, piter);
+				while (team.IterIsValid (evtIter)) {
+					TimelineEvent evt = team.GetValue (evtIter, 0) as TimelineEvent;
+					if (events.Contains (evt)) {
+						team.Remove (ref evtIter);
+					}
+					team.IterNext (ref evtIter);
+				}
+				team.IterNext (ref piter);
+			}
+		}
+
 		public void SetTeam(TeamTemplate template, List<TimelineEvent> plays) {
-			TreeStore team;
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
 			
 			Log.Debug("Updating teams models with template:" + template);

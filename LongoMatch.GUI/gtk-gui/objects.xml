@@ -252,10 +252,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PeriodsRecoder" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -332,6 +328,7 @@
       <itemgroup label="PlayerBin Signals">
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
+        <signal name="CloseEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -362,5 +359,13 @@
         <signal name="ScrollEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.FakeAnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.EventsListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

@@ -147,5 +147,8 @@ namespace LongoMatch.Video.Capturer
 		{
 			return true;
 		}
+		
+		public void Expose () {
+		}
 	}
 }

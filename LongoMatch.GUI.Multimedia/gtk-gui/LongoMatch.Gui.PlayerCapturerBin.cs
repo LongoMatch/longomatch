@@ -4,11 +4,17 @@ namespace LongoMatch.Gui
 {
 	public partial class PlayerCapturerBin
 	{
-		private global::Gtk.VBox vbox2;
 		private global::Gtk.HBox hbox4;
+		private global::Gtk.VBox playerbox;
+		private global::Gtk.HBox replayhbox;
+		private global::Gtk.Image replayimage;
+		private global::Gtk.Label replaylabel;
 		private global::LongoMatch.Gui.PlayerBin playerbin;
+		private global::Gtk.VBox capturerbox;
+		private global::Gtk.HBox livebox;
+		private global::Gtk.Image liveimage;
+		private global::Gtk.Label livelabel;
 		private global::LongoMatch.Gui.CapturerBin capturerbin;
-		private global::Gtk.Button backtolivebutton;
 
 		protected virtual void Build ()
 		{
@@ -17,63 +23,97 @@ namespace LongoMatch.Gui
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.PlayerCapturerBin";
 			// Container child LongoMatch.Gui.PlayerCapturerBin.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox4 = new global::Gtk.HBox ();
 			this.hbox4.Name = "hbox4";
+			this.hbox4.Homogeneous = true;
 			this.hbox4.Spacing = 6;
 			// Container child hbox4.Gtk.Box+BoxChild
+			this.playerbox = new global::Gtk.VBox ();
+			this.playerbox.Name = "playerbox";
+			this.playerbox.Spacing = 6;
+			// Container child playerbox.Gtk.Box+BoxChild
+			this.replayhbox = new global::Gtk.HBox ();
+			this.replayhbox.Name = "replayhbox";
+			this.replayhbox.Spacing = 6;
+			// Container child replayhbox.Gtk.Box+BoxChild
+			this.replayimage = new global::Gtk.Image ();
+			this.replayimage.Name = "replayimage";
+			this.replayhbox.Add (this.replayimage);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.replayhbox [this.replayimage]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
+			// Container child replayhbox.Gtk.Box+BoxChild
+			this.replaylabel = new global::Gtk.Label ();
+			this.replaylabel.Name = "replaylabel";
+			this.replaylabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Replay");
+			this.replayhbox.Add (this.replaylabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.replayhbox [this.replaylabel]));
+			w2.Position = 1;
+			w2.Expand = false;
+			w2.Fill = false;
+			this.playerbox.Add (this.replayhbox);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.playerbox [this.replayhbox]));
+			w3.Position = 0;
+			w3.Expand = false;
+			w3.Fill = false;
+			// Container child playerbox.Gtk.Box+BoxChild
 			this.playerbin = new global::LongoMatch.Gui.PlayerBin ();
 			this.playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin.Name = "playerbin";
-			this.hbox4.Add (this.playerbin);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.playerbin]));
-			w1.Position = 0;
+			this.playerbox.Add (this.playerbin);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.playerbox [this.playerbin]));
+			w4.Position = 1;
+			this.hbox4.Add (this.playerbox);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.playerbox]));
+			w5.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
+			this.capturerbox = new global::Gtk.VBox ();
+			this.capturerbox.Name = "capturerbox";
+			this.capturerbox.Spacing = 6;
+			// Container child capturerbox.Gtk.Box+BoxChild
+			this.livebox = new global::Gtk.HBox ();
+			this.livebox.Name = "livebox";
+			this.livebox.Spacing = 6;
+			// Container child livebox.Gtk.Box+BoxChild
+			this.liveimage = new global::Gtk.Image ();
+			this.liveimage.Name = "liveimage";
+			this.livebox.Add (this.liveimage);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.livebox [this.liveimage]));
+			w6.Position = 0;
+			w6.Expand = false;
+			w6.Fill = false;
+			// Container child livebox.Gtk.Box+BoxChild
+			this.livelabel = new global::Gtk.Label ();
+			this.livelabel.Name = "livelabel";
+			this.livelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Live");
+			this.livebox.Add (this.livelabel);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.livebox [this.livelabel]));
+			w7.Position = 1;
+			w7.Expand = false;
+			w7.Fill = false;
+			this.capturerbox.Add (this.livebox);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.livebox]));
+			w8.Position = 0;
+			w8.Expand = false;
+			w8.Fill = false;
+			// Container child capturerbox.Gtk.Box+BoxChild
 			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
 			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
 			this.capturerbin.Name = "capturerbin";
-			this.hbox4.Add (this.capturerbin);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.capturerbin]));
-			w2.Position = 1;
-			this.vbox2.Add (this.hbox4);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox4]));
-			w3.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.backtolivebutton = new global::Gtk.Button ();
-			this.backtolivebutton.CanFocus = true;
-			this.backtolivebutton.Name = "backtolivebutton";
-			this.backtolivebutton.UseUnderline = true;
-			// Container child backtolivebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w5 = new global::Gtk.HBox ();
-			w5.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w6 = new global::Gtk.Image ();
-			w6.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-goto-last", global::Gtk.IconSize.Menu);
-			w5.Add (w6);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w8 = new global::Gtk.Label ();
-			w8.LabelProp = global::Mono.Unix.Catalog.GetString ("Back To Live");
-			w8.UseUnderline = true;
-			w5.Add (w8);
-			w4.Add (w5);
-			this.backtolivebutton.Add (w4);
-			this.vbox2.Add (this.backtolivebutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.backtolivebutton]));
-			w12.Position = 1;
-			w12.Expand = false;
-			w12.Fill = false;
-			this.Add (this.vbox2);
+			this.capturerbox.Add (this.capturerbin);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.capturerbin]));
+			w9.Position = 1;
+			this.hbox4.Add (this.capturerbox);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.capturerbox]));
+			w10.Position = 1;
+			this.Add (this.hbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.backtolivebutton.Hide ();
+			this.replayhbox.Hide ();
+			this.livebox.Hide ();
 			this.Hide ();
-			this.backtolivebutton.Clicked += new global::System.EventHandler (this.OnBacktolivebuttonClicked);
 		}
 	}
 }

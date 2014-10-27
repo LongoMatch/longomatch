@@ -14,6 +14,8 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label label3;
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
 		private global::Gtk.Label label5;
+		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
+		private global::Gtk.Label label13;
 
 		protected virtual void Build ()
 		{
@@ -25,7 +27,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 0;
+			this.notebook.CurrentPage = 3;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			this.notebook.ShowBorder = false;
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -85,6 +87,19 @@ namespace LongoMatch.Gui.Component
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
 			this.notebook.SetTabLabel (this.playspositionviewer1, this.label5);
 			this.label5.ShowAll ();
+			// Container child notebook.Gtk.Notebook+NotebookChild
+			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget ();
+			this.eventslistwidget.Events = ((global::Gdk.EventMask)(256));
+			this.eventslistwidget.Name = "eventslistwidget";
+			this.notebook.Add (this.eventslistwidget);
+			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.eventslistwidget]));
+			w7.Position = 3;
+			// Notebook tab
+			this.label13 = new global::Gtk.Label ();
+			this.label13.Name = "label13";
+			this.label13.LabelProp = global::Mono.Unix.Catalog.GetString ("page4");
+			this.notebook.SetTabLabel (this.eventslistwidget, this.label13);
+			this.label13.ShowAll ();
 			this.Add (this.notebook);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

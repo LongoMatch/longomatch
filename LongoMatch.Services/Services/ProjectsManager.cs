@@ -138,8 +138,9 @@ namespace LongoMatch.Services
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug ("Reloading saved file: " + filePath);
-				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1,
-				                                      multimediaToolkit.DiscoverFile (filePath));
+				MediaFile file = multimediaToolkit.DiscoverFile (filePath);
+				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1, file);
+				project.Periods = Capturer.Periods;
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -274,7 +275,7 @@ namespace LongoMatch.Services
 				
 			Log.Debug ("Closing project " + OpenedProject.ID);
 			if (OpenedProjectType != ProjectType.FileProject) {
-				Capturer.Stop ();
+				Capturer.StopPeriod ();
 				Capturer.Close ();
 			} else {
 				Player.Close ();
@@ -293,10 +294,10 @@ namespace LongoMatch.Services
 
 		protected virtual void SaveProject (Project project, ProjectType projectType)
 		{
-			Log.Debug (String.Format ("Saving project {0} type: {1}", project, projectType));
 			if (project == null)
 				return;
 			
+			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
 			if (projectType == ProjectType.FileProject) {
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
@@ -381,12 +382,19 @@ namespace LongoMatch.Services
 			CloseOpenedProject (true);
 		}
 
-		void HandleCaptureFinished (bool close)
+		void HandleCaptureFinished (bool cancel)
 		{
 			Guid id = OpenedProject.ID;
 			ProjectType type = OpenedProjectType;
-			CloseOpenedProject (!close);
-			if (!close && type != ProjectType.FakeCaptureProject) {
+			if (cancel) {
+				try {
+					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject.ID);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+				}
+			}
+			CloseOpenedProject (!cancel);
+			if (!cancel && type != ProjectType.FakeCaptureProject) {
 				OpenProjectID (id);
 			}
 		}

@@ -117,7 +117,7 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append(item);
 		}
 		
-		public IAnalysisWindow SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public IAnalysisWindow SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
 			
@@ -129,8 +129,12 @@ namespace LongoMatch.Gui
 			} else {
 				Title = Constants.SOFTWARE_NAME;
 			}
-			MakeActionsSensitive(true, projectType);
-			analysisWindow = new AnalysisComponent();
+			MakeActionsSensitive (true, projectType);
+			if (projectType == ProjectType.FakeCaptureProject) {
+				analysisWindow = new FakeAnalysisComponent ();
+			} else {
+				analysisWindow = new AnalysisComponent();
+			}
 			SetPanel (analysisWindow as Widget);
 			analysisWindow.SetProject (project, projectType, props, filter);
 			return analysisWindow;

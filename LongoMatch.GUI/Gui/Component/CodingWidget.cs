@@ -16,17 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
-using LongoMatch.Drawing.Widgets;
-using LongoMatch.Drawing.Cairo;
-using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Drawing.Cairo;
+using LongoMatch.Drawing.Widgets;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -42,6 +40,7 @@ namespace LongoMatch.Gui.Component
 		Gdk.Pixbuf timelineIco, timelineActiveIco;
 		Gdk.Pixbuf posIco, posAtiveIco;
 		Gdk.Pixbuf dashboardIco, dashboardActiveIco;
+		Gdk.Pixbuf listIco, listActiveIco;
 		bool sizeAllocated;
 
 		public CodingWidget ()
@@ -58,6 +57,7 @@ namespace LongoMatch.Gui.Component
 			SetTabProps (dashboardhpaned, false);
 			SetTabProps (timeline, false);
 			SetTabProps (playspositionviewer1, false);
+			SetTabProps (eventslistwidget, false);
 			notebook.Page = currentPage = 0;
 
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
@@ -108,27 +108,35 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void ZoomIn () {
+		public void ZoomIn ()
+		{
 			timeline.ZoomIn ();
 		}
-		
-		public void ZoomOut () {
+
+		public void ZoomOut ()
+		{
 			timeline.ZoomOut ();
 		}
-		
-		public void FitTimeline () {
+
+		public void FitTimeline ()
+		{
 			timeline.Fit ();
 		}
-		
-		public void ShowDashboard () {
+
+		public void ShowDashboard ()
+		{
 			SelectPage (dashboardhpaned);
 		}
 
-		public void ShowTimeline () {
-			SelectPage (timeline);
+		public void ShowTimeline ()
+		{
+			if (projectType == ProjectType.FileProject) {
+				SelectPage (timeline);
+			} 
 		}
-		
-		public void ShowZonalTags () {
+
+		public void ShowZonalTags ()
+		{
 			SelectPage (playspositionviewer1);
 		}
 
@@ -145,13 +153,18 @@ namespace LongoMatch.Gui.Component
 			if (project != null) {
 				buttonswidget.Project = project;
 			}
+			buttonswidget.Mode = TagMode.Predefined;
 			teamtagger.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Dashboard.FieldBackground);
 			teamtagger.CurrentTime = new Time (0);
 			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
+			} else if (projectType == ProjectType.FakeCaptureProject) {
+				eventslistwidget.SetProject (project, filter);
 			}
+			eventslistwidget.Visible = projectType == ProjectType.FakeCaptureProject;
+			timeline.Visible = projectType == ProjectType.FileProject;
 			playspositionviewer1.LoadProject (project, filter);
 		}
 
@@ -159,6 +172,8 @@ namespace LongoMatch.Gui.Component
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.AddPlay (play);
+			} else if (projectType == ProjectType.FakeCaptureProject) {
+				eventslistwidget.AddPlay (play);
 			}
 			playspositionviewer1.AddPlay (play);
 		}
@@ -167,6 +182,8 @@ namespace LongoMatch.Gui.Component
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.RemovePlays (plays);
+			} else if (projectType == ProjectType.FakeCaptureProject) {
+				eventslistwidget.RemovePlays (plays);
 			}
 			playspositionviewer1.RemovePlays (plays);
 		}
@@ -187,6 +204,8 @@ namespace LongoMatch.Gui.Component
 			dashboardActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
 			posIco = Helpers.Misc.LoadIcon ("longomatch-tab-position", s, f);
 			posAtiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-position", s, f);
+			listIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
+			listActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
 		}
 
 		void SelectPage (Widget widget)
@@ -218,6 +237,8 @@ namespace LongoMatch.Gui.Component
 				icon = active ? dashboardActiveIco : dashboardIco;
 			} else if (widget == playspositionviewer1) {
 				icon = active ? posAtiveIco : posIco;
+			} else if (widget == eventslistwidget) {
+				icon = active ? listActiveIco : listIco;
 			} else {
 				return;
 			}
@@ -290,9 +311,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
-			selectedPlayers = players.ToList();
+			selectedPlayers = players.ToList ();
 		}
-		
+
 		void HandleNewTagEvent (EventType eventType, List<Player> players, Team team, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
@@ -300,9 +321,6 @@ namespace LongoMatch.Gui.Component
 			play.Team = teamtagger.SelectedTeam;
 			play.Players = selectedPlayers ?? new List<Player> ();
 			play.Tags = tags ?? new List<Tag> ();
-			if (!project.Dashboard.DisablePopupWindow) {
-				Config.GUIToolkit.EditPlay (play, project, true, true, true, true);
-			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
 			Config.EventsBroker.EmitNewEvent (play);
@@ -313,7 +331,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Config.EventsBroker.EmitSubstitutionEvent (team, p1, p2, reason, time);
 		}
-		
+
 		void HandleSizeAllocated (object o, SizeAllocatedArgs args)
 		{
 			if (!sizeAllocated) {
@@ -327,7 +345,6 @@ namespace LongoMatch.Gui.Component
 		{
 			timeline.AddTimerNode (timer, tn);
 		}
-
 	}
 }
 

@@ -467,7 +467,6 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.lcapturetable [this.hbox7]));
 			w42.LeftAttach = ((uint)(1));
 			w42.RightAttach = ((uint)(2));
-			w42.XOptions = ((global::Gtk.AttachOptions)(4));
 			w42.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child lcapturetable.Gtk.Table+TableChild
 			this.hbox8 = new global::Gtk.HBox ();
@@ -515,8 +514,6 @@ namespace LongoMatch.Gui.Panel
 			this.hbox10.Add (this.lcapturetable);
 			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.hbox10 [this.lcapturetable]));
 			w48.Position = 0;
-			w48.Expand = false;
-			w48.Fill = false;
 			// Container child hbox10.Gtk.Box+BoxChild
 			this.rcapturetable = new global::Gtk.Table (((uint)(2)), ((uint)(2)), false);
 			this.rcapturetable.Name = "rcapturetable";

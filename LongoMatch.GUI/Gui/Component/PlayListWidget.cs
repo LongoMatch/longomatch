@@ -44,6 +44,7 @@ namespace LongoMatch.Gui.Component
 			newvideobutton.CanFocus = false;
 			Config.EventsBroker.PlaylistsChangedEvent += HandlePlaylistsChangedEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
+			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 		}
 
 		protected override void OnDestroyed ()

@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Store
 	{
 		public Timer ()
 		{
-			Nodes = new List<TimeNode>();
+			Nodes = new List<TimeNode> ();
 			Team = Team.NONE;
 		}
 
@@ -37,7 +37,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public List<TimeNode> Nodes {
 			get;
 			set;
@@ -47,26 +47,44 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public Time TotalTime {
 			get {
 				return new Time (Nodes.Sum (tn => tn.Duration.MSeconds));
 			}
 		}
-		
-		public TimeNode StartTimer (Time start, string name = null) {
+
+		public TimeNode StartTimer (Time start, string name = null)
+		{
 			TimeNode tn;
 
 			if (name == null)
 				name = Name;
 			StopTimer (start);
-			tn = new TimeNode {Name = name, Start = start};
+			tn = new TimeNode { Name = name, Start = start };
 			Nodes.Add (tn);
 			return tn;
 		}
-		
-		public void StopTimer (Time stop) {
+
+		public void PauseTimer (Time stop)
+		{
+			TimeNode node = Nodes.LastOrDefault ();
+			if (node == null) {
+				throw new TimerNotRunningException ();
+			}
+			node.Stop = stop;
+		}
+
+		public TimeNode Resume (Time start)
+		{
+			TimeNode tn = new TimeNode { Name = Name, Start = start };
+			Nodes.Add (tn);
+			return tn;
+		}
+
+		public void StopTimer (Time stop)
+		{
 			if (Nodes.Count > 0) {
 				TimeNode last = Nodes.Last ();
 				if (last.Stop == null) {
@@ -75,8 +93,9 @@ namespace LongoMatch.Core.Store
 			}
 			Nodes.OrderBy (tn => tn.Start.MSeconds);
 		}
-		
-		public void CancelTimer () {
+
+		public void CancelTimer ()
+		{
 			if (Nodes.Count > 0) {
 				TimeNode last = Nodes.Last ();
 				if (last.Stop == null) {

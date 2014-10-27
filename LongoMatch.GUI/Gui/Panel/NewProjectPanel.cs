@@ -229,20 +229,8 @@ namespace LongoMatch.Gui.Panel
 
 			foreach (Device device in devices) {
 				string deviceElement, deviceName;
-
-				if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-					deviceElement = Catalog.GetString ("DirectShow source");
-				} else {
-					if (device.DeviceType == CaptureSourceType.DV)
-						deviceElement = Catalog.GetString (Catalog.GetString ("DV source"));
-					else if (device.DeviceType == CaptureSourceType.System) {
-						deviceElement = Catalog.GetString (Catalog.GetString ("System source"));
-					} else {
-						deviceElement = Catalog.GetString (Catalog.GetString ("GConf source"));
-					}
-				}
 				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
-				devicecombobox.AppendText (deviceName + " (" + deviceElement + ")");
+				devicecombobox.AppendText (deviceName);
 				devicecombobox.Active = 0;
 			}
 		}

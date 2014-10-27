@@ -62,6 +62,8 @@ namespace LongoMatch.Video.Capturer {
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_close(IntPtr raw);
 		[DllImport("libcesarplayer.dll")]
+		static extern void gst_camera_capturer_expose(IntPtr raw);
+		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_get_type();
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_enum_audio_devices();
@@ -342,6 +344,10 @@ namespace LongoMatch.Video.Capturer {
 
 		public void Close() {
 			gst_camera_capturer_close(Handle);
+		}
+
+		public void Expose() {
+			gst_camera_capturer_expose(Handle);
 		}
 
 		public static string[] AudioDevices {

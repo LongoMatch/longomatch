@@ -31,11 +31,13 @@ namespace LongoMatch.Core.Interfaces.GUI
 		Image CurrentMiniatureFrame {get;}
 		CaptureSettings CaptureSettings {get;}
 		List<string> PeriodsNames {set;}
+		List<Period> Periods { get; set; }
 
 		void Run (CaptureSettings settings);
 		void StartPeriod();
+		void PausePeriod();
+		void ResumePeriod();
 		void StopPeriod();
-		void Stop();
 		void Close();
 	}
 }

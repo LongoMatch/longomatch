@@ -78,5 +78,9 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+	
+	public class TimerNotRunningException: Exception
+	{
+	}
 }
 

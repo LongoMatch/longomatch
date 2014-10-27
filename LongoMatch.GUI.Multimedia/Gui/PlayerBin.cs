@@ -52,6 +52,7 @@ namespace LongoMatch.Gui
 
 		public event TickHandler Tick;
 		public event StateChangeHandler PlayStateChanged;
+		public event EventHandler CloseEvent;
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
@@ -80,14 +81,22 @@ namespace LongoMatch.Gui
 		{
 			this.Build ();
 
-			closebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-back", IconSize.Button, 0);
-			drawbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-draw", IconSize.Button, 0);
-			playbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-play", IconSize.Button, 0);
-			pausebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-pause", IconSize.Button, 0);
-			prevbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-rw", IconSize.Button, 0);
-			nextbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-ff", IconSize.Button, 0);
-			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi", IconSize.Button, 0);
-			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach", IconSize.Button, 0);
+			closebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-cancel-rec",
+			                                                 StyleConf.PlayerCapturerIconSize);
+			drawbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-draw",
+			                                                StyleConf.PlayerCapturerIconSize);
+			playbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-play",
+			                                                StyleConf.PlayerCapturerIconSize);
+			pausebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-pause",
+			                                                 StyleConf.PlayerCapturerIconSize);
+			prevbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-rw",
+			                                                StyleConf.PlayerCapturerIconSize);
+			nextbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-ff",
+			                                                StyleConf.PlayerCapturerIconSize);
+			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi",
+			                                                  StyleConf.PlayerCapturerIconSize);
+			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
+			                                                  StyleConf.PlayerCapturerIconSize);
 
 			vwin = new VolumeWindow ();
 			ConnectSignals ();
@@ -109,6 +118,7 @@ namespace LongoMatch.Gui
 			lastTime = new Time (0);
 			length = new Time (0);
 			vscale1.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			
 			CreatePlayer ();
 		}
@@ -185,6 +195,14 @@ namespace LongoMatch.Gui
 		public bool Playing {
 			get {
 				return player != null ? player.Playing : false;
+			}
+		}
+
+		public bool Compact {
+			set {
+				prevbutton.Visible = nextbutton.Visible = jumplabel.Visible =
+				jumpspinbutton.Visible = tlabel.Visible = timelabel.Visible =
+				detachbutton.Visible = vscale1.Visible = !value;
 			}
 		}
 		
@@ -763,6 +781,9 @@ namespace LongoMatch.Gui
 
 		void OnClosebuttonClicked (object sender, System.EventArgs e)
 		{
+			if (CloseEvent != null) {
+				CloseEvent (this, null);
+			}
 			Config.EventsBroker.EmitLoadEvent (null);
 			Play ();
 		}

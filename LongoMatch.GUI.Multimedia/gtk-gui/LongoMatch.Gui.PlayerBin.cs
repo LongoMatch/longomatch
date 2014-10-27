@@ -93,6 +93,7 @@ namespace LongoMatch.Gui
 			this.vbox5.Spacing = 6;
 			// Container child vbox5.Gtk.Box+BoxChild
 			this.vscale1 = new global::Gtk.VScale (null);
+			this.vscale1.TooltipMarkup = "Playback speed";
 			this.vscale1.WidthRequest = 36;
 			this.vscale1.Sensitive = false;
 			this.vscale1.Name = "vscale1";
@@ -131,6 +132,7 @@ namespace LongoMatch.Gui
 			this.buttonsbox.Homogeneous = true;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.closebutton = new global::Gtk.Button ();
+			this.closebutton.TooltipMarkup = "Close loaded event";
 			this.closebutton.Name = "closebutton";
 			this.closebutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child closebutton.Gtk.Container+ContainerChild
@@ -145,6 +147,7 @@ namespace LongoMatch.Gui
 			w10.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.drawbutton = new global::Gtk.Button ();
+			this.drawbutton.TooltipMarkup = "Draw frame";
 			this.drawbutton.Name = "drawbutton";
 			this.drawbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child drawbutton.Gtk.Container+ContainerChild
@@ -159,6 +162,7 @@ namespace LongoMatch.Gui
 			w12.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.playbutton = new global::Gtk.Button ();
+			this.playbutton.TooltipMarkup = "Play";
 			this.playbutton.Name = "playbutton";
 			this.playbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child playbutton.Gtk.Container+ContainerChild
@@ -173,6 +177,7 @@ namespace LongoMatch.Gui
 			w14.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.pausebutton = new global::Gtk.Button ();
+			this.pausebutton.TooltipMarkup = "Pause";
 			this.pausebutton.Name = "pausebutton";
 			this.pausebutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child pausebutton.Gtk.Container+ContainerChild
@@ -187,6 +192,7 @@ namespace LongoMatch.Gui
 			w16.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.prevbutton = new global::Gtk.Button ();
+			this.prevbutton.TooltipMarkup = "Previous";
 			this.prevbutton.Name = "prevbutton";
 			this.prevbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child prevbutton.Gtk.Container+ContainerChild
@@ -201,6 +207,7 @@ namespace LongoMatch.Gui
 			w18.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.nextbutton = new global::Gtk.Button ();
+			this.nextbutton.TooltipMarkup = "Next";
 			this.nextbutton.Sensitive = false;
 			this.nextbutton.Name = "nextbutton";
 			this.nextbutton.Relief = ((global::Gtk.ReliefStyle)(2));
@@ -281,6 +288,7 @@ namespace LongoMatch.Gui
 			w27.Expand = false;
 			// Container child controlsbox.Gtk.Box+BoxChild
 			this.volumebutton = new global::Gtk.Button ();
+			this.volumebutton.TooltipMarkup = "Volume";
 			this.volumebutton.Name = "volumebutton";
 			this.volumebutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child volumebutton.Gtk.Container+ContainerChild
@@ -295,6 +303,7 @@ namespace LongoMatch.Gui
 			w29.Fill = false;
 			// Container child controlsbox.Gtk.Box+BoxChild
 			this.detachbutton = new global::Gtk.Button ();
+			this.detachbutton.TooltipMarkup = "Detach window";
 			this.detachbutton.Name = "detachbutton";
 			this.detachbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child detachbutton.Gtk.Container+ContainerChild
@@ -317,6 +326,7 @@ namespace LongoMatch.Gui
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.videowindow.Hide ();
 			this.blackboarddrawingarea.Hide ();
 			this.closebutton.Hide ();
 			this.prevbutton.Hide ();

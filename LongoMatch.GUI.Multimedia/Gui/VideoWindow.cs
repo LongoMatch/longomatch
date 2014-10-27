@@ -53,7 +53,7 @@ namespace LongoMatch.Gui
 			}
 			set {
 				base.Visible = value;
-				if (value) {
+				if (value && Window.GdkWindow != null) {
 					// Hack for Windows. Force video window visibility as EventBox window's might prevent it to be mapped again.
 					// See for more info https://code.area51.fluendo.com/private/trac/ticket/26543
 					Window.GdkWindow.Show ();

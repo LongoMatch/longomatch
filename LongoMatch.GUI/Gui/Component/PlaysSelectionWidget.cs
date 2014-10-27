@@ -17,15 +17,12 @@
 // 
 using System;
 using System.Collections.Generic;
-using Mono.Unix;
-using Gtk;
-
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using Helpers = LongoMatch.Gui.Helpers;
 using Gdk;
+using Gtk;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using Mono.Unix;
+using Helpers = LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,67 +38,48 @@ namespace LongoMatch.Gui.Component
 		Pixbuf filtersIco, filtersActiveIco;
 		int currentPage;
 
-		
 		public PlaysSelectionWidget ()
 		{
 			this.Build ();
 			
 			LoadIcons ();
 
-			localPlayersList.Team = Team.LOCAL;
-			visitorPlayersList.Team = Team.VISITOR;
-			AddFilters();
-			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
-			playsnotebook.Page = 0;
+			AddFilters ();
 			notebook.Page = currentPage = 0;
 			
 			notebook.SwitchPage += HandleSwitchPage;
-			SetTabProps (playsnotebook, false);
+			SetTabProps (eventslistwidget, false);
 			SetTabProps (playlistwidget, false);
 			SetTabProps (filtersvbox, false);
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof (TreeView));
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
-			playsList.Project = null;
-			localPlayersList.Clear();
-			visitorPlayersList.Clear();
-			playsList1.Destroy ();
+			eventslistwidget.Destroy ();
 			playlistwidget.Destroy ();
 			base.OnDestroyed ();
 		}
-		
 		#region Plubic Methods
-		
-		public void SetProject(Project project, EventsFilter filter) {
+		public void SetProject (Project project, EventsFilter filter)
+		{
 			this.project = project;
-			playsList.Filter = filter;
-			localPlayersList.Filter = filter;
-			visitorPlayersList.Filter = filter;
-			playersfilter.SetFilter(filter, project);
-			categoriesfilter.SetFilter(filter, project);
-			playsList.Project=project;
-			visitorPlayersList.Project = project;
-			localPlayersList.Project = project;
+			eventslistwidget.SetProject (project, filter);
+			playersfilter.SetFilter (filter, project);
+			categoriesfilter.SetFilter (filter, project);
 			playlistwidget.Project = project;
-			visitorPlaysList.LabelProp = project.VisitorTeamTemplate.TeamName;
-			localPlaysList.LabelProp = project.LocalTeamTemplate.TeamName;
-			UpdateTeamsModels();
 		}
-		
-		public void AddPlay(TimelineEvent play) {
-			playsList.AddPlay(play);
-			UpdateTeamsModels();
+
+		public void AddPlay (TimelineEvent play)
+		{
+			eventslistwidget.AddPlay (play);
 		}
-		
-		public void RemovePlays (List<TimelineEvent> plays) {
-			playsList.RemovePlays(plays);
-			UpdateTeamsModels();
+
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
+			eventslistwidget.RemovePlays (plays);
 		}
 		#endregion
-
 		void LoadIcons ()
 		{
 			int s = StyleConf.NotebookTabIconSize;
@@ -128,7 +106,7 @@ namespace LongoMatch.Gui.Component
 				notebook.SetTabLabel (widget, img);
 			}
 
-			if (widget == playsnotebook) {
+			if (widget == eventslistwidget) {
 				icon = active ? listActiveIco : listIco;
 			} else if (widget == filtersvbox) {
 				icon = active ? filtersActiveIco : filtersIco;
@@ -147,25 +125,24 @@ namespace LongoMatch.Gui.Component
 			currentPage = (int)args.PageNum;
 		}
 
-		void AddFilters() {
-			ScrolledWindow s1 = new ScrolledWindow();
-			ScrolledWindow s2 = new ScrolledWindow();
+		void AddFilters ()
+		{
+			Label l;
+			ScrolledWindow s1 = new ScrolledWindow ();
+			ScrolledWindow s2 = new ScrolledWindow ();
 			
-			playersfilter = new PlayersFilterTreeView();
-			categoriesfilter = new CategoriesFilterTreeView();
+			playersfilter = new PlayersFilterTreeView ();
+			categoriesfilter = new CategoriesFilterTreeView ();
 			
-			s1.Add(categoriesfilter);
-			s2.Add(playersfilter);
-			filtersnotebook.AppendPage(s1, new Gtk.Label(Catalog.GetString("Categories filter")));
-			filtersnotebook.AppendPage(s2, new Gtk.Label(Catalog.GetString("Players filter")));
-			filtersnotebook.ShowAll();
-		}
-		
-		private void UpdateTeamsModels() {
-			if (project == null)
-				return;
-			localPlayersList.SetTeam(project.LocalTeamTemplate, project.Timeline);
-			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.Timeline);
+			s1.Add (categoriesfilter);
+			s2.Add (playersfilter);
+			l = new Gtk.Label (Catalog.GetString ("Categories filter"));
+			l.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			filtersnotebook.AppendPage (s1, l);
+			l = new Gtk.Label (Catalog.GetString ("Players filter"));
+			l.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			filtersnotebook.AppendPage (s2, l);
+			filtersnotebook.ShowAll ();
 		}
 	}
 }

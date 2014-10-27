@@ -117,7 +117,9 @@ namespace LongoMatch.Core.Common
 		public static Color ButtonPenaltyColor = Color.Parse ("#ffc7f0");
 		public static Color ButtonEventColor = Color.Parse ("#c7e9ff");
 		
-
+		public static int PlayerCapturerIconSize = 20;
+		public static int PlayerCapturerControlsHeight = 30;
+		
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;
 

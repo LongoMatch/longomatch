@@ -17,6 +17,7 @@
       <itemgroup label="PlayerBin Signals">
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
+        <signal name="CloseEvent" />
       </itemgroup>
     </signals>
   </object>
