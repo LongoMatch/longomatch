@@ -364,6 +364,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		void UpdateLineup ()
 		{
 			List<Player> homeFieldL, awayFieldL, homeBenchL, awayBenchL;
+			
+			if (Project == null) {
+				return;
+			}
+			
 			Project.CurrentLineup (currentTime, out homeFieldL, out homeBenchL,
 			                       out awayFieldL, out awayBenchL);
 			homePlayingPlayers = homeFieldL.Select (p => playerToPlayerObject [p]).ToList ();
