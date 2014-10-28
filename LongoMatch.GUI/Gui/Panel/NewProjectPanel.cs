@@ -45,6 +45,7 @@ namespace LongoMatch.Gui.Panel
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
+		int firstPage;
 		Project project;
 		ProjectType projectType;
 		CaptureSettings captureSettings;
@@ -77,11 +78,11 @@ namespace LongoMatch.Gui.Panel
 			FillDevices (mtoolkit.VideoDevices);
 			LoadTeams ();
 			if (project == null) {
-				notebook1.Page = 0;
+				notebook1.Page = firstPage = 0;
 				datepicker1.Date = DateTime.Now;
 				mediafilesetselection1.FileSet = new MediaFileSet ();
 			} else {
-				notebook1.Page = 1;
+				notebook1.Page = firstPage = 1;
 				this.project = project;
 				projectType = ProjectType.EditProject;
 				SetProjectType ();
@@ -412,7 +413,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleBackClicked (object sender, EventArgs e)
 		{
-			if (notebook1.Page == PROJECT_TYPE) {
+			if (notebook1.Page == firstPage) {
 				if (BackEvent != null) {
 					BackEvent ();
 				}
