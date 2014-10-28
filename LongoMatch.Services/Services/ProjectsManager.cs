@@ -305,6 +305,7 @@ namespace LongoMatch.Services
 					Log.Exception (e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
+				project.Periods = Capturer.Periods;
 				try {
 					Config.DatabaseManager.ActiveDB.AddProject (project);
 				} catch (Exception e) {
