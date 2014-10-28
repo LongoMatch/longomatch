@@ -152,7 +152,7 @@ namespace LongoMatch.Migration
 			}
 			dashboard.ID = cats.ID;
 			if (dashboard.ID == Guid.Empty) {
-				dashboard.ID = Guid.NewGuid;
+				dashboard.ID = Guid.NewGuid ();
 			}
 			dashboard.GamePeriods = new List<string> { "1", "2" };
 			
