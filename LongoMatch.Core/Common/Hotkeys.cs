@@ -72,7 +72,7 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.VisitorPlayer] = Catalog.GetString ("Start tagging away player");
 			ActionsDescriptions [KeyAction.SpeedDown] = Catalog.GetString ("Increase playback speed");
 			ActionsDescriptions [KeyAction.SpeedUp] = Catalog.GetString ("Decrease playback speed");
-			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause clock");
+			ActionsDescriptions [KeyAction.PauseClock] = Catalog.GetString ("Pause/Resume capture clock");
 			ActionsDescriptions [KeyAction.StartPeriod] = Catalog.GetString ("Start recording period");
 			ActionsDescriptions [KeyAction.StopPeriod] = Catalog.GetString ("Stop recording period");
 			ActionsDescriptions [KeyAction.Substitution] = Catalog.GetString ("Toggle substitutions mode");
