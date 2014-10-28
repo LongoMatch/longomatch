@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Time time = val as Time;
 			playerbin2.Pause ();
-			playerbin2.Seek (time, true);
+			playerbin2.Seek (time, false);
 		}
 
 		void HandleValueChanged (object sender, EventArgs e)
