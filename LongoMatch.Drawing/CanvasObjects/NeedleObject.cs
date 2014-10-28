@@ -35,6 +35,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 			}
 			Width = needle.Width;
+			X = 0;
+			TimelineHeight = 0;
 		}
 
 		protected override void Dispose (bool disposing)
