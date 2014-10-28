@@ -1,5 +1,8 @@
 style "longomatch-scrollbar"
 {
+  GtkRange::trough-under-steppers	= 0
+  GtkRange::trough-border		= 0
+
   engine "pixmap" 
   {
     image 
