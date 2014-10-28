@@ -442,6 +442,7 @@ namespace LongoMatch.Gui.Panel
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
+				projectperiods1.SaveChanges ();
 				StartProject ();
 				return;
 			}

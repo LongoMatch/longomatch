@@ -110,6 +110,19 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public void Move (Time diff)
+		{
+			if (start != null) {
+				start += diff;
+			}
+			if (stop != null) {
+				stop += diff;
+			}
+			if (eventTime != null) {
+				eventTime += diff;
+			}
+		}
+
 		public TimeNode Join (TimeNode tn) {
 			if (tn.Stop < Start || tn.Start > Stop)
 				return null;

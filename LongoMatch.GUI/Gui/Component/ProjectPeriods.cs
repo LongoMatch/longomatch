@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
@@ -34,6 +35,8 @@ namespace LongoMatch.Gui.Component
 		Time duration;
 		Project project;
 		PeriodsMenu menu;
+		Dictionary<Period, Period> periodsDict;
+		bool projectHasPeriods;
 
 		public ProjectPeriods ()
 		{
@@ -64,10 +67,29 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
+		public void SaveChanges ()
+		{
+			if (!projectHasPeriods)
+				return;
+			foreach (Period p in periodsDict.Keys) {
+				Period newp = periodsDict [p];
+				TimeNode tn = p.PeriodNode;
+				Time diff = newp.PeriodNode.Start - tn.Start;
+				foreach (TimelineEvent evt in project.Timeline.Where
+				         (e=>e.EventTime > tn.Start && e.EventTime < tn.Stop)) {
+					evt.Move (diff);
+				}
+				foreach (TimeNode t in p.Nodes) {
+					t.Move (diff);
+				}
+			}
+		}
+
 		public Project Project {
 			set {
 				Time start, pDuration;
 				List<string> gamePeriods;
+				List<Period> periods;
 				MediaFile file;
 				
 				playerbin2.ShowControls = false;
@@ -79,7 +101,7 @@ namespace LongoMatch.Gui.Component
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
 				if (project.Periods == null || project.Periods.Count == 0) {
-					List<Period> periods = new List<Period> ();
+					periods = new List<Period> ();
 					gamePeriods = value.Dashboard.GamePeriods;
 					foreach (string s in gamePeriods) {
 						Period period = new Period { Name = s };
@@ -89,8 +111,18 @@ namespace LongoMatch.Gui.Component
 						start += pDuration;
 					}
 					value.Periods = periods;
+					projectHasPeriods = false;
+				} else {
+					periodsDict = new Dictionary <Period, Period> ();
+					foreach (Period p in project.Periods) {
+						Period newp = new Period {Name = p.Name};
+						newp.Nodes.Add (p.PeriodNode);
+						periodsDict.Add (p, newp);
+					}
+					projectHasPeriods = true;
+					periods = periodsDict.Values.ToList ();
 				}
-				timersTimeline.LoadPeriods (value.Periods, duration);
+				timersTimeline.LoadPeriods (periods, duration);
 				timerule.Duration = duration;
 				SetZoom ();
 				playerbin2.Open (value.Description.FileSet);
