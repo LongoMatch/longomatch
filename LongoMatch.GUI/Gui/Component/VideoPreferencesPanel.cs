@@ -33,6 +33,10 @@ namespace LongoMatch.Gui.Component
 			
 			if (Config.FPS_N == 30) {
 				fpscombobox.Active = 1;
+			} else if (Config.FPS_N == 50) {
+				fpscombobox.Active = 2;
+			} else if (Config.FPS_N == 60) {
+				fpscombobox.Active = 3;
 			} else {
 				fpscombobox.Active = 0;
 			}
@@ -90,12 +94,15 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFPSChanged (object sender, EventArgs e)
 		{
-			if (fpscombobox.ActiveText == "25 fps") {
+			Config.FPS_D = 1;
+			if (fpscombobox.Active == 0) {
 				Config.FPS_N = 25;
-				Config.FPS_D = 1;
-			} else {
+			} else if (fpscombobox.Active == 1) {
 				Config.FPS_N = 30;
-				Config.FPS_D = 1;
+			} else if (fpscombobox.Active == 2) {
+				Config.FPS_N = 50;
+			} else if (fpscombobox.Active == 3) {
+				Config.FPS_N = 60;
 			}
 		}
 

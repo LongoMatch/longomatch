@@ -61,6 +61,8 @@ namespace LongoMatch.Gui.Component
 			this.fpscombobox = global::Gtk.ComboBox.NewText ();
 			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("25 fps"));
 			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("30 fps"));
+			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("50 fps"));
+			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("60 fps"));
 			this.fpscombobox.Name = "fpscombobox";
 			this.fpscombobox.Active = 0;
 			this.hbox1.Add (this.fpscombobox);

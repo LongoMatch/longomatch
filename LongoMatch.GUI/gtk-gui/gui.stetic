@@ -5094,7 +5094,9 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="IsTextCombo">True</property>
                 <property name="Items">25 fps
-30 fps</property>
+30 fps
+50 fps
+60 fps</property>
                 <property name="Active">0</property>
               </widget>
               <packing>
