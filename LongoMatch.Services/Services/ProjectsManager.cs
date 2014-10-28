@@ -360,16 +360,8 @@ namespace LongoMatch.Services
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				if (guiToolkit.SelectMediaFiles (project)) {
-					try {
-						Config.DatabaseManager.ActiveDB.UpdateProject (project);
-					} catch (Exception e) {
-						Log.Exception (e);
-					}
-				} else {
-					guiToolkit.ErrorMessage (Catalog.GetString ("No valid video files associated. The project will be closed")); 
-					return;
-				}
+				Config.EventsBroker.EmitNewProject (project);
+				return;
 			}
 			project.UpdateEventTypesAndTimers ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());

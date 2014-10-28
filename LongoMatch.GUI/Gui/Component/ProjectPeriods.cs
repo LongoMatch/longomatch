@@ -78,22 +78,22 @@ namespace LongoMatch.Gui.Component
 				start = new Time (0);
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
-				List<Period> periods = new List<Period> ();
-				gamePeriods = value.Dashboard.GamePeriods;
-				
+				if (project.Periods == null || project.Periods.Count == 0) {
+					List<Period> periods = new List<Period> ();
+					gamePeriods = value.Dashboard.GamePeriods;
+					foreach (string s in gamePeriods) {
+						Period period = new Period { Name = s };
+						period.StartTimer (start);
+						period.StopTimer (start + pDuration);
+						periods.Add (period);
+						start += pDuration;
+					}
+					value.Periods = periods;
+				}
+				timersTimeline.LoadPeriods (value.Periods, duration);
 				timerule.Duration = duration;
 				SetZoom ();
 				playerbin2.Open (value.Description.FileSet);
-				
-				foreach (string s in gamePeriods) {
-					Period period = new Period { Name = s };
-					period.StartTimer (start);
-					period.StopTimer (start + pDuration);
-					periods.Add (period);
-					start += pDuration;
-				}
-				value.Periods = periods;
-				timersTimeline.LoadPeriods (periods, duration);
 			}
 		}
 

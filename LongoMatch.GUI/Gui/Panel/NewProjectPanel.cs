@@ -84,6 +84,7 @@ namespace LongoMatch.Gui.Panel
 				notebook1.Page = 1;
 				this.project = project;
 				projectType = ProjectType.EditProject;
+				SetProjectType ();
 				FillProjectDetails ();
 			}
 			UpdateTitle ();
@@ -199,7 +200,8 @@ namespace LongoMatch.Gui.Panel
 		{
 			bool filemode = false, urimode = false, capturemode = false;
 			
-			if (projectType == ProjectType.FileProject) {
+			if (projectType == ProjectType.FileProject ||
+			    projectType == ProjectType.EditProject) {
 				filemode = true;
 			} else if (projectType == ProjectType.CaptureProject) {
 				capturemode = true;
