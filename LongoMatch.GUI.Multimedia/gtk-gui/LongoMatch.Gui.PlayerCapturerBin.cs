@@ -101,6 +101,7 @@ namespace LongoMatch.Gui
 			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
 			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
 			this.capturerbin.Name = "capturerbin";
+			this.capturerbin.Capturing = false;
 			this.capturerbox.Add (this.capturerbin);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.capturerbin]));
 			w9.Position = 1;

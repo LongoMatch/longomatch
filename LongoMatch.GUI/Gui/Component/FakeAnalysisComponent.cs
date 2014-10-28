@@ -30,7 +30,7 @@ namespace LongoMatch.Gui.Component
 		public FakeAnalysisComponent ()
 		{
 			this.Build ();
-			capturerbin.Mode = CapturerType.Live;
+			capturerbin.Mode = CapturerType.Fake;
 		}
 		#region IAnalysisWindow implementation
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
