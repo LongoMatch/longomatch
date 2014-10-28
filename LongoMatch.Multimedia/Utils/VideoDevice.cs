@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using LongoMatch.Core.Common;
 using LongoMatch.Video.Capturer;
 
@@ -38,6 +39,13 @@ namespace LongoMatch.Multimedia.Utils
 
 			foreach (string source in devices) {
 				foreach (string devname in GstCameraCapturer.ListVideoDevices (source)) {
+					/* The Direct Show GStreamer element seems to have problems with the
+					 * BlackMagic DeckLink cards, so filter them out. They are also
+					 * available through the ksvideosrc element. */
+					if (source == "dshowvideosrc" &&
+						Regex.Match (devname, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
+						continue;
+					}
 					devicesList.Add (new Device {
 						ID = devname,
 						DeviceType = CaptureSourceType.System,
