@@ -97,7 +97,9 @@ namespace LongoMatch.Drawing.Widgets
 			if (sel == null)
 				return;
 
-			if (sel.Position != SelectionPosition.All) {
+			if (sel.Position == SelectionPosition.All) {
+				widget.SetCursor (CursorType.Selection);
+			} else {
 				widget.SetCursor (CursorType.DoubleArrow);
 			}
 		}

@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			SelectWhole = true;
 			LineColor = Config.Style.PaletteBackgroundLight;
 		}
-		
+
 		protected override void Dispose (bool disposing)
 		{
 			base.Dispose (disposing);
@@ -76,7 +76,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public double Height {
 			get {
 				return StyleConf.TimelineCategoryHeight;
@@ -149,23 +149,24 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			switch (sel.Position) {
 			case SelectionPosition.Left:
-				{
-					if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
-						TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
-					} else {
-						TimeNode.Start = newTime;
-					}
-					break;
+				if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
+					TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
+				} else {
+					TimeNode.Start = newTime;
 				}
+				break;
 			case SelectionPosition.Right:
-				{
-					if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
-						TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
-					} else {
-						TimeNode.Stop = newTime;
-					}
-					break;
+				if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
+					TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
+				} else {
+					TimeNode.Stop = newTime;
 				}
+				break;
+			case SelectionPosition.All:
+				Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
+				TimeNode.Start += diff;
+				TimeNode.Stop += diff;
+				break;
 			}
 			movingPos = sel.Position;
 		}
@@ -219,14 +220,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 	}
-	
+
 	public class TimerTimeNodeObject: TimeNodeObject
 	{
 		public TimerTimeNodeObject (Timer t, TimeNode tn): base (tn)
 		{
 			Timer = t;
 		}
-		
+
 		public Timer Timer {
 			get;
 			set;
