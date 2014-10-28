@@ -31,6 +31,7 @@ namespace LongoMatch.Services
 	{
 		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
 		IAnalysisWindow analysisWindow;
+		ICapturerBin capturer;
 		Dashboard dashboard;
 		AnalysisEventButton pendingButton;
 		System.Threading.Timer timer;
@@ -40,8 +41,8 @@ namespace LongoMatch.Services
 		{
 			dashboardHotkeys = new Dictionary<HotKey,DashboardButton> ();
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed += UIKeyListener;
 			Config.EventsBroker.KeyPressed += DashboardKeyListener;
+			Config.EventsBroker.KeyPressed += UIKeyListener;
 			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			timer = new System.Threading.Timer (HandleTimeout);
 		}
@@ -77,6 +78,7 @@ namespace LongoMatch.Services
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.analysisWindow = analysisWindow;
+			this.capturer = analysisWindow.Capturer;
 			if (project == null) {
 				dashboard = null;
 			} else {
@@ -117,6 +119,25 @@ namespace LongoMatch.Services
 				case KeyAction.FitTimeline:
 					analysisWindow.FitTimeline ();
 					return;
+				case KeyAction.PauseClock:
+					if (capturer != null) {
+						if (capturer.Capturing) {
+							capturer.PausePeriod ();
+						} else {
+							capturer.ResumePeriod ();
+						}
+					}
+					break;
+				case KeyAction.StartPeriod:
+					if (capturer != null) {
+						capturer.StartPeriod ();
+					}
+					break;
+				case KeyAction.StopPeriod:
+					if (capturer != null) {
+						capturer.StopPeriod ();
+					}
+					break;
 				}
 			}
 		}
