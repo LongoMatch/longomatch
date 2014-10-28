@@ -3,6 +3,7 @@ libcesarplayer/lgm-video-player.c
 LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
 LongoMatch.Core/Common/Exceptions.cs
+LongoMatch.Core/Common/Hotkeys.cs
 LongoMatch.Core/Common/VideoStandards.cs
 LongoMatch.Core/Store/EventType.cs
 LongoMatch.Core/Store/HotKey.cs
@@ -15,11 +16,11 @@ LongoMatch.Drawing/Widgets/TimelineLabels.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.EventsListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PeriodsRecoder.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs
@@ -63,6 +64,7 @@ LongoMatch.GUI/Gui/Component/CodingWidget.cs
 LongoMatch.GUI/Gui/Component/DashboardWidget.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
 LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
+LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
@@ -78,6 +80,8 @@ LongoMatch.GUI/Gui/Dialog/DrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs
 LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs
 LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs
+LongoMatch.GUI/Gui/Dialog/HotKeySelectorDialog.cs
+LongoMatch.GUI/Gui/Dialog/PlayEditor.cs
 LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs
 LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
@@ -100,9 +104,11 @@ LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs
 LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs
 LongoMatch.GUI.Helpers/MessagesHelpers.cs
 LongoMatch.GUI.Helpers/Misc.cs
+LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
+LongoMatch.GUI.Multimedia/Gui/RecordingController.cs
 LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
 LongoMatch.Migration/Core/Category.cs
 LongoMatch.Migration/Core/HotKey.cs
@@ -115,7 +121,9 @@ LongoMatch.Migration/MainWindow.cs
 LongoMatch.Multimedia/Capturer/FakeCapturer.cs
 LongoMatch.Multimedia/Utils/GstDiscoverer.cs
 LongoMatch.Plugins/CSVExporter.cs
+LongoMatch.Plugins/SystemDashboards.cs
 LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs
+LongoMatch.Services/Services/CoreServices.cs
 LongoMatch.Services/Services/DataBaseManager.cs
 LongoMatch.Services/Services/EventsManager.cs
 LongoMatch.Services/Services/PlaylistManager.cs
