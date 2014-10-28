@@ -98,6 +98,9 @@ namespace LongoMatch.Gui
 
 		void HandleCloseClicked (object sender, EventArgs e)
 		{
+			if (mode == PlayerOperationMode.Player) {
+				return;
+			}
 			livebox.Visible = replayhbox.Visible = false;
 			playerbin.Pause ();
 			ShowCapturer ();
