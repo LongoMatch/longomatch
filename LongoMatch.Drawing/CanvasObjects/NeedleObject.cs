@@ -42,10 +42,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected override void Dispose (bool disposing)
 		{
 			base.Dispose (disposing);
-			if (needle != null) {
-				needle.Dispose ();
-				needle = null;
-			}
 		}
 
 		public double X {
