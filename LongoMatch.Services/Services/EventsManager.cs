@@ -323,7 +323,12 @@ namespace LongoMatch.Services
 			}
 
 			if (!openedProject.Dashboard.DisablePopupWindow) {
+				bool playing = player.Playing;
+				player.Pause ();
 				Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
+				if (playing) {
+					player.Play ();
+				}
 			}
 
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
@@ -389,18 +394,21 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			if (action == KeyAction.None) {
+			if (action == KeyAction.None || loadedPlay == null) {
 				return;
 			}
 			
 			switch (action) {
 			case KeyAction.EditEvent:
+				bool playing = player.Playing;
+				player.Pause ();
 				Config.GUIToolkit.EditPlay (loadedPlay, openedProject, true, true, true, true);
+				if (playing) {
+					player.Play ();
+				}
 				break;
 			case KeyAction.DeleteEvent:
-				if (loadedPlay != null) {
-					DeletePlays (new List<TimelineEvent> { loadedPlay });
-				}
+				DeletePlays (new List<TimelineEvent> { loadedPlay });
 				break;
 			}
 		}
