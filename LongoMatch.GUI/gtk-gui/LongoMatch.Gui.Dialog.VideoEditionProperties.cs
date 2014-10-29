@@ -241,7 +241,7 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseStock = true;
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget (this.buttonOk, -5);
+			w22.Add (this.buttonOk);
 			global::Gtk.ButtonBox.ButtonBoxChild w24 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w22 [this.buttonOk]));
 			w24.Position = 1;
 			w24.Expand = false;
@@ -254,7 +254,6 @@ namespace LongoMatch.Gui.Dialog
 			this.dirbox.Hide ();
 			this.Show ();
 			this.splitfilesbutton.Clicked += new global::System.EventHandler (this.OnSplitfilesbuttonClicked);
-			this.buttonCancel.Clicked += new global::System.EventHandler (this.OnButtonCancelClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler (this.OnButtonOkClicked);
 		}
 	}

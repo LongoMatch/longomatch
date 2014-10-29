@@ -103,12 +103,13 @@ namespace LongoMatch.Gui.Dialog
 			encSettings.EnableAudio = audiocheckbutton.Active;
 			encSettings.EnableTitle = descriptioncheckbutton.Active;
 			
-			Hide ();
-		}
-
-		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
-		{
-			this.Destroy ();
+			if (!SplitFiles && String.IsNullOrEmpty (EncodingSettings.OutputFile)) {
+				Config.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select a video file."));
+			} else if (SplitFiles && String.IsNullOrEmpty (OutputDir)) {
+				Config.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select an output directory."));
+			} else {
+				Respond (ResponseType.Ok);
+			}
 		}
 
 		protected void OnSplitfilesbuttonClicked (object sender, System.EventArgs e)
