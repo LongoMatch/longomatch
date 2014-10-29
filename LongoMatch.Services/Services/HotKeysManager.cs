@@ -31,6 +31,7 @@ namespace LongoMatch.Services
 	{
 		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
 		IAnalysisWindow analysisWindow;
+		ProjectType projectType;
 		ICapturerBin capturer;
 		Dashboard dashboard;
 		AnalysisEventButton pendingButton;
@@ -119,25 +120,26 @@ namespace LongoMatch.Services
 				case KeyAction.FitTimeline:
 					analysisWindow.FitTimeline ();
 					return;
-				case KeyAction.PauseClock:
-					if (capturer != null) {
+				}
+				
+				if (projectType == ProjectType.CaptureProject ||
+					projectType == ProjectType.FakeCaptureProject ||
+					projectType == ProjectType.URICaptureProject) {
+					switch (action) {
+					case KeyAction.PauseClock:
 						if (capturer.Capturing) {
 							capturer.PausePeriod ();
 						} else {
 							capturer.ResumePeriod ();
 						}
-					}
-					break;
-				case KeyAction.StartPeriod:
-					if (capturer != null) {
+						break;
+					case KeyAction.StartPeriod:
 						capturer.StartPeriod ();
-					}
-					break;
-				case KeyAction.StopPeriod:
-					if (capturer != null) {
+						break;
+					case KeyAction.StopPeriod:
 						capturer.StopPeriod ();
+						break;
 					}
-					break;
 				}
 			}
 		}
