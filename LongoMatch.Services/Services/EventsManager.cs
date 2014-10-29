@@ -120,7 +120,7 @@ namespace LongoMatch.Services
 				Save (openedProject);
 			}
 			if (loadedPlay != null && plays.Contains (loadedPlay)) {
-				Config.EventsBroker.EmitEventLoaded (null);
+				Config.EventsBroker.EmitLoadEvent (null);
 			}
 			filter.Update ();
 		}
