@@ -66,6 +66,12 @@ namespace LongoMatch.Gui
 			base.OnDestroyed ();
 		}
 		
+		public IPlayerBin Player {
+			get {
+				return playerbin;
+			}
+		}
+		
 		public PlayerOperationMode Mode {
 			set {
 				mode = value;
@@ -107,24 +113,6 @@ namespace LongoMatch.Gui
 		}
 		
 #region Common
-		public Time CurrentTime {
-			get {
-				if (mode == PlayerOperationMode.Player)
-					return playerbin.CurrentTime;
-				else
-					return capturerbin.CurrentTime;
-			}
-		}
-		
-		public Image CurrentMiniatureFrame {
-			get {
-				if (mode == PlayerOperationMode.Player)
-					return playerbin.CurrentMiniatureFrame;
-				else
-					return capturerbin.CurrentMiniatureFrame;
-			}
-		}
-		
 		public void Close () {
 			playerbin.Close ();
 			capturerbin.Close ();
@@ -134,6 +122,18 @@ namespace LongoMatch.Gui
 
 #region Capturer
 
+		public Time CurrentCaptureTime {
+			get {
+				return capturerbin.CurrentCaptureTime;
+			}
+		}
+		
+		public Image CurrentCaptureFrame {
+			get {
+				return capturerbin.CurrentCaptureFrame;
+			}
+		}
+		
 		public CaptureSettings CaptureSettings {
 			get {
 				return capturerbin.CaptureSettings;
@@ -188,6 +188,12 @@ namespace LongoMatch.Gui
 		
 #region Player
 
+		public Time CurrentTime {
+			get {
+				return playerbin.CurrentTime;
+			}
+		}
+		
 		public bool Playing {
 			get {
 				return playerbin.Playing;
@@ -215,6 +221,12 @@ namespace LongoMatch.Gui
 		public Image CurrentFrame {
 			get {
 				return playerbin.CurrentFrame;
+			}
+		}
+		
+		public Image CurrentMiniatureFrame {
+			get {
+				return playerbin.CurrentMiniatureFrame;
 			}
 		}
 		

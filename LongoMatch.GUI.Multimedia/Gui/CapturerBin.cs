@@ -132,7 +132,7 @@ namespace LongoMatch.Gui
 			get;
 		}
 
-		public Time CurrentTime {
+		public Time CurrentCaptureTime {
 			get {
 				int timeDiff;
 				
@@ -187,8 +187,8 @@ namespace LongoMatch.Gui
 		{
 			GLib.Source.Remove (timeoutID);
 			if (currentPeriod != null) {
-				currentPeriod.StopTimer (CurrentTime);
-				accumTime = CurrentTime;
+				currentPeriod.StopTimer (CurrentCaptureTime);
+				accumTime = CurrentCaptureTime;
 				Log.Debug ("Stop period stop=", accumTime.ToMSecondsString ());
 			}
 			currentTimeNode = null;
@@ -205,8 +205,8 @@ namespace LongoMatch.Gui
 		public void PausePeriod ()
 		{
 			if (currentPeriod != null) {
-				Log.Debug ("Pause period at currentTime=", CurrentTime.ToMSecondsString ());
-				currentPeriod.PauseTimer (CurrentTime);
+				Log.Debug ("Pause period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
+				currentPeriod.PauseTimer (CurrentCaptureTime);
 			}
 			currentTimeNode = null;
 			pausebutton.Visible = false;
@@ -216,8 +216,8 @@ namespace LongoMatch.Gui
 
 		public void ResumePeriod ()
 		{
-			Log.Debug ("Resume period at currentTime=", CurrentTime.ToMSecondsString ());
-			currentTimeNode = currentPeriod.Resume (CurrentTime);
+			Log.Debug ("Resume period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
+			currentTimeNode = currentPeriod.Resume (CurrentCaptureTime);
 			pausebutton.Visible = true;
 			resumebutton.Visible = false;
 			Capturing = true;
@@ -253,12 +253,12 @@ namespace LongoMatch.Gui
 		bool UpdateTime ()
 		{
 			if (currentTimeNode != null) {
-				currentTimeNode.Stop = CurrentTime;
+				currentTimeNode.Stop = CurrentCaptureTime;
 			}
 			hourlabel.Markup = EllapsedTime.Hours.ToString ("d2");
 			minuteslabel.Markup = EllapsedTime.Minutes.ToString ("d2");
 			secondslabel.Markup = EllapsedTime.Seconds.ToString ("d2");
-			Config.EventsBroker.EmitCapturerTick (CurrentTime);
+			Config.EventsBroker.EmitCapturerTick (CurrentCaptureTime);
 			return true;
 		}
 
@@ -314,7 +314,7 @@ namespace LongoMatch.Gui
 			Capturer = null;
 		}
 
-		public Image CurrentMiniatureFrame {
+		public Image CurrentCaptureFrame {
 			get {
 				if (Capturer == null)
 					return null;

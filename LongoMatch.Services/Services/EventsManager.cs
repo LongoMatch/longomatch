@@ -249,7 +249,7 @@ namespace LongoMatch.Services
 			/* Get the current frame and get a thumbnail from it */
 			if (projectType == ProjectType.CaptureProject ||
 				projectType == ProjectType.URICaptureProject) {
-				frame = capturer.CurrentMiniatureFrame;
+				frame = capturer.CurrentCaptureFrame;
 			} else if (projectType == ProjectType.FileProject) {
 				frame = framesCapturer.GetFrame (tagtime, true, Constants.MAX_THUMBNAIL_SIZE,
 				                                 Constants.MAX_THUMBNAIL_SIZE);

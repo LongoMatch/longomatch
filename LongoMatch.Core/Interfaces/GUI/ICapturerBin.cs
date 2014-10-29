@@ -26,9 +26,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface ICapturerBin
 	{
-		Time CurrentTime {get;}
+		Time CurrentCaptureTime {get;}
 		bool Capturing {get;}
-		Image CurrentMiniatureFrame {get;}
+		Image CurrentCaptureFrame {get;}
 		CaptureSettings CaptureSettings {get;}
 		List<string> PeriodsNames {set;}
 		List<Period> Periods { get; set; }
