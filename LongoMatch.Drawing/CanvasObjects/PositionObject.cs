@@ -114,10 +114,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			switch (sel.Position) {
 			case SelectionPosition.LineStart:
-				Start = p;
+				Start = new Point (Math.Max (p.X, 0), Math.Max (p.Y, 0));
 				break;
 			case SelectionPosition.LineStop:
-				Stop = p;
+				Stop = new Point (Math.Max (p.X, 0), Math.Max (p.Y, 0));
 				break;
 			default:
 				throw new Exception ("Unsupported move for circle:  " + sel.Position);
