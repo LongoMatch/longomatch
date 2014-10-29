@@ -378,7 +378,7 @@ namespace LongoMatch.Core.Store
 			}
 
 			lineup = new LineupEvent {
-				Name = Catalog.GetString ("Lineup ") + LocalTeamTemplate.TeamName,
+				Name = Catalog.GetString ("Lineup"),
 				EventType = SubstitutionsEventType,
 				HomeStartingPlayers = LocalTeamTemplate.StartingPlayersList,
 				HomeBenchPlayers = LocalTeamTemplate.BenchPlayersList,
