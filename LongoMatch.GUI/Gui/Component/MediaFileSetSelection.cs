@@ -31,6 +31,9 @@ namespace LongoMatch.Gui.Component
 		public MediaFileSetSelection ()
 		{
 			this.Build ();
+			frame2.NoShowAll = true;
+			frame3.NoShowAll = true;
+			frame4.NoShowAll = true;
 			mediafilechooser1.ChangedEvent += HandleFileChangedEvent;
 			mediafilechooser2.ChangedEvent += HandleFileChangedEvent;
 			mediafilechooser3.ChangedEvent += HandleFileChangedEvent;

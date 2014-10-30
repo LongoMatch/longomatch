@@ -9287,6 +9287,7 @@ You can continue with the current capture, cancel it or save your project.
                                         <child>
                                           <widget class="Gtk.Frame" id="frame6">
                                             <property name="MemberName" />
+                                            <property name="Visible">False</property>
                                             <property name="ShadowType">None</property>
                                             <child>
                                               <widget class="Gtk.Alignment" id="GtkAlignment9">
@@ -9377,6 +9378,7 @@ You can continue with the current capture, cancel it or save your project.
                                         <child>
                                           <widget class="Gtk.Frame" id="frame7">
                                             <property name="MemberName" />
+                                            <property name="Visible">False</property>
                                             <property name="ShadowType">None</property>
                                             <child>
                                               <widget class="Gtk.Alignment" id="GtkAlignment10">
@@ -9467,6 +9469,7 @@ You can continue with the current capture, cancel it or save your project.
                                         <child>
                                           <widget class="Gtk.Frame" id="frame8">
                                             <property name="MemberName" />
+                                            <property name="Visible">False</property>
                                             <property name="ShadowType">None</property>
                                             <child>
                                               <widget class="Gtk.Alignment" id="GtkAlignment12">
@@ -11232,7 +11235,7 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.Label" id="GtkLabel3">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Angle 1&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Main camera angle&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -11254,6 +11257,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Frame" id="frame2">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment2">
@@ -11321,6 +11325,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Frame" id="frame3">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment1">
@@ -11388,6 +11393,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Frame" id="frame4">
             <property name="MemberName" />
+            <property name="Visible">False</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment">

@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Add (this.GtkAlignment3);
 			this.GtkLabel3 = new global::Gtk.Label ();
 			this.GtkLabel3.Name = "GtkLabel3";
-			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Angle 1</b>");
+			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Main camera angle</b>");
 			this.GtkLabel3.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel3;
 			this.filetable.Add (this.frame1);
@@ -229,6 +229,9 @@ namespace LongoMatch.Gui.Component
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.frame2.Hide ();
+			this.frame3.Hide ();
+			this.frame4.Hide ();
 			this.Hide ();
 		}
 	}

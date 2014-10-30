@@ -691,6 +691,9 @@ namespace LongoMatch.Gui.Panel
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.frame6.Hide ();
+			this.frame7.Hide ();
+			this.frame8.Hide ();
 			this.descbox.Hide ();
 			this.rbox.Hide ();
 			this.Hide ();
