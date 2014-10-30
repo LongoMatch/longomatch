@@ -148,7 +148,7 @@ namespace LongoMatch.Migration
 			if (cats.GoalBackground != null) {
 				dashboard.GoalBackground = ConvertImage (cats.GoalBackground);
 			} else {
-				dashboard.HalfFieldBackground = Config.GoalBackground;
+				dashboard.GoalBackground = Config.GoalBackground;
 			}
 			dashboard.ID = cats.ID;
 			if (dashboard.ID == Guid.Empty) {
