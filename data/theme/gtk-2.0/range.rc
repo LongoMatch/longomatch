@@ -17,7 +17,7 @@ style "longomatch-hscale"  = "longomatch-range"
           recolorable			= TRUE
           detail			= "trough-lower"
           file				= "Range/trough-horizontal-lower.png"
-          border			= { 0, 0, 9, 9 }
+          border			= { 1, 1, 10, 10 }
           stretch			= TRUE
     }
     image 
@@ -26,7 +26,7 @@ style "longomatch-hscale"  = "longomatch-range"
           recolorable			= TRUE
           detail			= "trough-upper"
           file				= "Range/trough-horizontal.png"
-          border			= { 0, 0, 9, 9 }
+          border			= { 1, 1, 10, 10 }
           stretch			= TRUE
     }
     image 
@@ -86,7 +86,7 @@ style "longomatch-vscale"  = "longomatch-range"
           recolorable			= TRUE
           detail			= "trough-lower"
           file				= "Range/trough-vertical-lower.png"
-          border			= { 9, 9, 0, 0 }
+          border			= { 10, 10, 1, 1 }
           stretch			= TRUE
     }
     image 
@@ -95,7 +95,7 @@ style "longomatch-vscale"  = "longomatch-range"
           recolorable			= TRUE
           detail			= "trough-upper"
           file				= "Range/trough-vertical.png"
-          border			= { 9, 9, 0, 0 }
+          border			= { 10, 10, 1, 1 }
           stretch			= TRUE
     }
     image 
