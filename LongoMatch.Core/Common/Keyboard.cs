@@ -34,7 +34,7 @@ namespace LongoMatch.Core.Common
 
 		public static HotKey ParseEvent (Gdk.EventKey evt)
 		{
-			int modifier = -1;
+			int modifier = 0;
 
 			if (evt.State == Gdk.ModifierType.ShiftMask) {
 				modifier = (int)KeyvalFromName ("Shift_L");
