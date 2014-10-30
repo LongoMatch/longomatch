@@ -143,9 +143,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
 		{
-			Gtk.TreeIter iter;
-			modelFilter.GetIter (out iter, args.Path);
-			object item = modelFilter.GetValue (iter, 0);
+			object item = GetValueFromPath (args.Path);
 			if (!(item is TimelineEvent))
 				return;
 
