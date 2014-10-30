@@ -258,5 +258,10 @@ namespace LongoMatch.Gui.Component
 			                        out dragSourceElement);
 			base.OnDragBegin (context);
 		}
+		
+		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+		{
+			return false;
+		}
 	}
 }
