@@ -15,44 +15,40 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gdk;
 using Gtk;
-using Mono.Unix;
-
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
+using LongoMatch.Drawing.Cairo;
+using LongoMatch.Gui.Menus;
+using Color = Gdk.Color;
 using Image = LongoMatch.Core.Common.Image;
 using Point = LongoMatch.Core.Common.Point;
-using Color = Gdk.Color;
-using LongoMatch.Gui.Menus;
-using LongoMatch.Drawing.Cairo;
-using LongoMatch.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Gui.Component
 {
-
-
 	public abstract class ListTreeViewBase:TreeView
 	{
 		protected bool editing;
 		protected bool enableCategoryMove = false;
 		protected PlaysMenu playsMenu;
-		
-		TreeModelFilter modelFilter;
+		protected TreeModelFilter modelFilter;
+		protected TreeModelSort modelSort;
+		protected TreeStore childModel;
 		EventsFilter filter;
 
 		public event EventHandler NewRenderingJob;
 
-		public ListTreeViewBase()
+		public ListTreeViewBase ()
 		{
 			Selection.Mode = SelectionMode.Multiple;
 			Selection.SelectFunction = SelectFunction;
-			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
+			RowActivated += new RowActivatedHandler (OnTreeviewRowActivated);
 			HeadersVisible = false;
 			
 			TreeViewColumn custColumn = new TreeViewColumn ();
@@ -62,7 +58,7 @@ namespace LongoMatch.Gui.Component
 
 			playsMenu = new PlaysMenu ();
 			playsMenu.EditPlayEvent += HandleEditPlayEvent;
-			AppendColumn(custColumn);
+			AppendColumn (custColumn);
 		}
 
 		public bool Colors {
@@ -74,77 +70,83 @@ namespace LongoMatch.Gui.Component
 			set {
 				filter = value;
 				filter.FilterUpdated += OnFilterUpdated;
-				Refilter();
+				Refilter ();
 			}
 			get {
 				return filter;
 			}
 		}
-		
-		public void Refilter() {
+
+		public void Refilter ()
+		{
 			if (modelFilter != null)
-				modelFilter.Refilter();
+				modelFilter.Refilter ();
 		}
 
 		public Project Project {
 			set;
 			protected get;
 		}
-		
+
 		new public TreeStore Model {
 			set {
-				if(value != null) {
+				childModel = value;
+				if (value != null) {
 					modelFilter = new TreeModelFilter (value, null);
 					modelFilter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterFunction);
-					value.SetSortFunc(0, SortFunction);
-					value.SetSortColumnId(0,SortType.Ascending);
+					modelSort = new TreeModelSort (modelFilter);
+					modelSort.SetSortFunc (0, SortFunction);
+					modelSort.SetSortColumnId (0, SortType.Ascending);
 					// Assign the filter as our tree's model
-					base.Model = modelFilter;
+					base.Model = modelSort;
 				} else {
 					base.Model = null;
 				}
 			}
 			get {
-				return (base.Model as TreeModelFilter).ChildModel as TreeStore;
+				return childModel;
 			}
 		}
 
 		protected TimelineEvent SelectedPlay {
 			get {
-				return GetValueFromPath(Selection.GetSelectedRows()[0]) as TimelineEvent;
+				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEvent;
 			}
 		}
-		
+
 		protected List<TimelineEvent> SelectedPlays {
 			get {
-				return Selection.GetSelectedRows().Select (
-					p => GetValueFromPath(p) as TimelineEvent).ToList ();
+				return Selection.GetSelectedRows ().Select (
+					p => GetValueFromPath (p) as TimelineEvent).ToList ();
 			}
 		}
-		
-		protected void ShowMenu () {
+
+		protected void ShowMenu ()
+		{
 			playsMenu.ShowListMenu (Project, SelectedPlays);
 		}
 
-		protected object GetValueFromPath(TreePath path) {
-			Gtk.TreeIter iter;
-			modelFilter.GetIter(out iter, path);
-			return modelFilter.GetValue(iter,0);
-		}
-		
-		protected bool FilterFunction(TreeModel model, TreeIter iter) {
-			if (Filter == null)
-				return true;
-			object o = model.GetValue(iter, 0);
-			return Filter.IsVisible(o);
-		}	
-
-		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
+		protected object GetValueFromPath (TreePath path)
 		{
 			Gtk.TreeIter iter;
-			modelFilter.GetIter(out iter, args.Path);
-			object item = modelFilter.GetValue(iter, 0);
-			if(!(item is TimelineEvent))
+			modelSort.GetIter (out iter, path);
+			return modelSort.GetValue (iter, 0);
+		}
+
+		protected bool FilterFunction (TreeModel model, TreeIter iter)
+		{
+			if (Filter == null)
+				return true;
+			object o = model.GetValue (iter, 0);
+			return Filter.IsVisible (o);
+		}
+
+		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
+		{
+			Gtk.TreeIter iter;
+			modelFilter.GetIter (out iter, args.Path);
+			object item = modelFilter.GetValue (iter, 0);
+			if (!(item is TimelineEvent))
 				return;
 
 			Config.EventsBroker.EmitLoadEvent (item as TimelineEvent);
@@ -156,10 +158,11 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitTeamTagsChanged ();
 		}
 
-		protected void OnFilterUpdated() {
+		protected void OnFilterUpdated ()
+		{
 			Refilter ();
 		}
-		
+
 		protected void RenderElement (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
 			var item = model.GetValue (iter, 0);
@@ -168,23 +171,24 @@ namespace LongoMatch.Gui.Component
 			c.Count = model.IterNChildren (iter);
 		}
 
-		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);
-		protected abstract int SortFunction(TreeModel model, TreeIter a, TreeIter b);
-		
+		protected abstract bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected);
+
+		protected abstract int SortFunction (TreeModel model, TreeIter a, TreeIter b);
 	}
-	
-	public class PlaysCellRenderer: CellRenderer {
+
+	public class PlaysCellRenderer: CellRenderer
+	{
 
 		public object Item {
 			get;
 			set;
 		}
-		
+
 		public int Count {
 			get;
 			set;
 		}
-		
+
 		public override void GetSize (Widget widget, ref Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
 		{
 			x_offset = 0;
@@ -203,7 +207,7 @@ namespace LongoMatch.Gui.Component
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
 		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
-			CellState state = (CellState) flags;
+			CellState state = (CellState)flags;
 			
 			using (IContext context = new CairoContext (window)) {
 				Area bkg = new Area (new Point (backgroundArea.X, backgroundArea.Y),
