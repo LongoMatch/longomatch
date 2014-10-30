@@ -91,6 +91,20 @@ namespace LongoMatch.Gui.Component
 
 			menu = new Menu ();
 
+			if (element is PlaylistPlayElement || element == null) {
+				PlaylistPlayElement pl = element as PlaylistPlayElement;
+
+				edit = new MenuItem (Catalog.GetString ("Edit name"));
+				edit.Activated += (sender, e) => {
+					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					                                              pl.Title);
+					if (!String.IsNullOrEmpty (name)) {
+						pl.Title = name;
+					}
+				};
+				menu.Append (edit);
+			}
+
 			delete = new MenuItem (Catalog.GetString ("Delete"));
 			delete.Activated += (sender, e) => {
 				project.Playlists.Remove (playlist);
@@ -99,19 +113,6 @@ namespace LongoMatch.Gui.Component
 			};
 			menu.Append (delete);
 			
-			if (element is PlaylistPlayElement) {
-				PlaylistPlayElement pl = element as PlaylistPlayElement;
-				edit = new MenuItem (Catalog.GetString ("Edit"));
-				edit.Activated += (sender, e) => {
-					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-					                                             pl.Title);
-					if (!String.IsNullOrEmpty (name)) {
-						pl.Title = name; 
-					}
-				};
-				menu.Append (edit);
-			}
-			
 			menu.ShowAll ();
 			menu.Popup ();
 		}
@@ -119,9 +120,19 @@ namespace LongoMatch.Gui.Component
 		void ShowPlaylistMenu (Playlist playlist)
 		{
 			Menu menu;
-			MenuItem delete, render;
+			MenuItem edit, delete, render;
 
 			menu = new Menu ();
+
+			edit = new MenuItem (Catalog.GetString ("Edit name"));
+			edit.Activated += (sender, e) => {
+				string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+				                                              playlist.Name);
+				if (!String.IsNullOrEmpty (name)) {
+					playlist.Name = name;
+				}
+			};
+			menu.Append (edit);
 
 			render = new MenuItem (Catalog.GetString ("Render"));
 			render.Activated += (sender, e) => {
@@ -258,8 +269,8 @@ namespace LongoMatch.Gui.Component
 			                        out dragSourceElement);
 			base.OnDragBegin (context);
 		}
-		
-		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;
 		}
