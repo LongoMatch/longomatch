@@ -60,7 +60,7 @@ namespace LongoMatch.Drawing
 			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 			tk.FontAlignment = FontAlignment.Center;
 			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
-			             2 * StyleConf.ListCountRadio, count.ToString (), true);
+			             2 * StyleConf.ListCountRadio, count.ToString ());
 		}
 
 		static void RenderBackgroundAndText (bool isExpanded, IDrawingToolkit tk, Area backgroundArea, Point textP, double textW, string text)
@@ -85,7 +85,7 @@ namespace LongoMatch.Drawing
 			tk.FontSize = 14;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (textP, textW, backgroundArea.Height, text, false);
+			tk.DrawText (textP, textW, backgroundArea.Height, text);
 		}
 
 		public static void RenderPlayer (Player player, int count, bool isExpanded, IDrawingToolkit tk,
@@ -174,7 +174,7 @@ namespace LongoMatch.Drawing
 			tk.FontWeight = FontWeight.Normal;
 			tk.StrokeColor = Config.Style.PaletteSelected;
 			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (textPoint, textWidth, cellArea.Height, desc, true);
+			tk.DrawText (textPoint, textWidth, cellArea.Height, desc);
 			
 			if (selected) {
 				if (EyeSurface == null) {
