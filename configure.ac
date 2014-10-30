@@ -74,10 +74,12 @@ PKG_CHECK_MODULES([GTKSHARP], [gtk-sharp-2.0])
 AC_SUBST(GTKSHARP_LIBS)
 PKG_CHECK_MODULES([JSON], [newtonsoft-json])
 AC_SUBST(JSON_LIBS)
-PKG_CHECK_MODULES([DB4O], [db4o])
+PKG_CHECK_MODULES([DB4O], [db40],  [HAVE_DB4O=1], [HAVE_DB4O=0])
 AC_SUBST(DB4O_LIBS)
 PKG_CHECK_MODULES([MONO_ADDINS], [mono-addins])
 AC_SUBST(MONO_ADDINS_LIBS)
+
+AM_CONDITIONAL(WITH_MIGRATION_TOOL, [test "$HAVE_DB4O" -eq 1])
 
 dnl package checks for libcesarplayer
 PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gstreamer-pbutils-0.10 gobject-2.0 gstreamer-interfaces-0.10 gstreamer-tag-0.10 gstreamer-app-0.10])

@@ -22,8 +22,11 @@ SUBDIRS = \
 	LongoMatch.Plugins \
 	LongoMatch.Services \
 	LongoMatch \
-	LongoMatch.Migration \
 	po
+
+if WITH_MIGRATION_TOOL
+SUBDIRS += LongoMatch.Migration
+endif
 
 DISTCLEANFILES = 	intltool-extract\
 			intltool-merge\

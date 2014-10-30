@@ -41,8 +41,7 @@ Dependencies
  * Mono >= 2.0
  * GTK# >= 2.12
  * GStreamer >= 0.10.24
- * GNonlin >= 0.10.11
- * db4o
+ * Json.NET >= 5.0
 
 We strongly recommend to use the latest GStreamer core version, as well as have installed all the GStreamer 
 modules to get the best user experience.
