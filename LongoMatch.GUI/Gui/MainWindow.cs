@@ -17,28 +17,16 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Gdk;
-using GLib;
 using Gtk;
-using Mono.Unix;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Video.Common;
 using LongoMatch.Gui.Component;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Core.Interfaces.Multimedia;
-
 
 namespace LongoMatch.Gui
 {
@@ -52,19 +40,17 @@ namespace LongoMatch.Gui
 		ProjectType projectType;
 		Widget currentPanel;
 		Widget stackPanel;
-
 		#region Constructors
-		public MainWindow(IGUIToolkit guiToolkit) :
+		public MainWindow (IGUIToolkit guiToolkit) :
 		base(Constants.SOFTWARE_NAME)
 		{
-			this.Build();
+			this.Build ();
 			this.guiToolKit = guiToolkit;
 			Title = Constants.SOFTWARE_NAME;
-			TagSubcategoriesAction.Active = !Config.FastTagging;
 			projectType = ProjectType.None;
 			
-			ConnectSignals();
-			ConnectMenuSignals();
+			ConnectSignals ();
+			ConnectMenuSignals ();
 
 			// Default screen
 			Screen screen = Display.Default.DefaultScreen;
@@ -78,16 +64,14 @@ namespace LongoMatch.Gui
 			this.Move (monitor_geometry.Width * 10 / 100, monitor_geometry.Height * 10 / 100);
 #endif
 		}
-
 		#endregion
-		
 		#region Plubic Methods
-		public IRenderingStateBar RenderingStateBar{
+		public IRenderingStateBar RenderingStateBar {
 			get {
 				return renderingstatebar1;
 			}
 		}
-		
+
 		public void SetPanel (Widget panel)
 		{
 			if (panel == null) {
@@ -99,7 +83,7 @@ namespace LongoMatch.Gui
 					RemovePanel (false);
 				}
 				currentPanel = panel;
-				panel.Show();
+				panel.Show ();
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += BackClicked;
 				}
@@ -107,16 +91,17 @@ namespace LongoMatch.Gui
 				welcomepanel.Hide ();
 			}
 		}
-		
-		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction) {
-			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ExportProjectAction1");
+
+		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction)
+		{
+			MenuItem parent = (MenuItem)this.UIManager.GetWidget ("/menubar1/ToolsAction/ExportProjectAction1");
 			
-			MenuItem item = new MenuItem(name);
-			item.Activated += (sender, e) => (exportAction(openedProject, guiToolKit));
-			item.Show();
-			(parent.Submenu as Menu).Append(item);
+			MenuItem item = new MenuItem (name);
+			item.Activated += (sender, e) => (exportAction (openedProject, guiToolKit));
+			item.Show ();
+			(parent.Submenu as Menu).Append (item);
 		}
-		
+
 		public IAnalysisWindow SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
@@ -133,61 +118,63 @@ namespace LongoMatch.Gui
 			if (projectType == ProjectType.FakeCaptureProject) {
 				analysisWindow = new FakeAnalysisComponent ();
 			} else {
-				analysisWindow = new AnalysisComponent();
+				analysisWindow = new AnalysisComponent ();
 			}
 			SetPanel (analysisWindow as Widget);
 			analysisWindow.SetProject (project, projectType, props, filter);
 			return analysisWindow;
 		}
-		
-		public void CloseProject () {
+
+		public void CloseProject ()
+		{
 			openedProject = null;
 			projectType = ProjectType.None;
-			(analysisWindow as Gtk.Widget).Destroy();
+			(analysisWindow as Gtk.Widget).Destroy ();
 			analysisWindow = null;
 			ResetGUI ();
 		}
-		
-		public void SelectProject (List<ProjectDescription> projects) {
-			OpenProjectPanel panel  = new OpenProjectPanel ();
+
+		public void SelectProject (List<ProjectDescription> projects)
+		{
+			OpenProjectPanel panel = new OpenProjectPanel ();
 			panel.Projects = projects;
 			SetPanel (panel);
 		}
-		
-		public void CreateNewProject (Project project) {
+
+		public void CreateNewProject (Project project)
+		{
 			NewProjectPanel panel = new NewProjectPanel (project);
 			panel.Name = "newprojectpanel";
 			SetPanel (panel);
 		}
-
 		#endregion
-		
 		#region Private Methods
-		
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			bool ret = base.OnKeyPressEvent (evnt);
 			if (Focus is Entry) {
 				return ret;
 			} else {
-				Config.EventsBroker.EmitKeyPressed(this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
+				Config.EventsBroker.EmitKeyPressed (this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
 				return true;
 			}
 		}
 
 		MenuItem ImportProjectActionMenu {
 			get {
-				return (MenuItem) this.UIManager.GetWidget("/menubar1/FileAction/ImportProjectAction");
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/ImportProjectAction");
 			}
 		}
-		
-		private void ConnectSignals() {
+
+		private void ConnectSignals ()
+		{
 			/* Adding Handlers for each event */
 			renderingstatebar1.ManageJobs += (e, o) => {
-				Config.EventsBroker.EmitManageJobs();};
- 		}
-		
-		private void ConnectMenuSignals() {
+				Config.EventsBroker.EmitManageJobs ();};
+		}
+
+		private void ConnectMenuSignals ()
+		{
 			SaveProjectAction.Activated += (o, e) => {
 				Config.EventsBroker.EmitSaveProject (openedProject, projectType);};
 			CloseProjectAction.Activated += (o, e) => {
@@ -195,26 +182,24 @@ namespace LongoMatch.Gui
 			ExportToProjectFileAction.Activated += (o, e) => {
 				Config.EventsBroker.EmitExportProject (openedProject);};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageCategories();};
+				Config.EventsBroker.EmitManageCategories ();};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageTeams();};
+				Config.EventsBroker.EmitManageTeams ();};
 			ProjectsManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageProjects();};
-			DatabasesManagerAction.Activated +=  (o, e) => {
-				Config.EventsBroker.EmitManageDatabases();};
+				Config.EventsBroker.EmitManageProjects ();};
+			DatabasesManagerAction.Activated += (o, e) => {
+				Config.EventsBroker.EmitManageDatabases ();};
 			PreferencesAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitEditPreferences();};
+				Config.EventsBroker.EmitEditPreferences ();};
 			ShowProjectStatsAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitShowProjectStats (openedProject);}; 
-			QuitAction.Activated += (o, e) => {CloseAndQuit();};
+			QuitAction.Activated += (o, e) => {
+				CloseAndQuit ();};
 			openAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
 				Config.EventsBroker.EmitOpenProject ();};
 			NewPojectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitNewProject (null);
-			};
-			TagSubcategoriesAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitTagSubcategories (TagSubcategoriesAction.Active);
 			};
 			ImportProjectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitImportProject ();
@@ -230,8 +215,8 @@ namespace LongoMatch.Gui
 				(panel as IPanel).BackEvent -= BackClicked;
 			}
 			panel.Destroy ();
-			panel.Dispose();
-			System.GC.Collect();
+			panel.Dispose ();
+			System.GC.Collect ();
 		}
 
 		void RemovePanel (bool stack)
@@ -262,66 +247,68 @@ namespace LongoMatch.Gui
 				ResetGUI ();
 			}
 		}
-		
-		private void ResetGUI() {
+
+		private void ResetGUI ()
+		{
 			Title = Constants.SOFTWARE_NAME;
-			MakeActionsSensitive(false, projectType);
+			MakeActionsSensitive (false, projectType);
 			RemovePanel (false);
 			welcomepanel.Show ();
 		}
 
-		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
+		private void MakeActionsSensitive (bool sensitive, ProjectType projectType)
+		{
 			bool sensitive2 = sensitive && projectType == ProjectType.FileProject;
-			CloseProjectAction.Sensitive=sensitive;
+			CloseProjectAction.Sensitive = sensitive;
 			ExportProjectAction1.Sensitive = sensitive;
 			ShowProjectStatsAction.Sensitive = sensitive;
 			SaveProjectAction.Sensitive = sensitive2;
 		}
 
-		private void CloseAndQuit() {
+		private void CloseAndQuit ()
+		{
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			if (openedProject == null) {
 				Config.EventsBroker.EmitQuitApplication ();
 			}
 		}
-		
+
 		protected override bool OnDeleteEvent (Event evnt)
 		{
 			CloseAndQuit ();
 			return true;
 		}
-		
 		#endregion
-
 		#region Callbacks
 		protected void OnVideoConverterToolActionActivated (object sender, System.EventArgs e)
 		{
 			int res;
-			VideoConversionTool converter = new VideoConversionTool();
+			VideoConversionTool converter = new VideoConversionTool ();
 			res = converter.Run ();
-			converter.Destroy();
-			if (res == (int) ResponseType.Ok) {
+			converter.Destroy ();
+			if (res == (int)ResponseType.Ok) {
 				Config.EventsBroker.EmitConvertVideoFiles (converter.Files,
 				                                           converter.EncodingSettings);
 			}
 		}
-		
-		protected virtual void OnHelpAction1Activated(object sender, System.EventArgs e)
+
+		protected virtual void OnHelpAction1Activated (object sender, System.EventArgs e)
 		{
 			try {
-				System.Diagnostics.Process.Start(Constants.MANUAL);
-			} catch {}
+				System.Diagnostics.Process.Start (Constants.MANUAL);
+			} catch {
+			}
 		}
 
-		protected virtual void OnAboutActionActivated(object sender, System.EventArgs e)
+		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
-			var about = new LongoMatch.Gui.Dialog.AboutDialog(guiToolKit.Version);
+			var about = new LongoMatch.Gui.Dialog.AboutDialog (guiToolKit.Version);
 			about.TransientFor = this;
-			about.Run();
-			about.Destroy();
+			about.Run ();
+			about.Destroy ();
 		}
-		
-		protected void OnMigrationToolActionActivated(object sender, EventArgs e)
+
+		protected void OnMigrationToolActionActivated (object sender, EventArgs e)
 		{
 			Config.EventsBroker.EmitMigrateDB ();
 		}

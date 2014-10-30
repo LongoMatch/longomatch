@@ -820,13 +820,6 @@ Sort by competition</property>
         <property name="Label" translatable="yes">Import from file</property>
         <property name="ShortLabel" translatable="yes">Import from file</property>
       </action>
-      <action id="TagSubcategoriesAction">
-        <property name="Type">Toggle</property>
-        <property name="Label" translatable="yes">Tag subcategories</property>
-        <property name="ShortLabel" translatable="yes">Tag subcategories</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">True</property>
-      </action>
       <action id="VideoConverterToolAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Video Converter Tool</property>
@@ -901,7 +894,6 @@ Sort by competition</property>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />
                     <node type="Separator" />
-                    <node type="Menuitem" action="TagSubcategoriesAction" />
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="AboutAction" />
