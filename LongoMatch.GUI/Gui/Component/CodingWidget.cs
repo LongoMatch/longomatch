@@ -145,6 +145,11 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.ClickButton (button);
 		}
 
+		public void TagPlayer (Player player)
+		{
+			teamtagger.Select (player);
+		}
+
 		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)
 		{
 			this.projectType = projectType;

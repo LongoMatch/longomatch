@@ -97,6 +97,11 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.ClickButton (button);
 		}
 
+		public void TagPlayer (Player player)
+		{
+			codingwidget1.TagPlayer (player);
+		}
+
 		public IPlayerBin Player {
 			get {
 				return null;

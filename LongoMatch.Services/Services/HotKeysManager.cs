@@ -18,11 +18,12 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using System;
 using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services
@@ -34,7 +35,11 @@ namespace LongoMatch.Services
 		ProjectType projectType;
 		ICapturerBin capturer;
 		Dashboard dashboard;
+		Project openedProject;
 		AnalysisEventButton pendingButton;
+		bool inPlayerTagging;
+		string playerNumber;
+		Team taggedTeam;
 		System.Threading.Timer timer;
 		const int TIMEOUT_MS = 1000;
 
@@ -48,6 +53,22 @@ namespace LongoMatch.Services
 			timer = new System.Threading.Timer (HandleTimeout);
 		}
 
+		void TagPlayer ()
+		{
+			int playerNumber;
+			
+			if (int.TryParse (this.playerNumber, out playerNumber)) {
+				TeamTemplate team = taggedTeam == Team.LOCAL ? openedProject.LocalTeamTemplate :
+					openedProject.VisitorTeamTemplate;
+				Player player = team.List.FirstOrDefault (p => p.Number == playerNumber);
+				if (player != null) {
+					analysisWindow.TagPlayer (player);
+				}
+			}
+			inPlayerTagging = false;
+			this.playerNumber = "";
+		}
+		
 		void ReloadHotkeys ()
 		{
 			dashboardHotkeys.Clear ();
@@ -66,6 +87,8 @@ namespace LongoMatch.Services
 				if (pendingButton != null) {
 					analysisWindow.ClickButton (pendingButton);
 					pendingButton = null;
+				} else if (inPlayerTagging) {
+					TagPlayer ();
 				}
 			});
 		}
@@ -80,6 +103,7 @@ namespace LongoMatch.Services
 		{
 			this.analysisWindow = analysisWindow;
 			this.capturer = analysisWindow.Capturer;
+			openedProject = project;
 			if (project == null) {
 				dashboard = null;
 			} else {
@@ -149,31 +173,55 @@ namespace LongoMatch.Services
 			KeyAction action;
 			DashboardButton button;
 
+			if (openedProject == null) {
+				return;
+			}
+
 			try {
 				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
 			} catch {
 				return;
 			}
-			if (action != KeyAction.None) {
-				/* Keep prevalence of general hotkeys over the dashboard ones */
-				return;
-			}
 			
-			if (dashboardHotkeys.TryGetValue (key, out button)) {
-				if (button is AnalysisEventButton) {
-					AnalysisEventButton evButton = button as AnalysisEventButton;
-					/* Finish tagging for the pending button */
-					if (pendingButton != null) {
+			if (action == KeyAction.LocalPlayer || action == KeyAction.VisitorPlayer) {
+				if (inPlayerTagging) {
+					TagPlayer ();
+				}
+				if (pendingButton != null) {
+					analysisWindow.ClickButton (pendingButton);
+				}
+				inPlayerTagging = true;
+				taggedTeam = action == KeyAction.LocalPlayer ? Team.LOCAL : Team.VISITOR;
+				playerNumber = "";
+				timer.Change (TIMEOUT_MS, 0);
+			} else if (action == KeyAction.None) {
+				if (dashboardHotkeys.TryGetValue (key, out button)) {
+					if (inPlayerTagging) {
+						TagPlayer ();
+					}
+					if (button is AnalysisEventButton) {
+						AnalysisEventButton evButton = button as AnalysisEventButton;
+						/* Finish tagging for the pending button */
+						if (pendingButton != null) {
+							analysisWindow.ClickButton (pendingButton);
+						}
+						if (evButton.AnalysisEventType.Tags.Count == 0) {
+							analysisWindow.ClickButton (button);
+						} else {
+							pendingButton = evButton;
+							timer.Change (TIMEOUT_MS, 0);
+						}
+					} else {
 						analysisWindow.ClickButton (button);
 					}
-					if (evButton.AnalysisEventType.Tags.Count == 0) {
-						analysisWindow.ClickButton (button);
-					} else {
-						pendingButton = evButton;
+				} else if (inPlayerTagging) {
+					int number;
+					string name = Keyboard.NameFromKeyval ((uint)key.Key);
+					if (int.TryParse (name, out number)) {
+						playerNumber += number.ToString ();
 						timer.Change (TIMEOUT_MS, 0);
 					}
-				} else {
-					analysisWindow.ClickButton (button);
+					return;
 				}
 			}
 		}

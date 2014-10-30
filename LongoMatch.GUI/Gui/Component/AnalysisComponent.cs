@@ -109,6 +109,11 @@ namespace LongoMatch.Gui.Component
 			codingwidget.ClickButton (button);
 		}
 
+		public void TagPlayer (Player player)
+		{
+			codingwidget.TagPlayer (player);
+		}
+
 		public void DetachPlayer ()
 		{
 			bool isPlaying = playercapturer.Playing;
