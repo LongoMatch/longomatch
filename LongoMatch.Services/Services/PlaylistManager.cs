@@ -257,10 +257,10 @@ namespace LongoMatch.Services
 
 				switch (action) {
 				case KeyAction.FrameUp:
-					player.SeekToPreviousFrame ();
+					player.SeekToNextFrame ();
 					return;
 				case KeyAction.FrameDown:
-					player.SeekToNextFrame ();
+					player.SeekToPreviousFrame ();
 					return;
 				case KeyAction.JumpUp:
 					player.StepForward ();
