@@ -180,18 +180,14 @@ namespace LongoMatch.Services
 		
 		void HandleMigrateDB ()
 		{
-			string codeBase = Assembly.GetExecutingAssembly ().CodeBase;
-			UriBuilder uri = new UriBuilder (codeBase);
-			string assemblyDir = Path.GetDirectoryName (Uri.UnescapeDataString (uri.Path));
-			string monoPath = assemblyDir;
-			monoPath += Path.PathSeparator + Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
-			Console.WriteLine (monoPath);
-			string migrationExe = Path.Combine (assemblyDir, "migration", "LongoMatch.exe");
+			string db4oPath = Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
+			string monoPath = Path.GetFullPath (Config.LibsDir) + Path.PathSeparator + Path.GetFullPath (db4oPath);
+			string migrationExe = Path.Combine (Config.LibsDir, "migration", "LongoMatch.exe");
 			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
 			startInfo.UseShellExecute = false;
-			startInfo.Arguments = migrationExe;
-			startInfo.WorkingDirectory = Path.Combine (Config.baseDirectory, "bin");
+			startInfo.Arguments = "\"" + migrationExe + "\"";
+			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				startInfo.FileName = "mono";
 			} else {

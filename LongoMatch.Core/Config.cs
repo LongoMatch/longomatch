@@ -148,6 +148,13 @@ namespace LongoMatch
 			}
 		}
 		
+		public static string LibsDir {
+			get {
+				return RelativeToPrefix(Path.Combine ("lib",
+				                                      Constants.SOFTWARE_NAME.ToLower()));
+			}
+		}
+
 		public static string PluginsDir {
 			get {
 				return RelativeToPrefix(String.Format("lib/{0}/plugins",
