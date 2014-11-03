@@ -330,14 +330,24 @@ lgm_create_audio_encoder (AudioEncoderType type, guint quality,
 
   switch (type) {
     case AUDIO_ENCODER_MP3:
-      encoder = gst_element_factory_make ("lamemp3enc", "audio-encoder");
-      g_object_set (encoder, "target", 0, "quality", (gfloat) 4, NULL);
+      encoder = gst_element_factory_make ("flump3enc", "audio-encoder");
+      if (encoder != NULL) {
+        g_object_set (encoder, "bitrate", 128, NULL);
+      } else {
+        encoder = gst_element_factory_make ("lamemp3enc", "audio-encoder");
+        g_object_set (encoder, "target", 0, "quality", (gfloat) 4, NULL);
+      }
       name = "Mp3 audio encoder";
       break;
 
     case AUDIO_ENCODER_AAC:
-      encoder = gst_element_factory_make ("faac", "audio-encoder");
-      g_object_set (encoder, "bitrate", 128000, NULL);
+      encoder = gst_element_factory_make ("fluaacenc", "audio-encoder");
+      if (encoder != NULL) {
+        g_object_set (encoder, "bitrate", 128, "output-format", 2, NULL);
+      } else {
+        encoder = gst_element_factory_make ("faac", "audio-encoder");
+        g_object_set (encoder, "bitrate", 128000, NULL);
+      }
       name = "AAC audio encoder";
       break;
 
