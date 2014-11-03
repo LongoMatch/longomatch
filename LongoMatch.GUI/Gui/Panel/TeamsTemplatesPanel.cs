@@ -107,8 +107,8 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 			};
 			
-			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
-			editplayerslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
+			editplayerslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
 
 			Load (null);
 		}

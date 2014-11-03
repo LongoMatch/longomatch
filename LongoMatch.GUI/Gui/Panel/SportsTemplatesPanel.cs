@@ -121,8 +121,8 @@ namespace LongoMatch.Gui.Panel
 			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save (false);
 			
-			editdashboardslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
-			editbuttonslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+			editdashboardslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
+			editbuttonslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
 
 			Load (null);
 		}
