@@ -286,7 +286,7 @@ lgm_query_timeout (LgmVideoPlayer * lvp)
     GST_INFO ("could not get duration");
   }
 
-  if (gst_element_query_position (lvp->priv->play, &fmt, &pos)) {
+  if (gst_element_query_position (lvp->priv->video_sink, &fmt, &pos)) {
     if (pos != -1 && fmt == GST_FORMAT_TIME) {
       got_time_tick (GST_ELEMENT (lvp->priv->play), pos, lvp);
     }
@@ -755,7 +755,7 @@ lgm_video_player_get_current_time (LgmVideoPlayer * lvp)
   fmt = GST_FORMAT_TIME;
   pos = -1;
 
-  gst_element_query_position (lvp->priv->play, &fmt, &pos);
+  gst_element_query_position (lvp->priv->video_sink, &fmt, &pos);
 
   return pos != -1 ? pos : lvp->priv->current_time;
 }
