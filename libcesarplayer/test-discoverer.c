@@ -31,7 +31,7 @@ main (int argc, char *argv[])
   lgm_init_backend (0, NULL);
 
   if (argc != 2) {
-    g_print("Usage: test-discoverer file_uri\n");
+    g_print ("Usage: test-discoverer file_uri\n");
     return 1;
   }
 

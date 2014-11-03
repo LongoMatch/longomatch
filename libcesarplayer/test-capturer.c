@@ -35,19 +35,19 @@ static int sargc;
 static char **sargv;
 
 static void
-rec_clicked_cb (GtkButton *b, GstCameraCapturer *gcc)
+rec_clicked_cb (GtkButton * b, GstCameraCapturer * gcc)
 {
   gst_camera_capturer_start (gcc);
 }
 
 static void
-stop_clicked (GtkButton *b, GstCameraCapturer *gcc)
+stop_clicked (GtkButton * b, GstCameraCapturer * gcc)
 {
   gst_camera_capturer_stop (gcc);
 }
 
 static void
-on_realized_cb (GtkWidget *video)
+on_realized_cb (GtkWidget * video)
 {
   GstCameraCapturer *gvc;
   guintptr window;
@@ -57,14 +57,15 @@ on_realized_cb (GtkWidget *video)
 
   gvc = gst_camera_capturer_new (&error);
   gst_camera_capturer_configure (gvc, sargv[1], CAPTURE_SOURCE_TYPE_SYSTEM,
-      sargv[2], sargv[3], VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC, VIDEO_MUXER_MP4,
-      1000, 100, FALSE, 320, 240, window);
-  gst_camera_capturer_run(gvc);
+      sargv[2], sargv[3], VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
+      VIDEO_MUXER_MP4, 1000, 100, FALSE, 320, 240, window);
+  gst_camera_capturer_run (gvc);
   g_signal_connect (G_OBJECT (recbutton), "clicked",
       G_CALLBACK (rec_clicked_cb), gvc);
   g_signal_connect (G_OBJECT (stopbutton), "clicked",
       G_CALLBACK (stop_clicked), gvc);
 }
+
 void
 create_window (void)
 {
@@ -81,10 +82,10 @@ create_window (void)
   GTK_WIDGET_UNSET_FLAGS (video, GTK_DOUBLE_BUFFERED);
 
   gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (vbox));
-  gtk_box_pack_start (GTK_BOX(vbox), GTK_WIDGET (video), TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX(vbox), GTK_WIDGET (hbox), FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), recbutton, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), stopbutton, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (video), TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (hbox), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), recbutton, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), stopbutton, TRUE, TRUE, 0);
   g_signal_connect (video, "realize", G_CALLBACK (on_realized_cb), NULL);
   gtk_widget_show_all (window);
 }
@@ -95,7 +96,7 @@ int
 main (int argc, char **argv)
 {
   if (argc != 4) {
-    g_print("Usage: test-encoder output_file device_type device-id\n");
+    g_print ("Usage: test-encoder output_file device_type device-id\n");
     return 1;
   }
   gtk_init (&argc, &argv);

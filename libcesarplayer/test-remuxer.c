@@ -26,23 +26,23 @@
 #include "gst-remuxer.h"
 
 static gboolean
-percent_done_cb (GstRemuxer *remuxer, gfloat percent, GMainLoop *loop)
+percent_done_cb (GstRemuxer * remuxer, gfloat percent, GMainLoop * loop)
 {
   if (percent == 1) {
-    g_print("SUCESS!\n");
+    g_print ("SUCESS!\n");
     g_main_loop_quit (loop);
   } else {
-    g_print("----> %f%%", percent);
+    g_print ("----> %f%%", percent);
   }
   return TRUE;
 }
 
 static gboolean
-error_cb (GstRemuxer *remuxer, gchar *error, GMainLoop *loop)
+error_cb (GstRemuxer * remuxer, gchar * error, GMainLoop * loop)
 {
-    g_print("ERROR: %s\n", error);
-    g_main_loop_quit (loop);
-    return TRUE;
+  g_print ("ERROR: %s\n", error);
+  g_main_loop_quit (loop);
+  return TRUE;
 }
 
 int
@@ -54,7 +54,7 @@ main (int argc, char *argv[])
   gst_remuxer_init_backend (&argc, &argv);
 
   if (argc != 3) {
-    g_print("Usage: test-remuxer input_file output_file\n");
+    g_print ("Usage: test-remuxer input_file output_file\n");
     return 1;
   }
   remuxer = gst_remuxer_new (argv[1], argv[2], VIDEO_MUXER_MP4, NULL);
@@ -63,8 +63,7 @@ main (int argc, char *argv[])
 
   g_signal_connect (remuxer, "percent_completed",
       G_CALLBACK (percent_done_cb), loop);
-  g_signal_connect (remuxer, "error",
-      G_CALLBACK (error_cb), loop);
+  g_signal_connect (remuxer, "error", G_CALLBACK (error_cb), loop);
 
   gst_remuxer_start (remuxer);
   g_main_loop_run (loop);

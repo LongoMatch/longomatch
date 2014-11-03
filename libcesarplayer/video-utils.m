@@ -41,18 +41,18 @@
 #endif
 
 GstAutoplugSelectResult
-lgm_filter_video_decoders (GstElement* object, GstPad* arg0,
-    GstCaps* arg1, GstElementFactory* arg2, gpointer user_data)
+lgm_filter_video_decoders (GstElement * object, GstPad * arg0,
+    GstCaps * arg1, GstElementFactory * arg2, gpointer user_data)
 {
   const gchar *name = gst_plugin_feature_get_name (GST_PLUGIN_FEATURE (arg2));
-  if (!g_strcmp0(name, "fluvadec")) {
+  if (!g_strcmp0 (name, "fluvadec")) {
     return GST_AUTOPLUG_SELECT_SKIP;
   }
   return GST_AUTOPLUG_SELECT_TRY;
 }
 
 guintptr
-lgm_get_window_handle(GdkWindow *window)
+lgm_get_window_handle (GdkWindow * window)
 {
   guintptr window_handle;
 
@@ -60,7 +60,7 @@ lgm_get_window_handle(GdkWindow *window)
 
   /* Retrieve window handler from GDK */
 #if defined (GDK_WINDOWING_WIN32)
-  window_handle = (guintptr)GDK_WINDOW_HWND (window);
+  window_handle = (guintptr) GDK_WINDOW_HWND (window);
 #elif defined (GDK_WINDOWING_QUARTZ)
   window_handle = (guintptr) gdk_quartz_window_get_nsview (window);
 #elif defined (GDK_WINDOWING_X11)
@@ -71,7 +71,7 @@ lgm_get_window_handle(GdkWindow *window)
 }
 
 void
-lgm_set_window_handle(GstXOverlay *xoverlay, guintptr window_handle)
+lgm_set_window_handle (GstXOverlay * xoverlay, guintptr window_handle)
 {
   gst_x_overlay_set_window_handle (xoverlay, window_handle);
 }
@@ -79,17 +79,17 @@ lgm_set_window_handle(GstXOverlay *xoverlay, guintptr window_handle)
 void
 lgm_init_backend (int argc, char **argv)
 {
-  gst_init(&argc, &argv);
+  gst_init (&argc, &argv);
 }
 
 gchar *
-lgm_filename_to_uri (const gchar *filename)
+lgm_filename_to_uri (const gchar * filename)
 {
   gchar *uri, *path;
   GError *err = NULL;
 
 #ifdef G_OS_WIN32
-  if (g_path_is_absolute(filename) || !gst_uri_is_valid (filename)) {
+  if (g_path_is_absolute (filename) || !gst_uri_is_valid (filename)) {
 #else
   if (!gst_uri_is_valid (filename)) {
 #endif
@@ -118,11 +118,10 @@ lgm_filename_to_uri (const gchar *filename)
 }
 
 GstDiscovererResult
-lgm_discover_uri (
-    const gchar *filename, guint64 *duration, guint *width,
-    guint *height, guint *fps_n, guint *fps_d, guint *par_n, guint *par_d,
-    gchar **container, gchar **video_codec, gchar **audio_codec,
-    GError **err)
+lgm_discover_uri (const gchar * filename, guint64 * duration, guint * width,
+    guint * height, guint * fps_n, guint * fps_d, guint * par_n, guint * par_d,
+    gchar ** container, gchar ** video_codec, gchar ** audio_codec,
+    GError ** err)
 {
   GstDiscoverer *discoverer;
   GstDiscovererInfo *info;
@@ -163,8 +162,9 @@ lgm_discover_uri (
   if (GST_IS_DISCOVERER_CONTAINER_INFO (sinfo)) {
     GstCaps *caps;
 
-    caps = gst_discoverer_stream_info_get_caps (
-        GST_DISCOVERER_STREAM_INFO(sinfo));
+    caps =
+        gst_discoverer_stream_info_get_caps (GST_DISCOVERER_STREAM_INFO
+        (sinfo));
     *container = gst_pb_utils_get_codec_description (caps);
     gst_caps_unref (caps);
   }
@@ -181,8 +181,9 @@ lgm_discover_uri (
   if (ainfo != NULL) {
     GstCaps *caps;
 
-    caps = gst_discoverer_stream_info_get_caps (
-        GST_DISCOVERER_STREAM_INFO (ainfo));
+    caps =
+        gst_discoverer_stream_info_get_caps (GST_DISCOVERER_STREAM_INFO
+        (ainfo));
     *audio_codec = gst_pb_utils_get_codec_description (caps);
     gst_caps_unref (caps);
   }
@@ -202,8 +203,9 @@ lgm_discover_uri (
   if (vinfo != NULL) {
     GstCaps *caps;
 
-    caps = gst_discoverer_stream_info_get_caps (
-        GST_DISCOVERER_STREAM_INFO (vinfo));
+    caps =
+        gst_discoverer_stream_info_get_caps (GST_DISCOVERER_STREAM_INFO
+        (vinfo));
     *video_codec = gst_pb_utils_get_codec_description (caps);
     gst_caps_unref (caps);
     *height = gst_discoverer_video_info_get_height (vinfo);
@@ -224,18 +226,18 @@ lgm_discover_uri (
   return ret;
 }
 
-GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
+GstElement *
+lgm_create_video_encoder (VideoEncoderType type, guint quality,
     GQuark quark, GError ** err)
 {
-  GstElement * encoder = NULL;
+  GstElement *encoder = NULL;
   gchar *name = NULL;
 
   switch (type) {
     case VIDEO_ENCODER_MPEG4:
       encoder = gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
       g_object_set (encoder, "pass", 512,
-          "max-key-interval", -1,
-          "bitrate", quality * 1000 , NULL);
+          "max-key-interval", -1, "bitrate", quality * 1000, NULL);
       name = "FFmpeg mpeg4 video encoder";
       break;
 
@@ -247,27 +249,28 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       name = "Xvid video encoder";
       break;
 
-    case VIDEO_ENCODER_H264: {
+    case VIDEO_ENCODER_H264:{
       GstElement *parse;
-      gchar *stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir(),
+      gchar *stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir (),
           "x264.log", NULL);
       encoder = gst_element_factory_make ("fluvah264enc", "video-encoder");
       parse = gst_element_factory_make ("h264parse", NULL);
       if (!encoder || !parse) {
-        if (encoder) gst_object_unref (encoder);
-        if (parse) gst_object_unref (parse);
-	    encoder = gst_element_factory_make ("x264enc", "video-encoder");
-	    g_object_set (encoder, "key-int-max", 25, "pass", 17,
-	        "speed-preset", 3, "stats-file", stats_file,
-	        "bitrate", quality, NULL);
-	    name = "X264 video encoder";
-	  }
-      else {
+        if (encoder)
+          gst_object_unref (encoder);
+        if (parse)
+          gst_object_unref (parse);
+        encoder = gst_element_factory_make ("x264enc", "video-encoder");
+        g_object_set (encoder, "key-int-max", 25, "pass", 17,
+            "speed-preset", 3, "stats-file", stats_file,
+            "bitrate", quality, NULL);
+        name = "X264 video encoder";
+      } else {
         GstPad *encoder_sink_pad, *parse_src_pad;
         GstElement *bin = gst_bin_new (NULL);
 
         g_object_set (encoder, "bitrate", quality, "keyframe-period", 1000,
-        	"rate-control", 1, "entropy-mode", 1, NULL);
+            "rate-control", 1, "entropy-mode", 1, NULL);
 
         gst_bin_add_many (GST_BIN (bin), encoder, parse, NULL);
         gst_element_link (encoder, parse);
@@ -275,16 +278,14 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
         encoder_sink_pad = gst_element_get_static_pad (encoder, "sink");
         parse_src_pad = gst_element_get_static_pad (parse, "src");
 
-        gst_element_add_pad (bin,
-            gst_ghost_pad_new ("sink", encoder_sink_pad));
-        gst_element_add_pad (bin,
-            gst_ghost_pad_new ("src", parse_src_pad));
-        
+        gst_element_add_pad (bin, gst_ghost_pad_new ("sink", encoder_sink_pad));
+        gst_element_add_pad (bin, gst_ghost_pad_new ("src", parse_src_pad));
+
         gst_object_unref (encoder_sink_pad);
         gst_object_unref (parse_src_pad);
 
         encoder = bin;
-        
+
         name = "Fluendo H264 video encoder";
       }
       g_free (stats_file);
@@ -294,8 +295,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
     case VIDEO_ENCODER_THEORA:
       encoder = gst_element_factory_make ("theoraenc", "video-encoder");
       g_object_set (encoder, "keyframe-auto", FALSE,
-          "keyframe-force", 25,
-          "bitrate", quality, NULL);
+          "keyframe-force", 25, "bitrate", quality, NULL);
       name = "Theora video encoder";
       break;
 
@@ -321,7 +321,8 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
   return encoder;
 }
 
-GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
+GstElement *
+lgm_create_audio_encoder (AudioEncoderType type, guint quality,
     GQuark quark, GError ** err)
 {
   GstElement *encoder = NULL;
@@ -330,7 +331,7 @@ GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
   switch (type) {
     case AUDIO_ENCODER_MP3:
       encoder = gst_element_factory_make ("lamemp3enc", "audio-encoder");
-      g_object_set (encoder, "target", 0, "quality", (gfloat)4, NULL);
+      g_object_set (encoder, "target", 0, "quality", (gfloat) 4, NULL);
       name = "Mp3 audio encoder";
       break;
 
@@ -360,7 +361,8 @@ GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
   return encoder;
 }
 
-GstElement * lgm_create_muxer (VideoMuxerType type, GQuark quark, GError **err)
+GstElement *
+lgm_create_muxer (VideoMuxerType type, GQuark quark, GError ** err)
 {
   GstElement *muxer = NULL;
   gchar *name = NULL;

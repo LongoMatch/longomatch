@@ -84,7 +84,7 @@ static int gve_signals[LAST_SIGNAL] = { 0 };
 static void gve_error_msg (GstVideoEncoder * gcc, GstMessage * msg);
 static void gve_bus_message_cb (GstBus * bus, GstMessage * message,
     gpointer data);
-static gboolean gst_video_encoder_select_next_file (GstVideoEncoder *gve);
+static gboolean gst_video_encoder_select_next_file (GstVideoEncoder * gve);
 
 G_DEFINE_TYPE (GstVideoEncoder, gst_video_encoder, G_TYPE_OBJECT);
 
@@ -209,14 +209,14 @@ gst_video_encoder_error_quark (void)
 }
 
 static gboolean
-gve_on_buffer_cb (GstPad *pad, GstBuffer *buf, GstVideoEncoder *gve)
+gve_on_buffer_cb (GstPad * pad, GstBuffer * buf, GstVideoEncoder * gve)
 {
   gve->priv->last_buf_ts = g_get_monotonic_time ();
   return TRUE;
 }
 
 static void
-gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
+gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
 {
   GstElement *colorspace1, *videoscale, *framerate, *deinterlace;
   GstElement *colorspace2, *audioconvert, *audioresample;
@@ -228,14 +228,14 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   GST_INFO_OBJECT (gve, "Creating encoder bin");
   gve->priv->encoder_bin = gst_bin_new ("encoder_bin");
 
-  colorspace1 = gst_element_factory_make("ffmpegcolorspace", NULL);
-  deinterlace = gst_element_factory_make("ffdeinterlace", NULL);
-  colorspace2 = gst_element_factory_make("ffmpegcolorspace", "colorspace2");
-  videoscale = gst_element_factory_make("videoscale", "gve_videoscale");
-  framerate = gst_element_factory_make("videorate", "gve_videorate");
-  audioconvert = gst_element_factory_make("audioconvert", NULL);
-  audioresample = gst_element_factory_make("audioresample", NULL);
-  gve->priv->filesink = gst_element_factory_make("filesink", NULL);
+  colorspace1 = gst_element_factory_make ("ffmpegcolorspace", NULL);
+  deinterlace = gst_element_factory_make ("ffdeinterlace", NULL);
+  colorspace2 = gst_element_factory_make ("ffmpegcolorspace", "colorspace2");
+  videoscale = gst_element_factory_make ("videoscale", "gve_videoscale");
+  framerate = gst_element_factory_make ("videorate", "gve_videorate");
+  audioconvert = gst_element_factory_make ("audioconvert", NULL);
+  audioresample = gst_element_factory_make ("audioresample", NULL);
+  gve->priv->filesink = gst_element_factory_make ("filesink", NULL);
   aqueue = gst_element_factory_make ("queue2", "audio_queue");
   vqueue = gst_element_factory_make ("queue2", "video_queue");
   a_identity = gst_element_factory_make ("identity", "audio_identity");
@@ -258,22 +258,22 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
       1, 1, NULL);
   if (gve->priv->output_width != 0) {
-    gst_caps_set_simple (video_caps, "width", G_TYPE_INT, gve->priv->output_width,
-        NULL);
+    gst_caps_set_simple (video_caps, "width", G_TYPE_INT,
+        gve->priv->output_width, NULL);
   }
   if (gve->priv->output_height != 0) {
-    gst_caps_set_simple (video_caps, "height", G_TYPE_INT, gve->priv->output_height,
-        NULL);
+    gst_caps_set_simple (video_caps, "height", G_TYPE_INT,
+        gve->priv->output_height, NULL);
   }
   /* Set caps for the encoding framerate */
   if (gve->priv->fps_n != 0 && gve->priv->fps_d != 0) {
-   gst_caps_set_simple (video_caps, "framerate", GST_TYPE_FRACTION,
-      gve->priv->fps_n, gve->priv->fps_d, NULL);
+    gst_caps_set_simple (video_caps, "framerate", GST_TYPE_FRACTION,
+        gve->priv->fps_n, gve->priv->fps_d, NULL);
   }
 
   /* Audio caps to fixate the channels and sample rate */
-  audio_caps = gst_caps_from_string (
-      "audio/x-raw-int, channels=(int)2, rate=(int)48000;"
+  audio_caps =
+      gst_caps_from_string ("audio/x-raw-int, channels=(int)2, rate=(int)48000;"
       "audio/x-raw-float, channels=(int)2, rate=(int)48000");
 
   /* Set caps for the h264 profile */
@@ -284,23 +284,24 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   g_object_set (a_identity, "single-segment", TRUE, NULL);
   g_object_set (v_identity, "single-segment", TRUE, NULL);
 
-  gst_bin_add_many(GST_BIN(gve->priv->encoder_bin), v_identity,  colorspace1,
+  gst_bin_add_many (GST_BIN (gve->priv->encoder_bin), v_identity, colorspace1,
       deinterlace, videoscale, framerate, colorspace2,
       gve->priv->video_enc, vqueue, gve->priv->muxer, gve->priv->filesink,
-      a_identity, audioconvert, audioresample, gve->priv->audio_enc, aqueue, NULL);
+      a_identity, audioconvert, audioresample, gve->priv->audio_enc, aqueue,
+      NULL);
 
-  gst_element_link_many(v_identity, colorspace1, deinterlace, framerate,
+  gst_element_link_many (v_identity, colorspace1, deinterlace, framerate,
       videoscale, colorspace2, NULL);
   gst_element_link_filtered (colorspace2, gve->priv->video_enc, video_caps);
   gst_element_link_filtered (gve->priv->video_enc, vqueue, h264_caps);
   gst_element_link (vqueue, gve->priv->muxer);
-  gst_element_link_many(a_identity, audioconvert, audioresample, NULL);
+  gst_element_link_many (a_identity, audioconvert, audioresample, NULL);
   gst_element_link_filtered (audioresample, gve->priv->audio_enc, audio_caps);
   gst_element_link_many (gve->priv->audio_enc, aqueue, gve->priv->muxer, NULL);
-  gst_element_link(gve->priv->muxer, gve->priv->filesink);
+  gst_element_link (gve->priv->muxer, gve->priv->filesink);
 
-  gst_caps_unref(video_caps);
-  gst_caps_unref(audio_caps);
+  gst_caps_unref (video_caps);
+  gst_caps_unref (audio_caps);
   gst_caps_unref (h264_caps);
   g_object_set (gve->priv->filesink, "location", gve->priv->output_file, NULL);
 
@@ -325,7 +326,7 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
 }
 
 static gboolean
-cb_handle_eos (GstPad *pad, GstEvent *event, GstVideoEncoder *gve)
+cb_handle_eos (GstPad * pad, GstEvent * event, GstVideoEncoder * gve)
 {
   if (event->type == GST_EVENT_EOS) {
     GST_DEBUG_OBJECT (gve, "Dropping EOS on pad %s:%s",
@@ -336,7 +337,7 @@ cb_handle_eos (GstPad *pad, GstEvent *event, GstVideoEncoder *gve)
       gve->priv->video_drained = TRUE;
     }
     if (gve->priv->audio_drained && gve->priv->video_drained) {
-      g_idle_add ((GSourceFunc)gst_video_encoder_select_next_file, gve);
+      g_idle_add ((GSourceFunc) gst_video_encoder_select_next_file, gve);
     }
     return FALSE;
   }
@@ -344,7 +345,7 @@ cb_handle_eos (GstPad *pad, GstEvent *event, GstVideoEncoder *gve)
 }
 
 static void
-cb_new_pad (GstElement *decodebin, GstPad *pad, GstVideoEncoder *gve)
+cb_new_pad (GstElement * decodebin, GstPad * pad, GstVideoEncoder * gve)
 {
   GstPad *epad = NULL;
   GstCaps *caps;
@@ -383,27 +384,28 @@ cb_new_pad (GstElement *decodebin, GstPad *pad, GstVideoEncoder *gve)
 }
 
 static void
-gst_video_encoder_create_source (GstVideoEncoder *gve, gchar *location)
+gst_video_encoder_create_source (GstVideoEncoder * gve, gchar * location)
 {
   GST_INFO_OBJECT (gve, "Creating source");
 
   if (gve->priv->source_bin != NULL) {
     gst_element_set_state (gve->priv->source_bin, GST_STATE_NULL);
-    gst_bin_remove (GST_BIN(gve->priv->main_pipeline), gve->priv->source_bin);
+    gst_bin_remove (GST_BIN (gve->priv->main_pipeline), gve->priv->source_bin);
   }
   gve->priv->source_bin = gst_element_factory_make ("uridecodebin", NULL);
   g_object_set (gve->priv->source_bin, "uri", location, NULL);
-  g_signal_connect (gve->priv->source_bin, "pad-added", G_CALLBACK (cb_new_pad), gve);
+  g_signal_connect (gve->priv->source_bin, "pad-added", G_CALLBACK (cb_new_pad),
+      gve);
   g_signal_connect (gve->priv->source_bin, "autoplug-select",
       G_CALLBACK (lgm_filter_video_decoders), gve);
-  gst_bin_add (GST_BIN(gve->priv->main_pipeline), gve->priv->source_bin);
+  gst_bin_add (GST_BIN (gve->priv->main_pipeline), gve->priv->source_bin);
   gst_element_sync_state_with_parent (gve->priv->source_bin);
   gve->priv->audio_drained = FALSE;
   gve->priv->video_drained = FALSE;
 }
 
 static gboolean
-gst_video_encoder_select_next_file (GstVideoEncoder *gve)
+gst_video_encoder_select_next_file (GstVideoEncoder * gve)
 {
   GstPad *audio_pad, *video_pad;
 
@@ -432,7 +434,8 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
       gst_pad_unlink (v_peer, video_pad);
       gst_object_unref (v_peer);
     }
-    gst_video_encoder_create_source (gve, (gchar *) gve->priv->current_file->data);
+    gst_video_encoder_create_source (gve,
+        (gchar *) gve->priv->current_file->data);
   } else {
     GST_INFO_OBJECT (gve, "No more files, sending EOS");
     if (gve->priv->update_id != 0) {
@@ -444,8 +447,8 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
         "max-size-bytes", 0, "max-size-buffers", 0, NULL);
     g_object_set (gve->priv->vqueue, "max-size-time", 0,
         "max-size-bytes", 0, "max-size-buffers", 0, NULL);
-    gst_pad_send_event (audio_pad, gst_event_new_eos());
-    gst_pad_send_event (video_pad, gst_event_new_eos());
+    gst_pad_send_event (audio_pad, gst_event_new_eos ());
+    gst_pad_send_event (video_pad, gst_event_new_eos ());
   }
   return FALSE;
 }
@@ -509,19 +512,19 @@ gst_video_encoder_create_video_muxer (GstVideoEncoder * gve,
 }
 
 static void
-gst_video_encoder_initialize (GstVideoEncoder *gve)
+gst_video_encoder_initialize (GstVideoEncoder * gve)
 {
-  GError *err= NULL;
+  GError *err = NULL;
 
   GST_INFO_OBJECT (gve, "Initializing encoders");
-  if (!gst_video_encoder_create_video_encoder(gve,
-        gve->priv->video_encoder_type, &err))
+  if (!gst_video_encoder_create_video_encoder (gve,
+          gve->priv->video_encoder_type, &err))
     goto missing_plugin;
-  if (!gst_video_encoder_create_audio_encoder(gve,
-        gve->priv->audio_encoder_type, &err))
+  if (!gst_video_encoder_create_audio_encoder (gve,
+          gve->priv->audio_encoder_type, &err))
     goto missing_plugin;
-  if (!gst_video_encoder_create_video_muxer(gve,
-        gve->priv->video_muxer_type, &err))
+  if (!gst_video_encoder_create_video_muxer (gve,
+          gve->priv->video_muxer_type, &err))
     goto missing_plugin;
 
   gst_video_encoder_create_encoder_bin (gve);
@@ -530,8 +533,8 @@ gst_video_encoder_initialize (GstVideoEncoder *gve)
   return;
 
 missing_plugin:
-    g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, err->message);
-    g_error_free (err);
+  g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, err->message);
+  g_error_free (err);
 }
 
 static void
@@ -614,7 +617,7 @@ gst_video_encoder_query_timeout (GstVideoEncoder * gve)
       MIN (0.99, (gfloat) pos / (gfloat) gve->priv->total_duration));
 
   if (g_get_monotonic_time () - gve->priv->last_buf_ts > 4 * 1000000) {
-    g_idle_add ((GSourceFunc)gst_video_encoder_select_next_file, gve);
+    g_idle_add ((GSourceFunc) gst_video_encoder_select_next_file, gve);
   }
 
   return TRUE;
@@ -632,11 +635,11 @@ gst_video_encoder_cancel (GstVideoEncoder * gve)
   g_return_if_fail (gve != NULL);
   g_return_if_fail (GST_IS_VIDEO_ENCODER (gve));
 
-  g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) -1);
+  g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) - 1);
   gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
   gst_element_get_state (gve->priv->main_pipeline, NULL, NULL, -1);
-  gst_bin_remove (GST_BIN(gve->priv->main_pipeline), gve->priv->source_bin);
-  gst_bin_remove (GST_BIN(gve->priv->main_pipeline), gve->priv->encoder_bin);
+  gst_bin_remove (GST_BIN (gve->priv->main_pipeline), gve->priv->source_bin);
+  gst_bin_remove (GST_BIN (gve->priv->main_pipeline), gve->priv->encoder_bin);
   gve->priv->total_duration = 0;
   if (gve->priv->update_id != 0) {
     g_source_remove (gve->priv->update_id);
@@ -650,7 +653,7 @@ gst_video_encoder_start (GstVideoEncoder * gve)
   g_return_if_fail (gve != NULL);
   g_return_if_fail (GST_IS_VIDEO_ENCODER (gve));
 
-  GST_INFO_OBJECT(gve, "Starting encoding");
+  GST_INFO_OBJECT (gve, "Starting encoding");
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 0);
   gst_video_encoder_initialize (gve);
   gve->priv->last_buf_ts = g_get_monotonic_time ();
@@ -660,16 +663,17 @@ gst_video_encoder_start (GstVideoEncoder * gve)
 }
 
 void
-gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar *file, guint64 duration)
+gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar * file,
+    guint64 duration)
 {
   gchar *uri;
   g_return_if_fail (gve != NULL);
   g_return_if_fail (GST_IS_VIDEO_ENCODER (gve));
 
-  GST_INFO_OBJECT(gve, "Adding file %s", file);
+  GST_INFO_OBJECT (gve, "Adding file %s", file);
   uri = lgm_filename_to_uri (file);
   if (uri == NULL) {
-    GST_ERROR_OBJECT(gve, "Invalid filename %s", file);
+    GST_ERROR_OBJECT (gve, "Invalid filename %s", file);
   }
   gve->priv->input_files = g_list_append (gve->priv->input_files, uri);
   gve->priv->total_duration += duration * GST_MSECOND;
@@ -700,6 +704,7 @@ gst_video_encoder_set_encoding_format (GstVideoEncoder * gve,
   gve->priv->fps_d = fps_d;
 
 }
+
 GstVideoEncoder *
 gst_video_encoder_new (gchar * filename, GError ** err)
 {

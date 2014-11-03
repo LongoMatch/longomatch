@@ -56,17 +56,18 @@ enum
   LAST_SIGNAL
 };
 
-typedef enum {
-  GST_PLAY_FLAG_VIDEO         = (1 << 0),
-  GST_PLAY_FLAG_AUDIO         = (1 << 1),
-  GST_PLAY_FLAG_TEXT          = (1 << 2),
-  GST_PLAY_FLAG_VIS           = (1 << 3),
-  GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
-  GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
-  GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
-  GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
-  GST_PLAY_FLAG_BUFFERING     = (1 << 8),
-  GST_PLAY_FLAG_DEINTERLACE   = (1 << 9),
+typedef enum
+{
+  GST_PLAY_FLAG_VIDEO = (1 << 0),
+  GST_PLAY_FLAG_AUDIO = (1 << 1),
+  GST_PLAY_FLAG_TEXT = (1 << 2),
+  GST_PLAY_FLAG_VIS = (1 << 3),
+  GST_PLAY_FLAG_SOFT_VOLUME = (1 << 4),
+  GST_PLAY_FLAG_NATIVE_AUDIO = (1 << 5),
+  GST_PLAY_FLAG_NATIVE_VIDEO = (1 << 6),
+  GST_PLAY_FLAG_DOWNLOAD = (1 << 7),
+  GST_PLAY_FLAG_BUFFERING = (1 << 8),
+  GST_PLAY_FLAG_DEINTERLACE = (1 << 9),
   GST_PLAY_FLAG_SOFT_COLORBALANCE = (1 << 10)
 } GstPlayFlags;
 
@@ -102,8 +103,7 @@ struct LgmVideoPlayerPrivate
 static void lgm_video_player_finalize (GObject * object);
 static gboolean lgm_query_timeout (LgmVideoPlayer * lvp);
 
-static GError *lgm_error_from_gst_error (LgmVideoPlayer * lvp,
-    GstMessage * m);
+static GError *lgm_error_from_gst_error (LgmVideoPlayer * lvp, GstMessage * m);
 
 static GstElementClass *parent_class = NULL;
 
@@ -166,8 +166,9 @@ lgm_element_msg_sync_cb (GstBus * bus, GstMessage * msg, gpointer data)
       if (lvp->priv->xoverlay != NULL) {
         gst_object_unref (lvp->priv->xoverlay);
       }
-      lvp->priv->xoverlay = (GstXOverlay *) gst_object_ref (GST_X_OVERLAY (sender));
-      lgm_set_window_handle(lvp->priv->xoverlay, lvp->priv->window_handle);
+      lvp->priv->xoverlay =
+          (GstXOverlay *) gst_object_ref (GST_X_OVERLAY (sender));
+      lgm_set_window_handle (lvp->priv->xoverlay, lvp->priv->window_handle);
       g_mutex_unlock (&lvp->priv->overlay_lock);
     }
   }
@@ -197,7 +198,7 @@ lgm_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         gst_element_set_state (lvp->priv->play, GST_STATE_NULL);
 
       g_signal_emit (lvp, lgm_signals[SIGNAL_ERROR], 0,
-        error->message, TRUE, FALSE);
+          error->message, TRUE, FALSE);
       g_error_free (error);
       break;
     }
@@ -297,8 +298,7 @@ lgm_query_timeout (LgmVideoPlayer * lvp)
 }
 
 static void
-lgm_parse_stream_caps (GstPad *pad, GstPad *peer,
-    LgmVideoPlayer *lvp)
+lgm_parse_stream_caps (GstPad * pad, GstPad * peer, LgmVideoPlayer * lvp)
 {
   GstCaps *caps;
   GstStructure *s;
@@ -342,19 +342,20 @@ lgm_error_from_gst_error (LgmVideoPlayer * lvp, GstMessage * err_msg)
   gst_message_parse_error (err_msg, &e, NULL);
 
   if (is_error (e, RESOURCE, NOT_FOUND) || is_error (e, RESOURCE, OPEN_READ)) {
-      if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
-        ret = g_error_new_literal (LGM_ERROR, GST_ERROR_FILE_NOT_FOUND,
-            _("Location not found."));
-      } else {
-        ret = g_error_new_literal (LGM_ERROR, GST_ERROR_FILE_PERMISSION,
-            _("Could not open location; "
-                "you might not have permission to open the file."));
-      }
+    if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
+      ret = g_error_new_literal (LGM_ERROR, GST_ERROR_FILE_NOT_FOUND,
+          _("Location not found."));
+    } else {
+      ret = g_error_new_literal (LGM_ERROR, GST_ERROR_FILE_PERMISSION,
+          _("Could not open location; "
+              "you might not have permission to open the file."));
+    }
   } else if (e->domain == GST_RESOURCE_ERROR) {
     ret = g_error_new_literal (LGM_ERROR, GST_ERROR_FILE_GENERIC, e->message);
   } else if (is_error (e, CORE, MISSING_PLUGIN) ||
       is_error (e, STREAM, CODEC_NOT_FOUND)) {
-    gchar *msg = "The playback of this movie requires a plugin which is not installed.";
+    gchar *msg =
+        "The playback of this movie requires a plugin which is not installed.";
     ret = g_error_new_literal (LGM_ERROR, GST_ERROR_CODEC_NOT_HANDLED, msg);
   } else if (is_error (e, STREAM, WRONG_TYPE) ||
       is_error (e, STREAM, NOT_IMPLEMENTED)) {
@@ -383,7 +384,9 @@ poll_for_state_change_full (LgmVideoPlayer * lvp, GstElement * element,
   GstMessageType events;
 
   bus = gst_element_get_bus (element);
-  events = (GstMessageType) (GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
+  events =
+      (GstMessageType) (GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR |
+      GST_MESSAGE_EOS);
 
   while (TRUE) {
     GstMessage *message;
@@ -458,8 +461,7 @@ error:
 }
 
 gboolean
-lgm_video_player_open (LgmVideoPlayer * lvp,
-    const gchar * uri, GError ** error)
+lgm_video_player_open (LgmVideoPlayer * lvp, const gchar * uri, GError ** error)
 {
   GstMessage *err_msg = NULL;
   gboolean ret;
@@ -798,8 +800,7 @@ lgm_video_player_expose (LgmVideoPlayer * lvp)
   g_return_if_fail (lvp != NULL);
 
   g_mutex_lock (&lvp->priv->overlay_lock);
-  if (lvp->priv->xoverlay != NULL &&
-      GST_IS_X_OVERLAY (lvp->priv->xoverlay)) {
+  if (lvp->priv->xoverlay != NULL && GST_IS_X_OVERLAY (lvp->priv->xoverlay)) {
     gst_x_overlay_expose (lvp->priv->xoverlay);
   }
   g_mutex_unlock (&lvp->priv->overlay_lock);
@@ -893,13 +894,14 @@ lgm_video_player_get_current_frame (LgmVideoPlayer * lvp)
   return pixbuf;
 }
 
-void lgm_video_player_set_window_handle (LgmVideoPlayer *lvp,
+void
+lgm_video_player_set_window_handle (LgmVideoPlayer * lvp,
     guintptr window_handle)
 {
   g_mutex_lock (&lvp->priv->overlay_lock);
   lvp->priv->window_handle = window_handle;
   if (lvp->priv->xoverlay != NULL) {
-      lgm_set_window_handle(lvp->priv->xoverlay, lvp->priv->window_handle);
+    lgm_set_window_handle (lvp->priv->xoverlay, lvp->priv->window_handle);
   }
   g_mutex_unlock (&lvp->priv->overlay_lock);
 }
@@ -956,7 +958,7 @@ lgm_video_player_new (LgmUseType type, GError ** err)
       g_object_set (audio_sink, "sync", TRUE, NULL);
   }
 
-  if (!video_sink  || !audio_sink) {
+  if (!video_sink || !audio_sink) {
     g_set_error (err, LGM_ERROR, GST_ERROR_VIDEO_PLUGIN,
         _("No valid sink found."));
     goto sink_error;

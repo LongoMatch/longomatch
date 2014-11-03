@@ -89,8 +89,8 @@ struct GstCameraCapturerPrivate
   GstElement *audio_enc;
   GstElement *muxer;
   GstElement *filesink;
-  GstElement* video_appsrc;
-  GstElement* audio_appsrc;
+  GstElement *video_appsrc;
+  GstElement *audio_appsrc;
 
   /* Recording */
   gboolean is_recording;
@@ -125,7 +125,7 @@ static void gcc_bus_message_cb (GstBus * bus, GstMessage * message,
     gpointer data);
 static void gcc_element_msg_sync (GstBus * bus, GstMessage * msg,
     gpointer data);
-static gboolean gcc_get_video_stream_info (GstPad *pad, GstPad *peer,
+static gboolean gcc_get_video_stream_info (GstPad * pad, GstPad * peer,
     GstCameraCapturer * gcc);
 
 G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, G_TYPE_OBJECT);
@@ -277,7 +277,7 @@ gst_camera_capturer_error_quark (void)
 }
 
 static void
-gst_camera_capturer_update_device_id (GstCameraCapturer *gcc)
+gst_camera_capturer_update_device_id (GstCameraCapturer * gcc)
 {
   const gchar *prop_name;
 
@@ -293,17 +293,17 @@ gst_camera_capturer_update_device_id (GstCameraCapturer *gcc)
     prop_name = "device-name";
 
   if (prop_name)
-    g_object_set(gcc->priv->source, prop_name, gcc->priv->device_id, NULL);
+    g_object_set (gcc->priv->source, prop_name, gcc->priv->device_id, NULL);
 }
 
 static void
-cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer *gcc)
+cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer * gcc)
 {
   GstCaps *caps;
   const gchar *mime;
   GstElement *sink = NULL;
   GstPad *epad;
-  GstBin *bin = GST_BIN(gcc->priv->source_decoder_bin);
+  GstBin *bin = GST_BIN (gcc->priv->source_decoder_bin);
 
   caps = gst_pad_get_caps_reffed (pad);
   mime = gst_structure_get_name (gst_caps_get_structure (caps, 0));
@@ -315,16 +315,16 @@ cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer *gcc)
   }
 
   if (sink != NULL) {
-    epad = gst_element_get_static_pad(sink, "sink");
+    epad = gst_element_get_static_pad (sink, "sink");
     gst_pad_link (pad, epad);
-    gst_object_unref(epad);
+    gst_object_unref (epad);
     gst_object_unref (sink);
   }
-  gst_caps_unref(caps);
+  gst_caps_unref (caps);
 }
 
 static void
-gst_camera_capturer_create_encoder_bin (GstCameraCapturer *gcc)
+gst_camera_capturer_create_encoder_bin (GstCameraCapturer * gcc)
 {
   GstElement *colorspace, *videoscale, *videorate;
   GstCaps *caps;
@@ -333,11 +333,11 @@ gst_camera_capturer_create_encoder_bin (GstCameraCapturer *gcc)
   GST_INFO_OBJECT (gcc, "Creating encoder bin");
   gcc->priv->encoder_bin = gst_bin_new ("encoder_bin");
 
-  colorspace = gst_element_factory_make("ffmpegcolorspace", NULL);
-  videoscale = gst_element_factory_make("videoscale", NULL);
-  videorate = gst_element_factory_make("videorate", NULL);
-  gcc->priv->video_filter = gst_element_factory_make("capsfilter", NULL);
-  gcc->priv->filesink = gst_element_factory_make("filesink", NULL);
+  colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
+  videoscale = gst_element_factory_make ("videoscale", NULL);
+  videorate = gst_element_factory_make ("videorate", NULL);
+  gcc->priv->video_filter = gst_element_factory_make ("capsfilter", NULL);
+  gcc->priv->filesink = gst_element_factory_make ("filesink", NULL);
 
   /* Set caps for the encoding resolution */
   caps = gst_caps_new_simple ("video/x-raw-yuv", "framerate",
@@ -350,39 +350,40 @@ gst_camera_capturer_create_encoder_bin (GstCameraCapturer *gcc)
     gst_caps_set_simple (caps, "height", G_TYPE_INT, gcc->priv->output_height,
         NULL);
   }
-  g_object_set(gcc->priv->video_filter, "caps", caps, NULL);
+  g_object_set (gcc->priv->video_filter, "caps", caps, NULL);
 
-  gst_bin_add_many(GST_BIN(gcc->priv->encoder_bin), videoscale,
+  gst_bin_add_many (GST_BIN (gcc->priv->encoder_bin), videoscale,
       colorspace, videorate, gcc->priv->video_filter, gcc->priv->video_enc,
       gcc->priv->muxer, gcc->priv->filesink, NULL);
 
-  gst_element_link_many(videoscale, colorspace, videorate, gcc->priv->video_filter,
-      gcc->priv->video_enc, gcc->priv->muxer, NULL);
-  gst_element_link(gcc->priv->muxer, gcc->priv->filesink);
+  gst_element_link_many (videoscale, colorspace, videorate,
+      gcc->priv->video_filter, gcc->priv->video_enc, gcc->priv->muxer, NULL);
+  gst_element_link (gcc->priv->muxer, gcc->priv->filesink);
 
   g_object_set (gcc->priv->filesink, "location", gcc->priv->output_file, NULL);
 
   /* Create ghost pads */
   v_sink_pad = gst_element_get_static_pad (videoscale, "sink");
-  gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("video", v_sink_pad));
+  gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("video",
+          v_sink_pad));
   gst_object_unref (GST_OBJECT (v_sink_pad));
 
-  if (gcc->priv->audio_enabled)
-  {
+  if (gcc->priv->audio_enabled) {
     GstElement *audioconvert, *audioresample;
     GstPad *a_sink_pad;
 
-    audioconvert = gst_element_factory_make("audioconvert", NULL);
-    audioresample = gst_element_factory_make("audioresample", NULL);
+    audioconvert = gst_element_factory_make ("audioconvert", NULL);
+    audioresample = gst_element_factory_make ("audioresample", NULL);
 
-    gst_bin_add_many(GST_BIN(gcc->priv->encoder_bin), audioconvert, audioresample,
-        audioresample, gcc->priv->audio_enc, NULL);
+    gst_bin_add_many (GST_BIN (gcc->priv->encoder_bin), audioconvert,
+        audioresample, audioresample, gcc->priv->audio_enc, NULL);
 
-    gst_element_link_many(audioconvert, audioresample, gcc->priv->audio_enc,
+    gst_element_link_many (audioconvert, audioresample, gcc->priv->audio_enc,
         gcc->priv->muxer, NULL);
 
     a_sink_pad = gst_element_get_static_pad (audioconvert, "sink");
-    gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("audio", a_sink_pad));
+    gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("audio",
+            a_sink_pad));
     gst_object_unref (GST_OBJECT (a_sink_pad));
   }
 
@@ -390,23 +391,25 @@ gst_camera_capturer_create_encoder_bin (GstCameraCapturer *gcc)
 }
 
 static void
-gst_camera_capturer_create_remuxer_bin (GstCameraCapturer *gcc)
+gst_camera_capturer_create_remuxer_bin (GstCameraCapturer * gcc)
 {
   GstElement *muxer;
   GstPad *v_sink_pad;
 
   GST_INFO_OBJECT (gcc, "Creating remuxer bin");
   gcc->priv->encoder_bin = gst_bin_new ("encoder_bin");
-  muxer = gst_element_factory_make("qtmux", NULL);
-  gcc->priv->filesink = gst_element_factory_make("filesink", NULL);
+  muxer = gst_element_factory_make ("qtmux", NULL);
+  gcc->priv->filesink = gst_element_factory_make ("filesink", NULL);
   g_object_set (gcc->priv->filesink, "location", gcc->priv->output_file, NULL);
 
-  gst_bin_add_many(GST_BIN(gcc->priv->encoder_bin), muxer, gcc->priv->filesink, NULL);
-  gst_element_link(muxer, gcc->priv->filesink);
+  gst_bin_add_many (GST_BIN (gcc->priv->encoder_bin), muxer,
+      gcc->priv->filesink, NULL);
+  gst_element_link (muxer, gcc->priv->filesink);
 
   /* Create ghost pads */
   v_sink_pad = gst_element_get_request_pad (muxer, "video_%d");
-  gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("video", v_sink_pad));
+  gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("video",
+          v_sink_pad));
   gst_object_unref (v_sink_pad);
 
   if (gcc->priv->audio_enabled) {
@@ -414,13 +417,14 @@ gst_camera_capturer_create_remuxer_bin (GstCameraCapturer *gcc)
 
     /* Create ghost pads */
     a_sink_pad = gst_element_get_request_pad (muxer, "audio_%d");
-    gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("audio", a_sink_pad));
+    gst_element_add_pad (gcc->priv->encoder_bin, gst_ghost_pad_new ("audio",
+            a_sink_pad));
     gst_object_unref (GST_OBJECT (v_sink_pad));
   }
 }
 
 static GstElement *
-gst_camera_capturer_prepare_raw_source (GstCameraCapturer *gcc)
+gst_camera_capturer_prepare_raw_source (GstCameraCapturer * gcc)
 {
   GstElement *bin, *v_identity;
   GstPad *video_pad, *src_pad;
@@ -443,13 +447,13 @@ gst_camera_capturer_prepare_raw_source (GstCameraCapturer *gcc)
   gst_element_add_pad (bin, gst_ghost_pad_new ("sink", src_pad));
   gst_object_unref (GST_OBJECT (src_pad));
 
-  gst_camera_capturer_create_encoder_bin(gcc);
+  gst_camera_capturer_create_encoder_bin (gcc);
 
   return bin;
 }
 
 static GstElement *
-gst_camera_capturer_prepare_uri_source (GstCameraCapturer *gcc)
+gst_camera_capturer_prepare_uri_source (GstCameraCapturer * gcc)
 {
   GstElement *bin, *decodebin, *identity;
   GstPad *video_pad;
@@ -488,13 +492,13 @@ gst_camera_capturer_prepare_uri_source (GstCameraCapturer *gcc)
 
   g_signal_connect (decodebin, "pad-added", G_CALLBACK (cb_new_pad), gcc);
 
-  gst_camera_capturer_create_encoder_bin(gcc);
+  gst_camera_capturer_create_encoder_bin (gcc);
 
   return bin;
 }
 
 static GstElement *
-gst_camera_capturer_prepare_dv_source (GstCameraCapturer *gcc)
+gst_camera_capturer_prepare_dv_source (GstCameraCapturer * gcc)
 {
   GstElement *bin, *decodebin, *colorspace, *deinterlacer;
   GstPad *video_pad, *src_pad;
@@ -536,15 +540,15 @@ gst_camera_capturer_prepare_dv_source (GstCameraCapturer *gcc)
 
   g_signal_connect (decodebin, "pad-added", G_CALLBACK (cb_new_pad), gcc);
 
-  gst_camera_capturer_create_encoder_bin(gcc);
+  gst_camera_capturer_create_encoder_bin (gcc);
 
   return bin;
 }
 
 static GstElement *
-gst_camera_capturer_prepare_mpegts_source (GstCameraCapturer *gcc)
+gst_camera_capturer_prepare_mpegts_source (GstCameraCapturer * gcc)
 {
-  GstElement *bin, *demuxer,  *video, *video_parser;
+  GstElement *bin, *demuxer, *video, *video_parser;
   GstPad *video_pad, *src_pad;
 
   GST_INFO_OBJECT (gcc, "Creating mpegts source");
@@ -558,10 +562,12 @@ gst_camera_capturer_prepare_mpegts_source (GstCameraCapturer *gcc)
   demuxer = gst_element_factory_make ("mpegtsdemux", NULL);
   video_parser = gst_element_factory_make ("h264parse", "video-pad");
   video = gst_element_factory_make ("capsfilter", NULL);
-  g_object_set(video, "caps", gst_caps_from_string("video/x-h264, stream-format=avc, alignment=au"), NULL);
+  g_object_set (video, "caps",
+      gst_caps_from_string ("video/x-h264, stream-format=avc, alignment=au"),
+      NULL);
 
   gst_bin_add_many (GST_BIN (bin), demuxer, video_parser, video, NULL);
-  gst_element_link(video_parser, video);
+  gst_element_link (video_parser, video);
 
   /* add ghostpad */
   video_pad = gst_element_get_static_pad (video, "src");
@@ -587,14 +593,14 @@ gst_camera_capturer_prepare_mpegts_source (GstCameraCapturer *gcc)
 
   g_signal_connect (demuxer, "pad-added", G_CALLBACK (cb_new_pad), gcc);
 
-  gst_camera_capturer_create_remuxer_bin(gcc);
+  gst_camera_capturer_create_remuxer_bin (gcc);
 
   return bin;
 }
 
 static gboolean
-gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
-    GstBuffer *prev_buf, gboolean is_video)
+gst_camera_capturer_encoding_retimestamper (GstCameraCapturer * gcc,
+    GstBuffer * prev_buf, gboolean is_video)
 {
   GstClockTime buf_ts, new_buf_ts, duration;
   GstBuffer *enc_buf;
@@ -603,22 +609,24 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
 
   if (!gcc->priv->is_recording) {
     /* Drop buffers if we are not recording */
-    GST_LOG_OBJECT (gcc, "Dropping buffer on %s pad", is_video ? "video": "audio");
+    GST_LOG_OBJECT (gcc, "Dropping buffer on %s pad",
+        is_video ? "video" : "audio");
     goto done;
   }
 
   /* If we are just remuxing, drop everything until we see a keyframe */
   if (gcc->priv->video_needs_keyframe_sync && !gcc->priv->video_synced) {
-    if (is_video && !GST_BUFFER_FLAG_IS_SET(prev_buf, GST_BUFFER_FLAG_DELTA_UNIT)) {
+    if (is_video
+        && !GST_BUFFER_FLAG_IS_SET (prev_buf, GST_BUFFER_FLAG_DELTA_UNIT)) {
       gcc->priv->video_synced = TRUE;
     } else {
       GST_LOG_OBJECT (gcc, "Waiting for a keyframe, "
-          "dropping buffer on %s pad", is_video ? "video": "audio");
+          "dropping buffer on %s pad", is_video ? "video" : "audio");
       goto done;
     }
   }
 
-  enc_buf = gst_buffer_create_sub (prev_buf, 0, GST_BUFFER_SIZE(prev_buf));
+  enc_buf = gst_buffer_create_sub (prev_buf, 0, GST_BUFFER_SIZE (prev_buf));
   buf_ts = GST_BUFFER_TIMESTAMP (prev_buf);
   duration = GST_BUFFER_DURATION (prev_buf);
   if (duration == GST_CLOCK_TIME_NONE)
@@ -626,11 +634,11 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
 
   /* Check if it's the first buffer after starting or restarting the capture
    * and update the timestamps accordingly */
-  if (G_UNLIKELY(gcc->priv->current_recording_start_ts == GST_CLOCK_TIME_NONE)) {
+  if (G_UNLIKELY (gcc->priv->current_recording_start_ts == GST_CLOCK_TIME_NONE)) {
     gcc->priv->current_recording_start_ts = buf_ts;
     gcc->priv->last_accum_recorded_ts = gcc->priv->accum_recorded_ts;
     GST_INFO_OBJECT (gcc, "Starting recording at %" GST_TIME_FORMAT,
-        GST_TIME_ARGS(gcc->priv->last_accum_recorded_ts));
+        GST_TIME_ARGS (gcc->priv->last_accum_recorded_ts));
   }
 
   /* Clip buffers that are not in the segment */
@@ -642,7 +650,9 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
   if (buf_ts != GST_CLOCK_TIME_NONE) {
     /* Get the buffer timestamp with respect of the encoding time and not
      * the playing time for a continous stream in the encoders input */
-    new_buf_ts = buf_ts - gcc->priv->current_recording_start_ts + gcc->priv->last_accum_recorded_ts;
+    new_buf_ts =
+        buf_ts - gcc->priv->current_recording_start_ts +
+        gcc->priv->last_accum_recorded_ts;
 
     /* Store the last timestamp seen on this pad */
     if (is_video)
@@ -665,14 +675,15 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
 
   GST_BUFFER_TIMESTAMP (enc_buf) = new_buf_ts;
 
-  GST_LOG_OBJECT(gcc, "Pushing %s frame to the encoder in ts:% " GST_TIME_FORMAT
-      " out ts: %" GST_TIME_FORMAT, is_video ? "video": "audio",
-      GST_TIME_ARGS(buf_ts), GST_TIME_ARGS(new_buf_ts));
+  GST_LOG_OBJECT (gcc,
+      "Pushing %s frame to the encoder in ts:% " GST_TIME_FORMAT " out ts: %"
+      GST_TIME_FORMAT, is_video ? "video" : "audio", GST_TIME_ARGS (buf_ts),
+      GST_TIME_ARGS (new_buf_ts));
 
   if (is_video)
-    gst_app_src_push_buffer(GST_APP_SRC(gcc->priv->video_appsrc), enc_buf);
+    gst_app_src_push_buffer (GST_APP_SRC (gcc->priv->video_appsrc), enc_buf);
   else
-    gst_app_src_push_buffer(GST_APP_SRC(gcc->priv->audio_appsrc), enc_buf);
+    gst_app_src_push_buffer (GST_APP_SRC (gcc->priv->audio_appsrc), enc_buf);
 
 done:
   {
@@ -682,21 +693,21 @@ done:
 }
 
 static gboolean
-gst_camera_capturer_audio_encoding_probe (GstPad *pad, GstBuffer *buf,
-    GstCameraCapturer *gcc)
+gst_camera_capturer_audio_encoding_probe (GstPad * pad, GstBuffer * buf,
+    GstCameraCapturer * gcc)
 {
-  return gst_camera_capturer_encoding_retimestamper(gcc, buf, FALSE);
+  return gst_camera_capturer_encoding_retimestamper (gcc, buf, FALSE);
 }
 
 static gboolean
-gst_camera_capturer_video_encoding_probe (GstPad *pad, GstBuffer *buf,
-    GstCameraCapturer *gcc)
+gst_camera_capturer_video_encoding_probe (GstPad * pad, GstBuffer * buf,
+    GstCameraCapturer * gcc)
 {
-  return gst_camera_capturer_encoding_retimestamper(gcc, buf, TRUE);
+  return gst_camera_capturer_encoding_retimestamper (gcc, buf, TRUE);
 }
 
 static void
-gst_camera_capturer_create_decoder_bin (GstCameraCapturer *gcc)
+gst_camera_capturer_create_decoder_bin (GstCameraCapturer * gcc)
 {
   /*    decoder --> video_preview_queue
    *            |
@@ -710,261 +721,281 @@ gst_camera_capturer_create_decoder_bin (GstCameraCapturer *gcc)
   GstPad *v_dec_pad, *v_queue_pad, *v_prev_queue_pad;
   GstPad *dec_sink_pad;
 
-  GST_INFO_OBJECT(gcc, "Creating decoder bin");
+  GST_INFO_OBJECT (gcc, "Creating decoder bin");
   decoder_bin = gcc->priv->source_decoder_bin;
   /* Create elements */
-  gcc->priv->decoder_bin = gst_bin_new("decoder_bin");
-  v_queue = gst_element_factory_make("queue2", "video-queue");
-  gcc->priv->video_appsrc = gst_element_factory_make("appsrc", "video-appsrc");
-  v_prev_queue = gst_element_factory_make("queue2", "video-preview-queue");
+  gcc->priv->decoder_bin = gst_bin_new ("decoder_bin");
+  v_queue = gst_element_factory_make ("queue2", "video-queue");
+  gcc->priv->video_appsrc = gst_element_factory_make ("appsrc", "video-appsrc");
+  v_prev_queue = gst_element_factory_make ("queue2", "video-preview-queue");
 
-  g_object_set(v_queue, "max-size-time", 1 * GST_SECOND, NULL);
-  g_object_set(v_prev_queue, "max-size-bytes", 0,  NULL);
+  g_object_set (v_queue, "max-size-time", 1 * GST_SECOND, NULL);
+  g_object_set (v_prev_queue, "max-size-bytes", 0, NULL);
 
-  gst_bin_add_many(GST_BIN(gcc->priv->decoder_bin), decoder_bin, v_queue,
+  gst_bin_add_many (GST_BIN (gcc->priv->decoder_bin), decoder_bin, v_queue,
       gcc->priv->video_appsrc, v_prev_queue, NULL);
 
   /* link decoder to the preview-queue */
-  v_dec_pad = gst_element_get_static_pad(decoder_bin, "video");
-  v_prev_queue_pad = gst_element_get_static_pad(v_prev_queue, "sink");
-  gst_pad_link(v_dec_pad, v_prev_queue_pad);
-  gst_object_unref(v_dec_pad);
-  gst_object_unref(v_prev_queue_pad);
+  v_dec_pad = gst_element_get_static_pad (decoder_bin, "video");
+  v_prev_queue_pad = gst_element_get_static_pad (v_prev_queue, "sink");
+  gst_pad_link (v_dec_pad, v_prev_queue_pad);
+  gst_object_unref (v_dec_pad);
+  gst_object_unref (v_prev_queue_pad);
 
   /* Link appsrc */
   gst_element_link (gcc->priv->video_appsrc, v_queue);
 
   /* Create ghost pads */
-  v_queue_pad = gst_element_get_static_pad(v_queue, "src");
-  v_prev_queue_pad = gst_element_get_static_pad(v_prev_queue, "src");
-  gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("video", v_queue_pad));
-  gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("video_preview", v_prev_queue_pad));
-  gst_object_unref(v_queue_pad);
-  gst_object_unref(v_prev_queue_pad);
+  v_queue_pad = gst_element_get_static_pad (v_queue, "src");
+  v_prev_queue_pad = gst_element_get_static_pad (v_prev_queue, "src");
+  gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("video",
+          v_queue_pad));
+  gst_element_add_pad (gcc->priv->decoder_bin,
+      gst_ghost_pad_new ("video_preview", v_prev_queue_pad));
+  gst_object_unref (v_queue_pad);
+  gst_object_unref (v_prev_queue_pad);
 
   /* Create the sink ghost pad, not needed for URI's */
-  dec_sink_pad = gst_element_get_static_pad(decoder_bin, "sink");
+  dec_sink_pad = gst_element_get_static_pad (decoder_bin, "sink");
   if (dec_sink_pad) {
-    gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("sink", dec_sink_pad));
-    gst_object_unref(dec_sink_pad);
+    gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("sink",
+            dec_sink_pad));
+    gst_object_unref (dec_sink_pad);
   }
 
   /* Add pad probes for the encoding branch */
-  v_prev_queue_pad = gst_element_get_static_pad(v_prev_queue, "src");
-  gst_pad_add_buffer_probe(v_prev_queue_pad, (GCallback) gst_camera_capturer_video_encoding_probe, gcc);
-  gst_object_unref(v_prev_queue_pad);
+  v_prev_queue_pad = gst_element_get_static_pad (v_prev_queue, "src");
+  gst_pad_add_buffer_probe (v_prev_queue_pad,
+      (GCallback) gst_camera_capturer_video_encoding_probe, gcc);
+  gst_object_unref (v_prev_queue_pad);
   if (gcc->priv->audio_enabled) {
     GstElement *a_queue, *a_prev_queue;
     GstPad *a_dec_pad, *a_queue_pad, *a_prev_queue_pad;
 
     /* Create elements */
-    gcc->priv->audio_appsrc = gst_element_factory_make("appsrc", "video-appsrc");
-    a_queue = gst_element_factory_make("queue2", "audio-queue");
-    a_prev_queue = gst_element_factory_make("queue2", "audio-preview-queue");
+    gcc->priv->audio_appsrc =
+        gst_element_factory_make ("appsrc", "video-appsrc");
+    a_queue = gst_element_factory_make ("queue2", "audio-queue");
+    a_prev_queue = gst_element_factory_make ("queue2", "audio-preview-queue");
 
-    g_object_set(a_queue, "max-size-time", 1 * GST_SECOND,  NULL);
+    g_object_set (a_queue, "max-size-time", 1 * GST_SECOND, NULL);
 
-    gst_bin_add_many(GST_BIN(gcc->priv->decoder_bin), gcc->priv->audio_appsrc, a_queue,
-        a_prev_queue, NULL);
+    gst_bin_add_many (GST_BIN (gcc->priv->decoder_bin), gcc->priv->audio_appsrc,
+        a_queue, a_prev_queue, NULL);
 
     /* Link appsrc to the queue */
-    gst_element_link(gcc->priv->audio_appsrc, a_queue);
+    gst_element_link (gcc->priv->audio_appsrc, a_queue);
 
     /* link decoder to the queue */
-    a_dec_pad = gst_element_get_static_pad(decoder_bin, "audio");
-    a_prev_queue_pad = gst_element_get_static_pad(a_prev_queue, "sink");
-    gst_pad_link(a_dec_pad, a_prev_queue_pad);
-    gst_object_unref(a_dec_pad);
-    gst_object_unref(a_prev_queue_pad);
+    a_dec_pad = gst_element_get_static_pad (decoder_bin, "audio");
+    a_prev_queue_pad = gst_element_get_static_pad (a_prev_queue, "sink");
+    gst_pad_link (a_dec_pad, a_prev_queue_pad);
+    gst_object_unref (a_dec_pad);
+    gst_object_unref (a_prev_queue_pad);
 
     /* Create ghost pads */
-    a_queue_pad = gst_element_get_static_pad(a_queue, "src");
-    a_prev_queue_pad = gst_element_get_static_pad(a_prev_queue, "src");
-    gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("audio", a_queue_pad));
-    gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("audio_preview", a_prev_queue_pad));
-    gst_object_unref(a_queue_pad);
-    gst_object_unref(a_prev_queue_pad);
+    a_queue_pad = gst_element_get_static_pad (a_queue, "src");
+    a_prev_queue_pad = gst_element_get_static_pad (a_prev_queue, "src");
+    gst_element_add_pad (gcc->priv->decoder_bin, gst_ghost_pad_new ("audio",
+            a_queue_pad));
+    gst_element_add_pad (gcc->priv->decoder_bin,
+        gst_ghost_pad_new ("audio_preview", a_prev_queue_pad));
+    gst_object_unref (a_queue_pad);
+    gst_object_unref (a_prev_queue_pad);
 
     /* Add pad probes for the encoding branch */
-    a_prev_queue_pad = gst_element_get_static_pad(a_prev_queue, "src");
-    gst_pad_add_buffer_probe(a_prev_queue_pad, (GCallback) gst_camera_capturer_audio_encoding_probe, gcc);
-    gst_object_unref(a_prev_queue_pad);
+    a_prev_queue_pad = gst_element_get_static_pad (a_prev_queue, "src");
+    gst_pad_add_buffer_probe (a_prev_queue_pad,
+        (GCallback) gst_camera_capturer_audio_encoding_probe, gcc);
+    gst_object_unref (a_prev_queue_pad);
   }
 }
 
 static void
-gst_camera_capturer_link_encoder_bin (GstCameraCapturer *gcc)
+gst_camera_capturer_link_encoder_bin (GstCameraCapturer * gcc)
 {
   GstPad *v_dec_pad, *v_enc_pad;
 
-  GST_INFO_OBJECT(gcc, "Linking encoder bin");
+  GST_INFO_OBJECT (gcc, "Linking encoder bin");
 
-  gst_bin_add(GST_BIN(gcc->priv->main_pipeline), gcc->priv->encoder_bin);
+  gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->encoder_bin);
 
-  v_dec_pad = gst_element_get_static_pad(gcc->priv->decoder_bin, "video");
-  v_enc_pad = gst_element_get_static_pad(gcc->priv->encoder_bin, "video");
-  gst_pad_link(v_dec_pad, v_enc_pad);
-  gst_object_unref(v_dec_pad);
-  gst_object_unref(v_enc_pad);
+  v_dec_pad = gst_element_get_static_pad (gcc->priv->decoder_bin, "video");
+  v_enc_pad = gst_element_get_static_pad (gcc->priv->encoder_bin, "video");
+  gst_pad_link (v_dec_pad, v_enc_pad);
+  gst_object_unref (v_dec_pad);
+  gst_object_unref (v_enc_pad);
 
   if (gcc->priv->audio_enabled) {
     GstPad *a_dec_pad, *a_enc_pad;
 
-    a_dec_pad = gst_element_get_static_pad(gcc->priv->decoder_bin, "audio");
-    a_enc_pad = gst_element_get_static_pad(gcc->priv->encoder_bin, "audio");
-    gst_pad_link(a_dec_pad, a_enc_pad);
-    gst_object_unref(a_dec_pad);
-    gst_object_unref(a_enc_pad);
+    a_dec_pad = gst_element_get_static_pad (gcc->priv->decoder_bin, "audio");
+    a_enc_pad = gst_element_get_static_pad (gcc->priv->encoder_bin, "audio");
+    gst_pad_link (a_dec_pad, a_enc_pad);
+    gst_object_unref (a_dec_pad);
+    gst_object_unref (a_enc_pad);
   }
 
-  gst_element_set_state(gcc->priv->encoder_bin, GST_STATE_PLAYING);
+  gst_element_set_state (gcc->priv->encoder_bin, GST_STATE_PLAYING);
 }
 
 static void
-gst_camera_capturer_link_preview (GstCameraCapturer *gcc)
+gst_camera_capturer_link_preview (GstCameraCapturer * gcc)
 {
   GstPad *v_dec_prev_pad, *v_prev_pad;
 
-  GST_INFO_OBJECT(gcc, "Linking preview bin");
+  GST_INFO_OBJECT (gcc, "Linking preview bin");
 
-  gst_bin_add(GST_BIN(gcc->priv->main_pipeline), gcc->priv->decoder_bin);
+  gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->decoder_bin);
 
   if (gcc->priv->source_bin != NULL)
-    gst_element_link(gcc->priv->source_bin, gcc->priv->decoder_bin);
+    gst_element_link (gcc->priv->source_bin, gcc->priv->decoder_bin);
 
-  v_dec_prev_pad = gst_element_get_static_pad(gcc->priv->decoder_bin, "video_preview");
-  v_prev_pad = gst_element_get_static_pad(gcc->priv->preview_bin, "video");
+  v_dec_prev_pad =
+      gst_element_get_static_pad (gcc->priv->decoder_bin, "video_preview");
+  v_prev_pad = gst_element_get_static_pad (gcc->priv->preview_bin, "video");
 
-  gst_pad_link(v_dec_prev_pad, v_prev_pad);
+  gst_pad_link (v_dec_prev_pad, v_prev_pad);
 
-  gst_object_unref(v_dec_prev_pad);
-  gst_object_unref(v_prev_pad);
+  gst_object_unref (v_dec_prev_pad);
+  gst_object_unref (v_prev_pad);
 
   if (gcc->priv->audio_enabled) {
     GstPad *a_dec_prev_pad, *a_prev_pad;
 
-    a_dec_prev_pad = gst_element_get_static_pad(gcc->priv->decoder_bin, "audio_preview");
-    a_prev_pad = gst_element_get_static_pad(gcc->priv->preview_bin, "audio");
+    a_dec_prev_pad =
+        gst_element_get_static_pad (gcc->priv->decoder_bin, "audio_preview");
+    a_prev_pad = gst_element_get_static_pad (gcc->priv->preview_bin, "audio");
 
-    gst_pad_link(a_dec_prev_pad, a_prev_pad);
+    gst_pad_link (a_dec_prev_pad, a_prev_pad);
 
-    gst_object_unref(a_dec_prev_pad);
-    gst_object_unref(a_prev_pad);
+    gst_object_unref (a_dec_prev_pad);
+    gst_object_unref (a_prev_pad);
   }
-  gst_element_set_state(gcc->priv->decoder_bin, GST_STATE_PLAYING);
+  gst_element_set_state (gcc->priv->decoder_bin, GST_STATE_PLAYING);
 }
 
 static gboolean
-cb_last_buffer (GstPad *pad, GstBuffer *buf, GstCameraCapturer *gcc){
+cb_last_buffer (GstPad * pad, GstBuffer * buf, GstCameraCapturer * gcc)
+{
   if (buf != NULL) {
     if (gcc->priv->last_buffer != NULL) {
-      gst_buffer_unref(gcc->priv->last_buffer);
+      gst_buffer_unref (gcc->priv->last_buffer);
     }
-    gcc->priv->last_buffer =  gst_buffer_ref(buf);
+    gcc->priv->last_buffer = gst_buffer_ref (buf);
   }
   return TRUE;
 }
 
 static void
-cb_new_prev_pad (GstElement * element, GstPad * pad, GstElement *bin)
+cb_new_prev_pad (GstElement * element, GstPad * pad, GstElement * bin)
 {
   GstPad *sink_pad;
 
-  sink_pad = gst_element_get_static_pad(bin, "sink");
-  gst_pad_link(pad, sink_pad);
-  gst_object_unref(sink_pad);
+  sink_pad = gst_element_get_static_pad (bin, "sink");
+  gst_pad_link (pad, sink_pad);
+  gst_object_unref (sink_pad);
 }
 
 static void
-gst_camera_capturer_create_preview(GstCameraCapturer *gcc)
+gst_camera_capturer_create_preview (GstCameraCapturer * gcc)
 {
   GstElement *v_decoder, *video_bin;
   GstPad *video_pad;
 
-  v_decoder = gst_element_factory_make("decodebin2", "preview-decoder");
+  v_decoder = gst_element_factory_make ("decodebin2", "preview-decoder");
 
-  video_bin = gst_parse_bin_from_description(
-      "videoscale ! ffmpegcolorspace ! " DEFAULT_VIDEO_SINK " name=videosink sync=false", TRUE, NULL);
+  video_bin =
+      gst_parse_bin_from_description ("videoscale ! ffmpegcolorspace ! "
+      DEFAULT_VIDEO_SINK " name=videosink sync=false", TRUE, NULL);
 
-  gcc->priv->preview_bin = gst_bin_new("preview_bin");
-  gst_bin_add_many (GST_BIN(gcc->priv->preview_bin), v_decoder, video_bin, NULL);
+  gcc->priv->preview_bin = gst_bin_new ("preview_bin");
+  gst_bin_add_many (GST_BIN (gcc->priv->preview_bin), v_decoder, video_bin,
+      NULL);
 
-  g_signal_connect (v_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad), video_bin);
+  g_signal_connect (v_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad),
+      video_bin);
 
-  video_pad = gst_element_get_static_pad(video_bin, "sink");
+  video_pad = gst_element_get_static_pad (video_bin, "sink");
   g_signal_connect (video_pad, "notify::caps",
       G_CALLBACK (gcc_get_video_stream_info), gcc);
   gst_pad_add_buffer_probe (video_pad, (GCallback) cb_last_buffer, gcc);
-  gst_object_unref(video_pad);
+  gst_object_unref (video_pad);
 
   /* Create ghost pads */
   video_pad = gst_element_get_static_pad (v_decoder, "sink");
-  gst_element_add_pad (gcc->priv->preview_bin, gst_ghost_pad_new ("video", video_pad));
+  gst_element_add_pad (gcc->priv->preview_bin, gst_ghost_pad_new ("video",
+          video_pad));
   gst_object_unref (GST_OBJECT (video_pad));
 
   if (gcc->priv->audio_enabled) {
     GstElement *a_decoder, *audio_bin;
     GstPad *audio_pad;
 
-    a_decoder = gst_element_factory_make("decodebin2", NULL);
+    a_decoder = gst_element_factory_make ("decodebin2", NULL);
 
-    audio_bin = gst_parse_bin_from_description(
-        "audioconvert ! audioresample ! autoaudiosink name=audiosink", TRUE, NULL);
+    audio_bin =
+        gst_parse_bin_from_description
+        ("audioconvert ! audioresample ! autoaudiosink name=audiosink", TRUE,
+        NULL);
 
-    gst_bin_add_many (GST_BIN(gcc->priv->preview_bin), a_decoder, audio_bin, NULL);
+    gst_bin_add_many (GST_BIN (gcc->priv->preview_bin), a_decoder, audio_bin,
+        NULL);
 
-    g_signal_connect (a_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad), audio_bin);
+    g_signal_connect (a_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad),
+        audio_bin);
 
     /* Create ghost pads */
     audio_pad = gst_element_get_static_pad (a_decoder, "sink");
-    gst_element_add_pad (gcc->priv->preview_bin, gst_ghost_pad_new ("audio", audio_pad));
+    gst_element_add_pad (gcc->priv->preview_bin, gst_ghost_pad_new ("audio",
+            audio_pad));
     gst_object_unref (GST_OBJECT (audio_pad));
   }
 
-  gst_bin_add(GST_BIN(gcc->priv->main_pipeline), gcc->priv->preview_bin);
-  gst_element_set_state(gcc->priv->preview_bin, GST_STATE_PLAYING);
+  gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->preview_bin);
+  gst_element_set_state (gcc->priv->preview_bin, GST_STATE_PLAYING);
 }
 
 static void
-gst_camera_capturer_create_remainig (GstCameraCapturer *gcc)
+gst_camera_capturer_create_remainig (GstCameraCapturer * gcc)
 {
-  gst_camera_capturer_create_decoder_bin(gcc);
-  gst_camera_capturer_create_preview(gcc);
+  gst_camera_capturer_create_decoder_bin (gcc);
+  gst_camera_capturer_create_preview (gcc);
 
-  gst_camera_capturer_link_preview(gcc);
-  gst_element_set_state(gcc->priv->main_pipeline, GST_STATE_PLAYING);
+  gst_camera_capturer_link_preview (gcc);
+  gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
 }
 
 static gboolean
-gst_camera_capturer_have_type_cb (GstElement *typefind, guint prob,
-    GstCaps *caps, GstCameraCapturer *gcc)
+gst_camera_capturer_have_type_cb (GstElement * typefind, guint prob,
+    GstCaps * caps, GstCameraCapturer * gcc)
 {
   GstCaps *media_caps;
   GstElement *decoder_bin = NULL;
 
-  GST_INFO_OBJECT (gcc, "Found type with caps %s", gst_caps_to_string(caps));
+  GST_INFO_OBJECT (gcc, "Found type with caps %s", gst_caps_to_string (caps));
 
   /* Check for DV streams */
-  media_caps = gst_caps_from_string("video/x-dv, systemstream=true");
+  media_caps = gst_caps_from_string ("video/x-dv, systemstream=true");
 
-  if (gst_caps_can_intersect(caps, media_caps)) {
-    decoder_bin = gst_camera_capturer_prepare_dv_source(gcc);
-    gst_caps_unref(media_caps);
+  if (gst_caps_can_intersect (caps, media_caps)) {
+    decoder_bin = gst_camera_capturer_prepare_dv_source (gcc);
+    gst_caps_unref (media_caps);
   }
 
   /* Check for MPEG-TS streams */
-  media_caps = gst_caps_from_string("video/mpegts");
-  if (gst_caps_can_intersect(caps, media_caps)) {
-    decoder_bin = gst_camera_capturer_prepare_mpegts_source(gcc);
-    gst_caps_unref(media_caps);
+  media_caps = gst_caps_from_string ("video/mpegts");
+  if (gst_caps_can_intersect (caps, media_caps)) {
+    decoder_bin = gst_camera_capturer_prepare_mpegts_source (gcc);
+    gst_caps_unref (media_caps);
   }
 
   /* Check for Raw streams */
   media_caps = gst_caps_from_string ("video/x-raw-rgb; video/x-raw-yuv");
-  if (gst_caps_can_intersect(caps, media_caps)) {
+  if (gst_caps_can_intersect (caps, media_caps)) {
     gcc->priv->audio_enabled = FALSE;
-    decoder_bin = gst_camera_capturer_prepare_raw_source(gcc);
-    gst_caps_unref(media_caps);
+    decoder_bin = gst_camera_capturer_prepare_raw_source (gcc);
+    gst_caps_unref (media_caps);
   }
 
   if (decoder_bin != NULL) {
@@ -988,43 +1019,44 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
 
   switch (type) {
     case CAPTURE_SOURCE_TYPE_DV:
-      GST_INFO_OBJECT(gcc, "Creating dv video source");
+      GST_INFO_OBJECT (gcc, "Creating dv video source");
       break;
     case CAPTURE_SOURCE_TYPE_SYSTEM:
-      GST_INFO_OBJECT(gcc, "Creating system video source");
+      GST_INFO_OBJECT (gcc, "Creating system video source");
       break;
     case CAPTURE_SOURCE_TYPE_URI:
       /* We don't use any source element for URI's, just a uridecodebin element
        * which goes in the decoder bin */
-      GST_INFO_OBJECT(gcc, "Skippinig creation of video source for URI");
+      GST_INFO_OBJECT (gcc, "Skippinig creation of video source for URI");
       gcc->priv->source_bin = NULL;
       gst_camera_capturer_prepare_uri_source (gcc);
       gst_camera_capturer_create_remainig (gcc);
       return TRUE;
     case CAPTURE_SOURCE_TYPE_FILE:
-      GST_INFO_OBJECT(gcc, "Creating file video source");
+      GST_INFO_OBJECT (gcc, "Creating file video source");
       gcc->priv->source_element_name = g_strdup ("filesrc");
       break;
     default:
-      g_assert_not_reached();
+      g_assert_not_reached ();
   }
 
   /* HACK: dshowvideosrc's device must be set before linking the element
    * since the device is set in getcaps and can't be changed later */
   if (!g_strcmp0 (gcc->priv->source_element_name, "dshowvideosrc")) {
-    source_str = g_strdup_printf("%s device-name=\"%s\" name=source ! "
+    source_str = g_strdup_printf ("%s device-name=\"%s\" name=source ! "
         "video/x-raw-yuv; video/x-raw-rgb; "
         "video/x-dv, systemstream=(boolean)True "
         "! typefind name=typefind", gcc->priv->source_element_name,
         gcc->priv->device_id);
   } else {
-    source_str = g_strdup_printf("%s name=source %s ! typefind name=typefind",
+    source_str = g_strdup_printf ("%s name=source %s ! typefind name=typefind",
         gcc->priv->source_element_name, filter);
   }
 
-  GST_INFO_OBJECT(gcc, "Created video source %s", source_str);
-  gcc->priv->source_bin = gst_parse_bin_from_description(source_str, TRUE, NULL);
-  g_free(source_str);
+  GST_INFO_OBJECT (gcc, "Created video source %s", source_str);
+  gcc->priv->source_bin =
+      gst_parse_bin_from_description (source_str, TRUE, NULL);
+  g_free (source_str);
   if (!gcc->priv->source_bin) {
     g_set_error (err,
         GCC_ERROR,
@@ -1035,14 +1067,16 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
     return FALSE;
   }
 
-  gcc->priv->source = gst_bin_get_by_name (GST_BIN(gcc->priv->source_bin), "source");
-  typefind = gst_bin_get_by_name (GST_BIN(gcc->priv->source_bin), "typefind");
+  gcc->priv->source =
+      gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin), "source");
+  typefind = gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin), "typefind");
   g_signal_connect (typefind, "have-type",
       G_CALLBACK (gst_camera_capturer_have_type_cb), gcc);
 
-  gst_camera_capturer_update_device_id(gcc);
+  gst_camera_capturer_update_device_id (gcc);
 
-  GST_INFO_OBJECT(gcc, "Created video source %s", gcc->priv->source_element_name);
+  GST_INFO_OBJECT (gcc, "Created video source %s",
+      gcc->priv->source_element_name);
 
   gst_object_unref (gcc->priv->source);
   gst_object_unref (typefind);
@@ -1109,38 +1143,38 @@ gst_camera_capturer_create_video_muxer (GstCameraCapturer * gcc,
 }
 
 static void
-gst_camera_capturer_initialize (GstCameraCapturer *gcc)
+gst_camera_capturer_initialize (GstCameraCapturer * gcc)
 {
-  GError *err= NULL;
+  GError *err = NULL;
 
   GST_INFO_OBJECT (gcc, "Initializing encoders");
-  if (!gst_camera_capturer_create_video_encoder(gcc,
-        gcc->priv->video_encoder_type, &err))
+  if (!gst_camera_capturer_create_video_encoder (gcc,
+          gcc->priv->video_encoder_type, &err))
     goto missing_plugin;
-  if (!gst_camera_capturer_create_audio_encoder(gcc,
-        gcc->priv->audio_encoder_type, &err))
+  if (!gst_camera_capturer_create_audio_encoder (gcc,
+          gcc->priv->audio_encoder_type, &err))
     goto missing_plugin;
-  if (!gst_camera_capturer_create_video_muxer(gcc,
-        gcc->priv->video_muxer_type, &err))
+  if (!gst_camera_capturer_create_video_muxer (gcc,
+          gcc->priv->video_muxer_type, &err))
     goto missing_plugin;
 
   GST_INFO_OBJECT (gcc, "Initializing source");
-  if (!gst_camera_capturer_create_video_source(gcc,
-        gcc->priv->source_type, &err))
+  if (!gst_camera_capturer_create_video_source (gcc,
+          gcc->priv->source_type, &err))
     goto missing_plugin;
 
   /* add the source element */
   if (gcc->priv->source_bin)
-    gst_bin_add(GST_BIN(gcc->priv->main_pipeline), gcc->priv->source_bin);
+    gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->source_bin);
   return;
 
 missing_plugin:
-    g_signal_emit (gcc, gcc_signals[SIGNAL_ERROR], 0, err->message);
-    g_error_free (err);
+  g_signal_emit (gcc, gcc_signals[SIGNAL_ERROR], 0, err->message);
+  g_error_free (err);
 }
 
 static void
-gcc_encoder_send_event (GstCameraCapturer *gcc, GstEvent *event)
+gcc_encoder_send_event (GstCameraCapturer * gcc, GstEvent * event)
 {
   GstPad *video_pad, *audio_pad;
 
@@ -1148,15 +1182,15 @@ gcc_encoder_send_event (GstCameraCapturer *gcc, GstEvent *event)
     return;
 
   if (gcc->priv->audio_enabled) {
-    gst_event_ref(event);
-    audio_pad = gst_element_get_static_pad(gcc->priv->encoder_bin, "audio");
-    gst_pad_send_event(audio_pad, event);
-    gst_object_unref(audio_pad);
+    gst_event_ref (event);
+    audio_pad = gst_element_get_static_pad (gcc->priv->encoder_bin, "audio");
+    gst_pad_send_event (audio_pad, event);
+    gst_object_unref (audio_pad);
   }
 
-  video_pad = gst_element_get_static_pad(gcc->priv->encoder_bin, "video");
-  gst_pad_send_event(video_pad, event);
-  gst_object_unref(video_pad);
+  video_pad = gst_element_get_static_pad (gcc->priv->encoder_bin, "video");
+  gst_pad_send_event (video_pad, event);
+  gst_object_unref (video_pad);
 }
 
 static void
@@ -1289,13 +1323,14 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_return_if_fail (gcc->priv->xoverlay != NULL);
     g_return_if_fail (gcc->priv->window_handle != 0);
 
-    g_object_set (GST_ELEMENT (gcc->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
+    g_object_set (GST_ELEMENT (gcc->priv->xoverlay), "force-aspect-ratio", TRUE,
+        NULL);
     lgm_set_window_handle (gcc->priv->xoverlay, gcc->priv->window_handle);
   }
 }
 
 static gboolean
-gcc_get_video_stream_info (GstPad *pad, GstPad *peer, GstCameraCapturer * gcc)
+gcc_get_video_stream_info (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
 {
   GstStructure *s;
   GstCaps *caps;
@@ -1388,13 +1423,13 @@ finish:
  * ****************************************/
 
 GList *
-gst_camera_capturer_enum_video_devices (const gchar *device)
+gst_camera_capturer_enum_video_devices (const gchar * device)
 {
   return gst_camera_capturer_enum_devices (device);
 }
 
 GList *
-gst_camera_capturer_enum_audio_devices (const gchar *device)
+gst_camera_capturer_enum_audio_devices (const gchar * device)
 {
   return gst_camera_capturer_enum_devices (device);
 }
@@ -1429,9 +1464,10 @@ gst_camera_capturer_start (GstCameraCapturer * gcc)
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
-  GST_INFO_OBJECT(gcc, "Started capture");
+  GST_INFO_OBJECT (gcc, "Started capture");
   g_mutex_lock (&gcc->priv->recording_lock);
-  if (!gcc->priv->is_recording && gcc->priv->accum_recorded_ts == GST_CLOCK_TIME_NONE) {
+  if (!gcc->priv->is_recording
+      && gcc->priv->accum_recorded_ts == GST_CLOCK_TIME_NONE) {
     gcc->priv->accum_recorded_ts = 0;
     gcc->priv->is_recording = TRUE;
     gst_camera_capturer_link_encoder_bin (gcc);
@@ -1455,7 +1491,8 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
   }
   g_mutex_unlock (&gcc->priv->recording_lock);
 
-  GST_INFO_OBJECT(gcc, "Capture state changed to %s", gcc->priv->is_recording ? "recording": "paused");
+  GST_INFO_OBJECT (gcc, "Capture state changed to %s",
+      gcc->priv->is_recording ? "recording" : "paused");
 }
 
 static void
@@ -1584,16 +1621,16 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
   //supports it. When a device is disconnected, the source is locked
   //in ::create(), blocking the streaming thread. We need to change its
   //state to null, this way camerabin doesn't block in ::do_stop().
-  gst_element_set_state(gcc->priv->source, GST_STATE_NULL);
+  gst_element_set_state (gcc->priv->source, GST_STATE_NULL);
 #endif
 
-  GST_INFO_OBJECT(gcc, "Closing capture");
+  GST_INFO_OBJECT (gcc, "Closing capture");
   g_mutex_lock (&gcc->priv->recording_lock);
   gcc->priv->closing_recording = TRUE;
   gcc->priv->is_recording = FALSE;
   g_mutex_unlock (&gcc->priv->recording_lock);
 
-  gcc_encoder_send_event(gcc, gst_event_new_eos());
+  gcc_encoder_send_event (gcc, gst_event_new_eos ());
 }
 
 void
@@ -1601,16 +1638,15 @@ gst_camera_capturer_expose (GstCameraCapturer * gcc)
 {
   g_return_if_fail (gcc != NULL);
 
-  if (gcc->priv->xoverlay != NULL &&
-      GST_IS_X_OVERLAY (gcc->priv->xoverlay)) {
+  if (gcc->priv->xoverlay != NULL && GST_IS_X_OVERLAY (gcc->priv->xoverlay)) {
     gst_x_overlay_expose (gcc->priv->xoverlay);
   }
 }
 
 void
-gst_camera_capturer_configure (GstCameraCapturer *gcc,
+gst_camera_capturer_configure (GstCameraCapturer * gcc,
     const gchar * filename, CaptureSourceType source,
-    const gchar *source_element, const gchar *device_id,
+    const gchar * source_element, const gchar * device_id,
     VideoEncoderType video_encoder, AudioEncoderType audio_encoder,
     VideoMuxerType muxer, guint video_bitrate, guint audio_bitrate,
     guint record_audio, guint output_width, guint output_height,

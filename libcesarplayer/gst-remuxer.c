@@ -83,8 +83,7 @@ gst_remuxer_init (GstRemuxer * object)
 {
   GstRemuxerPrivate *priv;
   object->priv = priv =
-      G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_REMUXER,
-      GstRemuxerPrivate);
+      G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_REMUXER, GstRemuxerPrivate);
 
   priv->input_file = NULL;
   priv->output_file = NULL;
@@ -107,7 +106,8 @@ gst_remuxer_finalize (GObject * object)
     gst_bus_set_flushing (remuxer->priv->bus, TRUE);
 
     if (remuxer->priv->sig_bus_async)
-      g_signal_handler_disconnect (remuxer->priv->bus, remuxer->priv->sig_bus_async);
+      g_signal_handler_disconnect (remuxer->priv->bus,
+          remuxer->priv->sig_bus_async);
 
     gst_object_unref (remuxer->priv->bus);
     remuxer->priv->bus = NULL;
@@ -125,8 +125,7 @@ gst_remuxer_finalize (GObject * object)
 
   if (remuxer->priv->main_pipeline != NULL
       && GST_IS_ELEMENT (remuxer->priv->main_pipeline)) {
-    gst_element_set_state (remuxer->priv->main_pipeline,
-        GST_STATE_NULL);
+    gst_element_set_state (remuxer->priv->main_pipeline, GST_STATE_NULL);
     gst_object_unref (remuxer->priv->main_pipeline);
     remuxer->priv->main_pipeline = NULL;
   }
@@ -149,18 +148,18 @@ gst_remuxer_class_init (GstRemuxerClass * klass)
   /* Signals */
   remuxer_signals[SIGNAL_ERROR] =
       g_signal_new ("error",
-        G_TYPE_FROM_CLASS (object_class),
-        G_SIGNAL_RUN_LAST,
-        G_STRUCT_OFFSET (GstRemuxerClass, error),
-        NULL, NULL,
-        g_cclosure_marshal_VOID__STRING, G_TYPE_NONE, 1, G_TYPE_STRING);
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstRemuxerClass, error),
+      NULL, NULL,
+      g_cclosure_marshal_VOID__STRING, G_TYPE_NONE, 1, G_TYPE_STRING);
 
   remuxer_signals[SIGNAL_PERCENT] =
       g_signal_new ("percent_completed",
-        G_TYPE_FROM_CLASS (object_class),
-        G_SIGNAL_RUN_LAST,
-        G_STRUCT_OFFSET (GstRemuxerClass, percent_completed),
-        NULL, NULL, g_cclosure_marshal_VOID__FLOAT, G_TYPE_NONE, 1, G_TYPE_FLOAT);
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstRemuxerClass, percent_completed),
+      NULL, NULL, g_cclosure_marshal_VOID__FLOAT, G_TYPE_NONE, 1, G_TYPE_FLOAT);
 }
 
 /***********************************
@@ -187,8 +186,7 @@ gst_remuxer_error_quark (void)
 }
 
 static GstElement *
-gst_remuxer_create_video_muxer (GstRemuxer * remuxer,
-    VideoMuxerType type)
+gst_remuxer_create_video_muxer (GstRemuxer * remuxer, VideoMuxerType type)
 {
   GstElement *muxer;
 
@@ -218,7 +216,7 @@ gst_remuxer_create_video_muxer (GstRemuxer * remuxer,
 }
 
 static gboolean
-gst_remuxer_fix_video_ts (GstPad *pad, GstBuffer *buf, GstRemuxer *remuxer)
+gst_remuxer_fix_video_ts (GstPad * pad, GstBuffer * buf, GstRemuxer * remuxer)
 {
   if (GST_BUFFER_TIMESTAMP (buf) == GST_CLOCK_TIME_NONE) {
     GST_BUFFER_TIMESTAMP (buf) = remuxer->priv->last_video_buf_ts;
@@ -229,8 +227,8 @@ gst_remuxer_fix_video_ts (GstPad *pad, GstBuffer *buf, GstRemuxer *remuxer)
 }
 
 static gboolean
-gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
-    GstRemuxer *remuxer)
+gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
+    GstRemuxer * remuxer)
 {
   GstElement *muxer, *queue;
   GstElement *parser = NULL;
@@ -251,11 +249,14 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
     if (g_strrstr (mime, "video/x-h264")) {
       GstPad *parser_pad;
 
-      parser = gst_element_factory_make("h264parse", "video-parser");
-      parser_caps = gst_caps_from_string("video/x-h264, stream-format=avc, alignment=au");
+      parser = gst_element_factory_make ("h264parse", "video-parser");
+      parser_caps =
+          gst_caps_from_string
+          ("video/x-h264, stream-format=avc, alignment=au");
 
       parser_pad = gst_element_get_static_pad (parser, "src");
-      gst_pad_add_buffer_probe (parser_pad, (GCallback)gst_remuxer_fix_video_ts, remuxer);
+      gst_pad_add_buffer_probe (parser_pad,
+          (GCallback) gst_remuxer_fix_video_ts, remuxer);
     }
     is_video = TRUE;
   } else if (g_strrstr (mime, "audio") && !remuxer->priv->audio_linked) {
@@ -268,9 +269,9 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
         //parser = gst_element_factory_make ("aacparse", NULL);
         parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
       } else if (version == 3) {
-        parser = gst_element_factory_make("mp3parse", "audio-parser");
+        parser = gst_element_factory_make ("mp3parse", "audio-parser");
       } else {
-        parser = gst_element_factory_make("mpegaudioparse", "audio-parser");
+        parser = gst_element_factory_make ("mpegaudioparse", "audio-parser");
       }
     } else if (g_strrstr (mime, "audio/x-eac3")) {
       parser = gst_element_factory_make ("ac3parse", NULL);
@@ -285,9 +286,9 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
     return TRUE;
   }
 
-  muxer = gst_bin_get_by_name (GST_BIN(remuxer->priv->main_pipeline), "muxer");
+  muxer = gst_bin_get_by_name (GST_BIN (remuxer->priv->main_pipeline), "muxer");
   if (parser != NULL) {
-    gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), parser);
+    gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), parser);
     gst_element_set_state (parser, GST_STATE_PLAYING);
     if (parser_caps) {
       gst_element_link_filtered (parser, muxer, parser_caps);
@@ -316,7 +317,7 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
       remuxer->priv->audio_linked = TRUE;
   }
   queue = gst_element_factory_make ("queue2", NULL);
-  gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), queue);
+  gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), queue);
   gst_element_set_state (queue, GST_STATE_PLAYING);
   queue_sink_pad = gst_element_get_static_pad (queue, "sink");
   queue_src_pad = gst_element_get_static_pad (queue, "src");
@@ -333,8 +334,8 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
 }
 
 static gboolean
-gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
-    GstCaps *caps, GstRemuxer *remuxer)
+gst_remuxer_have_type_cb (GstElement * typefind, guint prob,
+    GstCaps * caps, GstRemuxer * remuxer)
 {
   GstElement *demuxer = NULL;
   GstElement *parser = NULL;
@@ -371,13 +372,13 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
   }
 
   if (demuxer) {
-    gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), demuxer);
+    gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), demuxer);
     gst_element_link (typefind, demuxer);
     g_signal_connect (demuxer, "pad-added",
         G_CALLBACK (gst_remuxer_pad_added_cb), remuxer);
   } else if (parser) {
     GstPad *pad;
-    gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), parser);
+    gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), parser);
     gst_element_link (typefind, parser);
     pad = gst_element_get_static_pad (parser, "src");
     gst_remuxer_pad_added_cb (parser, pad, remuxer);
@@ -394,7 +395,7 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
 }
 
 static void
-gst_remuxer_initialize (GstRemuxer *remuxer)
+gst_remuxer_initialize (GstRemuxer * remuxer)
 {
   GstElement *filesrc, *typefind, *muxer, *filesink;
 
@@ -403,20 +404,21 @@ gst_remuxer_initialize (GstRemuxer *remuxer)
   /* Create elements */
   remuxer->priv->main_pipeline = gst_pipeline_new ("pipeline");
 
-  filesrc = gst_element_factory_make("filesrc", "source");
-  typefind = gst_element_factory_make("typefind", "typefind");
-  muxer = gst_remuxer_create_video_muxer (remuxer, remuxer->priv->video_muxer_type);
-  filesink = gst_element_factory_make("filesink", "sink");
+  filesrc = gst_element_factory_make ("filesrc", "source");
+  typefind = gst_element_factory_make ("typefind", "typefind");
+  muxer =
+      gst_remuxer_create_video_muxer (remuxer, remuxer->priv->video_muxer_type);
+  filesink = gst_element_factory_make ("filesink", "sink");
 
   /* Set properties */
   g_object_set (filesrc, "location", remuxer->priv->input_file, NULL);
   g_object_set (filesink, "location", remuxer->priv->output_file, NULL);
 
   /* Add elements to the bin */
-  gst_bin_add_many(GST_BIN(remuxer->priv->main_pipeline), filesrc, typefind,
+  gst_bin_add_many (GST_BIN (remuxer->priv->main_pipeline), filesrc, typefind,
       muxer, filesink, NULL);
-  gst_element_link(filesrc, typefind);
-  gst_element_link(muxer, filesink);
+  gst_element_link (filesrc, typefind);
+  gst_element_link (muxer, filesink);
 
   g_signal_connect (typefind, "have-type",
       G_CALLBACK (gst_remuxer_have_type_cb), remuxer);
@@ -514,7 +516,7 @@ gst_remuxer_cancel (GstRemuxer * remuxer)
 }
 
 GstRemuxer *
-gst_remuxer_new (gchar * input_file, gchar *output_file,
+gst_remuxer_new (gchar * input_file, gchar * output_file,
     VideoMuxerType muxer, GError ** err)
 {
   GstRemuxer *remuxer = NULL;

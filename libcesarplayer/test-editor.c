@@ -29,23 +29,24 @@
 static GMainLoop *loop;
 
 static gboolean
-percent_done_cb (GstVideoEditor *remuxer, gfloat percent, GstVideoEditor *editor)
+percent_done_cb (GstVideoEditor * remuxer, gfloat percent,
+    GstVideoEditor * editor)
 {
   if (percent == 1) {
-    g_print("SUCESS!\n");
+    g_print ("SUCESS!\n");
     g_main_loop_quit (loop);
   } else {
-    g_print("----> %f%%\n", percent);
+    g_print ("----> %f%%\n", percent);
   }
   return TRUE;
 }
 
 static gboolean
-error_cb (GstVideoEditor *remuxer, gchar *error, GstVideoEditor *editor)
+error_cb (GstVideoEditor * remuxer, gchar * error, GstVideoEditor * editor)
 {
-    g_print("ERROR: %s\n", error);
-    g_main_loop_quit (loop);
-    return FALSE;
+  g_print ("ERROR: %s\n", error);
+  g_main_loop_quit (loop);
+  return FALSE;
 }
 
 int
@@ -64,7 +65,8 @@ main (int argc, char *argv[])
   gst_video_editor_init_backend (&argc, &argv);
 
   if (argc < 9) {
-    g_print("Usage: test-remuxer output_file format bitrate with_audio with_title input_file start stop\n");
+    g_print
+        ("Usage: test-remuxer output_file format bitrate with_audio with_title input_file start stop\n");
     return 1;
   }
   output_file = argv[1];
@@ -73,11 +75,11 @@ main (int argc, char *argv[])
   with_audio = (gboolean) g_strtod (argv[4], NULL);
   with_title = (gboolean) g_strtod (argv[5], NULL);
 
-  if (!g_strcmp0(format, "mp4")) {
+  if (!g_strcmp0 (format, "mp4")) {
     video_encoder = VIDEO_ENCODER_H264;
     video_muxer = VIDEO_MUXER_MP4;
     audio_encoder = AUDIO_ENCODER_AAC;
-  } else if (!g_strcmp0(format, "avi")) {
+  } else if (!g_strcmp0 (format, "avi")) {
     video_encoder = VIDEO_ENCODER_MPEG4;
     video_muxer = VIDEO_MUXER_AVI;
     audio_encoder = AUDIO_ENCODER_MP3;
@@ -88,28 +90,29 @@ main (int argc, char *argv[])
 
   editor = gst_video_editor_new (NULL);
   gst_video_editor_set_encoding_format (editor, output_file, video_encoder,
-      audio_encoder, video_muxer, bitrate, 128, 1280, 720, 25, 1, with_audio, with_title);
+      audio_encoder, video_muxer, bitrate, 128, 1280, 720, 25, 1, with_audio,
+      with_title);
 
-  for (i=8; i<=argc; i=i+3) {
+  for (i = 8; i <= argc; i = i + 3) {
     gchar *title;
-    title = g_strdup_printf ("Title %d", i-4);
+    title = g_strdup_printf ("Title %d", i - 4);
 
-    input_file = argv[i-2];
-    start = (guint64) g_strtod (argv[i-1], NULL);
+    input_file = argv[i - 2];
+    start = (guint64) g_strtod (argv[i - 1], NULL);
     stop = (guint64) g_strtod (argv[i], NULL);
     if (g_str_has_suffix (input_file, ".png")) {
       gst_video_editor_add_image_segment (editor, input_file, start,
-          stop-start, title);
+          stop - start, title);
     } else {
-      gst_video_editor_add_segment (editor, input_file, start, stop-start,
-        (gfloat) 1, title, TRUE);
+      gst_video_editor_add_segment (editor, input_file, start, stop - start,
+          (gfloat) 1, title, TRUE);
     }
     g_free (title);
   }
 
   loop = g_main_loop_new (NULL, FALSE);
   g_signal_connect (editor, "error", G_CALLBACK (error_cb), editor);
-  g_signal_connect (editor, "percent_completed", G_CALLBACK(percent_done_cb),
+  g_signal_connect (editor, "percent_completed", G_CALLBACK (percent_done_cb),
       editor);
   gst_video_editor_start (editor);
   g_main_loop_run (loop);
@@ -121,4 +124,3 @@ error:
   return 1;
 
 }
-

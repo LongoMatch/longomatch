@@ -287,8 +287,9 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
 
   if (buf_ts < item->start) {
     GST_LOG_OBJECT (nlesrc, "Discard early %s buffer with ts: %"
-      GST_TIME_FORMAT" start: %" GST_TIME_FORMAT, is_audio ? "audio" : "video",
-      GST_TIME_ARGS (buf_ts), GST_TIME_ARGS (item->start));
+        GST_TIME_FORMAT " start: %" GST_TIME_FORMAT,
+        is_audio ? "audio" : "video", GST_TIME_ARGS (buf_ts),
+        GST_TIME_ARGS (item->start));
     gst_buffer_unref (buf);
     return GST_FLOW_OK;
   }
@@ -336,7 +337,7 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
 }
 
 static GstBuffer *
-gst_nle_source_audio_silence_buf (GstNleSource *nlesrc, guint64 start,
+gst_nle_source_audio_silence_buf (GstNleSource * nlesrc, guint64 start,
     guint64 duration)
 {
   GstBuffer *buf;
@@ -375,17 +376,17 @@ gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
     duration = item->duration / item->rate;
 
     /* Push the start buffer and last 2 ones and let audiorate fill the gap */
-    buf = gst_nle_source_audio_silence_buf (nlesrc, item->start, 20 * GST_MSECOND);
-    gst_nle_source_push_buffer (nlesrc, buf, TRUE);
-
-    buf = gst_nle_source_audio_silence_buf (nlesrc,
-        item->start + duration - 40 * GST_MSECOND,
+    buf =
+        gst_nle_source_audio_silence_buf (nlesrc, item->start,
         20 * GST_MSECOND);
     gst_nle_source_push_buffer (nlesrc, buf, TRUE);
 
     buf = gst_nle_source_audio_silence_buf (nlesrc,
-        item->start + duration - 20 * GST_MSECOND,
-        20 * GST_MSECOND);
+        item->start + duration - 40 * GST_MSECOND, 20 * GST_MSECOND);
+    gst_nle_source_push_buffer (nlesrc, buf, TRUE);
+
+    buf = gst_nle_source_audio_silence_buf (nlesrc,
+        item->start + duration - 20 * GST_MSECOND, 20 * GST_MSECOND);
     gst_nle_source_push_buffer (nlesrc, buf, TRUE);
   }
 }
@@ -644,8 +645,7 @@ gst_nle_source_next (GstNleSource * nlesrc)
   GST_DEBUG_OBJECT (nlesrc, "Start ts:%" GST_TIME_FORMAT,
       GST_TIME_ARGS (nlesrc->start_ts));
   gst_element_set_state (nlesrc->decoder, GST_STATE_PLAYING);
-  ret = gst_element_get_state (nlesrc->decoder, &state,
-      NULL, 5 * GST_SECOND);
+  ret = gst_element_get_state (nlesrc->decoder, &state, NULL, 5 * GST_SECOND);
   if (ret == GST_STATE_CHANGE_FAILURE) {
     GST_WARNING_OBJECT (nlesrc, "Error changing state, selecting next item.");
     gst_nle_source_check_eos (nlesrc);
@@ -694,7 +694,8 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
         gst_element_set_state (nlesrc->decoder, GST_STATE_READY);
       }
       if (nlesrc->queue != NULL) {
-        g_list_free_full (nlesrc->queue, (GDestroyNotify) gst_nle_source_item_free);
+        g_list_free_full (nlesrc->queue,
+            (GDestroyNotify) gst_nle_source_item_free);
         nlesrc->queue = NULL;
       }
       break;
