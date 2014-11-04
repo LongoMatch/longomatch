@@ -21,4 +21,5 @@ using Mono.Addins;
 [assembly:Addin]
 [assembly:AddinAuthor ("LongoMatch Project")]
 [assembly:AddinName ("LongoMatch plugins")]
+[assembly:AddinDescription ("LongoMatch default import and dashboard plugins")]
 [assembly:AddinDependency ("LongoMatch", "1.1")]

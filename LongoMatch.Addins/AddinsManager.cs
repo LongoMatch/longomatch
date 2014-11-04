@@ -16,29 +16,32 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using LongoMatch.Addins.ExtensionPoints;
+using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using Mono.Addins;
 using LongoMatch.Core.Store.Templates;
+using Mono.Addins;
+using Mono.Addins.Description;
+using LongoMatch.Addins.ExtensionPoints;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
 {
 	public class AddinsManager
 	{
-	
-		public AddinsManager (string configPath, string searchPath)
+		
+		public static void Initialize (string configPath, string searchPath)
 		{
 			Log.Information ("Initializing addins at path: " + searchPath);
 			AddinManager.Initialize (configPath, searchPath);
 			AddinManager.Registry.Update ();
 		}
 
-		public bool RegisterGStreamerPlugins ()
+		public static bool RegisterGStreamerPlugins ()
 		{
 			IGStreamerPluginsProvider[] gstPluginsProvider = AddinManager.GetExtensionObjects<IGStreamerPluginsProvider> ();
 			
@@ -53,7 +56,7 @@ namespace LongoMatch.Addins
 			return true; 
 		}
 
-		public void LoadConfigModifierAddins ()
+		public static void LoadConfigModifierAddins ()
 		{
 			foreach (IConfigModifier configModifier in AddinManager.GetExtensionObjects<IConfigModifier> ()) {
 				try {
@@ -65,13 +68,13 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		public void LoadExportProjectAddins (IMainController mainWindow)
+		public static void LoadExportProjectAddins (IMainController mainWindow)
 		{
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
 				try {
 					Log.Information ("Adding export entry from plugin: " + exportProject.Name);
 					mainWindow.AddExportEntry (exportProject.GetMenuEntryName (), exportProject.GetMenuEntryShortName (),
-					                          new Action<Project, IGUIToolkit> (exportProject.ExportProject));
+					                           new Action<Project, IGUIToolkit> (exportProject.ExportProject));
 				} catch (Exception ex) {
 					Log.Error ("Error adding export entry");
 					Log.Exception (ex);
@@ -79,7 +82,7 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		public void LoadImportProjectAddins (IProjectsImporter importer)
+		public static void LoadImportProjectAddins (IProjectsImporter importer)
 		{
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
@@ -90,7 +93,7 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		public void LoadMultimediaBackendsAddins (IMultimediaToolkit mtoolkit)
+		public static void LoadMultimediaBackendsAddins (IMultimediaToolkit mtoolkit)
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
 				try {
@@ -103,14 +106,14 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		public void ShutdownMultimediaBackends ()
+		public static void ShutdownMultimediaBackends ()
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
 				backend.Shutdown ();
 			}
 		}
-		
-		public void LoadDashboards (ICategoriesTemplatesProvider provider)
+
+		public static void LoadDashboards (ICategoriesTemplatesProvider provider)
 		{
 			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
 				foreach (Dashboard dashboard in plugin.Dashboards) {
@@ -118,7 +121,34 @@ namespace LongoMatch.Addins
 					provider.Register (dashboard);
 				}
 			}
-			
+		}
+
+		public static Dictionary<AddinDescription, List<ConfigurablePlugin>> Plugins {
+			get {
+				HashSet <string> paths;
+				Dictionary<AddinDescription, List<ConfigurablePlugin>> plugins;
+				
+				paths = new HashSet<string> ();
+				plugins = new Dictionary<AddinDescription, List<ConfigurablePlugin>> ();
+
+				foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
+					foreach (Extension ext in addin.Description.MainModule.Extensions) {
+						paths.Add (ext.Path);
+					}
+					plugins.Add (addin.Description, new List<ConfigurablePlugin> ());
+				}
+
+				foreach (string path in paths) {
+					foreach (TypeExtensionNode n  in AddinManager.GetExtensionNodes (path)) {
+						var list = plugins.FirstOrDefault (a => a.Key.LocalId == n.Addin.Id).Value;
+						var instance = n.GetInstance ();
+						if (instance is ConfigurablePlugin) {
+							list.Add ((ConfigurablePlugin)instance);
+						}
+					}
+				}
+				return plugins;
+			}
 		}
 	}
 }

@@ -15,10 +15,18 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using Mono.Addins;
+using System;
 
-[assembly:Addin]
-[assembly:AddinAuthor ("LongoMatch Project")]
-[assembly:AddinName ("Free Codecs")]
-[assembly:AddinDescription ("Free Software codecs for audio/video encoding and decoding with patents and licence issues")]
-[assembly:AddinDependency ("LongoMatch", "1.1")]
+namespace LongoMatch.Addins
+{
+	public class PreferencesAttribute: Attribute
+	{
+		public readonly string description;
+
+		public PreferencesAttribute (string description)
+		{
+			this.description = description;
+		}
+	}
+}
+

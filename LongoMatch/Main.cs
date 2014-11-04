@@ -38,7 +38,6 @@ namespace LongoMatch
 		
 		public static void Main (string[] args)
 		{
-			AddinsManager manager = null;
 			CoreServices.Init ();
 
 			InitGtk ();
@@ -52,16 +51,16 @@ namespace LongoMatch
 			Version version = Assembly.GetExecutingAssembly ().GetName ().Version;
 
 			try {
-				manager = new AddinsManager (Config.PluginsConfigDir, Config.PluginsDir);
-				manager.LoadConfigModifierAddins ();
-				manager.RegisterGStreamerPlugins ();
+				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+				AddinsManager.LoadConfigModifierAddins ();
+				AddinsManager.RegisterGStreamerPlugins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
 				IMultimediaToolkit multimediaToolkit = new MultimediaToolkit ();
 				Config.MultimediaToolkit = multimediaToolkit;
 				GUIToolkit guiToolkit = new GUIToolkit (version);
-				manager.LoadExportProjectAddins (guiToolkit.MainController);
-				manager.LoadMultimediaBackendsAddins (multimediaToolkit);
+				AddinsManager.LoadExportProjectAddins (guiToolkit.MainController);
+				AddinsManager.LoadMultimediaBackendsAddins (multimediaToolkit);
 				try {
 					CoreServices.Start (guiToolkit, multimediaToolkit);
 				} catch (DBLockedException locked) {
@@ -71,17 +70,15 @@ namespace LongoMatch
 					Log.Exception (locked);
 					return;
 				}
-				manager.LoadDashboards (Config.CategoriesTemplatesProvider);
-				manager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
+				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
+				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 				Application.Run ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			} finally {
-				if (manager != null) {
-					try {
-						manager.ShutdownMultimediaBackends ();
-					} catch {
-					}
+				try {
+					AddinsManager.ShutdownMultimediaBackends ();
+				} catch {
 				}
 			}
 		}

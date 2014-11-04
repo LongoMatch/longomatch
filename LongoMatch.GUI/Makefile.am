@@ -25,6 +25,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/PlaysListTreeWidget.cs \
 	Gui/Component/PlaysPositionViewer.cs \
 	Gui/Component/PlaysSelectionWidget.cs \
+	Gui/Component/PluginsPreferences.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectPeriods.cs \
 	Gui/Component/RenderingStateBar.cs \
@@ -105,6 +106,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysPositionViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectPeriods.cs \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \

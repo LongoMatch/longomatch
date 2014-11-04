@@ -49,7 +49,6 @@ namespace LongoMatch.Gui.Panel
 			w3.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
 			this.tablewidget = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.tablewidget.Name = "tablewidget";

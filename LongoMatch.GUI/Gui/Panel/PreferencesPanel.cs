@@ -67,6 +67,9 @@ namespace LongoMatch.Gui.Panel
 			AddPane (Catalog.GetString ("Live analysis"),
 			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
 			         new LiveAnalysisPreferences());
+			AddPane (Catalog.GetString ("Plugins"),
+			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
+			         new PluginsPreferences());
 		}
 		
 		void AddPane (string desc, Pixbuf icon, Widget pane) {

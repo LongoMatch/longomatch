@@ -280,7 +280,6 @@ namespace LongoMatch.Gui.Panel
 			this.vbox5.Spacing = 6;
 			// Container child vbox5.Gtk.Box+BoxChild
 			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
-			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
 			this.topbox = new global::Gtk.HBox ();
 			this.topbox.Name = "topbox";

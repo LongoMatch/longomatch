@@ -79,9 +79,11 @@ REF_DEP_LONGOMATCH_GUI_HELPERS = \
 REF_DEP_LONGOMATCH_GUI = \
                      $(LINK_SYSTEM_DRAWING) \
                      $(LINK_MONO_POSIX) \
+                     $(LINK_MONO_ADDINS) \
                      $(LINK_GLIB) \
                      $(LINK_GTK) \
                      $(LINK_CAIRO) \
+                     $(LINK_LONGOMATCH_ADDINS) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_MULTIMEDIA) \
                      $(LINK_LONGOMATCH_GUI_MULTIMEDIA) \
