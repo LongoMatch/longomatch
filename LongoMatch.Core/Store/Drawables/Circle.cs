@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Drawables
 {
+	[Serializable]
 	public class Circle: Ellipse
 	{
 		public Circle ()
