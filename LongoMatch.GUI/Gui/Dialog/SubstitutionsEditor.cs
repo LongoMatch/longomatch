@@ -104,7 +104,11 @@ namespace LongoMatch.Gui.Dialog
 			tagger.SubstitutionMode = false;
 			tagger.ShowSubstitutionButtons = false;
 			tagger.SelectionMode = MultiSelectionMode.Single;
-			LoadTeams (project, hfp, hbp, null, null);
+			if (substitution.Team == Team.LOCAL) {
+				LoadTeams (project, hfp, hbp, null, null);
+			} else {
+				LoadTeams (project, afp, abp, null, null);
+			}
 			SwitchPlayer (substitution.In, substitution.Out);
 		}
 
