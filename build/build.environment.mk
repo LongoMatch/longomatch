@@ -35,6 +35,7 @@ LINK_LONGOMATCH_SERVICES = -r:$(DIR_BIN)/LongoMatch.Services.dll
 
 REF_DEP_LONGOMATCH_ADDINS = \
                      $(LINK_MONO_ADDINS) \
+                     $(LINK_JSON) \
                      $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_LONGOMATCH_PLUGINS = \
