@@ -128,13 +128,20 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
-			Switch (play, null, null);
-			if (play != null) {
-				LoadPlay (play, play.Start, true);
+			if (play is SubstitutionEvent || play is LineupEvent) {
+				Switch (null, null, null);
+				Config.EventsBroker.EmitEventLoaded (null);
+				player.Seek (play.EventTime, true);
+				player.Play ();
 			} else {
-				player.CloseSegment ();
+				Switch (play, null, null);
+				if (play != null) {
+					LoadPlay (play, play.Start, true);
+				} else {
+					player.CloseSegment ();
+				}
+				Config.EventsBroker.EmitEventLoaded (play);
 			}
-			Config.EventsBroker.EmitEventLoaded (play);
 		}
 
 		void HandleNext (Playlist playlist)
