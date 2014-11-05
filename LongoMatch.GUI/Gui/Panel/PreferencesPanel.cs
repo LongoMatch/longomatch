@@ -62,13 +62,13 @@ namespace LongoMatch.Gui.Panel
 			         Helpers.Misc.LoadIcon ("longomatch-shortcut", IconSize.Dialog, 0),
 			         new HotkeysConfiguration ());
 			AddPane (Catalog.GetString ("Video"),
-			         Helpers.Misc.LoadIcon ("longomatch-control-record", IconSize.Dialog, 0),
+			         Helpers.Misc.LoadIcon ("longomatch-record", IconSize.Dialog, 0),
 			         new VideoPreferencesPanel());
 			AddPane (Catalog.GetString ("Live analysis"),
 			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
 			         new LiveAnalysisPreferences());
 			AddPane (Catalog.GetString ("Plugins"),
-			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
+			         Helpers.Misc.LoadIcon ("longomatch-plugin", IconSize.Dialog, 0),
 			         new PluginsPreferences());
 		}
 		

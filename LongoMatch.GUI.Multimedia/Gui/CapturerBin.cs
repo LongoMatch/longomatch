@@ -60,7 +60,7 @@ namespace LongoMatch.Gui
 			resumebutton.Clicked += (sender, e) => ResumePeriod ();
 			savebutton.Clicked += HandleSaveClicked;
 			cancelbutton.Clicked += HandleCloseClicked;
-			recimage.Pixbuf = Misc.LoadIcon ("longomatch-record",
+			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record",
 			                                 StyleConf.PlayerCapturerIconSize);
 			stopimage.Pixbuf = Misc.LoadIcon ("longomatch-stop",
 			                                  StyleConf.PlayerCapturerIconSize);
