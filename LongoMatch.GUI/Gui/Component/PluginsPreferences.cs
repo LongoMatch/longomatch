@@ -51,6 +51,8 @@ namespace LongoMatch.Gui.Component
 			}
 			if (pluginsStore.GetIterFirst (out first)) {
 				treeview1.Selection.SelectIter (first);
+				LoadAddin (pluginsStore.GetValue (first, 1) as AddinDescription,
+				           pluginsStore.GetValue (first, 2) as List<ConfigurablePlugin>);
 			}
 		}
 
