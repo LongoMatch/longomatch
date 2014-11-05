@@ -31,6 +31,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public event ButtonSelectedHandler EditButtonTagsEvent;
 
 		static Image iconImage;
+		static Image recImage;
+		static Image editImage;
+		static Image cancelImage;
+		static Image applyImage;
 		Dictionary <Rectangle, object> rects, buttonsRects;
 		Dictionary <string, List<Tag>> tagsByGroup;
 		bool recording, emitEvent, delayEvent, editClicked;
@@ -58,6 +62,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (iconImage == null) {
 				iconImage = new Image (Path.Combine (Config.ImagesDir,
 				                                     StyleConf.ButtonEventIcon));
+			}
+			if (recImage == null) {
+				recImage = new Image (Path.Combine (Config.IconsDir,
+				                                    StyleConf.RecordButton));
+			}
+			if (editImage == null) {
+				editImage = new Image (Path.Combine (Config.IconsDir,
+				                                     StyleConf.EditButton));
+			}
+			if (cancelImage == null) {
+				cancelImage = new Image (Path.Combine (Config.IconsDir,
+				                                       StyleConf.CancelButton));
+			}
+			if (applyImage == null) {
+				applyImage = new Image (Path.Combine (Config.IconsDir,
+				                                      StyleConf.ApplyButton));
 			}
 			MinWidth = 100;
 			MinHeight = HeaderHeight * 2;
@@ -113,7 +133,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					&& Mode != TagMode.Edit;
 			}
 		}
-		
+
 		bool ShowTags {
 			get {
 				return Button.ShowSubcategories && Button.AnalysisEventType.Tags.Count != 0;
@@ -430,10 +450,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = BackgroundColor;
 			tk.DrawRectangle (pos, width, height);
 			tk.StrokeColor = Color.Green1;
+			tk.FillColor = Color.Green1;
 			tk.FontSize = StyleConf.ButtonButtonsFontSize;
-			tk.DrawText (pos, width, height, "✐ EDIT");
 			editRect.Update (pos, width, height);
 			buttonsRects [editRect] = editbutton;
+			pos = new Point (pos.X, pos.Y + 5);
+			tk.DrawImage (pos, width, height - 10, editImage, true, true);
 		}
 
 		void DrawSelectedTags (IDrawingToolkit tk)
@@ -495,15 +517,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = 0;
 			tk.DrawRectangle (pos, width, height);
 			tk.StrokeColor = Color.Green1;
+			tk.FillColor = Color.Green1;
 			tk.FontSize = 12;
-			tk.DrawText (pos, width, height, " ✔ ");
 			applyRect.Update (pos, width, height);
-			buttonsRects[applyRect] = applyButton; 
+			buttonsRects [applyRect] = applyButton; 
+			pos = new Point (pos.X, pos.Y + 5);
+			tk.DrawImage (pos, width, height - 10, applyImage, true, true);
 		}
 
 		void DrawRecordButton (IDrawingToolkit tk)
 		{
-			Point pos;
+			Point pos, bpos;
 			double width, height;
 
 			if (Button.TagMode != TagMode.Free) {
@@ -512,6 +536,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
 			                 Position.Y);
+			bpos = new Point (pos.X, pos.Y + 5);
 			
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
@@ -522,12 +547,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.LineWidth = StyleConf.ButtonLineWidth;
 				tk.DrawRectangle (pos, width, height);
 				tk.StrokeColor = Color.Red1;
-				tk.DrawText (pos, width, height, "● REC");
+				tk.FillColor = Color.Red1;
+				tk.DrawImage (bpos, width, height - 10, recImage, true, true);
 			} else {
 				tk.FillColor = tk.StrokeColor = BackgroundColor;
 				tk.DrawRectangle (pos, width, height);
 				tk.StrokeColor = TextColor;
-				tk.DrawText (pos, width, height, "✕");
+				tk.FillColor = TextColor;
+				tk.DrawImage (bpos, width, height - 10, cancelImage, true, true);
 				cancelRect.Update (pos, width, height);
 				buttonsRects [cancelRect] = cancelButton;
 			}

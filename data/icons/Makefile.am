@@ -16,6 +16,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/gtk-save.svg \
 	hicolor/scalable/actions/longomat-project.svg \
 	hicolor/scalable/actions/longomatch-angle.svg \
+	hicolor/scalable/actions/longomatch-apply-button.svg \
 	hicolor/scalable/actions/longomatch-apply.svg \
 	hicolor/scalable/actions/longomatch-arrow.svg \
 	hicolor/scalable/actions/longomatch-back.svg \
