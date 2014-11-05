@@ -45,7 +45,7 @@ static GstStaticPadTemplate video_tpl = GST_STATIC_PAD_TEMPLATE ("video",
     GST_PAD_SRC,
     GST_PAD_SOMETIMES,
     GST_STATIC_CAPS ("video/x-raw-yuv, format=(fourcc)I420, "
-        "width=[1,2160], height=[1,2160], framerate={25/1, 30/1}"));
+        "width=[1,2160], height=[1,2160], framerate={25/1, 30/1, 50/1, 60/1}"));
 
 static GstStaticPadTemplate audio_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
     GST_PAD_SRC,
