@@ -82,6 +82,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-square-fill.svg \
 	hicolor/scalable/actions/longomatch-square.svg \
 	hicolor/scalable/actions/longomatch-stop.svg \
+	hicolor/scalable/actions/longomatch-subs-arrow.svg \
 	hicolor/scalable/actions/longomatch-tab-active-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-active-filter.svg \
 	hicolor/scalable/actions/longomatch-tab-active-playlist.svg \

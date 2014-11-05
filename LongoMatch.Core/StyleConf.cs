@@ -88,6 +88,7 @@ namespace LongoMatch.Core.Common
 		
 		public const string SubsLock = "hicolor/scalable/actions/longomatch-player-swap-lock.svg";
 		public const string SubsUnlock = "hicolor/scalable/actions/longomatch-player-swap-unlock.svg";
+		public const string SubsIcon = "hicolor/scalable/actions/longomatch-subs-arrow.svg";
 		public const string DefaultShield = "hicolor/scalable/actions/longomatch-default-shield.svg";
 
 		public const string EditButton = "hicolor/scalable/actions/longomatch-pencil.svg";
