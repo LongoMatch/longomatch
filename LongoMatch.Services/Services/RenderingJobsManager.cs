@@ -186,6 +186,8 @@ namespace LongoMatch.Services
 			foreach (IPlaylistElement segment in job.Playlist.Elements) {
 				if (segment is PlaylistPlayElement) {
 					ProcessPlay (segment as PlaylistPlayElement);
+				} else if (segment is PlaylistVideo) {
+					ProcessVideo (segment as PlaylistVideo);
 				} else if (segment is PlaylistImage) {
 					ProcessImage (segment as PlaylistImage);
 				} else if (segment is PlaylistDrawing) {
@@ -216,7 +218,14 @@ namespace LongoMatch.Services
 			                          image.Duration));
 			ProcessImage (image.Image, image.Duration);
 		}
-		
+
+		void ProcessVideo (PlaylistVideo video)
+		{
+			Log.Debug ("Adding external video " + video.File.FilePath);
+			videoEditor.AddSegment (video.File.FilePath, 0, video.File.Duration.MSeconds,
+			                        1, "", video.File.HasAudio);
+		}
+
 		void ProcessDrawing (PlaylistDrawing drawing)
 		{
 			Image img;

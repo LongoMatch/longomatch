@@ -62,14 +62,18 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				Clear (false);
 				drawing = value;
-				foreach (IBlackboardObject d in value.Drawables) {
-					Add (d);
-				}
 				if (backbuffer != null) {
 					backbuffer.Dispose ();
 				}
-				backbuffer = tk.CreateSurface (Background.Width, Background.Height,
-				                               drawing.Freehand);
+				if (drawing != null) {
+					foreach (IBlackboardObject d in drawing.Drawables) {
+						Add (d);
+					}
+					backbuffer = tk.CreateSurface (Background.Width, Background.Height,
+					                               drawing.Freehand);
+				} else {
+					backbuffer = tk.CreateSurface (Background.Width, Background.Height);
+				}
 				Accuracy = Background.Width / 100;
 			}
 		}

@@ -23,6 +23,7 @@ using LongoMatch.Core.Store.Playlists;
 using System.IO;
 using System.Collections.Generic;
 using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Drawing
 {
@@ -270,6 +271,10 @@ namespace LongoMatch.Drawing
 				PlaylistPlayElement p = item as PlaylistPlayElement;
 				RenderPlay (p.Play.EventType.Color, p.Miniature, null, p.Selected, p.Description, count, isExpanded, tk,
 				            context, backgroundArea, cellArea, state);
+			} else if (item is IPlaylistElement) {
+				IPlaylistElement p = item as IPlaylistElement;
+				RenderPlay (Config.Style.PaletteActive, p.Miniature, null, p.Selected, p.Description,
+				            count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType ());
 			}

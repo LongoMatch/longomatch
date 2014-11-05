@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
@@ -29,11 +30,11 @@ namespace LongoMatch.Core.Store.Playlists
 			Drawing = drawing;
 		}
 
+		[JsonIgnore]
 		public bool Selected {
 			get;
 			set;
 		}
-		
 
 		public int Width {
 			get;

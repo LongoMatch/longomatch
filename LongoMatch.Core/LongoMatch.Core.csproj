@@ -131,6 +131,7 @@
     <Compile Include="Store\MediaFileSet.cs" />
     <Compile Include="Common\Hotkeys.cs" />
     <Compile Include="Common\Keyboard.cs" />
+    <Compile Include="Store\Playlists\PlaylistVideo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

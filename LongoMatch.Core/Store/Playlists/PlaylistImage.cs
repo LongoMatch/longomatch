@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 #if HAVE_GTK
 using SImage = Gdk.Pixbuf;
@@ -31,6 +32,8 @@ namespace LongoMatch.Core.Store.Playlists
 		public PlaylistImage (Image image, Time duration)
 		{
 			Image = image;
+			Miniature = image.Scale (Constants.MAX_THUMBNAIL_SIZE,
+			                         Constants.MAX_THUMBNAIL_SIZE);
 			Duration = duration;
 		}
 
@@ -39,6 +42,7 @@ namespace LongoMatch.Core.Store.Playlists
 			set;
 		}
 
+		[JsonIgnore]
 		public bool Selected {
 			get;
 			set;

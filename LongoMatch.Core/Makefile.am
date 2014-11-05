@@ -92,6 +92,7 @@ SOURCES = Common/Area.cs \
 	Store/Playlists/PlaylistDrawing.cs \
 	Store/Playlists/PlaylistImage.cs \
 	Store/Playlists/PlaylistPlayElement.cs \
+	Store/Playlists/PlaylistVideo.cs \
 	Store/Point.cs \
 	Store/Project.cs \
 	Store/ProjectDescription.cs \

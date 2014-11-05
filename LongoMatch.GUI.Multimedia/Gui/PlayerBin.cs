@@ -56,11 +56,12 @@ namespace LongoMatch.Gui
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
+		const int TIMEOUT_MS = 20;
 		IPlayer player;
 		TimelineEvent loadedPlay;
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
-		Time length, lastTime;
+		Time length, lastTime, imageLoadedTS;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
 		bool ignoreTick, stillimageLoaded, delayedOpen;
 		MediaFileSet fileSet;
@@ -220,18 +221,26 @@ namespace LongoMatch.Gui
 
 		public void Play ()
 		{
-			DrawingsVisible = false;
-			player.Play ();
+			if (ImageLoaded) {
+				ReconfigureTimeout (TIMEOUT_MS);
+			} else {
+				DrawingsVisible = false;
+				player.Play ();
+			}
 		}
 
 		public void Pause ()
 		{
-			player.Pause ();
+			if (ImageLoaded) {
+				ReconfigureTimeout (0);
+			} else {
+				player.Pause ();
+			}
 		}
 
 		public void TogglePlay ()
 		{
-			if (player.Playing)
+			if ((ImageLoaded && timeout != 0) || player.Playing)
 				Pause ();
 			else
 				Play ();
@@ -267,10 +276,12 @@ namespace LongoMatch.Gui
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
 				TimelineEvent play = ple.Play;
 				LoadSegment (ple.FileSet, play.Start, play.Stop, play.Start, true, play.Rate);
+			} else if (element is PlaylistVideo) {
+				LoadVideo (element as PlaylistVideo);
 			} else if (element is PlaylistImage) {
-				//LoadStillImage (element as PlaylistImage);
+				LoadStillImage (element as PlaylistImage);
 			} else if (element is PlaylistDrawing) {
-				//LoadFrameDrawing (element as PlaylistDrawing);
+				LoadFrameDrawing (element as PlaylistDrawing);
 			}
 		}
 
@@ -301,6 +312,9 @@ namespace LongoMatch.Gui
 
 		public void Seek (Time time, bool accurate)
 		{
+			if (ImageLoaded) {
+				return;
+			}
 			DrawingsVisible = false;
 			player.Seek (time + activeFile.Offset, accurate);
 			OnTick ();
@@ -308,6 +322,9 @@ namespace LongoMatch.Gui
 
 		public void SeekToNextFrame ()
 		{
+			if (ImageLoaded) {
+				return;
+			}
 			DrawingsVisible = false;
 			if (CurrentTime < segment.Stop) {
 				player.SeekToNextFrame ();
@@ -317,6 +334,9 @@ namespace LongoMatch.Gui
 
 		public void SeekToPreviousFrame ()
 		{
+			if (ImageLoaded) {
+				return;
+			}
 			DrawingsVisible = false;
 			if (CurrentTime > segment.Start) {
 				seeker.Seek (SeekType.StepDown);
@@ -325,25 +345,35 @@ namespace LongoMatch.Gui
 
 		public void StepForward ()
 		{
+			if (ImageLoaded) {
+				return;
+			}
 			DrawingsVisible = false;
 			Jump ((int)jumpspinbutton.Value);
 		}
 
 		public void StepBackward ()
 		{
+			if (ImageLoaded) {
+				return;
+			}
 			DrawingsVisible = false;
 			Jump (-(int)jumpspinbutton.Value);
 		}
 
 		public void FramerateUp ()
 		{
-			DrawingsVisible = false;
+			if (!ImageLoaded) {
+				DrawingsVisible = false;
+			}
 			vscale1.Adjustment.Value += vscale1.Adjustment.StepIncrement;
 		}
 
 		public void FramerateDown ()
 		{
-			DrawingsVisible = false;
+			if (!ImageLoaded) {
+				DrawingsVisible = false;
+			}
 			vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
 		}
 
@@ -356,7 +386,6 @@ namespace LongoMatch.Gui
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
 			loadedPlay = null;
-			ImageLoaded = false;
 		}
 
 		public void SetSensitive ()
@@ -379,7 +408,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void Open (MediaFileSet fileSet, bool seek, bool force=false)
+		void Open (MediaFileSet fileSet, bool seek, bool force=false, bool play=false)
 		{
 			ResetGui ();
 			CloseSegment ();
@@ -400,6 +429,9 @@ namespace LongoMatch.Gui
 				if (seek) {
 					Seek (new Time (0), true);
 				}
+			}
+			if (play) {
+				player.Play ();
 			}
 			detachbutton.Sensitive = true;
 		}
@@ -424,6 +456,11 @@ namespace LongoMatch.Gui
 		bool ImageLoaded {
 			set {
 				stillimageLoaded = value;
+				if (stillimageLoaded) {
+					player.Pause();
+					imageLoadedTS = new Time (0);
+					ReconfigureTimeout (TIMEOUT_MS);
+				}
 				drawbutton.Sensitive = !stillimageLoaded;
 				playbutton.Sensitive = !stillimageLoaded;
 				pausebutton.Sensitive = !stillimageLoaded;
@@ -492,16 +529,28 @@ namespace LongoMatch.Gui
 			videowindow.Visible = false;
 		}
 
-		void LoadStillImage (Image image)
+		void LoadStillImage (PlaylistImage image)
 		{
+			loadedPlaylistElement = image;
+			CloseSegment ();
 			ImageLoaded = true;
-			LoadImage (image, null);
+			LoadImage (image.Image, null);
 		}
 
-		void LoadFrameDrawing (FrameDrawing drawing)
+		void LoadFrameDrawing (PlaylistDrawing drawing)
 		{
+			loadedPlaylistElement = drawing;
+			CloseSegment ();
 			ImageLoaded = true;
-			LoadImage (null, drawing);
+			LoadImage (null, drawing.Drawing);
+		}
+
+		void LoadVideo (PlaylistVideo video)
+		{
+			loadedPlaylistElement = video;
+			MediaFileSet fileSet = new MediaFileSet ();
+			fileSet.SetAngle (MediaFileAngle.Angle1, video.File);
+			Open (fileSet, false, true, true);
 		}
 
 		void LoadPlayDrawing (FrameDrawing drawing)
@@ -590,11 +639,13 @@ namespace LongoMatch.Gui
 		void DoStateChanged (bool playing)
 		{
 			if (playing) {
-				ReconfigureTimeout (20);
+				ReconfigureTimeout (TIMEOUT_MS);
 				playbutton.Hide ();
 				pausebutton.Show ();
 			} else {
-				ReconfigureTimeout (0);
+				if (!ImageLoaded) {
+					ReconfigureTimeout (0);
+				}
 				playbutton.Show ();
 				pausebutton.Hide ();
 			}
@@ -650,6 +701,18 @@ namespace LongoMatch.Gui
 				return true;
 			}
 
+			if (ImageLoaded) {
+				slength = loadedPlaylistElement.Duration.ToMSecondsString (true);
+				timelabel.Text = imageLoadedTS.ToMSecondsString (true) + "/" + slength;
+				timescale.Value = (double)imageLoadedTS.MSeconds / loadedPlaylistElement.Duration.MSeconds;
+				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
+					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+				} else {
+					imageLoadedTS.MSeconds += TIMEOUT_MS;
+				}
+				return true;
+			}
+			
 			currentTime = CurrentTime;
 			if (SegmentLoaded) {
 				Time dur, ct;
@@ -767,8 +830,12 @@ namespace LongoMatch.Gui
 		void OnEndOfStream ()
 		{
 			Application.Invoke (delegate {
-				Seek (new Time (0), true);
-				Pause ();
+				if (loadedPlaylistElement is PlaylistVideo) {
+					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+				} else {
+					Seek (new Time (0), true);
+					Pause ();
+				}
 			});
 		}
 

@@ -16,29 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
-using LongoMatch.Core.Common;
+using System.IO;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
-	public class PlaylistPlayElement: IPlaylistElement
+	public class PlaylistVideo:  IPlaylistElement
 	{
-		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset=null)
+		public PlaylistVideo (MediaFile file)
 		{
-			Play = play;
-			Title = play.Name;
-			Rate = play.Rate;
-			Angles = new HashSet<MediaFileAngle> (play.ActiveViews);
-			FileSet = fileset;
+			File = file;
 		}
-
-		public TimelineEvent Play {
+		
+		public MediaFile File {
 			get;
 			set;
+		}
+
+		public string Description {
+			get {
+				return Path.GetFileName (File.FilePath);
+			}
+		}
+
+		public Image Miniature {
+			get {
+				return File.Preview;
+			}
 		}
 
 		[JsonIgnore]
@@ -49,41 +56,7 @@ namespace LongoMatch.Core.Store.Playlists
 
 		public Time Duration {
 			get {
-				return Play.Duration;
-			}
-		}
-
-		public string Title {
-			get;
-			set;
-		}
-
-		public double Rate {
-			get;
-			set;
-		}
-
-		public MediaFileSet FileSet {
-			get;
-			set;
-		}
-
-		public HashSet<MediaFileAngle> Angles {
-			get;
-			set;
-		}
-
-		[JsonIgnore]
-		public string Description {
-			get {
-				return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString ();
-			}
-		}
-
-		[JsonIgnore]
-		public Image Miniature {
-			get {
-				return Play.Miniature;
+				return File.Duration;
 			}
 		}
 	}
