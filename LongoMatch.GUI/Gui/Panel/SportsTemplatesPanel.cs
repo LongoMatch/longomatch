@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Panel
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", 54, IconLookupFlags.ForceSvg);
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", 47, IconLookupFlags.ForceSvg);
 			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-add", 36, IconLookupFlags.ForceSvg);
+			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-import", 36, IconLookupFlags.ForceSvg);
 			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-delete", 36, IconLookupFlags.ForceSvg);
 			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-save", 36, IconLookupFlags.ForceSvg);
 			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", 36, IconLookupFlags.ForceSvg);
@@ -69,6 +70,8 @@ namespace LongoMatch.Gui.Panel
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
 			newtemplatebutton.Left += HandleLeftTemplateButton;
+			importtemplatebutton.Entered += HandleEnterTemplateButton;
+			importtemplatebutton.Left += HandleLeftTemplateButton;
 			deletetemplatebutton.Entered += HandleEnterTemplateButton;
 			deletetemplatebutton.Left += HandleLeftTemplateButton;
 			savetemplatebutton.Entered += HandleEnterTemplateButton;
@@ -117,8 +120,9 @@ namespace LongoMatch.Gui.Panel
 			newtemplatebutton.Visible = true;
 			deletetemplatebutton.Visible = false;
 			
-			newtemplatebutton.Clicked += HandleNewTeamClicked;
-			deletetemplatebutton.Clicked += HandleDeleteTeamClicked;
+			newtemplatebutton.Clicked += HandleNewTemplateClicked;
+			importtemplatebutton.Clicked += HandleImportTemplateClicked;
+			deletetemplatebutton.Clicked += HandleDeleteTemplateClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save (false);
 			
 			editdashboardslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
@@ -214,7 +218,7 @@ namespace LongoMatch.Gui.Panel
 						SaveStatic ();
 					}
 				} else {
-					string msg = Catalog.GetString ("Do you want to save the current template");
+					string msg = Catalog.GetString ("Do you want to save the current dashboard");
 					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 						if (SaveTemplate (loadedTemplate)) {
 							buttonswidget.Edited = false;
@@ -228,6 +232,8 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (sender == newtemplatebutton) {
 				editdashboardslabel.Markup = Catalog.GetString ("New dashboard");
+			} else if (sender == importtemplatebutton) {
+				editdashboardslabel.Markup = Catalog.GetString ("Import dashboard");
 			} else if (sender == deletetemplatebutton) {
 				editdashboardslabel.Markup = Catalog.GetString ("Delete dashboard");
 			} else if (sender == savetemplatebutton) {
@@ -277,10 +283,10 @@ namespace LongoMatch.Gui.Panel
 			loadedTemplate = selected;
 		}
 
-		void HandleDeleteTeamClicked (object sender, EventArgs e)
+		void HandleDeleteTemplateClicked (object sender, EventArgs e)
 		{
 			if (loadedTemplate != null) {
-				string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTemplate.Name;
+				string msg = Catalog.GetString ("Do you really want to delete the dashboard: ") + loadedTemplate.Name;
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
 					provider.Delete (loadedTemplate.Name);
 				}
@@ -288,7 +294,53 @@ namespace LongoMatch.Gui.Panel
 			Load (provider.TemplatesNames.FirstOrDefault ());
 		}
 
-		void HandleNewTeamClicked (object sender, EventArgs e)
+		void HandleImportTemplateClicked (object sender, EventArgs e)
+		{
+			string fileName, filterName;
+			string[] extensions;
+
+			Log.Debug ("Importing dashboard");
+			filterName = Catalog.GetString ("Dashboard files");
+			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
+			/* Show a file chooser dialog to select the file to import */
+			fileName = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import dashboard"), null, Config.HomeDir,
+				filterName, extensions);
+
+			if (fileName == null)
+				return;
+
+			try {
+				Dashboard new_dashboard = Dashboard.Load (fileName);
+
+				if (new_dashboard != null) {
+					while (provider.Exists (new_dashboard.Name)) {
+						new_dashboard.Name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
+							Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
+					}
+
+					Pixbuf img;
+
+					provider.Save (new_dashboard);
+
+					if (new_dashboard.Image != null)
+						img = new_dashboard.Image.Value;
+					else
+						img = Helpers.Misc.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
+
+					string name = new_dashboard.Name;
+
+					templates.AppendValues (img, name, new_dashboard, !new_dashboard.Static);
+				}
+			}
+			catch (Exception ex) {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing template:") +
+					"\n" + ex.Message);
+				Log.Exception (ex);
+				return;
+			}
+		}
+
+		void HandleNewTemplateClicked (object sender, EventArgs e)
 		{
 			bool create = false;
 			bool force = false;
@@ -302,10 +354,10 @@ namespace LongoMatch.Gui.Panel
 			
 			while (dialog.Run() == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
-					var msg = Catalog.GetString ("The template already exists. " +
+					var msg = Catalog.GetString ("The dashboard already exists. " +
 						"Do you want to overwrite it ?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
