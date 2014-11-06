@@ -51,8 +51,8 @@ namespace LongoMatch.Gui
 		void HandleVisibilityNotifyEvent (object o, VisibilityNotifyEventArgs args)
 		{
 			if (videoeventbox.Visible && Window.GdkWindow != null) {
-				// Hack for Windows. Force video window visibility as EventBox window's might prevent it to be mapped again.
-				// See for more info https://code.area51.fluendo.com/private/trac/ticket/26543
+				// Hack for Windows. Force video window visibility as
+				// EventBox window's might prevent it to be mapped again.
 				Window.GdkWindow.Show ();
 			}
 		}
