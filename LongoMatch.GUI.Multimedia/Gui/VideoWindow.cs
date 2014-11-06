@@ -41,23 +41,19 @@ namespace LongoMatch.Gui
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
+			videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
 
 			frame.Add (Window);
 			videoeventbox.Add (frame);
 			ShowAll ();
 		}
 
-		public new bool Visible {
-			get {
-				return base.Visible;
-			}
-			set {
-				base.Visible = value;
-				if (value && Window.GdkWindow != null) {
-					// Hack for Windows. Force video window visibility as EventBox window's might prevent it to be mapped again.
-					// See for more info https://code.area51.fluendo.com/private/trac/ticket/26543
-					Window.GdkWindow.Show ();
-				}
+		void HandleVisibilityNotifyEvent (object o, VisibilityNotifyEventArgs args)
+		{
+			if (videoeventbox.Visible && Window.GdkWindow != null) {
+				// Hack for Windows. Force video window visibility as EventBox window's might prevent it to be mapped again.
+				// See for more info https://code.area51.fluendo.com/private/trac/ticket/26543
+				Window.GdkWindow.Show ();
 			}
 		}
 
