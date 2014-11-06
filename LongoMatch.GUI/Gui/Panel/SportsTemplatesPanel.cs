@@ -313,23 +313,33 @@ namespace LongoMatch.Gui.Panel
 				Dashboard new_dashboard = Dashboard.Load (fileName);
 
 				if (new_dashboard != null) {
-					while (provider.Exists (new_dashboard.Name)) {
-						new_dashboard.Name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
+					bool abort = false;
+
+					while (provider.Exists (new_dashboard.Name) && !abort) {
+						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
 							Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
+						if (name == null) {
+							abort = true;
+						}
+						else {
+							new_dashboard.Name = name;
+						}
 					}
 
-					Pixbuf img;
+					if (!abort) {
+						Pixbuf img;
 
-					provider.Save (new_dashboard);
+						provider.Save (new_dashboard);
 
-					if (new_dashboard.Image != null)
-						img = new_dashboard.Image.Value;
-					else
-						img = Helpers.Misc.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
+						if (new_dashboard.Image != null)
+							img = new_dashboard.Image.Value;
+						else
+							img = Helpers.Misc.LoadIcon ("longomatch", 20, IconLookupFlags.ForceSvg);
 
-					string name = new_dashboard.Name;
+						string name = new_dashboard.Name;
 
-					templates.AppendValues (img, name, new_dashboard, !new_dashboard.Static);
+						templates.AppendValues (img, name, new_dashboard, !new_dashboard.Static);
+					}
 				}
 			}
 			catch (Exception ex) {
