@@ -339,6 +339,8 @@ namespace LongoMatch.Gui.Panel
 						string name = new_dashboard.Name;
 
 						templates.AppendValues (img, name, new_dashboard, !new_dashboard.Static);
+
+						Load (new_dashboard.Name);
 					}
 				}
 			}
