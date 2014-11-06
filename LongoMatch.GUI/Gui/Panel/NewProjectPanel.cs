@@ -231,7 +231,7 @@ namespace LongoMatch.Gui.Panel
 			videoDevices = devices;
 
 			foreach (Device device in devices) {
-				string deviceElement, deviceName;
+				string deviceName;
 				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
 				devicecombobox.AppendText (deviceName);
 				devicecombobox.Active = 0;
@@ -402,6 +402,11 @@ namespace LongoMatch.Gui.Panel
 			if (sender == filebutton) {
 				projectType = ProjectType.FileProject;
 			} else if (sender == capturebutton) {
+				if (videoDevices == null || videoDevices.Count == 0) {
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
+					                                this);
+					return;
+				}
 				projectType = ProjectType.CaptureProject;
 			} else if (sender == fakebutton) {
 				projectType = ProjectType.FakeCaptureProject;
