@@ -223,7 +223,7 @@ namespace LongoMatch.Core.Store.Templates
 			template.List.Add (tagbutton);
 			
 			tagbutton = new TagButton {
-				Tag = new Tag (Catalog.GetString ("Deffense"), ""),
+				Tag = new Tag (Catalog.GetString ("Defense"), ""),
 				Position = new Point (10 + (10 + CAT_WIDTH) * 1, 10)};
 			template.List.Add (tagbutton);
 
