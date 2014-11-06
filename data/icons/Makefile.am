@@ -110,6 +110,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-template-config.svg \
 	hicolor/scalable/actions/longomatch-template-delete.svg \
 	hicolor/scalable/actions/longomatch-template-header.svg \
+	hicolor/scalable/actions/longomatch-template-import.svg \
 	hicolor/scalable/actions/longomatch-template-save.svg \
 	hicolor/scalable/actions/longomatch-text.svg \
 	hicolor/scalable/actions/longomatch-timeline-needle-big.svg \
