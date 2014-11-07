@@ -348,7 +348,6 @@
     <itemgroups>
       <itemgroup label="VideoWindow Properties">
         <property name="Ready" />
-        <property name="Visible" />
       </itemgroup>
     </itemgroups>
     <signals>
