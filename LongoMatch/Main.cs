@@ -24,6 +24,7 @@ using LongoMatch.Addins;
 using LongoMatch.Core.Common;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Utils;
@@ -53,7 +54,7 @@ namespace LongoMatch
 			try {
 				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
 				AddinsManager.LoadConfigModifierAddins ();
-				AddinsManager.RegisterGStreamerPlugins ();
+				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
 				IMultimediaToolkit multimediaToolkit = new MultimediaToolkit ();
@@ -61,6 +62,23 @@ namespace LongoMatch
 				GUIToolkit guiToolkit = new GUIToolkit (version);
 				AddinsManager.LoadExportProjectAddins (guiToolkit.MainController);
 				AddinsManager.LoadMultimediaBackendsAddins (multimediaToolkit);
+
+				if (!haveCodecs) {
+					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
+					int response = ccd.Run ();
+					if (response == (int) ResponseType.Accept) {
+						try {
+							System.Diagnostics.Process.Start (Constants.PRO_WEBSITE);
+						} catch {
+						}
+					} else if (response == (int) ResponseType.Reject) {
+						try {
+							System.Diagnostics.Process.Start (Constants.FREE_CODECS_WEBSITE);
+						} catch {
+						}
+					}
+					ccd.Destroy ();
+				}
 				try {
 					CoreServices.Start (guiToolkit, multimediaToolkit);
 				} catch (DBLockedException locked) {

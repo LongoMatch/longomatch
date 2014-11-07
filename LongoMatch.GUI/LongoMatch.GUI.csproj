@@ -194,6 +194,8 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.EventsListWidget.cs" />
     <Compile Include="Gui\Component\PluginsPreferences.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PluginsPreferences.cs" />
+    <Compile Include="Gui\Dialog\CodecsChoiceDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
