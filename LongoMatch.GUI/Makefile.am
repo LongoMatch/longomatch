@@ -46,6 +46,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/About.cs \
 	Gui/Dialog/BusyDialog.cs \
 	Gui/Dialog/CalendarDialog.cs \
+	Gui/Dialog/CodecsChoiceDialog.cs \
 	Gui/Dialog/DatabasesManager.cs \
 	Gui/Dialog/DrawingTool.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
@@ -123,6 +124,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
