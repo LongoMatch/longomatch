@@ -10,7 +10,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox3;
 		private global::Gtk.VBox vbox6;
 		private global::Gtk.Button zoomoutbutton;
+		private global::Gtk.Image zoomoutimage;
 		private global::Gtk.Button zoominbutton;
+		private global::Gtk.Image zoominimage;
 		private global::Gtk.VBox vbox7;
 		private global::Gtk.DrawingArea drawingarea1;
 		private global::Gtk.ScrolledWindow scrolledwindow2;
@@ -54,54 +56,34 @@ namespace LongoMatch.Gui.Component
 			this.zoomoutbutton = new global::Gtk.Button ();
 			this.zoomoutbutton.CanFocus = true;
 			this.zoomoutbutton.Name = "zoomoutbutton";
-			this.zoomoutbutton.UseUnderline = true;
 			// Container child zoomoutbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w4 = new global::Gtk.HBox ();
-			w4.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-zoom-more", global::Gtk.IconSize.Menu);
-			w4.Add (w5);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w7 = new global::Gtk.Label ();
-			w4.Add (w7);
-			w3.Add (w4);
-			this.zoomoutbutton.Add (w3);
+			this.zoomoutimage = new global::Gtk.Image ();
+			this.zoomoutimage.Name = "zoomoutimage";
+			this.zoomoutbutton.Add (this.zoomoutimage);
+			this.zoomoutbutton.Label = null;
 			this.vbox6.Add (this.zoomoutbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.zoomoutbutton]));
-			w11.Position = 0;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.zoomoutbutton]));
+			w4.Position = 0;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child vbox6.Gtk.Box+BoxChild
 			this.zoominbutton = new global::Gtk.Button ();
 			this.zoominbutton.CanFocus = true;
 			this.zoominbutton.Name = "zoominbutton";
-			this.zoominbutton.UseUnderline = true;
 			// Container child zoominbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w13 = new global::Gtk.HBox ();
-			w13.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w14 = new global::Gtk.Image ();
-			w14.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-zoom-less", global::Gtk.IconSize.Menu);
-			w13.Add (w14);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w16 = new global::Gtk.Label ();
-			w13.Add (w16);
-			w12.Add (w13);
-			this.zoominbutton.Add (w12);
+			this.zoominimage = new global::Gtk.Image ();
+			this.zoominimage.Name = "zoominimage";
+			this.zoominbutton.Add (this.zoominimage);
+			this.zoominbutton.Label = null;
 			this.vbox6.Add (this.zoominbutton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.zoominbutton]));
-			w20.Position = 1;
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.zoominbutton]));
+			w6.Position = 1;
+			w6.Expand = false;
+			w6.Fill = false;
 			this.hbox3.Add (this.vbox6);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox6]));
-			w21.Position = 0;
-			w21.Expand = false;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox6]));
+			w7.Position = 0;
+			w7.Expand = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.vbox7 = new global::Gtk.VBox ();
 			this.vbox7.Name = "vbox7";
@@ -109,31 +91,31 @@ namespace LongoMatch.Gui.Component
 			this.drawingarea1 = new global::Gtk.DrawingArea ();
 			this.drawingarea1.Name = "drawingarea1";
 			this.vbox7.Add (this.drawingarea1);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.drawingarea1]));
-			w22.Position = 0;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.drawingarea1]));
+			w8.Position = 0;
 			// Container child vbox7.Gtk.Box+BoxChild
 			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
 			this.scrolledwindow2.HeightRequest = 50;
 			this.scrolledwindow2.CanFocus = true;
 			this.scrolledwindow2.Name = "scrolledwindow2";
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w23 = new global::Gtk.Viewport ();
-			w23.ShadowType = ((global::Gtk.ShadowType)(0));
+			global::Gtk.Viewport w9 = new global::Gtk.Viewport ();
+			w9.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.drawingarea2 = new global::Gtk.DrawingArea ();
 			this.drawingarea2.Name = "drawingarea2";
-			w23.Add (this.drawingarea2);
-			this.scrolledwindow2.Add (w23);
+			w9.Add (this.drawingarea2);
+			this.scrolledwindow2.Add (w9);
 			this.vbox7.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.scrolledwindow2]));
-			w26.Position = 1;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.scrolledwindow2]));
+			w12.Position = 1;
 			this.hbox3.Add (this.vbox7);
-			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox7]));
-			w27.Position = 1;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox7]));
+			w13.Position = 1;
 			this.vbox2.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
-			w28.Position = 2;
-			w28.Expand = false;
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
+			w14.Position = 2;
+			w14.Expand = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

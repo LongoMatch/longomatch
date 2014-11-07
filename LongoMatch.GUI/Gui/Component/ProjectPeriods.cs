@@ -22,8 +22,10 @@ using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Menus;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,6 +43,10 @@ namespace LongoMatch.Gui.Component
 		public ProjectPeriods ()
 		{
 			this.Build ();
+
+			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-more", 20, IconLookupFlags.ForceSvg);
+			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-less", 20, IconLookupFlags.ForceSvg);
+
 			zoominbutton.Clicked += HandleZooomActivated;
 			zoomoutbutton.Clicked += HandleZooomActivated;
 			playerbin2.Tick += HandleTick;

@@ -10474,10 +10474,12 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Button" id="zoomoutbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:longomatch-zoom-more Menu</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="zoomoutimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -10490,10 +10492,12 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Button" id="zoominbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextAndIcon</property>
-                    <property name="Icon">stock:longomatch-zoom-less Menu</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="UseUnderline">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Image" id="zoominimage">
+                        <property name="MemberName" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
