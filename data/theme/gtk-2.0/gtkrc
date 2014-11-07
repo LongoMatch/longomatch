@@ -65,6 +65,7 @@ style "longomatch-default"
   stock["gtk-help"] = {{ "Stock/gtk-help.svg" }}
   stock["gtk-new"] = {{ "Stock/gtk-new.svg" }}
   stock["gtk-ok"] = {{ "Stock/gtk-ok.svg" }}
+  stock["gtk-cancel"] = {{ "Stock/gtk-close.svg" }}
   stock["gtk-open"] = {{ "Stock/gtk-open.svg" }}
   stock["gtk-quit"] = {{ "Stock/gtk-quit.svg" }}
   stock["gtk-remove"] = {{ "Stock/gtk-remove.svg" }}
