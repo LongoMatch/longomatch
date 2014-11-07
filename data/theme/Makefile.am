@@ -57,6 +57,19 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Scrollbar/slider-vertical.png \
 	gtk-2.0/Scrollbar/trough-horizontal.png \
 	gtk-2.0/Scrollbar/trough-vertical.png \
+	gtk-2.0/Stock/gtk-about.svg \
+	gtk-2.0/Stock/gtk-add.svg \
+	gtk-2.0/Stock/gtk-close.svg \
+	gtk-2.0/Stock/gtk-dialog-info.svg \
+	gtk-2.0/Stock/gtk-fullscreen.svg \
+	gtk-2.0/Stock/gtk-help.svg \
+	gtk-2.0/Stock/gtk-new.svg \
+	gtk-2.0/Stock/gtk-ok.svg \
+	gtk-2.0/Stock/gtk-open.svg \
+	gtk-2.0/Stock/gtk-quit.svg \
+	gtk-2.0/Stock/gtk-remove.svg \
+	gtk-2.0/Stock/gtk-save-as.svg \
+	gtk-2.0/Stock/gtk-save.svg \
 	gtk-2.0/Tabs/notebook-gap-horiz.png \
 	gtk-2.0/Tabs/notebook-gap-vert.png \
 	gtk-2.0/Tabs/notebook.png \
