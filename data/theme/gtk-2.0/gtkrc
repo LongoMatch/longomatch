@@ -4,7 +4,7 @@ gtk-icon-theme-name = "longomatch"
 gtk-icon-sizes = "gtk-menu=13,13:gtk-small-toolbar=24,24:gtk-large-toolbar=24,24:gtk-dnd=80,80:gtk-dialog=80,80"
 gtk-toolbar-icon-size = small-toolbar
 
-gtk-color-scheme = "bg_color:#252627\nbg_light_color:#3b3b3b\nbg_dark_color:#151a20\nselected_color:#f3f3f3\nactive_color:#50b44d\ntool_color:#c42527\nbase_color:#6a6a6a\ntext_color:#f6f6f6"
+gtk-color-scheme = "bg_color:#252627\nbg_light_color:#3b3b3b\nbg_dark_color:#151a20\nselected_color:#f3f3f3\nactive_color:#50b44d\ntool_color:#c42527\nbase_color:#6a6a6a\ntext_color:#f6f6f6\nselected_text_color:#f6f6f6\nselected_text_color_no_focus:#151a20\ntext_selection_color:#6a6a6a\nfocus_color:#50b44d"
 
 
 # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
