@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Component
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));
 			delete.Activated += (sender, e) => {
-				project.Playlists.Remove (playlist);
+				playlist.Remove (element);
 				(Model as TreeStore).Remove (ref selectedIter);
 				Config.EventsBroker.EmitPlaylistsChanged (this);
 			};
