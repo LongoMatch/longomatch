@@ -17,7 +17,9 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
@@ -26,7 +28,6 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Addins;
 using Mono.Addins.Description;
-using LongoMatch.Addins.ExtensionPoints;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -37,7 +38,13 @@ namespace LongoMatch.Addins
 		public static void Initialize (string configPath, string searchPath)
 		{
 			Log.Information ("Initializing addins at path: " + searchPath);
-			AddinManager.Initialize (configPath, searchPath);
+			try {
+				AddinManager.Initialize (configPath, searchPath);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				Directory.Delete (configPath, true);
+				AddinManager.Initialize (configPath, searchPath);
+			}
 			AddinManager.Registry.Update ();
 		}
 
