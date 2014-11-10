@@ -156,6 +156,11 @@ namespace LongoMatch.Gui
 		{
 			string periodName;
 			
+			if (currentPeriod != null) {
+				string msg = Catalog.GetString ("Period recording already started");
+				Config.GUIToolkit.WarningMessage (msg, this);
+				return;
+			}
 			recbutton.Visible = false;
 			pausebutton.Visible = savebutton.Visible = stopbutton.Visible = true;
 			
@@ -185,15 +190,18 @@ namespace LongoMatch.Gui
 
 		public void StopPeriod ()
 		{
-			GLib.Source.Remove (timeoutID);
-			if (currentPeriod != null) {
-				currentPeriod.StopTimer (CurrentCaptureTime);
-				accumTime = CurrentCaptureTime;
-				Log.Debug ("Stop period stop=", accumTime.ToMSecondsString ());
+			if (currentPeriod == null) {
+				string msg = Catalog.GetString ("Period recording not started");
+				Config.GUIToolkit.WarningMessage (msg, this);
+				return;
 			}
+			
+			GLib.Source.Remove (timeoutID);
+			currentPeriod.StopTimer (CurrentCaptureTime);
+			accumTime = CurrentCaptureTime;
+			Log.Debug ("Stop period stop=", accumTime.ToMSecondsString ());
 			currentTimeNode = null;
 			currentPeriod = null;
-			
 			recbutton.Visible = true;
 			pausebutton.Visible = resumebutton.Visible = stopbutton.Visible = false;
 			if (Capturer != null && Capturing) {
@@ -204,10 +212,13 @@ namespace LongoMatch.Gui
 
 		public void PausePeriod ()
 		{
-			if (currentPeriod != null) {
-				Log.Debug ("Pause period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
-				currentPeriod.PauseTimer (CurrentCaptureTime);
+			if (currentPeriod == null) {
+				string msg = Catalog.GetString ("Period recording not started");
+				Config.GUIToolkit.WarningMessage (msg, this);
+				return;
 			}
+			Log.Debug ("Pause period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
+			currentPeriod.PauseTimer (CurrentCaptureTime);
 			currentTimeNode = null;
 			pausebutton.Visible = false;
 			resumebutton.Visible = true;
@@ -216,6 +227,11 @@ namespace LongoMatch.Gui
 
 		public void ResumePeriod ()
 		{
+			if (currentPeriod == null) {
+				string msg = Catalog.GetString ("Period recording not started");
+				Config.GUIToolkit.WarningMessage (msg, this);
+				return;
+			}
 			Log.Debug ("Resume period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
 			currentTimeNode = currentPeriod.Resume (CurrentCaptureTime);
 			pausebutton.Visible = true;
@@ -299,7 +315,9 @@ namespace LongoMatch.Gui
 
 		public void Close ()
 		{
-			StopPeriod ();
+			if (currentPeriod != null) {
+				StopPeriod ();
+			}
 			/* stopping and closing capturer */
 			if (Capturer != null) {
 				try {

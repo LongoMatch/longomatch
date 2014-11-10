@@ -275,7 +275,6 @@ namespace LongoMatch.Services
 				
 			Log.Debug ("Closing project " + OpenedProject.ID);
 			if (OpenedProjectType != ProjectType.FileProject) {
-				Capturer.StopPeriod ();
 				Capturer.Close ();
 			} else {
 				Player.Close ();

@@ -323,11 +323,15 @@ namespace LongoMatch.Services
 			}
 
 			if (!openedProject.Dashboard.DisablePopupWindow) {
-				bool playing = player.Playing;
-				player.Pause ();
-				Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
-				if (playing) {
-					player.Play ();
+				if (player != null) {
+					bool playing = player.Playing;
+					player.Pause ();
+					Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
+					if (playing) {
+						player.Play ();
+					}
+				} else {
+					Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
 				}
 			}
 
