@@ -17,7 +17,6 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
 using Gtk;
@@ -28,8 +27,6 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
-
-
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlaysListTreeWidget : Gtk.Bin
@@ -38,15 +35,15 @@ namespace LongoMatch.Gui.Component
 		Project project;
 		Dictionary<EventType, TreeIter> itersDic;
 
-		public PlaysListTreeWidget()
+		public PlaysListTreeWidget ()
 		{
-			this.Build();
+			this.Build ();
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 			itersDic = new Dictionary<EventType, TreeIter> ();
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
@@ -54,60 +51,58 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public EventsFilter Filter {
-			set{
+			set {
 				treeview.Filter = value;
 			}
 		}
 
-		public void RemovePlays(List<TimelineEvent> plays) {
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
 			TreeIter iter, child;
 			TreeStore model;
 			List<TreeIter> removeIters;
 
-			if(project == null)
+			if (project == null)
 				return;
 
-			removeIters = new List<TreeIter>();
+			removeIters = new List<TreeIter> ();
 			model = (TreeStore)treeview.Model;
-			model.GetIterFirst(out iter);
+			model.GetIterFirst (out iter);
 			/* Scan all the tree and store the iter of each play
 			 * we need to delete, but don't delete it yet so that
 			 * we don't alter the tree */
 			do {
-				if(!model.IterHasChild(iter))
+				if (!model.IterHasChild (iter))
 					continue;
 
-				model.IterChildren(out child, iter);
+				model.IterChildren (out child, iter);
 				do {
-					TimelineEvent play = (TimelineEvent) model.GetValue(child,0);
-					if(plays.Contains(play)) {
-						removeIters.Add(child);
+					TimelineEvent play = (TimelineEvent)model.GetValue (child, 0);
+					if (plays.Contains (play)) {
+						removeIters.Add (child);
 					}
 				} while(model.IterNext(ref child));
 			} while(model.IterNext(ref iter));
 
 			/* Remove the selected iters now */
-			for(int i=0; i < removeIters.Count; i++) {
-				iter = removeIters[i];
-				model.Remove(ref iter);
+			for (int i=0; i < removeIters.Count; i++) {
+				iter = removeIters [i];
+				model.Remove (ref iter);
 			}
 		}
 
-		public void AddPlay(TimelineEvent play) {
-			TreeIter categoryIter;
+		public void AddPlay (TimelineEvent play)
+		{
+			TreePath path;
 
-			if(project == null)
+			if (project == null)
 				return;
 
-			var cat = play.EventType;
-			var model = (TreeStore)treeview.Model;
-			categoryIter = itersDic[cat];
-			var playIter = model.AppendValues(categoryIter,play);
-			var playPath = model.GetPath(playIter);
-			treeview.Selection.UnselectAll();
-			treeview.ExpandToPath(playPath);
-			treeview.ScrollToCell (playPath, null, true, 0, 0);
-			treeview.Selection.SelectIter(playIter);
+			path = treeview.AddEvent (play, itersDic [play.EventType]);
+			treeview.ExpandToPath (path);
+			treeview.SetCursor (path, null, false);
+			var cellRect = treeview.GetBackgroundArea (path, null);
+			treeview.ScrollToPoint (cellRect.X, Math.Max (cellRect.Y, 0));
 		}
 
 		public Project Project {
@@ -133,27 +128,28 @@ namespace LongoMatch.Gui.Component
 
 			itersDic.Clear ();
 
-			foreach(EventType evType in project.EventTypes) {
-				iter = dataFileListStore.AppendValues(evType);
-				itersDic.Add(evType, iter);
+			foreach (EventType evType in project.EventTypes) {
+				iter = dataFileListStore.AppendValues (evType);
+				itersDic.Add (evType, iter);
 			}
 			
 			var queryPlaysByCategory = project.PlaysGroupedByEventType;
-			foreach(var playsGroup in queryPlaysByCategory) {
+			foreach (var playsGroup in queryPlaysByCategory) {
 				EventType cat = playsGroup.Key;
-				if(!itersDic.ContainsKey(cat))
+				if (!itersDic.ContainsKey (cat))
 					continue;
-				foreach(TimelineEvent play in playsGroup) {
-					dataFileListStore.AppendValues(itersDic[cat], play);
+				foreach (TimelineEvent play in playsGroup) {
+					dataFileListStore.AppendValues (itersDic [cat], play);
 				}
 			}
 			return dataFileListStore;
 		}
 
-		protected virtual void OnEditProperties(EventType eventType) {
+		protected virtual void OnEditProperties (EventType eventType)
+		{
 			EditCategoryDialog dialog = new EditCategoryDialog (project, eventType);
-			dialog.Run();
-			dialog.Destroy();
+			dialog.Run ();
+			dialog.Destroy ();
 		}
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
@@ -161,23 +157,24 @@ namespace LongoMatch.Gui.Component
 			Playlist playlist;
 			TreePath[] paths;
 
-			playlist = new Playlist();
-			paths = treeview.Selection.GetSelectedRows();
+			playlist = new Playlist ();
+			paths = treeview.Selection.GetSelectedRows ();
 
-			foreach(var path in paths) {
+			foreach (var path in paths) {
 				TreeIter iter;
 				PlaylistPlayElement element;
 				
-				treeview.Model.GetIter(out iter, path);
-				element = new PlaylistPlayElement (treeview.Model.GetValue(iter, 0) as TimelineEvent,
+				treeview.Model.GetIter (out iter, path);
+				element = new PlaylistPlayElement (treeview.Model.GetValue (iter, 0) as TimelineEvent,
 				                                   project.Description.FileSet);
 				playlist.Elements.Add (element);
 			}
 			
 			Config.EventsBroker.EmitRenderPlaylist (playlist);
 		}
-		
-		void HandlePlayLoaded (TimelineEvent play) {
+
+		void HandlePlayLoaded (TimelineEvent play)
+		{
 			treeview.QueueDraw ();
 		}
 	}

@@ -62,6 +62,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public TreePath AddEvent (TimelineEvent evt, TreeIter evtTter)
+		{
+			TreeIter childIter = childModel.AppendValues (evtTter, evt);
+			TreePath childPath = childModel.GetPath (childIter);
+			TreePath path = modelSort.ConvertChildPathToPath (
+				modelFilter.ConvertChildPathToPath (childPath));
+			return path;
+		}
+
 		private void SetCategoriesMenu ()
 		{
 			Gtk.Action editProp, sortMenu;

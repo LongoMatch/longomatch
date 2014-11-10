@@ -265,8 +265,8 @@ namespace LongoMatch.Services
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 			}
 
-			analysisWindow.AddPlay (play);
 			filter.Update ();
+			analysisWindow.AddPlay (play);
 			if (projectType == ProjectType.FileProject) {
 				player.Play ();
 			}

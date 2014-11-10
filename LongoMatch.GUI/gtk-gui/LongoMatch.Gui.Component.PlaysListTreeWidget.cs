@@ -4,7 +4,7 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class PlaysListTreeWidget
 	{
-		private global::Gtk.ScrolledWindow scrolledwindow1;
+		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 		private global::LongoMatch.Gui.Component.PlaysTreeView treeview;
 
 		protected virtual void Build ()
@@ -14,20 +14,16 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.PlaysListTreeWidget";
 			// Container child LongoMatch.Gui.Component.PlaysListTreeWidget.Gtk.Container+ContainerChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
-			this.scrolledwindow1.CanFocus = true;
-			this.scrolledwindow1.Name = "scrolledwindow1";
-			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
-			w1.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
+			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
+			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 			this.treeview = new global::LongoMatch.Gui.Component.PlaysTreeView ();
 			this.treeview.CanFocus = true;
 			this.treeview.Name = "treeview";
 			this.treeview.Colors = false;
-			w1.Add (this.treeview);
-			this.scrolledwindow1.Add (w1);
-			this.Add (this.scrolledwindow1);
+			this.GtkScrolledWindow.Add (this.treeview);
+			this.Add (this.GtkScrolledWindow);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
