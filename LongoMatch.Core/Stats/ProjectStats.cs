@@ -16,13 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-
+using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Stats
 {
@@ -30,18 +27,18 @@ namespace LongoMatch.Core.Stats
 	{
 		EventsFilter filter;
 		Project project;
-		
+
 		public ProjectStats (Project project)
 		{
 			this.project = project;
 			filter = new EventsFilter (project);
 			CreateStats ();
 		}
-		
+
 		public void Dispose ()
 		{
 		}
-		
+
 		public Project Project {
 			get;
 			protected set;
@@ -51,29 +48,54 @@ namespace LongoMatch.Core.Stats
 			get;
 			protected set;
 		}
+
+		public TeamStats HomeTeamStats {
+			get;
+			set;
+		}
 		
+		public TeamStats AwayTeamStats {
+			get;
+			set;
+		}
+
 		public EventsFilter Filter {
 			set {
 				filter = value;
 				UpdateStats ();
 			}
 		}
-		
-		public void CreateStats () {
+
+		public PlayerStats GetPlayerStats (Player p)
+		{
+			if (project.LocalTeamTemplate.List.Contains (p)) {
+				return HomeTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
+			} else {
+				return AwayTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
+			}
+		}
+ 
+		public void CreateStats ()
+		{
 			EventTypeStats = new List <EventTypeStats> ();
 			
 			foreach (EventType evt in project.EventTypes) {
 				EventTypeStats evstats = new EventTypeStats (project, filter, evt);
-				evstats.Update ();
 				EventTypeStats.Add (evstats);
 			}
+
+			HomeTeamStats = new TeamStats (project, filter, Team.LOCAL);
+			AwayTeamStats = new TeamStats (project, filter, Team.VISITOR);
+			UpdateStats ();
 		}
 
 		public void UpdateStats ()
 		{
 			foreach (EventTypeStats e in EventTypeStats) {
-				e.Update();
+				e.Update ();
 			}
+			HomeTeamStats.Update ();
+			AwayTeamStats.Update ();
 		}
 	}
 }

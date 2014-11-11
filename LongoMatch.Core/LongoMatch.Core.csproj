@@ -72,7 +72,6 @@
     <Compile Include="Stats\ProjectStats.cs" />
     <Compile Include="Stats\PercentualStat.cs" />
     <Compile Include="Stats\Stat.cs" />
-    <Compile Include="Stats\PlayersStats.cs" />
     <Compile Include="Common\EventsFilter.cs" />
     <Compile Include="Interfaces\Multimedia\IRemuxer.cs" />
     <Compile Include="Interfaces\Multimedia\IVideoConverter.cs" />
@@ -132,6 +131,9 @@
     <Compile Include="Common\Hotkeys.cs" />
     <Compile Include="Common\Keyboard.cs" />
     <Compile Include="Store\Playlists\PlaylistVideo.cs" />
+    <Compile Include="Stats\TeamStats.cs" />
+    <Compile Include="Stats\PlayerEventTypeStats.cs" />
+    <Compile Include="Stats\PlayerStats.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

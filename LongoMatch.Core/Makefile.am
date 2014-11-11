@@ -61,10 +61,12 @@ SOURCES = Common/Area.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
 	Stats/EventTypeStats.cs \
 	Stats/PercentualStat.cs \
-	Stats/PlayersStats.cs \
+	Stats/PlayerEventTypeStats.cs \
+	Stats/PlayerStats.cs \
 	Stats/ProjectStats.cs \
 	Stats/Stat.cs \
 	Stats/SubCategoryStat.cs \
+	Stats/TeamStats.cs \
 	Store/Coordinates.cs \
 	Store/DashboardButton.cs \
 	Store/Drawables/Angle.cs \

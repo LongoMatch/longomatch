@@ -52,9 +52,18 @@ namespace LongoMatch.Gui.Component
 		{
 			Visible = false;
 			
-			UpdateTags (stats, team, FieldPositionType.Field, field);
-			UpdateTags (stats, team, FieldPositionType.HalfField, hfield);
-			UpdateTags (stats, team, FieldPositionType.Goal, goal);
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Field), field);
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.HalfField), hfield);
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Goal), goal);
+		}
+		
+		public void LoadStats (PlayerEventTypeStats stats, Team team)
+		{
+			Visible = false;
+			
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Field), field);
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.HalfField), hfield);
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Goal), goal);
 		}
 		
 		public void LoadPlay (TimelineEvent play) {
@@ -75,9 +84,8 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void UpdateTags (EventTypeStats stats, Team team, FieldPositionType field, CoordinatesTagger tagger)
+		void UpdateTags (List<Coordinates> coords, CoordinatesTagger tagger)
 		{
-			List<Coordinates> coords = stats.GetFieldCoordinates (team, field);
 			if (coords.Count > 0) {
 				Visible = true;
 			}

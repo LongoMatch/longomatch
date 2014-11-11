@@ -26,6 +26,7 @@ namespace LongoMatch.Gui.Component.Stats
 	public partial class PlayerCategoriesViewer : Gtk.Bin
 	{
 		ListStore store;
+		Project project;
 		ProjectStats pstats;
 		
 		public PlayerCategoriesViewer ()
@@ -43,20 +44,24 @@ namespace LongoMatch.Gui.Component.Stats
 		public void LoadStats (ProjectStats pstats, Project project) {
 			categoryviewer.LoadBackgrounds (project);
 			this.pstats = pstats;
-			ReloadStats();
+			this.project = project;
+			ReloadStats (project.LocalTeamTemplate.List[0]);
 		}
 		
-		public void ReloadStats () {
+		public void ReloadStats (Player player) {
+			PlayerStats playerStats;
 			TreeIter iter;
 			TreePath selected = null;
 			
+			playerStats = pstats.GetPlayerStats (player);
+
 			treeview.Selection.GetSelected (out iter);
 			if (store.IterIsValid (iter))
 				selected = store.GetPath (iter);
 			
 			store.Clear();
-			foreach (EventTypeStats cstats in pstats.EventTypeStats) {
-				store.AppendValues (cstats, cstats.Name);
+			foreach (PlayerEventTypeStats petats in playerStats.PlayerEventStats) {
+				store.AppendValues (petats, petats.EventType.Name);
 			}
 			
 			/* Keep the selected category for when we reload the stats changing players */
@@ -66,16 +71,16 @@ namespace LongoMatch.Gui.Component.Stats
 				store.GetIterFirst(out iter);
 			}
 			treeview.Selection.SelectIter(iter);
-			categoryviewer.LoadStats (store.GetValue (iter, 0) as EventTypeStats);
+			categoryviewer.LoadStats (store.GetValue (iter, 0) as PlayerEventTypeStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
-			EventTypeStats stats;
+			PlayerEventTypeStats stats;
 			TreeIter iter;
 			
 			treeview.Selection.GetSelected(out iter);
-			stats = store.GetValue(iter, 0) as EventTypeStats;
+			stats = store.GetValue(iter, 0) as PlayerEventTypeStats;
 			categoryviewer.LoadStats (stats);
 		}	
 	}

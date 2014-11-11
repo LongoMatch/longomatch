@@ -47,22 +47,24 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 		
 		public void LoadProject (Project project, ProjectStats stats) {
-			TreeIter first;
+			TreePath path;
 			
 			store.Clear();
 			pstats = stats;
-			filter = new EventsFilter (project);
-			pstats.Filter = filter;
 			categoriesviewer.LoadStats (pstats, project);
 			AddTeam (project.LocalTeamTemplate, project.Dashboard);
 			AddTeam (project.VisitorTeamTemplate, project.Dashboard);
-			filter.Update();
-			store.GetIter (out first, new TreePath ("0:0"));
-			treeview1.Selection.SelectIter (first);
+			path = new TreePath ("0:0");
+			treeview1.ExpandAll ();
+			treeview1.SetCursor (path, null, false);
 		}
 		
-		void AddTeam (TeamTemplate tpl, Dashboard cats) {
-			store.AppendValues (tpl.TeamName, null);
+		void AddTeam (TeamTemplate tpl, Dashboard cats)
+		{
+			TreeIter iter = store.AppendValues (tpl.TeamName, null);
+			foreach (Player p in tpl.List) {
+				store.AppendValues (iter, p.Name, p);
+			}
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
@@ -72,9 +74,7 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview1.Selection.GetSelected(out iter);
 			current = store.GetValue(iter, 1) as Player;
 			if (current != null) {
-				filter.Update();
-				pstats.UpdateStats ();
-				categoriesviewer.ReloadStats ();
+				categoriesviewer.ReloadStats (current);
 			}
 		}
 	}
