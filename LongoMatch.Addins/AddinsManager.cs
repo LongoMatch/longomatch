@@ -148,9 +148,13 @@ namespace LongoMatch.Addins
 				foreach (string path in paths) {
 					foreach (TypeExtensionNode n  in AddinManager.GetExtensionNodes (path)) {
 						var list = plugins.FirstOrDefault (a => a.Key.LocalId == n.Addin.Id).Value;
-						var instance = n.GetInstance ();
-						if (instance is ConfigurablePlugin) {
-							list.Add ((ConfigurablePlugin)instance);
+						try {
+							var instance = n.GetInstance ();
+							if (instance is ConfigurablePlugin) {
+								list.Add ((ConfigurablePlugin)instance);
+							}
+						} catch (Exception ex) {
+							Log.Exception (ex);
 						}
 					}
 				}
