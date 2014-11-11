@@ -57,11 +57,10 @@ namespace LongoMatch
 				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
-				IMultimediaToolkit multimediaToolkit = new MultimediaToolkit ();
-				Config.MultimediaToolkit = multimediaToolkit;
-				GUIToolkit guiToolkit = new GUIToolkit (version);
-				AddinsManager.LoadExportProjectAddins (guiToolkit.MainController);
-				AddinsManager.LoadMultimediaBackendsAddins (multimediaToolkit);
+				Config.MultimediaToolkit = new MultimediaToolkit ();
+				Config.GUIToolkit = new GUIToolkit (version);
+				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
+				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
 
 				if (!haveCodecs) {
 					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
@@ -80,11 +79,11 @@ namespace LongoMatch
 					ccd.Destroy ();
 				}
 				try {
-					CoreServices.Start (guiToolkit, multimediaToolkit);
+					CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				} catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
 						"the application will closed.");
-					guiToolkit.ErrorMessage (msg);
+					Config.GUIToolkit.ErrorMessage (msg);
 					Log.Exception (locked);
 					return;
 				}
