@@ -96,6 +96,10 @@
       <Project>{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}</Project>
       <Name>LongoMatch.Plugins.GStreamer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Plugins.Stats\LongoMatch.Plugins.Stats.csproj">
+      <Project>{F03D161E-CC4D-4FE6-968A-04F884AB0939}</Project>
+      <Name>LongoMatch.Plugins.Stats</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

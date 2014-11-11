@@ -7,6 +7,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>LongoMatch.Addins</RootNamespace>
     <AssemblyName>LongoMatch.Addins</AssemblyName>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,10 +37,12 @@
     <Compile Include="ExtensionPoints\IAnalisysDashboardsProvider.cs" />
     <Compile Include="PreferencesAttribute.cs" />
     <Compile Include="ConfigurablePlugin.cs" />
+    <Compile Include="ExtensionPoints\IStatsUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
       <SpecificVersion>False</SpecificVersion>
+      <Package>mono-addins</Package>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,4 +1,51 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Plugins.Stats.CategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.CategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="CategoryViewer Properties">
+        <property name="HomeName" />
+        <property name="AwayName" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.GameViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.PlayerCategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.PlayerCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.PlayerSubcategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.PlayersViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.Plotter" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="Plotter Properties">
+        <property name="ShowTeams" />
+        <property name="HomeName" />
+        <property name="AwayName" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CategoryProperties Properties">
@@ -213,11 +260,11 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
     <itemgroups />
     <signals />
   </object>
@@ -263,55 +310,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="CapturerBin Properties">
-        <property name="Capturing" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="IPlayerBin Properties">
-        <property name="Sensitive" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="PlayerBin Signals">
-        <signal name="Tick" />
-        <signal name="PlayStateChanged" />
-        <signal name="CloseEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="IPlayerBin Properties">
-        <property name="Sensitive" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="IPlayerBin Signals">
-        <signal name="PlayStateChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="VideoWindow Properties">
-        <property name="Ready" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="VideoWindow Signals">
-        <signal name="ReadyEvent" />
-        <signal name="ExposeEvent" />
-        <signal name="ButtonPressEvent" />
-        <signal name="ScrollEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.FakeAnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -321,6 +319,10 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.PluginsPreferences" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Plugins.Stats.StatsViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>

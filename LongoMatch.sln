@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Migration", "Lon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.GStreamer", "LongoMatch.Plugins.GStreamer\LongoMatch.Plugins.GStreamer.csproj", "{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.Stats", "LongoMatch.Plugins.Stats\LongoMatch.Plugins.Stats.csproj", "{F03D161E-CC4D-4FE6-968A-04F884AB0939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{E75E30DC-C1CF-4683-9A36-65B91EF10095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E75E30DC-C1CF-4683-9A36-65B91EF10095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E75E30DC-C1CF-4683-9A36-65B91EF10095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = LongoMatch\LongoMatch.csproj

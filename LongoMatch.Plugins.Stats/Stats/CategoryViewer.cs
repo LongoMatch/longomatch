@@ -23,7 +23,7 @@ using LongoMatch.Core.Common;
 using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CategoryViewer : Gtk.Bin

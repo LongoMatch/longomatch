@@ -326,11 +326,7 @@ namespace LongoMatch.Gui
 		
 		public void ShowProjectStats (Project project) {
 			Log.Information ("Show project stats");
-			StatsViewer dialog = new StatsViewer ();
-			dialog.LoadStats (project);
-			dialog.TransientFor = mainWindow as Gtk.Window;
-			dialog.Run();
-			dialog.Destroy();
+			Addins.AddinsManager.ShowStats (project);
 			System.GC.Collect();
 		}
 		

@@ -29,16 +29,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectPeriods.cs \
 	Gui/Component/RenderingStateBar.cs \
-	Gui/Component/Stats/CategoriesViewer.cs \
-	Gui/Component/Stats/CategoryViewer.cs \
-	Gui/Component/Stats/GameViewer.cs \
-	Gui/Component/Stats/PangoTextMeasurer.cs \
-	Gui/Component/Stats/PlayerCategoriesViewer.cs \
-	Gui/Component/Stats/PlayerCategoryViewer.cs \
-	Gui/Component/Stats/PlayerSubcategoryViewer.cs \
-	Gui/Component/Stats/PlayersViewer.cs \
-	Gui/Component/Stats/Plotter.cs \
-	Gui/Component/Stats/SubcategoryViewer.cs \
 	Gui/Component/TeamTemplateEditor.cs \
 	Gui/Component/TeamsComboBox.cs \
 	Gui/Component/Timeline.cs \
@@ -58,7 +48,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/PlayEditor.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
-	Gui/Dialog/StatsViewer.cs \
 	Gui/Dialog/SubstitutionsEditor.cs \
 	Gui/Dialog/UpdateDialog.cs \
 	Gui/Dialog/VideoConversionTool.cs \
@@ -94,7 +83,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
 	gtk-gui/LongoMatch.Gui.Component.EventsListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.FakeAnalysisComponent.cs \
-	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.HotkeysConfiguration.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
@@ -111,14 +99,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectPeriods.cs \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.CategoriesViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.PlayersViewer.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs \
-	gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.Timeline.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs \
@@ -136,7 +116,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs \

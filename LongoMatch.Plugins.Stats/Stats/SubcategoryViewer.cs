@@ -22,7 +22,7 @@ using Mono.Unix;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class SubCategoryViewer : Gtk.Bin

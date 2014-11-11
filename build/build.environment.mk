@@ -153,6 +153,18 @@ REF_DEP_LONGOMATCH_PLUGINS_GSTREAMER = \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_ADDINS)
 
+REF_DEP_LONGOMATCH_PLUGINS_STATS = \
+                     $(LINK_MONO_ADDINS) \
+                     $(LINK_MONO_POSIX) \
+                     $(LINK_GLIB) \
+                     $(LINK_GTK) \
+                     $(LINK_OSXYPLOT) \
+                     $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_GUI) \
+                     $(LINK_LONGOMATCH_GUI_HELPERS) \
+                     $(LINK_LONGOMATCH_ADDINS)
+
+
 
 DIR_BIN = $(top_builddir)/bin
 

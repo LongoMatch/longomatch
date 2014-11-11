@@ -28,6 +28,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Addins;
 using Mono.Addins.Description;
+using LongoMatch.Core.Stats;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -160,6 +161,16 @@ namespace LongoMatch.Addins
 				}
 				return plugins;
 			}
+		}
+
+		public static bool ShowStats (Project project)
+		{
+			IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
+			if (statsUI != null) {
+				statsUI.ShowStats (project);
+				return true;
+			}
+			return false;
 		}
 	}
 }

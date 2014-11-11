@@ -24,14 +24,13 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayersViewer : Gtk.Bin
 	{
 		TreeStore store;
 		ProjectStats pstats;
-		EventsFilter filter;
 		Player current;
 		
 		public PlayersViewer ()

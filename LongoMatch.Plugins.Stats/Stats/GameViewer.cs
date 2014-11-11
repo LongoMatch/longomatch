@@ -27,7 +27,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Gui.Component
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class GameViewer : Gtk.Bin

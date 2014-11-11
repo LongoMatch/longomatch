@@ -12,6 +12,7 @@ SOURCES = AddinsManager.cs \
 	ExtensionPoints/IImportProject.cs \
 	ExtensionPoints/ILongoMatchPlugin.cs \
 	ExtensionPoints/IMultimediaBackend.cs \
+	ExtensionPoints/IStatsUI.cs \
 	PreferencesAttribute.cs
 
 RESOURCES = 

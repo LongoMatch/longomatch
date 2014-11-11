@@ -29,7 +29,7 @@ using LongoMatch.Core.Common;
 using Mono.Unix;
 using Gtk;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class Plotter : Gtk.Bin

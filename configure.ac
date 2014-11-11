@@ -143,6 +143,7 @@ LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile
 LongoMatch.Plugins.GStreamer/Makefile
+LongoMatch.Plugins.Stats/Makefile
 LongoMatch.Services/Makefile
 LongoMatch/Makefile
 LongoMatch/longomatch

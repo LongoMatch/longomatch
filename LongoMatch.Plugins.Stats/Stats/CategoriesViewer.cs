@@ -17,22 +17,23 @@
 //
 using System;
 using Gtk;
+
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PlayerCategoriesViewer : Gtk.Bin
+	public partial class CategoriesViewer : Gtk.Bin
 	{
 		ListStore store;
-		Project project;
 		ProjectStats pstats;
 		
-		public PlayerCategoriesViewer ()
+		public CategoriesViewer ()
 		{
 			this.Build ();
-			store = new ListStore(typeof(EventType), typeof(string));
+			store = new ListStore(typeof(EventTypeStats), typeof(string));
 			treeview.AppendColumn ("Desc", new Gtk.CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
 			treeview.Model = store;
@@ -42,26 +43,26 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 		
 		public void LoadStats (ProjectStats pstats, Project project) {
-			categoryviewer.LoadBackgrounds (project);
+			categoryviewer1.HomeName = project.LocalTeamTemplate.TeamName;
+			categoryviewer1.AwayName = project.VisitorTeamTemplate.TeamName;
+			categoryviewer1.LoadBackgrounds (project);
 			this.pstats = pstats;
-			this.project = project;
-			ReloadStats (project.LocalTeamTemplate.List[0]);
+			ReloadStats();
 		}
 		
-		public void ReloadStats (Player player) {
-			PlayerStats playerStats;
+		public void ReloadStats () {
 			TreeIter iter;
 			TreePath selected = null;
-			
-			playerStats = pstats.GetPlayerStats (player);
+
+			pstats.UpdateStats ();
 
 			treeview.Selection.GetSelected (out iter);
 			if (store.IterIsValid (iter))
 				selected = store.GetPath (iter);
 			
 			store.Clear();
-			foreach (PlayerEventTypeStats petats in playerStats.PlayerEventStats) {
-				store.AppendValues (petats, petats.EventType.Name);
+			foreach (EventTypeStats cstats in pstats.EventTypeStats) {
+				store.AppendValues (cstats, cstats.Name);
 			}
 			
 			/* Keep the selected category for when we reload the stats changing players */
@@ -71,18 +72,18 @@ namespace LongoMatch.Gui.Component.Stats
 				store.GetIterFirst(out iter);
 			}
 			treeview.Selection.SelectIter(iter);
-			categoryviewer.LoadStats (store.GetValue (iter, 0) as PlayerEventTypeStats);
+			categoryviewer1.LoadStats (store.GetValue (iter, 0) as EventTypeStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
-			PlayerEventTypeStats stats;
+			EventTypeStats stats;
 			TreeIter iter;
 			
 			treeview.Selection.GetSelected(out iter);
-			stats = store.GetValue(iter, 0) as PlayerEventTypeStats;
-			categoryviewer.LoadStats (stats);
-		}	
+			stats = store.GetValue(iter, 0) as EventTypeStats;
+			categoryviewer1.LoadStats (stats);
+		}
 	}
 }
 

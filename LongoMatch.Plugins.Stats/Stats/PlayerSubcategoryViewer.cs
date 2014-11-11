@@ -16,43 +16,39 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
 using Gtk;
+using Mono.Unix;
 
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
-using Image = LongoMatch.Core.Common.Image;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PlayerCategoryViewer : Gtk.Bin
+	public partial class PlayerSubcategoryViewer : Gtk.Bin
 	{
-		public PlayerCategoryViewer ()
+		ListStore store;
+		
+		public PlayerSubcategoryViewer ()
 		{
 			this.Build ();
+			treeview.AppendColumn (Catalog.GetString ("Name"), new Gtk.CellRendererText (), "text", 0);
+			treeview.AppendColumn (Catalog.GetString("Count"), new Gtk.CellRendererText (), "text", 1);
+			plotter1.ShowTeams = false;
+			plotter1.WidthRequest = 500;
 		}
-
-		public void LoadBackgrounds (Project project) {
-			tagger.LoadBackgrounds (project);
-		}
-
-		public void LoadStats (PlayerEventTypeStats stats) {
-			tagger.LoadStats (stats, Team.BOTH);
+		
+		public void LoadStats (SubCategoryStat stats) {
+			store = new ListStore(typeof(string), typeof(string));
+			treeview.Model = store;
 			
-			foreach (Widget child in vbox1.AllChildren) {
-				if (!(child is PlaysCoordinatesTagger))
-					vbox1.Remove (child);
+			gtkframe.Markup = String.Format("<b> {0} </b>", stats.Name);
+			plotter1.LoadHistogram (stats);
+			
+			foreach (PercentualStat st in stats.OptionStats) {
+				store.AppendValues (st.Name, st.TotalCount.ToString());
 			}
-			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
-				PlayerSubcategoryViewer subcatviewer = new PlayerSubcategoryViewer();
-				subcatviewer.LoadStats (st);
-				vbox1.PackStart (subcatviewer);
-				vbox1.PackStart (new HSeparator());
-				subcatviewer.Show ();
-			}
-		}	
+		}
 	}
 }
 

@@ -42,7 +42,6 @@
     <Folder Include="Gui\Component\" />
     <Folder Include="Gui\TreeView\" />
     <Folder Include="..\" />
-    <Folder Include="Gui\Component\Stats\" />
     <Folder Include="Gui\Panel\" />
     <Folder Include="Gui\Menu\" />
   </ItemGroup>
@@ -117,29 +116,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.LiveAnalysisPreferences.cs" />
     <Compile Include="Gui\Component\PlaysCoordinatesTagger.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs" />
-    <Compile Include="Gui\Component\Stats\CategoryViewer.cs" />
-    <Compile Include="Gui\Component\Stats\Plotter.cs" />
-    <Compile Include="Gui\Component\Stats\PangoTextMeasurer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.Plotter.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.CategoryViewer.cs" />
-    <Compile Include="Gui\Component\Stats\SubcategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs" />
-    <Compile Include="Gui\Component\Stats\CategoriesViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.CategoriesViewer.cs" />
-    <Compile Include="Gui\Dialog\StatsViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.StatsViewer.cs" />
-    <Compile Include="Gui\Component\Stats\GameViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.GameViewer.cs" />
-    <Compile Include="Gui\Component\Stats\PlayersViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.PlayersViewer.cs" />
-    <Compile Include="Gui\Component\Stats\PlayerCategoriesViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer.cs" />
-    <Compile Include="Gui\Component\Stats\PlayerCategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs" />
-    <Compile Include="Gui\Component\Stats\PlayerSubcategoryViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs" />
     <Compile Include="Gui\Component\AnalysisComponent.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.AnalysisComponent.cs" />
     <Compile Include="Gui\Panel\WelcomePanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.WelcomePanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.BackgroundWidget.cs" />
@@ -196,6 +173,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PluginsPreferences.cs" />
     <Compile Include="Gui\Dialog\CodecsChoiceDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.AnalysisComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

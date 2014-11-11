@@ -19,7 +19,7 @@ using System;
 using Pango;
 using OxyPlot;
 
-namespace LongoMatch.Gui.Component.Stats
+namespace LongoMatch.Plugins.Stats
 {
 	public class PangoTextMeasurer: ITextMeasurer
 	{
