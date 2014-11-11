@@ -158,6 +158,7 @@ REF_DEP_LONGOMATCH_PLUGINS_STATS = \
                      $(LINK_MONO_POSIX) \
                      $(LINK_GLIB) \
                      $(LINK_GTK) \
+                     $(LINK_CAIRO) \
                      $(LINK_OSXYPLOT) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_GUI) \

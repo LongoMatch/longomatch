@@ -2,7 +2,7 @@
 ASSEMBLY = LongoMatch.Plugins.Stats
 TARGET = library
 
-LINK = $(REF_DEP_LONGOMATCH_STATS)
+LINK = $(REF_DEP_LONGOMATCH_PLUGINS_STATS)
 
 SOURCES = Stats/CategoriesViewer.cs \
 	Stats/CategoryViewer.cs \
