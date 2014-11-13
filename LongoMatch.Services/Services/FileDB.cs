@@ -186,7 +186,7 @@ namespace LongoMatch.DB
 
 		public void UpdateProject (Project project)
 		{
-			project.Description.LastModified = DateTime.UtcNow;
+			project.ConsolidateDescription ();
 			AddProject (project);
 		}
 

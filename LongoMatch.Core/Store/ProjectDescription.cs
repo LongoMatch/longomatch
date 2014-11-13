@@ -20,6 +20,7 @@ using System;
 using Newtonsoft.Json;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
@@ -120,6 +121,24 @@ namespace LongoMatch.Core.Store
 		/// Goals of the visitor team
 		/// </summary>
 		public int VisitorGoals {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the shield for the local team.
+		/// </summary>
+		/// <value>The local team shield.</value>
+		public Image LocalShield {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the shield for the visitor team.
+		/// </summary>
+		/// <value>The visitor team shield.</value>
+		public Image VisitorShield {
 			get;
 			set;
 		}

@@ -433,6 +433,16 @@ namespace LongoMatch.Core.Store
 			return null;
 		}
 
+		public void ConsolidateDescription () {
+			Description.LastModified = DateTime.UtcNow;
+			Description.LocalName = LocalTeamTemplate.Name;
+			Description.LocalShield = LocalTeamTemplate.Shield;
+			Description.LocalGoals = GetScore (Team.LOCAL);
+			Description.VisitorName = VisitorTeamTemplate.Name;
+			Description.VisitorShield = VisitorTeamTemplate.Shield;
+			Description.VisitorGoals = GetScore (Team.VISITOR);
+		}
+
 		public bool Equals(Project project) {
 			if(project == null)
 				return false;
