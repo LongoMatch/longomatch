@@ -5,85 +5,45 @@ namespace LongoMatch.Gui.Panel
 	public partial class SportsTemplatesPanel
 	{
 		private global::Gtk.VBox dashboardeditorvbox;
-		
 		private global::Gtk.EventBox headereventbox;
-		
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
 		private global::Gtk.Alignment contentalignment;
-		
 		private global::Gtk.VBox contentvbox;
-		
 		private global::Gtk.HBox dashboardeditorbuttonbar;
-		
 		private global::Gtk.Alignment templateimagealignment;
-		
 		private global::Gtk.Image templateimage;
-		
 		private global::Gtk.VBox vbox3;
-		
 		private global::Gtk.Label editdashboardslabel;
-		
 		private global::Gtk.HBox hbox3;
-		
 		private global::Gtk.Button newtemplatebutton;
-		
 		private global::Gtk.Image newtemplateimage;
-		
 		private global::Gtk.Button importtemplatebutton;
-		
 		private global::Gtk.Image importtemplateimage;
-		
 		private global::Gtk.Button deletetemplatebutton;
-		
 		private global::Gtk.Image deletetemplateimage;
-		
 		private global::Gtk.Button savetemplatebutton;
-		
 		private global::Gtk.Image savetemplateimage;
-		
 		private global::Gtk.Image vseparatorimage;
-		
 		private global::Gtk.VBox vbox17;
-		
 		private global::Gtk.Label editbuttonslabel;
-		
 		private global::Gtk.HBox hbox4;
-		
 		private global::Gtk.Button addcategorybutton;
-		
 		private global::Gtk.Image addcategoryimage;
-		
 		private global::Gtk.Button addtagbutton1;
-		
 		private global::Gtk.Image addtagimage;
-		
 		private global::Gtk.Button scorebutton;
-		
 		private global::Gtk.Image scoreimage;
-		
 		private global::Gtk.Button cardbutton;
-		
 		private global::Gtk.Image cardimage;
-		
 		private global::Gtk.Button timerbutton;
-		
 		private global::Gtk.Image timerimage;
-		
 		private global::Gtk.Alignment categoryheaderimagealignment;
-		
 		private global::Gtk.Image categoryheaderimage;
-		
 		private global::Gtk.HBox hbox1;
-		
 		private global::Gtk.VBox templatesvbox;
-		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		
 		private global::Gtk.TreeView dashboardseditortreeview;
-		
 		private global::Gtk.VBox vbox4;
-		
 		private global::LongoMatch.Gui.Component.DashboardWidget buttonswidget;
 
 		protected virtual void Build ()
@@ -165,6 +125,7 @@ namespace LongoMatch.Gui.Panel
 			this.newtemplateimage.Xpad = 5;
 			this.newtemplateimage.Ypad = 5;
 			this.newtemplatebutton.Add (this.newtemplateimage);
+			this.newtemplatebutton.Label = null;
 			this.hbox3.Add (this.newtemplatebutton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.newtemplatebutton]));
 			w7.Position = 0;
@@ -180,6 +141,7 @@ namespace LongoMatch.Gui.Panel
 			this.importtemplateimage.Xpad = 5;
 			this.importtemplateimage.Ypad = 5;
 			this.importtemplatebutton.Add (this.importtemplateimage);
+			this.importtemplatebutton.Label = null;
 			this.hbox3.Add (this.importtemplatebutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.importtemplatebutton]));
 			w9.Position = 1;
@@ -195,6 +157,7 @@ namespace LongoMatch.Gui.Panel
 			this.deletetemplateimage.Xpad = 5;
 			this.deletetemplateimage.Ypad = 5;
 			this.deletetemplatebutton.Add (this.deletetemplateimage);
+			this.deletetemplatebutton.Label = null;
 			this.hbox3.Add (this.deletetemplatebutton);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.deletetemplatebutton]));
 			w11.Position = 2;
@@ -210,6 +173,7 @@ namespace LongoMatch.Gui.Panel
 			this.savetemplateimage.Xpad = 5;
 			this.savetemplateimage.Ypad = 5;
 			this.savetemplatebutton.Add (this.savetemplateimage);
+			this.savetemplatebutton.Label = null;
 			this.hbox3.Add (this.savetemplatebutton);
 			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savetemplatebutton]));
 			w13.Position = 3;
@@ -262,6 +226,7 @@ namespace LongoMatch.Gui.Panel
 			this.addcategoryimage.Xpad = 5;
 			this.addcategoryimage.Ypad = 5;
 			this.addcategorybutton.Add (this.addcategoryimage);
+			this.addcategorybutton.Label = null;
 			this.hbox4.Add (this.addcategorybutton);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addcategorybutton]));
 			w19.Position = 0;
@@ -277,6 +242,7 @@ namespace LongoMatch.Gui.Panel
 			this.addtagimage.Xpad = 5;
 			this.addtagimage.Ypad = 5;
 			this.addtagbutton1.Add (this.addtagimage);
+			this.addtagbutton1.Label = null;
 			this.hbox4.Add (this.addtagbutton1);
 			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addtagbutton1]));
 			w21.Position = 1;
@@ -292,6 +258,7 @@ namespace LongoMatch.Gui.Panel
 			this.scoreimage.Xpad = 5;
 			this.scoreimage.Ypad = 5;
 			this.scorebutton.Add (this.scoreimage);
+			this.scorebutton.Label = null;
 			this.hbox4.Add (this.scorebutton);
 			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.scorebutton]));
 			w23.Position = 2;
@@ -307,6 +274,7 @@ namespace LongoMatch.Gui.Panel
 			this.cardimage.Xpad = 5;
 			this.cardimage.Ypad = 5;
 			this.cardbutton.Add (this.cardimage);
+			this.cardbutton.Label = null;
 			this.hbox4.Add (this.cardbutton);
 			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.cardbutton]));
 			w25.Position = 3;
@@ -322,6 +290,7 @@ namespace LongoMatch.Gui.Panel
 			this.timerimage.Xpad = 5;
 			this.timerimage.Ypad = 5;
 			this.timerbutton.Add (this.timerimage);
+			this.timerbutton.Label = null;
 			this.hbox4.Add (this.timerbutton);
 			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.timerbutton]));
 			w27.Position = 4;

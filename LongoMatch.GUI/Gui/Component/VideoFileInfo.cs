@@ -1,0 +1,103 @@
+//
+//  Copyright (C) 2014 Andoni Morales Alastruey
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
+using System;
+using Mono.Unix;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using Misc = LongoMatch.Gui.Helpers.Misc;
+
+namespace LongoMatch.Gui.Component
+{
+	[System.ComponentModel.ToolboxItem(true)]
+	public partial class VideoFileInfo : Gtk.Bin
+	{
+		MediaFileSet fileSet;
+		MediaFileAngle angle;
+		MediaFile mediaFile;
+		
+		public VideoFileInfo ()
+		{
+			this.Build ();
+			eventbox3.ButtonPressEvent += HandleButtonPressEvent;
+			HeightRequest = 100;
+		}
+
+		public void SetMediaFile (MediaFileSet fileSet, MediaFileAngle angle)
+		{
+			this.fileSet = fileSet;
+			this.angle = angle;
+			mediaFile = fileSet.GetAngle (angle);
+			UpdateMediaFile ();
+		}
+
+		void UpdateMediaFile ()
+		{
+			if (mediaFile == null) {
+				Visible = false;
+				return;
+			}
+			else
+				if (mediaFile.FilePath == Constants.FAKE_PROJECT) {
+					filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
+					snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
+					table1.Visible = false;
+					return;
+				}
+			table1.Visible = true;
+			filelabel.Text = mediaFile.FilePath;
+			if (mediaFile.Preview != null) {
+				snapshotimage.Pixbuf = mediaFile.Preview.Value;
+			}
+			else {
+				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-file", 80);
+			}
+			if (mediaFile.Duration != null) {
+				durationlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Duration"),
+				                                    mediaFile.Duration.ToSecondsString ());
+			}
+			else {
+				durationlabel.Text = Catalog.GetString ("Missing duration info, reload this file.");
+			}
+			formatlabel.Text = String.Format ("{0}: {1}x{2}@{3}fps", Catalog.GetString ("Format"),
+			                                  mediaFile.VideoWidth, mediaFile.VideoHeight, mediaFile.Fps);
+			videolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Video codec"),
+			                                 mediaFile.VideoCodec);
+			audiolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Audio codec"),
+			                                 mediaFile.VideoCodec);
+			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
+			                                     mediaFile.Container);
+		}
+		
+		void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
+		{
+			if (args.Event.Button != 1 || mediaFile.FilePath == Constants.FAKE_PROJECT) {
+				return;
+			}
+			MediaFile file = Misc.OpenFile (this);
+			if (file != null) {
+				if (mediaFile != null) {
+					file.Offset = mediaFile.Offset;
+				}
+				fileSet.SetAngle (angle, file);
+				mediaFile = file;
+				UpdateMediaFile ();
+			}
+		}
+	}
+}
+

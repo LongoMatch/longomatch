@@ -16,19 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Handlers;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Interfaces.Multimedia;
-using Mono.Unix;
-using LongoMatch.Video;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
+using LongoMatch.Gui.Helpers;
+using Mono.Unix;
+using Pango;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -36,12 +35,12 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
-		
+
 		Project openedProject, loadedProject;
 		List<ProjectDescription> selectedProjects;
 		IDatabase DB;
 		IGUIToolkit gkit;
-		
+
 		public ProjectsManagerPanel (Project openedProject)
 		{
 			this.openedProject = openedProject;
@@ -49,84 +48,68 @@ namespace LongoMatch.Gui.Panel
 			this.gkit = Config.GUIToolkit;
 			this.Build ();
 
-			savebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-project-save", 34, IconLookupFlags.ForceSvg);
-			exportbuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-project-export", 34, IconLookupFlags.ForceSvg);
-			deletebuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-project-delete", 34, IconLookupFlags.ForceSvg);
+			savebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-save", 34);
+			exportbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
+			deletebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-delete", 34);
+			openbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-open", 34);
 
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
-			projectlistwidget1.Fill (DB.GetAllProjects());
-			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
+			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
+			projectlistwidget1.Fill (DB.GetAllProjects ());
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
+			openbutton.Clicked += HandleOpenClicked;
 			datepicker.ValueChanged += HandleDateChanged;
-			mediafilechooser1.ChangedEvent += HandleFileChanged;
-			mediafilechooser2.ChangedEvent += HandleFileChanged;
-			mediafilechooser3.ChangedEvent += HandleFileChanged;
-			mediafilechooser4.ChangedEvent += HandleFileChanged;
 
 			notebook1.Page = 0;
 			panelheader1.Title = "PROJECTS MANAGER";
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
+			
+			projectlistwidget1.ShowList = true;
+
+			SetStyle ();
 		}
 
-		void LoadProject (Project project) {
+		void SetStyle ()
+		{
+			FontDescription desc = FontDescription.FromString ("Ubuntu 18");
+			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
+			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			infolabel.ModifyFont (desc);
+			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
+			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			videoslabel.ModifyFont (desc);
+		}
+
+		void LoadProject (Project project)
+		{
 			ProjectDescription pd = project.Description;
 			MediaFile f = pd.FileSet.GetAngle (MediaFileAngle.Angle1);
-			TeamTemplate lt = project.LocalTeamTemplate;
-			TeamTemplate vt = project.VisitorTeamTemplate;
 			
+			gamedescriptionheader1.ProjectDescription = pd;
 			seasonentry.Text = pd.Season;
 			competitionentry.Text = pd.Competition;
-			scorelabel.Text = String.Format ("{0} - {1}", pd.LocalGoals, pd.VisitorGoals);
 			datepicker.Date = pd.MatchDate;
 			templatelabel.Text = project.Dashboard.Name;
 	
-			if (f.Preview != null) {
-				fileimage1.Pixbuf = f.Preview.Value;
-			} else {
-				fileimage1.Pixbuf = Helpers.Misc.LoadStockIcon (this, Gtk.Stock.Harddisk,
-				                                               IconSize.Dialog);
-			}
-			medialabel1.Markup = f.Description;
-			
-			homelabel.Text = lt.TeamName;
-			awaylabel.Text = vt.TeamName;
-			if (lt.Shield != null) {
-				homeimage.Pixbuf = lt.Shield.Value;
-			} else {
-				homeimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
-				                                          Constants.MAX_SHIELD_ICON_SIZE);
-			}
-			if (vt.Shield != null) {
-				awayimage.Pixbuf = vt.Shield.Value;
-			} else {
-				awayimage.Pixbuf = Helpers.Misc.LoadIcon (Constants.LOGO_ICON,
-				                                          Constants.MAX_SHIELD_ICON_SIZE);
-			}
-			
 			loadedProject = project;
-			
-			UpdateFile (mediafilechooser1, project.Description.FileSet.GetAngle (MediaFileAngle.Angle1),
-			            MediaFileAngle.Angle1, fileimage1, medialabel1);
-			UpdateFile (mediafilechooser2, project.Description.FileSet.GetAngle (MediaFileAngle.Angle2),
-			            MediaFileAngle.Angle2, fileimage2, medialabel2);
-			UpdateFile (mediafilechooser3, project.Description.FileSet.GetAngle (MediaFileAngle.Angle3),
-			            MediaFileAngle.Angle3, fileimage3, medialabel3);
-			UpdateFile (mediafilechooser4, project.Description.FileSet.GetAngle (MediaFileAngle.Angle4),
-			            MediaFileAngle.Angle4, fileimage4, medialabel4);
-			
-			descbox.Visible = true;
+
+			videofileinfo1.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle1);
+			videofileinfo2.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle2);
+			videofileinfo3.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle3);
+			videofileinfo4.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle4);
+			projectbox.Visible = true;
 		}
-		
+
 		void UpdateFile (MediaFileChooser mediafilechooser, MediaFile file, MediaFileAngle view,
-		               Gtk.Image image, Label label)
+		                 Gtk.Image image, Label label)
 		{
 			mediafilechooser.MediaFile = file;
 			if (file != null) {
@@ -137,27 +120,6 @@ namespace LongoMatch.Gui.Panel
 				loadedProject.Description.FileSet.SetAngle (view, null);
 				image.Pixbuf = null;
 				label.Markup = null;
-			}
-		}
-
-		void HandleFileChanged (object sender, EventArgs e)
-		{
-			if (loadedProject == null) {
-				return;
-			}
-
-			if (sender == mediafilechooser1) {
-				UpdateFile (mediafilechooser1, mediafilechooser1.MediaFile,
-				            MediaFileAngle.Angle1, fileimage1, medialabel1);
-			} else if (sender == mediafilechooser2) {
-				UpdateFile (mediafilechooser2, mediafilechooser2.MediaFile,
-				            MediaFileAngle.Angle2, fileimage2, medialabel2);
-			} else if (sender == mediafilechooser3) {
-				UpdateFile (mediafilechooser3, mediafilechooser3.MediaFile,
-				            MediaFileAngle.Angle3, fileimage3, medialabel3);
-			} else if (sender == mediafilechooser4) {
-				UpdateFile (mediafilechooser4, mediafilechooser4.MediaFile,
-				            MediaFileAngle.Angle4, fileimage4, medialabel4);
 			}
 		}
 
@@ -190,7 +152,7 @@ namespace LongoMatch.Gui.Panel
 			savebutton.Sensitive = projects.Count == 1;
 			exportbutton.Sensitive = projects.Count == 1;
 			deletebutton.Sensitive = projects.Count != 0;
-			descbox.Sensitive = projects.Count == 1;
+			projectbox.Sensitive = projects.Count == 1;
 			
 			selectedProjects = projects;
 			if (projects.Count == 1) {
@@ -202,14 +164,14 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 		}
-		
+
 		void HandleSaveClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
 				DB.UpdateProject (loadedProject);
 			}
 		}
-		
+
 		void HandleExportClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
@@ -220,7 +182,7 @@ namespace LongoMatch.Gui.Panel
 					new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
-					Serializer.Save(loadedProject, filename);
+					Serializer.Save (loadedProject, filename);
 				}
 			}
 		}
@@ -240,12 +202,12 @@ namespace LongoMatch.Gui.Panel
 			if (selectedProjects == null)
 				return;
 				
-			deletedProjects = new List<ProjectDescription>();
+			deletedProjects = new List<ProjectDescription> ();
 			foreach (ProjectDescription selectedProject in selectedProjects) {
 				if (openedProject != null && openedProject.ID == selectedProject.ID) {
 					MessagesHelpers.WarningMessage (this,
-					                                Catalog.GetString("This Project is actually in use.")+"\n"+
-					                                Catalog.GetString("Close it first to allow its removal from the database"));
+					                                Catalog.GetString ("This Project is actually in use.") + "\n" +
+						Catalog.GetString ("Close it first to allow its removal from the database"));
 					continue;
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" + selectedProject.Title;
@@ -254,7 +216,14 @@ namespace LongoMatch.Gui.Panel
 					deletedProjects.Add (selectedProject);
 				}
 			}
-			projectlistwidget1.RemoveProjects(deletedProjects);
+			projectlistwidget1.RemoveProjects (deletedProjects);
+		}
+		
+		void HandleOpenClicked (object sender, EventArgs e)
+		{
+			if (loadedProject != null) {
+				Config.EventsBroker.EmitOpenProjectID (loadedProject.ID);
+			}
 		}
 	}
 }

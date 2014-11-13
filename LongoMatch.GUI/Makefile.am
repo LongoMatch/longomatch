@@ -13,6 +13,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/DatePicker.cs \
 	Gui/Component/EventsListWidget.cs \
 	Gui/Component/FakeAnalysisComponent.cs \
+	Gui/Component/GameDescriptionHeader.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/HotkeysConfiguration.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
@@ -32,6 +33,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/TeamTemplateEditor.cs \
 	Gui/Component/TeamsComboBox.cs \
 	Gui/Component/Timeline.cs \
+	Gui/Component/VideoFileInfo.cs \
 	Gui/Component/VideoPreferencesPanel.cs \
 	Gui/Dialog/About.cs \
 	Gui/Dialog/BusyDialog.cs \
@@ -83,6 +85,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
 	gtk-gui/LongoMatch.Gui.Component.EventsListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.FakeAnalysisComponent.cs \
+	gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.HotkeysConfiguration.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
@@ -101,6 +104,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.Timeline.cs \
+	gtk-gui/LongoMatch.Gui.Component.VideoFileInfo.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs \

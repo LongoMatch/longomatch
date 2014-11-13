@@ -64,6 +64,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-replay.svg \
 	hicolor/scalable/actions/longomatch-resume-clock.svg \
 	hicolor/scalable/actions/longomatch-save.svg \
+	hicolor/scalable/actions/longomatch-search.svg \
 	hicolor/scalable/actions/longomatch-select.svg \
 	hicolor/scalable/actions/longomatch-shortcut.svg \
 	hicolor/scalable/actions/longomatch-square-fill.svg \

@@ -6,11 +6,13 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.VBox vbox2;
 		private global::Gtk.HBox hbox1;
-		private global::Gtk.Label filterlabel;
+		private global::Gtk.Image focusimage;
 		private global::Gtk.Entry filterEntry;
 		private global::Gtk.ComboBox sortcombobox;
-		private global::Gtk.ScrolledWindow scrolledwindow2;
+		private global::Gtk.ScrolledWindow icoscrolledwindow;
 		private global::Gtk.IconView iconview;
+		private global::Gtk.ScrolledWindow treeviewscrolledwindow;
+		private global::Gtk.TreeView treeview;
 
 		protected virtual void Build ()
 		{
@@ -27,11 +29,10 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.filterlabel = new global::Gtk.Label ();
-			this.filterlabel.Name = "filterlabel";
-			this.filterlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Projects Search:");
-			this.hbox1.Add (this.filterlabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterlabel]));
+			this.focusimage = new global::Gtk.Image ();
+			this.focusimage.Name = "focusimage";
+			this.hbox1.Add (this.focusimage);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.focusimage]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -44,6 +45,7 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Add (this.filterEntry);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterEntry]));
 			w2.Position = 1;
+			w2.Expand = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.sortcombobox = global::Gtk.ComboBox.NewText ();
 			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by name"));
@@ -64,21 +66,35 @@ namespace LongoMatch.Gui.Component
 			w4.Expand = false;
 			w4.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
-			this.scrolledwindow2.CanFocus = true;
-			this.scrolledwindow2.Name = "scrolledwindow2";
-			// Container child scrolledwindow2.Gtk.Container+ContainerChild
+			this.icoscrolledwindow = new global::Gtk.ScrolledWindow ();
+			this.icoscrolledwindow.CanFocus = true;
+			this.icoscrolledwindow.Name = "icoscrolledwindow";
+			// Container child icoscrolledwindow.Gtk.Container+ContainerChild
 			this.iconview = new global::Gtk.IconView ();
 			this.iconview.CanFocus = true;
 			this.iconview.Name = "iconview";
-			this.scrolledwindow2.Add (this.iconview);
-			this.vbox2.Add (this.scrolledwindow2);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
+			this.icoscrolledwindow.Add (this.iconview);
+			this.vbox2.Add (this.icoscrolledwindow);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.icoscrolledwindow]));
 			w6.Position = 1;
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.treeviewscrolledwindow = new global::Gtk.ScrolledWindow ();
+			this.treeviewscrolledwindow.Name = "treeviewscrolledwindow";
+			// Container child treeviewscrolledwindow.Gtk.Container+ContainerChild
+			this.treeview = new global::Gtk.TreeView ();
+			this.treeview.CanFocus = true;
+			this.treeview.Name = "treeview";
+			this.treeview.HeadersVisible = false;
+			this.treeviewscrolledwindow.Add (this.treeview);
+			this.vbox2.Add (this.treeviewscrolledwindow);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.treeviewscrolledwindow]));
+			w8.Position = 2;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.icoscrolledwindow.Hide ();
+			this.treeviewscrolledwindow.Hide ();
 			this.Show ();
 			this.filterEntry.Changed += new global::System.EventHandler (this.OnFilterentryChanged);
 		}

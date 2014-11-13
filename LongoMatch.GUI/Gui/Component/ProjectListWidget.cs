@@ -21,9 +21,11 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
+using Misc = LongoMatch.Gui.Helpers.Misc;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -35,9 +37,12 @@ namespace LongoMatch.Gui.Component
 		public event ProjectSelectedHandler ProjectSelected;
 
 		const int COL_DISPLAY_NAME = 0;
-		const int COL_PIXBUF = 1;
-		const int COL_PROJECT_DESCRIPTION = 2;
+		const int COL_PIXBUF1 = 1;
+		const int COL_PIXBUF2 = 2;
+		const int COL_PIXBUF3 = 3;
+		const int COL_PROJECT_DESCRIPTION = 4;
 		TreeModelFilter filter;
+		TreeModelSort sort;
 		List<ProjectDescription> projects;
 		ListStore store;
 		bool swallowSignals;
@@ -46,43 +51,87 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			
-			//GtkGlue.EntrySetIcon (filterEntry, GtkGlue.EntryIconPosition.Secondary, "gtk-clear");
 			store = CreateStore ();
 			iconview.TextColumn = COL_DISPLAY_NAME;
-			iconview.PixbufColumn = COL_PIXBUF;
-			iconview.SelectionChanged += OnSelectionChanged;
+			iconview.PixbufColumn = COL_PIXBUF1;
+			iconview.SelectionChanged += HandleIconViewSelectionChanged;
 			iconview.ItemActivated += HandleItemActivated;
 			iconview.ItemWidth = 200;
+
+			treeview.HeadersVisible = false;
+			treeview.AppendColumn ("Home", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF2); 
+			treeview.AppendColumn ("Away", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF3); 
+			treeview.AppendColumn ("Desc", new CellRendererText (), "text", COL_DISPLAY_NAME); 
+			treeview.Selection.Mode = SelectionMode.Multiple;
+			treeview.EnableGridLines = TreeViewGridLines.None;
+			treeview.Selection.Changed += HandleTreeviewSelectionChanged;
+	
 			sortcombobox.Active = (int)Config.ProjectSortMethod;
 			sortcombobox.Changed += (sender, e) => {
 				/* Hack to make it actually resort */
-				store.SetSortColumnId (-2 , SortType.Ascending);
-				store.SetSortColumnId (0, SortType.Ascending);
-				Config.ProjectSortMethod = (ProjectSortMethod) sortcombobox.Active;
+				sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
+				Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
 			};
+			focusimage.Pixbuf = Misc.LoadIcon ("longomatch-search", 27);
+			ShowList = false;
 		}
 
 		public SelectionMode SelectionMode {
 			set {
 				iconview.SelectionMode = value;
+				treeview.Selection.Mode = value;
+			}
+		}
+
+		public bool ShowList {
+			set {
+				icoscrolledwindow.Visible = !value;
+				treeviewscrolledwindow.Visible = value;
 			}
 		}
 
 		public void Fill (List<ProjectDescription> projects)
 		{
-			Pixbuf image;
+			Pixbuf image, homeShield, awayShield;
+			string desc;
+
 			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects) {
-				if (pdesc.FileSet.Preview != null) {
+				MediaFile file = pdesc.FileSet.GetAngle (MediaFileAngle.Angle1);
+				if (file != null && file.FilePath == Constants.FAKE_PROJECT) {
+					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
+				} else if (pdesc.FileSet.Preview != null) {
 					image = pdesc.FileSet.Preview.Value;
 				} else {
-					image = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk, IconSize.Dialog);
+					image = Misc.LoadIcon ("longomatch-video-file", 50);
 				}
-				store.AppendValues (pdesc.Title, image, pdesc);
+				if (pdesc.LocalShield != null) {
+					homeShield = pdesc.LocalShield.Scale (50, 50).Value;
+				} else {
+					homeShield = Misc.LoadIcon ("longomatch-default-shield", 50);
+				}
+				if (pdesc.VisitorShield != null) {
+					awayShield = pdesc.VisitorShield.Scale (50, 50).Value;
+				} else {
+					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
+				}
+				
+				desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
+				                      pdesc.LocalName, pdesc.VisitorName,
+				                      pdesc.LocalGoals, pdesc.VisitorGoals,
+				                      Catalog.GetString ("Date"),
+				                      pdesc.MatchDate.ToShortDateString(),
+				                      Catalog.GetString ("Competition"),
+				                      pdesc.Competition,
+				                      Catalog.GetString ("Season"),
+				                      pdesc.Season);
+				store.AppendValues (desc, image, homeShield, awayShield, pdesc);
 			}
 			swallowSignals = false;
+			iconview.SetCursor (new TreePath ("0"), null, false);
+			treeview.SetCursor (new TreePath ("0"), null, false);
 		}
 
 		public void RemoveProjects (List<ProjectDescription> projects)
@@ -103,12 +152,16 @@ namespace LongoMatch.Gui.Component
 
 		ListStore CreateStore ()
 		{
-			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(ProjectDescription));
-			store.SetSortFunc (0, SortFunc);
-			store.SetSortColumnId (0, SortType.Ascending);
+			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf),
+			                       typeof(Gdk.Pixbuf), typeof(ProjectDescription));
+			
 			filter = new Gtk.TreeModelFilter (store, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
-			iconview.Model = filter;
+			sort = new TreeModelSort (filter);
+			sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
+			sort.SetSortColumnId (COL_DISPLAY_NAME, SortType.Ascending);
+			iconview.Model = sort;
+			treeview.Model = sort;
 			return store;
 		}
 
@@ -174,7 +227,7 @@ namespace LongoMatch.Gui.Component
 			filter.Refilter ();
 		}
 
-		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
+		bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			StringComparison sc = StringComparison.InvariantCultureIgnoreCase;
 			ProjectDescription project = (ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION);
@@ -199,25 +252,32 @@ namespace LongoMatch.Gui.Component
 				return false;
 		}
 
-		protected virtual void OnSelectionChanged (object o, EventArgs args)
+		void HandleSelectionChanged (TreeModel model, TreePath[] selectedItems)
 		{
 			TreeIter iter;
 			List<ProjectDescription> list;
-			TreePath[] pathArray;
-			
+
 			if (swallowSignals)
 				return;
 
 			if (ProjectsSelected != null) {
 				list = new List<ProjectDescription> ();
-				pathArray = iconview.SelectedItems;
-				
-				for (int i=0; i< pathArray.Length; i++) {
-					iconview.Model.GetIterFromString (out iter, pathArray [i].ToString ());
-					list.Add ((ProjectDescription)iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION));
+				for (int i = 0; i < selectedItems.Length; i++) {
+					model.GetIterFromString (out iter, selectedItems [i].ToString ());
+					list.Add ((ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION));
 				}
 				ProjectsSelected (list);
 			}
+		}
+
+		protected virtual void HandleIconViewSelectionChanged (object o, EventArgs args)
+		{
+			HandleSelectionChanged (iconview.Model, iconview.SelectedItems);
+		}
+		
+		void HandleTreeviewSelectionChanged (object sender, EventArgs e)
+		{
+			HandleSelectionChanged (treeview.Model, treeview.Selection.GetSelectedRows());
 		}
 
 		void HandleItemActivated (object o, ItemActivatedArgs args)
@@ -236,5 +296,6 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 		}
+
 	}
 }

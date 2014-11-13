@@ -300,6 +300,7 @@ namespace LongoMatch.Gui.Component
 			this.playerpropertyhbox.Spacing = 6;
 			// Container child playerpropertyhbox.Gtk.Box+BoxChild
 			this.alignment1 = new global::Gtk.Alignment (0.5F, 0F, 0F, 0F);
+			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
 			this.playerimageframe = new global::Gtk.Frame ();
 			this.playerimageframe.Name = "playerimageframe";
