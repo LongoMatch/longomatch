@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Panel
 			
 			if (projectType == ProjectType.FileProject ||
 				projectType == ProjectType.EditProject) {
-				if (mediafilesetselection1.FileSet.GetAngle (MediaFileAngle.Angle1) == null) {
+				if (!mediafilesetselection1.FileSet.CheckFiles ()) {
 					gtoolkit.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					return false;
 				}
