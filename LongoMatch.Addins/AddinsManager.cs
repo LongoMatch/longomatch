@@ -38,6 +38,7 @@ namespace LongoMatch.Addins
 		
 		public static void Initialize (string configPath, string searchPath)
 		{
+			searchPath = Path.GetFullPath (searchPath);
 			Log.Information ("Initializing addins at path: " + searchPath);
 			try {
 				AddinManager.Initialize (configPath, searchPath);
@@ -47,6 +48,17 @@ namespace LongoMatch.Addins
 				AddinManager.Initialize (configPath, searchPath);
 			}
 			AddinManager.Registry.Update ();
+			foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
+				string addinPath = addin.Description.AddinFile;
+				
+				if (!addinPath.StartsWith (searchPath) &&
+					!addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
+					AddinManager.Registry.DisableAddin (addin.Id);
+					Log.Debug ("Disable addin at path " + addinPath);
+				} else {
+					AddinManager.Registry.EnableAddin (addin.Id);
+				}
+			}
 		}
 
 		public static bool RegisterGStreamerPlugins ()
@@ -140,6 +152,9 @@ namespace LongoMatch.Addins
 				plugins = new Dictionary<AddinDescription, List<ConfigurablePlugin>> ();
 
 				foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
+					if (!addin.Enabled) {
+						continue;
+					}
 					foreach (Extension ext in addin.Description.MainModule.Extensions) {
 						paths.Add (ext.Path);
 					}
