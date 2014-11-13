@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public HotKey HotKey {
+		public virtual HotKey HotKey {
 			get;
 			set;
 		}
@@ -132,6 +132,17 @@ namespace LongoMatch.Core.Store
 		public Tag Tag {
 			get;
 			set;
+		}
+
+		public override HotKey HotKey {
+			get {
+				return Tag.HotKey;
+			}
+			set {
+				if (Tag != null) {
+					Tag.HotKey = value;
+				}
+			}
 		}
 
 		public override string Name {

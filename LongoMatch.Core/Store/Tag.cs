@@ -15,43 +15,47 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
-
 	[Serializable]
 	public class Tag
 	{
-		public Tag (string value, string grp="Default") {
+		public Tag (string value, string grp="Default")
+		{
 			Group = grp;
 			Value = value;
+			HotKey = new HotKey ();
 		}
-		
+
 		public string Group {
 			set;
 			get;
 		}
-		
+
 		public string Value {
 			get;
 			set;
 		}
-		
+
+		public HotKey HotKey {
+			get;
+			set;
+		}
+
 		public override bool Equals (object obj)
 		{
 			Tag tag = obj as Tag;
-            if (tag == null)
+			if (tag == null)
 				return false;
 			return Value == tag.Value && Group == tag.Group;
 		}
-		
+
 		public override int GetHashCode ()
 		{
 			if (Value != null && Group != null) {
