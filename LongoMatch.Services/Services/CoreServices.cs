@@ -136,7 +136,7 @@ namespace LongoMatch.Services
 			string home;
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
-				Config.baseDirectory = ".";
+				Config.baseDirectory = Path.GetFullPath (".");
 				Config.dataDir = "../data";
 			} else {
 				Config.baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "../");

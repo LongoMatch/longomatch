@@ -101,7 +101,7 @@ Xavier Queralt Mateu (ca)";
 		public const string PROJECT_EXT = ".lgm";
 		
 		public const string LOGO_ICON = "longomatch";
-		public const string BACKGROUND = "background.png";
+		public const string BACKGROUND = "longomatch-dark-bg.svg";
 		public const string FIELD_BACKGROUND = "fields/field-full.svg";
 		public const string HALF_FIELD_BACKGROUND = "fields/field-half.svg";
 		public const string HHALF_FIELD_BACKGROUND = "fields/field-full-teameditor.svg";

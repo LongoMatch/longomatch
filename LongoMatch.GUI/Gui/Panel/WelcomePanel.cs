@@ -85,7 +85,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Our logo
 			logoImage = new Gtk.Image ();
-			logoImage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("longomatch-dark-bg.svg");
+			logoImage.Pixbuf = Config.Background.Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
 			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,

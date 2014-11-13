@@ -67,6 +67,10 @@ namespace LongoMatch
 				state = new ConfigState();
 				Save ();
 			}
+			Background = new Image (Path.Combine (Config.ImagesDir, Constants.BACKGROUND));
+			Copyright = Constants.COPYRIGHT;
+			License = Constants.LICENSE;
+			SoftwareName = Constants.SOFTWARE_NAME;
 		}
 		
 		public static void Save () {
@@ -191,6 +195,27 @@ namespace LongoMatch
 		}
 		
 		#region Properties
+		
+		static public Image Background {
+			get;
+			set;
+		}
+
+		static public string Copyright {
+			get;
+			set;
+		}
+		
+		static public string License {
+			get;
+			set;
+		}
+		
+		static public string SoftwareName {
+			get;
+			set;
+		}
+
 		static public Image FieldBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.FIELD_BACKGROUND));

@@ -16,8 +16,6 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Reflection;
-using Gtk;
 
 using LongoMatch.Core.Common;
 
@@ -27,13 +25,12 @@ namespace LongoMatch.Gui.Dialog
 	{
 		public AboutDialog (Version version)
 		{
-			ProgramName = Constants.SOFTWARE_NAME;
+			ProgramName = Config.SoftwareName;
 			Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
-			Copyright = Constants.COPYRIGHT;
+			Copyright = Config.Copyright;
 			Website = Constants.WEBSITE;
-			License = Constants.LICENSE;
+			License = Config.License;
 			Authors = new string[] {"Andoni Morales Alastruey", "Fluendo" };
-			Artists = new string[] {"Bencomo González Marrero"};
 			TranslatorCredits = Constants.TRANSLATORS;
 			SetUrlHook(delegate(Gtk.AboutDialog dialog, string url) {
 				try {

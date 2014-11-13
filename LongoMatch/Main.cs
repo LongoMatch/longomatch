@@ -53,11 +53,11 @@ namespace LongoMatch
 
 			try {
 				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+				AddinsManager.LoadConfigModifierAddins ();
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
 				Config.GUIToolkit = new GUIToolkit (version);
-				AddinsManager.LoadConfigModifierAddins ();
 				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
 				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
 				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);

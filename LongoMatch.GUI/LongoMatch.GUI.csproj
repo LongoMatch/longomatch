@@ -207,12 +207,6 @@
     <EmbeddedResource Include="..\images\tools\line-arrow.svg">
       <LogicalName>line-arrow.svg</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\data\images\longomatch-light-bg.svg">
-      <LogicalName>longomatch-light-bg.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\data\images\longomatch-dark-bg.svg">
-      <LogicalName>longomatch-dark-bg.svg</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="LongoMatch.GUI.dll.config">
