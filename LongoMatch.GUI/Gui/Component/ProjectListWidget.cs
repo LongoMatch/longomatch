@@ -165,18 +165,6 @@ namespace LongoMatch.Gui.Component
 			return store;
 		}
 
-		int CompareString (string s1, string s2)
-		{
-			if (s1 != null && s2 != null) {
-				return s1.CompareTo (s2);
-			} else if (s1 != null) {
-				return 1;
-			} else if (s2 != null) {
-				return - 1;
-			}
-			return 0;
-		}
-
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
 			ProjectDescription p1, p2;
@@ -185,40 +173,42 @@ namespace LongoMatch.Gui.Component
 			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
 			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
 
-			if (p1 == null) {
+			if (p1 == null && p2 == null) {
 				return 0;
+			} else if (p1 == null) {
+				return -1;
 			} else if (p2 == null) {
-				return 0;
+				return 1;
 			}
 			
 			if (sortcombobox.Active == 0) {
-				ret = CompareString (p1.Title, p2.Title);
+				ret = String.Compare (p1.Title, p2.Title);
 				if (ret == 0) {
-					ret = (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+					ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 				}
 				return ret;
 			} else if (sortcombobox.Active == 1) {
-				ret = (int)(p1.MatchDate.Ticks - p2.MatchDate.Ticks);
+				ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 				if (ret == 0) {
-					ret = (CompareString (p1.Title, p2.Title));
+					ret = String.Compare (p1.Title, p2.Title);
 				}
 				return ret;
 			} else if (sortcombobox.Active == 2) {
-				return (int)(p1.LastModified.Ticks - p2.LastModified.Ticks);
+				return -DateTime.Compare (p1.LastModified, p2.LastModified);
 			} else if (sortcombobox.Active == 3) {
-				ret = CompareString (p1.Season, p2.Season);
+				ret = String.Compare (p1.Season, p2.Season);
 				if (ret == 0) {
-					ret = CompareString (p1.Title, p2.Title);
+					ret = String.Compare (p1.Title, p2.Title);
 				}
 				return ret;
 			} else if (sortcombobox.Active == 4) {
-				ret = CompareString (p1.Competition, p2.Competition);
+				ret = String.Compare (p1.Competition, p2.Competition);
 				if (ret == 0) {
-					ret = CompareString (p1.Title, p2.Title);
+					ret = String.Compare (p1.Title, p2.Title);
 				}
 				return ret;
 			} else {
-				return p1.Title.CompareTo(p2.Title);
+				return  String.Compare (p1.Title, p2.Title);
 			}
 		}
 
