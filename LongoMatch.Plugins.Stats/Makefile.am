@@ -1,6 +1,6 @@
-
 ASSEMBLY = LongoMatch.Plugins.Stats
 TARGET = library
+INSTALL_DIR = $(pkglibdir)/plugins
 
 LINK = $(REF_DEP_LONGOMATCH_PLUGINS_STATS)
 
