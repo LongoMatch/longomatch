@@ -106,17 +106,16 @@ namespace LongoMatch.Drawing
 			Point image, text;
 			double textWidth;
 
-			image = new Point (cellArea.Start.X + 10, cellArea.Start.Y);
-			text = new Point (image.X + StyleConf.ListImageWidth, cellArea.Start.Y);
+			image = new Point (cellArea.Start.X, cellArea.Start.Y);
+			text = new Point (image.X + StyleConf.ListRowSeparator + StyleConf.ListImageWidth,
+			                  cellArea.Start.Y);
 			textWidth = cellArea.Start.X + cellArea.Width - text.X;
 
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, text, textWidth, player.ToString ());
 			/* Photo */
-			if (player.Photo != null) {
-				tk.DrawImage (image, StyleConf.ListImageWidth, backgroundArea.Height, player.Photo, true); 
-			}
+			RenderPlayer (tk, player, image);
 			RenderCount (Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
