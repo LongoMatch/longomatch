@@ -95,6 +95,8 @@ namespace LongoMatch.Gui.Panel
 			urilabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
 			ApplyStyle ();
+			hometacticsbutton.Clicked += HandleTacticsChanged;
+			awaytacticsbutton.Clicked += HandleTacticsChanged;
 		}
 
 		protected override void OnDestroyed ()
@@ -120,6 +122,9 @@ namespace LongoMatch.Gui.Panel
 			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
+			homealignment.Xscale = awayalignment.Xscale = 0;
+			homealignment.Xalign = 0.8f;
+			awayalignment.Xalign = 0.2f;
 		}
 
 		void LoadIcons ()
@@ -251,8 +256,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (team == Team.LOCAL) {
 				hometemplate = Cloner.Clone (template);
+				hometacticsentry.Text = hometemplate.FormationStr;
 			} else {
 				awaytemplate = Cloner.Clone (template);
+				awaytacticsentry.Text = awaytemplate.FormationStr;
 			}
 			teamtagger.LoadTeams (hometemplate, awaytemplate,
 			                      analysisTemplate.FieldBackground);
@@ -484,6 +491,29 @@ namespace LongoMatch.Gui.Panel
 			teamtagger.Substitute (p1, p2, team);
 		}
 		
+		void HandleTacticsChanged (object sender, EventArgs e)
+		{
+			TeamTemplate team;
+			Entry entry;
+
+			if (sender == hometacticsbutton) {
+				team = hometemplate;
+				entry = hometacticsentry;
+			} else {
+				team = awaytemplate;
+				entry = awaytacticsentry;
+			}
+			
+			try {
+				team.FormationStr = entry.Text;
+				teamtagger.Reload ();
+			} catch {
+				Config.GUIToolkit.ErrorMessage (
+					Catalog.GetString ("Could not parse tactics string"));
+			}
+			entry.Text = team.FormationStr;
+		}
+
 	}
 }
 

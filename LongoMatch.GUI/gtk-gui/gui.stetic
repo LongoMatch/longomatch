@@ -5875,7 +5875,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1206 584">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1129 750">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -6644,37 +6644,24 @@ You can continue with the current capture, cancel it or save your project.
                         <child>
                           <widget class="Gtk.Table" id="righttable">
                             <property name="MemberName" />
-                            <property name="NRows">3</property>
                             <property name="NColumns">2</property>
                             <property name="Homogeneous">True</property>
                             <property name="RowSpacing">6</property>
                             <property name="ColumnSpacing">6</property>
-                            <child>
-                              <placeholder />
-                            </child>
-                            <child>
-                              <placeholder />
-                            </child>
-                            <child>
-                              <placeholder />
-                            </child>
-                            <child>
-                              <placeholder />
-                            </child>
                             <child>
                               <widget class="Gtk.Label" id="analysislabel">
                                 <property name="MemberName" />
                                 <property name="LabelProp" translatable="yes">Analysis Template:</property>
                               </widget>
                               <packing>
-                                <property name="AutoSize">True</property>
+                                <property name="AutoSize">False</property>
                                 <property name="XOptions">Fill</property>
-                                <property name="YOptions">Fill</property>
+                                <property name="YOptions">0</property>
                                 <property name="XExpand">False</property>
                                 <property name="XFill">True</property>
                                 <property name="XShrink">False</property>
                                 <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
+                                <property name="YFill">False</property>
                                 <property name="YShrink">False</property>
                               </packing>
                             </child>
@@ -6720,11 +6707,137 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
+                      <widget class="Gtk.HBox" id="hbox14">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Alignment" id="homealignment">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <child>
+                              <widget class="Gtk.HBox" id="hbox16">
+                                <property name="MemberName" />
+                                <property name="Spacing">6</property>
+                                <child>
+                                  <widget class="Gtk.Label" id="label8">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">Tactics</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Entry" id="hometacticsentry">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="IsEditable">True</property>
+                                    <property name="InvisibleChar">•</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="Expand">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="hometacticsbutton">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">TextAndIcon</property>
+                                    <property name="Icon">stock:gtk-apply Menu</property>
+                                    <property name="Label" translatable="yes" />
+                                    <property name="UseUnderline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">2</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Alignment" id="awayalignment">
+                            <property name="MemberName" />
+                            <property name="Xscale">0</property>
+                            <child>
+                              <widget class="Gtk.HBox" id="hbox17">
+                                <property name="MemberName" />
+                                <property name="Spacing">6</property>
+                                <child>
+                                  <widget class="Gtk.Label" id="label9">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">Tactics</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Entry" id="awaytacticsentry">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="IsEditable">True</property>
+                                    <property name="InvisibleChar">•</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="Expand">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="awaytacticsbutton">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">TextAndIcon</property>
+                                    <property name="Icon">stock:gtk-apply Menu</property>
+                                    <property name="Label" translatable="yes" />
+                                    <property name="UseUnderline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">2</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="Gtk.DrawingArea" id="drawingarea">
                         <property name="MemberName" />
                       </widget>
                       <packing>
-                        <property name="Position">0</property>
+                        <property name="Position">1</property>
                         <property name="AutoSize">True</property>
                       </packing>
                     </child>

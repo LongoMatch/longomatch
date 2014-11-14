@@ -322,7 +322,11 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Plugins.Stats.StatsViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.GameDescriptionHeader" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.VideoFileInfo" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
