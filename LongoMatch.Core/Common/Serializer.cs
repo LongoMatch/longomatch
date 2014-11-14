@@ -47,7 +47,8 @@ namespace LongoMatch.Core.Common
 				xmlformatter.Serialize(stream, obj);
 				break;
 			case SerializationType.Json:
-				StreamWriter sw = new StreamWriter (stream);
+				StreamWriter sw = new StreamWriter (stream, Encoding.UTF8);
+				sw.NewLine = "\n";
 				sw.Write (JsonConvert.SerializeObject (obj, JsonSettings));
 				sw.Flush();
 				break;
@@ -73,7 +74,7 @@ namespace LongoMatch.Core.Common
 				XmlSerializer xmlformatter = new XmlSerializer(typeof(T));
 				return (T) xmlformatter.Deserialize(stream);
 			case SerializationType.Json:
-				StreamReader sr = new StreamReader (stream);
+				StreamReader sr = new StreamReader (stream, Encoding.UTF8);
 				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd(), JsonSettings);
 			default:
 				throw new Exception();
