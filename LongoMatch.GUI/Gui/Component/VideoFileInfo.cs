@@ -20,6 +20,7 @@ using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using Gtk;
 
 namespace LongoMatch.Gui.Component
 {
@@ -29,12 +30,14 @@ namespace LongoMatch.Gui.Component
 		MediaFileSet fileSet;
 		MediaFileAngle angle;
 		MediaFile mediaFile;
+		bool disableChanges;
 		
 		public VideoFileInfo ()
 		{
 			this.Build ();
 			eventbox3.ButtonPressEvent += HandleButtonPressEvent;
 			HeightRequest = 100;
+			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
 		}
 
 		public void SetMediaFile (MediaFileSet fileSet, MediaFileAngle angle)
@@ -42,6 +45,14 @@ namespace LongoMatch.Gui.Component
 			this.fileSet = fileSet;
 			this.angle = angle;
 			mediaFile = fileSet.GetAngle (angle);
+			disableChanges = false;
+			UpdateMediaFile ();
+		}
+		
+		public void SetMediaFile (MediaFile file)
+		{
+			mediaFile = file;
+			disableChanges = true;
 			UpdateMediaFile ();
 		}
 
@@ -51,26 +62,24 @@ namespace LongoMatch.Gui.Component
 				Visible = false;
 				return;
 			}
-			else
-				if (mediaFile.FilePath == Constants.FAKE_PROJECT) {
-					filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
-					snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
-					table1.Visible = false;
-					return;
-				}
+			if (mediaFile.FilePath == Constants.FAKE_PROJECT) {
+				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
+				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
+				table1.Visible = false;
+				disableChanges = true;
+				return;
+			}
 			table1.Visible = true;
 			filelabel.Text = mediaFile.FilePath;
 			if (mediaFile.Preview != null) {
 				snapshotimage.Pixbuf = mediaFile.Preview.Value;
-			}
-			else {
+			} else {
 				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-file", 80);
 			}
 			if (mediaFile.Duration != null) {
 				durationlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Duration"),
 				                                    mediaFile.Duration.ToSecondsString ());
-			}
-			else {
+			} else {
 				durationlabel.Text = Catalog.GetString ("Missing duration info, reload this file.");
 			}
 			formatlabel.Text = String.Format ("{0}: {1}x{2}@{3}fps", Catalog.GetString ("Format"),
@@ -85,7 +94,7 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			if (args.Event.Button != 1 || mediaFile.FilePath == Constants.FAKE_PROJECT) {
+			if (args.Event.Button != 1 || disableChanges) {
 				return;
 			}
 			MediaFile file = Misc.OpenFile (this);

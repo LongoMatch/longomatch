@@ -22,8 +22,10 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui;
+using LongoMatch.Gui.Component;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -39,7 +41,6 @@ namespace LongoMatch.Gui.Dialog
 		public VideoConversionTool ()
 		{
 			this.Build ();
-			SetTreeView ();
 			buttonOk.Sensitive = false;
 			Files = new List<MediaFile> ();
 			supportedVideoStandards = VideoStandards.Transcode;
@@ -48,9 +49,13 @@ namespace LongoMatch.Gui.Dialog
 			mediafilechooser1.ChangedEvent += HandleFileChanges;
 			FillStandards ();
 			FillBitrates ();
-			addbutton.Clicked += OnAddbuttonClicked;
-			removebutton.Clicked += OnRemovebuttonClicked;
+			addbutton1.Clicked += OnAddbuttonClicked;
 			buttonOk.Clicked += OnButtonOkClicked;
+			convertimage.Pixbuf = Misc.LoadIcon ("longomatch-video-converter-big", 64);
+			addimage.Pixbuf = Misc.LoadIcon ("gtk-add", IconSize.Button);
+			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
+			addbutton1.CanFocus = false;
+			scrolledwindow1.Visible = false;
 		}
 
 		public List<MediaFile> Files {
@@ -65,21 +70,8 @@ namespace LongoMatch.Gui.Dialog
 
 		void CheckStatus ()
 		{
+			scrolledwindow1.Visible = Files.Count != 0;
 			buttonOk.Sensitive = mediafilechooser1.CurrentPath != null && Files.Count != 0;
-		}
-
-		void SetTreeView ()
-		{
-			TreeViewColumn mediaFileCol = new TreeViewColumn ();
-			mediaFileCol.Title = Catalog.GetString ("Input files");
-			CellRendererText mediaFileCell = new CellRendererText ();
-			mediaFileCol.PackStart (mediaFileCell, true);
-			mediaFileCol.SetCellDataFunc (mediaFileCell, new TreeCellDataFunc (RenderMediaFile));
-			treeview1.AppendColumn (mediaFileCol);
-			
-			store = new ListStore (typeof(MediaFile));
-			treeview1.Model = store;
-			
 		}
 
 		void FillStandards ()
@@ -110,6 +102,34 @@ namespace LongoMatch.Gui.Dialog
 			bitratecombobox.Active = 1;
 		}
 
+		void AppendFile (MediaFile file) {
+			HBox box;
+			Button delButton;
+			Gtk.Image delImage;
+			VideoFileInfo fileinfo;
+			
+			if (file == null)
+				return;
+			Files.Add (file);
+			box = new HBox();
+			delButton = new Button ();
+			delButton.Relief = ReliefStyle.None;
+			delButton.CanFocus = false;
+			delImage = new Gtk.Image ("gtk-remove", IconSize.Button);
+			delButton.Add (delImage);
+			delButton.Clicked += (object sender, EventArgs e) => {
+				filesbox.Remove (box);
+				Files.Remove (file);
+				CheckStatus ();
+			};
+			fileinfo = new VideoFileInfo ();
+			fileinfo.SetMediaFile (file);
+			box.PackStart (fileinfo, true, true, 0);
+			box.PackStart (delButton, false, false, 0);
+			box.ShowAll ();
+			filesbox.PackStart (box, false, true, 0);
+		}
+
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
 			TreeIter iter;
@@ -120,9 +140,22 @@ namespace LongoMatch.Gui.Dialog
 			List<string> errors = new List<string> ();
 			foreach (string path in paths) {
 				try {
-					MediaFile file = Config.MultimediaToolkit.DiscoverFile (path, false);
-					store.AppendValues (file);
-					Files.Add (file);
+					string error = null;
+					MediaFile mediaFile = Config.MultimediaToolkit.DiscoverFile (path, true);
+					if (mediaFile == null) {
+						continue;
+					}
+					if(!mediaFile.HasVideo || mediaFile.VideoCodec == "") {
+						throw new Exception (Catalog.GetString("This file doesn't contain a video stream."));
+					}
+					if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0) {
+						throw new Exception (Catalog.GetString("This file contains a video stream but its length is 0."));
+					}
+					if (error != null) {
+						Config.GUIToolkit.ErrorMessage (error, this);
+					} else {
+						AppendFile (Config.MultimediaToolkit.DiscoverFile (path, true));
+					}
 				} catch (Exception) {
 					errors.Add (path);
 				}
@@ -136,35 +169,17 @@ namespace LongoMatch.Gui.Dialog
 			}
 			CheckStatus ();
 
-			maxHeight = Files.Max (f => f.VideoHeight);
-			sizecombobox.GetActiveIter (out iter);
-			selectedVideoStandard = stdStore.GetValue (iter, 1) as VideoStandard;
-			FillStandards ();
+			if (Files.Count > 0) {
+				maxHeight = Files.Max (f => f.VideoHeight);
+				sizecombobox.GetActiveIter (out iter);
+				selectedVideoStandard = stdStore.GetValue (iter, 1) as VideoStandard;
+				FillStandards ();
+			}
 		}
 
 		void HandleFileChanges (object sender, EventArgs e)
 		{
 			CheckStatus ();
-		}
-
-		protected void OnRemovebuttonClicked (object sender, System.EventArgs e)
-		{
-			TreeIter iter;
-			
-			treeview1.Selection.GetSelected (out iter);
-			Files.Remove (store.GetValue (iter, 0) as MediaFile);
-			CheckStatus ();
-			store.Remove (ref iter);
-		}
-
-		private void RenderMediaFile (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			MediaFile file = (MediaFile)store.GetValue (iter, 0);
-
-			(cell as Gtk.CellRendererText).Text = String.Format ("{0} {1}x{2} (Video:'{3}' Audio:'{4}')",
-			                                                     System.IO.Path.GetFileName (file.FilePath),
-			                                                     file.VideoWidth, file.VideoHeight,
-			                                                     file.VideoCodec, file.AudioCodec);
 		}
 
 		protected void OnButtonOkClicked (object sender, System.EventArgs e)

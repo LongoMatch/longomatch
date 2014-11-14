@@ -56,7 +56,6 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Add (this.filelabel);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.filelabel]));
 			w2.Position = 0;
-			w2.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(2)), false);
 			this.table1.Name = "table1";
