@@ -424,11 +424,11 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					string prevName = template.Name;
 					template.Name = args.NewText;
-					if (!SaveTemplate (template)) {
-						template.Name = prevName;
-					} else {
-						provider.Delete (template.Name);
+					if (SaveTemplate (template)) {
+						provider.Delete (prevName);
 						templates.SetValue (iter, 1, template.Name);
+					} else {
+						template.Name = prevName;
 					}
 				}
 			}

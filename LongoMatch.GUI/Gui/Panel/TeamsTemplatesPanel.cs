@@ -317,11 +317,11 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					string prevName = team.Name;
 					team.Name = args.NewText;
-					if (!SaveTemplate (team)) {
-						team.Name = prevName;
-					} else {
-						provider.Delete (team.Name);
+					if (SaveTemplate (team)) {
+						provider.Delete (prevName);
 						teams.SetValue (iter, 1, team.Name);
+					} else {
+						team.Name = prevName;
 					}
 				}
 			}
