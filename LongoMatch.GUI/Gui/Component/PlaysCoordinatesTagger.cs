@@ -40,6 +40,9 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.Accuracy = 20;
 			hfield.Tagger.Accuracy = 20;
 			goal.Tagger.Accuracy = 20;
+			field.Tagger.ObjectsCanMove = false;
+			hfield.Tagger.ObjectsCanMove = false;
+			goal.Tagger.ObjectsCanMove = false;
 		}
 
 		public void LoadBackgrounds (Project project) {

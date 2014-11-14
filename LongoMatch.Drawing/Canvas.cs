@@ -53,7 +53,7 @@ namespace LongoMatch.Drawing
 				Dispose (true);
 			}
 		}
-		
+
 		public void Dispose ()
 		{
 			Dispose (true);
@@ -85,7 +85,8 @@ namespace LongoMatch.Drawing
 			set;
 		}
 
-		public void AddObject (ICanvasObject co) {
+		public void AddObject (ICanvasObject co)
+		{
 			Objects.Add (co);
 			co.RedrawEvent += HandleRedrawEvent;
 		}
@@ -198,18 +199,18 @@ namespace LongoMatch.Drawing
 			get;
 			set;
 		}
-		
+
+		public bool ObjectsCanMove {
+			get;
+			set;
+		}
+
 		protected bool MoveWithoutSelection {
 			get;
 			set;
 		}
 
 		protected List<Selection> Selections {
-			get;
-			set;
-		}
-
-		protected bool ObjectsCanMove {
 			get;
 			set;
 		}
