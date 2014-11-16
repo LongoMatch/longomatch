@@ -296,6 +296,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			awayPlayers = new List<PlayerObject> ();
 
 			if (homeTeam != null) {
+				homeTeam.UpdateColors ();
 				homePlayingPlayers = GetPlayers (homeTeam.StartingPlayersList, Team.LOCAL);
 				homeBenchPlayers = GetPlayers (homeTeam.BenchPlayersList, Team.LOCAL);
 				homePlayers.AddRange (homePlayingPlayers);
@@ -310,6 +311,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				NTeams ++;
 			}
 			if (awayTeam != null) {
+				awayTeam.UpdateColors ();
 				awayPlayingPlayers = GetPlayers (awayTeam.StartingPlayersList, Team.VISITOR);
 				awayBenchPlayers = GetPlayers (awayTeam.BenchPlayersList, Team.VISITOR);
 				awayPlayers.AddRange (awayPlayingPlayers);
@@ -534,10 +536,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			playerObjects = new List<PlayerObject> ();
 			foreach (Player p in players) {
-				PlayerObject po = new PlayerObject { Player = p,
-					Color = color,
-					Team = team,
-				};
+				PlayerObject po = new PlayerObject { Player = p, Team = team};
 				po.ClickedEvent += HandlePlayerClickedEvent;
 				po.RedrawEvent += (co, area) => {EmitRedrawEvent (po, area);};
 				playerObjects.Add (po);

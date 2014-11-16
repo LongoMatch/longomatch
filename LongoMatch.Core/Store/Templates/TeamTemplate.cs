@@ -43,6 +43,10 @@ namespace LongoMatch.Core.Store.Templates
 			List = new List<Player>();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			Shield = Image.LoadFromFile (path);
+			ActiveColor = 0;
+			Colors = new Color [2];
+			Colors[0] = Color.Blue1;
+			Colors[1] = Color.Red1;
 		}
 		
 		public Guid ID {
@@ -68,6 +72,28 @@ namespace LongoMatch.Core.Store.Templates
 		public Image Shield {
 			get;
 			set;
+		}
+
+		public int ActiveColor {
+			get;
+			set;
+		}
+
+		public Color[] Colors {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public Color Color {
+			get {
+				if (ActiveColor <= Colors.Length) {
+					return Colors [ActiveColor];
+				} else {
+					ActiveColor = 0;
+					return Colors[0];
+				}
+			}
 		}
 		
 		[JsonIgnore]
@@ -155,6 +181,13 @@ namespace LongoMatch.Core.Store.Templates
 
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
+		}
+
+		public void UpdateColors ()
+		{
+			foreach (Player p in List) {
+				p.Color = Color;
+			}
 		}
 		
 		public Player AddDefaultItem (int i) {

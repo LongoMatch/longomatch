@@ -138,6 +138,12 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		[JsonIgnore]
+		public Color Color {
+			get;
+			set;
+		}
 		
 		public override string ToString ()
 		{

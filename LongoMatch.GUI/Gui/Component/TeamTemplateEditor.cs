@@ -16,21 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Gtk;
 using Gdk;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Store;
-using Mono.Unix;
-
-using Image = LongoMatch.Core.Common.Image;
-using Color = LongoMatch.Core.Common.Color;
+using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Gui.Dialog;
-using LongoMatch.Drawing.Widgets;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
+using LongoMatch.Drawing.Widgets;
+using Mono.Unix;
+using Color = LongoMatch.Core.Common.Color;
+using Image = LongoMatch.Core.Common.Image;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -38,13 +35,14 @@ namespace LongoMatch.Gui.Component
 	public partial class TeamTemplateEditor : Gtk.Bin
 	{
 		public event EventHandler TemplateSaved;
-	
+
 		Player loadedPlayer;
 		TeamTemplate template;
 		bool edited, ignoreChanges;
 		List<Player> selectedPlayers;
 		TeamTagger teamtagger;
-		
+		const int SHIELD_SIZE = 70;
+
 		public TeamTemplateEditor ()
 		{
 			this.Build ();
@@ -53,6 +51,11 @@ namespace LongoMatch.Gui.Component
 			teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
+			shieldimage.HeightRequest = shieldvbox.WidthRequest = SHIELD_SIZE;
+			colorbutton1.Color = Misc.ToGdkColor (Color.Red1);
+			colorbutton1.ColorSet += HandleColorSet;
+			colorbutton2.Color = Misc.ToGdkColor (Color.Green1);
+			colorbutton2.ColorSet += HandleColorSet;
 
 			ConnectSignals ();
 
@@ -74,22 +77,23 @@ namespace LongoMatch.Gui.Component
 				savebutton.Sensitive = edited;
 			}
 		}
-		
+
 		public TeamTemplate  Team {
 			set {
 				template = value;
 				ignoreChanges = true;
 				if (template.Shield != null) {
-					shieldimage.Pixbuf = template.Shield.Value;
+					shieldimage.Pixbuf = template.Shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				} else {
-					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-default-shield",
-					                                            Constants.MAX_SHIELD_ICON_SIZE);
+					shieldimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-default-shield", SHIELD_SIZE);
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
 				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
+				colorbutton1.Color = Misc.ToGdkColor (value.Colors[0]);
+				colorbutton2.Color = Misc.ToGdkColor (value.Colors[1]);
 				ignoreChanges = false;
 				Edited = false;
 			}
@@ -101,14 +105,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlayer () {
+		public void AddPlayer ()
+		{
 			Player p = template.AddDefaultItem (template.List.Count);
 			teamtagger.Reload ();
 			teamtagger.Select (p);
 			Edited = true;
 		}
 
-		public void DeleteSelectedPlayers () {
+		public void DeleteSelectedPlayers ()
+		{
 			if (selectedPlayers == null || selectedPlayers.Count == 0) {
 				return;
 			}
@@ -122,8 +128,9 @@ namespace LongoMatch.Gui.Component
 			}
 			Team = template;
 		}
-		
-		void ConnectSignals () {
+
+		void ConnectSignals ()
+		{
 			newplayerbutton.Clicked += HandleNewPlayerClicked;
 			savebutton.Clicked += HandleSaveTemplateClicked;
 			deletebutton.Clicked += HandleDeletePlayerClicked;
@@ -144,7 +151,8 @@ namespace LongoMatch.Gui.Component
 			mailentry.Changed += HandleEntryChanged;
 			bdaydatepicker.ValueChanged += HandleEntryChanged;
 			
-			applybutton.Clicked += (s,e) => {ParseTactics();}; 
+			applybutton.Clicked += (s,e) => {
+				ParseTactics ();}; 
 
 			Edited = false;
 		}
@@ -182,12 +190,13 @@ namespace LongoMatch.Gui.Component
 			drawingarea.QueueDraw ();
 		}
 
-		void FillFormation () {
+		void FillFormation ()
+		{
 			tacticsentry.Text = template.FormationStr;
-			nplayerslabel.Text = template.StartingPlayers.ToString();
 		}
-		
-		void LoadPlayer (Player p) {
+
+		void LoadPlayer (Player p)
+		{
 			ignoreChanges = true;
 
 			loadedPlayer = p;
@@ -209,7 +218,8 @@ namespace LongoMatch.Gui.Component
 			ignoreChanges = false;
 		}
 
-		void ClearPlayer () {
+		void ClearPlayer ()
+		{
 			ignoreChanges = true;
 
 			playerframe.Sensitive = false;
@@ -230,8 +240,9 @@ namespace LongoMatch.Gui.Component
 
 			ignoreChanges = false;
 		}
-		
-		void ParseTactics () {
+
+		void ParseTactics ()
+		{
 			try {
 				template.FormationStr = tacticsentry.Text;
 				teamtagger.Reload ();
@@ -242,8 +253,9 @@ namespace LongoMatch.Gui.Component
 			}
 			FillFormation ();
 		}
-		
-		Pixbuf PlayerPhoto (Player p) {
+
+		Pixbuf PlayerPhoto (Player p)
+		{
 			Pixbuf playerImage;
 				
 			if (p.Photo != null) {
@@ -254,26 +266,27 @@ namespace LongoMatch.Gui.Component
 			}
 			return playerImage;
 		}
-		
-		void PlayersSelected (List<Player> players) {
+
+		void PlayersSelected (List<Player> players)
+		{
 			ignoreChanges = true;
 
 			selectedPlayers = players;
 			deletebutton.Sensitive = players.Count != 0;
 			if (players.Count == 1) {
-				LoadPlayer (players[0]);
+				LoadPlayer (players [0]);
 			} else {
 				ClearPlayer ();
 			}
 
 			ignoreChanges = false;
 		}
-		
+
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
 			PlayersSelected (players);
 		}
-		
+
 		void HandleSaveTemplateClicked (object sender, EventArgs e)
 		{
 			if (template != null) {
@@ -298,7 +311,7 @@ namespace LongoMatch.Gui.Component
 		{
 			DeleteSelectedPlayers ();
 		}
-		
+
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
 		{
 			if (args.Event.Key == Gdk.Key.Delete) {
@@ -336,22 +349,36 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			shield = new Image (pix);
-			shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
-			                     Constants.MAX_SHIELD_ICON_SIZE); 
-			if (shield != null)
-			{
-				shieldimage.Pixbuf = shield.Value;
+			if (shield != null) {
+				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
+				                     Constants.MAX_SHIELD_ICON_SIZE); 
 				template.Shield = shield;
+				shieldimage.Pixbuf = shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				Edited = true;
 			}
 		}
-		
+
 		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
 		}
+		
+		void HandleColorSet (object sender, EventArgs e)
+		{
+			if (ignoreChanges)
+				return;
+			if (sender == colorbutton1) {
+				template.Colors [0] = Misc.ToLgmColor (colorbutton1.Color);
+				template.UpdateColors ();
+				drawingarea.QueueDraw ();
+			} else {
+				template.Colors [1] = Misc.ToLgmColor (colorbutton2.Color);
+			}
+			Edited = true;
+		}
+
 	}
 }
 

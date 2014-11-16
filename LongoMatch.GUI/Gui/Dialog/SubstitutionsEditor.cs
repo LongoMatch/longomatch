@@ -119,6 +119,8 @@ namespace LongoMatch.Gui.Dialog
 
 			homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
 			homeTeam = new TeamTemplate {
+				Colors = project.LocalTeamTemplate.Colors,
+				ActiveColor = project.LocalTeamTemplate.ActiveColor,
 				ID = project.LocalTeamTemplate.ID,
 				Formation = project.LocalTeamTemplate.Formation,
 				List = homeTeamPlayers
@@ -127,6 +129,8 @@ namespace LongoMatch.Gui.Dialog
 			if (awayFieldPlayers != null) {
 				awayTeamPlayers = awayFieldPlayers.Concat (awayBenchPlayers).ToList ();
 				awayTeam = new TeamTemplate {
+					Colors = project.VisitorTeamTemplate.Colors,
+					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
 					Formation = project.VisitorTeamTemplate.Formation,
 					List = awayTeamPlayers

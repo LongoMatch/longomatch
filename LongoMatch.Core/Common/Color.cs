@@ -70,6 +70,11 @@ namespace LongoMatch.Core.Common
 		{
 			return (Int32)R<<24 | (Int32)G<<16 | (Int32)B<<8 | (Int32)A;
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("#{0:X}{1:X}{2:X}{3:X}", R, G, B, A);
+		}
 		
 		static public byte UShortToByte (ushort val) {
 			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);

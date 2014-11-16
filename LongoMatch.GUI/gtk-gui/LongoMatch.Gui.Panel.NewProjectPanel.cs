@@ -75,11 +75,19 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Label label8;
 		private global::Gtk.Entry hometacticsentry;
 		private global::Gtk.Button hometacticsbutton;
+		private global::Gtk.ToggleButton homecolor1button;
+		private global::Gtk.DrawingArea homecolor1;
+		private global::Gtk.ToggleButton homecolor2button;
+		private global::Gtk.DrawingArea homecolor2;
 		private global::Gtk.Alignment awayalignment;
 		private global::Gtk.HBox hbox17;
 		private global::Gtk.Label label9;
 		private global::Gtk.Entry awaytacticsentry;
 		private global::Gtk.Button awaytacticsbutton;
+		private global::Gtk.ToggleButton awaycolor1button;
+		private global::Gtk.DrawingArea awaycolor1;
+		private global::Gtk.ToggleButton awaycolor2button;
+		private global::Gtk.DrawingArea awaycolor2;
 		private global::Gtk.DrawingArea drawingarea;
 		private global::Gtk.Label label3;
 		private global::LongoMatch.Gui.Component.ProjectPeriods projectperiods1;
@@ -668,10 +676,36 @@ namespace LongoMatch.Gui.Panel
 			w71.Position = 2;
 			w71.Expand = false;
 			w71.Fill = false;
+			// Container child hbox16.Gtk.Box+BoxChild
+			this.homecolor1button = new global::Gtk.ToggleButton ();
+			this.homecolor1button.WidthRequest = 30;
+			this.homecolor1button.CanFocus = true;
+			this.homecolor1button.Name = "homecolor1button";
+			// Container child homecolor1button.Gtk.Container+ContainerChild
+			this.homecolor1 = new global::Gtk.DrawingArea ();
+			this.homecolor1.Name = "homecolor1";
+			this.homecolor1button.Add (this.homecolor1);
+			this.homecolor1button.Label = null;
+			this.hbox16.Add (this.homecolor1button);
+			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor1button]));
+			w73.Position = 3;
+			// Container child hbox16.Gtk.Box+BoxChild
+			this.homecolor2button = new global::Gtk.ToggleButton ();
+			this.homecolor2button.WidthRequest = 30;
+			this.homecolor2button.CanFocus = true;
+			this.homecolor2button.Name = "homecolor2button";
+			// Container child homecolor2button.Gtk.Container+ContainerChild
+			this.homecolor2 = new global::Gtk.DrawingArea ();
+			this.homecolor2.Name = "homecolor2";
+			this.homecolor2button.Add (this.homecolor2);
+			this.homecolor2button.Label = null;
+			this.hbox16.Add (this.homecolor2button);
+			global::Gtk.Box.BoxChild w75 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor2button]));
+			w75.Position = 4;
 			this.homealignment.Add (this.hbox16);
 			this.hbox14.Add (this.homealignment);
-			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.homealignment]));
-			w73.Position = 0;
+			global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.homealignment]));
+			w77.Position = 0;
 			// Container child hbox14.Gtk.Box+BoxChild
 			this.awayalignment = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 1F);
 			this.awayalignment.Name = "awayalignment";
@@ -684,10 +718,10 @@ namespace LongoMatch.Gui.Panel
 			this.label9.Name = "label9";
 			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Tactics");
 			this.hbox17.Add (this.label9);
-			global::Gtk.Box.BoxChild w74 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.label9]));
-			w74.Position = 0;
-			w74.Expand = false;
-			w74.Fill = false;
+			global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.label9]));
+			w78.Position = 0;
+			w78.Expand = false;
+			w78.Fill = false;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaytacticsentry = new global::Gtk.Entry ();
 			this.awaytacticsentry.CanFocus = true;
@@ -695,56 +729,81 @@ namespace LongoMatch.Gui.Panel
 			this.awaytacticsentry.IsEditable = true;
 			this.awaytacticsentry.InvisibleChar = '•';
 			this.hbox17.Add (this.awaytacticsentry);
-			global::Gtk.Box.BoxChild w75 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsentry]));
-			w75.Position = 1;
-			w75.Expand = false;
+			global::Gtk.Box.BoxChild w79 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsentry]));
+			w79.Position = 1;
+			w79.Expand = false;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaytacticsbutton = new global::Gtk.Button ();
 			this.awaytacticsbutton.CanFocus = true;
 			this.awaytacticsbutton.Name = "awaytacticsbutton";
 			this.awaytacticsbutton.UseUnderline = true;
 			// Container child awaytacticsbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w76 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w80 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w77 = new global::Gtk.HBox ();
-			w77.Spacing = 2;
+			global::Gtk.HBox w81 = new global::Gtk.HBox ();
+			w81.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w78 = new global::Gtk.Image ();
-			w78.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-			w77.Add (w78);
+			global::Gtk.Image w82 = new global::Gtk.Image ();
+			w82.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+			w81.Add (w82);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w80 = new global::Gtk.Label ();
-			w77.Add (w80);
-			w76.Add (w77);
-			this.awaytacticsbutton.Add (w76);
+			global::Gtk.Label w84 = new global::Gtk.Label ();
+			w81.Add (w84);
+			w80.Add (w81);
+			this.awaytacticsbutton.Add (w80);
 			this.hbox17.Add (this.awaytacticsbutton);
-			global::Gtk.Box.BoxChild w84 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsbutton]));
-			w84.Position = 2;
-			w84.Expand = false;
-			w84.Fill = false;
+			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsbutton]));
+			w88.Position = 2;
+			w88.Expand = false;
+			w88.Fill = false;
+			// Container child hbox17.Gtk.Box+BoxChild
+			this.awaycolor1button = new global::Gtk.ToggleButton ();
+			this.awaycolor1button.WidthRequest = 30;
+			this.awaycolor1button.CanFocus = true;
+			this.awaycolor1button.Name = "awaycolor1button";
+			// Container child awaycolor1button.Gtk.Container+ContainerChild
+			this.awaycolor1 = new global::Gtk.DrawingArea ();
+			this.awaycolor1.Name = "awaycolor1";
+			this.awaycolor1button.Add (this.awaycolor1);
+			this.awaycolor1button.Label = null;
+			this.hbox17.Add (this.awaycolor1button);
+			global::Gtk.Box.BoxChild w90 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor1button]));
+			w90.Position = 3;
+			// Container child hbox17.Gtk.Box+BoxChild
+			this.awaycolor2button = new global::Gtk.ToggleButton ();
+			this.awaycolor2button.WidthRequest = 30;
+			this.awaycolor2button.CanFocus = true;
+			this.awaycolor2button.Name = "awaycolor2button";
+			// Container child awaycolor2button.Gtk.Container+ContainerChild
+			this.awaycolor2 = new global::Gtk.DrawingArea ();
+			this.awaycolor2.Name = "awaycolor2";
+			this.awaycolor2button.Add (this.awaycolor2);
+			this.awaycolor2button.Label = null;
+			this.hbox17.Add (this.awaycolor2button);
+			global::Gtk.Box.BoxChild w92 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor2button]));
+			w92.Position = 4;
 			this.awayalignment.Add (this.hbox17);
 			this.hbox14.Add (this.awayalignment);
-			global::Gtk.Box.BoxChild w86 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.awayalignment]));
-			w86.Position = 1;
+			global::Gtk.Box.BoxChild w94 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.awayalignment]));
+			w94.Position = 1;
 			this.vbox6.Add (this.hbox14);
-			global::Gtk.Box.BoxChild w87 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.hbox14]));
-			w87.Position = 0;
-			w87.Expand = false;
-			w87.Fill = false;
+			global::Gtk.Box.BoxChild w95 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.hbox14]));
+			w95.Position = 0;
+			w95.Expand = false;
 			// Container child vbox6.Gtk.Box+BoxChild
 			this.drawingarea = new global::Gtk.DrawingArea ();
 			this.drawingarea.Name = "drawingarea";
 			this.vbox6.Add (this.drawingarea);
-			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.drawingarea]));
-			w88.Position = 1;
+			global::Gtk.Box.BoxChild w96 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.drawingarea]));
+			w96.Position = 1;
 			this.vbox5.Add (this.vbox6);
-			global::Gtk.Box.BoxChild w89 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.vbox6]));
-			w89.Position = 1;
+			global::Gtk.Box.BoxChild w97 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.vbox6]));
+			w97.Position = 1;
 			this.notebook1.Add (this.vbox5);
-			global::Gtk.Notebook.NotebookChild w90 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox5]));
-			w90.Position = 1;
-			w90.TabFill = false;
-			w90.MenuLabel = "";
+			global::Gtk.Notebook.NotebookChild w98 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox5]));
+			w98.Position = 1;
+			w98.TabFill = false;
+			w98.MenuLabel = "";
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
@@ -756,8 +815,8 @@ namespace LongoMatch.Gui.Panel
 			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
 			this.projectperiods1.Name = "projectperiods1";
 			this.notebook1.Add (this.projectperiods1);
-			global::Gtk.Notebook.NotebookChild w91 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
-			w91.Position = 2;
+			global::Gtk.Notebook.NotebookChild w99 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
+			w99.Position = 2;
 			// Notebook tab
 			this.label7 = new global::Gtk.Label ();
 			this.label7.Name = "label7";
@@ -765,8 +824,8 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1.SetTabLabel (this.projectperiods1, this.label7);
 			this.label7.ShowAll ();
 			this.vbox3.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w92 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
-			w92.Position = 1;
+			global::Gtk.Box.BoxChild w100 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
+			w100.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

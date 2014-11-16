@@ -72,6 +72,7 @@ namespace LongoMatch.Drawing
 			tk.DrawRectangle (new Point (countX1, countY), StyleConf.ListCountWidth, 2 * StyleConf.ListCountRadio);
 			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 			tk.FontAlignment = FontAlignment.Center;
+			tk.FontWeight = FontWeight.Bold;
 			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
 			             2 * StyleConf.ListCountRadio, count.ToString ());
 		}
@@ -116,7 +117,7 @@ namespace LongoMatch.Drawing
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, text, textWidth, player.ToString ());
 			/* Photo */
 			RenderPlayer (tk, player, image);
-			RenderCount (Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
+			RenderCount (player.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}

@@ -5875,7 +5875,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1129 750">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1129 786">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -6759,6 +6759,40 @@ You can continue with the current capture, cancel it or save your project.
                                     <property name="Fill">False</property>
                                   </packing>
                                 </child>
+                                <child>
+                                  <widget class="Gtk.ToggleButton" id="homecolor1button">
+                                    <property name="MemberName" />
+                                    <property name="WidthRequest">30</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">Custom</property>
+                                    <child>
+                                      <widget class="Gtk.DrawingArea" id="homecolor1">
+                                        <property name="MemberName" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">3</property>
+                                    <property name="AutoSize">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.ToggleButton" id="homecolor2button">
+                                    <property name="MemberName" />
+                                    <property name="WidthRequest">30</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">Custom</property>
+                                    <child>
+                                      <widget class="Gtk.DrawingArea" id="homecolor2">
+                                        <property name="MemberName" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">4</property>
+                                    <property name="AutoSize">True</property>
+                                  </packing>
+                                </child>
                               </widget>
                             </child>
                           </widget>
@@ -6816,6 +6850,40 @@ You can continue with the current capture, cancel it or save your project.
                                     <property name="Fill">False</property>
                                   </packing>
                                 </child>
+                                <child>
+                                  <widget class="Gtk.ToggleButton" id="awaycolor1button">
+                                    <property name="MemberName" />
+                                    <property name="WidthRequest">30</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">Custom</property>
+                                    <child>
+                                      <widget class="Gtk.DrawingArea" id="awaycolor1">
+                                        <property name="MemberName" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">3</property>
+                                    <property name="AutoSize">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.ToggleButton" id="awaycolor2button">
+                                    <property name="MemberName" />
+                                    <property name="WidthRequest">30</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">Custom</property>
+                                    <child>
+                                      <widget class="Gtk.DrawingArea" id="awaycolor2">
+                                        <property name="MemberName" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">4</property>
+                                    <property name="AutoSize">True</property>
+                                  </packing>
+                                </child>
                               </widget>
                             </child>
                           </widget>
@@ -6827,9 +6895,8 @@ You can continue with the current capture, cancel it or save your project.
                       </widget>
                       <packing>
                         <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
-                        <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
@@ -7267,12 +7334,14 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Alignment" id="shieldalignment">
                                     <property name="MemberName" />
+                                    <property name="WidthRequest">120</property>
+                                    <property name="HeightRequest">120</property>
                                     <property name="Xalign">0</property>
                                     <property name="Yalign">0</property>
-                                    <property name="LeftPadding">12</property>
-                                    <property name="TopPadding">12</property>
-                                    <property name="RightPadding">12</property>
-                                    <property name="BottomPadding">12</property>
+                                    <property name="LeftPadding">6</property>
+                                    <property name="TopPadding">6</property>
+                                    <property name="RightPadding">6</property>
+                                    <property name="BottomPadding">6</property>
                                     <child>
                                       <widget class="Gtk.EventBox" id="shieldeventbox">
                                         <property name="MemberName" />
@@ -7346,13 +7415,11 @@ You can continue with the current capture, cancel it or save your project.
                                     <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
-                                    <property name="AutoSize">True</property>
-                                    <property name="XOptions">Fill</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">False</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="XExpand">True</property>
                                     <property name="XFill">True</property>
                                     <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
+                                    <property name="YExpand">True</property>
                                     <property name="YFill">True</property>
                                     <property name="YShrink">False</property>
                                   </packing>
@@ -7392,6 +7459,53 @@ You can continue with the current capture, cancel it or save your project.
                                     </child>
                                   </widget>
                                   <packing>
+                                    <property name="TopAttach">1</property>
+                                    <property name="BottomAttach">2</property>
+                                    <property name="LeftAttach">1</property>
+                                    <property name="RightAttach">2</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="XOptions">Fill</property>
+                                    <property name="YOptions">Fill</property>
+                                    <property name="XExpand">False</property>
+                                    <property name="XFill">True</property>
+                                    <property name="XShrink">False</property>
+                                    <property name="YExpand">False</property>
+                                    <property name="YFill">True</property>
+                                    <property name="YShrink">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.HBox" id="hbox6">
+                                    <property name="MemberName" />
+                                    <property name="Spacing">6</property>
+                                    <child>
+                                      <widget class="Gtk.ColorButton" id="colorbutton1">
+                                        <property name="MemberName" />
+                                        <property name="CanFocus">True</property>
+                                        <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
+                                        <property name="Alpha">-1</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="Position">0</property>
+                                        <property name="AutoSize">False</property>
+                                        <property name="Fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.ColorButton" id="colorbutton2">
+                                        <property name="MemberName" />
+                                        <property name="CanFocus">True</property>
+                                        <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
+                                        <property name="Alpha">-1</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="Position">1</property>
+                                        <property name="AutoSize">False</property>
+                                        <property name="Fill">False</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
                                     <property name="TopAttach">2</property>
                                     <property name="BottomAttach">3</property>
                                     <property name="LeftAttach">1</property>
@@ -7408,10 +7522,10 @@ You can continue with the current capture, cancel it or save your project.
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="Gtk.Label" id="label1">
+                                  <widget class="Gtk.Label" id="label2">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Number of players&lt;/span&gt;</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Tactics&lt;/span&gt;</property>
                                     <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
@@ -7427,43 +7541,20 @@ You can continue with the current capture, cancel it or save your project.
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="Gtk.Label" id="label2">
+                                  <widget class="Gtk.Label" id="label4">
                                     <property name="MemberName" />
                                     <property name="Xalign">1</property>
-                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Tactics&lt;/span&gt;</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span font_desc="10"&gt;Colors&lt;/span&gt;</property>
                                     <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
                                     <property name="TopAttach">2</property>
                                     <property name="BottomAttach">3</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="XOptions">Fill</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">False</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="XExpand">True</property>
                                     <property name="XFill">True</property>
                                     <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
-                                    <property name="YFill">True</property>
-                                    <property name="YShrink">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="Gtk.Label" id="nplayerslabel">
-                                    <property name="MemberName" />
-                                    <property name="Xalign">0</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="TopAttach">1</property>
-                                    <property name="BottomAttach">2</property>
-                                    <property name="LeftAttach">1</property>
-                                    <property name="RightAttach">2</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="XOptions">Fill</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">False</property>
-                                    <property name="XFill">True</property>
-                                    <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
+                                    <property name="YExpand">True</property>
                                     <property name="YFill">True</property>
                                     <property name="YShrink">False</property>
                                   </packing>

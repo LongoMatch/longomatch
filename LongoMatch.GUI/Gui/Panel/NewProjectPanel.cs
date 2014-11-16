@@ -16,24 +16,23 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Gtk;
+using System.Linq;
 using Gdk;
+using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
-using Misc = LongoMatch.Gui.Helpers.Misc;
-using Mono.Unix;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Interfaces.GUI;
-using Device = LongoMatch.Core.Common.Device;
-using Color = Gdk.Color;
-using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
-using LongoMatch.Gui.Component;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Gui.Helpers;
+using Mono.Unix;
+using Color = LongoMatch.Core.Common.Color;
+using Device = LongoMatch.Core.Common.Device;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -54,7 +53,7 @@ namespace LongoMatch.Gui.Panel
 		ListStore videoStandardList, encProfileList, qualList;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
-		Color red;
+		Gdk.Color red;
 		TeamTemplate hometemplate, awaytemplate;
 		Dashboard analysisTemplate;
 		TeamTagger teamtagger;
@@ -69,8 +68,6 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			
 			
-			panelheader1.ApplyClicked += HandleNextClicked;
-			panelheader1.BackClicked += HandleBackClicked;
 			LoadIcons ();
 			ConnectSignals ();
 			FillCategories ();
@@ -89,14 +86,10 @@ namespace LongoMatch.Gui.Panel
 				FillProjectDetails ();
 			}
 			UpdateTitle ();
-			Color.Parse ("red", ref red);
+			Gdk.Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
-			Color.Parse ("red", ref red);
 			urilabel.ModifyFg (StateType.Normal, red);
-			Color.Parse ("red", ref red);
 			ApplyStyle ();
-			hometacticsbutton.Clicked += HandleTacticsChanged;
-			awaytacticsbutton.Clicked += HandleTacticsChanged;
 		}
 
 		protected override void OnDestroyed ()
@@ -167,6 +160,14 @@ namespace LongoMatch.Gui.Panel
 
 		void ConnectSignals ()
 		{
+			homecolor1button.Clicked += HandleColorClicked;
+			homecolor2button.Clicked += HandleColorClicked;
+			awaycolor1button.Clicked += HandleColorClicked;
+			awaycolor2button.Clicked += HandleColorClicked;
+			hometacticsbutton.Clicked += HandleTacticsChanged;
+			awaytacticsbutton.Clicked += HandleTacticsChanged;
+			panelheader1.ApplyClicked += HandleNextClicked;
+			panelheader1.BackClicked += HandleBackClicked;
 			urientry.Changed += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 		}
@@ -207,7 +208,7 @@ namespace LongoMatch.Gui.Panel
 			bool filemode = false, urimode = false, capturemode = false;
 			
 			if (projectType == ProjectType.FileProject ||
-			    projectType == ProjectType.EditProject) {
+				projectType == ProjectType.EditProject) {
 				filemode = true;
 			} else if (projectType == ProjectType.CaptureProject) {
 				capturemode = true;
@@ -252,14 +253,38 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void SetButtonColor (DrawingArea area, Color color)
+		{
+			Gdk.Color gcolor = Misc.ToGdkColor (color);
+			area.ModifyBg (StateType.Normal, gcolor);
+			area.ModifyBg (StateType.Active, gcolor); 
+			area.ModifyBg (StateType.Insensitive, gcolor);
+			area.ModifyBg (StateType.Prelight, gcolor); 
+			area.ModifyBg (StateType.Selected, gcolor); 
+		}
+
 		void LoadTemplate (TeamTemplate template, Team team)
 		{
 			if (team == Team.LOCAL) {
 				hometemplate = Cloner.Clone (template);
 				hometacticsentry.Text = hometemplate.FormationStr;
+				SetButtonColor (homecolor1, hometemplate.Colors [0]);
+				SetButtonColor (homecolor2, hometemplate.Colors [1]);
+				if (awaytemplate != null && awaytemplate.Color.Equals (hometemplate.Color)) {
+					homecolor2button.Click ();
+				} else {
+					homecolor1button.Click ();
+				}
 			} else {
 				awaytemplate = Cloner.Clone (template);
 				awaytacticsentry.Text = awaytemplate.FormationStr;
+				SetButtonColor (awaycolor1, awaytemplate.Colors [0]);
+				SetButtonColor (awaycolor2, awaytemplate.Colors [1]);
+				if (hometemplate != null && hometemplate.Color.Equals (awaytemplate.Color)) {
+					awaycolor2button.Click ();
+				} else {
+					awaycolor1button.Click ();
+				}
 			}
 			teamtagger.LoadTeams (hometemplate, awaytemplate,
 			                      analysisTemplate.FieldBackground);
@@ -368,7 +393,7 @@ namespace LongoMatch.Gui.Panel
 			}
 			return true;
 		}
-		
+
 		void StartProject ()
 		{
 			if (CreateProject ()) {
@@ -448,9 +473,9 @@ namespace LongoMatch.Gui.Panel
 					return;
 				}
 				if (projectType == ProjectType.CaptureProject ||
-				    projectType == ProjectType.FakeCaptureProject ||
-				    projectType == ProjectType.URICaptureProject) {
-				    project.CreateLineupEvent ();
+					projectType == ProjectType.FakeCaptureProject ||
+					projectType == ProjectType.URICaptureProject) {
+					project.CreateLineupEvent ();
 					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
 					return;
 				}
@@ -475,22 +500,22 @@ namespace LongoMatch.Gui.Panel
 			Menu menu = new Menu ();
 			MenuItem item = new MenuItem ("Remove for this match");
 			item.Activated += (sender, e) => {
-					hometemplate.RemovePlayers (players, false);
-					awaytemplate.RemovePlayers (players, false);
-					teamtagger.Reload ();
+				hometemplate.RemovePlayers (players, false);
+				awaytemplate.RemovePlayers (players, false);
+				teamtagger.Reload ();
 			};
 			menu.Add (item);
 			menu.ShowAll ();
 			menu.Popup ();
 		}
-		
+
 		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
 		}
-		
+
 		void HandleTacticsChanged (object sender, EventArgs e)
 		{
 			TeamTemplate team;
@@ -514,6 +539,31 @@ namespace LongoMatch.Gui.Panel
 			entry.Text = team.FormationStr;
 		}
 
+		void HandleColorClicked (object sender, EventArgs e)
+		{
+			ToggleButton button = sender as ToggleButton;
+			if (!button.Active) {
+				return;
+			} 
+			if (button == homecolor1button) {
+				homecolor2button.Active = false;
+				hometemplate.ActiveColor = 0;
+				hometemplate.UpdateColors ();
+			} else if (button == homecolor2button) {
+				homecolor1button.Active = false;
+				hometemplate.ActiveColor = 1;
+				hometemplate.UpdateColors ();
+			} else if (button == awaycolor1button) {
+				awaycolor2button.Active = false;
+				awaytemplate.ActiveColor = 0;
+				awaytemplate.UpdateColors ();
+			} else if (button == awaycolor2button) {
+				awaycolor1button.Active = false;
+				awaytemplate.ActiveColor = 1;
+				awaytemplate.UpdateColors ();
+			}
+			drawingarea.QueueDraw ();
+		}
 	}
 }
 

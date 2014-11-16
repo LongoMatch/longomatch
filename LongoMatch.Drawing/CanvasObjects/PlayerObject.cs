@@ -66,9 +66,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Color Color {
-			get;
-			set;
+		Color Color {
+			get {
+				return Player.Color;
+			}
 		}
 
 		public override double Width {
@@ -200,7 +201,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			Position = pos;
 			DrawPhoto = true;
-			Color = Constants.PLAYER_SELECTED_COLOR;
 			Size = (int)PlayersIconSize.Medium;
 			Toggle = true;
 			LoadSurfaces ();
