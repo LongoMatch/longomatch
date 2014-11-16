@@ -40,9 +40,6 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.Accuracy = 20;
 			hfield.Tagger.Accuracy = 20;
 			goal.Tagger.Accuracy = 20;
-			field.Tagger.ObjectsCanMove = false;
-			hfield.Tagger.ObjectsCanMove = false;
-			goal.Tagger.ObjectsCanMove = false;
 		}
 
 		public void LoadBackgrounds (Project project) {
@@ -58,6 +55,9 @@ namespace LongoMatch.Gui.Component
 			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Field), field);
 			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.HalfField), hfield);
 			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Goal), goal);
+			field.Tagger.ObjectsCanMove = false;
+			hfield.Tagger.ObjectsCanMove = false;
+			goal.Tagger.ObjectsCanMove = false;
 		}
 		
 		public void LoadStats (PlayerEventTypeStats stats, Team team)
@@ -67,6 +67,9 @@ namespace LongoMatch.Gui.Component
 			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Field), field);
 			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.HalfField), hfield);
 			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Goal), goal);
+			field.Tagger.ObjectsCanMove = false;
+			hfield.Tagger.ObjectsCanMove = false;
+			goal.Tagger.ObjectsCanMove = false;
 		}
 		
 		public void LoadPlay (TimelineEvent play) {
