@@ -105,6 +105,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-timeline-needle-up.svg \
 	hicolor/scalable/actions/longomatch-timeline-select-left.svg \
 	hicolor/scalable/actions/longomatch-timeline-select-right.svg \
+	hicolor/scalable/actions/longomatch-video-converter-big.svg \
 	hicolor/scalable/actions/longomatch-video-device-fake.svg \
 	hicolor/scalable/actions/longomatch-video-device-ip.svg \
 	hicolor/scalable/actions/longomatch-video-device.svg \
