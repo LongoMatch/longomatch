@@ -128,8 +128,11 @@ libcesarplayer/Makefile
 
 oxyplot/Makefile
 pkgconfig/Makefile
-pkgconfig/longomatch-core.pc
 pkgconfig/longomatch-addins.pc
+pkgconfig/longomatch-core.pc
+pkgconfig/longomatch-drawing.pc
+pkgconfig/longomatch-drawing-cairo.pc
+pkgconfig/longomatch-gui-helpers.pc
 
 LongoMatch.Addins/Makefile
 LongoMatch.Core/Makefile
