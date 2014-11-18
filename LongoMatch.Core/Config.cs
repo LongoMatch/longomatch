@@ -50,6 +50,40 @@ namespace LongoMatch
 		public static StyleConf Style;
 
 		static ConfigState state;
+
+		public static void Init () {
+			string home;
+
+			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
+				Config.baseDirectory = Path.GetFullPath (".");
+				Config.dataDir = "../data";
+			} else {
+				Config.baseDirectory = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "../");
+				if (!Directory.Exists (Path.Combine (Config.baseDirectory, "share",
+				                                     Constants.SOFTWARE_NAME))) {
+					Config.baseDirectory = Path.Combine (Config.baseDirectory, "../");
+				}
+				if (!Directory.Exists (Path.Combine (Config.baseDirectory, "share",
+				                                     Constants.SOFTWARE_NAME)))
+					Log.Warning ("Prefix directory not found");
+				Config.dataDir = Path.Combine (Config.baseDirectory, "share",
+				                               Constants.SOFTWARE_NAME.ToLower ());
+			}
+			
+			/* Check for the magic file PORTABLE to check if it's a portable version
+			 * and the config goes in the same folder as the binaries */
+			if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE)))
+				home = Config.baseDirectory;
+			else
+				home = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+			
+			Config.homeDirectory = System.IO.Path.Combine (home, Constants.SOFTWARE_NAME);
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				Config.configDirectory = Config.homeDirectory;
+			else
+				Config.configDirectory = System.IO.Path.Combine (home, "." +
+					Constants.SOFTWARE_NAME.ToLower ());
+		}
 		
 		public static void Load () {
 			if (File.Exists(Config.ConfigFile)) {

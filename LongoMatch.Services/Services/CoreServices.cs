@@ -54,7 +54,7 @@ namespace LongoMatch.Services
 			Log.Debugging = Debugging;
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 
-			SetupBaseDir ();
+			Config.Init ();
 
 			/* Check default folders */
 			CheckDirs ();
@@ -129,39 +129,6 @@ namespace LongoMatch.Services
 				System.IO.Directory.CreateDirectory (Config.VideosDir);
 			if (!System.IO.Directory.Exists (Config.TempVideosDir))
 				System.IO.Directory.CreateDirectory (Config.TempVideosDir);
-		}
-
-		static void SetupBaseDir ()
-		{
-			string home;
-
-			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
-				Config.baseDirectory = Path.GetFullPath (".");
-				Config.dataDir = "../data";
-			} else {
-				Config.baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "../");
-				if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME))) {
-					Config.baseDirectory = System.IO.Path.Combine (Config.baseDirectory, "../");
-				}
-				if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME)))
-					Log.Warning ("Prefix directory not found");
-				Config.dataDir = Path.Combine (Config.baseDirectory, "share",
-				                               Constants.SOFTWARE_NAME.ToLower ());
-			}
-			
-			/* Check for the magic file PORTABLE to check if it's a portable version
-			 * and the config goes in the same folder as the binaries */
-			if (File.Exists (System.IO.Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE)))
-				home = Config.baseDirectory;
-			else
-				home = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			
-			Config.homeDirectory = System.IO.Path.Combine (home, Constants.SOFTWARE_NAME);
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				Config.configDirectory = Config.homeDirectory;
-			else
-				Config.configDirectory = System.IO.Path.Combine (home, "." +
-					Constants.SOFTWARE_NAME.ToLower ());
 		}
 
 		static bool? debugging = null;
