@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Component
 			videolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Video codec"),
 			                                 mediaFile.VideoCodec);
 			audiolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Audio codec"),
-			                                 mediaFile.VideoCodec);
+			                                 mediaFile.AudioCodec);
 			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
 			                                     mediaFile.Container);
 		}
