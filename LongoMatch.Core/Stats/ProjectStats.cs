@@ -64,6 +64,9 @@ namespace LongoMatch.Core.Stats
 				filter = value;
 				UpdateStats ();
 			}
+			get {
+				return filter;
+			}
 		}
 
 		public PlayerStats GetPlayerStats (Player p)
