@@ -83,6 +83,10 @@ namespace LongoMatch.Core.Stats
 			EventTypeStats = new List <EventTypeStats> ();
 			
 			foreach (EventType evt in project.EventTypes) {
+				if (evt is ScoreEventType || evt is SubstitutionEventType ||
+					evt is PenaltyCardEventType) {
+					continue;
+				}
 				EventTypeStats evstats = new EventTypeStats (project, filter, evt);
 				EventTypeStats.Add (evstats);
 			}
