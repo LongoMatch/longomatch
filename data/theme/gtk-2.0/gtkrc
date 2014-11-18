@@ -145,6 +145,7 @@ include "radiobutton.rc"
 include "entry.rc"
 include "range.rc"
 include "scrollbar.rc"
+include "separator.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -163,6 +164,7 @@ class "GtkTextView"                              style "longomatch-treeview"
 class "GtkHScale"                                style "longomatch-hscale"
 class "GtkVScale"                                style "longomatch-vscale"
 class "GtkScrollbar"                             style "longomatch-scrollbar"
+class "GtkSeparator"                             style "longomatch-separator"
 
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
