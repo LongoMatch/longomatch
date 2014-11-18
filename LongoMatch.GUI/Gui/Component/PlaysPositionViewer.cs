@@ -46,6 +46,9 @@ namespace LongoMatch.Gui.Component
 		public void LoadProject (Project project, EventsFilter filter) {
 			this.project = project;
 			if (project != null) {
+				field.Tagger.Project = project;
+				hfield.Tagger.Project = project;
+				goal.Tagger.Project = project;
 				field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
 				hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
 				goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);

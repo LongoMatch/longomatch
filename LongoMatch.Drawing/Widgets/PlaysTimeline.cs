@@ -201,7 +201,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			                        
 			foreach (EventType type in project.EventTypes) {
-				tl = new CategoryTimeline (project.EventsByType (type), duration,
+				tl = new CategoryTimeline (project, project.EventsByType (type), duration,
 				                           i * StyleConf.TimelineCategoryHeight,
 				                           Utils.ColorForRow (i), playsFilter);
 				AddTimeline (tl, type);

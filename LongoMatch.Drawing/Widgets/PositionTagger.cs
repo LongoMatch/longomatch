@@ -42,11 +42,18 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
-		public PositionTagger (IWidget widget, List<TimelineEvent> plays, Image background, FieldPositionType position): base (widget)
+		public PositionTagger (IWidget widget, Project project, List<TimelineEvent> plays,
+		                       Image background, FieldPositionType position): base (widget)
 		{
+			Project = project;
 			Background = background;
 			Plays = plays;
 			FieldPosition = position;
+		}
+
+		public Project Project {
+			get;
+			set;
 		}
 
 		public EventsFilter Filter {
@@ -127,6 +134,7 @@ namespace LongoMatch.Drawing.Widgets
 			po = new PositionObject (coords.Points, Background.Width,
 			                         Background.Height);
 			po.Play = play;
+			po.Project = Project;
 			if (Filter != null) {
 				po.Visible = Filter.IsVisible (play);
 			}

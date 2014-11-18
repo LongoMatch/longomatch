@@ -225,11 +225,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class CategoryTimeline: TimelineObject
 	{
 		EventsFilter filter;
+		Project project;
 
-		public CategoryTimeline (List<TimelineEvent> plays, Time maxTime, double offsetY, Color background, EventsFilter filter):
+		public CategoryTimeline (Project project, List<TimelineEvent> plays, Time maxTime,
+		                         double offsetY, Color background, EventsFilter filter):
 			base (maxTime, offsetY, background)
 		{
 			this.filter = filter;
+			this.project = project;
 			foreach (TimelineEvent p in plays) {
 				AddPlay (p);
 			}
@@ -247,7 +250,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public void AddPlay (TimelineEvent play)
 		{
-			PlayObject po = new PlayObject (play);
+			PlayObject po = new PlayObject (play, project);
 			po.SelectionLeft = selectionBorderL; 
 			po.SelectionRight = selectionBorderR; 
 			po.OffsetY = OffsetY;

@@ -54,6 +54,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public Project Project {
+			get;
+			set;
+		}
+
 		public TimelineEvent Play {
 			get;
 			set;
@@ -126,7 +131,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color color;
+			Color fillColor, strokeColor;
 			double relSize;
 
 			relSize = Math.Max (1, (double)Width / 200);
@@ -137,23 +142,33 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			tk.Begin ();
 			if (Play != null) {
-				color = Play.Color;
+				fillColor = Play.Color;
+				strokeColor = fillColor;
+				if (Project != null) {
+					Team team = Project.PlayTaggedTeam (Play);
+					if (team == Team.LOCAL) {
+						strokeColor = Project.LocalTeamTemplate.Color;
+					} else if (team == Team.VISITOR) {
+						strokeColor = Project.VisitorTeamTemplate.Color;
+					}
+				}
 			} else {
-				color = Constants.TAGGER_POINT_COLOR;
+				fillColor = strokeColor = Constants.TAGGER_POINT_COLOR;
 			}
 			
 			if (Selected) {
-				color = Constants.TAGGER_SELECTION_COLOR;
+				fillColor = Constants.TAGGER_SELECTION_COLOR;
 			} else if (Highlighted) {
-				color = Config.Style.PaletteActive;
+				fillColor = Config.Style.PaletteActive;
 			}
 
- 			tk.FillColor = color;
-			tk.StrokeColor = color;
-			tk.LineWidth = 0;
-			tk.DrawCircle (Start, (int)relSize * 2);
+ 			tk.FillColor = fillColor;
+			tk.StrokeColor = strokeColor;
+			tk.LineWidth = (int)relSize;
+			tk.DrawCircle (Start, relSize * 1.5);
 			if (Points.Count == 2) {
-				tk.LineWidth = (int)relSize * 2;
+				tk.StrokeColor = fillColor;
+				tk.LineWidth = (int)relSize;
 				tk.DrawLine (Start, Stop);
 				tk.DrawArrow (Start, Stop, 10, 0.3, true);
 			}

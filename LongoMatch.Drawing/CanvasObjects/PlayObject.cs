@@ -18,28 +18,32 @@
 using System;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class PlayObject: TimeNodeObject
 	{
-		public PlayObject (TimelineEvent play):base (play)
+		public PlayObject (TimelineEvent play, Project project):base (play)
 		{
+			Project = project;
 		}
 
 		public ISurface SelectionLeft {
 			get;
 			set;
 		}
-		
+
 		public ISurface SelectionRight {
 			get;
 			set;
 		}
-		
+
+		public Project Project {
+			get;
+			set;
+		}
+
 		public override string Description {
 			get {
 				return Play.Name;
@@ -79,11 +83,21 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
 		{
+			Team team;
+			Color color;
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			tk.FillColor = Config.Style.PaletteWidgets;
-			tk.StrokeColor = Config.Style.PaletteWidgets;
+			team = Project.PlayTaggedTeam (Play);
+			if (team == Team.LOCAL) {
+				color = Project.LocalTeamTemplate.Color;
+			} else if (team == Team.VISITOR) {
+				color = Project.VisitorTeamTemplate.Color;
+			} else {
+				color = Config.Style.PaletteWidgets;
+			}
+			tk.FillColor = color;
+			tk.StrokeColor = color;
 			y1 = OffsetY + 6;
 			y2 = OffsetY + Height - 6;
 			tk.DrawLine (new Point (start, y1), new Point (start, y2));
