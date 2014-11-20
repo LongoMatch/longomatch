@@ -141,16 +141,32 @@ namespace LongoMatch.Core.Store
 		}
 		
 		[JsonIgnore]
-		public List<TimelineEvent> ScorePlays {
+		public List<Score> Scores {
 			get {
-				return Timeline.OfType<ScoreEvent>().Select (t => (TimelineEvent) t).ToList();
+				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
+				return ScorePlays.Select (e => e.Score).Union (scores).OrderByDescending (s=>s.Points).ToList();
 			}
 		}
 		
 		[JsonIgnore]
-		public List<TimelineEvent> PenaltyCardsPlays {
+		public List<PenaltyCard> PenaltyCards {
 			get {
-				return Timeline.OfType<PenaltyCardEvent>().Select (t => (TimelineEvent) t).ToList();
+				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
+				return PenaltyCardsPlays.Select (e => e.PenaltyCard).Union (pc).ToList();
+			}
+		}
+
+		[JsonIgnore]
+		public List<ScoreEvent> ScorePlays {
+			get {
+				return Timeline.OfType<ScoreEvent>().Select (t => t).ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<PenaltyCardEvent> PenaltyCardsPlays {
+			get {
+				return Timeline.OfType<PenaltyCardEvent>().Select (t => t).ToList();
 			}
 		}
 

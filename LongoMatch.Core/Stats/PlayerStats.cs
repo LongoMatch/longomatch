@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
@@ -33,9 +34,15 @@ namespace LongoMatch.Core.Stats
 			this.filter = filter;
 			this.Player = player;
 			PlayerEventStats = new List<PlayerEventTypeStats> ();
+			foreach (EventType evtType in project.EventTypes.OfType<ScoreEventType> ()) {
+				PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
+			}
+			foreach (EventType evtType in project.EventTypes.OfType<PenaltyCardEventType> ()) {
+				PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
+			}
 			foreach (EventType evtType in project.EventTypes) {
 				if (evtType is AnalysisEventType) {
-					PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType as AnalysisEventType));
+					PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
 				}
 			}
 		}

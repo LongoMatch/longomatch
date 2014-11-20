@@ -20,6 +20,7 @@ using System.Linq;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using System.Collections.Generic;
+using Mono.Unix;
 
 namespace LongoMatch.Core.Stats
 {
@@ -27,43 +28,77 @@ namespace LongoMatch.Core.Stats
 	{
 		EventsFilter filter;
 		Player player;
+		Project project;
 		List<TimelineEvent> events;
-		
-		public PlayerEventTypeStats (Project project, EventsFilter filter, Player player, AnalysisEventType evType)
+
+		public PlayerEventTypeStats (Project project, EventsFilter filter, Player player, EventType evType)
 		{
 			this.filter = filter;
 			this.player = player;
+			this.project = project;
 			this.EventType = evType;
 		}
-		
+
 		public int TotalCount {
 			get;
 			set;
 		}
 
-		public AnalysisEventType EventType {
+		public EventType EventType {
 			get;
 			set;
 		}
 
 		public void Update ()
 		{
-			events = filter.VisiblePlays.Where (e => e.Players.Contains (player) && e.EventType == EventType).ToList();
-			TotalCount = events.Count;
-			SubcategoriesStats = new List<SubCategoryStat> ();
-			var tagsByGroup = EventType.TagsByGroup;
-			foreach (string grp in tagsByGroup.Keys) {
-				SubCategoryStat substat = new SubCategoryStat (grp);
-				foreach (Tag t in tagsByGroup[grp]) {
-					int count, localTeamCount, visitorTeamCount;
-					count = events.Count (e => e.Tags.Contains (t));
-					PercentualStat pStat = new PercentualStat (t.Value, count, 0, 0, events.Count);
+			events = filter.VisiblePlays.Where (e => e.Players.Contains (player) && e.EventType.Equals (EventType)).ToList ();
+			
+			if (EventType is ScoreEventType) {
+				TotalCount = events.Sum (e => (e as ScoreEvent).Score.Points);
+				SubcategoriesStats = new List<SubCategoryStat> ();
+				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Score"));
+				foreach (Score score in project.Scores) {
+					int count;
+					var scores = events.Where (e => (e as ScoreEvent).Score == score);
+					if (score.Points == 0) {
+						count = scores.Count ();
+					} else {
+						count = scores.Sum (e => (e as ScoreEvent).Score.Points);
+					}
+					PercentualStat pStat = new PercentualStat (score.Name, count, 0, 0, TotalCount);
 					substat.OptionStats.Add (pStat);
 				}
 				SubcategoriesStats.Add (substat);
+			} else if (EventType is PenaltyCardEventType) {
+				TotalCount = events.Count;
+				SubcategoriesStats = new List<SubCategoryStat> ();
+				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Penalties"));
+				foreach (PenaltyCard penalty in project.PenaltyCards) {
+					var penalties = events.Where (e => (e as PenaltyCardEvent).PenaltyCard == penalty);
+					PercentualStat pStat = new PercentualStat (penalty.Name, penalties.Count (), 0, 0, TotalCount);
+					substat.OptionStats.Add (pStat);
+				}
+				SubcategoriesStats.Add (substat);
+			} else {
+				AnalysisEventType evType = EventType as AnalysisEventType;
+				TotalCount = events.Count;
+				
+				SubcategoriesStats = new List<SubCategoryStat> ();
+				var tagsByGroup = evType.TagsByGroup;
+				foreach (string grp in tagsByGroup.Keys) {
+					SubCategoryStat substat = new SubCategoryStat (grp);
+					foreach (Tag t in tagsByGroup[grp]) {
+						int count;
+						count = events.Count (e => e.Tags.Contains (t));
+						PercentualStat pStat = new PercentualStat (t.Value, count, 0, 0, events.Count);
+						substat.OptionStats.Add (pStat);
+					}
+					SubcategoriesStats.Add (substat);
+				}
 			}
+			
 		}
-		
+
 		public List<SubCategoryStat> SubcategoriesStats {
 			get;
 			protected set;
@@ -80,7 +115,6 @@ namespace LongoMatch.Core.Stats
 				return events.Where (e => e.GoalPosition != null).Select (e => e.GoalPosition).ToList ();
 			}
 		}
-
 	}
 }
 
