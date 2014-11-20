@@ -53,9 +53,10 @@ namespace LongoMatch.Core.Stats
 		{
 			events = filter.VisiblePlays.Where (e => e.Players.Contains (player) && e.EventType.Equals (EventType)).ToList ();
 			
+			SubcategoriesStats = new List<SubCategoryStat> ();
+
 			if (EventType is ScoreEventType) {
 				TotalCount = events.Sum (e => (e as ScoreEvent).Score.Points);
-				SubcategoriesStats = new List<SubCategoryStat> ();
 				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Score"));
 				foreach (Score score in project.Scores) {
 					int count;
@@ -71,7 +72,6 @@ namespace LongoMatch.Core.Stats
 				SubcategoriesStats.Add (substat);
 			} else if (EventType is PenaltyCardEventType) {
 				TotalCount = events.Count;
-				SubcategoriesStats = new List<SubCategoryStat> ();
 				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Penalties"));
 				foreach (PenaltyCard penalty in project.PenaltyCards) {
 					var penalties = events.Where (e => (e as PenaltyCardEvent).PenaltyCard == penalty);

@@ -45,9 +45,15 @@ namespace LongoMatch.Core.Stats
 					PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
 				}
 			}
+			UpdateTimePlayed ();
 		}
 
 		public Player Player {
+			get;
+			set;
+		}
+
+		public Time TimePlayed {
 			get;
 			set;
 		}
@@ -62,6 +68,71 @@ namespace LongoMatch.Core.Stats
 			foreach (PlayerEventTypeStats stats in PlayerEventStats) {
 				stats.Update ();
 			}
+		}
+
+		void UpdateTimePlayed ()
+		{
+			LineupEvent lineup = project.Lineup;
+			List<SubstitutionEvent> subs;
+			Time start;
+			List<TimeNode> timenodes, playingTimeNodes;
+			TimeNode last;
+			
+			subs = project.EventsByType (project.SubstitutionsEventType).
+				Where (s => !(s is LineupEvent) && ((s as SubstitutionEvent).In == Player ||
+				                                    (s as SubstitutionEvent).Out == Player))
+				.OrderBy (e => e.EventTime).Select (e => e as SubstitutionEvent).ToList ();
+
+			if (lineup.AwayStartingPlayers.Contains (Player) ||
+				lineup.HomeStartingPlayers.Contains (Player)) {
+				start = lineup.EventTime;
+			} else {
+				SubstitutionEvent sub = subs.Where (s => s.In == Player).FirstOrDefault ();
+				if (sub == null) {
+					TimePlayed = new Time (0);
+					return;
+				} else {
+					start = sub.EventTime;
+				}
+			}
+
+			timenodes = new List<TimeNode> ();
+			/* Find the sequences of playing time */
+			last = new TimeNode { Start = start };
+			timenodes.Add (last);
+			if (subs.Count == 0) {
+				last.Stop = project.Description.FileSet.Duration;
+			} else {
+				foreach (SubstitutionEvent sub in subs) {
+					if (last.Stop == null) {
+						if (sub.Out == Player) {
+							last.Stop = sub.EventTime;
+						}
+					} else {
+						if (sub.In == Player) {
+							last = new TimeNode { Start = sub.EventTime };
+							timenodes.Add (last);
+						}
+					}
+				}
+			}
+
+			playingTimeNodes = new List<TimeNode> ();
+			/* Get the real playing time intersecting with the periods */
+			foreach (TimeNode timenode in timenodes) {
+				foreach (Period p in project.Periods) {
+					if (p.PeriodNode.Intersect (timenode) != null) {
+						foreach (TimeNode ptn in p.Nodes) {
+							TimeNode res = ptn.Intersect (timenode);
+							if (res != null) {
+								playingTimeNodes.Add (res);
+							}
+						}
+					}
+				}
+			}
+			
+			TimePlayed = new Time (playingTimeNodes.Sum (t => t.Duration.MSeconds));
 		}
 	}
 }

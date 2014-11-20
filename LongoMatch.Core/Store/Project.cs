@@ -191,6 +191,17 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		public LineupEvent Lineup {
+			get {
+				LineupEvent lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
+				if (lineup == null) {
+					lineup = CreateLineupEvent ();
+				}
+				return lineup;
+			}
+		}
+
 		#endregion
 
 		#region Public Methods
@@ -339,16 +350,10 @@ namespace LongoMatch.Core.Store
 		                         out List<Player> awayBenchPlayers)
 		{
 			TeamTemplate homeTeam, awayTeam;
-			LineupEvent lineup;
 			List<Player> homeTeamPlayers, awayTeamPlayers;
 
-			lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
-			if (lineup == null) {
-				lineup = CreateLineupEvent ();
-			}
-
-			homeTeamPlayers = lineup.HomeStartingPlayers.Concat (lineup.HomeBenchPlayers).ToList ();
-			awayTeamPlayers = lineup.AwayStartingPlayers.Concat (lineup.AwayBenchPlayers).ToList ();
+			homeTeamPlayers = Lineup.HomeStartingPlayers.Concat (Lineup.HomeBenchPlayers).ToList ();
+			awayTeamPlayers = Lineup.AwayStartingPlayers.Concat (Lineup.AwayBenchPlayers).ToList ();
 
 			foreach (SubstitutionEvent ev in Timeline.OfType<SubstitutionEvent> ().
 			         Where (e => e.EventTime <= currentTime)) {

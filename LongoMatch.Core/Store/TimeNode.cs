@@ -131,6 +131,15 @@ namespace LongoMatch.Core.Store
 				Start = new Time (Math.Min (Start.MSeconds, tn.Start.MSeconds)),
 				Stop = new Time (Math.Max (Stop.MSeconds, tn.Stop.MSeconds))};
 		}
+		
+		public TimeNode Intersect (TimeNode tn) {
+			if (tn.Stop < Start || tn.Start > Stop)
+				return null;
+			else
+				return new TimeNode {
+				Start = new Time (Math.Max (Start.MSeconds, tn.Start.MSeconds)),
+				Stop = new Time (Math.Min (Stop.MSeconds, tn.Stop.MSeconds))};
+		}
 
 		#endregion
 
