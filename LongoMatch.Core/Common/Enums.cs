@@ -209,7 +209,8 @@ namespace LongoMatch.Core.Common
 	public enum ButtonModifier {
 		None,
 		Shift,
-		Control
+		Control,
+		Meta
 	}
 	
 	public enum CursorType {

@@ -20,6 +20,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -64,7 +65,7 @@ namespace LongoMatch.Gui.Component
 		{
 			TreePath[] paths = Selection.GetSelectedRows();
 
-			if((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3))
+			if (Misc.RightButtonClicked (evnt))
 			{
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button

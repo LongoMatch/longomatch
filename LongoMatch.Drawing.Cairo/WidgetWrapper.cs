@@ -247,9 +247,18 @@ namespace LongoMatch.Drawing.Cairo
 			ButtonModifier bm;
 			
 			switch (modifier) {
+#if OSTYPE_OS_X
+			case ModifierType.MetaMask:
+				bm = ButtonModifier.Control;
+				break;
+			case ModifierType.ControlMask:
+				bm = ButtonModifier.Meta;
+				break;
+#else
 			case ModifierType.ControlMask:
 				bm = ButtonModifier.Control;
 				break;
+#endif
 			case ModifierType.ShiftMask:
 				bm = ButtonModifier.Shift;
 				break;

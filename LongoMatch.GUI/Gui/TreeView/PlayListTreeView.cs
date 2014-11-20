@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Core.Store;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -202,7 +203,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			if ((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3)) {
+			if (Misc.RightButtonClicked (evnt)) {
 				TreePath path;
 				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path);
 				if (path != null) {

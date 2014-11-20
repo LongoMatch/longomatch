@@ -408,6 +408,10 @@ namespace LongoMatch.Drawing
 			}
 			coords = ToUserCoords (coords); 
 			if (type == ButtonType.Left) {
+				/* For OS X CTRL+Left emulating right click */
+				if (modifier == ButtonModifier.Meta) {
+					HandleRightButton (coords, modifier);
+				}
 				HandleLeftButton (coords, modifier);
 			} else if (type == ButtonType.Right) {
 				HandleRightButton (coords, modifier);

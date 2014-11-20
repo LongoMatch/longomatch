@@ -324,6 +324,17 @@ namespace LongoMatch.Gui.Helpers
 			
 			return mediaFile;
 		}
+
+		public static bool RightButtonClicked (Gdk.EventButton evnt)
+		{
+			if (evnt.Type != Gdk.EventType.ButtonPress)
+				return false;
+#if OSTYPE_OS_X
+			return evnt.Button == 3 || (evnt.Button == 1 && evnt.State == ModifierType.ControlMask);
+#else
+			return evnt.Button == 3;
+#endif
+		}
 	}
 }
 

@@ -22,7 +22,7 @@ using Mono.Unix;
 
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			if((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 3))
+			if(Misc.RightButtonClicked (evnt))
 				playersMenu.Popup();
 			return base.OnButtonPressEvent (evnt);
 		}
