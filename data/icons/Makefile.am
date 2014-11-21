@@ -11,6 +11,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-calendar.svg \
 	hicolor/scalable/actions/longomatch-cancel-rec.svg \
 	hicolor/scalable/actions/longomatch-category-header.svg \
+	hicolor/scalable/actions/longomatch-category.svg \
 	hicolor/scalable/actions/longomatch-circle-fill.svg \
 	hicolor/scalable/actions/longomatch-circle.svg \
 	hicolor/scalable/actions/longomatch-control-attach.svg \
