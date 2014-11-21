@@ -81,6 +81,7 @@ struct LgmVideoPlayerPrivate
   GstElement *video_sink;
   GstXOverlay *xoverlay;
   guintptr window_handle;
+  gboolean window_set;
   GMutex overlay_lock;
 
   guint update_id;
@@ -169,6 +170,7 @@ lgm_element_msg_sync_cb (GstBus * bus, GstMessage * msg, gpointer data)
       lvp->priv->xoverlay =
           (GstXOverlay *) gst_object_ref (GST_X_OVERLAY (sender));
       lgm_set_window_handle (lvp->priv->xoverlay, lvp->priv->window_handle);
+      lvp->priv->window_set = TRUE;
       g_mutex_unlock (&lvp->priv->overlay_lock);
     }
   }
@@ -799,6 +801,9 @@ lgm_video_player_expose (LgmVideoPlayer * lvp)
 {
   g_return_if_fail (lvp != NULL);
 
+  if (!lvp->priv->window_set) {
+    return;
+  }
   g_mutex_lock (&lvp->priv->overlay_lock);
   if (lvp->priv->xoverlay != NULL && GST_IS_X_OVERLAY (lvp->priv->xoverlay)) {
     gst_x_overlay_expose (lvp->priv->xoverlay);
@@ -902,6 +907,7 @@ lgm_video_player_set_window_handle (LgmVideoPlayer * lvp,
   lvp->priv->window_handle = window_handle;
   if (lvp->priv->xoverlay != NULL) {
     lgm_set_window_handle (lvp->priv->xoverlay, lvp->priv->window_handle);
+    lvp->priv->window_set = TRUE;
   }
   g_mutex_unlock (&lvp->priv->overlay_lock);
 }
