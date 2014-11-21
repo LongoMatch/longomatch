@@ -27,6 +27,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public PlayObject (TimelineEvent play, Project project):base (play)
 		{
 			Project = project;
+			SelectWhole = false;
 		}
 
 		public ISurface SelectionLeft {
