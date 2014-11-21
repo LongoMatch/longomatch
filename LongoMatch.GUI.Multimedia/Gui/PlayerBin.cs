@@ -522,6 +522,9 @@ namespace LongoMatch.Gui
 
 		void LoadImage (Image image, FrameDrawing drawing)
 		{
+			if (image == null) {
+				return;
+			}
 			blackboard.Background = image;
 			blackboard.Drawing = drawing;
 			DrawingsVisible = true;
