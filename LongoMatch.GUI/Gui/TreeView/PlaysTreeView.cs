@@ -257,18 +257,6 @@ namespace LongoMatch.Gui.Component
 		{
 			TreePath[] paths = Selection.GetSelectedRows ();
 
-			if ((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 1)) {
-				base.OnButtonPressEvent (evnt);
-				paths = Selection.GetSelectedRows ();
-				if (paths.Length == 1 && GetValueFromPath (paths [0]) is EventType) {
-					dragging = true;
-					dragStarted = false;
-					startX = (int)evnt.X;
-					startY = (int)evnt.Y;
-				}
-				return true;
-			}
-		
 			if (Misc.RightButtonClicked (evnt)) {
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
@@ -291,9 +279,20 @@ namespace LongoMatch.Gui.Component
 				} else if (paths.Length > 1) {
 					ShowMenu ();
 				}
-			} else
+				return true;
+			} else if ((evnt.Type == Gdk.EventType.ButtonPress) && (evnt.Button == 1)) {
 				base.OnButtonPressEvent (evnt);
-			return true;
+				paths = Selection.GetSelectedRows ();
+				if (paths.Length == 1 && GetValueFromPath (paths [0]) is EventType) {
+					dragging = true;
+					dragStarted = false;
+					startX = (int)evnt.X;
+					startY = (int)evnt.Y;
+				}
+				return true;
+			} else {
+				return base.OnButtonPressEvent (evnt);
+			}
 		}
 
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)

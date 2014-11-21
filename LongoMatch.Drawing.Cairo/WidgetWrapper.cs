@@ -248,7 +248,7 @@ namespace LongoMatch.Drawing.Cairo
 			
 			switch (modifier) {
 #if OSTYPE_OS_X
-			case ModifierType.MetaMask:
+			case ModifierType.Mod2Mask:
 				bm = ButtonModifier.Control;
 				break;
 			case ModifierType.ControlMask:
