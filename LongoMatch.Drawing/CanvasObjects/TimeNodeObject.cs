@@ -35,6 +35,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			TimeNode = node;
 			SelectWhole = true;
+			MoveWhole = true;
 			LineColor = Config.Style.PaletteBackgroundLight;
 		}
 
@@ -53,6 +54,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public bool SelectWhole {
+			get;
+			set;
+		}
+
+		public bool MoveWhole {
 			get;
 			set;
 		}
@@ -163,9 +169,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 				break;
 			case SelectionPosition.All:
-				Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
-				TimeNode.Start += diff;
-				TimeNode.Stop += diff;
+				if (MoveWhole) {
+					Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
+					TimeNode.Start += diff;
+					TimeNode.Stop += diff;
+				}
 				break;
 			}
 			movingPos = sel.Position;
