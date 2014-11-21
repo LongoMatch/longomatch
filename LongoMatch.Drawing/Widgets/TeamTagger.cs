@@ -123,6 +123,11 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.ResetSelection ();
 		} 
 
+		public void Select (Team team)
+		{
+			tagger.Select (team);
+		}
+
 		public void Select (List<Player> players, Team team)
 		{
 			tagger.Select (players, team);

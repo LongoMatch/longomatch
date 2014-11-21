@@ -180,6 +180,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public void ClickTag (Tag tag)
+		{
+			SelectedTags.Add (tag);
+			ReDraw ();
+		}
+
 		void Clear ()
 		{
 			recording = false;

@@ -122,10 +122,14 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void Click (DashboardButton b)
+		public void Click (DashboardButton b, Tag tag = null)
 		{
-			TaggerObject co = Objects.OfType<TaggerObject>().FirstOrDefault (o => o.Tagger == b);
-			co.Click ();
+			TaggerObject co = Objects.OfType<TaggerObject> ().FirstOrDefault (o => o.Tagger == b);
+			if (tag != null && co is CategoryObject) {
+				(co as CategoryObject).ClickTag (tag);
+			} else {
+				co.Click ();
+			}
 		}
 
 		public void RedrawButton (DashboardButton b)

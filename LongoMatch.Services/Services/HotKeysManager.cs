@@ -104,6 +104,7 @@ namespace LongoMatch.Services
 			this.analysisWindow = analysisWindow;
 			this.capturer = analysisWindow.Capturer;
 			openedProject = project;
+			this.projectType = projectType;
 			if (project == null) {
 				dashboard = null;
 			} else {
@@ -193,9 +194,16 @@ namespace LongoMatch.Services
 				inPlayerTagging = true;
 				taggedTeam = action == KeyAction.LocalPlayer ? Team.LOCAL : Team.VISITOR;
 				playerNumber = "";
+				analysisWindow.TagTeam (taggedTeam);
 				timer.Change (TIMEOUT_MS, 0);
 			} else if (action == KeyAction.None) {
-				if (dashboardHotkeys.TryGetValue (key, out button)) {
+				if (pendingButton != null) {
+					Tag tag = pendingButton.AnalysisEventType.Tags.FirstOrDefault (t => t.HotKey == key);
+					if (tag != null) {
+						analysisWindow.ClickButton (pendingButton, tag);
+						timer.Change (TIMEOUT_MS, 0);
+					}
+				} else if (dashboardHotkeys.TryGetValue (key, out button)) {
 					if (inPlayerTagging) {
 						TagPlayer ();
 					}

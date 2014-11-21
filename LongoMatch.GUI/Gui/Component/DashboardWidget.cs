@@ -206,9 +206,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void ClickButton (DashboardButton button)
+		public void ClickButton (DashboardButton button, Tag tag = null)
 		{
-			tagger.Click (button);
+			tagger.Click (button, tag);
 		}
 		
 		public void Refresh (DashboardButton b = null) {

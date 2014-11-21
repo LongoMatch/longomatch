@@ -211,7 +211,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			ResetSelection ();
 			foreach (Player p in players) {
-				Select (p, true);
+				Select (p, true, false);
 			}
 			homeButton.Active = team == Team.BOTH || team == Team.LOCAL;
 			awayButton.Active = team == Team.BOTH || team == Team.VISITOR;
@@ -220,7 +220,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public void Select (Player player, bool silent=false)
+		public void Select (Team team)
+		{
+			if (team == Team.LOCAL) {
+				homeButton.Active = true;
+				awayButton.Active = false;
+			} else {
+				awayButton.Active = true;
+				homeButton.Active = false;
+			}
+		}
+
+		public void Select (Player player, bool silent=false, bool reset=false)
 		{
 			PlayerObject po;
 
@@ -229,7 +240,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				po = awayPlayers.FirstOrDefault (p => p.Player == player);
 			}
 			if (po != null) {
-				if (!silent) {
+				if (reset) {
 					ResetSelection ();
 				}
 				SelectedPlayers.Add (player);

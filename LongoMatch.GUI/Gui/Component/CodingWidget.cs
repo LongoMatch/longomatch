@@ -140,14 +140,19 @@ namespace LongoMatch.Gui.Component
 			SelectPage (playspositionviewer1);
 		}
 
-		public void ClickButton (DashboardButton button)
+		public void ClickButton (DashboardButton button, Tag tag = null)
 		{
-			buttonswidget.ClickButton (button);
+			buttonswidget.ClickButton (button, tag);
 		}
 
 		public void TagPlayer (Player player)
 		{
 			teamtagger.Select (player);
+		}
+		
+		public void TagTeam (Team team)
+		{
+			teamtagger.Select (team);
 		}
 
 		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)

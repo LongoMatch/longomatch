@@ -92,14 +92,19 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.ShowZonalTags ();
 		}
 
-		public void ClickButton (DashboardButton button)
+		public void ClickButton (DashboardButton button, Tag tag = null)
 		{
-			codingwidget1.ClickButton (button);
+			codingwidget1.ClickButton (button, tag);
 		}
 
 		public void TagPlayer (Player player)
 		{
 			codingwidget1.TagPlayer (player);
+		}
+
+		public void TagTeam (Team team)
+		{
+			codingwidget1.TagTeam (team);
 		}
 
 		public IPlayerBin Player {
