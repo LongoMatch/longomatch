@@ -74,7 +74,7 @@ namespace LongoMatch.Core.Common
 	public class HotkeyAlreadyInUse: Exception
 	{
 		public HotkeyAlreadyInUse (HotKey hotkey):
-			base (Catalog.GetString("Hotkey already in use: " + hotkey))
+			base (Catalog.GetString("Hotkey already in use: ") + hotkey)
 		{
 		}
 	}
