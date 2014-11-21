@@ -22,6 +22,7 @@ using LongoMatch.Core.Store;
 using Mono.Unix;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -142,7 +143,7 @@ namespace LongoMatch.Gui.Dialog
 			HBox box = new HBox (false, 5);
 			Label l = new Label ();
 			Entry entry = new Entry (name);
-			Button b = RemoveButton ();
+			Button b = Button ("gtk-remove");
 			
 			l.Markup = Catalog.GetString ("<b>Group name:</b>");
 			g.nameEntry = entry;
@@ -164,10 +165,27 @@ namespace LongoMatch.Gui.Dialog
 		{
 			HBox box = new HBox (false, 2);
 			Entry tagEntry = new Entry (tag.Value);
-			Button b = RemoveButton ();
+			Label hotkeyLabel = new Label (tag.HotKey.ToString ());
+			Button editHK = Button ("gtk-edit");
+			Button b = Button ("gtk-remove");
 
 			b.Clicked += (sender, e) => {
 				RemoveTag (tag, g);
+			};
+
+			editHK.Clicked += (sender, e) => {
+				HotKey hotkey = Config.GUIToolkit.SelectHotkey (tag.HotKey);
+				if (hotkey != null) {
+					try {
+						if (EventType.Tags.Select (tt => tt.HotKey).Contains (hotkey)) {
+							throw new HotkeyAlreadyInUse (hotkey);
+						}
+						tag.HotKey = hotkey;
+						hotkeyLabel.Text = hotkey.ToString ();
+					} catch (HotkeyAlreadyInUse ex) {
+						Config.GUIToolkit.ErrorMessage (ex.Message, this);
+					}
+				}
 			};
 
 			tagEntry.Changed += (o, e) => { 
@@ -175,16 +193,18 @@ namespace LongoMatch.Gui.Dialog
 			};
 			focusEntry = tagEntry;
 
-			box.PackStart (tagEntry, true, true, 0);
+			box.PackStart (tagEntry, false, false, 0);
+			box.PackStart (hotkeyLabel, false, false, 0);
+			box.PackStart (editHK, false, false, 0);
 			box.PackStart (b, false, false, 0);
 			InsertInTable (t, box, i);
 		}
 
-		Button RemoveButton ()
+		Button Button (string name)
 		{
 			Button b = new Button ();
 			Alignment a = new Alignment (0.5F, 0.5F, 0F, 0F);
-			Gtk.Image i = new Image (Misc.LoadIcon ("gtk-remove", 24));
+			Gtk.Image i = new Gtk.Image (Misc.LoadIcon (name, 24));
 			a.Add (i);
 			b.Add (a);
 			return b;
@@ -193,7 +213,7 @@ namespace LongoMatch.Gui.Dialog
 		Button CreateButton (string s, int size)
 		{
 			Button b = new Button ();
-			Gtk.Image i = new Image (Misc.LoadIcon ("gtk-add", size));
+			Gtk.Image i = new Gtk.Image (Misc.LoadIcon ("gtk-add", size));
 			Label l = new Label (s);
 			HBox box = new HBox ();
 			box.PackStart (i, false, false, 5);
