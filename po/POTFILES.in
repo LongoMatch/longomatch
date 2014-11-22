@@ -5,6 +5,7 @@ LongoMatch/Main.cs
 LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Hotkeys.cs
 LongoMatch.Core/Common/VideoStandards.cs
+LongoMatch.Core/Stats/PlayerEventTypeStats.cs
 LongoMatch.Core/Store/EventType.cs
 LongoMatch.Core/Store/HotKey.cs
 LongoMatch.Core/Store/MediaFile.cs
@@ -105,6 +106,7 @@ LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
+LongoMatch.GUI.Multimedia/MultimediaToolkit.cs
 LongoMatch.Migration/Core/Category.cs
 LongoMatch.Migration/Core/HotKey.cs
 LongoMatch.Migration/Core/Project.cs
