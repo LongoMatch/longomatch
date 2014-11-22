@@ -112,6 +112,7 @@ namespace LongoMatch.Plugins
 					headers += String.Format (";{0}", tag.Value);
 				}
 			}
+			output.Add (headers);
 			
 			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
 				string line;
