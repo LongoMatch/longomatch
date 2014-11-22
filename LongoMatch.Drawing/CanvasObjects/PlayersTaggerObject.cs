@@ -39,8 +39,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
-		const int SUBSTITUTION_BUTTONS_HEIGHT = 40;
-		const int SUBSTITUTION_BUTTONS_WIDTH = 60;
+		const int BUTTONS_HEIGHT = 40;
+		const int BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
@@ -463,13 +463,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			homeButton = new ButtonObject ();
 			homeButton.Toggle = true;
 			homeButton.ClickedEvent += HandleTeamClickedEvent;
-			homeButton.Width = SUBSTITUTION_BUTTONS_WIDTH * 2 - 2;
-			homeButton.Height = SUBSTITUTION_BUTTONS_HEIGHT - 1;
+			homeButton.Width = BUTTONS_WIDTH;
+			homeButton.Height = BUTTONS_HEIGHT;
 			homeButton.RedrawEvent += (co, area) => {EmitRedrawEvent (homeButton, area);};
 			awayButton = new ButtonObject ();
 			awayButton.Toggle = true;
-			awayButton.Width = SUBSTITUTION_BUTTONS_WIDTH * 2 - 2;
-			awayButton.Height = SUBSTITUTION_BUTTONS_HEIGHT - 1;
+			awayButton.Width = BUTTONS_WIDTH;
+			awayButton.Height = BUTTONS_HEIGHT;
 			awayButton.ClickedEvent += HandleTeamClickedEvent;
 			awayButton.RedrawEvent += (co, area) => {EmitRedrawEvent (awayButton, area);};
 		}
@@ -710,28 +710,29 @@ namespace LongoMatch.Drawing.CanvasObjects
 				2 * NTeams * Config.Style.TeamTaggerBenchBorder; 
 			height = field.Height;
 			Image.ScaleFactor ((int)width, (int)height, (int)Width,
-			                   (int)Height - SUBSTITUTION_BUTTONS_HEIGHT,
+			                   (int)Height - BUTTONS_HEIGHT,
 			                   out scaleX, out scaleY, out offset);
-			offset.Y += SUBSTITUTION_BUTTONS_HEIGHT;
+			offset.Y += BUTTONS_HEIGHT;
 			tk.Begin ();
 			tk.Clear (Config.Style.PaletteBackground);
 
 			/* Draw substitution buttons */
 			if (subPlayers.Visible) {
-				subPlayers.Position = new Point (Width / 2 - SUBSTITUTION_BUTTONS_WIDTH / 2,
-				                                 offset.Y - SUBSTITUTION_BUTTONS_HEIGHT);
-				subPlayers.Width = SUBSTITUTION_BUTTONS_WIDTH;
-				subPlayers.Height = SUBSTITUTION_BUTTONS_HEIGHT;
+				subPlayers.Position = new Point (Width / 2 - BUTTONS_WIDTH / 2,
+				                                 offset.Y - BUTTONS_HEIGHT);
+				subPlayers.Width = BUTTONS_WIDTH;
+				subPlayers.Height = BUTTONS_HEIGHT;
 				subPlayers.Draw (tk, area);
 			}
 			if (homeButton.Visible) {
 				/* Draw local team button */
-				homeButton.Position = new Point (Position.X + offset.X, offset.Y - homeButton.Height);
+				double x = Position.X + Config.Style.TeamTaggerBenchBorder * scaleX + offset.X; 
+				homeButton.Position = new Point (x, offset.Y - homeButton.Height);
 				homeButton.Draw (tk, area);
 			}
 			if (awayButton.Visible) {
-				awayButton.Position = new Point ((Position.X + Width - offset.X) - awayButton.Width,
-				                                 offset.Y - awayButton.Height);
+				double x = (Position.X + Width - offset.X - Config.Style.TeamTaggerBenchBorder * scaleX) - awayButton.Width; 
+				awayButton.Position = new Point (x, offset.Y - awayButton.Height);
 				awayButton.Draw (tk, area);
 			}
 

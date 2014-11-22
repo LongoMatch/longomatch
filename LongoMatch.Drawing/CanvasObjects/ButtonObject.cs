@@ -24,7 +24,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class ButtonObject: CanvasButtonObject, IMovableObject
 	{
-		const int BORDER_SIZE = 4;
+		const int BORDER_SIZE = 8;
 		const int SELECTION_SIZE = 6;
 		protected ISurface backBufferSurface;
 
