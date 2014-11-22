@@ -307,13 +307,12 @@ namespace LongoMatch.Gui.Helpers
 				if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0)
 					throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
 				if (multimedia.FileNeedsRemux (mediaFile)) {
-					string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
-						                             "Would you like to convert it into a more suitable format?");
-					if (gui.QuestionMessage (q, Catalog.GetString ("Convert"), null)) {
-						string newFilename = multimedia.RemuxFile (mediaFile, parent);
-						if (newFilename != null)
-							mediaFile = multimedia.DiscoverFile (newFilename);
-					}
+					string q = Catalog.GetString("This file needs to be converted into a more suitable format." +
+					                             "(this step only requires a few minutes)");
+					gui.InfoMessage (q, parent);
+					string newFilename = multimedia.RemuxFile (mediaFile, parent);
+					if (newFilename != null)
+						mediaFile = multimedia.DiscoverFile (newFilename);
 				}
 			}
 			catch(Exception ex) {

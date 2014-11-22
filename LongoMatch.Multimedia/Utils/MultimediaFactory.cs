@@ -91,15 +91,9 @@ namespace LongoMatch.Video
 
 		public IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer)
 		{
-			if (inputFile.Container == GStreamer.MPEG1_PS ||
-				inputFile.Container == GStreamer.MPEG2_PS ||
-				inputFile.Container == GStreamer.MPEG2_TS) {
-				return new MpegRemuxer (inputFile.FilePath, outputFile);
-			} else {
-				return GetDefaultElement<IRemuxer> (typeof(IRemuxer),
-				                                    inputFile.FilePath,
-				                                    outputFile, muxer);
-			}
+			return GetDefaultElement<IRemuxer> (typeof(IRemuxer),
+			                                    inputFile.FilePath,
+			                                    outputFile, muxer);
 		}
 
 		public MediaFile DiscoverFile (string file, bool takeScreenshot = true)

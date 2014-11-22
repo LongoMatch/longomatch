@@ -17,7 +17,6 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
 	Remuxer/GstRemuxer.cs \
-	Remuxer/MpegRemuxer.cs \
 	Remuxer/ObjectManager.cs \
 	Utils/GStreamer.cs \
 	Utils/GstDiscoverer.cs \

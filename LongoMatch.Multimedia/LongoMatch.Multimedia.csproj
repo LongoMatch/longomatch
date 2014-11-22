@@ -47,7 +47,6 @@
     <Compile Include="Converter\GstVideoConverter.cs" />
     <Compile Include="Converter\ObjectManager.cs" />
     <Compile Include="Utils\Seeker.cs" />
-    <Compile Include="Remuxer\MpegRemuxer.cs" />
     <Compile Include="Utils\MultimediaFactory.cs" />
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />

@@ -43,11 +43,9 @@ namespace LongoMatch.Video.Utils
 		Window parent;
 		
 		public Remuxer (MediaFile inputFile, string outputFilepath = null,
-		                VideoMuxerType muxer = VideoMuxerType.Mp4)
+		                VideoMuxerType muxer = VideoMuxerType.Matroska)
 		{
 			this.inputFile = inputFile;
-			if (inputFile.Container == GStreamer.ASF)
-				muxer = VideoMuxerType.Matroska;
 			this.muxer = muxer;
 			
 			if (outputFilepath != null) {

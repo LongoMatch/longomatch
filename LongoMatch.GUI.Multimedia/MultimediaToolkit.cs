@@ -20,8 +20,9 @@
 using LongoMatch.Video.Utils;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-
-using Remuxer = LongoMatch.Video.Utils;
+using LongoMatch.Core.Common;
+using Mono.Unix;
+using System.IO;
 
 namespace LongoMatch.Video
 {
@@ -29,7 +30,12 @@ namespace LongoMatch.Video
 	public class MultimediaToolkit:MultimediaFactory, IMultimediaToolkit
 	{
 		public string RemuxFile (MediaFile file, object window) {
-			LongoMatch.Video.Utils.Remuxer remuxer = new LongoMatch.Video.Utils.Remuxer (file);
+			string outputFile = Config.GUIToolkit.SaveFile (Catalog.GetString ("Output file"),
+			                                                Path.ChangeExtension (file.FilePath, ".mkv"),
+			                                                Path.GetDirectoryName (file.FilePath),
+			                                                "Matroska (.mkv)", new string[] { ".mkv"});
+			outputFile = Path.ChangeExtension (outputFile, ".mkv");
+			Utils.Remuxer remuxer = new Utils.Remuxer (file, outputFile, VideoMuxerType.Matroska);
 			return remuxer.Remux (window as Gtk.Window);
 		}
 	}
