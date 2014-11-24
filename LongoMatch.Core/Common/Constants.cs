@@ -71,13 +71,13 @@ Pavel Bárta (cs)
 Petr Kovar (cs)
 Xavier Queralt Mateu (ca)";
 
-		public const string WEBSITE = "http://www.longomatch.org";
+		public const string WEBSITE = "http://www.longomatch.com";
 
-		public const string PRO_WEBSITE = "http://www.longomatch.org/pro";
+		public const string PRO_WEBSITE = "http://www.longomatch.com/pro";
 
-		public const string FREE_CODECS_WEBSITE = "http://www.longomatch.org/free";
+		public const string FREE_CODECS_WEBSITE = "http://www.longomatch.com/free";
 
-		public const string MANUAL = "http://www.longomatch.org/documentation/manual.html";
+		public const string MANUAL = "http://www.longomatch.com/documentation/manual.html";
 
 #if HAVE_GTK
 		public const int STEP = (int) Gdk.ModifierType.ShiftMask;
