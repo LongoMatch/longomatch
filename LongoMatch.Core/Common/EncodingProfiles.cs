@@ -93,8 +93,6 @@ namespace LongoMatch.Core.Common
 			get {
 				List<EncodingProfile> list = new List<EncodingProfile> ();
 				list.Add (MP4);
-				list.Add (Avi);
-				list.Add (WebM);
 				return list;
 			}
 		}
@@ -103,8 +101,6 @@ namespace LongoMatch.Core.Common
 			get {
 				List<EncodingProfile> list = new List<EncodingProfile> ();
 				list.Add (MP4);
-				list.Add (Avi);
-				list.Add (WebM);
 				return list;
 			}
 		}
