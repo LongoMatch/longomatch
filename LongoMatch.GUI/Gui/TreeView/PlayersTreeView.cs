@@ -31,6 +31,8 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
 
+		TreePath pathClicked;
+
 		public PlayersTreeView() {
 			this.Team = Team.LOCAL;
 		}
@@ -69,32 +71,44 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)
+		protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
 		{
-			TreePath[] paths = Selection.GetSelectedRows();
+			if (pathClicked != null) {
+				if (GetRowExpanded (pathClicked)) {
+					CollapseRow (pathClicked);
+				} else {
+					ExpandRow (pathClicked, true);
+				}
+				pathClicked = null;
+			}
+			return base.OnButtonReleaseEvent (evnt);
+		}
 
-			if (Misc.RightButtonClicked (evnt))
-			{
+		override protected bool OnButtonPressEvent (Gdk.EventButton evnt)
+		{
+			TreePath[] paths = Selection.GetSelectedRows ();
+
+			if (Misc.RightButtonClicked (evnt)) {
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
 				// For multiedition
-				if(paths.Length <= 1) {
-					base.OnButtonPressEvent(evnt);
-					paths = Selection.GetSelectedRows();
+				if (paths.Length <= 1) {
+					base.OnButtonPressEvent (evnt);
+					paths = Selection.GetSelectedRows ();
 				}
 
-				if(paths.Length == 1) {
-					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
-					if(selectedTimeNode is TimelineEvent) {
+				if (paths.Length == 1) {
+					TimeNode selectedTimeNode = GetValueFromPath (paths [0]) as TimeNode;
+					if (selectedTimeNode is TimelineEvent) {
 						ShowMenu ();
 					}
-				}
-				else if(paths.Length > 1) {
+				} else if (paths.Length > 1) {
 					ShowMenu ();
 				}
-			}
-			else
+			} else {
+				GetPathAtPos ((int) evnt.X, (int) evnt.Y, out pathClicked);
 				base.OnButtonPressEvent(evnt);
+			}
 			return true;
 		}
 

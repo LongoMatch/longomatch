@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Component
 			Selection.SelectFunction = SelectFunction;
 			RowActivated += new RowActivatedHandler (OnTreeviewRowActivated);
 			HeadersVisible = false;
+			ShowExpanders = false;
 			
 			TreeViewColumn custColumn = new TreeViewColumn ();
 			CellRenderer cr = new PlaysCellRenderer ();

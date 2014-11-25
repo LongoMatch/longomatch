@@ -35,6 +35,7 @@ namespace LongoMatch.Gui.Component
 	{
 		Project project;
 		TreeIter selectedIter;
+		TreePath pathClicked;
 		Playlist dragSourcePlaylist;
 		IPlaylistElement dragSourceElement;
 
@@ -43,6 +44,7 @@ namespace LongoMatch.Gui.Component
 			HeadersVisible = false;
 			EnableGridLines = TreeViewGridLines.None;
 			EnableTreeLines = false;
+			ShowExpanders = false;
 			
 			TreeViewColumn custColumn = new TreeViewColumn ();
 			CellRenderer cr = new PlaysCellRenderer ();
@@ -218,6 +220,8 @@ namespace LongoMatch.Gui.Component
 						ShowPlaylistElementMenu (playlist, el as IPlaylistElement, parent);
 					}
 				}
+			} else {
+				GetPathAtPos ((int) evnt.X, (int) evnt.Y, out pathClicked);
 			}
 			return base.OnButtonPressEvent (evnt);
 		}
@@ -317,6 +321,19 @@ namespace LongoMatch.Gui.Component
 			FillElementAndPlaylist (selectedIter, out dragSourcePlaylist,
 			                        out dragSourceElement);
 			base.OnDragBegin (context);
+		}
+
+		protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
+		{
+			if (pathClicked != null) {
+				if (GetRowExpanded (pathClicked)) {
+					CollapseRow (pathClicked);
+				} else {
+					ExpandRow (pathClicked, true);
+				}
+				pathClicked = null;
+			}
+			return base.OnButtonReleaseEvent (evnt);
 		}
 
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)

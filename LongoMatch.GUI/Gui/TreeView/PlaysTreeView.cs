@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		int startX, startY;
 		TargetList targetList;
 		TargetEntry[] targetEntry;
-		bool dragging, dragStarted;
+		bool dragging, dragStarted, catClicked;
 		TreeViewDropPosition dropPos;
 
 		public PlaysTreeView ()
@@ -249,10 +249,25 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
 		{
-			dragging = dragStarted = false;
+			if (catClicked && !dragStarted) {
+				TreePath path;
+				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path);
+				if (GetRowExpanded (path)) {
+					CollapseRow (path);
+				} else {
+					ExpandRow (path, true);
+				}
+			}
+			dragging = dragStarted = catClicked = false;
 			return base.OnButtonReleaseEvent (evnt);
 		}
 
+		protected override bool OnExpandCollapseCursorRow (bool logical, bool expand, bool open_all)
+		{
+			Console.WriteLine (logical + " " + expand + " " + open_all);
+			return base.OnExpandCollapseCursorRow (logical, expand, open_all);
+		}
+		
 		override protected bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
 			TreePath[] paths = Selection.GetSelectedRows ();
@@ -285,6 +300,7 @@ namespace LongoMatch.Gui.Component
 				paths = Selection.GetSelectedRows ();
 				if (paths.Length == 1 && GetValueFromPath (paths [0]) is EventType) {
 					dragging = true;
+					catClicked = true;
 					dragStarted = false;
 					startX = (int)evnt.X;
 					startY = (int)evnt.Y;
