@@ -2,6 +2,9 @@
 
 style "longomatch-radiobutton"
 {
+  # background color prelight
+  bg[PRELIGHT]   =  @active_color
+
   engine "pixmap"
   {
 	image 
@@ -84,7 +87,12 @@ style "longomatch-radiobutton"
             overlay_file    		= "Check-Radio/option-checked-insensitive.png"
             overlay_stretch 		= FALSE
         }
-}
+  }
 }
 
-
+style "longomatch-radiobutton-label"
+{
+  fg[NORMAL]     = @base_color
+  fg[ACTIVE]     = @text_color
+  fg[PRELIGHT]   = @bg_dark_color
+}

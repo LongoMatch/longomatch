@@ -2,6 +2,9 @@
 
 style "longomatch-checkbox"
 {
+  # background color prelight
+  bg[PRELIGHT]   =  @active_color
+
   engine "pixmap"
   {
     image
@@ -94,5 +97,13 @@ style "longomatch-checkbox"
             overlay_file		= "Check-Radio/checkbox-checked-insensitive.png"
             overlay_stretch 		= FALSE
 	}
+  }
 }
+
+style "longomatch-checkbox-label"
+{
+  fg[NORMAL]     = @base_color
+  fg[ACTIVE]     = @text_color
+  fg[PRELIGHT]   = @bg_dark_color
 }
+

@@ -153,12 +153,16 @@ include "separator.rc"
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
 class "GtkButton"                                style "longomatch-square-button"
+class "GtkNotebook"                              style "longomatch-notebook"
+widget_class "*<GtkNotebook>*<GtkLabel>"         style "longomatch-notebook-tab-label"
 class "GtkPaned"                                 style "longomatch-handles"
 #Remove borders completely
 class "GtkAspectFrame"                           style "longomatch-aspect-frame"
 class "GtkCheckButton"                           style "longomatch-checkbox"
+widget_class "*<GtkCheckButton>.<GtkLabel>"      style "longomatch-checkbox-label"
 class "GtkCheckMenuItem"                         style "longomatch-checkbox"
 class "GtkRadioButton"                           style "longomatch-radiobutton"
+widget_class "*<GtkRadioButton>.<GtkLabel>"      style "longomatch-radiobutton-label"
 class "GtkTreeView"                              style "longomatch-treeview"
 class "GtkIconView"                              style "longomatch-treeview"
 class "GtkTextView"                              style "longomatch-treeview"
@@ -168,7 +172,6 @@ class "GtkHScale"                                style "longomatch-hscale"
 class "GtkVScale"                                style "longomatch-vscale"
 class "GtkScrollbar"                             style "longomatch-scrollbar"
 class "GtkSeparator"                             style "longomatch-separator"
-
 # Background for the menubar
 class "GtkMenuBar"                               style "longomatch-menubar"
 # Text color for the menu items in the bar and the menus
@@ -183,9 +186,6 @@ widget_class "*AwayTeamsComboBox*"               style "longomatch-away-teams-co
 # Order matters here
 widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-children"
 widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
-
-class "GtkNotebook"                              style "longomatch-notebook"
-widget_class "*<GtkNotebook>*<GtkLabel>"         style "longomatch-notebook-tab-label"
 
 widget "*entryeventbox"                          style "longomatch-custom-entry"
 widget "*entryeventbox.*"                        style "longomatch-custom-entry-children"
