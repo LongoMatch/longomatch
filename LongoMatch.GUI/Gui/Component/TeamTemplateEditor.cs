@@ -261,8 +261,7 @@ namespace LongoMatch.Gui.Component
 			if (p.Photo != null) {
 				playerImage = p.Photo.Value;
 			} else {
-				//playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
-				playerImage = Helpers.Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
+				playerImage = Misc.LoadIcon ("longomatch-player-pic", 45, IconLookupFlags.ForceSvg);
 			}
 			return playerImage;
 		}
