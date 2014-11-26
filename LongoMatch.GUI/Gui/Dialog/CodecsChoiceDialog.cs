@@ -16,6 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.IO;
+using LongoMatch.Gui;
+using LongoMatch.Core.Common;
+
+using Pango;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -24,6 +29,11 @@ namespace LongoMatch.Gui.Dialog
 		public CodecsChoiceDialog ()
 		{
 			this.Build ();
+
+			Image img = new Image (System.IO.Path.Combine (Config.ImagesDir, "longomatch-pro-small.png"));
+			buttonOKimage.Pixbuf = img.Value;
+
+			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
 		}
 	}
 }

@@ -10966,27 +10966,42 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.CodecsChoiceDialog" design-size="606 300">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.CodecsChoiceDialog" design-size="606 397">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Buttons">2</property>
+    <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="Gtk.VBox" id="vbox2">
+          <widget class="Gtk.Alignment" id="alignment4">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.HBox" id="hbox1">
+              <widget class="Gtk.VBox" id="vbox2">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
+                <property name="BorderWidth">10</property>
                 <child>
-                  <widget class="Gtk.Image" id="titleimage">
+                  <widget class="Gtk.EventBox" id="headereventbox">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:gtk-dialog-warning Dialog</property>
+                    <child>
+                      <widget class="Gtk.Alignment" id="alignment3">
+                        <property name="MemberName" />
+                        <property name="LeftPadding">20</property>
+                        <property name="TopPadding">20</property>
+                        <property name="RightPadding">20</property>
+                        <property name="BottomPadding">20</property>
+                        <child>
+                          <widget class="Gtk.Label" id="titlelabel">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Missing CODECS</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -10996,56 +11011,32 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Label" id="titlelabel">
+                  <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Missing multimedia components</property>
+                    <property name="LabelProp" translatable="yes">As explained and detailed in the &lt;a href="http://www.longomatch.com/open-source.html"&gt;OpenSource project&lt;/a&gt; page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  
+
+To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the &lt;a href="http://www.longomatch.com/open-source.html"&gt;OpenSource project&lt;/a&gt; page.
+
+To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. </property>
+                    <property name="UseMarkup">True</property>
+                    <property name="Wrap">True</property>
+                    <property name="Justify">Fill</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">False</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
-                <property name="MemberName" />
-                <property name="ShadowType">In</property>
-                <child>
-                  <widget class="Gtk.TextView" id="disclaimertextview">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="ShowScrollbars">True</property>
-                    <property name="Text" translatable="yes" context="yes">Legal disclaimers when no codec pack is detected|We advise you to use our professional pack OnePlay ® with fully licensed patents. 
-
-You might want to install the codecs available from other sources. We inform you that we do not make any representation as to their availability, their fitness to the purpose and we provide some links for your convenience only.  
-
-Certain software, and in particular software that implements multimedia standard formats such as Mp3, MPEG 2 video and audio, h.264, MPEG 4 audio and video, AC3, etc, can have patent issues. In certain countries patents are granted on software and even software-only solution are by and large considered patentable and are patented (such as in the United States). In certain others, patents on pure software solutions are formally prohibited, but granted (this is the case of Europe), and in others again are neither allowed nor granted.
-
-It is up to you to make sure that in the countries where Longomatch is used, a license from the applicable patent holders on the codec packages is required or not. Receiving Longomatch– or links to other downloadable software – does not provide any license expressed or implied over these patents, except in very limited conditions where the license so provides. No representation is made.
-
-Besides, your provider could be actively filtering the target URLs.
-
-Installing these codecs will therefore be entirely at your risk.</property>
-                    <property name="WrapMode">WordChar</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-              </packing>
             </child>
           </widget>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -11055,35 +11046,22 @@ Installing these codecs will therefore be entirely at your risk.</property>
         <property name="MemberName" />
         <property name="Spacing">10</property>
         <property name="BorderWidth">5</property>
-        <property name="Size">2</property>
+        <property name="Size">1</property>
         <property name="LayoutStyle">End</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonCancel">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Get me to the free codecs at my own _risk</property>
-            <property name="UseUnderline">True</property>
-            <property name="ResponseId">-2</property>
-          </widget>
-          <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
         <child>
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
             <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">I want the _professional pack !</property>
-            <property name="UseUnderline">True</property>
+            <property name="Type">Custom</property>
             <property name="ResponseId">-3</property>
+            <child>
+              <widget class="Gtk.Image" id="buttonOKimage">
+                <property name="MemberName" />
+              </widget>
+            </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>

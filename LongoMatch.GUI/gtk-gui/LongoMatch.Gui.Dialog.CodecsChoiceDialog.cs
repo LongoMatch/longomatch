@@ -4,14 +4,14 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class CodecsChoiceDialog
 	{
+		private global::Gtk.Alignment alignment4;
 		private global::Gtk.VBox vbox2;
-		private global::Gtk.HBox hbox1;
-		private global::Gtk.Image titleimage;
+		private global::Gtk.EventBox headereventbox;
+		private global::Gtk.Alignment alignment3;
 		private global::Gtk.Label titlelabel;
-		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		private global::Gtk.TextView disclaimertextview;
-		private global::Gtk.Button buttonCancel;
+		private global::Gtk.Label label1;
 		private global::Gtk.Button buttonOk;
+		private global::Gtk.Image buttonOKimage;
 
 		protected virtual void Build ()
 		{
@@ -24,51 +24,53 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
+			this.alignment4 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.alignment4.Name = "alignment4";
+			// Container child alignment4.Gtk.Container+ContainerChild
 			this.vbox2 = new global::Gtk.VBox ();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
+			this.vbox2.BorderWidth = ((uint)(10));
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.titleimage = new global::Gtk.Image ();
-			this.titleimage.Name = "titleimage";
-			this.titleimage.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-warning", global::Gtk.IconSize.Dialog);
-			this.hbox1.Add (this.titleimage);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.titleimage]));
-			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.headereventbox = new global::Gtk.EventBox ();
+			this.headereventbox.Name = "headereventbox";
+			// Container child headereventbox.Gtk.Container+ContainerChild
+			this.alignment3 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.alignment3.Name = "alignment3";
+			this.alignment3.LeftPadding = ((uint)(20));
+			this.alignment3.TopPadding = ((uint)(20));
+			this.alignment3.RightPadding = ((uint)(20));
+			this.alignment3.BottomPadding = ((uint)(20));
+			// Container child alignment3.Gtk.Container+ContainerChild
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Missing multimedia components");
-			this.hbox1.Add (this.titlelabel);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.titlelabel]));
-			w3.Position = 1;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			this.titlelabel.Xalign = 0F;
+			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Missing CODECS");
+			this.alignment3.Add (this.titlelabel);
+			this.headereventbox.Add (this.alignment3);
+			this.vbox2.Add (this.headereventbox);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.headereventbox]));
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
-			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-			this.disclaimertextview = new global::Gtk.TextView ();
-			this.disclaimertextview.Buffer.Text = "We advise you to use our professional pack OnePlay ® with fully licensed patents. \n\nYou might want to install the codecs available from other sources. We inform you that we do not make any representation as to their availability, their fitness to the purpose and we provide some links for your convenience only.  \n\nCertain software, and in particular software that implements multimedia standard formats such as Mp3, MPEG 2 video and audio, h.264, MPEG 4 audio and video, AC3, etc, can have patent issues. In certain countries patents are granted on software and even software-only solution are by and large considered patentable and are patented (such as in the United States). In certain others, patents on pure software solutions are formally prohibited, but granted (this is the case of Europe), and in others again are neither allowed nor granted.\n\nIt is up to you to make sure that in the countries where Longomatch is used, a license from the applicable patent holders on the codec packages is required or not. Receiving Longomatch– or links to other downloadable software – does not provide any license expressed or implied over these patents, except in very limited conditions where the license so provides. No representation is made.\n\nBesides, your provider could be actively filtering the target URLs.\n\nInstalling these codecs will therefore be entirely at your risk.";
-			this.disclaimertextview.CanFocus = true;
-			this.disclaimertextview.Name = "disclaimertextview";
-			this.disclaimertextview.WrapMode = ((global::Gtk.WrapMode)(3));
-			this.GtkScrolledWindow.Add (this.disclaimertextview);
-			this.vbox2.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.GtkScrolledWindow]));
-			w6.Position = 1;
-			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			this.label1 = new global::Gtk.Label ();
+			this.label1.Name = "label1";
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n\nTo acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n\nTo avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. ");
+			this.label1.UseMarkup = true;
+			this.label1.Wrap = true;
+			this.label1.Justify = ((global::Gtk.Justification)(3));
+			this.vbox2.Add (this.label1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label1]));
+			w5.Position = 1;
+			w5.Expand = false;
+			w5.Fill = false;
+			this.alignment4.Add (this.vbox2);
+			w1.Add (this.alignment4);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(w1 [this.alignment4]));
 			w7.Position = 0;
+			w7.Expand = false;
+			w7.Fill = false;
 			// Internal child LongoMatch.Gui.Dialog.CodecsChoiceDialog.ActionArea
 			global::Gtk.HButtonBox w8 = this.ActionArea;
 			w8.Name = "dialog1_ActionArea";
@@ -76,33 +78,24 @@ namespace LongoMatch.Gui.Dialog
 			w8.BorderWidth = ((uint)(5));
 			w8.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonCancel = new global::Gtk.Button ();
-			this.buttonCancel.CanDefault = true;
-			this.buttonCancel.CanFocus = true;
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.UseUnderline = true;
-			this.buttonCancel.Label = global::Mono.Unix.Catalog.GetString ("Get me to the free codecs at my own _risk");
-			this.AddActionWidget (this.buttonCancel, -2);
-			global::Gtk.ButtonBox.ButtonBoxChild w9 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8 [this.buttonCancel]));
-			w9.Expand = false;
-			w9.Fill = false;
-			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
-			this.buttonOk.UseUnderline = true;
-			this.buttonOk.Label = global::Mono.Unix.Catalog.GetString ("I want the _professional pack !");
+			// Container child buttonOk.Gtk.Container+ContainerChild
+			this.buttonOKimage = new global::Gtk.Image ();
+			this.buttonOKimage.Name = "buttonOKimage";
+			this.buttonOk.Add (this.buttonOKimage);
+			this.buttonOk.Label = null;
 			this.AddActionWidget (this.buttonOk, -3);
 			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8 [this.buttonOk]));
-			w10.Position = 1;
 			w10.Expand = false;
 			w10.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 606;
-			this.DefaultHeight = 300;
+			this.DefaultHeight = 397;
 			this.Show ();
 		}
 	}
