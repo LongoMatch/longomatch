@@ -132,7 +132,9 @@ pkgconfig/longomatch-addins.pc
 pkgconfig/longomatch-core.pc
 pkgconfig/longomatch-drawing.pc
 pkgconfig/longomatch-drawing-cairo.pc
+pkgconfig/longomatch-gui.pc
 pkgconfig/longomatch-gui-helpers.pc
+pkgconfig/longomatch-oxyplot.pc
 
 LongoMatch.Addins/Makefile
 LongoMatch.Core/Makefile
