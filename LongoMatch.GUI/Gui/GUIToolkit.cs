@@ -140,7 +140,24 @@ namespace LongoMatch.Gui
 			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
 			                                    defaultFolder, filterName, extensionFilter);
 		}
-		
+
+		public object ChooseOption (Dictionary<string, object> options, object parent=null)
+		{
+			object res = null;
+			ChooseOptionDialog dialog = new ChooseOptionDialog ();
+			dialog.Options = options;
+			if (parent != null) {
+				dialog.TransientFor = (parent as Widget).Toplevel as Gtk.Window;
+			} else {
+				dialog.TransientFor = mainWindow as Gtk.Window;
+			}
+			if (dialog.Run () == (int)ResponseType.Ok) {
+				res = dialog.SelectedOption;
+			}
+			dialog.Destroy ();
+			return res;
+		}
+
 		public List<EditionJob> ConfigureRenderingJob (Playlist playlist)
 		{
 			VideoEditionProperties vep;
@@ -255,6 +272,19 @@ namespace LongoMatch.Gui
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run();
 			dialog.Destroy();	
+		}
+		
+		public ProjectDescription ChooseProject (List<ProjectDescription> projects)
+		{
+			Log.Information ("Choosing project");
+			ProjectDescription pd = null;
+			ChooseProjectDialog dialog = new ChooseProjectDialog ();
+			dialog.Fill (projects);
+			if (dialog.Run () == (int)ResponseType.Ok) {
+				pd = dialog.Project;
+			}
+			dialog.Destroy ();
+			return pd;
 		}
 		
 		public void SelectProject(List<ProjectDescription> projects) {

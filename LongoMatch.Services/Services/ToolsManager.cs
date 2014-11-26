@@ -44,8 +44,9 @@ namespace LongoMatch.Services
 			this.dbManager = dbManager;
 			ProjectImporters = new List<ProjectImporter> ();
 			
-			RegisterImporter (Project.Import, Constants.PROJECT_NAME,
-			                  new string[] {"*"+Constants.PROJECT_EXT }, false);
+			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
+			                  Constants.PROJECT_NAME,
+			                  new string[] {"*"+Constants.PROJECT_EXT }, false, false);
 
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
@@ -80,14 +81,17 @@ namespace LongoMatch.Services
 		}
 
 		public void RegisterImporter (Func<string, Project> importFunction,
-		                              string filterName, string[] extensions, 
-		                              bool needsEdition)
+		                              string description, string filterName,
+		                              string[] extensions, bool needsEdition,
+		                              bool canOverwrite)
 		{
 			ProjectImporter importer = new ProjectImporter {
+				Description = description,
 				ImportFunction=importFunction,
 				FilterName=filterName,
 				Extensions=extensions,
-				NeedsEdition=needsEdition
+				NeedsEdition=needsEdition,
+				CanOverwrite=canOverwrite,
 			};
 			ProjectImporters.Add (importer);
 		}
@@ -120,6 +124,12 @@ namespace LongoMatch.Services
 			}
 		}
 
+		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
+		{
+			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
+			return (ProjectImporter) Config.GUIToolkit.ChooseOption (options);
+		}
+ 
 		void ImportProject ()
 		{
 			Project project;
@@ -143,12 +153,16 @@ namespace LongoMatch.Services
 			 * is not a valid project */
 			try {
 				string extension = "*" + Path.GetExtension (fileName);
-				importer = ProjectImporters.Where (p => p.Extensions.Contains (extension)).FirstOrDefault ();
-				if (importer != null) {
-					project = importer.ImportFunction (fileName);
-				} else {
+				IEnumerable<ProjectImporter> importers =  ProjectImporters.Where
+					(p => p.Extensions.Contains (extension));
+				if (importers.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
+				} else if (importers.Count () == 1) {
+					importer = importers.First();
+				} else {
+					importer = ChooseImporter (importers);
 				}
+				project = importer.ImportFunction (fileName);
 				if (importer.NeedsEdition) {
 					Config.EventsBroker.EmitNewProject (project);
 				} else {
@@ -159,9 +173,10 @@ namespace LongoMatch.Services
 						}
 					}
 					/* If the project exists ask if we want to overwrite it */
-					if (DB.Exists (project)) {
+					if (!importer.CanOverwrite && DB.Exists (project)) {
 						var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
-						                                      project.ID + "\n" +	Catalog.GetString ("Do you want to overwrite it?"), null);
+						                                      project.ID + "\n" +
+						                                      Catalog.GetString ("Do you want to overwrite it?"), null);
 						if (!res)
 							return;
 						DB.UpdateProject (project);
@@ -213,6 +228,11 @@ namespace LongoMatch.Services
 			set;
 		}
 
+		public string Description {
+			get;
+			set;
+		}
+		
 		public string [] Extensions {
 			get;
 			set;
@@ -224,6 +244,11 @@ namespace LongoMatch.Services
 		}
 
 		public bool NeedsEdition {
+			get;
+			set;
+		}
+
+		public bool CanOverwrite {
 			get;
 			set;
 		}

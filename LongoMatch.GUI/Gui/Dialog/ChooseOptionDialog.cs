@@ -16,16 +16,40 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
+using System.Collections.Generic;
+using System.Linq;
+using Gtk;
 
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Gui.Dialog
 {
-	public interface IProjectsImporter
+	public partial class ChooseOptionDialog : Gtk.Dialog
 	{
-		void RegisterImporter (Func<string, Project> ImportFunction,
-		                       string description, string filterName,
-		                       string[] extensions, bool needsEdition,
-		                       bool canOverwrite);
+		public ChooseOptionDialog ()
+		{
+			this.Build ();
+		}
+
+		public Dictionary<string, object> Options {
+			set {
+				RadioButton first = null;
+				SelectedOption = value.Values.FirstOrDefault ();
+				foreach (string desc in value.Keys) {
+					first = new RadioButton (first, desc);
+					first.Toggled += (sender, e) => {
+						if ((sender as RadioButton).Active) {
+							SelectedOption = value[desc];
+						}
+					};
+					first.ShowAll ();
+					optionsbox.PackStart (first, false, true, 0);
+				}
+			}
+		}
+		
+		public object SelectedOption {
+			get;
+			protected set;
+		}
 	}
 }
 

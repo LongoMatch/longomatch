@@ -178,6 +178,10 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.GameDescriptionHeader.cs" />
     <Compile Include="Gui\Component\VideoFileInfo.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoFileInfo.cs" />
+    <Compile Include="Gui\Dialog\ChooseProjectDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseProjectDialog.cs" />
+    <Compile Include="Gui\Dialog\ChooseOptionDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseOptionDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

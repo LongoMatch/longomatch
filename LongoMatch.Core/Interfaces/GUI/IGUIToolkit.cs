@@ -55,6 +55,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 		string SelectFolder(string title, string defaultName, string defaultFolder,
 			string filterName, string[] extensionFilter);
 			
+		object ChooseOption (Dictionary<string, object> options, object parent=null);
+
 		IBusyDialog BusyDialog(string message, object parent=null);
 			
 		List<EditionJob> ConfigureRenderingJob (Playlist playlist);
@@ -66,6 +68,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 		void CloseProject ();
 			                     
 		void SelectProject(List<ProjectDescription> projects);
+
+		ProjectDescription ChooseProject(List<ProjectDescription> projects);
 		
 		void CreateNewProject (Project project=null);
 		

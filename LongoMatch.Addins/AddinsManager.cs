@@ -107,9 +107,11 @@ namespace LongoMatch.Addins
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
 				importer.RegisterImporter (new Func<string, Project> (importProject.ImportProject),
+				                           importProject.Description,
 				                           importProject.FilterName,
 				                           importProject.FilterExtensions,
-				                           importProject.NeedsEdition);
+				                           importProject.NeedsEdition,
+				                           importProject.CanOverwrite);
 			}
 		}
 
