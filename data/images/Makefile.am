@@ -11,6 +11,7 @@ nobase_dist_images_DATA = Makefile.am \
 	fields/field-half.svg \
 	longomatch-dark-bg.svg \
 	longomatch-light-bg.svg \
+	longomatch-pro-small.png \
 	player/arrow-in.svg \
 	player/arrow-out.svg \
 	player/photo.svg
