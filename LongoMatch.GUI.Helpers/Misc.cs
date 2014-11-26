@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
+using System.Threading.Tasks;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -299,8 +300,16 @@ namespace LongoMatch.Gui.Helpers
 				busy = gui.BusyDialog (Catalog.GetString("Analyzing video file:")+"\n"+filename,
 				                       parent);
 				busy.Show ();
-				mediaFile = multimedia.DiscoverFile (filename);
+				
+				Task task = new Task ( () => {
+					mediaFile = multimedia.DiscoverFile (filename);
+				});
+				task.Start ();
+				task.Wait (6000);
 				busy.Destroy ();
+				if (mediaFile == null) {
+					throw new Exception(Catalog.GetString("Timeout parsing file."));
+				}
 
 				if(!mediaFile.HasVideo || mediaFile.VideoCodec == "")
 					throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
