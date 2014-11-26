@@ -68,7 +68,6 @@
     <Compile Include="Gui\Component\PlaysListTreeWidget.cs" />
     <Compile Include="Gui\Dialog\DrawingTool.cs" />
     <Compile Include="Gui\Dialog\EndCaptureDialog.cs" />
-    <Compile Include="Gui\Dialog\BusyDialog.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DrawingTool.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.BusyDialog.cs" />
     <Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
     <Compile Include="Gui\Component\RenderingStateBar.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.RenderingStateBar.cs" />
@@ -182,6 +180,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseProjectDialog.cs" />
     <Compile Include="Gui\Dialog\ChooseOptionDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseOptionDialog.cs" />
+    <Compile Include="Gui\Dialog\BusyDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

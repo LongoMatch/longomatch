@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2010 Andoni Morales Alastruey
+//  Copyright (C) 2014 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,32 +15,54 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
-
+using Gtk;
 using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Dialog
 {
-
-
-	public partial class BusyDialog : Gtk.Window, IBusyDialog
+	public class BusyDialog: Gtk.Dialog, IBusyDialog
 	{
+		VBox box;
+		Label titleLabel;
+		ProgressBar progressBar;
 
-		public BusyDialog() :
-		base(Gtk.WindowType.Toplevel)
+		public BusyDialog ()
 		{
-			this.Build();
+			box = new VBox (false, 10);
+			titleLabel = new Label ();
+			progressBar = new ProgressBar ();
+			box.PackStart (titleLabel, true, true, 0);
+			box.PackStart (progressBar, true, true, 0);
+			box.ShowAll ();
+			VBox.PackStart (box);
+			Icon = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch", 28);
+			TypeHint = Gdk.WindowTypeHint.Dialog;
+			WindowPosition = WindowPosition.Center;
+			Modal = true;
+			Resizable = false;
+			Gravity = Gdk.Gravity.Center; 
+			SkipPagerHint = true;
+			SkipTaskbarHint = true;
+			DefaultWidth = 300;
+			DefaultHeight = 100;
 		}
 
 		public string Message {
 			set {
-				messagelabel.Text = value;
+				titleLabel.Text = value;
 			}
 		}
 
-		public void Pulse() {
-			progressbar1.Pulse();
+		public void Pulse ()
+		{
+			progressBar.Pulse ();
+		}
+
+		public void ShowSync ()
+		{
+			Run ();
 		}
 	}
 }
+

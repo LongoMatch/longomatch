@@ -108,7 +108,6 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.Timeline.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoFileInfo.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ChooseOptionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ChooseProjectDialog.cs \

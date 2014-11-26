@@ -22,9 +22,8 @@ using System.IO;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-
 using LongoMatch.Core.Common;
-using LColor = LongoMatch.Core.Common.Color; 
+using LColor = LongoMatch.Core.Common.Color;
 using Color = Gdk.Color;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
@@ -37,16 +36,16 @@ namespace LongoMatch.Gui.Helpers
 	public class Misc
 	{
 		public static string lastFilename;
-
 		public static Hashtable missingIcons = new Hashtable ();
-		
-		public static FileFilter GetFileFilter() {
-			FileFilter filter = new FileFilter();
+
+		public static FileFilter GetFileFilter ()
+		{
+			FileFilter filter = new FileFilter ();
 			filter.Name = "Images";
-			filter.AddPattern("*.png");
-			filter.AddPattern("*.jpg");
-			filter.AddPattern("*.jpeg");
-			filter.AddPattern("*.svg");
+			filter.AddPattern ("*.png");
+			filter.AddPattern ("*.jpg");
+			filter.AddPattern ("*.jpeg");
+			filter.AddPattern ("*.svg");
 			return filter;
 		}
 
@@ -65,9 +64,9 @@ namespace LongoMatch.Gui.Helpers
 			}
 			
 			fChooser = new FileChooserDialog (Catalog.GetString ("Choose an image"),
-			                                 toplevel, FileChooserAction.Open,
-			                                 "gtk-cancel", ResponseType.Cancel,
-			                                 "gtk-open", ResponseType.Accept);
+			                                  toplevel, FileChooserAction.Open,
+			                                  "gtk-cancel", ResponseType.Cancel,
+			                                  "gtk-open", ResponseType.Accept);
 			fChooser.AddFilter (GetFileFilter ());
 			fChooser.SetCurrentFolder (lastDir);
 			if (fChooser.Run () == (int)ResponseType.Accept) {
@@ -84,59 +83,65 @@ namespace LongoMatch.Gui.Helpers
 					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Image file format not supported"), widget);
 				}
 			}
-			fChooser.Destroy();
+			fChooser.Destroy ();
 			return pimage;
 		}
-		
-		public static Pixbuf Scale(Pixbuf pixbuf, int max_width, int max_height, bool dispose=true) {
-			int ow,oh,h,w;
+
+		public static Pixbuf Scale (Pixbuf pixbuf, int max_width, int max_height, bool dispose=true)
+		{
+			int ow, oh, h, w;
 
 			h = ow = pixbuf.Height;
 			w = oh = pixbuf.Width;
 			ow = max_width;
 			oh = max_height;
 
-			if(w>max_width || h>max_height) {
+			if (w > max_width || h > max_height) {
 				Pixbuf scalledPixbuf;
-				double rate = (double)w/(double)h;
+				double rate = (double)w / (double)h;
 				
-				if(h>w)
+				if (h > w)
 					ow = (int)(oh * rate);
 				else
 					oh = (int)(ow / rate);
-				scalledPixbuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear);
+				scalledPixbuf = pixbuf.ScaleSimple (ow, oh, Gdk.InterpType.Bilinear);
 				if (dispose)
-					pixbuf.Dispose();
+					pixbuf.Dispose ();
 				return scalledPixbuf;
 			} else {
 				return pixbuf;
 			}
 		}
-		
-		static public double ShortToDouble (ushort val) {
-			return (double) (val) / ushort.MaxValue;
+
+		static public double ShortToDouble (ushort val)
+		{
+			return (double)(val) / ushort.MaxValue;
 		}
-		
-		static public double ByteToDouble (byte val) {
-			return (double) (val) / byte.MaxValue;
+
+		static public double ByteToDouble (byte val)
+		{
+			return (double)(val) / byte.MaxValue;
 		}
-		
-		public static Color ToGdkColor(LColor color) {
+
+		public static Color ToGdkColor (LColor color)
+		{
 			return new Color (color.R, color.G, color.B);
 		}
-		
-		public static LColor ToLgmColor(Color color, ushort alpha = ushort.MaxValue) {
+
+		public static LColor ToLgmColor (Color color, ushort alpha = ushort.MaxValue)
+		{
 			return LColor.ColorFromUShort (color.Red, color.Green, color.Blue, alpha);
 		}
-		
-		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {
+
+		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def)
+		{
 			ListStore formatStore;
 			int index = 0, active = 0;
 			
-			formatStore = new ListStore(typeof(string), typeof (VideoStandard));
+			formatStore = new ListStore (typeof(string), typeof(VideoStandard));
 			foreach (VideoStandard std in VideoStandards.Rendering) {
 				formatStore.AppendValues (std.Name, std);
-				if (std.Equals(def))
+				if (std.Equals (def))
 					active = index;
 				index ++;
 			} 
@@ -145,14 +150,15 @@ namespace LongoMatch.Gui.Helpers
 			return formatStore;
 		}
 
-		public static ListStore FillEncodingFormat (ComboBox encodingBox, EncodingProfile def) {
+		public static ListStore FillEncodingFormat (ComboBox encodingBox, EncodingProfile def)
+		{
 			ListStore encodingStore;
 			int index = 0, active = 0;
 			
-			encodingStore = new ListStore(typeof(string), typeof (EncodingProfile));
+			encodingStore = new ListStore (typeof(string), typeof(EncodingProfile));
 			foreach (EncodingProfile prof in EncodingProfiles.Render) {
-				encodingStore.AppendValues(prof.Name, prof);
-				if (prof.Equals(def))
+				encodingStore.AppendValues (prof.Name, prof);
+				if (prof.Equals (def))
 					active = index;
 				index++;
 			}
@@ -160,15 +166,16 @@ namespace LongoMatch.Gui.Helpers
 			encodingBox.Active = active;
 			return encodingStore;
 		}
-		
-		public static ListStore FillQuality (ComboBox qualityBox, EncodingQuality def) {
+
+		public static ListStore FillQuality (ComboBox qualityBox, EncodingQuality def)
+		{
 			ListStore qualityStore;
 			int index = 0, active = 0;
 			
-			qualityStore = new ListStore(typeof(string), typeof (EncodingQuality));
+			qualityStore = new ListStore (typeof(string), typeof(EncodingQuality));
 			foreach (EncodingQuality qual in EncodingQualities.All) {
-				qualityStore.AppendValues(qual.Name, qual);
-				if (qual.Equals(def)) {
+				qualityStore.AppendValues (qual.Name, qual);
+				if (qual.Equals (def)) {
 					active = index;
 				}
 				index++;
@@ -208,9 +215,9 @@ namespace LongoMatch.Gui.Helpers
 				gc.RgbFgColor = new Gdk.Color (255, 0, 0);
 				pmap.DrawLine (gc, (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)), ((sz - 1) - (sz / 4)));
 				pmap.DrawLine (gc, ((sz - 1) - (sz / 4)), (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)));
-				missingIcons[sz] = Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
+				missingIcons [sz] = Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
 			}
-			return (Gdk.Pixbuf) missingIcons [sz];
+			return (Gdk.Pixbuf)missingIcons [sz];
 		}
 
 		/// <summary>
@@ -225,7 +232,7 @@ namespace LongoMatch.Gui.Helpers
 			try {
 				IconInfo icon_info = Gtk.IconTheme.Default.LookupIcon (name, size, flags);
 				Gdk.Pixbuf res = new Gdk.Pixbuf (icon_info.Filename, size, size, true);
-			    return res;
+				return res;
 			} catch (System.Exception) {
 				return LoadMissingIcon (size);
 			}
@@ -264,10 +271,11 @@ namespace LongoMatch.Gui.Helpers
 
 		static bool IsSkipedType (Widget w, Type[] skipTypes)
 		{
-			return skipTypes.Count (t => w.GetType().IsSubclassOf(t)) > 0;
+			return skipTypes.Count (t => w.GetType ().IsSubclassOf (t)) > 0;
 		}
 
-		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes) {
+		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes)
+		{
 			if (IsSkipedType (w, skipTypes)) {
 				return;
 			}
@@ -282,8 +290,9 @@ namespace LongoMatch.Gui.Helpers
 				}
 			}
 		}
-		
-		public static MediaFile OpenFile (object parent) {
+
+		public static MediaFile OpenFile (object parent)
+		{
 			IBusyDialog busy = null;
 			MediaFile mediaFile = null;
 			IGUIToolkit gui = Config.GUIToolkit;
@@ -291,40 +300,48 @@ namespace LongoMatch.Gui.Helpers
 			string folder, filename;
 			
 			
-			folder = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			filename = gui.OpenFile (Catalog.GetString("Open file"), null, folder);                             
+			folder = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+			filename = gui.OpenFile (Catalog.GetString ("Open file"), null, folder);                             
 			if (filename == null)
-					return null;
+				return null;
 			
 			try {
-				busy = gui.BusyDialog (Catalog.GetString("Analyzing video file:")+"\n"+filename,
+				Exception ex = null;
+				busy = gui.BusyDialog (Catalog.GetString ("Analyzing video file:") + "\n" + filename,
 				                       parent);
-				busy.Show ();
-				
-				Task task = new Task ( () => {
-					mediaFile = multimedia.DiscoverFile (filename);
+				Task task = new Task (() => {
+					try {
+						mediaFile = multimedia.DiscoverFile (filename);
+					} catch (Exception e) {
+						ex = e;
+					}
+					Config.GUIToolkit.Invoke (delegate {
+						busy.Destroy ();
+					});
 				});
+				busy.Pulse ();
 				task.Start ();
-				task.Wait (6000);
-				busy.Destroy ();
-				if (mediaFile == null) {
-					throw new Exception(Catalog.GetString("Timeout parsing file."));
+				busy.ShowSync ();
+				
+				if (ex != null) {
+					throw ex;
+				} else if (mediaFile == null) {
+					throw new Exception (Catalog.GetString ("Timeout parsing file."));
+				} else if (!mediaFile.HasVideo || mediaFile.VideoCodec == "") {
+					throw new Exception (Catalog.GetString ("This file doesn't contain a video stream."));
+				} else if (mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0) {
+					throw new Exception (Catalog.GetString ("This file contains a video stream but its length is 0."));
 				}
 
-				if(!mediaFile.HasVideo || mediaFile.VideoCodec == "")
-					throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
-				if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0)
-					throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
 				if (multimedia.FileNeedsRemux (mediaFile)) {
-					string q = Catalog.GetString("This file needs to be converted into a more suitable format." +
-					                             "(this step only requires a few minutes)");
+					string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
+						"(this step only requires a few minutes)");
 					gui.InfoMessage (q, parent);
 					string newFilename = multimedia.RemuxFile (mediaFile, parent);
 					if (newFilename != null)
 						mediaFile = multimedia.DiscoverFile (newFilename);
 				}
-			}
-			catch(Exception ex) {
+			} catch (Exception ex) {
 				busy.Destroy ();
 				gui.ErrorMessage (ex.Message, parent);
 				return null;

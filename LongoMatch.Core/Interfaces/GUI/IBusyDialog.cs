@@ -23,7 +23,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 	{
 		void Pulse();
 		void Destroy();
-		void Show();
+		void Show ();
+		void ShowSync ();
 	}
 }
 
