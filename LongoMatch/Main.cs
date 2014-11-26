@@ -67,12 +67,7 @@ namespace LongoMatch
 					int response = ccd.Run ();
 					if (response == (int) ResponseType.Accept) {
 						try {
-							System.Diagnostics.Process.Start (Constants.PRO_WEBSITE);
-						} catch {
-						}
-					} else if (response == (int) ResponseType.Reject) {
-						try {
-							System.Diagnostics.Process.Start (Constants.FREE_CODECS_WEBSITE);
+							System.Diagnostics.Process.Start (Constants.WEBSITE);
 						} catch {
 						}
 					}
