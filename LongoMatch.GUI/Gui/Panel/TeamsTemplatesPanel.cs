@@ -247,6 +247,7 @@ namespace LongoMatch.Gui.Panel
 				if (loadedTeam.Name == "default") {
 					MessagesHelpers.ErrorMessage (this,
 					                              Catalog.GetString ("The default team can't be deleted"));
+					return;
 				}
 				string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
