@@ -115,6 +115,8 @@ namespace LongoMatch.Gui.Component
 
 		public void DeleteSelectedPlayers ()
 		{
+			bool edited = false;
+
 			if (selectedPlayers == null || selectedPlayers.Count == 0) {
 				return;
 			}
@@ -123,10 +125,13 @@ namespace LongoMatch.Gui.Component
 				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
 				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 					template.List.Remove (p);
-					Edited = true;
+					edited = true;
 				}
 			}
-			Team = template;
+			if (edited) {
+				teamtagger.Reload ();
+				Edited = true;
+			}
 		}
 
 		void ConnectSignals ()
