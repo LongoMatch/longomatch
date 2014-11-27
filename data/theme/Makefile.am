@@ -68,6 +68,7 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Stock/gtk-ok.svg \
 	gtk-2.0/Stock/gtk-open.svg \
 	gtk-2.0/Stock/gtk-quit.svg \
+	gtk-2.0/Stock/gtk-refresh.svg \
 	gtk-2.0/Stock/gtk-remove.svg \
 	gtk-2.0/Stock/gtk-save-as.svg \
 	gtk-2.0/Stock/gtk-save.svg \
