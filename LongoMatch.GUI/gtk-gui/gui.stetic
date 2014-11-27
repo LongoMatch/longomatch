@@ -447,10 +447,10 @@ Sort by competition</property>
                                   <widget class="Gtk.Button" id="resetfieldbutton">
                                     <property name="MemberName" />
                                     <property name="CanFocus">True</property>
-                                    <property name="Type">TextAndIcon</property>
-                                    <property name="Icon">stock:gtk-refresh Menu</property>
-                                    <property name="Label" translatable="yes" />
-                                    <property name="UseUnderline">True</property>
+                                    <property name="UseStock">True</property>
+                                    <property name="Type">StockItem</property>
+                                    <property name="StockId">gtk-refresh</property>
+                                    <property name="label">gtk-refresh</property>
                                   </widget>
                                   <packing>
                                     <property name="Position">1</property>
@@ -546,10 +546,10 @@ Sort by competition</property>
                                   <widget class="Gtk.Button" id="resethfieldbutton">
                                     <property name="MemberName" />
                                     <property name="CanFocus">True</property>
-                                    <property name="Type">TextAndIcon</property>
-                                    <property name="Icon">stock:gtk-refresh Menu</property>
-                                    <property name="Label" translatable="yes" />
-                                    <property name="UseUnderline">True</property>
+                                    <property name="UseStock">True</property>
+                                    <property name="Type">StockItem</property>
+                                    <property name="StockId">gtk-refresh</property>
+                                    <property name="label">gtk-refresh</property>
                                   </widget>
                                   <packing>
                                     <property name="Position">1</property>
@@ -645,10 +645,10 @@ Sort by competition</property>
                                   <widget class="Gtk.Button" id="resetgoalbutton">
                                     <property name="MemberName" />
                                     <property name="CanFocus">True</property>
-                                    <property name="Type">TextAndIcon</property>
-                                    <property name="Icon">stock:gtk-refresh Menu</property>
-                                    <property name="Label" translatable="yes" />
-                                    <property name="UseUnderline">True</property>
+                                    <property name="UseStock">True</property>
+                                    <property name="Type">StockItem</property>
+                                    <property name="StockId">gtk-refresh</property>
+                                    <property name="label">gtk-refresh</property>
                                   </widget>
                                   <packing>
                                     <property name="Position">1</property>
