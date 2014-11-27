@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Panel
 			deleteplayerbutton.Clicked += (object sender, EventArgs e) => {
 				teamtemplateeditor1.DeleteSelectedPlayers (); };
 
-			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof(TeamTemplate));
+			teams = new ListStore (typeof(Pixbuf), typeof(string));
 			itersDict = new Dictionary<string, TreeIter> ();
 			
 			var cell = new CellRendererText ();
@@ -85,7 +85,6 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
 			teamseditortreeview.AppendColumn ("Text", cell, "text", 1); 
 			teamseditortreeview.SearchColumn = 1;
-			teamseditortreeview.TooltipColumn = 2;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
 			
@@ -137,7 +136,7 @@ namespace LongoMatch.Gui.Panel
 					img = Helpers.Misc.LoadIcon ("longomatch-default-shield",
 					                             StyleConf.TeamsShieldIconSize);
 				}
-				iter = teams.AppendValues (img, template.Name, template);
+				iter = teams.AppendValues (img, template.Name);
 				itersDict.Add (template.Name, iter);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
@@ -233,7 +232,12 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 
 			teamseditortreeview.Selection.GetSelected (out iter);
-			selected = teams.GetValue (iter, 2) as TeamTemplate;
+			try {
+				selected = Config.TeamTemplatesProvider.Load (teams.GetValue (iter, 1) as string);
+			} catch (Exception ex) {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
+				return;
+			}
 			deleteteambutton.Visible = selected != null;
 			teamtemplateeditor1.Visible = selected != null;
 			if (selected != null) {
@@ -310,19 +314,18 @@ namespace LongoMatch.Gui.Panel
 			Gtk.TreeIter iter;
 			teams.GetIter (out iter, new Gtk.TreePath (args.Path));
  
-			TeamTemplate team = (TeamTemplate)teams.GetValue (iter, 2);
-			if (team.Name != args.NewText) {
+			string name = (string)teams.GetValue (iter, 1);
+			if (name != args.NewText) {
 				if (provider.TemplatesNames.Contains (args.NewText)) {
 					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
-					string prevName = team.Name;
-					team.Name = args.NewText;
-					if (SaveTemplate (team)) {
-						provider.Delete (prevName);
-						teams.SetValue (iter, 1, team.Name);
-					} else {
-						team.Name = prevName;
+					try {
+						provider.Copy (name, args.NewText);
+						provider.Delete (name);
+						teams.SetValue (iter, 1, args.NewText);
+					} catch (Exception ex) {
+						Config.GUIToolkit.ErrorMessage (ex.Message);
 					}
 				}
 			}
