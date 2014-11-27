@@ -29,6 +29,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ChooseProjectDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs
