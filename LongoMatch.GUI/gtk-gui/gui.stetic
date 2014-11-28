@@ -822,11 +822,13 @@ Sort by competition</property>
       </action>
       <action id="ProjectsManagerAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;m</property>
         <property name="Label" translatable="yes">Projects Manager</property>
         <property name="ShortLabel" translatable="yes">Database Manager</property>
       </action>
       <action id="CategoriesTemplatesManagerAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;d</property>
         <property name="Label" translatable="yes">Analysis Dashboards Manager</property>
         <property name="ShortLabel" translatable="yes">Dashboards Manager</property>
       </action>
@@ -873,6 +875,7 @@ Sort by competition</property>
       </action>
       <action id="TeamsTemplatesManagerAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;t</property>
         <property name="Label" translatable="yes">Teams Manager</property>
         <property name="ShortLabel" translatable="yes">Teams Manager</property>
       </action>
@@ -885,7 +888,7 @@ Sort by competition</property>
       </action>
       <action id="ImportProjectAction">
         <property name="Type">Action</property>
-        <property name="Accelerator">&lt;Control&gt;i</property>
+        <property name="Accelerator">&lt;Primary&gt;i</property>
         <property name="Label" translatable="yes">_Import Project</property>
         <property name="ShortLabel" translatable="yes">_Import Project</property>
         <property name="StockId">stock-import</property>
@@ -923,16 +926,19 @@ Sort by competition</property>
       </action>
       <action id="DatabasesManagerAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;b</property>
         <property name="Label" translatable="yes">Databases Manager</property>
         <property name="ShortLabel" translatable="yes">Databases Manager</property>
       </action>
       <action id="PreferencesAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;p</property>
         <property name="Label" translatable="yes">Preferences</property>
         <property name="ShortLabel" translatable="yes">Preferences</property>
       </action>
       <action id="ShowProjectStatsAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;h</property>
         <property name="Label" translatable="yes">Show project stats</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Show project stats</property>
