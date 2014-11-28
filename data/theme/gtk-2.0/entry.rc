@@ -4,20 +4,6 @@ style "longomatch-default-entry" = "longomatch-default" {
   font = "Ubuntu 12"
   xthickness = 2
   ythickness = 2
-
-  base[NORMAL]        = @bg_dark_color
-  base[INSENSITIVE]   = darker (@bg_dark_color)
-  # Text selection with Focus
-  base[SELECTED]      = @text_selection_color
-  # Text selection without Focus
-  base[ACTIVE]        = @text_selection_color
-
-  text[NORMAL]         = @text_color
-  text[INSENSITIVE]    = darker (@text_color)
-  # With Focus
-  text[SELECTED]       = @selected_text_color
-  # Without Focus
-  text[ACTIVE]         = @selected_text_color_no_focus
 }
 
 style "longomatch-entry" = "longomatch-default-entry" {
