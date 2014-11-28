@@ -44,7 +44,6 @@ LongoMatch/Makefile.in
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop
 LongoMatch/share/
-LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
 Makefile.in
 aclocal.m4
 configure
