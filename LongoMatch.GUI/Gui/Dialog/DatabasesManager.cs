@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Dialog
 			if(db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackground = "white";
+				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Dialog
 			if(db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackground = "white";
+				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
@@ -116,7 +116,7 @@ namespace LongoMatch.Gui.Dialog
 			if(db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackground = "white";
+				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
