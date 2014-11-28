@@ -35,6 +35,9 @@ style "longomatch-default"
   GtkButton::interior-focus = 0
   GtkButton::focus-padding = 0
 
+  GtkLabel::link-color = @active_color
+  GtkLabel::visited-link-color = darker(@active_color)
+
   #xthickness = 0
   #ythickness = 0
 
@@ -48,7 +51,6 @@ style "longomatch-default"
   bg[PRELIGHT]      = @active_color
   bg[SELECTED]      = @active_color
   bg[INSENSITIVE]   = darker (@bg_color)
-
 
   text[NORMAL]      = @base_color
   text[ACTIVE]      = @base_color
