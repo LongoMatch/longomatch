@@ -85,7 +85,8 @@ namespace LongoMatch.Gui.Panel
 
 			// Our logo
 			logoImage = new Gtk.Image ();
-			logoImage.Pixbuf = Config.Background.Value;
+			logoImage.Pixbuf = Config.Background.Scale (StyleConf.WelcomeLogoWidth,
+			                                            StyleConf.WelcomeLogoHeight).Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
 			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,
