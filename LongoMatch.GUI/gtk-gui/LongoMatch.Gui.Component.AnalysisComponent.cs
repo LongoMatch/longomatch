@@ -40,9 +40,10 @@ namespace LongoMatch.Gui.Component
 			this.uppane = new global::Gtk.HPaned ();
 			this.uppane.CanFocus = true;
 			this.uppane.Name = "uppane";
-			this.uppane.Position = 283;
+			this.uppane.Position = 400;
 			// Container child uppane.Gtk.Paned+PanedChild
 			this.playsSelection = new global::LongoMatch.Gui.Component.PlaysSelectionWidget ();
+			this.playsSelection.WidthRequest = 400;
 			this.playsSelection.Events = ((global::Gdk.EventMask)(256));
 			this.playsSelection.Name = "playsSelection";
 			this.uppane.Add (this.playsSelection);

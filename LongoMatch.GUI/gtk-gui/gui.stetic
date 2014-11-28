@@ -10,7 +10,7 @@
     <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1592 741">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1824 741">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -30,10 +30,11 @@
                   <widget class="Gtk.HPaned" id="uppane">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Position">283</property>
+                    <property name="Position">400</property>
                     <child>
                       <widget class="LongoMatch.Gui.Component.PlaysSelectionWidget" id="playsSelection">
                         <property name="MemberName" />
+                        <property name="WidthRequest">400</property>
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
