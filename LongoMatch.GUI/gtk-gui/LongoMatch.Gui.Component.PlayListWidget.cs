@@ -10,7 +10,9 @@ namespace LongoMatch.Gui.Component
 		private global::LongoMatch.Gui.Component.PlayListTreeView playlisttreeview1;
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.Button newbutton;
+		private global::Gtk.Image newimage;
 		private global::Gtk.Button newvideobutton;
+		private global::Gtk.Image recimage;
 
 		protected virtual void Build ()
 		{
@@ -57,52 +59,36 @@ namespace LongoMatch.Gui.Component
 			this.newbutton.TooltipMarkup = "Create a new playlist";
 			this.newbutton.CanFocus = true;
 			this.newbutton.Name = "newbutton";
-			this.newbutton.UseUnderline = true;
+			this.newbutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child newbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w6 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w7 = new global::Gtk.HBox ();
-			w7.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w8 = new global::Gtk.Image ();
-			w8.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-new", global::Gtk.IconSize.Button);
-			w7.Add (w8);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w10 = new global::Gtk.Label ();
-			w7.Add (w10);
-			w6.Add (w7);
-			this.newbutton.Add (w6);
+			this.newimage = new global::Gtk.Image ();
+			this.newimage.Name = "newimage";
+			this.newbutton.Add (this.newimage);
+			this.newbutton.Label = null;
 			this.hbox2.Add (this.newbutton);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
-			w14.Position = 0;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
+			w7.Position = 0;
+			w7.Padding = ((uint)(5));
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.newvideobutton = new global::Gtk.Button ();
 			this.newvideobutton.TooltipMarkup = "Export the playlist to new video file";
 			this.newvideobutton.CanFocus = true;
 			this.newvideobutton.Name = "newvideobutton";
-			this.newvideobutton.UseUnderline = true;
+			this.newvideobutton.Relief = ((global::Gtk.ReliefStyle)(2));
 			// Container child newvideobutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w15 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w16 = new global::Gtk.HBox ();
-			w16.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w17 = new global::Gtk.Image ();
-			w17.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
-			w16.Add (w17);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w19 = new global::Gtk.Label ();
-			w16.Add (w19);
-			w15.Add (w16);
-			this.newvideobutton.Add (w15);
+			this.recimage = new global::Gtk.Image ();
+			this.recimage.Name = "recimage";
+			this.newvideobutton.Add (this.recimage);
+			this.newvideobutton.Label = null;
 			this.hbox2.Add (this.newvideobutton);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
-			w23.Position = 1;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
+			w9.Position = 1;
+			w9.Padding = ((uint)(5));
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w24.Position = 1;
-			w24.Expand = false;
-			w24.Fill = false;
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w10.Position = 1;
+			w10.Expand = false;
+			w10.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

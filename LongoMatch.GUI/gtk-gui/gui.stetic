@@ -1993,15 +1993,19 @@ Away</property>
                 <property name="MemberName" />
                 <property name="Tooltip" translatable="yes">Create a new playlist</property>
                 <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-new Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
+                <property name="Type">Custom</property>
+                <property name="Relief">None</property>
                 <signal name="Clicked" handler="OnNewbuttonClicked" />
+                <child>
+                  <widget class="Gtk.Image" id="newimage">
+                    <property name="MemberName" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
                 <property name="AutoSize">False</property>
+                <property name="Padding">5</property>
               </packing>
             </child>
             <child>
@@ -2009,15 +2013,19 @@ Away</property>
                 <property name="MemberName" />
                 <property name="Tooltip" translatable="yes">Export the playlist to new video file</property>
                 <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-media-record Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
+                <property name="Type">Custom</property>
+                <property name="Relief">None</property>
                 <signal name="Clicked" handler="OnNewvideobuttonClicked" />
+                <child>
+                  <widget class="Gtk.Image" id="recimage">
+                    <property name="MemberName" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="Position">1</property>
                 <property name="AutoSize">False</property>
+                <property name="Padding">5</property>
               </packing>
             </child>
           </widget>

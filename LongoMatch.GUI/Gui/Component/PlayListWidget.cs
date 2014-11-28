@@ -18,14 +18,12 @@
 //
 //
 using System.Linq;
-using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store;
-using Mono.Unix;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -45,6 +43,8 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlaylistsChangedEvent += HandlePlaylistsChangedEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
+			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
+			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
 		protected override void OnDestroyed ()

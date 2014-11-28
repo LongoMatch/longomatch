@@ -51,6 +51,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-player-pic.svg \
 	hicolor/scalable/actions/longomatch-player-swap-lock.svg \
 	hicolor/scalable/actions/longomatch-player-swap-unlock.svg \
+	hicolor/scalable/actions/longomatch-playlist-new.svg \
 	hicolor/scalable/actions/longomatch-plugin.svg \
 	hicolor/scalable/actions/longomatch-popup.svg \
 	hicolor/scalable/actions/longomatch-preferences.svg \
