@@ -28,7 +28,7 @@ baconvideowidget-marshal.c: baconvideowidget-marshal.h
 	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > baconvideowidget-marshal.c )
 
 
-pkglib_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libcesarplayer.la
 
 libcesarplayer_la_SOURCES = \
