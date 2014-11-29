@@ -40,6 +40,7 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			BackgroundColor = Config.Style.PaletteBackground;
 		}
 
 		public PositionTagger (IWidget widget, Project project, List<TimelineEvent> plays,
@@ -49,6 +50,12 @@ namespace LongoMatch.Drawing.Widgets
 			Background = background;
 			Plays = plays;
 			FieldPosition = position;
+			BackgroundColor = Config.Style.PaletteBackground;
+		}
+
+		public Color BackgroundColor {
+			set;
+			get;
 		}
 
 		public Project Project {
@@ -180,7 +187,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tk.Context = context;
 			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
+			tk.Clear (BackgroundColor);
 			tk.End ();
 			base.Draw (context, area);
 		}
