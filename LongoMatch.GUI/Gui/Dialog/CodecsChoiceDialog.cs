@@ -17,6 +17,7 @@
 //
 using System;
 using System.IO;
+using LongoMatch;
 using LongoMatch.Gui;
 using LongoMatch.Core.Common;
 
@@ -34,6 +35,14 @@ namespace LongoMatch.Gui.Dialog
 			buttonOKimage.Pixbuf = img.Value;
 
 			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
+
+			// Configure URL handler for the links
+			GtkGlue.SetLinkHandler (label1, (url) => {
+				try {
+					System.Diagnostics.Process.Start (url);
+				} catch {
+				}
+			});
 		}
 	}
 }
