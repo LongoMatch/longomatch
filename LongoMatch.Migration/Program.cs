@@ -25,7 +25,7 @@ namespace LongoMatch.Migration
 	{
 		public static void Main (string[] args)
 		{
-			SetupBasedir ();
+			LongoMatch.Config.Init ();
 			InitGtk ();
 			MainWindow win = new MainWindow ();
 			win.Show ();

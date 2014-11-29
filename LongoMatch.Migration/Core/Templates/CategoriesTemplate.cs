@@ -45,6 +45,7 @@ namespace LongoMatch.Store.Templates
 	{
 		/* Database additions */
 		GameUnitsList gameUnits;
+		Version version;
 		byte[] fieldImage, halfFieldImage, goalImage ;
 
 		/// <summary>

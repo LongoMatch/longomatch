@@ -37,6 +37,7 @@ namespace LongoMatch.Store.Templates
 		private byte[] thumbnailBuf;
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;
+		Version version;
 		
 		public TeamTemplate () {
 			init (Guid.NewGuid ());
