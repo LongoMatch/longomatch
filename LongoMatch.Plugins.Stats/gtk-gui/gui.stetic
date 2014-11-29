@@ -198,6 +198,7 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes">Histogram</property>
+                <property name="Active">True</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
@@ -531,13 +532,13 @@
         <child>
           <widget class="LongoMatch.Gui.Component.PlaysCoordinatesTagger" id="tagger">
             <property name="MemberName" />
+            <property name="HeightRequest">200</property>
             <property name="Events">ButtonPressMask</property>
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
             <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
         <child>

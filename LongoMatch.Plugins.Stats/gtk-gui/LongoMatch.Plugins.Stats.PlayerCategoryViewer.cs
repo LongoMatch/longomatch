@@ -19,13 +19,13 @@ namespace LongoMatch.Plugins.Stats
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.tagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.tagger.HeightRequest = 200;
 			this.tagger.Events = ((global::Gdk.EventMask)(256));
 			this.tagger.Name = "tagger";
 			this.vbox1.Add (this.tagger);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.tagger]));
 			w1.Position = 0;
 			w1.Expand = false;
-			w1.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
