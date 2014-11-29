@@ -30,6 +30,44 @@ namespace LongoMatch
 		public static void MenuItemSetLabel (MenuItem menu, string label) {
 			gtk_menu_item_set_label (menu.Handle, GLib.Marshaller.StringToFilenamePtr (label));
 		}
+
+		/// <summary>
+		/// Sets the link handler for a given GtkLabel.
+		/// </summary>
+		/// <param name="label">GtkLabel to set the handler for.</param>
+		/// <param name="urlHandler">URL handler.</param>
+		public static void SetLinkHandler (Gtk.Label label, Action<string> urlHandler)
+		{
+			new UrlHandlerClosure (urlHandler).ConnectTo (label);
+		}
+
+		class UrlHandlerClosure
+		{
+			Action<string> urlHandler;
+
+			public UrlHandlerClosure (Action<string> urlHandler)
+			{
+				this.urlHandler = urlHandler;
+			}
+
+			[GLib.ConnectBefore]
+			void HandleLink (object sender, ActivateLinkEventArgs args)
+			{
+				urlHandler (args.Url);
+				args.RetVal = true;
+			}
+
+			public void ConnectTo (Gtk.Label label)
+			{
+				var signal = GLib.Signal.Lookup (label, "activate-link", typeof(ActivateLinkEventArgs));
+				signal.AddDelegate (new EventHandler<ActivateLinkEventArgs> (HandleLink));
+			}
+
+			class ActivateLinkEventArgs : GLib.SignalArgs
+			{
+				public string Url { get { return (string)base.Args [0]; } }
+			}
+		}
 	}
 }
 
