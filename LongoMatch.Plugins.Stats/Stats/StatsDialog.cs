@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using Gdk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Stats;
 
@@ -28,6 +29,14 @@ namespace LongoMatch.Plugins.Stats
 		public StatsDialog ()
 		{
 			this.Build ();
+			Screen screen = Display.Default.DefaultScreen;
+			int monitor = screen.GetMonitorAtWindow (GdkWindow);
+			Rectangle monitor_geometry = screen.GetMonitorGeometry (monitor);
+			Resize (monitor_geometry.Width * 80 / 100, monitor_geometry.Height * 80 / 100);
+#if OSTYPE_OS_X
+			this.Move (monitor_geometry.Width * 10 / 100, monitor_geometry.Height * 10 / 100);
+#endif
+			
 		}
 
 		protected override void OnDestroyed ()
