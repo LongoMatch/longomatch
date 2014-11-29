@@ -205,7 +205,7 @@ msgstr ""
 
 #: ../LongoMatch.Core/Common/VideoStandards.cs:55
 msgid "Keep original size"
-msgstr "Manté la mida original"
+msgstr "Mantén la mida original"
 
 #: ../LongoMatch.Core/Stats/PlayerEventTypeStats.cs:60
 #: ../LongoMatch.Core/Store/EventType.cs:161
@@ -1533,7 +1533,7 @@ msgstr "El projecte s'ha modificat. Voleu guardar els canvis?"
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:209
 msgid "This Project is actually in use."
-msgstr "Aquest projecte està en us."
+msgstr "Aquest projecte està en ús."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:210
@@ -1543,11 +1543,11 @@ msgstr "Tanqueu-lo primer per poder-lo esborrar de la base de dades."
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:213
 msgid "Do you really want to delete:"
-msgstr "Esteu segurs de que voleu eliminar-lo:"
+msgstr "Esteu segurs de què voleu eliminar-lo:"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:159
 msgid "The Project you are trying to load is actually in use."
-msgstr "El projecte que intenteu carregar està en us."
+msgstr "El projecte que intenteu carregar està en ús."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:159
 msgid "Close it first to edit it"
