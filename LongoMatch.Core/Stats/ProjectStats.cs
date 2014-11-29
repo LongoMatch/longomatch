@@ -49,6 +49,11 @@ namespace LongoMatch.Core.Stats
 			protected set;
 		}
 
+		public List<TimerStats> TimersStats {
+			get;
+			protected set;
+		}
+
 		public TeamStats HomeTeamStats {
 			get;
 			set;
@@ -89,6 +94,11 @@ namespace LongoMatch.Core.Stats
 				}
 			}
 
+			TimersStats = new List<TimerStats> ();
+			foreach (Timer t in project.Timers) {
+				TimersStats.Add (new TimerStats (project, t));
+			}
+
 			HomeTeamStats = new TeamStats (project, filter, Team.LOCAL);
 			AwayTeamStats = new TeamStats (project, filter, Team.VISITOR);
 			UpdateStats ();
@@ -98,6 +108,9 @@ namespace LongoMatch.Core.Stats
 		{
 			foreach (EventTypeStats e in EventTypeStats) {
 				e.Update ();
+			}
+			foreach (TimerStats st in TimersStats) {
+				st.Update ();
 			}
 			HomeTeamStats.Update ();
 			AwayTeamStats.Update ();

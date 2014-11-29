@@ -67,6 +67,7 @@ SOURCES = Common/Area.cs \
 	Stats/Stat.cs \
 	Stats/SubCategoryStat.cs \
 	Stats/TeamStats.cs \
+	Stats/TimerStats.cs \
 	Store/Coordinates.cs \
 	Store/DashboardButton.cs \
 	Store/Drawables/Angle.cs \
