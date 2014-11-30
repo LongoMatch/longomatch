@@ -74,6 +74,11 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
+		public void Pause ()
+		{
+			playerbin2.Pause ();
+		}
+
 		public void SaveChanges ()
 		{
 			if (!projectHasPeriods)

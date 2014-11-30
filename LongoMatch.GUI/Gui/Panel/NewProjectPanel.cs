@@ -450,6 +450,9 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleBackClicked (object sender, EventArgs e)
 		{
+			if (notebook1.Page == PROJECT_PERIODS) {
+				projectperiods1.Pause ();
+			}
 			if (notebook1.Page == firstPage) {
 				if (BackEvent != null) {
 					BackEvent ();
