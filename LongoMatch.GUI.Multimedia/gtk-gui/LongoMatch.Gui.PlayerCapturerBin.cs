@@ -61,6 +61,7 @@ namespace LongoMatch.Gui
 			this.playerbin = new global::LongoMatch.Gui.PlayerBin ();
 			this.playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin.Name = "playerbin";
+			this.playerbin.CloseAlwaysVisible = false;
 			this.playerbox.Add (this.playerbin);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.playerbox [this.playerbin]));
 			w4.Position = 1;

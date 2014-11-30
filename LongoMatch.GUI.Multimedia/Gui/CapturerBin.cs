@@ -103,9 +103,13 @@ namespace LongoMatch.Gui
 				if (type == CapturerType.Fake) {
 					SetStyle (StyleConf.PlayerCapturerControlsHeight * 2, 24 * 2, 40 * 2);
 					playlastbutton.Visible = false;
+					controllerbox.SetChildPacking (vseparator1, false, false, 20, PackType.Start);
+					controllerbox.SetChildPacking (vseparator2, false, false, 20, PackType.Start);
 				} else {
 					playlastbutton.Visible = true;
 					SetStyle (StyleConf.PlayerCapturerControlsHeight, 24, 40);
+					controllerbox.SetChildPacking (vseparator1, true, true, 0, PackType.Start);
+					controllerbox.SetChildPacking (vseparator2, true, true, 0, PackType.Start);
 				}
 			}
 		}

@@ -57,7 +57,7 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.videowindow]));
 			w1.Position = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 1F);
 			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
 			this.controllerbox = new global::Gtk.HBox ();
