@@ -52,6 +52,7 @@ namespace LongoMatch.Gui.Component
 			playerbin2.Tick += HandleTick;
 			playerbin2.ShowControls = false;
 			timerule = new Timerule (new WidgetWrapper (drawingarea1));
+			timerule.ObjectsCanMove = false;
 			timersTimeline = new TimersTimeline (new WidgetWrapper (drawingarea2));
 			drawingarea1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			drawingarea2.HeightRequest = LongoMatch.Drawing.Constants.TIMER_HEIGHT;
