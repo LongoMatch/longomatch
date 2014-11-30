@@ -33,6 +33,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void LoadEventHandler (TimelineEvent evt);
 	/* An event was loaded */
 	public delegate void EventLoadedHandler (TimelineEvent evt);
+	/* An event has been created */
+	public delegate void EventCreatedHandler (TimelineEvent evt);
 	/* A new play needs to be create for a specific category at the current play time */
 	public delegate void NewEventHandler (EventType eventType,List<Player> players, Team team,
 	                                      List<Tag> tags,Time start,Time stop, Time EventTime,

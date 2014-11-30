@@ -446,7 +446,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.CapturerBin" design-size="983 403">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.CapturerBin" design-size="1092 445">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -467,7 +467,6 @@
         <child>
           <widget class="Gtk.Alignment" id="alignment1">
             <property name="MemberName" />
-            <property name="Xscale">0</property>
             <child>
               <widget class="Gtk.HBox" id="controllerbox">
                 <property name="MemberName" />
@@ -566,12 +565,10 @@
                 <child>
                   <widget class="Gtk.VSeparator" id="vseparator1">
                     <property name="MemberName" />
-                    <property name="WidthRequest">60</property>
                   </widget>
                   <packing>
                     <property name="Position">6</property>
                     <property name="AutoSize">False</property>
-                    <property name="Expand">False</property>
                   </packing>
                 </child>
                 <child>
@@ -701,6 +698,84 @@
                   </widget>
                   <packing>
                     <property name="Position">12</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.VSeparator" id="vseparator2">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="Position">13</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="lasteventbox">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Label" id="lastlabel">
+                        <property name="MemberName" />
+                        <property name="Ellipsize">End</property>
+                        <property name="MaxWidthChars">15</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Button" id="deletelastbutton">
+                        <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">Delete event</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">Custom</property>
+                        <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="deletelastimage">
+                            <property name="MemberName" />
+                            <property name="Xpad">5</property>
+                            <property name="Ypad">5</property>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Button" id="playlastbutton">
+                        <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">Replay event</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">Custom</property>
+                        <property name="Relief">None</property>
+                        <child>
+                          <widget class="Gtk.Image" id="playlastimage">
+                            <property name="MemberName" />
+                            <property name="Xpad">5</property>
+                            <property name="Ypad">5</property>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="PackType">End</property>
+                    <property name="Position">14</property>
                     <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>

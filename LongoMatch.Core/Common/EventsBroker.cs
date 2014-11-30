@@ -31,6 +31,7 @@ namespace LongoMatch.Core.Common
 	
 		public event NewEventHandler NewTagEvent;
 		public event NewTimelineEventHandler NewTimelineEventEvent;
+		public event EventCreatedHandler EventCreatedEvent;
 		public event DeleteEventsHandler EventsDeletedEvent;
 		public event LoadEventHandler LoadEventEvent;
 		public event EventLoadedHandler EventLoadedEvent;
@@ -419,6 +420,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (TimerNodeAddedEvent != null) {
 				TimerNodeAddedEvent (timer, node);
+			}
+		}
+
+		public void EmitEventCreated (TimelineEvent evt)
+		{
+			if (EventCreatedEvent != null) {
+				EventCreatedEvent (evt);
 			}
 		}
 	}

@@ -267,6 +267,7 @@ namespace LongoMatch.Services
 
 			filter.Update ();
 			analysisWindow.AddPlay (play);
+			Config.EventsBroker.EmitEventCreated (play);
 			if (projectType == ProjectType.FileProject) {
 				player.Play ();
 			}

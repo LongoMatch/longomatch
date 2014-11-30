@@ -46,6 +46,7 @@ namespace LongoMatch.Gui
 		Time accumTime;
 		DateTime currentPeriodStart;
 		List<string> gamePeriods;
+		TimelineEvent lastevent;
 
 		public CapturerBin ()
 		{
@@ -72,9 +73,18 @@ namespace LongoMatch.Gui
 			                                  StyleConf.PlayerCapturerIconSize);
 			cancelimage.Pixbuf = Misc.LoadIcon ("longomatch-cancel-rec",
 			                                    StyleConf.PlayerCapturerIconSize);
+			deletelastimage.Pixbuf = Misc.LoadIcon ("longomatch-delete",
+			                                        StyleConf.PlayerCapturerIconSize);
+			playlastimage.Pixbuf = Misc.LoadIcon ("longomatch-control-play",
+			                                      StyleConf.PlayerCapturerIconSize);
+			lasteventbox.Visible = false;
+			deletelastbutton.Clicked += HandleDeleteLast;
+			playlastbutton.Clicked += HandlePlayLast;
 			Periods = new List<Period> ();
 			Reset ();
 			Mode = CapturerType.Live;
+			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
+			lastlabel.ModifyFont (Pango.FontDescription.FromString (Config.Style.Font + " 8px"));
 		}
 
 		protected override void OnDestroyed ()
@@ -82,6 +92,7 @@ namespace LongoMatch.Gui
 			if (timeoutID != 0) {
 				GLib.Source.Remove (timeoutID);
 			}
+			Config.EventsBroker.EventCreatedEvent -= HandleEventCreated;
 			base.OnDestroyed ();
 		}
 
@@ -91,7 +102,9 @@ namespace LongoMatch.Gui
 				videowindow.Visible = value == CapturerType.Live;
 				if (type == CapturerType.Fake) {
 					SetStyle (StyleConf.PlayerCapturerControlsHeight * 2, 24 * 2, 40 * 2);
+					playlastbutton.Visible = false;
 				} else {
+					playlastbutton.Visible = true;
 					SetStyle (StyleConf.PlayerCapturerControlsHeight, 24, 40);
 				}
 			}
@@ -361,6 +374,7 @@ namespace LongoMatch.Gui
 			savebutton.Visible = false;
 			cancelbutton.Visible = true;
 			resumebutton.Visible = false;
+			lasteventbox.Visible = false;
 		}
 
 		void Configure ()
@@ -428,5 +442,31 @@ namespace LongoMatch.Gui
 				Capturer.Expose ();
 			}
 		}
+		
+		void HandleEventCreated (TimelineEvent evt)
+		{
+			lasteventbox.Visible = true;
+			lastlabel.Text = evt.Name;
+			lastlabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (evt.Color));
+			lastevent = evt;
+		}
+
+		void HandlePlayLast (object sender, EventArgs e)
+		{
+			if (lastevent != null) {
+				Config.EventsBroker.EmitLoadEvent (lastevent);
+			}
+		}
+
+		void HandleDeleteLast (object sender, EventArgs e)
+		{
+			if (lastevent != null) {
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {lastevent});
+				lastevent = null;
+				lasteventbox.Visible = false;
+			}
+			
+		}
+
 	}
 }

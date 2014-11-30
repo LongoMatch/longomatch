@@ -30,6 +30,13 @@ namespace LongoMatch.Gui
 		private global::Gtk.Image saveimage;
 		private global::Gtk.Button cancelbutton;
 		private global::Gtk.Image cancelimage;
+		private global::Gtk.VSeparator vseparator2;
+		private global::Gtk.HBox lasteventbox;
+		private global::Gtk.Label lastlabel;
+		private global::Gtk.Button deletelastbutton;
+		private global::Gtk.Image deletelastimage;
+		private global::Gtk.Button playlastbutton;
+		private global::Gtk.Image playlastimage;
 
 		protected virtual void Build ()
 		{
@@ -50,7 +57,7 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.videowindow]));
 			w1.Position = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 1F);
+			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.alignment1.Name = "alignment1";
 			// Container child alignment1.Gtk.Container+ContainerChild
 			this.controllerbox = new global::Gtk.HBox ();
@@ -128,12 +135,10 @@ namespace LongoMatch.Gui
 			w10.Fill = false;
 			// Container child controllerbox.Gtk.Box+BoxChild
 			this.vseparator1 = new global::Gtk.VSeparator ();
-			this.vseparator1.WidthRequest = 60;
 			this.vseparator1.Name = "vseparator1";
 			this.controllerbox.Add (this.vseparator1);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.vseparator1]));
 			w11.Position = 6;
-			w11.Expand = false;
 			// Container child controllerbox.Gtk.Box+BoxChild
 			this.recbutton = new global::Gtk.Button ();
 			this.recbutton.TooltipMarkup = "Start recording period";
@@ -242,11 +247,72 @@ namespace LongoMatch.Gui
 			w23.Position = 12;
 			w23.Expand = false;
 			w23.Fill = false;
+			// Container child controllerbox.Gtk.Box+BoxChild
+			this.vseparator2 = new global::Gtk.VSeparator ();
+			this.vseparator2.Name = "vseparator2";
+			this.controllerbox.Add (this.vseparator2);
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.vseparator2]));
+			w24.Position = 13;
+			// Container child controllerbox.Gtk.Box+BoxChild
+			this.lasteventbox = new global::Gtk.HBox ();
+			this.lasteventbox.Name = "lasteventbox";
+			this.lasteventbox.Spacing = 6;
+			// Container child lasteventbox.Gtk.Box+BoxChild
+			this.lastlabel = new global::Gtk.Label ();
+			this.lastlabel.Name = "lastlabel";
+			this.lastlabel.Ellipsize = ((global::Pango.EllipsizeMode)(3));
+			this.lastlabel.MaxWidthChars = 15;
+			this.lasteventbox.Add (this.lastlabel);
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.lasteventbox [this.lastlabel]));
+			w25.Position = 0;
+			w25.Fill = false;
+			// Container child lasteventbox.Gtk.Box+BoxChild
+			this.deletelastbutton = new global::Gtk.Button ();
+			this.deletelastbutton.TooltipMarkup = "Delete event";
+			this.deletelastbutton.CanFocus = true;
+			this.deletelastbutton.Name = "deletelastbutton";
+			this.deletelastbutton.Relief = ((global::Gtk.ReliefStyle)(2));
+			// Container child deletelastbutton.Gtk.Container+ContainerChild
+			this.deletelastimage = new global::Gtk.Image ();
+			this.deletelastimage.Name = "deletelastimage";
+			this.deletelastimage.Xpad = 5;
+			this.deletelastimage.Ypad = 5;
+			this.deletelastbutton.Add (this.deletelastimage);
+			this.deletelastbutton.Label = null;
+			this.lasteventbox.Add (this.deletelastbutton);
+			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.lasteventbox [this.deletelastbutton]));
+			w27.Position = 1;
+			w27.Expand = false;
+			w27.Fill = false;
+			// Container child lasteventbox.Gtk.Box+BoxChild
+			this.playlastbutton = new global::Gtk.Button ();
+			this.playlastbutton.TooltipMarkup = "Replay event";
+			this.playlastbutton.CanFocus = true;
+			this.playlastbutton.Name = "playlastbutton";
+			this.playlastbutton.Relief = ((global::Gtk.ReliefStyle)(2));
+			// Container child playlastbutton.Gtk.Container+ContainerChild
+			this.playlastimage = new global::Gtk.Image ();
+			this.playlastimage.Name = "playlastimage";
+			this.playlastimage.Xpad = 5;
+			this.playlastimage.Ypad = 5;
+			this.playlastbutton.Add (this.playlastimage);
+			this.playlastbutton.Label = null;
+			this.lasteventbox.Add (this.playlastbutton);
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.lasteventbox [this.playlastbutton]));
+			w29.Position = 2;
+			w29.Expand = false;
+			w29.Fill = false;
+			this.controllerbox.Add (this.lasteventbox);
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.lasteventbox]));
+			w30.PackType = ((global::Gtk.PackType)(1));
+			w30.Position = 14;
+			w30.Expand = false;
+			w30.Fill = false;
 			this.alignment1.Add (this.controllerbox);
 			this.vbox1.Add (this.alignment1);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.alignment1]));
-			w25.Position = 1;
-			w25.Expand = false;
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.alignment1]));
+			w32.Position = 1;
+			w32.Expand = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
