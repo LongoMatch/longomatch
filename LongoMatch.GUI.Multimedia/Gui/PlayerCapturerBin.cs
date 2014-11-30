@@ -78,8 +78,10 @@ namespace LongoMatch.Gui
 				if (mode == PlayerOperationMode.Player) {
 					ShowPlayer();
 					playerbin.Compact = false;
+					playerbin.CloseAlwaysVisible = false;
 				} else {
 					ShowCapturer();
+					playerbin.CloseAlwaysVisible = true;
 					playerbin.Compact = true;
 				}
 				Log.Debug ("CapturerPlayer setting mode " + value);

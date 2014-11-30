@@ -206,6 +206,11 @@ namespace LongoMatch.Gui
 				detachbutton.Visible = vscale1.Visible = !value;
 			}
 		}
+
+		public bool CloseAlwaysVisible {
+			get;
+			set;
+		}
 		
 		#endregion
 		#region Public methods
@@ -248,7 +253,9 @@ namespace LongoMatch.Gui
 
 		public void ResetGui ()
 		{
-			closebutton.Hide ();
+			if (!CloseAlwaysVisible) {
+				closebutton.Hide ();
+			}
 			SetSensitive ();
 			timescale.Value = 0;
 			timelabel.Text = "";
@@ -380,7 +387,9 @@ namespace LongoMatch.Gui
 		public void CloseSegment ()
 		{
 			ImageLoaded = false;
-			closebutton.Hide ();
+			if (!CloseAlwaysVisible) {
+				closebutton.Hide ();
+			}
 			segment.Start = new Time (-1);
 			segment.Stop = new Time (int.MaxValue);
 			SetScaleValue (SCALE_FPS);
