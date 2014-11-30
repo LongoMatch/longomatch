@@ -151,6 +151,7 @@ namespace LongoMatch.Gui.Panel
 			rbox.Visible = true;
 			savebutton.Sensitive = projects.Count == 1;
 			exportbutton.Sensitive = projects.Count == 1;
+			openbutton.Sensitive = projects.Count == 1;
 			deletebutton.Sensitive = projects.Count != 0;
 			projectbox.Sensitive = projects.Count == 1;
 			

@@ -8628,6 +8628,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <child>
                                   <widget class="Gtk.Button" id="openbutton">
                                     <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
                                     <property name="Tooltip" translatable="yes">Open</property>
                                     <property name="CanFocus">True</property>
                                     <property name="Type">Custom</property>

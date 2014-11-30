@@ -320,6 +320,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.openbutton = new global::Gtk.Button ();
 			this.openbutton.TooltipMarkup = "Open";
+			this.openbutton.Sensitive = false;
 			this.openbutton.CanFocus = true;
 			this.openbutton.Name = "openbutton";
 			// Container child openbutton.Gtk.Container+ContainerChild
