@@ -230,6 +230,8 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
 
   colorspace1 = gst_element_factory_make ("ffmpegcolorspace", NULL);
   deinterlace = gst_element_factory_make ("ffdeinterlace", NULL);
+  if (deinterlace == null)
+    deinterlace = gst_element_factory_make ("identity", NULL);
   colorspace2 = gst_element_factory_make ("ffmpegcolorspace", "colorspace2");
   videoscale = gst_element_factory_make ("videoscale", "gve_videoscale");
   framerate = gst_element_factory_make ("videorate", "gve_videorate");

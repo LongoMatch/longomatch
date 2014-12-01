@@ -512,6 +512,8 @@ gst_camera_capturer_prepare_dv_source (GstCameraCapturer * gcc)
   decodebin = gst_element_factory_make ("decodebin2", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", "video-pad");
   deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
+  if (deinterlacer == NULL)
+    deinterlacer = gst_element_factory_make ("identity", NULL);
 
   gst_bin_add_many (GST_BIN (bin), decodebin, colorspace, deinterlacer, NULL);
   gst_element_link (colorspace, deinterlacer);
