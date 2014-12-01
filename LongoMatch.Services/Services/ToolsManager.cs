@@ -106,8 +106,8 @@ namespace LongoMatch.Services
 			if (project == null) {
 				Log.Warning ("Opened project is null and can't be exported");
 			}
-			
-			string filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"), null,
+			string proposed_filename = project.Description.Title + Constants.PROJECT_EXT;
+			string filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"), proposed_filename,
 			                                       Config.HomeDir, Constants.PROJECT_NAME, new string[] { Constants.PROJECT_EXT });
 			
 			if (filename == null)

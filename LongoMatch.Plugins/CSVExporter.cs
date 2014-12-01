@@ -56,7 +56,8 @@ namespace LongoMatch.Plugins
 
 		public void ExportProject (Project project, IGUIToolkit guiToolkit)
 		{
-			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), null,
+			string proposed_filename = project.Description.Title + ".csv";
+			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), proposed_filename,
 			                                       Config.HomeDir, "CSV",
 			                                       new string[] { ".csv" });
 			

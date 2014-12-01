@@ -378,10 +378,10 @@ namespace LongoMatch.Gui.Dialog
 
 		void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
-			string filename;
-			
-			filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Save File as..."),
-			                                       null, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
+			string proposed_filename = String.Format ("LongoMatch-{0}.png",
+				DateTime.Now.ToShortDateString ().Replace ('/', '-'));
+			string filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Save File as..."),
+				proposed_filename, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");
 				blackboard.Save (filename);
