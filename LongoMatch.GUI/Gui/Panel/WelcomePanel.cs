@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Panel
 		};
 		List<Widget> buttonWidgets;
 		Gtk.Image logoImage;
+		SizeGroup sizegroup;
 		
 		public WelcomePanel ()
 		{
@@ -75,6 +76,7 @@ namespace LongoMatch.Gui.Panel
 			// One extra row for our logo
 			tablewidget.NRows = (uint) NRows + 1;
 			tablewidget.NColumns = StyleConf.WelcomeIconsPerRow;
+			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 
 			Gtk.Image prefImage = new Gtk.Image (
 				Helpers.Misc.LoadIcon ("longomatch-preferences",
@@ -134,6 +136,7 @@ namespace LongoMatch.Gui.Panel
 			label.LineWrap = true;
 			label.LineWrapMode = Pango.WrapMode.Word;
 			label.Justify = Justification.Center;
+			sizegroup.AddWidget (label);
 
 			box = new VBox (false, StyleConf.WelcomeIconsTextSpacing);
 			box.PackStart (alignment, false, false, 0);
