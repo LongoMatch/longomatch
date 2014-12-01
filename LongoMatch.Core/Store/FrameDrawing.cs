@@ -42,6 +42,11 @@ namespace LongoMatch.Core.Store
 			Drawables = new List<Drawable> ();
 		}
 		
+		public Image Miniature {
+			get;
+			set;
+		}
+
 		public Image Freehand {
 			get;
 			set;

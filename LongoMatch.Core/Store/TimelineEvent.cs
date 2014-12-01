@@ -181,6 +181,15 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		public void UpdateMiniature ()
+		{
+			if (Drawings.Count == 0) {
+				Miniature = null;
+			} else {
+				Miniature = Drawings[0].Miniature;
+			}
+		}
+
 		public void AddDefaultPositions ()
 		{
 			if (EventType.TagFieldPosition) {

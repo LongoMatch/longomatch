@@ -142,6 +142,7 @@ namespace LongoMatch.Gui.Menus
 					}; 
 					deleteItem.Activated += (sender, e) => {
 						plays [0].Drawings.RemoveAt (index);
+						plays [0].UpdateMiniature ();
 					}; 
 					drawingItem.Submenu = drawingMenu;
 					drawingMenu.ShowAll ();

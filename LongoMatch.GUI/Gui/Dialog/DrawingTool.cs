@@ -395,9 +395,10 @@ namespace LongoMatch.Gui.Dialog
 			if (!play.Drawings.Contains (drawing)) {
 				play.Drawings.Add (drawing);
 			}
-			play.Miniature = blackboard.Save ();
-			play.Miniature.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE,
-			                             Constants.MAX_THUMBNAIL_SIZE);
+			drawing.Miniature = blackboard.Save ();
+			drawing.Miniature.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE,
+			                                Constants.MAX_THUMBNAIL_SIZE);
+			play.UpdateMiniature ();
 			drawing = null;
 			Respond (ResponseType.Accept);
 		}
