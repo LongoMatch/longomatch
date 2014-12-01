@@ -50,6 +50,14 @@ namespace LongoMatch.Gui.Component
 			oa = model.GetValue(a, 0);
 			ob = model.GetValue(b, 0);
 
+			if (oa == null && ob == null) {
+				return 0;
+			} else if (oa == null) {
+				return -1;
+			} else if (ob == null) {
+				return 1;
+			}
+
 			if(oa is Player)
 				return (oa as Player).Number.CompareTo((ob as Player).Number);
 			else
