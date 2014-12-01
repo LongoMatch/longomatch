@@ -291,27 +291,18 @@ namespace LongoMatch.Gui.Helpers
 			}
 		}
 
-		public static MediaFile OpenFile (object parent)
+		public static MediaFile DiscoverFile (string filename, object parent)
 		{
-			IBusyDialog busy = null;
 			MediaFile mediaFile = null;
-			IGUIToolkit gui = Config.GUIToolkit;
-			IMultimediaToolkit multimedia = Config.MultimediaToolkit; 
-			string folder, filename;
-			
-			
-			folder = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			filename = gui.OpenFile (Catalog.GetString ("Open file"), null, folder);                             
-			if (filename == null)
-				return null;
-			
+			IBusyDialog busy = null;
+
 			try {
 				Exception ex = null;
-				busy = gui.BusyDialog (Catalog.GetString ("Analyzing video file:") + "\n" + filename,
-				                       parent);
+				busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Analyzing video file:") + "\n" +
+					filename, parent);
 				Task task = new Task (() => {
 					try {
-						mediaFile = multimedia.DiscoverFile (filename);
+						mediaFile = Config.MultimediaToolkit.DiscoverFile (filename);
 					} catch (Exception e) {
 						ex = e;
 					}
@@ -332,21 +323,42 @@ namespace LongoMatch.Gui.Helpers
 				} else if (mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0) {
 					throw new Exception (Catalog.GetString ("This file contains a video stream but its length is 0."));
 				}
-
-				if (multimedia.FileNeedsRemux (mediaFile)) {
-					string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
-						"(this step only requires a few minutes)");
-					gui.InfoMessage (q, parent);
-					string newFilename = multimedia.RemuxFile (mediaFile, parent);
-					if (newFilename != null)
-						mediaFile = multimedia.DiscoverFile (newFilename);
-				}
 			} catch (Exception ex) {
 				busy.Destroy ();
-				gui.ErrorMessage (ex.Message, parent);
+				Config.GUIToolkit.ErrorMessage (ex.Message, parent);
 				return null;
 			}
+			return mediaFile;
+		}
+
+		public static MediaFile OpenFile (object parent)
+		{
+			MediaFile mediaFile;
+			IGUIToolkit gui = Config.GUIToolkit;
+			IMultimediaToolkit multimedia = Config.MultimediaToolkit;
+			string folder, filename;
 			
+			folder = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+			filename = gui.OpenFile (Catalog.GetString ("Open file"), null, folder);
+			if (filename == null)
+				return null;
+			
+			mediaFile = DiscoverFile (filename, parent);
+			if (mediaFile != null) {
+				try {
+					if (multimedia.FileNeedsRemux (mediaFile)) {
+						string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
+							"(this step only requires a few minutes)");
+						gui.InfoMessage (q, parent);
+						string newFilename = multimedia.RemuxFile (mediaFile, parent);
+						if (newFilename != null)
+							mediaFile = multimedia.DiscoverFile (newFilename);
+					}
+				} catch (Exception ex) {
+					gui.ErrorMessage (ex.Message, parent);
+					return null;
+				}
+			}
 			return mediaFile;
 		}
 

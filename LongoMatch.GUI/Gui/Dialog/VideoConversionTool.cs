@@ -137,35 +137,11 @@ namespace LongoMatch.Gui.Dialog
 			var msg = Catalog.GetString ("Add file");
 			List<string> paths = FileChooserHelper.OpenFiles (this, msg, null,
 			                                                  Config.HomeDir, null, null);
-			List<string> errors = new List<string> ();
 			foreach (string path in paths) {
-				try {
-					string error = null;
-					MediaFile mediaFile = Config.MultimediaToolkit.DiscoverFile (path, true);
-					if (mediaFile == null) {
-						continue;
-					}
-					if(!mediaFile.HasVideo || mediaFile.VideoCodec == "") {
-						throw new Exception (Catalog.GetString("This file doesn't contain a video stream."));
-					}
-					if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0) {
-						throw new Exception (Catalog.GetString("This file contains a video stream but its length is 0."));
-					}
-					if (error != null) {
-						Config.GUIToolkit.ErrorMessage (error, this);
-					} else {
-						AppendFile (Config.MultimediaToolkit.DiscoverFile (path, true));
-					}
-				} catch (Exception) {
-					errors.Add (path);
+				MediaFile mediaFile = Misc.DiscoverFile (path, this);
+				if (mediaFile != null) {
+					AppendFile (mediaFile);
 				}
-			}
-			if (errors.Count != 0) {
-				string s = Catalog.GetString ("Error adding files:");
-				foreach (string p in errors) {
-					s += '\n' + p;
-				}
-				GUIToolkit.Instance.ErrorMessage (s);
 			}
 			CheckStatus ();
 
