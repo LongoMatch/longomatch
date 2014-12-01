@@ -29,6 +29,9 @@ namespace LongoMatch.Migration
 			InitGtk ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
+			Application.Invoke (delegate {
+				win.Load ();
+			});
 			Application.Run ();
 		}
 		

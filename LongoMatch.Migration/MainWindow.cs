@@ -35,15 +35,19 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		FindFiles ();
-		UpdateLabel ();
+
 		buf = "";
+
 		convertbutton.Clicked += HandleConvertClicked;
 		closebutton.Clicked += HandleCloseClicked;
 	}
 
-	
-	
+	public void Load ()
+	{
+		FindFiles ();
+		UpdateLabel ();
+	}
+		
 	void FindFiles ()
 	{
 		string dbdir, templatesdir;
