@@ -170,6 +170,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				DB.UpdateProject (loadedProject);
+				projectlistwidget1.UpdateProject (loadedProject.Description);
 			}
 		}
 

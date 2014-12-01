@@ -93,7 +93,6 @@ namespace LongoMatch.Gui.Component
 		public void Fill (List<ProjectDescription> projects)
 		{
 			Pixbuf image, homeShield, awayShield;
-			string desc;
 
 			swallowSignals = true;
 			this.projects = projects;
@@ -118,16 +117,7 @@ namespace LongoMatch.Gui.Component
 					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
 				}
 				
-				desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
-				                      pdesc.LocalName, pdesc.VisitorName,
-				                      pdesc.LocalGoals, pdesc.VisitorGoals,
-				                      Catalog.GetString ("Date"),
-				                      pdesc.MatchDate.ToShortDateString(),
-				                      Catalog.GetString ("Competition"),
-				                      pdesc.Competition,
-				                      Catalog.GetString ("Season"),
-				                      pdesc.Season);
-				store.AppendValues (desc, image, homeShield, awayShield, pdesc);
+				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, pdesc);
 			}
 			swallowSignals = false;
 			iconview.SetCursor (new TreePath ("0"), null, false);
@@ -145,9 +135,37 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public void UpdateProject (ProjectDescription description)
+		{
+			TreeIter first;
+
+			/* Projects are only update in the treeview mode */
+			store.GetIterFirst (out first);
+			while (store.IterIsValid (first)) {
+				ProjectDescription pd = store.GetValue (first, COL_PROJECT_DESCRIPTION) as ProjectDescription;
+				if (description.ID == pd.ID) {
+					store.SetValue (first, COL_DISPLAY_NAME, FormatDesc (description));
+					store.SetValue (first, COL_PROJECT_DESCRIPTION, description);
+					break;
+				}
+				store.IterNext (ref (first));
+			}
+		}
+		
+
 		public void ClearSearch ()
 		{
 			filterEntry.Text = "";
+		}
+
+		static string FormatDesc (ProjectDescription pdesc)
+		{
+			string desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
+			                             pdesc.LocalName, pdesc.VisitorName, pdesc.LocalGoals,
+			                             pdesc.VisitorGoals, Catalog.GetString ("Date"),
+			                             pdesc.MatchDate.ToShortDateString (), Catalog.GetString ("Competition"),
+			                             pdesc.Competition, Catalog.GetString ("Season"), pdesc.Season);
+			return desc;
 		}
 
 		ListStore CreateStore ()
