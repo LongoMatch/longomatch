@@ -18,7 +18,13 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.CodecsChoiceDialog
 			this.Name = "LongoMatch.Gui.Dialog.CodecsChoiceDialog";
+			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Modal = true;
+			this.DestroyWithParent = true;
+			this.Gravity = ((global::Gdk.Gravity)(5));
+			this.SkipPagerHint = true;
+			this.SkipTaskbarHint = true;
 			// Internal child LongoMatch.Gui.Dialog.CodecsChoiceDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";

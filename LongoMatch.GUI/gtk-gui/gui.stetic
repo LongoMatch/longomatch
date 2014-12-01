@@ -10984,7 +10984,13 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.CodecsChoiceDialog" design-size="606 397">
     <property name="MemberName" />
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
