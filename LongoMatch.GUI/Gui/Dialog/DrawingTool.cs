@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Dialog
 			textcolorbutton.ColorSet += HandleTextColorSet;
 			textcolorbutton.Color = Misc.ToGdkColor (Color.White); 
 			backgroundcolorbutton.UseAlpha = true;
-			backgroundcolorbutton.Alpha = 0;
+			backgroundcolorbutton.Alpha = (ushort) (ushort.MaxValue * 0.8);
 			backgroundcolorbutton.ColorSet += HandleBackgroundColorSet;
 			backgroundcolorbutton.Color = Misc.ToGdkColor (Color.Green1); 
 			blackboard.Color = Color.Red1;
