@@ -12,6 +12,7 @@
       <itemgroup label="IPlayerBin Properties">
         <property name="Sensitive" />
         <property name="CloseAlwaysVisible" />
+        <property name="CloseAlwaysHidden" />
       </itemgroup>
     </itemgroups>
     <signals>

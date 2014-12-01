@@ -9498,6 +9498,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="LongoMatch.Gui.PlayerBin" id="playerbin2">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
+            <property name="CloseAlwaysVisible">False</property>
           </widget>
           <packing>
             <property name="Position">0</property>
