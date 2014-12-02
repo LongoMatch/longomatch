@@ -178,6 +178,8 @@ namespace LongoMatch.Services
 
 		public void Copy (string orig, string copy)
 		{
+			T template;
+
 			if (File.Exists (copy)) {
 				throw new Exception (Catalog.GetString ("A template already exists with " +
 					"the name: ") + copy);
@@ -185,7 +187,15 @@ namespace LongoMatch.Services
 			
 			CheckInvalidChars (copy);
 			Log.Information (String.Format ("Copying template {0} to {1}", orig, copy));
-			File.Copy (GetPath (orig), GetPath (copy));
+			
+			template = systemTemplates.FirstOrDefault (t => t.Name == orig);
+			
+			if (template == null) {
+				template = Load (orig);
+			}
+			template.ID = new Guid ();
+			template.Name = copy;
+			Save (template);
 		}
 
 		public void Delete (string templateName)
