@@ -197,17 +197,13 @@ namespace LongoMatch.Services
 		{
 			string db4oPath = Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
 			string monoPath = Path.GetFullPath (Config.LibsDir) + Path.PathSeparator + Path.GetFullPath (db4oPath);
-			string migrationExe = Path.Combine (Config.LibsDir, "migration", "LongoMatch.exe");
+			string migrationExe = Path.GetFullPath (Path.Combine (Config.LibsDir, "migration", "LongoMatch.exe"));
 			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
 			startInfo.UseShellExecute = false;
 			startInfo.Arguments = "\"" + migrationExe + "\"";
 			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
-			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				startInfo.FileName = "mono";
-			} else {
-				startInfo.FileName = "mono-sgen";
-			}
+			startInfo.FileName = "mono-sgen";
 			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
 				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + monoPath;
 			} else {
