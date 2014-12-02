@@ -35,7 +35,8 @@ namespace LongoMatch.Addins
 {
 	public class AddinsManager
 	{
-		
+		private static Dictionary<AddinDescription, List<ConfigurablePlugin>> pluginsDict;
+
 		public static void Initialize (string configPath, string searchPath)
 		{
 			searchPath = Path.GetFullPath (searchPath);
@@ -59,6 +60,8 @@ namespace LongoMatch.Addins
 					AddinManager.Registry.EnableAddin (addin.Id);
 				}
 			}
+
+			pluginsDict = ListPlugins ();
 		}
 
 		public static bool RegisterGStreamerPlugins ()
@@ -146,38 +149,44 @@ namespace LongoMatch.Addins
 		}
 
 		public static Dictionary<AddinDescription, List<ConfigurablePlugin>> Plugins {
-			get {
-				HashSet <string> paths;
-				Dictionary<AddinDescription, List<ConfigurablePlugin>> plugins;
-				
-				paths = new HashSet<string> ();
-				plugins = new Dictionary<AddinDescription, List<ConfigurablePlugin>> ();
+			get { return pluginsDict; }
+		}
 
-				foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
-					if (!addin.Enabled) {
-						continue;
-					}
-					foreach (Extension ext in addin.Description.MainModule.Extensions) {
-						paths.Add (ext.Path);
-					}
-					plugins.Add (addin.Description, new List<ConfigurablePlugin> ());
+		private static Dictionary<AddinDescription, List<ConfigurablePlugin>> ListPlugins () {
+			HashSet <string> paths;
+			Dictionary<AddinDescription, List<ConfigurablePlugin>> plugins;
+			
+			paths = new HashSet<string> ();
+			plugins = new Dictionary<AddinDescription, List<ConfigurablePlugin>> ();
+
+			foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
+				if (!addin.Enabled) {
+					continue;
 				}
+				foreach (Extension ext in addin.Description.MainModule.Extensions) {
+					paths.Add (ext.Path);
+				}
+				plugins.Add (addin.Description, new List<ConfigurablePlugin> ());
+			}
 
-				foreach (string path in paths) {
-					foreach (TypeExtensionNode n  in AddinManager.GetExtensionNodes (path)) {
-						var list = plugins.FirstOrDefault (a => a.Key.LocalId == n.Addin.Id).Value;
-						try {
-							var instance = n.GetInstance ();
-							if (instance is ConfigurablePlugin) {
-								list.Add ((ConfigurablePlugin)instance);
-							}
-						} catch (Exception ex) {
+			foreach (string path in paths) {
+				foreach (TypeExtensionNode n  in AddinManager.GetExtensionNodes (path)) {
+					var list = plugins.FirstOrDefault (a => a.Key.LocalId == n.Addin.Id).Value;
+					try {
+						var instance = n.GetInstance ();
+						if (instance is ConfigurablePlugin) {
+							list.Add ((ConfigurablePlugin)instance);
+						}
+					} catch (Exception ex) {
+						if (ex.InnerException is AddinRequestShutdownException) {
+							throw ex.InnerException;
+						} else {
 							Log.Exception (ex);
 						}
 					}
 				}
-				return plugins;
 			}
+			return plugins;
 		}
 
 		public static bool ShowStats (Project project)
