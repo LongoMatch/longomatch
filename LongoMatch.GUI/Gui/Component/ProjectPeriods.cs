@@ -44,8 +44,10 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-more", 20, IconLookupFlags.ForceSvg);
-			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-less", 20, IconLookupFlags.ForceSvg);
+			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-more", 20);
+			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-less", 20);
+			arrowimage1.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-down-arrow", 20);
+			arrowimage2.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-down-arrow", 20);
 
 			zoominbutton.Clicked += HandleZooomActivated;
 			zoomoutbutton.Clicked += HandleZooomActivated;
@@ -59,9 +61,8 @@ namespace LongoMatch.Gui.Component
 			timersTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			timersTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
-			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
-			                                  Catalog.GetString ("Synchronize the game periods"),
-			                                  "  ⬇</b>");
+			synclabel.Markup = String.Format ("<b> {0} </b>",
+			                                  Catalog.GetString ("Synchronize the game periods"));
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			menu = new PeriodsMenu ();
 		}

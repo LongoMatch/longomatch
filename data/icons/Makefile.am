@@ -36,6 +36,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-dash-fit.svg \
 	hicolor/scalable/actions/longomatch-default-shield.svg \
 	hicolor/scalable/actions/longomatch-delete.svg \
+	hicolor/scalable/actions/longomatch-down-arrow.svg \
 	hicolor/scalable/actions/longomatch-eraser.svg \
 	hicolor/scalable/actions/longomatch-eye.svg \
 	hicolor/scalable/actions/longomatch-field-full.svg \
