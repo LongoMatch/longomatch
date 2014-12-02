@@ -73,12 +73,20 @@ namespace LongoMatch.Core.Stats
 			set;
 		}
 
-		public void Update () {
+		public void Update ()
+		{
 			Count = timer.Nodes.Count;
-			TotalDuration = new Time (timer.Nodes.Sum (n => n.Duration.MSeconds));
-			AverageDuration = new Time ((int) timer.Nodes.Average (n => n.Duration.MSeconds));
-			MinDuration = timer.Nodes.Min (n => n.Duration);
-			MaxDuration = timer.Nodes.Max (n => n.Duration);
+			if (Count > 0) {
+				TotalDuration = new Time (timer.Nodes.Sum (n => n.Duration.MSeconds));
+				AverageDuration = new Time ((int)timer.Nodes.Average (n => n.Duration.MSeconds));
+				MinDuration = timer.Nodes.Min (n => n.Duration);
+				MaxDuration = timer.Nodes.Max (n => n.Duration);
+			} else {
+				TotalDuration = new Time (0);
+				AverageDuration = new Time (0);
+				MinDuration = new Time (0);
+				MaxDuration = new Time (0);
+			}
 		}
 	}
 }
