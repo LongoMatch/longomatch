@@ -85,6 +85,8 @@ namespace LongoMatch
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 				Application.Run ();
+			}  catch (AddinRequestShutdownException arse) {
+				// Abort gracefully
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			} finally {
