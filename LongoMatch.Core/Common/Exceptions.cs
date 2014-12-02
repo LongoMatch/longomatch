@@ -82,5 +82,13 @@ namespace LongoMatch.Core.Common
 	public class TimerNotRunningException: Exception
 	{
 	}
+
+	public class AddinRequestShutdownException: Exception
+	{
+		public AddinRequestShutdownException (string reason):
+			base (reason)
+		{
+		}
+	}
 }
 
