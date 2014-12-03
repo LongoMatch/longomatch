@@ -267,7 +267,9 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       if (version == 4) {
         /* FIXME: aacparse doesn't seem to support adts to raw conversion */
         //parser = gst_element_factory_make ("aacparse", NULL);
-        parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
+        parser = gst_parse_bin_from_description ("fluaacdec ! fluaacenc", TRUE, NULL);
+        if (parser == NULL)
+          parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
       } else if (version == 3) {
         parser = gst_element_factory_make ("mp3parse", "audio-parser");
       } else {
