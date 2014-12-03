@@ -347,12 +347,14 @@ namespace LongoMatch.Gui.Helpers
 			if (mediaFile != null) {
 				try {
 					if (multimedia.FileNeedsRemux (mediaFile)) {
-						string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
-							"(this step only requires a few minutes)");
-						gui.InfoMessage (q, parent);
-						string newFilename = multimedia.RemuxFile (mediaFile, parent);
-						if (newFilename != null)
-							mediaFile = multimedia.DiscoverFile (newFilename);
+						string msg = Catalog.GetString ("This file is not a supported format, convert it with video conversion tool");
+						throw new Exception (msg);
+//						string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
+//							"(this step only requires a few minutes)");
+//						gui.InfoMessage (q, parent);
+//						string newFilename = multimedia.RemuxFile (mediaFile, parent);
+//						if (newFilename != null)
+//							mediaFile = multimedia.DiscoverFile (newFilename);
 					}
 				} catch (Exception ex) {
 					gui.ErrorMessage (ex.Message, parent);
