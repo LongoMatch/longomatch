@@ -40,7 +40,9 @@ namespace LongoMatch.Addins
 		public static void Initialize (string configPath, string searchPath)
 		{
 			Log.Information ("Delete addins cache at " + configPath);
+			try {
 			Directory.Delete (configPath, true);
+			} catch (Exception ex) {}
 			searchPath = Path.GetFullPath (searchPath);
 			Log.Information ("Initializing addins at path: " + searchPath);
 			try {
