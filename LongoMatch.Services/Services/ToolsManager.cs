@@ -204,7 +204,7 @@ namespace LongoMatch.Services
 			startInfo.Arguments = "\"" + migrationExe + "\"";
 			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				startInfo.FileName = "mono-sgen.exe";
+				startInfo.FileName = Path.Combine (Config.baseDirectory, "bin", "mono-sgen.exe");
 			} else {
 				startInfo.FileName = "mono-sgen";
 			}
