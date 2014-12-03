@@ -465,7 +465,7 @@ gst_video_encoder_create_video_encoder (GstVideoEncoder * gve,
   g_return_val_if_fail (GST_IS_VIDEO_ENCODER (gve), FALSE);
 
   encoder = lgm_create_video_encoder (type, gve->priv->video_quality,
-      GVE_ERROR, err);
+      FALSE, GVE_ERROR, err);
   if (!encoder) {
     return FALSE;
   }

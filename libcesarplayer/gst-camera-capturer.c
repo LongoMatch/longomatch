@@ -1095,7 +1095,7 @@ gst_camera_capturer_create_video_encoder (GstCameraCapturer * gcc,
   g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
-  encoder = lgm_create_video_encoder (type, gcc->priv->video_quality,
+  encoder = lgm_create_video_encoder (type, gcc->priv->video_quality, TRUE,
       GCC_ERROR, err);
   if (!encoder) {
     return FALSE;

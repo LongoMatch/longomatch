@@ -228,7 +228,7 @@ lgm_discover_uri (const gchar * filename, guint64 * duration, guint * width,
 
 GstElement *
 lgm_create_video_encoder (VideoEncoderType type, guint quality,
-    GQuark quark, GError ** err)
+    gboolean realtime, GQuark quark, GError ** err)
 {
   GstElement *encoder = NULL;
   gchar *name = NULL;
@@ -270,7 +270,11 @@ lgm_create_video_encoder (VideoEncoderType type, guint quality,
         GstElement *bin = gst_bin_new (NULL);
 
         g_object_set (encoder, "bitrate", quality, "keyframe-period", 1000,
-            "rate-control", 1, "entropy-mode", 1, NULL);
+            "rate-control", 1, "entropy-mode", 1, "allow-b-frames", FALSE,
+            "profile", 1, NULL);
+        if (realtime) {
+            g_object_set (encoder, "realtime", TRUE, NULL);
+        }
 
         gst_bin_add_many (GST_BIN (bin), encoder, parse, NULL);
         gst_element_link (encoder, parse);

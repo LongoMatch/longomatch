@@ -235,7 +235,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   gve->priv->queue = gst_element_factory_make ("queue2", "video-encode-queue");
   gve->priv->video_encoder =
       lgm_create_video_encoder (gve->priv->video_encoder_type,
-      gve->priv->video_quality, GVE_ERROR, &error);
+      gve->priv->video_quality, FALSE, GVE_ERROR, &error);
   if (error) {
     g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, error->message);
     g_error_free (error);

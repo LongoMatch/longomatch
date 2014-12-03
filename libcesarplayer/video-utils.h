@@ -60,7 +60,7 @@ EXPORT GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration
     guint *par_d, gchar **container, gchar **video_codec, gchar **audio_codec,
     GError **err);
 EXPORT GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
-    GQuark quark, GError **err);
+    gboolean realtime, GQuark quark, GError **err);
 EXPORT GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
     GQuark quark, GError **err);
 EXPORT GstElement * lgm_create_muxer (VideoMuxerType type,
