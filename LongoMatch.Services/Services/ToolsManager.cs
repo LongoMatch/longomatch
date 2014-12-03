@@ -203,7 +203,11 @@ namespace LongoMatch.Services
 			startInfo.UseShellExecute = false;
 			startInfo.Arguments = "\"" + migrationExe + "\"";
 			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
-			startInfo.FileName = "mono-sgen";
+			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				startInfo.FileName = "mono-sgen.exe";
+			} else {
+				startInfo.FileName = "mono-sgen";
+			}
 			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
 				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + monoPath;
 			} else {
