@@ -1,35 +1,41 @@
-LongoMatch-0.20.7 "Franela"
+LongoMatch-1.0.0 "Ermitaño"
 -----------------------------
 
-The LongoMatch team is happy to announce the seventh release in the
-stable 0.20 series.
+The LongoMatch team is happy to announce the first release in the
+stable 1.0 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest GStreamer libraries and plugins installed for the best user
 experience.
 
-
-* Bugs fixed
-	* Fix deadlock cancelling rendering operations
-	* Fix x264enc when running from non-writable place
-
-  * LongoMatch:
-	Andoni Morales Alastruey <ylatuya@gmail.com>
+* Features
+	* New UI more intuitive and easier to use
+	* Fully customizable analysis dashboards
+	* Players tagging dashboard
+	* Zonal tagging panel for events review
+	* New statistics events: Score, Penalties, Timers and Players substitutions
+	* Periods synchronization for fake live analysis
+	* HDMI capture
+	* Transition titles and external video sources in playlists
+	* Improved drawing tool
+	* Sizable screens of the different video analysis
+	* Filtering based in periods
+	* Customizable hotkeys
+	* And many usability improvements
 
 * Requirements
 
  * mono >= 2.4
  * mono-posix >= 2.4
  * mono-cairo >= 2.4
- * gstreamer >= 0.10.30
- * gnonlin >= 0.10.15
+ * gstreamer >= 0.10.35
  * gtk-sharp >= 2.12
- * db40 >= 7.4
-
+ * json.net >= 5.0
+ * db40 >= 7.4 (optional for the migration tool)
 
 * Download
   LongoMatch source tarballs are available on gnome FTP:
-   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.20/
+   http://ftp.gnome.org/pub/GNOME/sources/longomatch/1.0/
 
   See the website for distribution-specific packages.
 
