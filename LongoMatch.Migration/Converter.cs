@@ -277,6 +277,7 @@ namespace LongoMatch.Migration
 			newproject.ID = project.UUID;
 			newproject.LocalTeamTemplate = ConvertTeamTemplate (project.LocalTeamTemplate, teamsDict);
 			newproject.VisitorTeamTemplate = ConvertTeamTemplate (project.VisitorTeamTemplate, teamsDict);
+			newproject.VisitorTeamTemplate.ActiveColor = 1;
 			newproject.Dashboard = ConvertCategories (project.Categories, out subcatsDict, out eventTypesDict);
 			newproject.UpdateEventTypesAndTimers ();
 			newproject.Description = ConvertProjectDescription (project.Description);
