@@ -52,7 +52,7 @@ namespace LongoMatch.Migration
 			
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				LongoMatch.Config.baseDirectory = ".";
-				LongoMatch.Config.dataDir = "../data";
+				LongoMatch.Config.dataDir = "../../data";
 			} else {
 				LongoMatch.Config.baseDirectory = baseDirectory;
 				LongoMatch.Config.dataDir = System.IO.Path.Combine (LongoMatch.Config.baseDirectory, "share", "longomatch");
