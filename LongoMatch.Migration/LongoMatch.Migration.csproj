@@ -81,9 +81,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\data\images\fields\field-half.svg">
       <Link>field-half.svg</Link>
+      <LogicalName>field-half.svg</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="..\data\images\fields\field-goal.svg">
       <Link>field-goal.svg</Link>
+      <LogicalName>field-goal.svg</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="..\data\images\fields\field-full.svg">
       <Link>field-full.svg</Link>

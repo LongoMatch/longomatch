@@ -301,6 +301,16 @@ namespace LongoMatch.Migration
 			field = project.Categories.FieldBackground;
 			halffield = project.Categories.HalfFieldBackground;
 			goal = project.Categories.GoalBackground;
+			
+			if (field == null) {
+				field = LongoMatch.Common.Config.FieldBackground;
+			}
+			if (halffield == null) {
+				halffield = LongoMatch.Common.Config.HalfFieldBackground;
+			}
+			if (goal == null) {
+				goal = LongoMatch.Common.Config.GoalBackground;
+			}
 				
 			foreach (Play play in project.AllPlays ()) {
 				LongoMatch.Core.Common.Coordinates c;
@@ -317,9 +327,9 @@ namespace LongoMatch.Migration
 				newplay.Rate = play.Rate;
 				newplay.Start = ConvertTime (play.Start);
 				newplay.Stop = ConvertTime (play.Stop);
-				newplay.Team = (LongoMatch.Core.Common.Team) play.Team;
+				newplay.Team = (LongoMatch.Core.Common.Team)play.Team;
 
-				newplay.EventType = eventTypesDict[play.Category];
+				newplay.EventType = eventTypesDict [play.Category];
 				foreach (Player player in play.Players.GetTagsValues()) {
 					newplay.Players.Add (teamsDict [player]);
 				}
