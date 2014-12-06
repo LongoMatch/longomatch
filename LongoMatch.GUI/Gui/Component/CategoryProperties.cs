@@ -205,6 +205,7 @@ namespace LongoMatch.Gui.Component
 				tagmodecombobox.Active = (int)timedButton.TagMode;
 				leadtimebutton.Value = timedButton.Start.TotalSeconds;
 				lagtimebutton.Value = timedButton.Stop.TotalSeconds;
+				lagtimebutton.Sensitive = timedButton.TagMode == TagMode.Predefined;
 			}
 			if (eventButton != null) {
 				SetPositionCombo (fieldcombobox, eventButton.EventType.TagFieldPosition,
