@@ -223,6 +223,7 @@ namespace LongoMatch.Gui.Panel
 			PromptSave ();
 			
 			loadedTeam = team;
+			team.TemplateEditorMode = true;
 			teamtemplateeditor1.Team = loadedTeam;
 		}
 

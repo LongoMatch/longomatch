@@ -130,9 +130,19 @@ namespace LongoMatch.Core.Store.Templates
 		}
 		
 		[JsonIgnore]
+		public bool TemplateEditorMode {
+			set;
+			get;
+		}
+
+		[JsonIgnore]
 		public List<Player> PlayingPlayersList {
 			get {
-				return List.Where(p=>p.Playing).Select(p=>p).ToList();
+				if (TemplateEditorMode) {
+					return List;
+				} else {
+					return List.Where(p=>p.Playing).Select(p=>p).ToList();
+				}
 			}
 		}
 
@@ -140,7 +150,7 @@ namespace LongoMatch.Core.Store.Templates
 		public List<Player> StartingPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;
-				int count = Math.Min (StartingPlayers, List.Count);
+				int count = Math.Min (StartingPlayers, playingPlayers.Count);
 				return playingPlayers.GetRange (0, count);
 			}
 		}
