@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Menus
 				snapshot.Visible = moveCat.Visible = drawings.Visible =
 					addPLN.Visible = render.Visible = duplicate.Visible = false;
 			} else {
-				edit.Visible = editableName;
+				edit.Visible = editableName && plays.Count == 1;
 				snapshot.Visible = plays.Count == 1;
 				moveCat.Visible = plays.Count == 1 && eventTypes != null;
 				drawings.Visible = plays.Count == 1 && plays [0].Drawings.Count > 0;
