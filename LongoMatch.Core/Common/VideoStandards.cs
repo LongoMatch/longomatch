@@ -85,14 +85,9 @@ namespace LongoMatch.Core.Common
 			get {
 				List<VideoStandard> list = new List<VideoStandard>();
 				list.Add (Original);
-				list.Add (P240_4_3);
-				list.Add (P240_16_9);
-				list.Add (P480_4_3);
-				list.Add (P480_16_9);
-				list.Add (P720_4_3);
-				list.Add (P720_16_9);
-				list.Add (P1080_4_3);
-				list.Add (P1080_16_9);
+				list.Add (P480);
+				list.Add (P720);
+				list.Add (P1080);
 				return list;
 			}
 		}
