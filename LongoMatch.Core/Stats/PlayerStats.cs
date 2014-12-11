@@ -117,6 +117,11 @@ namespace LongoMatch.Core.Stats
 				}
 			}
 
+			/* If the last substitution was Player IN */
+			if (last.Stop == null) {
+				last.Stop = project.Description.FileSet.Duration;
+			}
+
 			playingTimeNodes = new List<TimeNode> ();
 			/* Get the real playing time intersecting with the periods */
 			foreach (TimeNode timenode in timenodes) {

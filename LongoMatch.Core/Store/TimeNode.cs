@@ -133,6 +133,8 @@ namespace LongoMatch.Core.Store
 		}
 		
 		public TimeNode Intersect (TimeNode tn) {
+			if (tn.Stop == null || tn.Start == null || Start == null || Stop == null)
+				return null;
 			if (tn.Stop < Start || tn.Start > Stop)
 				return null;
 			else
