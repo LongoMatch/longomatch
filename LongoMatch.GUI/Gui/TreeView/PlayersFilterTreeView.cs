@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Component
 			store.SetValue(localIter, 1, false);
 			store.SetValue(visitorIter, 1, false);
 			
+			filter.IgnoreUpdates = true;
 			foreach (Player player in local.PlayingPlayersList) {
 				filter.FilterPlayer (player, true);
 				store.AppendValues (localIter, player, true);
@@ -66,6 +67,8 @@ namespace LongoMatch.Gui.Component
 				filter.FilterPlayer (player, true);
 				store.AppendValues (visitorIter, player, true);
 			}
+			filter.IgnoreUpdates = false;
+			filter.Update ();
 			Model = store;
 		}
  

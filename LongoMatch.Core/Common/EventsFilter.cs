@@ -50,6 +50,11 @@ namespace LongoMatch.Core.Common
 			get;
 		}
 
+		public bool IgnoreUpdates {
+			set;
+			get;
+		}
+
 		public List<EventType> VisibleEventTypes {
 			get;
 			protected set;
@@ -154,8 +159,10 @@ namespace LongoMatch.Core.Common
 
 		public void Update ()
 		{
-			UpdateFilters ();
-			EmitFilterUpdated ();
+			if (!IgnoreUpdates) {
+				UpdateFilters ();
+				EmitFilterUpdated ();
+			}
 		}
 
 		void UpdateFilters ()
@@ -168,7 +175,8 @@ namespace LongoMatch.Core.Common
 		void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
-				VisiblePlayers = project.LocalTeamTemplate.List.Concat (project.VisitorTeamTemplate.List).ToList ();
+				VisiblePlayers = project.LocalTeamTemplate.PlayingPlayersList.Concat (
+					project.VisitorTeamTemplate.PlayingPlayersList).ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
 			}
@@ -205,7 +213,8 @@ namespace LongoMatch.Core.Common
 				}
 
 				if (play.Players.Count == 0 && VisiblePlayers.Count == 
-					project.LocalTeamTemplate.List.Count + project.VisitorTeamTemplate.List.Count) {
+				    project.LocalTeamTemplate.PlayingPlayersList.Count +
+				    project.VisitorTeamTemplate.PlayingPlayersList.Count) {
 					player_match = true;
 				} else {
 					player_match = VisiblePlayers.Intersect (play.Players).Count () != 0;

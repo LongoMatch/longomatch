@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 			TreeIter catIter;
 			store = new TreeStore (typeof(object), typeof(bool));
 			
+			filter.IgnoreUpdates = true;
 			/* Periods */
 			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Periods")), false);
 			foreach (Period p in project.Periods) {
@@ -68,6 +69,8 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			}
+			filter.IgnoreUpdates = false;
+			filter.Update ();
 			Model = store;
 		}
 
