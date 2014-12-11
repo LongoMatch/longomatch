@@ -227,7 +227,8 @@ namespace LongoMatch.Gui.Panel
 
 		void FillFormats ()
 		{
-			videoStandardList = Misc.FillImageFormat (imagecombobox, Config.CaptureVideoStandard);
+			videoStandardList = Misc.FillImageFormat (imagecombobox, VideoStandards.Capture,
+			                                          Config.CaptureVideoStandard);
 			encProfileList = Misc.FillEncodingFormat (encodingcombobox, Config.CaptureEncodingProfile);
 			qualList = Misc.FillQuality (qualitycombobox, Config.CaptureEncodingQuality);
 		}

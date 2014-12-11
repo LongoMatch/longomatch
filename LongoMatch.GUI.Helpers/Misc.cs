@@ -133,13 +133,14 @@ namespace LongoMatch.Gui.Helpers
 			return LColor.ColorFromUShort (color.Red, color.Green, color.Blue, alpha);
 		}
 
-		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def)
+		public static ListStore FillImageFormat (ComboBox formatBox, List<VideoStandard> standards,
+		                                         VideoStandard def)
 		{
 			ListStore formatStore;
 			int index = 0, active = 0;
 			
 			formatStore = new ListStore (typeof(string), typeof(VideoStandard));
-			foreach (VideoStandard std in VideoStandards.Rendering) {
+			foreach (VideoStandard std in standards) {
 				formatStore.AppendValues (std.Name, std);
 				if (std.Equals (def))
 					active = index;

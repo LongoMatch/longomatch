@@ -38,7 +38,8 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build ();
 			encSettings = new EncodingSettings ();
-			stdStore = Misc.FillImageFormat (sizecombobox, Config.RenderVideoStandard);
+			stdStore = Misc.FillImageFormat (sizecombobox, VideoStandards.Rendering,
+			                                 Config.RenderVideoStandard);
 			encStore = Misc.FillEncodingFormat (formatcombobox, Config.RenderEncodingProfile);
 			qualStore = Misc.FillQuality (qualitycombobox, Config.RenderEncodingQuality);
 			descriptioncheckbutton.Active = Config.OverlayTitle;

@@ -41,11 +41,11 @@ namespace LongoMatch.Gui.Component
 				fpscombobox.Active = 0;
 			}
 			fpscombobox.Changed += HandleFPSChanged;
-			Misc.FillImageFormat (renderimagecombo, Config.RenderVideoStandard);
+			Misc.FillImageFormat (renderimagecombo, VideoStandards.Rendering, Config.RenderVideoStandard);
 			Misc.FillEncodingFormat (renderenccombo, Config.RenderEncodingProfile);
 			Misc.FillQuality (renderqualcombo, Config.RenderEncodingQuality);
 			
-			Misc.FillImageFormat (captureimagecombo, Config.CaptureVideoStandard);
+			Misc.FillImageFormat (captureimagecombo, VideoStandards.Capture, Config.CaptureVideoStandard);
 			Misc.FillEncodingFormat (captureenccombo, Config.CaptureEncodingProfile);
 			Misc.FillQuality (capturequalcombo, Config.CaptureEncodingQuality);
 			
