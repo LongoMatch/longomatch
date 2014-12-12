@@ -55,12 +55,18 @@ namespace LongoMatch.Core.Common
 			}
 		}
 		
-		public static void Save<T>(T obj, string filepath,
-		                           SerializationType type=SerializationType.Json) {
-			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
-			using (stream) {
+		public static void Save<T> (T obj, string filepath,
+		                          SerializationType type=SerializationType.Json)
+		{
+			string tmpPath = filepath + ".tmp";
+			using (Stream stream = new FileStream(tmpPath, FileMode.Create,
+			                                      FileAccess.Write, FileShare.None)) {
 				Save<T> (obj, stream, type);
-				stream.Close();
+			}
+			if (File.Exists (filepath)) {
+				File.Replace (tmpPath, filepath, null);
+			} else {
+				File.Move (tmpPath, filepath);
 			}
 		}
 
