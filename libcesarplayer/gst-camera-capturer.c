@@ -1008,11 +1008,40 @@ gst_camera_capturer_have_type_cb (GstElement * typefind, guint prob,
   return TRUE;
 }
 
+static GstCaps *
+gst_camera_capturer_find_highest_res (GstCaps *caps)
+{
+  gint max_width = 0, max_height = 0, i = 0;
+  gint width, height;
+  gchar *caps_str;
+  GstCaps *rcaps;
+
+  for (i=0; i < gst_caps_get_size (caps); i++) {
+    GstStructure *s = gst_caps_get_structure (caps, i);
+    gst_structure_get_int (s, "width", &width);
+    gst_structure_get_int (s, "height", &height);
+    if (width + height > max_width + max_height) {
+      max_width = width;
+      max_height = height;
+    }
+  }
+  caps_str = g_strdup_printf ("video/x-raw-yuv, width=%d, height=%d;"
+      "video/x-raw-rgb, width=%d, height=%d;"
+      "video/x-dv, systemstream=true, width=%d, height=%d",
+      max_width, max_height, max_width, max_height, max_width, max_height);
+  rcaps = gst_caps_from_string (caps_str);
+  g_free (caps_str);
+  return rcaps;
+}
+
 static gboolean
 gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
     CaptureSourceType type, GError ** err)
 {
-  GstElement *typefind;
+  GstElement *bin;
+  GstElement *typefind, *source;
+  GstCaps *source_caps, *link_caps;
+  GstPad *source_pad;
   gchar *source_str;
   gchar *filter = "";
 
@@ -1042,24 +1071,9 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
       g_assert_not_reached ();
   }
 
-  /* HACK: dshowvideosrc's device must be set before linking the element
-   * since the device is set in getcaps and can't be changed later */
-  if (!g_strcmp0 (gcc->priv->source_element_name, "dshowvideosrc")) {
-    source_str = g_strdup_printf ("%s device-name=\"%s\" name=source ! "
-        "video/x-raw-yuv; video/x-raw-rgb; "
-        "video/x-dv, systemstream=(boolean)True "
-        "! typefind name=typefind", gcc->priv->source_element_name,
-        gcc->priv->device_id);
-  } else {
-    source_str = g_strdup_printf ("%s name=source %s ! typefind name=typefind",
-        gcc->priv->source_element_name, filter);
-  }
-
-  GST_INFO_OBJECT (gcc, "Created video source %s", source_str);
-  gcc->priv->source_bin =
-      gst_parse_bin_from_description (source_str, TRUE, NULL);
-  g_free (source_str);
-  if (!gcc->priv->source_bin) {
+  gcc->priv->source_bin = bin = gst_bin_new ("source");
+  gcc->priv->source = source = gst_element_factory_make (gcc->priv->source_element_name, "video-source");
+  if (!source) {
     g_set_error (err,
         GCC_ERROR,
         GST_ERROR_PLUGIN_LOAD,
@@ -1068,20 +1082,30 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
         gcc->priv->source_element_name);
     return FALSE;
   }
+  typefind = gst_element_factory_make ("typefind", "video-source-typefind");
+  gst_bin_add_many (GST_BIN(bin), source, typefind, NULL);
+  source_pad = gst_element_get_static_pad (typefind, "src");
+  gst_element_add_pad (bin, gst_ghost_pad_new ("src", source_pad));
+  gst_object_unref (source_pad);
 
-  gcc->priv->source =
-      gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin), "source");
-  typefind = gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin), "typefind");
+  /* dshowvideosrc's device must be set before linking the element
+   * since the device is set in getcaps and can't be changed later */
+  gst_camera_capturer_update_device_id (gcc);
+
+  /* Some capture devices like the Extremecap U3 don't downscale correctly.
+   * Choose the highest resolution and downscale later if needed */
+  source_pad = gst_element_get_static_pad (source, "src");
+  source_caps = gst_pad_get_caps_reffed (source_pad);
+  link_caps = gst_camera_capturer_find_highest_res (source_caps);
+  gst_object_unref (source_pad);
+  gst_caps_unref (source_caps);
+
+  gst_element_link_filtered (source, typefind, link_caps);
   g_signal_connect (typefind, "have-type",
       G_CALLBACK (gst_camera_capturer_have_type_cb), gcc);
 
-  gst_camera_capturer_update_device_id (gcc);
-
   GST_INFO_OBJECT (gcc, "Created video source %s",
       gcc->priv->source_element_name);
-
-  gst_object_unref (gcc->priv->source);
-  gst_object_unref (typefind);
 
   return TRUE;
 }
