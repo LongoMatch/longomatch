@@ -731,6 +731,8 @@ gst_camera_capturer_create_decoder_bin (GstCameraCapturer * gcc)
   gcc->priv->video_appsrc = gst_element_factory_make ("appsrc", "video-appsrc");
   v_prev_queue = gst_element_factory_make ("queue2", "video-preview-queue");
 
+  g_object_set (gcc->priv->video_appsrc, "block", TRUE, "max-bytes",
+      40 * 1024 * 1024, NULL);
   g_object_set (v_queue, "max-size-time", 1 * GST_SECOND, NULL);
   g_object_set (v_prev_queue, "max-size-bytes", 0, NULL);
 
