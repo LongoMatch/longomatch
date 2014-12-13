@@ -352,8 +352,8 @@ gst_camera_capturer_create_encoder_bin (GstCameraCapturer * gcc)
   }
   g_object_set (gcc->priv->video_filter, "caps", caps, NULL);
 
-  gst_bin_add_many (GST_BIN (gcc->priv->encoder_bin), videoscale,
-      colorspace, videorate, gcc->priv->video_filter, gcc->priv->video_enc,
+  gst_bin_add_many (GST_BIN (gcc->priv->encoder_bin), videorate, videoscale,
+      colorspace, gcc->priv->video_filter, gcc->priv->video_enc,
       gcc->priv->muxer, gcc->priv->filesink, NULL);
 
   gst_element_link_many (videoscale, colorspace, videorate,
