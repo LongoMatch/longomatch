@@ -1013,13 +1013,10 @@ gst_camera_capturer_have_type_cb (GstElement * typefind, guint prob,
 static GstCaps *
 gst_camera_capturer_find_highest_res (GstCameraCapturer *gcc, GstCaps *caps)
 {
-  gint max_width, max_height, i = 0;
+  gint max_width = 0, max_height = 0, i = 0;
   gint width, height;
   gchar *caps_str;
   GstCaps *rcaps;
-
-  max_width = gcc->priv->output_width;
-  max_height = gcc->priv->output_height;
 
   for (i=0; i < gst_caps_get_size (caps); i++) {
     GstStructure *s = gst_caps_get_structure (caps, i);
@@ -1031,6 +1028,11 @@ gst_camera_capturer_find_highest_res (GstCameraCapturer *gcc, GstCaps *caps)
       }
     }
   }
+  if (max_width == 0 || max_height == 0) {
+    max_width = gcc->priv->output_width;
+    max_height = gcc->priv->output_height;
+  }
+
   caps_str = g_strdup_printf ("video/x-raw-yuv, width=%d, height=%d;"
       "video/x-raw-rgb, width=%d, height=%d;"
       "video/x-dv, systemstream=true, width=%d, height=%d",
