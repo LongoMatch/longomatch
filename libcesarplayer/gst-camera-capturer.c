@@ -1011,20 +1011,24 @@ gst_camera_capturer_have_type_cb (GstElement * typefind, guint prob,
 }
 
 static GstCaps *
-gst_camera_capturer_find_highest_res (GstCaps *caps)
+gst_camera_capturer_find_highest_res (GstCameraCapturer *gcc, GstCaps *caps)
 {
-  gint max_width = 0, max_height = 0, i = 0;
+  gint max_width, max_height, i = 0;
   gint width, height;
   gchar *caps_str;
   GstCaps *rcaps;
 
+  max_width = gcc->priv->output_width;
+  max_height = gcc->priv->output_height;
+
   for (i=0; i < gst_caps_get_size (caps); i++) {
     GstStructure *s = gst_caps_get_structure (caps, i);
-    gst_structure_get_int (s, "width", &width);
-    gst_structure_get_int (s, "height", &height);
-    if (width + height > max_width + max_height) {
-      max_width = width;
-      max_height = height;
+    if (gst_structure_get_int (s, "width", &width) &&
+      gst_structure_get_int (s, "height", &height)) {
+      if (width + height > max_width + max_height) {
+        max_width = width;
+        max_height = height;
+      }
     }
   }
   caps_str = g_strdup_printf ("video/x-raw-yuv, width=%d, height=%d;"
@@ -1098,7 +1102,7 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
    * Choose the highest resolution and downscale later if needed */
   source_pad = gst_element_get_static_pad (source, "src");
   source_caps = gst_pad_get_caps_reffed (source_pad);
-  link_caps = gst_camera_capturer_find_highest_res (source_caps);
+  link_caps = gst_camera_capturer_find_highest_res (gcc, source_caps);
   gst_object_unref (source_pad);
   gst_caps_unref (source_caps);
 
