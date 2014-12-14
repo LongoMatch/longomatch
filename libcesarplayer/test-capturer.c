@@ -56,9 +56,10 @@ on_realized_cb (GtkWidget * video)
   window = lgm_get_window_handle (gtk_widget_get_window (video));
 
   gvc = gst_camera_capturer_new (&error);
-  gst_camera_capturer_configure (gvc, sargv[1], CAPTURE_SOURCE_TYPE_SYSTEM,
-      sargv[2], sargv[3], VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
-      VIDEO_MUXER_MP4, 1000, 100, FALSE, 320, 240, window);
+  gst_camera_capturer_configure (gvc, sargv[1],
+      (CaptureSourceType) atoi(sargv[4]), sargv[2], sargv[3],
+      VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
+      VIDEO_MUXER_MP4, 1000, 100, TRUE, 320, 240, window);
   gst_camera_capturer_run (gvc);
   g_signal_connect (G_OBJECT (recbutton), "clicked",
       G_CALLBACK (rec_clicked_cb), gvc);
@@ -95,8 +96,8 @@ create_window (void)
 int
 main (int argc, char **argv)
 {
-  if (argc != 4) {
-    g_print ("Usage: test-encoder output_file device_type device-id\n");
+  if (argc != 5) {
+    g_print ("Usage: test-capturer output_file device_name device_id device_type \n");
     return 1;
   }
   gtk_init (&argc, &argv);
