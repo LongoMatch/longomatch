@@ -1348,8 +1348,10 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
 
     if (gcc->priv->xoverlay == NULL) {
       GstObject *sender = GST_MESSAGE_SRC (msg);
-      if (sender && GST_IS_X_OVERLAY (sender))
+      if (sender && GST_IS_X_OVERLAY (sender)) {
         gcc->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
+        g_object_set (gcc->priv->xoverlay, "sync", FALSE, NULL);
+      }
     }
 
     g_return_if_fail (gcc->priv->xoverlay != NULL);
