@@ -69,6 +69,7 @@ Matej Urbančič (sl)
 Maurizio Napolitano (it)
 Pavel Bárta (cs)
 Petr Kovar (cs)
+Pop Eugen (po)
 Xavier Queralt Mateu (ca)";
 
 		public const string WEBSITE = "http://www.longomatch.com";
