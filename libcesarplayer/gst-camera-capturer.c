@@ -837,12 +837,19 @@ gst_camera_capturer_find_highest_res (GstCameraCapturer *gcc, GstCaps *caps)
   if (max_width == 0 || max_height == 0) {
     max_width = gcc->priv->output_width;
     max_height = gcc->priv->output_height;
+  } else if (max_width < gcc->priv->output_width &&
+      max_height < gcc->priv->output_height) {
+    gcc->priv->output_width = max_width;
+    gcc->priv->output_height = max_height;
+    GST_INFO_OBJECT (gcc, "Reconfiguring the output size to %dx%d",
+        gcc->priv->output_width, gcc->priv->output_height);
   }
 
   caps_str = g_strdup_printf ("video/x-raw-yuv, width=%d, height=%d;"
       "video/x-raw-rgb, width=%d, height=%d;"
       "video/x-dv, systemstream=true, width=%d, height=%d",
       max_width, max_height, max_width, max_height, max_width, max_height);
+  GST_INFO_OBJECT (gcc, "Source caps configured to: %s", caps_str);
   rcaps = gst_caps_from_string (caps_str);
   g_free (caps_str);
   return rcaps;
