@@ -46,8 +46,7 @@ namespace LongoMatch.Services
 		public static IProjectsImporter ProjectsImporter;
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
-		static extern void g_setenv (String env, String val);
-		
+		static extern bool g_setenv (String env, String val, bool overwrite);
 		#endif
 		public static void Init ()
 		{
@@ -65,7 +64,7 @@ namespace LongoMatch.Services
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang);
 #if OSTYPE_WINDOWS
-				g_setenv ("LANGUAGE", Config.Lang);
+				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
 #endif
 			}
 			
