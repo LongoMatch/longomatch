@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class EventTypeTagsEditor : Gtk.Dialog
 	{
-		const int COLS_PER_ROW = 5;
+		const int COLS_PER_ROW = 4;
 		AnalysisEventType eventType;
 		Entry focusEntry;
 
