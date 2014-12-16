@@ -395,7 +395,7 @@ namespace LongoMatch.Services
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 				" the current capture will be closed:") + "\n" + message);
-			HandleCaptureFinished (false);
+			HandleCaptureFinished (true);
 		}
 
 	}
