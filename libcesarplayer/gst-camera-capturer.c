@@ -1042,6 +1042,10 @@ gst_camera_capturer_create_source (GstCameraCapturer *gcc,
    * since the device is set in getcaps and can't be changed later */
   gst_camera_capturer_update_device_id (gcc);
 
+  /* So the internal device of the source is opened and the following getcaps
+   * returns something sensible. */
+  gst_element_set_state (source, GST_STATE_READY);
+
   /* Some capture devices like the Extremecap U3 don't downscale correctly.
    * Choose the highest resolution and downscale later if needed */
   source_pad = gst_element_get_static_pad (source, "src");
