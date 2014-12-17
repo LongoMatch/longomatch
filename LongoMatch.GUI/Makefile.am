@@ -57,7 +57,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Dialog/VideoConversionTool.cs \
 	Gui/Dialog/VideoEditionProperties.cs \
 	Gui/GUIToolkit.cs \
-	Gui/GtkGlue.cs \
 	Gui/MainWindow.cs \
 	Gui/Menu/PeriodsMenu.cs \
 	Gui/Menu/PlaysMenu.cs \

@@ -30,6 +30,7 @@
     <Compile Include="FileChooserHelper.cs" />
     <Compile Include="MessagesHelpers.cs" />
     <Compile Include="Misc.cs" />
+    <Compile Include="GtkGlue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,4 +55,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="LongoMatch.GUI.Helpers.dll.config" />
+  </ItemGroup>
 </Project>

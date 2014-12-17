@@ -34,6 +34,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
+using LongoMatch.Gui.Helpers;
 using Image = LongoMatch.Core.Common.Image;
 using System.Collections.Generic;
 
@@ -493,7 +494,9 @@ namespace LongoMatch.Gui
 			drawbutton.Clicked += OnDrawButtonClicked;
 			volumebutton.Clicked += OnVolumebuttonClicked;
 			timescale.ValueChanged += OnTimescaleValueChanged;
-			timescale.AdjustBounds += OnTimescaleAdjustBounds;			
+			timescale.AdjustBounds += OnTimescaleAdjustBounds;
+			timescale.ButtonPressEvent += OnTimescaleButtonPress;
+			timescale.ButtonReleaseEvent += OnTimescaleButtonRelease;
 			vscale1.FormatValue += OnVscale1FormatValue;
 			vscale1.ValueChanged += OnVscale1ValueChanged;
 
@@ -762,6 +765,28 @@ namespace LongoMatch.Gui
 			
 			Config.EventsBroker.EmitPlayerTick (currentTime);
 			return true;
+		}
+
+		[GLib.ConnectBefore]
+		void OnTimescaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
+		{
+			if (args.Event.Button == 1)
+			{
+				GtkGlue.EventButtonSetButton(args.Event, 2);
+			} else {
+				GtkGlue.EventButtonSetButton(args.Event, 1);
+			}
+		}
+
+		[GLib.ConnectBefore]
+		void OnTimescaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
+		{
+			if (args.Event.Button == 1)
+			{
+				GtkGlue.EventButtonSetButton(args.Event, 2);
+			} else {
+				GtkGlue.EventButtonSetButton(args.Event, 1);
+			}
 		}
 
 		void OnTimescaleAdjustBounds (object o, Gtk.AdjustBoundsArgs args)

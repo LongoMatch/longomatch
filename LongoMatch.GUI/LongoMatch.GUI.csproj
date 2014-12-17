@@ -143,7 +143,6 @@
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
     <Compile Include="Gui\Menu\PlaysMenu.cs" />
-    <Compile Include="Gui\GtkGlue.cs" />
     <Compile Include="Gui\Component\TeamsComboBox.cs" />
     <Compile Include="Gui\Component\MediaFileChooser.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />

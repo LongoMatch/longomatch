@@ -34,6 +34,8 @@ lib_LTLIBRARIES = \
 libcesarplayer_la_SOURCES = \
 	$(BVWMARSHALFILES) \
 	common.h\
+	lgm-gtk-glue.c\
+	lgm-gtk-glue.h\
 	lgm-video-player.h\
 	lgm-video-player.c\
 	gstscreenshot.c \

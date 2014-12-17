@@ -64,6 +64,7 @@
     <None Include="gst-video-encoder.h" />
     <None Include="lgm-video-player.h" />
     <None Include="gst-nle-source.h" />
+    <None Include="lgm-gtk-glue.h" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gst-camera-capturer.c" />
@@ -77,5 +78,6 @@
     <Compile Include="gst-nle-source.c" />
     <Compile Include="lgm-video-player.c" />
     <Compile Include="video-utils.m" />
+    <Compile Include="lgm-gtk-glue.c" />
   </ItemGroup>
 </Project>
