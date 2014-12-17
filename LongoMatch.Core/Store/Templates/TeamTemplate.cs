@@ -189,6 +189,13 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		public void ResetPlayers()
+		{
+			foreach (Player p in List) {
+				p.Playing = true;
+			}
+		}
+
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}

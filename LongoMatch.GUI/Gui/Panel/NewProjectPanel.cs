@@ -499,15 +499,26 @@ namespace LongoMatch.Gui.Panel
 			UpdateTitle ();
 		}
 
-		void HandleShowMenuEvent (List<Player> players)
+		void HandleShowMenuEvent(List<Player> players)
 		{
-			Menu menu = new Menu ();
-			MenuItem item = new MenuItem ("Remove for this match");
-			item.Activated += (sender, e) => {
-				hometemplate.RemovePlayers (players, false);
-				awaytemplate.RemovePlayers (players, false);
-				teamtagger.Reload ();
-			};
+			Menu menu = new Menu();
+			MenuItem item;
+			
+			if (players.Count > 0) {
+				item = new MenuItem("Remove for this match");
+				item.Activated += (sender, e) => {
+					hometemplate.RemovePlayers(players, false);
+					awaytemplate.RemovePlayers(players, false);
+					teamtagger.Reload();
+				};
+			} else {
+				item = new MenuItem ("Reset players");
+				item.Activated += (sender, e) => {
+					hometemplate.ResetPlayers ();
+					awaytemplate.ResetPlayers ();
+					teamtagger.Reload ();
+				};
+			}
 			menu.Add (item);
 			menu.ShowAll ();
 			menu.Popup ();

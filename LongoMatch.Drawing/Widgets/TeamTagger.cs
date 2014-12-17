@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing.Widgets
 				players = tagger.SelectedPlayers;
 			}
 			
-			if (players.Count > 0 && ShowMenuEvent != null) {
+			if (ShowMenuEvent != null) {
 				ShowMenuEvent (players);
 			}
 		}
