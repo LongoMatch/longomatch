@@ -494,7 +494,6 @@ namespace LongoMatch.Gui
 			drawbutton.Clicked += OnDrawButtonClicked;
 			volumebutton.Clicked += OnVolumebuttonClicked;
 			timescale.ValueChanged += OnTimescaleValueChanged;
-			timescale.AdjustBounds += OnTimescaleAdjustBounds;
 			timescale.ButtonPressEvent += OnTimescaleButtonPress;
 			timescale.ButtonReleaseEvent += OnTimescaleButtonRelease;
 			vscale1.FormatValue += OnVscale1FormatValue;
@@ -776,6 +775,13 @@ namespace LongoMatch.Gui
 			} else {
 				GtkGlue.EventButtonSetButton(args.Event, 1);
 			}
+
+			if (!seeking) {
+				seeking = true;
+				IsPlayingPrevState = player.Playing;
+				ignoreTick = true;
+				Pause ();
+			}
 		}
 
 		[GLib.ConnectBefore]
@@ -787,38 +793,22 @@ namespace LongoMatch.Gui
 			} else {
 				GtkGlue.EventButtonSetButton(args.Event, 1);
 			}
-		}
 
-		void OnTimescaleAdjustBounds (object o, Gtk.AdjustBoundsArgs args)
-		{
-			double pos;
-
-			if (!seeking) {
-				seeking = true;
-				IsPlayingPrevState = player.Playing;
-				ignoreTick = true;
-				Pause ();
-				seeksQueue [0] = -1;
-				seeksQueue [1] = -1;
+			if (seeking) {
+				seeking = false;
+				ignoreTick = false;
+				if (IsPlayingPrevState)
+					Play ();
 			}
-
-			pos = timescale.Value;
-			seeksQueue [0] = seeksQueue [1];
-			seeksQueue [1] = pos;
-
-			SeekFromTimescale (pos);
 		}
 
 		void OnTimescaleValueChanged (object sender, System.EventArgs e)
 		{
 			if (seeking) {
-				/* Releasing the timescale always report value different from the real one.
-				 * We need to cache previous position and seek again to the this position */
-				SeekFromTimescale (seeksQueue [0] != -1 ? seeksQueue [0] : seeksQueue [1]);
-				seeking = false;
-				ignoreTick = false;
-				if (IsPlayingPrevState)
-					Play ();
+				double pos;
+
+				pos = timescale.Value;
+				SeekFromTimescale (pos);
 			}
 		}
 

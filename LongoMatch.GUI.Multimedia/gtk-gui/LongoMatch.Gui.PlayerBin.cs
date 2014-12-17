@@ -269,7 +269,6 @@ namespace LongoMatch.Gui
 			// Container child controlsbox.Gtk.Box+BoxChild
 			this.timescale = new global::Gtk.HScale (null);
 			this.timescale.Name = "timescale";
-			this.timescale.UpdatePolicy = ((global::Gtk.UpdateType)(1));
 			this.timescale.Adjustment.Upper = 1;
 			this.timescale.Adjustment.PageIncrement = 1;
 			this.timescale.Adjustment.StepIncrement = 1;

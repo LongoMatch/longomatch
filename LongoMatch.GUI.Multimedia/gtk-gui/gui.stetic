@@ -372,7 +372,6 @@
                 <child>
                   <widget class="Gtk.HScale" id="timescale">
                     <property name="MemberName" />
-                    <property name="UpdatePolicy">Discontinuous</property>
                     <property name="Upper">1</property>
                     <property name="PageIncrement">1</property>
                     <property name="StepIncrement">1</property>
