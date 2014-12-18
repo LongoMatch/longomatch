@@ -77,7 +77,7 @@ namespace LongoMatch
 					CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				} catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
-						"the application will closed.");
+						"the application will be closed.");
 					Config.GUIToolkit.ErrorMessage (msg);
 					Log.Exception (locked);
 					return;
