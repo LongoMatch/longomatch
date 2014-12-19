@@ -47,6 +47,12 @@ stop_clicked (GtkButton * b, GstCameraCapturer * gcc)
 }
 
 static void
+on_delete_cb (GtkWidget * video)
+{
+  gtk_main_quit ();
+}
+
+static void
 on_realized_cb (GtkWidget * video)
 {
   GstCameraCapturer *gvc;
@@ -88,6 +94,7 @@ create_window (void)
   gtk_box_pack_start (GTK_BOX (hbox), recbutton, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), stopbutton, TRUE, TRUE, 0);
   g_signal_connect (video, "realize", G_CALLBACK (on_realized_cb), NULL);
+  g_signal_connect (video, "delete_event", G_CALLBACK (on_delete_cb), NULL);
   gtk_widget_show_all (window);
 }
 
