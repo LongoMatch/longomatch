@@ -546,14 +546,12 @@ gst_camera_capturer_create_splitter_bin (GstCameraCapturer * gcc)
   GST_INFO_OBJECT (gcc, "Creating splitter bin");
   /* Create elements */
   gcc->priv->splitter_bin = gst_bin_new ("splitter");
-  v_prev_queue = gst_element_factory_make ("queue2", "video-preview-queue");
+  v_prev_queue = gst_element_factory_make ("queue", "video-preview-queue");
   gcc->priv->video_appsrc = gst_element_factory_make ("appsrc", "video-appsrc");
-  v_queue = gst_element_factory_make ("queue2", "video-queue");
+  v_queue = gst_element_factory_make ("queue", "video-queue");
 
   g_object_set (gcc->priv->video_appsrc, "block", TRUE, "max-bytes",
       20 * 1024 * 1024, NULL);
-  g_object_set (v_queue, "max-size-time", 1 * GST_SECOND, NULL);
-  g_object_set (v_prev_queue, "max-size-bytes", 0, NULL);
 
   gst_camera_capturer_create_converter_bin (gcc);
   gst_bin_add_many (GST_BIN (gcc->priv->splitter_bin),
@@ -599,8 +597,8 @@ gst_camera_capturer_fill_audio_splitter_bin (GstCameraCapturer * gcc)
   /* Create elements */
   gcc->priv->audio_appsrc =
       gst_element_factory_make ("appsrc", "audio-appsrc");
-  a_queue = gst_element_factory_make ("queue2", "audio-queue");
-  a_prev_queue = gst_element_factory_make ("queue2", "audio-preview-queue");
+  a_queue = gst_element_factory_make ("queue", "audio-queue");
+  a_prev_queue = gst_element_factory_make ("queue", "audio-preview-queue");
 
   g_object_set (a_queue, "max-size-time", 1 * GST_SECOND, NULL);
 
