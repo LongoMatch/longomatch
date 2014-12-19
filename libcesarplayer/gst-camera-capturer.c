@@ -550,8 +550,9 @@ gst_camera_capturer_create_splitter_bin (GstCameraCapturer * gcc)
   gcc->priv->video_appsrc = gst_element_factory_make ("appsrc", "video-appsrc");
   v_queue = gst_element_factory_make ("queue", "video-queue");
 
-  g_object_set (gcc->priv->video_appsrc, "block", TRUE, "max-bytes",
-      20 * 1024 * 1024, NULL);
+  gst_app_src_set_max_bytes ((GstAppSrc*) gcc->priv->video_appsrc,
+      (guint64) 20 * 1024 * 1024);
+  g_object_set (gcc->priv->video_appsrc, "block", TRUE, NULL);
 
   gst_camera_capturer_create_converter_bin (gcc);
   gst_bin_add_many (GST_BIN (gcc->priv->splitter_bin),
