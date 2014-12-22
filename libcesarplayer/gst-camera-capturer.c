@@ -311,8 +311,8 @@ gst_camera_capturer_create_converter_bin (GstCameraCapturer * gcc)
   videoscale = gst_element_factory_make ("videoscale", NULL);
   filter = gst_element_factory_make ("capsfilter", NULL);
   /* Set caps for the encoding resolution */
-  caps = gst_caps_new_simple ("video/x-raw-yuv", "framerate",
-      GST_TYPE_FRACTION, 25, 1, NULL);
+  caps = gst_caps_from_string ("video/x-raw-yuv, framerate=25/1;"
+      "video/x-raw-rgb, framerate=25/1");
   if (gcc->priv->output_width != 0) {
     gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->output_width,
         NULL);
