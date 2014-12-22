@@ -29,6 +29,7 @@ namespace LongoMatch.Core.Common
 		public event FilterUpdatedHandler FilterUpdated;
 
 		Dictionary<EventType, List<Tag>> eventsFilter;
+		List<Tag> tagsFilter;
 		List<Player> playersFilter;
 		List<Period> periodsFilter;
 		List<Timer> timersFilter;
@@ -40,6 +41,7 @@ namespace LongoMatch.Core.Common
 			eventsFilter = new Dictionary<EventType, List<Tag>> ();
 			playersFilter = new List<Player> (); 
 			periodsFilter = new List<Period> ();
+			tagsFilter = new List<Tag> ();
 			timersFilter = new List<Timer> ();
 			ClearAll ();
 			UpdateFilters ();
@@ -76,6 +78,7 @@ namespace LongoMatch.Core.Common
 			playersFilter.Clear ();
 			periodsFilter.Clear ();
 			timersFilter.Clear ();
+			tagsFilter.Clear ();
 			if (update)
 				Update ();
 		}
@@ -116,6 +119,16 @@ namespace LongoMatch.Core.Common
 			Update ();
 		}
 
+		public void FilterTag (Tag tag, bool visible)
+		{
+			if (visible) {
+				if (!tagsFilter.Contains (tag))
+					tagsFilter.Add (tag);
+			} else {
+				if (tagsFilter.Contains (tag))
+					tagsFilter.Remove (tag);
+			}
+		}
 		public void FilterTimer (Timer timer, bool visible)
 		{
 			if (visible) {
@@ -193,7 +206,7 @@ namespace LongoMatch.Core.Common
 
 		void UpdateVisiblePlays ()
 		{
-			bool cat_match = true, player_match = true;
+			bool cat_match = true, tag_match = true, player_match = true;
 			bool period_match = true, timer_match = true;
 
 			VisiblePlays = new List<TimelineEvent> ();
@@ -209,6 +222,17 @@ namespace LongoMatch.Core.Common
 						} else {
 							cat_match = false;
 						}
+					}
+				}
+
+				if (tagsFilter.Count > 0) {
+					if (play.Tags.Count > 0 && play.Tags [0].Value == "Layup") {
+						Console.WriteLine (tagsFilter.Intersect (play.Tags).Count ());
+					}
+					if (tagsFilter.Intersect (play.Tags).Count () == 0) {
+						tag_match = false;
+					} else {
+						tag_match = true;
 					}
 				}
 
@@ -240,7 +264,7 @@ namespace LongoMatch.Core.Common
 					}
 				}
 
-				if (player_match && cat_match && period_match && timer_match) {
+				if (player_match && cat_match && tag_match && period_match && timer_match) {
 					VisiblePlays.Add (play);
 				}
 			}

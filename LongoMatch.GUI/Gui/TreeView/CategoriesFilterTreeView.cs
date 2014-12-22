@@ -16,12 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Linq;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -69,6 +68,15 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			}
+
+			var tagsByGroup = project.Dashboard.CommonTagsByGroup.ToDictionary (x => x.Key, x => x.Value);
+			foreach (string grp in tagsByGroup.Keys) {
+				TreeIter grpIter = store.AppendValues (new StringObject (grp), false);
+				foreach (Tag tag in tagsByGroup[grp]) {
+					store.AppendValues (grpIter, tag, false);
+				}
+			}
+
 			filter.IgnoreUpdates = false;
 			filter.Update ();
 			Model = store;
@@ -83,7 +91,11 @@ namespace LongoMatch.Gui.Component
 			
 			if (o is Tag) {
 				EventType evType = store.GetValue (parent, 0) as EventType;
-				filter.FilterEventTag (evType, o as Tag, active);
+				if (evType != null) {
+					filter.FilterEventTag (evType, o as Tag, active);
+				} else {
+					filter.FilterTag (o as Tag, active);
+				}
 			} else if (o is EventType) {
 				filter.FilterEventType (o as EventType, active);
 			} else if (o is Period) {
