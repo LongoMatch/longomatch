@@ -427,7 +427,11 @@ namespace LongoMatch.Gui
 				this.fileSet = fileSet;
 				angle = MediaFileAngle.Angle1;
 				activeFile = fileSet.GetAngle (angle);
-				videowindow.Ratio = (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight);
+				if (activeFile.VideoHeight != 0) {
+					videowindow.Ratio = (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight);
+				} else {
+					videowindow.Ratio = 1;
+				}
 				try {
 					Log.Debug ("Opening new file " + activeFile.FilePath);
 					player.Open (activeFile.FilePath);
