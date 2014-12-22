@@ -112,11 +112,13 @@ namespace LongoMatch.Gui.Component
 			
 			/* Check/Uncheck all children */
 			if (recurse) {
+				filter.IgnoreUpdates = true;
 				store.IterChildren (out child, iter);
 				while (store.IterIsValid(child)) {
-					UpdateSelectionPriv (child, active, false, true);
+					UpdateSelectionPriv (child, active, false, false);
 					store.IterNext (ref child);
 				}
+				filter.IgnoreUpdates = false;
 			}
 			
 			if (recurse && checkParents)

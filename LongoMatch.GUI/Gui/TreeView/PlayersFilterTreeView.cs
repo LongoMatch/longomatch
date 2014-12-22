@@ -83,12 +83,14 @@ namespace LongoMatch.Gui.Component
 				TreeIter child;
 				store.IterChildren(out child, iter);
 				
+				filter.IgnoreUpdates = true;
 				while (store.IterIsValid(child)) {
 					Player childPlayer = (Player) store.GetValue(child, 0);
 					filter.FilterPlayer (childPlayer, active);
 					store.SetValue(child, 1, active);
 					store.IterNext(ref child);
 				}
+				filter.IgnoreUpdates = false;
 			} else {
 				filter.FilterPlayer (player, active);
 				if (!active) {
