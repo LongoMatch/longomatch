@@ -323,6 +323,9 @@ namespace LongoMatch.Core.Store
 			if (!EventTypes.Contains (SubstitutionsEventType)) {
 				EventTypes.Add (SubstitutionsEventType);
 			}
+
+			/* Remove null EventTypes just in case */
+			EventTypes = EventTypes.Where (e => e != null).ToList ();
 		}
 
 		public SubstitutionEvent SubsitutePlayer (TeamTemplate template, Player playerIn, Player playerOut,
