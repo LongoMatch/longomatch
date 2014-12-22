@@ -250,6 +250,11 @@ namespace LongoMatch
 			set;
 		}
 
+		static public bool SupportsFullHD {
+			get;
+			set;
+		}
+
 		static public Image FieldBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.FIELD_BACKGROUND));
