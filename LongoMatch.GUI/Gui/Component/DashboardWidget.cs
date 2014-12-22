@@ -247,6 +247,7 @@ namespace LongoMatch.Gui.Component
 				button.Name + "?";
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 				template.List.Remove (button);
+				Edited = true;
 				Refresh ();
 			}
 		}
