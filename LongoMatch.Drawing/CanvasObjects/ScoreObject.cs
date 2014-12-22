@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class ScoreObject: TaggerObject
+	public class ScoreObject: TimedTaggerObject
 	{
 		static Image iconImage;
 
@@ -49,7 +47,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override string Text {
 			get {
-				return Button.Name;
+				if (Recording) {
+					return (CurrentTime - Start).ToSecondsString ();
+				} else {
+					return Button.Name;
+				}
 			}
 		}
 	}

@@ -65,12 +65,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
+		public Time Start {
+			get;
+			set;
+		}
+
 		public override Color BackgroundColor {
 			get {
 				return Tagger.BackgroundColor;
 			}
 		}
-		
+
 		public override Color BackgroundColorActive {
 			get {
 				return Tagger.DarkColor;
@@ -117,10 +122,75 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return 1;
 			}
 		}
+	}
 
-		public Time Start {
+	public class TimedTaggerObject: TaggerObject
+	{
+		Time currentTime;
+
+		public TimedTaggerObject (TimedDashboardButton button): base (button)
+		{
+			TimedButton = button;
+			currentTime = new Time (0);
+			Start = null;
+		}
+
+		public TimedDashboardButton TimedButton {
 			get;
 			set;
+		}
+
+		public Time CurrentTime {
+			get {
+				return currentTime;
+			}
+			set {
+				Time prevCurrentTime = currentTime;
+				currentTime = value;
+				if (Start != null) {
+					bool secsChanged = (prevCurrentTime - Start).TotalSeconds != (value - Start).TotalSeconds;
+					if (currentTime < Start) {
+						Clear ();
+					} else if (secsChanged) {
+						ReDraw ();
+					}
+				}
+			}
+		}
+
+		protected bool Recording {
+			get;
+			set;
+		}
+
+		public override void ClickReleased ()
+		{
+			if (TimedButton.TagMode == TagMode.Predefined) {
+				Active = !Active;
+				EmitClickEvent ();
+			} else if (!Recording) {
+				StartRecording ();
+			} else {
+				EmitClickEvent ();
+				Clear ();
+			}
+		}
+
+		protected void StartRecording ()
+		{
+			Recording = true;
+			if (Start == null) {
+				Start = CurrentTime;
+			}
+			Active = true;
+			ReDraw ();
+		}
+
+		protected virtual void Clear ()
+		{
+			Recording = false;
+			Start = null;
+			Active = false;
 		}
 	}
 }

@@ -22,7 +22,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CardObject: TaggerObject
+	public class CardObject: TimedTaggerObject
 	{
 		public CardObject (PenaltyCardButton card): base (card)
 		{
@@ -33,18 +33,28 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-
+		
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			Color front, back;
+			int width;
+
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
 			tk.Begin ();
 
-			/* Draw Rectangle */
-			tk.FillColor = CurrentBackgroundColor;
-			tk.StrokeColor = CurrentBackgroundColor;
-			tk.LineWidth = 0;
+			if (Active) {
+				tk.LineWidth = StyleConf.ButtonLineWidth;
+				tk.StrokeColor = BackgroundColor;
+				tk.FillColor = TextColor;
+			} else {
+				tk.LineWidth = 0;
+				tk.StrokeColor = TextColor;
+				tk.FillColor =  BackgroundColor;
+			}
+
+			/* Draw Shape */
 			switch (Button.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
 				tk.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
@@ -62,9 +72,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.StrokeColor = Button.TextColor;
-			tk.FillColor = Button.TextColor;
-			tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
+			if (Recording) {
+				tk.DrawText (Position, Button.Width, Button.Height, (CurrentTime - Start).ToSecondsString());
+			} else {
+				tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
+			}
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

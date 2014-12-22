@@ -26,7 +26,7 @@ using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CategoryObject: TaggerObject
+	public class CategoryObject: TimedTaggerObject
 	{
 		public event ButtonSelectedHandler EditButtonTagsEvent;
 
@@ -37,11 +37,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		static Image applyImage;
 		Dictionary <Rectangle, object> rects, buttonsRects;
 		Dictionary <string, List<Tag>> tagsByGroup;
-		bool recording, emitEvent, delayEvent, editClicked;
+		bool emitEvent, delayEvent, editClicked;
 		bool cancelClicked, applyClicked, moved;
 		int nrows;
 		const int TIMEOUT_MS = 800;
-		Time currentTime;
 		System.Threading.Timer timer;
 		object cancelButton = new object ();
 		object editbutton = new object ();
@@ -55,7 +54,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			rects = new Dictionary <Rectangle, object> ();
 			buttonsRects = new Dictionary <Rectangle, object> ();
 			SelectedTags = new List<Tag> ();
-			currentTime = new Time (0);
 			cancelRect = new Rectangle (new Point (0, 0), 0, 0);
 			editRect = new Rectangle (new Point (0, 0), 0, 0);
 			applyRect = new Rectangle (new Point (0, 0), 0, 0);
@@ -100,23 +98,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override Image Icon {
 			get {
 				return iconImage;
-			}
-		}
-
-		public Time CurrentTime {
-			get {
-				return currentTime;
-			}
-			set {
-				bool secsChanged = currentTime.TotalSeconds != value.TotalSeconds;
-				currentTime = value;
-				if (Start != null) {
-					if (currentTime < Start) {
-						Clear ();
-					} else if (secsChanged) {
-						ReDraw ();
-					}
-				}
 			}
 		}
 
@@ -186,29 +167,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			ReDraw ();
 		}
 
-		void Clear ()
+		override protected void Clear ()
 		{
-			recording = false;
+			base.Clear();
 			emitEvent = false;
 			cancelClicked = false;
-			Start = null;
 			SelectedTags.Clear ();
-			Active = false;
 		}
 
 		void EmitCreateEvent ()
 		{
 			EmitClickEvent ();
 			Clear ();
-		}
-
-		void StartRecording ()
-		{
-			recording = true;
-			if (Start == null) {
-				Start = CurrentTime;
-			}
-			Active = true;
 		}
 
 		void TimerCallback (Object state)
@@ -237,7 +207,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				emitEvent = true;
 				Active = true;
 			} else if (Button.TagMode == TagMode.Free) {
-				if (!recording) {
+				if (!Recording) {
 					StartRecording ();
 				} else {
 					emitEvent = true;
@@ -415,12 +385,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (ShowTags) {
 				rects.Add (new Rectangle (Position, Width, HeaderHeight), Button);
-				if (recording) {
+				if (Recording) {
 					/* Draw Timer instead */
 					return;
 				}
 			} else {
-				if (!recording) {
+				if (!Recording) {
 					width = Width;
 					height = Height - HeaderHeight;
 					pos = new Point (Position.X, Position.Y + HeaderHeight);
@@ -486,7 +456,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		void DrawRecordTime (IDrawingToolkit tk)
 		{
-			if (recording && Mode != TagMode.Edit) {
+			if (Recording && Mode != TagMode.Edit) {
 				if (ShowTags) {
 					tk.FontSize = 12;
 					tk.FontWeight = FontWeight.Normal;
@@ -547,7 +517,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
 			tk.FontSize = StyleConf.ButtonButtonsFontSize;
-			if (!recording) {
+			if (!Recording) {
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 				tk.StrokeColor = BackgroundColor;
 				tk.LineWidth = StyleConf.ButtonLineWidth;
