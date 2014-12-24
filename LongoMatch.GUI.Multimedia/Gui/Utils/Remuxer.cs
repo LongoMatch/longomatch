@@ -43,7 +43,7 @@ namespace LongoMatch.Video.Utils
 		Window parent;
 		
 		public Remuxer (MediaFile inputFile, string outputFilepath = null,
-		                VideoMuxerType muxer = VideoMuxerType.Matroska)
+		                VideoMuxerType muxer = VideoMuxerType.Mp4)
 		{
 			this.inputFile = inputFile;
 			this.muxer = muxer;
