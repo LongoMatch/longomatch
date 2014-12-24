@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing
 		{
 			double countX1, countX2, countY, countYC;
 			
-			countX1 = cellArea.Start.X + cellArea.Width - StyleConf.ListImageWidth + StyleConf.ListCountRadio;
+			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator + StyleConf.ListCountRadio;
 			countX2 = countX1 + StyleConf.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
 			countY = countYC - StyleConf.ListCountRadio;
@@ -73,6 +73,7 @@ namespace LongoMatch.Drawing
 			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 			tk.FontAlignment = FontAlignment.Center;
 			tk.FontWeight = FontWeight.Bold;
+			tk.FontSize = 14;
 			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
 			             2 * StyleConf.ListCountRadio, count.ToString ());
 		}
@@ -107,7 +108,7 @@ namespace LongoMatch.Drawing
 			Point image, text;
 			double textWidth;
 
-			image = new Point (cellArea.Start.X, cellArea.Start.Y);
+			image = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			text = new Point (image.X + StyleConf.ListRowSeparator + StyleConf.ListImageWidth,
 			                  cellArea.Start.Y);
 			textWidth = cellArea.Start.X + cellArea.Width - text.X;
@@ -125,9 +126,10 @@ namespace LongoMatch.Drawing
 		public static void RenderPlaylist (Playlist playlist, int count, bool isExpanded, IDrawingToolkit tk,
 		                                   IContext context, Area backgroundArea, Area cellArea)
 		{
+			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
-			RenderBackgroundAndText (isExpanded, tk, backgroundArea, cellArea.Start, cellArea.Width, playlist.Name);
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, playlist.Name);
 			RenderCount (Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
@@ -136,9 +138,10 @@ namespace LongoMatch.Drawing
 		public static void RenderAnalysisCategory (EventType cat, int count, bool isExpanded, IDrawingToolkit tk,
 		                                           IContext context, Area backgroundArea, Area cellArea)
 		{
+			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
-			RenderBackgroundAndText (isExpanded, tk, backgroundArea, cellArea.Start, cellArea.Width, cat.Name);
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP , cellArea.Width - textP.X, cat.Name);
 			RenderCount (cat.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();

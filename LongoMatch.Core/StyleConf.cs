@@ -59,6 +59,8 @@ namespace LongoMatch.Core.Common
 		public const int ListCategoryHeight = 50;
 		public const int ListCountRadio = 10;
 		public const int ListCountWidth = 20;
+		public const int ListTextOffset =  ListRowSeparator * 2 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
+
 		public const int ListEyeIconOffset = 10;
 		public const string ListEyeIconPath = "hicolor/scalable/actions/longomatch-eye.svg";
 
