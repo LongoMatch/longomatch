@@ -1,25 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
-# Marek Černocký <marek@manet.cz>, 2010-2013
-# Marek Černocký <marek@manet.cz>, 2014
 # Pavel Bárta <BartyCok@email.cz>, 2009
 # Petr Tronicek <petr.tronicek@gmail.com>, 2014
+# Marek Černocký <marek@manet.cz>, 2010-2013, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-12-21 22:55+0000\n"
-"PO-Revision-Date: 2014-12-04 10:05+0000\n"
-"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/longomatch/language/cs/)\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-12-27 22:58+0000\n"
+"PO-Revision-Date: 2014-12-30 11:04+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../libcesarplayer/lgm-video-player.c:349
 msgid "Location not found."
@@ -39,7 +41,9 @@ msgstr "Mediální soubor nelze přehrát."
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr "Selhalo vytvoření přehrávacího objektu GStreamer. Zkontrolujte prosím svoji instalaci systému GStreamer."
+msgstr ""
+"Selhalo vytvoření přehrávacího objektu GStreamer. Zkontrolujte prosím svoji "
+"instalaci systému GStreamer."
 
 #: ../libcesarplayer/lgm-video-player.c:969
 #, c-format
@@ -61,9 +65,10 @@ msgstr "Nástroj pro analýzu sportu pro trenéry"
 
 #: ../LongoMatch/Main.cs:79
 msgid ""
-"The database seems to be locked by another instance and the application will"
-" closed."
-msgstr "Vypadá to, že databáze je uzamčena jiným procesem a aplikace bude zavřena."
+"The database seems to be locked by another instance and the application will "
+"be closed."
+msgstr ""
+"Vypadá to, že databáze je uzamčena jiným procesem a aplikace bude zavřena."
 
 #: ../LongoMatch/Main.cs:150
 msgid "The application has finished with an unexpected error."
@@ -108,7 +113,7 @@ msgstr "Smazat vybranou událost"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:56
 msgid "Draw frame"
-msgstr ""
+msgstr "Vykreslit snímek"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:57
 msgid "Edit selected event"
@@ -116,7 +121,7 @@ msgstr "Upravit vybranou událost"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:58
 msgid "Adjust timeline to current position"
-msgstr ""
+msgstr "Přizpůsobit časovou osu aktuální pozici"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:59
 msgid "Frame step backward"
@@ -180,7 +185,7 @@ msgstr "Snížit rychlost přehrávání"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:75
 msgid "Pause/Resume capture clock"
-msgstr ""
+msgstr "Pozastavit/spustit hodiny nahrávání"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:76
 msgid "Start recording period"
@@ -270,19 +275,20 @@ msgstr "Není definován"
 msgid "No video file associated"
 msgstr "Není přiřazeno žádné video"
 
-#: ../LongoMatch.Core/Store/Project.cs:330
+#: ../LongoMatch.Core/Store/Project.cs:345
 msgid "No lineup events found"
 msgstr "Není zaznamenána žádná událost základní sestavy"
 
-#: ../LongoMatch.Core/Store/Project.cs:333
+#: ../LongoMatch.Core/Store/Project.cs:348
 msgid "A substitution can't happen before the lineup event"
-msgstr "Střídání není možné dokud není zaznamenána žádná událost základní sestavy"
+msgstr ""
+"Střídání není možné dokud není zaznamenána žádná událost základní sestavy"
 
-#: ../LongoMatch.Core/Store/Project.cs:402
+#: ../LongoMatch.Core/Store/Project.cs:417
 msgid "Lineup"
 msgstr "Základní sestava"
 
-#: ../LongoMatch.Core/Store/Project.cs:494
+#: ../LongoMatch.Core/Store/Project.cs:509
 #: ../LongoMatch.Migration/Core/Project.cs:289
 msgid "The file you are trying to load is not a valid project"
 msgstr "Soubor, který se pokoušíte načíst, není platný projekt"
@@ -341,7 +347,7 @@ msgstr "Tým"
 #. Periods
 #: ../LongoMatch.Drawing/Widgets/TimelineLabels.cs:78
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:434
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:52
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:51
 msgid "Periods"
 msgstr "Části hry"
 
@@ -413,15 +419,15 @@ msgstr "Oštítkovat jako čáru"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:322
 msgid "Field position"
-msgstr ""
+msgstr "Pozice na hrací ploše"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:332
 msgid "Half field position"
-msgstr ""
+msgstr "Pozice na půlce hrací plochy"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:344
 msgid "Goal position"
-msgstr ""
+msgstr "Gólová pozice"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:356
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:85
@@ -430,7 +436,7 @@ msgstr "Způsob řazení"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:392
 msgid "Tags per row"
-msgstr ""
+msgstr "Štítky k řádkům"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:404
 msgid "Show tags"
@@ -500,7 +506,7 @@ msgstr "Strana4"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:228
 msgid "<span font_desc=\"10\">Field</span>"
-msgstr "Hřiště"
+msgstr "Hrací plocha"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:240
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:315
@@ -512,7 +518,7 @@ msgstr "Klikni pro změnu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:305
 msgid "<span font_desc=\"10\">Half field</span>"
-msgstr "Polovina hřiště"
+msgstr "Půlka hrací plochy"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:380
 msgid "<span font_desc=\"10\">Goal</span>"
@@ -551,7 +557,9 @@ msgstr "Výstupní adresář"
 msgid ""
 "Render new events automatically\n"
 "(Requires a powerful CPU)"
-msgstr "Vykreslovat nové události automaticky\n(vyžaduje výkonný procesor)"
+msgstr ""
+"Vykreslovat nové události automaticky\n"
+"(vyžaduje výkonný procesor)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
 msgid "<b>Main camera angle</b>"
@@ -584,8 +592,8 @@ msgstr "  Filtry  "
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:116
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:77
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:190
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:178
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:180
 msgid "Name:"
 msgstr "Jméno:"
 
@@ -759,20 +767,40 @@ msgstr "Kalendář"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ChooseProjectDialog.cs:16
 msgid "Choose project"
-msgstr ""
+msgstr "Výběr projektu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs:54
 msgid "Missing CODECS"
-msgstr ""
+msgstr "Schází KODEKY"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs:65
 msgid ""
-"As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n"
+"As explained and detailed in the <a href=\"http://www.longomatch.com/open-"
+"source.html\">OpenSource project</a> page, the use of this free and open "
+"source version of LongoMatch requires that you also install additional "
+"software called a CODEC, which may also be free.  \n"
 "\n"
-"To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n"
+"To acknowledge your understanding and for more information on why this is "
+"so, where to get it and how to install it visit the <a href=\"http://www."
+"longomatch.com/open-source.html\">OpenSource project</a> page.\n"
 "\n"
-"To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
+"To avoid this, and to enjoy many additional functional benefits, we "
+"encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-"
+"use. "
 msgstr ""
+"Jak je podrobně vysvětleno na stránce <a href=\"http://www.longomatch.com/"
+"open-source.html\">Projekt OpenSource</a>, použití této svobodné verze "
+"LongoMatch s otevřeným kódem vyžaduje i instalaci dodatečného softwaru "
+"nazývaného KODEK, který může být rovněž svobodný.\n"
+"\n"
+"Jestli se chcete ujistit, že tomu rozumíte, a získat více informací, proč "
+"tomu tak je, kde jej získat a jak jej nainstalovat, navštivte zmíněnou "
+"stránku <a href=\"http://www.longomatch.com/open-source.html\">Projekt "
+"OpenSource</a>.\n"
+"\n"
+"Abyste předešli těmto komplikacím a navíc si mohli užívat další "
+"funkcionality, doporučujeme přejít na LongoMatch PRO, který je sice za "
+"poplatek, ale ihned plně připraven k používání."
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
 msgid "Databases manager"
@@ -853,8 +881,15 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
-msgstr "Právě probíhá nahrávání projektu.\nMůžete pokračovat v současném nahrávání, zrušit jej nebo svůj projekt uložit.\n\n<b>Varování: Pokud aktuální projekt zrušíte, budou ztraceny všechny změny, které jste v něm provedli.</b>"
+"<b>Warning: If you cancel the current project all your changes will be lost."
+"</b>"
+msgstr ""
+"Právě probíhá nahrávání projektu.\n"
+"Můžete pokračovat v současném nahrávání, zrušit jej nebo svůj projekt "
+"uložit.\n"
+"\n"
+"<b>Varování: Pokud aktuální projekt zrušíte, budou ztraceny všechny změny, "
+"které jste v něm provedli.</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
 msgid "Return"
@@ -948,7 +983,9 @@ msgstr "<b>Hráč vně</b>"
 msgid ""
 "\n"
 "A new version of LongoMatch has been released at www.ylatuya.es!\n"
-msgstr "\nNová verze LongoMatch je k dipozici ke stažení na www.ylatuya.es!\n"
+msgstr ""
+"\n"
+"Nová verze LongoMatch je k dipozici ke stažení na www.ylatuya.es!\n"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
 msgid "The new version is "
@@ -958,7 +995,9 @@ msgstr "Nová verze je "
 msgid ""
 "\n"
 "You can download it using this direct link:"
-msgstr "\nPřímý odkaz pro stažení nové verze:"
+msgstr ""
+"\n"
+"Přímý odkaz pro stažení nové verze:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
 msgid "label7"
@@ -1255,9 +1294,10 @@ msgstr "Kategorie"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
 msgid ""
-"You are about to delete a category and all the plays added to this category."
-" Do you want to proceed?"
-msgstr "Hodláte odstranit kategorii a všechny hry v ní přidané. Chcete pokračovat?"
+"You are about to delete a category and all the plays added to this category. "
+"Do you want to proceed?"
+msgstr ""
+"Hodláte odstranit kategorii a všechny hry v ní přidané. Chcete pokračovat?"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
@@ -1270,7 +1310,7 @@ msgstr "Pozadí hrací plochy"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:155
 msgid "Half field background"
-msgstr "Pozadí poloviny hrací plochy"
+msgstr "Pozadí půlky hrací plochy"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:158
 msgid "Goal background"
@@ -1307,37 +1347,37 @@ msgstr "Prohlížeč zónového štítkování"
 msgid "Do you want to delete: "
 msgstr "Přejete si smazat:"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:265
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:266
 msgid "Edit dashboard"
 msgstr "Upravit ovládací panel"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:274
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:275
 msgid "Disable popup window"
 msgstr "Zakázat vyskakovací okno"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:281
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:282
 msgid "Fit dashboard"
-msgstr ""
+msgstr "Přizpůsobit ovládací panel"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:286
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:287
 msgid "Fill dashboard"
-msgstr ""
+msgstr "Roztáhnout ovládací panel"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:291
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:292
 msgid "1:1 dashboard"
 msgstr "Ovládací panel 1∶1"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:389
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:390
 #: ../LongoMatch.GUI/Gui/Component/Timeline.cs:217
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:459
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:102
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:133
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:157
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:192
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:159
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:194
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:472
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:473
 msgid "Could not parse game periods."
 msgstr "Nelze analyzovat část hry."
 
@@ -1378,7 +1418,7 @@ msgid "Do you want to delete player: "
 msgstr "Přejete se smazat hráče:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:541
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
 msgid "Could not parse tactics string"
 msgstr "Neni mozne rozpoznat takticky řetězec"
 
@@ -1736,7 +1776,7 @@ msgstr "Export projektu"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
-msgstr ""
+msgstr "Systém"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
 msgid "System templates can't be edited, do you want to create a copy?"
@@ -1783,7 +1823,7 @@ msgstr "Přidat tlačítko se skóre"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:259
 msgid "Add timer button"
-msgstr ""
+msgstr "Přidat tlačítko se stopkami"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:261
 msgid "Add card button"
@@ -1844,7 +1884,7 @@ msgstr "Přejete si uložit aktuální šablonu"
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
 msgid "Could not load team"
-msgstr ""
+msgstr "Nelze načíst tým"
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
 msgid "The default team can't be deleted"
@@ -1897,13 +1937,13 @@ msgid ""
 "manager"
 msgstr "Správce týmů"
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:35
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
 msgid "Category"
 msgstr "Kategorie"
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:57
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:56
 msgid "Timers"
-msgstr ""
+msgstr "Stopky"
 
 #: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:69
 msgid "Visible"
@@ -1917,28 +1957,28 @@ msgstr "Vybrat vše"
 msgid "Unselect all"
 msgstr "Zrušit výběr"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:119
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:121
 msgid "External video"
 msgstr "Externí video"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:122
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:124
 msgid "External image"
 msgstr "Externí obrázek"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:138
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:176
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:178
 msgid "Edit name"
 msgstr "Upravit název"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:149
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:151
 msgid "Insert before"
 msgstr "Vložit před"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:153
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:155
 msgid "Insert after"
 msgstr "Vložit za"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:186
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:188
 msgid "Render"
 msgstr "Provést"
 
@@ -1968,7 +2008,7 @@ msgstr "Analyzuje se soubor s videem:"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:321
 msgid "Timeout parsing file."
-msgstr ""
+msgstr "Vypršel časový limit při zpracování souboru."
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:323
 msgid "This file doesn't contain a video stream."
@@ -1982,10 +2022,21 @@ msgstr "Tento soubor obsahuje video, ale jeho délka je 0."
 msgid "Open file"
 msgstr "Otevření souboru"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:351
+#: ../LongoMatch.GUI.Helpers/Misc.cs:352
 msgid ""
-"This file is not a supported format, convert it with video conversion tool"
+"This file is not in a supported format, convert it with the video conversion "
+"tool"
 msgstr ""
+"Tento soubor není v podporovaném formátu, převeďte jej pomocí nástroje pro "
+"převod videa"
+
+#: ../LongoMatch.GUI.Helpers/Misc.cs:356
+msgid ""
+"This file needs to be converted into a more suitable format.(This step will "
+"only take a few minutes)"
+msgstr ""
+"Tento soubor je zapotřebí převést do vhodnějšího formátu. (tento krok zabere "
+"jen pár minut)"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:72
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:95
@@ -2008,11 +2059,11 @@ msgstr "Čas:"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs:49
 msgid "Replay"
-msgstr ""
+msgstr "Ze záznamu"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs:90
 msgid "Live"
-msgstr "Źivě"
+msgstr "Živě"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:177
 msgid "Period recording already started"
@@ -2043,7 +2094,7 @@ msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
 msgid "Remuxing file..."
-msgstr "Opětovné multiplexování souboru…"
+msgstr "Znovu se multiplexuje soubor…"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:80
 msgid "Remuxing file, this might take a while..."
@@ -2055,9 +2106,11 @@ msgstr "Chyba multiplexování souboru:\n"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:165
 msgid ""
-"The file you are trying to load is not properly supported. Would you like to"
-" convert it into a more suitable format?"
-msgstr "Soubor, který zkoušíte načíst není podporován. Přejete si jej převést do podporovaného formátu?"
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+"Soubor, který zkoušíte načíst není podporován. Přejete si jej převést do "
+"podporovaného formátu?"
 
 #: ../LongoMatch.Migration/Core/SubCategory.cs:125
 msgid "Tags list"
@@ -2148,7 +2201,9 @@ msgstr "Zásuvné moduly GStreamer s otevřeným kódem"
 
 #: ../LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs:45
 msgid "GStreamer open source plugins with patents issues"
-msgstr "Zásuvné moduly GStreamer s otevřeným kódem s potenciálním patentovými problémy"
+msgstr ""
+"Zásuvné moduly GStreamer s otevřeným kódem s potenciálním patentovými "
+"problémy"
 
 #: ../LongoMatch.Plugins.Stats/gtk-gui/LongoMatch.Plugins.Stats.CategoryViewer.cs:53
 msgid "No data available"
@@ -2260,7 +2315,9 @@ msgstr "Vyskytla se chyba při ukládání projektu:\n"
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
-msgstr "Soubor s videem a záloha projektu byly uloženy. Zkuste je později naimportovat:\n"
+msgstr ""
+"Soubor s videem a záloha projektu byly uloženy. Zkuste je později "
+"naimportovat:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:190
 msgid "An error occurred opening this project:"
