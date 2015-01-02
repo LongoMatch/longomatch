@@ -270,7 +270,7 @@ lgm_create_video_encoder (VideoEncoderType type, guint quality,
         GstElement *bin = gst_bin_new (NULL);
 
         g_object_set (encoder, "bitrate", quality, "keyframe-period", 1000,
-            "rate-control", 1, "entropy-mode", 1, "allow-b-frames", FALSE,
+            "rate-control", 1, "entropy-mode", 0, "allow-b-frames", FALSE,
             "profile", 1, NULL);
         if (realtime) {
             g_object_set (encoder, "realtime", TRUE, NULL);
