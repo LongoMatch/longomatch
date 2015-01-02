@@ -355,15 +355,21 @@ namespace LongoMatch.Gui.Helpers
 						} else {
 							string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
 							                              "(This step will only take a few minutes)");
-							gui.InfoMessage (q, parent);
-							string newFilename = multimedia.RemuxFile (mediaFile, parent);
-							if (newFilename != null)
-								mediaFile = multimedia.DiscoverFile (newFilename);
+							if (gui.QuestionMessage (q, null, parent)) {
+								string newFilename = multimedia.RemuxFile (mediaFile, parent);
+								if (newFilename != null) {
+									mediaFile = multimedia.DiscoverFile (newFilename);
+								} else {
+									mediaFile = null;
+								}
+							} else {
+								mediaFile = null;
+							}
 						}
 					}
 				} catch (Exception ex) {
 					gui.ErrorMessage (ex.Message, parent);
-					return null;
+					mediaFile = null;
 				}
 			}
 			return mediaFile;
