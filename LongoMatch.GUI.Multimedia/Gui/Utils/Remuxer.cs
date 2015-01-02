@@ -101,7 +101,14 @@ namespace LongoMatch.Video.Utils
 			
 			/* Wait until the thread call Destroy on the dialog */
 			dialog.Run();
-			return cancelled ? null : outputFilepath;
+			if (cancelled) {
+				try {
+					File.Delete(outputFilepath);
+				} catch {
+				}
+				outputFilepath = null;
+			}
+			return outputFilepath;
 		}
 		
 		void Error (string error) {
