@@ -60,6 +60,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\images\cursors\cross">
       <Link>cross</Link>
+      <LogicalName>cross</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
