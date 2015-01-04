@@ -26,6 +26,7 @@ namespace LongoMatch.Gui.Dialog
 		VBox box;
 		Label titleLabel;
 		ProgressBar progressBar;
+		uint timeout;
 
 		public BusyDialog ()
 		{
@@ -46,6 +47,15 @@ namespace LongoMatch.Gui.Dialog
 			SkipTaskbarHint = true;
 			DefaultWidth = 300;
 			DefaultHeight = 100;
+			timeout = 0;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			if (timeout != 0) {
+				GLib.Source.Remove (timeout);
+			}
+			base.OnDestroyed ();
 		}
 
 		public string Message {
@@ -61,7 +71,13 @@ namespace LongoMatch.Gui.Dialog
 
 		public void ShowSync ()
 		{
+			GLib.Timeout.Add (200, OnTimeout);
 			Run ();
+		}
+	
+		bool OnTimeout () {
+			Pulse ();
+			return true;
 		}
 	}
 }

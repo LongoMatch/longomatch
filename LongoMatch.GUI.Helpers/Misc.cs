@@ -311,7 +311,6 @@ namespace LongoMatch.Gui.Helpers
 						busy.Destroy ();
 					});
 				});
-				busy.Pulse ();
 				task.Start ();
 				busy.ShowSync ();
 				
