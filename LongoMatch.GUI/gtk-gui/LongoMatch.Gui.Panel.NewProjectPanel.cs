@@ -587,14 +587,14 @@ namespace LongoMatch.Gui.Panel
 			w55.Position = 1;
 			w55.Fill = false;
 			// Container child topbox.Gtk.Box+BoxChild
-			this.righttable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), true);
+			this.righttable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), false);
 			this.righttable.Name = "righttable";
 			this.righttable.RowSpacing = ((uint)(6));
 			this.righttable.ColumnSpacing = ((uint)(6));
 			// Container child righttable.Gtk.Table+TableChild
 			this.analysislabel = new global::Gtk.Label ();
 			this.analysislabel.Name = "analysislabel";
-			this.analysislabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Analysis Template:");
+			this.analysislabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Dashboard");
 			this.righttable.Add (this.analysislabel);
 			global::Gtk.Table.TableChild w56 = ((global::Gtk.Table.TableChild)(this.righttable [this.analysislabel]));
 			w56.XOptions = ((global::Gtk.AttachOptions)(4));

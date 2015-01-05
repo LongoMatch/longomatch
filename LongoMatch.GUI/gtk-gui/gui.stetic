@@ -6621,13 +6621,12 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Table" id="righttable">
                             <property name="MemberName" />
                             <property name="NColumns">2</property>
-                            <property name="Homogeneous">True</property>
                             <property name="RowSpacing">6</property>
                             <property name="ColumnSpacing">6</property>
                             <child>
                               <widget class="Gtk.Label" id="analysislabel">
                                 <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">Analysis Template:</property>
+                                <property name="LabelProp" translatable="yes">Dashboard</property>
                               </widget>
                               <packing>
                                 <property name="AutoSize">False</property>
