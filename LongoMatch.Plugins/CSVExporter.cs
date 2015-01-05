@@ -98,31 +98,53 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		void ExportCategory (EventType evt)
+		string TeamName(Team team)
+		{
+			if (team == Team.LOCAL) {
+				return project.LocalTeamTemplate.TeamName;
+			} else if (team == Team.VISITOR) {
+				return project.VisitorTeamTemplate.TeamName;
+			} else if (team == Team.BOTH) {
+				return "ALL";
+			} else {
+				return "";
+			}
+		}
+
+		void ExportCategory(EventType evt)
 		{
 			string headers;
 			List<TimelineEvent> plays;
 			
-			output.Add ("CATEGORY: " + evt.Name);
-			plays = project.EventsByType (evt);
+			output.Add("CATEGORY: " + evt.Name);
+			plays = project.EventsByType(evt);
 			
 			/* Write Headers for this category */
-			headers = "Name;Start;Stop;Team";
+			headers = "Name;Time;Start;Stop;Team;Player";
+			if (evt is ScoreEventType) {
+				headers += ";Score";
+			}
 			if (evt is AnalysisEventType) {
 				foreach (Tag tag in (evt as AnalysisEventType).Tags) {
-					headers += String.Format (";{0}", tag.Value);
+					headers += String.Format(";{0}", tag.Value);
 				}
 			}
-			output.Add (headers);
+			output.Add(headers);
 			
 			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
 				string line;
 				
-				line = String.Format ("{0};{1};{2};{3}", play.Name,
-				                      play.Start.ToMSecondsString (),
-				                      play.Stop.ToMSecondsString (),
-				                      play.Team);
-				
+				line = String.Format("{0};{1};{2};{3};{4};{5}", play.Name,
+				                      play.EventTime == null ? "" : play.EventTime.ToMSecondsString(),
+				                      play.Start.ToMSecondsString(),
+				                      play.Stop.ToMSecondsString(),
+				                      TeamName(project.PlayTaggedTeam(play)),
+				                      String.Join (" | ", play.Players));
+
+				if (evt is ScoreEventType) {
+					line += ";" + (play as ScoreEvent).Score.Points;
+				}
+
 				/* Strings Tags */
 				if (evt is AnalysisEventType) {
 					foreach (Tag tag in (evt as AnalysisEventType).Tags) {
