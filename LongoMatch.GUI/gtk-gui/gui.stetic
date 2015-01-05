@@ -6682,6 +6682,17 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
+                      <widget class="Gtk.HSeparator" id="hseparator1">
+                        <property name="MemberName" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="Gtk.HBox" id="hbox14">
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
@@ -6869,7 +6880,7 @@ You can continue with the current capture, cancel it or save your project.
                         </child>
                       </widget>
                       <packing>
-                        <property name="Position">0</property>
+                        <property name="Position">1</property>
                         <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
                       </packing>
@@ -6879,7 +6890,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                       </widget>
                       <packing>
-                        <property name="Position">1</property>
+                        <property name="Position">2</property>
                         <property name="AutoSize">True</property>
                       </packing>
                     </child>
