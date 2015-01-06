@@ -5,15 +5,15 @@
 # Translators:
 # Pavel Bárta <BartyCok@email.cz>, 2009
 # Petr Tronicek <petr.tronicek@gmail.com>, 2014
-# Marek Černocký <marek@manet.cz>, 2010-2013, 2014.
+# Marek Černocký <marek@manet.cz>, 2010-2013, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-12-27 22:58+0000\n"
-"PO-Revision-Date: 2014-12-30 11:04+0100\n"
+"POT-Creation-Date: 2015-01-06 10:52+0000\n"
+"PO-Revision-Date: 2015-01-06 22:28+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -486,17 +486,17 @@ msgid "Group"
 msgstr "Skupina"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:293
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:294
 msgid "page1"
 msgstr "Strana1"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:810
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:819
 msgid "page2"
 msgstr "Strana2"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:823
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:832
 msgid "page3"
 msgstr "Strana3"
 
@@ -739,7 +739,7 @@ msgstr "Formát kódování"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:562
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
 msgid "Quality"
 msgstr "Kvalita"
 
@@ -1175,68 +1175,67 @@ msgstr "Zobrazit statistiku projektu"
 msgid "Migration Tool"
 msgstr "Migrační nástroj"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:160
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:161
 msgid "Video file"
 msgstr "Soubor videa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:199
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:200
 msgid "Capture device"
 msgstr "Nahrávací zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:238
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:239
 msgid "Fake capture device"
 msgstr "Falešné nahrávací zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:277
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:278
 msgid "Ip camera"
 msgstr "IP kamera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:330
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:331
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Utkání"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:341
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:342
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:377
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:378
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Sezóna"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:446
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:114
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Výstupní soubor"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:497
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:498
 msgid "Device"
 msgstr "Zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:504
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:505
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:526
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
 msgid "Size"
 msgstr "Velikost"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:572
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:573
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Formát"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:597
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
-msgid "Analysis Template:"
-msgstr "Analyzační šablona"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:598
+msgid "Dashboard"
+msgstr "Ovládací panel"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:639
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:719
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:648
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:728
 msgid "Tactics"
 msgstr "Taktiky"
 
@@ -1255,6 +1254,10 @@ msgstr "Utkání:"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:179
 msgid "Date:"
 msgstr "Datum:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
+msgid "Analysis Template:"
+msgstr "Analyzační šablona"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:215
 msgid "Season:"
@@ -2006,23 +2009,23 @@ msgstr "Formát souboru s obrázkem není podporován"
 msgid "Analyzing video file:"
 msgstr "Analyzuje se soubor s videem:"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:321
+#: ../LongoMatch.GUI.Helpers/Misc.cs:320
 msgid "Timeout parsing file."
 msgstr "Vypršel časový limit při zpracování souboru."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:323
+#: ../LongoMatch.GUI.Helpers/Misc.cs:322
 msgid "This file doesn't contain a video stream."
 msgstr "Tento soubor neobsahuje video"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:325
+#: ../LongoMatch.GUI.Helpers/Misc.cs:324
 msgid "This file contains a video stream but its length is 0."
 msgstr "Tento soubor obsahuje video, ale jeho délka je 0."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:343
+#: ../LongoMatch.GUI.Helpers/Misc.cs:342
 msgid "Open file"
 msgstr "Otevření souboru"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:352
+#: ../LongoMatch.GUI.Helpers/Misc.cs:351
 msgid ""
 "This file is not in a supported format, convert it with the video conversion "
 "tool"
@@ -2030,7 +2033,7 @@ msgstr ""
 "Tento soubor není v podporovaném formátu, převeďte jej pomocí nástroje pro "
 "převod videa"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:356
+#: ../LongoMatch.GUI.Helpers/Misc.cs:355
 msgid ""
 "This file needs to be converted into a more suitable format.(This step will "
 "only take a few minutes)"
@@ -2100,11 +2103,11 @@ msgstr "Znovu se multiplexuje soubor…"
 msgid "Remuxing file, this might take a while..."
 msgstr "Multiplexuje se soubor, to může chvíli trvat…"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:110
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:117
 msgid "Error remuxing file:\n"
 msgstr "Chyba multiplexování souboru:\n"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:165
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:172
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to "
 "convert it into a more suitable format?"
