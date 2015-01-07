@@ -50,7 +50,8 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnCalendar1DaySelected(object sender, System.EventArgs e)
 		{
-			selectedDate = calendar1.Date;
+			DateTime d = calendar1.Date;
+			selectedDate = new DateTime (d.Year, d.Month, d.Day, 0, 0, 0, DateTimeKind.Utc);
 		}
 	}
 }
