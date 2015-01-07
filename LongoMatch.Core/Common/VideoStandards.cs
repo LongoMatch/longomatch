@@ -80,8 +80,8 @@ namespace LongoMatch.Core.Common
 		public static List<VideoStandard> Capture {
 			get {
 				List<VideoStandard> list = new List<VideoStandard>();
-				list.Add (Original);
 				list.Add (P480);
+				list.Add (P576);
 				list.Add (P720);
 				list.Add (P1080);
 				return list;
