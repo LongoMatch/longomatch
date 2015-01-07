@@ -126,8 +126,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 				rowHeight = Height / formation [col];
 
 				for (int row=0; row < formation[col]; row ++) {
-					PlayerObject po = players [index];
-					po.Position = new Point (colX, rowHeight * row + rowHeight / 2); 
+					double rowY;
+					PlayerObject po = players[index];
+
+					if (team == Team.LOCAL) {
+						rowY = rowHeight * row + rowHeight / 2;
+					} else {
+						rowY = Height - (rowHeight * row + rowHeight / 2);
+					}
+
+					po.Position = new Point (colX, rowY);
 					po.Size = playerSize;
 					index ++;
 					if (players.Count == index)
