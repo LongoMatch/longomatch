@@ -495,7 +495,7 @@ lgm_video_player_open (LgmVideoPlayer * lvp, const gchar * uri, GError ** error)
     /* used as thumbnailer, wait for state change to finish. */
     GST_INFO ("waiting for state changed to PAUSED to complete");
     ret = poll_for_state_change_full (lvp, lvp->priv->play,
-        GST_STATE_PAUSED, &err_msg, -1);
+        GST_STATE_PAUSED, &err_msg, 5 * GST_SECOND);
     lgm_video_player_get_stream_length (lvp);
     GST_INFO ("stream length = %u", lvp->priv->stream_length);
   }
