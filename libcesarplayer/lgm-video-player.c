@@ -394,7 +394,7 @@ poll_for_state_change_full (LgmVideoPlayer * lvp, GstElement * element,
     GstMessage *message;
     GstElement *src;
 
-    message = gst_bus_poll (bus, events, timeout);
+    message = gst_bus_timed_pop_filtered (bus, timeout, events);
 
     if (!message)
       goto timed_out;
@@ -663,7 +663,7 @@ lgm_stop_play_pipeline (LgmVideoPlayer * lvp)
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_INFO ("processing pending state-change messages");
     bus = gst_element_get_bus (lvp->priv->play);
-    while ((msg = gst_bus_poll (bus, GST_MESSAGE_STATE_CHANGED, 0))) {
+    while ((msg = gst_bus_timed_pop_filtered (bus, 0, GST_MESSAGE_STATE_CHANGED))) {
       gst_bus_async_signal_func (bus, msg, NULL);
       gst_message_unref (msg);
     }

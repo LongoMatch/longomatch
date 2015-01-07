@@ -156,7 +156,7 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 
   bus = gst_element_get_bus (pipeline);
   msg =
-      gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 25 * GST_SECOND);
+      gst_bus_timed_pop_filtered (bus, 25 * GST_SECOND, GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
 
   if (msg) {
     switch (GST_MESSAGE_TYPE (msg)) {
