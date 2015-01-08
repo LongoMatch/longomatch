@@ -53,11 +53,11 @@ namespace LongoMatch.Core.Common
 	
 	public class VideoStandards {
 		public static VideoStandard Original = new VideoStandard(Catalog.GetString("Keep original size"), 0, 0);
-		public static VideoStandard P240 = new VideoStandard("240p", 240, 0);
-		public static VideoStandard P480 = new VideoStandard("480p", 480, 0);
-		public static VideoStandard P576 = new VideoStandard("576p", 576, 0);
-		public static VideoStandard P720 = new VideoStandard("720p", 720, 0);
-		public static VideoStandard P1080 = new VideoStandard("1080p", 1080, 0);
+		public static VideoStandard P240 = new VideoStandard("240p", 240, 320);
+		public static VideoStandard P480 = new VideoStandard("480p", 480, 640);
+		public static VideoStandard P576 = new VideoStandard("576p", 576, 720);
+		public static VideoStandard P720 = new VideoStandard("720p", 720, 1280);
+		public static VideoStandard P1080 = new VideoStandard("1080p", 1080, 1920);
 		public static VideoStandard P240_4_3 = new VideoStandard("240p (4:3)", 240, 320);
 		public static VideoStandard P240_16_9 = new VideoStandard("240p (16:9)", 240, 426);
 		public static VideoStandard P480_4_3 = new VideoStandard("480p (4:3)", 480, 640);
