@@ -192,6 +192,8 @@ namespace LongoMatch.Services
 			
 			if (template == null) {
 				template = Load (orig);
+			} else {
+				template = Cloner.Clone (template);
 			}
 			template.ID = new Guid ();
 			template.Name = copy;
