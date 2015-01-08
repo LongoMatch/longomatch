@@ -28,6 +28,7 @@ namespace LongoMatch.Video.Common
 	public delegate void GlibPercentCompletedHandler (object o,PercentCompletedArgs args);
 	public delegate void GlibStateChangeHandler (object o,StateChangeArgs args);
 	public delegate void GlibTickHandler (object o,TickArgs args);
+	public delegate void GlibMediaInfoHandler (object o, MediaInfoArgs args);
 	public delegate void GlibDeviceChangeHandler (object o,DeviceChangeArgs args);
 	public class ErrorArgs : GLib.SignalArgs
 	{
@@ -82,6 +83,33 @@ namespace LongoMatch.Video.Common
 		public int DeviceChange {
 			get {
 				return (int)Args [0];
+			}
+		}
+	}
+	
+	public class MediaInfoArgs : GLib.SignalArgs
+	{
+		public int Width {
+			get {
+				return (int) Args[0];
+			}
+		}
+
+		public int Height {
+			get {
+				return (int) Args[1];
+			}
+		}
+
+		public int ParN {
+			get {
+				return (int) Args[2];
+			}
+		}
+		
+		public int ParD {
+			get {
+				return (int) Args[3];
 			}
 		}
 	}

@@ -196,7 +196,7 @@ namespace LongoMatch.Services
 				projectType == ProjectType.URICaptureProject ||
 				projectType == ProjectType.FakeCaptureProject) {
 				try {
-					Capturer.Run (props);
+					Capturer.Run (props, project.Description.FileSet.GetAngle (MediaFileAngle.Angle1));
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (ex.Message);

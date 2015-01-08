@@ -33,6 +33,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event EllpasedTimeHandler EllapsedTime;
 		event ErrorHandler Error;
 		event DeviceChangeHandler DeviceChange;
+		event MediaInfoHandler MediaInfo;
 
 		void Configure (CaptureSettings settings, IntPtr window_handle);
 

@@ -39,6 +39,7 @@ namespace LongoMatch.Video.Capturer {
 		public event EllpasedTimeHandler EllapsedTime;
 		public event ErrorHandler Error;
 		public event DeviceChangeHandler DeviceChange;
+		public event MediaInfoHandler MediaInfo;
 
 		private LiveSourceTimer timer;
 
@@ -98,6 +99,12 @@ namespace LongoMatch.Video.Capturer {
 			this.GlibDeviceChange += (o, args) => {
 				if (DeviceChange != null) {
 					DeviceChange (args.DeviceChange);
+				}
+			};
+			
+			this.GlibMediaInfo += (o, args) => {
+				if (MediaInfo != null) {
+					MediaInfo (args.Width, args.Height, args.ParN, args.ParD);
 				}
 			};
 		}
@@ -287,6 +294,62 @@ namespace LongoMatch.Video.Capturer {
 				sig.RemoveDelegate(value);
 			}
 		}
+		
+		[UnmanagedFunctionPointer (CallingConvention.Cdecl)]
+		delegate void MediaInfoVMDelegate (IntPtr gcc, int width, int height, int par_n, int par_d);
+
+		static MediaInfoVMDelegate MediaInfoVMCallback;
+
+		static void media_info_cb (IntPtr gcc, int width, int height, int par_n, int par_d)
+		{
+			try {
+				GstCameraCapturer gcc_managed = GLib.Object.GetObject (gcc, false) as GstCameraCapturer;
+				gcc_managed.OnMediaInfo (width, height, par_n, par_d);
+			} catch (Exception e) {
+				GLib.ExceptionManager.RaiseUnhandledException (e, false);
+			}
+		}
+
+		private static void OverrideMediaInfo (GLib.GType gtype)
+		{
+			if (MediaInfoVMCallback == null)
+				MediaInfoVMCallback = new MediaInfoVMDelegate (media_info_cb);
+			OverrideVirtualMethod (gtype, "media-info", MediaInfoVMCallback);
+		}
+
+		[GLib.DefaultSignalHandler(Type=typeof(GstCameraCapturer), ConnectionMethod="OverrideMediaInfo")]
+		protected virtual void OnMediaInfo (int width, int height, int par_n, int par_d)
+		{
+			GLib.Value ret = GLib.Value.Empty;
+			GLib.ValueArray inst_and_params = new GLib.ValueArray (6);
+			GLib.Value[] vals = new GLib.Value [6];
+			vals [0] = new GLib.Value (this);
+			inst_and_params.Append (vals [0]);
+			vals [1] = new GLib.Value (width);
+			inst_and_params.Append (vals [1]);
+			vals [2] = new GLib.Value (height);
+			inst_and_params.Append (vals [2]);
+			vals [3] = new GLib.Value (par_n);
+			inst_and_params.Append (vals [3]);
+			vals [4] = new GLib.Value (par_d);
+			inst_and_params.Append (vals [4]);
+			g_signal_chain_from_overridden (inst_and_params.ArrayPtr, ref ret);
+			foreach (GLib.Value v in vals)
+				v.Dispose ();
+		}
+
+		[GLib.Signal("media-info")]
+		public event GlibMediaInfoHandler GlibMediaInfo {
+			add {
+				GLib.Signal sig = GLib.Signal.Lookup (this, "media-info", typeof(MediaInfoArgs));
+				sig.AddDelegate (value);
+			}
+			remove {
+				GLib.Signal sig = GLib.Signal.Lookup (this, "media-info", typeof(MediaInfoArgs));
+				sig.RemoveDelegate (value);
+			}
+		}
+
 #pragma warning restore 0169
 
 		public void Configure (CaptureSettings settings, IntPtr window_handle) {

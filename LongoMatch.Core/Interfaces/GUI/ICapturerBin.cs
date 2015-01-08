@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -32,8 +33,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 		CaptureSettings CaptureSettings {get;}
 		List<string> PeriodsNames {set;}
 		List<Period> Periods { get; set; }
+		ICapturer Capturer { get; }
 
-		void Run (CaptureSettings settings);
+		void Run (CaptureSettings settings, MediaFile outputFile);
 		void StartPeriod();
 		void PausePeriod();
 		void ResumePeriod();

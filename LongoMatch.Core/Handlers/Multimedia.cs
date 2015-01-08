@@ -43,6 +43,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PercentCompletedHandler(float percent);
 	public delegate void StateChangeHandler(bool playing);
 	public delegate void TickHandler(Time currentTime);
+	public delegate void MediaInfoHandler(int width, int height, int parN, int parD);
 	public delegate void EosHandler();
 	public delegate void ReadyToSeekHandler();
 }

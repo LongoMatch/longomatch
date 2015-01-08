@@ -38,6 +38,14 @@ extern void baconvideowidget_marshal_VOID__INT64_INT64_DOUBLE (GClosure     *clo
                                                                gpointer      invocation_hint,
                                                                gpointer      marshal_data);
 
+/* VOID:INT,INT,INT,INT (./baconvideowidget-marshal.list:5) */
+extern void baconvideowidget_marshal_VOID__INT_INT_INT_INT (GClosure     *closure,
+                                                            GValue       *return_value,
+                                                            guint         n_param_values,
+                                                            const GValue *param_values,
+                                                            gpointer      invocation_hint,
+                                                            gpointer      marshal_data);
+
 G_END_DECLS
 
 #endif /* __baconvideowidget_marshal_MARSHAL_H__ */

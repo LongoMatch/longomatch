@@ -35,6 +35,7 @@
 #include "gstscreenshot.h"
 #include "common.h"
 #include "video-utils.h"
+#include "baconvideowidget-marshal.h"
 
 
 GST_DEBUG_CATEGORY (_cesarplayer_gst_debug_cat);
@@ -47,6 +48,7 @@ enum
   SIGNAL_EOS,
   SIGNAL_STATE_CHANGED,
   SIGNAL_DEVICE_CHANGE,
+  SIGNAL_MEDIA_INFO,
   LAST_SIGNAL
 };
 
@@ -70,6 +72,8 @@ struct GstCameraCapturerPrivate
   /*Video input info */
   gint video_width;             /* Movie width */
   gint video_height;            /* Movie height */
+  gint video_par_n;
+  gint video_par_d;
   gint video_fps_n;
   gint video_fps_d;
 
@@ -259,6 +263,15 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       G_SIGNAL_RUN_LAST,
       G_STRUCT_OFFSET (GstCameraCapturerClass, device_change),
       NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+
+  gcc_signals[SIGNAL_MEDIA_INFO] =
+      g_signal_new ("media-info",
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstCameraCapturerClass, media_info),
+      NULL, NULL,
+      baconvideowidget_marshal_VOID__INT_INT_INT_INT,
+      G_TYPE_NONE, 4, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT);
 }
 
 /***********************************
@@ -919,7 +932,7 @@ static gboolean
 gst_camera_capturer_fill_decodebin_source (GstCameraCapturer * gcc)
 {
   GstElement *bin, *decodebin, *colorspace, *deinterlacer;
-  GstPad *video_pad, *src_pad;
+  GstPad *video_pad;
 
   GST_INFO_OBJECT (gcc, "Creating dv source");
 
@@ -1383,9 +1396,14 @@ gcc_get_video_stream_info (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
     if (!
         (gst_structure_get_fraction
             (s, "framerate", &gcc->priv->video_fps_n, &gcc->priv->video_fps_d)
+            && gst_structure_get_fraction (s, "pixel-aspect-ratio",
+              &gcc->priv->video_par_n, &gcc->priv->video_par_d)
             && gst_structure_get_int (s, "width", &gcc->priv->video_width)
             && gst_structure_get_int (s, "height", &gcc->priv->video_height)))
       return FALSE;
+    g_signal_emit (gcc, gcc_signals[SIGNAL_MEDIA_INFO], 0,
+      gcc->priv->video_width, gcc->priv->video_height,
+      gcc->priv->video_par_n, gcc->priv->video_par_d);
   }
   return FALSE;
 }

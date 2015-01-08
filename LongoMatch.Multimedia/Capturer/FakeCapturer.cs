@@ -30,6 +30,7 @@ namespace LongoMatch.Video.Capturer
 		public event EllpasedTimeHandler EllapsedTime;
 		public event ErrorHandler Error;
 		public event DeviceChangeHandler DeviceChange;
+		public event MediaInfoHandler MediaInfo;
 
 		LiveSourceTimer timer;
 

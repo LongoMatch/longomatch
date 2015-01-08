@@ -124,6 +124,12 @@ namespace LongoMatch.Gui
 
 #region Capturer
 
+		public ICapturer Capturer {
+			get {
+				return capturerbin.Capturer;
+			}
+		}
+
 		public Time CurrentCaptureTime {
 			get {
 				return capturerbin.CurrentCaptureTime;
@@ -171,8 +177,8 @@ namespace LongoMatch.Gui
 			capturerbin.StopPeriod ();
 		}
 		
-		public void Run (CaptureSettings settings) {
-			capturerbin.Run (settings);
+		public void Run (CaptureSettings settings, MediaFile outputFile) {
+			capturerbin.Run (settings, outputFile);
 		}
 		
 		public void PausePeriod ()
