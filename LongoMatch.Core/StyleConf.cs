@@ -63,6 +63,8 @@ namespace LongoMatch.Core.Common
 
 		public const int ListEyeIconOffset = 10;
 		public const string ListEyeIconPath = "hicolor/scalable/actions/longomatch-eye.svg";
+		public const string ListArrowRightPath = "hicolor/scalable/actions/longomatch-arrow-right.svg";
+		public const string ListArrowDownPath = "hicolor/scalable/actions/longomatch-arrow-down.svg";
 
 		public const int TeamsShieldIconSize = 45;
 		

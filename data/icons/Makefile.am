@@ -5,6 +5,8 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-angle.svg \
 	hicolor/scalable/actions/longomatch-apply-button.svg \
 	hicolor/scalable/actions/longomatch-apply.svg \
+	hicolor/scalable/actions/longomatch-arrow-down.svg \
+	hicolor/scalable/actions/longomatch-arrow-right.svg \
 	hicolor/scalable/actions/longomatch-arrow.svg \
 	hicolor/scalable/actions/longomatch-back.svg \
 	hicolor/scalable/actions/longomatch-browse.svg \

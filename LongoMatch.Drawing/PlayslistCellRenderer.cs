@@ -31,6 +31,8 @@ namespace LongoMatch.Drawing
 	{
 	
 		public static ISurface EyeSurface = null;
+		public static ISurface ArrowRight = null;
+		public static ISurface ArrowDown = null;
 		public static Image subsImage = null;
 
 		public static void RenderSeparationLine (IDrawingToolkit tk, IContext context, Area backgroundArea)
@@ -57,14 +59,34 @@ namespace LongoMatch.Drawing
 			po.Dispose ();
 		}
 
-		static void RenderCount (Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
+		static void RenderCount(bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
 		{
 			double countX1, countX2, countY, countYC;
+			Point arrowY;
+			ISurface arrow;
 			
 			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator + StyleConf.ListCountRadio;
 			countX2 = countX1 + StyleConf.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
 			countY = countYC - StyleConf.ListCountRadio;
+			if (!isExpanded) {
+				if (ArrowRight == null) {
+					ArrowRight = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
+					                                                                StyleConf.ListArrowRightPath));
+				}
+				arrow = ArrowRight;
+				arrowY = new Point (cellArea.Start.X + 1,
+				                    cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
+			} else {
+				if (ArrowDown == null) {
+					ArrowDown = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
+					                                                                StyleConf.ListArrowDownPath));
+				}
+				arrow = ArrowDown;
+				arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
+			}
+			tk.DrawSurface (arrow, arrowY);
+
 			tk.LineWidth = 0;
 			tk.FillColor = color;
 			tk.DrawCircle (new Point (countX1, countYC), StyleConf.ListCountRadio);
@@ -118,7 +140,7 @@ namespace LongoMatch.Drawing
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, text, textWidth, player.ToString ());
 			/* Photo */
 			RenderPlayer (tk, player, image);
-			RenderCount (player.Color, count, tk, backgroundArea, cellArea);
+			RenderCount (isExpanded, player.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
@@ -130,7 +152,7 @@ namespace LongoMatch.Drawing
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, playlist.Name);
-			RenderCount (Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
+			RenderCount (isExpanded, Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
@@ -142,7 +164,7 @@ namespace LongoMatch.Drawing
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP , cellArea.Width - textP.X, cat.Name);
-			RenderCount (cat.Color, count, tk, backgroundArea, cellArea);
+			RenderCount (isExpanded, cat.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
