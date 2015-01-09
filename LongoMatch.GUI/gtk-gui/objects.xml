@@ -293,9 +293,9 @@
   </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
-      <itemgroup label="IPlayerBin Properties">
-        <property name="Sensitive" />
+      <itemgroup label="PlayerBin Properties">
         <property name="CloseAlwaysVisible" />
+        <property name="Sensitive" />
       </itemgroup>
     </itemgroups>
     <signals>
