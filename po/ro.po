@@ -4,12 +4,13 @@
 # 
 # Translators:
 # eugen pop <eugen_tennis@yahoo.com>, 2014
+# eugen pop <eugen_tennis@yahoo.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-12-21 22:55+0000\n"
-"PO-Revision-Date: 2014-12-16 14:02+0000\n"
+"POT-Creation-Date: 2015-01-08 22:49+0000\n"
+"PO-Revision-Date: 2015-01-08 23:01+0000\n"
 "Last-Translator: eugen pop <eugen_tennis@yahoo.com>\n"
 "Language-Team: Romanian (Romania) (http://www.transifex.com/projects/p/longomatch/language/ro_RO/)\n"
 "MIME-Version: 1.0\n"
@@ -59,8 +60,8 @@ msgstr "Instrument al antrenorilor pentru analiză video în sport ."
 #: ../LongoMatch/Main.cs:79
 msgid ""
 "The database seems to be locked by another instance and the application will"
-" closed."
-msgstr "Baza de date pare a fi blocată de o altă instanță iar aplicația se va inchide."
+" be closed."
+msgstr "Baza de date pare a fi blocată de o altă instanță iar aplicația va fi închisă."
 
 #: ../LongoMatch/Main.cs:150
 msgid "The application has finished with an unexpected error."
@@ -267,19 +268,19 @@ msgstr "Nedefinit"
 msgid "No video file associated"
 msgstr "Nici un fișier video asociat"
 
-#: ../LongoMatch.Core/Store/Project.cs:330
+#: ../LongoMatch.Core/Store/Project.cs:345
 msgid "No lineup events found"
 msgstr "Nu s-au găsit evenimente ale formației"
 
-#: ../LongoMatch.Core/Store/Project.cs:333
+#: ../LongoMatch.Core/Store/Project.cs:348
 msgid "A substitution can't happen before the lineup event"
 msgstr "O schimbare nu se poate produce inaintea alcătuirii formației"
 
-#: ../LongoMatch.Core/Store/Project.cs:402
+#: ../LongoMatch.Core/Store/Project.cs:417
 msgid "Lineup"
 msgstr "Formație"
 
-#: ../LongoMatch.Core/Store/Project.cs:494
+#: ../LongoMatch.Core/Store/Project.cs:509
 #: ../LongoMatch.Migration/Core/Project.cs:289
 msgid "The file you are trying to load is not a valid project"
 msgstr "Fișierul pe care incerci să il încarci nu este un proiect valid"
@@ -338,7 +339,7 @@ msgstr "Echipă"
 #. Periods
 #: ../LongoMatch.Drawing/Widgets/TimelineLabels.cs:78
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:434
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:52
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:51
 msgid "Periods"
 msgstr "Perioade"
 
@@ -477,17 +478,17 @@ msgid "Group"
 msgstr "Grup"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:293
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:294
 msgid "page1"
 msgstr "pagina1"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:810
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:819
 msgid "page2"
 msgstr "pagina2"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:823
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:832
 msgid "page3"
 msgstr "pagina3"
 
@@ -581,8 +582,8 @@ msgstr "Filtre"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:116
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:77
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:190
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:178
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:180
 msgid "Name:"
 msgstr "Nume:"
 
@@ -728,7 +729,7 @@ msgstr "Format codificare"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:562
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
 msgid "Quality"
 msgstr "Calitate"
 
@@ -1133,68 +1134,67 @@ msgstr "Arată statistica proiectului"
 msgid "Migration Tool"
 msgstr "Instrument de migrare"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:160
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:161
 msgid "Video file"
 msgstr "Fișier video"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:199
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:200
 msgid "Capture device"
 msgstr "Captură video"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:238
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:239
 msgid "Fake capture device"
 msgstr "Instrument de captură falsă"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:277
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:278
 msgid "Ip camera"
 msgstr "Ip cameră"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:330
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:331
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Competiție"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:341
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:342
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Dată"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:377
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:378
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Sezon"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:446
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:114
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Ieșire fișier"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:497
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:498
 msgid "Device"
 msgstr "Aparat"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:504
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:505
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:526
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
 msgid "Size"
 msgstr "Mărime"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:572
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:573
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Format"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:597
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
-msgid "Analysis Template:"
-msgstr "Model analiză:"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:598
+msgid "Dashboard"
+msgstr "Planșă"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:639
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:719
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:648
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:728
 msgid "Tactics"
 msgstr "Tactică"
 
@@ -1213,6 +1213,10 @@ msgstr "Competiție:"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:179
 msgid "Date:"
 msgstr "Dată:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
+msgid "Analysis Template:"
+msgstr "Model analiză:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:215
 msgid "Season:"
@@ -1304,37 +1308,37 @@ msgstr "Vedere etichete zonale"
 msgid "Do you want to delete: "
 msgstr "Vrei să ștergi:"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:265
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:266
 msgid "Edit dashboard"
 msgstr "Editează planșa"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:274
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:275
 msgid "Disable popup window"
 msgstr "Dezactivează fereastra popup"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:281
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:282
 msgid "Fit dashboard"
 msgstr "Potrivește planșa"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:286
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:287
 msgid "Fill dashboard"
 msgstr "Umple planșa"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:291
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:292
 msgid "1:1 dashboard"
 msgstr "1:1 planșă"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:389
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:390
 #: ../LongoMatch.GUI/Gui/Component/Timeline.cs:217
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:459
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:102
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:133
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:157
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:192
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:159
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:194
 msgid "Delete"
 msgstr "Șterge"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:472
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:473
 msgid "Could not parse game periods."
 msgstr "Nu se pot analiza perioadele jocului."
 
@@ -1375,7 +1379,7 @@ msgid "Do you want to delete player: "
 msgstr "Vrei să ștergi jucător:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:541
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
 msgid "Could not parse tactics string"
 msgstr "Nu se poate analiza șirul tactic"
 
@@ -1894,11 +1898,11 @@ msgid ""
 "manager"
 msgstr "Managerul\nechipelor"
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:35
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
 msgid "Category"
 msgstr "Categorie"
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:57
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:56
 msgid "Timers"
 msgstr "Timere"
 
@@ -1914,28 +1918,28 @@ msgstr "Selectează tot"
 msgid "Unselect all"
 msgstr "Deselectează tot"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:119
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:121
 msgid "External video"
 msgstr "Video extern"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:122
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:124
 msgid "External image"
 msgstr "Imagine externă"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:138
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:176
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:178
 msgid "Edit name"
 msgstr "Editează nume"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:149
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:151
 msgid "Insert before"
 msgstr "Inserează inainte"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:153
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:155
 msgid "Insert after"
 msgstr "Inserează după"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:186
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:188
 msgid "Render"
 msgstr "Render"
 
@@ -1963,26 +1967,33 @@ msgstr "Formatul fișierului imaginii nu este suportat"
 msgid "Analyzing video file:"
 msgstr "Analizează fișier video:"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:321
+#: ../LongoMatch.GUI.Helpers/Misc.cs:320
 msgid "Timeout parsing file."
 msgstr "Timpul alocat analizei fișierului a expirat."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:323
+#: ../LongoMatch.GUI.Helpers/Misc.cs:322
 msgid "This file doesn't contain a video stream."
 msgstr "Acest fișier nu conține un flux video."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:325
+#: ../LongoMatch.GUI.Helpers/Misc.cs:324
 msgid "This file contains a video stream but its length is 0."
 msgstr "Acest fișier conține un flux video dar lungimea lui este 0."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:343
+#: ../LongoMatch.GUI.Helpers/Misc.cs:342
 msgid "Open file"
 msgstr "Deschide fișier"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:351
 msgid ""
-"This file is not a supported format, convert it with video conversion tool"
-msgstr "Acest fișier nu este un format suportat, convertește-l cu instrumentul de conversie video."
+"This file is not in a supported format, convert it with the video conversion"
+" tool"
+msgstr "Acest fișier nu este într-un format suportat, convertește-l cu instrumentul de conversie video."
+
+#: ../LongoMatch.GUI.Helpers/Misc.cs:355
+msgid ""
+"This file needs to be converted into a more suitable format.(This step will "
+"only take a few minutes)"
+msgstr "Acest fișier necesită să fie convertit într-un format mai potrivit. (acest pas va dura doar câteva minute)"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:72
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:95
@@ -2011,29 +2022,29 @@ msgstr "Reluare"
 msgid "Live"
 msgstr "În direct"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:177
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:178
 msgid "Period recording already started"
 msgstr "Înregistrarea perioadei a inceput deja"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:211
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:233
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:248
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:212
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:234
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:249
 msgid "Period recording not started"
 msgstr "Înregistrarea perioadei nu a început"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:300
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:301
 msgid "Do you want to finish the current capture?"
 msgstr "Vrei să termini captura curentă?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:308
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
 msgid "Do you want to close and cancell the current capture?"
 msgstr "Vrei să închizi și să anulezi captura curentă?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:419
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
 msgid "Device disconnected. The capture will be paused"
 msgstr "Aparat deconectat.Captura va fi intreruptă"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:422
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Aparat reconectat.Vrei să repornești captura?"
 
@@ -2046,11 +2057,11 @@ msgstr "Remuxează fișierul..."
 msgid "Remuxing file, this might take a while..."
 msgstr "Remuxează fișierul, ar putea dura ceva timp..."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:110
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:117
 msgid "Error remuxing file:\n"
 msgstr "Eroare la remuxarea fișierului:\n"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:165
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:172
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to"
 " convert it into a more suitable format?"
@@ -2104,7 +2115,7 @@ msgstr "Conversie"
 msgid "Nothing to migrate from the old version"
 msgstr "Nu există nimic pentru a fi migrat de la versiunea veche"
 
-#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:99
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:100
 msgid "Fake live source"
 msgstr "Sursă live falsă"
 

@@ -1,27 +1,24 @@
-# Hungarian translation for longomatch.
-# Copyright (C) 2014, 2015 Free Software Foundation, Inc.
-# This file is distributed under the same license as the longomatch package.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
 # Translators:
-# Balázs Úr <urbalazs at gmail dot com>, 2014, 2015.
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
-# SP <rugbystat at freemail dot hu>, 2014.
+# Balázs Úr <urbalazs at gmail dot com>, 2014-2015
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2012
+# SP <rugbystat at freemail dot hu>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-06 10:52+0000\n"
-"PO-Revision-Date: 2015-01-06 23:12+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
-"Language-Team: Hungarian <openscope at googlegroups dot com>\n"
-"Language: hu\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-01-08 22:49+0000\n"
+"PO-Revision-Date: 2015-01-07 11:31+0000\n"
+"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/longomatch/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"language/hu/)\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
 #: ../libcesarplayer/lgm-video-player.c:349
 msgid "Location not found."
@@ -30,8 +27,7 @@ msgstr "A hely nem található."
 #: ../libcesarplayer/lgm-video-player.c:352
 msgid ""
 "Could not open location; you might not have permission to open the file."
-msgstr ""
-"A hely nem nyitható meg; lehet, hogy nincs jogosultsága megnyitni a fájlt."
+msgstr "A hely nem nyitható meg; lehet, hogy nincs jogosultsága megnyitni a fájlt."
 
 #: ../libcesarplayer/lgm-video-player.c:432
 msgid "Media file could not be played."
@@ -42,9 +38,7 @@ msgstr "A médiafájl nem játszható le."
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr ""
-"Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a "
-"GStreamer telepítését."
+msgstr "Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a GStreamer telepítését."
 
 #: ../libcesarplayer/lgm-video-player.c:969
 #, c-format
@@ -66,11 +60,9 @@ msgstr "Sportvideo-elemző eszköz edzőknek"
 
 #: ../LongoMatch/Main.cs:79
 msgid ""
-"The database seems to be locked by another instance and the application will "
-"be closed."
-msgstr ""
-"Az adatbázist valószínűleg egy másik példány zárolja, és az alkalmazás be "
-"lesz zárva."
+"The database seems to be locked by another instance and the application will"
+" be closed."
+msgstr "Az adatbázist valószínűleg egy másik példány zárolja, és az alkalmazás be lesz zárva."
 
 #: ../LongoMatch/Main.cs:150
 msgid "The application has finished with an unexpected error."
@@ -558,9 +550,7 @@ msgstr "Kimeneti könyvtár"
 msgid ""
 "Render new events automatically\n"
 "(Requires a powerful CPU)"
-msgstr ""
-"Új események automatikus megjelenítése\n"
-"(Erős CPU-t igényel)"
+msgstr "Új események automatikus megjelenítése\n(Erős CPU-t igényel)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
 msgid "<b>Main camera angle</b>"
@@ -776,33 +766,12 @@ msgstr "Hiányzó KODEKEK"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs:65
 msgid ""
-"As explained and detailed in the <a href=\"http://www.longomatch.com/open-"
-"source.html\">OpenSource project</a> page, the use of this free and open "
-"source version of LongoMatch requires that you also install additional "
-"software called a CODEC, which may also be free.  \n"
+"As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n"
 "\n"
-"To acknowledge your understanding and for more information on why this is "
-"so, where to get it and how to install it visit the <a href=\"http://www."
-"longomatch.com/open-source.html\">OpenSource project</a> page.\n"
+"To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n"
 "\n"
-"To avoid this, and to enjoy many additional functional benefits, we "
-"encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-"
-"use. "
-msgstr ""
-"A <a href=\"http://www.longomatch.com/open-source.html\">nyílt forrású "
-"projekt</a> oldalon elmagyarázott és részletezett leírás szerint a "
-"LongoMatch ezen ingyenes és nyílt forrású verziójának használatához "
-"szükséges egy kiegészítő szoftver telepítése is, amit KODEK-nek hívnak, és "
-"ami szintén ingyenes.\n"
-"\n"
-"A megértésének elfogadásához és további információkért, hogy ez miért van "
-"így, honnan lehet beszerezni és hogyan kell telepíteni, látogassa meg a <a "
-"href=\"http://www.longomatch.com/open-source.html\">nyílt forrású projekt</"
-"a> oldalt.\n"
-"\n"
-"Ennek elkerülése érdekében, valamint további számos funkcionális előny "
-"élvezetéhez azt javasoljuk, hogy frissítsen a Longomatch PRO verzióra, amely "
-"egy kis honorárium ellenében használatra kész. "
+"To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
+msgstr "A <a href=\"http://www.longomatch.com/open-source.html\">nyílt forrású projekt</a> oldalon elmagyarázott és részletezett leírás szerint a LongoMatch ezen ingyenes és nyílt forrású verziójának használatához szükséges egy kiegészítő szoftver telepítése is, amit KODEK-nek hívnak, és ami szintén ingyenes.\n\nA megértésének elfogadásához és további információkért, hogy ez miért van így, honnan lehet beszerezni és hogyan kell telepíteni, látogassa meg a <a href=\"http://www.longomatch.com/open-source.html\">nyílt forrású projekt</a> oldalt.\n\nEnnek elkerülése érdekében, valamint további számos funkcionális előny élvezetéhez azt javasoljuk, hogy frissítsen a Longomatch PRO verzióra, amely egy kis honorárium ellenében használatra kész. "
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
 msgid "Databases manager"
@@ -883,15 +852,8 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost."
-"</b>"
-msgstr ""
-"Egy projekt rögzítése jelenleg is fut.\n"
-"Folytathatja a jelenlegi felvétellel, megszakíthatja vagy elmentheti a "
-"projektet.\n"
-"\n"
-"<b>Figyelem: Ha megszakítja a jelenlegi projektet, minden változtatást el "
-"fog veszíteni.</b>"
+"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
+msgstr "Egy projekt rögzítése jelenleg is fut.\nFolytathatja a jelenlegi felvétellel, megszakíthatja vagy elmentheti a projektet.\n\n<b>Figyelem: Ha megszakítja a jelenlegi projektet, minden változtatást el fog veszíteni.</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
 msgid "Return"
@@ -985,9 +947,7 @@ msgstr "<b>Kimenő játékos</b>"
 msgid ""
 "\n"
 "A new version of LongoMatch has been released at www.ylatuya.es!\n"
-msgstr ""
-"\n"
-"Kiadták a LongoMatch új verzióját a www.ylatuya.es címen!\n"
+msgstr "\nKiadták a LongoMatch új verzióját a www.ylatuya.es címen!\n"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
 msgid "The new version is "
@@ -997,9 +957,7 @@ msgstr "Az új verzió "
 msgid ""
 "\n"
 "You can download it using this direct link:"
-msgstr ""
-"\n"
-"Letöltheti ezen közvetlen hivatkozás használatával:"
+msgstr "\nLetöltheti ezen közvetlen hivatkozás használatával:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
 msgid "label7"
@@ -1233,7 +1191,6 @@ msgid "Format"
 msgstr "Formátum"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:598
-#| msgid "Dashboard files"
 msgid "Dashboard"
 msgstr "Áttekintő"
 
@@ -1300,11 +1257,9 @@ msgstr "Kategóriák"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
 msgid ""
-"You are about to delete a category and all the plays added to this category. "
-"Do you want to proceed?"
-msgstr ""
-"Egy kategória és az ahhoz hozzáadott minden játék törlésére készül. Szeretné "
-"folytatni?"
+"You are about to delete a category and all the plays added to this category."
+" Do you want to proceed?"
+msgstr "Egy kategória és az ahhoz hozzáadott minden játék törlésére készül. Szeretné folytatni?"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
@@ -1336,9 +1291,7 @@ msgstr "Visszaállítás"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:243
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
-msgstr ""
-"Érvénytelen tartalom. A szakaszokat szóközzel kell elválasztani („1 2 ex1 "
-"ex2”)"
+msgstr "Érvénytelen tartalom. A szakaszokat szóközzel kell elválasztani („1 2 ex1 ex2”)"
 
 #: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:266
 msgid "Timeline"
@@ -1595,8 +1548,7 @@ msgstr "Ez a projekt éppen használatban van."
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:212
 msgid "Close it first to allow its removal from the database"
-msgstr ""
-"Először zárja be, hogy lehetővé tegye az adatbázisból való eltávolítást"
+msgstr "Először zárja be, hogy lehetővé tegye az adatbázisból való eltávolítást"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:215
@@ -1790,9 +1742,7 @@ msgstr "Rendszer"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
 msgid "System templates can't be edited, do you want to create a copy?"
-msgstr ""
-"A rendszersablonokat nem lehet szerkeszteni, szeretne egy másolatot "
-"létrehozni?"
+msgstr "A rendszersablonokat nem lehet szerkeszteni, szeretne egy másolatot létrehozni?"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
@@ -1934,27 +1884,20 @@ msgstr "Importálás"
 msgid ""
 "Projects\n"
 "manager"
-msgstr ""
-"Projektek\n"
-"kezelője"
+msgstr "Projektek\nkezelője"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:42
 msgid ""
 "Analysis\n"
 "Dashboards\n"
 "manager"
-msgstr ""
-"Elemzési\n"
-"áttekintők\n"
-"kezelője"
+msgstr "Elemzési\náttekintők\nkezelője"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:44
 msgid ""
 "Teams\n"
 "manager"
-msgstr ""
-"Csapatok\n"
-"kezelője"
+msgstr "Csapatok\nkezelője"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
 msgid "Category"
@@ -2043,18 +1986,15 @@ msgstr "Fájl megnyitása"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:351
 msgid ""
-"This file is not in a supported format, convert it with the video conversion "
-"tool"
-msgstr ""
-"Ez a fájl nem támogatott formátumú, alakítsa át a videoátalakító eszközzel"
+"This file is not in a supported format, convert it with the video conversion"
+" tool"
+msgstr "Ez a fájl nem támogatott formátumú, alakítsa át a videoátalakító eszközzel"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:355
 msgid ""
 "This file needs to be converted into a more suitable format.(This step will "
 "only take a few minutes)"
-msgstr ""
-"Ezt a fájlt át kell alakítani egy megfelelő formátumra. (Ez a lépés csak pár "
-"percet fog igénybe venni)"
+msgstr "Ezt a fájlt át kell alakítani egy megfelelő formátumra. (Ez a lépés csak pár percet fog igénybe venni)"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:72
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:95
@@ -2083,29 +2023,29 @@ msgstr "Ismétlés"
 msgid "Live"
 msgstr "Élő"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:177
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:178
 msgid "Period recording already started"
 msgstr "A szakasz rögzítése már elkezdődött"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:211
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:233
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:248
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:212
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:234
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:249
 msgid "Period recording not started"
 msgstr "A szakasz rögzítése nem kezdődött el"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:300
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:301
 msgid "Do you want to finish the current capture?"
 msgstr "Be szeretné fejezni a jelenlegi felvételt?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:308
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
 msgid "Do you want to close and cancell the current capture?"
 msgstr "Szeretné bezárni és megszakítani a jelenlegi felvételt?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:419
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
 msgid "Device disconnected. The capture will be paused"
 msgstr "Az eszköz leválasztva. A rögzítés szüneteltetve lesz"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:422
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Az eszköz leválasztva. Szeretné újraindítani a felvételt?"
 
@@ -2124,11 +2064,9 @@ msgstr "Hiba a fájl egyesítésekor:\n"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:172
 msgid ""
-"The file you are trying to load is not properly supported. Would you like to "
-"convert it into a more suitable format?"
-msgstr ""
-"A fájl, amelyet megpróbált betölteni, nincs megfelelően támogatva. Szeretné "
-"átalakítani a megfelelő formátumra?"
+"The file you are trying to load is not properly supported. Would you like to"
+" convert it into a more suitable format?"
+msgstr "A fájl, amelyet megpróbált betölteni, nincs megfelelően támogatva. Szeretné átalakítani a megfelelő formátumra?"
 
 #: ../LongoMatch.Migration/Core/SubCategory.cs:125
 msgid "Tags list"
@@ -2178,7 +2116,7 @@ msgstr "Átalakítás"
 msgid "Nothing to migrate from the old version"
 msgstr "Nincs mit költöztetni a régi verzióból"
 
-#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:99
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:100
 msgid "Fake live source"
 msgstr "Hamis élő forrás"
 
@@ -2331,9 +2269,7 @@ msgstr "Hiba történt a projekt mentésekor:\n"
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
-msgstr ""
-"A videofájl és a projekt biztonsági mentése el lett mentve. Próbálja meg "
-"később importálni:\n"
+msgstr "A videofájl és a projekt biztonsági mentése el lett mentve. Próbálja meg később importálni:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:190
 msgid "An error occurred opening this project:"
@@ -2406,4 +2342,3 @@ msgstr "Biztosan felülírja?"
 #: ../LongoMatch.Services/Services/ToolsManager.cs:189
 msgid "Error importing project:"
 msgstr "Hiba a projekt importálásakor"
-
