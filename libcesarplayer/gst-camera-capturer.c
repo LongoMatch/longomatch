@@ -1370,7 +1370,7 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_return_if_fail (gcc->priv->xoverlay != NULL);
     g_return_if_fail (gcc->priv->window_handle != 0);
 
-    g_object_set (GST_ELEMENT (gcc->priv->xoverlay), "force-aspect-ratio", TRUE,
+    g_object_set (GST_ELEMENT (gcc->priv->xoverlay), "force-aspect-ratio", FALSE,
         NULL);
     lgm_set_window_handle (gcc->priv->xoverlay, gcc->priv->window_handle);
   }
