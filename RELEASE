@@ -1,27 +1,31 @@
-LongoMatch-1.0.0 "Ermitaño"
+LongoMatch-1.0.1 "Alpes"
 -----------------------------
 
-The LongoMatch team is happy to announce the first release in the
+The LongoMatch team is happy to announce the second release in the
 stable 1.0 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest GStreamer libraries and plugins installed for the best user
 experience.
 
-* Features
-	* New UI more intuitive and easier to use
-	* Fully customizable analysis dashboards
-	* Players tagging dashboard
-	* Zonal tagging panel for events review
-	* New statistics events: Score, Penalties, Timers and Players substitutions
-	* Periods synchronization for fake live analysis
-	* HDMI capture
-	* Transition titles and external video sources in playlists
-	* Improved drawing tool
-	* Sizable screens of the different video analysis
-	* Filtering based in periods
-	* Customizable hotkeys
-	* And many usability improvements
+* Bugs fixed
+	* Add support for MPEG-TS to MP4 remuxing when supported
+	* Add Common tags to the filters
+	* Make treeviews fold/unfold with a single click in the cell instead of the expander
+	* Make projects serialization more atomic
+	* Make the seek bar behave correctly with single clicks
+	* Include team, player, score and event time in the CSV
+	* Fix template namewhen copying system templates
+	* Fix events filtering in projects with players not playing
+	* Fix capture at high resolutions and simplify encoding size options
+	* Fix Score and penalty buttons in manual mode
+	* Fix deadlock in files discovery
+	* Fix error handling with live capture
+	* Fix exception in stats with substitutions
+	* Fix changing the UI language in Windows
+	* Fix aspect ratio in live capture
+	* Fix teams mirroring
+	* Fix date display in the projects manager
 
 * Requirements
 

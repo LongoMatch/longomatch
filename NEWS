@@ -1,3 +1,25 @@
+===== LongoMatch 1.0.1 "Alpes" =====
+
+	== Bugs Fixed ==
+
+	* Add support for MPEG-TS to MP4 remuxing when supported
+	* Add Common tags to the filters
+	* Make treeviews fold/unfold with a single click in the cell instead of the expander
+	* Make projects serialization more atomic
+	* Make the seek bar behave correctly with single clicks
+	* Include team, player, score and event time in the CSV
+	* Fix template namewhen copying system templates
+	* Fix events filtering in projects with players not playing
+	* Fix capture at high resolutions and simplify encoding size options
+	* Fix Score and penalty buttons in manual mode
+	* Fix deadlock in files discovery
+	* Fix error handling with live capture
+	* Fix exception in stats with substitutions
+	* Fix changing the UI language in Windows
+	* Fix aspect ratio in live capture
+	* Fix teams mirroring
+	* Fix date display in the projects manager
+
 ===== LongoMatch 1.0.0 "Ermitaño" =====
 
 	== Features ==
