@@ -41,7 +41,10 @@ namespace LongoMatch.Gui
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
+#if OSTYPE_WINDOWS
+			// Workaround for GTK bugs on Windows not showing the video window
 			videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
+#endif
 
 			frame.Add (Window);
 			videoeventbox.Add (frame);
