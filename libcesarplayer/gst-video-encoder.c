@@ -255,8 +255,8 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
 
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
-  gst_caps_set_simple (video_caps, "format", GST_TYPE_FOURCC,
-      GST_STR_FOURCC ("I420"), NULL);
+  /* gst_caps_set_simple (video_caps, "format", GST_TYPE_FOURCC,
+      GST_STR_FOURCC ("I420"), NULL); */
   gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
       1, 1, NULL);
   if (gve->priv->output_width != 0) {
