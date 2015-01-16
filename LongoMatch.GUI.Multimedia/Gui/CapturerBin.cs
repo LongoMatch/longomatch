@@ -306,7 +306,7 @@ namespace LongoMatch.Gui
 
 		void HandleCloseClicked (object sender, EventArgs e)
 		{
-			string msg = Catalog.GetString ("Do you want to close and cancell the current capture?");
+			string msg = Catalog.GetString ("Do you want to close and cancel the current capture?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
 				Config.EventsBroker.EmitCaptureFinished (true);
 			}
@@ -421,7 +421,7 @@ namespace LongoMatch.Gui
 				msg = Catalog.GetString ("Device disconnected. " + "The capture will be paused");
 				MessagesHelpers.WarningMessage (this, msg);
 			} else {
-				msg = Catalog.GetString ("Device reconnected." + "Do you want to restart the capture?");
+				msg = Catalog.GetString ("Device reconnected. " + "Do you want to restart the capture?");
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
 					ResumePeriod ();
 				}

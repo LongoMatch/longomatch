@@ -176,7 +176,7 @@ namespace LongoMatch.Gui.Dialog
 			IDatabase db = SelectedDB;
 			if (db != null) {
 				if (db.Backup())
-					MessagesHelpers.InfoMessage (this, Catalog.GetString ("Backup successfull"));
+					MessagesHelpers.InfoMessage (this, Catalog.GetString ("Backup successful"));
 				else
 					MessagesHelpers.ErrorMessage (this, Catalog.GetString ("Could not create backup"));
 			}

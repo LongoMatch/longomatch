@@ -281,7 +281,7 @@ namespace LongoMatch.Gui.Panel
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The template already exists. " +
-						"Do you want to overwrite it ?");
+						"Do you want to overwrite it?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						break;
