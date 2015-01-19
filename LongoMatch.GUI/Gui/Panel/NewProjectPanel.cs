@@ -294,11 +294,11 @@ namespace LongoMatch.Gui.Panel
 		void UpdateTitle ()
 		{
 			if (notebook1.Page == 0) {
-				panelheader1.Title = "PROJECT TYPE";
+				panelheader1.Title = Catalog.GetString ("PROJECT TYPE");
 			} else if (notebook1.Page == 1) {
-				panelheader1.Title = "PROJECT PROPERTIES";
+				panelheader1.Title = Catalog.GetString ("PROJECT PROPERTIES");
 			} else if (notebook1.Page == 2) {
-				panelheader1.Title = "PERIODS SYNCHRONIZATION";
+				panelheader1.Title = Catalog.GetString ("PERIODS SYNCHRONIZATION");
 			}
 		}
 

@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = "ANALYSIS DASHBOARDS MANAGER";
+			panelheader1.Title = Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
 			panelheader1.BackClicked += (sender, o) => {
 				Save (true);
 				if (BackEvent != null)

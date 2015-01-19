@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Panel
 			datepicker.ValueChanged += HandleDateChanged;
 
 			notebook1.Page = 0;
-			panelheader1.Title = "PROJECTS MANAGER";
+			panelheader1.Title = Catalog.GetString ("PROJECTS MANAGER");
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
 			

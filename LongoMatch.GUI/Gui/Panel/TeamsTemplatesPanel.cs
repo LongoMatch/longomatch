@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Panel
 				SaveLoadedTeam ();};
 
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = "TEAMS MANAGER";
+			panelheader1.Title = Catalog.GetString ("TEAMS MANAGER");
 			panelheader1.BackClicked += (sender, o) => {
 				PromptSave ();
 				if (BackEvent != null)

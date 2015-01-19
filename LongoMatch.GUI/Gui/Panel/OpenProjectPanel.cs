@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using Mono.Unix;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Gui;
 using LongoMatch.Core.Store;
@@ -39,7 +40,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget.ShowList = false;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleClicked;
-			panelheader1.Title = "OPEN PROJECT";
+			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
 		public List<ProjectDescription> Projects{
