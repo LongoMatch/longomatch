@@ -57,6 +57,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\images\cursors\eraser">
       <Link>eraser</Link>
+      <LogicalName>eraser</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="..\images\cursors\cross">
       <Link>cross</Link>
