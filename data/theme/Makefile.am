@@ -60,7 +60,8 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Stock/gtk-about.svg \
 	gtk-2.0/Stock/gtk-add.svg \
 	gtk-2.0/Stock/gtk-close.svg \
-	gtk-2.0/Stock/gtk-dialog-info.svg \
+	gtk-2.0/Stock/gtk-dialog-info.png \
+	gtk-2.0/Stock/gtk-dialog-warning.png \
 	gtk-2.0/Stock/gtk-edit.svg \
 	gtk-2.0/Stock/gtk-fullscreen.svg \
 	gtk-2.0/Stock/gtk-help.svg \
