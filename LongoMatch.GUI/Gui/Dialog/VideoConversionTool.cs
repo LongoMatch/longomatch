@@ -77,6 +77,7 @@ namespace LongoMatch.Gui.Dialog
 		void FillStandards ()
 		{
 			int index = 0, active = 0;
+			VideoStandard min_std = null;
 
 			stdStore = new ListStore (typeof(string), typeof(VideoStandard));
 			foreach (VideoStandard std in supportedVideoStandards) {
@@ -87,6 +88,14 @@ namespace LongoMatch.Gui.Dialog
 					}
 					index ++;
 				}
+				if (min_std == null || std.Height < min_std.Height) {
+					min_std = std;
+				}
+			}
+			if (index == 0 && min_std != null) {
+				// No Video Standard matches the max Height of our video files, add the smallest
+				// supported standard to the list.
+				stdStore.AppendValues (min_std.Name, min_std);
 			}
 			sizecombobox.Model = stdStore;
 			sizecombobox.Active = active;
