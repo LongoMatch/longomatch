@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Panel
 			FillCategories ();
 			FillFormats ();
 			FillDevices (mtoolkit.VideoDevices);
-			LoadTeams ();
+			LoadTeams (project);
 			if (project == null) {
 				notebook1.Page = firstPage = 0;
 				datepicker1.Date = DateTime.Now;
@@ -137,7 +137,7 @@ namespace LongoMatch.Gui.Panel
 			ipbutton.Clicked += HandleProjectTypeSet;
 		}
 
-		void LoadTeams ()
+		void LoadTeams (Project project)
 		{
 			List<TeamTemplate> teams;
 			
@@ -148,12 +148,17 @@ namespace LongoMatch.Gui.Panel
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = Config.TeamTemplatesProvider.Templates;
-			hometeamscombobox.Load (teams);
-			hometeamscombobox.Changed += (sender, e) => {
-				LoadTemplate (hometeamscombobox.ActiveTeam, Team.LOCAL);};
-			awayteamscombobox.Load (teams);
-			awayteamscombobox.Changed += (sender, e) => {
-				LoadTemplate (awayteamscombobox.ActiveTeam, Team.VISITOR);};
+			if (project != null) {
+				hometeamscombobox.Load (new List<TeamTemplate> { project.LocalTeamTemplate });
+				awayteamscombobox.Load (new List<TeamTemplate> { project.VisitorTeamTemplate });
+			} else {
+				hometeamscombobox.Load (teams);
+				hometeamscombobox.Changed += (sender, e) => {
+					LoadTemplate (hometeamscombobox.ActiveTeam, Team.LOCAL, false);};
+				awayteamscombobox.Load (teams);
+				awayteamscombobox.Changed += (sender, e) => {
+					LoadTemplate (awayteamscombobox.ActiveTeam, Team.VISITOR, false);};
+			}
 			hometeamscombobox.Active = 0;
 			awayteamscombobox.Active = 0;
 		}
@@ -183,8 +188,8 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Visible = false;
 			analysislabel.Visible = false;
 			analysisTemplate = project.Dashboard;
-			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
-			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR);
+			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL, true);
+			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR, true);
 			mediafilesetselection1.Visible = true;
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
@@ -250,7 +255,7 @@ namespace LongoMatch.Gui.Panel
 			TeamTemplate template;
 			if (name != null) {
 				template = Config.TeamTemplatesProvider.Load (name);
-				LoadTemplate (template, team);
+				LoadTemplate (template, team, false);
 			}
 		}
 
@@ -264,14 +269,16 @@ namespace LongoMatch.Gui.Panel
 			area.ModifyBg (StateType.Selected, gcolor); 
 		}
 
-		void LoadTemplate (TeamTemplate template, Team team)
+		void LoadTemplate (TeamTemplate template, Team team, bool forceColor)
 		{
 			if (team == Team.LOCAL) {
 				hometemplate = Cloner.Clone (template);
 				hometacticsentry.Text = hometemplate.FormationStr;
 				SetButtonColor (homecolor1, hometemplate.Colors [0]);
 				SetButtonColor (homecolor2, hometemplate.Colors [1]);
-				if (awaytemplate != null && awaytemplate.Color.Equals (hometemplate.Color)) {
+				homecolor1button.Active = homecolor2button.Active = false;
+				if ((forceColor && template.ActiveColor == 1) ||
+				    (awaytemplate != null && awaytemplate.Color.Equals (hometemplate.Color))) {
 					homecolor2button.Click ();
 				} else {
 					homecolor1button.Click ();
@@ -281,7 +288,9 @@ namespace LongoMatch.Gui.Panel
 				awaytacticsentry.Text = awaytemplate.FormationStr;
 				SetButtonColor (awaycolor1, awaytemplate.Colors [0]);
 				SetButtonColor (awaycolor2, awaytemplate.Colors [1]);
-				if (hometemplate != null && hometemplate.Color.Equals (awaytemplate.Color)) {
+				awaycolor1button.Active = awaycolor2button.Active = false;
+				if ((forceColor && template.ActiveColor == 1) ||
+				    (hometemplate != null && hometemplate.Color.Equals (awaytemplate.Color))) {
 					awaycolor2button.Click ();
 				} else {
 					awaycolor1button.Click ();
