@@ -39,7 +39,6 @@ namespace LongoMatch.Gui.Panel
 
 		ListStore teams;
 		TeamTemplate loadedTeam;
-		Dictionary<string, TreeIter> itersDict;
 		ITeamTemplatesProvider provider;
 
 		public TeamsTemplatesPanel ()
@@ -75,7 +74,6 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers (); };
 
 			teams = new ListStore (typeof(Pixbuf), typeof(string));
-			itersDict = new Dictionary<string, TreeIter> ();
 			
 			var cell = new CellRendererText ();
 			cell.Editable = true;
@@ -124,7 +122,6 @@ namespace LongoMatch.Gui.Panel
 			bool first = true;
 			
 			teams.Clear ();
-			itersDict.Clear ();
 			foreach (TeamTemplate template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
@@ -137,7 +134,6 @@ namespace LongoMatch.Gui.Panel
 					                             StyleConf.TeamsShieldIconSize);
 				}
 				iter = teams.AppendValues (img, template.Name);
-				itersDict.Add (template.Name, iter);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
 				}
@@ -200,8 +196,19 @@ namespace LongoMatch.Gui.Panel
 			}
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
-				teamseditortreeview.Model.SetValue (itersDict [loadedTeam.Name], 0,
-				                                    loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize, StyleConf.TeamsShieldIconSize).Value);
+				TreeIter iter;
+				
+				teams.GetIterFirst (out iter);
+				while (teams.IterIsValid (iter)) {
+					string name = teams.GetValue (iter, 1) as string;
+					if (name == loadedTeam.Name) {
+						Pixbuf shield = loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize,
+						                                         StyleConf.TeamsShieldIconSize).Value;
+						teamseditortreeview.Model.SetValue (iter, 0, shield);
+						break;
+					}
+					teams.IterNext (ref iter);
+				}
 			}
 			teamtemplateeditor1.Edited = false;
 		}
