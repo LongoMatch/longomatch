@@ -89,6 +89,7 @@ LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
+LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs
 LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs
 LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs
