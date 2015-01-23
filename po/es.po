@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-19 22:53+0000\n"
-"PO-Revision-Date: 2015-01-20 11:39+0100\n"
+"POT-Creation-Date: 2015-01-22 22:49+0000\n"
+"PO-Revision-Date: 2015-01-23 11:38+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -699,12 +699,12 @@ msgid "Save template"
 msgstr "Guardar plantilla"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:702
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:178
 msgid "New player"
 msgstr "Nuevo jugador"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:728
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:184
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:180
 msgid "Delete player"
 msgstr "Eliminar jugador"
 
@@ -1276,12 +1276,12 @@ msgid "Manage dashboard buttons"
 msgstr "Gestionar botones del panel"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
 msgid "Manage teams"
 msgstr "Gestionar equipos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:185
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:186
 msgid "Manage players"
 msgstr "Gestionar jugadores"
 
@@ -1422,7 +1422,7 @@ msgid "Do you want to delete player: "
 msgstr "Quiere eliminar al jugador: "
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
 msgid "Could not parse tactics string"
 msgstr "No se pudo analizar la cadena de táctica"
 
@@ -1502,7 +1502,6 @@ msgid "Do you really want to delete the database: "
 msgstr "¿Realmente quiere eliminar la base de datos?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
-#| msgid "Backup successfull"
 msgid "Backup successful"
 msgstr "Respaldo correcto"
 
@@ -1655,11 +1654,11 @@ msgid "You can't delete the 'default' template"
 msgstr "No puede eliminar la plantilla predeterminada"
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:257
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
 msgid "Do you really want to delete the template: "
 msgstr "Quiere eliminar la plantilla: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:137
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
 msgid "Add file"
 msgstr "Añadir archivo"
 
@@ -1690,7 +1689,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Algunos ficheros de vídeo siguen sin encontrarse para este proyecto."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:313
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
 msgid "You need at least 1 video file for the main angle"
 msgstr "Necesitar al menos 1 fichero de vídeo para vista principal"
 
@@ -1735,21 +1734,37 @@ msgstr "Mover a"
 msgid "Drawings"
 msgstr "Dibujos"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+msgid "PROJECT TYPE"
+msgstr "TIPO DE PROYECTO"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+msgid "PROJECT PROPERTIES"
+msgstr "PROPIEDADES DEL PROYECTO"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+msgid "PERIODS SYNCHRONIZATION"
+msgstr "PERÍODOS DE SINCRONIZACIÓN"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
 msgstr "No hay archivo de salida"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "No input URI"
 msgstr "No hay URI de entrada"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:439
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
 msgid "No capture devices found in the system"
 msgstr "No se encontraron dispositivos de captura en el sistema"
+
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+msgid "OPEN PROJECT"
+msgstr "ABRIR PROYECTO"
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1775,9 +1790,17 @@ msgstr "Análisis en directo"
 msgid "Plugins"
 msgstr "Plugins"
 
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+msgid "PROJECTS MANAGER"
+msgstr "GESTOR DE PROYECTOS"
+
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
 msgstr "Exportar proyecto"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
+msgid "ANALYSIS DASHBOARDS MANAGER"
+msgstr "GESTOR DE PANELES DE ANÁLISIS"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
@@ -1868,49 +1891,51 @@ msgid "The dashboard name is empty."
 msgstr "El nombre del panel está vacío."
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
-#| msgid "The dashboard already exists. Do you want to overwrite it ?"
 msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "El panel de análisis ya existe. ¿Quiere sobrescribirlo?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
+msgid "TEAMS MANAGER"
+msgstr "GESTOR DE EQUIPOS"
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
 msgid "New team"
 msgstr "Nuevo equipo"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:168
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:164
 msgid "Delete team"
 msgstr "Borrar equipo"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:170
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
 msgid "Save team"
 msgstr "Guardar equipo"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:213
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "¿Quiere guardar la plantilla actual?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:246
 msgid "Could not load team"
 msgstr "No se pudo cargar el equipo"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:261
 msgid "The default team can't be deleted"
 msgstr "El equipo por defecto no se puede borrar"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:284
 msgid "The template name is empty."
 msgstr "El nombre de la plantilla está vacío."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:287
 msgid "The template can't be named 'default'."
 msgstr "El nombre de la plantilla no puede ser «predeterminada»."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:283
-#| msgid "The template already exists. Do you want to overwrite it ?"
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:290
 msgid "The template already exists. Do you want to overwrite it?"
 msgstr "La plantilla ya existe. ¿Quiere sobrescribirla?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
 msgid "A team with the same name already exists"
 msgstr "Un equipo con el mismo nombre ya existe"
 
@@ -2095,7 +2120,6 @@ msgid "Do you want to finish the current capture?"
 msgstr "¿Quiere terminar la captura actual?"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
-#| msgid "Do you want to close and cancell the current capture?"
 msgid "Do you want to close and cancel the current capture?"
 msgstr "¿Quiere cerrar y cancelar la captura actual?"
 
@@ -2104,7 +2128,6 @@ msgid "Device disconnected. The capture will be paused"
 msgstr "Dispositivo desconectado. Se pausará la captura."
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
-#| msgid "Device reconnected.Do you want to restart the capture?"
 msgid "Device reconnected. Do you want to restart the capture?"
 msgstr "Dispositivo reconectado. ¿Quiere reiniciar la captura?"
 
