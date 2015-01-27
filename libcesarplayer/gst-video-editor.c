@@ -426,10 +426,10 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       }
       if (old_state == GST_STATE_NULL && new_state == GST_STATE_READY)
         GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (gve->priv->main_pipeline),
-            GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-null-to-ready");
+            GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-editor-null-to-ready");
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED)
         GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (gve->priv->main_pipeline),
-            GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-ready-to-paused");
+            GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-editor-ready-to-paused");
       break;
     }
     case GST_MESSAGE_EOS:
@@ -464,6 +464,8 @@ gve_error_msg (GstVideoEditor * gve, GstMessage * msg)
 
   g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
       GST_STR_NULL (dbg));
+  GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline),
+      GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-editor-error");
   g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, err->message);
   g_error_free (err);
   g_free (dbg);
