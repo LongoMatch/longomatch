@@ -255,10 +255,6 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
 
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
-  /* gst_caps_set_simple (video_caps, "format", GST_TYPE_FOURCC,
-      GST_STR_FOURCC ("I420"), NULL); */
-  gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
-      1, 1, NULL);
   if (gve->priv->output_width != 0) {
     gst_caps_set_simple (video_caps, "width", G_TYPE_INT,
         gve->priv->output_width, NULL);
@@ -266,6 +262,10 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
   if (gve->priv->output_height != 0) {
     gst_caps_set_simple (video_caps, "height", G_TYPE_INT,
         gve->priv->output_height, NULL);
+  }
+  if (gve->priv->output_height == 0 || gve->priv->output_width == 0) {
+    gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
+        1, 1, NULL);
   }
   /* Set caps for the encoding framerate */
   if (gve->priv->fps_n != 0 && gve->priv->fps_d != 0) {
