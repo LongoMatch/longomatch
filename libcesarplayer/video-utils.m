@@ -253,17 +253,28 @@ lgm_create_video_encoder (VideoEncoderType type, guint quality,
       GstElement *parse;
 
       encoder = gst_element_factory_make ("fluvah264enc", "video-encoder");
-      parse = gst_element_factory_make ("h264parse", NULL);
-      if (encoder != NULL && parse != NULL) {
-        GstPad *encoder_sink_pad, *parse_src_pad;
-        GstElement *bin = gst_bin_new (NULL);
-
+      if (encoder != NULL) {
         g_object_set (encoder, "bitrate", quality, "keyframe-period", 1000,
             "rate-control", 1, "entropy-mode", 0, "allow-b-frames", FALSE,
             "profile", 1, NULL);
         if (realtime) {
             g_object_set (encoder, "realtime", TRUE, NULL);
         }
+        name = "Fluendo VA H264 video encoder";
+      } else {
+        encoder = gst_element_factory_make ("fluh264enc", "video-encoder");
+        if (encoder != NULL) {
+          g_object_set (encoder, "keyframe-period", 1000, "rate-control", 1,
+              "max-threads", 0, "profile", 1, "entropy-mode", 0,
+              "quality-speed", 0, "bitrate", quality, NULL);
+          name = "Fluendo IPP H264 video encoder";
+        }
+      }
+      parse = gst_element_factory_make ("h264parse", NULL);
+      if (encoder != NULL && parse != NULL) {
+        GstPad *encoder_sink_pad, *parse_src_pad;
+        GstElement *bin = gst_bin_new (NULL);
+
 
         gst_bin_add_many (GST_BIN (bin), encoder, parse, NULL);
         gst_element_link (encoder, parse);
@@ -278,29 +289,21 @@ lgm_create_video_encoder (VideoEncoderType type, guint quality,
         gst_object_unref (parse_src_pad);
 
         encoder = bin;
-
-        name = "Fluendo VA H264 video encoder";
       } else {
+        gchar *stats_file;
+
         if (encoder)
           gst_object_unref (encoder);
         if (parse)
           gst_object_unref (parse);
-        encoder = gst_element_factory_make ("fluh264enc", "video-encoder");
-        if (encoder != NULL) {
-          g_object_set (encoder, "keyframe-period", 1000, "rate-control", 1,
-              "max-threads", 0, "profile", 1, "entropy-mode", 0,
-              "quality-speed", 0, "bitrate", quality, NULL);
-          name = "Fluendo IPP H264 video encoder";
-        } else {
-          gchar *stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir (),
-              "x264.log", NULL);
-          encoder = gst_element_factory_make ("x264enc", "video-encoder");
-          g_object_set (encoder, "key-int-max", 25, "pass", 17,
-              "speed-preset", 3, "stats-file", stats_file,
-              "bitrate", quality, NULL);
-          g_free (stats_file);
-          name = "X264 video encoder";
-        }
+        stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir (),
+            "x264.log", NULL);
+        encoder = gst_element_factory_make ("x264enc", "video-encoder");
+        g_object_set (encoder, "key-int-max", 25, "pass", 17,
+            "speed-preset", 3, "stats-file", stats_file,
+            "bitrate", quality, NULL);
+        g_free (stats_file);
+        name = "X264 video encoder";
       }
       break;
     }
