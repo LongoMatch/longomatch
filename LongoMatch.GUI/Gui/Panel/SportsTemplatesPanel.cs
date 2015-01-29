@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Clicked += (object sender, EventArgs e) => {
 				buttonswidget.AddButton ("Timer"); };
 
-			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof(Dashboard), typeof(bool));
+			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof (string), typeof(bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = templates;
@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Panel
 				if (template.Static) {
 					name += " (" + Catalog.GetString ("System") + ")";
 				}
-				iter = templates.AppendValues (img, name, template, !template.Static);
+				iter = templates.AppendValues (img, name, template.Name, !template.Static);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
 				}
@@ -273,7 +273,14 @@ namespace LongoMatch.Gui.Panel
 			Dashboard selected;
 			
 			dashboardseditortreeview.Selection.GetSelected (out iter);
-			selected = templates.GetValue (iter, 2) as Dashboard;
+
+			try {
+				// Load using the template real name and not the display name
+				selected = provider.Load (templates.GetValue (iter, 2) as string);
+			} catch (Exception ex) {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load dashboard"));
+				return;
+			}
 			deletetemplatebutton.Visible = selected != null;
 			buttonswidget.Sensitive = selected != null;
 			if (selected != null) {
@@ -339,7 +346,7 @@ namespace LongoMatch.Gui.Panel
 
 						string name = new_dashboard.Name;
 
-						templates.AppendValues (img, name, new_dashboard, !new_dashboard.Static);
+						templates.AppendValues (img, name, name, !new_dashboard.Static);
 
 						Load (new_dashboard.Name);
 					}
@@ -417,19 +424,20 @@ namespace LongoMatch.Gui.Panel
 			Gtk.TreeIter iter;
 			templates.GetIter (out iter, new Gtk.TreePath (args.Path));
  
-			Dashboard template = (Dashboard)templates.GetValue (iter, 2);
-			if (template.Name != args.NewText) {
+			string name = (string)templates.GetValue (iter, 2);
+			if (name != args.NewText) {
 				if (provider.TemplatesNames.Contains (args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A template with the same name already exists"), this);
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A dashboard with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
-					string prevName = template.Name;
-					template.Name = args.NewText;
-					if (SaveTemplate (template)) {
-						provider.Delete (prevName);
-						templates.SetValue (iter, 1, template.Name);
-					} else {
-						template.Name = prevName;
+					try {
+						provider.Copy (name, args.NewText);
+						provider.Delete (name);
+						// Change displayed name and template name in our store
+						templates.SetValue (iter, 1, args.NewText);
+						templates.SetValue (iter, 2, args.NewText);
+					} catch (Exception ex) {
+						Config.GUIToolkit.ErrorMessage (ex.Message);
 					}
 				}
 			}
