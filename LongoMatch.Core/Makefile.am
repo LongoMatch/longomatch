@@ -26,6 +26,7 @@ SOURCES = Common/Area.cs \
 	Common/Log.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \
+	Common/Utils.cs \
 	Common/VideoStandards.cs \
 	Config.cs \
 	Handlers/Drawing.cs \

@@ -128,9 +128,7 @@ namespace LongoMatch
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
 			string message;
 
-			logFile = logFile.Replace ("/", "-");
-			logFile = logFile.Replace (" ", "-");
-			logFile = logFile.Replace (":", "-");
+			logFile = Utils.SanitizePath (logFile, ' ', ':');
 			logFile = System.IO.Path.Combine (Config.HomeDir, logFile);
 
 			message = SysInfo.PrintInfo (Assembly.GetExecutingAssembly ().GetName ().Version);
