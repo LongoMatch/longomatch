@@ -389,7 +389,7 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_ERROR:
       gve_error_msg (gve, message);
       if (gve->priv->main_pipeline)
-        gst_element_set_state (gve->priv->main_pipeline, GST_STATE_READY);
+        gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
       break;
     case GST_MESSAGE_WARNING:
       GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
