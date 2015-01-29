@@ -53,6 +53,21 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		public String DateTitle {
+			get {
+				string ret = String.Format ("{0}-{1} {2}", LocalName, VisitorName,
+				                            MatchDate.ToShortDateString());
+				if (!String.IsNullOrEmpty (Season)) {
+					ret += " " + Season;
+				}
+				if (!String.IsNullOrEmpty (Competition)) {
+					ret += " " + Competition;
+				}
+				return ret;
+			}
+		}
+
 		/// <summary>
 		/// Media file asigned to this project
 		/// </summary>

@@ -215,7 +215,7 @@ namespace LongoMatch.Services
 			Playlist playlist;
 			EncodingSettings settings;
 			EditionJob job;
-			string outputDir, outputFile;
+			string outputDir, outputProjectDir, outputFile;
 			
 			if (Config.AutoRenderDir == null ||
 				!Directory.Exists (Config.AutoRenderDir)) {
@@ -224,12 +224,15 @@ namespace LongoMatch.Services
 				outputDir = Config.AutoRenderDir;
 			}
 			
+			outputProjectDir = Path.Combine (outputDir,
+			                                 Utils.SanitizePath (project.Description.DateTitle));
 			outputFile = String.Format ("{0}-{1}.mp4", play.EventType.Name, play.Name);
-			outputFile = Path.Combine (outputDir, project.Description.Title, outputFile);
+			outputFile = Utils.SanitizePath (outputFile, ' ');
+			outputFile = Path.Combine (outputProjectDir, outputFile);
 			try {
 				PlaylistPlayElement element;
 				
-				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
+				Directory.CreateDirectory (outputProjectDir);
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
 				playlist = new Playlist ();
 				element = new PlaylistPlayElement (play, project.Description.FileSet);
