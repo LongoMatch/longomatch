@@ -183,7 +183,7 @@ namespace LongoMatch.Gui.Panel
 
 		void SaveStatic ()
 		{
-			string msg = Catalog.GetString ("System templates can't be edited, do you want to create a copy?");
+			string msg = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 				string newName;
 				while (true) {
@@ -192,7 +192,7 @@ namespace LongoMatch.Gui.Panel
 					if (newName == null)
 						break;
 					if (provider.TemplatesNames.Contains (newName)) {
-						msg = Catalog.GetString ("A template with the same name already exists"); 
+						msg = Catalog.GetString ("A dashboard with the same name already exists"); 
 						Config.GUIToolkit.ErrorMessage (msg, this);
 					} else {
 						break;
