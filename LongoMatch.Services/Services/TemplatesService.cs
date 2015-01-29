@@ -133,7 +133,8 @@ namespace LongoMatch.Services
 			
 			template = systemTemplates.FirstOrDefault (t => t.Name == name);
 			if (template != null) {
-				return template;
+				// Return a copy to prevent modification of system templates.
+				return Cloner.Clone (template);
 			} else {
 				Log.Information ("Loading template " + name);
 				template = (T)methodLoad.Invoke (null, new object[] { GetPath(name) });
