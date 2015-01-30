@@ -476,10 +476,12 @@ namespace LongoMatch.Gui
 
 		void HandleMediaInfo (int width, int height, int parN, int parD)
 		{
-			videowindow.Ratio = (float) width / height * parN / parD;
-			outputFile.VideoWidth = (uint) width;
-			outputFile.VideoHeight = (uint) height;
-			outputFile.Par = (float) parN / parD;
+			Application.Invoke (delegate {
+				videowindow.Ratio = (float) width / height * parN / parD;
+				outputFile.VideoWidth = (uint) width;
+				outputFile.VideoHeight = (uint) height;
+				outputFile.Par = (float) parN / parD;
+			});
 		}
 	}
 }
