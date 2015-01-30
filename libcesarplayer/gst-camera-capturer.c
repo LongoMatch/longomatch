@@ -923,8 +923,8 @@ cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer * gcc)
     gst_object_unref (epad);
     gst_object_unref (sink);
   }
-    GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gcc->priv->main_pipeline), GST_DEBUG_GRAPH_SHOW_ALL,
-        "longomatch-capture-link");
+  GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gcc->priv->main_pipeline),
+      GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-capture-link");
   gst_caps_unref (caps);
 }
 
@@ -1339,6 +1339,8 @@ gcc_error_msg (GstCameraCapturer * gcc, GstMessage * msg)
 
     g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
         GST_STR_NULL (dbg));
+    GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gcc->priv->main_pipeline),
+      GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-capture-error");
     g_signal_emit (gcc, gcc_signals[SIGNAL_ERROR], 0, err->message);
     g_error_free (err);
   }
