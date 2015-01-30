@@ -28,7 +28,7 @@
 #define DEFAULT_VIDEO_SINK "osxvideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #elif defined(OSTYPE_LINUX)
-#define DEFAULT_VIDEO_SINK "gsettingsvideosink"
+#define DEFAULT_VIDEO_SINK "autovideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #endif
 
