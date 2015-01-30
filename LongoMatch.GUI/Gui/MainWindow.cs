@@ -72,6 +72,11 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public MenuShell Menu {
+			get {
+				return menubar1;
+			}
+		}
 		public void SetPanel (Widget panel)
 		{
 			if (panel == null) {
@@ -147,6 +152,15 @@ namespace LongoMatch.Gui
 			panel.Name = "newprojectpanel";
 			SetPanel (panel);
 		}
+
+		public void CloseAndQuit ()
+		{
+			Config.EventsBroker.EmitCloseOpenedProject ();
+			if (openedProject == null) {
+				Config.EventsBroker.EmitQuitApplication ();
+			}
+		}
+
 		#endregion
 		#region Private Methods
 		protected override bool OnKeyPressEvent (EventKey evnt)
@@ -263,14 +277,6 @@ namespace LongoMatch.Gui
 			ExportProjectAction1.Sensitive = sensitive;
 			ShowProjectStatsAction.Sensitive = sensitive;
 			SaveProjectAction.Sensitive = sensitive2;
-		}
-
-		private void CloseAndQuit ()
-		{
-			Config.EventsBroker.EmitCloseOpenedProject ();
-			if (openedProject == null) {
-				Config.EventsBroker.EmitQuitApplication ();
-			}
 		}
 
 		protected override bool OnDeleteEvent (Event evnt)

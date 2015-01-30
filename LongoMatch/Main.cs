@@ -84,6 +84,19 @@ namespace LongoMatch
 				}
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
+
+				#if OSTYPE_OS_X
+				GtkOSXApplication app = new GtkOSXApplication ();
+				MainWindow window = Config.GUIToolkit.MainController as MainWindow;
+				app.NSApplicationBlockTermination += (o, a) => {
+					window.CloseAndQuit();
+				};
+				app.SetMenuBar (window.Menu);
+				window.Menu.Visible = false;
+				app.UseQuartzAccelerators = false;
+				app.Ready ();
+				#endif
+
 				Application.Run ();
 			}  catch (AddinRequestShutdownException arse) {
 				// Abort gracefully
