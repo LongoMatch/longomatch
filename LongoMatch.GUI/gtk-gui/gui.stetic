@@ -841,7 +841,7 @@ Sort by competition</property>
       </action>
       <action id="FullScreenAction">
         <property name="Type">Toggle</property>
-        <property name="Accelerator">&lt;Control&gt;&lt;Alt&gt;f</property>
+        <property name="Accelerator">&lt;Primary&gt;f</property>
         <property name="Label" translatable="yes">Full Screen</property>
         <property name="ShortLabel" translatable="yes">Full Screen</property>
         <property name="StockId">gtk-fullscreen</property>

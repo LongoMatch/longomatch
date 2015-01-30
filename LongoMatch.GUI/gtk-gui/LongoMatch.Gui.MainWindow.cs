@@ -75,7 +75,7 @@ namespace LongoMatch.Gui
 			w1.Add (this.ViewAction, "<Control>t");
 			this.FullScreenAction = new global::Gtk.ToggleAction ("FullScreenAction", global::Mono.Unix.Catalog.GetString ("Full Screen"), null, "gtk-fullscreen");
 			this.FullScreenAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Full Screen");
-			w1.Add (this.FullScreenAction, "<Control><Alt>f");
+			w1.Add (this.FullScreenAction, "<Primary>f");
 			this.SaveProjectAction = new global::Gtk.Action ("SaveProjectAction", global::Mono.Unix.Catalog.GetString ("_Save Project"), null, "gtk-save");
 			this.SaveProjectAction.Sensitive = false;
 			this.SaveProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save Project");
