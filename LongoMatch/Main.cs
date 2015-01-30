@@ -85,17 +85,7 @@ namespace LongoMatch
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
-				#if OSTYPE_OS_X
-				GtkOSXApplication app = new GtkOSXApplication ();
-				MainWindow window = Config.GUIToolkit.MainController as MainWindow;
-				app.NSApplicationBlockTermination += (o, a) => {
-					window.CloseAndQuit();
-				};
-				app.SetMenuBar (window.Menu);
-				window.Menu.Visible = false;
-				app.UseQuartzAccelerators = false;
-				app.Ready ();
-				#endif
+				ConfigureOSXApp ();
 
 				Application.Run ();
 			}  catch (AddinRequestShutdownException arse) {
@@ -108,6 +98,29 @@ namespace LongoMatch
 				} catch {
 				}
 			}
+		}
+
+		static void ConfigureOSXApp ()
+		{
+			#if OSTYPE_OS_X
+			MenuItem quit, preferences;
+			GtkOSXApplication app;
+
+			app = new GtkOSXApplication ();
+			MainWindow window = Config.GUIToolkit.MainController as MainWindow;
+			app.NSApplicationBlockTermination += (o, a) => {
+				window.CloseAndQuit();
+			};
+
+			quit = window.QuitMenu;
+			preferences = window.PreferencesMenu;
+			quit.Visible = false;
+			app.SetMenuBar (window.Menu);
+			app.InsertAppMenuItem (preferences, 0);
+			window.Menu.Visible = false;
+			app.UseQuartzAccelerators = false;
+			app.Ready ();
+			#endif
 		}
 
 		static void InitGtk ()

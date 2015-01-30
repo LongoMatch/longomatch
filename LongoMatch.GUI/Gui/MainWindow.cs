@@ -77,6 +77,19 @@ namespace LongoMatch.Gui
 				return menubar1;
 			}
 		}
+
+		public MenuItem QuitMenu {
+			get {
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/QuitAction");
+			}
+		}
+
+		public MenuItem PreferencesMenu {
+			get {
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/PreferencesAction");
+			}
+		}
+
 		public void SetPanel (Widget panel)
 		{
 			if (panel == null) {
