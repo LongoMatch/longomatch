@@ -85,7 +85,7 @@ namespace LongoMatch.Core.Store
 		/// </summary>
 		public Time EventTime {
 			get {
-				return eventTime;
+				return eventTime ?? start;
 			}
 			set {
 				eventTime = value;
