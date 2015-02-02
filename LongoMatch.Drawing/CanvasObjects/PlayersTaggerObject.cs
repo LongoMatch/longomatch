@@ -302,6 +302,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			ResetSelection ();
 			ClearPlayers ();
 			homePlayingPlayers = awayPlayingPlayers = null;
+			lastTime = null;
 
 			homePlayers = new List<PlayerObject> ();
 			awayPlayers = new List<PlayerObject> ();

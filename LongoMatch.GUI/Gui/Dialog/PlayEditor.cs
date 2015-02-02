@@ -74,8 +74,11 @@ namespace LongoMatch.Gui.Dialog
 				notes.Play = play;
 			}
 			if (editPlayers) {
+				teamtagger.Project = project;
 				teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 				                      project.Dashboard.FieldBackground);
+				/* Force lineup update */
+				teamtagger.CurrentTime = play.EventTime;
 				teamtagger.Select (play.Players, play.Team);
 			}
 		
