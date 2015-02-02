@@ -65,6 +65,8 @@ namespace LongoMatch.Gui.Dialog
 			tagsvbox.Visible = editTags;
 
 			nameentry.Text = play.Name;
+			nameentry.GrabFocus ();
+
 			if (editPos) {
 				tagger.LoadBackgrounds (project);
 				tagger.LoadPlay (play);
@@ -157,7 +159,6 @@ namespace LongoMatch.Gui.Dialog
 		{
 			if (play != null) {
 				play.Name = nameentry.Text;
-				nameentry.GrabFocus ();
 			}
 		}
 
