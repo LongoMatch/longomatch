@@ -534,9 +534,18 @@ namespace LongoMatch.Video.Player
 		
 		public Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1)
 		{
+			Image img = null;
+			
 			Seek (pos, accurate, false);
 			Pause ();
-			return GetCurrentFrame (outwidth, outheight);
+			for (int i=0; i < 3; i++) {
+				img = GetCurrentFrame (outwidth, outheight);
+				if (img != null) {
+					break;
+				}
+				System.Threading.Thread.Sleep (10);
+			}
+			return img;
 		}
 	}
 }
