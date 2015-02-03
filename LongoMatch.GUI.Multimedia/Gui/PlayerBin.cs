@@ -283,7 +283,7 @@ namespace LongoMatch.Gui
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
 				TimelineEvent play = ple.Play;
-				LoadSegment (ple.FileSet, play.Start, play.Stop, play.Start, true, play.Rate);
+				LoadSegment (ple.FileSet, play.Start, play.Stop, play.Start, true, ple.Rate);
 			} else if (element is PlaylistVideo) {
 				LoadVideo (element as PlaylistVideo);
 			} else if (element is PlaylistImage) {
