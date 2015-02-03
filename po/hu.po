@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-08 22:49+0000\n"
-"PO-Revision-Date: 2015-01-07 11:31+0000\n"
+"POT-Creation-Date: 2015-02-03 09:11+0000\n"
+"PO-Revision-Date: 2015-01-30 10:02+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/longomatch/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -64,15 +64,15 @@ msgid ""
 " be closed."
 msgstr "Az adatbázist valószínűleg egy másik példány zárolja, és az alkalmazás be lesz zárva."
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "Az alkalmazás befejeződött egy váratlan hibával."
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "A napló ide lett elmentve: "
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Töltsön ki egy hibajelentést "
 
@@ -456,7 +456,7 @@ msgid "Points"
 msgstr "Pontok"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Nincs"
 
@@ -689,12 +689,12 @@ msgid "Save template"
 msgstr "Sablon mentése"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:702
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:178
 msgid "New player"
 msgstr "Új játékos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:728
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:184
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:180
 msgid "Delete player"
 msgstr "Játékos törlése"
 
@@ -1238,12 +1238,12 @@ msgid "Manage dashboard buttons"
 msgstr "Áttekintő gombok kezelése"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
 msgid "Manage teams"
 msgstr "Csapatok kezelése"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:185
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:186
 msgid "Manage players"
 msgstr "Játékosok kezelése"
 
@@ -1380,7 +1380,7 @@ msgid "Do you want to delete player: "
 msgstr "Szeretné törölni a játékost: "
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
 msgid "Could not parse tactics string"
 msgstr "Nem sikerült feldolgozni a taktika szöveget"
 
@@ -1460,8 +1460,8 @@ msgid "Do you really want to delete the database: "
 msgstr "Biztosan törölni szeretné az adatbázist: "
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
-msgid "Backup successfull"
-msgstr "A biztonsági mentés sikeres"
+msgid "Backup successful"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:181
 msgid "Could not create backup"
@@ -1532,7 +1532,7 @@ msgstr "Kész"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "nem érvényes billentyűmódosító: Alt, Shift vagy Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Közös címkék"
 
@@ -1612,11 +1612,11 @@ msgid "You can't delete the 'default' template"
 msgstr "Nem törölheti az „alapértelmezett” nevű sablont"
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:257
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
 msgid "Do you really want to delete the template: "
 msgstr "Biztosan törölni akarja a sablont: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:137
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
 msgid "Add file"
 msgstr "Fájl hozzáadása"
 
@@ -1647,7 +1647,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Néhány videofájl még mindig hiányzik ennél a projektnél."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:313
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
 msgid "You need at least 1 video file for the main angle"
 msgstr "Legalább 1 videofájlra van szüksége a fő szöghöz"
 
@@ -1692,21 +1692,37 @@ msgstr "Mozgatás ide"
 msgid "Drawings"
 msgstr "Rajzolások"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+msgid "PROJECT TYPE"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+msgid "PROJECT PROPERTIES"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+msgid "PERIODS SYNCHRONIZATION"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
 msgstr "Nincs kimeneti videofájl"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "No input URI"
 msgstr "Nincs bemeneti URI"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:439
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
 msgid "No capture devices found in the system"
 msgstr "Nem található felvevőeszköz a rendszeren"
+
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+msgid "OPEN PROJECT"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1732,22 +1748,30 @@ msgstr "Élő elemzés"
 msgid "Plugins"
 msgstr "Bővítmények"
 
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+msgid "PROJECTS MANAGER"
+msgstr ""
+
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
 msgstr "Projekt exportálása"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
+msgid "ANALYSIS DASHBOARDS MANAGER"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
 msgstr "Rendszer"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
-msgstr "A rendszersablonokat nem lehet szerkeszteni, szeretne egy másolatot létrehozni?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Már létezik ugyanilyen nevű sablon"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1759,7 +1783,7 @@ msgstr "Új áttekintő"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Áttekintő importálása"
 
@@ -1791,80 +1815,88 @@ msgstr "Stoppergomb hozzáadása"
 msgid "Add card button"
 msgstr "Lapgomb hozzáadása"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Valóban törölni szeretné az áttekintőt: "
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Áttekintő fájljai"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Áttekintő neve:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Névütközés"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Hiba a sablon importálásakor:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Új áttekintő"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Eseménytípusok:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "Az áttekintő neve üres."
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
-msgid "The dashboard already exists. Do you want to overwrite it ?"
-msgstr "Az áttekintő már létezik. Szeretné felülírni?"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
+msgid "The dashboard already exists. Do you want to overwrite it?"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
+msgid "TEAMS MANAGER"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
 msgid "New team"
 msgstr "Új csapat"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:168
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:164
 msgid "Delete team"
 msgstr "Csapat törlése"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:170
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
 msgid "Save team"
 msgstr "Csapat mentése"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:213
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "Szeretné menteni a jelenlegi sablont"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:246
 msgid "Could not load team"
 msgstr "Nem sikerült betölteni a csapatot"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:261
 msgid "The default team can't be deleted"
 msgstr "Az alapértelmezett csapat nem törölhető"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:284
 msgid "The template name is empty."
 msgstr "A sablon neve üres."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:287
 msgid "The template can't be named 'default'."
 msgstr "A sablont nem lehet „alapértelmezett” néven menteni."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:283
-msgid "The template already exists. Do you want to overwrite it ?"
-msgstr "A sablon már létezik. Szeretné felülírni?"
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:290
+msgid "The template already exists. Do you want to overwrite it?"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
 msgid "A team with the same name already exists"
 msgstr "Már létezik ugyanilyen nevű csapat"
 
@@ -2038,16 +2070,16 @@ msgid "Do you want to finish the current capture?"
 msgstr "Be szeretné fejezni a jelenlegi felvételt?"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
-msgid "Do you want to close and cancell the current capture?"
-msgstr "Szeretné bezárni és megszakítani a jelenlegi felvételt?"
+msgid "Do you want to close and cancel the current capture?"
+msgstr ""
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
 msgid "Device disconnected. The capture will be paused"
 msgstr "Az eszköz leválasztva. A rögzítés szüneteltetve lesz"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
-msgid "Device reconnected.Do you want to restart the capture?"
-msgstr "Az eszköz leválasztva. Szeretné újraindítani a felvételt?"
+msgid "Device reconnected. Do you want to restart the capture?"
+msgstr ""
 
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
@@ -2248,8 +2280,8 @@ msgstr "A jelenlegi projekt bezárása az adatbázis-kezelő megnyitásához"
 msgid "Error capturing video frame"
 msgstr "Hiba a videoképkocka rögzítésekor"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "A videofelvétel leállítva"
 
@@ -2312,8 +2344,8 @@ msgstr "Hiba történt a videoszerkesztőben."
 msgid "Please, try again."
 msgstr "Próbálja újra."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Egy sablon már létezik ezzel a névvel: "
 

@@ -1,28 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2014
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2015
 # Jorge González <jorgegonz@svn.gnome.org>, 2010-2011
 # ylatuya <ylatuya@gmail.com>, 2014-2015
 # ylatuya <ylatuya@gmail.com>, 2014
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2014, 2015.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-22 22:49+0000\n"
-"PO-Revision-Date: 2015-01-23 11:38+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-03 09:11+0000\n"
+"PO-Revision-Date: 2015-01-30 10:02+0000\n"
+"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/longomatch/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../libcesarplayer/lgm-video-player.c:349
 msgid "Location not found."
@@ -31,8 +29,7 @@ msgstr "Ubicación no encontrada."
 #: ../libcesarplayer/lgm-video-player.c:352
 msgid ""
 "Could not open location; you might not have permission to open the file."
-msgstr ""
-"No se pudo abrir la ubicación; quizás no tiene permiso para abrir el archivo."
+msgstr "No se pudo abrir la ubicación; quizás no tiene permiso para abrir el archivo."
 
 #: ../libcesarplayer/lgm-video-player.c:432
 msgid "Media file could not be played."
@@ -43,9 +40,7 @@ msgstr "No se pudo reproducir el archivo."
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr ""
-"Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
-"de GStreamer."
+msgstr "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación de GStreamer."
 
 #: ../libcesarplayer/lgm-video-player.c:969
 #, c-format
@@ -67,20 +62,19 @@ msgstr "Herramienta de vídeo análisis para entrenadores"
 
 #: ../LongoMatch/Main.cs:79
 msgid ""
-"The database seems to be locked by another instance and the application will "
-"be closed."
-msgstr ""
-"La base de datos está bloqueada por otra instancia y se cerrará la aplicación"
+"The database seems to be locked by another instance and the application will"
+" be closed."
+msgstr "La base de datos está bloqueada por otra instancia y se cerrará la aplicación"
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "El programa ha terminado con error inesperado"
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "Se ha guardado un registro en:"
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Envíe un informe de fallos "
 
@@ -464,7 +458,7 @@ msgid "Points"
 msgstr "Puntos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Ninguno"
 
@@ -558,9 +552,7 @@ msgstr "Carpeta de salida"
 msgid ""
 "Render new events automatically\n"
 "(Requires a powerful CPU)"
-msgstr ""
-"Exportar eventos automáticamente\n"
-"(Requiere una computadora potente)"
+msgstr "Exportar eventos automáticamente\n(Requiere una computadora potente)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
 msgid "<b>Main camera angle</b>"
@@ -776,31 +768,12 @@ msgstr "CODECS no encontrados"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs:65
 msgid ""
-"As explained and detailed in the <a href=\"http://www.longomatch.com/open-"
-"source.html\">OpenSource project</a> page, the use of this free and open "
-"source version of LongoMatch requires that you also install additional "
-"software called a CODEC, which may also be free.  \n"
+"As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n"
 "\n"
-"To acknowledge your understanding and for more information on why this is "
-"so, where to get it and how to install it visit the <a href=\"http://www."
-"longomatch.com/open-source.html\">OpenSource project</a> page.\n"
+"To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n"
 "\n"
-"To avoid this, and to enjoy many additional functional benefits, we "
-"encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-"
-"use. "
-msgstr ""
-"Tal y como se explica en detalle en la página del <a href=\"http://www."
-"longomatch.com/open-source.html\">proyecto OpenSource</a>, el uso de esta "
-"versión gratuita y de software libre de LongoMatch requiere que instale un "
-"software adicional llamado CODECS, que también puede ser gratuito.\n"
-"\n"
-"Para confirmar que entiende las implicaciones y para obtener más información "
-"del porqué, dónde descargarlo y cómo instalarlo, visite la página del <a "
-"href=\"http://www.longomatch.com/open-source.html\">proyecto OpenSource</a>\n"
-"\n"
-"Para evitar esto y poder disfrutar de más funcionalidades, le recomendamos "
-"que actualice a LongoMatch PRO, que por una subscripción, está listo para su "
-"utilización."
+"To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
+msgstr "Tal y como se explica en detalle en la página del <a href=\"http://www.longomatch.com/open-source.html\">proyecto OpenSource</a>, el uso de esta versión gratuita y de software libre de LongoMatch requiere que instale un software adicional llamado CODECS, que también puede ser gratuito.\n\nPara confirmar que entiende las implicaciones y para obtener más información del porqué, dónde descargarlo y cómo instalarlo, visite la página del <a href=\"http://www.longomatch.com/open-source.html\">proyecto OpenSource</a>\n\nPara evitar esto y poder disfrutar de más funcionalidades, le recomendamos que actualice a LongoMatch PRO, que por una subscripción, está listo para su utilización."
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
 msgid "Databases manager"
@@ -881,13 +854,8 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost."
-"</b>"
-msgstr ""
-"Actualmente hay un proyecto de captura en ejecución.\n"
-"Puede continuar con la captura actual, cancelarla o guardar su proyecto.\n"
-"\n"
-"<b>Aviso: se perderán todos los cambios si cancela el proyecto actual.</b>"
+"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
+msgstr "Actualmente hay un proyecto de captura en ejecución.\nPuede continuar con la captura actual, cancelarla o guardar su proyecto.\n\n<b>Aviso: se perderán todos los cambios si cancela el proyecto actual.</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
 msgid "Return"
@@ -981,9 +949,7 @@ msgstr "<b>Jugador saliente</b>"
 msgid ""
 "\n"
 "A new version of LongoMatch has been released at www.ylatuya.es!\n"
-msgstr ""
-"\n"
-"Se ha publicado una nueva versión de LongoMatch en www.ylatuya.es\n"
+msgstr "\nSe ha publicado una nueva versión de LongoMatch en www.ylatuya.es\n"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
 msgid "The new version is "
@@ -993,9 +959,7 @@ msgstr "La nueva versión es"
 msgid ""
 "\n"
 "You can download it using this direct link:"
-msgstr ""
-"\n"
-"Puede descargarla usando este enlace directo:"
+msgstr "\nPuede descargarla usando este enlace directo:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
 msgid "label7"
@@ -1295,11 +1259,9 @@ msgstr "Categorías"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
 msgid ""
-"You are about to delete a category and all the plays added to this category. "
-"Do you want to proceed?"
-msgstr ""
-"Está a punto de eliminar una categoría y todas las jugadas añadidas a la "
-"categoría. ¿Quiere continuar?"
+"You are about to delete a category and all the plays added to this category."
+" Do you want to proceed?"
+msgstr "Está a punto de eliminar una categoría y todas las jugadas añadidas a la categoría. ¿Quiere continuar?"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
@@ -1331,9 +1293,7 @@ msgstr "Reiniciar"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:243
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
-msgstr ""
-"Contenido no válido. Los períodos se deben separar por espacios (\"1 2 ex1 "
-"ex2\")"
+msgstr "Contenido no válido. Los períodos se deben separar por espacios (\"1 2 ex1 ex2\")"
 
 #: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:266
 msgid "Timeline"
@@ -1574,7 +1534,7 @@ msgstr "Terminado"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "no es una tecla de modificador válida: Alt, Shift o Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Etiquetas comunes"
 
@@ -1740,15 +1700,15 @@ msgstr "Desconocido"
 
 #: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
 msgid "PROJECT TYPE"
-msgstr "TIPO DE PROYECTO"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
 msgid "PROJECT PROPERTIES"
-msgstr "PROPIEDADES DEL PROYECTO"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
 msgid "PERIODS SYNCHRONIZATION"
-msgstr "PERÍODOS DE SINCRONIZACIÓN"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
@@ -1764,7 +1724,7 @@ msgstr "No se encontraron dispositivos de captura en el sistema"
 
 #: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
 msgid "OPEN PROJECT"
-msgstr "ABRIR PROYECTO"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1792,7 +1752,7 @@ msgstr "Plugins"
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
 msgid "PROJECTS MANAGER"
-msgstr "GESTOR DE PROYECTOS"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
@@ -1800,21 +1760,20 @@ msgstr "Exportar proyecto"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
 msgid "ANALYSIS DASHBOARDS MANAGER"
-msgstr "GESTOR DE PANELES DE ANÁLISIS"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
 msgstr "Sistema"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
 msgstr ""
-"Las plantillas del sistema no se pueden editar, quiere crear una copia?"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Una plantilla con el mismo nombre ya existe"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1826,7 +1785,7 @@ msgstr "Panel nuevo"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Importar panel"
 
@@ -1858,45 +1817,49 @@ msgstr "Añadir botón de temporizador"
 msgid "Add card button"
 msgstr "Añadir botón de amonestación"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Desea eliminar este panel:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Ficheros de paneles de análisis"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Nombre del panel:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Conflicto en el nombre"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Error importando panel:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Nuevo panel"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Categorías de evento:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "El nombre del panel está vacío."
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
 msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "El panel de análisis ya existe. ¿Quiere sobrescribirlo?"
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
 msgid "TEAMS MANAGER"
-msgstr "GESTOR DE EQUIPOS"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
@@ -1955,27 +1918,20 @@ msgstr "Importar"
 msgid ""
 "Projects\n"
 "manager"
-msgstr ""
-"Gestor de\n"
-"proyectos"
+msgstr "Gestor de\nproyectos"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:42
 msgid ""
 "Analysis\n"
 "Dashboards\n"
 "manager"
-msgstr ""
-"Gestor de\n"
-"paneles de\n"
-"análisis"
+msgstr "Gestor de\npaneles de\nanálisis"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:44
 msgid ""
 "Teams\n"
 "manager"
-msgstr ""
-"Gestor de\n"
-"Equipos"
+msgstr "Gestor de\nEquipos"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
 msgid "Category"
@@ -2064,19 +2020,15 @@ msgstr "Abrir archivo"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:351
 msgid ""
-"This file is not in a supported format, convert it with the video conversion "
-"tool"
-msgstr ""
-"El archivo no está en un formato soportado, conviértalo con la herramienta "
-"de conversión de vídeo."
+"This file is not in a supported format, convert it with the video conversion"
+" tool"
+msgstr "El archivo no está en un formato soportado, conviértalo con la herramienta de conversión de vídeo."
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:355
 msgid ""
 "This file needs to be converted into a more suitable format.(This step will "
 "only take a few minutes)"
-msgstr ""
-"Este fichero tiene que convertirse a un formato más adecuado. (El proceso "
-"solo tardará unos pocos minutos)"
+msgstr "Este fichero tiene que convertirse a un formato más adecuado. (El proceso solo tardará unos pocos minutos)"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:72
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:95
@@ -2146,11 +2098,9 @@ msgstr "Error al remultiplexar archivo:\n"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:172
 msgid ""
-"The file you are trying to load is not properly supported. Would you like to "
-"convert it into a more suitable format?"
-msgstr ""
-"El archivo que intenta cargar no está soportado adecuadamente. ¿Quiere "
-"convertirlo a un formato más adecuado?"
+"The file you are trying to load is not properly supported. Would you like to"
+" convert it into a more suitable format?"
+msgstr "El archivo que intenta cargar no está soportado adecuadamente. ¿Quiere convertirlo a un formato más adecuado?"
 
 #: ../LongoMatch.Migration/Core/SubCategory.cs:125
 msgid "Tags list"
@@ -2190,8 +2140,7 @@ msgstr "Herramienta de migración"
 
 #: ../LongoMatch.Migration/gtk-gui/MainWindow.cs:34
 msgid "<b> We have found the following elements from the old version: </b>"
-msgstr ""
-"<b> Se han encontrado los siguientes elementos de la versión anterior:</b>"
+msgstr "<b> Se han encontrado los siguientes elementos de la versión anterior:</b>"
 
 #: ../LongoMatch.Migration/gtk-gui/MainWindow.cs:103
 msgid "Convert"
@@ -2323,9 +2272,7 @@ msgstr "Mostar estadísticas del partido"
 #: ../LongoMatch.Services/Services/CoreServices.cs:156
 msgid ""
 "A rendering job is running in the background. Do you really want to quit?"
-msgstr ""
-"Existe un trabajado de renderizado corriendo de fondo. ¿Desea salir de todas "
-"formas?"
+msgstr "Existe un trabajado de renderizado corriendo de fondo. ¿Desea salir de todas formas?"
 
 #: ../LongoMatch.Services/Services/DataBaseManager.cs:143
 msgid "Close the current project to open the database manager"
@@ -2335,8 +2282,8 @@ msgstr "Cierre el proyecto actual para abrir el gestor de bases de datos"
 msgid "Error capturing video frame"
 msgstr "Error capturando fotograma"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "La captura de vídeo se ha parado"
 
@@ -2356,9 +2303,7 @@ msgstr "Ocurrió un error al guardar el proyecto:\n"
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
-msgstr ""
-"Se han guardado el archivo de vídeo y el respaldo del proyecto. Inténtelo "
-"importar más tarde:\n"
+msgstr "Se han guardado el archivo de vídeo y el respaldo del proyecto. Inténtelo importar más tarde:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:190
 msgid "An error occurred opening this project:"
@@ -2401,8 +2346,8 @@ msgstr "Ocurrió un error en el editor de vídeo."
 msgid "Please, try again."
 msgstr "Inténtelo de nuevo."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Ya existe una plantilla con el nombre: "
 

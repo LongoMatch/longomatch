@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-08 22:49+0000\n"
-"PO-Revision-Date: 2015-01-08 23:01+0000\n"
+"POT-Creation-Date: 2015-02-03 09:11+0000\n"
+"PO-Revision-Date: 2015-01-30 11:31+0000\n"
 "Last-Translator: eugen pop <eugen_tennis@yahoo.com>\n"
 "Language-Team: Romanian (Romania) (http://www.transifex.com/projects/p/longomatch/language/ro_RO/)\n"
 "MIME-Version: 1.0\n"
@@ -63,15 +63,15 @@ msgid ""
 " be closed."
 msgstr "Baza de date pare a fi blocată de o altă instanță iar aplicația va fi închisă."
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "Aplicația s-a oprit datorită unei erori neașteptate."
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "Un jurnal a fost salvat la:"
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Te rugăm să completezi un raport al defecțiunii."
 
@@ -455,7 +455,7 @@ msgid "Points"
 msgstr "Puncte"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Nimic"
 
@@ -549,7 +549,7 @@ msgstr "Director ieșire"
 msgid ""
 "Render new events automatically\n"
 "(Requires a powerful CPU)"
-msgstr "Rendare automată a noilor evenimente\n(Necesită un putrernic CPU)"
+msgstr "Rendare automată a noilor evenimente\n(Necesită un CPU puternic)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
 msgid "<b>Main camera angle</b>"
@@ -688,12 +688,12 @@ msgid "Save template"
 msgstr "Salvează model"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:702
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:178
 msgid "New player"
 msgstr "Jucător nou"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:728
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:184
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:180
 msgid "Delete player"
 msgstr "Șterge jucător"
 
@@ -1237,12 +1237,12 @@ msgid "Manage dashboard buttons"
 msgstr "Gestionează butoanele planșei"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
 msgid "Manage teams"
 msgstr "Gestionează echipe"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:185
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:186
 msgid "Manage players"
 msgstr "Gestionează jucători"
 
@@ -1379,7 +1379,7 @@ msgid "Do you want to delete player: "
 msgstr "Vrei să ștergi jucător:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
 msgid "Could not parse tactics string"
 msgstr "Nu se poate analiza șirul tactic"
 
@@ -1459,7 +1459,7 @@ msgid "Do you really want to delete the database: "
 msgstr "Sigur vrei să ștergi baza de date:"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
-msgid "Backup successfull"
+msgid "Backup successful"
 msgstr "Copie de rezervă finalizată cu succes"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:181
@@ -1531,7 +1531,7 @@ msgstr "Realizat"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "nu este o tastă modificatoare validă:Alt, Shift or Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Etichete comune"
 
@@ -1611,11 +1611,11 @@ msgid "You can't delete the 'default' template"
 msgstr "Nu poți șterge modelul 'predefinit' "
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:257
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
 msgid "Do you really want to delete the template: "
 msgstr "Sigur vrei să ștergi acest model:"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:137
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
 msgid "Add file"
 msgstr "Adaugă fișier"
 
@@ -1646,7 +1646,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Încă mai lipsesc unele fișiere video pentru acest proiect"
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:313
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
 msgid "You need at least 1 video file for the main angle"
 msgstr "Ai nevoie de cel puțin 1 fișier video pentru unghiul principal"
 
@@ -1691,21 +1691,37 @@ msgstr "Mută la"
 msgid "Drawings"
 msgstr "Desene"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+msgid "PROJECT TYPE"
+msgstr "TIP DE PROIECT"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+msgid "PROJECT PROPERTIES"
+msgstr "PROPRIETĂȚILE PROIECTULUI"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+msgid "PERIODS SYNCHRONIZATION"
+msgstr "SINCRONIZAREA PERIOADELOR"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
 msgstr "Nici un fișier video de ieșire"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "No input URI"
 msgstr "Nici un URI de intrare"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:439
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
 msgid "No capture devices found in the system"
 msgstr "Nu o fost găsit în sistem nici un instrument de captură."
+
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+msgid "OPEN PROJECT"
+msgstr "DESCHIDE PROIECT"
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1731,22 +1747,30 @@ msgstr "Analiză in direct"
 msgid "Plugins"
 msgstr "Module"
 
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+msgid "PROJECTS MANAGER"
+msgstr "MANAGERUL PROIECTELOR"
+
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
 msgstr "Exportă proiect"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
+msgid "ANALYSIS DASHBOARDS MANAGER"
+msgstr "MANAGERUL PLANȘELOR DE ANALIZĂ"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
 msgstr "Sistem"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
-msgstr "Modele sistemului nu pot fi editate.Vrei să creezi o copie?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
+msgstr "Planșele sistemului nu pot fi editate ,vrei să creezi o copie ?"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Un model cu același nume există deja"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr "O planșă cu același nume există deja"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1758,7 +1782,7 @@ msgstr "Planșa nouă"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Importă planșa"
 
@@ -1790,80 +1814,88 @@ msgstr "Adaugă buton timer"
 msgid "Add card button"
 msgstr "Adaugă buton cartonaș"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr "Nu se poate încărca planșa"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Sigur vrei să ștergi planșa:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Fișierele planșei"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Numele planșei:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Numele conflictului"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Eroare la importarea modelului"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Planșă nouă"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Tipuri de evenimente:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "Numele planșei este liber."
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
-msgid "The dashboard already exists. Do you want to overwrite it ?"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
+msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "Planșa există deja. Vrei să o suprascrii ?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
+msgid "TEAMS MANAGER"
+msgstr "MANAGERUL ECHIPELOR"
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
 msgid "New team"
 msgstr "Echipă nouă"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:168
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:164
 msgid "Delete team"
 msgstr "Șterge echipă"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:170
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
 msgid "Save team"
 msgstr "Salvează echipă"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:213
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "Vrei să salvezi modelul curent"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:246
 msgid "Could not load team"
 msgstr "Echipa nu a putut fi încărcată"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:261
 msgid "The default team can't be deleted"
 msgstr "Echipa predefină nu poate fi ștearsă"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:284
 msgid "The template name is empty."
 msgstr "Numele modelului este liber."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:287
 msgid "The template can't be named 'default'."
 msgstr "Modelul nu poate fi numit 'predefinit'."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:283
-msgid "The template already exists. Do you want to overwrite it ?"
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:290
+msgid "The template already exists. Do you want to overwrite it?"
 msgstr "Modelul există deja. Vrei să il suprascri ?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
 msgid "A team with the same name already exists"
 msgstr "O echipă cu același nume există deja"
 
@@ -2037,7 +2069,7 @@ msgid "Do you want to finish the current capture?"
 msgstr "Vrei să termini captura curentă?"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
-msgid "Do you want to close and cancell the current capture?"
+msgid "Do you want to close and cancel the current capture?"
 msgstr "Vrei să închizi și să anulezi captura curentă?"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
@@ -2045,8 +2077,8 @@ msgid "Device disconnected. The capture will be paused"
 msgstr "Aparat deconectat.Captura va fi intreruptă"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
-msgid "Device reconnected.Do you want to restart the capture?"
-msgstr "Aparat reconectat.Vrei să repornești captura?"
+msgid "Device reconnected. Do you want to restart the capture?"
+msgstr "Aparat reconectat. Vrei să repornești captura?"
 
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
@@ -2247,8 +2279,8 @@ msgstr "Închide proiectul curent pentru a deschide managerul bazei de date"
 msgid "Error capturing video frame"
 msgstr "Eroare la captura cadrului video"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "Captura video este oprită"
 
@@ -2311,8 +2343,8 @@ msgstr "S-a produs o eroare la editorul video."
 msgid "Please, try again."
 msgstr "Te rugăm să incerci din nou."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Un model cu acest nume există deja:"
 

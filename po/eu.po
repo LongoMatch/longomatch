@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-08 22:49+0000\n"
-"PO-Revision-Date: 2015-01-06 10:05+0000\n"
+"POT-Creation-Date: 2015-02-03 09:11+0000\n"
+"PO-Revision-Date: 2015-01-30 10:02+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Basque (Spain) (http://www.transifex.com/projects/p/longomatch/language/eu_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -63,15 +63,15 @@ msgid ""
 " be closed."
 msgstr ""
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "Aplikazioa espero ez zen errore batekin itxi egin da."
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "Log-a ondoko tokian gorde da:"
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Errore txosten bat osatu mesedez"
 
@@ -455,7 +455,7 @@ msgid "Points"
 msgstr "Puntuak"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Ezer ez"
 
@@ -688,12 +688,12 @@ msgid "Save template"
 msgstr "Plantilla gorde"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:702
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:178
 msgid "New player"
 msgstr "Jokalari berria"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:728
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:184
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:180
 msgid "Delete player"
 msgstr "Jokalaria ezabatu"
 
@@ -1237,12 +1237,12 @@ msgid "Manage dashboard buttons"
 msgstr "Panelen botoiak kudeatu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
 msgid "Manage teams"
 msgstr "Taldeak kudeatu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:185
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:186
 msgid "Manage players"
 msgstr "Jokalariak kudeatu"
 
@@ -1379,7 +1379,7 @@ msgid "Do you want to delete player: "
 msgstr "Jokalaria ezabatu nahi al duzu?"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
 msgid "Could not parse tactics string"
 msgstr "Ezin izan dira taktikak aztertu"
 
@@ -1459,8 +1459,8 @@ msgid "Do you really want to delete the database: "
 msgstr "Datubasea ezabatu nahi duzula ziurtatzen duzu?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
-msgid "Backup successfull"
-msgstr "Segurtasun kopia egoki egin da"
+msgid "Backup successful"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:181
 msgid "Could not create backup"
@@ -1531,7 +1531,7 @@ msgstr "Egina"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "Tekla eraldatzailea ez du balio: Alt, Shift edo Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Ohiko etiketak"
 
@@ -1611,11 +1611,11 @@ msgid "You can't delete the 'default' template"
 msgstr "Ezin duzu \"jatorrizko\" plantila ezabatu"
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:257
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
 msgid "Do you really want to delete the template: "
 msgstr "Ziur zaude plantila ezabatu nahi duzula?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:137
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
 msgid "Add file"
 msgstr "Fitxategia gehitu"
 
@@ -1646,7 +1646,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Proiektu honetako bideo fitxategi batzuk galduta jarraitzen dute."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:313
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
 msgid "You need at least 1 video file for the main angle"
 msgstr "Bideo fitxategi 1 behar da gutxienez angelu nagusirako"
 
@@ -1691,21 +1691,37 @@ msgstr "Mugitu"
 msgid "Drawings"
 msgstr "Marrazkiak"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+msgid "PROJECT TYPE"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+msgid "PROJECT PROPERTIES"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+msgid "PERIODS SYNCHRONIZATION"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
 msgstr "Ez dago bideo irteerarik"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "No input URI"
 msgstr "Ez da URLrik sartu"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:439
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
 msgid "No capture devices found in the system"
 msgstr "Sisteman ez da kaptura gailurik aurkitu"
+
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+msgid "OPEN PROJECT"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1731,22 +1747,30 @@ msgstr "Zuzeneko analisia"
 msgid "Plugins"
 msgstr "Pluginak"
 
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+msgid "PROJECTS MANAGER"
+msgstr ""
+
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
 msgstr "Proiektua esportatu"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
+msgid "ANALYSIS DASHBOARDS MANAGER"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
 msgstr "Sistema"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
-msgstr "Sistemaren plantilak ezin dira editatu, kopia bat sortu nahi duzu?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Plantila bat existitzen da izen berdinarekin"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1758,7 +1782,7 @@ msgstr "Panel berria"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Panela inportatu"
 
@@ -1790,80 +1814,88 @@ msgstr "Denbora botoia gehitu"
 msgid "Add card button"
 msgstr "Txartela botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Ziur zaude panela ezabatu nahi duzula?"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Panelen fitxategiak"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Panelaren izena:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Izen arazoa"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Plantila importatzen errorea:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Panel berria"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Gertaera motak:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "Panelaren izena hutsik dago"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
-msgid "The dashboard already exists. Do you want to overwrite it ?"
-msgstr "Panela dagoeneko existitzen da. Berridatzi nahi al duzu?"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
+msgid "The dashboard already exists. Do you want to overwrite it?"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
+msgid "TEAMS MANAGER"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
 msgid "New team"
 msgstr "Talde berria"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:168
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:164
 msgid "Delete team"
 msgstr "Taldea ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:170
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
 msgid "Save team"
 msgstr "Taldea gorde"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:213
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "Erabiltzen ari zaren plantila gorde nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:246
 msgid "Could not load team"
 msgstr "Ezin izan da taldea kargatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:261
 msgid "The default team can't be deleted"
 msgstr "Jatorrizko taldea ezin da ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:284
 msgid "The template name is empty."
 msgstr "Plantila izena hutsik dago"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:287
 msgid "The template can't be named 'default'."
 msgstr "Plantila ezin da 'default' deitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:283
-msgid "The template already exists. Do you want to overwrite it ?"
-msgstr "Plantila existitzen da. Berridatzi nahi al duzu?"
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:290
+msgid "The template already exists. Do you want to overwrite it?"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
 msgid "A team with the same name already exists"
 msgstr "Izen berdina duen talde bat existitzen da"
 
@@ -2037,16 +2069,16 @@ msgid "Do you want to finish the current capture?"
 msgstr "Kaptura hau bukatu nahi duzu?"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
-msgid "Do you want to close and cancell the current capture?"
-msgstr "Kaptura hau itxi eta kanzelatu nahi duzu?"
+msgid "Do you want to close and cancel the current capture?"
+msgstr ""
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
 msgid "Device disconnected. The capture will be paused"
 msgstr "Gailu deskonektatua. Kaptura geldituko da"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
-msgid "Device reconnected.Do you want to restart the capture?"
-msgstr "Gailua berriz konektatu da. Kapturarekin jarraitu nahi duzu?"
+msgid "Device reconnected. Do you want to restart the capture?"
+msgstr ""
 
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
@@ -2247,8 +2279,8 @@ msgstr "Proiektu hau itxi datubase kudeatzailea irekitzeko"
 msgid "Error capturing video frame"
 msgstr "Errorea bideo markoa kapturatzen"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "Bideo kaptura geldituta dago"
 
@@ -2311,8 +2343,8 @@ msgstr "Errore bat gertatu da bideo editorean."
 msgid "Please, try again."
 msgstr "Berriz saiatu mesedez"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Izen honekin dagoeneko plantila bat existitzen da:"
 

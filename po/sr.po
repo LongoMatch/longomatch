@@ -1,23 +1,22 @@
-# Serbian translation for longomatch.
-# Copyright (C) 201 COPYRIGHT HOLDER
-# This file is distributed under the same license as the longomatch package.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2015.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longoma"
-"tch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-27 22:57+0000\n"
-"PO-Revision-Date: 2015-01-31 11:12+0200\n"
-"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian <gnom@prevod.org>\n"
-"Language: sr\n"
+"Project-Id-Version: LongoMatch\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-03 09:11+0000\n"
+"PO-Revision-Date: 2015-02-02 17:11+0000\n"
+"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/longomatch/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
-"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Project-Style: gnome\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../libcesarplayer/lgm-video-player.c:349
 msgid "Location not found."
@@ -37,9 +36,7 @@ msgstr "Медијска датотека не може бити пуштена.
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr ""
-"Нисам успео да направим објекат пуштања Гстримера. Проверите инсталацију "
-"Гстримера."
+msgstr "Нисам успео да направим објекат пуштања Гстримера. Проверите инсталацију Гстримера."
 
 #: ../libcesarplayer/lgm-video-player.c:969
 #, c-format
@@ -61,21 +58,19 @@ msgstr "Алат за анализу спортских снимака за тр
 
 #: ../LongoMatch/Main.cs:79
 msgid ""
-"The database seems to be locked by another instance and the application will "
-"be closed."
-msgstr ""
-"Изгледа да је база података закључана другим примерком а програм ће бити "
-"затворен."
+"The database seems to be locked by another instance and the application will"
+" be closed."
+msgstr "Изгледа да је база података закључана другим примерком а програм ће бити затворен."
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "Програм је завршио неочекиваном грешком."
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "Дневник је сачуван у: "
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Попуните извештај о грешци "
 
@@ -459,7 +454,7 @@ msgid "Points"
 msgstr "Тачке"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Ништа"
 
@@ -553,9 +548,7 @@ msgstr "Излазни директоријум"
 msgid ""
 "Render new events automatically\n"
 "(Requires a powerful CPU)"
-msgstr ""
-"Самостално исцртај нове догађаје\n"
-"(захтева снажан процесор)"
+msgstr "Самостално исцртај нове догађаје\n(захтева снажан процесор)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
 msgid "<b>Main camera angle</b>"
@@ -771,38 +764,17 @@ msgstr "Недостају КОДЕЦИ"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs:65
 msgid ""
-"As explained and detailed in the <a href=\"http://www.longomatch.com/open-"
-"source.html\">OpenSource project</a> page, the use of this free and open "
-"source version of LongoMatch requires that you also install additional "
-"software called a CODEC, which may also be free.  \n"
+"As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n"
 "\n"
-"To acknowledge your understanding and for more information on why this is "
-"so, where to get it and how to install it visit the <a href=\"http://www."
-"longomatch.com/open-source.html\">OpenSource project</a> page.\n"
+"To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n"
 "\n"
-"To avoid this, and to enjoy many additional functional benefits, we "
-"encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-"
-"use. "
-msgstr ""
-"Као што је објашњено и описано на страници <a href=\""
-"http://www.longomatch.com/open-source.html\">пројекта отвореног кода</a>, "
-"употреба овог бесплатног издања Дугог меча отвореног кода захтева "
-"инсталацију додатног софтвера под називом КОДЕК, који такође може бити "
-"бесплатан.  \n"
-"\n"
-"Да бисте боље разумели зашто је то тако и за више података, где да га "
-"набавите и како да га инсталирате посетите страницу <a href=\""
-"http://www.longomatch.com/open-source.html\">пројекта отвореног кода</a>.\n"
-"\n"
-"Да избегнете ове заврзламе, и да уживате у многим додатним функцијама, "
-"саветујемо вам да надоградите на Дуги меч ПРО, који је, уз надокнаду, већ "
-"спреман за употребу. "
+"To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
+msgstr "Као што је објашњено и описано на страници <a href=\"http://www.longomatch.com/open-source.html\">пројекта отвореног кода</a>, употреба овог бесплатног издања Дугог меча отвореног кода захтева инсталацију додатног софтвера под називом КОДЕК, који такође може бити бесплатан.  \n\nДа бисте боље разумели зашто је то тако и за више података, где да га набавите и како да га инсталирате посетите страницу <a href=\"http://www.longomatch.com/open-source.html\">пројекта отвореног кода</a>.\n\nДа избегнете ове заврзламе, и да уживате у многим додатним функцијама, саветујемо вам да надоградите на Дуги меч ПРО, који је, уз надокнаду, већ спреман за употребу. "
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
 msgid "Databases manager"
 msgstr "Управник базе података"
 
-#
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
 msgid "_Select DB"
 msgstr "_Изабери БП"
@@ -878,15 +850,8 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost."
-"</b>"
-msgstr ""
-"Снимање пројекта тренутно ради.\n"
-"Можете да наставите са тренутним снимањем, да га откажете или да сачувате "
-"ваш пројекат.\n"
-"\n"
-"<b>Упозорење: Ако откажете текући пројекат све ваше измене биће изгубљене.</"
-"b>"
+"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
+msgstr "Снимање пројекта тренутно ради.\nМожете да наставите са тренутним снимањем, да га откажете или да сачувате ваш пројекат.\n\n<b>Упозорење: Ако откажете текући пројекат све ваше измене биће изгубљене.</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
 msgid "Return"
@@ -980,9 +945,7 @@ msgstr "<b>Играч излази</b>"
 msgid ""
 "\n"
 "A new version of LongoMatch has been released at www.ylatuya.es!\n"
-msgstr ""
-"\n"
-"Изашло је ново издање Дугог меча које можете наћи на „www.ylatuya.es“!\n"
+msgstr "\nИзашло је ново издање Дугог меча које можете наћи на „www.ylatuya.es“!\n"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
 msgid "The new version is "
@@ -992,9 +955,7 @@ msgstr "Ново издање је "
 msgid ""
 "\n"
 "You can download it using this direct link:"
-msgstr ""
-"\n"
-"Можете га преузети са ове везе:"
+msgstr "\nМожете га преузети са ове везе:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
 msgid "label7"
@@ -1294,11 +1255,9 @@ msgstr "Категорије"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
 msgid ""
-"You are about to delete a category and all the plays added to this category. "
-"Do you want to proceed?"
-msgstr ""
-"Обрисаћете категорију и све игре које су јој додате. Да ли желите да "
-"наставите?"
+"You are about to delete a category and all the plays added to this category."
+" Do you want to proceed?"
+msgstr "Обрисаћете категорију и све игре које су јој додате. Да ли желите да наставите?"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
@@ -1330,9 +1289,7 @@ msgstr "Поврати"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:243
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
-msgstr ""
-"Неисправан садржај. Полувремена морају бити раздвојена размацима („1 2 ex1 "
-"ex2“)"
+msgstr "Неисправан садржај. Полувремена морају бити раздвојена размацима („1 2 ex1 ex2“)"
 
 #: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:266
 msgid "Timeline"
@@ -1573,7 +1530,7 @@ msgstr "Готово"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "није исправан измењивач тастера: АЛт, Помак или Ктрл"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Опште ознаке"
 
@@ -1806,14 +1763,13 @@ msgid "System"
 msgstr "Систем"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
 msgstr ""
-"Системски шаблони не могу бити уређивани, да ли желите да направите умножак?"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Већ постоји шаблон са истим називом"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1825,7 +1781,7 @@ msgstr "Направите нову радну таблу"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Увезите радну таблу"
 
@@ -1857,39 +1813,43 @@ msgstr "Дугме за додавање одбројавача"
 msgid "Add card button"
 msgstr "Дугме за додавање картона"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Да ли заиста желите да обришете радну таблу: "
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Датотеке радне табле"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Назив радне табле:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Сукоб назива"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Грешка увоза шаблона:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Нова радна табла"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Врсте догађаја:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "Назив радне табле је празан."
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
 msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "Већ постоји радна табла. Да ли желите да је препишете?"
 
@@ -1954,27 +1914,20 @@ msgstr "Увези"
 msgid ""
 "Projects\n"
 "manager"
-msgstr ""
-"Управник\n"
-"пројеката"
+msgstr "Управник\nпројеката"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:42
 msgid ""
 "Analysis\n"
 "Dashboards\n"
 "manager"
-msgstr ""
-"Управник\n"
-"радним таблама\n"
-"анализе"
+msgstr "Управник\nрадним таблама\nанализе"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:44
 msgid ""
 "Teams\n"
 "manager"
-msgstr ""
-"Управник\n"
-"екипа"
+msgstr "Управник\nекипа"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
 msgid "Category"
@@ -2063,19 +2016,15 @@ msgstr "Отворите датотеку"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:351
 msgid ""
-"This file is not in a supported format, convert it with the video conversion "
-"tool"
-msgstr ""
-"Ова датотека није у подржаном запису, претворите је алатом за претварање "
-"снимка"
+"This file is not in a supported format, convert it with the video conversion"
+" tool"
+msgstr "Ова датотека није у подржаном запису, претворите је алатом за претварање снимка"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:355
 msgid ""
 "This file needs to be converted into a more suitable format.(This step will "
 "only take a few minutes)"
-msgstr ""
-"Ова датотека треба да буде претворена у погоднији запис. (А то ће потрајати "
-"неколико минута)"
+msgstr "Ова датотека треба да буде претворена у погоднији запис. (А то ће потрајати неколико минута)"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:72
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:95
@@ -2145,11 +2094,9 @@ msgstr "Грешка демултиплексирања датотеке:\n"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:172
 msgid ""
-"The file you are trying to load is not properly supported. Would you like to "
-"convert it into a more suitable format?"
-msgstr ""
-"Датотека коју покушавате да увезете није потпуно подржана. Да ли бисте "
-"желели да је претворите у пригоднији запис?"
+"The file you are trying to load is not properly supported. Would you like to"
+" convert it into a more suitable format?"
+msgstr "Датотека коју покушавате да увезете није потпуно подржана. Да ли бисте желели да је претворите у пригоднији запис?"
 
 #: ../LongoMatch.Migration/Core/SubCategory.cs:125
 msgid "Tags list"
@@ -2331,8 +2278,8 @@ msgstr "Затворите текући пројекат да отворите �
 msgid "Error capturing video frame"
 msgstr "Грешка снимања кадра"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "Снимање је заустављено"
 
@@ -2352,9 +2299,7 @@ msgstr "Дошло је до грешке чувања пројекта:\n"
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
-msgstr ""
-"Датотека снимка и резерва пројекта су сачуване. Покушајте да их увезете "
-"касније:\n"
+msgstr "Датотека снимка и резерва пројекта су сачуване. Покушајте да их увезете касније:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:190
 msgid "An error occurred opening this project:"
@@ -2397,8 +2342,8 @@ msgstr "Дошло је до грешке у уређивачу снимака."
 msgid "Please, try again."
 msgstr "Пробајте опет."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Већ постоји шаблон са називом: "
 
