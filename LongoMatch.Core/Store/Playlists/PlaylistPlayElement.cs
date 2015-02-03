@@ -58,7 +58,7 @@ namespace LongoMatch.Core.Store.Playlists
 			set;
 		}
 
-		public double Rate {
+		public float Rate {
 			get;
 			set;
 		}
