@@ -3,24 +3,25 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Marek Černocký <marek@manet.cz>, 2010, 2011, 2012, 2013, 2014, 2015.
 # Pavel Bárta <BartyCok@email.cz>, 2009
 # Petr Tronicek <petr.tronicek@gmail.com>, 2014
+# Marek Černocký <marek@manet.cz>, 2010, 2011, 2012, 2013, 2014, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-18 22:49+0000\n"
-"PO-Revision-Date: 2015-01-19 00:44+0100\n"
-"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/longomatch/"
-"language/cs/)\n"
+"POT-Creation-Date: 2015-02-02 22:56+0000\n"
+"PO-Revision-Date: 2015-02-03 10:10+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../libcesarplayer/lgm-video-player.c:349
 msgid "Location not found."
@@ -69,15 +70,15 @@ msgid ""
 msgstr ""
 "Vypadá to, že databáze je uzamčena jiným procesem a aplikace bude zavřena."
 
-#: ../LongoMatch/Main.cs:150
+#: ../LongoMatch/Main.cs:174
 msgid "The application has finished with an unexpected error."
 msgstr "Program byl ukončen pro neočekávanou chybu."
 
-#: ../LongoMatch/Main.cs:151
+#: ../LongoMatch/Main.cs:175
 msgid "A log has been saved at: "
 msgstr "Protokol byl uložen do: "
 
-#: ../LongoMatch/Main.cs:152
+#: ../LongoMatch/Main.cs:176
 msgid "Please, fill a bug report "
 msgstr "Prosím vyplňte protokol chybového hlášení."
 
@@ -462,7 +463,7 @@ msgid "Points"
 msgstr "Body"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:520
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:113
 msgid "None"
 msgstr "Žádný"
 
@@ -697,12 +698,12 @@ msgid "Save template"
 msgstr "Uložit šablonu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:702
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:178
 msgid "New player"
 msgstr "Nový hráč"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:728
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:184
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:180
 msgid "Delete player"
 msgstr "Smazat hráče"
 
@@ -1277,12 +1278,12 @@ msgid "Manage dashboard buttons"
 msgstr "Spravovat tlačítka ovládacího panelu"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
 msgid "Manage teams"
 msgstr "Spravovat týmy"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:185
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:186
 msgid "Manage players"
 msgstr "Spravovat hráče"
 
@@ -1420,7 +1421,7 @@ msgid "Do you want to delete player: "
 msgstr "Přejete se smazat hráče:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:552
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
 msgid "Could not parse tactics string"
 msgstr "Neni mozne rozpoznat takticky řetězec"
 
@@ -1572,7 +1573,7 @@ msgstr "Dokončeno"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "není platný přeřazovat klávesy: Alt, Shift nebo Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:109
 msgid "Common tags"
 msgstr "Běžné štítky"
 
@@ -1652,11 +1653,11 @@ msgid "You can't delete the 'default' template"
 msgstr "Standardní šablonu „default“ není možné odstranit"
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:257
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
 msgid "Do you really want to delete the template: "
 msgstr "Přejete si opravdu smazat tuto šablonu: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:137
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
 msgid "Add file"
 msgstr "Přidat soubor"
 
@@ -1687,7 +1688,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Stále schází některé videosoubory pro tento projekt."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:313
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
 msgid "You need at least 1 video file for the main angle"
 msgstr "Potřebujete nejméně jedno video pro hlavní úhel"
 
@@ -1732,21 +1733,37 @@ msgstr "Přesunout do"
 msgid "Drawings"
 msgstr "Kresby"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+msgid "PROJECT TYPE"
+msgstr "TYP PROJEKTU"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+msgid "PROJECT PROPERTIES"
+msgstr "VLASTNOSTI PROJEKTU"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+msgid "PERIODS SYNCHRONIZATION"
+msgstr "SYNCHRONIZACE ČÁSTÍ HRY"
+
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
 msgid "No output video file"
 msgstr "Žádný výstupní soubor videa"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "No input URI"
 msgstr "Žádné vstupní URI"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:439
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
 msgid "No capture devices found in the system"
 msgstr "V systému nebylo nalezeno žádné nahrávací zařízení"
+
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+msgid "OPEN PROJECT"
+msgstr "OTEVŘÍT PROJEKT"
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:49
 msgid "PREFERENCES"
@@ -1772,22 +1789,30 @@ msgstr "Živé analýzy"
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+msgid "PROJECTS MANAGER"
+msgstr "SPRÁVA PROJEKTU"
+
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
 msgid "Export project"
 msgstr "Export projektu"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:51
+msgid "ANALYSIS DASHBOARDS MANAGER"
+msgstr "SPRÁVA ANALYTICKÝCH PANELŮ"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:159
 msgid "System"
 msgstr "Systém"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:186
-msgid "System templates can't be edited, do you want to create a copy?"
-msgstr "Systémovou šablonu není možné měnit. Chcete vytvořit její kopii?"
+msgid "System dashboards can't be edited, do you want to create a copy?"
+msgstr "Systémový ovládací panel není možné měnit. Chcete vytvořit její kopii?"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:423
-msgid "A template with the same name already exists"
-msgstr "Šablona se stejným názvem již existuje"
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:430
+msgid "A dashboard with the same name already exists"
+msgstr "Ovládací panel se stejným názvem již existuje"
 
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:222
 msgid "Do you want to save the current dashboard"
@@ -1799,7 +1824,7 @@ msgstr "Nový ovládací panel"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:314
 msgid "Import dashboard"
 msgstr "Importovat ovládací panel"
 
@@ -1831,82 +1856,90 @@ msgstr "Přidat tlačítko se stopkami"
 msgid "Add card button"
 msgstr "Přidat tlačítko s kartou"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:290
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
+msgid "Could not load dashboard"
+msgstr "Nelze načíst ovládací panel"
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Do you really want to delete the dashboard: "
 msgstr "Opravdu chcete odstranit ovládací panel: "
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:304
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:311
 msgid "Dashboard files"
 msgstr "Soubory s ovládacími panely"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:320
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:327
 msgid "Dashboard name:"
 msgstr "Název ovládacího panelu:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:328
 msgid "Name conflict"
 msgstr "Konflikt názvů"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:349
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:356
 msgid "Error importing template:"
 msgstr "Chyba při importu šablony:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:364
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:371
 msgid "New dasboard"
 msgstr "Nový ovládací panel"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:372
 msgid "Event types:"
 msgstr "Typy událostí:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:377
 msgid "The dashboard name is empty."
 msgstr "Název ovládacího panelu je prázdný."
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:380
 msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "Ovládací panel již existuje. Chcete ji přepsat?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:100
+msgid "TEAMS MANAGER"
+msgstr "SPRÁVA TÝMŮ"
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:162
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:279
 msgid "New team"
 msgstr "Nový tým"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:168
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:164
 msgid "Delete team"
 msgstr "Smazat tým"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:170
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:166
 msgid "Save team"
 msgstr "Uložit tým"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:213
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "Přejete si uložit aktuální šablonu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:239
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:246
 msgid "Could not load team"
 msgstr "Nelze načíst tým"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:254
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:261
 msgid "The default team can't be deleted"
 msgstr "Výchozí tým není možné smazat"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:284
 msgid "The template name is empty."
 msgstr "Název šablony je prázdný."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:287
 msgid "The template can't be named 'default'."
 msgstr "Šablona nemůže být pojmenována jako 'výchozí'."
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:283
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:290
 msgid "The template already exists. Do you want to overwrite it?"
 msgstr "Šablona již existuje. Chcete ji přepsat?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:321
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
 msgid "A team with the same name already exists"
-msgstr "Tám se stejným názvem již existuje"
+msgstr "Tým se stejným názvem již existuje"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:34
 msgid "New"
@@ -2296,8 +2329,8 @@ msgstr "Aby se mohla otevřít správa databází, je třeba zavřít aktuální
 msgid "Error capturing video frame"
 msgstr "Chyba při nahrávání snímku videa"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:293
-#: ../LongoMatch.Services/Services/EventsManager.cs:321
+#: ../LongoMatch.Services/Services/EventsManager.cs:296
+#: ../LongoMatch.Services/Services/EventsManager.cs:324
 msgid "Video capture is stopped"
 msgstr "Nahrávání videa je stopnuto"
 
@@ -2362,8 +2395,8 @@ msgstr "Nastala chyba ve vedeo editoru."
 msgid "Please, try again."
 msgstr "Zkuste to prosím znovu."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:153
-#: ../LongoMatch.Services/Services/TemplatesService.cs:184
+#: ../LongoMatch.Services/Services/TemplatesService.cs:154
+#: ../LongoMatch.Services/Services/TemplatesService.cs:185
 msgid "A template already exists with the name: "
 msgstr "Již existuje šablona s názvem: "
 
