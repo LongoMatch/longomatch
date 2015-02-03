@@ -280,7 +280,7 @@ namespace LongoMatch.Gui.Component
 			this.fieldcombobox = global::Gtk.ComboBox.NewText ();
 			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Not tagged"));
 			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
-			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trayectory"));
+			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trajectory"));
 			this.fieldcombobox.Name = "fieldcombobox";
 			this.fieldcombobox.Active = 0;
 			this.postable.Add (this.fieldcombobox);
@@ -305,7 +305,7 @@ namespace LongoMatch.Gui.Component
 			this.hfieldcombobox = global::Gtk.ComboBox.NewText ();
 			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Not tagged"));
 			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
-			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trayectory"));
+			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trajectory"));
 			this.hfieldcombobox.Name = "hfieldcombobox";
 			this.hfieldcombobox.Active = 2;
 			this.postable.Add (this.hfieldcombobox);
