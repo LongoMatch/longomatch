@@ -300,6 +300,8 @@ gst_camera_capturer_update_device_id (GstCameraCapturer * gcc)
     prop_name = "guid";
   else if (!g_strcmp0 (gcc->priv->source_element_name, "v4l2src"))
     prop_name = "device";
+  else if (!g_strcmp0 (gcc->priv->source_element_name, "avfvideosrc"))
+    prop_name = "device";
   else if (!g_strcmp0 (gcc->priv->source_element_name, "filesrc"))
     prop_name = "location";
   else if (!g_strcmp0 (gcc->priv->source_element_name, "gsettingsvideosrc"))
