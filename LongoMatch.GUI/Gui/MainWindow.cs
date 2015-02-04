@@ -92,7 +92,7 @@ namespace LongoMatch.Gui
 		
 		public MenuItem AboutMenu {
 			get {
-				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/AboutAction");
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/HelpAction/AboutAction");
 			}
 		}
 
