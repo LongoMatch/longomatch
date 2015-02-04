@@ -103,7 +103,7 @@ namespace LongoMatch
 		static void ConfigureOSXApp ()
 		{
 			#if OSTYPE_OS_X
-			MenuItem quit, preferences;
+			MenuItem quit;
 			GtkOSXApplication app;
 
 			app = new GtkOSXApplication ();
@@ -113,10 +113,11 @@ namespace LongoMatch
 			};
 
 			quit = window.QuitMenu;
-			preferences = window.PreferencesMenu;
 			quit.Visible = false;
 			app.SetMenuBar (window.Menu);
-			app.InsertAppMenuItem (preferences, 0);
+			app.InsertAppMenuItem (window.AboutMenu, 0);
+			app.InsertAppMenuItem (new SeparatorMenuItem (), 1);
+			app.InsertAppMenuItem (window.PreferencesMenu, 2);
 			window.Menu.Visible = false;
 			app.UseQuartzAccelerators = false;
 			app.Ready ();

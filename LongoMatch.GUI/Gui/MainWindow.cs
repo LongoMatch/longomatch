@@ -89,6 +89,12 @@ namespace LongoMatch.Gui
 				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/PreferencesAction");
 			}
 		}
+		
+		public MenuItem AboutMenu {
+			get {
+				return (MenuItem)this.UIManager.GetWidget ("/menubar1/FileAction/AboutAction");
+			}
+		}
 
 		public void SetPanel (Widget panel)
 		{
