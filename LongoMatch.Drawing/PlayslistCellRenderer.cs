@@ -59,7 +59,7 @@ namespace LongoMatch.Drawing
 			po.Dispose ();
 		}
 
-		static void RenderCount(bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
+		static void RenderCount (bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
 		{
 			double countX1, countX2, countY, countYC;
 			Point arrowY;
@@ -69,23 +69,25 @@ namespace LongoMatch.Drawing
 			countX2 = countX1 + StyleConf.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
 			countY = countYC - StyleConf.ListCountRadio;
-			if (!isExpanded) {
-				if (ArrowRight == null) {
-					ArrowRight = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-					                                                                StyleConf.ListArrowRightPath));
+			if (count > 0) {
+				if (!isExpanded) {
+					if (ArrowRight == null) {
+						ArrowRight = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
+						                                                                StyleConf.ListArrowRightPath));
+					}
+					arrow = ArrowRight;
+					arrowY = new Point (cellArea.Start.X + 1,
+					                    cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
+				} else {
+					if (ArrowDown == null) {
+						ArrowDown = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
+						                                                               StyleConf.ListArrowDownPath));
+					}
+					arrow = ArrowDown;
+					arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
 				}
-				arrow = ArrowRight;
-				arrowY = new Point (cellArea.Start.X + 1,
-				                    cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
-			} else {
-				if (ArrowDown == null) {
-					ArrowDown = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-					                                                                StyleConf.ListArrowDownPath));
-				}
-				arrow = ArrowDown;
-				arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
+				tk.DrawSurface (arrow, arrowY);
 			}
-			tk.DrawSurface (arrow, arrowY);
 
 			tk.LineWidth = 0;
 			tk.FillColor = color;
