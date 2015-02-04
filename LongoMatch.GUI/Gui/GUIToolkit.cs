@@ -172,6 +172,7 @@ namespace LongoMatch.Gui
 
 			vep = new VideoEditionProperties ();
 			vep.TransientFor = mainWindow as Gtk.Window;
+			vep.Playlist = playlist;
 			response = vep.Run ();
 			while (response == (int)ResponseType.Ok) {
 				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {

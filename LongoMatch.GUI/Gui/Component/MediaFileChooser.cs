@@ -30,6 +30,8 @@ namespace LongoMatch.Gui.Component
 
 		MediaFile mediaFile;
 		string path;
+		string proposedFileName;
+		string proposedDirectoryName;
 
 		public MediaFileChooser ()
 		{
@@ -41,11 +43,31 @@ namespace LongoMatch.Gui.Component
 			FileChooserMode = FileChooserMode.MediaFile;
 			UpdateFile ();
 			addbutton.Clicked += HandleClicked;
+			ProposedFileName = String.Format ("LongoMatch-{0}.mp4", DateTime.Now.ToShortDateString ());
+			ProposedDirectoryName = String.Format ("LongoMatch-{0}", DateTime.Now.ToShortDateString ()); 
 		}
 
 		public FileChooserMode FileChooserMode {
 			get;
 			set;
+		}
+
+		public string ProposedFileName {
+			get {
+				return proposedFileName;
+			}
+			set {
+				proposedFileName = Utils.SanitizePath (value);
+			}
+		}
+
+		public string ProposedDirectoryName {
+			get {
+				return proposedDirectoryName;
+			}
+			set {
+				proposedDirectoryName = Utils.SanitizePath (value);
+			}
 		}
 
 		public string CurrentPath {
@@ -109,18 +131,16 @@ namespace LongoMatch.Gui.Component
 				}
 				MediaFile = file;
 			} else if (FileChooserMode == FileChooserMode.File) {
-				string filename = String.Format ("LongoMatch-{0}.mp4",
-				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
-				CurrentPath = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"), filename,
-				                                          Config.LastRenderDir, FilterName, FilterExtensions);
+				CurrentPath = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
+				                                          ProposedFileName, Config.LastRenderDir,
+				                                          FilterName, FilterExtensions);
 				if (CurrentPath != null) {
 					Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
 				}
 			} else if (FileChooserMode == FileChooserMode.Directory) {
-				string filename = String.Format ("LongoMatch-{0}",
-				                                 DateTime.Now.ToShortDateString ().Replace ('/', '-'));
-				CurrentPath = FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"), filename,
-				                                              Config.LastRenderDir, null, null);
+				CurrentPath = FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"),
+				                                              ProposedDirectoryName, Config.LastRenderDir,
+				                                              null, null);
 			}
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);

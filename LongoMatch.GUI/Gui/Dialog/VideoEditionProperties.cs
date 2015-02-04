@@ -24,6 +24,7 @@ using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using LongoMatch.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -69,6 +70,16 @@ namespace LongoMatch.Gui.Dialog
 			get;
 			set;
 		}
+
+		public Playlist Playlist {
+			set {
+				if (value.Name != null) {
+					mediafilechooser1.ProposedFileName = value.Name + ".mp4";
+					mediafilechooser1.ProposedDirectoryName = value.Name;
+				}
+			}
+		}
+		
 		#endregion Properties
 		#region Private Methods
 		string GetExtension ()

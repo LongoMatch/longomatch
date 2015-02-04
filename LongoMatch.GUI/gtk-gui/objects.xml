@@ -226,6 +226,8 @@
       <itemgroup label="MediaFileChooser Properties">
         <property name="CurrentPath" />
         <property name="FilterName" />
+        <property name="ProposedFileName" />
+        <property name="ProposedDirectoryName" />
       </itemgroup>
     </itemgroups>
     <signals>

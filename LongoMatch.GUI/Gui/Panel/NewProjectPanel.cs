@@ -64,9 +64,10 @@ namespace LongoMatch.Gui.Panel
 			this.mtoolkit = Config.MultimediaToolkit;
 			this.gtoolkit = Config.GUIToolkit;
 			capturemediafilechooser.FileChooserMode = FileChooserMode.File;
+			capturemediafilechooser.ProposedFileName = String.Format ("Live-LongoMatch-{0}.mp4",
+			                                                          DateTime.Now.ToShortDateString ());
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
-			
 			
 			LoadIcons ();
 			ConnectSignals ();
