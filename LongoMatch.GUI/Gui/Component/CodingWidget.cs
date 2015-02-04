@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using Mono.Unix;
+using LongoMatch.GUI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -258,10 +259,11 @@ namespace LongoMatch.Gui.Component
 
 		Notebook CreateNewWindow (Notebook source, Widget page, int x, int y)
 		{
-			Window window;
+			ExternalWindow window;
+			EventBox box;
 			Notebook notebook;
 
-			window = new Window (WindowType.Toplevel);
+			window = new ExternalWindow ();
 			if (page == timeline) {
 				window.Title = Catalog.GetString ("Timeline");
 			} else if (page == dashboardhpaned) {
@@ -269,10 +271,12 @@ namespace LongoMatch.Gui.Component
 			} else if (page == playspositionviewer1) {
 				window.Title = Catalog.GetString ("Zonal tags viewer");
 			}
-			window.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Menu);
+
 			notebook = new Notebook ();
 			notebook.ShowTabs = false;
+			notebook.CanFocus = false;
 			//notebook.Group = source.Group;
+
 			window.Add (notebook);
 			window.SetDefaultSize (page.Allocation.Width, page.Allocation.Height);
 			window.Move (x, y);

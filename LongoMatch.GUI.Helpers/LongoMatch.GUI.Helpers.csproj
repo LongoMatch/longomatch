@@ -36,6 +36,7 @@
     <Compile Include="MessagesHelpers.cs" />
     <Compile Include="Misc.cs" />
     <Compile Include="GtkGlue.cs" />
+    <Compile Include="ExternalWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

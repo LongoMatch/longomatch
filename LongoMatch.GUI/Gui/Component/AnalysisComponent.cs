@@ -20,6 +20,7 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using LongoMatch.GUI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -127,27 +128,17 @@ namespace LongoMatch.Gui.Component
 			 * are beeing changed */
 			playercapturer.Pause ();
 			if (!detachedPlayer) {
-				EventBox box;
 				Log.Debug ("Detaching player");
 				
-				playerWindow = new Gtk.Window (Constants.SOFTWARE_NAME);
+				ExternalWindow playerWindow = new ExternalWindow ();
+				this.playerWindow = playerWindow;
+				playerWindow.Title = Constants.SOFTWARE_NAME;
 				int player_width = playercapturer.Allocation.Width;
 				int player_height = playercapturer.Allocation.Height;
 				playerWindow.SetDefaultSize (player_width, player_height);
-				playerWindow.Icon = Stetic.IconLoader.LoadIcon (this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer ();
-				box = new EventBox ();
-				box.Name = "lightbackgroundeventbox";
-				box.KeyPressEvent += (o, args) => {
-					Config.EventsBroker.EmitKeyPressed (this, Keyboard.ParseEvent (args.Event));
-				};
-				playerWindow.Add (box);
-				
-				box.Show ();
-				box.CanFocus = true;
 				playerWindow.Show ();
-				playercapturer.Reparent (box);
-				playerWindow.Focus = box;
+				playercapturer.Reparent (playerWindow.Box);
 				// Hack to reposition video window in widget for OSX
 				playerWindow.Resize (player_width + 10, player_height);
 				videowidgetsbox.Visible = false;

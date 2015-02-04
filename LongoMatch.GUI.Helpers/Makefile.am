@@ -4,9 +4,10 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_GUI_HELPERS)
 
-SOURCES = FileChooserHelper.cs \
-	MessagesHelpers.cs \
+SOURCES = ExternalWindow.cs \
+	FileChooserHelper.cs \
 	GtkGlue.cs \
+	MessagesHelpers.cs \
 	Misc.cs
 
 RESOURCES = 
