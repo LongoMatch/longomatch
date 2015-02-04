@@ -225,6 +225,9 @@ namespace LongoMatch.Services
 				} else if (inPlayerTagging) {
 					int number;
 					string name = Keyboard.NameFromKeyval ((uint)key.Key);
+					if (name.StartsWith ("KP_")) {
+						name = name.Replace ("KP_", "");
+					}
 					if (int.TryParse (name, out number)) {
 						playerNumber += number.ToString ();
 						timer.Change (TIMEOUT_MS, 0);
