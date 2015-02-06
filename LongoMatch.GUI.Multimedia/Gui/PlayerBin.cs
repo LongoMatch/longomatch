@@ -393,7 +393,7 @@ namespace LongoMatch.Gui
 			}
 			segment.Start = new Time (-1);
 			segment.Stop = new Time (int.MaxValue);
-			SetScaleValue (SCALE_FPS);
+			SetScaleValue (1);
 			//timescale.Sensitive = true;
 			loadedPlay = null;
 		}
@@ -523,7 +523,7 @@ namespace LongoMatch.Gui
 			if (readyToSeek) {
 				Log.Debug ("Player is ready to seek, seeking to " +
 					seekTime.ToMSecondsString ());
-				SetScaleValue ((int)(rate * SCALE_FPS));
+				SetScaleValue (rate);
 				player.Rate = (double)rate;
 				Seek (seekTime, true);
 				if (playing) {
@@ -580,10 +580,14 @@ namespace LongoMatch.Gui
 			LoadImage (CurrentFrame, drawing);
 		}
 
-		void SetScaleValue (int value)
+		void SetScaleValue (float rate)
 		{
 			emitRateScale = false;
-			vscale1.Value = value;
+			if (rate > 1) {
+				vscale1.Value = rate - 1 + SCALE_FPS;
+			} else {
+				vscale1.Value = rate * SCALE_FPS;
+			}
 			emitRateScale = true;
 		}
 
