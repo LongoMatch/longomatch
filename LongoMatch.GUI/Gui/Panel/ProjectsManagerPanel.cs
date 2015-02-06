@@ -93,6 +93,7 @@ namespace LongoMatch.Gui.Panel
 			ProjectDescription pd = project.Description;
 			MediaFile f = pd.FileSet.GetAngle (MediaFileAngle.Angle1);
 			
+			loadedProject = null;
 			gamedescriptionheader1.ProjectDescription = pd;
 			seasonentry.Text = pd.Season;
 			competitionentry.Text = pd.Competition;
