@@ -76,7 +76,9 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlayerTick += HandleTick;
 			Config.EventsBroker.CapturerTick += HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeletedEvent;
 			Config.EventsBroker.TimerNodeAddedEvent += HandleTimerNodeAddedEvent;
+			Config.EventsBroker.EventEditedEvent += HandleEventEdited;;
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			
 			buttonswidget.Mode = TagMode.Free;
@@ -102,6 +104,8 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.CapturerTick -= HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			Config.EventsBroker.TimerNodeAddedEvent -= HandleTimerNodeAddedEvent;
+			Config.EventsBroker.EventEditedEvent -= HandleEventEdited;
+			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeletedEvent;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -359,6 +363,21 @@ namespace LongoMatch.Gui.Component
 		{
 			timeline.AddTimerNode (timer, tn);
 		}
+		
+		void HandleEventEdited (TimelineEvent play)
+		{
+			if (play is SubstitutionEvent) {
+				teamtagger.Reload ();
+			}
+		}
+		
+		void HandleEventsDeletedEvent (List<TimelineEvent> events)
+		{
+			if (events.Count (e => e is SubstitutionEvent) != 0) {
+				teamtagger.Reload ();
+			}
+		}
+
 	}
 }
 

@@ -52,6 +52,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void TagEventHandler (TimelineEvent evt);
 	/* Change the Play's category */
 	public delegate void MoveEventHandler (TimelineEvent play,EventType eventType);
+	/* An event was edited */
+	public delegate void EventEditedHandler (TimelineEvent play);
 	/* Duplicate play */
 	public delegate void DuplicateEventsHandler (List<TimelineEvent> events);
 	/* Emited when the dashboard is edited and might have new EventTypes */

@@ -160,6 +160,7 @@ namespace LongoMatch.Gui.Component
 			if (!Enumerable.SequenceEqual (players, SelectedPlay.Players)) {
 				Config.EventsBroker.EmitTeamTagsChanged ();
 			}
+			Config.EventsBroker.EmitEventEdited (SelectedPlay);
 		}
 
 		protected void OnFilterUpdated ()

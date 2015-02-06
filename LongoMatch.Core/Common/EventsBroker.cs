@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Common
 		public event DeleteEventsHandler EventsDeletedEvent;
 		public event LoadEventHandler LoadEventEvent;
 		public event EventLoadedHandler EventLoadedEvent;
+		public event EventEditedHandler EventEditedEvent;
 		public event TimerNodeAddedHandler TimerNodeAddedEvent;
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -122,6 +123,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (EventLoadedEvent != null)
 				EventLoadedEvent (play);
+		}
+
+		public void EmitEventEdited (TimelineEvent play)
+		{
+			if (EventEditedEvent != null) {
+				EventEditedEvent (play);
+			}
 		}
 		
 		public void EmitSnapshotSeries(TimelineEvent play)
