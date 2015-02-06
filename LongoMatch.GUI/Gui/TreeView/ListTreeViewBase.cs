@@ -153,8 +153,13 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
+			List<Player> players = SelectedPlay.Players.ToList ();
+
 			Config.GUIToolkit.EditPlay (SelectedPlay, Project, true, true, true, true);
-			Config.EventsBroker.EmitTeamTagsChanged ();
+
+			if (!Enumerable.SequenceEqual (players, SelectedPlay.Players)) {
+				Config.EventsBroker.EmitTeamTagsChanged ();
+			}
 		}
 
 		protected void OnFilterUpdated ()
