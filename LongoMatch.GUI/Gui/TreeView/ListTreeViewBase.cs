@@ -161,6 +161,8 @@ namespace LongoMatch.Gui.Component
 				Config.EventsBroker.EmitTeamTagsChanged ();
 			}
 			Config.EventsBroker.EmitEventEdited (SelectedPlay);
+			modelSort.SetSortFunc (0, SortFunction);
+			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}
 
 		protected void OnFilterUpdated ()
