@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				int width, height;
 				Config.DrawingToolkit.MeasureText (
-					Name, out width, out height, "Ubuntu",
+					Name, out width, out height, Config.Style.Font ,
 					DEFAULT_FONT_SIZE, FontWeight.Normal);
 				return TextOffset + width;
 			}

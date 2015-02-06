@@ -259,7 +259,7 @@ namespace LongoMatch.Gui
 
 		void SetStyle (int height, int fontSize, int timeWidth)
 		{
-			string font = String.Format ("Ubuntu {0}px", fontSize);
+			string font = String.Format ("{0} {1}px", Config.Style.Font, fontSize);
 			Pango.FontDescription desc = Pango.FontDescription.FromString (font);
 
 			controllerbox.HeightRequest = height;

@@ -47,7 +47,7 @@ namespace LongoMatch.Core.Common
 		public const int NewTeamsComboWidth = 245;
 		public const int NewTeamsComboHeight = 60;
 		public const int NewTeamsIconSize = 55;
-		public const string NewTeamsFont = "Ubuntu 16";
+		public const int NewTeamsFontSize = 16;
 		public static Color NewTeamsFontColor = Color.White;
 		public const int NewTeamsSpacing = 60;
 		public const int NewTaggerSpacing = 35;

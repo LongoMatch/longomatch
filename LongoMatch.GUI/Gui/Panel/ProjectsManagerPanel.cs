@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Panel
 
 		void SetStyle ()
 		{
-			FontDescription desc = FontDescription.FromString ("Ubuntu 18");
+			FontDescription desc = FontDescription.FromString (Config.Style.Font + " 18");
 			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
 			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
 			infolabel.ModifyFont (desc);

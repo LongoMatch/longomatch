@@ -51,7 +51,7 @@ namespace LongoMatch.Drawing.Cairo
 			FillColor = Color.Black;
 			LineWidth = 2;
 			FontSize = 12;
-			FontFamily = "Ubuntu";
+			FontFamily = Config.Style.Font;
 			FontWeight = FontWeight.Normal;
 			FontSlant = FontSlant.Normal;
 			LineStyle = LineStyle.Normal;

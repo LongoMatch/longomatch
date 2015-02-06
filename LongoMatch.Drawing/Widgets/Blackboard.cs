@@ -231,7 +231,7 @@ namespace LongoMatch.Drawing.Widgets
 						return;
 					}
 					Config.DrawingToolkit.MeasureText (text.Value, out width, out heigth,
-				                                   "Ubuntu", FontSize, FontWeight.Normal);
+						Config.Style.Font, FontSize, FontWeight.Normal);
 					text.Update (new Point (start.X - width / 2, start.Y - heigth / 2),
 				             width, heigth);
 					text.TextColor = TextColor.Copy ();

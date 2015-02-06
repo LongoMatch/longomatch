@@ -61,8 +61,8 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void SetStyle () {
-			Pango.FontDescription numDesc = Pango.FontDescription.FromString ("Ubuntu 48px");
-			Pango.FontDescription nameDesc = Pango.FontDescription.FromString ("Ubuntu 30px");
+			Pango.FontDescription numDesc = Pango.FontDescription.FromString (Config.Style.Font + " 48px");
+			Pango.FontDescription nameDesc = Pango.FontDescription.FromString (Config.Style.Font + " 30px");
 
 			homescoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
 			homescorelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
