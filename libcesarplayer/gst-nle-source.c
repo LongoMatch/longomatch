@@ -516,6 +516,9 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
   GstElement *appsink = NULL;
   GstPad *sink_pad;
   GstAppSinkCallbacks appsink_cbs;
+  GstNleSrcItem *item;
+
+  item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
 
   caps = gst_pad_get_caps_reffed (pad);
   s = gst_caps_get_structure (caps, 0);
@@ -538,7 +541,7 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
         (GCallback) gst_nle_source_video_pad_probe_cb, nlesrc);
     nlesrc->video_eos = FALSE;
   } else if (g_strrstr (mime, "audio") && nlesrc->with_audio
-      && !nlesrc->audio_linked) {
+      && !nlesrc->audio_linked && (item ? item->rate == 1.0 : TRUE)) {
     appsink = gst_element_factory_make ("appsink", NULL);
     memset (&appsink_cbs, 0, sizeof (appsink_cbs));
     appsink_cbs.eos = gst_nle_source_on_audio_eos;
