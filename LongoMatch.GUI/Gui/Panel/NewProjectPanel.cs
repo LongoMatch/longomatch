@@ -73,7 +73,6 @@ namespace LongoMatch.Gui.Panel
 			ConnectSignals ();
 			FillCategories ();
 			FillFormats ();
-			FillDevices (mtoolkit.VideoDevices);
 			LoadTeams (project);
 			if (project == null) {
 				notebook1.Page = firstPage = 0;
@@ -449,6 +448,7 @@ namespace LongoMatch.Gui.Panel
 			if (sender == filebutton) {
 				projectType = ProjectType.FileProject;
 			} else if (sender == capturebutton) {
+				FillDevices (mtoolkit.VideoDevices);
 				if (videoDevices == null || videoDevices.Count == 0) {
 					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
 					                                this);
