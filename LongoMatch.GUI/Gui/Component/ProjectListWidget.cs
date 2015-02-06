@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Component
 					store.SetValue (first, COL_PROJECT_DESCRIPTION, description);
 					break;
 				}
-				store.IterNext (ref (first));
+				store.IterNext (ref first);
 			}
 		}
 		
@@ -191,43 +191,7 @@ namespace LongoMatch.Gui.Component
 			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
 			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
 
-			if (p1 == null && p2 == null) {
-				return 0;
-			} else if (p1 == null) {
-				return -1;
-			} else if (p2 == null) {
-				return 1;
-			}
-			
-			if (sortcombobox.Active == 0) {
-				ret = String.Compare (p1.Title, p2.Title);
-				if (ret == 0) {
-					ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
-				}
-				return ret;
-			} else if (sortcombobox.Active == 1) {
-				ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
-				if (ret == 0) {
-					ret = String.Compare (p1.Title, p2.Title);
-				}
-				return ret;
-			} else if (sortcombobox.Active == 2) {
-				return -DateTime.Compare (p1.LastModified, p2.LastModified);
-			} else if (sortcombobox.Active == 3) {
-				ret = String.Compare (p1.Season, p2.Season);
-				if (ret == 0) {
-					ret = String.Compare (p1.Title, p2.Title);
-				}
-				return ret;
-			} else if (sortcombobox.Active == 4) {
-				ret = String.Compare (p1.Competition, p2.Competition);
-				if (ret == 0) {
-					ret = String.Compare (p1.Title, p2.Title);
-				}
-				return ret;
-			} else {
-				return  String.Compare (p1.Title, p2.Title);
-			}
+			return ProjectDescription.Sort (p1, p2, (ProjectSortType) sortcombobox.Active);
 		}
 
 		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
@@ -237,27 +201,12 @@ namespace LongoMatch.Gui.Component
 
 		bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			StringComparison sc = StringComparison.InvariantCultureIgnoreCase;
 			ProjectDescription project = (ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION);
 
 			if (project == null)
 				return true;
-
-			if (filterEntry.Text == "")
-				return true;
-
-			if (project.Title.IndexOf (filterEntry.Text, sc) > -1)
-				return true;
-			else if (project.Season.IndexOf (filterEntry.Text, sc) > -1)
-				return true;
-			else if (project.Competition.IndexOf (filterEntry.Text, sc) > -1)
-				return true;
-			else if (project.LocalName.IndexOf (filterEntry.Text, sc) > -1)
-				return true;
-			else if (project.VisitorName.IndexOf (filterEntry.Text, sc) > -1)
-				return true;
-			else
-				return false;
+			
+			return project.Search (filterEntry.Text);
 		}
 
 		void HandleSelectionChanged (TreeModel model, TreePath[] selectedItems)

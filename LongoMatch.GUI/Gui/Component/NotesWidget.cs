@@ -53,6 +53,7 @@ namespace LongoMatch.Gui.Component
 				Notes = play.Notes;
 			}
 		}
+
 		string Notes {
 			set {
 				buf.Clear();

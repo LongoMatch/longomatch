@@ -184,6 +184,8 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Text = project.Description.Competition;
 			datelabel2.Text = project.Description.MatchDate.ToShortDateString ();
 			datepicker1.Date = project.Description.MatchDate;
+			desctextview.Buffer.Clear ();
+			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
 			hometeamscombobox.Sensitive = false;
 			awayteamscombobox.Sensitive = false;
 			tagscombobox.Visible = false;
@@ -349,6 +351,8 @@ namespace LongoMatch.Gui.Panel
 			project.Description = new ProjectDescription ();
 			project.Description.Competition = competitionentry.Text;
 			project.Description.MatchDate = datepicker1.Date;
+			project.Description.Description = desctextview.Buffer.GetText(desctextview.Buffer.StartIter,
+			                                                              desctextview.Buffer.EndIter,true);
 			project.Description.Season = seasonentry.Text;
 			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;

@@ -61,6 +61,14 @@ namespace LongoMatch.Core.Common
 		SortByDuration = 3
 	}
 
+	public enum ProjectSortType {
+		SortByName = 0,
+		SortByDate = 1,
+		SortByModificationDate = 2,
+		SortBySeason = 3,
+		SortByCompetition = 4
+	}
+
 	public enum Team {
 		NONE = 0,
 		LOCAL = 1,

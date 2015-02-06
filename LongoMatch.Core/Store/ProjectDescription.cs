@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-
 using System;
 using Newtonsoft.Json;
 using LongoMatch.Core.Store;
@@ -24,7 +23,6 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
 	/// Describes a project in LongoMatch.
 	/// </summary>
@@ -40,7 +38,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Title of the project
 		/// </summary>
@@ -57,7 +55,7 @@ namespace LongoMatch.Core.Store
 		public String DateTitle {
 			get {
 				string ret = String.Format ("{0}-{1} {2}", LocalName, VisitorName,
-				                            MatchDate.ToShortDateString());
+				                            MatchDate.ToShortDateString ());
 				if (!String.IsNullOrEmpty (Season)) {
 					ret += " " + Season;
 				}
@@ -91,8 +89,13 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public string Category {
+			get;
+			set;
+		}
+
+		public string Description {
 			get;
 			set;
 		}
@@ -101,12 +104,12 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public string Phase {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Name of the local team
 		/// </summary>
@@ -114,7 +117,6 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-
 
 		/// <summary>
 		/// Name of the visitor team
@@ -166,25 +168,104 @@ namespace LongoMatch.Core.Store
 				return matchDate;
 			}
 			set {
-				matchDate = value.ToUniversalTime();
+				matchDate = value.ToUniversalTime ();
 			}
 		}
-		
+
 		public DateTime LastModified {
 			get {
 				return lastModified;
 			}
 			set {
-				lastModified = value.ToUniversalTime();
+				lastModified = value.ToUniversalTime ();
 			}
 		}
 
-		public int CompareTo(object obj) {
-			if(obj is ProjectDescription) {
-				ProjectDescription project = (ProjectDescription) obj;
-				return ID.CompareTo(project.ID);
+		public bool Search (string text)
+		{
+			StringComparison sc = StringComparison.InvariantCultureIgnoreCase;
+
+			if (text == "")
+				return true;
+
+			if (Title != null && Title.IndexOf (text, sc) > -1)
+				return true;
+			else if (Season != null && Season.IndexOf (text, sc) > -1)
+				return true;
+			else if (Competition != null && Competition.IndexOf (text, sc) > -1)
+				return true;
+			else if (LocalName != null && LocalName.IndexOf (text, sc) > -1)
+				return true;
+			else if (VisitorName != null && VisitorName.IndexOf (text, sc) > -1)
+				return true;
+			else if (Description != null && Description.IndexOf (text, sc) > -1)
+				return true;
+			else
+				return false;
+		}
+
+		static public int Sort (ProjectDescription p1, ProjectDescription p2,
+		                        ProjectSortType sortType)
+		{
+			int ret = 0;
+			
+			if (p1 == null && p2 == null) {
+				ret = 0;
+			} else if (p1 == null) {
+				ret = -1;
+			} else if (p2 == null) {
+				ret = 1;
+			} else {
+				switch (sortType) {
+				case ProjectSortType.SortByName:
+					{
+						ret = String.Compare (p1.Title, p2.Title);
+						if (ret == 0) {
+							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
+						}
+						break;
+					}
+				case ProjectSortType.SortByDate:
+					{
+						ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
+						if (ret == 0) {
+							ret = String.Compare (p1.Title, p2.Title);
+						}
+						break;
+					}
+				case ProjectSortType.SortByModificationDate:
+					{
+						ret = -DateTime.Compare (p1.LastModified, p2.LastModified);
+						break;
+					}
+				case ProjectSortType.SortBySeason:
+					{
+						ret = String.Compare (p1.Season, p2.Season);
+						if (ret == 0) {
+							ret = String.Compare (p1.Title, p2.Title);
+						}
+						break;
+					}
+				case ProjectSortType.SortByCompetition:
+					{
+						ret = String.Compare (p1.Competition, p2.Competition);
+						if (ret == 0) {
+							ret = String.Compare (p1.Title, p2.Title);
+						}
+						break;
+					}
+				}
 			}
-			throw new ArgumentException("object is not a ProjectDescription and cannot be compared");
+			return ret;
+		}
+
+		public int CompareTo (object obj)
+		{
+			if (obj is ProjectDescription) {
+				ProjectDescription project = (ProjectDescription)obj;
+				return ID.CompareTo (project.ID);
+			}
+			throw new ArgumentException ("object is not a ProjectDescription and cannot be compared");
 		}
 	}
 }

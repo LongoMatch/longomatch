@@ -307,7 +307,7 @@ namespace LongoMatch.Gui.Component
 			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
 			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trajectory"));
 			this.hfieldcombobox.Name = "hfieldcombobox";
-			this.hfieldcombobox.Active = 2;
+			this.hfieldcombobox.Active = 0;
 			this.postable.Add (this.hfieldcombobox);
 			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.postable [this.hfieldcombobox]));
 			w22.TopAttach = ((uint)(1));

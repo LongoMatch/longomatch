@@ -66,6 +66,7 @@ namespace LongoMatch.Gui.Panel
 			deletebutton.Clicked += HandleDeleteClicked;
 			openbutton.Clicked += HandleOpenClicked;
 			datepicker.ValueChanged += HandleDateChanged;
+			desctextview.Buffer.Changed += HandleChanged;
 
 			notebook1.Page = 0;
 			panelheader1.Title = Catalog.GetString ("PROJECTS MANAGER");
@@ -99,7 +100,8 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Text = pd.Competition;
 			datepicker.Date = pd.MatchDate;
 			templatelabel.Text = project.Dashboard.Name;
-	
+			desctextview.Buffer.Clear ();
+			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
 			loadedProject = project;
 
 			videofileinfo1.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle1);
@@ -144,6 +146,10 @@ namespace LongoMatch.Gui.Panel
 				loadedProject.Description.Competition = (sender as Entry).Text;
 			} else if (sender == seasonentry) {
 				loadedProject.Description.Season = (sender as Entry).Text;
+			} else if (sender == desctextview.Buffer) {
+				loadedProject.Description.Description =
+					desctextview.Buffer.GetText(desctextview.Buffer.StartIter,
+					                            desctextview.Buffer.EndIter,true);
 			}
 		}
 
