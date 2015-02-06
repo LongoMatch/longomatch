@@ -154,10 +154,10 @@ namespace LongoMatch.Core.Common
 				PlaylistElementSelectedEvent (playlist, element);
 		}
 		
-		public void EmitTimeNodeChanged (TimeNode tn, object val)
+		public void EmitTimeNodeChanged (TimeNode tn, Time time)
 		{
 			if (TimeNodeChanged != null)
-				TimeNodeChanged(tn, val);
+				TimeNodeChanged (tn, time);
 		}
 		
 		public virtual void EmitMoveToEventType(TimelineEvent evnt, EventType eventType)

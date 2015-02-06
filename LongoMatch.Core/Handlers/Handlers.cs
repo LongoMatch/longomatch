@@ -42,7 +42,7 @@ namespace LongoMatch.Core.Handlers
 	/* Add a new play to the current project */
 	public delegate void NewTimelineEventHandler (TimelineEvent evt);
 	/* An event was edited */
-	public delegate void TimeNodeChangedHandler (TimeNode tNode,object val);
+	public delegate void TimeNodeChangedHandler (TimeNode tNode, Time time);
 	public delegate void TimerNodeAddedHandler (Timer timer, TimeNode tn);
 	/* Edit EventType properties */
 	public delegate void EditEventTypeHandler (EventType cat);

@@ -97,13 +97,12 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandlePlayChanged (TimeNode tNode, object val)
+		void HandlePlayChanged (TimeNode tNode, Time time)
 		{
-			/* FIXME: Tricky, create a new handler for categories */
-			if (tNode is TimelineEvent && val is Time) {
-				LoadPlay (tNode as TimelineEvent, val as Time, false);
+			if (tNode is TimelineEvent) {
+				LoadPlay (tNode as TimelineEvent, time, false);
+				filter.Update ();
 			}
-			filter.Update ();
 		}
 		
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
