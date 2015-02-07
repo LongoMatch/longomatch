@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Andoni Morales Alastruey <ylatuya@gmail.com>
+ * Copyright (C) 2009-2015  Andoni Morales Alastruey <ylatuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  *
+ * The Totem project hereby grant permission for non-gpl compatible GStreamer
+ * plugins to be used and distributed together with GStreamer and Totem. This
+ * permission is above and beyond the permissions granted by the GPL license
+ * Totem is covered by.
+ *
  */
 
-#ifndef __LIBCESARPLAYER_COMMON_H__
-#define __LIBCESARPLAYER_COMMON_H__
+#ifndef __LGM_UTILS_H__
+#define __LGM_UTILS_H__
+
+#include <gst/gst.h>
+#include <gst/interfaces/xoverlay.h>
+#include <gst/pbutils/pbutils.h>
+#include <gio/gio.h>
+#include <glib/gi18n.h>
+#include <gdk/gdk.h>
+#if defined (GDK_WINDOWING_X11)
+#include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
+#endif
+
+#ifdef WIN32
+#define EXPORT __declspec (dllexport)
+#else
+#define EXPORT
+#endif
+
+G_BEGIN_DECLS
 
 /* Default video/audio sinks */
 #if defined(OSTYPE_WINDOWS)
@@ -47,33 +74,6 @@
 #define AUDIOSRC "gsettingsaudiosrc"
 #endif
 
-/**
- * Error:
- * @GST_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
- * @GST_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
- * @GST_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
- * @GST_ERROR_AUDIO_BUSY: Audio output device is busy.
- * @GST_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
- * @GST_ERROR_FILE_GENERIC: A generic error for problems with movie files.
- * @GST_ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
- * @GST_ERROR_FILE_ENCRYPTED: The stream is encrypted and cannot be played.
- * @GST_ERROR_FILE_NOT_FOUND: The stream cannot be found.
- * @GST_ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
- * @GST_ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
- * @GST_ERROR_DEVICE_BUSY: The device was busy.
- * @GST_ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
- * @GST_ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
- * @GST_ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
- * @GST_ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
- * @GST_ERROR_GENERIC: A generic error occurred.
- * @GST_ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
- * @GST_ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
- * @GST_ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
- * @GST_ERROR_READ_ERROR: A generic error for problems reading streams.
- * @GST_ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
- * @GST_ERROR_EMPTY_FILE: A movie file was empty.
- *
- **/
 typedef enum
 {
   /* Plugins */
@@ -143,4 +143,31 @@ typedef enum
   CAPTURE_SOURCE_TYPE_FILE = 4,
 } CaptureSourceType;
 
+typedef enum {
+  GST_AUTOPLUG_SELECT_TRY,
+  GST_AUTOPLUG_SELECT_EXPOSE,
+  GST_AUTOPLUG_SELECT_SKIP
+} GstAutoplugSelectResult;
+
+
+EXPORT void lgm_init_backend (int argc, char **argv);
+EXPORT GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration,
+    guint *width, guint *height, guint *fps_n, guint *fps_d, guint *par_n,
+    guint *par_d, gchar **container, gchar **video_codec, gchar **audio_codec,
+    GError **err);
+EXPORT guintptr lgm_get_window_handle (GdkWindow *window);
+EXPORT void lgm_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
+
+void lgm_init_debug();
+gchar * lgm_filename_to_uri (const gchar *filena);
+GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
+    gboolean realtime, GQuark quark, GError **err);
+GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
+    GQuark quark, GError **err);
+GstElement * lgm_create_muxer (VideoMuxerType type,
+    GQuark quark, GError **err);
+GstAutoplugSelectResult lgm_filter_video_decoders (GstElement* object,
+    GstPad* arg0, GstCaps* arg1, GstElementFactory* arg2, gpointer user_data);
+
+G_END_DECLS
 #endif

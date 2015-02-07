@@ -30,7 +30,7 @@
 
 #include <glib-object.h>
 
-#include "common.h"
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_VIDEO_ENCODER             (gst_video_encoder_get_type ())

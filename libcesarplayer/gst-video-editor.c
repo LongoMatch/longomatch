@@ -25,7 +25,7 @@
 #include <gst/gst.h>
 #include "gst-video-editor.h"
 #include "gst-nle-source.h"
-#include "video-utils.h"
+#include "lgm-utils.h"
 
 
 #define AUDIO_INT_CAPS "audio/x-raw-int, rate=44100, channels=2"

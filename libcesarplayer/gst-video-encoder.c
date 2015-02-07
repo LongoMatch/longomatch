@@ -23,7 +23,7 @@
 #include <gst/gst.h>
 
 #include "gst-video-encoder.h"
-#include "video-utils.h"
+#include "lgm-utils.h"
 
 
 GST_DEBUG_CATEGORY (_video_encoder_gst_debug_cat);

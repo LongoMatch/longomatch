@@ -51,33 +51,29 @@
     </CodeGeneration>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="common.h" />
     <None Include="gst-camera-capturer.h" />
     <None Include="gstscreenshot.h" />
     <None Include="gst-smart-video-scaler.h" />
     <None Include="gst-video-editor.h" />
-    <None Include="gstvideowidget.h" />
-    <None Include="macros.h" />
-    <None Include="video-utils.h" />
     <None Include="baconvideowidget-marshal.h" />
     <None Include="gst-remuxer.h" />
     <None Include="gst-video-encoder.h" />
     <None Include="lgm-video-player.h" />
     <None Include="gst-nle-source.h" />
     <None Include="lgm-gtk-glue.h" />
+    <None Include="lgm-utils.h" />
+    <None Include="lgm-utils.m" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gst-camera-capturer.c" />
     <Compile Include="gstscreenshot.c" />
     <Compile Include="gst-smart-video-scaler.c" />
     <Compile Include="gst-video-editor.c" />
-    <Compile Include="gstvideowidget.c" />
     <Compile Include="baconvideowidget-marshal.c" />
     <Compile Include="gst-remuxer.c" />
     <Compile Include="gst-video-encoder.c" />
     <Compile Include="gst-nle-source.c" />
     <Compile Include="lgm-video-player.c" />
-    <Compile Include="video-utils.m" />
     <Compile Include="lgm-gtk-glue.c" />
   </ItemGroup>
 </Project>

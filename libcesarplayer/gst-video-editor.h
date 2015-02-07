@@ -32,7 +32,7 @@
 
 #include <glib-object.h>
 
-#include "common.h"
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_VIDEO_EDITOR             (gst_video_editor_get_type ())

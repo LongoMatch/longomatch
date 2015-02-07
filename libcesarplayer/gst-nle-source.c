@@ -28,7 +28,7 @@
 #include <gst/app/gstappsink.h>
 #include <gst/app/gstappsrc.h>
 
-#include "video-utils.h"
+#include "lgm-utils.h"
 #include "gst-nle-source.h"
 
 GST_DEBUG_CATEGORY (_nlesrc_gst_debug_cat);

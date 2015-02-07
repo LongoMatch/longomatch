@@ -18,17 +18,8 @@
  */
 
 #include <gtk/gtk.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "gst-camera-capturer.h"
-#include "video-utils.h"
-#if defined (GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#elif defined (GDK_WINDOWING_QUARTZ)
-#include <gdk/gdkquartz.h>
-#endif
+#include "lgm-utils.h"
 
 static GtkWidget *recbutton, *stopbutton;
 static int sargc;

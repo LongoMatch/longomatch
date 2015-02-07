@@ -32,7 +32,7 @@
 #endif
 
 #include <gst/gst.h>
-#include "common.h"
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_REMUXER             (gst_remuxer_get_type ())

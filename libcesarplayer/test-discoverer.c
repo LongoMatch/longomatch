@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "video-utils.h"
+#include "lgm-utils.h"
 
 int
 main (int argc, char *argv[])

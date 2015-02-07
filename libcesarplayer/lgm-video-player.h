@@ -26,7 +26,7 @@
 #define EXPORT
 #endif
 
-#include <gst/gst.h>
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define LGM_TYPE_VIDEO_WIDGET              (lgm_video_player_get_type ())

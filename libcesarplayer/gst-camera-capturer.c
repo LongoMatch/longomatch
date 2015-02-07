@@ -33,8 +33,7 @@
 
 #include "gst-camera-capturer.h"
 #include "gstscreenshot.h"
-#include "common.h"
-#include "video-utils.h"
+#include "lgm-utils.h"
 #include "baconvideowidget-marshal.h"
 
 

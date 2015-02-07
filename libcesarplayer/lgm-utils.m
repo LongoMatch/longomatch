@@ -22,23 +22,7 @@
  *
  */
 
-#include "video-utils.h"
-
-#include <glib/gi18n.h>
-#include <libintl.h>
-
-#include <gst/gst.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#if defined (GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#elif defined (GDK_WINDOWING_QUARTZ)
-#include <gdk/gdkquartz.h>
-#endif
+#include "lgm-utils.h"
 
 GstAutoplugSelectResult
 lgm_filter_video_decoders (GstElement * object, GstPad * arg0,

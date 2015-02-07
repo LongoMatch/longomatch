@@ -30,7 +30,7 @@
 #endif
 
 #include <glib-object.h>
-#include "common.h"
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_NLE_SOURCE             (gst_nle_source_get_type ())

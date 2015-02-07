@@ -33,7 +33,7 @@
 
 #include <glib-object.h>
 #include <gdk/gdk.h>
-#include "common.h"
+#include "lgm-utils.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_CAMERA_CAPTURER             (gst_camera_capturer_get_type ())

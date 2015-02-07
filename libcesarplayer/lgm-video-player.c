@@ -17,21 +17,9 @@
  *
  */
 
-
-#include <gst/gst.h>
-#include <gst/interfaces/xoverlay.h>
-
-/* gtk+/gnome */
-#include <gdk/gdk.h>
-
-#include <gio/gio.h>
-#include <glib/gi18n.h>
-
 #include "lgm-video-player.h"
 #include "baconvideowidget-marshal.h"
-#include "common.h"
 #include "gstscreenshot.h"
-#include "video-utils.h"
 
 #define LGM_PLAY_TIMEOUT 20
 #define LGM_PAUSE_TIMEOUT 100

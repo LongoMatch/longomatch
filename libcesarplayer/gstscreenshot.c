@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "gstscreenshot.h"
-#include "video-utils.h"
+#include "lgm-utils.h"
 
 
 static void
