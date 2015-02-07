@@ -103,7 +103,7 @@ namespace LongoMatch.Video
 
 		public List<Device> VideoDevices {
 			get {
-				return VideoDevice.ListVideoDevices ();
+				return Devices.ListVideoDevices ();
 			}
 		}
 

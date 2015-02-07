@@ -62,7 +62,7 @@
     <None Include="gst-nle-source.h" />
     <None Include="lgm-gtk-glue.h" />
     <None Include="lgm-utils.h" />
-    <None Include="lgm-utils.m" />
+    <None Include="lgm-device.h" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gst-camera-capturer.c" />
@@ -75,5 +75,7 @@
     <Compile Include="gst-nle-source.c" />
     <Compile Include="lgm-video-player.c" />
     <Compile Include="lgm-gtk-glue.c" />
+    <Compile Include="lgm-device.c" />
+    <Compile Include="lgm-utils.m" />
   </ItemGroup>
 </Project>

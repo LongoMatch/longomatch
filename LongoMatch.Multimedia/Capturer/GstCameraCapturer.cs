@@ -48,7 +48,8 @@ namespace LongoMatch.Video.Capturer {
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_camera_capturer_configure (
 			IntPtr raw, IntPtr output_file, int type, IntPtr source_element,
-			IntPtr device_id, int video_encoder, int audio_encoder, int muxer,
+			IntPtr device_id, int width, int height, int fps_n, int fps_d,
+			int video_encoder, int audio_encoder, int muxer,
 			uint video_bitrate, uint audio_bitrate, bool record_audio,
 			uint output_width, uint output_height, IntPtr window_handle,
 			out IntPtr err);
@@ -355,6 +356,8 @@ namespace LongoMatch.Video.Capturer {
 		public void Configure (CaptureSettings settings, IntPtr window_handle) {
 			IntPtr err = IntPtr.Zero;
 			EncodingQuality qual = settings.EncodingSettings.EncodingQuality;
+			Device device = settings.Device;
+			DeviceVideoFormat format = settings.Format;
 			EncodingProfile enc;
 			VideoStandard std;
 			IntPtr outFile, sourceElement, deviceID;
@@ -363,11 +366,12 @@ namespace LongoMatch.Video.Capturer {
 			std = settings.EncodingSettings.VideoStandard;
 			
 			outFile = Marshaller.StringToPtrGStrdup (settings.EncodingSettings.OutputFile);
-			sourceElement = Marshaller.StringToPtrGStrdup (settings.SourceElement);
-			deviceID = Marshaller.StringToPtrGStrdup (settings.DeviceID);
+			sourceElement = Marshaller.StringToPtrGStrdup (device.SourceElement);
+			deviceID = Marshaller.StringToPtrGStrdup (device.ID);
 			
-			gst_camera_capturer_configure (Handle, outFile, (int) settings.CaptureSourceType,
+			gst_camera_capturer_configure (Handle, outFile, (int) settings.Device.DeviceType,
 			                               sourceElement, deviceID,
+			                               format.width, format.height, format.fps_n, format.fps_d,
 			                               (int) enc.VideoEncoder, (int) enc.AudioEncoder,
 			                               (int) enc.Muxer, qual.VideoQuality,
 			                               qual.AudioQuality,
@@ -412,19 +416,6 @@ namespace LongoMatch.Video.Capturer {
 		public void Expose() {
 			gst_camera_capturer_expose(Handle);
 		}
-
-		public static string[] AudioDevices {
-			get {
-				IntPtr raw_ret = gst_camera_capturer_enum_audio_devices();
-				return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));
-			}
-		}
-
-		public static string[] ListVideoDevices (string devname) {
-			IntPtr raw_ret = gst_camera_capturer_enum_video_devices(devname);
-			return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));
-		}
-
 
 		public Image CurrentFrame {
 			get {

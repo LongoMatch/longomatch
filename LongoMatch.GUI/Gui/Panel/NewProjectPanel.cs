@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Panel
 		TeamTemplate hometemplate, awaytemplate;
 		Dashboard analysisTemplate;
 		TeamTagger teamtagger;
+		SizeGroup sg;
 
 		public NewProjectPanel (Project project)
 		{
@@ -70,6 +71,7 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			
 			LoadIcons ();
+			GroupLabels ();
 			ConnectSignals ();
 			FillCategories ();
 			FillFormats ();
@@ -111,7 +113,6 @@ namespace LongoMatch.Gui.Panel
 			lefttable.RowSpacing = outputfiletable.RowSpacing =
 				righttable.RowSpacing = StyleConf.NewTableHSpacing;
 			lefttable.ColumnSpacing = righttable.ColumnSpacing = StyleConf.NewTableHSpacing;
-			outputfiletable.ColumnSpacing = StyleConf.NewTeamsSpacing; 
 			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
@@ -136,6 +137,17 @@ namespace LongoMatch.Gui.Panel
 			capturebutton.Clicked += HandleProjectTypeSet;
 			fakebutton.Clicked += HandleProjectTypeSet;
 			ipbutton.Clicked += HandleProjectTypeSet;
+		}
+
+		void GroupLabels ()
+		{
+			sg = new SizeGroup (SizeGroupMode.Horizontal);
+			sg.AddWidget (urilabel);
+			sg.AddWidget (outputfilelabel);
+			sg.AddWidget (device);
+			sg.AddWidget (videoformatlabel);
+			sg.AddWidget (deviceformatlabel);
+			sg.AddWidget (outputsizelabel);
 		}
 
 		void LoadTeams (Project project)
@@ -175,7 +187,9 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.ApplyClicked += HandleNextClicked;
 			panelheader1.BackClicked += HandleBackClicked;
 			urientry.Changed += HandleEntryChanged;
+			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
+			devicecombobox.Changed += HandleDeviceChanged;
 		}
 
 		void FillProjectDetails ()
@@ -224,13 +238,9 @@ namespace LongoMatch.Gui.Panel
 				urimode = true;
 			}
 			mediafilesetselection1.Visible = filemode;
-			outputfiletable.Visible = capturemode || urimode;
-			rcapturetable.Visible = capturemode || urimode;
-			lcapturetable.Visible = capturemode || urimode;
-			urientry.Visible = urimode;
-			urilabel.Visible = urimode;
-			device.Visible = capturemode;
-			devicecombobox.Visible = capturemode;
+			capturebox.Visible = capturemode || urimode;
+			urltable.Visible = urimode;
+			devicetable.Visible = capturemode;
 		}
 
 		void FillFormats ()
@@ -244,10 +254,16 @@ namespace LongoMatch.Gui.Panel
 		public void FillDevices (List<Device> devices)
 		{
 			videoDevices = devices;
+			bool includeSourceName;
+			
+			includeSourceName = devices.GroupBy (d => d.SourceElement).Count() > 1;
 
 			foreach (Device device in devices) {
 				string deviceName;
 				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
+				if (includeSourceName) {
+					deviceName += String.Format (" ({0})", device.SourceElement);
+				}
 				devicecombobox.AppendText (deviceName);
 				devicecombobox.Active = 0;
 			}
@@ -391,19 +407,16 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			if (projectType == ProjectType.CaptureProject) {
-				Device device = videoDevices [devicecombobox.Active];
-				captureSettings.CaptureSourceType = device.DeviceType;
-				captureSettings.DeviceID = device.ID;
-				captureSettings.SourceElement = device.SourceElement;
+				captureSettings.Device = videoDevices [devicecombobox.Active];
+				captureSettings.Format = captureSettings.Device.Formats[deviceformatcombobox.Active];
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.URICaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.URI;
-				captureSettings.DeviceID = urientry.Text;
+				captureSettings.Device = new Device {DeviceType = CaptureSourceType.URI,
+					ID = urientry.Text};
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.FakeCaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.None;
 				file.FilePath = Constants.FAKE_PROJECT;
 			}
 			return true;
@@ -428,7 +441,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				urilabel.ModifyFg (StateType.Normal, red);
 			}
-			if (String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
+			if (!String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
 				outputfilelabel.ModifyFg (StateType.Normal);
 			} else {
 				outputfilelabel.ModifyFg (StateType.Normal, red);
@@ -593,6 +606,17 @@ namespace LongoMatch.Gui.Panel
 				awaytemplate.UpdateColors ();
 			}
 			drawingarea.QueueDraw ();
+		}
+		
+		void HandleDeviceChanged (object sender, EventArgs e)
+		{
+			Device device = videoDevices [devicecombobox.Active];
+			ListStore store = new ListStore (typeof(string));
+			deviceformatcombobox.Model = store;
+			foreach (DeviceVideoFormat format in device.Formats) {
+				deviceformatcombobox.AppendText (format.ToString ());
+			}
+			deviceformatcombobox.Active = 0;
 		}
 	}
 }

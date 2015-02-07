@@ -37,6 +37,8 @@ libcesarplayer_la_SOURCES = \
 	lgm-gtk-glue.h\
 	lgm-video-player.h\
 	lgm-video-player.c\
+	lgm-device.h\
+	lgm-device.c\
 	gstscreenshot.c \
 	gstscreenshot.h \
 	gst-camera-capturer.c\

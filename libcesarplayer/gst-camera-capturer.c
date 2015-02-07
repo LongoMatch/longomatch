@@ -27,7 +27,6 @@
 
 #include <gst/app/gstappsrc.h>
 #include <gst/interfaces/xoverlay.h>
-#include <gst/interfaces/propertyprobe.h>
 #include <gst/gst.h>
 #include <gst/video/video.h>
 
@@ -57,6 +56,10 @@ struct GstCameraCapturerPrivate
   /*Encoding properties */
   gchar *output_file;
   gchar *device_id;
+  gint source_width;
+  gint source_height;
+  gint source_fps_n;
+  gint source_fps_d;
   guint output_height;
   guint output_width;
   guint audio_quality;
@@ -325,8 +328,7 @@ gst_camera_capturer_create_converter_bin (GstCameraCapturer * gcc)
   videoscale = gst_element_factory_make ("videoscale", NULL);
   filter = gst_element_factory_make ("capsfilter", NULL);
   /* Set caps for the encoding resolution */
-  caps = gst_caps_from_string ("video/x-raw-yuv, framerate=25/1;"
-      "video/x-raw-rgb, framerate=25/1");
+  caps = gst_caps_from_string ("video/x-raw-yuv; video/x-raw-rgb");
   if (gcc->priv->output_width != 0) {
     gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->output_width,
         NULL);
@@ -334,6 +336,18 @@ gst_camera_capturer_create_converter_bin (GstCameraCapturer * gcc)
   if (gcc->priv->output_height != 0) {
     gst_caps_set_simple (caps, "height", G_TYPE_INT, gcc->priv->output_height,
         NULL);
+  }
+  if (gcc->priv->source_fps_n != 0 && gcc->priv->source_fps_d != 0) {
+    gint fps_n, fps_d;
+
+    /* If the source frame rate is 50 or 60, reduce it to 25 or 30 */
+    fps_n = gcc->priv->source_fps_n;
+    fps_d = gcc->priv->source_fps_d;
+    if ((gfloat)fps_n / fps_d > 30) {
+      fps_d = fps_d * 2;
+    }
+    gst_caps_set_simple (caps, "framerate", GST_TYPE_FRACTION,
+        fps_n, fps_d, NULL);
   }
   g_object_set (filter, "caps", caps, NULL);
   gst_bin_add_many (GST_BIN (bin), videorate, videoscale, filter, NULL);
@@ -827,45 +841,23 @@ gst_camera_capturer_fill_audio_source_bin (GstCameraCapturer * gcc)
 }
 
 static GstCaps *
-gst_camera_capturer_find_highest_res (GstCameraCapturer *gcc, GstCaps *caps)
+gst_camera_capturer_source_caps (GstCameraCapturer *gcc)
 {
-  gint max_width = 0, max_height = 0, i = 0;
-  gint width, height;
   gchar *caps_str;
-  GstCaps *rcaps;
+  GstCaps *caps;
 
-  if (gst_caps_get_size (caps) == 0) {
-    return NULL;
+  caps = gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb;"
+      "video/x-dv, systemstream=true");
+  if (gcc->priv->source_width == 0 && gcc->priv->source_height == 0) {
+    return caps;
   }
-  for (i=0; i < gst_caps_get_size (caps); i++) {
-    GstStructure *s = gst_caps_get_structure (caps, i);
-    if (gst_structure_get_int (s, "width", &width) &&
-      gst_structure_get_int (s, "height", &height)) {
-      if (width + height > max_width + max_height) {
-        max_width = width;
-        max_height = height;
-      }
-    }
-  }
-  if (max_width == 0 || max_height == 0) {
-    max_width = gcc->priv->output_width;
-    max_height = gcc->priv->output_height;
-  } else if (max_width < gcc->priv->output_width &&
-      max_height < gcc->priv->output_height) {
-    gcc->priv->output_width = max_width;
-    gcc->priv->output_height = max_height;
-    GST_INFO_OBJECT (gcc, "Reconfiguring the output size to %dx%d",
-        gcc->priv->output_width, gcc->priv->output_height);
-  }
-
-  caps_str = g_strdup_printf ("video/x-raw-yuv, width=%d, height=%d;"
-      "video/x-raw-rgb, width=%d, height=%d;"
-      "video/x-dv, systemstream=true, width=%d, height=%d",
-      max_width, max_height, max_width, max_height, max_width, max_height);
+  gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->source_width,
+      "height", G_TYPE_INT, gcc->priv->source_height, "framerate",
+      GST_TYPE_FRACTION, gcc->priv->source_fps_n, gcc->priv->source_fps_d, NULL);
+  caps_str = gst_caps_to_string (caps);
   GST_INFO_OBJECT (gcc, "Source caps configured to: %s", caps_str);
-  rcaps = gst_caps_from_string (caps_str);
   g_free (caps_str);
-  return rcaps;
+  return caps;
 }
 
 static void
@@ -1074,7 +1066,7 @@ gst_camera_capturer_create_source (GstCameraCapturer *gcc,
   if (gst_caps_get_size (source_caps) != 0) {
     s = gst_caps_get_structure (source_caps, 0);
   }
-  if (s == NULL) { 
+  if (s == NULL) {
     gst_camera_capturer_fill_decodebin_source (gcc);
   } else if (gst_structure_has_name (s, "video/x-raw-yuv") ||
       gst_structure_has_name (s, "video/x-raw-rgb")) {
@@ -1085,7 +1077,7 @@ gst_camera_capturer_create_source (GstCameraCapturer *gcc,
     filter = gst_element_factory_make ("capsfilter", NULL);
     gst_bin_add (GST_BIN (bin), filter);
     gst_element_link (source, filter);
-    link_caps = gst_camera_capturer_find_highest_res (gcc, source_caps);
+    link_caps = gst_camera_capturer_source_caps (gcc);
     if (link_caps) {
       g_object_set (filter, "caps", link_caps, NULL);
       gst_caps_unref (link_caps);
@@ -1411,83 +1403,11 @@ gcc_get_video_stream_info (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
   return FALSE;
 }
 
-/*****************************************************
- *
- *             Device Probe
- *
- * **************************************************/
-
-GList *
-gst_camera_capturer_enum_devices (const gchar * device_name)
-{
-  GstElement *device;
-  GstPropertyProbe *probe;
-  GValueArray *va;
-  gchar *prop_name;
-  GList *list = NULL;
-  guint i = 0;
-
-  device = gst_element_factory_make (device_name, "source");
-  if (!device || !GST_IS_PROPERTY_PROBE (device))
-    goto finish;
-  gst_element_set_state (device, GST_STATE_READY);
-  gst_element_get_state (device, NULL, NULL, 5 * GST_SECOND);
-  probe = GST_PROPERTY_PROBE (device);
-
-  if (!g_strcmp0 (device_name, "dv1394src"))
-    prop_name = "guid";
-  else if (!g_strcmp0 (device_name, "v4l2src") ||
-      !g_strcmp0 (device_name, "avfvideosrc"))
-    prop_name = "device";
-  else if (!g_strcmp0 (device_name, "filesrc"))
-    prop_name = "location";
-  else
-    prop_name = "device-name";
-
-  va = gst_property_probe_probe_and_get_values_name (probe, prop_name);
-  if (!va)
-    goto finish;
-
-  for (i = 0; i < va->n_values; ++i) {
-    GValue *v = g_value_array_get_nth (va, i);
-    GValue valstr = { 0, };
-
-    g_value_init (&valstr, G_TYPE_STRING);
-    if (!g_value_transform (v, &valstr))
-      continue;
-    list = g_list_append (list, g_value_dup_string (&valstr));
-    g_value_unset (&valstr);
-  }
-  g_value_array_free (va);
-
-finish:
-  {
-    if (device != NULL) {
-      gst_element_set_state (device, GST_STATE_NULL);
-      gst_object_unref (GST_OBJECT (device));
-    }
-    return list;
-  }
-}
-
-
 /*******************************************
  *
  *         Public methods
  *
  * ****************************************/
-
-GList *
-gst_camera_capturer_enum_video_devices (const gchar * device)
-{
-  return gst_camera_capturer_enum_devices (device);
-}
-
-GList *
-gst_camera_capturer_enum_audio_devices (const gchar * device)
-{
-  return gst_camera_capturer_enum_devices (device);
-}
 
 void
 gst_camera_capturer_run (GstCameraCapturer * gcc)
@@ -1703,6 +1623,7 @@ void
 gst_camera_capturer_configure (GstCameraCapturer * gcc,
     const gchar * filename, CaptureSourceType source,
     const gchar * source_element, const gchar * device_id,
+    gint source_width, gint source_height, gint source_fps_n, gint source_fps_d,
     VideoEncoderType video_encoder, AudioEncoderType audio_encoder,
     VideoMuxerType muxer, guint video_bitrate, guint audio_bitrate,
     guint record_audio, guint output_width, guint output_height,
@@ -1721,6 +1642,10 @@ gst_camera_capturer_configure (GstCameraCapturer * gcc,
   gcc->priv->output_height = output_height;
   gcc->priv->output_width = output_width;
   gcc->priv->window_handle = window_handle;
+  gcc->priv->source_width = source_width;
+  gcc->priv->source_height = source_height;
+  gcc->priv->source_fps_n = source_fps_n;
+  gcc->priv->source_fps_d = source_fps_d;
 }
 
 GstCameraCapturer *

@@ -2654,6 +2654,7 @@ Away</property>
             <child>
               <widget class="Gtk.Label" id="playLabel">
                 <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
@@ -4863,6 +4864,7 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.Label" id="dblabel">
                 <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -6373,95 +6375,142 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Table" id="outputfiletable">
+                              <widget class="Gtk.VBox" id="capturebox">
                                 <property name="MemberName" />
-                                <property name="NColumns">2</property>
-                                <property name="RowSpacing">6</property>
-                                <property name="ColumnSpacing">6</property>
-                                <child>
-                                  <widget class="LongoMatch.Gui.Component.MediaFileChooser" id="capturemediafilechooser">
-                                    <property name="MemberName" />
-                                    <property name="Events">ButtonPressMask</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="LeftAttach">1</property>
-                                    <property name="RightAttach">2</property>
-                                    <property name="AutoSize">True</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">True</property>
-                                    <property name="XFill">True</property>
-                                    <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
-                                    <property name="YFill">True</property>
-                                    <property name="YShrink">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="Gtk.Label" id="outputfilelabel">
-                                    <property name="MemberName" />
-                                    <property name="LabelProp" translatable="yes">Output file</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="AutoSize">True</property>
-                                    <property name="XOptions">Fill</property>
-                                    <property name="YOptions">Fill</property>
-                                    <property name="XExpand">False</property>
-                                    <property name="XFill">True</property>
-                                    <property name="XShrink">False</property>
-                                    <property name="YExpand">False</property>
-                                    <property name="YFill">True</property>
-                                    <property name="YShrink">False</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="Position">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.HBox" id="hbox10">
-                                <property name="MemberName" />
-                                <property name="Homogeneous">True</property>
                                 <property name="Spacing">6</property>
                                 <child>
-                                  <widget class="Gtk.Table" id="lcapturetable">
+                                  <widget class="Gtk.Table" id="outputfiletable">
+                                    <property name="MemberName" />
+                                    <property name="NColumns">2</property>
+                                    <property name="RowSpacing">6</property>
+                                    <property name="ColumnSpacing">6</property>
+                                    <child>
+                                      <widget class="LongoMatch.Gui.Component.MediaFileChooser" id="capturemediafilechooser">
+                                        <property name="MemberName" />
+                                        <property name="Events">ButtonPressMask</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="LeftAttach">1</property>
+                                        <property name="RightAttach">2</property>
+                                        <property name="AutoSize">True</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">True</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.Label" id="outputfilelabel">
+                                        <property name="MemberName" />
+                                        <property name="Xalign">1</property>
+                                        <property name="LabelProp" translatable="yes">Output file</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="AutoSize">True</property>
+                                        <property name="XOptions">Fill</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">False</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Table" id="urltable">
+                                    <property name="MemberName" />
+                                    <property name="NColumns">2</property>
+                                    <property name="RowSpacing">6</property>
+                                    <property name="ColumnSpacing">6</property>
+                                    <child>
+                                      <widget class="Gtk.Entry" id="urientry">
+                                        <property name="MemberName" />
+                                        <property name="CanFocus">True</property>
+                                        <property name="IsEditable">True</property>
+                                        <property name="InvisibleChar">•</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="LeftAttach">1</property>
+                                        <property name="RightAttach">2</property>
+                                        <property name="AutoSize">True</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">True</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.Label" id="urilabel">
+                                        <property name="MemberName" />
+                                        <property name="Xalign">1</property>
+                                        <property name="LabelProp" translatable="yes">URL</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="AutoSize">True</property>
+                                        <property name="XOptions">Fill</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">False</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Table" id="devicetable">
                                     <property name="MemberName" />
                                     <property name="NRows">2</property>
                                     <property name="NColumns">2</property>
                                     <property name="RowSpacing">6</property>
                                     <property name="ColumnSpacing">6</property>
                                     <child>
-                                      <widget class="Gtk.HBox" id="hbox7">
+                                      <widget class="Gtk.Label" id="device">
                                         <property name="MemberName" />
-                                        <property name="Spacing">6</property>
-                                        <child>
-                                          <widget class="Gtk.ComboBox" id="devicecombobox">
-                                            <property name="MemberName" />
-                                            <property name="Visible">False</property>
-                                            <property name="IsTextCombo">True</property>
-                                            <property name="Items" translatable="yes" />
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">0</property>
-                                            <property name="AutoSize">False</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="Gtk.Entry" id="urientry">
-                                            <property name="MemberName" />
-                                            <property name="Visible">False</property>
-                                            <property name="CanFocus">True</property>
-                                            <property name="IsEditable">True</property>
-                                            <property name="InvisibleChar">•</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">1</property>
-                                            <property name="AutoSize">False</property>
-                                          </packing>
-                                        </child>
+                                        <property name="Xalign">1</property>
+                                        <property name="LabelProp" translatable="yes">Device</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="AutoSize">True</property>
+                                        <property name="XOptions">Fill</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">False</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.ComboBox" id="devicecombobox">
+                                        <property name="MemberName" />
+                                        <property name="WidthRequest">300</property>
+                                        <property name="IsTextCombo">True</property>
+                                        <property name="Items" translatable="yes" />
                                       </widget>
                                       <packing>
                                         <property name="LeftAttach">1</property>
@@ -6477,37 +6526,80 @@ You can continue with the current capture, cancel it or save your project.
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="Gtk.HBox" id="hbox8">
+                                      <widget class="Gtk.ComboBox" id="deviceformatcombobox">
                                         <property name="MemberName" />
-                                        <property name="Spacing">6</property>
-                                        <child>
-                                          <widget class="Gtk.Label" id="device">
-                                            <property name="MemberName" />
-                                            <property name="Visible">False</property>
-                                            <property name="LabelProp" translatable="yes">Device</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">0</property>
-                                            <property name="AutoSize">False</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="Gtk.Label" id="urilabel">
-                                            <property name="MemberName" />
-                                            <property name="Visible">False</property>
-                                            <property name="LabelProp" translatable="yes">URL</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="Position">1</property>
-                                            <property name="AutoSize">False</property>
-                                          </packing>
-                                        </child>
+                                        <property name="IsTextCombo">True</property>
+                                        <property name="Items" translatable="yes" />
                                       </widget>
                                       <packing>
+                                        <property name="TopAttach">1</property>
+                                        <property name="BottomAttach">2</property>
+                                        <property name="LeftAttach">1</property>
+                                        <property name="RightAttach">2</property>
                                         <property name="AutoSize">True</property>
                                         <property name="XOptions">Fill</property>
                                         <property name="YOptions">Fill</property>
                                         <property name="XExpand">False</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.Label" id="deviceformatlabel">
+                                        <property name="MemberName" />
+                                        <property name="Xalign">1</property>
+                                        <property name="LabelProp" translatable="yes">Device format</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="TopAttach">1</property>
+                                        <property name="BottomAttach">2</property>
+                                        <property name="AutoSize">True</property>
+                                        <property name="XOptions">Fill</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">False</property>
+                                        <property name="XFill">True</property>
+                                        <property name="XShrink">False</property>
+                                        <property name="YExpand">False</property>
+                                        <property name="YFill">True</property>
+                                        <property name="YShrink">False</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">2</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Table" id="encpropstable">
+                                    <property name="MemberName" />
+                                    <property name="NRows">2</property>
+                                    <property name="NColumns">4</property>
+                                    <property name="RowSpacing">6</property>
+                                    <property name="ColumnSpacing">6</property>
+                                    <child>
+                                      <placeholder />
+                                    </child>
+                                    <child>
+                                      <placeholder />
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.ComboBox" id="encodingcombobox">
+                                        <property name="MemberName" />
+                                        <property name="IsTextCombo">True</property>
+                                        <property name="Items" translatable="yes" />
+                                      </widget>
+                                      <packing>
+                                        <property name="LeftAttach">1</property>
+                                        <property name="RightAttach">2</property>
+                                        <property name="AutoSize">False</property>
+                                        <property name="YOptions">Fill</property>
+                                        <property name="XExpand">True</property>
                                         <property name="XFill">True</property>
                                         <property name="XShrink">False</property>
                                         <property name="YExpand">False</property>
@@ -6538,9 +6630,10 @@ You can continue with the current capture, cancel it or save your project.
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="Gtk.Label" id="sizelabel">
+                                      <widget class="Gtk.Label" id="outputsizelabel">
                                         <property name="MemberName" />
-                                        <property name="LabelProp" translatable="yes">Size</property>
+                                        <property name="Xalign">1</property>
+                                        <property name="LabelProp" translatable="yes">Output size</property>
                                       </widget>
                                       <packing>
                                         <property name="TopAttach">1</property>
@@ -6549,39 +6642,6 @@ You can continue with the current capture, cancel it or save your project.
                                         <property name="XOptions">Fill</property>
                                         <property name="YOptions">Fill</property>
                                         <property name="XExpand">False</property>
-                                        <property name="XFill">True</property>
-                                        <property name="XShrink">False</property>
-                                        <property name="YExpand">False</property>
-                                        <property name="YFill">True</property>
-                                        <property name="YShrink">False</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="Position">0</property>
-                                    <property name="AutoSize">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="Gtk.Table" id="rcapturetable">
-                                    <property name="MemberName" />
-                                    <property name="Visible">False</property>
-                                    <property name="NRows">2</property>
-                                    <property name="NColumns">2</property>
-                                    <property name="RowSpacing">6</property>
-                                    <property name="ColumnSpacing">6</property>
-                                    <child>
-                                      <widget class="Gtk.ComboBox" id="encodingcombobox">
-                                        <property name="MemberName" />
-                                        <property name="IsTextCombo">True</property>
-                                        <property name="Items" translatable="yes" />
-                                      </widget>
-                                      <packing>
-                                        <property name="LeftAttach">1</property>
-                                        <property name="RightAttach">2</property>
-                                        <property name="AutoSize">False</property>
-                                        <property name="YOptions">Fill</property>
-                                        <property name="XExpand">True</property>
                                         <property name="XFill">True</property>
                                         <property name="XShrink">False</property>
                                         <property name="YExpand">False</property>
@@ -6596,10 +6656,8 @@ You can continue with the current capture, cancel it or save your project.
                                         <property name="Items" translatable="yes" />
                                       </widget>
                                       <packing>
-                                        <property name="TopAttach">1</property>
-                                        <property name="BottomAttach">2</property>
-                                        <property name="LeftAttach">1</property>
-                                        <property name="RightAttach">2</property>
+                                        <property name="LeftAttach">3</property>
+                                        <property name="RightAttach">4</property>
                                         <property name="AutoSize">False</property>
                                         <property name="YOptions">Fill</property>
                                         <property name="XExpand">True</property>
@@ -6611,13 +6669,14 @@ You can continue with the current capture, cancel it or save your project.
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="Gtk.Label" id="qualitylabel">
+                                      <widget class="Gtk.Label" id="qualityformatlabel">
                                         <property name="MemberName" />
+                                        <property name="Xalign">1</property>
                                         <property name="LabelProp" translatable="yes">Quality</property>
                                       </widget>
                                       <packing>
-                                        <property name="TopAttach">1</property>
-                                        <property name="BottomAttach">2</property>
+                                        <property name="LeftAttach">2</property>
+                                        <property name="RightAttach">3</property>
                                         <property name="AutoSize">True</property>
                                         <property name="XOptions">Fill</property>
                                         <property name="YOptions">Fill</property>
@@ -6632,10 +6691,11 @@ You can continue with the current capture, cancel it or save your project.
                                     <child>
                                       <widget class="Gtk.Label" id="videoformatlabel">
                                         <property name="MemberName" />
+                                        <property name="Xalign">1</property>
                                         <property name="LabelProp" translatable="yes">Format</property>
                                       </widget>
                                       <packing>
-                                        <property name="AutoSize">True</property>
+                                        <property name="AutoSize">False</property>
                                         <property name="XOptions">Fill</property>
                                         <property name="YOptions">Fill</property>
                                         <property name="XExpand">False</property>
@@ -6648,13 +6708,15 @@ You can continue with the current capture, cancel it or save your project.
                                     </child>
                                   </widget>
                                   <packing>
-                                    <property name="Position">1</property>
-                                    <property name="AutoSize">False</property>
+                                    <property name="Position">3</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
                                   </packing>
                                 </child>
                               </widget>
                               <packing>
-                                <property name="Position">3</property>
+                                <property name="Position">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
@@ -6755,7 +6817,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="MemberName" />
                                 <property name="Spacing">6</property>
                                 <child>
-                                  <widget class="Gtk.Label" id="label8">
+                                  <widget class="Gtk.Label" id="label11">
                                     <property name="MemberName" />
                                     <property name="LabelProp" translatable="yes">Tactics</property>
                                   </widget>
@@ -6846,7 +6908,7 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="MemberName" />
                                 <property name="Spacing">6</property>
                                 <child>
-                                  <widget class="Gtk.Label" id="label9">
+                                  <widget class="Gtk.Label" id="label12">
                                     <property name="MemberName" />
                                     <property name="LabelProp" translatable="yes">Tactics</property>
                                   </widget>
@@ -6958,7 +7020,7 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Label" id="label3">
+              <widget class="Gtk.Label" id="label13">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">page2</property>
               </widget>
@@ -6976,7 +7038,7 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Label" id="label7">
+              <widget class="Gtk.Label" id="label14">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">page3</property>
               </widget>
@@ -8600,6 +8662,7 @@ You can continue with the current capture, cancel it or save your project.
                                               <widget class="Gtk.Label" id="templatelabel">
                                                 <property name="MemberName" />
                                                 <property name="Xalign">0</property>
+                                                <property name="LabelProp" translatable="yes" />
                                               </widget>
                                               <packing>
                                                 <property name="TopAttach">1</property>
@@ -8817,6 +8880,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="type">tab</property>
@@ -8828,6 +8892,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label3">
                     <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="type">tab</property>
@@ -9641,6 +9706,7 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="synclabel">
                     <property name="MemberName" />
                     <property name="WidthRequest">300</property>
+                    <property name="LabelProp" translatable="yes" />
                     <property name="UseMarkup">True</property>
                   </widget>
                   <packing>
@@ -9821,7 +9887,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileChooser" design-size="300 64">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileChooser" design-size="259 64">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -10819,6 +10885,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="localPlaysList">
             <property name="MemberName" />
+            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="type">tab</property>
@@ -10836,6 +10903,7 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="visitorPlaysList">
             <property name="MemberName" />
+            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="type">tab</property>
@@ -10898,6 +10966,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="authorlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -10919,6 +10988,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="desclabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                             <property name="Wrap">True</property>
                             <property name="WidthChars">70</property>
                             <property name="MaxWidthChars">100</property>
@@ -10942,6 +11012,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="filelabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                             <property name="Wrap">True</property>
                             <property name="Ellipsize">Start</property>
                             <property name="SingleLineMode">True</property>
@@ -11047,6 +11118,7 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="namelabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">1</property>
@@ -11390,6 +11462,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                       <widget class="Gtk.Label" id="filelabel">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes" />
                         <property name="Ellipsize">Start</property>
                       </widget>
                       <packing>
@@ -11408,6 +11481,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="audiolabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>
@@ -11427,6 +11501,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="containerlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -11444,6 +11519,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="durationlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="AutoSize">False</property>
@@ -11459,6 +11535,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="formatlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">1</property>
@@ -11476,6 +11553,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="label9">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -11495,6 +11573,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="videolabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>

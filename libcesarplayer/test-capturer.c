@@ -19,7 +19,7 @@
 
 #include <gtk/gtk.h>
 #include "gst-camera-capturer.h"
-#include "lgm-utils.h"
+#include "lgm-device.h"
 
 static GtkWidget *recbutton, *stopbutton;
 static int sargc;
@@ -55,6 +55,7 @@ on_realized_cb (GtkWidget * video)
   gvc = gst_camera_capturer_new (&error);
   gst_camera_capturer_configure (gvc, sargv[1],
       (CaptureSourceType) atoi(sargv[4]), sargv[2], sargv[3],
+      0, 0, 0, 0,
       VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
       VIDEO_MUXER_MP4, 1000, 100, TRUE, 320, 240, window);
   gst_camera_capturer_run (gvc);

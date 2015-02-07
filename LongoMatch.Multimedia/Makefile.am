@@ -23,7 +23,7 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Utils/MultimediaFactory.cs \
 	Utils/Seeker.cs \
 	Utils/TimeString.cs \
-	Utils/VideoDevice.cs \
+	Utils/Devices.cs \
 	Utils/WindowHandle.cs
 
 DLLCONFIG = LongoMatch.Multimedia.dll.config

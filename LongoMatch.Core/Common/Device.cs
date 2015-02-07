@@ -28,6 +28,7 @@ namespace LongoMatch.Core.Common
 	public class Device
 	{
 		public Device() {
+			Formats = new List<DeviceVideoFormat>();
 
 		}
 
@@ -52,11 +53,29 @@ namespace LongoMatch.Core.Common
 			get;
 			set;
 		}
+
+		public List<DeviceVideoFormat> Formats {
+			get;
+			set;
+		}
 		
 		public string Desc  {
 			get {
 				return String.Format("{0} ({1})", ID, SourceElement);
 			}
+		}
+	}
+	
+	public struct DeviceVideoFormat {
+		public int width;
+		public int height;
+		public int fps_n;
+		public int fps_d;
+		
+		public override string ToString ()
+		{
+			return string.Format ("{0}x{1}@{2}fps", width, height,
+			                      ((double)fps_n/fps_d).ToString ("#.##"));
 		}
 	}
 }

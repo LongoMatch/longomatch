@@ -23,20 +23,9 @@ namespace LongoMatch.Core.Common
 
 	public struct CaptureSettings
 	{
-		public CaptureSourceType CaptureSourceType;
-		public string DeviceID;
-		public string SourceElement;
+		public Device Device;
+		public DeviceVideoFormat Format;
 		public EncodingSettings EncodingSettings;
-
-		public static CaptureSettings DefaultSettings() {
-			CaptureSettings settings = new CaptureSettings();
-			settings.CaptureSourceType = CaptureSourceType.System;
-			settings.EncodingSettings = new EncodingSettings(Config.CaptureVideoStandard,
-			                                                 Config.CaptureEncodingProfile,
-			                                                 Config.CaptureEncodingQuality,
-			                                                 25, 1, "", true, false, 20);
-			return settings;
-		}
 	}
 	
 }

@@ -39,7 +39,6 @@
     <Compile Include="Capturer\LiveSourceTimer.cs" />
     <Compile Include="Utils\TimeString.cs" />
     <Compile Include="Utils\GstDiscoverer.cs" />
-    <Compile Include="Utils\VideoDevice.cs" />
     <Compile Include="Utils\GStreamer.cs" />
     <Compile Include="Common\Handlers.cs" />
     <Compile Include="Remuxer\GstRemuxer.cs" />
@@ -51,6 +50,7 @@
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />
     <Compile Include="Utils\WindowHandle.cs" />
+    <Compile Include="Utils\Devices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Capturer\" />
