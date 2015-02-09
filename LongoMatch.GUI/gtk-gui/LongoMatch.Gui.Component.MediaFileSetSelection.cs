@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment3 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment3.Name = "GtkAlignment3";
 			this.GtkAlignment3.LeftPadding = ((uint)(12));
+			this.GtkAlignment3.BorderWidth = ((uint)(2));
 			// Container child GtkAlignment3.Gtk.Container+ContainerChild
 			this.mediafilechooser1 = new global::LongoMatch.Gui.Component.MediaFileChooser ();
 			this.mediafilechooser1.Events = ((global::Gdk.EventMask)(256));
@@ -69,6 +70,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment2.Name = "GtkAlignment2";
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
+			this.GtkAlignment2.BorderWidth = ((uint)(2));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
 			this.file2box = new global::Gtk.HBox ();
 			this.file2box.Name = "file2box";
@@ -123,6 +125,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment1 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment1.Name = "GtkAlignment1";
 			this.GtkAlignment1.LeftPadding = ((uint)(12));
+			this.GtkAlignment1.BorderWidth = ((uint)(2));
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
 			this.file3box = new global::Gtk.HBox ();
 			this.file3box.Name = "file3box";
@@ -177,6 +180,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
+			this.GtkAlignment.BorderWidth = ((uint)(2));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			this.file4box = new global::Gtk.HBox ();
 			this.file4box.Name = "file4box";

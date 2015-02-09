@@ -10443,7 +10443,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileSetSelection" design-size="534 172">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.MediaFileSetSelection" design-size="542 180">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -10464,6 +10464,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
                 <property name="LeftPadding">12</property>
+                <property name="BorderWidth">2</property>
                 <child>
                   <widget class="LongoMatch.Gui.Component.MediaFileChooser" id="mediafilechooser1">
                     <property name="MemberName" />
@@ -10505,6 +10506,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
                 <property name="LeftPadding">12</property>
+                <property name="BorderWidth">2</property>
                 <child>
                   <widget class="Gtk.HBox" id="file2box">
                     <property name="MemberName" />
@@ -10573,6 +10575,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
                 <property name="LeftPadding">12</property>
+                <property name="BorderWidth">2</property>
                 <child>
                   <widget class="Gtk.HBox" id="file3box">
                     <property name="MemberName" />
@@ -10641,6 +10644,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
                 <property name="LeftPadding">12</property>
+                <property name="BorderWidth">2</property>
                 <child>
                   <widget class="Gtk.HBox" id="file4box">
                     <property name="MemberName" />
