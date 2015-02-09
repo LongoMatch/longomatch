@@ -110,6 +110,12 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public string RateString {
+			get {
+				return String.Format ("{0}X", Rate);
+			}
+		}
+
 		public void Move (Time diff)
 		{
 			if (start != null) {

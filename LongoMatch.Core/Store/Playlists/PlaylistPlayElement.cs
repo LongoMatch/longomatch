@@ -63,6 +63,12 @@ namespace LongoMatch.Core.Store.Playlists
 			set;
 		}
 
+		public string RateString {
+			get {
+				return String.Format ("{0}X", Rate);
+			}
+		}
+
 		public MediaFileSet FileSet {
 			get;
 			set;
@@ -76,7 +82,11 @@ namespace LongoMatch.Core.Store.Playlists
 		[JsonIgnore]
 		public string Description {
 			get {
-				return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString ();
+				if (Rate != 1) {
+					return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString () + " (" + RateString + ")";
+				} else {
+					return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString ();
+				}
 			}
 		}
 

@@ -173,7 +173,11 @@ namespace LongoMatch.Core.Store
 		public string TimesDesription ()
 		{
 			if (Start != null && Stop != null) {
-				return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString ();
+				if (Rate != 1) {
+					return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString () + " (" + RateString + ")";
+				} else {
+					return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString ();
+				}
 			} else if (EventType != null) {
 				return EventTime.ToMSecondsString ();
 			} else {
