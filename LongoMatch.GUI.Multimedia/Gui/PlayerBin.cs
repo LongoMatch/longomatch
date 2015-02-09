@@ -907,7 +907,7 @@ namespace LongoMatch.Gui
 				val = val + 1 - SCALE_FPS;
 				args.RetVal = val + "X";
 			} else if (val < SCALE_FPS) {
-				args.RetVal = "-" + val + "/" + SCALE_FPS + "X";
+				args.RetVal = val + "/" + SCALE_FPS + "X";
 			}
 		}
 
