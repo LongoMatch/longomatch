@@ -115,6 +115,7 @@ namespace LongoMatch.Gui.Panel
 			vsimage.WidthRequest = StyleConf.NewTeamsSpacing;
 			hometeamscombobox.WidthRequest = awayteamscombobox.WidthRequest = StyleConf.NewTeamsComboWidth;
 			hometeamscombobox.HeightRequest = awayteamscombobox.HeightRequest = StyleConf.NewTeamsComboHeight;
+			hometeamscombobox.WrapWidth = awayteamscombobox.WrapWidth = 1;
 			homealignment.Xscale = awayalignment.Xscale = 0;
 			homealignment.Xalign = 0.8f;
 			awayalignment.Xalign = 0.2f;
