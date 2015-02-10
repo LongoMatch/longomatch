@@ -62,6 +62,18 @@ namespace LongoMatch.Gui
 			resumebutton.Clicked += (sender, e) => ResumePeriod ();
 			savebutton.Clicked += HandleSaveClicked;
 			cancelbutton.Clicked += HandleCloseClicked;
+
+			// Force tooltips to be translatable as there seems to be a bug in stetic 
+			// code generation for translatable tooltips.
+			recbutton.TooltipMarkup = Catalog.GetString ("Start recording period");
+			stopbutton.TooltipMarkup = Catalog.GetString ("Stop recording period");
+			pausebutton.TooltipMarkup = Catalog.GetString ("Pause clock");
+			resumebutton.TooltipMarkup = Catalog.GetString ("Resume clock");
+			savebutton.TooltipMarkup = Catalog.GetString ("Save project");
+			cancelbutton.TooltipMarkup = Catalog.GetString ("Cancel capture");
+			deletelastbutton.TooltipMarkup = Catalog.GetString ("Delete event");
+			playlastbutton.TooltipMarkup = Catalog.GetString ("Replay event");
+
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record",
 			                                 StyleConf.PlayerCapturerIconSize);
 			stopimage.Pixbuf = Misc.LoadIcon ("longomatch-stop",

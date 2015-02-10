@@ -53,6 +53,13 @@ namespace LongoMatch.Gui.Panel
 			deletebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-delete", 34);
 			openbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-open", 34);
 
+			// Force tooltips to be translatable as there seems to be a bug in stetic 
+			// code generation for translatable tooltips.
+			savebutton.TooltipMarkup = Catalog.GetString ("Save");
+			exportbutton.TooltipMarkup = Catalog.GetString ("Export");
+			openbutton.TooltipMarkup = Catalog.GetString ("Open");
+			deletebutton.TooltipMarkup = Catalog.GetString ("Delete");
+
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;

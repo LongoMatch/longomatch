@@ -22,6 +22,7 @@ using System.Linq;
 using Gdk;
 using Gtk;
 using Pango;
+using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
@@ -99,6 +100,19 @@ namespace LongoMatch.Gui
 			                                                  StyleConf.PlayerCapturerIconSize);
 			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
 			                                                  StyleConf.PlayerCapturerIconSize);
+
+			// Force tooltips to be translatable as there seems to be a bug in stetic 
+			// code generation for translatable tooltips.
+			vscale1.TooltipMarkup = Catalog.GetString ("Playback speed");
+			closebutton.TooltipMarkup = Catalog.GetString ("Close loaded event");
+			drawbutton.TooltipMarkup = Catalog.GetString ("Draw frame");
+			playbutton.TooltipMarkup = Catalog.GetString ("Play");
+			pausebutton.TooltipMarkup = Catalog.GetString ("Pause");
+			prevbutton.TooltipMarkup = Catalog.GetString ("Previous");
+			nextbutton.TooltipMarkup = Catalog.GetString ("Next");
+			jumpspinbutton.TooltipMarkup = Catalog.GetString ("Jump in seconds. Hold the Shift key with the direction keys to activate it.");
+			volumebutton.TooltipMarkup = Catalog.GetString ("Volume");
+			detachbutton.TooltipMarkup = Catalog.GetString ("Detach window");
 
 			vwin = new VolumeWindow ();
 			ConnectSignals ();

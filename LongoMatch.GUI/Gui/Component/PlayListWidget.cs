@@ -19,6 +19,7 @@
 //
 using System.Linq;
 using Gtk;
+using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Playlists;
@@ -38,8 +39,15 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			playlisttreeview1.Reorderable = true;
 			playlisttreeview1.RowActivated += HandleRowActivated;
+
+			// Force tooltips to be translatable as there seems to be a bug in stetic 
+			// code generation for translatable tooltips.
+			newbutton.TooltipMarkup = Catalog.GetString ("Create a new playlist");
+			newvideobutton.TooltipMarkup = Catalog.GetString ("Export the playlist to new video file");
+
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
+
 			Config.EventsBroker.PlaylistsChangedEvent += HandlePlaylistsChangedEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
