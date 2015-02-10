@@ -83,7 +83,26 @@ namespace LongoMatch.Gui.Dialog
 			playerbutton.Toggled += HandleToolClicked;
 			anglebutton.Toggled += HandleToolClicked;
 			numberbutton.Toggled += HandleToolClicked;
-			
+
+			// Force tooltips to be translatable as there seems to be a bug in stetic 
+			// code generation for translatable tooltips.
+			selectbutton.TooltipMarkup = Catalog.GetString ("Selection tool");
+			eraserbutton.TooltipMarkup = Catalog.GetString ("Rubber tool");
+			penbutton.TooltipMarkup = Catalog.GetString ("Pencil tool");
+			textbutton.TooltipMarkup = Catalog.GetString ("Text tool");
+			linebutton.TooltipMarkup = Catalog.GetString ("Line tool");
+			crossbutton.TooltipMarkup = Catalog.GetString ("Cross tool");
+			rectanglebutton.TooltipMarkup = Catalog.GetString ("Rectangle tool");
+			ellipsebutton.TooltipMarkup = Catalog.GetString ("Ellipse tool");
+			rectanglefilledbutton.TooltipMarkup = Catalog.GetString ("Filled rectangle tool");
+			ellipsefilledbutton.TooltipMarkup = Catalog.GetString ("Filled ellipse tool");
+			playerbutton.TooltipMarkup = Catalog.GetString ("Player tool");
+			numberbutton.TooltipMarkup = Catalog.GetString ("Index tool");
+			anglebutton.TooltipMarkup = Catalog.GetString ("Angle tool");
+			stylecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
+			typecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
+			clearbutton.TooltipMarkup = Catalog.GetString ("Clear all drawings");
+
 			FillLineStyle ();
 			FillLineType ();
 
