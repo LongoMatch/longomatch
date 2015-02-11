@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-03 09:11+0000\n"
-"PO-Revision-Date: 2015-01-30 10:02+0000\n"
+"POT-Creation-Date: 2015-02-10 23:01+0000\n"
+"PO-Revision-Date: 2015-02-07 10:02+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/longomatch/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -64,15 +64,15 @@ msgid ""
 " be closed."
 msgstr "Az adatbázist valószínűleg egy másik példány zárolja, és az alkalmazás be lesz zárva."
 
-#: ../LongoMatch/Main.cs:174
+#: ../LongoMatch/Main.cs:175
 msgid "The application has finished with an unexpected error."
 msgstr "Az alkalmazás befejeződött egy váratlan hibával."
 
-#: ../LongoMatch/Main.cs:175
+#: ../LongoMatch/Main.cs:176
 msgid "A log has been saved at: "
 msgstr "A napló ide lett elmentve: "
 
-#: ../LongoMatch/Main.cs:176
+#: ../LongoMatch/Main.cs:177
 msgid "Please, fill a bug report "
 msgstr "Töltsön ki egy hibajelentést "
 
@@ -407,8 +407,8 @@ msgstr "Címkézés pontként"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:283
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:308
-msgid "Tag as trayectory"
-msgstr "Címkézés röppályaként"
+msgid "Tag as trajectory"
+msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:322
 msgid "Field position"
@@ -479,17 +479,17 @@ msgid "Group"
 msgstr "Csoport"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:294
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:297
 msgid "page1"
 msgstr "1. oldal"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:819
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:851
 msgid "page2"
 msgstr "2. oldal"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:832
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:864
 msgid "page3"
 msgstr "3. oldal"
 
@@ -589,6 +589,7 @@ msgid "Name:"
 msgstr "Név:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:125
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:198
 msgid "Description:"
 msgstr "Leírás:"
 
@@ -730,7 +731,7 @@ msgstr "Kódolási formátum"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:595
 msgid "Quality"
 msgstr "Minőség"
 
@@ -1135,67 +1136,71 @@ msgstr "Projektstatisztika megjelenítése"
 msgid "Migration Tool"
 msgstr "Költöztető eszköz"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:164
 msgid "Video file"
 msgstr "Videofájl"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:200
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:203
 msgid "Capture device"
 msgstr "Felvevőeszköz"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:239
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:242
 msgid "Fake capture device"
 msgstr "Hamis felvevőeszköz"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:278
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:281
 msgid "Ip camera"
 msgstr "IP-kamera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:334
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Mérkőzés"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:342
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:345
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Dátum"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:378
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:370
+msgid "Description"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:410
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Idény"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:479
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Kimeneti fájl"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:498
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:530
 msgid "Device"
 msgstr "Eszköz"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:505
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:537
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:559
 msgid "Size"
 msgstr "Méret"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:573
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:605
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Formátum"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:598
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:630
 msgid "Dashboard"
 msgstr "Áttekintő"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:648
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:728
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:680
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:760
 msgid "Tactics"
 msgstr "Taktikák"
 
@@ -1203,27 +1208,27 @@ msgstr "Taktikák"
 msgid "<span font_desc=\"22\"><b>Title</b></span>"
 msgstr "<span font_desc=\"22\"><b>Cím</b></span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:129
 msgid "Information"
 msgstr "Információ"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:154
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:156
 msgid "Competition:"
 msgstr "Mérkőzés:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:179
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:209
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:222
 msgid "Analysis Template:"
 msgstr "Elemzési sablon:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:215
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:244
 msgid "Season:"
 msgstr "Idény:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:242
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:271
 msgid "Videos"
 msgstr "Videók"
 
@@ -1293,15 +1298,15 @@ msgstr "Visszaállítás"
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
 msgstr "Érvénytelen tartalom. A szakaszokat szóközzel kell elválasztani („1 2 ex1 ex2”)"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:266
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:272
 msgid "Timeline"
 msgstr "Idővonal"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:268
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:274
 msgid "Analysis dashboard"
 msgstr "Elemzési áttekintő"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:270
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:276
 msgid "Zonal tags viewer"
 msgstr "Zonális címkék megjelenítője"
 
@@ -1351,15 +1356,15 @@ msgstr "Idő: "
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:96
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:118
 msgid "Select folder..."
 msgstr "Mappa kiválasztása…"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:98
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:120
 msgid "Select file..."
 msgstr "Fájl kiválasztása…"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:122
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:141
 msgid "Output folder"
 msgstr "Kimeneti mappa"
 
@@ -1380,7 +1385,7 @@ msgid "Do you want to delete player: "
 msgstr "Szeretné törölni a játékost: "
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:566
 msgid "Could not parse tactics string"
 msgstr "Nem sikerült feldolgozni a taktika szöveget"
 
@@ -1541,17 +1546,17 @@ msgid "The Project has been edited, do you want to save the changes?"
 msgstr "A projekt módosult, szeretné menteni a változásokat?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:211
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:218
 msgid "This Project is actually in use."
 msgstr "Ez a projekt éppen használatban van."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:212
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:219
 msgid "Close it first to allow its removal from the database"
 msgstr "Először zárja be, hogy lehetővé tegye az adatbázisból való eltávolítást"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:215
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:222
 msgid "Do you really want to delete:"
 msgstr "Valóban törölni szeretné:"
 
@@ -1616,17 +1621,17 @@ msgstr "Nem törölheti az „alapértelmezett” nevű sablont"
 msgid "Do you really want to delete the template: "
 msgstr "Biztosan törölni akarja a sablont: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:148
 msgid "Add file"
 msgstr "Fájl hozzáadása"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:178
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:119
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:179
 msgid "Please, select a video file."
 msgstr "Válasszon egy videofájlt."
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:110
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:181
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:121
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:182
 msgid "Please, select an output directory."
 msgstr "Válasszon egy kimeneti könyvtárat."
 
@@ -1634,20 +1639,20 @@ msgstr "Válasszon egy kimeneti könyvtárat."
 msgid "The playlist you want to render is empty."
 msgstr "A megjeleníteni kívánt lejátszólista üres."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:406
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:407
 msgid "Select video files"
 msgstr "Videofájlok kiválasztása"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:414
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:415
 msgid "Some video files are missing for this project"
 msgstr "Néhány videofájl hiányzik ennél a projektnél"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:417
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:418
 msgid "Some video files are still missing for this project."
 msgstr "Néhány videofájl még mindig hiányzik ennél a projektnél."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:422
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:324
 msgid "You need at least 1 video file for the main angle"
 msgstr "Legalább 1 videofájlra van szüksége a fő szöghöz"
 
@@ -1692,31 +1697,31 @@ msgstr "Mozgatás ide"
 msgid "Drawings"
 msgstr "Rajzolások"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:249
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
 msgid "PROJECT TYPE"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
 msgid "PROJECT PROPERTIES"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:312
 msgid "PERIODS SYNCHRONIZATION"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:336
 msgid "No output video file"
 msgstr "Nincs kimeneti videofájl"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:342
 msgid "No input URI"
 msgstr "Nincs bemeneti URI"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:453
 msgid "No capture devices found in the system"
 msgstr "Nem található felvevőeszköz a rendszeren"
 
@@ -1748,11 +1753,11 @@ msgstr "Élő elemzés"
 msgid "Plugins"
 msgstr "Bővítmények"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:72
 msgid "PROJECTS MANAGER"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:188
 msgid "Export project"
 msgstr "Projekt exportálása"
 
@@ -2285,11 +2290,11 @@ msgstr "Hiba a videoképkocka rögzítésekor"
 msgid "Video capture is stopped"
 msgstr "A videofelvétel leállítva"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:204
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:203
 msgid "Playlist name:"
 msgstr "Lejátszólista neve:"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:205
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:204
 msgid "New playlist"
 msgstr "Új lejátszólista"
 
@@ -2363,14 +2368,14 @@ msgstr "Projekt mentése"
 msgid "Plugin not found"
 msgstr "Bővítmény nem található"
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:177
+#: ../LongoMatch.Services/Services/ToolsManager.cs:180
 msgid "A project already exists for this ID:"
 msgstr "Már létezik egy projekt ehhez az azonosítóhoz:"
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:179
+#: ../LongoMatch.Services/Services/ToolsManager.cs:182
 msgid "Do you want to overwrite it?"
 msgstr "Biztosan felülírja?"
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:189
+#: ../LongoMatch.Services/Services/ToolsManager.cs:192
 msgid "Error importing project:"
 msgstr "Hiba a projekt importálásakor"

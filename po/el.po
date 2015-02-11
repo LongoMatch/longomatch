@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-03 09:11+0000\n"
-"PO-Revision-Date: 2015-01-30 10:02+0000\n"
+"POT-Creation-Date: 2015-02-10 23:01+0000\n"
+"PO-Revision-Date: 2015-02-07 10:02+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/longomatch/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -67,15 +67,15 @@ msgid ""
 " be closed."
 msgstr ""
 
-#: ../LongoMatch/Main.cs:174
+#: ../LongoMatch/Main.cs:175
 msgid "The application has finished with an unexpected error."
 msgstr "Η εφαρμογή τερματίστηκε με ένα απροσδόκητο σφάλμα."
 
-#: ../LongoMatch/Main.cs:175
+#: ../LongoMatch/Main.cs:176
 msgid "A log has been saved at: "
 msgstr "Ένα αρχείο καταγραφής αποθηκεύτηκε στο: "
 
-#: ../LongoMatch/Main.cs:176
+#: ../LongoMatch/Main.cs:177
 msgid "Please, fill a bug report "
 msgstr "Παρακαλούμε, συμπληρώστε μια αναφορά σφάλματος "
 
@@ -410,7 +410,7 @@ msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:283
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:308
-msgid "Tag as trayectory"
+msgid "Tag as trajectory"
 msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:322
@@ -482,17 +482,17 @@ msgid "Group"
 msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:294
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:297
 msgid "page1"
 msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:819
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:851
 msgid "page2"
 msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:832
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:864
 msgid "page3"
 msgstr ""
 
@@ -592,6 +592,7 @@ msgid "Name:"
 msgstr "Όνομα:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:125
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:198
 msgid "Description:"
 msgstr ""
 
@@ -733,7 +734,7 @@ msgstr "Μορφή κωδικοποίησης"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:595
 msgid "Quality"
 msgstr "Ποιότητα"
 
@@ -1138,67 +1139,71 @@ msgstr "Εμφάνιση στατιστικών έργου"
 msgid "Migration Tool"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:164
 msgid "Video file"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:200
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:203
 msgid "Capture device"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:239
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:242
 msgid "Fake capture device"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:278
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:281
 msgid "Ip camera"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:331
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:334
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Διοργάνωση"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:342
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:345
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:378
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:370
+msgid "Description"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:410
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Περίοδος"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:479
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Αρχείο εξόδου"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:498
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:530
 msgid "Device"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:505
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:537
 msgid "URL"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:559
 msgid "Size"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:573
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:605
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Μορφή"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:598
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:630
 msgid "Dashboard"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:648
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:728
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:680
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:760
 msgid "Tactics"
 msgstr ""
 
@@ -1206,27 +1211,27 @@ msgstr ""
 msgid "<span font_desc=\"22\"><b>Title</b></span>"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:129
 msgid "Information"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:154
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:156
 msgid "Competition:"
 msgstr "Διοργάνωση:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:179
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:209
 msgid "Date:"
 msgstr "Ημερομηνία:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:192
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:222
 msgid "Analysis Template:"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:215
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:244
 msgid "Season:"
 msgstr "Περίοδος:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:242
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:271
 msgid "Videos"
 msgstr ""
 
@@ -1296,15 +1301,15 @@ msgstr "Επαναφορά"
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
 msgstr "Άκυρο περιεχόμενο. Οι περίοδοι πρέπει να διαχωρίζονται με κενά (\"1 2 ex1 ex2\")"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:266
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:272
 msgid "Timeline"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:268
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:274
 msgid "Analysis dashboard"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:270
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:276
 msgid "Zonal tags viewer"
 msgstr ""
 
@@ -1354,15 +1359,15 @@ msgstr "Χρόνος: "
 msgid "Default"
 msgstr "Προεπιλογή"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:96
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:118
 msgid "Select folder..."
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:98
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:120
 msgid "Select file..."
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:122
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:141
 msgid "Output folder"
 msgstr ""
 
@@ -1383,7 +1388,7 @@ msgid "Do you want to delete player: "
 msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:561
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:566
 msgid "Could not parse tactics string"
 msgstr ""
 
@@ -1544,17 +1549,17 @@ msgid "The Project has been edited, do you want to save the changes?"
 msgstr "Το έργο έχει επεξεργαστεί, θέλετε να αποθηκεύσετε τις αλλαγές;"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:211
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:218
 msgid "This Project is actually in use."
 msgstr "Το έργο αυτό χρησιμοποιείται ήδη."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:212
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:219
 msgid "Close it first to allow its removal from the database"
 msgstr "Κλείστε το πρώτα για να επιτρέψετε την αφαίρεσή του από τη βάση δεδομένων"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:215
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:222
 msgid "Do you really want to delete:"
 msgstr "Θέλετε πραγματικά να διαγράψετε:"
 
@@ -1619,17 +1624,17 @@ msgstr "Αδύνατη η διαγραφή του 'προεπιλεγμένου'
 msgid "Do you really want to delete the template: "
 msgstr "Θέλετε πραγματικά να διαγράψετε το πρότυπο: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:146
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:148
 msgid "Add file"
 msgstr "Προσθήκη αρχείου"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:178
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:119
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:179
 msgid "Please, select a video file."
 msgstr "Παρακαλώ, επιλέξτε ένα αρχείο βίντεο."
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:110
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:181
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:121
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:182
 msgid "Please, select an output directory."
 msgstr "Παρακαλώ, επιλέξτε έναν κατάλογο εξόδου."
 
@@ -1637,20 +1642,20 @@ msgstr "Παρακαλώ, επιλέξτε έναν κατάλογο εξόδο�
 msgid "The playlist you want to render is empty."
 msgstr "Ο κατάλογος αναπαραγωγής που θέλετε να αποδώσετε είναι κενός."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:406
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:407
 msgid "Select video files"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:414
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:415
 msgid "Some video files are missing for this project"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:417
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:418
 msgid "Some video files are still missing for this project."
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:421
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:322
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:422
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:324
 msgid "You need at least 1 video file for the main angle"
 msgstr ""
 
@@ -1695,31 +1700,31 @@ msgstr ""
 msgid "Drawings"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:247
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:249
 msgid "Unknown"
 msgstr "Άγνωστο"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
 msgid "PROJECT TYPE"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
 msgid "PROJECT PROPERTIES"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:312
 msgid "PERIODS SYNCHRONIZATION"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:334
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:336
 msgid "No output video file"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:342
 msgid "No input URI"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:453
 msgid "No capture devices found in the system"
 msgstr ""
 
@@ -1751,11 +1756,11 @@ msgstr "Ζωντανή ανάλυση"
 msgid "Plugins"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:71
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:72
 msgid "PROJECTS MANAGER"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:181
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:188
 msgid "Export project"
 msgstr ""
 
@@ -2288,11 +2293,11 @@ msgstr ""
 msgid "Video capture is stopped"
 msgstr ""
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:204
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:203
 msgid "Playlist name:"
 msgstr ""
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:205
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:204
 msgid "New playlist"
 msgstr "Νέος κατάλογος αναπαραγωγής"
 
@@ -2366,14 +2371,14 @@ msgstr "Αποθήκευση έργου"
 msgid "Plugin not found"
 msgstr ""
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:177
+#: ../LongoMatch.Services/Services/ToolsManager.cs:180
 msgid "A project already exists for this ID:"
 msgstr ""
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:179
+#: ../LongoMatch.Services/Services/ToolsManager.cs:182
 msgid "Do you want to overwrite it?"
 msgstr "Θέλετε να αντικατασταθεί;"
 
-#: ../LongoMatch.Services/Services/ToolsManager.cs:189
+#: ../LongoMatch.Services/Services/ToolsManager.cs:192
 msgid "Error importing project:"
 msgstr "Σφάλμα κατά την εισαγωγή του έργου:"
