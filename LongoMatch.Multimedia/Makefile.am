@@ -31,5 +31,4 @@ DLLCONFIG = LongoMatch.Multimedia.dll.config
 
 include $(top_srcdir)/build/build.mk
 
-EXTRA_DIST += LongoMatch.Multimedia.dll.config
 CLEANFILES += $(DLLCONFIG)
