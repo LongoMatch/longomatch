@@ -129,6 +129,14 @@ namespace LongoMatch.Plugins.Stats
 					valueAxis.MajorStep = 50;
 				}
             }
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.Config.Style.PaletteText.A,
+				LongoMatch.Config.Style.PaletteText.R,
+				LongoMatch.Config.Style.PaletteText.G,
+				LongoMatch.Config.Style.PaletteText.B);
+			model.TextColor = text_color;
+			model.TitleColor = text_color;
+			model.SubtitleColor = text_color;
+
             return model;
 		}
 		
@@ -154,6 +162,13 @@ namespace LongoMatch.Plugins.Stats
 			} else if (team == Team.VISITOR) {
 				ps.Title = AwayName;
 			}
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.Config.Style.PaletteText.A,
+				LongoMatch.Config.Style.PaletteText.R,
+				LongoMatch.Config.Style.PaletteText.G,
+				LongoMatch.Config.Style.PaletteText.B);
+			model.TextColor = text_color;
+			model.TitleColor = text_color;
+			model.SubtitleColor = text_color;
             model.Series.Add(ps);
             return model;
 		}
