@@ -52,8 +52,7 @@ namespace LongoMatch.Video.Utils
 
 		public FramesSeriesCapturer (MediaFileSet fileSet, TimelineEvent evt, uint interval, string outputDir)
 		{
-			MultimediaFactory mf= new MultimediaFactory();
-			this.capturer=mf.GetFramesCapturer();
+			this.capturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			this.fileSet = fileSet;
 			this.evt = evt;
 			this.start= evt.Start;

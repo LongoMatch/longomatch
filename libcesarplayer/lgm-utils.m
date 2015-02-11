@@ -24,6 +24,14 @@
 
 #include "lgm-utils.h"
 
+#if defined (GDK_WINDOWING_X11)
+#include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
+#endif
+
 GstAutoplugSelectResult
 lgm_filter_video_decoders (GstElement * object, GstPad * arg0,
     GstCaps * arg1, GstElementFactory * arg2, gpointer user_data)
