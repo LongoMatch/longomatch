@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Component
 
 			var obj = Model.GetValue (iter, 0);
 			if (obj is IPlaylistElement) {
-				Model.IterParent (out parent, selectedIter);
+				Model.IterParent (out parent, iter);
 				element = obj as IPlaylistElement;
 				playlist = Model.GetValue (parent, 0) as Playlist;
 			} else {
@@ -258,17 +258,29 @@ namespace LongoMatch.Gui.Component
 				if (dragSourceElement == null) {
 					project.Playlists.Remove (dragSourcePlaylist);
 					project.Playlists.Insert (path.Indices [0], dragSourcePlaylist);
+					if (pos == TreeViewDropPosition.Before ||
+					    pos == TreeViewDropPosition.IntoOrBefore) {
+						(Model as TreeStore).MoveBefore (selectedIter, iter);
+					} else {
+						(Model as TreeStore).MoveAfter (selectedIter, iter);
+					}
 				} else {
+					/* For elements moves can happen between 2 playlists and Move{Before|After}
+					 * requires iter to have the same parent */
+					TreeIter newIter;
+					if (pos == TreeViewDropPosition.Before ||
+					    pos == TreeViewDropPosition.IntoOrBefore) {
+						newIter = (Model as TreeStore).InsertNodeBefore (iter);
+					} else {
+						newIter = (Model as TreeStore).InsertNodeAfter (iter);
+					}
+					Model.SetValue (newIter, 0, dragSourceElement);
+					(Model as TreeStore).Remove (ref selectedIter);
+					
 					dragSourcePlaylist.Elements.Remove (dragSourceElement);
 					destPlaylist.Elements.Insert (path.Indices [1], dragSourceElement);
 				}
 				
-				if (pos == TreeViewDropPosition.Before ||
-					pos == TreeViewDropPosition.IntoOrBefore) {
-					(Model as TreeStore).MoveBefore (selectedIter, iter);
-				} else {
-					(Model as TreeStore).MoveAfter (selectedIter, iter);
-				}
 			}
 			Gtk.Drag.Finish (context, true, false, time);
 		}
@@ -289,14 +301,17 @@ namespace LongoMatch.Gui.Component
 			TreePath path;
 			TreeViewDropPosition pos;
 			TreeIter iter;
+			IPlaylistElement element;
+			Playlist playlist;
 			
 			if (GetDestRowAtPos (x, y, out path, out pos)) {
 				Model.GetIter (out iter, path);
-				var el = Model.GetValue (iter, 0);
+				
+				FillElementAndPlaylist (iter, out playlist, out element);
 
 				/* Drag a playlist*/
 				if (dragSourceElement == null) {
-					if (el is Playlist) {
+					if (element == null) {
 						DisableDragInto (path, context, time, pos);
 						return true;
 					} else {
@@ -305,7 +320,7 @@ namespace LongoMatch.Gui.Component
 				}
 				/* Drag an element */
 				else {
-					if (el is IPlaylistElement) {
+					if (element != null) {
 						DisableDragInto (path, context, time, pos);
 						return true;
 					} else {
