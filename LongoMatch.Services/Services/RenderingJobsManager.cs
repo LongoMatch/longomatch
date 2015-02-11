@@ -264,6 +264,9 @@ namespace LongoMatch.Services
 					continue;
 				}
 				string image_path = CreateStillImage (file.FilePath, fd);
+				if (image_path == null) {
+					continue;
+				}
 				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 				                       fd.Render.MSeconds - lastTS.MSeconds,
 				                       element.Rate, play.Name, file.HasAudio);
@@ -285,6 +288,11 @@ namespace LongoMatch.Services
 			capturer.Open (filename);
 			frame = capturer.GetFrame (drawing.Render, true);
 			capturer.Dispose ();
+			if (frame == null) {
+				Log.Error (String.Format ("Could not get frame for file {0} at pos {1}",
+				                          filename, drawing.Render.ToMSecondsString ()));
+				return null;
+			}
 			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
 			final_image.Save (path);
 			return path;
