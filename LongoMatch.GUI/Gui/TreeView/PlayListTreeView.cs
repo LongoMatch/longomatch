@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Component
 		TreePath pathClicked;
 		Playlist dragSourcePlaylist;
 		IPlaylistElement dragSourceElement;
+		bool dragStarted;
 
 		public PlayListTreeView ()
 		{
@@ -320,12 +321,13 @@ namespace LongoMatch.Gui.Component
 			Selection.GetSelected (out selectedIter);
 			FillElementAndPlaylist (selectedIter, out dragSourcePlaylist,
 			                        out dragSourceElement);
+			dragStarted = true;
 			base.OnDragBegin (context);
 		}
 
 		protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
 		{
-			if (pathClicked != null) {
+			if (pathClicked != null && !dragStarted) {
 				if (GetRowExpanded (pathClicked)) {
 					CollapseRow (pathClicked);
 				} else {
@@ -334,6 +336,12 @@ namespace LongoMatch.Gui.Component
 				pathClicked = null;
 			}
 			return base.OnButtonReleaseEvent (evnt);
+		}
+		
+		protected override void OnDragEnd (DragContext context)
+		{
+			base.OnDragEnd (context);
+			dragStarted = false;
 		}
 
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
