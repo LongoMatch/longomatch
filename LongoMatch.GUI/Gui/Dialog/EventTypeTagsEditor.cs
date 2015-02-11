@@ -204,16 +204,16 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Button b = new Button ();
 			Alignment a = new Alignment (0.5F, 0.5F, 0F, 0F);
-			Gtk.Image i = new Gtk.Image (Misc.LoadIcon (name, 24));
+			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (b, name, IconSize.Button));
 			a.Add (i);
 			b.Add (a);
 			return b;
 		}
 
-		Button CreateButton (string s, int size)
+		Button CreateButton (string s, IconSize size)
 		{
 			Button b = new Button ();
-			Gtk.Image i = new Gtk.Image (Misc.LoadIcon ("gtk-add", size));
+			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (b, "gtk-add", size));
 			Label l = new Label (s);
 			HBox box = new HBox ();
 			box.PackStart (i, false, false, 5);
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Dialog
 
 		Button CreateAddGroupButton ()
 		{
-			Button b = CreateButton (Catalog.GetString ("Add new group"), 48);
+			Button b = CreateButton (Catalog.GetString ("Add new group"), IconSize.LargeToolbar);
 			b.Clicked += (sender, e) => {
 				AddNewGroup (Catalog.GetString ("New group"), new List<Tag> ());
 			};
@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		Button CreateAddTagButton (TagsGroup g)
 		{
-			Button b = CreateButton (Catalog.GetString ("Add new tag"), 24);
+			Button b = CreateButton (Catalog.GetString ("Add new tag"), IconSize.Button);
 			b.Clicked += (sender, e) => {
 				AddTag (g);
 			};

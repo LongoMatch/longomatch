@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Dialog
 			addbutton1.Clicked += OnAddbuttonClicked;
 			buttonOk.Clicked += OnButtonOkClicked;
 			convertimage.Pixbuf = Misc.LoadIcon ("longomatch-video-converter-big", 64);
-			addimage.Pixbuf = Misc.LoadIcon ("gtk-add", IconSize.Button);
+			addimage.Pixbuf = Misc.LoadStockIcon (addimage, "gtk-add", IconSize.Button);
 			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
 			addbutton1.CanFocus = false;
 			scrolledwindow1.Visible = false;
