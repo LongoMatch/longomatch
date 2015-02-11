@@ -249,9 +249,10 @@ namespace LongoMatch.Gui.Component
 			TreeViewDropPosition pos;
 			Playlist destPlaylist;
 			IPlaylistElement destElement;
+			TreeStore store = Model as TreeStore;
 
 			if (GetDestRowAtPos (x, y, out path, out pos)) {
-				Model.GetIter (out iter, path);
+				store.GetIter (out iter, path);
 				FillElementAndPlaylist (iter, out destPlaylist, out destElement);
 				
 				/* Moving playlists */
@@ -260,25 +261,35 @@ namespace LongoMatch.Gui.Component
 					project.Playlists.Insert (path.Indices [0], dragSourcePlaylist);
 					if (pos == TreeViewDropPosition.Before ||
 					    pos == TreeViewDropPosition.IntoOrBefore) {
-						(Model as TreeStore).MoveBefore (selectedIter, iter);
+						store.MoveBefore (selectedIter, iter);
 					} else {
-						(Model as TreeStore).MoveAfter (selectedIter, iter);
+						store.MoveAfter (selectedIter, iter);
 					}
 				} else {
 					/* For elements moves can happen between 2 playlists and Move{Before|After}
 					 * requires iter to have the same parent */
 					TreeIter newIter;
+					IPlaylistElement srcCurrent, dstCurrent;
+
 					if (pos == TreeViewDropPosition.Before ||
 					    pos == TreeViewDropPosition.IntoOrBefore) {
 						newIter = (Model as TreeStore).InsertNodeBefore (iter);
 					} else {
 						newIter = (Model as TreeStore).InsertNodeAfter (iter);
 					}
-					Model.SetValue (newIter, 0, dragSourceElement);
-					(Model as TreeStore).Remove (ref selectedIter);
+					store.SetValue (newIter, 0, dragSourceElement);
+					store.Remove (ref selectedIter);
+					
+					srcCurrent = dragSourcePlaylist.Selected;
+					dstCurrent = destPlaylist.Selected;
 					
 					dragSourcePlaylist.Elements.Remove (dragSourceElement);
-					destPlaylist.Elements.Insert (path.Indices [1], dragSourceElement);
+					destPlaylist.Elements.Insert (store.GetPath (newIter).Indices [1], dragSourceElement);
+					
+					if (dragSourcePlaylist != destPlaylist) {
+						dragSourcePlaylist.SetActive (srcCurrent);
+					}
+					destPlaylist.SetActive (dstCurrent);
 				}
 				
 			}

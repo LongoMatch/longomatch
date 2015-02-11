@@ -51,6 +51,18 @@ namespace LongoMatch.Core.Store.Playlists
 				return indexSelection;
 			}
 		}
+
+		public IPlaylistElement Selected {
+			get {
+				if (Elements.Count == 0) {
+					return null;
+				}
+				if (indexSelection >= Elements.Count) {
+					indexSelection = 0;
+				}
+				return Elements [indexSelection];
+			}
+		}
 		#endregion
 		#region Public methods
 		public IPlaylistElement Next ()
@@ -103,7 +115,12 @@ namespace LongoMatch.Core.Store.Playlists
 
 		public void SetActive (IPlaylistElement play)
 		{
-			indexSelection = Elements.IndexOf (play);
+			int newIndex;
+			
+			newIndex = Elements.IndexOf (play);
+			if (newIndex >= 0) {
+				indexSelection = Elements.IndexOf (play);
+			}
 		}
 
 		public bool HasNext ()
