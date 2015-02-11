@@ -204,7 +204,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Button b = new Button ();
 			Alignment a = new Alignment (0.5F, 0.5F, 0F, 0F);
-			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (b, name, IconSize.Button));
+			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (this, name, IconSize.Button));
 			a.Add (i);
 			b.Add (a);
 			return b;
@@ -213,7 +213,7 @@ namespace LongoMatch.Gui.Dialog
 		Button CreateButton (string s, IconSize size)
 		{
 			Button b = new Button ();
-			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (b, "gtk-add", size));
+			Gtk.Image i = new Gtk.Image (Misc.LoadStockIcon (this, "gtk-add", size));
 			Label l = new Label (s);
 			HBox box = new HBox ();
 			box.PackStart (i, false, false, 5);
