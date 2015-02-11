@@ -536,14 +536,14 @@ namespace LongoMatch.Video.Player
 		{
 			Image img = null;
 			
-			Seek (pos, accurate, false);
 			Pause ();
+			Seek (pos, accurate, false);
 			for (int i=0; i < 3; i++) {
 				img = GetCurrentFrame (outwidth, outheight);
 				if (img != null) {
 					break;
 				}
-				System.Threading.Thread.Sleep (10);
+				System.Threading.Thread.Sleep (100);
 			}
 			return img;
 		}
