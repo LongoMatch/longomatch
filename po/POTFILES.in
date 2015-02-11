@@ -66,6 +66,7 @@ LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
+LongoMatch.GUI/Gui/Component/PlayListWidget.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectPeriods.cs
@@ -107,6 +108,7 @@ LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
+LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs
 LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
 LongoMatch.GUI.Multimedia/MultimediaToolkit.cs
 LongoMatch.Migration/Core/Category.cs
