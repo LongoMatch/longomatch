@@ -848,12 +848,14 @@ gst_camera_capturer_source_caps (GstCameraCapturer *gcc)
 
   caps = gst_caps_from_string ("video/x-raw-yuv;video/x-raw-rgb;"
       "video/x-dv, systemstream=true");
-  if (gcc->priv->source_width == 0 && gcc->priv->source_height == 0) {
-    return caps;
+  if (gcc->priv->source_width != 0 && gcc->priv->source_height != 0) {
+    gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->source_width,
+        "height", G_TYPE_INT, gcc->priv->source_height, NULL);
   }
-  gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->source_width,
-      "height", G_TYPE_INT, gcc->priv->source_height, "framerate",
-      GST_TYPE_FRACTION, gcc->priv->source_fps_n, gcc->priv->source_fps_d, NULL);
+  if (gcc->priv->source_fps_n != 0 && gcc->priv->source_fps_d != 0) {
+    gst_caps_set_simple (caps, "framerate", GST_TYPE_FRACTION,
+        gcc->priv->source_fps_n, gcc->priv->source_fps_d, NULL);
+  }
   caps_str = gst_caps_to_string (caps);
   GST_INFO_OBJECT (gcc, "Source caps configured to: %s", caps_str);
   g_free (caps_str);

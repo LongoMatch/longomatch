@@ -74,6 +74,9 @@ namespace LongoMatch.Core.Common
 		
 		public override string ToString ()
 		{
+			if (width == 0 && height == 0 && fps_n == 0 && fps_d == 0) {
+				return Catalog.GetString ("Default");
+			}
 			return string.Format ("{0}x{1}@{2}fps", width, height,
 			                      ((double)fps_n/fps_d).ToString ("#.##"));
 		}
