@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-10 23:01+0000\n"
-"PO-Revision-Date: 2015-02-07 10:02+0000\n"
+"POT-Creation-Date: 2015-02-12 00:46+0000\n"
+"PO-Revision-Date: 2015-02-12 10:01+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/longomatch/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../libcesarplayer/lgm-video-player.c:349
+#: ../libcesarplayer/lgm-video-player.c:337
 msgid "Location not found."
 msgstr "Нисам пронашао место."
 
-#: ../libcesarplayer/lgm-video-player.c:352
+#: ../libcesarplayer/lgm-video-player.c:340
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Не могу да отворим место; можда немате овлашћења за отварање датотеке."
 
-#: ../libcesarplayer/lgm-video-player.c:432
+#: ../libcesarplayer/lgm-video-player.c:420
 msgid "Media file could not be played."
 msgstr "Медијска датотека не може бити пуштена."
 
-#: ../libcesarplayer/lgm-video-player.c:931
+#: ../libcesarplayer/lgm-video-player.c:919
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "Нисам успео да направим објекат пуштања Гстримера. Проверите инсталацију Гстримера."
 
-#: ../libcesarplayer/lgm-video-player.c:969
+#: ../libcesarplayer/lgm-video-player.c:957
 #, c-format
 msgid "No valid sink found."
 msgstr "Нисам пронашао исправан усклађивач."
@@ -104,6 +104,7 @@ msgid "Delete selected event"
 msgstr "Обришите изабрани догађај"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:56
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:108
 msgid "Draw frame"
 msgstr "Нацртајте кадар"
 
@@ -132,6 +133,7 @@ msgid "Jump forward"
 msgstr "Премотајте унапред"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:63
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:107
 msgid "Close loaded event"
 msgstr "Затворите учитани догађај"
 
@@ -179,11 +181,15 @@ msgstr "Смањите брзину пуштања"
 msgid "Pause/Resume capture clock"
 msgstr "Паузирајте/наставите сат снимања"
 
+#. Force tooltips to be translatable as there seems to be a bug in stetic
+#. code generation for translatable tooltips.
 #: ../LongoMatch.Core/Common/Hotkeys.cs:76
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:68
 msgid "Start recording period"
 msgstr "Покрените период снимања"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:77
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:69
 msgid "Stop recording period"
 msgstr "Зауставите период снимања"
 
@@ -477,17 +483,17 @@ msgid "Group"
 msgstr "Група"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:297
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:298
 msgid "page1"
 msgstr "страница1"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:851
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:883
 msgid "page2"
 msgstr "страница2"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:864
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:896
 msgid "page3"
 msgstr "страница3"
 
@@ -550,19 +556,19 @@ msgid ""
 "(Requires a powerful CPU)"
 msgstr "Самостално исцртај нове догађаје\n(захтева снажан процесор)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:58
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:59
 msgid "<b>Main camera angle</b>"
 msgstr "<b>Угао главне камере</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:110
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:112
 msgid "<b>Angle 2</b>"
 msgstr "<b>Угао 2</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:167
 msgid "<b>Angle 3</b>"
 msgstr "<b>Угао 3</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:218
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:222
 msgid "<b>Angle 4</b>"
 msgstr "<b>Угао 4</b>"
 
@@ -581,8 +587,8 @@ msgstr "  Пропусници  "
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:116
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:77
 #: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:190
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:180
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:143
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:181
 msgid "Name:"
 msgstr "Назив:"
 
@@ -729,7 +735,7 @@ msgstr "Запис кодирања"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:595
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:622
 msgid "Quality"
 msgstr "Квалитет"
 
@@ -859,6 +865,7 @@ msgid "Return"
 msgstr "Поврати"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:104
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:73
 msgid "Cancel capture"
 msgstr "Откажи снимање"
 
@@ -1134,71 +1141,75 @@ msgstr "Прикажи статистику пројекта"
 msgid "Migration Tool"
 msgstr "Алат за премештање"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:165
 msgid "Video file"
 msgstr "Датотека снимка"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:203
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:204
 msgid "Capture device"
 msgstr "Уређај за снимање"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:242
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:243
 msgid "Fake capture device"
 msgstr "Лажни уређај снимања"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:281
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:282
 msgid "Ip camera"
 msgstr "Ип камера"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:334
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:335
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Такмичење"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:345
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:346
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Датум"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:370
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:371
 msgid "Description"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:410
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:411
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Сезона"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:479
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:485
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Излазна датотека"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:530
-msgid "Device"
-msgstr "Уређај"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:537
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:515
 msgid "URL"
 msgstr "Адреса"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:559
-msgid "Size"
-msgstr "Величина"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:534
+msgid "Device"
+msgstr "Уређај"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:605
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
+msgid "Device format"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:603
+msgid "Output size"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:633
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Запис"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:630
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:660
 msgid "Dashboard"
 msgstr "Радна табла"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:680
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:760
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:710
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:791
 msgid "Tactics"
 msgstr "Распоред"
 
@@ -1334,11 +1345,12 @@ msgstr "Радна табла неизмењених димензија"
 
 #: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:390
 #: ../LongoMatch.GUI/Gui/Component/Timeline.cs:217
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:459
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:478
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:102
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:133
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:159
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:194
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:61
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:160
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:195
 msgid "Delete"
 msgstr "Обриши"
 
@@ -1366,6 +1378,16 @@ msgstr "Изаберите датотеку..."
 msgid "Output folder"
 msgstr "Фасцикла резултата"
 
+#. Force tooltips to be translatable as there seems to be a bug in stetic
+#. code generation for translatable tooltips.
+#: ../LongoMatch.GUI/Gui/Component/PlayListWidget.cs:45
+msgid "Create a new playlist"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/PlayListWidget.cs:46
+msgid "Export the playlist to new video file"
+msgstr ""
+
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:139
 msgid "Categories filter"
 msgstr "Пропусник категорија"
@@ -1383,7 +1405,7 @@ msgid "Do you want to delete player: "
 msgstr "Да ли желите да обришете играча: "
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:566
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:580
 msgid "Could not parse tactics string"
 msgstr "Не могу да обрадим ниску тактике"
 
@@ -1470,28 +1492,91 @@ msgstr "Стварање резерве је успело"
 msgid "Could not create backup"
 msgstr "Не могу да направим резеру"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:220
+#. Force tooltips to be translatable as there seems to be a bug in stetic
+#. code generation for translatable tooltips.
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:89
+msgid "Selection tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:90
+msgid "Rubber tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:91
+msgid "Pencil tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:92
+msgid "Text tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:93
+msgid "Line tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:94
+msgid "Cross tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:95
+msgid "Rectangle tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:96
+msgid "Ellipse tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:97
+msgid "Filled rectangle tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:98
+msgid "Filled ellipse tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:99
+msgid "Player tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:100
+msgid "Index tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:101
+msgid "Angle tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:102
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:103
+msgid "Change the line style"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:104
+msgid "Clear all drawings"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:239
 msgid "Text"
 msgstr "Текст"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:229
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:248
 msgid "Select player"
 msgstr "Изабери играча"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:290
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:309
 msgid "Do you want to clear the drawing?"
 msgstr "Да ли желите да очистите нацрт?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:383
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:402
 msgid "Save File as..."
 msgstr "Сачувај датотеку као..."
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:464
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:483
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:132
 msgid "Edit"
 msgstr "Уреди"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:475
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:494
 msgid "Do you want to close the current drawing?"
 msgstr "Да ли желите да затворите текући нацрт?"
 
@@ -1544,17 +1629,17 @@ msgid "The Project has been edited, do you want to save the changes?"
 msgstr "Пројекат је измењен, да ли желите да сачувате измене?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:218
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:225
 msgid "This Project is actually in use."
 msgstr "Овај пројекат је већ у употреби."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:219
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:226
 msgid "Close it first to allow its removal from the database"
 msgstr "Прво га затворите да бисте могли да га уклоните из базе података"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:222
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:229
 msgid "Do you really want to delete:"
 msgstr "Да ли заиста желите да обришете:"
 
@@ -1650,7 +1735,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Неке датотеке снимака још увек недостају за овај пројекат."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:422
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:324
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:341
 msgid "You need at least 1 video file for the main angle"
 msgstr "Потребна вам је барем 1 датотека снимка за главни угао"
 
@@ -1695,31 +1780,31 @@ msgstr "Премести у"
 msgid "Drawings"
 msgstr "Цртежи"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:249
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:263
 msgid "Unknown"
 msgstr "Непознато"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:308
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
 msgid "PROJECT TYPE"
 msgstr "ВРСТА ПРОЈЕКТА"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:310
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:327
 msgid "PROJECT PROPERTIES"
 msgstr "СВОЈСТВА ПРОЈЕКТА"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:312
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:329
 msgid "PERIODS SYNCHRONIZATION"
 msgstr "УСКЛАЂИВАЊЕ ПОЛУВРЕМЕНА"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:336
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:353
 msgid "No output video file"
 msgstr "Нема излазне датотеке снимка"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:342
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:359
 msgid "No input URI"
 msgstr "Нема улазне путање"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:453
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:467
 msgid "No capture devices found in the system"
 msgstr "Нисам пронашао уређај за снимање на систему"
 
@@ -1751,11 +1836,26 @@ msgstr "Анализа уживо"
 msgid "Plugins"
 msgstr "Прикључци"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:72
+#. Force tooltips to be translatable as there seems to be a bug in stetic
+#. code generation for translatable tooltips.
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:58
+msgid "Save"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:59
+msgid "Export"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:60
+#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
+msgid "Open"
+msgstr "Отвори"
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:79
 msgid "PROJECTS MANAGER"
 msgstr "УПРАВНИК ПРОЈЕКТА"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:188
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:195
 msgid "Export project"
 msgstr "Извези пројекат"
 
@@ -1907,10 +2007,6 @@ msgstr "Већ постоји екипа са истим називом"
 msgid "New"
 msgstr "Ново"
 
-#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
-msgid "Open"
-msgstr "Отвори"
-
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:38
 msgid "Import"
 msgstr "Увези"
@@ -1954,28 +2050,28 @@ msgstr "Изабери све"
 msgid "Unselect all"
 msgstr "Поништи избор"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:121
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:122
 msgid "External video"
 msgstr "Спољни снимак"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:124
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:125
 msgid "External image"
 msgstr "Спољна слика"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:178
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:179
 msgid "Edit name"
 msgstr "Уреди назив"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:151
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:152
 msgid "Insert before"
 msgstr "Уметни пре"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:155
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:156
 msgid "Insert after"
 msgstr "Уметни после"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:188
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:189
 msgid "Render"
 msgstr "Исцртај"
 
@@ -2058,31 +2154,87 @@ msgstr "Понови"
 msgid "Live"
 msgstr "Уживо"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:178
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:70
+msgid "Pause clock"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:71
+msgid "Resume clock"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:72
+#: ../LongoMatch.Services/Services/ToolsManager.cs:110
+msgid "Save project"
+msgstr "Сачувај пројекат"
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:74
+msgid "Delete event"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:75
+msgid "Replay event"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:190
 msgid "Period recording already started"
 msgstr "Снимање полувремена је већ почело"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:212
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:234
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:249
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:224
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:246
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:261
 msgid "Period recording not started"
 msgstr "Снимање полувремена није почело"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:301
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:313
 msgid "Do you want to finish the current capture?"
 msgstr "Да ли желите да завршите текуће снимање?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:309
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:321
 msgid "Do you want to close and cancel the current capture?"
 msgstr "Да ли желите да затворите и откажете текуће снимање?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:421
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:433
 msgid "Device disconnected. The capture will be paused"
 msgstr "Уређај је искључен. Снимање ће бити паузирано"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:424
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:436
 msgid "Device reconnected. Do you want to restart the capture?"
 msgstr "Уређај је поново прикључен. Да ли желите поново да покренете снимање?"
+
+#. Force tooltips to be translatable as there seems to be a bug in stetic
+#. code generation for translatable tooltips.
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:106
+msgid "Playback speed"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:109
+msgid "Play"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:110
+msgid "Pause"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:111
+msgid "Previous"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:112
+msgid "Next"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:113
+msgid ""
+"Jump in seconds. Hold the Shift key with the direction keys to activate it."
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:114
+msgid "Volume"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:115
+msgid "Detach window"
+msgstr ""
 
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
@@ -2327,23 +2479,23 @@ msgstr "Дошло је до следеће грешке а текуће сни�
 msgid "Error rendering job: "
 msgstr "Грешка исцртавања посла: "
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:324
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:332
 msgid "Rendering"
 msgstr "Исцртавање"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:330
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:338
 msgid "Rendering queue"
 msgstr "Ред исцртавања"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:331
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:339
 msgid "Pending"
 msgstr "На чекању"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:345
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:353
 msgid "An error has occurred in the video editor."
 msgstr "Дошло је до грешке у уређивачу снимака."
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:346
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:354
 msgid "Please, try again."
 msgstr "Пробајте опет."
 
@@ -2357,10 +2509,6 @@ msgstr "Већ постоји шаблон са називом: "
 #: ../LongoMatch.Services/Services/ToolsManager.cs:146
 msgid "Import project"
 msgstr "Увезите пројекат"
-
-#: ../LongoMatch.Services/Services/ToolsManager.cs:110
-msgid "Save project"
-msgstr "Сачувај пројекат"
 
 #: ../LongoMatch.Services/Services/ToolsManager.cs:159
 msgid "Plugin not found"
