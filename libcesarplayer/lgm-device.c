@@ -154,17 +154,11 @@ lgm_device_fixate_int_value (const GValue *val)
 
 static void
 lgm_device_add_format (GHashTable *table, int width, int height,
-    const GValue *val)
+    gint fps_n, gint fps_d)
 {
   LgmDeviceVideoFormat * format;
-  gint fps_n, fps_d;
   gchar *format_str;
 
-  fps_n = gst_value_get_fraction_numerator (val);
-  fps_d = gst_value_get_fraction_denominator (val);
-  if (fps_n == 0) {
-    fps_d = 0;
-  }
   format = lgm_device_video_format_new (width, height, fps_n, fps_d);
   format_str = lgm_device_video_format_to_string (format);
   if (!g_hash_table_contains(table, format_str)) {
@@ -174,6 +168,20 @@ lgm_device_add_format (GHashTable *table, int width, int height,
     g_free (format_str);
     lgm_device_video_format_free (format);
   }
+}
+
+static void
+lgm_device_add_format_from_fps_val (GHashTable *table, int width, int height,
+    const GValue *val)
+{
+  gint fps_n, fps_d;
+
+  fps_n = gst_value_get_fraction_numerator (val);
+  fps_d = gst_value_get_fraction_denominator (val);
+  if (fps_n == 0) {
+    fps_d = 0;
+  }
+  lgm_device_add_format (table, width, height, fps_n, fps_d);
 }
 
 static void
@@ -192,16 +200,16 @@ lgm_device_parse_structure (GstStructure *s, GHashTable *table)
 
   val = gst_structure_get_value (s, "framerate");
   if (G_VALUE_TYPE (val) == GST_TYPE_FRACTION) {
-    lgm_device_add_format (table, width, height, val);
+    lgm_device_add_format_from_fps_val (table, width, height, val);
   } else if (G_VALUE_TYPE (val) == GST_TYPE_FRACTION_RANGE) {
-    GValue *fr_val;
+    const GValue *fr_val;
 
-    lgm_device_add_format (table, width, height,
+    lgm_device_add_format_from_fps_val (table, width, height,
         gst_value_get_fraction_range_min (val));
     /* For sources returning template caps set framerate to 0/0 */
     fr_val = gst_value_get_fraction_range_min (val);
     if (!gst_value_get_fraction_numerator (fr_val) == 0) {
-      lgm_device_add_format (table, width, height,
+      lgm_device_add_format_from_fps_val (table, width, height,
           gst_value_get_fraction_range_max (val));
     }
   } else if (G_VALUE_TYPE (val) == GST_TYPE_ARRAY) {
@@ -210,7 +218,7 @@ lgm_device_parse_structure (GstStructure *s, GHashTable *table)
     len = gst_value_array_get_size (val);
     for (n = 0; n < len; n++) {
       const GValue *kid = gst_value_array_get_value (val, n);
-      lgm_device_add_format (table, width, height, kid);
+      lgm_device_add_format_from_fps_val (table, width, height, kid);
     }
   } else if (G_VALUE_TYPE (val) == GST_TYPE_LIST) {
     guint n, len;
@@ -218,7 +226,7 @@ lgm_device_parse_structure (GstStructure *s, GHashTable *table)
     len = gst_value_list_get_size (val);
     for (n = 0; n < len; n++) {
       const GValue *kid = gst_value_list_get_value (val, n);
-      lgm_device_add_format (table, width, height, kid);
+      lgm_device_add_format_from_fps_val (table, width, height, kid);
     }
   }
 }
@@ -254,6 +262,8 @@ lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
         gst_structure_has_name (s, "video/x-raw-rgb") ||
         gst_structure_has_name (s, "video/x-dv")) {
       lgm_device_parse_structure (s, table);
+    } else if (gst_structure_has_name (s, "video/x-dv")) {
+      lgm_device_add_format (table, 0, 0, 0, 0);
     }
   }
   device->formats = g_hash_table_get_values (table);
