@@ -2,6 +2,7 @@
 libcesarplayer/lgm-video-player.c
 LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
+LongoMatch.Core/Common/Device.cs
 LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Hotkeys.cs
 LongoMatch.Core/Common/VideoStandards.cs
