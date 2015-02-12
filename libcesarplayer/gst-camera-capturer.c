@@ -90,6 +90,7 @@ struct GstCameraCapturerPrivate
   GstElement *preview_bin;
   GstElement *encoder_bin;
   GstElement *source;
+  GstElement *source_filter;
   GstElement *video_enc;
   GstElement *audio_enc;
   GstElement *muxer;
@@ -1030,6 +1031,20 @@ gst_camera_capturer_create_uri_source (GstCameraCapturer * gcc, GError ** err)
 }
 
 static gboolean
+gcc_source_caps_set (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
+{
+  GstStructure *s;
+  GstCaps *caps;
+
+  /* We only use the caps filter to select an output from the device
+   * but the image size can change and we need to be able to adapt
+   * the filter to these changes (like a camera going from 4:3 to 16:9)
+   */
+  caps = gst_pad_get_negotiated_caps (pad);
+  g_object_set (gcc->priv->source_filter, "caps", caps, NULL);
+}
+
+static gboolean
 gst_camera_capturer_create_source (GstCameraCapturer *gcc,
     GError ** err)
 {
@@ -1060,10 +1075,11 @@ gst_camera_capturer_create_source (GstCameraCapturer *gcc,
    * returns something sensible. */
   gst_element_set_state (source, GST_STATE_READY);
 
-  /* Some capture devices like the Extremecap U3 don't downscale correctly.
-   * Choose the highest resolution and downscale later if needed */
   source_pad = gst_element_get_static_pad (source, "src");
   source_caps = gst_pad_get_caps_reffed (source_pad);
+
+  g_signal_connect (source_pad, "notify::caps",
+      G_CALLBACK (gcc_source_caps_set), gcc);
 
   if (gst_caps_get_size (source_caps) != 0) {
     s = gst_caps_get_structure (source_caps, 0);
@@ -1076,7 +1092,7 @@ gst_camera_capturer_create_source (GstCameraCapturer *gcc,
     GstElement *filter;
     GstCaps *link_caps;
 
-    filter = gst_element_factory_make ("capsfilter", NULL);
+    filter = gcc->priv->source_filter = gst_element_factory_make ("capsfilter", NULL);
     gst_bin_add (GST_BIN (bin), filter);
     gst_element_link (source, filter);
     link_caps = gst_camera_capturer_source_caps (gcc);
