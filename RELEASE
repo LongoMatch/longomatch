@@ -1,31 +1,39 @@
-LongoMatch-1.0.1 "Alpes"
+LongoMatch-1.0.2 "Field Hockey"
 -----------------------------
 
 The LongoMatch team is happy to announce the second release in the
 stable 1.0 series.
 
-Due to its dependency on GStreamer, We strongly recommend to have
-all official latest GStreamer libraries and plugins installed for the best user
-experience.
+* Features
+	* Added Chinese, Swedish and Russian languages.
+	* Add a new “Details” entry in the projects description.
+	* Add support for DV capturers in OS X.
+	* Add a new option to rescan the database.
 
 * Bugs fixed
-	* Add support for MPEG-TS to MP4 remuxing when supported
-	* Add Common tags to the filters
-	* Make treeviews fold/unfold with a single click in the cell instead of the expander
-	* Make projects serialization more atomic
-	* Make the seek bar behave correctly with single clicks
-	* Include team, player, score and event time in the CSV
-	* Fix template namewhen copying system templates
-	* Fix events filtering in projects with players not playing
-	* Fix capture at high resolutions and simplify encoding size options
-	* Fix Score and penalty buttons in manual mode
-	* Fix deadlock in files discovery
-	* Fix error handling with live capture
-	* Fix exception in stats with substitutions
-	* Fix changing the UI language in Windows
-	* Fix aspect ratio in live capture
-	* Fix teams mirroring
-	* Fix date display in the projects manager
+	* Fix support for blackmagic capturers.
+	* Improve OS X integration the Apple menu bar and the Dock.
+	* Fix fullscreen hotkey in OS X.
+	* Fix events sorting after editing the details.
+	* Set the correct teams when opening a fake capture project.
+	* Fix infinite errors loop in the editor and the capturer.
+	* Don’t persist dashboard changes if it’s not saved.
+	* Use the correct style in pie charts and histograms.
+	* Translate tooltips.
+	* Update players tagger after a substitution change.
+	* Fix playlists elements reordering.
+	* Fix setting rate for events at >1x.
+	* Fix loading of stock icons.
+	* Fix frames capture  in open source version.
+	* Remove audio for events exported at rates != 1.
+	* Fix projects description corruption.
+	* Fix tagging players using a key pad.
+	* Propose better filenames in the file media chooser.
+	* Fix deletion of the event name in the event editor.
+	* Use the current lineup in the event editor.
+	* Fix paths for automatic export of events in live.
+	* Fix DB backups.
+
 
 * Requirements
 
@@ -38,8 +46,14 @@ experience.
  * db40 >= 7.4 (optional for the migration tool)
 
 * Download
-  LongoMatch source tarballs are available on gnome FTP:
+
+  LongoMatch source tarballs are available at:
    http://ftp.gnome.org/pub/GNOME/sources/longomatch/1.0/
+
+  Binaries are available at:
+   http://ftp.gnome.org/pub/GNOME/binaries/linux/longomatch/
+   http://ftp.gnome.org/pub/GNOME/binaries/mac/longomatch/
+   http://ftp.gnome.org/pub/GNOME/binaries/win32/longomatch/
 
   See the website for distribution-specific packages.
 

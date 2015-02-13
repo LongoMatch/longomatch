@@ -1,3 +1,38 @@
+===== LongoMatch 1.0.2 "Field Hockey" =====
+
+	== Features ==
+
+	* Added Chinese, Swedish and Russian languages.
+	* Add a new “Details” entry in the projects description.
+	* Add support for DV capturers in OS X.
+	* Add a new option to rescan the database.
+
+	== Bugs Fixed ==
+
+	* Fix support for blackmagic capturers.
+	* Improve OS X integration the Apple menu bar and the Dock.
+	* Fix fullscreen hotkey in OS X.
+	* Fix events sorting after editing the details.
+	* Set the correct teams when opening a fake capture project.
+	* Fix infinite errors loop in the editor and the capturer.
+	* Don’t persist dashboard changes if it’s not saved.
+	* Use the correct style in pie charts and histograms.
+	* Translate tooltips.
+	* Update players tagger after a substitution change.
+	* Fix playlists elements reordering.
+	* Fix setting rate for events at >1x.
+	* Fix loading of stock icons.
+	* Fix frames capture  in open source version.
+	* Remove audio for events exported at rates != 1.
+	* Fix projects description corruption.
+	* Fix tagging players using a key pad.
+	* Propose better filenames in the file media chooser.
+	* Fix deletion of the event name in the event editor.
+	* Use the current lineup in the event editor.
+	* Fix paths for automatic export of events in live.
+	* Fix DB backups.
+
+
 ===== LongoMatch 1.0.1 "Alpes" =====
 
 	== Bugs Fixed ==
