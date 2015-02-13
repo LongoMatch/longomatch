@@ -109,7 +109,7 @@ namespace LongoMatch.DB
 			backupDir = new DirectoryInfo (dbDirPath + ".backup");
 			try {
 				if (backupDir.Exists) {
-					backupDir.Delete ();
+					backupDir.Delete (true);
 				}
 				backupDir.Create ();
 				files = dbDir.GetFiles ();
@@ -120,7 +120,8 @@ namespace LongoMatch.DB
 				projectsDB.LastBackup = DateTime.UtcNow;
 				projectsDB.Save ();
 				return true;
-			} catch {
+			} catch (Exception ex) {
+				Log.Exception (ex);
 				return false;
 			}
 		}
