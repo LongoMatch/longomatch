@@ -531,7 +531,7 @@ lgm_video_player_play (LgmVideoPlayer * lvp)
 
 gboolean
 lgm_video_player_seek_time (LgmVideoPlayer * lvp, gint64 time,
-    gboolean accurate)
+    gboolean accurate, gboolean synchronous)
 {
   guint32 flags;
 
@@ -548,10 +548,13 @@ lgm_video_player_seek_time (LgmVideoPlayer * lvp, gint64 time,
     flags |= GST_SEEK_FLAG_KEY_UNIT;
   }
 
-  got_time_tick (lvp->priv->play, time, lvp);
   gst_element_seek (lvp->priv->play, lvp->priv->rate,
       GST_FORMAT_TIME, flags, GST_SEEK_TYPE_SET, time,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+  if (synchronous) {
+    gst_element_get_state (lvp->priv->play, NULL, NULL, 5 * GST_SECOND);
+  }
+  got_time_tick (lvp->priv->play, time, lvp);
   return TRUE;
 }
 
@@ -570,7 +573,7 @@ lgm_video_player_set_rate (LgmVideoPlayer * lvp, gdouble rate)
 
   GST_DEBUG ("Setting rate to %f", rate);
   lvp->priv->rate = rate;
-  lgm_video_player_seek_time (lvp, pos, TRUE);
+  lgm_video_player_seek_time (lvp, pos, TRUE, FALSE);
 
   return TRUE;
 }
@@ -627,7 +630,7 @@ lgm_video_player_seek_to_previous_frame (LgmVideoPlayer * lvp)
   if (lgm_video_player_is_playing (lvp))
     lgm_video_player_pause (lvp);
 
-  lgm_video_player_seek_time (lvp, final_pos, TRUE);
+  lgm_video_player_seek_time (lvp, final_pos, TRUE, FALSE);
   got_time_tick (GST_ELEMENT (lvp->priv->play), pos, lvp);
   lgm_video_player_expose (lvp);
 

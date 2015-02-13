@@ -66,7 +66,7 @@ namespace LongoMatch.Video.Player
 		static extern bool lgm_video_player_seek (IntPtr raw, double position);
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool lgm_video_player_seek_time (IntPtr raw, long time, bool accurate);
+		static extern bool lgm_video_player_seek_time (IntPtr raw, long time, bool accurate, bool synchronous);
 
 		[DllImport("libcesarplayer.dll")]
 		static extern bool lgm_video_player_seek_to_next_frame (IntPtr raw);
@@ -434,7 +434,7 @@ namespace LongoMatch.Video.Player
 
 		public bool Seek (Time time, bool accurate, bool synchronous)
 		{
-			return lgm_video_player_seek_time (Handle, time.NSeconds, accurate);
+			return lgm_video_player_seek_time (Handle, time.NSeconds, accurate, synchronous);
 		}
 
 		public bool SeekToPreviousFrame ()
@@ -537,14 +537,8 @@ namespace LongoMatch.Video.Player
 			Image img = null;
 			
 			Pause ();
-			Seek (pos, accurate, false);
-			for (int i=0; i < 3; i++) {
-				img = GetCurrentFrame (outwidth, outheight);
-				if (img != null) {
-					break;
-				}
-				System.Threading.Thread.Sleep (100);
-			}
+			Seek (pos, accurate, true);
+			img = GetCurrentFrame (outwidth, outheight);
 			return img;
 		}
 	}

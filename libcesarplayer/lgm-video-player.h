@@ -91,7 +91,8 @@ EXPORT gboolean lgm_video_player_is_seekable              (LgmVideoPlayer * lvp)
 
 EXPORT gboolean lgm_video_player_seek_time                (LgmVideoPlayer * lvp,
                                                            gint64 time,
-                                                           gboolean accurate);
+                                                           gboolean accurate,
+                                                           gboolean synchronous);
 
 EXPORT gboolean lgm_video_player_seek_to_next_frame       (LgmVideoPlayer * lvp);
 
