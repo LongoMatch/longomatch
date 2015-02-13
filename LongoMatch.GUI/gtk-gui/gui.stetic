@@ -2654,7 +2654,6 @@ Away</property>
             <child>
               <widget class="Gtk.Label" id="playLabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
@@ -4864,7 +4863,6 @@ You can continue with the current capture, cancel it or save your project.
             <child>
               <widget class="Gtk.Label" id="dblabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -4954,6 +4952,23 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
+                      <widget class="Gtk.Button" id="rescanbutton">
+                        <property name="MemberName" />
+                        <property name="Sensitive">False</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextAndIcon</property>
+                        <property name="Icon">stock:gtk-refresh Menu</property>
+                        <property name="Label" translatable="yes">Re-scan</property>
+                        <property name="UseUnderline">True</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">3</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="Gtk.Button" id="addbutton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
@@ -4964,7 +4979,7 @@ You can continue with the current capture, cancel it or save your project.
                         <signal name="Clicked" handler="OnAddbuttonClicked" />
                       </widget>
                       <packing>
-                        <property name="Position">3</property>
+                        <property name="Position">4</property>
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
@@ -8662,7 +8677,6 @@ You can continue with the current capture, cancel it or save your project.
                                               <widget class="Gtk.Label" id="templatelabel">
                                                 <property name="MemberName" />
                                                 <property name="Xalign">0</property>
-                                                <property name="LabelProp" translatable="yes" />
                                               </widget>
                                               <packing>
                                                 <property name="TopAttach">1</property>
@@ -8880,7 +8894,6 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="type">tab</property>
@@ -8892,7 +8905,6 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label3">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="type">tab</property>
@@ -9706,7 +9718,6 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.Label" id="synclabel">
                     <property name="MemberName" />
                     <property name="WidthRequest">300</property>
-                    <property name="LabelProp" translatable="yes" />
                     <property name="UseMarkup">True</property>
                   </widget>
                   <packing>
@@ -10885,7 +10896,6 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="localPlaysList">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="type">tab</property>
@@ -10903,7 +10913,6 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="visitorPlaysList">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="type">tab</property>
@@ -10966,7 +10975,6 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="authorlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -10988,7 +10996,6 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="desclabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                             <property name="Wrap">True</property>
                             <property name="WidthChars">70</property>
                             <property name="MaxWidthChars">100</property>
@@ -11012,7 +11019,6 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="filelabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                             <property name="Wrap">True</property>
                             <property name="Ellipsize">Start</property>
                             <property name="SingleLineMode">True</property>
@@ -11118,7 +11124,6 @@ You can continue with the current capture, cancel it or save your project.
                           <widget class="Gtk.Label" id="namelabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">1</property>
@@ -11462,7 +11467,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                       <widget class="Gtk.Label" id="filelabel">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes" />
                         <property name="Ellipsize">Start</property>
                       </widget>
                       <packing>
@@ -11481,7 +11485,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="audiolabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>
@@ -11501,7 +11504,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="containerlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -11519,7 +11521,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="durationlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="AutoSize">False</property>
@@ -11535,7 +11536,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="formatlabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="LeftAttach">1</property>
@@ -11553,7 +11553,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="label9">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">2</property>
@@ -11573,7 +11572,6 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                           <widget class="Gtk.Label" id="videolabel">
                             <property name="MemberName" />
                             <property name="Xalign">0</property>
-                            <property name="LabelProp" translatable="yes" />
                           </widget>
                           <packing>
                             <property name="TopAttach">1</property>

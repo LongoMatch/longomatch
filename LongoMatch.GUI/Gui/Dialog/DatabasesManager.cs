@@ -22,6 +22,9 @@ using Mono.Unix;
 
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Core.Interfaces.GUI;
+using System.Threading.Tasks;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -36,8 +39,9 @@ namespace LongoMatch.Gui.Dialog
 			this.manager = Config.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
+			rescanbutton.Clicked += HandleRescanClicked;
 		}
-		
+
 		IDatabase ActiveDB {
 			set {
 				dblabel.Text = Catalog.GetString("Active database") +": " + value.Name;
@@ -189,7 +193,30 @@ namespace LongoMatch.Gui.Dialog
 			delbutton.Sensitive = selected;
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
+			rescanbutton.Sensitive = selected;
 		}
+		
+		void HandleRescanClicked (object sender, EventArgs e)
+		{
+			IDatabase db = SelectedDB;
+			if (db != null) {
+				IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Scanning database..."), this);
+				Task task = new Task (() => {
+					try {
+						db.Reload ();
+					} catch (Exception ex) {
+						Log.Exception (ex);
+					}
+					Config.GUIToolkit.Invoke (delegate {
+						busy.Destroy ();
+					});
+				});
+				task.Start ();
+				busy.ShowSync ();
+				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Database scanned succesfully."));
+			}
+		}
+		
 	}
 }
 

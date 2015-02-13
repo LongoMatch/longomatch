@@ -39,6 +39,8 @@ namespace LongoMatch.Core.Interfaces
 		
 		bool Delete ();
 		
+		void Reload ();
+		
 		string Name {get;}
 		
 		DateTime LastBackup {get;}

@@ -51,7 +51,7 @@ namespace LongoMatch.DB
 				}
 			}
 			if (projectsDB == null) {
-				ReloadDB ();
+				Reload ();
 			}
 			DateTime now = DateTime.UtcNow;
 			if (projectsDB.LastBackup + maxDaysWithoutBackup < now) {
@@ -191,7 +191,7 @@ namespace LongoMatch.DB
 			AddProject (project);
 		}
 
-		void ReloadDB ()
+		public void Reload ()
 		{
 			projectsDB = new LiteDB (dbPath);
 			DirectoryInfo dbDir = new DirectoryInfo (dbDirPath);
