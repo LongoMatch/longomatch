@@ -62,7 +62,7 @@ namespace LongoMatch.Services
 			Config.Load ();
 			
 			if (Config.Lang != null) {
-				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang);
+				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
 #if OSTYPE_WINDOWS
 				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
 #endif
