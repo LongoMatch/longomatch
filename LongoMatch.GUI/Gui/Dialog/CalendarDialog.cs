@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Build();
 			SkipPagerHint = true;
 			SkipTaskbarHint = true;
-			Decorated = false;
+			//Decorated = false;
 			Modal = true;
 			calendar1.Date = date;
 		}

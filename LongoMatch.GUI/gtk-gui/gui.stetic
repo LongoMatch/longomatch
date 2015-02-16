@@ -3028,7 +3028,8 @@ You can download it using this direct link:</property>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Calendar</property>
     <property name="Icon">stock:longomatch Menu</property>
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="TypeHint">Dialog</property>
+    <property name="WindowPosition">Mouse</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
