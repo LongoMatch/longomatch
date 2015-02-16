@@ -18,6 +18,7 @@
 
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -29,6 +30,7 @@ namespace LongoMatch.Gui.Dialog
 		public EndCaptureDialog(string filepath)
 		{
 			this.Build();
+			image439.Pixbuf = Helpers.Misc.LoadStockIcon (this, "gtk-dialog-question", Gtk.IconSize.Dialog);
 			savebutton.Visible = System.IO.File.Exists (filepath);
 		}
 
