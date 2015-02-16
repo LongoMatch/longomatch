@@ -193,7 +193,7 @@ namespace LongoMatch.Gui.Panel
 			if (loadedProject != null) {
 				string filename = gkit.SaveFile (
 					Catalog.GetString ("Export project"),
-					loadedProject.Description.Title + Constants.PROJECT_EXT,
+					Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
 					Config.HomeDir, Constants.PROJECT_NAME,
 					new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
