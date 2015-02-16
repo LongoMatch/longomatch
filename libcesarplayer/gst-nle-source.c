@@ -412,6 +412,14 @@ gst_nle_source_on_video_buffer (GstAppSink * appsink, gpointer data)
 
   if (item->still_picture) {
     GstBuffer *end_buf;
+    GstCaps *bcaps, *ncaps;
+
+    bcaps = gst_buffer_get_caps (buf);
+    ncaps = gst_caps_make_writable (bcaps);
+    gst_caps_set_simple (ncaps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
+        1, 1, NULL);
+    gst_buffer_set_caps (buf, ncaps);
+    gst_caps_unref (ncaps);
 
     end_buf = gst_buffer_copy (buf);
 
