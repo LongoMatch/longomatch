@@ -75,6 +75,10 @@ struct GstVideoEncoderPrivate
   GstClockTime total_duration;
   guint update_id;
   guint64 last_buf_ts;
+  gboolean size_changes;
+  guint last_height;
+  guint last_width;
+  guint last_par;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -106,6 +110,9 @@ gst_video_encoder_init (GstVideoEncoder * object)
   priv->output_width = 640;
   priv->audio_quality = 50;
   priv->video_quality = 50;
+  priv->last_width = 0;
+  priv->last_height = 0;
+  priv->size_changes = FALSE;
   priv->video_encoder_type = VIDEO_ENCODER_VP8;
   priv->audio_encoder_type = AUDIO_ENCODER_VORBIS;
   priv->video_muxer_type = VIDEO_MUXER_WEBM;
@@ -253,6 +260,7 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
   g_object_set (vqueue, "max-size-bytes", 0, "max-size-buffers", 0,
       "max-size-time", 5 * GST_SECOND, NULL);
 
+
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
   if (gve->priv->output_width != 0) {
@@ -263,10 +271,18 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder * gve)
     gst_caps_set_simple (video_caps, "height", G_TYPE_INT,
         gve->priv->output_height, NULL);
   }
+
   if (gve->priv->output_height == 0 || gve->priv->output_width == 0) {
     gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
         1, 1, NULL);
   }
+
+  if (gve->priv->size_changes) {
+    gst_caps_set_simple (video_caps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
+        1, 1, NULL);
+    g_object_set (videoscale, "add-borders", TRUE, NULL);
+  }
+
   /* Set caps for the encoding framerate */
   if (gve->priv->fps_n != 0 && gve->priv->fps_d != 0) {
     gst_caps_set_simple (video_caps, "framerate", GST_TYPE_FRACTION,
@@ -666,7 +682,7 @@ gst_video_encoder_start (GstVideoEncoder * gve)
 
 void
 gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar * file,
-    guint64 duration)
+    guint64 duration, guint width, guint height, gdouble par)
 {
   gchar *uri;
   g_return_if_fail (gve != NULL);
@@ -677,6 +693,16 @@ gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar * file,
   if (uri == NULL) {
     GST_ERROR_OBJECT (gve, "Invalid filename %s", file);
   }
+  if ((gve->priv->last_width != 0 || gve->priv->last_height != 0) &&
+      (gve->priv->last_width != width ||
+      gve->priv->last_height != height ||
+      gve->priv->last_par != par)) {
+    gve->priv->size_changes = TRUE;
+  }
+  gve->priv->last_width = width;
+  gve->priv->last_height = height;
+  gve->priv->last_par = par;
+
   gve->priv->input_files = g_list_append (gve->priv->input_files, uri);
   gve->priv->total_duration += duration * GST_MSECOND;
 }

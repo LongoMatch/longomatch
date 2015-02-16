@@ -228,11 +228,11 @@ namespace LongoMatch.Video.Converter {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_video_encoder_add_file (IntPtr raw, IntPtr filename, long duration);
+		static extern bool gst_video_encoder_add_file (IntPtr raw, IntPtr filename, long duration, uint width, uint height, double par);
 		
-		public void AddFile (string filename, long duration) {
+		public void AddFile (string filename, long duration, uint width, uint height, double par) {
 			IntPtr file = GLib.Marshaller.StringToPtrGStrdup(filename);
-			gst_video_encoder_add_file (Handle, file, duration);
+			gst_video_encoder_add_file (Handle, file, duration, width, height, par);
 		}
 
 		[DllImport("libcesarplayer.dll")]

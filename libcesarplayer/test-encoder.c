@@ -72,7 +72,19 @@ main (int argc, char *argv[])
       audio_encoder, video_muxer, 500, 128, 240, 180, 25, 1);
 
   for (i=2; i < argc; i++) {
-    gst_video_encoder_add_file (encoder, argv[i], 1000);
+    guint64 duration;
+    guint width, height, fps_n, fps_d, par_n, par_d;
+    gchar *container, *video_codec, *audio_codec;
+    GError *err=NULL;
+
+    lgm_discover_uri (argv[i], &duration, &width, &height, &fps_n,
+        &fps_d, &par_n, &par_d, &container, &video_codec, &audio_codec, &err);
+    if (err != NULL) {
+      g_print ("Error parsing file %s \n", argv[i]);
+      exit (1);
+    }
+    gst_video_encoder_add_file (encoder, argv[i], duration / GST_MSECOND, width, height,
+        (gdouble)par_n/par_d);
   }
 
   loop = g_main_loop_new (NULL, FALSE);

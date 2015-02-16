@@ -162,7 +162,8 @@ namespace LongoMatch.Services
 			videoConverter.Error += OnError;
 			
 			foreach (MediaFile file in job.InputFiles) {
-				videoConverter.AddFile (file.FilePath, file.Duration.MSeconds);
+				videoConverter.AddFile (file.FilePath, file.Duration.MSeconds,
+				                        file.VideoWidth, file.VideoHeight, file.Par);
 			}
 			
 			try {

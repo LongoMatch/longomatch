@@ -83,7 +83,10 @@ EXPORT void gst_video_encoder_set_encoding_format              (GstVideoEncoder 
 
 EXPORT void gst_video_encoder_add_file                         (GstVideoEncoder * gve,
                                                                 const gchar * file,
-                                                                guint64 duration);
+                                                                guint64 duration,
+                                                                guint width,
+                                                                guint height,
+                                                                gdouble par);
 
 EXPORT gboolean gst_video_encoder_dump_graph                   (GstVideoEncoder *gve);
 

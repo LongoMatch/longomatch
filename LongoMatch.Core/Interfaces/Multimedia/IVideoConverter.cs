@@ -37,7 +37,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		void Cancel();
 		
-		void AddFile(string filename, long duration);
+		void AddFile(string filename, long duration, uint width, uint height, double par);
 		
 		EncodingSettings EncodingSettings {set;}
 		
