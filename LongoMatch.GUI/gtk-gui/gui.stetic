@@ -5944,6 +5944,9 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="WidthRequest">180</property>
                             <property name="LabelProp" translatable="yes">Video file</property>
+                            <property name="Wrap">True</property>
+                            <property name="Justify">Center</property>
+                            <property name="WidthChars">1</property>
                           </widget>
                           <packing>
                             <property name="Position">1</property>
@@ -5996,6 +5999,9 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="WidthRequest">180</property>
                             <property name="LabelProp" translatable="yes">Capture device</property>
+                            <property name="Wrap">True</property>
+                            <property name="Justify">Center</property>
+                            <property name="WidthChars">1</property>
                           </widget>
                           <packing>
                             <property name="Position">1</property>
@@ -6048,6 +6054,9 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="WidthRequest">180</property>
                             <property name="LabelProp" translatable="yes">Fake capture device</property>
+                            <property name="Wrap">True</property>
+                            <property name="Justify">Center</property>
+                            <property name="WidthChars">1</property>
                           </widget>
                           <packing>
                             <property name="Position">1</property>
@@ -6100,6 +6109,9 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="WidthRequest">180</property>
                             <property name="LabelProp" translatable="yes">Ip camera</property>
+                            <property name="Wrap">True</property>
+                            <property name="Justify">Center</property>
+                            <property name="WidthChars">1</property>
                           </widget>
                           <packing>
                             <property name="Position">1</property>

@@ -163,6 +163,9 @@ namespace LongoMatch.Gui.Panel
 			this.label2.WidthRequest = 180;
 			this.label2.Name = "label2";
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Video file");
+			this.label2.Wrap = true;
+			this.label2.Justify = ((global::Gtk.Justification)(2));
+			this.label2.WidthChars = 1;
 			this.vbox12.Add (this.label2);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox12 [this.label2]));
 			w6.Position = 1;
@@ -202,6 +205,9 @@ namespace LongoMatch.Gui.Panel
 			this.label4.WidthRequest = 180;
 			this.label4.Name = "label4";
 			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Capture device");
+			this.label4.Wrap = true;
+			this.label4.Justify = ((global::Gtk.Justification)(2));
+			this.label4.WidthChars = 1;
 			this.vbox13.Add (this.label4);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox13 [this.label4]));
 			w11.Position = 1;
@@ -241,6 +247,9 @@ namespace LongoMatch.Gui.Panel
 			this.label5.WidthRequest = 180;
 			this.label5.Name = "label5";
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Fake capture device");
+			this.label5.Wrap = true;
+			this.label5.Justify = ((global::Gtk.Justification)(2));
+			this.label5.WidthChars = 1;
 			this.vbox14.Add (this.label5);
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.label5]));
 			w16.Position = 1;
@@ -280,6 +289,9 @@ namespace LongoMatch.Gui.Panel
 			this.label6.WidthRequest = 180;
 			this.label6.Name = "label6";
 			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("Ip camera");
+			this.label6.Wrap = true;
+			this.label6.Justify = ((global::Gtk.Justification)(2));
+			this.label6.WidthChars = 1;
 			this.vbox15.Add (this.label6);
 			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox15 [this.label6]));
 			w21.Position = 1;
