@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-12 00:46+0000\n"
-"PO-Revision-Date: 2015-02-12 10:01+0000\n"
+"POT-Creation-Date: 2015-02-17 23:04+0000\n"
+"PO-Revision-Date: 2015-02-14 10:00+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Basque (Spain) (http://www.transifex.com/projects/p/longomatch/language/eu_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -32,14 +32,14 @@ msgstr "Ezin da kokapen hori ireki; dirudienez ez duzu fitxategi hori irekitzeko
 msgid "Media file could not be played."
 msgstr "Ezin da media fitxategia erreproduzitu"
 
-#: ../libcesarplayer/lgm-video-player.c:919
+#: ../libcesarplayer/lgm-video-player.c:922
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "Akatsa GStreamer objektua sortzerakoan. Mesedez zure GStreamer instalazioa konprobatu"
 
-#: ../libcesarplayer/lgm-video-player.c:957
+#: ../libcesarplayer/lgm-video-player.c:960
 #, c-format
 msgid "No valid sink found."
 msgstr "Ez da baliodun \"sink\" aurkitu."
@@ -74,6 +74,11 @@ msgstr "Log-a ondoko tokian gorde da:"
 #: ../LongoMatch/Main.cs:177
 msgid "Please, fill a bug report "
 msgstr "Errore txosten bat osatu mesedez"
+
+#: ../LongoMatch.Core/Common/Device.cs:78
+#: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:53
+msgid "Default"
+msgstr "Jatorrizkoa"
 
 #: ../LongoMatch.Core/Common/Exceptions.cs:28
 msgid "Database locked:"
@@ -350,7 +355,7 @@ msgid "Periods"
 msgstr "Jokoaldiak"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:85
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:54
 #: ../LongoMatch.Migration/Core/SubCategory.cs:85
 #: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:35
 msgid "Name"
@@ -484,17 +489,17 @@ msgid "Group"
 msgstr "Taldea"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:298
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:310
 msgid "page1"
 msgstr "1. orrialdea"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:883
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:895
 msgid "page2"
 msgstr "2. orrialdea"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:896
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:908
 msgid "page3"
 msgstr "3. orrialdea"
 
@@ -736,7 +741,7 @@ msgstr "Kodifikatze abiadura"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:622
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:634
 msgid "Quality"
 msgstr "Kalitatea"
 
@@ -779,23 +784,27 @@ msgid ""
 "To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
 msgstr "<a href=\"http://www.longomatch.com/open-source.html\">OpenSource proiektuan</a> azaldu eta zehaztu bezala, doako eta kode irekiko LongoMatch bertsio honen erabilerak, CODEC deitutako softwarea instalatzea behar du, hau doakoa da ere.\n\nHonen ulermena ziurtatzeko eta honen buruzko informazio gehiago izateko, non lortu eta nola instalatu, <a href=\"http://www.longomatch.com/open-source.html\">OpenSource proiektua</a> webgunea bisitatu.\n\nHau ekiditeko, eta gainontzeko funtzio hobekuntza gehiago gozatu ahal izateko, LongoMatch PRO-ra eguneratzea gomendatzen dugu, hau kuota baten truke erabilgarri izango da."
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:25
 msgid "Databases manager"
 msgstr "Datubase kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:85
 msgid "_Select DB"
 msgstr "_DB Aukeratu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:111
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:112
 msgid "_Delete"
 msgstr "_Ezabatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:138
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:139
 msgid "_Backup"
 msgstr "_Segurtasun kopia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:166
+msgid "Re-scan"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:192
 msgid "_Add"
 msgstr "_Gehitu"
 
@@ -1146,71 +1155,71 @@ msgstr "Migratze tresna"
 msgid "Video file"
 msgstr "Bideo fitxategia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:204
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:207
 msgid "Capture device"
 msgstr "Kaptura gailua"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:243
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:249
 msgid "Fake capture device"
 msgstr "Kaptura gailu irudikatua"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:282
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:291
 msgid "Ip camera"
 msgstr "IP Kamera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:335
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:347
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Lehiaketa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:346
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:358
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Data"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:371
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:383
 msgid "Description"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:411
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:423
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Denboraldia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:485
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:497
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Irteerako fitxategia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:515
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:534
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:546
 msgid "Device"
 msgstr "Gailua"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:575
 msgid "Device format"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:603
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:615
 msgid "Output size"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:633
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:645
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Formatoa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:660
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:672
 msgid "Dashboard"
 msgstr ""
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:710
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:791
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:722
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:803
 msgid "Tactics"
 msgstr "Taktikak"
 
@@ -1363,10 +1372,6 @@ msgstr "Ezin dira jokoaldiak aztertu."
 msgid "Time: "
 msgstr "Denbora:"
 
-#: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:53
-msgid "Default"
-msgstr "Jatorrizkoa"
-
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:118
 msgid "Select folder..."
 msgstr "Direktorioa aukeratu..."
@@ -1457,41 +1462,49 @@ msgstr "Audio codec"
 msgid "Container"
 msgstr "Kontainerra"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:43
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:47
 msgid "Active database"
 msgstr "Datubase aktiboa"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:58
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:62
 msgid "Last backup"
 msgstr "Azkeneko segurtasun kopia"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:66
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:70
 msgid "Projects count"
 msgstr "Proiektu zenbatzailea"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:135
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:139
 msgid "Database name"
 msgstr "Datubase izena"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:140
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:144
 msgid "A database already exists with this name"
 msgstr "Izen bedina duen datubase bat existitzen da"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:159
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:163
 msgid "This database is the active one and can't be deleted"
 msgstr "Aukeratutako datubasea erabiltzen ari da eta ezin da ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:165
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:169
 msgid "Do you really want to delete the database: "
 msgstr "Datubasea ezabatu nahi duzula ziurtatzen duzu?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:183
 msgid "Backup successful"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:181
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:185
 msgid "Could not create backup"
 msgstr "Ezin izan da segurtasun kopia sortu"
+
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:203
+msgid "Scanning database..."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:216
+msgid "Database scanned succesfully."
+msgstr ""
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
@@ -2475,28 +2488,28 @@ msgstr "Ondorengo errorea gertatu da eta proiektu hau itxiko da:"
 msgid "The following error happened and the current capture will be closed:"
 msgstr "Ondorengo errorea gertatu da eta kaptura hau itxiko da:"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:175
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:205
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:176
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:206
 msgid "Error rendering job: "
 msgstr "Lana renderizatzen errorea:"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:332
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:333
 msgid "Rendering"
 msgstr "Renderizatzen"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:338
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:339
 msgid "Rendering queue"
 msgstr "Renderizatze zerrenda"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:339
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:340
 msgid "Pending"
 msgstr "Itxoiten"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:353
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:354
 msgid "An error has occurred in the video editor."
 msgstr "Errore bat gertatu da bideo editorean."
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:354
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:355
 msgid "Please, try again."
 msgstr "Berriz saiatu mesedez"
 

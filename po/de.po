@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-12 00:46+0000\n"
-"PO-Revision-Date: 2015-02-12 10:01+0000\n"
-"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
+"POT-Creation-Date: 2015-02-17 23:04+0000\n"
+"PO-Revision-Date: 2015-02-17 14:38+0000\n"
+"Last-Translator: Franziska Nagel <franziskanagel@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/longomatch/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,14 +32,14 @@ msgstr "Der Ort konnte nicht geöffnet werden; möglicherweise besitzen Sie nich
 msgid "Media file could not be played."
 msgstr "Mediendatei konnte nicht abgespielt werden."
 
-#: ../libcesarplayer/lgm-video-player.c:919
+#: ../libcesarplayer/lgm-video-player.c:922
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "Es konnte kein GStreamer-Wiedergabeobjekt erzeugt werden. Bitte überprüfen Sie Ihre GStreamer-Installation."
 
-#: ../libcesarplayer/lgm-video-player.c:957
+#: ../libcesarplayer/lgm-video-player.c:960
 #, c-format
 msgid "No valid sink found."
 msgstr "Keine gültige Senke gefunden."
@@ -74,6 +74,11 @@ msgstr "Ein Protokoll wurde gespeichert in:"
 #: ../LongoMatch/Main.cs:177
 msgid "Please, fill a bug report "
 msgstr "Bitte verfassen Sie einen Fehlerbericht."
+
+#: ../LongoMatch.Core/Common/Device.cs:78
+#: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:53
+msgid "Default"
+msgstr "Voreinstellung"
 
 #: ../LongoMatch.Core/Common/Exceptions.cs:28
 msgid "Database locked:"
@@ -350,7 +355,7 @@ msgid "Periods"
 msgstr "Dauer"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:85
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:54
 #: ../LongoMatch.Migration/Core/SubCategory.cs:85
 #: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:35
 msgid "Name"
@@ -484,17 +489,17 @@ msgid "Group"
 msgstr "Gruppe"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:298
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:310
 msgid "page1"
 msgstr "Seite 1"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:883
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:895
 msgid "page2"
 msgstr "Seite 2"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:896
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:908
 msgid "page3"
 msgstr "Seite 3"
 
@@ -736,7 +741,7 @@ msgstr "Format für Encoding"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:622
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:634
 msgid "Quality"
 msgstr "Qualität"
 
@@ -779,23 +784,27 @@ msgid ""
 "To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
 msgstr "Wie bereits auf der Seite <a href=\"http://www.longomatch.com/open-source.html\">OpenSource Projekt</a> erläutert wurde, erfordert die Verwendung dieser kostenlosen Open-Source-Version von Longomatch, dass Sie mit der zusätzlichen Software CODEC ausgestattet sind bzw. diese kostenfrei installieren. \n\nFür weitere Information wie dies funktioniert, wo Sie diese erhalten und wie diese zu installieren ist, besuchen Sie die Seite  <a href=\"http://www.longomatch.com/open-source.html\">OpenSource Projekt</a>.\n\nWir empfehlen Ihnen das Upgrade zu Longomatch PRO gegen eine geringe Gebühr, um weitere funktionelle Vorteile zu genießen."
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:25
 msgid "Databases manager"
 msgstr "Datenbanken verwalten"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:85
 msgid "_Select DB"
 msgstr "_Datenbank auswählen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:111
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:112
 msgid "_Delete"
 msgstr "_Löschen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:138
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:139
 msgid "_Backup"
 msgstr "_Datensicherung"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:166
+msgid "Re-scan"
+msgstr "Erneutes Scannen"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:192
 msgid "_Add"
 msgstr "_Hinzufügen"
 
@@ -1146,71 +1155,71 @@ msgstr "Migrationswerkzeug"
 msgid "Video file"
 msgstr "Videodatei"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:204
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:207
 msgid "Capture device"
 msgstr "Aufnahmegerät"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:243
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:249
 msgid "Fake capture device"
 msgstr "Simuliertes Aufnahmegerät"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:282
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:291
 msgid "Ip camera"
 msgstr "IP Kamera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:335
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:347
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
 msgid "Competition"
 msgstr "Turnier"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:346
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:358
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:371
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:383
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:411
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:423
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
 msgid "Season"
 msgstr "Saison"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:485
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:497
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Ausgabedatei"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:515
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:534
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:546
 msgid "Device"
 msgstr "Gerät"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:563
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:575
 msgid "Device format"
-msgstr ""
+msgstr "Geräteformat"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:603
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:615
 msgid "Output size"
-msgstr ""
+msgstr "Ausgabegröße"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:633
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:645
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Format"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:660
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:672
 msgid "Dashboard"
 msgstr "Übersicht"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:710
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:791
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:722
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:803
 msgid "Tactics"
 msgstr "Strategien"
 
@@ -1363,10 +1372,6 @@ msgstr "Spielperioden konnten nicht analysiert werden."
 msgid "Time: "
 msgstr "Zeit:"
 
-#: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:53
-msgid "Default"
-msgstr "Voreinstellung"
-
 #: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:118
 msgid "Select folder..."
 msgstr "Order auswählen..."
@@ -1383,11 +1388,11 @@ msgstr "Ausgabeordner"
 #. code generation for translatable tooltips.
 #: ../LongoMatch.GUI/Gui/Component/PlayListWidget.cs:45
 msgid "Create a new playlist"
-msgstr ""
+msgstr "Neue Playlist erstellen"
 
 #: ../LongoMatch.GUI/Gui/Component/PlayListWidget.cs:46
 msgid "Export the playlist to new video file"
-msgstr ""
+msgstr "Playlist zur neuen Videodatei exportieren"
 
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:139
 msgid "Categories filter"
@@ -1457,104 +1462,112 @@ msgstr "Audio codec"
 msgid "Container"
 msgstr "Container"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:43
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:47
 msgid "Active database"
 msgstr "Aktive Datenbank"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:58
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:62
 msgid "Last backup"
 msgstr "Letzte Datensicherung"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:66
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:70
 msgid "Projects count"
 msgstr "Projektzähler"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:135
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:139
 msgid "Database name"
 msgstr "Datenbankname"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:140
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:144
 msgid "A database already exists with this name"
 msgstr "Es existiert bereits eine Datenbank mit diesem Namen"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:159
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:163
 msgid "This database is the active one and can't be deleted"
 msgstr "Die aktive Datenbank kann nicht gelöscht werden "
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:165
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:169
 msgid "Do you really want to delete the database: "
 msgstr "Soll diese Datenbank wirklich gelöscht werden:"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:179
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:183
 msgid "Backup successful"
 msgstr "Backup erfolgreich"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:181
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:185
 msgid "Could not create backup"
 msgstr "Konnte keine Datensicherung durchführen"
+
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:203
+msgid "Scanning database..."
+msgstr "Datenbank wird gescannt"
+
+#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:216
+msgid "Database scanned succesfully."
+msgstr "Datenbank erfolgreich gescannt"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:89
 msgid "Selection tool"
-msgstr ""
+msgstr "Auswahlwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:90
 msgid "Rubber tool"
-msgstr ""
+msgstr "Radiergummi"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:91
 msgid "Pencil tool"
-msgstr ""
+msgstr "Stift"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:92
 msgid "Text tool"
-msgstr ""
+msgstr "Text"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:93
 msgid "Line tool"
-msgstr ""
+msgstr "Linie"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:94
 msgid "Cross tool"
-msgstr ""
+msgstr "Kreuzwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:95
 msgid "Rectangle tool"
-msgstr ""
+msgstr "Dreieckswerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:96
 msgid "Ellipse tool"
-msgstr ""
+msgstr "Elipsenwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:97
 msgid "Filled rectangle tool"
-msgstr ""
+msgstr "Ausgefülltes Rechteck"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:98
 msgid "Filled ellipse tool"
-msgstr ""
+msgstr "Ausgefüllte Ellipse"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:99
 msgid "Player tool"
-msgstr ""
+msgstr "Spielerwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:100
 msgid "Index tool"
-msgstr ""
+msgstr "Indexwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:101
 msgid "Angle tool"
-msgstr ""
+msgstr "Winkelwerkzeug"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:102
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:103
 msgid "Change the line style"
-msgstr ""
+msgstr "Linienart ändern"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:104
 msgid "Clear all drawings"
-msgstr ""
+msgstr "Alle Zeichnungen löschen"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:239
 msgid "Text"
@@ -1841,11 +1854,11 @@ msgstr "Plugins"
 #. code generation for translatable tooltips.
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:58
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:59
 msgid "Export"
-msgstr ""
+msgstr "Exportieren"
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:60
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
@@ -2157,11 +2170,11 @@ msgstr "Live"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:70
 msgid "Pause clock"
-msgstr ""
+msgstr "Uhr stoppen"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:71
 msgid "Resume clock"
-msgstr ""
+msgstr "Uhr weiterlaufen lassen"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:72
 #: ../LongoMatch.Services/Services/ToolsManager.cs:110
@@ -2170,11 +2183,11 @@ msgstr "Projekt speichern"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:74
 msgid "Delete event"
-msgstr ""
+msgstr "Veranstaltung löschen"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:75
 msgid "Replay event"
-msgstr ""
+msgstr "Veranstaltung erneut abspielen"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:190
 msgid "Period recording already started"
@@ -2206,36 +2219,36 @@ msgstr "Gerät verbunden. Wollen Sie die Aufnahme erneut starten?"
 #. code generation for translatable tooltips.
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:106
 msgid "Playback speed"
-msgstr ""
+msgstr "Wiedergabegeschwindigkeit"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:109
 msgid "Play"
-msgstr ""
+msgstr "Play"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:110
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:111
 msgid "Previous"
-msgstr ""
+msgstr "Vorher"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:112
 msgid "Next"
-msgstr ""
+msgstr "Nächstes"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:113
 msgid ""
 "Jump in seconds. Hold the Shift key with the direction keys to activate it."
-msgstr ""
+msgstr "In Sekundenschritten. Zur Aktivierung Shift-Taste mit den Pfeiltasten halten."
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:114
 msgid "Volume"
-msgstr ""
+msgstr "Lautstärke"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:115
 msgid "Detach window"
-msgstr ""
+msgstr "Fenster trennen"
 
 #. Create the dialog
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:73
@@ -2475,28 +2488,28 @@ msgstr "Der folgende Fehler ist aufgetreten und das aktuelle Projekt wird geschl
 msgid "The following error happened and the current capture will be closed:"
 msgstr "Der folgende Fehler ist aufgetreten und die Aufnahme wird beendet:"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:175
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:205
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:176
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:206
 msgid "Error rendering job: "
 msgstr "Fehler bei der Filmerzeugung:"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:332
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:333
 msgid "Rendering"
 msgstr "Rendern"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:338
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:339
 msgid "Rendering queue"
 msgstr "Rendering-Warteschlange"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:339
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:340
 msgid "Pending"
 msgstr "Ausstehend"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:353
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:354
 msgid "An error has occurred in the video editor."
 msgstr "Ein Fehler ist im Video-Editor aufgetreten."
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:354
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:355
 msgid "Please, try again."
 msgstr "Bitte versuchen Sie es erneut."
 
