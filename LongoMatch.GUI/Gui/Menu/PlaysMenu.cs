@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Menus
 			this.project = project;
 
 			if (eventType != null) {
-				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new play"), eventType.Name);
+				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new event"), eventType.Name);
 				GtkGlue.MenuItemSetLabel (newPlay, label); 
 				newPlay.Visible = true;
 			} else {

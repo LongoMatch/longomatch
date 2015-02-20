@@ -2907,7 +2907,6 @@ You can download it using this direct link:</property>
             <child>
               <widget class="Gtk.Label" id="label7">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">label7</property>
                 <property name="UseMarkup">True</property>
                 <property name="Justify">Center</property>
                 <property name="Selectable">True</property>
@@ -10029,7 +10028,7 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="Gtk.Label" id="titlelabel">
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
-                <property name="LabelProp" translatable="yes">&lt;span font_desc="22"&gt;&lt;b&gt;Title&lt;/b&gt;&lt;/span&gt;</property>
+                <property name="LabelProp">&lt;span font_desc="22"&gt;&lt;b&gt;Title&lt;/b&gt;&lt;/span&gt;</property>
                 <property name="UseMarkup">True</property>
                 <property name="Justify">Center</property>
               </widget>
@@ -10089,7 +10088,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PlayEditor" design-size="1021 671">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Edit play details</property>
+    <property name="Title" translatable="yes">Edit event details</property>
     <property name="Icon">stock:longomatch Menu</property>
     <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>

@@ -241,7 +241,7 @@ namespace LongoMatch.Core.Store.Templates
 			
 			scoreButton = new ScoreButton {
 				Score = new Score {
-					Name = Catalog.GetString ("Field goal"),
+					Name = Catalog.GetString ("Free play goal"),
 					Points = 1,
 					Color = StyleConf.ButtonScoreColor},
 				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10)};

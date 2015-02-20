@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.PlayEditor
 			this.Name = "LongoMatch.Gui.Dialog.PlayEditor";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Edit play details");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Edit event details");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));

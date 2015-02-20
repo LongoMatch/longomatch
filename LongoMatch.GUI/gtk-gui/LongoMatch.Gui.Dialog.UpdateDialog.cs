@@ -59,7 +59,6 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label7 = new global::Gtk.Label ();
 			this.label7.Name = "label7";
-			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("label7");
 			this.label7.UseMarkup = true;
 			this.label7.Justify = ((global::Gtk.Justification)(2));
 			this.label7.Selectable = true;
