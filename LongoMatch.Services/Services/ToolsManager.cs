@@ -208,6 +208,8 @@ namespace LongoMatch.Services
 			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				startInfo.FileName = Path.Combine (Config.baseDirectory, "bin", "mono-sgen.exe");
+				startInfo.EnvironmentVariables["MONO_CFG_DIR"] = Path.GetFullPath (
+					Path.Combine (Config.baseDirectory, "etc"));
 			} else {
 				startInfo.FileName = "mono-sgen";
 			}
@@ -216,6 +218,9 @@ namespace LongoMatch.Services
 			} else {
 				startInfo.EnvironmentVariables.Add ("MONO_PATH", monoPath);
 			}
+			Log.Information (String.Format ("Launching migration tool {0} {1}",
+			                                startInfo.FileName,
+			                                startInfo.EnvironmentVariables["MONO_PATH"]));
 			using (Process exeProcess = Process.Start(startInfo)) {
 				exeProcess.WaitForExit ();
 				dbManager.UpdateDatabases ();
