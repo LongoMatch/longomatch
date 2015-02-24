@@ -88,9 +88,10 @@ public partial class MainWindow: Gtk.Window
 	}
 	
 	void UpdateLabel () {
-		label3.Markup = " <b> Databases </b>: " + dbs.Count + "\n\n" + 
-			" <b> Analysis templates </b>: " + categories.Count + "\n\n" +
-				" <b> Teams templates: </b>: " + teams.Count + "\n\n";
+		label3.Markup = String.Format (" <b> {0} </b>: {1}\n\n <b> {2} </b>: {3}\n\n <b> {4} </b>: {5}\n\n",
+		                               Catalog.GetString ("Databases"), dbs.Count,
+		                               Catalog.GetString ("Dashboards"), categories.Count,
+		                               Catalog.GetString ("Teams"), teams.Count);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)

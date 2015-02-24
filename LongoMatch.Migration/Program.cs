@@ -18,6 +18,7 @@
 using System;
 using Gtk;
 using System.IO;
+using Mono.Unix;
 
 namespace LongoMatch.Migration
 {
@@ -26,6 +27,7 @@ namespace LongoMatch.Migration
 		public static void Main (string[] args)
 		{
 			SetupBasedir ();
+			Catalog.Init ("longomatch", LongoMatch.Config.RelativeToPrefix ("share/locale"));
 			InitGtk ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
