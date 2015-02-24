@@ -367,6 +367,7 @@ namespace LongoMatch.Gui.Component
 		{
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
+			Edited = true;
 		}
 		
 		void HandleColorSet (object sender, EventArgs e)
