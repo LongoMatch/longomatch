@@ -272,6 +272,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTeamClicked (object sender, EventArgs e)
 		{
 			bool create = false;
+			bool force = false;
 			
 			EntryDialog dialog = new EntryDialog ();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
@@ -291,6 +292,7 @@ namespace LongoMatch.Gui.Panel
 						"Do you want to overwrite it?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
+						force = true;
 						break;
 					}
 				} else {
@@ -300,6 +302,13 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			if (create) {
+				if (force) {
+					try {
+						provider.Delete (dialog.Text);
+					} catch (Exception ex){
+						Log.Exception (ex);
+					}
+				}
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (dialog.SelectedTemplate, dialog.Text);
 				} else {
