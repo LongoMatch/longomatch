@@ -158,6 +158,23 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Operators
+		public static bool operator == (Time t1, Time t2)
+		{
+			if (Object.ReferenceEquals (t1, t2)) {
+				return true;
+			}
+			
+			if ((object)t1 == null || (object)t2 == null) {
+				return false;
+			}
+			
+			return t1.Equals (t2);
+		}
+		
+		public static bool operator != (Time t1,Time t2) {
+			return ! (t1 == t2);
+		}
+
 		public static bool operator < (Time t1,Time t2) {
 			return t1.MSeconds < t2.MSeconds;
 		}
