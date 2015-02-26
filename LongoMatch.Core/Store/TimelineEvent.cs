@@ -85,22 +85,6 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		/* FIXME: Keep this until we support multiple drawings */
-		[JsonIgnore]
-		public FrameDrawing KeyFrameDrawing {
-			get {
-				if (Drawings.Count > 0)
-					return Drawings.First ();
-				else
-					return null;
-			}
-			set {
-				if (Drawings.Count == 0)
-					Drawings.Add (value);
-				else
-					Drawings [0] = value;
-			}
-		}
 
 		/// <summary>
 		/// Get wether the play has at least a frame drawing
