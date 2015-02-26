@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.GStreame
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.Stats", "LongoMatch.Plugins.Stats\LongoMatch.Plugins.Stats.csproj", "{F03D161E-CC4D-4FE6-968A-04F884AB0939}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F042D024-3283-4E60-9A85-76E6BBBBB2C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F03D161E-CC4D-4FE6-968A-04F884AB0939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = LongoMatch\LongoMatch.csproj

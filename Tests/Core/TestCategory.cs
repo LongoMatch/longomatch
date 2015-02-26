@@ -16,13 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using Newtonsoft.Json;
-
+using System.Collections.Generic;
+using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using System.IO;
-using System.Collections.Generic;
+using NUnit.Framework;
+using Newtonsoft.Json;
 
 namespace Tests.Core
 {
@@ -81,10 +80,6 @@ namespace Tests.Core
 			Assert.AreEqual (newcat.Tags.Count, 1);
 			Assert.AreEqual (newcat.Tags[0].Value, "foo");
 			Assert.AreEqual (newcat.Tags[0].Group, "bar");
-		}
-		
-		public static void Main (string [] args)
-		{
 		}
 	}
 }
