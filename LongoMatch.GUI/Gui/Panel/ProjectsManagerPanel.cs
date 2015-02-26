@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Panel
 		List<ProjectDescription> selectedProjects;
 		IDatabase DB;
 		IGUIToolkit gkit;
+		bool edited;
 
 		public ProjectsManagerPanel (Project openedProject)
 		{
@@ -83,6 +84,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.ShowList = true;
 
 			SetStyle ();
+			edited = true;
 		}
 
 		void SetStyle ()
@@ -96,10 +98,24 @@ namespace LongoMatch.Gui.Panel
 			videoslabel.ModifyFont (desc);
 		}
 
+		void SaveLoadedProject (bool force)
+		{
+			if (loadedProject != null) {
+				if (edited) {
+					string msg = Catalog.GetString ("Do you want to save the current template");
+					if (!Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+						return;
+					}
+				}
+				DB.UpdateProject (loadedProject);
+				projectlistwidget1.UpdateProject (loadedProject.Description);
+				edited = false;
+			}
+		}
+
 		void LoadProject (Project project)
 		{
 			ProjectDescription pd = project.Description;
-			MediaFile f = pd.FileSet.GetAngle (MediaFileAngle.Angle1);
 			
 			loadedProject = null;
 			gamedescriptionheader1.ProjectDescription = pd;
@@ -116,21 +132,7 @@ namespace LongoMatch.Gui.Panel
 			videofileinfo3.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle3);
 			videofileinfo4.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle4);
 			projectbox.Visible = true;
-		}
-
-		void UpdateFile (MediaFileChooser mediafilechooser, MediaFile file, MediaFileAngle view,
-		                 Gtk.Image image, Label label)
-		{
-			mediafilechooser.MediaFile = file;
-			if (file != null) {
-				loadedProject.Description.FileSet.SetAngle (view, file);
-				image.Pixbuf = file.Preview.Value;
-				label.Markup = file.Description;
-			} else {
-				loadedProject.Description.FileSet.SetAngle (view, null);
-				image.Pixbuf = null;
-				label.Markup = null;
-			}
+			edited = false;
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
@@ -158,10 +160,12 @@ namespace LongoMatch.Gui.Panel
 					desctextview.Buffer.GetText(desctextview.Buffer.StartIter,
 					                            desctextview.Buffer.EndIter,true);
 			}
+			edited = true;
 		}
 
 		void HandleProjectsSelected (List<ProjectDescription> projects)
 		{
+			SaveLoadedProject (false);
 			rbox.Visible = true;
 			savebutton.Sensitive = projects.Count == 1;
 			exportbutton.Sensitive = projects.Count == 1;
@@ -182,10 +186,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSaveClicked (object sender, EventArgs e)
 		{
-			if (loadedProject != null) {
-				DB.UpdateProject (loadedProject);
-				projectlistwidget1.UpdateProject (loadedProject.Description);
-			}
+			SaveLoadedProject (true);
 		}
 
 		void HandleExportClicked (object sender, EventArgs e)
@@ -209,6 +210,7 @@ namespace LongoMatch.Gui.Panel
 				return;
 
 			loadedProject.Description.MatchDate = datepicker.Date;
+			edited = true;
 		}
 
 		void HandleDeleteClicked (object sender, EventArgs e)
