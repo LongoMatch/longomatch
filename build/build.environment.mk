@@ -21,6 +21,7 @@ LINK_GTK = $(GTKSHARP_LIBS)
 LINK_GCONF = $(GCONFSHARP_LIBS)
 LINK_DB40 = $(DB4O_LIBS)
 LINK_JSON = $(JSON_LIBS)
+LINK_NUNIT = $(NUNIT_LIBS)
 LINK_OSXYPLOT = -r:$(DIR_BIN)/OxyPlotMono.dll
 LINK_LONGOMATCH_ADDINS = -r:$(DIR_BIN)/LongoMatch.Addins.dll
 LINK_LONGOMATCH_CORE = -r:$(DIR_BIN)/LongoMatch.Core.dll
@@ -166,6 +167,10 @@ REF_DEP_LONGOMATCH_PLUGINS_STATS = \
                      $(LINK_LONGOMATCH_ADDINS)
 
 
+REF_DEP_TESTS = \
+                     $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_SERVICES) \
+                     $(LINK_NUNIT)
 
 DIR_BIN = $(top_builddir)/bin
 

@@ -29,6 +29,10 @@ if WITH_MIGRATION_TOOL
 SUBDIRS += LongoMatch.Migration
 endif
 
+if ENABLE_TESTS
+SUBDIRS += Tests
+endif
+
 DISTCLEANFILES = 	intltool-extract\
 			intltool-merge\
 			intltool-update

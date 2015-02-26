@@ -112,8 +112,6 @@ AM_CONDITIONAL(OSTYPE_LINUX, test x$ostype = xLinux)
 AC_SUBST(GMCS_FLAGS, ["$GMCS_FLAGS"])
 AC_MSG_RESULT($ostype)
 
-AM_CONDITIONAL(ENABLE_TESTS, test x = y)
-
 dnl package checks, per config
 
 AC_CONFIG_FILES([env], [chmod +x env])
@@ -153,6 +151,7 @@ LongoMatch/Makefile
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
+Tests/Makefile
 tools/deb-pkg.sh
 
 data/Makefile

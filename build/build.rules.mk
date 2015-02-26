@@ -19,11 +19,6 @@ ASSEMBLY_FILE := $(top_builddir)/$(BUILD_DIR_RESOLVED)/$(ASSEMBLY).$(ASSEMBLY_EX
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
-if ENABLE_TESTS
-    LINK += " $(NUNIT_LIBS)"
-    ENABLE_TESTS_FLAG = "-define:ENABLE_TESTS"
-endif
-
 FILTERED_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE))
 DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
 
