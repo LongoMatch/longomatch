@@ -82,7 +82,7 @@ namespace LongoMatch.Core.Store
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
 				byte y = c.Y;
 				c.Y = (byte)(Math.Min (y + 50, 255));
-				return YCbCrColor.ColorFromYCbCr (c);
+				return c.RGBColor ();
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace LongoMatch.Core.Store
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
 				byte y = c.Y;
 				c.Y = (byte)(Math.Max (y - 50, 0));
-				return YCbCrColor.ColorFromYCbCr (c);
+				return c.RGBColor ();
 			}
 		}
 	}

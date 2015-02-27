@@ -161,12 +161,12 @@ namespace LongoMatch.Core.Common
 			return new YCbCrColor (Y, Cb, Cr);
 		}
 
-		public static Color ColorFromYCbCr (YCbCrColor c) {
+		public Color RGBColor () {
 			double r, g, b;
 
-			r = (1.164 * (c.Y - 16) + 1.596 * (c.Cr - 128));
-			g = (1.164 * (c.Y - 16) - 0.392 * (c.Cb - 128) - 0.813 * (c.Cr - 128));
-			b = (1.164 * (c.Y - 16) + 2.017 * (c.Cb - 128));
+			r = (1.164 * (Y - 16) + 1.596 * (Cr - 128));
+			g = (1.164 * (Y - 16) - 0.392 * (Cb - 128) - 0.813 * (Cr - 128));
+			b = (1.164 * (Y - 16) + 2.017 * (Cb - 128));
 
 			return new Color (
 				(byte) Math.Max(0, Math.Min (r, 255)),
