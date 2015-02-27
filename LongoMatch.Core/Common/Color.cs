@@ -91,7 +91,7 @@ namespace LongoMatch.Core.Common
 
 		static public Color Parse (string colorHex)
 		{
-			byte r, g, b, a=Byte.MaxValue;
+			byte r, g, b, a = Byte.MaxValue;
 			
 			if (!colorHex.StartsWith ("#")) {
 				return null;
@@ -99,11 +99,17 @@ namespace LongoMatch.Core.Common
 			if (colorHex.Length != 7 && colorHex.Length != 9) {
 				return null;
 			}
-			r = Byte.Parse (colorHex.Substring (1, 2), NumberStyles.HexNumber);
-			g = Byte.Parse (colorHex.Substring (3, 2), NumberStyles.HexNumber);
-			b = Byte.Parse (colorHex.Substring (5, 2), NumberStyles.HexNumber);
-			if (colorHex.Length == 9) {
-				a = Byte.Parse (colorHex.Substring (7, 2), NumberStyles.HexNumber);
+			
+			try {
+				r = Byte.Parse (colorHex.Substring (1, 2), NumberStyles.HexNumber);
+				g = Byte.Parse (colorHex.Substring (3, 2), NumberStyles.HexNumber);
+				b = Byte.Parse (colorHex.Substring (5, 2), NumberStyles.HexNumber);
+				if (colorHex.Length == 9) {
+					a = Byte.Parse (colorHex.Substring (7, 2), NumberStyles.HexNumber);
+				}
+			} catch (FormatException ex) {
+				Log.Exception (ex);
+				return null;
 			}
 			return new Color (r, g, b, a);
 		}
