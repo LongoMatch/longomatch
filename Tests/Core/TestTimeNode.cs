@@ -16,8 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
 using LongoMatch.Core.Store;
+using NUnit.Framework;
 
 namespace Tests.Core
 {

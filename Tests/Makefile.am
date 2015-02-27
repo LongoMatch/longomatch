@@ -3,12 +3,14 @@ TARGET = library
 
 LINK = $(REF_DEP_TESTS)
 
-SOURCES = Core/TestTime.cs \
+SOURCES = Core/TestColor.cs \
+	Core/TestImage.cs \
+	Core/TestTime.cs \
 	Core/TestTimeNode.cs \
 	Core/TestTimelineEvent.cs \
 	Utils.cs
 
-RESOURCES = 
+RESOURCES = Core/dibujo.svg
 
 include $(top_srcdir)/build/build.mk
 

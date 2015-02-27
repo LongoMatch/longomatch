@@ -44,6 +44,8 @@
     <Compile Include="Core\TestTimelineEvent.cs" />
     <Compile Include="Core\TestTimeNode.cs" />
     <Compile Include="Core\TestTime.cs" />
+    <Compile Include="Core\TestColor.cs" />
+    <Compile Include="Core\TestImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
@@ -54,5 +56,10 @@
       <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
       <Name>LongoMatch.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Core\dibujo.svg">
+      <LogicalName>dibujo.svg</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
