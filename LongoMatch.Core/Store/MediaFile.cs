@@ -132,24 +132,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[JsonIgnore]
-		public string Description {
-			get {
-				if (FilePath == Constants.FAKE_PROJECT) {
-					return Catalog.GetString ("No video file associated");
-				} else {
-					string desc = String.Format ("<b>File path</b>: {0}\n", FilePath);
-					desc += String.Format ("<b>Format</b>: {0}x{1} @ {2}fps\n", VideoWidth,
-					                       VideoHeight, Fps);
-					desc += String.Format ("<b>Duration</b>: {0}\n", Duration.ToSecondsString ());
-					desc += String.Format ("<b>Video Codec</b>: {0}\n", VideoCodec);
-					desc += String.Format ("<b>Audio Codec</b>: {0}\n", AudioCodec);
-					desc += String.Format ("<b>Container</b>: {0}\n", Container);
-					return desc;
-				}
-			}
-		}
-
 		public bool Exists () {
 			return System.IO.File.Exists (FilePath);
 		}
