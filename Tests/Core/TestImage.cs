@@ -27,34 +27,11 @@ namespace Tests.Core
 	{
 		Image img;
 		
-		Image LoadFromFile (bool scaled = false)
-		{
-			Image img = null;
-			string tmpFile = Path.GetTempFileName ();
-
-			using (Stream resource = GetType().Assembly.GetManifestResourceStream("dibujo.svg")) {
-				using (Stream output = File.OpenWrite(tmpFile)) {
-					resource.CopyTo (output);
-				}
-			}
-			try {
-				if (!scaled) {
-					img = Image.LoadFromFile (tmpFile);
-				} else {
-					img = Image.LoadFromFile (tmpFile, 20, 20);
-				}
-			} catch (Exception ex) {
-				Assert.Fail (ex.Message);
-			} finally {
-				File.Delete (tmpFile);
-			}
-			return img;
-		}
-
+		
 		[SetUp()]
-		public void LoadFromFile ()
+		public void LoadImageFromFile ()
 		{
-			img = LoadFromFile (false);
+			img = Utils.LoadImageFromFile (false);
 		}
 
 		[Test()]
@@ -69,7 +46,7 @@ namespace Tests.Core
 		{
 			Assert.AreEqual (img.Width, 16);
 			Assert.AreEqual (img.Height, 16);
-			img = LoadFromFile (true);
+			img = Utils.LoadImageFromFile (true);
 			Assert.AreEqual (img.Width, 20);
 			Assert.AreEqual (img.Height, 20);
 		}
@@ -121,7 +98,7 @@ namespace Tests.Core
 		[Test()]
 		public void TestComposite ()
 		{
-			Image img2 = LoadFromFile (true);
+			Image img2 = Utils.LoadImageFromFile (true);
 			Image img3 = Image.Composite (img2, img);
 			Assert.AreEqual (img3.Width, 20);
 			Assert.AreEqual (img3.Height, 20);

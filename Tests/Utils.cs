@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Tests
 {
@@ -65,6 +66,30 @@ namespace Tests
 				Console.WriteLine (newJsonString);
 			}
 			Assert.AreEqual (jsonString, newJsonString);
+		}
+		
+		public static Image LoadImageFromFile (bool scaled = false)
+		{
+			Image img = null;
+			string tmpFile = Path.GetTempFileName ();
+
+			using (Stream resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("dibujo.svg")) {
+				using (Stream output = File.OpenWrite(tmpFile)) {
+					resource.CopyTo (output);
+				}
+			}
+			try {
+				if (!scaled) {
+					img = Image.LoadFromFile (tmpFile);
+				} else {
+					img = Image.LoadFromFile (tmpFile, 20, 20);
+				}
+			} catch (Exception ex) {
+				Assert.Fail (ex.Message);
+			} finally {
+				File.Delete (tmpFile);
+			}
+			return img;
 		}
 	}
 }

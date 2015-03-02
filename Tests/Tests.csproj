@@ -46,6 +46,9 @@
     <Compile Include="Core\TestTime.cs" />
     <Compile Include="Core\TestColor.cs" />
     <Compile Include="Core\TestImage.cs" />
+    <Compile Include="Core\TestCoordinates.cs" />
+    <Compile Include="Core\TestDashboardButton.cs" />
+    <Compile Include="Core\TestFrameDrawing.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
