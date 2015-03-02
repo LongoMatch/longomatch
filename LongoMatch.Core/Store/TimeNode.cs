@@ -110,6 +110,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
 		public string RateString {
 			get {
 				return String.Format ("{0}X", Rate);
