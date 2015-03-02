@@ -136,7 +136,7 @@ namespace LongoMatch.Core.Store
 
 		public override HotKey HotKey {
 			get {
-				return Tag.HotKey;
+				return Tag != null ? Tag.HotKey : null;
 			}
 			set {
 				if (Tag != null) {
