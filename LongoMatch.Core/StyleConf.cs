@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Common
 {
@@ -152,9 +153,25 @@ namespace LongoMatch.Core.Common
 		
 		public Color PaletteText { get; set; }
 
+		public StyleConf ()
+		{
+			HomeTeamColor = Color.Red;
+			AwayTeamColor = Color.Blue;
+			PaletteBackground = Color.Black;
+			PaletteBackgroundLight = Color.Black;
+			PaletteBackgroundDark = Color.Black;
+			PaletteBackgroundDarkBright = Color.Black;
+			PaletteWidgets = Color.Black;
+			PaletteSelected = Color.Black;
+			PaletteActive = Color.Black;
+			PaletteTool = Color.Black;
+			PaletteText = Color.Black;
+		}
+		
 		public static StyleConf Load (string filename)
 		{
 			return Serializer.Load <StyleConf> (filename);
 		}
+		
 	}
 }

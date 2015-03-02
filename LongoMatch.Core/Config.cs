@@ -47,9 +47,9 @@ namespace LongoMatch
 		public static IDataBaseManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
 		
-		public static StyleConf Style;
-
+		static StyleConf style;
 		static ConfigState state;
+
 
 		public static void Init () {
 			string home;
@@ -116,6 +116,18 @@ namespace LongoMatch
 			}
 		}
 		
+		public static StyleConf Style {
+			get {
+				if (style == null) {
+					style = new StyleConf ();
+				}
+				return style;
+			}
+			set {
+				style = value;
+			}
+		}
+
 		public static string ConfigFile {
 			get {
 				string filename = Constants.SOFTWARE_NAME.ToLower() + "-1.0.config";
