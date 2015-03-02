@@ -45,7 +45,11 @@ namespace LongoMatch.Core.Store
 
 		public Image Preview {
 			get {
-				return Files[MediaFileAngle.Angle1].Preview;
+				if (Files.Count == 0) {
+					return null;
+				} else {
+					return Files[MediaFileAngle.Angle1].Preview;
+				}
 			}
 		}
 
