@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public Boolean Defined {
 			get {
-				return (Key != -1 || Modifier != -1);
+				return (Key != -1);
 			}
 		}
 		#endregion
