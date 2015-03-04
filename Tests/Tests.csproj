@@ -64,6 +64,7 @@
     <Compile Include="Core\Store\Drawables\TestRectangle.cs" />
     <Compile Include="Core\Store\Drawables\TestText.cs" />
     <Compile Include="Core\Common\TestImage.cs" />
+    <Compile Include="Core\Store\Templates\TestTeamTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
