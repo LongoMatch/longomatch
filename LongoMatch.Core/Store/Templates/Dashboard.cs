@@ -53,9 +53,13 @@ namespace LongoMatch.Core.Store.Templates
 		/// Creates a new template
 		/// </summary>
 		public Dashboard() {
-			FieldBackground = Config.FieldBackground;
-			HalfFieldBackground = Config.HalfFieldBackground;
-			GoalBackground = Config.GoalBackground;
+			try {
+				FieldBackground = Config.FieldBackground;
+				HalfFieldBackground = Config.HalfFieldBackground;
+				GoalBackground = Config.GoalBackground;
+			} catch {
+				/* Ingore for unit tests */
+			}
 			ID = Guid.NewGuid ();
 			List = new List<DashboardButton>();
 		}

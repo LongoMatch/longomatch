@@ -36,19 +36,25 @@ namespace Tests.Core
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 			                              "aac", 320, 240, 1.3, null);
 			ProjectDescription pd = new ProjectDescription ();
-			pd.File = mf;
+			pd.FileSet = new MediaFileSet ();
+			pd.FileSet.SetAngle (MediaFileAngle.Angle1, mf);
 			p.Description = pd;
+			p.UpdateEventTypesAndTimers ();
+			
+			AnalysisEventButton b = p.Dashboard.List[0] as AnalysisEventButton;
 			
 			/* No tags, no players */
-			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[0]};
+			pl = new TimelineEvent {EventType = b.EventType};
 			p.Timeline.Add (pl);
 			/* tags, but no players */
-			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[1]};
-			pl.Tags.Add (p.Dashboard.CategoriesList[1].Tags[0]);
+			b = p.Dashboard.List[1] as AnalysisEventButton;
+			pl = new TimelineEvent {EventType = b.EventType};
+			pl.Tags.Add (b.AnalysisEventType.Tags[0]);
 			p.Timeline.Add (pl);
 			/* tags and players */
-			pl = new TimelineEvent {EventType = p.Dashboard.CategoriesList[2]};
-			pl.Tags.Add (p.Dashboard.CategoriesList[2].Tags[1]);
+			b = p.Dashboard.List[2] as AnalysisEventButton;
+			pl = new TimelineEvent {EventType = b.EventType};
+			pl.Tags.Add (b.AnalysisEventType.Tags[1]);
 			pl.Players.Add (p.LocalTeamTemplate.List[0]);
 			p.Timeline.Add (pl);
 			return p;
@@ -60,7 +66,7 @@ namespace Tests.Core
 			Project p = CreateProject ();
 			EventsFilter filter = new EventsFilter (p);
 			
-			Assert.AreEqual (17, filter.VisibleCategories.Count);
+			Assert.AreEqual (13, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
@@ -71,32 +77,32 @@ namespace Tests.Core
 			Project p = CreateProject ();
 			EventsFilter filter = new EventsFilter (p);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
-			Assert.AreEqual (1, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[0], true);
+			Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[1], true);
-			Assert.AreEqual (2, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[1], true);
+			Assert.AreEqual (2, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 
-			filter.FilterEventType (p.Dashboard.CategoriesList[2], true);
-			Assert.AreEqual (3, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[2], true);
+			Assert.AreEqual (3, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
-			Assert.AreEqual (3, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[0], true);
+			Assert.AreEqual (3, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[0], false);
-			Assert.AreEqual (2, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[0], false);
+			Assert.AreEqual (2, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 
-			filter.FilterEventType (p.Dashboard.CategoriesList[1], false);
-			Assert.AreEqual (1, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[1], false);
+			Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[2], false);
-			Assert.AreEqual (17, filter.VisibleCategories.Count);
+			filter.FilterEventType (p.EventTypes[2], false);
+			Assert.AreEqual (13, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
 		
@@ -105,44 +111,51 @@ namespace Tests.Core
 		{
 			Project p = CreateProject ();
 			EventsFilter filter = new EventsFilter (p);
+			AnalysisEventType a;
 			
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
-			Assert.AreEqual (1, filter.VisibleCategories.Count);
+			a = p.EventTypes[0] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[0], true);
+			Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (0, filter.VisiblePlays.Count);
 
-			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], true);
-			Assert.AreEqual (2, filter.VisibleCategories.Count);
+			a = p.EventTypes[1] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[0], true);
+			Assert.AreEqual (2, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
-			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], true);
-			Assert.AreEqual (3, filter.VisibleCategories.Count);
+			a = p.EventTypes[2] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[0], true);
+			Assert.AreEqual (3, filter.VisibleEventTypes.Count);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 
-			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], true);
+			filter.FilterEventTag (a, a.Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			
-			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], false);
+			a = p.EventTypes[0] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[0], false);
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			
-			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[0], false);
-			filter.FilterEventTag (p.Dashboard.CategoriesList[1], p.Dashboard.CategoriesList[1].Tags[1], true);
+			a = p.EventTypes[1] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[0], false);
+			filter.FilterEventTag (a, a.Tags[1], true);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
 			
 			/* One tag filtered now, but not the one of this play */
-			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[1], false);
+			a = p.EventTypes[2] as AnalysisEventType;
+			filter.FilterEventTag (a, a.Tags[1], false);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			/* No more tags filtered, if the category matches we are ok */
-			filter.FilterEventTag (p.Dashboard.CategoriesList[2], p.Dashboard.CategoriesList[2].Tags[0], false);
+			filter.FilterEventTag (a, a.Tags[0], false);
 			Assert.AreEqual (2, filter.VisiblePlays.Count);
 			Assert.AreEqual (p.Timeline[0], filter.VisiblePlays[0]);
 			Assert.AreEqual (p.Timeline[2], filter.VisiblePlays[1]);
 
-			filter.ClearCategoriesFilter ();
+			filter.ClearAll ();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 		}
 		
@@ -172,7 +185,7 @@ namespace Tests.Core
 		}
 		
 		[Test()]
-		public void TestClearFilters ()
+		public void TestClearAll ()
 		{
 			Project p = CreateProject ();
 			EventsFilter filter = new EventsFilter (p);
@@ -180,23 +193,23 @@ namespace Tests.Core
 			filter.FilterPlayer (p.LocalTeamTemplate.List[0], true);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
 			Assert.AreEqual (1, filter.VisiblePlayers.Count);
-			filter.ClearPlayersFilter();
+			filter.ClearAll();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
 			Assert.AreEqual (10, filter.VisiblePlayers.Count);
 			
-			filter.FilterEventType (p.Dashboard.CategoriesList[0], true);
+			filter.FilterEventType (p.EventTypes[0], true);
 			Assert.AreEqual (1, filter.VisiblePlays.Count);
-			Assert.AreEqual (1, filter.VisibleCategories.Count);
-			filter.ClearCategoriesFilter ();
-			Assert.AreEqual (3, filter.VisiblePlays.Count);
-			Assert.AreEqual (17, filter.VisibleCategories.Count);
-			
-			filter.FilterEventTag (p.Dashboard.CategoriesList[0], p.Dashboard.CategoriesList[0].Tags[0], true);
-			Assert.AreEqual (0, filter.VisiblePlays.Count);
-			Assert.AreEqual (1, filter.VisibleCategories.Count);
+			Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 			filter.ClearAll ();
 			Assert.AreEqual (3, filter.VisiblePlays.Count);
-			Assert.AreEqual (17, filter.VisibleCategories.Count);
+			Assert.AreEqual (13, filter.VisibleEventTypes.Count);
+			
+			filter.FilterEventTag (p.EventTypes[0], (p.EventTypes[0] as AnalysisEventType).Tags[0], true);
+			Assert.AreEqual (0, filter.VisiblePlays.Count);
+			Assert.AreEqual (1, filter.VisibleEventTypes.Count);
+			filter.ClearAll ();
+			Assert.AreEqual (3, filter.VisiblePlays.Count);
+			Assert.AreEqual (13, filter.VisibleEventTypes.Count);
 		}
 	}
 }

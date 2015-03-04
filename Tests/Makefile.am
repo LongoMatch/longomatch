@@ -22,6 +22,8 @@ SOURCES = Core/Drawables/TestAngle.cs \
 	Core/TestMediaFile.cs \
 	Core/TestMediaFileSet.cs \
 	Core/TestPenaltyCard.cs \
+	Core/TestPlayer.cs \
+	Core/TestPlaysFilter.cs \
 	Core/TestPoint.cs \
 	Core/TestScore.cs \
 	Core/TestTime.cs \

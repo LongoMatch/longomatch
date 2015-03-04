@@ -65,6 +65,8 @@
     <Compile Include="Core\Drawables\TestQuadrilateral.cs" />
     <Compile Include="Core\Drawables\TestRectangle.cs" />
     <Compile Include="Core\Drawables\TestText.cs" />
+    <Compile Include="Core\TestPlayer.cs" />
+    <Compile Include="Core\TestPlaysFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

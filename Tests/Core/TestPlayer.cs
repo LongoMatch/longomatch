@@ -32,7 +32,7 @@ namespace Tests.Core
 			Player player = new Player {Name="andoni", Position="runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
-				Playing = true};
+				Playing = true, Mail = "test@test"};
 				
 			Utils.CheckSerialization (player);
 			
@@ -45,6 +45,7 @@ namespace Tests.Core
 			Assert.AreEqual (player.Height, newPlayer.Height);
 			Assert.AreEqual (player.Weight, newPlayer.Weight);
 			Assert.AreEqual (player.Playing, newPlayer.Playing);
+			Assert.AreEqual (player.Mail, newPlayer.Mail);
 		}
 		
 		[Test()]
@@ -54,12 +55,10 @@ namespace Tests.Core
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true};
-				
-			player.Photo = null;
-			Assert.AreEqual (player.Photo, null);
-			/* FIXME: test with real image */
-			player.Photo = null;
+			player.Photo = Utils.LoadImageFromFile();
 			Utils.CheckSerialization (player);
+			Assert.AreEqual (player.Photo.Width, 16);
+			Assert.AreEqual (player.Photo.Height, 16);
 		}
 	}
 }

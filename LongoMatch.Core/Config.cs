@@ -31,10 +31,10 @@ namespace LongoMatch
 {
 	public class Config
 	{
-		public static string homeDirectory;
-		public static string baseDirectory;
-		public static string configDirectory;
-		public static string dataDir;
+		public static string homeDirectory = ".";
+		public static string baseDirectory = ".";
+		public static string configDirectory = ".";
+		public static string dataDir = ".";
 		
 		/* State */
 		public static IGUIToolkit GUIToolkit;

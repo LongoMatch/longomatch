@@ -34,15 +34,20 @@ namespace LongoMatch.Core.Store.Templates
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;
 		
-		public TeamTemplate () {
-			TeamName = Catalog.GetString("Team");
+		public TeamTemplate ()
+		{
+			TeamName = Catalog.GetString ("Team");
 			if (Formation == null) {
 				FormationStr = "1-4-3-3";
 			}
-			ID = Guid.NewGuid();
-			List = new List<Player>();
+			ID = Guid.NewGuid ();
+			List = new List<Player> ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
-			Shield = Image.LoadFromFile (path);
+			try {
+				Shield = Image.LoadFromFile (path);
+			} catch {
+				/* Ignore for unit tests */
+			}
 			ActiveColor = 0;
 			Colors = new Color [2];
 			Colors[0] = Color.Blue1;
