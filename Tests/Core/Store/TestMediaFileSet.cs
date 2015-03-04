@@ -21,7 +21,7 @@ using NUnit.Framework;
 using LongoMatch.Core.Common;
 using System.IO;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestMediaFileSet

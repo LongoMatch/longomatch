@@ -20,7 +20,7 @@ using NUnit.Framework;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestPoint

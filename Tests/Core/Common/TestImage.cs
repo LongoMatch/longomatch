@@ -20,7 +20,7 @@ using System.IO;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
 
-namespace Tests.Core
+namespace Tests.Core.Common
 {
 	[TestFixture()]
 	public class TestImage

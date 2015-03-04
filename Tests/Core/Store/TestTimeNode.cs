@@ -19,7 +19,7 @@ using System;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestTimeNode

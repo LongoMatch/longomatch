@@ -21,7 +21,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Common;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestPlaysFilter

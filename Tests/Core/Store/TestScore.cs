@@ -20,7 +20,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestScore

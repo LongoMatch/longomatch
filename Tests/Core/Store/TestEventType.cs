@@ -23,7 +23,7 @@ using LongoMatch.Core.Store;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestEventType

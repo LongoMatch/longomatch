@@ -20,7 +20,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestPenaltyCard

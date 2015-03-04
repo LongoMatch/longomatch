@@ -19,7 +19,7 @@ using NUnit.Framework;
 using System;
 using LongoMatch.Core.Store;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestHotKey

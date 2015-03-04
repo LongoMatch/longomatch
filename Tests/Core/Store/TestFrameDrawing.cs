@@ -22,7 +22,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 using NUnit.Framework;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
 	[TestFixture()]
 	public class TestFrameDrawing
