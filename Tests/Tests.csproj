@@ -49,6 +49,13 @@
     <Compile Include="Core\TestCoordinates.cs" />
     <Compile Include="Core\TestDashboardButton.cs" />
     <Compile Include="Core\TestFrameDrawing.cs" />
+    <Compile Include="Core\TestEventType.cs" />
+    <Compile Include="Core\TestHotkey.cs" />
+    <Compile Include="Core\TestMediaFile.cs" />
+    <Compile Include="Core\TestMediaFileSet.cs" />
+    <Compile Include="Core\TestPenaltyCard.cs" />
+    <Compile Include="Core\TestScore.cs" />
+    <Compile Include="Core\TestPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

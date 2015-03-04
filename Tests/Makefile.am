@@ -6,8 +6,15 @@ LINK = $(REF_DEP_TESTS)
 SOURCES = Core/TestColor.cs \
 	Core/TestCoordinates.cs \
 	Core/TestDashboardButton.cs \
+	Core/TestEventType.cs \
 	Core/TestFrameDrawing.cs \
+	Core/TestHotkey.cs \
 	Core/TestImage.cs \
+	Core/TestMediaFile.cs \
+	Core/TestMediaFileSet.cs \
+	Core/TestPenaltyCard.cs \
+	Core/TestPoint.cs \
+	Core/TestScore.cs \
 	Core/TestTime.cs \
 	Core/TestTimeNode.cs \
 	Core/TestTimelineEvent.cs \

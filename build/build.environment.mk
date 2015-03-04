@@ -170,6 +170,7 @@ REF_DEP_LONGOMATCH_PLUGINS_STATS = \
 REF_DEP_TESTS = \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_SERVICES) \
+                     $(LINK_JSON) \
                      $(LINK_NUNIT)
 
 DIR_BIN = $(top_builddir)/bin
