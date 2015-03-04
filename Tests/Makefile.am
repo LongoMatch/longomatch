@@ -3,7 +3,16 @@ TARGET = library
 
 LINK = $(REF_DEP_TESTS)
 
-SOURCES = Core/TestColor.cs \
+SOURCES = Core/Drawables/TestAngle.cs \
+	Core/Drawables/TestCross.cs \
+	Core/Drawables/TestDrawable.cs \
+	Core/Drawables/TestEllipse.cs \
+	Core/Drawables/TestLine.cs \
+	Core/Drawables/TestMultipoints.cs \
+	Core/Drawables/TestQuadrilateral.cs \
+	Core/Drawables/TestRectangle.cs \
+	Core/Drawables/TestText.cs \
+	Core/TestColor.cs \
 	Core/TestCoordinates.cs \
 	Core/TestDashboardButton.cs \
 	Core/TestEventType.cs \

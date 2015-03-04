@@ -76,6 +76,18 @@ namespace Tests.Core
 			Assert.AreEqual ((double)p1.Y * 100, p2.Y);
 		}
 
+		[Test()]
+		public void TestOperators ()
+		{
+			Point p1 = new Point (2, 4);
+			Point p2 = new Point (4, 5);
+			Point p3 = p1 + p2;
+			Assert.AreEqual (p3.X, 6);
+			Assert.AreEqual (p3.Y, 9);
+			p3 = p1 - p2;
+			Assert.AreEqual (p3.X, -2);
+			Assert.AreEqual (p3.Y, -1);
+		}
 	}
 }
 

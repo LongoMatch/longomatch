@@ -56,6 +56,15 @@
     <Compile Include="Core\TestPenaltyCard.cs" />
     <Compile Include="Core\TestScore.cs" />
     <Compile Include="Core\TestPoint.cs" />
+    <Compile Include="Core\Drawables\TestAngle.cs" />
+    <Compile Include="Core\Drawables\TestCross.cs" />
+    <Compile Include="Core\Drawables\TestDrawable.cs" />
+    <Compile Include="Core\Drawables\TestEllipse.cs" />
+    <Compile Include="Core\Drawables\TestLine.cs" />
+    <Compile Include="Core\Drawables\TestMultipoints.cs" />
+    <Compile Include="Core\Drawables\TestQuadrilateral.cs" />
+    <Compile Include="Core\Drawables\TestRectangle.cs" />
+    <Compile Include="Core\Drawables\TestText.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

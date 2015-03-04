@@ -68,10 +68,10 @@ namespace Tests.Core.Drawables
 			ymax = 8;
 			
 			MultiPoints m = new MultiPoints (l);
-			Assert.AreEqual (new Point (xmin, ymax), m.TopLeft);
-			Assert.AreEqual (new Point (xmax, ymax), m.TopRight);
-			Assert.AreEqual (new Point (xmax, ymin), m.BottomRight);
-			Assert.AreEqual (new Point (xmin, ymin), m.BottomLeft);
+			Assert.AreEqual (new Point (xmin, ymin), m.TopLeft);
+			Assert.AreEqual (new Point (xmax, ymin), m.TopRight);
+			Assert.AreEqual (new Point (xmax, ymax), m.BottomRight);
+			Assert.AreEqual (new Point (xmin, ymax), m.BottomLeft);
 		}
 		
 		[Test()]

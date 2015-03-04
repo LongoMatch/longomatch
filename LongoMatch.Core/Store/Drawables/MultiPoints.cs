@@ -81,10 +81,10 @@ namespace LongoMatch.Core.Store.Drawables
 			xmax = px[px.Count-1].X;
 			ymin = py[0].Y;
 			ymax = py[py.Count-1].Y; 
-			BottomLeft = new Point (xmin, ymin);
-			TopLeft = new Point (xmin, ymax);
-			TopRight = new Point (xmax, ymax);
-			BottomRight = new Point (xmax, ymin);
+			TopLeft = new Point (xmin, ymin);
+			TopRight = new Point (xmax, ymin);
+			BottomLeft = new Point (xmin, ymax);
+			BottomRight = new Point (xmax, ymax);
 		} 
 	}
 }
