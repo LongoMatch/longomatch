@@ -67,6 +67,11 @@ SHAMROCK_FIND_MONO_RUNTIME
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
+dnl Covem (optional)
+AC_PATH_PROG(COVEM, covem, no)
+AC_PATH_PROG(COV_GTK, cov-gtk, no)
+AM_CONDITIONAL(HAVE_COVEM, test x$COVEM != xno)
+
 dnl package checks, common for all configs
 PKG_CHECK_MODULES([GLIBSHARP], [glib-sharp-2.0])
 AC_SUBST(GLIBSHARP_LIBS)

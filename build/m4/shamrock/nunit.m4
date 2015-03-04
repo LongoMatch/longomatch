@@ -15,6 +15,10 @@ AC_DEFUN([SHAMROCK_CHECK_NUNIT],
 		AC_SUBST(NUNIT_LIBS)
 		AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
 
+		AC_PATH_PROG(NUNIT_CONSOLE, nunit-console, no)
+		NUNIT_CONSOLE_EXE=`cat $NUNIT_CONSOLE | tr ' ' '\n' | grep nunit-console.exe`
+		AC_SUBST(NUNIT_CONSOLE_EXE)
+
 		if test "x$do_tests" = "xno"; then
 			PKG_CHECK_MODULES(NUNIT, mono-nunit >= 2.4,
 				do_tests="yes", do_tests="no")
