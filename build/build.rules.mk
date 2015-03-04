@@ -13,6 +13,7 @@ THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png) $(wildcard $(src
 THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 
 BUILD_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_BUILD_DIR), $(BUILD_DIR)))
+BUILD_DIR_ABS = $(top_builddir)/$(BUILD_DIR_RESOLVED)
 
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE := $(top_builddir)/$(BUILD_DIR_RESOLVED)/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
@@ -20,7 +21,7 @@ ASSEMBLY_FILE := $(top_builddir)/$(BUILD_DIR_RESOLVED)/$(ASSEMBLY).$(ASSEMBLY_EX
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
 FILTERED_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE))
-DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
+DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep '$(BUILD_DIR_ABS)')
 
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
@@ -61,7 +62,7 @@ build-debug:
 $(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
-	@mkdir -p $(top_builddir)/bin/migration
+	@mkdir -p $(BUILD_DIR_ABS)/migration
 	$(AM_V_GEN) $(MCS) \
 		$(GMCS_FLAGS) \
 		$(ASSEMBLY_BUILD_FLAGS) \
@@ -71,7 +72,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 		$(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(ENABLE_ATK_FLAG) \
 		$(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 	@if [ ! -z "$(EXTRA_BUNDLE)" ]; then \
-		cp $(EXTRA_BUNDLE) $(top_builddir)/bin; \
+		cp $(EXTRA_BUNDLE) $(BUILD_DIR_ABS); \
 	fi;
 
 theme-icons: $(THEME_ICONS_SOURCE)

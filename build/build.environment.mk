@@ -6,7 +6,7 @@ MONO_ADDINS_PATH =
 DEFAULT_INSTALL_DIR = $(pkglibdir)
 
 # Build Paths
-DEFAULT_BUILD_DIR = bin
+DEFAULT_BUILD_DIR = bin_sh
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
@@ -173,7 +173,7 @@ REF_DEP_TESTS = \
                      $(LINK_JSON) \
                      $(LINK_NUNIT)
 
-DIR_BIN = $(top_builddir)/bin
+DIR_BIN = $(top_builddir)/$(DEFAULT_BUILD_DIR)
 
 # Cute hack to replace a space with something
 colon:= :
