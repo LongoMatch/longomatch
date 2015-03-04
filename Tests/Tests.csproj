@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F042D024-3283-4E60-9A85-76E6BBBBB2C1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tests</RootNamespace>
@@ -31,42 +29,41 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
-      <Private>False</Private>
+      <Package>nunit</Package>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
-      <Private>False</Private>
       <Package>newtonsoft-json</Package>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Utils.cs" />
-    <Compile Include="Core\TestTimelineEvent.cs" />
-    <Compile Include="Core\TestTimeNode.cs" />
-    <Compile Include="Core\TestTime.cs" />
-    <Compile Include="Core\TestColor.cs" />
-    <Compile Include="Core\TestImage.cs" />
-    <Compile Include="Core\TestCoordinates.cs" />
-    <Compile Include="Core\TestDashboardButton.cs" />
-    <Compile Include="Core\TestFrameDrawing.cs" />
-    <Compile Include="Core\TestEventType.cs" />
-    <Compile Include="Core\TestHotkey.cs" />
-    <Compile Include="Core\TestMediaFile.cs" />
-    <Compile Include="Core\TestMediaFileSet.cs" />
-    <Compile Include="Core\TestPenaltyCard.cs" />
-    <Compile Include="Core\TestScore.cs" />
-    <Compile Include="Core\TestPoint.cs" />
-    <Compile Include="Core\Drawables\TestAngle.cs" />
-    <Compile Include="Core\Drawables\TestCross.cs" />
-    <Compile Include="Core\Drawables\TestDrawable.cs" />
-    <Compile Include="Core\Drawables\TestEllipse.cs" />
-    <Compile Include="Core\Drawables\TestLine.cs" />
-    <Compile Include="Core\Drawables\TestMultipoints.cs" />
-    <Compile Include="Core\Drawables\TestQuadrilateral.cs" />
-    <Compile Include="Core\Drawables\TestRectangle.cs" />
-    <Compile Include="Core\Drawables\TestText.cs" />
-    <Compile Include="Core\TestPlayer.cs" />
-    <Compile Include="Core\TestPlaysFilter.cs" />
+    <Compile Include="Core\Store\TestDashboardButton.cs" />
+    <Compile Include="Core\Store\TestEventType.cs" />
+    <Compile Include="Core\Store\TestFrameDrawing.cs" />
+    <Compile Include="Core\Store\TestHotkey.cs" />
+    <Compile Include="Core\Store\TestMediaFile.cs" />
+    <Compile Include="Core\Store\TestMediaFileSet.cs" />
+    <Compile Include="Core\Store\TestPenaltyCard.cs" />
+    <Compile Include="Core\Store\TestPlayer.cs" />
+    <Compile Include="Core\Store\TestPlaysFilter.cs" />
+    <Compile Include="Core\Store\TestPoint.cs" />
+    <Compile Include="Core\Store\TestScore.cs" />
+    <Compile Include="Core\Store\TestTime.cs" />
+    <Compile Include="Core\Store\TestTimelineEvent.cs" />
+    <Compile Include="Core\Store\TestTimeNode.cs" />
+    <Compile Include="Core\Common\TestColor.cs" />
+    <Compile Include="Core\Store\TestCoordinates.cs" />
+    <Compile Include="Core\Store\Drawables\TestAngle.cs" />
+    <Compile Include="Core\Store\Drawables\TestCross.cs" />
+    <Compile Include="Core\Store\Drawables\TestDrawable.cs" />
+    <Compile Include="Core\Store\Drawables\TestEllipse.cs" />
+    <Compile Include="Core\Store\Drawables\TestLine.cs" />
+    <Compile Include="Core\Store\Drawables\TestMultipoints.cs" />
+    <Compile Include="Core\Store\Drawables\TestQuadrilateral.cs" />
+    <Compile Include="Core\Store\Drawables\TestRectangle.cs" />
+    <Compile Include="Core\Store\Drawables\TestText.cs" />
+    <Compile Include="Core\Common\TestImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
@@ -82,5 +79,10 @@
     <EmbeddedResource Include="Core\dibujo.svg">
       <LogicalName>dibujo.svg</LogicalName>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Store\" />
+    <Folder Include="Core\Common\" />
+    <Folder Include="Core\Store\Templates\" />
   </ItemGroup>
 </Project>
