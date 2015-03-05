@@ -6,6 +6,8 @@ LINK = $(REF_DEP_TESTS)
 SOURCES = Core/Common/TestColor.cs \
 	Core/Common/TestImage.cs \
 	Core/Store/Drawables/TestAngle.cs \
+	Core/Store/Drawables/TestCircle.cs \
+	Core/Store/Drawables/TestCounter.cs \
 	Core/Store/Drawables/TestCross.cs \
 	Core/Store/Drawables/TestDrawable.cs \
 	Core/Store/Drawables/TestEllipse.cs \

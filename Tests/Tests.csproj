@@ -69,6 +69,8 @@
     <Compile Include="Core\Store\TestProjectDescription.cs" />
     <Compile Include="Core\Store\TestTimer.cs" />
     <Compile Include="Core\Store\TestTag.cs" />
+    <Compile Include="Core\Store\Drawables\TestCircle.cs" />
+    <Compile Include="Core\Store\Drawables\TestCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

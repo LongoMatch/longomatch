@@ -20,7 +20,7 @@ using NUnit.Framework;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Common;
 
-namespace Tests.Core.Drawables
+namespace Tests.Core.Store.Drawables
 {
 	[TestFixture()]
 	public class TestRectangle

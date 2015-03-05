@@ -20,7 +20,7 @@ using NUnit.Framework;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
 
-namespace Tests.Core.Drawables
+namespace Tests.Core.Store.Drawables
 {
 	[TestFixture()]
 	public class TestLine
