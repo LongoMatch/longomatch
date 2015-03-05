@@ -8,6 +8,7 @@ NEWS~
 README~
 RELEASE~
 bin
+bin_sh
 compile
 config.guess
 config.log
@@ -71,3 +72,5 @@ tools/deb-pkg.sh
 *test-results.xml
 *.pc
 oneplay-longomatch
+*Result.xml
+*covcfg.*
