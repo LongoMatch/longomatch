@@ -25,7 +25,7 @@ using LongoMatch.Core.Store.Templates;
 namespace Tests.Core
 {
 	[TestFixture()]
-	public class TestCategoriesTemplate
+	public class TestDashboard
 	{
 		[Test()]
 		public void TestSerialization ()
@@ -38,8 +38,8 @@ namespace Tests.Core
 			cat.GamePeriods = new List<string> ();
 			cat.GamePeriods.Add ("1");
 			cat.GamePeriods.Add ("2");
-			cat.List.Add ( new CategoryButton {Name = "cat1"});
-			cat.List.Add ( new CategoryButton {Name = "cat2"});
+			cat.List.Add ( new AnalysisEventButton {Name = "cat1"});
+			cat.List.Add ( new {Name = "cat2"});
 			cat.List.Add ( new CategoryButton {Name = "cat3"});
 			
 			Utils.CheckSerialization (cat);

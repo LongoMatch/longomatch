@@ -20,32 +20,58 @@ using NUnit.Framework;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 
-namespace Tests.Core
+namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestProjectDescription
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, null);
+				               "aac", 320, 240, 1.3, null);
 			ProjectDescription pd = new ProjectDescription ();
 			Utils.CheckSerialization (pd);
 			
-			pd.File = mf;
+			pd.FileSet = new MediaFileSet ();
+			pd.FileSet.SetAngle (MediaFileAngle.Angle1, mf);
 			pd.Competition = "Comp";
-			pd.LastModified = DateTime.Now;
+			pd.Category = "Cat";
+			pd.Group = "Group";
+			pd.Phase = "Phase";
+			pd.Season = "Season";
+			pd.LastModified = DateTime.UtcNow.ToUniversalTime ();
 			pd.LocalGoals = 1;
 			pd.VisitorGoals = 2;
-			pd.MatchDate = DateTime.Now;
-			pd.Season = "Season";
-			
+			pd.MatchDate = DateTime.UtcNow.ToUniversalTime ();
+
 			Utils.CheckSerialization (pd);
 			
-			ProjectDescription newpd = Utils.SerializeDeserialize(pd);
+			ProjectDescription newpd = Utils.SerializeDeserialize (pd);
 			Assert.AreEqual (pd.CompareTo (newpd), 0);
+			Assert.AreEqual (pd.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath,
+				newpd.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
 			Assert.AreEqual (pd.ID, newpd.ID);
+			Assert.AreEqual (pd.Competition, newpd.Competition);
+			Assert.AreEqual (pd.Category, newpd.Category);
+			Assert.AreEqual (pd.Group, newpd.Group);
+			Assert.AreEqual (pd.Phase, newpd.Phase);
+			Assert.AreEqual (pd.Season, newpd.Season);
+			Assert.AreEqual (pd.LocalGoals, newpd.LocalGoals);
+			Assert.AreEqual (pd.VisitorGoals, newpd.VisitorGoals);
+			Assert.AreEqual (pd.MatchDate, newpd.MatchDate);
+		}
+
+		[Test ()]
+		[Ignore("Not implemented")]
+		public void TestSort ()
+		{
+		}
+
+		[Test ()]
+		[Ignore("Not implemented")]
+		public void TestSearch ()
+		{
 		}
 	}
 }

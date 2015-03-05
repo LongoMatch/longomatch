@@ -31,6 +31,11 @@ namespace LongoMatch.Core.Store
 	{
 		DateTime matchDate, lastModified;
 
+		public ProjectDescription ()
+		{
+			MatchDate = LastModified = DateTime.Now;
+		}
+
 		/// <summary>
 		/// Unique ID of the parent project
 		/// </summary>

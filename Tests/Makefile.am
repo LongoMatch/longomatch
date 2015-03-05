@@ -26,10 +26,14 @@ SOURCES = Core/Common/TestColor.cs \
 	Core/Store/TestPlayer.cs \
 	Core/Store/TestPlaysFilter.cs \
 	Core/Store/TestPoint.cs \
+	Core/Store/TestProject.cs \
+	Core/Store/TestProjectDescription.cs \
 	Core/Store/TestScore.cs \
+	Core/Store/TestTag.cs \
 	Core/Store/TestTime.cs \
 	Core/Store/TestTimeNode.cs \
 	Core/Store/TestTimelineEvent.cs \
+	Core/Store/TestTimer.cs \
 	Utils.cs
 
 RESOURCES = Core/dibujo.svg
