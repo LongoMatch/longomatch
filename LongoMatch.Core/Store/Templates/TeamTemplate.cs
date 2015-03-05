@@ -92,7 +92,7 @@ namespace LongoMatch.Core.Store.Templates
 		[JsonIgnore]
 		public Color Color {
 			get {
-				if (ActiveColor <= Colors.Length) {
+				if (ActiveColor > 0 && ActiveColor <= Colors.Length) {
 					return Colors [ActiveColor];
 				} else {
 					ActiveColor = 0;
