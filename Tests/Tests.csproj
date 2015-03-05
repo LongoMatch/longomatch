@@ -31,7 +31,7 @@
     <Reference Include="nunit.framework">
       <Package>nunit</Package>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
     </Reference>
   </ItemGroup>
