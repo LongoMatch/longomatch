@@ -94,7 +94,43 @@ namespace Tests.Core.Store
 			mf.Replace ("Test asset", new MediaFile {Duration = new Time (2001), Name = "Test asset 2"});
 			Assert.AreEqual (mf.Duration.MSeconds, 2001);
 		}
-		
+
+		[Test()]
+		public void TestOrderReplace ()
+		{
+			MediaFileSet mf = new MediaFileSet ();
+
+			mf.Add (new MediaFile ("path1", 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset"));
+			mf.Add (new MediaFile ("path2", 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 2"));
+			mf.Add (new MediaFile ("path3", 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 3"));
+
+			Assert.AreEqual (3, mf.Count);
+			Assert.AreEqual ("path1", mf [0].FilePath);
+			Assert.AreEqual ("path2", mf [1].FilePath);
+			Assert.AreEqual ("path3", mf [2].FilePath);
+
+			mf.Replace ("Test asset 2", new MediaFile ("path4", 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 4"));
+
+			Assert.AreEqual (3, mf.Count);
+			Assert.AreEqual ("path1", mf [0].FilePath);
+			Assert.AreEqual ("path4", mf [1].FilePath);
+			Assert.AreEqual ("Test asset 2", mf [1].Name);
+			Assert.AreEqual ("path3", mf [2].FilePath);
+
+			mf.Replace (mf [1], new MediaFile ("path5", 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 5"));
+
+			Assert.AreEqual (3, mf.Count);
+			Assert.AreEqual ("path1", mf [0].FilePath);
+			Assert.AreEqual ("path2", mf [1].FilePath);
+			Assert.AreEqual ("Test asset 2", mf [1].Name);
+			Assert.AreEqual ("path3", mf [2].FilePath);
+		}
+
 		[Test()]
 		public void TestCheckFiles ()
 		{
