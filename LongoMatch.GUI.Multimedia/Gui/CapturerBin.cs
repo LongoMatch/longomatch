@@ -201,7 +201,7 @@ namespace LongoMatch.Gui
 			}
 			currentPeriod = new Period { Name = periodName };
 			
-			currentTimeNode = currentPeriod.StartTimer (accumTime, periodName);
+			currentTimeNode = currentPeriod.Start (accumTime, periodName);
 			currentTimeNode.Stop = currentTimeNode.Start;
 			currentPeriodStart = DateTime.UtcNow;
 			timeoutID = GLib.Timeout.Add (20, UpdateTime);
@@ -227,7 +227,7 @@ namespace LongoMatch.Gui
 			}
 			
 			GLib.Source.Remove (timeoutID);
-			currentPeriod.StopTimer (CurrentCaptureTime);
+			currentPeriod.Stop (CurrentCaptureTime);
 			accumTime = CurrentCaptureTime;
 			Log.Debug ("Stop period stop=", accumTime.ToMSecondsString ());
 			currentTimeNode = null;
@@ -248,7 +248,7 @@ namespace LongoMatch.Gui
 				return;
 			}
 			Log.Debug ("Pause period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
-			currentPeriod.PauseTimer (CurrentCaptureTime);
+			currentPeriod.Stop (CurrentCaptureTime);
 			currentTimeNode = null;
 			pausebutton.Visible = false;
 			resumebutton.Visible = true;
@@ -263,7 +263,7 @@ namespace LongoMatch.Gui
 				return;
 			}
 			Log.Debug ("Resume period at currentTime=", CurrentCaptureTime.ToMSecondsString ());
-			currentTimeNode = currentPeriod.Resume (CurrentCaptureTime);
+			currentTimeNode = currentPeriod.Start (CurrentCaptureTime);
 			pausebutton.Visible = true;
 			resumebutton.Visible = false;
 			Capturing = true;

@@ -118,8 +118,8 @@ namespace LongoMatch.Gui.Component
 					gamePeriods = value.Dashboard.GamePeriods;
 					foreach (string s in gamePeriods) {
 						Period period = new Period { Name = s };
-						period.StartTimer (start);
-						period.StopTimer (start + pDuration);
+						period.Start (start);
+						period.Stop (start + pDuration);
 						periods.Add (period);
 						start += pDuration;
 					}

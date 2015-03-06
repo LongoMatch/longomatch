@@ -51,39 +51,24 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public Time TotalTime {
 			get {
-				return new Time (Nodes.Sum (tn => tn.Duration.MSeconds));
+				return new Time (Nodes.Where (tn=>tn.Start != null && tn.Stop != null)
+					.Sum (tn => tn.Duration.MSeconds));
 			}
 		}
 
-		public TimeNode StartTimer (Time start, string name = null)
+		public TimeNode Start (Time start, string name = null)
 		{
 			TimeNode tn;
 
 			if (name == null)
 				name = Name;
-			StopTimer (start);
+			Stop (start);
 			tn = new TimeNode { Name = name, Start = start };
 			Nodes.Add (tn);
 			return tn;
 		}
 
-		public void PauseTimer (Time stop)
-		{
-			TimeNode node = Nodes.LastOrDefault ();
-			if (node == null) {
-				throw new TimerNotRunningException ();
-			}
-			node.Stop = stop;
-		}
-
-		public TimeNode Resume (Time start)
-		{
-			TimeNode tn = new TimeNode { Name = Name, Start = start };
-			Nodes.Add (tn);
-			return tn;
-		}
-
-		public void StopTimer (Time stop)
+		public void Stop (Time stop)
 		{
 			if (Nodes.Count > 0) {
 				TimeNode last = Nodes.Last ();
@@ -94,7 +79,7 @@ namespace LongoMatch.Core.Store
 			Nodes.OrderBy (tn => tn.Start.MSeconds);
 		}
 
-		public void CancelTimer ()
+		public void CancelCurrent ()
 		{
 			if (Nodes.Count > 0) {
 				TimeNode last = Nodes.Last ();
