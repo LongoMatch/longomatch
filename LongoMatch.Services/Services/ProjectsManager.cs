@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -129,7 +130,8 @@ namespace LongoMatch.Services
 		void SaveCaptureProject (Project project)
 		{
 			Guid projectID = project.ID;
-			string filePath = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath;
+			// FIXME
+			string filePath = project.Description.FileSet.First ().FilePath;
 
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
@@ -139,7 +141,7 @@ namespace LongoMatch.Services
 			
 				Log.Debug ("Reloading saved file: " + filePath);
 				MediaFile file = multimediaToolkit.DiscoverFile (filePath);
-				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1, file);
+				project.Description.FileSet.Add (file);
 				project.Periods = Capturer.Periods;
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
@@ -196,7 +198,7 @@ namespace LongoMatch.Services
 				projectType == ProjectType.URICaptureProject ||
 				projectType == ProjectType.FakeCaptureProject) {
 				try {
-					Capturer.Run (props, project.Description.FileSet.GetAngle (MediaFileAngle.Angle1));
+					Capturer.Run (props, project.Description.FileSet.First ());
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (ex.Message);
@@ -250,8 +252,9 @@ namespace LongoMatch.Services
 				return false;
 			} else {
 				EndCaptureResponse res;
-				
-				res = guiToolkit.EndCapture (OpenedProject.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
+
+				// FIXME:
+				res = guiToolkit.EndCapture (OpenedProject.Description.FileSet.First ().FilePath);
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
@@ -355,8 +358,8 @@ namespace LongoMatch.Services
 				guiToolkit.ErrorMessage (ex.Message);
 				return;
 			}
-
-			if (project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath == Constants.FAKE_PROJECT) {
+			// FIXME
+			if (project.Description.FileSet.First ().FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");

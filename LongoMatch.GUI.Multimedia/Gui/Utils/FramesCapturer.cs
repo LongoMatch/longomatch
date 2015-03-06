@@ -20,7 +20,7 @@
 
 using System;
 using System.Threading;
-
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Video;
@@ -90,7 +90,7 @@ namespace LongoMatch.Video.Utils
 					break;
 				}
 				Log.Debug ("Start frames series capture for angle " + angle);
-				MediaFile file = fileSet.GetAngle (angle);
+				MediaFile file = fileSet.First ();
 				capturer.Open (file.FilePath);
 				pos = new Time {MSeconds = start.MSeconds};
 				if(Progress != null) {

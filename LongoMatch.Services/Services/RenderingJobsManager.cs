@@ -250,7 +250,7 @@ namespace LongoMatch.Services
 			
 			lastTS = play.Start;
 			/* FIXME: for now we only support rendering the first angle in the list */
-			file = element.FileSet.GetAngle (element.Angles.FirstOrDefault ());
+			file = element.FileSet.FirstOrDefault ();
 			drawings = play.Drawings.Where (d => d.Angle == element.Angles.FirstOrDefault ());
 			if (file == null || drawings == null) {
 				return false;

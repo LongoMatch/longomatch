@@ -38,10 +38,10 @@ namespace Tests.Core.Store
 			p.LocalTeamTemplate = TeamTemplate.DefaultTemplate (10);
 			p.VisitorTeamTemplate = TeamTemplate.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null);
+				               "aac", 320, 240, 1.3, null, "Test asset");
 			ProjectDescription pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
-			pd.FileSet.SetAngle (MediaFileAngle.Angle1, mf);
+			pd.FileSet.Add (mf);
 			p.Description = pd;
 			if (fill) {
 				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);

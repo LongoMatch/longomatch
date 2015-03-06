@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
@@ -44,7 +45,8 @@ namespace LongoMatch.Gui.Component
 		{
 			this.fileSet = fileSet;
 			this.angle = angle;
-			mediaFile = fileSet.GetAngle (angle);
+			// FIXME: use first file for now
+			mediaFile = fileSet.First ();
 			disableChanges = false;
 			UpdateMediaFile ();
 		}
@@ -102,7 +104,8 @@ namespace LongoMatch.Gui.Component
 				if (mediaFile != null) {
 					file.Offset = mediaFile.Offset;
 				}
-				fileSet.SetAngle (angle, file);
+				// FIXME: Change file for a given name in list
+				fileSet.Add (file);
 				mediaFile = file;
 				UpdateMediaFile ();
 			}

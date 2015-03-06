@@ -30,7 +30,7 @@ namespace Tests.Core.Store
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, null);
+			                              "aac", 320, 240, 1.3, null, "Test asset");
 			Utils.CheckSerialization (mf);
 			
 			MediaFile newmf = Utils.SerializeDeserialize (mf);
@@ -46,6 +46,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (mf.VideoHeight, newmf.VideoHeight);
 			Assert.AreEqual (mf.Par, newmf.Par);
 			Assert.AreEqual (mf.Offset, new Time (0));
+			Assert.AreEqual (mf.Name, newmf.Name);
 				
 		}
 		

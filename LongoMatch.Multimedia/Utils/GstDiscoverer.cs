@@ -84,7 +84,7 @@ namespace LongoMatch.Video.Utils
 			
 			return new LongoMatch.Core.Store.MediaFile (filePath, duration, (ushort)fps, has_audio, has_video,
 			                                       container, video_codec, audio_codec, width, height,
-			                                       par, preview);
+			                                       par, preview, null);
 		}
 	}
 }

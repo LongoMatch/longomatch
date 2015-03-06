@@ -99,8 +99,7 @@ namespace LongoMatch.Migration
 			newdesc.MatchDate = desc.MatchDate;
 			newdesc.LastModified = desc.LastModified;
 			newdesc.FileSet = new LongoMatch.Core.Store.MediaFileSet ();
-			newdesc.FileSet.SetAngle (LongoMatch.Core.Common.MediaFileAngle.Angle1,
-			                          ConvertMediaFile (desc.File));
+			newdesc.FileSet.Add (ConvertMediaFile (desc.File));
 			return newdesc;
 		}
 

@@ -16,6 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using Mono.Unix;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using Gtk;
@@ -26,100 +28,78 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileSetSelection : Gtk.Bin
 	{
 		MediaFileSet fileSet;
-		bool ignoreChanges;
+		List<MediaFileChooser> fileChoosers;
 
 		public MediaFileSetSelection ()
 		{
 			this.Build ();
-			frame2.NoShowAll = true;
-			frame3.NoShowAll = true;
-			frame4.NoShowAll = true;
-			mediafilechooser1.ChangedEvent += HandleFileChangedEvent;
-			mediafilechooser2.ChangedEvent += HandleFileChangedEvent;
-			mediafilechooser3.ChangedEvent += HandleFileChangedEvent;
-			mediafilechooser4.ChangedEvent += HandleFileChangedEvent;
-			delfile2button.Clicked += HandleFileRemoved;
-			delfile3button.Clicked += HandleFileRemoved;
-			delfile4button.Clicked += HandleFileRemoved;
-			filetable.RowSpacing = StyleConf.NewTableHSpacing;
-			filetable.ColumnSpacing = StyleConf.NewTeamsSpacing; 
+
+			fileChoosers = new List<MediaFileChooser> ();
+
+			// Add the first media file chooser for main camera
+			AddMediaFileChooser (Catalog.GetString ("Main angle camera"));
 		}
 
 		public MediaFileSet FileSet {
 			set {
 				fileSet = value;
-				UpdateMediaFile (mediafilechooser1);
-				UpdateMediaFile (mediafilechooser2);
-				UpdateMediaFile (mediafilechooser3);
-				UpdateMediaFile (mediafilechooser4);
 			}
 			get {
 				return fileSet;
 			}
 		}
 
-		void UpdateMediaFile (MediaFileChooser filechooser, MediaFile file = null, bool delete = false)
+		void AddMediaFileChooser (String name)
 		{
-			MediaFileAngle angle = MediaFileAngle.Angle1;
-			Button delbutton = null;
+			Alignment alignment = new Alignment (0.0f, 0.5f, 0.0f, 0.0f);
+			MediaFileChooser chooser = new MediaFileChooser (name);
 
-			ignoreChanges = true;
-			if (filechooser == mediafilechooser1) {
-				angle = MediaFileAngle.Angle1;
-			} else if (filechooser == mediafilechooser2) {
-				delbutton = delfile2button;
-				angle = MediaFileAngle.Angle2;
-			} else if (filechooser == mediafilechooser3) {
-				delbutton = delfile3button;
-				angle = MediaFileAngle.Angle3;
-			} else if (filechooser == mediafilechooser4) {
-				delbutton = delfile4button;
-				angle = MediaFileAngle.Angle4;
-			}
-			
-			if (delete) {
-				FileSet.SetAngle (angle, null);
-				filechooser.MediaFile = null;
-			} else {
-				if (file == null) {
-					filechooser.MediaFile = FileSet.GetAngle (angle);
+			chooser.ChangedEvent += HandleFileChangedEvent;
+			alignment.Add (chooser);
+			alignment.ShowAll ();
+
+			mfss_vbox.PackStart (alignment, true, false, 0);
+
+			fileChoosers.Add (chooser);
+		}
+
+		void UpdateFileSet ()
+		{
+			bool have_empty_chooser = false;
+			List<MediaFileChooser> to_remove = new List<MediaFileChooser> ();
+
+			fileSet.Clear ();
+
+			foreach (MediaFileChooser chooser in fileChoosers) {
+				if (chooser.MediaFile != null) {
+					fileSet.Add (chooser.MediaFile);
 				} else {
-					FileSet.SetAngle (angle, file);
-					filechooser.MediaFile = file;
+					if (!have_empty_chooser) {
+						have_empty_chooser = true;
+					} else {
+						// Mark for removal as we only want one empty file chooser at most
+						to_remove.Add (chooser);
+					}
 				}
 			}
 
-			if (delbutton != null) {
-				delbutton.Visible = filechooser.MediaFile != null;
+			foreach (MediaFileChooser chooser in to_remove) {
+				chooser.ChangedEvent -= HandleFileChangedEvent;
+				fileChoosers.Remove (chooser);
+				mfss_vbox.Remove (chooser.Parent);
 			}
 
+			to_remove.Clear ();
 
-			ignoreChanges = false;
+			if (!have_empty_chooser) {
+				AddMediaFileChooser (String.Format ("{0} {1}", Catalog.GetString ("Angle"), fileChoosers.Count));
+			}
 		}
 
 		void HandleFileChangedEvent (object sender, EventArgs e)
 		{
-			if (ignoreChanges) {
-				return;
-			}
-			MediaFileChooser filechooser = sender as MediaFileChooser;
-			UpdateMediaFile (filechooser, filechooser.MediaFile);
+			UpdateFileSet ();
 		}
-
-		void HandleFileRemoved (object sender, EventArgs e)
-		{
-			MediaFileChooser filechooser = null;
-
-			if (sender == delfile2button) {
-				filechooser = mediafilechooser2;
-			} else if (sender == delfile3button) {
-				filechooser = mediafilechooser3;
-			} else if (sender == delfile4button) {
-				filechooser = mediafilechooser4;
-			}
-			UpdateMediaFile (filechooser, null, true);
-		}
-
 	}
 }
 

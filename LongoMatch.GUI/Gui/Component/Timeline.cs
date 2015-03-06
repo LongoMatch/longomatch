@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
@@ -130,7 +131,8 @@ namespace LongoMatch.Gui.Component
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 			focusscale.Value = 6;
-			timerule.Duration = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1).Duration;
+			// Can throw an exception if there are no files in set
+			timerule.Duration = project.Description.FileSet.First ().Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
 			timeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;

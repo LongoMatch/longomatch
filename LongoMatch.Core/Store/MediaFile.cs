@@ -41,9 +41,10 @@ namespace LongoMatch.Core.Store
 		                 string videoCodec,
 		                 string audioCodec,
 		                 uint videoWidth,
-		                 uint videoHeight, 
+		                 uint videoHeight,
 		                 double par,
-		                 Image preview)
+		                 Image preview,
+                         String name)
 		{
 			FilePath = filePath;
 			Duration = new Time ((int)length);
@@ -58,6 +59,7 @@ namespace LongoMatch.Core.Store
 			Preview = preview;
 			Par = par;
 			Offset = new Time (0);
+			Name = name;
 		}
 
 		public string FilePath {
@@ -121,6 +123,11 @@ namespace LongoMatch.Core.Store
 		}
 
 		public Time Offset {
+			get;
+			set;
+		}
+
+		public String Name {
 			get;
 			set;
 		}

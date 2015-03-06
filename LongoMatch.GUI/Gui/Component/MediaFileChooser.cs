@@ -33,18 +33,36 @@ namespace LongoMatch.Gui.Component
 		string proposedFileName;
 		string proposedDirectoryName;
 
-		public MediaFileChooser ()
+		public MediaFileChooser (String name)
 		{
 			this.Build ();
 
+			nameentry.NoShowAll = true;
+			clearbutton.NoShowAll = true;
+
+			// The name entry is only visible when not empty
+			nameentry.Visible = !String.IsNullOrEmpty (name);
+			nameentry.Text = name;
+
 			addbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-browse", Gtk.IconSize.Button, 0);
+			clearbuttonimage.Pixbuf = Helpers.Misc.LoadStockIcon (clearbuttonimage, "gtk-clear", Gtk.IconSize.Button);
+
 			FilterName = "MP4";
 			FilterExtensions = new string[] { "*.mp4" }; 
 			FileChooserMode = FileChooserMode.MediaFile;
+
 			UpdateFile ();
-			addbutton.Clicked += HandleClicked;
+
+			addbutton.Clicked += HandleAddClicked;
+			clearbutton.Clicked += HandleClearClicked;
+			nameentry.Changed += HandleNameChanged;
+
 			ProposedFileName = String.Format ("LongoMatch-{0}.mp4", DateTime.Now.ToShortDateString ());
 			ProposedDirectoryName = String.Format ("LongoMatch-{0}", DateTime.Now.ToShortDateString ()); 
+		}
+
+		public MediaFileChooser () : this (null)
+		{
 		}
 
 		public FileChooserMode FileChooserMode {
@@ -92,6 +110,9 @@ namespace LongoMatch.Gui.Component
 
 		public MediaFile MediaFile {
 			get {
+				if (mediaFile != null && nameentry.Visible && !String.IsNullOrEmpty (nameentry.Text)) {
+					mediaFile.Name = nameentry.Text;
+				}
 				return mediaFile;
 			}
 			set {
@@ -102,6 +123,8 @@ namespace LongoMatch.Gui.Component
 
 		void UpdateFile ()
 		{
+			bool clear_visible = false;
+
 			if (mediaFile != null) {
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
 				fileentry.TooltipText = mediaFile.FilePath;
@@ -110,19 +133,36 @@ namespace LongoMatch.Gui.Component
 				} else {
 					fileentry.ModifyText (Gtk.StateType.Normal, Misc.ToGdkColor (Color.Red1));
 				}
+				clear_visible = true;
 			} else if (path != null) {
 				fileentry.Text = System.IO.Path.GetFileName (path);
 				fileentry.TooltipText = path;
+				clear_visible = true;
 			} else {
 				if (FileChooserMode == FileChooserMode.Directory) {
 					fileentry.Text = Catalog.GetString ("Select folder...");
 				} else {
 					fileentry.Text = Catalog.GetString ("Select file...");
 				}
+				fileentry.TooltipText = fileentry.Text;
+			}
+
+			clearbutton.Visible = clear_visible;
+		}
+
+		void HandleClearClicked (object sender, EventArgs e)
+		{
+			mediaFile = null;
+			path = null;
+
+			UpdateFile ();
+
+			if (ChangedEvent != null) {
+				ChangedEvent (this, null);
 			}
 		}
 
-		void HandleClicked (object sender, EventArgs e)
+		void HandleAddClicked (object sender, EventArgs e)
 		{
 			if (FileChooserMode == FileChooserMode.MediaFile) {
 				MediaFile file = Misc.OpenFile (this);
@@ -142,6 +182,13 @@ namespace LongoMatch.Gui.Component
 				                                              ProposedDirectoryName, Config.LastRenderDir,
 				                                              null, null);
 			}
+			if (ChangedEvent != null) {
+				ChangedEvent (this, null);
+			}
+		}
+
+		void HandleNameChanged (object sender, EventArgs e)
+		{
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);
 			}

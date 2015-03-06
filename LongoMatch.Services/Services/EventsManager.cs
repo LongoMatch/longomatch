@@ -71,7 +71,7 @@ namespace LongoMatch.Services
 
 			if (projectType == ProjectType.FileProject) {
 				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
-				framesCapturer.Open (openedProject.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
+				framesCapturer.Open (openedProject.Description.FileSet.First ().FilePath);
 			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
@@ -198,7 +198,8 @@ namespace LongoMatch.Services
 			}
 
 			if (framesCapturer != null && !current) {
-				Time offset = openedProject.Description.FileSet.GetAngle (angle).Offset;
+				// FIXME
+				Time offset = openedProject.Description.FileSet.First ().Offset;
 				pixbuf = framesCapturer.GetFrame (pos + offset, true, -1, -1);
 			} else {
 				pixbuf = player.CurrentFrame;

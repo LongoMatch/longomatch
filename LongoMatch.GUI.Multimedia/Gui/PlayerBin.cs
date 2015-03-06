@@ -439,8 +439,7 @@ namespace LongoMatch.Gui
 			if (fileSet != this.fileSet || force) {
 				readyToSeek = false;
 				this.fileSet = fileSet;
-				angle = MediaFileAngle.Angle1;
-				activeFile = fileSet.GetAngle (angle);
+				activeFile = fileSet.First ();
 				if (activeFile.VideoHeight != 0) {
 					videowindow.Ratio = (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight);
 				} else {
@@ -581,7 +580,7 @@ namespace LongoMatch.Gui
 		{
 			loadedPlaylistElement = video;
 			MediaFileSet fileSet = new MediaFileSet ();
-			fileSet.SetAngle (MediaFileAngle.Angle1, video.File);
+			fileSet.Add (video.File);
 			Open (fileSet, false, true, true);
 		}
 

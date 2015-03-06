@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using NUnit.Framework;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
@@ -29,12 +30,12 @@ namespace Tests.Core.Store
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null);
+				               "aac", 320, 240, 1.3, null, "Test asset");
 			ProjectDescription pd = new ProjectDescription ();
 			Utils.CheckSerialization (pd);
 			
 			pd.FileSet = new MediaFileSet ();
-			pd.FileSet.SetAngle (MediaFileAngle.Angle1, mf);
+			pd.FileSet.Add (mf);
 			pd.Competition = "Comp";
 			pd.Category = "Cat";
 			pd.Group = "Group";
@@ -49,8 +50,8 @@ namespace Tests.Core.Store
 			
 			ProjectDescription newpd = Utils.SerializeDeserialize (pd);
 			Assert.AreEqual (pd.CompareTo (newpd), 0);
-			Assert.AreEqual (pd.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath,
-				newpd.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
+			Assert.AreEqual (pd.FileSet.First ().FilePath,
+				newpd.FileSet.First ().FilePath);
 			Assert.AreEqual (pd.ID, newpd.ID);
 			Assert.AreEqual (pd.Competition, newpd.Competition);
 			Assert.AreEqual (pd.Category, newpd.Category);

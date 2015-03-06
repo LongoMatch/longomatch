@@ -397,13 +397,13 @@ namespace LongoMatch.Gui.Panel
 			
 			captureSettings.EncodingSettings = encSettings;
 
-			file = project.Description.FileSet.GetAngle (MediaFileAngle.Angle1); 
+			file = project.Description.FileSet.FirstOrDefault (); 
 			if (file == null) {
-				file = new MediaFile ();
+				file = new MediaFile () { Name = Catalog.GetString ("Main angle camera") };
 				file.FilePath = capturemediafilechooser.CurrentPath;
 				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
 				file.Par = 1;
-				project.Description.FileSet.SetAngle (MediaFileAngle.Angle1, file);
+				project.Description.FileSet.Add (file);
 			}
 			
 			if (projectType == ProjectType.CaptureProject) {

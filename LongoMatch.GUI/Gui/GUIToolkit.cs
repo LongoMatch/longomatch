@@ -418,7 +418,7 @@ namespace LongoMatch.Gui
 					WarningMessage (Catalog.GetString ("Some video files are still missing for this project."), d);
 					continue;
 				}
-				if (fileselector.FileSet.GetAngle (MediaFileAngle.Angle1) == null) {
+				if (fileselector.FileSet.Count == 0) {
 					WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					continue;
 				}

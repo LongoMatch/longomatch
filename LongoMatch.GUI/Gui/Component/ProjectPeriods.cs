@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Component
 				this.project = value;
 				gamePeriods = value.Dashboard.GamePeriods;
 
-				file = value.Description.FileSet.GetAngle (MediaFileAngle.Angle1);
+				file = value.Description.FileSet.FirstOrDefault ();
 				start = new Time (0);
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);

@@ -18,6 +18,7 @@
 //
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
@@ -98,7 +99,7 @@ namespace LongoMatch.Gui.Component
 			this.projects = projects;
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects) {
-				MediaFile file = pdesc.FileSet.GetAngle (MediaFileAngle.Angle1);
+				MediaFile file = pdesc.FileSet.FirstOrDefault ();
 				if (file != null && file.FilePath == Constants.FAKE_PROJECT) {
 					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
 				} else if (pdesc.FileSet.Preview != null) {

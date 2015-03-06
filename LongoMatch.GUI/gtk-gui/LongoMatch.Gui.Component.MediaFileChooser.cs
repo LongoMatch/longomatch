@@ -5,9 +5,19 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileChooser
 	{
 		private global::Gtk.EventBox fileentryeventbox;
+		
 		private global::Gtk.HBox hbox1;
+		
+		private global::Gtk.Entry nameentry;
+		
 		private global::Gtk.Entry fileentry;
+		
+		private global::Gtk.Button clearbutton;
+		
+		private global::Gtk.Image clearbuttonimage;
+		
 		private global::Gtk.Button addbutton;
+		
 		private global::Gtk.Image addbuttonimage;
 
 		protected virtual void Build ()
@@ -24,6 +34,16 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.BorderWidth = ((uint)(2));
 			// Container child hbox1.Gtk.Box+BoxChild
+			this.nameentry = new global::Gtk.Entry ();
+			this.nameentry.CanFocus = true;
+			this.nameentry.Name = "nameentry";
+			this.nameentry.IsEditable = true;
+			this.nameentry.HasFrame = false;
+			this.nameentry.InvisibleChar = '•';
+			this.hbox1.Add (this.nameentry);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.nameentry]));
+			w1.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
 			this.fileentry = new global::Gtk.Entry ();
 			this.fileentry.CanFocus = true;
 			this.fileentry.Name = "fileentry";
@@ -31,8 +51,21 @@ namespace LongoMatch.Gui.Component
 			this.fileentry.HasFrame = false;
 			this.fileentry.InvisibleChar = '•';
 			this.hbox1.Add (this.fileentry);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.fileentry]));
-			w1.Position = 0;
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.fileentry]));
+			w2.Position = 1;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.clearbutton = new global::Gtk.Button ();
+			this.clearbutton.CanFocus = true;
+			this.clearbutton.Name = "clearbutton";
+			// Container child clearbutton.Gtk.Container+ContainerChild
+			this.clearbuttonimage = new global::Gtk.Image ();
+			this.clearbuttonimage.Name = "clearbuttonimage";
+			this.clearbutton.Add (this.clearbuttonimage);
+			this.hbox1.Add (this.clearbutton);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.clearbutton]));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.addbutton = new global::Gtk.Button ();
 			this.addbutton.CanFocus = true;
@@ -41,17 +74,17 @@ namespace LongoMatch.Gui.Component
 			this.addbuttonimage = new global::Gtk.Image ();
 			this.addbuttonimage.Name = "addbuttonimage";
 			this.addbutton.Add (this.addbuttonimage);
-			this.addbutton.Label = null;
 			this.hbox1.Add (this.addbutton);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.addbutton]));
-			w3.Position = 1;
-			w3.Expand = false;
-			w3.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.addbutton]));
+			w6.Position = 3;
+			w6.Expand = false;
+			w6.Fill = false;
 			this.fileentryeventbox.Add (this.hbox1);
 			this.Add (this.fileentryeventbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.nameentry.Hide ();
 			this.Hide ();
 		}
 	}
