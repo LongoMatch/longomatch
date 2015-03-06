@@ -116,6 +116,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Search for a file in the set and replace it with a new one.
 		/// If old file is not found, this is equivalent to adding new file to the set.
+		/// Some properties from the old file are copied to the new file such as Name and Offset.
 		/// </summary>
 		/// <param name="old_file">Old file.</param>
 		/// <param name="new_file">New file.</param>
@@ -124,12 +125,16 @@ namespace LongoMatch.Core.Store
 			bool found = false;
 
 			if (Contains (old_file)) {
-				Remove (old_file);
-				found = true;
-			}
+				if (new_file != null && old_file != null) {
+					new_file.Name = old_file.Name;
+					new_file.Offset = old_file.Offset;
+				}
 
-			//FIXME: Should we copy some properties from the previous file such as Offset ?
-			Add (new_file);
+				this [IndexOf (old_file)] = new_file;
+				found = true;
+			} else {
+				Add (new_file);
+			}
 
 			return found;
 		}
