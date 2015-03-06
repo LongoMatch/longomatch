@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Component
 	public partial class VideoFileInfo : Gtk.Bin
 	{
 		MediaFileSet fileSet;
-		MediaFileAngle angle;
 		MediaFile mediaFile;
 		bool disableChanges;
 		
@@ -41,20 +40,16 @@ namespace LongoMatch.Gui.Component
 			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
 		}
 
-		public void SetMediaFile (MediaFileSet fileSet, MediaFileAngle angle)
+		public void SetMediaFileSet (MediaFileSet files, MediaFile file)
 		{
-			this.fileSet = fileSet;
-			this.angle = angle;
-			// FIXME: use first file for now
-			mediaFile = fileSet.First ();
-			disableChanges = false;
-			UpdateMediaFile ();
+			fileSet = files;
+			SetMediaFile (file, true);
 		}
-		
-		public void SetMediaFile (MediaFile file)
+
+		public void SetMediaFile (MediaFile file, bool editable = false)
 		{
 			mediaFile = file;
-			disableChanges = true;
+			disableChanges = !editable;
 			UpdateMediaFile ();
 		}
 
@@ -64,6 +59,7 @@ namespace LongoMatch.Gui.Component
 				Visible = false;
 				return;
 			}
+			namelabel.Text = mediaFile.Name;
 			if (mediaFile.FilePath == Constants.FAKE_PROJECT) {
 				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
 				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
@@ -104,8 +100,7 @@ namespace LongoMatch.Gui.Component
 				if (mediaFile != null) {
 					file.Offset = mediaFile.Offset;
 				}
-				// FIXME: Change file for a given name in list
-				fileSet.Add (file);
+				fileSet.Replace (mediaFile, file);
 				mediaFile = file;
 				UpdateMediaFile ();
 			}

@@ -5,47 +5,83 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel
 	{
 		private global::Gtk.VBox vbox3;
+		
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
+		
 		private global::Gtk.Alignment contentalignment;
+		
 		private global::Gtk.Notebook notebook1;
+		
 		private global::Gtk.HBox hbox4;
+		
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
+		
 		private global::Gtk.Alignment projectpropertiesalignment;
+		
 		private global::Gtk.VBox rbox;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow3;
+		
 		private global::Gtk.VBox projectbox;
+		
 		private global::LongoMatch.Gui.Component.GameDescriptionHeader gamedescriptionheader1;
+		
 		private global::Gtk.EventBox infoeventbox;
+		
 		private global::Gtk.Label infolabel;
+		
 		private global::Gtk.Table table1;
+		
 		private global::Gtk.Entry competitionentry;
+		
 		private global::Gtk.Label Competitionlabel;
+		
 		private global::LongoMatch.Gui.Component.DatePicker datepicker;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::Gtk.TextView desctextview;
+		
 		private global::Gtk.Label label14;
+		
 		private global::Gtk.Label label5;
+		
 		private global::Gtk.Label label9;
+		
 		private global::Gtk.Entry seasonentry;
+		
 		private global::Gtk.Label seasonlabel;
+		
 		private global::Gtk.Label templatelabel;
+		
 		private global::Gtk.EventBox videoseventbox;
+		
 		private global::Gtk.Label videoslabel;
-		private global::Gtk.VBox vbox4;
+		
+		private global::Gtk.VBox videofileinfo_vbox;
+		
 		private global::LongoMatch.Gui.Component.VideoFileInfo videofileinfo1;
-		private global::LongoMatch.Gui.Component.VideoFileInfo videofileinfo2;
-		private global::LongoMatch.Gui.Component.VideoFileInfo videofileinfo3;
-		private global::LongoMatch.Gui.Component.VideoFileInfo videofileinfo4;
+		
 		private global::Gtk.HButtonBox hbuttonbox1;
+		
 		private global::Gtk.Button savebutton;
+		
 		private global::Gtk.Image savebuttonimage;
+		
 		private global::Gtk.Button openbutton;
+		
 		private global::Gtk.Image openbuttonimage;
+		
 		private global::Gtk.Button exportbutton;
+		
 		private global::Gtk.Image exportbuttonimage;
+		
 		private global::Gtk.Button deletebutton;
+		
 		private global::Gtk.Image deletebuttonimage;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.Label label3;
 
 		protected virtual void Build ()
@@ -136,6 +172,7 @@ namespace LongoMatch.Gui.Panel
 			w6.Fill = false;
 			// Container child projectbox.Gtk.Box+BoxChild
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(4)), false);
+			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(5));
 			this.table1.ColumnSpacing = ((uint)(5));
 			// Container child table1.Gtk.Table+TableChild
@@ -277,61 +314,28 @@ namespace LongoMatch.Gui.Panel
 			w20.Expand = false;
 			w20.Fill = false;
 			// Container child projectbox.Gtk.Box+BoxChild
-			this.vbox4 = new global::Gtk.VBox ();
-			this.vbox4.Name = "vbox4";
-			// Container child vbox4.Gtk.Box+BoxChild
+			this.videofileinfo_vbox = new global::Gtk.VBox ();
+			this.videofileinfo_vbox.Name = "videofileinfo_vbox";
+			// Container child videofileinfo_vbox.Gtk.Box+BoxChild
 			this.videofileinfo1 = new global::LongoMatch.Gui.Component.VideoFileInfo ();
 			this.videofileinfo1.HeightRequest = 100;
 			this.videofileinfo1.Events = ((global::Gdk.EventMask)(256));
 			this.videofileinfo1.Name = "videofileinfo1";
-			this.vbox4.Add (this.videofileinfo1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.videofileinfo1]));
+			this.videofileinfo_vbox.Add (this.videofileinfo1);
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.videofileinfo_vbox [this.videofileinfo1]));
 			w21.Position = 0;
 			w21.Expand = false;
 			w21.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.videofileinfo2 = new global::LongoMatch.Gui.Component.VideoFileInfo ();
-			this.videofileinfo2.HeightRequest = 100;
-			this.videofileinfo2.Events = ((global::Gdk.EventMask)(256));
-			this.videofileinfo2.Name = "videofileinfo2";
-			this.vbox4.Add (this.videofileinfo2);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.videofileinfo2]));
-			w22.Position = 1;
-			w22.Expand = false;
-			w22.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.videofileinfo3 = new global::LongoMatch.Gui.Component.VideoFileInfo ();
-			this.videofileinfo3.HeightRequest = 100;
-			this.videofileinfo3.Events = ((global::Gdk.EventMask)(256));
-			this.videofileinfo3.Name = "videofileinfo3";
-			this.vbox4.Add (this.videofileinfo3);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.videofileinfo3]));
-			w23.Position = 2;
-			w23.Expand = false;
-			w23.Fill = false;
-			// Container child vbox4.Gtk.Box+BoxChild
-			this.videofileinfo4 = new global::LongoMatch.Gui.Component.VideoFileInfo ();
-			this.videofileinfo4.HeightRequest = 100;
-			this.videofileinfo4.Events = ((global::Gdk.EventMask)(256));
-			this.videofileinfo4.Name = "videofileinfo4";
-			this.vbox4.Add (this.videofileinfo4);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.videofileinfo4]));
-			w24.Position = 3;
-			w24.Expand = false;
-			w24.Fill = false;
-			this.projectbox.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.projectbox [this.vbox4]));
-			w25.Position = 4;
-			w25.Expand = false;
-			w25.Fill = false;
+			this.projectbox.Add (this.videofileinfo_vbox);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.projectbox [this.videofileinfo_vbox]));
+			w22.Position = 4;
 			w3.Add (this.projectbox);
 			this.scrolledwindow3.Add (w3);
 			this.rbox.Add (this.scrolledwindow3);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.rbox [this.scrolledwindow3]));
-			w28.Position = 0;
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.rbox [this.scrolledwindow3]));
+			w25.Position = 0;
 			// Container child rbox.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox1.Name = "hbuttonbox1";
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.savebutton = new global::Gtk.Button ();
 			this.savebutton.TooltipMarkup = "Save";
@@ -342,11 +346,10 @@ namespace LongoMatch.Gui.Panel
 			this.savebuttonimage = new global::Gtk.Image ();
 			this.savebuttonimage.Name = "savebuttonimage";
 			this.savebutton.Add (this.savebuttonimage);
-			this.savebutton.Label = null;
 			this.hbuttonbox1.Add (this.savebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w30 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.savebutton]));
-			w30.Expand = false;
-			w30.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.savebutton]));
+			w27.Expand = false;
+			w27.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.openbutton = new global::Gtk.Button ();
 			this.openbutton.TooltipMarkup = "Open";
@@ -357,12 +360,11 @@ namespace LongoMatch.Gui.Panel
 			this.openbuttonimage = new global::Gtk.Image ();
 			this.openbuttonimage.Name = "openbuttonimage";
 			this.openbutton.Add (this.openbuttonimage);
-			this.openbutton.Label = null;
 			this.hbuttonbox1.Add (this.openbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w32 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.openbutton]));
-			w32.Position = 1;
-			w32.Expand = false;
-			w32.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w29 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.openbutton]));
+			w29.Position = 1;
+			w29.Expand = false;
+			w29.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.exportbutton = new global::Gtk.Button ();
 			this.exportbutton.TooltipMarkup = "Export";
@@ -373,12 +375,11 @@ namespace LongoMatch.Gui.Panel
 			this.exportbuttonimage = new global::Gtk.Image ();
 			this.exportbuttonimage.Name = "exportbuttonimage";
 			this.exportbutton.Add (this.exportbuttonimage);
-			this.exportbutton.Label = null;
 			this.hbuttonbox1.Add (this.exportbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w34 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
-			w34.Position = 2;
-			w34.Expand = false;
-			w34.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
+			w31.Position = 2;
+			w31.Expand = false;
+			w31.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.deletebutton = new global::Gtk.Button ();
 			this.deletebutton.TooltipMarkup = "Delete";
@@ -389,21 +390,20 @@ namespace LongoMatch.Gui.Panel
 			this.deletebuttonimage = new global::Gtk.Image ();
 			this.deletebuttonimage.Name = "deletebuttonimage";
 			this.deletebutton.Add (this.deletebuttonimage);
-			this.deletebutton.Label = null;
 			this.hbuttonbox1.Add (this.deletebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w36 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.deletebutton]));
-			w36.Position = 3;
-			w36.Expand = false;
-			w36.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.deletebutton]));
+			w33.Position = 3;
+			w33.Expand = false;
+			w33.Fill = false;
 			this.rbox.Add (this.hbuttonbox1);
-			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.rbox [this.hbuttonbox1]));
-			w37.Position = 1;
-			w37.Expand = false;
-			w37.Fill = false;
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.rbox [this.hbuttonbox1]));
+			w34.Position = 1;
+			w34.Expand = false;
+			w34.Fill = false;
 			this.projectpropertiesalignment.Add (this.rbox);
 			this.hbox4.Add (this.projectpropertiesalignment);
-			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectpropertiesalignment]));
-			w39.Position = 1;
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectpropertiesalignment]));
+			w36.Position = 1;
 			this.notebook1.Add (this.hbox4);
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
@@ -411,17 +411,17 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1.SetTabLabel (this.hbox4, this.label1);
 			this.label1.ShowAll ();
 			// Notebook tab
-			global::Gtk.Label w41 = new global::Gtk.Label ();
-			w41.Visible = true;
-			this.notebook1.Add (w41);
+			global::Gtk.Label w38 = new global::Gtk.Label ();
+			w38.Visible = true;
+			this.notebook1.Add (w38);
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.notebook1.SetTabLabel (w41, this.label3);
+			this.notebook1.SetTabLabel (w38, this.label3);
 			this.label3.ShowAll ();
 			this.contentalignment.Add (this.notebook1);
 			this.vbox3.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.contentalignment]));
-			w43.Position = 1;
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.contentalignment]));
+			w40.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

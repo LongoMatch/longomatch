@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Panel
 
 		Project openedProject, loadedProject;
 		List<ProjectDescription> selectedProjects;
+		List<VideoFileInfo> videoFileInfos;
 		IDatabase DB;
 		IGUIToolkit gkit;
 		bool edited;
@@ -48,6 +49,8 @@ namespace LongoMatch.Gui.Panel
 			this.DB = Config.DatabaseManager.ActiveDB;
 			this.gkit = Config.GUIToolkit;
 			this.Build ();
+
+			this.videoFileInfos = new List<VideoFileInfo> ();
 
 			savebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-save", 34);
 			exportbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
@@ -127,10 +130,23 @@ namespace LongoMatch.Gui.Panel
 			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
 			loadedProject = project;
 
-			videofileinfo1.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle1);
-			videofileinfo2.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle2);
-			videofileinfo3.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle3);
-			videofileinfo4.SetMediaFile (project.Description.FileSet, MediaFileAngle.Angle4);
+			foreach (VideoFileInfo vfi in videoFileInfos) {
+				videofileinfo_vbox.Remove (vfi);
+			}
+			videoFileInfos.Clear ();
+
+			foreach (MediaFile mf in project.Description.FileSet) {
+				VideoFileInfo vfi = new VideoFileInfo ();
+
+				vfi.SetMediaFileSet (project.Description.FileSet, mf);
+
+				vfi.ShowAll ();
+
+				videoFileInfos.Add (vfi);
+
+				videofileinfo_vbox.PackStart (vfi, true, true, 0);
+			}
+
 			projectbox.Visible = true;
 			edited = false;
 		}
