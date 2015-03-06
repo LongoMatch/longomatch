@@ -17,6 +17,7 @@
 //
 using NUnit.Framework;
 using System;
+using LongoMatch.Core.Store;
 
 namespace Tests.Core.Store
 {
@@ -24,9 +25,31 @@ namespace Tests.Core.Store
 	public class TestTag
 	{
 		[Test ()]
-		[Ignore ("Not implemented")]
-		public void TestCase ()
+		public void TestSerialization ()
 		{
+			Tag tag = new Tag ("name", "grp");
+			tag.HotKey = new HotKey { Modifier = 2, Key = 1 };
+			Utils.CheckSerialization (tag);
+
+			Tag tag2 = Utils.SerializeDeserialize (tag);
+			Assert.AreEqual (tag.Value, tag2.Value);
+			Assert.AreEqual (tag.Group, tag2.Group);
+			Assert.AreEqual (tag.HotKey, tag2.HotKey);
+		}
+
+		[Test ()]
+		public void TestEquals ()
+		{
+			Tag tag1 = new Tag ("name", "grp");
+			Tag tag2 = new Tag ("name", "grp");
+			Tag tag3 = new Tag ("name1", "grp");
+			Tag tag4 = new Tag ("name", "grp1");
+
+			Assert.IsFalse (tag1.Equals (null));
+			Assert.IsFalse (tag1.Equals ("string"));
+			Assert.IsFalse (tag1.Equals (tag3));
+			Assert.IsFalse (tag1.Equals (tag4));
+			Assert.IsTrue (tag1.Equals (tag2));
 		}
 	}
 }

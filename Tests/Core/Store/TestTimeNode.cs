@@ -155,6 +155,13 @@ namespace Tests.Core.Store
 			tn2.Start = new Time (2000);
 			tn2.Stop = new Time (2100);
 			Assert.IsNull (tn1.Intersect (tn2));
+
+			/* Intersection */
+			tn2.Start = new Time (1500);
+			tn2.Stop = new Time (2400);
+			TimeNode tn3 = tn1.Intersect (tn2);
+			Assert.AreEqual (1000, tn3.Start.MSeconds);
+			Assert.AreEqual (2400, tn3.Start.MSeconds);
 		}
 	}
 }

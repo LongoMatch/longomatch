@@ -23,16 +23,17 @@ using LongoMatch.Core.Store;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestPlayer
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
-			Player player = new Player {Name="andoni", Position="runner",
+			Player player = new Player {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
-				Playing = true, Mail = "test@test"};
+				Playing = true, Mail = "test@test", Color = Color.Red
+			};
 				
 			Utils.CheckSerialization (player);
 			
@@ -46,16 +47,27 @@ namespace Tests.Core.Store
 			Assert.AreEqual (player.Weight, newPlayer.Weight);
 			Assert.AreEqual (player.Playing, newPlayer.Playing);
 			Assert.AreEqual (player.Mail, newPlayer.Mail);
+			Assert.IsNull (newPlayer.Color);
 		}
-		
-		[Test()]
+
+		[Test ()]
+		public void TestToString ()
+		{
+			Player player = new Player { Name = "andoni", LastName = "morales", Number=1 };
+			Assert.AreEqual ("1-andoni morales", player.ToString ());
+			player.NickName = "ylatuya";
+			Assert.AreEqual ("1-ylatuya", player.ToString ());
+		}
+
+		[Test ()]
 		public void TestPhoto ()
 		{
-			Player player = new Player {Name="andoni", Position="runner",
+			Player player = new Player {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
-				Playing = true};
-			player.Photo = Utils.LoadImageFromFile();
+				Playing = true
+			};
+			player.Photo = Utils.LoadImageFromFile ();
 			Utils.CheckSerialization (player);
 			Assert.AreEqual (player.Photo.Width, 16);
 			Assert.AreEqual (player.Photo.Height, 16);
