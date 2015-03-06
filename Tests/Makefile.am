@@ -44,7 +44,7 @@ include $(top_srcdir)/build/build.mk
 
 if ENABLE_TESTS
 check:
-	$(NUNIT_CONSOLE) $(ASSEMBLY_FILE)
+	$(MONO) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
 if HAVE_COVEM
 coverage:
 	@rm -rf Tests.dll.covcfg.*
