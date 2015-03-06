@@ -120,7 +120,7 @@ namespace Tests.Core.Store
 		public void TestEventsGroupedByEventType ()
 		{
 			Project p = CreateProject ();
-			var g = p.PlaysGroupedByEventType;
+			var g = p.EventsGroupedByEventType;
 			Assert.AreEqual (g.Count (), 4);
 			var gr = g.ElementAt (0);
 			Assert.AreEqual (p.EventTypes[0], gr.Key);
@@ -184,7 +184,7 @@ namespace Tests.Core.Store
 			p.AddEvent (p3);
 			plays.Add (p1);
 			plays.Add (p2);
-			p.RemovePlays (plays);
+			p.RemoveEvents (plays);
 			Assert.AreEqual (p.Timeline.Count, 1);
 			Assert.AreEqual (p.Timeline [0], p3);
 		}

@@ -133,7 +133,7 @@ namespace LongoMatch.Gui.Component
 				itersDic.Add (evType, iter);
 			}
 			
-			var queryPlaysByCategory = project.PlaysGroupedByEventType;
+			var queryPlaysByCategory = project.EventsGroupedByEventType;
 			foreach (var playsGroup in queryPlaysByCategory) {
 				EventType cat = playsGroup.Key;
 				if (!itersDic.ContainsKey (cat))

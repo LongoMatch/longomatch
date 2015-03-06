@@ -115,7 +115,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (plays.Count + " plays deleted");
 			analysisWindow.DeletePlays (plays);
-			openedProject.RemovePlays (plays);
+			openedProject.RemoveEvents (plays);
 			if (projectType == ProjectType.FileProject) {
 				Save (openedProject);
 			}

@@ -42,8 +42,8 @@ namespace LongoMatch.Core.Stats
 		public void Update ()
 		{
 			events = project.EventsByType (eventType).Where (filter.IsVisible).ToList ();
-			homeEvents = events.Where (e => project.PlayTaggedTeam (e) == Team.LOCAL).ToList ();
-			awayEvents = events.Where (e => project.PlayTaggedTeam (e) == Team.VISITOR).ToList ();
+			homeEvents = events.Where (e => project.EventTaggedTeam (e) == Team.LOCAL).ToList ();
+			awayEvents = events.Where (e => project.EventTaggedTeam (e) == Team.VISITOR).ToList ();
 			TotalCount = events.Count;
 			LocalTeamCount = homeEvents.Count;
 			VisitorTeamCount = awayEvents.Count;

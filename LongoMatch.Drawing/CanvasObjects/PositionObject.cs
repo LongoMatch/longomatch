@@ -145,7 +145,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				fillColor = Play.Color;
 				strokeColor = fillColor;
 				if (Project != null) {
-					Team team = Project.PlayTaggedTeam (Play);
+					Team team = Project.EventTaggedTeam (Play);
 					if (team == Team.LOCAL) {
 						strokeColor = Project.LocalTeamTemplate.Color;
 					} else if (team == Team.VISITOR) {

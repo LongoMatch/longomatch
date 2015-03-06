@@ -144,7 +144,7 @@ namespace LongoMatch.Core.Store
 		public List<Score> Scores {
 			get {
 				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
-				return ScorePlays.Select (e => e.Score).Union (scores).OrderByDescending (s=>s.Points).ToList();
+				return ScoreEvents.Select (e => e.Score).Union (scores).OrderByDescending (s=>s.Points).ToList();
 			}
 		}
 		
@@ -152,26 +152,26 @@ namespace LongoMatch.Core.Store
 		public List<PenaltyCard> PenaltyCards {
 			get {
 				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
-				return PenaltyCardsPlays.Select (e => e.PenaltyCard).Union (pc).ToList();
+				return PenaltyCardsEvents.Select (e => e.PenaltyCard).Union (pc).ToList();
 			}
 		}
 
 		[JsonIgnore]
-		public List<ScoreEvent> ScorePlays {
+		public List<ScoreEvent> ScoreEvents {
 			get {
 				return Timeline.OfType<ScoreEvent>().Select (t => t).ToList();
 			}
 		}
 		
 		[JsonIgnore]
-		public List<PenaltyCardEvent> PenaltyCardsPlays {
+		public List<PenaltyCardEvent> PenaltyCardsEvents {
 			get {
 				return Timeline.OfType<PenaltyCardEvent>().Select (t => t).ToList();
 			}
 		}
 
 		[JsonIgnore]
-		public IEnumerable<IGrouping<EventType, TimelineEvent>> PlaysGroupedByEventType {
+		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByEventType {
 			get {
 				return Timeline.GroupBy(play => play.EventType);
 			}
@@ -275,7 +275,7 @@ namespace LongoMatch.Core.Store
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemoveEvents (List<TimelineEvent> plays)
 		{
 			bool updateScore = false;
 
@@ -431,10 +431,10 @@ namespace LongoMatch.Core.Store
 		}
 
 		public int GetScore (Team team) {
-			return Timeline.OfType<ScoreEvent>().Where (s => PlayTaggedTeam (s) == team).Sum(s => s.Score.Points); 
+			return Timeline.OfType<ScoreEvent>().Where (s => EventTaggedTeam (s) == team).Sum(s => s.Score.Points); 
 		}
 		
-		public Team PlayTaggedTeam (TimelineEvent play) {
+		public Team EventTaggedTeam (TimelineEvent play) {
 			bool home=false, away=false;
 			
 			if (play.Team == Team.LOCAL || play.Team == Team.BOTH ||
