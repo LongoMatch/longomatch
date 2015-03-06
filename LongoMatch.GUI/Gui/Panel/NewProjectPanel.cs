@@ -399,7 +399,7 @@ namespace LongoMatch.Gui.Panel
 
 			file = project.Description.FileSet.FirstOrDefault (); 
 			if (file == null) {
-				file = new MediaFile () { Name = Catalog.GetString ("Main angle camera") };
+				file = new MediaFile () { Name = Catalog.GetString ("Main camera angle") };
 				file.FilePath = capturemediafilechooser.CurrentPath;
 				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
 				file.Par = 1;
