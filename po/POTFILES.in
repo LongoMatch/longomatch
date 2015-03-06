@@ -10,6 +10,7 @@ LongoMatch.Core/Stats/PlayerEventTypeStats.cs
 LongoMatch.Core/Store/EventType.cs
 LongoMatch.Core/Store/HotKey.cs
 LongoMatch.Core/Store/MediaFile.cs
+LongoMatch.Core/Store/MediaFileSet.cs
 LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/Dashboard.cs
 LongoMatch.Core/Store/Templates/TeamTemplate.cs
@@ -67,6 +68,7 @@ LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
+LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs
 LongoMatch.GUI/Gui/Component/PlayListWidget.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
