@@ -29,20 +29,30 @@ namespace LongoMatch.Gui.Component
 	{
 		MediaFileSet fileSet;
 		List<MediaFileChooser> fileChoosers;
+		bool editable = true;
 
 		public MediaFileSetSelection ()
 		{
 			this.Build ();
 
 			fileChoosers = new List<MediaFileChooser> ();
-
-			// Add the first media file chooser for main camera
-			AddMediaFileChooser (Catalog.GetString ("Main angle camera"));
 		}
 
 		public MediaFileSet FileSet {
 			set {
 				fileSet = value;
+
+				if (fileSet.Count > 0) {
+					editable = false;
+
+					// Create all choosers
+					foreach (MediaFile mf in fileSet) {
+						AddMediaFileChooser (mf.Name);
+					}
+				} else {
+					// Add the first media file chooser for main camera
+					AddMediaFileChooser (Catalog.GetString ("Main camera angle"));
+				}
 			}
 			get {
 				return fileSet;
@@ -63,7 +73,25 @@ namespace LongoMatch.Gui.Component
 			fileChoosers.Add (chooser);
 		}
 
+		/// <summary>
+		/// Here we just map 1 to 1 from the choosers list to our set. We make sure to use Replace method on the set
+		/// to preserve important metadata.
+		/// </summary>
 		void UpdateFileSet ()
+		{
+			for (var i = 0; i < fileChoosers.Count; i++) {
+				MediaFile mf = fileChoosers [i].MediaFile;
+				if (mf != null) {
+					fileSet.Replace (fileSet [i], mf);	
+				}
+			}
+		}
+
+		/// <summary>
+		/// Editable FileSet will just clear the set and recreate from the choosers. It will also figure out
+		/// if some choosers should be removed or added to allow more files to come in.
+		/// </summary>
+		void UpdateEditableFileSet ()
 		{
 			bool have_empty_chooser = false;
 			List<MediaFileChooser> to_remove = new List<MediaFileChooser> ();
@@ -98,7 +126,11 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFileChangedEvent (object sender, EventArgs e)
 		{
-			UpdateFileSet ();
+			if (editable) {
+				UpdateEditableFileSet ();
+			} else {
+				UpdateFileSet ();
+			}
 		}
 	}
 }
