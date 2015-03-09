@@ -3,14 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
     <ApplicationIcon>.</ApplicationIcon>
     <CodePage>65001</CodePage>
     <AssemblyName>LongoMatch.GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
