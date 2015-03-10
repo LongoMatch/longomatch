@@ -366,5 +366,67 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 	}
+
+	public class CameraTimeline: TimelineObject
+	{
+		public CameraTimeline (MediaFile mediaFile, bool showName, NodeSelectionMode selectionMode, bool showLine,
+			Time maxTime, double offsetY, Color background, Color lineColor):
+		base (maxTime, offsetY, background)
+		{
+			ShowName = showName;
+			SelectionMode = selectionMode;
+			ShowLine = showLine;
+			LineColor = lineColor;
+
+			AddMediaFile (mediaFile);
+		}
+
+		Color LineColor {
+			get;
+			set;
+		}
+
+		bool ShowLine {
+			get;
+			set;
+		}
+
+		bool ShowName {
+			get;
+			set;
+		}
+
+		NodeSelectionMode SelectionMode {
+			get;
+			set;
+		}
+
+		public void AddMediaFile (MediaFile mediaFile)
+		{
+			CameraObject co = new CameraObject (mediaFile);
+			co.OffsetY = OffsetY;
+			co.SecondsPerPixel = SecondsPerPixel;
+			co.MaxTime = maxTime;
+			co.SelectionMode = SelectionMode;
+			co.ShowName = ShowName;
+			co.LineColor = LineColor;
+			AddNode (co);
+		}
+
+		protected override void DrawBackground (IDrawingToolkit tk, Area area)
+		{
+			double linepos;
+			base.DrawBackground (tk, area);
+
+			if (ShowLine) {
+				linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+				tk.FillColor = Config.Style.PaletteBackgroundDark;
+				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+				tk.LineWidth = 4;
+				tk.DrawLine (new Point (0, linepos),
+					new Point (Width, linepos));
+			}
+		}
+	}
 }
 

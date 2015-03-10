@@ -7,6 +7,7 @@ LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 SOURCES = Canvas.cs \
 	CanvasObjects/BenchObject.cs \
 	CanvasObjects/ButtonObject.cs \
+	CanvasObjects/CameraObject.cs \
 	CanvasObjects/CanvasObject.cs \
 	CanvasObjects/CardObject.cs \
 	CanvasObjects/CategoryObject.cs \
