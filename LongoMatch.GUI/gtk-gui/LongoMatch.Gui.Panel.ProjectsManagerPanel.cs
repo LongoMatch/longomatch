@@ -58,9 +58,9 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Label videoslabel;
 		
-		private global::Gtk.VBox videofileinfo_vbox;
+		private global::Gtk.Alignment videofileinfo_alignment;
 		
-		private global::LongoMatch.Gui.Component.VideoFileInfo videofileinfo1;
+		private global::Gtk.VBox videofileinfo_vbox;
 		
 		private global::Gtk.HButtonBox hbuttonbox1;
 		
@@ -314,21 +314,16 @@ namespace LongoMatch.Gui.Panel
 			w20.Expand = false;
 			w20.Fill = false;
 			// Container child projectbox.Gtk.Box+BoxChild
+			this.videofileinfo_alignment = new global::Gtk.Alignment (0F, 0F, 1F, 0F);
+			this.videofileinfo_alignment.Name = "videofileinfo_alignment";
+			// Container child videofileinfo_alignment.Gtk.Container+ContainerChild
 			this.videofileinfo_vbox = new global::Gtk.VBox ();
 			this.videofileinfo_vbox.Name = "videofileinfo_vbox";
-			// Container child videofileinfo_vbox.Gtk.Box+BoxChild
-			this.videofileinfo1 = new global::LongoMatch.Gui.Component.VideoFileInfo ();
-			this.videofileinfo1.HeightRequest = 100;
-			this.videofileinfo1.Events = ((global::Gdk.EventMask)(256));
-			this.videofileinfo1.Name = "videofileinfo1";
-			this.videofileinfo_vbox.Add (this.videofileinfo1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.videofileinfo_vbox [this.videofileinfo1]));
-			w21.Position = 0;
-			w21.Expand = false;
-			w21.Fill = false;
-			this.projectbox.Add (this.videofileinfo_vbox);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.projectbox [this.videofileinfo_vbox]));
+			this.videofileinfo_alignment.Add (this.videofileinfo_vbox);
+			this.projectbox.Add (this.videofileinfo_alignment);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.projectbox [this.videofileinfo_alignment]));
 			w22.Position = 4;
+			w22.Padding = ((uint)(20));
 			w3.Add (this.projectbox);
 			this.scrolledwindow3.Add (w3);
 			this.rbox.Add (this.scrolledwindow3);
