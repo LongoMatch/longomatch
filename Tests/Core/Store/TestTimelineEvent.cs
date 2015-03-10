@@ -81,7 +81,8 @@ namespace Tests.Core.Store
 			TimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.HasDrawings, false);
 			Assert.AreEqual (evt.Color, evt.EventType.Color);
-			Assert.AreEqual (evt.Description, "Play\ntest\n0:01,000 - 0:02,000 (2,3X)");
+			Assert.AreEqual (evt.Description,
+				String.Format ("Play\ntest\n0:01,000 - 0:02,000 ({0}X)", 2.3));
 		}
 		
 		[Test()]
@@ -99,7 +100,8 @@ namespace Tests.Core.Store
 		public void TestTimesDescription ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
-			Assert.AreEqual (evt.TimesDesription (), "0:01,000 - 0:02,000 (2,3X)");
+			Assert.AreEqual (evt.TimesDesription (),
+				String.Format ("0:01,000 - 0:02,000 ({0})", 2.3));
 			evt.Rate = 1;
 			Assert.AreEqual (evt.TimesDesription (), "0:01,000 - 0:02,000");
 		}
