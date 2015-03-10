@@ -35,6 +35,7 @@ SOURCES = Canvas.cs \
 	PlayslistCellRenderer.cs \
 	Utils.cs \
 	Widgets/Blackboard.cs \
+	Widgets/CamerasTimeline.cs \
 	Widgets/DashboardCanvas.cs \
 	Widgets/PlaysTimeline.cs \
 	Widgets/PositionTagger.cs \
