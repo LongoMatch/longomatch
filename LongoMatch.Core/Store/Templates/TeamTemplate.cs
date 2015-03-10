@@ -19,6 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
+
 using Mono.Unix;
 using Newtonsoft.Json;
 
@@ -29,7 +31,7 @@ using System.IO;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class TeamTemplate: ITemplate
+	public class TeamTemplate: ITemplate, IDeserializationCallback
 	{
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;
@@ -173,6 +175,17 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		#region IDeserializationCallback implementation
+
+		void IDeserializationCallback.OnDeserialization (object sender)
+		{
+			if (Formation == null) {
+				FormationStr = "1-4-3-3";
+			}
+		}
+
+		#endregion
+
 		public void RemovePlayers (List<Player> players, bool delete)
 		{
 			List<Player> bench, starters;
@@ -228,9 +241,6 @@ namespace LongoMatch.Core.Store.Templates
 
 		public static TeamTemplate Load(string filePath) {
 			TeamTemplate template = Serializer.LoadSafe<TeamTemplate>(filePath);
-			if (template.Formation == null) {
-				template.FormationStr = "1-4-3-3";
-			}
 			return template;
 		}
 

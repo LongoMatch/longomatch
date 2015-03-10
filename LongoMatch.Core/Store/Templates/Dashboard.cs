@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 using Mono.Unix;
@@ -41,7 +42,7 @@ namespace LongoMatch.Core.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Dashboard: ITemplate
+	public class Dashboard: ITemplate, IDeserializationCallback
 	{
 
 		const int CAT_WIDTH = 120;
@@ -89,7 +90,7 @@ namespace LongoMatch.Core.Store.Templates
 			get;
 			set;
 		}
-		
+
 		public Image Image {
 			get;
 			set;
@@ -150,6 +151,20 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		#region IDeserializationCallback implementation
+
+		void IDeserializationCallback.OnDeserialization (object sender)
+		{
+			// After being deserialized, make sure to create a default GamePeriod
+			if (GamePeriods == null) {
+				GamePeriods = new List<string>();
+				GamePeriods.Add ("1");
+				GamePeriods.Add ("2");
+			}
+		}
+
+		#endregion
+
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}
@@ -200,11 +215,6 @@ namespace LongoMatch.Core.Store.Templates
 
 		public static Dashboard Load(string filePath) {
 			Dashboard cat = Serializer.LoadSafe<Dashboard>(filePath);
-			if (cat.GamePeriods == null) {
-				cat.GamePeriods = new List<string>();
-				cat.GamePeriods.Add ("1");
-				cat.GamePeriods.Add ("2");
-			}
 			return cat;
 		}
 
