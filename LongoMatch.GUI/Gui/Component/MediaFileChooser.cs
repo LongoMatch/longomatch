@@ -38,7 +38,6 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			nameentry.NoShowAll = true;
-			clearbutton.NoShowAll = true;
 
 			// The name entry is only visible when not empty
 			nameentry.Visible = !String.IsNullOrEmpty (name);
@@ -147,7 +146,7 @@ namespace LongoMatch.Gui.Component
 				fileentry.TooltipText = fileentry.Text;
 			}
 
-			clearbutton.Visible = clear_visible;
+			clearbutton.Sensitive = clear_visible;
 		}
 
 		void HandleClearClicked (object sender, EventArgs e)
