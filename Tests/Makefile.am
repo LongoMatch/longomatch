@@ -46,12 +46,12 @@ if ENABLE_TESTS
 check:
 	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
 	$(MONO) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
+
 if HAVE_COVEM
 do-coverage:
 	@rm -rf $(ASSEMBLY).dll.covcfg.*
 	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
 	@BABOON_CFG=$(ASSEMBLY).dll.covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
-	@python print_coverage.py $(ASSEMBLY).dll.covcfg.covreport
 
 print-coverage:
 	@python print_coverage.py $(ASSEMBLY).dll.covcfg.covreport
@@ -63,10 +63,10 @@ show-coverage:
 	$(COV_GTK) $(ASSEMBLY).dll.covcfg.covdb
 
 coverage:do-coverage print-coverage
-
 endif
 endif
 
 CLEANFILES += \
-	Tests.dll.covcfg.*
+	Tests.dll.covcfg.* \
 	TestsResult.xml
+
