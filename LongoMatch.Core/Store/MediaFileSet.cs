@@ -62,8 +62,14 @@ namespace LongoMatch.Core.Store
 						case MediaFileAngle.Angle1:
 							File.Value.Name = Catalog.GetString ("Main camera angle");
 							break;
-						default:
-							File.Value.Name = Catalog.GetString ("Camera angle");
+						case MediaFileAngle.Angle2:
+							File.Value.Name = Catalog.GetString ("Angle 2");
+							break;
+						case MediaFileAngle.Angle3:
+							File.Value.Name = Catalog.GetString ("Angle 3");
+							break;
+						case MediaFileAngle.Angle4:
+							File.Value.Name = Catalog.GetString ("Angle 4");
 							break;
 						}
 						// Add to list
@@ -91,12 +97,16 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// Gets the total duration of all files in set.
+		/// Gets the maximum duration from all files in set.
 		/// </summary>
 		/// <value>The duration.</value>
 		public Time Duration {
 			get {
-				return this.Max (mf => mf == null ? new Time (0) : mf.Duration);
+				if (Count != 0) {
+					return this.Max (mf => mf == null ? new Time (0) : mf.Duration);
+				} else {
+					return new Time (0);
+				}
 			}
 		}
 
