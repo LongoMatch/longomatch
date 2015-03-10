@@ -50,14 +50,14 @@ check:
 if HAVE_COVEM
 do-coverage:
 	@rm -rf $(ASSEMBLY).dll.covcfg.*
-	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
-	@BABOON_CFG=$(ASSEMBLY).dll.covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
+	@cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
+	BABOON_CFG=$(ASSEMBLY).dll.covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
 
 print-coverage:
 	@python print_coverage.py $(ASSEMBLY).dll.covcfg.covreport
 
 render-coverage:
-	@cov-html $(ASSEMBLY).dll.covcfg.covdb longomatch
+	cov-html $(ASSEMBLY).dll.covcfg.covdb longomatch
 
 show-coverage:
 	$(COV_GTK) $(ASSEMBLY).dll.covcfg.covdb
