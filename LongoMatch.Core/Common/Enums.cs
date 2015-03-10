@@ -156,6 +156,28 @@ namespace LongoMatch.Core.Common
 		Timeline,
 		GameUnits,
 	}
+
+	/// <summary>
+	/// Node selection mode.
+	/// </summary>
+	public enum NodeSelectionMode {
+		/// <summary>
+		/// The node is not selectable at all.
+		/// </summary>
+		None,
+		/// <summary>
+		/// Only borders of the node can be selected.
+		/// </summary>
+		Borders,
+		/// <summary>
+		/// Only the inner segment of the node can be selected.
+		/// </summary>
+		Segment,
+		/// <summary>
+		/// Both borders and inner segment can be selected.
+		/// </summary>
+		All,
+	}
 	
 	public enum SelectionPosition {
 		TopLeft,

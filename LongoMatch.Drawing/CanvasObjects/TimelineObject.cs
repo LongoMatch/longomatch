@@ -265,13 +265,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		List<Timer> timers;
 
-		public TimerTimeline (List<Timer> timers, bool showName, bool selectWhole, bool showLine,
+		public TimerTimeline (List<Timer> timers, bool showName, NodeSelectionMode selectionMode, bool showLine,
 		                      Time maxTime, double offsetY, Color background, Color lineColor):
 			base (maxTime, offsetY, background)
 		{
 			this.timers = timers;
 			ShowName = showName;
-			SelectWhole = selectWhole;
+			SelectionMode = selectionMode;
 			ShowLine = showLine;
 			LineColor = lineColor;
 	
@@ -293,7 +293,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 		
-		bool SelectWhole {
+		NodeSelectionMode SelectionMode {
 			get;
 			set;
 		}
@@ -337,7 +337,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			to.OffsetY = OffsetY;
 			to.SecondsPerPixel = SecondsPerPixel;
 			to.MaxTime = maxTime;
-			to.SelectWhole = SelectWhole;
+			to.SelectionMode = SelectionMode;
 			to.ShowName = ShowName;
 			to.LineColor = LineColor;
 			AddNode (to);

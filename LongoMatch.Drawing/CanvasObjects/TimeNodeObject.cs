@@ -34,8 +34,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public TimeNodeObject (TimeNode node)
 		{
 			TimeNode = node;
-			SelectWhole = true;
-			MoveWhole = true;
+			SelectionMode = NodeSelectionMode.All;
 			LineColor = Config.Style.PaletteBackgroundLight;
 		}
 
@@ -53,12 +52,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public bool SelectWhole {
-			get;
-			set;
-		}
-
-		public bool MoveWhole {
+		/// <summary>
+		/// Gets or sets the selection mode.
+		/// </summary>
+		/// <value>The selection mode.</value>
+		public NodeSelectionMode SelectionMode {
 			get;
 			set;
 		}
@@ -123,15 +121,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public Selection GetSelection (Point point, double precision, bool inMotion=false)
 		{
-			double accuracy;
-			if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
-				if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
-					return new Selection (this, SelectionPosition.Left, accuracy);
-				} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
-					return new Selection (this, SelectionPosition.Right, accuracy);
-				} else if (SelectWhole && point.X > StartX && point.X < StopX) {
-					return new Selection (this, SelectionPosition.All,
-					                      Math.Abs (CenterX - point.X));
+			if (SelectionMode == NodeSelectionMode.Borders || SelectionMode == NodeSelectionMode.All) {
+				double accuracy;
+				if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
+					if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
+						return new Selection (this, SelectionPosition.Left, accuracy);
+					} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
+						return new Selection (this, SelectionPosition.Right, accuracy);
+					}
+				}
+			}
+
+			if (SelectionMode == NodeSelectionMode.Segment || SelectionMode == NodeSelectionMode.All) {
+				if (point.Y >= OffsetY && point.Y < OffsetY + Height) {
+					if (point.X > StartX && point.X < StopX) {
+						return new Selection (this, SelectionPosition.All, Math.Abs (CenterX - point.X));
+					}
 				}
 			}
 			return null;
@@ -154,27 +159,25 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 
 			switch (sel.Position) {
-			case SelectionPosition.Left:
-				if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
-					TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
-				} else {
-					TimeNode.Start = newTime;
-				}
-				break;
-			case SelectionPosition.Right:
-				if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
-					TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
-				} else {
-					TimeNode.Stop = newTime;
-				}
-				break;
-			case SelectionPosition.All:
-				if (MoveWhole) {
+				case SelectionPosition.Left:
+					if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
+						TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
+					} else {
+						TimeNode.Start = newTime;
+					}
+					break;
+				case SelectionPosition.Right:
+					if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
+						TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
+					} else {
+						TimeNode.Stop = newTime;
+					}
+					break;
+				case SelectionPosition.All:
 					Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
 					TimeNode.Start += diff;
 					TimeNode.Stop += diff;
-				}
-				break;
+					break;
 			}
 			movingPos = sel.Position;
 		}

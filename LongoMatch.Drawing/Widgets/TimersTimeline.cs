@@ -1,3 +1,20 @@
+//
+//  Copyright (C) 2014 Andoni Morales Alastruey
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
 using System.Linq;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
@@ -82,7 +99,7 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas (List<Timer> timers)
 		{
 			widget.Height = Constants.TIMER_HEIGHT;
-			timertimeline = new TimerTimeline (timers, true, true, true, duration, 0,
+			timertimeline = new TimerTimeline (timers, true, NodeSelectionMode.All, true, duration, 0,
 			                                   Config.Style.PaletteBackground,
 			                                   Config.Style.PaletteBackgroundLight);
 			foreach (Timer t in timers) {

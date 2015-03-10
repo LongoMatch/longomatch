@@ -186,7 +186,7 @@ namespace LongoMatch.Drawing.Widgets
 			int i = 0;
 
 			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList (),
-			                        true, true, false, duration,
+				true, NodeSelectionMode.All, false, duration,
 			                        i * StyleConf.TimelineCategoryHeight,
 			                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
@@ -194,7 +194,7 @@ namespace LongoMatch.Drawing.Widgets
 			i++;
 
 			foreach (Timer t in project.Timers) {
-				tl = new TimerTimeline (new List<Timer> { t }, false, true, false, duration,
+				tl = new TimerTimeline (new List<Timer> { t }, false, NodeSelectionMode.All, false, duration,
 				                        i * StyleConf.TimelineCategoryHeight,
 				                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
