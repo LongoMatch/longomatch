@@ -6,6 +6,8 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.ScrolledWindow mfss_scrolledwindow;
 		
+		private global::Gtk.Alignment mfss_alignment;
+		
 		private global::Gtk.VBox mfss_vbox;
 
 		protected virtual void Build ()
@@ -13,6 +15,7 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Component.MediaFileSetSelection
 			global::Stetic.BinContainer.Attach (this);
+			this.HeightRequest = 100;
 			this.Name = "LongoMatch.Gui.Component.MediaFileSetSelection";
 			// Container child LongoMatch.Gui.Component.MediaFileSetSelection.Gtk.Container+ContainerChild
 			this.mfss_scrolledwindow = new global::Gtk.ScrolledWindow ();
@@ -24,10 +27,14 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
 			w1.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.mfss_alignment = new global::Gtk.Alignment (0F, 0F, 1F, 0F);
+			this.mfss_alignment.Name = "mfss_alignment";
+			// Container child mfss_alignment.Gtk.Container+ContainerChild
 			this.mfss_vbox = new global::Gtk.VBox ();
 			this.mfss_vbox.Name = "mfss_vbox";
 			this.mfss_vbox.Spacing = 6;
-			w1.Add (this.mfss_vbox);
+			this.mfss_alignment.Add (this.mfss_vbox);
+			w1.Add (this.mfss_alignment);
 			this.mfss_scrolledwindow.Add (w1);
 			this.Add (this.mfss_scrolledwindow);
 			if ((this.Child != null)) {
