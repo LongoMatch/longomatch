@@ -47,13 +47,23 @@ check:
 	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
 	$(MONO) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
 if HAVE_COVEM
-coverage:
-	@rm -rf Tests.dll.covcfg.*
+do-coverage:
+	@rm -rf $(ASSEMBLY).dll.covcfg.*
 	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
-	@BABOON_CFG=Tests.dll.covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
-	@python print_coverage.py Tests.dll.covcfg.covreport
+	@BABOON_CFG=$(ASSEMBLY).dll.covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
+	@python print_coverage.py $(ASSEMBLY).dll.covcfg.covreport
+
+print-coverage:
+	@python print_coverage.py $(ASSEMBLY).dll.covcfg.covreport
+
+render-coverage:
+	@cov-html $(ASSEMBLY).dll.covcfg.covdb longomatch
+
 show-coverage:
 	$(COV_GTK) $(ASSEMBLY).dll.covcfg.covdb
+
+coverage:do-coverage print-coverage
+
 endif
 endif
 
