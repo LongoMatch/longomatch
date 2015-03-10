@@ -101,7 +101,7 @@ namespace Tests.Core.Store
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.TimesDesription (),
-				String.Format ("0:01,000 - 0:02,000 ({0})", 2.3));
+				String.Format ("0:01,000 - 0:02,000 ({0}X)", 2.3));
 			evt.Rate = 1;
 			Assert.AreEqual (evt.TimesDesription (), "0:01,000 - 0:02,000");
 		}
