@@ -366,10 +366,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			base.DrawBackground (tk, area);
 
 			if (ShowLine) {
-				linepos = OffsetY + Height - StyleConf.TimelineLineSize;
+				linepos = OffsetY + Height / 2;
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-				tk.LineWidth = 4;
+				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;
 				tk.DrawLine (new Point (0, linepos),
 				             new Point (Width, linepos));
 			}
