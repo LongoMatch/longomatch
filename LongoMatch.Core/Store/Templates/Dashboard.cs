@@ -165,10 +165,6 @@ namespace LongoMatch.Core.Store.Templates
 
 		#endregion
 
-		public void Save(string filePath) {
-			Serializer.Save(this, filePath);
-		}
-
 		public void ChangeHotkey (DashboardButton button, HotKey hotkey)
 		{
 			if (List.Count (d => d.HotKey == hotkey) > 0) {
@@ -211,11 +207,6 @@ namespace LongoMatch.Core.Store.Templates
 			};
 			List.Insert(index, button);
 			return button;
-		}
-
-		public static Dashboard Load(string filePath) {
-			Dashboard cat = Serializer.LoadSafe<Dashboard>(filePath);
-			return cat;
 		}
 
 		public static Dashboard DefaultTemplate(int count) {

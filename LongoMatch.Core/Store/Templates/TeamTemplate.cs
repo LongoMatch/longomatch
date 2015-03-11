@@ -214,10 +214,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		public void Save(string filePath) {
-			Serializer.Save(this, filePath);
-		}
-
 		public void UpdateColors ()
 		{
 			foreach (Player p in List) {
@@ -237,11 +233,6 @@ namespace LongoMatch.Core.Store.Templates
 				Playing = true,};
 			List.Insert (i, p);
 			return p;
-		}
-
-		public static TeamTemplate Load(string filePath) {
-			TeamTemplate template = Serializer.LoadSafe<TeamTemplate>(filePath);
-			return template;
 		}
 
 		public static TeamTemplate DefaultTemplate(int playersCount) {

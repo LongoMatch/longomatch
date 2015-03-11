@@ -24,7 +24,6 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface ITemplate: IIDObject
 	{
-		void Save (string filename);
 		string Name {get; set;}
 	}
 	
@@ -42,6 +41,7 @@ namespace LongoMatch.Core.Interfaces
 	{
 		List<T> Templates {get;}
 		T Load (string name);
+		T LoadFile (string filename);
 		void Save (ITemplate template);
 		void Update (ITemplate template);
 		void Register (T template);

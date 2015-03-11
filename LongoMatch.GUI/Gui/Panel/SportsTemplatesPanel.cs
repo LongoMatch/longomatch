@@ -318,7 +318,7 @@ namespace LongoMatch.Gui.Panel
 				return;
 
 			try {
-				Dashboard new_dashboard = Dashboard.Load (fileName);
+				Dashboard new_dashboard = provider.LoadFile (fileName);
 
 				if (new_dashboard != null) {
 					bool abort = false;

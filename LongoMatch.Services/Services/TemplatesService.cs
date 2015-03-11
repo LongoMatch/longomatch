@@ -71,7 +71,6 @@ namespace LongoMatch.Services
 	{
 		readonly string basePath;
 		readonly string extension;
-		readonly MethodInfo methodLoad;
 		readonly MethodInfo methodDefaultTemplate;
 		List<T> systemTemplates;
 
@@ -79,7 +78,6 @@ namespace LongoMatch.Services
 		{
 			this.basePath = basePath;
 			this.extension = extension;
-			methodLoad = typeof(T).GetMethod ("Load");
 			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
 			systemTemplates = new List<T> ();
 		}
@@ -137,10 +135,19 @@ namespace LongoMatch.Services
 				return Cloner.Clone (template);
 			} else {
 				Log.Information ("Loading template " + name);
-				template = (T)methodLoad.Invoke (null, new object[] { GetPath(name) });
+				template = (T)Serializer.LoadSafe<T>(GetPath(name));
 				template.Name = name;
 				return template;
 			}
+		}
+
+		public T LoadFile (string filename)
+		{
+			T template;
+
+			Log.Information ("Loading template file " + filename);
+			template = (T)Serializer.LoadSafe<T>(filename);
+			return template;
 		}
 
 		public void Save (ITemplate template)
@@ -160,7 +167,7 @@ namespace LongoMatch.Services
 			}
 			
 			/* Don't cach the Exception here to chain it up */
-			template.Save (filename);
+			Serializer.Save<T>((T)template, filename);
 		}
 
 		public void Update (ITemplate template)
@@ -169,7 +176,7 @@ namespace LongoMatch.Services
 			string filename = GetPath (template.Name);
 			Log.Information ("Updating template " + filename);
 			/* Don't cach the Exception here to chain it up */
-			template.Save (filename);
+			Save(template);
 		}
 
 		public void Register (T template)
