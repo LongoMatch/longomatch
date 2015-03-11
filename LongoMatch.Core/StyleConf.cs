@@ -72,13 +72,17 @@ namespace LongoMatch.Core.Common
 		public const string TimelineNeedleResource = "hicolor/scalable/actions/longomatch-timeline-needle-big.svg";
 		public const string TimelineNeedleUP = "hicolor/scalable/actions/longomatch-timeline-needle-up.svg";
 		public const int TimelineCategoryHeight = 20;
+		public const int TimelineCameraHeight = 30;
+		public const int TimelineCameraMaxLines = 8;
+		public const int TimelineCameraFontSize = 14;
 		public const int TimelineLabelsWidth = 200;
 		public const int TimelineLabelHSpacing = 10;
 		public const int TimelineLabelVSpacing = 2;
 		public const int TimelineLineSize = 6;
+		public const int TimelineBackgroundLineSize = 4;
 		public const string TimelineSelectionLeft = "hicolor/scalable/actions/longomatch-timeline-select-left.svg";
 		public const string TimelineSelectionRight = "hicolor/scalable/actions/longomatch-timeline-select-right.svg";
-		
+
 		public const string PlayerArrowOut = "player/arrow-out.svg";
 		public const string PlayerArrowIn = "player/arrow-in.svg";
 		public const string PlayerPhoto = "player/photo.svg";
