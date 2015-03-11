@@ -60,12 +60,6 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
-		public TimerTimeline TimerTimeline {
-			get {
-				return PeriodsTimeline;
-			}
-		}
-
 		public TimerTimeline PeriodsTimeline {
 			get;
 			set;

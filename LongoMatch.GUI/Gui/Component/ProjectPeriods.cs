@@ -32,7 +32,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectPeriods : Gtk.Bin
 	{
-		TimersTimeline timersTimeline;
+		CamerasLabels camerasLabels;
+		CamerasTimeline camerasTimeline;
 		Timerule timerule;
 		Time duration;
 		Project project;
@@ -44,40 +45,62 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-more", 20);
-			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-less", 20);
-			arrowimage1.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-down-arrow", 20);
-			arrowimage2.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-down-arrow", 20);
+			zoomscale.CanFocus = false;
+			zoomscale.Adjustment.Lower = 0;
+			zoomscale.Adjustment.Upper = 12;
+			zoomscale.ValueChanged += HandleZoomChanged;
 
-			zoominbutton.Clicked += HandleZooomActivated;
-			zoomoutbutton.Clicked += HandleZooomActivated;
-			playerbin2.Tick += HandleTick;
-			playerbin2.ShowControls = false;
-			timerule = new Timerule (new WidgetWrapper (drawingarea1));
-			timerule.ObjectsCanMove = false;
-			timersTimeline = new TimersTimeline (new WidgetWrapper (drawingarea2));
-			drawingarea1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
-			drawingarea2.HeightRequest = LongoMatch.Drawing.Constants.TIMER_HEIGHT;
-			timersTimeline.TimeNodeChanged += HandleTimeNodeChanged;
-			timersTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
-			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
-			synclabel.Markup = String.Format ("<b> {0} </b>",
-			                                  Catalog.GetString ("Synchronize the game periods"));
+			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
+			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
+
+			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
+			scrolledwindow2.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
+				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
+				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
+			};
+
+			main_cam_playerbin.Tick += HandleTick;
+			main_cam_playerbin.ShowControls = false;
+			//secondary_cam_playerbin.ShowControls = false;
+
+			timerule = new Timerule (new WidgetWrapper (timerulearea)) { ObjectsCanMove = false };
+			camerasTimeline = new CamerasTimeline (new WidgetWrapper (timelinearea));
+			camerasLabels = new CamerasLabels (new WidgetWrapper (labelsarea));
+
+			/* Links Label size to the container */
+			labelsarea.SizeRequested += (o, args) => {
+				labels_vbox.WidthRequest = args.Requisition.Width;
+			};
+
+			// Set some sane defaults
+			labels_vbox.WidthRequest = StyleConf.TimelineLabelsWidth;
+			// We need to aligne the timerule and the beginning of labels list
+			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
+
+			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
+			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
+
+			// Synchronize scrollbars with timerule and labels
+			scrolledwindow2.Vadjustment.ValueChanged += HandleScrollEvent;
+			scrolledwindow2.Hadjustment.ValueChanged += HandleScrollEvent;
+
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
+
 			menu = new PeriodsMenu ();
 		}
 
 		protected override void OnDestroyed ()
 		{
-			playerbin2.Destroy ();
+			main_cam_playerbin.Destroy ();
 			timerule.Dispose ();
-			timersTimeline.Dispose ();
+			camerasLabels.Dispose ();
+			camerasTimeline.Dispose ();
 			base.OnDestroyed ();
 		}
 
 		public void Pause ()
 		{
-			playerbin2.Pause ();
+			main_cam_playerbin.Pause ();
 		}
 
 		public void SaveChanges ()
@@ -105,7 +128,7 @@ namespace LongoMatch.Gui.Component
 				List<Period> periods;
 				MediaFile file;
 				
-				playerbin2.ShowControls = false;
+				main_cam_playerbin.ShowControls = false;
 				this.project = value;
 				gamePeriods = value.Dashboard.GamePeriods;
 
@@ -135,60 +158,90 @@ namespace LongoMatch.Gui.Component
 					projectHasPeriods = true;
 					periods = periodsDict.Values.ToList ();
 				}
-				timersTimeline.LoadPeriods (periods, duration);
+
+				MediaFileSet fileSet = project.Description.FileSet;
+
+				camerasLabels.Load (fileSet);
+				camerasTimeline.Load (periods, fileSet, duration);
+				UpdateTimeLineSize (fileSet);
+
 				timerule.Duration = duration;
-				SetZoom ();
-				playerbin2.Open (value.Description.FileSet);
+				zoomscale.Value = 6;
+
+				// Open media file
+				main_cam_playerbin.Open (value.Description.FileSet);
 			}
 		}
 
-		void SetZoom ()
+		/// <summary>
+		/// Adjusts the VPaned position to accomodate up to 8 cameras
+		/// </summary>
+		/// <param name="fileSet">File set.</param>
+		void UpdateTimeLineSize (MediaFileSet fileSet)
 		{
-			if (duration != null) {
-				double spp = (double)duration.TotalSeconds / drawingarea1.Allocation.Width;
-				int secondsPerPixel = (int)Math.Ceiling (spp);
-				timerule.SecondsPerPixel = secondsPerPixel;
-				timersTimeline.SecondsPerPixel = secondsPerPixel;
-			}
+			// Number of media files plus period sync line
+			int visibleItems = Math.Min (StyleConf.TimelineCameraMaxLines, project.Description.FileSet.Count + 1);
+			int height = scrolledwindow2.HScrollbar.Requisition.Height * 2;
+			height += visibleItems * StyleConf.TimelineCameraHeight;
+			vpaned2.Position = vpaned2.Allocation.Height - height;
 		}
 
+		/// <summary>
+		/// Handles the tick from media player to update Current Time in timelines.
+		/// </summary>
+		/// <param name="currentTime">Current time.</param>
 		void HandleTick (Time currentTime)
 		{
 			timerule.CurrentTime = currentTime;
-			timersTimeline.CurrentTime = currentTime;
-			drawingarea1.QueueDraw ();
-			drawingarea2.QueueDraw ();
+			camerasTimeline.CurrentTime = currentTime;
+			QueueDraw ();
 		}
 
 		void HandleTimeNodeChanged (TimeNode tNode, object val)
 		{
 			Time time = val as Time;
-			playerbin2.Pause ();
-			playerbin2.Seek (time, false);
+			main_cam_playerbin.Pause ();
+			main_cam_playerbin.Seek (time, false);
+			// FIXME: Reflect change in the MediaFile's offset.
 		}
 
-		void HandleValueChanged (object sender, EventArgs e)
+		/// <summary>
+		/// Handles the scroll event from the scrolled window and synchronise the timelines labels and timerule with it.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
+		void HandleScrollEvent (object sender, System.EventArgs args)
 		{
-			timerule.Scroll = scrolledwindow2.Hadjustment.Value;
-			drawingarea1.QueueDraw ();
-		}
-
-		void HandleZooomActivated (object sender, EventArgs e)
-		{
-			if (sender == zoomoutbutton) {
-				timerule.SecondsPerPixel ++;
-				timersTimeline.SecondsPerPixel ++;
-			} else {
-				timerule.SecondsPerPixel = Math.Max (1, timerule.SecondsPerPixel - 1);
-				timersTimeline.SecondsPerPixel = Math.Max (1, timersTimeline.SecondsPerPixel - 1);
+			if (sender == scrolledwindow2.Vadjustment)
+				camerasLabels.Scroll = scrolledwindow2.Vadjustment.Value;
+			else if (sender == scrolledwindow2.Hadjustment) {
+				timerule.Scroll = scrolledwindow2.Hadjustment.Value;
 			}
-			drawingarea1.QueueDraw ();
-			drawingarea2.QueueDraw ();
+			QueueDraw ();
+		}
+
+		void HandleZoomChanged (object sender, EventArgs e)
+		{
+			double secondsPer100Pixels, value;
+
+			value = Math.Round (zoomscale.Value);
+			if (value == 0) {
+				secondsPer100Pixels = 1;
+			} else if (value <= 6) {
+				secondsPer100Pixels = value * 10;
+			} else {
+				secondsPer100Pixels = (value - 5) * 60;
+			}
+
+			double secondsPerPixel = secondsPer100Pixels / 100;
+			timerule.SecondsPerPixel = secondsPerPixel;
+			camerasTimeline.SecondsPerPixel = secondsPerPixel;
+			QueueDraw ();
 		}
 
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
-			menu.ShowMenu (project, timer, time, timersTimeline.TimerTimeline);
+			menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline);
 		}
 	}
 }
