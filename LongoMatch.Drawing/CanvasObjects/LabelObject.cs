@@ -159,5 +159,21 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 	}
+
+	public class CameraLabelObject: LabelObject {
+		MediaFile mediaFile;
+
+		public CameraLabelObject (MediaFile mediaFile, double width, double height, double offsetY):
+		base (width, height, offsetY)
+		{
+			this.mediaFile = mediaFile;
+		}
+
+		public override string Name {
+			get {
+				return mediaFile.Name;
+			}
+		}
+	}
 }
 
