@@ -39,6 +39,43 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return mediaFile.Name;
 			}
 		}
+
+		Area Area {
+			get {
+				return new Area (new Point (StartX, OffsetY),
+					(StopX - StartX), Height);
+			}
+		}
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
+			if (!UpdateDrawArea (tk, area, Area)) {
+				return;
+			}
+
+			tk.Begin ();
+
+			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			if (Selected) {
+				tk.FillColor = Config.Style.PaletteActive;
+			} else {
+				tk.FillColor = LineColor;
+			}
+			tk.LineWidth = 1;
+
+			tk.DrawRoundedRectangle (new Point (StartX, OffsetY), StopX - StartX, Height, 5);
+
+			if (ShowName) {
+				tk.FontSize = 16;
+				tk.FontWeight = FontWeight.Bold;
+				tk.FillColor = Config.Style.PaletteActive;
+				tk.StrokeColor = Config.Style.PaletteActive;
+				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
+					Height - StyleConf.TimelineLineSize,
+					TimeNode.Name);
+			}
+			tk.End ();
+		}
 	}
 }
 
