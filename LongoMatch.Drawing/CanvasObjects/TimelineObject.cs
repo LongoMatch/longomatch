@@ -265,13 +265,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		List<Timer> timers;
 
-		public TimerTimeline (List<Timer> timers, bool showName, NodeSelectionMode selectionMode, bool showLine,
+		public TimerTimeline (List<Timer> timers, bool showName, NodeDraggingMode draggingMode, bool showLine,
 		                      Time maxTime, double offsetY, Color background, Color lineColor):
 			base (maxTime, offsetY, background)
 		{
 			this.timers = timers;
 			ShowName = showName;
-			SelectionMode = selectionMode;
+			DraggingMode = draggingMode;
 			ShowLine = showLine;
 			LineColor = lineColor;
 	
@@ -293,7 +293,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 		
-		NodeSelectionMode SelectionMode {
+		NodeDraggingMode DraggingMode {
 			get;
 			set;
 		}
@@ -337,7 +337,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			to.OffsetY = OffsetY;
 			to.SecondsPerPixel = SecondsPerPixel;
 			to.MaxTime = maxTime;
-			to.SelectionMode = SelectionMode;
+			to.DraggingMode = DraggingMode;
 			to.ShowName = ShowName;
 			to.LineColor = LineColor;
 			AddNode (to);
@@ -369,12 +369,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 	public class CameraTimeline: TimelineObject
 	{
-		public CameraTimeline (MediaFile mediaFile, bool showName, NodeSelectionMode selectionMode, bool showLine,
+		public CameraTimeline (MediaFile mediaFile, bool showName, bool showLine,
 			Time maxTime, double offsetY, Color background, Color lineColor):
 		base (maxTime, offsetY, background)
 		{
 			ShowName = showName;
-			SelectionMode = selectionMode;
 			ShowLine = showLine;
 			LineColor = lineColor;
 
@@ -396,18 +395,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		NodeSelectionMode SelectionMode {
-			get;
-			set;
-		}
-
 		public void AddMediaFile (MediaFile mediaFile)
 		{
 			CameraObject co = new CameraObject (mediaFile);
 			co.OffsetY = OffsetY;
 			co.SecondsPerPixel = SecondsPerPixel;
+			co.DraggingMode = NodeDraggingMode.Segment;
 			co.MaxTime = maxTime;
-			co.SelectionMode = SelectionMode;
 			co.ShowName = ShowName;
 			co.LineColor = LineColor;
 			AddNode (co);

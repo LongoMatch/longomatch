@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas (List<Timer> timers)
 		{
 			widget.Height = Constants.TIMER_HEIGHT;
-			timertimeline = new TimerTimeline (timers, true, NodeSelectionMode.All, true, duration, 0,
+			timertimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, 0,
 			                                   Config.Style.PaletteBackground,
 			                                   Config.Style.PaletteBackgroundLight);
 			foreach (Timer t in timers) {
