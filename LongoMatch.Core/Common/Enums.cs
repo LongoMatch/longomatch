@@ -178,6 +178,28 @@ namespace LongoMatch.Core.Common
 		/// </summary>
 		All,
 	}
+
+	/// <summary>
+	/// Node dragging mode.
+	/// </summary>
+	public enum NodeDraggingMode {
+		/// <summary>
+		/// The node is not draggable at all.
+		/// </summary>
+		None,
+		/// <summary>
+		/// Only borders of the node can be dragged.
+		/// </summary>
+		Borders,
+		/// <summary>
+		/// Only the inner segment of the node can be dragged.
+		/// </summary>
+		Segment,
+		/// <summary>
+		/// Both borders and inner segment can be dragged.
+		/// </summary>
+		All,
+	}
 	
 	public enum SelectionPosition {
 		TopLeft,

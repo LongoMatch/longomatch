@@ -27,7 +27,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public PlayObject (TimelineEvent play, Project project):base (play)
 		{
 			Project = project;
-			SelectionMode = NodeSelectionMode.Borders;
+			// Only event boundaries can be dragged
+			DraggingMode = NodeDraggingMode.Borders;
 		}
 
 		public ISurface SelectionLeft {

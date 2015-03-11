@@ -30,7 +30,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			base (new TimeNode () { Start = mf.Offset, Stop = mf.Duration + mf.Offset, Name = mf.Name })
 		{
 			mediaFile = mf;
-			SelectionMode = NodeSelectionMode.Segment;
+			// Video boundaries can't be changed, only the segment can move.
+			DraggingMode = NodeDraggingMode.Segment;
 		}
 
 		public override string Description {

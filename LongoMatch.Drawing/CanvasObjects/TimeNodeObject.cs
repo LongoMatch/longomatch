@@ -35,6 +35,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			TimeNode = node;
 			SelectionMode = NodeSelectionMode.All;
+			DraggingMode = NodeDraggingMode.All;
 			LineColor = Config.Style.PaletteBackgroundLight;
 		}
 
@@ -57,6 +58,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		/// </summary>
 		/// <value>The selection mode.</value>
 		public NodeSelectionMode SelectionMode {
+			get;
+			set;
+		}
+
+		public NodeDraggingMode DraggingMode {
 			get;
 			set;
 		}
@@ -144,6 +150,21 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public void Move (Selection sel, Point p, Point start)
 		{
+			// Apply dragging restrictions
+			if (DraggingMode == NodeDraggingMode.None)
+				return;
+			switch (sel.Position) {
+				case SelectionPosition.Left:
+				case SelectionPosition.Right:
+					if (DraggingMode == NodeDraggingMode.Segment)
+						return;
+					break;
+				case SelectionPosition.All:
+					if (DraggingMode == NodeDraggingMode.Borders)
+						return;
+					break;
+			}
+
 			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
 
 			if (p.X < 0) {
