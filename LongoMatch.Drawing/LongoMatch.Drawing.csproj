@@ -69,6 +69,7 @@
     <Compile Include="CanvasObjects\NeedleObject.cs" />
     <Compile Include="CanvasObjects\CameraObject.cs" />
     <Compile Include="Widgets\CamerasTimeline.cs" />
+    <Compile Include="Widgets\CamerasLabels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
