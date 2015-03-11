@@ -112,17 +112,16 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas ()
 		{
 			// Calculate height depending on number of cameras - 1 (for the main camera) + the line for periods
-			widget.Height = Constants.TIMER_HEIGHT * fileSet.Count;
+			widget.Height = StyleConf.TimelineCameraHeight * fileSet.Count;
 
 			// Add the timeline for periods
-			PeriodsTimeline = new TimerTimeline (timers, true, NodeSelectionMode.All, true, duration, 0,
-				Config.Style.PaletteBackground,
-				Config.Style.PaletteBackgroundLight);
+			PeriodsTimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, StyleConf.TimelineCameraHeight, 0,
+				Config.Style.PaletteBackground, Config.Style.PaletteBackgroundLight);
 			AddTimeLine (PeriodsTimeline);
 
 			// And for the cameras
 			for (int i = 1; i < fileSet.Count; i++) {
-				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], true, NodeSelectionMode.Segment, true, duration, i * StyleConf.TimelineCategoryHeight,
+				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], false, true, duration, i * StyleConf.TimelineCameraHeight,
 					Config.Style.PaletteBackground,
 					Config.Style.PaletteBackgroundLight);
 				AddTimeLine (cameraTimeLine);
