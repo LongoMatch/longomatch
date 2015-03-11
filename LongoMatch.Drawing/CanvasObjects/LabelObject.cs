@@ -161,18 +161,34 @@ namespace LongoMatch.Drawing.CanvasObjects
 	}
 
 	public class CameraLabelObject: LabelObject {
-		MediaFile mediaFile;
-
-		public CameraLabelObject (MediaFile mediaFile, double width, double height, double offsetY):
+		public CameraLabelObject (double width, double height, double offsetY):
 		base (width, height, offsetY)
 		{
-			this.mediaFile = mediaFile;
 		}
 
-		public override string Name {
-			get {
-				return mediaFile.Name;
-			}
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
+			double y = OffsetY - Math.Floor (Scroll);
+
+			// Draw background
+			tk.Begin ();
+			tk.FillColor = BackgroundColor;
+			tk.StrokeColor = BackgroundColor;
+			tk.LineWidth = 0;
+			tk.DrawRectangle (new Point (0, y), Width, Height);
+			tk.LineWidth = 1;
+			tk.StrokeColor = Config.Style.PaletteWidgets;
+			tk.DrawLine (new Point (0, y + Height), new Point (Width, y + Height));
+
+			/* Draw category name */
+			tk.FontSlant = FontSlant.Normal;
+			tk.FontWeight = FontWeight.Bold;
+			tk.FontSize = StyleConf.TimelineCameraFontSize;
+			tk.FillColor = Config.Style.PaletteWidgets;
+			tk.FontAlignment = FontAlignment.Right;
+			tk.StrokeColor = Config.Style.PaletteWidgets;
+			tk.DrawText (new Point (0, y), Width - StyleConf.TimelineLabelHSpacing, Height, Name);
+			tk.End ();
 		}
 	}
 }
