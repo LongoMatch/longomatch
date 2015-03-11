@@ -37,6 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			SelectionMode = NodeSelectionMode.All;
 			DraggingMode = NodeDraggingMode.All;
 			LineColor = Config.Style.PaletteBackgroundLight;
+			Height = StyleConf.TimelineCategoryHeight;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -88,9 +89,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public double Height {
-			get {
-				return StyleConf.TimelineCategoryHeight;
-			}
+			get;
+			set;
 		}
 
 		public double SecondsPerPixel {

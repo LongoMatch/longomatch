@@ -34,7 +34,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected Time maxTime;
 		protected ISurface selectionBorderL, selectionBorderR;
 
-		public TimelineObject (Time maxTime, double offsetY, Color background)
+		public TimelineObject (Time maxTime, int height, double offsetY, Color background)
 		{
 			this.BackgroundColor = background;
 			this.nodes = new List<TimeNodeObject> ();
@@ -46,6 +46,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			CurrentTime = new Time (0);
 			OffsetY = offsetY;
 			SecondsPerPixel = 0.1;
+			Height = height;
 		}
 		
 		protected override void Dispose (bool disposing)
@@ -78,11 +79,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 			protected get;
 		}
-		
+
 		public double Height {
-			get {
-				return StyleConf.TimelineCategoryHeight;
-			}
+			get;
+			set;
 		}
 
 		public double Width {
@@ -229,7 +229,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public CategoryTimeline (Project project, List<TimelineEvent> plays, Time maxTime,
 		                         double offsetY, Color background, EventsFilter filter):
-			base (maxTime, offsetY, background)
+			base (maxTime, StyleConf.TimelineCategoryHeight, offsetY, background)
 		{
 			this.filter = filter;
 			this.project = project;
@@ -254,6 +254,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			po.SelectionLeft = selectionBorderL; 
 			po.SelectionRight = selectionBorderR; 
 			po.OffsetY = OffsetY;
+			po.Height = Height;
 			po.SecondsPerPixel = SecondsPerPixel;
 			po.MaxTime = maxTime;
 			AddNode (po);
@@ -266,8 +267,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		List<Timer> timers;
 
 		public TimerTimeline (List<Timer> timers, bool showName, NodeDraggingMode draggingMode, bool showLine,
-		                      Time maxTime, double offsetY, Color background, Color lineColor):
-			base (maxTime, offsetY, background)
+				Time maxTime, int height, double offsetY,  Color background, Color lineColor) :
+			base (maxTime, height, offsetY, background)
 		{
 			this.timers = timers;
 			ShowName = showName;
@@ -276,6 +277,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 			LineColor = lineColor;
 	
 			ReloadPeriods (timers);
+		}
+
+		public TimerTimeline (List<Timer> timers, bool showName, NodeDraggingMode draggingMode, bool showLine,
+			Time maxTime, double offsetY, Color background, Color lineColor) :
+			this (timers, showName, draggingMode, showLine, maxTime, StyleConf.TimelineCategoryHeight, offsetY,  background, lineColor)
+		{
+
 		}
 
 		Color LineColor {
@@ -335,6 +343,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			TimerTimeNodeObject to = new TimerTimeNodeObject (t, tn);
 			to.OffsetY = OffsetY;
+			to.Height = Height;
 			to.SecondsPerPixel = SecondsPerPixel;
 			to.MaxTime = maxTime;
 			to.DraggingMode = DraggingMode;
@@ -371,11 +380,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		public CameraTimeline (MediaFile mediaFile, bool showName, bool showLine,
 			Time maxTime, double offsetY, Color background, Color lineColor):
-		base (maxTime, offsetY, background)
+			base (maxTime, StyleConf.TimelineCameraHeight, offsetY, background)
 		{
 			ShowName = showName;
 			ShowLine = showLine;
 			LineColor = lineColor;
+			Height = StyleConf.TimelineCameraHeight;
 
 			AddMediaFile (mediaFile);
 		}
@@ -399,6 +409,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			CameraObject co = new CameraObject (mediaFile);
 			co.OffsetY = OffsetY;
+			co.Height = Height;
 			co.SecondsPerPixel = SecondsPerPixel;
 			co.DraggingMode = NodeDraggingMode.Segment;
 			co.MaxTime = maxTime;
