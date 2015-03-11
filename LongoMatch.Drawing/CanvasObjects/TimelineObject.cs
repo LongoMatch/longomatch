@@ -417,21 +417,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 			co.LineColor = LineColor;
 			AddNode (co);
 		}
-
-		protected override void DrawBackground (IDrawingToolkit tk, Area area)
-		{
-			double linepos;
-			base.DrawBackground (tk, area);
-
-			if (ShowLine) {
-				linepos = OffsetY + Height - StyleConf.TimelineLineSize;
-				tk.FillColor = Config.Style.PaletteBackgroundDark;
-				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-				tk.LineWidth = 4;
-				tk.DrawLine (new Point (0, linepos),
-					new Point (Width, linepos));
-			}
-		}
 	}
 }
 
