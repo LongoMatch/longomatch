@@ -4,6 +4,8 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class ProjectPeriods
 	{
+		private global::Gtk.EventBox headereventbox;
+		
 		private global::Gtk.VPaned vpaned2;
 		
 		private global::Gtk.VBox vbox2;
@@ -22,11 +24,11 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.HBox zoomhbox;
 		
-		private global::Gtk.Image zoominimage;
+		private global::Gtk.Image zoomoutimage;
 		
 		private global::Gtk.HScale zoomscale;
 		
-		private global::Gtk.Image zoomoutimage;
+		private global::Gtk.Image zoominimage;
 		
 		private global::Gtk.VBox vbox7;
 		
@@ -43,6 +45,9 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.ProjectPeriods";
 			// Container child LongoMatch.Gui.Component.ProjectPeriods.Gtk.Container+ContainerChild
+			this.headereventbox = new global::Gtk.EventBox ();
+			this.headereventbox.Name = "headereventbox";
+			// Container child headereventbox.Gtk.Container+ContainerChild
 			this.vpaned2 = new global::Gtk.VPaned ();
 			this.vpaned2.CanFocus = true;
 			this.vpaned2.Name = "vpaned2";
@@ -79,7 +84,6 @@ namespace LongoMatch.Gui.Component
 			// Container child labels_alignment.Gtk.Container+ContainerChild
 			this.labels_vbox = new global::Gtk.VBox ();
 			this.labels_vbox.Name = "labels_vbox";
-			this.labels_vbox.Spacing = 6;
 			// Container child labels_vbox.Gtk.Box+BoxChild
 			this.labelsarea = new global::Gtk.DrawingArea ();
 			this.labelsarea.Name = "labelsarea";
@@ -91,12 +95,12 @@ namespace LongoMatch.Gui.Component
 			this.zoomhbox.Name = "zoomhbox";
 			this.zoomhbox.Spacing = 6;
 			// Container child zoomhbox.Gtk.Box+BoxChild
-			this.zoominimage = new global::Gtk.Image ();
-			this.zoominimage.WidthRequest = 14;
-			this.zoominimage.HeightRequest = 8;
-			this.zoominimage.Name = "zoominimage";
-			this.zoomhbox.Add (this.zoominimage);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoominimage]));
+			this.zoomoutimage = new global::Gtk.Image ();
+			this.zoomoutimage.WidthRequest = 14;
+			this.zoomoutimage.HeightRequest = 8;
+			this.zoomoutimage.Name = "zoomoutimage";
+			this.zoomhbox.Add (this.zoomoutimage);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomoutimage]));
 			w5.Position = 0;
 			w5.Expand = false;
 			w5.Fill = false;
@@ -104,7 +108,6 @@ namespace LongoMatch.Gui.Component
 			this.zoomscale = new global::Gtk.HScale (null);
 			this.zoomscale.CanFocus = true;
 			this.zoomscale.Name = "zoomscale";
-			this.zoomscale.Inverted = true;
 			this.zoomscale.Adjustment.Upper = 100;
 			this.zoomscale.Adjustment.PageIncrement = 10;
 			this.zoomscale.Adjustment.StepIncrement = 1;
@@ -115,12 +118,12 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomscale]));
 			w6.Position = 1;
 			// Container child zoomhbox.Gtk.Box+BoxChild
-			this.zoomoutimage = new global::Gtk.Image ();
-			this.zoomoutimage.WidthRequest = 14;
-			this.zoomoutimage.HeightRequest = 8;
-			this.zoomoutimage.Name = "zoomoutimage";
-			this.zoomhbox.Add (this.zoomoutimage);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomoutimage]));
+			this.zoominimage = new global::Gtk.Image ();
+			this.zoominimage.WidthRequest = 14;
+			this.zoominimage.HeightRequest = 8;
+			this.zoominimage.Name = "zoominimage";
+			this.zoomhbox.Add (this.zoominimage);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoominimage]));
 			w7.Position = 2;
 			w7.Expand = false;
 			w7.Fill = false;
@@ -149,6 +152,8 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2.HeightRequest = 50;
 			this.scrolledwindow2.CanFocus = true;
 			this.scrolledwindow2.Name = "scrolledwindow2";
+			this.scrolledwindow2.VscrollbarPolicy = ((global::Gtk.PolicyType)(0));
+			this.scrolledwindow2.HscrollbarPolicy = ((global::Gtk.PolicyType)(0));
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w12 = new global::Gtk.Viewport ();
 			w12.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -164,7 +169,8 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.vbox7]));
 			w16.Position = 1;
 			this.vpaned2.Add (this.hbox3);
-			this.Add (this.vpaned2);
+			this.headereventbox.Add (this.vpaned2);
+			this.Add (this.headereventbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

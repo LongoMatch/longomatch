@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 		PeriodsMenu menu;
 		Dictionary<Period, Period> periodsDict;
 		bool projectHasPeriods;
+		double maxSecondsPerPixels;
 
 		public ProjectPeriods ()
 		{
@@ -47,34 +48,28 @@ namespace LongoMatch.Gui.Component
 
 			zoomscale.CanFocus = false;
 			zoomscale.Adjustment.Lower = 0;
-			zoomscale.Adjustment.Upper = 12;
+			zoomscale.Adjustment.Upper = 100;
 			zoomscale.ValueChanged += HandleZoomChanged;
 
-			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
 			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
-
-			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
-			scrolledwindow2.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
-				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
-				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
-			};
+			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
 
 			main_cam_playerbin.Tick += HandleTick;
 			main_cam_playerbin.ShowControls = false;
-			//secondary_cam_playerbin.ShowControls = false;
+			//sec_cam_playerbin.ShowControls = false;
 
 			timerule = new Timerule (new WidgetWrapper (timerulearea)) { ObjectsCanMove = false };
 			camerasTimeline = new CamerasTimeline (new WidgetWrapper (timelinearea));
 			camerasLabels = new CamerasLabels (new WidgetWrapper (labelsarea));
 
-			/* Links Label size to the container */
+			/* FIXME: Links Label size to the container */
 			labelsarea.SizeRequested += (o, args) => {
 				labels_vbox.WidthRequest = args.Requisition.Width;
 			};
 
 			// Set some sane defaults
 			labels_vbox.WidthRequest = StyleConf.TimelineLabelsWidth;
-			// We need to aligne the timerule and the beginning of labels list
+			// We need to align the timerule and the beginning of labels list
 			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
 
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
@@ -84,6 +79,16 @@ namespace LongoMatch.Gui.Component
 			scrolledwindow2.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleScrollEvent;
 
+			// Adjust our zoom factors when the window is resized
+			scrolledwindow2.SizeAllocated += (o, args) =>  {
+				UpdateMaxSecondsPerPixel ();
+			};
+			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
+			scrolledwindow2.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
+				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
+				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
+			};
+
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 
 			menu = new PeriodsMenu ();
@@ -92,6 +97,7 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			main_cam_playerbin.Destroy ();
+			//sec_cam_playerbin.Destroy ();
 			timerule.Dispose ();
 			camerasLabels.Dispose ();
 			camerasTimeline.Dispose ();
@@ -101,6 +107,7 @@ namespace LongoMatch.Gui.Component
 		public void Pause ()
 		{
 			main_cam_playerbin.Pause ();
+			//sec_cam_playerbin.Pause ();
 		}
 
 		public void SaveChanges ()
@@ -132,7 +139,8 @@ namespace LongoMatch.Gui.Component
 				this.project = value;
 				gamePeriods = value.Dashboard.GamePeriods;
 
-				file = value.Description.FileSet.FirstOrDefault ();
+				MediaFileSet fileSet = project.Description.FileSet;
+				file = fileSet.FirstOrDefault ();
 				start = new Time (0);
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
@@ -159,14 +167,13 @@ namespace LongoMatch.Gui.Component
 					periods = periodsDict.Values.ToList ();
 				}
 
-				MediaFileSet fileSet = project.Description.FileSet;
-
 				camerasLabels.Load (fileSet);
 				camerasTimeline.Load (periods, fileSet, duration);
+
+				UpdateMaxSecondsPerPixel ();
 				UpdateTimeLineSize (fileSet);
 
 				timerule.Duration = duration;
-				zoomscale.Value = 6;
 
 				// Open media file
 				main_cam_playerbin.Open (value.Description.FileSet);
@@ -174,7 +181,18 @@ namespace LongoMatch.Gui.Component
 		}
 
 		/// <summary>
-		/// Adjusts the VPaned position to accomodate up to 8 cameras
+		/// Calculates the maximum number of seconds per pixel to accomodate the complete duration in available space.
+		/// </summary>
+		void UpdateMaxSecondsPerPixel () {
+			if (duration != null) {
+				// With 20 pixels of margin to properly see the whole segment
+				maxSecondsPerPixels = (double)duration.TotalSeconds / (scrolledwindow2.Allocation.Width - 20);
+				HandleZoomChanged (zoomscale, new EventArgs ());
+			}
+		}
+
+		/// <summary>
+		/// Adjusts the VPaned position to accomodate up to 8 cameras.
 		/// </summary>
 		/// <param name="fileSet">File set.</param>
 		void UpdateTimeLineSize (MediaFileSet fileSet)
@@ -222,18 +240,13 @@ namespace LongoMatch.Gui.Component
 
 		void HandleZoomChanged (object sender, EventArgs e)
 		{
-			double secondsPer100Pixels, value;
+			// We zoom from our Maximum number of seconds per pixel to the minimum using the 0 to 100 scale value
+			double secondsPerPixel = 0, minSecondsPerPixels = 0.01;
+			double value = Math.Round (zoomscale.Value);
+			double diff = maxSecondsPerPixels - minSecondsPerPixels;
 
-			value = Math.Round (zoomscale.Value);
-			if (value == 0) {
-				secondsPer100Pixels = 1;
-			} else if (value <= 6) {
-				secondsPer100Pixels = value * 10;
-			} else {
-				secondsPer100Pixels = (value - 5) * 60;
-			}
+			secondsPerPixel = maxSecondsPerPixels - (diff * zoomscale.Value / 100);
 
-			double secondsPerPixel = secondsPer100Pixels / 100;
 			timerule.SecondsPerPixel = secondsPerPixel;
 			camerasTimeline.SecondsPerPixel = secondsPerPixel;
 			QueueDraw ();
