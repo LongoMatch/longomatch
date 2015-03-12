@@ -362,11 +362,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		protected override void DrawBackground (IDrawingToolkit tk, Area area)
 		{
-			double linepos;
 			base.DrawBackground (tk, area);
 
 			if (ShowLine) {
-				linepos = OffsetY + Height / 2;
+				// We want the background line and overlay to use the same starting point although they have different sizes.
+				double linepos = OffsetY + Height / 2  + StyleConf.TimelineLineSize / 2;
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;

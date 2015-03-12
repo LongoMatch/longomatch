@@ -227,7 +227,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			tk.LineWidth = StyleConf.TimelineLineSize;
 			
-			linepos = OffsetY + Height / 2;
+			linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
 			
 			if (StopX - StartX <= needle.Width / 2) {
 				double c = movingPos == SelectionPosition.Left ? StopX : StartX;
