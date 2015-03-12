@@ -135,6 +135,8 @@
     <Compile Include="Stats\PlayerStats.cs" />
     <Compile Include="Stats\TimerStats.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Interfaces\IStorage.cs" />
+    <Compile Include="Interfaces\IStorable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

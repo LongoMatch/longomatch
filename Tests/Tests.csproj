@@ -8,6 +8,8 @@
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,9 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <Package>nunit</Package>
-    </Reference>
+    <Reference Include="nunit.framework" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
     </Reference>
@@ -72,6 +72,7 @@
     <Compile Include="Core\Store\TestTag.cs" />
     <Compile Include="Core\Store\Drawables\TestCircle.cs" />
     <Compile Include="Core\Store\Drawables\TestCounter.cs" />
+    <Compile Include="Services\TestFileStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
@@ -92,5 +93,6 @@
     <Folder Include="Core\Store\" />
     <Folder Include="Core\Common\" />
     <Folder Include="Core\Store\Templates\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

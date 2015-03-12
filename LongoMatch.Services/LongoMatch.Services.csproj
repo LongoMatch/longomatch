@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Services</RootNamespace>
     <AssemblyName>LongoMatch.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +39,7 @@
     <Compile Include="Services\DataBaseManager.cs" />
     <Compile Include="Services\ToolsManager.cs" />
     <Compile Include="Services\FileDB.cs" />
+    <Compile Include="Services\FileStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\" />
