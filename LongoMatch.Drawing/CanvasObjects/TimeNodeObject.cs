@@ -241,13 +241,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 
 			if (ShowName) {
-				tk.FontSize = 16;
+				tk.FontSize = StyleConf.TimelineFontSize;
 				tk.FontWeight = FontWeight.Bold;
 				tk.FillColor = Config.Style.PaletteActive;
 				tk.StrokeColor = Config.Style.PaletteActive;
-				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
-				             Height - StyleConf.TimelineLineSize,
-				             TimeNode.Name);
+				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX, Height / 2, TimeNode.Name);
 			}
 			tk.End ();
 		}
