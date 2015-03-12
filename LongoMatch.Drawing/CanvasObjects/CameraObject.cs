@@ -34,6 +34,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			DraggingMode = NodeDraggingMode.Segment;
 		}
 
+		public MediaFile MediaFile {
+			get {
+				return mediaFile;
+			}
+		}
+
 		public override string Description {
 			get {
 				return mediaFile.Name;
