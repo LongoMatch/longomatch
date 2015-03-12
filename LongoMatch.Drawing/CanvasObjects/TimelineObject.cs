@@ -417,6 +417,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 			co.LineColor = LineColor;
 			AddNode (co);
 		}
+
+		protected override void DrawBackground (IDrawingToolkit tk, Area area)
+		{
+			// We want to have a slight border in our background.
+			tk.FillColor = BackgroundColor;
+			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			tk.LineWidth = 1;
+			tk.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
+		}
 	}
 }
 
