@@ -131,7 +131,7 @@ namespace LongoMatch.Drawing.Widgets
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = 12;
+			tk.FontSize = StyleConf.TimelineRuleFontSize;
 			tk.DrawLine (new Point (area.Start.X, height),
 			             new Point (area.Start.X + area.Width, height));
 
