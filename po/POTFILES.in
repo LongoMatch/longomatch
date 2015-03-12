@@ -15,6 +15,7 @@ LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/Dashboard.cs
 LongoMatch.Core/Store/Templates/TeamTemplate.cs
 LongoMatch.Drawing/CanvasObjects/CategoryObject.cs
+LongoMatch.Drawing/Widgets/CamerasLabels.cs
 LongoMatch.Drawing/Widgets/TimelineLabels.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
