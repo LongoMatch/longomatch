@@ -29,6 +29,13 @@ namespace LongoMatch.Core.Interfaces
 		List<T> RetrieveAll<T>() where T : IStorable;
 
 		/// <summary>
+		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
+		/// </summary>
+		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
+		/// <param name="filter">The dictionary used to filter the returned List</param>
+		List<T> Retrieve<T>(Dictionary<string,object> filter) where T : IStorable;
+
+		/// <summary>
 		/// Store the specified object
 		/// </summary>
 		/// <param name="t">The object to store.</param>

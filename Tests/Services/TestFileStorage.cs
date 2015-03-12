@@ -60,6 +60,18 @@ namespace Tests.Services
 			// Check that the object is the same
 			Assert.AreEqual(ts2.memberString, ts1.memberString);
 
+			// Get based on memberString
+			Dictionary<string, object> dict = new Dictionary<string, object>();
+			dict.Add("memberString", "first");
+			lts = fs.Retrieve<TestStorable>(dict);
+
+			// Check that we have stored one object
+			Assert.AreEqual(lts.Count, 1);
+
+			// Check that the returned object is the one we are looking for
+			ts2 = lts[0];
+			Assert.AreNotSame(ts2, null);
+
 			// Check that the storage is empty
 			fs.Delete<TestStorable>(ts2);
 			lts = fs.RetrieveAll<TestStorable>();

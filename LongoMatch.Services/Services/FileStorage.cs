@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 
@@ -79,6 +80,70 @@ namespace LongoMatch.Services.Services
 			}
 			return l;
 		}
+
+		public List<T> Retrieve<T> (Dictionary<string,object> dict) where T : IStorable
+		{
+			List<T> l = new List<T> ();
+			string typePath = ResolvePath<T>();
+			string extension = GetExtension(typeof(T));
+
+			if (dict == null)
+				return RetrieveAll<T>();
+
+			// Get the name of the class and look for a folder on the
+			// basePath with the same name
+			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
+				T t = (T)Serializer.LoadSafe<T>(path);
+				bool matches = true;
+
+				foreach (KeyValuePair<string, object> entry in dict)
+				{
+					FieldInfo finfo = t.GetType().GetField(entry.Key);
+					PropertyInfo pinfo = t.GetType().GetProperty(entry.Key);
+					object ret = null;
+
+					if (pinfo == null && finfo == null)
+					{
+						Log.Warning ("Property/Field does not exist " + entry.Key);
+						matches = false;
+						break;
+					}
+
+					if (pinfo != null)
+						ret = pinfo.GetValue(t, null);
+					else
+						ret = finfo.GetValue(t);
+
+					if (ret == null && entry.Value != null)
+					{
+						matches = false;
+						break;
+					}
+
+					if (ret != null && entry.Value == null)
+					{
+						matches = false;
+						break;
+					}
+
+					if (ret.GetType() == entry.Value.GetType())
+					{
+						if (Object.Equals(ret, entry.Value))
+						{
+							matches = true;
+						}
+					}
+				}
+
+				if (matches)
+				{
+					Log.Information ("Retrieving " + t.ID.ToString() + " at " + typePath);
+					l.Add (t);
+				}
+			}
+			return l;
+		}
+
 
 		public void Store<T> (T t) where T : IStorable
 		{
