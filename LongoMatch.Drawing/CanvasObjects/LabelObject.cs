@@ -173,12 +173,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			// Draw background
 			tk.Begin ();
 			tk.FillColor = BackgroundColor;
-			tk.StrokeColor = BackgroundColor;
-			tk.LineWidth = 0;
-			tk.DrawRectangle (new Point (0, y), Width, Height);
-			tk.LineWidth = 1;
 			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawLine (new Point (0, y + Height), new Point (Width, y + Height));
+			tk.LineWidth = 1;
+			tk.DrawRectangle (new Point (0, y), Width, Height);
 
 			/* Draw category name */
 			tk.FontSlant = FontSlant.Normal;
