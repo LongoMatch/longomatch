@@ -18,6 +18,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using LongoMatch.Services.Services;
 using LongoMatch.Core.Interfaces;
 
@@ -45,7 +46,7 @@ namespace Tests.Services
 		[Test()]
 		public void TestCase ()
 		{
-			FileStorage fs = new FileStorage("/tmp/TestFileStorage/", true);
+			FileStorage fs = new FileStorage(Path.Combine(Path.GetTempPath(), "TestFileStorage"), true);
 			TestStorable ts1 = new TestStorable("first");
 
 			fs.Store<TestStorable>(ts1);
