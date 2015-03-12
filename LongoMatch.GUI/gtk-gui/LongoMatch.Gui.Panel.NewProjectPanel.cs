@@ -5,97 +5,189 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewProjectPanel
 	{
 		private global::Gtk.VBox vbox3;
+		
 		private global::Gtk.EventBox headereventbox;
+		
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
+		
 		private global::Gtk.Notebook notebook1;
+		
 		private global::Gtk.Alignment alignment2;
+		
 		private global::Gtk.HBox hbox11;
+		
 		private global::Gtk.VBox vbox12;
+		
 		private global::Gtk.Alignment alignment4;
+		
 		private global::Gtk.Button filebutton;
+		
 		private global::Gtk.Image fileimage;
+		
 		private global::Gtk.Label label2;
+		
 		private global::Gtk.VBox vbox13;
+		
 		private global::Gtk.Alignment alignment3;
+		
 		private global::Gtk.Button capturebutton;
+		
 		private global::Gtk.Image captureimage;
+		
 		private global::Gtk.Label label4;
+		
 		private global::Gtk.VBox vbox14;
+		
 		private global::Gtk.Alignment alignment5;
+		
 		private global::Gtk.Button fakebutton;
+		
 		private global::Gtk.Image fakeimage;
+		
 		private global::Gtk.Label label5;
+		
 		private global::Gtk.VBox vbox15;
+		
 		private global::Gtk.Alignment alignment6;
+		
 		private global::Gtk.Button ipbutton;
+		
 		private global::Gtk.Image ipimage;
+		
 		private global::Gtk.Label label6;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.VBox vbox5;
+		
 		private global::Gtk.Alignment alignment1;
+		
 		private global::Gtk.HBox topbox;
+		
 		private global::Gtk.Table lefttable;
+		
 		private global::Gtk.Entry competitionentry;
+		
 		private global::Gtk.Label Competitionlabel;
+		
 		private global::Gtk.Label datelabel2;
+		
 		private global::LongoMatch.Gui.Component.DatePicker datepicker1;
+		
 		private global::Gtk.Label desclabel;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::Gtk.TextView desctextview;
+		
 		private global::Gtk.Entry seasonentry;
+		
 		private global::Gtk.Label seasonlabel;
+		
 		private global::Gtk.VBox centerbox;
+		
 		private global::Gtk.HBox hbox15;
+		
 		private global::LongoMatch.Gui.Component.HomeTeamsComboBox hometeamscombobox;
+		
 		private global::Gtk.Image vsimage;
+		
 		private global::LongoMatch.Gui.Component.AwayTeamsComboBox awayteamscombobox;
+		
 		private global::LongoMatch.Gui.Component.MediaFileSetSelection mediafilesetselection1;
+		
 		private global::Gtk.VBox capturebox;
+		
 		private global::Gtk.Table outputfiletable;
+		
 		private global::LongoMatch.Gui.Component.MediaFileChooser capturemediafilechooser;
+		
 		private global::Gtk.Label outputfilelabel;
+		
 		private global::Gtk.Table urltable;
+		
 		private global::Gtk.Entry urientry;
+		
 		private global::Gtk.Label urilabel;
+		
 		private global::Gtk.Table devicetable;
+		
 		private global::Gtk.Label device;
+		
 		private global::Gtk.ComboBox devicecombobox;
+		
 		private global::Gtk.ComboBox deviceformatcombobox;
+		
 		private global::Gtk.Label deviceformatlabel;
+		
 		private global::Gtk.Table encpropstable;
+		
 		private global::Gtk.ComboBox encodingcombobox;
+		
 		private global::Gtk.ComboBox imagecombobox;
+		
 		private global::Gtk.Label outputsizelabel;
+		
 		private global::Gtk.ComboBox qualitycombobox;
+		
 		private global::Gtk.Label qualityformatlabel;
+		
 		private global::Gtk.Label videoformatlabel;
+		
 		private global::Gtk.Table righttable;
+		
 		private global::Gtk.Label analysislabel;
+		
 		private global::Gtk.ComboBox tagscombobox;
+		
 		private global::Gtk.VBox vbox6;
+		
 		private global::Gtk.HSeparator hseparator1;
+		
 		private global::Gtk.HBox hbox14;
+		
 		private global::Gtk.Alignment homealignment;
+		
 		private global::Gtk.HBox hbox16;
+		
 		private global::Gtk.Label label11;
+		
 		private global::Gtk.Entry hometacticsentry;
+		
 		private global::Gtk.Button hometacticsbutton;
+		
 		private global::Gtk.ToggleButton homecolor1button;
+		
 		private global::Gtk.DrawingArea homecolor1;
+		
 		private global::Gtk.ToggleButton homecolor2button;
+		
 		private global::Gtk.DrawingArea homecolor2;
+		
 		private global::Gtk.Alignment awayalignment;
+		
 		private global::Gtk.HBox hbox17;
+		
 		private global::Gtk.Label label12;
+		
 		private global::Gtk.Entry awaytacticsentry;
+		
 		private global::Gtk.Button awaytacticsbutton;
+		
 		private global::Gtk.ToggleButton awaycolor1button;
+		
 		private global::Gtk.DrawingArea awaycolor1;
+		
 		private global::Gtk.ToggleButton awaycolor2button;
+		
 		private global::Gtk.DrawingArea awaycolor2;
+		
 		private global::Gtk.DrawingArea drawingarea;
+		
 		private global::Gtk.Label label13;
+		
 		private global::LongoMatch.Gui.Component.ProjectPeriods projectperiods1;
+		
 		private global::Gtk.Label label14;
 
 		protected virtual void Build ()
@@ -151,7 +243,6 @@ namespace LongoMatch.Gui.Panel
 			this.fileimage = new global::Gtk.Image ();
 			this.fileimage.Name = "fileimage";
 			this.filebutton.Add (this.fileimage);
-			this.filebutton.Label = null;
 			this.alignment4.Add (this.filebutton);
 			this.vbox12.Add (this.alignment4);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox12 [this.alignment4]));
@@ -193,7 +284,6 @@ namespace LongoMatch.Gui.Panel
 			this.captureimage = new global::Gtk.Image ();
 			this.captureimage.Name = "captureimage";
 			this.capturebutton.Add (this.captureimage);
-			this.capturebutton.Label = null;
 			this.alignment3.Add (this.capturebutton);
 			this.vbox13.Add (this.alignment3);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox13 [this.alignment3]));
@@ -235,7 +325,6 @@ namespace LongoMatch.Gui.Panel
 			this.fakeimage = new global::Gtk.Image ();
 			this.fakeimage.Name = "fakeimage";
 			this.fakebutton.Add (this.fakeimage);
-			this.fakebutton.Label = null;
 			this.alignment5.Add (this.fakebutton);
 			this.vbox14.Add (this.alignment5);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.alignment5]));
@@ -277,7 +366,6 @@ namespace LongoMatch.Gui.Panel
 			this.ipimage = new global::Gtk.Image ();
 			this.ipimage.Name = "ipimage";
 			this.ipbutton.Add (this.ipimage);
-			this.ipbutton.Label = null;
 			this.alignment6.Add (this.ipbutton);
 			this.vbox15.Add (this.alignment6);
 			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox15 [this.alignment6]));
@@ -314,6 +402,7 @@ namespace LongoMatch.Gui.Panel
 			this.vbox5 = new global::Gtk.VBox ();
 			this.vbox5.Name = "vbox5";
 			this.vbox5.Spacing = 6;
+			this.vbox5.BorderWidth = ((uint)(10));
 			// Container child vbox5.Gtk.Box+BoxChild
 			this.alignment1 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.alignment1.Name = "alignment1";
@@ -465,13 +554,12 @@ namespace LongoMatch.Gui.Panel
 			w38.Fill = false;
 			// Container child centerbox.Gtk.Box+BoxChild
 			this.mediafilesetselection1 = new global::LongoMatch.Gui.Component.MediaFileSetSelection ();
+			this.mediafilesetselection1.HeightRequest = 100;
 			this.mediafilesetselection1.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilesetselection1.Name = "mediafilesetselection1";
 			this.centerbox.Add (this.mediafilesetselection1);
 			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.centerbox [this.mediafilesetselection1]));
 			w39.Position = 1;
-			w39.Expand = false;
-			w39.Fill = false;
 			// Container child centerbox.Gtk.Box+BoxChild
 			this.capturebox = new global::Gtk.VBox ();
 			this.capturebox.Name = "capturebox";
@@ -740,26 +828,14 @@ namespace LongoMatch.Gui.Panel
 			this.hometacticsbutton.CanFocus = true;
 			this.hometacticsbutton.Name = "hometacticsbutton";
 			this.hometacticsbutton.UseUnderline = true;
-			// Container child hometacticsbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w68 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w69 = new global::Gtk.HBox ();
-			w69.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w70 = new global::Gtk.Image ();
-			w70.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-			w69.Add (w70);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w72 = new global::Gtk.Label ();
-			w72.LabelProp = "";
-			w69.Add (w72);
-			w68.Add (w69);
-			this.hometacticsbutton.Add (w68);
+			global::Gtk.Image w68 = new global::Gtk.Image ();
+			w68.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+			this.hometacticsbutton.Image = w68;
 			this.hbox16.Add (this.hometacticsbutton);
-			global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.hometacticsbutton]));
-			w76.Position = 2;
-			w76.Expand = false;
-			w76.Fill = false;
+			global::Gtk.Box.BoxChild w69 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.hometacticsbutton]));
+			w69.Position = 2;
+			w69.Expand = false;
+			w69.Fill = false;
 			// Container child hbox16.Gtk.Box+BoxChild
 			this.homecolor1button = new global::Gtk.ToggleButton ();
 			this.homecolor1button.WidthRequest = 30;
@@ -769,10 +845,9 @@ namespace LongoMatch.Gui.Panel
 			this.homecolor1 = new global::Gtk.DrawingArea ();
 			this.homecolor1.Name = "homecolor1";
 			this.homecolor1button.Add (this.homecolor1);
-			this.homecolor1button.Label = null;
 			this.hbox16.Add (this.homecolor1button);
-			global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor1button]));
-			w78.Position = 3;
+			global::Gtk.Box.BoxChild w71 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor1button]));
+			w71.Position = 3;
 			// Container child hbox16.Gtk.Box+BoxChild
 			this.homecolor2button = new global::Gtk.ToggleButton ();
 			this.homecolor2button.WidthRequest = 30;
@@ -782,14 +857,13 @@ namespace LongoMatch.Gui.Panel
 			this.homecolor2 = new global::Gtk.DrawingArea ();
 			this.homecolor2.Name = "homecolor2";
 			this.homecolor2button.Add (this.homecolor2);
-			this.homecolor2button.Label = null;
 			this.hbox16.Add (this.homecolor2button);
-			global::Gtk.Box.BoxChild w80 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor2button]));
-			w80.Position = 4;
+			global::Gtk.Box.BoxChild w73 = ((global::Gtk.Box.BoxChild)(this.hbox16 [this.homecolor2button]));
+			w73.Position = 4;
 			this.homealignment.Add (this.hbox16);
 			this.hbox14.Add (this.homealignment);
-			global::Gtk.Box.BoxChild w82 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.homealignment]));
-			w82.Position = 0;
+			global::Gtk.Box.BoxChild w75 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.homealignment]));
+			w75.Position = 0;
 			// Container child hbox14.Gtk.Box+BoxChild
 			this.awayalignment = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 1F);
 			this.awayalignment.Name = "awayalignment";
@@ -802,10 +876,10 @@ namespace LongoMatch.Gui.Panel
 			this.label12.Name = "label12";
 			this.label12.LabelProp = global::Mono.Unix.Catalog.GetString ("Tactics");
 			this.hbox17.Add (this.label12);
-			global::Gtk.Box.BoxChild w83 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.label12]));
-			w83.Position = 0;
-			w83.Expand = false;
-			w83.Fill = false;
+			global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.label12]));
+			w76.Position = 0;
+			w76.Expand = false;
+			w76.Fill = false;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaytacticsentry = new global::Gtk.Entry ();
 			this.awaytacticsentry.CanFocus = true;
@@ -813,34 +887,22 @@ namespace LongoMatch.Gui.Panel
 			this.awaytacticsentry.IsEditable = true;
 			this.awaytacticsentry.InvisibleChar = '•';
 			this.hbox17.Add (this.awaytacticsentry);
-			global::Gtk.Box.BoxChild w84 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsentry]));
-			w84.Position = 1;
-			w84.Expand = false;
+			global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsentry]));
+			w77.Position = 1;
+			w77.Expand = false;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaytacticsbutton = new global::Gtk.Button ();
 			this.awaytacticsbutton.CanFocus = true;
 			this.awaytacticsbutton.Name = "awaytacticsbutton";
 			this.awaytacticsbutton.UseUnderline = true;
-			// Container child awaytacticsbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w85 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w86 = new global::Gtk.HBox ();
-			w86.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w87 = new global::Gtk.Image ();
-			w87.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-			w86.Add (w87);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w89 = new global::Gtk.Label ();
-			w89.LabelProp = "";
-			w86.Add (w89);
-			w85.Add (w86);
-			this.awaytacticsbutton.Add (w85);
+			global::Gtk.Image w78 = new global::Gtk.Image ();
+			w78.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+			this.awaytacticsbutton.Image = w78;
 			this.hbox17.Add (this.awaytacticsbutton);
-			global::Gtk.Box.BoxChild w93 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsbutton]));
-			w93.Position = 2;
-			w93.Expand = false;
-			w93.Fill = false;
+			global::Gtk.Box.BoxChild w79 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaytacticsbutton]));
+			w79.Position = 2;
+			w79.Expand = false;
+			w79.Fill = false;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaycolor1button = new global::Gtk.ToggleButton ();
 			this.awaycolor1button.WidthRequest = 30;
@@ -850,10 +912,9 @@ namespace LongoMatch.Gui.Panel
 			this.awaycolor1 = new global::Gtk.DrawingArea ();
 			this.awaycolor1.Name = "awaycolor1";
 			this.awaycolor1button.Add (this.awaycolor1);
-			this.awaycolor1button.Label = null;
 			this.hbox17.Add (this.awaycolor1button);
-			global::Gtk.Box.BoxChild w95 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor1button]));
-			w95.Position = 3;
+			global::Gtk.Box.BoxChild w81 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor1button]));
+			w81.Position = 3;
 			// Container child hbox17.Gtk.Box+BoxChild
 			this.awaycolor2button = new global::Gtk.ToggleButton ();
 			this.awaycolor2button.WidthRequest = 30;
@@ -863,32 +924,31 @@ namespace LongoMatch.Gui.Panel
 			this.awaycolor2 = new global::Gtk.DrawingArea ();
 			this.awaycolor2.Name = "awaycolor2";
 			this.awaycolor2button.Add (this.awaycolor2);
-			this.awaycolor2button.Label = null;
 			this.hbox17.Add (this.awaycolor2button);
-			global::Gtk.Box.BoxChild w97 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor2button]));
-			w97.Position = 4;
+			global::Gtk.Box.BoxChild w83 = ((global::Gtk.Box.BoxChild)(this.hbox17 [this.awaycolor2button]));
+			w83.Position = 4;
 			this.awayalignment.Add (this.hbox17);
 			this.hbox14.Add (this.awayalignment);
-			global::Gtk.Box.BoxChild w99 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.awayalignment]));
-			w99.Position = 1;
+			global::Gtk.Box.BoxChild w85 = ((global::Gtk.Box.BoxChild)(this.hbox14 [this.awayalignment]));
+			w85.Position = 1;
 			this.vbox6.Add (this.hbox14);
-			global::Gtk.Box.BoxChild w100 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.hbox14]));
-			w100.Position = 1;
-			w100.Expand = false;
+			global::Gtk.Box.BoxChild w86 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.hbox14]));
+			w86.Position = 1;
+			w86.Expand = false;
 			// Container child vbox6.Gtk.Box+BoxChild
 			this.drawingarea = new global::Gtk.DrawingArea ();
 			this.drawingarea.Name = "drawingarea";
 			this.vbox6.Add (this.drawingarea);
-			global::Gtk.Box.BoxChild w101 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.drawingarea]));
-			w101.Position = 2;
+			global::Gtk.Box.BoxChild w87 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.drawingarea]));
+			w87.Position = 2;
 			this.vbox5.Add (this.vbox6);
-			global::Gtk.Box.BoxChild w102 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.vbox6]));
-			w102.Position = 1;
+			global::Gtk.Box.BoxChild w88 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.vbox6]));
+			w88.Position = 1;
 			this.notebook1.Add (this.vbox5);
-			global::Gtk.Notebook.NotebookChild w103 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox5]));
-			w103.Position = 1;
-			w103.TabFill = false;
-			w103.MenuLabel = "";
+			global::Gtk.Notebook.NotebookChild w89 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox5]));
+			w89.Position = 1;
+			w89.TabFill = false;
+			w89.MenuLabel = "";
 			// Notebook tab
 			this.label13 = new global::Gtk.Label ();
 			this.label13.Name = "label13";
@@ -900,8 +960,8 @@ namespace LongoMatch.Gui.Panel
 			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
 			this.projectperiods1.Name = "projectperiods1";
 			this.notebook1.Add (this.projectperiods1);
-			global::Gtk.Notebook.NotebookChild w104 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
-			w104.Position = 2;
+			global::Gtk.Notebook.NotebookChild w90 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
+			w90.Position = 2;
 			// Notebook tab
 			this.label14 = new global::Gtk.Label ();
 			this.label14.Name = "label14";
@@ -909,8 +969,8 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1.SetTabLabel (this.projectperiods1, this.label14);
 			this.label14.ShowAll ();
 			this.vbox3.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w105 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
-			w105.Position = 1;
+			global::Gtk.Box.BoxChild w91 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
+			w91.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

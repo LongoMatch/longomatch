@@ -109,7 +109,6 @@ namespace LongoMatch.Gui.Panel
 			grp.AddWidget (righttable);
 			
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
-			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
 			lefttable.RowSpacing = outputfiletable.RowSpacing =
 				righttable.RowSpacing = StyleConf.NewTableHSpacing;
 			lefttable.ColumnSpacing = righttable.ColumnSpacing = StyleConf.NewTableHSpacing;

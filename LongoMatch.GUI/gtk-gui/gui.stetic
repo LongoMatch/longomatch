@@ -5868,7 +5868,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1129 786">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1641 786">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -6144,6 +6144,7 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="Gtk.VBox" id="vbox5">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
+                <property name="BorderWidth">10</property>
                 <child>
                   <widget class="Gtk.Alignment" id="alignment1">
                     <property name="MemberName" />
