@@ -144,7 +144,7 @@ namespace LongoMatch.Drawing.Widgets
 				double pos = i - Scroll;
 				tk.DrawLine (new Point (pos, height),
 				             new Point (pos, height - BIG_LINE_HEIGHT));
-				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 0), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 4,
+				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 2), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 2,
 				             new Time { TotalSeconds = (int) (i * SecondsPerPixel) }.ToSecondsString ());
 			}
 
