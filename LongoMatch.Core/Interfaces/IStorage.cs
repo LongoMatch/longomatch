@@ -29,6 +29,13 @@ namespace LongoMatch.Core.Interfaces
 		List<T> RetrieveAll<T>() where T : IStorable;
 
 		/// <summary>
+		/// Retrieve on object with the specified id.
+		/// </summary>
+		/// <param name="id">The object unique identifier.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		T Retrieve<T> (Guid id) where T : IStorable;
+
+		/// <summary>
 		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>

@@ -65,6 +65,19 @@ namespace LongoMatch.Services.Services
 
 		#region IStorage implementation
 
+		public T Retrieve<T> (Guid id) where T : IStorable
+		{
+			string typePath = ResolvePath<T>();
+			string path = Path.Combine (typePath, id.ToString () + GetExtension(typeof(T)));
+
+			if (File.Exists (path)) {
+				T t = Serializer.LoadSafe<T>(path);
+				Log.Information (string.Format ("Retrieving {0} at {1}", t.ID, typePath));
+				return t;
+			}
+			return default (T);
+		}
+
 		public List<T> RetrieveAll<T> () where T : IStorable
 		{
 			List<T> l = new List<T> ();

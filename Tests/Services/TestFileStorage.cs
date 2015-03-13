@@ -24,14 +24,17 @@ using LongoMatch.Core.Interfaces;
 
 namespace Tests.Services
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestFileStorage
 	{
+
+		FileStorage fs;
+
 		private class TestStorable : IStorable
 		{
 			public string memberString;
 
-			public TestStorable(string memberString)
+			public TestStorable (string memberString)
 			{
 				this.memberString = memberString;
 				ID = Guid.NewGuid ();
@@ -43,39 +46,66 @@ namespace Tests.Services
 			}
 		}
 
-		[Test()]
+		[SetUp]
+		public void CreateStorage ()
+		{
+			fs = new FileStorage (Path.Combine (Path.GetTempPath (), "TestFileStorage"), true);
+		}
+
+		[TearDown]
+		public void RemoveStorage ()
+		{
+			try {
+				Directory.Delete (Path.Combine (Path.GetTempPath (), "TestFileStorage"), true);
+			} catch {
+			}
+		}
+
+		[Test ()]
 		public void TestCase ()
 		{
-			FileStorage fs = new FileStorage(Path.Combine(Path.GetTempPath(), "TestFileStorage"), true);
-			TestStorable ts1 = new TestStorable("first");
+			TestStorable ts1 = new TestStorable ("first");
 
-			fs.Store<TestStorable>(ts1);
-			List<TestStorable> lts = fs.RetrieveAll<TestStorable>();
+			fs.Store<TestStorable> (ts1);
+			List<TestStorable> lts = fs.RetrieveAll<TestStorable> ();
 
 			// Check that we have stored one object
-			Assert.AreEqual(lts.Count, 1);
-			TestStorable ts2 = lts[0];
-			Assert.AreNotSame(ts2, null);
+			Assert.AreEqual (lts.Count, 1);
+			TestStorable ts2 = lts [0];
+			Assert.AreNotSame (ts2, null);
 
 			// Check that the object is the same
-			Assert.AreEqual(ts2.memberString, ts1.memberString);
+			Assert.AreEqual (ts2.memberString, ts1.memberString);
 
 			// Get based on memberString
-			Dictionary<string, object> dict = new Dictionary<string, object>();
-			dict.Add("memberString", "first");
-			lts = fs.Retrieve<TestStorable>(dict);
+			Dictionary<string, object> dict = new Dictionary<string, object> ();
+			dict.Add ("memberString", "first");
+			lts = fs.Retrieve<TestStorable> (dict);
 
 			// Check that we have stored one object
-			Assert.AreEqual(lts.Count, 1);
+			Assert.AreEqual (lts.Count, 1);
 
 			// Check that the returned object is the one we are looking for
-			ts2 = lts[0];
-			Assert.AreNotSame(ts2, null);
+			ts2 = lts [0];
+			Assert.AreNotSame (ts2, null);
 
 			// Check that the storage is empty
-			fs.Delete<TestStorable>(ts2);
-			lts = fs.RetrieveAll<TestStorable>();
-			Assert.AreEqual(lts.Count, 0);
+			fs.Delete<TestStorable> (ts2);
+			lts = fs.RetrieveAll<TestStorable> ();
+			Assert.AreEqual (lts.Count, 0);
+		}
+
+		[Test ()]
+		public void TestRetrieveByID ()
+		{
+			TestStorable ts1 = new TestStorable ("first");
+			fs.Store<TestStorable> (ts1);
+
+			TestStorable ts2 = fs.Retrieve<TestStorable> (ts1.ID);
+			Assert.IsNotNull (ts2);
+			Assert.AreEqual (ts1.ID, ts2.ID);
+
+			Assert.IsNull (fs.Retrieve<TestStorable> (Guid.NewGuid()));
 		}
 	}
 }
