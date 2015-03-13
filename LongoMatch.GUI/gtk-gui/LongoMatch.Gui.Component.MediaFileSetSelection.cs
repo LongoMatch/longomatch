@@ -22,7 +22,6 @@ namespace LongoMatch.Gui.Component
 			this.mfss_scrolledwindow.CanFocus = true;
 			this.mfss_scrolledwindow.Name = "mfss_scrolledwindow";
 			this.mfss_scrolledwindow.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
-			this.mfss_scrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child mfss_scrolledwindow.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
 			w1.ShadowType = ((global::Gtk.ShadowType)(0));

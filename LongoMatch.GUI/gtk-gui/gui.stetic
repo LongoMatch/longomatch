@@ -5868,7 +5868,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1641 786">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="2453 786">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -10673,7 +10673,6 @@ You can continue with the current capture, cancel it or save your project.
         <property name="MemberName" />
         <property name="CanFocus">True</property>
         <property name="HscrollbarPolicy">Never</property>
-        <property name="ShadowType">In</property>
         <child>
           <widget class="Gtk.Viewport" id="GtkViewport">
             <property name="MemberName" />
@@ -10688,12 +10687,6 @@ You can continue with the current capture, cancel it or save your project.
                   <widget class="Gtk.VBox" id="mfss_vbox">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
                     <child>
                       <placeholder />
                     </child>
