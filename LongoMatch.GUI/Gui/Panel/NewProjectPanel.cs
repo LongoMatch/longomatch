@@ -511,6 +511,8 @@ namespace LongoMatch.Gui.Panel
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
+				// Pause playback and then save periods changes into the project. Fileset has already been updated.
+				projectperiods1.Pause ();
 				projectperiods1.SaveChanges ();
 				StartProject ();
 				return;
