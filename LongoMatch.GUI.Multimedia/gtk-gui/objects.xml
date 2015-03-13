@@ -12,6 +12,7 @@
       <itemgroup label="PlayerBin Properties">
         <property name="CloseAlwaysVisible" />
         <property name="Sensitive" />
+        <property name="Volume" />
       </itemgroup>
     </itemgroups>
     <signals>
