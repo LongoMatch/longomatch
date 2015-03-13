@@ -345,6 +345,7 @@ namespace LongoMatch.Gui
 			ReconfigureTimeout (0);
 			player.Dispose ();
 			blackboard.Dispose ();
+			fileSet = null;
 		}
 
 		public void Seek (Time time, bool accurate)
