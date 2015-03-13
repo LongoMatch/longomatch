@@ -28,6 +28,9 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class CamerasTimeline: SelectionCanvas
 	{
+		// For cameras
+		public event CameraDraggedHandler CameraDragged;
+		// And periods
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
@@ -142,16 +145,26 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			if (TimeNodeChanged != null) {
-				Time moveTime;
-				TimeNode tn = (sel.Drawable as TimeNodeObject).TimeNode;
-
-				if (sel.Position == SelectionPosition.Right) {
-					moveTime = tn.Stop;
-				} else {
-					moveTime = tn.Start;
+			if (sel.Drawable is CameraObject) {
+				if (CameraDragged != null) {
+					CameraObject co = sel.Drawable as CameraObject;
+					// Adjust offset
+					co.MediaFile.Offset = co.TimeNode.Start;
+					// And notify
+					CameraDragged (co.MediaFile, co.TimeNode);
 				}
-				TimeNodeChanged (tn, moveTime);
+			} else {
+				if (TimeNodeChanged != null) {
+					Time moveTime;
+					TimeNode tn = (sel.Drawable as TimeNodeObject).TimeNode;
+
+					if (sel.Position == SelectionPosition.Right) {
+						moveTime = tn.Stop;
+					} else {
+						moveTime = tn.Start;
+					}
+					TimeNodeChanged (tn, moveTime);
+				}
 			}
 		}
 
