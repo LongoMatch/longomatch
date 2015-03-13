@@ -9657,7 +9657,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectPeriods" design-size="1639 475">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectPeriods" design-size="3263 475">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -9669,18 +9669,20 @@ You can continue with the current capture, cancel it or save your project.
             <property name="CanFocus">True</property>
             <property name="Position">400</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox2">
+              <widget class="Gtk.HBox" id="playbins_hbox">
                 <property name="MemberName" />
+                <property name="Homogeneous">True</property>
+                <property name="Spacing">15</property>
+                <property name="BorderWidth">15</property>
                 <child>
-                  <widget class="Gtk.HBox" id="playbins_hbox">
+                  <widget class="Gtk.VBox" id="main_cam_vbox">
                     <property name="MemberName" />
-                    <property name="Homogeneous">True</property>
-                    <property name="Spacing">15</property>
-                    <property name="BorderWidth">15</property>
+                    <property name="Spacing">6</property>
                     <child>
                       <widget class="LongoMatch.Gui.PlayerBin" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
+                        <property name="Volume">0</property>
                         <property name="CloseAlwaysVisible">False</property>
                       </widget>
                       <packing>
@@ -9689,12 +9691,137 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <placeholder />
+                      <widget class="Gtk.HBox" id="main_cam_hbox">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="main_cam_label">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Alignment" id="main_cam_audio_alignment">
+                            <property name="MemberName" />
+                            <property name="RightPadding">50</property>
+                            <child>
+                              <widget class="Gtk.ToggleButton" id="main_cam_audio_button">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <property name="Active">True</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="main_cam_audio_button_image">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.VBox" id="sec_cam_vbox">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="LongoMatch.Gui.PlayerBin" id="sec_cam_playerbin">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                        <property name="Volume">0</property>
+                        <property name="CloseAlwaysVisible">False</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HBox" id="sec_cam_hbox">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="sec_cam_label">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Alignment" id="sec_cam_audio_alignment">
+                            <property name="MemberName" />
+                            <property name="RightPadding">50</property>
+                            <child>
+                              <widget class="Gtk.ToggleButton" id="sec_cam_audio_button">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="sec_cam_audio_button_image">
+                                    <property name="MemberName" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="sec_cam_didactic_label">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
                     <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
@@ -9703,7 +9830,7 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
-              <widget class="Gtk.HBox" id="hbox3">
+              <widget class="Gtk.HBox" id="hbox5">
                 <property name="MemberName" />
                 <child>
                   <widget class="Gtk.Alignment" id="labels_alignment">
@@ -9784,7 +9911,7 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox7">
+                  <widget class="Gtk.VBox" id="vbox9">
                     <property name="MemberName" />
                     <child>
                       <widget class="Gtk.DrawingArea" id="timerulearea">

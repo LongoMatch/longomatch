@@ -23,6 +23,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using Mono.Unix;
 using Gtk;
+using Pango;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Menus;
 using LongoMatch.Gui.Helpers;
@@ -49,35 +50,66 @@ namespace LongoMatch.Gui.Component
 			zoomscale.CanFocus = false;
 			zoomscale.Adjustment.Lower = 0;
 			zoomscale.Adjustment.Upper = 100;
-			zoomscale.ValueChanged += HandleZoomChanged;
 
-			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
-			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
+			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
+			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
 
-			main_cam_playerbin.Tick += HandleTick;
-			main_cam_playerbin.ShowControls = false;
-			//sec_cam_playerbin.ShowControls = false;
+			// Only main cam has audio for now
+			main_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi", IconSize.Button);
+			sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-off", IconSize.Button);
+			main_cam_audio_button.Active = true;
+			sec_cam_audio_button.Active = false;
 
-			timerule = new Timerule (new WidgetWrapper (timerulearea)) { ObjectsCanMove = false };
+			// We control visibility of those widgets
+			sec_cam_vbox.NoShowAll = true;
+			sec_cam_vbox.Visible = false;
+			sec_cam_didactic_label.NoShowAll = true;
+			sec_cam_didactic_label.Visible = true;
+			sec_cam_didactic_label.Text = Catalog.GetString ("Drag the bars in the timeline to synchronize secondary video files with the main video");
+
+			timerule = new Timerule (new WidgetWrapper (timerulearea));
 			camerasTimeline = new CamerasTimeline (new WidgetWrapper (timelinearea));
 			camerasLabels = new CamerasLabels (new WidgetWrapper (labelsarea));
-
-			/* FIXME: Links Label size to the container */
-			labelsarea.SizeRequested += (o, args) => {
-				labels_vbox.WidthRequest = args.Requisition.Width;
-			};
 
 			// Set some sane defaults
 			labels_vbox.WidthRequest = StyleConf.TimelineLabelsWidth;
 			// We need to align the timerule and the beginning of labels list
 			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
 
+			main_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
+			sec_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
+
+			ConnectSignals ();
+
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
+
+			menu = new PeriodsMenu ();
+		}
+
+		void ConnectSignals ()
+		{
+			zoomscale.ValueChanged += HandleZoomChanged;
+			main_cam_audio_button.Toggled += HandleAudioToggled;
+			sec_cam_audio_button.Toggled += HandleAudioToggled;
+
+			main_cam_playerbin.Tick += HandleTick;
+			main_cam_playerbin.PlayStateChanged += HandleStateChanged;
+
+			// Listen for seek events from the timerule
+			Config.EventsBroker.SeekEvent += HandleSeekEvent;
+			// Handle dragging of cameras and periods
+			camerasTimeline.CameraDragged += HandleCameraDragged;
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 
 			// Synchronize scrollbars with timerule and labels
 			scrolledwindow2.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleScrollEvent;
+
+			/* FIXME: Links Label size to the container */
+			labelsarea.SizeRequested += (o, args) => {
+				labels_vbox.WidthRequest = args.Requisition.Width;
+			};
 
 			// Adjust our zoom factors when the window is resized
 			scrolledwindow2.SizeAllocated += (o, args) =>  {
@@ -88,26 +120,36 @@ namespace LongoMatch.Gui.Component
 				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
 				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
 			};
-
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
-
-			menu = new PeriodsMenu ();
 		}
 
 		protected override void OnDestroyed ()
 		{
+			Config.EventsBroker.SeekEvent -= HandleSeekEvent;
+
 			main_cam_playerbin.Destroy ();
-			//sec_cam_playerbin.Destroy ();
+			sec_cam_playerbin.Destroy ();
+
 			timerule.Dispose ();
 			camerasLabels.Dispose ();
 			camerasTimeline.Dispose ();
+
 			base.OnDestroyed ();
 		}
 
 		public void Pause ()
 		{
 			main_cam_playerbin.Pause ();
-			//sec_cam_playerbin.Pause ();
+			sec_cam_playerbin.Pause ();
+		}
+
+		public void Seek (Time time, bool accurate)
+		{
+			if (main_cam_playerbin.Opened) {
+				main_cam_playerbin.Seek (time, accurate);
+			}
+			if (sec_cam_playerbin.Opened) {
+				sec_cam_playerbin.Seek (time, accurate);
+			}
 		}
 
 		public void SaveChanges ()
@@ -134,8 +176,7 @@ namespace LongoMatch.Gui.Component
 				List<string> gamePeriods;
 				List<Period> periods;
 				MediaFile file;
-				
-				main_cam_playerbin.ShowControls = false;
+
 				this.project = value;
 				gamePeriods = value.Dashboard.GamePeriods;
 
@@ -176,7 +217,9 @@ namespace LongoMatch.Gui.Component
 				timerule.Duration = duration;
 
 				// Open media file
-				main_cam_playerbin.Open (value.Description.FileSet);
+				main_cam_label.Text = fileSet.First ().Name;
+				main_cam_playerbin.ShowControls = false;
+				main_cam_playerbin.Open (fileSet);
 			}
 		}
 
@@ -215,12 +258,79 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
+		/// <summary>
+		/// Try to slave the secondary player to the first 
+		/// </summary>
+		/// <param name="playing">If set to <c>true</c> playing.</param>
+		void HandleStateChanged (bool playing)
+		{
+			if (playing) {
+				sec_cam_playerbin.Play ();
+			} else {
+				sec_cam_playerbin.Pause ();
+			}
+		}
+
+		void HandleAudioToggled (object sender, EventArgs args)
+		{
+			if (sender == main_cam_audio_button) {
+				main_cam_playerbin.Volume = main_cam_audio_button.Active ? 1 : 0;
+				main_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (main_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
+			} else if (sender == sec_cam_audio_button) {
+				sec_cam_playerbin.Volume = sec_cam_audio_button.Active ? 1 : 0;
+				sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (sec_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
+			}
+		}
+
+		void HandleCameraDragged (MediaFile mediafile, TimeNode timenode)
+		{
+			// Start by pausing players
+			main_cam_playerbin.Pause ();
+			sec_cam_playerbin.Pause ();
+
+			// Check if the CurrentTime of the time rule is in that node
+			if (timenode.Start <= timerule.CurrentTime && timerule.CurrentTime <= timenode.Stop) {
+				// Check if we need to show the player
+				if (!sec_cam_vbox.Visible) {
+					sec_cam_didactic_label.Hide ();
+					sec_cam_vbox.Show ();
+				}
+				// Open this media file if needed
+				if (!sec_cam_playerbin.Opened ||
+					sec_cam_playerbin.MediaFileSet.FirstOrDefault () != mediafile) {
+					MediaFileSet fileSet = new MediaFileSet ();
+					fileSet.Add (mediafile);
+
+					// Reload player with new cam
+					sec_cam_label.Text = mediafile.Name;
+					sec_cam_playerbin.ShowControls = false;
+					sec_cam_playerbin.Open (fileSet);
+
+					// Configure audio
+					HandleAudioToggled (sec_cam_audio_button, new EventArgs ());
+				}
+				// Seek to position 
+				sec_cam_playerbin.Seek (timerule.CurrentTime, true);
+			} else {
+				// Camera is out of scope, show didactic message
+				sec_cam_vbox.Hide ();
+				sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
+				sec_cam_didactic_label.Show ();
+			}
+		}
+
+		/// <summary>
+		/// Periods segments have moved, adjust main camera position to segment boundaries
+		/// </summary>
 		void HandleTimeNodeChanged (TimeNode tNode, object val)
 		{
 			Time time = val as Time;
+
 			main_cam_playerbin.Pause ();
-			main_cam_playerbin.Seek (time, false);
-			// FIXME: Reflect change in the MediaFile's offset.
+			if (sec_cam_playerbin.Opened) {
+				sec_cam_playerbin.Pause ();
+			}
+			Seek (time, false);
 		}
 
 		/// <summary>
@@ -242,7 +352,6 @@ namespace LongoMatch.Gui.Component
 		{
 			// We zoom from our Maximum number of seconds per pixel to the minimum using the 0 to 100 scale value
 			double secondsPerPixel = 0, minSecondsPerPixels = 0.01;
-			double value = Math.Round (zoomscale.Value);
 			double diff = maxSecondsPerPixels - minSecondsPerPixels;
 
 			secondsPerPixel = maxSecondsPerPixels - (diff * zoomscale.Value / 100);
@@ -250,6 +359,10 @@ namespace LongoMatch.Gui.Component
 			timerule.SecondsPerPixel = secondsPerPixel;
 			camerasTimeline.SecondsPerPixel = secondsPerPixel;
 			QueueDraw ();
+		}
+
+		void HandleSeekEvent (Time time, bool accurate) {
+			Seek (time, false);
 		}
 
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
