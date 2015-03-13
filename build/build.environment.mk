@@ -23,7 +23,9 @@ LINK_DB40 = $(DB4O_LIBS)
 LINK_JSON = $(JSON_LIBS)
 LINK_NUNIT = $(NUNIT_LIBS)
 LINK_OSXYPLOT = -r:$(DIR_BIN)/OxyPlotMono.dll
+LINK_COUCHBASE = $(COUCHBASE_LIBS)
 LINK_LONGOMATCH_ADDINS = -r:$(DIR_BIN)/LongoMatch.Addins.dll
+LINK_LONGOMATCH_DB = -r:$(DIR_BIN)/LongoMatch.DB.dll
 LINK_LONGOMATCH_CORE = -r:$(DIR_BIN)/LongoMatch.Core.dll
 LINK_LONGOMATCH_MULTIMEDIA = -r:$(DIR_BIN)/LongoMatch.Multimedia.dll
 LINK_LONGOMATCH_GUI_MULTIMEDIA = -r:$(DIR_BIN)/LongoMatch.GUI.Multimedia.dll
@@ -166,11 +168,17 @@ REF_DEP_LONGOMATCH_PLUGINS_STATS = \
                      $(LINK_LONGOMATCH_GUI_HELPERS) \
                      $(LINK_LONGOMATCH_ADDINS)
 
+REF_DEP_LONGOMATCH_DB = \
+                     $(LINK_JSON) \
+                     $(LINK_COUCHBASE) \
+                     $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_TESTS = \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_SERVICES) \
+                     $(LINK_LONGOMATCH_DB) \
                      $(LINK_JSON) \
+                     $(LINK_COUCHBASE) \
                      $(LINK_NUNIT)
 
 DIR_BIN = $(top_builddir)/$(DEFAULT_BUILD_DIR)

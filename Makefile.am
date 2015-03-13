@@ -12,6 +12,7 @@ SUBDIRS = \
 	libcesarplayer \
 	oxyplot \
 	LongoMatch.Core \
+	LongoMatch.DB \
 	LongoMatch.Addins \
 	LongoMatch.Multimedia \
 	LongoMatch.Drawing \

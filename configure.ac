@@ -84,6 +84,10 @@ PKG_CHECK_MODULES([DB4O], [db4o],  [HAVE_DB4O=1], [HAVE_DB4O=0])
 AC_SUBST(DB4O_LIBS)
 PKG_CHECK_MODULES([MONO_ADDINS], [mono-addins])
 AC_SUBST(MONO_ADDINS_LIBS)
+PKG_CHECK_MODULES([COUCHBASE], [couchbase-lite])
+AC_SUBST(COUCHBASE_LIBS)
+COUCHBASE_LIBS_PATHS=`echo $COUCHBASE_LIBS | sed 's/-r://g'`
+AC_SUBST(COUCHBASE_LIBS_PATHS)
 
 AM_CONDITIONAL(WITH_MIGRATION_TOOL, [test "$HAVE_DB4O" -eq 1])
 
@@ -141,6 +145,7 @@ pkgconfig/longomatch-gui-helpers.pc
 pkgconfig/longomatch-oxyplot.pc
 
 LongoMatch.Addins/Makefile
+LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Drawing/Makefile
 LongoMatch.Drawing.Cairo/Makefile

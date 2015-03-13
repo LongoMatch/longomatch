@@ -42,7 +42,7 @@ namespace LongoMatch.Core.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Dashboard: ITemplate, IDeserializationCallback
+	public class Dashboard: IStorable, ITemplate, IDeserializationCallback
 	{
 
 		const int CAT_WIDTH = 120;

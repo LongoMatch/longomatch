@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: IIDObject
+	public class Player: IStorable
 	{
 
 		#region Constructors
