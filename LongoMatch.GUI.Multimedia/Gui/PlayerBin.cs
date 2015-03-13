@@ -145,6 +145,21 @@ namespace LongoMatch.Gui
 			base.OnDestroyed ();
 		}
 		#region Properties
+		public MediaFileSet MediaFileSet {
+			get {
+				return fileSet;
+			}
+		}
+
+		public double Volume {
+			get {
+				return player.Volume;
+			}
+			set {
+				OnVolumeChanged (value);
+			}
+		}
+
 		public Time CurrentTime {
 			get {
 				return player.CurrentTime - activeFile.Offset;
