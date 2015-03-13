@@ -30,7 +30,6 @@ namespace LongoMatch.Core.Store
 	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
 	/// </summary>
 	[Serializable]
-	[JsonConverter (typeof (LongoMatchConverter))]
 	public class Time :  IComparable
 	{
 		private const int MS = 1000000 ;

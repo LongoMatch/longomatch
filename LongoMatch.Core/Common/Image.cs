@@ -30,7 +30,6 @@ namespace LongoMatch.Core.Common
 #endif
 
 	[Serializable]
-	[JsonConverter (typeof(LongoMatchConverter))]
 	public class Image: ISerializable, IDisposable
 	{
 		SImage image;

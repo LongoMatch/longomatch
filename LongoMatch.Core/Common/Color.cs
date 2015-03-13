@@ -21,7 +21,6 @@ using System.Globalization;
 
 namespace LongoMatch.Core.Common
 {
-	[JsonConverter (typeof (LongoMatchConverter))]
 	[Serializable]
 	public class Color
 	{

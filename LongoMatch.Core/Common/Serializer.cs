@@ -117,6 +117,7 @@ namespace LongoMatch.Core.Common
 				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 				settings.TypeNameHandling = TypeNameHandling.Objects;
 				settings.Converters.Add (new VersionConverter ());
+				settings.Converters.Add (new LongoMatchConverter ());
 				//settings.ReferenceResolver = new IdReferenceResolver ();
 				return settings;
 			}
@@ -190,6 +191,7 @@ namespace LongoMatch.Core.Common
 			return (
 				objectType == typeof(Time) ||
 				objectType == typeof(Color) ||
+				objectType == typeof(Point) ||
 				objectType == typeof(HotKey) ||
 				objectType == typeof(Image));
 		}
