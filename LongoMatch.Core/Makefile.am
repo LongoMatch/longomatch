@@ -50,6 +50,8 @@ SOURCES = Common/Area.cs \
 	Interfaces/IPlaylistElement.cs \
 	Interfaces/IProjectsImporter.cs \
 	Interfaces/IRenderingJobsManager.cs \
+	Interfaces/IStorable.cs \
+	Interfaces/IStorage.cs \
 	Interfaces/ITemplates.cs \
 	Interfaces/ITemplatesService.cs \
 	Interfaces/Multimedia/ICapturer.cs \
