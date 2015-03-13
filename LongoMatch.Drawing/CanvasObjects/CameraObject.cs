@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			mediaFile = mf;
 			// Video boundaries can't be changed, only the segment can move.
 			DraggingMode = NodeDraggingMode.Segment;
+			SelectionMode = NodeSelectionMode.Segment;
 		}
 
 		public MediaFile MediaFile {
