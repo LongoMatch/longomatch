@@ -353,9 +353,17 @@ namespace LongoMatch.Gui
 			if (ImageLoaded) {
 				return;
 			}
+
 			DrawingsVisible = false;
-			player.Seek (time + activeFile.Offset, accurate);
-			OnTick ();
+
+			// Check if we are ready first
+			if (readyToSeek) {
+				player.Seek (time + activeFile.Offset, accurate);
+				OnTick ();
+			} else {
+				Log.Debug ("Delaying seek until player is ready");
+				pendingSeek = new object[3] { time, 1.0f, false };
+			}
 		}
 
 		public void SeekToNextFrame ()
