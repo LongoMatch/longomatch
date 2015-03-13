@@ -255,6 +255,13 @@ namespace LongoMatch.Gui.Component
 		{
 			timerule.CurrentTime = currentTime;
 			camerasTimeline.CurrentTime = currentTime;
+			// Detect when secondary camera goes out of scope while main camera is playing.
+			if (sec_cam_playerbin.Opened) {
+				MediaFile mf = sec_cam_playerbin.MediaFileSet.First ();
+				if (mf.Duration + mf.Offset < currentTime) {
+					HandleOutOfScope ();
+				}
+			}
 			QueueDraw ();
 		}
 
@@ -280,6 +287,17 @@ namespace LongoMatch.Gui.Component
 				sec_cam_playerbin.Volume = sec_cam_audio_button.Active ? 1 : 0;
 				sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (sec_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
 			}
+		}
+
+		/// <summary>
+		/// Handles the case where the secondary video gets out of scope compared to current time of main video.
+		/// </summary>
+		void HandleOutOfScope ()
+		{
+			// Camera is out of scope, show didactic message
+			sec_cam_vbox.Hide ();
+			sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
+			sec_cam_didactic_label.Show ();
 		}
 
 		void HandleCameraDragged (MediaFile mediafile, TimeNode timenode)
@@ -312,10 +330,7 @@ namespace LongoMatch.Gui.Component
 				// Seek to position 
 				sec_cam_playerbin.Seek (timerule.CurrentTime, true);
 			} else {
-				// Camera is out of scope, show didactic message
-				sec_cam_vbox.Hide ();
-				sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
-				sec_cam_didactic_label.Show ();
+				HandleOutOfScope ();
 			}
 		}
 
