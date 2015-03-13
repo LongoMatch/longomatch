@@ -139,4 +139,6 @@ namespace LongoMatch.Core.Handlers
 	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable, DrawTool tool);
 	public delegate void DrawableChangedHandler (IBlackboardObject drawable);
 	public delegate void BackEventHandle ();
+	/* Camera dragging */
+	public delegate void CameraDraggedHandler (MediaFile file, TimeNode timenode);
 }
