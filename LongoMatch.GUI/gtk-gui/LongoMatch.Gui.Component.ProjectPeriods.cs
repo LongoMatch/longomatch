@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 			this.main_cam_playerbin = new global::LongoMatch.Gui.PlayerBin ();
 			this.main_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.main_cam_playerbin.Name = "main_cam_playerbin";
-			this.main_cam_playerbin.Volume = 0;
+			this.main_cam_playerbin.Volume = 1;
 			this.main_cam_playerbin.CloseAlwaysVisible = false;
 			this.main_cam_vbox.Add (this.main_cam_playerbin);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.main_cam_vbox [this.main_cam_playerbin]));
