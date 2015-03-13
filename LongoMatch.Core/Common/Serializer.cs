@@ -117,7 +117,7 @@ namespace LongoMatch.Core.Common
 				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 				settings.TypeNameHandling = TypeNameHandling.Objects;
 				settings.Converters.Add (new VersionConverter ());
-				settings.Converters.Add (new LongoMatchConverter ());
+				settings.Converters.Add (new LongoMatchConverter (true));
 				//settings.ReferenceResolver = new IdReferenceResolver ();
 				return settings;
 			}
@@ -126,6 +126,12 @@ namespace LongoMatch.Core.Common
 	
 	public class LongoMatchConverter : JsonConverter
 	{
+		bool handleImages;
+
+		public LongoMatchConverter (bool handleImages) {
+			this.handleImages = handleImages;
+		}
+
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			if (value is Time) {
@@ -193,7 +199,7 @@ namespace LongoMatch.Core.Common
 				objectType == typeof(Color) ||
 				objectType == typeof(Point) ||
 				objectType == typeof(HotKey) ||
-				objectType == typeof(Image));
+				objectType == typeof(Image) && handleImages);
 		}
 	}
 	
