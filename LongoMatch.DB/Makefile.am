@@ -4,9 +4,8 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_DB)
 
 SOURCES = AssemblyInfo.cs \
-	Documents/DashboardDocument.cs \
-	Documents/DocumentHelpers.cs \
-	Documents/Serializer.cs
+	CouchbaseStorage.cs \
+	DocumentsSerializer.cs
 
 RESOURCES = 
 

@@ -36,7 +36,7 @@ SOURCES = Core/Common/TestColor.cs \
 	Core/Store/TestTimeNode.cs \
 	Core/Store/TestTimelineEvent.cs \
 	Core/Store/TestTimer.cs \
-	DB/TestDashboardDocument.cs \
+	DB/TestStorage.cs \
 	Services/TestFileStorage.cs \
 	Utils.cs
 
