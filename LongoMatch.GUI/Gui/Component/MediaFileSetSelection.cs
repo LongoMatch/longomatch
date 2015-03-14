@@ -61,14 +61,12 @@ namespace LongoMatch.Gui.Component
 
 		void AddMediaFileChooser (String name)
 		{
-			Alignment alignment = new Alignment (0.0f, 0.5f, 0.0f, 0.0f);
 			MediaFileChooser chooser = new MediaFileChooser (name);
 
 			chooser.ChangedEvent += HandleFileChangedEvent;
-			alignment.Add (chooser);
-			alignment.ShowAll ();
+			chooser.ShowAll ();
 
-			mfss_vbox.PackStart (alignment, true, false, 0);
+			mfss_vbox.PackStart (chooser, true, true, 0);
 
 			fileChoosers.Add (chooser);
 		}
@@ -114,7 +112,7 @@ namespace LongoMatch.Gui.Component
 			foreach (MediaFileChooser chooser in to_remove) {
 				chooser.ChangedEvent -= HandleFileChangedEvent;
 				fileChoosers.Remove (chooser);
-				mfss_vbox.Remove (chooser.Parent);
+				mfss_vbox.Remove (chooser);
 			}
 
 			to_remove.Clear ();
