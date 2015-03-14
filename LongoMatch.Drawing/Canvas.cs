@@ -62,6 +62,7 @@ namespace LongoMatch.Drawing
 
 		protected virtual void Dispose (bool disposing)
 		{
+			// FIXME: Should we check if we are disposed already ?
 			if (disposing) {
 				ClearObjects ();
 				Objects = null;
@@ -271,8 +272,10 @@ namespace LongoMatch.Drawing
 				ICanvasSelectableObject po = sel.Drawable as ICanvasSelectableObject;
 				po.Selected = false;
 			}
-			foreach (ICanvasSelectableObject cso in Objects) {
-				cso.Selected = false;
+			if (Objects != null) {
+				foreach (ICanvasSelectableObject cso in Objects) {
+					cso.Selected = false;
+				}
 			}
 			Selections.Clear ();
 		}
