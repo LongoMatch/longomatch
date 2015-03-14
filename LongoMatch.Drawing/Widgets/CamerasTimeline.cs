@@ -149,7 +149,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (CameraDragged != null) {
 					CameraObject co = sel.Drawable as CameraObject;
 					// Adjust offset
-					co.MediaFile.Offset = co.TimeNode.Start;
+					co.MediaFile.Offset = new Time (-co.TimeNode.Start.MSeconds);
 					// And notify
 					CameraDragged (co.MediaFile, co.TimeNode);
 				}
