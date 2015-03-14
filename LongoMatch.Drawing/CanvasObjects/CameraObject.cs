@@ -27,7 +27,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		MediaFile mediaFile;
 
 		public CameraObject (MediaFile mf) : 
-			base (new TimeNode () { Start = mf.Offset, Stop = mf.Duration + mf.Offset, Name = mf.Name })
+			base (new TimeNode () { Start = new Time (-mf.Offset.MSeconds), Stop = mf.Duration - mf.Offset, Name = mf.Name })
 		{
 			mediaFile = mf;
 			// Video boundaries can't be changed, only the segment can move.
