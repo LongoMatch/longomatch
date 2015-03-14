@@ -140,8 +140,12 @@ namespace LongoMatch.Gui.Component
 
 		public void Pause ()
 		{
-			main_cam_playerbin.Pause ();
-			sec_cam_playerbin.Pause ();
+			if (main_cam_playerbin.Opened) {
+				main_cam_playerbin.Pause ();
+			}
+			if (sec_cam_playerbin.Opened) {
+				sec_cam_playerbin.Pause ();
+			}
 		}
 
 		public void Seek (Time time, bool accurate)
@@ -183,10 +187,12 @@ namespace LongoMatch.Gui.Component
 				gamePeriods = value.Dashboard.GamePeriods;
 
 				MediaFileSet fileSet = project.Description.FileSet;
-				file = fileSet.FirstOrDefault ();
 				start = new Time (0);
+				// FIXME: What should we do if the fileset is empty ?
+				file = fileSet.FirstOrDefault ();
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
+				// If no periods are provided create from dashboard
 				if (project.Periods == null || project.Periods.Count == 0) {
 					periods = new List<Period> ();
 					gamePeriods = value.Dashboard.GamePeriods;
