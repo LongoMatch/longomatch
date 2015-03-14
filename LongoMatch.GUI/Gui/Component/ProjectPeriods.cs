@@ -43,6 +43,11 @@ namespace LongoMatch.Gui.Component
 		bool projectHasPeriods;
 		double maxSecondsPerPixels;
 
+		enum DidacticMessage {
+			Initial,
+			CameraOutOfScope,
+		}
+
 		public ProjectPeriods ()
 		{
 			this.Build ();
@@ -60,12 +65,9 @@ namespace LongoMatch.Gui.Component
 			main_cam_audio_button.Active = true;
 			sec_cam_audio_button.Active = false;
 
-			// We control visibility of those widgets
+			// We control visibility of those widgets, they are hidden at startup
 			sec_cam_vbox.NoShowAll = true;
-			sec_cam_vbox.Visible = false;
 			sec_cam_didactic_label.NoShowAll = true;
-			sec_cam_didactic_label.Visible = true;
-			sec_cam_didactic_label.Text = Catalog.GetString ("Drag the bars in the timeline to synchronize secondary video files with the main video");
 
 			timerule = new Timerule (new WidgetWrapper (timerulearea));
 			camerasTimeline = new CamerasTimeline (new WidgetWrapper (timelinearea));
@@ -259,7 +261,7 @@ namespace LongoMatch.Gui.Component
 			if (sec_cam_playerbin.Opened) {
 				MediaFile mf = sec_cam_playerbin.MediaFileSet.First ();
 				if (mf.Duration + mf.Offset < currentTime) {
-					HandleOutOfScope ();
+					ShowDidactic (DidacticMessage.CameraOutOfScope);
 				}
 			}
 			QueueDraw ();
@@ -289,14 +291,39 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void HideSecondaryPlayer ()
+		{
+			sec_cam_vbox.Hide ();
+		}
+
+		void ShowSecondaryPlayer ()
+		{
+			if (!sec_cam_vbox.Visible) {
+				HideDidactic ();
+				sec_cam_vbox.Show ();
+			}
+		}
+
+		void HideDidactic ()
+		{
+			sec_cam_didactic_label.Hide ();
+		}
+
 		/// <summary>
 		/// Handles the case where the secondary video gets out of scope compared to current time of main video.
 		/// </summary>
-		void HandleOutOfScope ()
+		void ShowDidactic (DidacticMessage message)
 		{
-			// Camera is out of scope, show didactic message
-			sec_cam_vbox.Hide ();
-			sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
+			// Show didactic message, hide secondary player
+			HideSecondaryPlayer ();
+			switch (message) {
+			case DidacticMessage.Initial:
+				sec_cam_didactic_label.Text = Catalog.GetString ("Drag the bars in the timeline to synchronize secondary video files with the main video");
+				break;
+			case DidacticMessage.CameraOutOfScope:
+				sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
+				break;
+			}
 			sec_cam_didactic_label.Show ();
 		}
 
@@ -309,10 +336,7 @@ namespace LongoMatch.Gui.Component
 			// Check if the CurrentTime of the time rule is in that node
 			if (timenode.Start <= timerule.CurrentTime && timerule.CurrentTime <= timenode.Stop) {
 				// Check if we need to show the player
-				if (!sec_cam_vbox.Visible) {
-					sec_cam_didactic_label.Hide ();
-					sec_cam_vbox.Show ();
-				}
+				ShowSecondaryPlayer ();
 				// Open this media file if needed
 				if (!sec_cam_playerbin.Opened ||
 					sec_cam_playerbin.MediaFileSet.FirstOrDefault () != mediafile) {
@@ -330,7 +354,7 @@ namespace LongoMatch.Gui.Component
 				// Seek to position 
 				sec_cam_playerbin.Seek (timerule.CurrentTime, true);
 			} else {
-				HandleOutOfScope ();
+				ShowDidactic (DidacticMessage.CameraOutOfScope);
 			}
 		}
 
