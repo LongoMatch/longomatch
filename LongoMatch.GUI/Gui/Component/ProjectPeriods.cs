@@ -222,6 +222,15 @@ namespace LongoMatch.Gui.Component
 				main_cam_label.Text = fileSet.First ().Name;
 				main_cam_playerbin.ShowControls = false;
 				main_cam_playerbin.Open (fileSet);
+
+				if (fileSet.Count > 1) {
+					// Start with initial didactic message
+					ShowDidactic (DidacticMessage.Initial);
+				} else {
+					// Just in case it was previously visible, a mediafile might still be loaded if 
+					// the user is going back and forth adding/removing files to the set.
+					HideSecondaryPlayer ();
+				}
 			}
 		}
 
