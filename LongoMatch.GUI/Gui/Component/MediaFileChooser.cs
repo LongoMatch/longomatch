@@ -56,6 +56,8 @@ namespace LongoMatch.Gui.Component
 			clearbutton.Clicked += HandleClearClicked;
 			nameentry.Changed += HandleNameChanged;
 
+			nameentry.TooltipText = Catalog.GetString ("Edit to change camera name");
+
 			ProposedFileName = String.Format ("LongoMatch-{0}.mp4", DateTime.Now.ToShortDateString ());
 			ProposedDirectoryName = String.Format ("LongoMatch-{0}", DateTime.Now.ToShortDateString ()); 
 		}
