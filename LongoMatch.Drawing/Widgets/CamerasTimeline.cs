@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Linq;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
@@ -30,6 +31,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		// For cameras
 		public event CameraDraggedHandler CameraDragged;
+		public event EventHandler SelectedCameraChanged;
 		// And periods
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
@@ -83,6 +85,17 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			get {
 				return secondsPerPixel;
+			}
+		}
+
+		public CameraObject SelectedCamera {
+			get {
+				Selection sel = Selections.FirstOrDefault ();
+
+				if (sel != null && sel.Drawable is CameraObject)
+					return sel.Drawable as CameraObject;
+				else
+					return null;
 			}
 		}
 
@@ -165,6 +178,14 @@ namespace LongoMatch.Drawing.Widgets
 					}
 					TimeNodeChanged (tn, moveTime);
 				}
+			}
+		}
+
+		protected override void SelectionChanged (List<Selection> sel)
+		{
+			// Fire an event
+			if (SelectedCameraChanged != null) {
+				SelectedCameraChanged (this, new EventArgs ());
 			}
 		}
 
