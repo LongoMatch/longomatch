@@ -69,7 +69,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		protected void ClearObjects ()
+		protected virtual void ClearObjects ()
 		{
 			if (Objects != null) {
 				foreach (ICanvasObject co in Objects) {
@@ -178,6 +178,13 @@ namespace LongoMatch.Drawing
 			if (disposing)
 				widget.Dispose ();
 			base.Dispose (disposing);
+		}
+
+		protected override void ClearObjects ()
+		{
+			// Make sure we don't maintain a selection with invalid objects.
+			ClearSelection ();
+			base.ClearObjects ();
 		}
 
 		public int ClickRepeatMS {
