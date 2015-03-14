@@ -10035,6 +10035,17 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
+              <widget class="Gtk.VSeparator" id="vseparator1">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.Entry" id="fileentry">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
@@ -10043,7 +10054,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="InvisibleChar">•</property>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
                 <property name="AutoSize">True</property>
               </packing>
             </child>
@@ -10059,7 +10070,7 @@ You can continue with the current capture, cancel it or save your project.
                 </child>
               </widget>
               <packing>
-                <property name="Position">2</property>
+                <property name="Position">3</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -10077,7 +10088,7 @@ You can continue with the current capture, cancel it or save your project.
                 </child>
               </widget>
               <packing>
-                <property name="Position">3</property>
+                <property name="Position">4</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
