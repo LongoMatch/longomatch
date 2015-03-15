@@ -10210,6 +10210,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="HeightRequest">40</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">Custom</property>
+                <property name="FocusOnClick">False</property>
                 <property name="BorderWidth">10</property>
                 <child>
                   <widget class="Gtk.Image" id="backrectbuttonimage">

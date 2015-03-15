@@ -76,6 +76,7 @@ namespace LongoMatch.Gui.Panel
 			this.backrectbutton.HeightRequest = 40;
 			this.backrectbutton.CanFocus = true;
 			this.backrectbutton.Name = "backrectbutton";
+			this.backrectbutton.FocusOnClick = false;
 			this.backrectbutton.BorderWidth = ((uint)(10));
 			// Container child backrectbutton.Gtk.Container+ContainerChild
 			this.backrectbuttonimage = new global::Gtk.Image ();
