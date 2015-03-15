@@ -100,6 +100,7 @@ namespace LongoMatch.Gui.Component
 
 			// Listen for seek events from the timerule
 			Config.EventsBroker.SeekEvent += Seek;
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			// Handle dragging of cameras and periods
 			camerasTimeline.CameraDragged += HandleCameraDragged;
 			camerasTimeline.SelectedCameraChanged += HandleSelectedCameraChanged;
@@ -307,6 +308,44 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void HandleKeyPressed (object sender, HotKey key)
+		{
+			KeyAction action;
+
+			try {
+				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+			} catch (Exception ex) {
+				/* The dictionary contains 2 equal values for different keys */
+				Log.Exception (ex);
+				return;
+			}
+
+			if (action == KeyAction.None) {
+				return;
+			}
+
+			switch (action) {
+			case KeyAction.FrameUp:
+			case KeyAction.FrameDown:
+				CameraObject camera = camerasTimeline.SelectedCamera;
+				if (camera != null) {
+					Pause ();
+					Time before = sec_cam_playerbin.CurrentTime;
+					if (action == KeyAction.FrameUp)
+						sec_cam_playerbin.SeekToNextFrame ();
+					else
+						sec_cam_playerbin.SeekToPreviousFrame ();
+					Time diff = sec_cam_playerbin.CurrentTime - before;
+
+					// Reflect change in offset
+					camera.MediaFile.Offset += diff.MSeconds;
+					UpdateLabels ();
+					// TODO: Reflect the change in the timeline position without triggering a seek.
+				}
+				return;
+			}
+		}
+
 		/// <summary>
 		/// Configure players' audio volume based on toggle buttons.
 		/// </summary>
@@ -405,33 +444,46 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void UpdateLabels ()
+		{
+			CameraObject camera = camerasTimeline.SelectedCamera;
+
+			if (camera != null) {
+				sec_cam_label.Markup = String.Format ("<b>{0}</b> - <span foreground=\"red\" size=\"smaller\">{1}: {2}</span>", camera.MediaFile.Name, Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
+			}
+		}
+
+		void HandleCameraUpdate (CameraObject camera)
+		{
+			UpdateLabels ();
+			// If we are in scope, show player. Didactic message otherwise
+			if (IsInScope (camera)) {
+				ShowSecondaryPlayer ();
+				// And resync
+				SyncSecondaryPlayer ();
+			} else {
+				ShowDidactic (DidacticMessage.CameraOutOfScope);
+			}
+		}
+
 		void HandleSelectedCameraChanged (object sender, EventArgs args)
 		{
 			CameraObject camera = camerasTimeline.SelectedCamera;
 			if (camera != null) {
-				// If we are in scope, show player. Didactic message otherwise
-				if (IsInScope (camera)) {
-					// Check if we need to reopen the player
-					if (!sec_cam_playerbin.Opened ||
-						sec_cam_playerbin.MediaFileSet.FirstOrDefault () != camera.MediaFile) {
-						MediaFileSet fileSet = new MediaFileSet ();
-						fileSet.Add (camera.MediaFile);
+				// Check if we need to reopen the player
+				if (!sec_cam_playerbin.Opened ||
+					sec_cam_playerbin.MediaFileSet.FirstOrDefault () != camera.MediaFile) {
+					MediaFileSet fileSet = new MediaFileSet ();
+					fileSet.Add (camera.MediaFile);
 
-						// Reload player with new cam
-						sec_cam_label.Text = camera.MediaFile.Name;
-						sec_cam_playerbin.ShowControls = false;
-						sec_cam_playerbin.Open (fileSet);
+					sec_cam_playerbin.ShowControls = false;
+					sec_cam_playerbin.Open (fileSet);
 
-						// Configure audio
-						HandleAudioToggled (sec_cam_audio_button, new EventArgs ());
-
-						// And resync
-						SyncSecondaryPlayer ();
-					}
-					ShowSecondaryPlayer ();
-				} else {
-					ShowDidactic (DidacticMessage.CameraOutOfScope);
+					// Configure audio
+					HandleAudioToggled (sec_cam_audio_button, new EventArgs ());
 				}
+				// And update
+				HandleCameraUpdate (camera);
 			} else {
 				// When no camera is selected show the initial didactic message.
 				ShowDidactic (DidacticMessage.Initial);
@@ -442,16 +494,8 @@ namespace LongoMatch.Gui.Component
 		{
 			// Start by pausing players
 			Pause ();
-
-			// Check if the CurrentTime of the time rule is in that node
-			if (IsInScope (camerasTimeline.SelectedCamera)) {
-				// Show the player if needed
-				ShowSecondaryPlayer ();
-				// Seek to position accurately.
-				sec_cam_playerbin.Seek (timerule.CurrentTime, true);
-			} else {
-				ShowDidactic (DidacticMessage.CameraOutOfScope);
-			}
+			// And update
+			HandleCameraUpdate (camerasTimeline.SelectedCamera);
 		}
 
 		/// <summary>

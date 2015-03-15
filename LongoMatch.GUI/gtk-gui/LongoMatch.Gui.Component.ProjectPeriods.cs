@@ -156,6 +156,7 @@ namespace LongoMatch.Gui.Component
 			this.sec_cam_label = new global::Gtk.Label ();
 			this.sec_cam_label.Name = "sec_cam_label";
 			this.sec_cam_label.Xalign = 0F;
+			this.sec_cam_label.UseMarkup = true;
 			this.sec_cam_hbox.Add (this.sec_cam_label);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.sec_cam_hbox [this.sec_cam_label]));
 			w9.Position = 0;
