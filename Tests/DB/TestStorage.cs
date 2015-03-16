@@ -57,6 +57,9 @@ namespace Tests.DB
 		public void InitDB ()
 		{
 			string dbPath = Path.Combine (Path.GetTempPath (), "TestDB");
+			if (Directory.Exists (dbPath)) {
+				Directory.Delete (dbPath, true);
+			}
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
 		}
@@ -187,21 +190,14 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSaveDashboard ()
+		public void TestSaveLoadDashboard ()
 		{
 			Dashboard dashboard = Dashboard.DefaultTemplate (10);
+			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
+				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
 			Assert.AreEqual (1, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
-		}
-
-		[Test ()]
-		public void TestLoadDashboard ()
-		{
-			Dashboard dashboard = Dashboard.DefaultTemplate (10);
-			dashboard.Image = dashboard.GoalBackground =
-				dashboard.HalfFieldBackground = dashboard.FieldBackground = Utils.LoadImageFromFile ();
-			storage.Store (dashboard);
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
 			Assert.AreEqual (dashboard.ID, dashboard2.ID);
@@ -215,20 +211,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSavePlayer ()
-		{
-			Player player = new Player {Name = "andoni", Position = "runner",
-				Number = 5, Birthday = new DateTime (1984, 6, 11),
-				Nationality = "spanish", Height = 1.73f, Weight = 70,
-				Playing = true, Mail = "test@test", Color = Color.Red
-			};
-			storage.Store (player);
-			Assert.AreEqual (1, db.DocumentCount);
-			Assert.IsNotNull (db.GetExistingDocument (player.ID.ToString ()));
-		}
-
-		[Test ()]
-		public void TestLoadPlayer ()
+		public void TestSaveLoadPlayer ()
 		{
 			Player player1 = new Player {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
@@ -237,6 +220,8 @@ namespace Tests.DB
 			};
 			player1.Photo = Utils.LoadImageFromFile ();
 			storage.Store (player1);
+			Assert.AreEqual (1, db.DocumentCount);
+			Assert.IsNotNull (db.GetExistingDocument (player1.ID.ToString ()));
 			Player player2 = storage.Retrieve<Player> (player1.ID);
 			Assert.AreEqual (player1.ID, player2.ID);
 			Assert.AreEqual (player1.ToString (), player2.ToString ());
@@ -244,25 +229,77 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSaveTeam ()
+		public void TestSaveLoadTeam ()
 		{
-			Team team = Team.DefaultTemplate (10);
-			storage.Store<Team> (team);
+			Team team1 = Team.DefaultTemplate (10);
+			storage.Store<Team> (team1);
 			Assert.AreEqual (11, db.DocumentCount);
+			Team team2 = storage.Retrieve<Team> (team1.ID);
+			Assert.AreEqual (team1.ID, team2.ID);
+			Assert.AreEqual (team1.List.Count, team2.List.Count);
 		}
 
 		[Test ()]
-		public void TestLoadTeam ()
+		public void TestSaveLoadProjectDescription ()
 		{
-			Team team = Team.DefaultTemplate (10);
-			storage.Store<Team> (team);
-			Team team2 = storage.Retrieve<Team> (team.ID);
-			Assert.AreEqual (team.ID, team2.ID);
-			Assert.AreEqual (team.List.Count, team2.List.Count);
+			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
+				               "aac", 320, 240, 1.3, null, "Test asset");
+			ProjectDescription pd1 = new ProjectDescription ();
+			pd1.FileSet = new MediaFileSet ();
+			pd1.FileSet.Add (mf);
+			storage.Store (pd1);
+			Assert.AreEqual (1, db.DocumentCount);
 
-			for (int i = 0; i < team.List.Count; i++) {
-				Assert.AreEqual (team.List [i].ID, team2.List [i].ID);
+			ProjectDescription pd2 = storage.Retrieve<ProjectDescription> (pd1.ID);
+			Assert.AreEqual (pd1.ID, pd2.ID);
+		}
+
+		[Test ()]
+		public void TestSaveLoadProject ()
+		{
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (10);
+			p.UpdateEventTypesAndTimers ();
+			p.LocalTeamTemplate = Team.DefaultTemplate (10);
+			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
+				               "aac", 320, 240, 1.3, null, "Test asset");
+			ProjectDescription pd = new ProjectDescription ();
+			pd.FileSet = new MediaFileSet ();
+			pd.FileSet.Add (mf);
+			p.Description = pd;
+
+			storage.Store<Project> (p);
+			/* 1 Project + 1 ProjectDescription 
+			 * Teams and Dashboard are serialized locally in the project
+			 */ 
+			Assert.AreEqual (1 + 1, db.DocumentCount);
+		}
+
+
+		[Test ()]
+		public void TestSaveProjectWithEvents ()
+		{
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (10);
+			p.UpdateEventTypesAndTimers ();
+			p.LocalTeamTemplate = Team.DefaultTemplate (10);
+			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
+				               "aac", 320, 240, 1.3, null, "Test asset");
+			ProjectDescription pd = new ProjectDescription ();
+			pd.FileSet = new MediaFileSet ();
+			pd.FileSet.Add (mf);
+			p.Description = pd;
+
+			for (int i = 0; i < 10; i++) {
+				p.AddEvent (p.EventTypes [i], new Time (1000), new Time (2000), null, null, null, null);
 			}
+
+			storage.Store<Project> (p);
+			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+			storage.Store<Project> (p);
+			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
 		}
 	}
 }

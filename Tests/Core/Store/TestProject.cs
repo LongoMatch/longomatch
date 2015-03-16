@@ -85,37 +85,37 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetScores ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetPenaltyCards ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetScoreEvents ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetPenaltyCardEvents ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetSubstitutionEventType ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetLineup ()
 		{
 		}
@@ -127,30 +127,30 @@ namespace Tests.Core.Store
 			var g = p.EventsGroupedByEventType;
 			Assert.AreEqual (g.Count (), 4);
 			var gr = g.ElementAt (0);
-			Assert.AreEqual (p.EventTypes[0], gr.Key);
+			Assert.AreEqual (p.EventTypes [0], gr.Key);
 			Assert.AreEqual (2, gr.Count ());
 			
 			gr = g.ElementAt (1);
-			Assert.AreEqual (p.EventTypes[1], gr.Key);
+			Assert.AreEqual (p.EventTypes [1], gr.Key);
 			Assert.AreEqual (1, gr.Count ());
 			
 			gr = g.ElementAt (2);
-			Assert.AreEqual (p.EventTypes[2], gr.Key);
+			Assert.AreEqual (p.EventTypes [2], gr.Key);
 			Assert.AreEqual (3, gr.Count ());
 			
 			gr = g.ElementAt (3);
-			Assert.AreEqual (p.EventTypes[6], gr.Key);
+			Assert.AreEqual (p.EventTypes [6], gr.Key);
 			Assert.AreEqual (1, gr.Count ());
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void Clear ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void UpdateScore ()
 		{
 		}
@@ -194,25 +194,25 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestCleanupTimers ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestUpdateEventTypesAndTimers ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestSubstituePlayer ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestCurrentLineup ()
 		{
 		}
@@ -229,25 +229,25 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestGetScore ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestEventTaggedTeam ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestConsolidateDescription ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestEquals ()
 		{
 			Project p1 = CreateProject ();
@@ -259,13 +259,13 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestExport ()
 		{
 		}
 
 		[Test ()] 
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestImport ()
 		{
 		}
