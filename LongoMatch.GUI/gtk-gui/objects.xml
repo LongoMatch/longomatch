@@ -283,7 +283,11 @@
   </object>
   <object type="LongoMatch.Gui.Component.VideoFileInfo" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="VideoFileInfo Signals">
+        <signal name="Changed" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
