@@ -75,41 +75,15 @@ namespace LongoMatch.DB
 			settings.Formatting = Formatting.Indented;
 			settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 			settings.TypeNameHandling = TypeNameHandling.Objects;
-			settings.ContractResolver = new ImagePropertiesContractResolver (rev);
 			settings.Converters.Add (new ImageConverter (rev));
 			settings.Converters.Add (new VersionConverter ());
-			settings.Converters.Add (new DocumentsIDConverter (refTypes));
+			//settings.Converters.Add (new DocumentsIDConverter (localTypes));
 			settings.Converters.Add (new LongoMatchConverter (false));
 			//settings.ReferenceResolver = new IDReferenceResolver (db);
 			return JsonSerializer.Create (settings);
 		}
 	}
 
-
-	/// <summary>
-	/// Prevents serializing properties with <c>Image</c> objects that should be stored
-	/// as attachments
-	/// </summary>
-	class ImagePropertiesContractResolver : DefaultContractResolver
-	{
-		ImageConverter imgConverter;
-
-		public ImagePropertiesContractResolver (Revision rev)
-		{
-			imgConverter = new ImageConverter (rev);
-		}
-
-		protected override JsonProperty CreateProperty (MemberInfo member,
-		                                                MemberSerialization memberSerialization)
-		{
-			JsonProperty property = base.CreateProperty (member, memberSerialization);
-
-			if (property.PropertyType == typeof(Image)) {
-				property.ShouldSerialize = d => true;
-			}
-			return property;
-		}
-	}
 
 	class IdReferenceResolver : IReferenceResolver
 	{
@@ -172,17 +146,34 @@ namespace LongoMatch.DB
 	{
 		Revision rev;
 		const string ATTACHMENT = "attachment::";
+		Dictionary<string, int> attachmentNamesCount;
 
 		public ImageConverter (Revision rev)
 		{
 			this.rev = rev;
+			attachmentNamesCount = new Dictionary<string, int> ();
+		}
+
+		string GetAttachmentName (JsonWriter writer) {
+			string propertyName;
+			if (writer.WriteState == WriteState.Array) {
+				propertyName = ((writer as JTokenWriter).Token.Last as JProperty).Name;
+			} else {
+				propertyName = writer.Path;
+			}
+			if (!attachmentNamesCount.ContainsKey (propertyName)) {
+				attachmentNamesCount [propertyName] = 0;
+			}
+			attachmentNamesCount [propertyName] ++;
+			return string.Format ("{0}_{1}", propertyName, attachmentNamesCount [propertyName]);
 		}
 
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			(rev as UnsavedRevision).SetAttachment (writer.Path, "image/png",
+			string attachName = GetAttachmentName (writer);
+			(rev as UnsavedRevision).SetAttachment (attachName, "image/png",
 				(value as Image).Serialize ());
-			writer.WriteValue (ATTACHMENT + writer.Path);
+			writer.WriteValue (ATTACHMENT + attachName);
 		}
 
 		public override object ReadJson (JsonReader reader, Type objectType,

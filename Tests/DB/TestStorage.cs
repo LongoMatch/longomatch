@@ -15,16 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
 using System;
-using Couchbase.Lite;
-using LongoMatch.DB;
+using System.Collections.Generic;
 using System.IO;
+using Couchbase.Lite;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.DB;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace Tests.DB
 {
@@ -34,6 +35,7 @@ namespace Tests.DB
 		public Guid ID { get; set; }
 		public Image Image1 { get; set; }
 		public Image Image2 { get; set; }
+		public List<Image> Images { get; set;}
 	}
 
 	[TestFixture ()]
@@ -85,13 +87,34 @@ namespace Tests.DB
 			UnsavedRevision rev = doc.CreateRevision ();
 			JObject jo = DocumentsSerializer.SerializeObject (t, rev, null);
 			Assert.IsNotNull (jo ["ID"]);
-			Assert.AreEqual ("attachment::Image1", jo ["Image1"].Value<string>());
-			Assert.AreEqual ("attachment::Image2", jo ["Image2"].Value<string>());
+			Assert.AreEqual ("attachment::Image1_1", jo ["Image1"].Value<string> ());
+			Assert.AreEqual ("attachment::Image2_1", jo ["Image2"].Value<string> ());
 			int i = 0;
 			foreach (string name in rev.AttachmentNames) {
 				i++;
-				Assert.AreEqual ("Image" + i, name);
+				Assert.AreEqual (string.Format ("Image{0}_1", i), name);
 			}
+		}
+
+		[Test()]
+		public void TestSerializeImagesList () {
+			Image img = Utils.LoadImageFromFile ();
+			StorableImageTest t = new StorableImageTest {
+				Images = new List<Image> {img, img, img},
+				ID = Guid.NewGuid(),
+			};
+			Document doc = db.CreateDocument ();
+			UnsavedRevision rev = doc.CreateRevision ();
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, null);
+			int i = 0;
+			foreach (string name in rev.AttachmentNames) {
+				i++;
+				Assert.AreEqual ("Images_" + i, name);
+			}
+			Assert.AreEqual (3, i);
+			Assert.AreEqual ("attachment::Images_1", jo ["Images"][0].Value<string>());
+			Assert.AreEqual ("attachment::Images_2", jo ["Images"][1].Value<string>());
+			Assert.AreEqual ("attachment::Images_3", jo ["Images"][2].Value<string>());
 		}
 
 		[Test()]
