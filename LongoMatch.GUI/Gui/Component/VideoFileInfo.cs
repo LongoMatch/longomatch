@@ -28,6 +28,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class VideoFileInfo : Gtk.Bin
 	{
+		public event EventHandler Changed;
+
 		MediaFileSet fileSet;
 		MediaFile mediaFile;
 		bool disableChanges;
@@ -105,6 +107,9 @@ namespace LongoMatch.Gui.Component
 				fileSet.Replace (mediaFile, file);
 				mediaFile = file;
 				UpdateMediaFile ();
+				if (Changed != null) {
+					Changed (this, new EventArgs ());
+				}
 			}
 		}
 	}
