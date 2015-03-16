@@ -31,7 +31,7 @@ using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ProjectPeriods : Gtk.Bin
 	{
 		CamerasLabels camerasLabels;
@@ -44,7 +44,8 @@ namespace LongoMatch.Gui.Component
 		bool projectHasPeriods;
 		double maxSecondsPerPixels;
 
-		enum DidacticMessage {
+		enum DidacticMessage
+		{
 			Initial,
 			CameraOutOfScope,
 		}
@@ -117,7 +118,7 @@ namespace LongoMatch.Gui.Component
 			};
 
 			// Adjust our zoom factors when the window is resized
-			scrolledwindow2.SizeAllocated += (o, args) =>  {
+			scrolledwindow2.SizeAllocated += (o, args) => {
 				UpdateMaxSecondsPerPixel ();
 			};
 			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
@@ -211,7 +212,7 @@ namespace LongoMatch.Gui.Component
 				} else {
 					periodsDict = new Dictionary <Period, Period> ();
 					foreach (Period p in project.Periods) {
-						Period newp = new Period {Name = p.Name};
+						Period newp = new Period { Name = p.Name };
 						newp.Nodes.Add (p.PeriodNode);
 						periodsDict.Add (p, newp);
 					}
@@ -246,7 +247,8 @@ namespace LongoMatch.Gui.Component
 		/// <summary>
 		/// Calculates the maximum number of seconds per pixel to accomodate the complete duration in available space.
 		/// </summary>
-		void UpdateMaxSecondsPerPixel () {
+		void UpdateMaxSecondsPerPixel ()
+		{
 			if (duration != null) {
 				// With 20 pixels of margin to properly see the whole segment
 				maxSecondsPerPixels = (double)duration.TotalSeconds / (scrolledwindow2.Allocation.Width - 20);
@@ -472,7 +474,7 @@ namespace LongoMatch.Gui.Component
 			if (camera != null) {
 				// Check if we need to reopen the player
 				if (!sec_cam_playerbin.Opened ||
-					sec_cam_playerbin.MediaFileSet.FirstOrDefault () != camera.MediaFile) {
+				    sec_cam_playerbin.MediaFileSet.FirstOrDefault () != camera.MediaFile) {
 					MediaFileSet fileSet = new MediaFileSet ();
 					fileSet.Add (camera.MediaFile);
 
