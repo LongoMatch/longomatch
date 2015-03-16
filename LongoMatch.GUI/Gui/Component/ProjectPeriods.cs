@@ -451,7 +451,7 @@ namespace LongoMatch.Gui.Component
 			CameraObject camera = camerasTimeline.SelectedCamera;
 
 			if (camera != null) {
-				sec_cam_label.Markup = String.Format ("<b>{0}</b> - <span foreground=\"red\" size=\"smaller\">{1}: {2}</span>", camera.MediaFile.Name, Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
+				sec_cam_label.Markup = String.Format ("<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>", camera.MediaFile.Name, Config.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
 			}
 		}
 
