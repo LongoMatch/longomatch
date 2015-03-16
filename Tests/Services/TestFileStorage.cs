@@ -49,7 +49,7 @@ namespace Tests.Services
 		[SetUp]
 		public void CreateStorage ()
 		{
-			fs = new FileStorage (Path.Combine (Path.GetTempPath (), "TestFileStorage"), true);
+			fs = new FileStorage (Path.Combine (Path.GetTempPath (), "TestFileStorage"));
 		}
 
 		[TearDown]
