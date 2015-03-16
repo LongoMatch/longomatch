@@ -138,6 +138,7 @@ namespace LongoMatch.Gui.Panel
 				VideoFileInfo vfi = new VideoFileInfo ();
 
 				vfi.SetMediaFileSet (project.Description.FileSet, mf);
+				vfi.Changed += HandleChanged;
 
 				vfi.ShowAll ();
 
