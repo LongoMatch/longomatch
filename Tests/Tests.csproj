@@ -78,6 +78,7 @@
     <Compile Include="Services\TestFileStorage.cs" />
     <Compile Include="Core\Store\TestCoordinates.cs" />
     <Compile Include="DB\TestStorage.cs" />
+    <Compile Include="Services\TestTemplatesService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

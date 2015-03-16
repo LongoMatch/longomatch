@@ -25,6 +25,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Unix;
+using LongoMatch.Services.Services;
 
 namespace LongoMatch.Services
 {
@@ -32,19 +33,13 @@ namespace LongoMatch.Services
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
 
-		public TemplatesService ()
+		public TemplatesService (IStorage storage)
 		{
 			dict = new Dictionary<Type, ITemplateProvider> ();
-			dict.Add (typeof(Team),
-			          new TeamTemplatesProvider (Config.TeamsDir));
-			dict.Add (typeof(Dashboard), new CategoriesTemplatesProvider (Config.AnalysisDir));
-			CheckDefaultTemplates ();
-		}
-
-		private void CheckDefaultTemplates ()
-		{
-			foreach (ITemplateProvider t in dict.Values)
-				t.CheckDefaultTemplate ();
+			dict.Add (typeof(TeamTemplate),
+			          new TeamTemplatesProvider (storage));
+			dict.Add (typeof(Dashboard),
+			          new CategoriesTemplatesProvider (storage));
 		}
 
 		public ITemplateProvider<T> GetTemplateProvider<T> () where T: ITemplate
@@ -69,57 +64,58 @@ namespace LongoMatch.Services
 
 	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate
 	{
-		readonly string basePath;
-		readonly string extension;
 		readonly MethodInfo methodDefaultTemplate;
 		List<T> systemTemplates;
+		IStorage storage;
 
-		public TemplatesProvider (string basePath, string extension)
+		public TemplatesProvider (IStorage storage)
 		{
-			this.basePath = basePath;
-			this.extension = extension;
 			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
 			systemTemplates = new List<T> ();
-		}
-
-		public virtual void CheckDefaultTemplate ()
-		{
-			string path;
-			
-			path = GetPath ("default");
-			if (!File.Exists (path)) {
-				Create ("default", 20);
-			}
+			this.storage = storage;
+			// Create the default template, it will be added to the list
+			// of system templates to make it always available on the app 
+			// and also read-only
+			Create ("default", 20);
 		}
 
 		public bool Exists (string name)
 		{
-			return File.Exists (GetPath (name));
+			// FIXME we can add an Exist(Dictionary args) method on the IStorage?
+			Dictionary<string, object> dict = new Dictionary<string, object> ();
+			dict.Add ("Name", name);
+
+			List<T> list = storage.Retrieve<T>(dict);
+			if (list.Count == 0)
+				return false;
+			else
+				return true;
 		}
 
+		/// <summary>
+		/// Gets the templates.
+		/// </summary>
+		/// <value>The templates.</value>
 		public List<T> Templates {
 			get {
-				List<T> templates = new List<T> ();
-				
-				foreach (string file in TemplatesNames) {
-					try {
-						templates.Add (Load (file));
-					} catch (Exception ex) {
-						Log.Exception (ex);
-					}
-				}
-				return templates;
+				return storage.RetrieveAll<T>();
 			}
 		}
 
+		/// <summary>
+		/// Gets the templates names.
+		/// For that we need to get every ITemplate from the Storage, create a new list
+		/// based on every ITemplate name, and return it.
+		/// </summary>
+		/// <value>The templates names.</value>
 		public List<string> TemplatesNames {
+			// FIXME we really need to avoid this. Too many roundtrips
 			get {
 				List<string> l = new List<string> ();
-				if (!Directory.Exists (basePath)) {
-					Directory.CreateDirectory (basePath);
-				}
-				foreach (string path in Directory.GetFiles (basePath, "*" + extension)) {
-					l.Add (Path.GetFileNameWithoutExtension (path));
+				List<T> templates = Templates;
+				foreach (T template in templates)
+				{
+					l.Add(template.Name);
 				}
 				return l.Concat (systemTemplates.Select (t => t.Name)).ToList ();
 			}
@@ -134,48 +130,35 @@ namespace LongoMatch.Services
 				// Return a copy to prevent modification of system templates.
 				return Cloner.Clone (template);
 			} else {
-				Log.Information ("Loading template " + name);
-				template = (T)Serializer.LoadSafe<T>(GetPath(name));
-				template.Name = name;
-				return template;
+				Dictionary<string, object> dict = new Dictionary<string, object> ();
+				dict.Add ("Name", name);
+
+				List<T> list = storage.Retrieve<T>(dict);
+				if (list.Count == 0)
+					throw new TemplateNotFoundException (name);
+				else
+					return list[0];
 			}
 		}
 
 		public T LoadFile (string filename)
 		{
-			T template;
-
 			Log.Information ("Loading template file " + filename);
-			template = (T)Serializer.LoadSafe<T>(filename);
+			T template = FileStorage.RetrieveFrom<T>(filename);
 			return template;
 		}
 
-		public void Save (ITemplate template)
+		public void Save (T template)
 		{
 			CheckInvalidChars (template.Name);
-			string filename = GetPath (template.Name);
-			
-			Log.Information ("Saving template " + filename);
-			
-			if (File.Exists (filename)) {
-				throw new Exception (Catalog.GetString ("A template already exists with " +
-					"the name: ") + filename);
-			}
-			
-			if (!Directory.Exists (Path.GetDirectoryName (filename))) {
-				Directory.CreateDirectory (Path.GetDirectoryName (filename));
-			}
-			
-			/* Don't cach the Exception here to chain it up */
-			Serializer.Save<T>((T)template, filename);
+			Log.Information ("Saving template " + template.Name);
+			storage.Store<T>(template);
 		}
 
-		public void Update (ITemplate template)
+		public void Update (T template)
 		{
 			CheckInvalidChars (template.Name);
-			string filename = GetPath (template.Name);
-			Log.Information ("Updating template " + filename);
-			/* Don't cach the Exception here to chain it up */
+			Log.Information ("Updating template " + template.Name);
 			Save(template);
 		}
 
@@ -188,11 +171,6 @@ namespace LongoMatch.Services
 		{
 			T template;
 
-			if (File.Exists (copy)) {
-				throw new Exception (Catalog.GetString ("A template already exists with " +
-					"the name: ") + copy);
-			}
-			
 			CheckInvalidChars (copy);
 			Log.Information (String.Format ("Copying template {0} to {1}", orig, copy));
 			
@@ -212,7 +190,9 @@ namespace LongoMatch.Services
 		{
 			try {
 				Log.Information ("Deleting template " + templateName);
-				File.Delete (GetPath (templateName));
+				T template = Load(templateName);
+				if (template != null)
+					storage.Delete<T>(template);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
@@ -225,9 +205,12 @@ namespace LongoMatch.Services
 			if (list.Length == 0)
 				list = new object[] { 0 };
 			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
-			ITemplate t = (ITemplate)methodDefaultTemplate.Invoke (null, list);
+			T t = (T)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
-			Save (t);
+			// TODO split the registration from the creation, i.e: this function must return T
+			// and let the constructor register the returned template. For that we need to refactor
+			// the ITemplateProvider and ITemplateProvider<T>, no need to have them separated
+			Register (t);
 		}
 
 		void CheckInvalidChars (string name)
@@ -239,29 +222,19 @@ namespace LongoMatch.Services
 				throw new InvalidTemplateFilenameException (invalidChars); 
 			}
 		}
-
-		string GetPath (string templateName)
-		{
-			return System.IO.Path.Combine (basePath, templateName) + extension;
-		}
 	}
 
 	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
 	{
-		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT)
+		public TeamTemplatesProvider (IStorage storage): base (storage)
 		{
 		}
 	}
 
 	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
 	{
-		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT)
+		public CategoriesTemplatesProvider (IStorage storage) : base(storage)
 		{
-		}
-
-		public override void CheckDefaultTemplate ()
-		{
-			/* Do nothing now that we have a plugin that creates the default template */
 		}
 	}
 }

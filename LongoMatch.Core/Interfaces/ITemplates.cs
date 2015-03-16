@@ -22,14 +22,13 @@ using LongoMatch.Core.Store.Templates;
 	
 namespace LongoMatch.Core.Interfaces
 {
-	public interface ITemplate: IIDObject
+	public interface ITemplate: IStorable
 	{
 		string Name {get; set;}
 	}
-	
+
 	public interface ITemplateProvider
 	{
-		void CheckDefaultTemplate();
 		List<string> TemplatesNames {get;}
 		bool Exists(string name);
 		void Copy (string orig, string copy);
@@ -42,8 +41,8 @@ namespace LongoMatch.Core.Interfaces
 		List<T> Templates {get;}
 		T Load (string name);
 		T LoadFile (string filename);
-		void Save (ITemplate template);
-		void Update (ITemplate template);
+		void Save (T template);
+		void Update (T template);
 		void Register (T template);
 	}
 	

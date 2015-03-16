@@ -24,6 +24,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using Mono.Unix;
+using LongoMatch.Services.Services;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -83,7 +84,7 @@ namespace LongoMatch.Services
 
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			ts = new TemplatesService ();
+			ts = new TemplatesService (new FileStorage(Config.DBDir));
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
