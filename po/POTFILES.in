@@ -13,7 +13,7 @@ LongoMatch.Core/Store/MediaFile.cs
 LongoMatch.Core/Store/MediaFileSet.cs
 LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/Dashboard.cs
-LongoMatch.Core/Store/Templates/TeamTemplate.cs
+LongoMatch.Core/Store/Templates/Team.cs
 LongoMatch.Drawing/CanvasObjects/CategoryObject.cs
 LongoMatch.Drawing/Widgets/CamerasLabels.cs
 LongoMatch.Drawing/Widgets/TimelineLabels.cs
