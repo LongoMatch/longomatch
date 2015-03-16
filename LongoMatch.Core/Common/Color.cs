@@ -24,38 +24,39 @@ namespace LongoMatch.Core.Common
 	[Serializable]
 	public class Color
 	{
-		public Color (byte r, byte g, byte b, byte a=byte.MaxValue)
+		public Color (byte r, byte g, byte b, byte a = byte.MaxValue)
 		{
 			R = r;
 			G = g;
 			B = b;
 			A = a;
 		}
-		
+
 		public byte R {
 			get;
 			set;
 		}
-		
+
 		public byte G {
 			get;
 			set;
 		}
-		
+
 		public byte B {
 			get;
 			set;
 		}
-		
+
 		public byte A {
 			get;
 			set;
 		}
-		
-		public Color Copy () {
+
+		public Color Copy ()
+		{
 			return new Color (R, G, B, A);
 		}
-		
+
 		public override bool Equals (object obj)
 		{
 			Color c = obj as Color;
@@ -64,28 +65,40 @@ namespace LongoMatch.Core.Common
 			}
 			return c.R == R && c.G == G && c.B == B && c.A == A;
 		}
-		
+
 		public override int GetHashCode ()
 		{
-			return (Int32)R<<24 | (Int32)G<<16 | (Int32)B<<8 | (Int32)A;
+			return (Int32)R << 24 | (Int32)G << 16 | (Int32)B << 8 | (Int32)A;
+		}
+
+		public string ToRGBString (bool with_alpha)
+		{
+			if (with_alpha) {
+				return string.Format ("#{0:X}{1:X}{2:X}{3:X}", R, G, B, A);
+			} else {
+				return string.Format ("#{0:X}{1:X}{2:X}", R, G, B);
+			}
 		}
 
 		public override string ToString ()
 		{
-			return string.Format ("#{0:X}{1:X}{2:X}{3:X}", R, G, B, A);
-		}
-		
-		static public byte UShortToByte (ushort val) {
-			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
+			return ToRGBString (true);
 		}
 
-		static public ushort ByteToUShort (byte val) {
-			return (ushort) ((float)val / byte.MaxValue * ushort.MaxValue);
+		static public byte UShortToByte (ushort val)
+		{
+			return (byte)(((float)val) / ushort.MaxValue * byte.MaxValue);
 		}
-		
-		static public Color ColorFromUShort (ushort r, ushort g, ushort b, ushort a = ushort.MaxValue) {
+
+		static public ushort ByteToUShort (byte val)
+		{
+			return (ushort)((float)val / byte.MaxValue * ushort.MaxValue);
+		}
+
+		static public Color ColorFromUShort (ushort r, ushort g, ushort b, ushort a = ushort.MaxValue)
+		{
 			return new Color (UShortToByte (r), UShortToByte (g),
-			                  UShortToByte (b), UShortToByte (a));
+				UShortToByte (b), UShortToByte (a));
 		}
 
 		static public Color Parse (string colorHex)
@@ -112,7 +125,7 @@ namespace LongoMatch.Core.Common
 			}
 			return new Color (r, g, b, a);
 		}
-		
+
 		static public Color Black = new Color (0, 0, 0);
 		static public Color White = new Color (255, 255, 255);
 		static public Color Red = new Color (255, 0, 0);
@@ -120,7 +133,7 @@ namespace LongoMatch.Core.Common
 		static public Color Blue = new Color (0, 0, 255);
 		static public Color Grey1 = new Color (190, 190, 190);
 		static public Color Grey2 = new Color (32, 32, 32);
-		static public Color Green1 = new Color (99,192,56);
+		static public Color Green1 = new Color (99, 192, 56);
 		static public Color Red1 = new Color (255, 51, 0);
 		static public Color Blue1 = new Color (0, 153, 255);
 		static public Color Yellow = new Color (255, 255, 0);
@@ -128,9 +141,11 @@ namespace LongoMatch.Core.Common
 	}
 
 
-	public class YCbCrColor {
+	public class YCbCrColor
+	{
 
-		public YCbCrColor (byte y, byte cb, byte cr) {
+		public YCbCrColor (byte y, byte cb, byte cr)
+		{
 			Y = y;
 			Cb = cb;
 			Cr = cr;
@@ -151,16 +166,18 @@ namespace LongoMatch.Core.Common
 			set;
 		}
 
-		public static YCbCrColor YCbCrFromColor (Color c) {
+		public static YCbCrColor YCbCrFromColor (Color c)
+		{
 			byte Y, Cb, Cr;
 
-			Y = (byte) (16 + 0.257 * c.R + 0.504 * c.G + 0.098 * c.B);
-			Cb = (byte) (128 - 0.148 * c.R - 0.291 * c.G + 0.439 * c.B);
-			Cr = (byte) (128 + 0.439 * c.R - 0.396 * c.G - 0.071 * c.B);
+			Y = (byte)(16 + 0.257 * c.R + 0.504 * c.G + 0.098 * c.B);
+			Cb = (byte)(128 - 0.148 * c.R - 0.291 * c.G + 0.439 * c.B);
+			Cr = (byte)(128 + 0.439 * c.R - 0.396 * c.G - 0.071 * c.B);
 			return new YCbCrColor (Y, Cb, Cr);
 		}
 
-		public Color RGBColor () {
+		public Color RGBColor ()
+		{
 			double r, g, b;
 
 			r = (1.164 * (Y - 16) + 1.596 * (Cr - 128));
@@ -168,9 +185,9 @@ namespace LongoMatch.Core.Common
 			b = (1.164 * (Y - 16) + 2.017 * (Cb - 128));
 
 			return new Color (
-				(byte) Math.Max(0, Math.Min (r, 255)),
-				(byte) Math.Max(0, Math.Min (g, 255)),
-				(byte) Math.Max(0, Math.Min (b, 255)));
+				(byte)Math.Max (0, Math.Min (r, 255)),
+				(byte)Math.Max (0, Math.Min (g, 255)),
+				(byte)Math.Max (0, Math.Min (b, 255)));
 		}
 	}
 }

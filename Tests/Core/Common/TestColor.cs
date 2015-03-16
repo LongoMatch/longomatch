@@ -21,10 +21,10 @@ using NUnit.Framework;
 
 namespace Tests.Core.Common
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestColor
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			Color c = new Color (255, 10, 255, 10);
@@ -36,8 +36,8 @@ namespace Tests.Core.Common
 			YCbCrColor yc = new YCbCrColor (2, 3, 4);
 			Utils.CheckSerialization (yc);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestParse ()
 		{
 			Color c;
@@ -60,8 +60,20 @@ namespace Tests.Core.Common
 			Assert.AreEqual (c.B, 35);
 			Assert.AreEqual (c.A, 170);
 		}
-		
-		[Test()]
+
+		[Test ()]
+		public void TestToString ()
+		{
+			Color c = Color.Parse ("#af1023aa");
+
+			String s = c.ToString ();
+			Assert.AreEqual (s, "#AF1023AA");
+
+			s = c.ToRGBString (false);
+			Assert.AreEqual (s, "#AF1023");
+		}
+
+		[Test ()]
 		public void TestCopy ()
 		{
 			Color c1 = new Color (100, 200, 240);
@@ -70,15 +82,15 @@ namespace Tests.Core.Common
 			Assert.AreEqual (c1, c2);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestEquals ()
 		{
 			Color c1 = new Color (100, 200, 240);
 			Color c2 = new Color (100, 200, 240);
 			Assert.AreEqual (c1, c2);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestYCbCr ()
 		{
 			Color c1 = new Color (100, 100, 100);
