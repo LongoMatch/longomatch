@@ -75,9 +75,13 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
 		public void TestSetDescription ()
 		{
+			ProjectDescription pd = new ProjectDescription ();
+			Project p = new Project ();
+			p.Description = pd;
+			Assert.IsNotNull (pd.ID);
+			Assert.AreEqual (p.ID, pd.ProjectID);
 		}
 
 		[Test ()]

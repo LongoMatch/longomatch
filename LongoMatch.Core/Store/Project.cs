@@ -46,7 +46,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class Project : IComparable, IIDObject
+	public class Project : IComparable, IStorable
 	{
 		ProjectDescription description;
 		SubstitutionEventType subsType;
@@ -86,7 +86,7 @@ namespace LongoMatch.Core.Store
 			}
 			set {
 				if (value != null) {
-					value.ID = ID;
+					value.ProjectID = ID;
 				}
 				description = value;
 			}

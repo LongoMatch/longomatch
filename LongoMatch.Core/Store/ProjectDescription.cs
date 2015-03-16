@@ -27,12 +27,13 @@ namespace LongoMatch.Core.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
-	public class ProjectDescription :  IComparable, IIDObject
+	public class ProjectDescription :  IComparable, IStorable
 	{
 		DateTime matchDate, lastModified;
 
 		public ProjectDescription ()
 		{
+			ID = Guid.NewGuid ();
 			MatchDate = LastModified = DateTime.Now;
 		}
 
@@ -40,6 +41,11 @@ namespace LongoMatch.Core.Store
 		/// Unique ID of the parent project
 		/// </summary>
 		public Guid ID {
+			get;
+			set;
+		}
+
+		public Guid ProjectID {
 			get;
 			set;
 		}
