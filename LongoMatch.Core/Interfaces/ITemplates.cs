@@ -19,34 +19,52 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-	
+
 namespace LongoMatch.Core.Interfaces
 {
 	public interface ITemplate: IStorable
 	{
-		string Name {get; set;}
+		string Name { get; set; }
 	}
 
 	public interface ITemplateProvider
 	{
-		List<string> TemplatesNames {get;}
-		bool Exists(string name);
+		void CheckDefaultTemplate ();
+
+		List<string> TemplatesNames { get; }
+
+		bool Exists (string name);
+
 		void Copy (string orig, string copy);
+
 		void Delete (string templateName);
-		void Create (string templateName, params object [] list);
+
+		void Create (string templateName, params object[] list);
 	}
-	
+
 	public interface ITemplateProvider<T>: ITemplateProvider where T: ITemplate
 	{
-		List<T> Templates {get;}
+		List<T> Templates { get; }
+
 		T Load (string name);
+
 		T LoadFile (string filename);
-		void Save (T template);
-		void Update (T template);
+
+		void Save (ITemplate template);
+
+		void Update (ITemplate template);
+
 		void Register (T template);
 	}
-	
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard> {}
-	public interface ITeamTemplatesProvider: ITemplateProvider<Team> {}
+
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard>
+	{
+
+	}
+
+	public interface ITeamTemplatesProvider: ITemplateProvider<Team>
+	{
+
+	}
 }
 

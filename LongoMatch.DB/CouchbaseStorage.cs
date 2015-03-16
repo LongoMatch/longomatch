@@ -31,7 +31,7 @@ namespace LongoMatch.DB
 		public CouchbaseStorage (string databaseDir, string databaseName)
 		{
 			Manager manager = new Manager (new System.IO.DirectoryInfo (databaseDir),
-				ManagerOptions.Default);
+				                  ManagerOptions.Default);
 			db = manager.GetDatabase (databaseName);
 		}
 
@@ -40,6 +40,12 @@ namespace LongoMatch.DB
 				return db;
 			}
 		}
+
+		public object Retrieve (Type type, Guid id)
+		{
+			return DocumentsSerializer.LoadObject (type, id, db);
+		}
+
 		#region IStorage implementation
 
 		public List<T> RetrieveAll<T> () where T : IStorable
@@ -49,8 +55,7 @@ namespace LongoMatch.DB
 
 		public T Retrieve<T> (Guid id) where T : IStorable
 		{
-			Document doc = db.GetExistingDocument (id.ToString());
-			return DocumentsSerializer.DeserializeObject<T> (db, doc); 
+			return (T)Retrieve (typeof(T), id);
 		}
 
 		public List<T> Retrieve<T> (Dictionary<string, object> filter) where T : IStorable
@@ -60,19 +65,7 @@ namespace LongoMatch.DB
 
 		public void Store<T> (T t) where T : IStorable
 		{
-			Document doc = db.GetDocument (t.ID.ToString ());
-			doc.Update((UnsavedRevision newRevision) => 
-				{
-					JObject jo = DocumentsSerializer.SerializeObject (t, newRevision, null);
-					IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>>();
-					/* SetProperties sets a new properties dictionary, removing the attachments we
-					 * added in the serialization */
-					if (newRevision.Properties.ContainsKey ("_attachments")) {
-						props["_attachments"] = newRevision.Properties["_attachments"];
-					}
-					newRevision.SetProperties (props);
-					return true;
-				});
+			DocumentsSerializer.SaveObject (t, db);
 		}
 
 		public void Delete<T> (T t) where T : IStorable

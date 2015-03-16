@@ -29,13 +29,22 @@ using NUnit.Framework;
 
 namespace Tests.DB
 {
-
-	class StorableImageTest : IStorable 
+	class StorableContainerTest: IStorable
 	{
 		public Guid ID { get; set; }
+
+		public StorableImageTest Image { get; set; }
+	}
+
+	class StorableImageTest : IStorable
+	{
+		public Guid ID { get; set; }
+
 		public Image Image1 { get; set; }
+
 		public Image Image2 { get; set; }
-		public List<Image> Images { get; set;}
+
+		public List<Image> Images { get; set; }
 	}
 
 	[TestFixture ()]
@@ -45,19 +54,22 @@ namespace Tests.DB
 		CouchbaseStorage storage;
 
 		[TestFixtureSetUp]
-		public void InitDB () {
+		public void InitDB ()
+		{
 			string dbPath = Path.Combine (Path.GetTempPath (), "TestDB");
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
 		}
 
 		[TestFixtureTearDown]
-		public void DeleteDB () {
+		public void DeleteDB ()
+		{
 			Directory.Delete (db.Manager.Directory, true);
 		}
 
 		[TearDown]
-		public void CleanDB () {
+		public void CleanDB ()
+		{
 			foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
 				db.GetDocument (d.DocumentId).Delete ();
 			}
@@ -70,22 +82,23 @@ namespace Tests.DB
 				ID = Guid.NewGuid (),
 			};
 			Document doc = db.CreateDocument ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), null);
+			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), db, null);
 			Assert.AreEqual (t.ID, jo.Value<Guid> ("ID"));
 			Assert.AreEqual ("StorableImageTest", jo.Value<string> ("DocType"));
 		}
 
-		[Test()]
-		public void TestSerializeImages () {
+		[Test ()]
+		public void TestSerializeImages ()
+		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
 				Image1 = img,
 				Image2 = img,
-				ID = Guid.NewGuid(),
+				ID = Guid.NewGuid (),
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, rev, null);
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, db, null);
 			Assert.IsNotNull (jo ["ID"]);
 			Assert.AreEqual ("attachment::Image1_1", jo ["Image1"].Value<string> ());
 			Assert.AreEqual ("attachment::Image2_1", jo ["Image2"].Value<string> ());
@@ -96,34 +109,36 @@ namespace Tests.DB
 			}
 		}
 
-		[Test()]
-		public void TestSerializeImagesList () {
+		[Test ()]
+		public void TestSerializeImagesList ()
+		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
-				Images = new List<Image> {img, img, img},
-				ID = Guid.NewGuid(),
+				Images = new List<Image> { img, img, img },
+				ID = Guid.NewGuid (),
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, rev, null);
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, db, null);
 			int i = 0;
 			foreach (string name in rev.AttachmentNames) {
 				i++;
 				Assert.AreEqual ("Images_" + i, name);
 			}
 			Assert.AreEqual (3, i);
-			Assert.AreEqual ("attachment::Images_1", jo ["Images"][0].Value<string>());
-			Assert.AreEqual ("attachment::Images_2", jo ["Images"][1].Value<string>());
-			Assert.AreEqual ("attachment::Images_3", jo ["Images"][2].Value<string>());
+			Assert.AreEqual ("attachment::Images_1", jo ["Images"] [0].Value<string> ());
+			Assert.AreEqual ("attachment::Images_2", jo ["Images"] [1].Value<string> ());
+			Assert.AreEqual ("attachment::Images_3", jo ["Images"] [2].Value<string> ());
 		}
 
-		[Test()]
-		public void TestDeserializeImages () {
+		[Test ()]
+		public void TestDeserializeImages ()
+		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
 				Image1 = img,
 				Image2 = img,
-				ID = Guid.NewGuid(),
+				ID = Guid.NewGuid (),
 			};
 			storage.Store (t);
 			var test2 = storage.Retrieve<StorableImageTest> (t.ID);
@@ -134,12 +149,50 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestSerializeStorableByReference ()
+		{
+			StorableImageTest img = new StorableImageTest {
+				ID = Guid.NewGuid (),
+				Image1 = Utils.LoadImageFromFile (),
+			};
+			StorableContainerTest cont = new StorableContainerTest {
+				ID = Guid.NewGuid (),
+				Image = img,
+			};
+			Document doc = db.CreateDocument ();
+			UnsavedRevision rev = doc.CreateRevision ();
+			JObject jo = DocumentsSerializer.SerializeObject (cont, rev, db, null);
+			Assert.AreEqual (img.ID, jo ["Image"].Value<Guid> ());
+			Assert.AreEqual (1, db.DocumentCount);
+			Assert.IsNotNull (storage.Retrieve<StorableImageTest> (img.ID));
+			rev.Save ();
+			Assert.AreEqual (2, db.DocumentCount);
+		}
+
+		[Test ()]
+		public void TestDeserializeStorableByReference ()
+		{
+			StorableImageTest img = new StorableImageTest {
+				ID = Guid.NewGuid (),
+				Image1 = Utils.LoadImageFromFile (),
+			};
+			StorableContainerTest cont = new StorableContainerTest {
+				ID = Guid.NewGuid (),
+				Image = img,
+			};
+			storage.Store (cont);
+			var cont2 = storage.Retrieve <StorableContainerTest> (cont.ID);
+			Assert.IsNotNull (cont2.Image);
+			Assert.AreEqual (img.ID, cont2.Image.ID);
+		}
+
+		[Test ()]
 		public void TestSaveDashboard ()
 		{
 			Dashboard dashboard = Dashboard.DefaultTemplate (10);
 			storage.Store (dashboard);
 			Assert.AreEqual (1, db.DocumentCount);
-			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString()));
+			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 		}
 
 		[Test ()]
@@ -147,7 +200,7 @@ namespace Tests.DB
 		{
 			Dashboard dashboard = Dashboard.DefaultTemplate (10);
 			dashboard.Image = dashboard.GoalBackground =
-				dashboard.HalfFieldBackground = dashboard.FieldBackground = Utils.LoadImageFromFile();
+				dashboard.HalfFieldBackground = dashboard.FieldBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -171,7 +224,7 @@ namespace Tests.DB
 			};
 			storage.Store (player);
 			Assert.AreEqual (1, db.DocumentCount);
-			Assert.IsNotNull (db.GetExistingDocument (player.ID.ToString()));
+			Assert.IsNotNull (db.GetExistingDocument (player.ID.ToString ()));
 		}
 
 		[Test ()]
@@ -188,6 +241,28 @@ namespace Tests.DB
 			Assert.AreEqual (player1.ID, player2.ID);
 			Assert.AreEqual (player1.ToString (), player2.ToString ());
 			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
+		}
+
+		[Test ()]
+		public void TestSaveTeam ()
+		{
+			Team team = Team.DefaultTemplate (10);
+			storage.Store<Team> (team);
+			Assert.AreEqual (11, db.DocumentCount);
+		}
+
+		[Test ()]
+		public void TestLoadTeam ()
+		{
+			Team team = Team.DefaultTemplate (10);
+			storage.Store<Team> (team);
+			Team team2 = storage.Retrieve<Team> (team.ID);
+			Assert.AreEqual (team.ID, team2.ID);
+			Assert.AreEqual (team.List.Count, team2.List.Count);
+
+			for (int i = 0; i < team.List.Count; i++) {
+				Assert.AreEqual (team.List [i].ID, team2.List [i].ID);
+			}
 		}
 	}
 }

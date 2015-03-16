@@ -27,11 +27,43 @@ using Newtonsoft.Json.Converters;
 using System.Globalization;
 using LongoMatch.Core.Common;
 using System.Reflection;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
 	public static class DocumentsSerializer
 	{
+
+		public static void SaveObject (IStorable obj, Database db, JsonSerializer serializer = null)
+		{
+			List<Type> localStorables = new List<Type> ();
+			if (obj is Project) {
+				localStorables.Add (typeof(Team));
+				localStorables.Add (typeof(Dashboard));
+				localStorables.Add (typeof(Player));
+			}
+
+			Document doc = db.GetDocument (obj.ID.ToString ());
+			doc.Update ((UnsavedRevision rev) => {
+				JObject jo = SerializeObject (obj, rev, db, localStorables, serializer);
+				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
+				/* SetProperties sets a new properties dictionary, removing the attachments we
+					 * added in the serialization */
+				if (rev.Properties.ContainsKey ("_attachments")) {
+					props ["_attachments"] = rev.Properties ["_attachments"];
+				}
+				rev.SetProperties (props);
+				return true;
+			});
+		}
+
+		public static object LoadObject (Type objType, Guid id, Database db, JsonSerializer serializer = null)
+		{
+			Document doc = db.GetExistingDocument (id.ToString ());
+			return DeserializeObject (objType, doc, db, serializer);
+		}
+
 		/// <summary>
 		/// Serializes an object into a <c>JObject</c>.
 		/// </summary>
@@ -40,11 +72,15 @@ namespace LongoMatch.DB
 		/// <param name="rev">The document revision to serialize.</param>
 		/// <param name="localStorables">A list of <see cref="LongoMatch.Core.Interfaces.IStorable"/>
 		/// types that should be serialized as local referencies instead of by document ID.</param>
-		public static JObject SerializeObject (IStorable obj, Revision rev, List<Type> localStorables)
+		internal static JObject SerializeObject (IStorable obj, Revision rev, Database db,
+		                                         List<Type> localStorables, JsonSerializer serializer = null)
 		{
-			JObject jo = JObject.FromObject (obj,
-				GetSerializer (obj.GetType (), null, rev, localStorables));
-			jo["DocType"] = obj.GetType ().Name;
+			if (serializer == null) {
+				serializer = GetSerializer (obj.GetType (), rev, db, localStorables);
+			}
+
+			JObject jo = JObject.FromObject (obj, serializer);
+			jo ["DocType"] = obj.GetType ().Name;
 			return jo;
 		}
 
@@ -56,16 +92,16 @@ namespace LongoMatch.DB
 		/// <param name="doc">The document to deserialize.</param>
 		/// <param name = "serializer">The serializer to use when deserializing the object</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T DeserializeObject<T> (Database db, Document doc, JsonSerializer serializer = null)
+		internal static object DeserializeObject (Type type, Document doc, Database db, JsonSerializer serializer = null)
 		{
 			JObject jo = JObject.FromObject (doc.Properties);
 			if (serializer == null) {
-				serializer = GetSerializer (typeof(T), db, doc.CurrentRevision, null);
+				serializer = GetSerializer (type, doc.CurrentRevision, db, null);
 			}
-			return jo.ToObject<T> (serializer);
+			return jo.ToObject (type, serializer);
 		}
 
-		static JsonSerializer GetSerializer (Type serType, Database db, Revision rev, List<Type> localTypes)
+		static JsonSerializer GetSerializer (Type serType, Revision rev, Database db, List<Type> localTypes)
 		{
 			if (localTypes == null) {
 				localTypes = new List<Type> ();
@@ -77,7 +113,7 @@ namespace LongoMatch.DB
 			settings.TypeNameHandling = TypeNameHandling.Objects;
 			settings.Converters.Add (new ImageConverter (rev));
 			settings.Converters.Add (new VersionConverter ());
-			//settings.Converters.Add (new DocumentsIDConverter (localTypes));
+			settings.Converters.Add (new StorablesConverter (db, localTypes));
 			settings.Converters.Add (new LongoMatchConverter (false));
 			//settings.ReferenceResolver = new IDReferenceResolver (db);
 			return JsonSerializer.Create (settings);
@@ -90,9 +126,15 @@ namespace LongoMatch.DB
 		int _references;
 		readonly Dictionary<string, object> _idtoobjects;
 		readonly Dictionary<object, string> _objectstoid;
+		Database _db;
+		Type _parent;
+		Type[] _localRefType;
 
-		public IdReferenceResolver ()
+		public IdReferenceResolver (Database db, Type parent, Type[] localRefTypes)
 		{
+			_db = db;
+			_parent = parent;
+			_localRefType = localRefTypes;
 			_references = 0;
 			_idtoobjects = new Dictionary<string, object> ();
 			_objectstoid = new Dictionary<object, string> ();
@@ -102,14 +144,18 @@ namespace LongoMatch.DB
 		{
 			object p;
 			_idtoobjects.TryGetValue (reference, out p);
+
+			if (p == null) {
+				//DocumentsSerializer.DeserializeObject ( Serializer.
+			}
 			return p;
 		}
 
 		public string GetReference (object context, object value)
 		{
 			string referenceStr;
-			if (value is IIDObject) {
-				IIDObject p = (IIDObject)value;
+			if (value is IStorable) {
+				IStorable p = value as IStorable;
 				referenceStr = p.ID.ToString ();
 			} else {
 				if (!_objectstoid.TryGetValue (value, out referenceStr)) {
@@ -124,8 +170,10 @@ namespace LongoMatch.DB
 
 		public bool IsReferenced (object context, object value)
 		{
-			string reference;
-			return _objectstoid.TryGetValue (value, out reference);
+			if (value is IStorable) {
+				return true;
+			}
+			return _objectstoid.ContainsKey (value);
 		}
 
 		public void AddReference (object context, string reference, object value)
@@ -154,7 +202,8 @@ namespace LongoMatch.DB
 			attachmentNamesCount = new Dictionary<string, int> ();
 		}
 
-		string GetAttachmentName (JsonWriter writer) {
+		string GetAttachmentName (JsonWriter writer)
+		{
 			string propertyName;
 			if (writer.WriteState == WriteState.Array) {
 				propertyName = ((writer as JTokenWriter).Token.Last as JProperty).Name;
@@ -164,7 +213,7 @@ namespace LongoMatch.DB
 			if (!attachmentNamesCount.ContainsKey (propertyName)) {
 				attachmentNamesCount [propertyName] = 0;
 			}
-			attachmentNamesCount [propertyName] ++;
+			attachmentNamesCount [propertyName]++;
 			return string.Format ("{0}_{1}", propertyName, attachmentNamesCount [propertyName]);
 		}
 
@@ -209,34 +258,39 @@ namespace LongoMatch.DB
 	/// Serialize objects matching any of the types lists passed in the constructor
 	/// using their object ID.
 	/// </summary>
-	class DocumentsIDConverter : JsonConverter
+	class StorablesConverter : JsonConverter
 	{
-		Type[] refTypes;
+		List<Type> localTypes;
+		Database db;
 
-		public DocumentsIDConverter (Type[] refTypes)
+		public StorablesConverter (Database db, List<Type> localTypes)
 		{
-			this.refTypes = refTypes;
-			if (this.refTypes == null) {
-				this.refTypes = new Type[0] { };
+			this.db = db;
+			this.localTypes = localTypes;
+			if (this.localTypes == null) {
+				this.localTypes = new List<Type> ();
 			}
 		}
 
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			writer.WriteValue ((value as IIDObject).ID);
+			IStorable storable = value as IStorable;
+			writer.WriteValue (storable.ID);
+			DocumentsSerializer.SaveObject (storable, db);
 		}
 
 		public override object ReadJson (JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			throw new NotImplementedException ();
+			Guid id = Guid.Parse (reader.Value as string);
+			return DocumentsSerializer.LoadObject (objectType, id, db);
 		}
 
 		public override bool CanConvert (Type objectType)
 		{
-			if (refTypes == null) {
+			if (!typeof(IStorable).IsAssignableFrom (objectType)) {
 				return false;
 			}
-			return refTypes.Contains (objectType);
+			return !localTypes.Contains (objectType);
 		}
 	}
 }
