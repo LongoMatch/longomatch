@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Interfaces
 		List<T> RetrieveAll<T>() where T : IStorable;
 
 		/// <summary>
-		/// Retrieve on object with the specified id.
+		/// Retrieve an object with the specified id.
 		/// </summary>
 		/// <param name="id">The object unique identifier.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
