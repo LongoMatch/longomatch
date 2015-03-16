@@ -50,11 +50,11 @@ namespace LongoMatch.Plugins.Stats
 			homeLabel.Text = HomeName;
 			awayLabel.Text = AwayName;
 			
-			alltagger.LoadStats (stats, Team.BOTH);
+			alltagger.LoadStats (stats, TeamType.BOTH);
 			
-			hometagger.LoadStats (stats, Team.LOCAL);
+			hometagger.LoadStats (stats, TeamType.LOCAL);
 			    
-			awaytagger.LoadStats (stats, Team.VISITOR);
+			awaytagger.LoadStats (stats, TeamType.VISITOR);
 			
 			foreach (Widget child in vbox1.AllChildren) {
 				if (child is SubCategoryViewer || child is HSeparator)

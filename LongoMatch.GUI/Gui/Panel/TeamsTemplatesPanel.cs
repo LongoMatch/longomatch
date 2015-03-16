@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Panel
 		public event BackEventHandle BackEvent;
 
 		ListStore teams;
-		TeamTemplate loadedTeam;
+		Team loadedTeam;
 		ITeamTemplatesProvider provider;
 
 		public TeamsTemplatesPanel ()
@@ -122,7 +122,7 @@ namespace LongoMatch.Gui.Panel
 			bool first = true;
 			
 			teams.Clear ();
-			foreach (TeamTemplate template in provider.Templates) {
+			foreach (Team template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
 				
@@ -145,7 +145,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
-		bool SaveTemplate (TeamTemplate template)
+		bool SaveTemplate (Team template)
 		{
 			try {
 				provider.Update (template);
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadTeam (TeamTemplate team)
+		void LoadTeam (Team team)
 		{
 			PromptSave ();
 			
@@ -236,7 +236,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			TeamTemplate selected;
+			Team selected;
 			TreeIter iter;
 
 			teamseditortreeview.Selection.GetSelected (out iter);
@@ -312,8 +312,8 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (dialog.SelectedTemplate, dialog.Text);
 				} else {
-					TeamTemplate team;
-					team = TeamTemplate.DefaultTemplate (dialog.Count);
+					Team team;
+					team = Team.DefaultTemplate (dialog.Count);
 					team.TeamName = dialog.Text;
 					team.Name = dialog.Text;
 					if (!SaveTemplate (team)) {

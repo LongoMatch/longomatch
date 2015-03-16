@@ -85,15 +85,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
 		{
-			Team team;
+			TeamType team;
 			Color color;
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
 			team = Project.EventTaggedTeam (Play);
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				color = Project.LocalTeamTemplate.Color;
-			} else if (team == Team.VISITOR) {
+			} else if (team == TeamType.VISITOR) {
 				color = Project.VisitorTeamTemplate.Color;
 			} else {
 				color = Config.Style.PaletteWidgets;

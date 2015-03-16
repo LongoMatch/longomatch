@@ -125,7 +125,7 @@ namespace LongoMatch.Services
 			filter.Update ();
 		}
 
-		void HandlePlayerSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		void HandlePlayerSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
 			if (openedProject != null) {
 				TimelineEvent evt;
@@ -285,7 +285,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void OnNewTag (EventType evType, List<Player> players, Team team, List<Tag> tags,
+		public void OnNewTag (EventType evType, List<Player> players, TeamType team, List<Tag> tags,
 		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			if (player == null || openedProject == null)

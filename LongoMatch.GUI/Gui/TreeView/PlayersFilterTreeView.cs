@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlayersFilterTreeView: FilterTreeViewBase
 	{
-		TeamTemplate local, visitor;
+		Team local, visitor;
 		Player localTeam, visitorTeam;
 		TreeIter localIter, visitorIter;
 		

@@ -30,7 +30,7 @@ namespace LongoMatch.Core.Store
 		public Timer ()
 		{
 			Nodes = new List<TimeNode> ();
-			Team = Team.NONE;
+			Team = TeamType.NONE;
 		}
 
 		public string Name {
@@ -43,7 +43,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public Team Team {
+		public TeamType Team {
 			get;
 			set;
 		}

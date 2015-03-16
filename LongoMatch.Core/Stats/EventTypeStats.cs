@@ -42,8 +42,8 @@ namespace LongoMatch.Core.Stats
 		public void Update ()
 		{
 			events = project.EventsByType (eventType).Where (filter.IsVisible).ToList ();
-			homeEvents = events.Where (e => project.EventTaggedTeam (e) == Team.LOCAL).ToList ();
-			awayEvents = events.Where (e => project.EventTaggedTeam (e) == Team.VISITOR).ToList ();
+			homeEvents = events.Where (e => project.EventTaggedTeam (e) == TeamType.LOCAL).ToList ();
+			awayEvents = events.Where (e => project.EventTaggedTeam (e) == TeamType.VISITOR).ToList ();
 			TotalCount = events.Count;
 			LocalTeamCount = homeEvents.Count;
 			VisitorTeamCount = awayEvents.Count;
@@ -77,13 +77,13 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 
-		public bool HasPositionTags (Team team)
+		public bool HasPositionTags (TeamType team)
 		{
 			List<TimelineEvent> evts = EventsForTeam (team);
 			return evts.Count (e => e.FieldPosition != null || e.HalfFieldPosition != null || e.GoalPosition != null) != 0; 
 		}
 
-		public List<Coordinates> GetFieldCoordinates (Team team, FieldPositionType pos)
+		public List<Coordinates> GetFieldCoordinates (TeamType team, FieldPositionType pos)
 		{
 			List<TimelineEvent> evts = EventsForTeam (team);
 			
@@ -97,15 +97,15 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 
-		List<TimelineEvent> EventsForTeam (Team team)
+		List<TimelineEvent> EventsForTeam (TeamType team)
 		{
 			List<TimelineEvent> evts;
 			
 			switch (team) {
-			case Team.LOCAL:
+			case TeamType.LOCAL:
 				evts = homeEvents;
 				break;
-			case Team.VISITOR:
+			case TeamType.VISITOR:
 				evts = awayEvents;
 				break;
 			default:

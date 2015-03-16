@@ -32,7 +32,7 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (timer);
 
 			timer.Name = "test";
-			timer.Team = LongoMatch.Core.Common.Team.LOCAL;
+			timer.Team = LongoMatch.Core.Common.TeamType.LOCAL;
 			Timer timer2 = Utils.SerializeDeserialize (timer);
 			Assert.AreEqual (timer.Name, timer2.Name);
 			Assert.AreEqual (timer.Nodes, timer2.Nodes);

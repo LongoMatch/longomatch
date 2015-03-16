@@ -83,10 +83,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void Update ()
 		{
 			if (homeFormation != null) {
-				UpdateTeam (HomePlayingPlayers, homeFormation, Team.LOCAL);
+				UpdateTeam (HomePlayingPlayers, homeFormation, TeamType.LOCAL);
 			}
 			if (awayFormation != null) {
-				UpdateTeam (AwayPlayingPlayers, awayFormation, Team.VISITOR);
+				UpdateTeam (AwayPlayingPlayers, awayFormation, TeamType.VISITOR);
 			}
 		}
 
@@ -95,7 +95,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		void UpdateTeam (List<PlayerObject> players, int[] formation, Team team)
+		void UpdateTeam (List<PlayerObject> players, int[] formation, TeamType team)
 		{
 			int index = 0, offsetX;
 			int width, colWidth;
@@ -103,7 +103,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			width = Width / NTeams;
 			colWidth = width / formation.Length;
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				color = Config.Style.HomeTeamColor;
 				offsetX = 0;
 			} else {
@@ -118,7 +118,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				if (players.Count == index)
 					break;
 
-				if (team == Team.LOCAL) {
+				if (team == TeamType.LOCAL) {
 					colX = offsetX + colWidth * col + colWidth / 2;
 				} else {
 					colX = offsetX - colWidth * col - colWidth / 2;
@@ -129,7 +129,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					double rowY;
 					PlayerObject po = players[index];
 
-					if (team == Team.LOCAL) {
+					if (team == TeamType.LOCAL) {
 						rowY = rowHeight * row + rowHeight / 2;
 					} else {
 						rowY = Height - (rowHeight * row + rowHeight / 2);

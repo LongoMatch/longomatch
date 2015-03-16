@@ -68,9 +68,9 @@ namespace LongoMatch.Plugins.Stats
 		
 		void UpdateGui () {
 			homelabel.Markup = String.Format ("{0} <span font_desc=\"40\">{1}</span>",
-			                                  project.LocalTeamTemplate.TeamName, project.GetScore (Team.LOCAL));
+			                                  project.LocalTeamTemplate.TeamName, project.GetScore (TeamType.LOCAL));
 			awaylabel.Markup = String.Format ("<span font_desc=\"40\">{0}</span> {1}",
-			                                  project.GetScore (Team.VISITOR), project.VisitorTeamTemplate.TeamName);
+			                                  project.GetScore (TeamType.VISITOR), project.VisitorTeamTemplate.TeamName);
 			GetMaxSize(out catsMaxSize, out subcatsMaxSize);
 			if (project.LocalTeamTemplate.Shield != null)
 				homeimage.Pixbuf = project.LocalTeamTemplate.Shield.Value;

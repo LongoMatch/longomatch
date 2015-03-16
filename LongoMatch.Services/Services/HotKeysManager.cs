@@ -39,7 +39,7 @@ namespace LongoMatch.Services
 		AnalysisEventButton pendingButton;
 		bool inPlayerTagging;
 		string playerNumber;
-		Team taggedTeam;
+		TeamType taggedTeam;
 		System.Threading.Timer timer;
 		const int TIMEOUT_MS = 1000;
 
@@ -58,7 +58,7 @@ namespace LongoMatch.Services
 			int playerNumber;
 			
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				TeamTemplate team = taggedTeam == Team.LOCAL ? openedProject.LocalTeamTemplate :
+				Team team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
 				Player player = team.List.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
@@ -192,7 +192,7 @@ namespace LongoMatch.Services
 					analysisWindow.ClickButton (pendingButton);
 				}
 				inPlayerTagging = true;
-				taggedTeam = action == KeyAction.LocalPlayer ? Team.LOCAL : Team.VISITOR;
+				taggedTeam = action == KeyAction.LocalPlayer ? TeamType.LOCAL : TeamType.VISITOR;
 				playerNumber = "";
 				analysisWindow.TagTeam (taggedTeam);
 				timer.Change (TIMEOUT_MS, 0);

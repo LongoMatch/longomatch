@@ -56,8 +56,8 @@ namespace LongoMatch.Core.Store
 			ID = System.Guid.NewGuid();
 			Timeline = new List<TimelineEvent>();
 			Dashboard = new Dashboard();
-			LocalTeamTemplate = new TeamTemplate();
-			VisitorTeamTemplate = new TeamTemplate();
+			LocalTeamTemplate = new Team();
+			VisitorTeamTemplate = new Team();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
 			Playlists = new List<Playlist> ();
@@ -111,7 +111,7 @@ namespace LongoMatch.Core.Store
 		/// Local team template
 		/// </value>
 		[JsonProperty(Order = -9)]
-		public TeamTemplate LocalTeamTemplate {
+		public Team LocalTeamTemplate {
 			get;
 			set;
 		}
@@ -120,7 +120,7 @@ namespace LongoMatch.Core.Store
 		/// Visitor team template
 		/// </value>
 		[JsonProperty(Order = -8)]
-		public TeamTemplate VisitorTeamTemplate {
+		public Team VisitorTeamTemplate {
 			get;
 			set;
 		}
@@ -218,8 +218,8 @@ namespace LongoMatch.Core.Store
 		}
 
 		public void UpdateScore () {
-			Description.LocalGoals = GetScore (Team.LOCAL);
-			Description.VisitorGoals = GetScore (Team.VISITOR);
+			Description.LocalGoals = GetScore (TeamType.LOCAL);
+			Description.VisitorGoals = GetScore (TeamType.VISITOR);
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
@@ -328,17 +328,17 @@ namespace LongoMatch.Core.Store
 			EventTypes = EventTypes.Where (e => e != null).ToList ();
 		}
 
-		public SubstitutionEvent SubsitutePlayer (TeamTemplate template, Player playerIn, Player playerOut,
+		public SubstitutionEvent SubsitutePlayer (Team template, Player playerIn, Player playerOut,
 		                                          SubstitutionReason reason, Time subsTime)
 		{
-			Team team;
+			TeamType team;
 			LineupEvent lineup;
 			SubstitutionEvent se;
 			
 			if (template == LocalTeamTemplate) {
-				team = Team.LOCAL;
+				team = TeamType.LOCAL;
 			} else {
-				team = Team.VISITOR;
+				team = TeamType.VISITOR;
 			}
 			lineup = Timeline.OfType<LineupEvent> ().FirstOrDefault ();
 			if (lineup == null) {
@@ -364,7 +364,7 @@ namespace LongoMatch.Core.Store
 		                         out List<Player> awayFieldPlayers,
 		                         out List<Player> awayBenchPlayers)
 		{
-			TeamTemplate homeTeam, awayTeam;
+			Team homeTeam, awayTeam;
 			List<Player> homeTeamPlayers, awayTeamPlayers;
 
 			homeTeamPlayers = Lineup.HomeStartingPlayers.Concat (Lineup.HomeBenchPlayers).ToList ();
@@ -373,7 +373,7 @@ namespace LongoMatch.Core.Store
 			foreach (SubstitutionEvent ev in Timeline.OfType<SubstitutionEvent> ().
 			         Where (e => e.EventTime <= currentTime)) {
 				if (ev.In != null && ev.Out != null) {
-					if (ev.Team == Team.LOCAL) {
+					if (ev.Team == TeamType.LOCAL) {
 						homeTeamPlayers.Swap (ev.In, ev.Out);
 					} else {
 						awayTeamPlayers.Swap (ev.In, ev.Out);
@@ -381,11 +381,11 @@ namespace LongoMatch.Core.Store
 				}
 			}
 
-			homeTeam = new TeamTemplate {
+			homeTeam = new Team {
 				Formation = LocalTeamTemplate.Formation,
 				List = homeTeamPlayers
 			};
-			awayTeam = new TeamTemplate {
+			awayTeam = new Team {
 				Formation = VisitorTeamTemplate.Formation,
 				List = awayTeamPlayers
 			};
@@ -430,30 +430,30 @@ namespace LongoMatch.Core.Store
 			return Timeline.Where(p => p.EventType.ID == evType.ID).ToList();
 		}
 
-		public int GetScore (Team team) {
+		public int GetScore (TeamType team) {
 			return Timeline.OfType<ScoreEvent>().Where (s => EventTaggedTeam (s) == team).Sum(s => s.Score.Points); 
 		}
 		
-		public Team EventTaggedTeam (TimelineEvent play) {
+		public TeamType EventTaggedTeam (TimelineEvent play) {
 			bool home=false, away=false;
 			
-			if (play.Team == Team.LOCAL || play.Team == Team.BOTH ||
+			if (play.Team == TeamType.LOCAL || play.Team == TeamType.BOTH ||
 			    play.Players.Count (p => LocalTeamTemplate.List.Contains (p)) > 0) {
 				home = true;
 			}
-			if (play.Team == Team.VISITOR || play.Team == Team.BOTH ||
+			if (play.Team == TeamType.VISITOR || play.Team == TeamType.BOTH ||
 			    play.Players.Count (p => VisitorTeamTemplate.List.Contains (p)) > 0) {
 				away = true;
 			}
 			
 			if (away && home) {
-				return Team.BOTH;
+				return TeamType.BOTH;
 			} else if (home) {
-				return Team.LOCAL;
+				return TeamType.LOCAL;
 			} else if (away) {
-				return Team.VISITOR;
+				return TeamType.VISITOR;
 			} else {
-				return Team.NONE;
+				return TeamType.NONE;
 			}
 		}
 		
@@ -473,10 +473,10 @@ namespace LongoMatch.Core.Store
 			Description.LastModified = DateTime.UtcNow;
 			Description.LocalName = LocalTeamTemplate.Name;
 			Description.LocalShield = LocalTeamTemplate.Shield;
-			Description.LocalGoals = GetScore (Team.LOCAL);
+			Description.LocalGoals = GetScore (TeamType.LOCAL);
 			Description.VisitorName = VisitorTeamTemplate.Name;
 			Description.VisitorShield = VisitorTeamTemplate.Shield;
-			Description.VisitorGoals = GetScore (Team.VISITOR);
+			Description.VisitorGoals = GetScore (TeamType.VISITOR);
 		}
 
 		public bool Equals(Project project) {

@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger.Select (player);
 		}
 		
-		public void TagTeam (Team team)
+		public void TagTeam (TeamType team)
 		{
 			teamtagger.Select (team);
 		}
@@ -332,7 +332,7 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList ();
 		}
 
-		void HandleNewTagEvent (EventType eventType, List<Player> players, Team team, List<Tag> tags,
+		void HandleNewTagEvent (EventType eventType, List<Player> players, TeamType team, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
@@ -344,7 +344,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitNewEvent (play);
 		}
 
-		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			Config.EventsBroker.EmitSubstitutionEvent (team, p1, p2, reason, time);

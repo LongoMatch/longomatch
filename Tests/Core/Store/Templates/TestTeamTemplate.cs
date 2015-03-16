@@ -30,7 +30,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestSerialization ()
 		{
-			TeamTemplate t = new TeamTemplate ();
+			Team t = new Team ();
 			
 			Utils.CheckSerialization (t);
 			
@@ -44,7 +44,7 @@ namespace Tests.Core.Templates
 			
 			Utils.CheckSerialization (t);
 			
-			TeamTemplate newt = Utils.SerializeDeserialize (t);
+			Team newt = Utils.SerializeDeserialize (t);
 			
 			Assert.AreEqual (t.ID, newt.ID);
 			Assert.AreEqual (t.Name, newt.Name);
@@ -60,7 +60,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestColor ()
 		{
-			TeamTemplate t = new TeamTemplate ();
+			Team t = new Team ();
 			Assert.AreEqual (t.Color, t.Colors [0]);
 			t.ActiveColor = -1;
 			Assert.AreEqual (t.Color, t.Colors [0]);
@@ -73,7 +73,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestPlayingPlayers ()
 		{
-			TeamTemplate t = new TeamTemplate ();
+			Team t = new Team ();
 			Player p1, p2, p3;
 			
 			t.Name = "test";
@@ -97,7 +97,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestCreateDefaultTemplate ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (10);
+			Team t = Team.DefaultTemplate (10);
 			
 			Assert.AreEqual (t.List.Count, 10);
 			t.AddDefaultItem (8);
@@ -107,7 +107,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestFormation ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (1);
+			Team t = Team.DefaultTemplate (1);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (t.Formation.Length, 4);
 			Assert.AreEqual (t.Formation [0], 1);
@@ -123,7 +123,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestBenchPlayers ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (15);
+			Team t = Team.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (5, t.BenchPlayersList.Count);
 			Assert.AreEqual (t.List [10], t.BenchPlayersList [0]);
@@ -135,7 +135,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestStartingPlayers ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (15);
+			Team t = Team.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (10, t.StartingPlayers);
 			Assert.AreEqual (10, t.StartingPlayersList.Count);
@@ -166,7 +166,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestRemovePlayers ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (15);
+			Team t = Team.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 
 			/* Removing a player from the starting list must be swapped
@@ -190,7 +190,7 @@ namespace Tests.Core.Templates
 		[Test ()]
 		public void TestResetPlayers ()
 		{
-			TeamTemplate t = TeamTemplate.DefaultTemplate (10);
+			Team t = Team.DefaultTemplate (10);
 			for (int i = 0; i < 5; i++) {
 				t.List [0].Playing = false;
 			}

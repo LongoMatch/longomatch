@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Dialog
 		SelectionCanvas incanvas, outcanvas;
 		PlayerObject inpo, outpo;
 		Player inPlayer, outPlayer, selectedPlayer;
-		TeamTemplate homeTeam, awayTeam;
+		Team homeTeam, awayTeam;
 		LineupEvent lineup;
 		SubstitutionEvent substitution;
 		const int PLAYER_SIZE = 100;
@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Dialog
 			tagger.SubstitutionMode = false;
 			tagger.ShowSubstitutionButtons = false;
 			tagger.SelectionMode = MultiSelectionMode.Single;
-			if (substitution.Team == Team.LOCAL) {
+			if (substitution.Team == TeamType.LOCAL) {
 				LoadTeams (project, hfp, hbp, null, null);
 			} else {
 				LoadTeams (project, afp, abp, null, null);
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 			List<Player> homeTeamPlayers, awayTeamPlayers;
 
 			homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
-			homeTeam = new TeamTemplate {
+			homeTeam = new Team {
 				Colors = project.LocalTeamTemplate.Colors,
 				ActiveColor = project.LocalTeamTemplate.ActiveColor,
 				ID = project.LocalTeamTemplate.ID,
@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			if (awayFieldPlayers != null) {
 				awayTeamPlayers = awayFieldPlayers.Concat (awayBenchPlayers).ToList ();
-				awayTeam = new TeamTemplate {
+				awayTeam = new Team {
 					Colors = project.VisitorTeamTemplate.Colors,
 					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
-		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
 			tagger.Substitute (p1, p2, team);
 			if (team.ID == homeTeam.ID) {

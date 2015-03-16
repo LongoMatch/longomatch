@@ -31,9 +31,9 @@ namespace LongoMatch.Core.Stats
 		{
 			this.timer = timer;
 			Name = timer.Name;
-			if (timer.Team == Team.LOCAL) {
+			if (timer.Team == TeamType.LOCAL) {
 				TeamImage = project.LocalTeamTemplate.Shield;
-			} else if (timer.Team == Team.VISITOR) {
+			} else if (timer.Team == TeamType.VISITOR) {
 				TeamImage = project.VisitorTeamTemplate.Shield;
 			}
 		}

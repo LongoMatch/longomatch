@@ -410,7 +410,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleNewTagEvent (EventType evntType, List<Player> players, Team team, List<Tag> tags,
+		void HandleNewTagEvent (EventType evntType, List<Player> players, TeamType team, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			/* Forward event until we have players integrted in the dashboard layout */

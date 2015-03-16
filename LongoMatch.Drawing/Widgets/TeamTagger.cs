@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Dispose ();
 		}
 
-		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
+		public void LoadTeams (Team homeTeam, Team awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget.ReDraw ();
@@ -112,7 +112,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public Team SelectedTeam {
+		public TeamType SelectedTeam {
 			get {
 				return tagger.SelectedTeam;
 			}
@@ -123,12 +123,12 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.ResetSelection ();
 		} 
 
-		public void Select (Team team)
+		public void Select (TeamType team)
 		{
 			tagger.Select (team);
 		}
 
-		public void Select (List<Player> players, Team team)
+		public void Select (List<Player> players, TeamType team)
 		{
 			tagger.Select (players, team);
 		}
@@ -138,7 +138,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Select (p);
 		}
 
-		public void Substitute (Player p1, Player p2, TeamTemplate team)
+		public void Substitute (Player p1, Player p2, Team team)
 		{
 			tagger.Substitute (p1, p2, team);
 		}
@@ -167,7 +167,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Height = widget.Height;
 		}
 
-		void HandlePlayersSubstitutionEvent (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
 			widget.ReDraw ();
 			if (PlayersSubstitutionEvent != null) {
@@ -182,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		void HandleTeamSelectionChangedEvent (Team team)
+		void HandleTeamSelectionChangedEvent (TeamType team)
 		{
 			if (TeamSelectionChangedEvent != null) {
 				TeamSelectionChangedEvent (team);

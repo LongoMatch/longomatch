@@ -36,7 +36,7 @@ namespace LongoMatch.Core.Handlers
 	/* An event has been created */
 	public delegate void EventCreatedHandler (TimelineEvent evt);
 	/* A new play needs to be create for a specific category at the current play time */
-	public delegate void NewEventHandler (EventType eventType,List<Player> players, Team team,
+	public delegate void NewEventHandler (EventType eventType,List<Player> players, TeamType team,
 	                                      List<Tag> tags,Time start,Time stop, Time EventTime,
 	                                      Score score, PenaltyCard card);
 	/* Add a new play to the current project */
@@ -114,9 +114,9 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayerPropertiesHandler (Player player);
 	public delegate void PlayersPropertiesHandler (List<Player> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (TeamTemplate team, Player p1, Player p2, SubstitutionReason reason, Time time);
+	public delegate void PlayersSubstitutionHandler (Team team, Player p1, Player p2, SubstitutionReason reason, Time time);
 	public delegate void PlayersSelectionChangedHandler (List<Player> players);
-	public delegate void TeamSelectionChangedHandler (Team team);
+	public delegate void TeamSelectionChangedHandler (TeamType team);
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);
 	public delegate void ProjectSelectedHandler (ProjectDescription project);

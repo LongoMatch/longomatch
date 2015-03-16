@@ -167,7 +167,7 @@ namespace LongoMatch.Gui.Dialog
 			play.Players = players.ToList (); 
 		}
 		
-		void HandleTeamSelectionChangedEvent (Team team)
+		void HandleTeamSelectionChangedEvent (TeamType team)
 		{
 			play.Team = team;
 		}

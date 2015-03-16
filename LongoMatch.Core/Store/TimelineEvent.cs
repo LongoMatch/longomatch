@@ -101,7 +101,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public Team Team {
+		public TeamType Team {
 			get;
 			set;
 		}

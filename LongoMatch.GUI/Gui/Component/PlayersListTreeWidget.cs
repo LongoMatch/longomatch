@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 			get;
 		}
 
-		public Team Team {
+		public TeamType Team {
 			set {
 				playerstreeview.Team = value;
 			}
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam(TeamTemplate template, List<TimelineEvent> plays) {
+		public void SetTeam(Team template, List<TimelineEvent> plays) {
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
 			
 			Log.Debug("Updating teams models with template:" + template);

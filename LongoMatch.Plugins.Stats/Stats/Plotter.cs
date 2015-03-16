@@ -140,7 +140,7 @@ namespace LongoMatch.Plugins.Stats
             return model;
 		}
 		
-		PlotModel GetPie (SubCategoryStat stats, Team team) {
+		PlotModel GetPie (SubCategoryStat stats, TeamType team) {
 			PlotModel model = new PlotModel ();
 			PieSeries ps = new PieSeries();
 			
@@ -157,9 +157,9 @@ namespace LongoMatch.Plugins.Stats
 			ps.InsideLabelPosition = 0.8;
 			ps.AngleSpan = 360;
 			ps.StartAngle = 0;
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				ps.Title = HomeName;
-			} else if (team == Team.VISITOR) {
+			} else if (team == TeamType.VISITOR) {
 				ps.Title = AwayName;
 			}
 			OxyColor text_color = OxyColor.FromArgb (LongoMatch.Config.Style.PaletteText.A,
@@ -173,14 +173,14 @@ namespace LongoMatch.Plugins.Stats
             return model;
 		}
 		
-		double GetCount (PercentualStat stats, Team team) {
+		double GetCount (PercentualStat stats, TeamType team) {
 			switch (team) {
-			case Team.NONE:
-			case Team.BOTH:
+			case TeamType.NONE:
+			case TeamType.BOTH:
 				return stats.TotalCount;
-			case Team.LOCAL:
+			case TeamType.LOCAL:
 				return stats.LocalTeamCount;
-			case Team.VISITOR:
+			case TeamType.VISITOR:
 				return stats.VisitorTeamCount;
 			}
 			return 0;
@@ -198,11 +198,11 @@ namespace LongoMatch.Plugins.Stats
 				break;
 			case GraphType.Pie:
 				if (ShowTeams) {
-					imageall.Pixbuf = Load (GetPie (stats, Team.BOTH), graphWidth / 3, HEIGHT);
-					imagehome.Pixbuf = Load (GetPie (stats, Team.LOCAL), graphWidth / 3, HEIGHT);
-					imageaway.Pixbuf = Load (GetPie (stats, Team.VISITOR), graphWidth / 3, HEIGHT);
+					imageall.Pixbuf = Load (GetPie (stats, TeamType.BOTH), graphWidth / 3, HEIGHT);
+					imagehome.Pixbuf = Load (GetPie (stats, TeamType.LOCAL), graphWidth / 3, HEIGHT);
+					imageaway.Pixbuf = Load (GetPie (stats, TeamType.VISITOR), graphWidth / 3, HEIGHT);
 				} else {
-					imageall.Pixbuf = Load (GetPie (stats, Team.BOTH), graphWidth, HEIGHT);
+					imageall.Pixbuf = Load (GetPie (stats, TeamType.BOTH), graphWidth, HEIGHT);
 				}
 				imagehome.Visible = ShowTeams;
 				imageaway.Visible = ShowTeams;

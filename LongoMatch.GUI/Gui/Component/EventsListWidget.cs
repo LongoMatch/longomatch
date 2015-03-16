@@ -31,8 +31,8 @@ namespace LongoMatch.Gui.Component
 		public EventsListWidget ()
 		{
 			this.Build ();
-			localPlayersList.Team = Team.LOCAL;
-			visitorPlayersList.Team = Team.VISITOR;
+			localPlayersList.Team = TeamType.LOCAL;
+			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;

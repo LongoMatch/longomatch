@@ -69,7 +69,8 @@ namespace LongoMatch.Core.Common
 		SortByCompetition = 4
 	}
 
-	public enum Team {
+	public enum TeamType
+	{
 		NONE = 0,
 		LOCAL = 1,
 		VISITOR = 2,

@@ -266,9 +266,9 @@ namespace LongoMatch.Drawing.Widgets
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
 				if (Project != null && t.BackgroundImage == null) {
-					if (t.Timer.Team == Team.LOCAL) {
+					if (t.Timer.Team == TeamType.LOCAL) {
 						to.TeamImage = Project.LocalTeamTemplate.Shield;
-					} else if (t.Timer.Team == Team.VISITOR) {
+					} else if (t.Timer.Team == TeamType.VISITOR) {
 						to.TeamImage = Project.VisitorTeamTemplate.Shield;
 					}
 				}
@@ -373,7 +373,7 @@ namespace LongoMatch.Drawing.Widgets
 				score = (button as ScoreButton).Score;
 			}
 			
-			NewTagEvent (button.EventType, null, Team.NONE, tags, start, stop, eventTime, score, card);
+			NewTagEvent (button.EventType, null, TeamType.NONE, tags, start, stop, eventTime, score, card);
 		}
 	}
 }

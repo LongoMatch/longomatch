@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void Load (List<TeamTemplate> teams)
+		public void Load (List<Team> teams)
 		{
 			Clear ();
 			pixrender = new CellRendererPixbuf ();
@@ -52,8 +52,8 @@ namespace LongoMatch.Gui.Component
 				PackStart (texrender, true);
 			}
 			
-			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(TeamTemplate));
-			foreach (TeamTemplate t in teams) {
+			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(Team));
+			foreach (Team t in teams) {
 				Pixbuf shield;
 				int size = StyleConf.NewTeamsIconSize;
 
@@ -70,12 +70,12 @@ namespace LongoMatch.Gui.Component
 		
 		} 
 
-		public TeamTemplate ActiveTeam {
+		public Team ActiveTeam {
 			get {
 				TreeIter iter;
 
 				GetActiveIter (out iter);
-				return store.GetValue (iter, 2) as TeamTemplate;
+				return store.GetValue (iter, 2) as Team;
 			}
 		}
 	}

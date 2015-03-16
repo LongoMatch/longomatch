@@ -236,10 +236,10 @@ namespace LongoMatch.Migration
 			LongoMatch.Core.Common.Serializer.Save (dashboard, outputPath);
 		}
 
-		public static LongoMatch.Core.Store.Templates.TeamTemplate ConvertTeamTemplate (TeamTemplate team,
+		public static LongoMatch.Core.Store.Templates.Team ConvertTeamTemplate (TeamTemplate team,
 		                                                                              Dictionary <Player, LongoMatch.Core.Store.Player> teamsDict)
 		{
-			var newteam = new LongoMatch.Core.Store.Templates.TeamTemplate ();
+			var newteam = new LongoMatch.Core.Store.Templates.Team ();
 			newteam.Name = team.Name;
 			newteam.TeamName = team.TeamName;
 			newteam.Shield = ConvertImage (team.Shield);
@@ -326,7 +326,7 @@ namespace LongoMatch.Migration
 				newplay.Rate = play.Rate;
 				newplay.Start = ConvertTime (play.Start);
 				newplay.Stop = ConvertTime (play.Stop);
-				newplay.Team = (LongoMatch.Core.Common.Team)play.Team;
+				newplay.Team = (LongoMatch.Core.Common.TeamType)play.Team;
 
 				newplay.EventType = eventTypesDict [play.Category];
 				foreach (Player player in play.Players.GetTagsValues()) {

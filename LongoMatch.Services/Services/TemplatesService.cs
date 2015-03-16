@@ -35,7 +35,7 @@ namespace LongoMatch.Services
 		public TemplatesService ()
 		{
 			dict = new Dictionary<Type, ITemplateProvider> ();
-			dict.Add (typeof(TeamTemplate),
+			dict.Add (typeof(Team),
 			          new TeamTemplatesProvider (Config.TeamsDir));
 			dict.Add (typeof(Dashboard), new CategoriesTemplatesProvider (Config.AnalysisDir));
 			CheckDefaultTemplates ();
@@ -56,7 +56,7 @@ namespace LongoMatch.Services
 
 		public ITeamTemplatesProvider TeamTemplateProvider {
 			get {
-				return (ITeamTemplatesProvider)dict [typeof(TeamTemplate)]; 
+				return (ITeamTemplatesProvider)dict [typeof(Team)]; 
 			}
 		}
 
@@ -246,7 +246,7 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class TeamTemplatesProvider: TemplatesProvider<TeamTemplate>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT)
 		{

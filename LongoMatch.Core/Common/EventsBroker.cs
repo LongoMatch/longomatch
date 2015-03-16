@@ -95,7 +95,7 @@ namespace LongoMatch.Core.Common
 		public event SeekEventHandler SeekEvent;
 		public event TogglePlayEventHandler TogglePlayEvent;
 
-		public void EmitNewTag (EventType eventType, List<Player> players = null, Team team = Team.NONE,
+		public void EmitNewTag (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
 		                        List<Tag> tags = null, Time start = null, Time stop = null,
 		                        Time eventTime = null, Score score = null, PenaltyCard card = null) {
 			if (NewTagEvent != null)
@@ -387,8 +387,8 @@ namespace LongoMatch.Core.Common
 		
 		public void EmitPressButton (DashboardButton button) {
 		}
-		
-		public void EmitSubstitutionEvent (TeamTemplate team, Player p1, Player p2,
+
+		public void EmitSubstitutionEvent (Team team, Player p1, Player p2,
 		                                   SubstitutionReason reason, Time time)
 		{
 			if (PlayerSubstitutionEvent != null) {

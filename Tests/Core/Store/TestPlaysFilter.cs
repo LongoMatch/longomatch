@@ -31,8 +31,8 @@ namespace Tests.Core.Store
 			TimelineEvent pl;
 			Project p = new Project ();
 			p.Dashboard = Dashboard.DefaultTemplate (10);
-			p.LocalTeamTemplate = TeamTemplate.DefaultTemplate (5);
-			p.VisitorTeamTemplate = TeamTemplate.DefaultTemplate (5);
+			p.LocalTeamTemplate = Team.DefaultTemplate (5);
+			p.VisitorTeamTemplate = Team.DefaultTemplate (5);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 			                              "aac", 320, 240, 1.3, null, "Test asset");
 			ProjectDescription pd = new ProjectDescription ();

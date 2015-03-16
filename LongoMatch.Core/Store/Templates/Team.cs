@@ -31,12 +31,12 @@ using System.IO;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class TeamTemplate: ITemplate, IDeserializationCallback
+	public class Team: ITemplate, IDeserializationCallback
 	{
-		private const int MAX_WIDTH=100;
-		private const int MAX_HEIGHT=100;
-		
-		public TeamTemplate ()
+		private const int MAX_WIDTH = 100;
+		private const int MAX_HEIGHT = 100;
+
+		public Team ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			if (Formation == null) {
@@ -52,20 +52,20 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			ActiveColor = 0;
 			Colors = new Color [2];
-			Colors[0] = Color.Blue1;
-			Colors[1] = Color.Red1;
+			Colors [0] = Color.Blue1;
+			Colors [1] = Color.Red1;
 		}
-		
+
 		public Guid ID {
 			get;
 			set;
 		}
-		
+
 		public List<Player> List {
 			get;
 			set;
 		}
-		
+
 		public String Name {
 			get;
 			set;
@@ -75,7 +75,7 @@ namespace LongoMatch.Core.Store.Templates
 			get;
 			set;
 		}
-		
+
 		public Image Shield {
 			get;
 			set;
@@ -98,33 +98,33 @@ namespace LongoMatch.Core.Store.Templates
 					return Colors [ActiveColor];
 				} else {
 					ActiveColor = 0;
-					return Colors[0];
+					return Colors [0];
 				}
 			}
 		}
-		
+
 		[JsonIgnore]
 		public int StartingPlayers {
 			get {
-				return Formation.Sum();
+				return Formation.Sum ();
 			}
-		} 
-		
+		}
+
 		public int[] Formation {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public string FormationStr {
 			set {
-				string[] elements = value.Split('-');
+				string[] elements = value.Split ('-');
 				int[] tactics = new int[elements.Length];
 				int index = 0;
 				foreach (string s in elements) {
 					try {
-						tactics[index] = int.Parse (s);
-						index ++;
+						tactics [index] = int.Parse (s);
+						index++;
 					} catch {
 						throw new FormatException ();
 					}
@@ -135,7 +135,7 @@ namespace LongoMatch.Core.Store.Templates
 				return String.Join ("-", Formation);
 			}
 		}
-		
+
 		[JsonIgnore]
 		public bool TemplateEditorMode {
 			set;
@@ -148,7 +148,7 @@ namespace LongoMatch.Core.Store.Templates
 				if (TemplateEditorMode) {
 					return List;
 				} else {
-					return List.Where(p=>p.Playing).Select(p=>p).ToList();
+					return List.Where (p => p.Playing).Select (p => p).ToList ();
 				}
 			}
 		}
@@ -207,7 +207,7 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		public void ResetPlayers()
+		public void ResetPlayers ()
 		{
 			foreach (Player p in List) {
 				p.Playing = true;
@@ -220,31 +220,39 @@ namespace LongoMatch.Core.Store.Templates
 				p.Color = Color;
 			}
 		}
-		
-		public Player AddDefaultItem (int i) {
+
+		public Player AddDefaultItem (int i)
+		{
 			Player p = new Player {
-				Name = "Player " + (i+1).ToString(),
-				Birthday = new DateTime(DateTime.Now.Year - 25, 6, 1),
+				Name = "Player " + (i + 1).ToString (),
+				Birthday = new DateTime (DateTime.Now.Year - 25, 6, 1),
 				Height = 1.80f,
 				Weight = 80,
-				Number = i+1,
+				Number = i + 1,
 				Position = "",
 				Photo = null,
-				Playing = true,};
+				Playing = true,
+			};
 			List.Insert (i, p);
 			return p;
 		}
 
-		public static TeamTemplate DefaultTemplate(int playersCount) {
-			TeamTemplate defaultTemplate = new TeamTemplate();
-			defaultTemplate.FillDefaultTemplate(playersCount);
+		public static Team DefaultTemplate (int playersCount)
+		{
+			Team defaultTemplate = new Team ();
+			defaultTemplate.FillDefaultTemplate (playersCount);
 			return defaultTemplate;
 		}
 
-		void FillDefaultTemplate(int playersCount) {
-			List.Clear();
-			for(int i=1; i<=playersCount; i++)
-				AddDefaultItem(i-1);
+		void FillDefaultTemplate (int playersCount)
+		{
+			List.Clear ();
+			for (int i = 1; i <= playersCount; i++)
+				AddDefaultItem (i - 1);
 		}
+	}
+
+	public class TeamTemplate: Team
+	{
 	}
 }

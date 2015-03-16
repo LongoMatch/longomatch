@@ -26,16 +26,16 @@ namespace LongoMatch.Core.Stats
 	public class TeamStats
 	{
 		Project project;
-		TeamTemplate template;
-		Team team;
+		Team template;
+		TeamType team;
 		EventsFilter filter;
 		
-		public TeamStats (Project project, EventsFilter filter, Team team)
+		public TeamStats (Project project, EventsFilter filter, TeamType team)
 		{
 			this.project = project;
 			this.filter = filter;
 			this.team = team;
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				this.template = project.LocalTeamTemplate;
 			} else {
 				this.template = project.VisitorTeamTemplate;

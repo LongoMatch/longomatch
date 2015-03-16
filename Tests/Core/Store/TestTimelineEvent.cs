@@ -35,7 +35,7 @@ namespace Tests.Core.Store
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Selected = true;
-			evt.Team = Team.LOCAL;
+			evt.Team = TeamType.LOCAL;
 			evt.FieldPosition = new Coordinates();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
 			evt.HalfFieldPosition = new Coordinates ();

@@ -42,7 +42,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
-		TeamTemplate homeTeam, awayTeam;
+		Team homeTeam, awayTeam;
 		Image background;
 		Dictionary<Player, PlayerObject> playerToPlayerObject;
 		List<PlayerObject> homePlayingPlayers, awayPlayingPlayers;
@@ -181,16 +181,16 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Team SelectedTeam {
+		public TeamType SelectedTeam {
 			get {
 				if (homeButton.Active && awayButton.Active) {
-					return Team.BOTH;
+					return TeamType.BOTH;
 				} else if (homeButton.Active) {
-					return Team.LOCAL;
+					return TeamType.LOCAL;
 				} else if (awayButton.Active) {
-					return Team.VISITOR;
+					return TeamType.VISITOR;
 				} else {
-					return Team.NONE;
+					return TeamType.NONE;
 				}
 			}
 		}
@@ -207,22 +207,22 @@ namespace LongoMatch.Drawing.CanvasObjects
 			field.Update ();
 		}
 		
-		public void Select (List<Player> players, Team team)
+		public void Select (List<Player> players, TeamType team)
 		{
 			ResetSelection ();
 			foreach (Player p in players) {
 				Select (p, true, false);
 			}
-			homeButton.Active = team == Team.BOTH || team == Team.LOCAL;
-			awayButton.Active = team == Team.BOTH || team == Team.VISITOR;
+			homeButton.Active = team == TeamType.BOTH || team == TeamType.LOCAL;
+			awayButton.Active = team == TeamType.BOTH || team == TeamType.VISITOR;
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (SelectedPlayers);
 			}
 		}
 
-		public void Select (Team team)
+		public void Select (TeamType team)
 		{
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				homeButton.Active = true;
 				awayButton.Active = false;
 			} else {
@@ -269,7 +269,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			awayButton.Active = false;
 		}
 
-		public void Substitute (Player p1, Player p2, TeamTemplate team)
+		public void Substitute (Player p1, Player p2, Team team)
 		{
 			if (team == homeTeam) {
 				Substitute (homePlayers.FirstOrDefault (p => p.Player == p1),
@@ -282,7 +282,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
+		public void LoadTeams (Team homeTeam, Team awayTeam, Image background)
 		{
 			int[] homeF = null, awayF = null;
 			int playerSize, colSize, border;
@@ -309,8 +309,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (homeTeam != null) {
 				homeTeam.UpdateColors ();
-				homePlayingPlayers = GetPlayers (homeTeam.StartingPlayersList, Team.LOCAL);
-				homeBenchPlayers = GetPlayers (homeTeam.BenchPlayersList, Team.LOCAL);
+				homePlayingPlayers = GetPlayers (homeTeam.StartingPlayersList, TeamType.LOCAL);
+				homeBenchPlayers = GetPlayers (homeTeam.BenchPlayersList, TeamType.LOCAL);
 				homePlayers.AddRange (homePlayingPlayers);
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
@@ -324,8 +324,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			if (awayTeam != null) {
 				awayTeam.UpdateColors ();
-				awayPlayingPlayers = GetPlayers (awayTeam.StartingPlayersList, Team.VISITOR);
-				awayBenchPlayers = GetPlayers (awayTeam.BenchPlayersList, Team.VISITOR);
+				awayPlayingPlayers = GetPlayers (awayTeam.StartingPlayersList, TeamType.VISITOR);
+				awayBenchPlayers = GetPlayers (awayTeam.BenchPlayersList, TeamType.VISITOR);
 				awayPlayers.AddRange (awayPlayingPlayers);
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
@@ -535,12 +535,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		List<PlayerObject> GetPlayers (List<Player> players, Team team)
+		List<PlayerObject> GetPlayers (List<Player> players, TeamType team)
 		{
 			List<PlayerObject> playerObjects;
 			Color color = null;
 
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				color = Config.Style.HomeTeamColor;
 			} else {
 				color = Config.Style.AwayTeamColor;
@@ -559,10 +559,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		void EmitSubsitutionEvent (PlayerObject player1, PlayerObject player2)
 		{
-			TeamTemplate team;
+			Team team;
 			List<PlayerObject> bench;
 
-			if (substitutionPlayer.Team == Team.LOCAL) {
+			if (substitutionPlayer.Team == TeamType.LOCAL) {
 				team = homeTeam;
 				bench = homeBenchPlayers;
 			} else {

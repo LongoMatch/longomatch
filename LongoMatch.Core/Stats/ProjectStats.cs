@@ -99,8 +99,8 @@ namespace LongoMatch.Core.Stats
 				TimersStats.Add (new TimerStats (project, t));
 			}
 
-			HomeTeamStats = new TeamStats (project, filter, Team.LOCAL);
-			AwayTeamStats = new TeamStats (project, filter, Team.VISITOR);
+			HomeTeamStats = new TeamStats (project, filter, TeamType.LOCAL);
+			AwayTeamStats = new TeamStats (project, filter, TeamType.VISITOR);
 			UpdateStats ();
 		}
 

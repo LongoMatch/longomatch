@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 		
-		public void LoadStats (EventTypeStats stats, Team team)
+		public void LoadStats (EventTypeStats stats, TeamType team)
 		{
 			Visible = false;
 			
@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.ObjectsCanMove = false;
 		}
 		
-		public void LoadStats (PlayerEventTypeStats stats, Team team)
+		public void LoadStats (PlayerEventTypeStats stats, TeamType team)
 		{
 			Visible = false;
 			

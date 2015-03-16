@@ -84,7 +84,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Team Team {
+		public TeamType Team {
 			get;
 			set;
 		}
@@ -118,7 +118,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			size = StyleConf.PlayerSize;
 			scale = (double)Width / size; 
 			
-			if (Team == Team.LOCAL) {
+			if (Team == TeamType.LOCAL) {
 				arrowin = ArrowIn;
 				arrowout = ArrowOut;
 			} else {

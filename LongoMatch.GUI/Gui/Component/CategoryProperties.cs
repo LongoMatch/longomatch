@@ -379,7 +379,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ignore)
 				return;
-			timerButton.Timer.Team = (Team)teamcombobox.Active;
+			timerButton.Timer.Team = (TeamType)teamcombobox.Active;
 			Edited = true;
 		}
 		

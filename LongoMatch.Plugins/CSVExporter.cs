@@ -98,13 +98,13 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName(Team team)
+		string TeamName(TeamType team)
 		{
-			if (team == Team.LOCAL) {
+			if (team == TeamType.LOCAL) {
 				return project.LocalTeamTemplate.TeamName;
-			} else if (team == Team.VISITOR) {
+			} else if (team == TeamType.VISITOR) {
 				return project.VisitorTeamTemplate.TeamName;
-			} else if (team == Team.BOTH) {
+			} else if (team == TeamType.BOTH) {
 				return "ALL";
 			} else {
 				return "";

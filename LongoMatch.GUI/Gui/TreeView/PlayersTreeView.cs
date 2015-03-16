@@ -34,10 +34,10 @@ namespace LongoMatch.Gui.Component
 		TreePath pathClicked;
 
 		public PlayersTreeView() {
-			this.Team = Team.LOCAL;
+			this.Team = TeamType.LOCAL;
 		}
 
-		public Team Team {
+		public TeamType Team {
 			set;
 			get;
 		}

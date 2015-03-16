@@ -48,6 +48,6 @@ namespace LongoMatch.Core.Interfaces
 	}
 	
 	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard> {}
-	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate> {}
+	public interface ITeamTemplatesProvider: ITemplateProvider<Team> {}
 }
 

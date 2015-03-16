@@ -105,7 +105,7 @@ SOURCES = Common/Area.cs \
 	Store/Score.cs \
 	Store/Tag.cs \
 	Store/Templates/Dashboard.cs \
-	Store/Templates/TeamTemplate.cs \
+	Store/Templates/Team.cs \
 	Store/Time.cs \
 	Store/TimeNode.cs \
 	Store/TimelineEvent.cs \

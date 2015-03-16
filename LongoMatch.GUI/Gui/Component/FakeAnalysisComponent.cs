@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.TagPlayer (player);
 		}
 
-		public void TagTeam (Team team)
+		public void TagTeam (TeamType team)
 		{
 			codingwidget1.TagTeam (team);
 		}

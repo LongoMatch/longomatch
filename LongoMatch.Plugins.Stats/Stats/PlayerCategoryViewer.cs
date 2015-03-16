@@ -40,7 +40,7 @@ namespace LongoMatch.Plugins.Stats
 		}
 
 		public void LoadStats (PlayerEventTypeStats stats) {
-			tagger.LoadStats (stats, Team.BOTH);
+			tagger.LoadStats (stats, TeamType.BOTH);
 			
 			foreach (Widget child in vbox1.AllChildren) {
 				if (!(child is PlaysCoordinatesTagger))

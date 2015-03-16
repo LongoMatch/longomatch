@@ -41,7 +41,6 @@
     <Compile Include="Store\Time.cs" />
     <Compile Include="Store\TimeNode.cs" />
     <Compile Include="Store\Templates\Dashboard.cs" />
-    <Compile Include="Store\Templates\TeamTemplate.cs" />
     <Compile Include="Interfaces\ITemplates.cs" />
     <Compile Include="Store\MediaFile.cs" />
     <Compile Include="Handlers\Handlers.cs" />
@@ -137,6 +136,7 @@
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="Interfaces\IStorable.cs" />
+    <Compile Include="Store\Templates\Team.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

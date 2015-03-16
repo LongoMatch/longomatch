@@ -58,7 +58,7 @@ namespace LongoMatch.Plugins.Stats
 			treeview1.SetCursor (path, null, false);
 		}
 		
-		void AddTeam (TeamTemplate tpl, Dashboard cats)
+		void AddTeam (Team tpl, Dashboard cats)
 		{
 			TreeIter iter = store.AppendValues (tpl.TeamName, null);
 			foreach (Player p in tpl.List) {
