@@ -129,6 +129,7 @@ namespace LongoMatch.Gui.Component
 			this.offsetlabel = new global::Gtk.Label ();
 			this.offsetlabel.Name = "offsetlabel";
 			this.offsetlabel.Xalign = 0F;
+			this.offsetlabel.UseMarkup = true;
 			this.table1.Add (this.offsetlabel);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.offsetlabel]));
 			w8.TopAttach = ((uint)(1));

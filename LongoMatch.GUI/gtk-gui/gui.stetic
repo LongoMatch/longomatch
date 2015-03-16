@@ -11531,6 +11531,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
                       <widget class="Gtk.Label" id="offsetlabel">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">1</property>

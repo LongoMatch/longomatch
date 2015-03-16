@@ -25,7 +25,7 @@ using Gtk;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class VideoFileInfo : Gtk.Bin
 	{
 		public event EventHandler Changed;
@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 		MediaFileSet fileSet;
 		MediaFile mediaFile;
 		bool disableChanges;
-		
+
 		public VideoFileInfo ()
 		{
 			this.Build ();
@@ -78,22 +78,23 @@ namespace LongoMatch.Gui.Component
 			}
 			if (mediaFile.Duration != null) {
 				durationlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Duration"),
-				                                    mediaFile.Duration.ToSecondsString ());
+					mediaFile.Duration.ToSecondsString ());
 			} else {
 				durationlabel.Text = Catalog.GetString ("Missing duration info, reload this file.");
 			}
 			formatlabel.Text = String.Format ("{0}: {1}x{2}@{3}fps", Catalog.GetString ("Format"),
-			                                  mediaFile.VideoWidth, mediaFile.VideoHeight, mediaFile.Fps);
+				mediaFile.VideoWidth, mediaFile.VideoHeight, mediaFile.Fps);
 			videolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Video codec"),
-			                                 mediaFile.VideoCodec);
+				mediaFile.VideoCodec);
 			audiolabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Audio codec"),
-			                                 mediaFile.AudioCodec);
+				mediaFile.AudioCodec);
 			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
-			                                     mediaFile.Container);
-			offsetlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Offset"),
+				mediaFile.Container);
+			offsetlabel.Markup = String.Format ("<span foreground=\"{0}\">{1}: {2}</span>",
+				Config.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"),
 				mediaFile.Offset.ToMSecondsString ());
 		}
-		
+
 		void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
 			if (args.Event.Button != 1 || disableChanges) {
