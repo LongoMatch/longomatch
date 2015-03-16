@@ -88,6 +88,8 @@ namespace LongoMatch.Gui.Component
 			                                 mediaFile.AudioCodec);
 			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
 			                                     mediaFile.Container);
+			offsetlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Offset"),
+				mediaFile.Offset.ToMSecondsString ());
 		}
 		
 		void HandleButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)

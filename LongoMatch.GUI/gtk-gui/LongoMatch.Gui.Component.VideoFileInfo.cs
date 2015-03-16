@@ -24,9 +24,9 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Label formatlabel;
 		
-		private global::Gtk.Label label9;
-		
 		private global::Gtk.Label namelabel;
+		
+		private global::Gtk.Label offsetlabel;
 		
 		private global::Gtk.Label videolabel;
 		
@@ -59,6 +59,7 @@ namespace LongoMatch.Gui.Component
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.table1 = new global::Gtk.Table (((uint)(4)), ((uint)(2)), true);
+			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
@@ -67,8 +68,8 @@ namespace LongoMatch.Gui.Component
 			this.audiolabel.Xalign = 0F;
 			this.table1.Add (this.audiolabel);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.audiolabel]));
-			w2.TopAttach = ((uint)(2));
-			w2.BottomAttach = ((uint)(3));
+			w2.TopAttach = ((uint)(3));
+			w2.BottomAttach = ((uint)(4));
 			w2.LeftAttach = ((uint)(1));
 			w2.RightAttach = ((uint)(2));
 			w2.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -110,30 +111,30 @@ namespace LongoMatch.Gui.Component
 			this.formatlabel.Xalign = 0F;
 			this.table1.Add (this.formatlabel);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.formatlabel]));
-			w6.TopAttach = ((uint)(1));
-			w6.BottomAttach = ((uint)(2));
+			w6.TopAttach = ((uint)(2));
+			w6.BottomAttach = ((uint)(3));
 			w6.LeftAttach = ((uint)(1));
 			w6.RightAttach = ((uint)(2));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
 			w6.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.label9 = new global::Gtk.Label ();
-			this.label9.Name = "label9";
-			this.label9.Xalign = 0F;
-			this.table1.Add (this.label9);
-			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.label9]));
-			w7.TopAttach = ((uint)(3));
-			w7.BottomAttach = ((uint)(4));
-			w7.LeftAttach = ((uint)(1));
-			w7.RightAttach = ((uint)(2));
-			w7.XOptions = ((global::Gtk.AttachOptions)(4));
-			w7.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child table1.Gtk.Table+TableChild
 			this.namelabel = new global::Gtk.Label ();
 			this.namelabel.Name = "namelabel";
 			this.namelabel.Xalign = 0F;
 			this.table1.Add (this.namelabel);
-			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.namelabel]));
+			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.namelabel]));
+			w7.XOptions = ((global::Gtk.AttachOptions)(4));
+			w7.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
+			this.offsetlabel = new global::Gtk.Label ();
+			this.offsetlabel.Name = "offsetlabel";
+			this.offsetlabel.Xalign = 0F;
+			this.table1.Add (this.offsetlabel);
+			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.offsetlabel]));
+			w8.TopAttach = ((uint)(1));
+			w8.BottomAttach = ((uint)(2));
+			w8.LeftAttach = ((uint)(1));
+			w8.RightAttach = ((uint)(2));
 			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
