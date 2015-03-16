@@ -187,7 +187,6 @@ namespace LongoMatch.Gui.Component
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
 			ProjectDescription p1, p2;
-			int ret;
 			
 			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
 			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
