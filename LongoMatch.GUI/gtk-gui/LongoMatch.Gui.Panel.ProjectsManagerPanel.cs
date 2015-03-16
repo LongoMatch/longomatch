@@ -112,12 +112,11 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 1;
+			this.notebook1.CurrentPage = 0;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.pm_content_alignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.pm_content_alignment.Name = "pm_content_alignment";
-			this.pm_content_alignment.LeftPadding = ((uint)(12));
-			this.pm_content_alignment.RightPadding = ((uint)(12));
+			this.pm_content_alignment.BorderWidth = ((uint)(12));
 			// Container child pm_content_alignment.Gtk.Container+ContainerChild
 			this.pm_hbox = new global::Gtk.HBox ();
 			this.pm_hbox.Name = "pm_hbox";
