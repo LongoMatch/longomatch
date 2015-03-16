@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing
 		protected IWidget widget;
 		protected double scaleX, scaleY;
 		protected Point translation;
+		protected bool ignoreRedraws;
 		bool disposed;
 
 		public Canvas (IWidget widget)
@@ -63,6 +64,7 @@ namespace LongoMatch.Drawing
 		protected virtual void Dispose (bool disposing)
 		{
 			// FIXME: Should we check if we are disposed already ?
+			ignoreRedraws = true;
 			if (disposing) {
 				ClearObjects ();
 				Objects = null;
@@ -107,7 +109,9 @@ namespace LongoMatch.Drawing
 
 		void HandleRedrawEvent (ICanvasObject co, Area area)
 		{
-			widget.ReDraw (area);
+			if (!ignoreRedraws) {
+				widget.ReDraw (area);
+			}
 		}
 
 		void HandleSizeChangedEvent ()
