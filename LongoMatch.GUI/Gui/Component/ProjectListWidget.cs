@@ -125,17 +125,23 @@ namespace LongoMatch.Gui.Component
 			treeview.SetCursor (new TreePath ("0"), null, false);
 		}
 
+		/// <summary>
+		/// Removes the provided projects from the list. Matching is done using the project description instance, not the project ID.
+		/// </summary>
+		/// <param name="projects">List of project description to remove.</param>
 		public void RemoveProjects (List<ProjectDescription> projects)
 		{
 			foreach (ProjectDescription project in projects) {
 				this.projects.Remove (project);
 			}
+			// Regenerate our list, this will trigger selected event for the first item.
 			Fill (this.projects);
-			if (ProjectsSelected != null) {
-				ProjectsSelected (new List<ProjectDescription> ());
-			}
 		}
 
+		/// <summary>
+		/// Updates the project description with a matching ID to the new description.
+		/// </summary>
+		/// <param name="description">Project Description.</param>
 		public void UpdateProject (ProjectDescription description)
 		{
 			TreeIter first;
