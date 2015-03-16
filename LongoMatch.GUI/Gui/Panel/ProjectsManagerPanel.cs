@@ -87,7 +87,6 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.ShowList = true;
 
 			SetStyle ();
-			edited = true;
 		}
 
 		void SetStyle ()
