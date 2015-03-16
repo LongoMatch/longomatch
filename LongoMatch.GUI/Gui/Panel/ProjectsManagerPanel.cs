@@ -250,11 +250,20 @@ namespace LongoMatch.Gui.Panel
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" + selectedProject.Title;
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
+					// Unload first
+					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
+						loadedProject = null;
+					}
 					DB.RemoveProject (selectedProject.ID);
 					deletedProjects.Add (selectedProject);
 				}
 			}
 			projectlistwidget1.RemoveProjects (deletedProjects);
+
+			// In the case where there are no projects left we need to clear the project desc widget
+			if (DB.GetAllProjects ().Count == 0) {
+				rbox.Visible = false;
+			}
 		}
 		
 		void HandleOpenClicked (object sender, EventArgs e)
