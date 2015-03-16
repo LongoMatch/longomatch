@@ -145,8 +145,11 @@ namespace LongoMatch.Gui.Component
 			while (store.IterIsValid (first)) {
 				ProjectDescription pd = store.GetValue (first, COL_PROJECT_DESCRIPTION) as ProjectDescription;
 				if (description.ID == pd.ID) {
+					// Change value in model
 					store.SetValue (first, COL_DISPLAY_NAME, FormatDesc (description));
 					store.SetValue (first, COL_PROJECT_DESCRIPTION, description);
+					// Also update our internal list
+					projects[projects.IndexOf (pd)] = description;
 					break;
 				}
 				store.IterNext (ref first);
