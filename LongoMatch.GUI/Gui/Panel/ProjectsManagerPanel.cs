@@ -103,15 +103,19 @@ namespace LongoMatch.Gui.Panel
 		void SaveLoadedProject (bool force)
 		{
 			if (loadedProject != null) {
-				if (edited) {
+				bool save = edited;
+
+				if (edited && !force) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
 					if (!Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-						return;
+						save = false;
 					}
 				}
-				DB.UpdateProject (loadedProject);
-				projectlistwidget1.UpdateProject (loadedProject.Description);
-				edited = false;
+				if (save) {
+					DB.UpdateProject (loadedProject);
+					projectlistwidget1.UpdateProject (loadedProject.Description);
+					edited = false;
+				}
 			}
 		}
 
