@@ -68,7 +68,7 @@ namespace Tests.DB
 				ID = Guid.NewGuid (),
 			};
 			Document doc = db.CreateDocument ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), true, null);
+			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), null);
 			Assert.AreEqual (t.ID, jo.Value<Guid> ("ID"));
 			Assert.AreEqual ("StorableImageTest", jo.Value<string> ("DocType"));
 		}
@@ -83,7 +83,7 @@ namespace Tests.DB
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, rev, true, null);
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, null);
 			Assert.IsNotNull (jo ["ID"]);
 			Assert.AreEqual ("attachment::Image1", jo ["Image1"].Value<string>());
 			Assert.AreEqual ("attachment::Image2", jo ["Image2"].Value<string>());

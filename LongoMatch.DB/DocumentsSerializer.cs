@@ -37,14 +37,13 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>A new object serialized.</returns>
 		/// <param name="obj">The <c>IStorable</c> to serialize.</param>
-		/// <param name="preserveReferences">If set to <c>true</c> preserve references.</param>
-		/// <param name="refTypes">A list of types that should be serialized by ID.</param>
-		/// <param name="skipFields">Extra fields that shouldn't be serialized.</param>
-		public static JObject SerializeObject (IStorable obj, Revision rev, bool preserveReferences,
-		                                       Type[] refTypes)
+		/// <param name="rev">The document revision to serialize.</param>
+		/// <param name="localStorables">A list of <see cref="LongoMatch.Core.Interfaces.IStorable"/>
+		/// types that should be serialized as local referencies instead of by document ID.</param>
+		public static JObject SerializeObject (IStorable obj, Revision rev, List<Type> localStorables)
 		{
 			JObject jo = JObject.FromObject (obj,
-				GetSerializer (null, rev, preserveReferences, refTypes));
+				GetSerializer (obj.GetType (), null, rev, localStorables));
 			jo["DocType"] = obj.GetType ().Name;
 			return jo;
 		}
@@ -55,21 +54,26 @@ namespace LongoMatch.DB
 		/// <returns>A new object deserialized.</returns>
 		/// <param name="db">The <c>Database</c> where the Document is stored.</param>
 		/// <param name="doc">The document to deserialize.</param>
+		/// <param name = "serializer">The serializer to use when deserializing the object</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T DeserializeObject<T> (Database db, Document doc)
+		public static T DeserializeObject<T> (Database db, Document doc, JsonSerializer serializer = null)
 		{
 			JObject jo = JObject.FromObject (doc.Properties);
-			return jo.ToObject<T> (GetSerializer (db, doc.CurrentRevision, true, null));
+			if (serializer == null) {
+				serializer = GetSerializer (typeof(T), db, doc.CurrentRevision, null);
+			}
+			return jo.ToObject<T> (serializer);
 		}
 
-		static JsonSerializer GetSerializer (Database db, Revision rev,
-		                                     bool preserveReferences, Type[] refTypes)
+		static JsonSerializer GetSerializer (Type serType, Database db, Revision rev, List<Type> localTypes)
 		{
+			if (localTypes == null) {
+				localTypes = new List<Type> ();
+			}
+			localTypes.Add (serType);
 			JsonSerializerSettings settings = new JsonSerializerSettings ();
 			settings.Formatting = Formatting.Indented;
-			if (preserveReferences) {
-				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-			}
+			settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 			settings.TypeNameHandling = TypeNameHandling.Objects;
 			settings.ContractResolver = new ImagePropertiesContractResolver (rev);
 			settings.Converters.Add (new ImageConverter (rev));

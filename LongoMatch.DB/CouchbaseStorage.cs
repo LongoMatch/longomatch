@@ -63,7 +63,7 @@ namespace LongoMatch.DB
 			Document doc = db.GetDocument (t.ID.ToString ());
 			doc.Update((UnsavedRevision newRevision) => 
 				{
-					JObject jo = DocumentsSerializer.SerializeObject (t, newRevision, true, null);
+					JObject jo = DocumentsSerializer.SerializeObject (t, newRevision, null);
 					IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>>();
 					/* SetProperties sets a new properties dictionary, removing the attachments we
 					 * added in the serialization */
