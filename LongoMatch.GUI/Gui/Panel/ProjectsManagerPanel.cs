@@ -164,6 +164,13 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 				}
 			} else {
+				projectperiods1.Pause ();
+				projectperiods1.SaveChanges ();
+				// We need to reload project details
+				LoadProject (loadedProject);
+				// And remember that the project has changed
+				edited = true;
+
 				notebook1.Page--;
 			}
 		}
