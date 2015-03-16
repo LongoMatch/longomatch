@@ -31,7 +31,7 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
@@ -164,7 +164,7 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 				}
 			} else {
-				notebook1.Page --;
+				notebook1.Page--;
 			}
 		}
 
@@ -179,8 +179,8 @@ namespace LongoMatch.Gui.Panel
 				loadedProject.Description.Season = (sender as Entry).Text;
 			} else if (sender == desctextview.Buffer) {
 				loadedProject.Description.Description =
-					desctextview.Buffer.GetText(desctextview.Buffer.StartIter,
-					                            desctextview.Buffer.EndIter,true);
+					desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
+					desctextview.Buffer.EndIter, true);
 			}
 			edited = true;
 		}
@@ -224,10 +224,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				string filename = gkit.SaveFile (
-					Catalog.GetString ("Export project"),
-					Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					Config.HomeDir, Constants.PROJECT_NAME,
-					new string[] { Constants.PROJECT_EXT });
+					                  Catalog.GetString ("Export project"),
+					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
+					                  Config.HomeDir, Constants.PROJECT_NAME,
+					                  new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 					Serializer.Save (loadedProject, filename);
@@ -255,7 +255,7 @@ namespace LongoMatch.Gui.Panel
 			foreach (ProjectDescription selectedProject in selectedProjects) {
 				if (openedProject != null && openedProject.ID == selectedProject.ID) {
 					MessagesHelpers.WarningMessage (this,
-					                                Catalog.GetString ("This Project is actually in use.") + "\n" +
+						Catalog.GetString ("This Project is actually in use.") + "\n" +
 						Catalog.GetString ("Close it first to allow its removal from the database"));
 					continue;
 				}
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Panel
 				rbox.Visible = false;
 			}
 		}
-		
+
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
