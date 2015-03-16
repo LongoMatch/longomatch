@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Panel
 
 			savebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-save", 34);
 			exportbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
+			resyncbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
 			deletebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-delete", 34);
 			openbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-open", 34);
 
@@ -74,6 +75,7 @@ namespace LongoMatch.Gui.Panel
 			competitionentry.Changed += HandleChanged;
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
+			resyncbutton.Clicked += HandleResyncClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
 			openbutton.Clicked += HandleOpenClicked;
 			datepicker.ValueChanged += HandleDateChanged;
@@ -192,6 +194,7 @@ namespace LongoMatch.Gui.Panel
 			openbutton.Sensitive = projects.Count == 1;
 			deletebutton.Sensitive = projects.Count != 0;
 			projectbox.Sensitive = projects.Count == 1;
+			resyncbutton.Sensitive = projects.Count == 1;
 			
 			selectedProjects = projects;
 			if (projects.Count == 1) {
@@ -202,6 +205,14 @@ namespace LongoMatch.Gui.Panel
 					Config.GUIToolkit.ErrorMessage (ex.Message, this);
 				}
 			}
+		}
+
+		void HandleResyncClicked (object sender, EventArgs e)
+		{
+			notebook1.Page = 1;
+
+			// Load data in the project periods widget.
+			projectperiods1.Project = loadedProject;
 		}
 
 		void HandleSaveClicked (object sender, EventArgs e)

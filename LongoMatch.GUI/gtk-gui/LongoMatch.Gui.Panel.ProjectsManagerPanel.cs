@@ -8,11 +8,11 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
 		
-		private global::Gtk.Alignment contentalignment;
-		
 		private global::Gtk.Notebook notebook1;
 		
-		private global::Gtk.HBox hbox4;
+		private global::Gtk.Alignment pm_content_alignment;
+		
+		private global::Gtk.HBox pm_hbox;
 		
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
 		
@@ -72,6 +72,10 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Image openbuttonimage;
 		
+		private global::Gtk.Button resyncbutton;
+		
+		private global::Gtk.Image resyncbuttonimage;
+		
 		private global::Gtk.Button exportbutton;
 		
 		private global::Gtk.Image exportbuttonimage;
@@ -81,6 +85,8 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Image deletebuttonimage;
 		
 		private global::Gtk.Label label1;
+		
+		private global::LongoMatch.Gui.Component.ProjectPeriods projectperiods1;
 		
 		private global::Gtk.Label label3;
 
@@ -93,7 +99,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child LongoMatch.Gui.Panel.ProjectsManagerPanel.Gtk.Container+ContainerChild
 			this.vbox3 = new global::Gtk.VBox ();
 			this.vbox3.Name = "vbox3";
-			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.panelheader1 = new global::LongoMatch.Gui.Panel.PanelHeader ();
 			this.panelheader1.Events = ((global::Gdk.EventMask)(256));
@@ -104,29 +109,29 @@ namespace LongoMatch.Gui.Panel
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.contentalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
-			this.contentalignment.Name = "contentalignment";
-			this.contentalignment.LeftPadding = ((uint)(12));
-			this.contentalignment.RightPadding = ((uint)(12));
-			// Container child contentalignment.Gtk.Container+ContainerChild
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
+			this.notebook1.CurrentPage = 1;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.hbox4 = new global::Gtk.HBox ();
-			this.hbox4.Name = "hbox4";
-			this.hbox4.Spacing = 6;
-			// Container child hbox4.Gtk.Box+BoxChild
+			this.pm_content_alignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.pm_content_alignment.Name = "pm_content_alignment";
+			this.pm_content_alignment.LeftPadding = ((uint)(12));
+			this.pm_content_alignment.RightPadding = ((uint)(12));
+			// Container child pm_content_alignment.Gtk.Container+ContainerChild
+			this.pm_hbox = new global::Gtk.HBox ();
+			this.pm_hbox.Name = "pm_hbox";
+			this.pm_hbox.Spacing = 6;
+			// Container child pm_hbox.Gtk.Box+BoxChild
 			this.projectlistwidget1 = new global::LongoMatch.Gui.Component.ProjectListWidget ();
 			this.projectlistwidget1.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget1.Name = "projectlistwidget1";
-			this.hbox4.Add (this.projectlistwidget1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectlistwidget1]));
+			this.pm_hbox.Add (this.projectlistwidget1);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.pm_hbox [this.projectlistwidget1]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
-			// Container child hbox4.Gtk.Box+BoxChild
+			// Container child pm_hbox.Gtk.Box+BoxChild
 			this.projectpropertiesalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
 			this.projectpropertiesalignment.Name = "projectpropertiesalignment";
 			this.projectpropertiesalignment.BottomPadding = ((uint)(12));
@@ -142,7 +147,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child scrolledwindow3.Gtk.Container+ContainerChild
 			global::Gtk.Viewport w3 = new global::Gtk.Viewport ();
 			w3.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child GtkViewport.Gtk.Container+ContainerChild
+			// Container child GtkViewport1.Gtk.Container+ContainerChild
 			this.projectbox = new global::Gtk.VBox ();
 			this.projectbox.Name = "projectbox";
 			// Container child projectbox.Gtk.Box+BoxChild
@@ -361,6 +366,21 @@ namespace LongoMatch.Gui.Panel
 			w29.Expand = false;
 			w29.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+			this.resyncbutton = new global::Gtk.Button ();
+			this.resyncbutton.TooltipMarkup = "Adjust periods and secondary videos synchronisation";
+			this.resyncbutton.Sensitive = false;
+			this.resyncbutton.CanFocus = true;
+			this.resyncbutton.Name = "resyncbutton";
+			// Container child resyncbutton.Gtk.Container+ContainerChild
+			this.resyncbuttonimage = new global::Gtk.Image ();
+			this.resyncbuttonimage.Name = "resyncbuttonimage";
+			this.resyncbutton.Add (this.resyncbuttonimage);
+			this.hbuttonbox1.Add (this.resyncbutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.resyncbutton]));
+			w31.Position = 2;
+			w31.Expand = false;
+			w31.Fill = false;
+			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.exportbutton = new global::Gtk.Button ();
 			this.exportbutton.TooltipMarkup = "Export";
 			this.exportbutton.Sensitive = false;
@@ -371,10 +391,10 @@ namespace LongoMatch.Gui.Panel
 			this.exportbuttonimage.Name = "exportbuttonimage";
 			this.exportbutton.Add (this.exportbuttonimage);
 			this.hbuttonbox1.Add (this.exportbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
-			w31.Position = 2;
-			w31.Expand = false;
-			w31.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
+			w33.Position = 3;
+			w33.Expand = false;
+			w33.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.deletebutton = new global::Gtk.Button ();
 			this.deletebutton.TooltipMarkup = "Delete";
@@ -386,37 +406,41 @@ namespace LongoMatch.Gui.Panel
 			this.deletebuttonimage.Name = "deletebuttonimage";
 			this.deletebutton.Add (this.deletebuttonimage);
 			this.hbuttonbox1.Add (this.deletebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.deletebutton]));
-			w33.Position = 3;
-			w33.Expand = false;
-			w33.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w35 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.deletebutton]));
+			w35.Position = 4;
+			w35.Expand = false;
+			w35.Fill = false;
 			this.rbox.Add (this.hbuttonbox1);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.rbox [this.hbuttonbox1]));
-			w34.Position = 1;
-			w34.Expand = false;
-			w34.Fill = false;
-			this.projectpropertiesalignment.Add (this.rbox);
-			this.hbox4.Add (this.projectpropertiesalignment);
-			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.projectpropertiesalignment]));
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.rbox [this.hbuttonbox1]));
 			w36.Position = 1;
-			this.notebook1.Add (this.hbox4);
+			w36.Expand = false;
+			w36.Fill = false;
+			this.projectpropertiesalignment.Add (this.rbox);
+			this.pm_hbox.Add (this.projectpropertiesalignment);
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.pm_hbox [this.projectpropertiesalignment]));
+			w38.Position = 1;
+			this.pm_content_alignment.Add (this.pm_hbox);
+			this.notebook1.Add (this.pm_content_alignment);
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.notebook1.SetTabLabel (this.hbox4, this.label1);
+			this.notebook1.SetTabLabel (this.pm_content_alignment, this.label1);
 			this.label1.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.projectperiods1 = new global::LongoMatch.Gui.Component.ProjectPeriods ();
+			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
+			this.projectperiods1.Name = "projectperiods1";
+			this.notebook1.Add (this.projectperiods1);
+			global::Gtk.Notebook.NotebookChild w41 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
+			w41.Position = 1;
 			// Notebook tab
-			global::Gtk.Label w38 = new global::Gtk.Label ();
-			w38.Visible = true;
-			this.notebook1.Add (w38);
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.notebook1.SetTabLabel (w38, this.label3);
+			this.notebook1.SetTabLabel (this.projectperiods1, this.label3);
 			this.label3.ShowAll ();
-			this.contentalignment.Add (this.notebook1);
-			this.vbox3.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.contentalignment]));
-			w40.Position = 1;
+			this.vbox3.Add (this.notebook1);
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.notebook1]));
+			w42.Position = 1;
 			this.Add (this.vbox3);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
