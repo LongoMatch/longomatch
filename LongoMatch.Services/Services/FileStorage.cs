@@ -46,9 +46,16 @@ namespace LongoMatch.Services.Services
 				Reset();
 		}
 
+		public string BasePath
+		{
+			get {
+				return basePath;
+			}
+		}
+
 		private string ResolvePath<T> ()
 		{
-			string typePath = Path.Combine(basePath, typeof(T).ToString());
+			string typePath = Path.Combine(basePath, ResolveType (typeof(T)));
 
 			if (!Directory.Exists (typePath)) {
 				Log.Information ("Creating directory " + typePath);
@@ -57,10 +64,38 @@ namespace LongoMatch.Services.Services
 			return typePath;
 		}
 
+		// For a T being a Dashboard, the expected directory should be dashboards
+		// What we have so far is this:
+		// type -> dir -> extension
+		// Dashboard -> analysis (Config.AnalysisDir) -> lct (Constants.CAT_TEMPLATE_EXT)
+		// Team -> teams (Config.TeamsDir) -> ltt (Constants.TEAMS_TEMPLATE_EXT)
+		static private string ResolveType (Type t)
+		{
+			// For a type like TestTempltesService.MyService.Template split it by . to only
+			// use the last part
+			string[] parts = t.ToString ().Split ('.');
+			string part = parts [parts.Length - 1];
+			// Make it lowercase so we end into something like this: baseDir/template
+			return part.ToLower ();
+		}
+
 		static private string GetExtension (Type t)
 		{
+			string sType = ResolveType (t);
+
 			// Add the different cases of t
-			return ".json";
+			if (sType == "dashboard")
+			{
+				return Constants.CAT_TEMPLATE_EXT;
+			}
+			else if (sType == "team")
+			{
+				return Constants.TEAMS_TEMPLATE_EXT;
+			}
+			else
+			{
+				return ".json";
+			}
 		}
 
 		#region IStorage implementation
@@ -72,7 +107,7 @@ namespace LongoMatch.Services.Services
 
 			if (File.Exists (path)) {
 				T t = Serializer.LoadSafe<T>(path);
-				Log.Information (string.Format ("Retrieving {0} at {1}", t.ID, typePath));
+				Log.Information ("Retrieving " + path);
 				return t;
 			}
 			return default (T);
@@ -88,7 +123,7 @@ namespace LongoMatch.Services.Services
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
 				T t = (T)Serializer.LoadSafe<T>(path);
-				Log.Information ("Retrieving " + t.ID.ToString() + " at " + typePath);
+				Log.Information ("Retrieving " + path);
 				l.Add (t);
 			}
 			return l;
@@ -150,7 +185,7 @@ namespace LongoMatch.Services.Services
 
 				if (matches)
 				{
-					Log.Information ("Retrieving " + t.ID.ToString() + " at " + typePath);
+					Log.Information ("Retrieving " + path);
 					l.Add (t);
 				}
 			}
@@ -164,8 +199,9 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension(typeof(T));
 
 			// Save the object as a file on disk
-			Log.Information ("Storing " + t.ID.ToString() + " at " + typePath);
-			Serializer.Save<T>(t, Path.Combine(typePath, t.ID.ToString()) + extension);
+			string path = Path.Combine (typePath, t.ID.ToString ()) + extension;
+			Log.Information ("Storing " + path);
+			Serializer.Save<T>(t, path);
 		}
 
 		public void Delete<T> (T t) where T : IStorable
@@ -174,8 +210,9 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension(typeof(T));
 
 			try {
-				Log.Information ("Deleting " + t.ID.ToString() + " at " + typePath);
-				File.Delete (Path.Combine(typePath, t.ID.ToString()) + extension);
+				string path = Path.Combine(typePath, t.ID.ToString()) + extension; 
+				Log.Information ("Deleting " + path);
+				File.Delete (path);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
@@ -183,10 +220,49 @@ namespace LongoMatch.Services.Services
 
 		public void Reset()
 		{
-			Log.Information ("Deleting " + basePath + " recursively");
-			Directory.Delete(basePath, true);
+			if (File.Exists (basePath)) {
+				Log.Information ("Deleting " + basePath + " recursively");
+				Directory.Delete(basePath, true);
+			}
 		}
 		#endregion
+
+		/// <summary>
+		/// Retrieves an object of type T from a file path
+		/// </summary>
+		/// <returns>The object found.</returns>
+		/// <param name="from">The file path to retrieve the object from</param>
+		/// <typeparam name="T">The type of the object.</typeparam>
+		public static T RetrieveFrom<T> (string from) where T : IStorable
+		{
+			T t;
+
+			Log.Information ("Loading " + from);
+			t = (T)Serializer.LoadSafe<T>(from);
+			return t;
+		}
+
+		/// <summary>
+		/// Stores an object of type T at file at
+		/// </summary>
+		/// <param name="t">The object to store</param>
+		/// <param name="at">The filename to store the object</param>
+		/// <typeparam name="T">The type of the object.</typeparam>
+		public static void StoreAt<T> (T t, string at) where T : IStorable
+		{
+			Log.Information ("Saving " + t.ID.ToString() + " to " + at);
+
+			if (File.Exists (at)) {
+				throw new Exception ("A file already exists at " + at);
+			}
+
+			if (!Directory.Exists (Path.GetDirectoryName (at))) {
+				Directory.CreateDirectory (Path.GetDirectoryName (at));
+			}
+
+			/* Don't cach the Exception here to chain it up */
+			Serializer.Save<T> ((T)t, at);
+		}
 	}
 }
 
