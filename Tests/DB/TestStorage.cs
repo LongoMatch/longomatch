@@ -177,6 +177,17 @@ namespace Tests.DB
 		[Test ()]
 		public void TestLoadPlayer ()
 		{
+			Player player1 = new Player {Name = "andoni", Position = "runner",
+				Number = 5, Birthday = new DateTime (1984, 6, 11),
+				Nationality = "spanish", Height = 1.73f, Weight = 70,
+				Playing = true, Mail = "test@test", Color = Color.Red
+			};
+			player1.Photo = Utils.LoadImageFromFile ();
+			storage.Store (player1);
+			Player player2 = storage.Retrieve<Player> (player1.ID);
+			Assert.AreEqual (player1.ID, player2.ID);
+			Assert.AreEqual (player1.ToString (), player2.ToString ());
+			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
 		}
 	}
 }
