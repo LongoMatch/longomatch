@@ -70,7 +70,15 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
-	
+
+	public class TemplateNotFoundException : Exception
+	{
+		public TemplateNotFoundException (string name):
+			base (Catalog.GetString("Template not found:\n") + name)
+		{
+		}
+	}
+
 	public class HotkeyAlreadyInUse: Exception
 	{
 		public HotkeyAlreadyInUse (HotKey hotkey):
