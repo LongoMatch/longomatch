@@ -30,21 +30,21 @@ namespace Tests
 		public Utils ()
 		{
 		}
-		
+
 		public static T SerializeDeserialize<T> (T obj)
 		{
 			var stream = new MemoryStream ();
 			Serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			if (debugLine) {
-				var jsonString = new StreamReader(stream).ReadToEnd();
+				var jsonString = new StreamReader (stream).ReadToEnd ();
 				Console.WriteLine (jsonString);
 			}
-			stream.Seek(0, SeekOrigin.Begin);
+			stream.Seek (0, SeekOrigin.Begin);
 			
-			return Serializer.Load<T>(stream, SerializationType.Json);
+			return Serializer.Load<T> (stream, SerializationType.Json);
 		}
-		 
+
 		public static void CheckSerialization<T> (T obj)
 		{
 			var stream = new MemoryStream ();
@@ -67,14 +67,14 @@ namespace Tests
 			}
 			Assert.AreEqual (jsonString, newJsonString);
 		}
-		
+
 		public static Image LoadImageFromFile (bool scaled = false)
 		{
 			Image img = null;
 			string tmpFile = Path.GetTempFileName ();
 
-			using (Stream resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("dibujo.svg")) {
-				using (Stream output = File.OpenWrite(tmpFile)) {
+			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("dibujo.svg")) {
+				using (Stream output = File.OpenWrite (tmpFile)) {
 					resource.CopyTo (output);
 				}
 			}
