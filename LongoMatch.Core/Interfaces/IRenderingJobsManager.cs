@@ -23,16 +23,25 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IRenderingJobsManager
 	{
-		void RetryJobs(List<Job> retryJobs);
-		void DeleteJob(Job job);
-		void ClearDoneJobs();
-		void CancelJobs(List<Job> cancelJobs);
+		void RetryJobs (List<Job> retryJobs);
+
+		void DeleteJob (Job job);
+
+		void ClearDoneJobs ();
+
+		void CancelJobs (List<Job> cancelJobs);
+
 		void CancelCurrentJob ();
-		void CancelJob(Job job);
-		void CancelAllJobs();
-		void AddJob(Job job);
-		List<Job> Jobs {get;}
-		List<Job> PendingJobs {get;}
+
+		void CancelJob (Job job);
+
+		void CancelAllJobs ();
+
+		void AddJob (Job job);
+
+		List<Job> Jobs { get; }
+
+		List<Job> PendingJobs { get; }
 	}
 }
 
