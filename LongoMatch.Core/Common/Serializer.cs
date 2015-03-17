@@ -35,32 +35,33 @@ namespace LongoMatch.Core.Common
 {
 	public class Serializer
 	{
-		public static void Save<T>(T obj, Stream stream,
-		                           SerializationType type=SerializationType.Json) {
+		public static void Save<T> (T obj, Stream stream,
+		                            SerializationType type = SerializationType.Json)
+		{
 			switch (type) {
 			case SerializationType.Binary:
-				BinaryFormatter formatter = new  BinaryFormatter();
-				formatter.Serialize(stream, obj);
+				BinaryFormatter formatter = new  BinaryFormatter ();
+				formatter.Serialize (stream, obj);
 				break;
 			case SerializationType.Xml:
-				XmlSerializer xmlformatter = new XmlSerializer(typeof(T));
-				xmlformatter.Serialize(stream, obj);
+				XmlSerializer xmlformatter = new XmlSerializer (typeof(T));
+				xmlformatter.Serialize (stream, obj);
 				break;
 			case SerializationType.Json:
 				StreamWriter sw = new StreamWriter (stream, Encoding.UTF8);
 				sw.NewLine = "\n";
 				sw.Write (JsonConvert.SerializeObject (obj, JsonSettings));
-				sw.Flush();
+				sw.Flush ();
 				break;
 			}
 		}
-		
+
 		public static void Save<T> (T obj, string filepath,
-		                          SerializationType type=SerializationType.Json)
+		                            SerializationType type = SerializationType.Json)
 		{
 			string tmpPath = filepath + ".tmp";
-			using (Stream stream = new FileStream(tmpPath, FileMode.Create,
-			                                      FileAccess.Write, FileShare.None)) {
+			using (Stream stream = new FileStream (tmpPath, FileMode.Create,
+				                       FileAccess.Write, FileShare.None)) {
 				Save<T> (obj, stream, type);
 			}
 			if (File.Exists (filepath)) {
@@ -70,35 +71,38 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public static T Load<T>(Stream stream,
-		                        SerializationType type=SerializationType.Json) {
+		public static T Load<T> (Stream stream,
+		                         SerializationType type = SerializationType.Json)
+		{
 			switch (type) {
 			case SerializationType.Binary:
-				BinaryFormatter formatter = new BinaryFormatter();
-				return (T)formatter.Deserialize(stream);
+				BinaryFormatter formatter = new BinaryFormatter ();
+				return (T)formatter.Deserialize (stream);
 			case SerializationType.Xml:
-				XmlSerializer xmlformatter = new XmlSerializer(typeof(T));
-				return (T) xmlformatter.Deserialize(stream);
+				XmlSerializer xmlformatter = new XmlSerializer (typeof(T));
+				return (T)xmlformatter.Deserialize (stream);
 			case SerializationType.Json:
 				StreamReader sr = new StreamReader (stream, Encoding.UTF8);
-				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd(), JsonSettings);
+				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd (), JsonSettings);
 			default:
-				throw new Exception();
+				throw new Exception ();
 			}
 		}
-		
-		public static T Load<T>(string filepath,
-		                        SerializationType type=SerializationType.Json) {
-			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+		public static T Load<T> (string filepath,
+		                         SerializationType type = SerializationType.Json)
+		{
+			Stream stream = new FileStream (filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			using (stream) {
 				return Load<T> (stream, type);
 			}
 		}
-		
-		public static T LoadSafe<T>(string filepath) {
+
+		public static T LoadSafe<T> (string filepath)
+		{
 		
 			Stream stream = new FileStream (filepath, FileMode.Open,
-			                               FileAccess.Read, FileShare.Read);
+				                FileAccess.Read, FileShare.Read);
 			using (stream) {
 				try {
 					return Load<T> (stream, SerializationType.Json);
@@ -109,9 +113,9 @@ namespace LongoMatch.Core.Common
 				}
 			}
 		}
-		
+
 		static JsonSerializerSettings JsonSettings {
-			get{
+			get {
 				JsonSerializerSettings settings = new JsonSerializerSettings ();
 				settings.Formatting = Formatting.Indented;
 				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
@@ -123,133 +127,88 @@ namespace LongoMatch.Core.Common
 			}
 		}
 	}
-	
+
 	public class LongoMatchConverter : JsonConverter
 	{
 		bool handleImages;
 
-		public LongoMatchConverter (bool handleImages) {
+		public LongoMatchConverter (bool handleImages)
+		{
 			this.handleImages = handleImages;
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			if (value is Time) {
 				Time time = value as Time;
 				if (time != null) {
-					writer.WriteValue(time.MSeconds);
+					writer.WriteValue (time.MSeconds);
 				}
 			} else if (value is Color) {
 				Color color = value as Color;
 				if (color != null) {
-					writer.WriteValue(String.Format ("#{0}{1}{2}{3}",
-					                                 color.R.ToString ("X2"),
-					                                 color.G.ToString ("X2"),
-					                                 color.B.ToString ("X2"),
-					                                 color.A.ToString ("X2")));
+					writer.WriteValue (String.Format ("#{0}{1}{2}{3}",
+						color.R.ToString ("X2"),
+						color.G.ToString ("X2"),
+						color.B.ToString ("X2"),
+						color.A.ToString ("X2")));
 				}
 			} else if (value is Image) {
 				Image image = value as Image;
 				if (image != null) {
-					writer.WriteValue(image.Serialize());
+					writer.WriteValue (image.Serialize ());
 				}
 			} else if (value is HotKey) {
 				HotKey hotkey = value as HotKey;
 				if (hotkey != null) {
-					writer.WriteValue(String.Format ("{0} {1}", hotkey.Key, hotkey.Modifier));
+					writer.WriteValue (String.Format ("{0} {1}", hotkey.Key, hotkey.Modifier));
 				}
 			} else if (value is Point) {
 				Point p = value as Point;
 				if (p != null) {
-					writer.WriteValue(String.Format ("{0} {1}",
-					                                 p.X.ToString (NumberFormatInfo.InvariantInfo),
-					                                 p.Y.ToString (NumberFormatInfo.InvariantInfo)));
+					writer.WriteValue (String.Format ("{0} {1}",
+						p.X.ToString (NumberFormatInfo.InvariantInfo),
+						p.Y.ToString (NumberFormatInfo.InvariantInfo)));
 				}
 			}
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object ReadJson (JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			if (reader.Value != null) {
-				if (objectType == typeof (Time)) {
-					Int64 t = (Int64) reader.Value;
-					return new Time((int)t);
-				} else if (objectType == typeof (Color)) {
-					string rgbStr = (string) reader.Value;
+				if (objectType == typeof(Time)) {
+					if (reader.ValueType == typeof(Int64)) {
+						return new Time ((int)(Int64)reader.Value);
+					} else {
+						return new Time ((Int32)reader.Value);
+					}
+				} else if (objectType == typeof(Color)) {
+					string rgbStr = (string)reader.Value;
 					return Color.Parse (rgbStr);
-				} else if (objectType == typeof (Image)) {
+				} else if (objectType == typeof(Image)) {
 					byte[] buf = Convert.FromBase64String ((string)reader.Value); 
 					return Image.Deserialize (buf);
-				} else if (objectType == typeof (HotKey)) {
+				} else if (objectType == typeof(HotKey)) {
 					string[] hk = ((string)reader.Value).Split (' '); 
-					return new HotKey {Key = int.Parse(hk[0]), Modifier = int.Parse(hk[1])};
-				} else if (objectType == typeof (Point)) {
+					return new HotKey { Key = int.Parse (hk [0]), Modifier = int.Parse (hk [1]) };
+				} else if (objectType == typeof(Point)) {
 					string[] ps = ((string)reader.Value).Split (' '); 
-					return new Point (double.Parse(ps[0], NumberFormatInfo.InvariantInfo),
-					                  double.Parse(ps[1], NumberFormatInfo.InvariantInfo));
+					return new Point (double.Parse (ps [0], NumberFormatInfo.InvariantInfo),
+						double.Parse (ps [1], NumberFormatInfo.InvariantInfo));
 				}
 			}
 			return null;
 		}
-		
-		public override bool CanConvert(Type objectType)
+
+		public override bool CanConvert (Type objectType)
 		{
 			return (
-				objectType == typeof(Time) ||
-				objectType == typeof(Color) ||
-				objectType == typeof(Point) ||
-				objectType == typeof(HotKey) ||
-				objectType == typeof(Image) && handleImages);
+			    objectType == typeof(Time) ||
+			    objectType == typeof(Color) ||
+			    objectType == typeof(Point) ||
+			    objectType == typeof(HotKey) ||
+			    objectType == typeof(Image) && handleImages);
 		}
 	}
-	
-    public class IdReferenceResolver : IReferenceResolver
-    {
-		private int _references;
-        private readonly Dictionary<string, object> _idtoobjects;
-        private readonly Dictionary<object, string> _objectstoid;
-
-		public IdReferenceResolver () {
-			_references = 0;
-			_idtoobjects = new Dictionary<string, object>();
-			_objectstoid = new Dictionary<object, string>();
-		}
-		
-        public object ResolveReference(object context, string reference)
-        {
-			object p;
-            _idtoobjects.TryGetValue(reference, out p);
-            return p;
-        }
-
-        public string GetReference(object context, object value)
-        {
-			string referenceStr;
-			if (value is IIDObject) {
-				IIDObject p = (IIDObject)value;
-				referenceStr = p.ID.ToString();
-			} else {
-				if (!_objectstoid.TryGetValue (value, out referenceStr)) {
-					_references++;
-					referenceStr = _references.ToString(CultureInfo.InvariantCulture); 
-				}
-			}
-			_idtoobjects[referenceStr] = value;
-			_objectstoid[value] = referenceStr;
-			return referenceStr;
-        }
-
-        public bool IsReferenced(object context, object value)
-        {
-			string reference;
-			return _objectstoid.TryGetValue (value, out reference);
-        }
-
-        public void AddReference(object context, string reference, object value)
-        {
-			_idtoobjects[reference] = value;
-			_objectstoid[value] = reference;
-        }
-    }
 }
 
