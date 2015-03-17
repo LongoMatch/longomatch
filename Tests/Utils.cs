@@ -18,6 +18,8 @@
 using System;
 using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using System.Reflection;
 
@@ -90,6 +92,48 @@ namespace Tests
 				File.Delete (tmpFile);
 			}
 			return img;
+		}
+
+		public static Project CreateProject ()
+		{
+			TimelineEvent pl;
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (10);
+			p.LocalTeamTemplate = Team.DefaultTemplate (5);
+			p.VisitorTeamTemplate = Team.DefaultTemplate (5);
+			ProjectDescription pd = new ProjectDescription ();
+			pd.FileSet = new MediaFileSet ();
+			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 1"));
+			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",
+				"aac", 320, 240, 1.3, null, "Test asset 2"));
+			p.Description = pd;
+			p.UpdateEventTypesAndTimers ();
+
+			AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
+
+			/* No tags, no players */
+			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+			p.Timeline.Add (pl);
+			/* tags, but no players */
+			b = p.Dashboard.List [1] as AnalysisEventButton;
+			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+			pl.Tags.Add (b.AnalysisEventType.Tags [0]);
+			p.Timeline.Add (pl);
+			/* tags and players */
+			b = p.Dashboard.List [2] as AnalysisEventButton;
+			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+			pl.Tags.Add (b.AnalysisEventType.Tags [1]);
+			pl.Players.Add (p.LocalTeamTemplate.List [0]);
+			p.Timeline.Add (pl);
+			return p;
+		}
+
+		public static void DeleteProject (Project p)
+		{
+			foreach (MediaFile mf in p.Description.FileSet) {
+				File.Delete (mf.FilePath);
+			}
 		}
 	}
 }
