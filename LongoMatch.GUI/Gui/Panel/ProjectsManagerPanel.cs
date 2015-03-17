@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Panel
 
 			savebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-save", 34);
 			exportbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
-			resyncbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-export", 34);
+			resyncbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-resync", 34);
 			deletebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-delete", 34);
 			openbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-project-open", 34);
 

@@ -64,6 +64,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-project-import.svg \
 	hicolor/scalable/actions/longomatch-project-new.svg \
 	hicolor/scalable/actions/longomatch-project-open.svg \
+	hicolor/scalable/actions/longomatch-project-resync.svg \
 	hicolor/scalable/actions/longomatch-project-save.svg \
 	hicolor/scalable/actions/longomatch-project.svg \
 	hicolor/scalable/actions/longomatch-record.svg \
