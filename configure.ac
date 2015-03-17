@@ -67,6 +67,16 @@ SHAMROCK_FIND_MONO_RUNTIME
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
+dnl Moq (optional) disable test if not found
+PKG_CHECK_MODULES(MOQ, moq,
+	do_tests="yes", do_tests="no")
+AC_SUBST(MOQ_LIBS)
+AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
+if test "x$do_tests" = "xno"; then
+	AC_MSG_WARN([Could not find moq: tests will not be available])
+fi
+
+
 dnl Covem (optional)
 AC_PATH_PROG(COVEM, covem, no)
 AC_PATH_PROG(COV_GTK, cov-gtk, no)

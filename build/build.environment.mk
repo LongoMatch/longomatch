@@ -22,6 +22,7 @@ LINK_GCONF = $(GCONFSHARP_LIBS)
 LINK_DB40 = $(DB4O_LIBS)
 LINK_JSON = $(JSON_LIBS)
 LINK_NUNIT = $(NUNIT_LIBS)
+LINK_MOQ = $(MOQ_LIBS)
 LINK_OSXYPLOT = -r:$(DIR_BIN)/OxyPlotMono.dll
 LINK_COUCHBASE = $(COUCHBASE_LIBS)
 LINK_LONGOMATCH_ADDINS = -r:$(DIR_BIN)/LongoMatch.Addins.dll
@@ -179,6 +180,7 @@ REF_DEP_TESTS = \
                      $(LINK_LONGOMATCH_DB) \
                      $(LINK_JSON) \
                      $(LINK_COUCHBASE) \
+                     $(LINK_MOQ) \
                      $(LINK_NUNIT)
 
 DIR_BIN = $(top_builddir)/$(DEFAULT_BUILD_DIR)
