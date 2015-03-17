@@ -98,7 +98,12 @@ namespace LongoMatch.Services
 		/// <value>The templates.</value>
 		public List<T> Templates {
 			get {
-				return storage.RetrieveAll<T>();
+				List<T> templates = storage.RetrieveAll<T>();
+				// Now add the system templates, use a copy to prevent modification of system templates.
+				foreach (T stemplate in systemTemplates) {
+					templates.Add (Cloner.Clone(stemplate));
+				}
+				return templates;
 			}
 		}
 
