@@ -29,8 +29,6 @@ namespace LongoMatch.Core.Interfaces
 
 	public interface ITemplateProvider
 	{
-		void CheckDefaultTemplate ();
-
 		List<string> TemplatesNames { get; }
 
 		bool Exists (string name);
@@ -50,9 +48,9 @@ namespace LongoMatch.Core.Interfaces
 
 		T LoadFile (string filename);
 
-		void Save (ITemplate template);
+		void Save (T template);
 
-		void Update (ITemplate template);
+		void Update (T template);
 
 		void Register (T template);
 	}
