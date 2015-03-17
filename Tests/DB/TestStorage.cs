@@ -300,6 +300,9 @@ namespace Tests.DB
 			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
 			storage.Store<Project> (p);
 			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+
+			Project p2 = storage.Retrieve<Project> (p.ID);
+			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
 		}
 	}
 }

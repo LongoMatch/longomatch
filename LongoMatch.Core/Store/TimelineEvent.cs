@@ -32,10 +32,11 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 
 	[Serializable]
-	public class  TimelineEvent : PixbufTimeNode, IIDObject
+	public class  TimelineEvent : PixbufTimeNode, IStorable
 	{
 
 		#region Constructors
+
 		public TimelineEvent ()
 		{
 			Drawings = new List<FrameDrawing> ();
