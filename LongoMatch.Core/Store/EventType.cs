@@ -21,11 +21,12 @@ using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using Mono.Unix;
 using Newtonsoft.Json;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class EventType
+	public class EventType: IIDObject
 	{
 
 		public EventType ()
