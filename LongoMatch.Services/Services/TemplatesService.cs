@@ -36,7 +36,7 @@ namespace LongoMatch.Services
 		public TemplatesService (IStorage storage)
 		{
 			dict = new Dictionary<Type, ITemplateProvider> ();
-			dict.Add (typeof(TeamTemplate),
+			dict.Add (typeof(Team),
 			          new TeamTemplatesProvider (storage));
 			dict.Add (typeof(Dashboard),
 			          new CategoriesTemplatesProvider (storage));
