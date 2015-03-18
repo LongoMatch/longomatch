@@ -100,12 +100,8 @@ namespace LongoMatch.Gui.Component
 				if (chooser.MediaFile != null) {
 					fileSet.Add (chooser.MediaFile);
 				} else {
-					if (!have_empty_chooser) {
-						have_empty_chooser = true;
-					} else {
-						// Mark for removal as we only want one empty file chooser at most
-						to_remove.Add (chooser);
-					}
+					// Mark for removal as we only want one empty file chooser at most
+					to_remove.Add (chooser);
 				}
 			}
 
