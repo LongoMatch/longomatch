@@ -61,6 +61,22 @@ namespace LongoMatch.Gui.Component
 		}
 
 		/// <summary>
+		/// Forces a scroll to bottom of our scrolled window. This is useful for the user to access easily the latest entry field.
+		/// </summary>
+		void ScrollToBottom ()
+		{
+			Adjustment adj = mfss_scrolledwindow.Vadjustment;
+
+			adj.Value = adj.Upper - adj.PageSize;
+		}
+
+		void HandleChooserAllocated (object sender, EventArgs e)
+		{
+			ScrollToBottom ();
+			(sender as MediaFileChooser).SizeAllocated -= HandleChooserAllocated;
+		}
+
+		/// <summary>
 		/// Add a media file chooser with given name. If name is null pick a name automatically avoiding duplicates.
 		/// </summary>
 		/// <param name="name">Name.</param>
@@ -82,6 +98,9 @@ namespace LongoMatch.Gui.Component
 			MediaFileChooser chooser = new MediaFileChooser (name);
 
 			chooser.ChangedEvent += HandleFileChangedEvent;
+			// When the chooser is allocated we scroll to the bottom of the window.
+			chooser.SizeAllocated += HandleChooserAllocated;
+
 			chooser.ShowAll ();
 
 			mfss_vbox.PackStart (chooser, true, true, 0);
