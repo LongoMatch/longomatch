@@ -24,16 +24,18 @@ using Gtk;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class MediaFileSetSelection : Gtk.Bin
 	{
 		MediaFileSet fileSet;
 		List<MediaFileChooser> fileChoosers;
 		bool editable = true;
 
-		public MediaFileSetSelection ()
+		public MediaFileSetSelection (bool editable = true)
 		{
 			this.Build ();
+
+			this.editable = editable;
 
 			fileChoosers = new List<MediaFileChooser> ();
 		}
@@ -43,8 +45,6 @@ namespace LongoMatch.Gui.Component
 				fileSet = value;
 
 				if (fileSet.Count > 0) {
-					editable = false;
-
 					// Create all choosers
 					foreach (MediaFile mf in fileSet) {
 						AddMediaFileChooser (mf.Name);

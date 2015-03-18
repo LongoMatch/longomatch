@@ -415,7 +415,7 @@ namespace LongoMatch.Gui
 		public bool SelectMediaFiles (Project project)
 		{
 			bool ret = false;
-			MediaFileSetSelection fileselector = new MediaFileSetSelection ();
+			MediaFileSetSelection fileselector = new MediaFileSetSelection (false);
 			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select video files"),
 				               mainWindow.Toplevel as Gtk.Window,
 				               DialogFlags.Modal | DialogFlags.DestroyWithParent,
