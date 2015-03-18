@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Dialog
 					if (std == selectedVideoStandard) {
 						active = index; 
 					}
-					index ++;
+					index++;
 				}
 				if (min_std == null || std.Height < min_std.Height) {
 					min_std = std;
@@ -113,7 +113,8 @@ namespace LongoMatch.Gui.Dialog
 			bitratecombobox.Active = 1;
 		}
 
-		void AppendFile (MediaFile file) {
+		void AppendFile (MediaFile file)
+		{
 			HBox box;
 			Button delButton;
 			Gtk.Image delImage;
@@ -122,7 +123,7 @@ namespace LongoMatch.Gui.Dialog
 			if (file == null)
 				return;
 			Files.Add (file);
-			box = new HBox();
+			box = new HBox ();
 			delButton = new Button ();
 			delButton.Relief = ReliefStyle.None;
 			delButton.CanFocus = false;
@@ -147,7 +148,7 @@ namespace LongoMatch.Gui.Dialog
 
 			var msg = Catalog.GetString ("Add file");
 			List<string> paths = FileChooserHelper.OpenFiles (this, msg, null,
-			                                                  Config.HomeDir, null, null);
+				                     Config.HomeDir, null, null);
 			foreach (string path in paths) {
 				MediaFile mediaFile = Misc.DiscoverFile (path, this);
 				if (mediaFile != null) {
@@ -198,7 +199,7 @@ namespace LongoMatch.Gui.Dialog
 				fps_n = 30;
 			}
 			encSettings = new EncodingSettings (std, EncodingProfiles.MP4, qual, fps_n, fps_d,
-			                                    mediafilechooser1.CurrentPath, true, false, 0);
+				mediafilechooser1.CurrentPath, true, false, 0);
 			
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);

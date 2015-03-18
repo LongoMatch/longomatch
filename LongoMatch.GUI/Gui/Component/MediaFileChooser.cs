@@ -23,7 +23,7 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class MediaFileChooser : Gtk.Bin
 	{
 		public event EventHandler ChangedEvent;
@@ -173,15 +173,15 @@ namespace LongoMatch.Gui.Component
 				MediaFile = file;
 			} else if (FileChooserMode == FileChooserMode.File) {
 				CurrentPath = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
-				                                          ProposedFileName, Config.LastRenderDir,
-				                                          FilterName, FilterExtensions);
+					ProposedFileName, Config.LastRenderDir,
+					FilterName, FilterExtensions);
 				if (CurrentPath != null) {
 					Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
 				}
 			} else if (FileChooserMode == FileChooserMode.Directory) {
 				CurrentPath = FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"),
-				                                              ProposedDirectoryName, Config.LastRenderDir,
-				                                              null, null);
+					ProposedDirectoryName, Config.LastRenderDir,
+					null, null);
 			}
 			if (ChangedEvent != null) {
 				ChangedEvent (this, null);

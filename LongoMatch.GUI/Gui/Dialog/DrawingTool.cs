@@ -111,18 +111,20 @@ namespace LongoMatch.Gui.Dialog
 			textcolorbutton.ColorSet += HandleTextColorSet;
 			textcolorbutton.Color = Misc.ToGdkColor (Color.White); 
 			backgroundcolorbutton.UseAlpha = true;
-			backgroundcolorbutton.Alpha = (ushort) (ushort.MaxValue * 0.8);
+			backgroundcolorbutton.Alpha = (ushort)(ushort.MaxValue * 0.8);
 			backgroundcolorbutton.ColorSet += HandleBackgroundColorSet;
 			backgroundcolorbutton.Color = Misc.ToGdkColor (Color.Green1); 
 			blackboard.Color = Color.Red1;
 			blackboard.TextColor = Color.Grey2;
 			blackboard.TextBackgroundColor = new Color (Color.Green1.R, Color.Green1.G,
-			                                            Color.Green1.B, 0);
+				Color.Green1.B, 0);
 			textspinbutton.Value = 12;
 			textspinbutton.ValueChanged += (sender, e) => {
-				UpdateTextSize ();};
+				UpdateTextSize ();
+			};
 			linesizespinbutton.ValueChanged += (sender, e) => {
-				UpdateLineWidth ();};
+				UpdateLineWidth ();
+			};
 			linesizespinbutton.Value = 4;
 			
 			clearbutton.Clicked += HandleClearClicked;
@@ -174,9 +176,9 @@ namespace LongoMatch.Gui.Dialog
 			
 			formatStore = new ListStore (typeof(Gdk.Pixbuf), typeof(LineStyle));
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_NORMAL),
-			                          LineStyle.Normal);
+				LineStyle.Normal);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_DASHED),
-			                          LineStyle.Dashed);
+				LineStyle.Dashed);
 			stylecombobox.Clear ();
 			stylecombobox.PackStart (renderer, true);
 			stylecombobox.AddAttribute (renderer, "pixbuf", 0);
@@ -192,15 +194,15 @@ namespace LongoMatch.Gui.Dialog
 			
 			formatStore = new ListStore (typeof(Gdk.Pixbuf), typeof(LineStyle));
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_NORMAL),
-			                          LineType.Simple);
+				LineType.Simple);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_ARROW),
-			                          LineType.Arrow);
+				LineType.Arrow);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_DOUBLE_ARROW),
-			                          LineType.DoubleArrow);
+				LineType.DoubleArrow);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_DOT),
-			                          LineType.Dot);
+				LineType.Dot);
 			formatStore.AppendValues (Gdk.Pixbuf.LoadFromResource (Constants.LINE_DOUBLE_DOT),
-			                          LineType.DoubleDot);
+				LineType.DoubleDot);
 			typecombobox.Clear ();
 			typecombobox.PackStart (renderer, true);
 			typecombobox.AddAttribute (renderer, "pixbuf", 0);
@@ -237,7 +239,7 @@ namespace LongoMatch.Gui.Dialog
 		void EditText (Text text)
 		{
 			text.Value = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Text"),
-			                                           null, text.Value);
+				null, text.Value);
 			QueueDraw ();
 		}
 
@@ -246,8 +248,8 @@ namespace LongoMatch.Gui.Dialog
 			playerText = text;
 			if (playerDialog == null) {
 				Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select player"),
-				                               this, DialogFlags.Modal | DialogFlags.DestroyWithParent,
-				                               Gtk.Stock.Cancel, ResponseType.Cancel);
+					               this, DialogFlags.Modal | DialogFlags.DestroyWithParent,
+					               Gtk.Stock.Cancel, ResponseType.Cancel);
 				d.WidthRequest = 600;
 				d.HeightRequest = 400;
 				
@@ -255,7 +257,7 @@ namespace LongoMatch.Gui.Dialog
 				TeamTagger tagger = new TeamTagger (new WidgetWrapper (da));
 				tagger.ShowSubstitutionButtons = false;
 				tagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-				                  project.Dashboard.FieldBackground);
+					project.Dashboard.FieldBackground);
 				tagger.PlayersSelectionChangedEvent += players => {
 					if (players.Count == 1) {
 						Player p = players [0];
@@ -317,7 +319,7 @@ namespace LongoMatch.Gui.Dialog
 			Color c;
 			
 			c = Misc.ToLgmColor (backgroundcolorbutton.Color,
-			                     backgroundcolorbutton.Alpha);
+				backgroundcolorbutton.Alpha);
 			if (selectedDrawable is Text) {
 				Text t = (selectedDrawable as Text);
 				t.FillColor = t.StrokeColor = c;
@@ -416,7 +418,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 			drawing.Miniature = blackboard.Save ();
 			drawing.Miniature.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE,
-			                                Constants.MAX_THUMBNAIL_SIZE);
+				Constants.MAX_THUMBNAIL_SIZE);
 			play.UpdateMiniature ();
 			drawing = null;
 			Respond (ResponseType.Accept);
@@ -477,12 +479,14 @@ namespace LongoMatch.Gui.Dialog
 			Menu m = new Menu ();
 			MenuItem item = new MenuItem (Catalog.GetString ("Delete"));
 			item.Activated += (sender, e) => {
-				blackboard.DeleteSelection ();};
+				blackboard.DeleteSelection ();
+			};
 			m.Add (item);
 			if (drawable is Text) {
 				MenuItem edit = new MenuItem (Catalog.GetString ("Edit"));
 				edit.Activated += (sender, e) => {
-					EditText (drawable as Text);};
+					EditText (drawable as Text);
+				};
 				m.Add (edit);
 			}
 			m.ShowAll ();
