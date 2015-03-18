@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Mono.Unix;
 using LongoMatch.Core.Store;
@@ -59,8 +60,25 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		/// <summary>
+		/// Add a media file chooser with given name. If name is null pick a name automatically avoiding duplicates.
+		/// </summary>
+		/// <param name="name">Name.</param>
 		void AddMediaFileChooser (String name)
 		{
+			if (name == null) {
+				int i = fileChoosers.Count;
+
+				if (i == 0) {
+					name = Catalog.GetString ("Main camera angle");
+				} else {
+					name = String.Format ("{0} {1}", Catalog.GetString ("Angle"), i);
+					while (fileChoosers.Any (c => c.MediaFile.Name == name)) {
+						name = String.Format ("{0} {1}", Catalog.GetString ("Angle"), ++i);
+					}
+				}
+			}
+
 			MediaFileChooser chooser = new MediaFileChooser (name);
 
 			chooser.ChangedEvent += HandleFileChangedEvent;
@@ -114,7 +132,7 @@ namespace LongoMatch.Gui.Component
 			to_remove.Clear ();
 
 			if (!have_empty_chooser) {
-				AddMediaFileChooser (String.Format ("{0} {1}", Catalog.GetString ("Angle"), fileChoosers.Count));
+				AddMediaFileChooser (null);
 			}
 		}
 
