@@ -118,6 +118,9 @@ namespace LongoMatch.Gui.Component
 				MediaFile mf = fileChoosers [i].MediaFile;
 				if (mf != null) {
 					fileSet.Replace (fileSet [i], mf);	
+				} else {
+					// Make sure that CheckFiles will not return true for this MediaFile...
+					fileSet [i].FilePath = null;
 				}
 			}
 		}
