@@ -117,28 +117,28 @@ namespace LongoMatch.Gui
 		}
 
 		public string SaveFile (string title, string defaultName, string defaultFolder,
-		                       string filterName, string[] extensionFilter)
+		                        string filterName, string[] extensionFilter)
 		{
 			return FileChooserHelper.SaveFile (mainWindow as Widget, title, defaultName,
 				defaultFolder, filterName, extensionFilter);
 		}
 
 		public string SelectFolder (string title, string defaultName, string defaultFolder,
-		                           string filterName, string[] extensionFilter)
+		                            string filterName, string[] extensionFilter)
 		{
 			return FileChooserHelper.SelectFolder (mainWindow as Widget, title, defaultName,
 				defaultFolder, filterName, extensionFilter);
 		}
 
 		public string OpenFile (string title, string defaultName, string defaultFolder,
-		                       string filterName = null, string[] extensionFilter = null)
+		                        string filterName = null, string[] extensionFilter = null)
 		{
 			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
 				defaultFolder, filterName, extensionFilter);
 		}
 
 		public List<string> OpenFiles (string title, string defaultName, string defaultFolder,
-		                              string filterName, string[] extensionFilter)
+		                               string filterName, string[] extensionFilter)
 		{
 			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
 				defaultFolder, filterName, extensionFilter);
