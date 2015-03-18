@@ -240,6 +240,7 @@ namespace LongoMatch.Gui.Component
 					// Just in case it was previously visible, a mediafile might still be loaded if 
 					// the user is going back and forth adding/removing files to the set.
 					HideSecondaryPlayer ();
+					HideDidactic ();
 				}
 			}
 		}
