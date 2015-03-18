@@ -23,10 +23,11 @@ namespace LongoMatch.Core.Store.Drawables
 	[Serializable]
 	public class Counter: Circle
 	{
-		public Counter () {
+		public Counter ()
+		{
 		}
-		
-		public Counter (Point center, double radius, int count):
+
+		public Counter (Point center, double radius, int count) :
 			base (center, radius)
 		{
 			Count = count;

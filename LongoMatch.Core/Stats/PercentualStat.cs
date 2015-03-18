@@ -24,17 +24,16 @@ namespace LongoMatch.Core.Stats
 	public class PercentualStat: Stat
 	{
 		int parentTotal;
-		
-		public PercentualStat (string name, int totalCount, int localTeamCount,
-		                       int visitorTeamCount, int parentTotal): base (name, totalCount, localTeamCount, visitorTeamCount)
 
+		public PercentualStat (string name, int totalCount, int localTeamCount,
+		                       int visitorTeamCount, int parentTotal) : base (name, totalCount, localTeamCount, visitorTeamCount)
 		{
 			this.parentTotal = parentTotal;
 		}
-		
+
 		public int TotalPercent {
 			get {
-				return (int) (((float)TotalCount) / parentTotal * 100);
+				return (int)(((float)TotalCount) / parentTotal * 100);
 			}
 		}
 	}

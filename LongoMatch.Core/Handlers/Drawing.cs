@@ -21,14 +21,14 @@ using LongoMatch.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Core.Handlers.Drawing
 {
-	public delegate void DrawingHandler (IContext context, Area area);
-	public delegate void ButtonPressedHandler (Point coords, uint time, ButtonType type, ButtonModifier modifier);
-	public delegate void ButtonReleasedHandler (Point coords, ButtonType type, ButtonModifier modifier);
+	public delegate void DrawingHandler (IContext context,Area area);
+	public delegate void ButtonPressedHandler (Point coords,uint time,ButtonType type,ButtonModifier modifier);
+	public delegate void ButtonReleasedHandler (Point coords,ButtonType type,ButtonModifier modifier);
 	public delegate void MotionHandler (Point coords);
 	public delegate void ShowTooltipHandler (Point coords);
 	public delegate void SizeChangedHandler ();
 	public delegate void CanvasHandler (ICanvasObject co);
-	public delegate void RedrawHandler (ICanvasObject co, Area area);
+	public delegate void RedrawHandler (ICanvasObject co,Area area);
 
 }
 

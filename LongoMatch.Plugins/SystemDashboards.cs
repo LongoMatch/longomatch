@@ -43,7 +43,7 @@ namespace LongoMatch.Plugins
 			get {
 				Dashboard d = Dashboard.DefaultTemplate (14);
 				d.Name = "Default";
-				return new List<Dashboard> {d};	
+				return new List<Dashboard> { d };	
 			}
 		}
 	}

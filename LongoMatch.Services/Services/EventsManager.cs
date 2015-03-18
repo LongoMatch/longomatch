@@ -111,7 +111,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 		}
 
-		void DeletePlays (List<TimelineEvent> plays, bool update=true)
+		void DeletePlays (List<TimelineEvent> plays, bool update = true)
 		{
 			Log.Debug (plays.Count + " plays deleted");
 			analysisWindow.DeletePlays (plays);
@@ -219,14 +219,14 @@ namespace LongoMatch.Services
 			string outputDir, outputProjectDir, outputFile;
 			
 			if (Config.AutoRenderDir == null ||
-				!Directory.Exists (Config.AutoRenderDir)) {
+			    !Directory.Exists (Config.AutoRenderDir)) {
 				outputDir = Config.VideosDir;
 			} else {
 				outputDir = Config.AutoRenderDir;
 			}
 			
 			outputProjectDir = Path.Combine (outputDir,
-			                                 Utils.SanitizePath (project.Description.DateTitle));
+				Utils.SanitizePath (project.Description.DateTitle));
 			outputFile = String.Format ("{0}-{1}.mp4", play.EventType.Name, play.Name);
 			outputFile = Utils.SanitizePath (outputFile, ' ');
 			outputFile = Path.Combine (outputProjectDir, outputFile);
@@ -252,11 +252,11 @@ namespace LongoMatch.Services
 
 			/* Get the current frame and get a thumbnail from it */
 			if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject) {
+			    projectType == ProjectType.URICaptureProject) {
 				frame = capturer.CurrentCaptureFrame;
 			} else if (projectType == ProjectType.FileProject) {
 				frame = framesCapturer.GetFrame (tagtime, true, Constants.MAX_THUMBNAIL_SIZE,
-				                                 Constants.MAX_THUMBNAIL_SIZE);
+					Constants.MAX_THUMBNAIL_SIZE);
 			}
 			return frame;
 		}
@@ -278,7 +278,7 @@ namespace LongoMatch.Services
 			Save (openedProject);
 			
 			if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject) {
+			    projectType == ProjectType.URICaptureProject) {
 				if (Config.AutoRenderPlaysInLive) {
 					RenderPlay (openedProject, play);
 				}
@@ -292,15 +292,15 @@ namespace LongoMatch.Services
 				return;
 
 			if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject) {
+			    projectType == ProjectType.URICaptureProject) {
 				if (!capturer.Capturing) {
 					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
 				}
 			}
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-			                          start.ToMSecondsString (), stop.ToMSecondsString (),
-			                          evType.Name));
+				start.ToMSecondsString (), stop.ToMSecondsString (),
+				evType.Name));
 			/* Add the new created play to the project and update the GUI*/
 			var play = openedProject.AddEvent (evType, start, stop, eventTime, null, score, card);
 			play.Team = team;
@@ -319,8 +319,8 @@ namespace LongoMatch.Services
 				return;
 			
 			if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject ||
-				projectType == ProjectType.FakeCaptureProject) {
+			    projectType == ProjectType.URICaptureProject ||
+			    projectType == ProjectType.FakeCaptureProject) {
 				if (!capturer.Capturing) {
 					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
@@ -341,8 +341,8 @@ namespace LongoMatch.Services
 			}
 
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-			                          play.Start.ToMSecondsString (), play.Stop.ToMSecondsString (),
-			                          play.EventType.Name));
+				play.Start.ToMSecondsString (), play.Stop.ToMSecondsString (),
+				play.EventType.Name));
 			openedProject.AddEvent (play);
 			AddNewPlay (play);
 		}

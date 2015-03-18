@@ -221,7 +221,6 @@ namespace LongoMatch.Core.Common
 			return false;
 		}
 #endif
-
 	}
 }
 

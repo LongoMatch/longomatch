@@ -24,11 +24,11 @@ using Mono.Unix;
 namespace LongoMatch.Core.Common
 {
 
-
 	public class Device
 	{
-		public Device() {
-			Formats = new List<DeviceVideoFormat>();
+		public Device ()
+		{
+			Formats = new List<DeviceVideoFormat> ();
 
 		}
 
@@ -44,11 +44,11 @@ namespace LongoMatch.Core.Common
 		/// Device id, can be a human friendly name (for DirectShow devices),
 		/// the de device name (/dev/video0) or the GUID (dv1394src)
 		/// </summary>
-		public string ID  {
+		public string ID {
 			get;
 			set;
 		}
-		
+
 		public string SourceElement {
 			get;
 			set;
@@ -58,27 +58,28 @@ namespace LongoMatch.Core.Common
 			get;
 			set;
 		}
-		
-		public string Desc  {
+
+		public string Desc {
 			get {
-				return String.Format("{0} ({1})", ID, SourceElement);
+				return String.Format ("{0} ({1})", ID, SourceElement);
 			}
 		}
 	}
-	
-	public struct DeviceVideoFormat {
+
+	public struct DeviceVideoFormat
+	{
 		public int width;
 		public int height;
 		public int fps_n;
 		public int fps_d;
-		
+
 		public override string ToString ()
 		{
 			if (width == 0 && height == 0 && fps_n == 0 && fps_d == 0) {
 				return Catalog.GetString ("Default");
 			}
 			return string.Format ("{0}x{1}@{2}fps", width, height,
-			                      ((double)fps_n/fps_d).ToString ("#.##"));
+				((double)fps_n / fps_d).ToString ("#.##"));
 		}
 	}
 }

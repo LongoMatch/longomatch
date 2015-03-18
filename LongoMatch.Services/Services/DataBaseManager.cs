@@ -39,7 +39,9 @@ namespace LongoMatch.DB
 			this.DBDir = DBDir;
 			this.guiToolkit = guiToolkit;
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {OpenedProject = p;};
+			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
+				OpenedProject = p;
+			};
 			UpdateDatabases ();
 		}
 

@@ -37,11 +37,12 @@ namespace LongoMatch.Core.Store
 		/// are used by {@MediaTimeNodes} to store the key frame drawing
 		/// which stop time is stored in a int value
 		/// </summary>
-		public FrameDrawing() {
+		public FrameDrawing ()
+		{
 			Pause = new Time (DEFAULT_PAUSE_TIME);
 			Drawables = new List<Drawable> ();
 		}
-		
+
 		public Image Miniature {
 			get;
 			set;

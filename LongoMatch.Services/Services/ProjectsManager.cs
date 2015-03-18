@@ -82,7 +82,7 @@ namespace LongoMatch.Services
 		void EmitProjectChanged ()
 		{
 			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
-			                                              PlaysFilter, analysisWindow);
+				PlaysFilter, analysisWindow);
 		}
 
 		void RemuxOutputFile (EncodingSettings settings)
@@ -154,9 +154,9 @@ namespace LongoMatch.Services
 				projectFile = filePath + "_" + projectFile;
 				Project.Export (OpenedProject, projectFile);
 				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
-					Catalog.GetString ("The video file and a backup of the project has been " +
-					"saved. Try to import it later:\n") +
-					filePath + "\n" + projectFile);
+				Catalog.GetString ("The video file and a backup of the project has been " +
+				"saved. Try to import it later:\n") +
+				filePath + "\n" + projectFile);
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace LongoMatch.Services
 			PlaysFilter = new EventsFilter (project);
 			project.CleanupTimers ();
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
-			                        out analysisWindow);
+				out analysisWindow);
 			Player = analysisWindow.Player;
 			Capturer = analysisWindow.Capturer;
 			OpenedProject = project;
@@ -195,8 +195,8 @@ namespace LongoMatch.Services
 				}
 
 			} else if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject ||
-				projectType == ProjectType.FakeCaptureProject) {
+			           projectType == ProjectType.URICaptureProject ||
+			           projectType == ProjectType.FakeCaptureProject) {
 				try {
 					Capturer.Run (props, project.Description.FileSet.First ());
 				} catch (Exception ex) {
@@ -314,7 +314,7 @@ namespace LongoMatch.Services
 					Log.Exception (e);
 				}
 			} else if (projectType == ProjectType.CaptureProject ||
-				projectType == ProjectType.URICaptureProject) {
+			           projectType == ProjectType.URICaptureProject) {
 				SaveCaptureProject (project);
 			}
 		}
@@ -373,7 +373,7 @@ namespace LongoMatch.Services
 		void HandleMultimediaError (string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
-				" the current project will be closed:") + "\n" + message);
+			" the current project will be closed:") + "\n" + message);
 			CloseOpenedProject (true);
 		}
 
@@ -397,7 +397,7 @@ namespace LongoMatch.Services
 		void HandleCaptureError (string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
-				" the current capture will be closed:") + "\n" + message);
+			" the current capture will be closed:") + "\n" + message);
 			HandleCaptureFinished (true);
 		}
 

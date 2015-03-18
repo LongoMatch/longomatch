@@ -28,18 +28,18 @@ namespace LongoMatch.Core.Stats
 	{
 		
 		List<PercentualStat> optionStats;
-		
+
 		public SubCategoryStat (string name)
 		{
 			Name = name;
-			optionStats = new List<PercentualStat>();
+			optionStats = new List<PercentualStat> ();
 		}
-		
+
 		public string Name {
 			get;
 			set;
 		}
-		
+
 		public List<PercentualStat> OptionStats {
 			get {
 				return optionStats; 

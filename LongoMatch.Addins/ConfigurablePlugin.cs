@@ -67,7 +67,7 @@ namespace LongoMatch.Addins
 		void Load ()
 		{
 			if (File.Exists (ConfigFile)) {
-				using (StreamReader reader = File.OpenText(ConfigFile)) {
+				using (StreamReader reader = File.OpenText (ConfigFile)) {
 					JObject o;
 					try {
 						o = (JObject)JToken.ReadFrom (new JsonTextReader (reader));

@@ -28,36 +28,36 @@ namespace LongoMatch.Core.Common
 		public string Name;
 		public uint AudioQuality;
 		public uint VideoQuality;
-		
+
 		public EncodingQuality ()
 		{
 		}
-		
+
 		public EncodingQuality (string name, uint videoQuality, uint audioQuality)
 		{
 			Name = name;
 			VideoQuality = videoQuality;
 			AudioQuality = audioQuality;
 		}
-		
+
 		public override bool Equals (object obj)
 		{
 			EncodingQuality q;
 			if (!(obj is EncodingQuality))
 				return false;
-			q = (EncodingQuality) obj;	
+			q = (EncodingQuality)obj;	
 			return q.Name == Name &&
-				q.AudioQuality == AudioQuality &&
-				q.VideoQuality == VideoQuality;
+			q.AudioQuality == AudioQuality &&
+			q.VideoQuality == VideoQuality;
 		}
-		
+
 		public override int GetHashCode ()
 		{
-			return String.Format ("{0}-{1}-{2}", Name, AudioQuality, VideoQuality).GetHashCode();
+			return String.Format ("{0}-{1}-{2}", Name, AudioQuality, VideoQuality).GetHashCode ();
 		}
 
 	}
-	
+
 	public class EncodingQualities
 	{
 		public static EncodingQuality Lowest = new EncodingQuality ("Lowest (500 kbps)", 500, 128);
@@ -65,7 +65,7 @@ namespace LongoMatch.Core.Common
 		public static EncodingQuality Medium = new EncodingQuality ("Medium (2000 kbps)", 2000, 128);
 		public static EncodingQuality High = new EncodingQuality ("High (4000 kbps)", 4000, 128);
 		public static EncodingQuality Highest = new EncodingQuality ("Highest (6000 kbps)", 6000, 128);
-		
+
 		public static List<EncodingQuality> All {
 			get {
 				List<EncodingQuality> list = new List<EncodingQuality> ();
@@ -80,7 +80,7 @@ namespace LongoMatch.Core.Common
 
 		public static EncodingQuality[] Transcode {
 			get {
-					return new EncodingQuality[] {Highest, High, Medium};
+				return new EncodingQuality[] { Highest, High, Medium };
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Stats
 		Team template;
 		TeamType team;
 		EventsFilter filter;
-		
+
 		public TeamStats (Project project, EventsFilter filter, TeamType team)
 		{
 			this.project = project;
@@ -50,7 +50,7 @@ namespace LongoMatch.Core.Stats
 			get;
 			set;
 		}
-				
+
 		public void Update ()
 		{
 			foreach (PlayerStats stats in PlayersStats) {

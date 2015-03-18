@@ -33,6 +33,7 @@ namespace LongoMatch.DB
 		string dbName;
 		TimeSpan maxDaysWithoutBackup = new TimeSpan (5, 0, 0, 0);
 
+
 		public DataBase (string dbDirPath)
 		{
 			dbName = Path.GetFileNameWithoutExtension (dbDirPath);
@@ -219,7 +220,7 @@ namespace LongoMatch.DB
 			DBPath = dbPath;
 			ProjectsDict = new Dictionary <Guid, ProjectDescription> ();
 			Version = new System.Version (Constants.DB_MAYOR_VERSION,
-			                              Constants.DB_MINOR_VERSION);
+				Constants.DB_MINOR_VERSION);
 			LastBackup = DateTime.UtcNow;
 		}
 

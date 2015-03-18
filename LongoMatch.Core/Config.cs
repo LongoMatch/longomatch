@@ -51,7 +51,8 @@ namespace LongoMatch
 		static ConfigState state;
 
 
-		public static void Init () {
+		public static void Init ()
+		{
 			string home;
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
@@ -60,14 +61,14 @@ namespace LongoMatch
 			} else {
 				Config.baseDirectory = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "../");
 				if (!Directory.Exists (Path.Combine (Config.baseDirectory, "share",
-				                                     Constants.SOFTWARE_NAME))) {
+					    Constants.SOFTWARE_NAME))) {
 					Config.baseDirectory = Path.Combine (Config.baseDirectory, "../");
 				}
 				if (!Directory.Exists (Path.Combine (Config.baseDirectory, "share",
-				                                     Constants.SOFTWARE_NAME)))
+					    Constants.SOFTWARE_NAME)))
 					Log.Warning ("Prefix directory not found");
 				Config.dataDir = Path.Combine (Config.baseDirectory, "share",
-				                               Constants.SOFTWARE_NAME.ToLower ());
+					Constants.SOFTWARE_NAME.ToLower ());
 			}
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
@@ -82,14 +83,15 @@ namespace LongoMatch
 				Config.configDirectory = Config.homeDirectory;
 			else
 				Config.configDirectory = System.IO.Path.Combine (home, "." +
-					Constants.SOFTWARE_NAME.ToLower ());
+				Constants.SOFTWARE_NAME.ToLower ());
 		}
-		
-		public static void Load () {
-			if (File.Exists(Config.ConfigFile)) {
+
+		public static void Load ()
+		{
+			if (File.Exists (Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = Serializer.LoadSafe<ConfigState>(Config.ConfigFile);
+					state = Serializer.LoadSafe<ConfigState> (Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -98,7 +100,7 @@ namespace LongoMatch
 			
 			if (state == null) {
 				Log.Information ("Creating new config at " + Config.ConfigFile);
-				state = new ConfigState();
+				state = new ConfigState ();
 				Save ();
 			}
 			Background = new Image (Path.Combine (Config.ImagesDir, Constants.BACKGROUND));
@@ -106,16 +108,17 @@ namespace LongoMatch
 			License = Constants.LICENSE;
 			SoftwareName = Constants.SOFTWARE_NAME;
 		}
-		
-		public static void Save () {
+
+		public static void Save ()
+		{
 			try {
-				Serializer.Save(state, Config.ConfigFile); 
+				Serializer.Save (state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Errro saving config");
 				Log.Exception (ex);
 			}
 		}
-		
+
 		public static StyleConf Style {
 			get {
 				if (style == null) {
@@ -130,11 +133,11 @@ namespace LongoMatch
 
 		public static string ConfigFile {
 			get {
-				string filename = Constants.SOFTWARE_NAME.ToLower() + "-1.0.config";
-				return Path.Combine(Config.ConfigDir, filename);
+				string filename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
+				return Path.Combine (Config.ConfigDir, filename);
 			}
 		}
-		
+
 		public static string HomeDir {
 			get {
 				return homeDirectory;
@@ -146,7 +149,7 @@ namespace LongoMatch
 				baseDirectory = value;
 			}
 		}
-		
+
 		public static string ConfigDir {
 			set {
 				configDirectory = value;
@@ -155,34 +158,34 @@ namespace LongoMatch
 				return configDirectory;
 			}
 		}
-		
+
 		public static string PlayListDir {
 			get {
-				return Path.Combine(homeDirectory, "playlists");
+				return Path.Combine (homeDirectory, "playlists");
 			}
 		}
 
 		public static string SnapshotsDir {
 			get {
-				return Path.Combine(homeDirectory, "snapshots");
+				return Path.Combine (homeDirectory, "snapshots");
 			}
 		}
 
 		public static string TemplatesDir {
 			get {
-				return Path.Combine(homeDirectory, "templates");
+				return Path.Combine (homeDirectory, "templates");
 			}
 		}
 
 		public static string VideosDir {
 			get {
-				return Path.Combine(homeDirectory, "videos");
+				return Path.Combine (homeDirectory, "videos");
 			}
 		}
 
 		public static string TempVideosDir {
 			get {
-				return Path.Combine(configDirectory, "temp");
+				return Path.Combine (configDirectory, "temp");
 			}
 		}
 
@@ -191,57 +194,59 @@ namespace LongoMatch
 				return Path.Combine (dataDir, "images");
 			}
 		}
-		
+
 		public static string IconsDir {
 			get {
 				return Path.Combine (dataDir, "icons");
 			}
 		}
-		
+
 		public static string LibsDir {
 			get {
-				return RelativeToPrefix(Path.Combine ("lib",
-				                                      Constants.SOFTWARE_NAME.ToLower()));
+				return RelativeToPrefix (Path.Combine ("lib",
+					Constants.SOFTWARE_NAME.ToLower ()));
 			}
 		}
 
 		public static string PluginsDir {
 			get {
-				return RelativeToPrefix(String.Format("lib/{0}/plugins",
-				                                      Constants.SOFTWARE_NAME.ToLower()));
+				return RelativeToPrefix (String.Format ("lib/{0}/plugins",
+					Constants.SOFTWARE_NAME.ToLower ()));
 			}
 		}
-		
+
 		public static string PluginsConfigDir {
 			get {
-				return Path.Combine(configDirectory, "addins-1.0");
+				return Path.Combine (configDirectory, "addins-1.0");
 			}
 		}
 
 		public static string DBDir {
 			get {
-				return Path.Combine(homeDirectory, "db");
+				return Path.Combine (homeDirectory, "db");
 			}
 		}
 
 		public static string AnalysisDir {
 			get {
-				return Path.Combine(DBDir, "analysis");
+				return Path.Combine (DBDir, "analysis");
 			}
 			
 		}
+
 		public static string TeamsDir {
 			get {
-				return Path.Combine(DBDir, "teams");
+				return Path.Combine (DBDir, "teams");
 			}
 		}
-		
-		public static string RelativeToPrefix(string relativePath) {
-			return Path.Combine(baseDirectory, relativePath);
+
+		public static string RelativeToPrefix (string relativePath)
+		{
+			return Path.Combine (baseDirectory, relativePath);
 		}
-		
+
 		#region Properties
-		
+
 		static public Image Background {
 			get;
 			set;
@@ -251,12 +256,12 @@ namespace LongoMatch
 			get;
 			set;
 		}
-		
+
 		static public string License {
 			get;
 			set;
 		}
-		
+
 		static public string SoftwareName {
 			get;
 			set;
@@ -272,25 +277,25 @@ namespace LongoMatch
 				return new Image (Path.Combine (Config.ImagesDir, Constants.FIELD_BACKGROUND));
 			}
 		}
-		
+
 		static public Image HalfFieldBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.HALF_FIELD_BACKGROUND));
 			}
 		}
-		
+
 		static public Image HHalfFieldBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.HHALF_FIELD_BACKGROUND));
 			}
 		}
-		
+
 		static public Image GoalBackground {
 			get {
 				return new Image (Path.Combine (Config.ImagesDir, Constants.GOAL_BACKGROUND));
 			}
 		}
-		
+
 		public static bool FastTagging {
 			get {
 				return state.fastTagging;
@@ -300,12 +305,12 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool UseGameUnits {
 			get;
 			set;
 		}
-		
+
 		public static string CurrentDatabase {
 			get {
 				return state.currentDatabase;
@@ -315,7 +320,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static string Lang {
 			get {
 				return state.lang;
@@ -325,7 +330,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static VideoStandard CaptureVideoStandard {
 			get {
 				return state.captureVideoStandard;
@@ -335,18 +340,18 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static EncodingProfile CaptureEncodingProfile {
 			get {
 				return state.captureEncodingProfile;
 			}
-			set{
+			set {
 				state.captureEncodingProfile = value;
 				Save ();
 				
 			}
 		}
-		
+
 		public static VideoStandard RenderVideoStandard {
 			get {
 				return state.renderVideoStandard;
@@ -356,29 +361,29 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static EncodingProfile RenderEncodingProfile {
 			get {
 				return state.renderEncodingProfile;
 			}
-			set{
+			set {
 				state.renderEncodingProfile = value;
 				Save ();
 				
 			}
 		}
-		
+
 		public static EncodingQuality CaptureEncodingQuality {
 			get {
 				return state.captureEncodingQuality;
 			}
-			set{
+			set {
 				state.captureEncodingQuality = value;
 				Save ();
 				
 			}
 		}
-			
+
 		public static EncodingQuality RenderEncodingQuality {
 			get {
 				return state.renderEncodingQuality;
@@ -388,7 +393,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool AutoSave {
 			get {
 				return state.autoSave;
@@ -398,7 +403,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool OverlayTitle {
 			get {
 				return state.overlayTitle;
@@ -408,7 +413,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool EnableAudio {
 			get {
 				return state.enableAudio;
@@ -418,7 +423,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static uint FPS_N {
 			get {
 				return state.fps_n;
@@ -428,7 +433,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static uint FPS_D {
 			get {
 				return state.fps_d;
@@ -438,7 +443,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool AutoRenderPlaysInLive {
 			get {
 				return state.autorender;
@@ -448,7 +453,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static string AutoRenderDir {
 			get {
 				return state.autorenderDir;
@@ -458,7 +463,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static string LastRenderDir {
 			get {
 				return state.lastRenderDir;
@@ -468,7 +473,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static bool ReviewPlaysInSameWindow {
 			get {
 				return state.reviewPlaysInSameWindow;
@@ -478,7 +483,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static string DefaultTemplate {
 			get {
 				return state.defaultTemplate;
@@ -488,7 +493,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static Hotkeys Hotkeys {
 			get {
 				return state.hotkeys;
@@ -498,7 +503,7 @@ namespace LongoMatch
 				Save ();
 			}
 		}
-		
+
 		public static ProjectSortMethod ProjectSortMethod {
 			get {
 				return state.projectSortMethod;
@@ -508,13 +513,15 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+
 		#endregion
 
 	}
-	
+
 	[Serializable]
 	//[JsonConverter (typeof (LongoMatchConverter))]
-	public class ConfigState{
+	public class ConfigState
+	{
 		public bool fastTagging;
 		public bool autoSave;
 		public string currentDatabase;
@@ -536,8 +543,9 @@ namespace LongoMatch
 		public string defaultTemplate;
 		public Hotkeys hotkeys;
 		public ProjectSortMethod projectSortMethod;
-		
-		public ConfigState () {
+
+		public ConfigState ()
+		{
 			/* Set default values */
 			fastTagging = false;
 			currentDatabase = Constants.DEFAULT_DB_NAME;

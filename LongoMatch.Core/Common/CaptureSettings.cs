@@ -26,6 +26,7 @@ namespace LongoMatch.Core.Common
 		public Device Device;
 		public DeviceVideoFormat Format;
 		public EncodingSettings EncodingSettings;
+
 	}
 	
 }

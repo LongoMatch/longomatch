@@ -60,7 +60,7 @@ namespace LongoMatch.Core.Common
 		public const int ListCategoryHeight = 50;
 		public const int ListCountRadio = 10;
 		public const int ListCountWidth = 20;
-		public const int ListTextOffset =  ListRowSeparator * 2 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
+		public const int ListTextOffset = ListRowSeparator * 2 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
 
 		public const int ListEyeIconOffset = 10;
 		public const string ListEyeIconPath = "hicolor/scalable/actions/longomatch-eye.svg";
@@ -89,11 +89,11 @@ namespace LongoMatch.Core.Common
 		public const string PlayerArrowIn = "player/arrow-in.svg";
 		public const string PlayerPhoto = "player/photo.svg";
 		public const int PlayerLineWidth = 2;
-		public const int PlayerSize  = 60;
-		public const int PlayerNumberSize  = 20;
+		public const int PlayerSize = 60;
+		public const int PlayerNumberSize = 20;
 		public const int PlayerArrowSize = PlayerNumberSize;
-		public const int PlayerNumberX  = 0;
-		public const int PlayerNumberY  = 60 - PlayerLineWidth - PlayerNumberSize + 1;
+		public const int PlayerNumberX = 0;
+		public const int PlayerNumberY = 60 - PlayerLineWidth - PlayerNumberSize + 1;
 		public const int PlayerArrowX = PlayerNumberX;
 		public const int PlayerArrowY = PlayerNumberY - PlayerArrowSize + 1;
 		
@@ -136,7 +136,7 @@ namespace LongoMatch.Core.Common
 		public int TeamTaggerBenchBorder = 10;
 
 		public string Font = "Ubuntu";
-		
+
 		public Color HomeTeamColor { get; set; }
 
 		public Color AwayTeamColor { get; set; }
@@ -156,7 +156,7 @@ namespace LongoMatch.Core.Common
 		public Color PaletteActive { get; set; }
 
 		public Color PaletteTool { get; set; }
-		
+
 		public Color PaletteText { get; set; }
 
 		public StyleConf ()
@@ -173,7 +173,7 @@ namespace LongoMatch.Core.Common
 			PaletteTool = Color.Black;
 			PaletteText = Color.Black;
 		}
-		
+
 		public static StyleConf Load (string filename)
 		{
 			return Serializer.Load <StyleConf> (filename);

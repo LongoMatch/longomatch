@@ -58,8 +58,8 @@ namespace LongoMatch.Plugins
 		{
 			string proposed_filename = project.Description.Title + ".csv";
 			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), proposed_filename,
-			                                       Config.HomeDir, "CSV",
-			                                       new string[] { ".csv" });
+				                  Config.HomeDir, "CSV",
+				                  new string[] { ".csv" });
 			
 			if (filename == null)
 				return;
@@ -98,7 +98,7 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName(TeamType team)
+		string TeamName (TeamType team)
 		{
 			if (team == TeamType.LOCAL) {
 				return project.LocalTeamTemplate.TeamName;
@@ -111,13 +111,13 @@ namespace LongoMatch.Plugins
 			}
 		}
 
-		void ExportCategory(EventType evt)
+		void ExportCategory (EventType evt)
 		{
 			string headers;
 			List<TimelineEvent> plays;
 			
-			output.Add("CATEGORY: " + evt.Name);
-			plays = project.EventsByType(evt);
+			output.Add ("CATEGORY: " + evt.Name);
+			plays = project.EventsByType (evt);
 			
 			/* Write Headers for this category */
 			headers = "Name;Time;Start;Stop;Team;Player";
@@ -126,20 +126,20 @@ namespace LongoMatch.Plugins
 			}
 			if (evt is AnalysisEventType) {
 				foreach (Tag tag in (evt as AnalysisEventType).Tags) {
-					headers += String.Format(";{0}", tag.Value);
+					headers += String.Format (";{0}", tag.Value);
 				}
 			}
-			output.Add(headers);
+			output.Add (headers);
 			
 			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
 				string line;
 				
-				line = String.Format("{0};{1};{2};{3};{4};{5}", play.Name,
-				                      play.EventTime == null ? "" : play.EventTime.ToMSecondsString(),
-				                      play.Start.ToMSecondsString(),
-				                      play.Stop.ToMSecondsString(),
-				                      TeamName(project.EventTaggedTeam(play)),
-				                      String.Join (" | ", play.Players));
+				line = String.Format ("{0};{1};{2};{3};{4};{5}", play.Name,
+					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
+					play.Start.ToMSecondsString (),
+					play.Stop.ToMSecondsString (),
+					TeamName (project.EventTaggedTeam (play)),
+					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {
 					line += ";" + (play as ScoreEvent).Score.Points;

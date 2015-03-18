@@ -36,27 +36,27 @@ namespace LongoMatch.Core.Store.Drawables
 			Type = type;
 			Style = style;
 		}
-		
+
 		public Point Start {
 			get;
 			set;
 		}
-		
+
 		public Point Stop {
 			get;
 			set;
 		}
-		
-		public LineType Type{
+
+		public LineType Type {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public override Area Area {
 			get {
 				return new Area (new Point (Math.Min (Start.X, Stop.X), Math.Min (Start.Y, Stop.Y)),
-				                 Math.Abs (Stop.X - Start.X), Math.Abs (Stop.Y - Start.Y));
+					Math.Abs (Stop.X - Start.X), Math.Abs (Stop.Y - Start.Y));
 			}
 		}
 
@@ -64,11 +64,12 @@ namespace LongoMatch.Core.Store.Drawables
 		public Point Center {
 			get {
 				return new Point (Start.X + (Stop.X - Start.X) / 2,
-				                  Start.Y + (Stop.Y -Start.Y) / 2);
+					Start.Y + (Stop.Y - Start.Y) / 2);
 			}
 		}
-		
-		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
+
+		public override Selection GetSelection (Point p, double pr = 0.05, bool inMotion = false)
+		{
 			double d;
 		
 			if (MatchPoint (Start, p, pr, out d)) {
@@ -97,16 +98,17 @@ namespace LongoMatch.Core.Store.Drawables
 					d = Math.Abs ((slope * p.X) + yi - p.Y);
 				}
 				
-				if (d  < pr) {
+				if (d < pr) {
 					return new Selection (this, SelectionPosition.All, d);
 				} else {
 					return null;
 				}
 			}
 		}
-		
-		public override void Move (Selection sel, Point p, Point moveStart) {
-						switch (sel.Position) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
+			switch (sel.Position) {
 			case SelectionPosition.LineStart:
 				Start = p;
 				break;

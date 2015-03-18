@@ -40,14 +40,13 @@ namespace LongoMatch.Services.Services
 			}
 		}
 
-		~FileStorage()
+		~FileStorage ()
 		{
 			if (deleteOnDestroy)
-				Reset();
+				Reset ();
 		}
 
-		public string BasePath
-		{
+		public string BasePath {
 			get {
 				return basePath;
 			}
@@ -55,7 +54,7 @@ namespace LongoMatch.Services.Services
 
 		private string ResolvePath<T> ()
 		{
-			string typePath = Path.Combine(basePath, ResolveType (typeof(T)));
+			string typePath = Path.Combine (basePath, ResolveType (typeof(T)));
 
 			if (!Directory.Exists (typePath)) {
 				Log.Information ("Creating directory " + typePath);
@@ -84,16 +83,11 @@ namespace LongoMatch.Services.Services
 			string sType = ResolveType (t);
 
 			// Add the different cases of t
-			if (sType == "dashboard")
-			{
+			if (sType == "dashboard") {
 				return Constants.CAT_TEMPLATE_EXT;
-			}
-			else if (sType == "team")
-			{
+			} else if (sType == "team") {
 				return Constants.TEAMS_TEMPLATE_EXT;
-			}
-			else
-			{
+			} else {
 				return ".json";
 			}
 		}
@@ -102,11 +96,11 @@ namespace LongoMatch.Services.Services
 
 		public T Retrieve<T> (Guid id) where T : IStorable
 		{
-			string typePath = ResolvePath<T>();
-			string path = Path.Combine (typePath, id.ToString () + GetExtension(typeof(T)));
+			string typePath = ResolvePath<T> ();
+			string path = Path.Combine (typePath, id.ToString () + GetExtension (typeof(T)));
 
 			if (File.Exists (path)) {
-				T t = Serializer.LoadSafe<T>(path);
+				T t = Serializer.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 				return t;
 			}
@@ -116,13 +110,13 @@ namespace LongoMatch.Services.Services
 		public List<T> RetrieveAll<T> () where T : IStorable
 		{
 			List<T> l = new List<T> ();
-			string typePath = ResolvePath<T>();
-			string extension = GetExtension(typeof(T));
+			string typePath = ResolvePath<T> ();
+			string extension = GetExtension (typeof(T));
 
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = (T)Serializer.LoadSafe<T>(path);
+				T t = (T)Serializer.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 				l.Add (t);
 			}
@@ -132,59 +126,52 @@ namespace LongoMatch.Services.Services
 		public List<T> Retrieve<T> (Dictionary<string,object> dict) where T : IStorable
 		{
 			List<T> l = new List<T> ();
-			string typePath = ResolvePath<T>();
-			string extension = GetExtension(typeof(T));
+			string typePath = ResolvePath<T> ();
+			string extension = GetExtension (typeof(T));
 
 			if (dict == null)
-				return RetrieveAll<T>();
+				return RetrieveAll<T> ();
 
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = (T)Serializer.LoadSafe<T>(path);
+				T t = (T)Serializer.LoadSafe<T> (path);
 				bool matches = true;
 
-				foreach (KeyValuePair<string, object> entry in dict)
-				{
-					FieldInfo finfo = t.GetType().GetField(entry.Key);
-					PropertyInfo pinfo = t.GetType().GetProperty(entry.Key);
+				foreach (KeyValuePair<string, object> entry in dict) {
+					FieldInfo finfo = t.GetType ().GetField (entry.Key);
+					PropertyInfo pinfo = t.GetType ().GetProperty (entry.Key);
 					object ret = null;
 
-					if (pinfo == null && finfo == null)
-					{
+					if (pinfo == null && finfo == null) {
 						Log.Warning ("Property/Field does not exist " + entry.Key);
 						matches = false;
 						break;
 					}
 
 					if (pinfo != null)
-						ret = pinfo.GetValue(t, null);
+						ret = pinfo.GetValue (t, null);
 					else
-						ret = finfo.GetValue(t);
+						ret = finfo.GetValue (t);
 
-					if (ret == null && entry.Value != null)
-					{
+					if (ret == null && entry.Value != null) {
 						matches = false;
 						break;
 					}
 
-					if (ret != null && entry.Value == null)
-					{
+					if (ret != null && entry.Value == null) {
 						matches = false;
 						break;
 					}
 
-					if (ret.GetType() == entry.Value.GetType())
-					{
-						if (Object.Equals(ret, entry.Value))
-						{
+					if (ret.GetType () == entry.Value.GetType ()) {
+						if (Object.Equals (ret, entry.Value)) {
 							matches = true;
 						}
 					}
 				}
 
-				if (matches)
-				{
+				if (matches) {
 					Log.Information ("Retrieving " + path);
 					l.Add (t);
 				}
@@ -195,22 +182,22 @@ namespace LongoMatch.Services.Services
 
 		public void Store<T> (T t) where T : IStorable
 		{
-			string typePath = ResolvePath<T>();
-			string extension = GetExtension(typeof(T));
+			string typePath = ResolvePath<T> ();
+			string extension = GetExtension (typeof(T));
 
 			// Save the object as a file on disk
 			string path = Path.Combine (typePath, t.ID.ToString ()) + extension;
 			Log.Information ("Storing " + path);
-			Serializer.Save<T>(t, path);
+			Serializer.Save<T> (t, path);
 		}
 
 		public void Delete<T> (T t) where T : IStorable
 		{
-			string typePath = ResolvePath<T>();
-			string extension = GetExtension(typeof(T));
+			string typePath = ResolvePath<T> ();
+			string extension = GetExtension (typeof(T));
 
 			try {
-				string path = Path.Combine(typePath, t.ID.ToString()) + extension; 
+				string path = Path.Combine (typePath, t.ID.ToString ()) + extension; 
 				Log.Information ("Deleting " + path);
 				File.Delete (path);
 			} catch (Exception ex) {
@@ -218,13 +205,14 @@ namespace LongoMatch.Services.Services
 			}
 		}
 
-		public void Reset()
+		public void Reset ()
 		{
 			if (File.Exists (basePath)) {
 				Log.Information ("Deleting " + basePath + " recursively");
-				Directory.Delete(basePath, true);
+				Directory.Delete (basePath, true);
 			}
 		}
+
 		#endregion
 
 		/// <summary>
@@ -238,7 +226,7 @@ namespace LongoMatch.Services.Services
 			T t;
 
 			Log.Information ("Loading " + from);
-			t = (T)Serializer.LoadSafe<T>(from);
+			t = (T)Serializer.LoadSafe<T> (from);
 			return t;
 		}
 
@@ -250,7 +238,7 @@ namespace LongoMatch.Services.Services
 		/// <typeparam name="T">The type of the object.</typeparam>
 		public static void StoreAt<T> (T t, string at) where T : IStorable
 		{
-			Log.Information ("Saving " + t.ID.ToString() + " to " + at);
+			Log.Information ("Saving " + t.ID.ToString () + " to " + at);
 
 			if (File.Exists (at)) {
 				throw new Exception ("A file already exists at " + at);

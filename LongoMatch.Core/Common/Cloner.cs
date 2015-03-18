@@ -22,17 +22,17 @@ namespace LongoMatch.Core.Common
 {
 	public static class Cloner
 	{
-		public static T Clone<T> (this T source) {
-			if (Object.ReferenceEquals(source, null))
+		public static T Clone<T> (this T source)
+		{
+			if (Object.ReferenceEquals (source, null))
 				return default(T);
 			
-			Stream s = new MemoryStream();
+			Stream s = new MemoryStream ();
 			using (s) {
-				Serializer.Save<T>(source, s, SerializationType.Binary);
-				s.Seek(0, SeekOrigin.Begin);
-				return Serializer.Load<T>(s, SerializationType.Binary);
+				Serializer.Save<T> (source, s, SerializationType.Binary);
+				s.Seek (0, SeekOrigin.Begin);
+				return Serializer.Load<T> (s, SerializationType.Binary);
 			}
 		}
 	}
 }
-

@@ -58,7 +58,7 @@ namespace LongoMatch.Core.Stats
 						localTeamCount = homeEvents.Count (e => e.Tags.Contains (t));
 						visitorTeamCount = awayEvents.Count (e => e.Tags.Contains (t));
 						PercentualStat pStat = new PercentualStat (t.Value, count, localTeamCount,
-						                                           visitorTeamCount, events.Count);
+							                       visitorTeamCount, events.Count);
 						substat.OptionStats.Add (pStat);
 					}
 					SubcategoriesStats.Add (substat);

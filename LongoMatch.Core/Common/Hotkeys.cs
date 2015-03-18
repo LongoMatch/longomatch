@@ -44,14 +44,15 @@ namespace LongoMatch.Core.Common
 			get;
 			set;
 		}
-		
+
 		void UpdateMapping (KeyAction action, string name)
 		{
 			HotKey key = Keyboard.ParseName (name);
 			ActionsHotkeys [action] = key;
 		}
 
-		void FillDefaults() {
+		void FillDefaults ()
+		{
 			ActionsDescriptions [KeyAction.DeleteEvent] = Catalog.GetString ("Delete selected event");
 			ActionsDescriptions [KeyAction.DrawFrame] = Catalog.GetString ("Draw frame");
 			ActionsDescriptions [KeyAction.EditEvent] = Catalog.GetString ("Edit selected event");

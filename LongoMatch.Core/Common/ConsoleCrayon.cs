@@ -36,46 +36,48 @@ namespace LongoMatch.Core.Common
 		#region Public API
 
 		private static ConsoleColor foreground_color;
+
 		public static ConsoleColor ForegroundColor {
 			get {
 				return foreground_color;
 			}
 			set {
 				foreground_color = value;
-				SetColor(foreground_color, true);
+				SetColor (foreground_color, true);
 			}
 		}
 
 		private static ConsoleColor background_color;
+
 		public static ConsoleColor BackgroundColor {
 			get {
 				return background_color;
 			}
 			set {
 				background_color = value;
-				SetColor(background_color, false);
+				SetColor (background_color, false);
 			}
 		}
 
-		public static void ResetColor()
+		public static void ResetColor ()
 		{
-			if(XtermColors) {
-				Console.Write(GetAnsiResetControlCode());
-			} else if(Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
-				Console.ResetColor();
+			if (XtermColors) {
+				Console.Write (GetAnsiResetControlCode ());
+			} else if (Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
+				Console.ResetColor ();
 			}
 		}
 
-		private static void SetColor(ConsoleColor color, bool isForeground)
+		private static void SetColor (ConsoleColor color, bool isForeground)
 		{
-			if(color < ConsoleColor.Black || color > ConsoleColor.White) {
-				throw new ArgumentOutOfRangeException("color", "Not a ConsoleColor value.");
+			if (color < ConsoleColor.Black || color > ConsoleColor.White) {
+				throw new ArgumentOutOfRangeException ("color", "Not a ConsoleColor value.");
 			}
 
-			if(XtermColors) {
-				Console.Write(GetAnsiColorControlCode(color, isForeground));
-			} else if(Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
-				if(isForeground) {
+			if (XtermColors) {
+				Console.Write (GetAnsiColorControlCode (color, isForeground));
+			} else if (Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
+				if (isForeground) {
 					Console.ForegroundColor = color;
 				} else {
 					Console.BackgroundColor = color;
@@ -92,11 +94,11 @@ namespace LongoMatch.Core.Common
 		// Authors: Gonzalo Paniagua Javier <gonzalo@ximian.com>
 		// (C) 2005-2006 Novell, Inc <http://www.novell.com>
 
-		private static int TranslateColor(ConsoleColor desired, out bool light)
+		private static int TranslateColor (ConsoleColor desired, out bool light)
 		{
 			light = false;
-			switch(desired) {
-				// Dark colors
+			switch (desired) {
+			// Dark colors
 			case ConsoleColor.Black:
 				return 0;
 			case ConsoleColor.DarkRed:
@@ -114,7 +116,7 @@ namespace LongoMatch.Core.Common
 			case ConsoleColor.Gray:
 				return 7;
 
-				// Light colors
+			// Light colors
 			case ConsoleColor.DarkGray:
 				light = true;
 				return 0;
@@ -143,16 +145,16 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		private static string GetAnsiColorControlCode(ConsoleColor color, bool isForeground)
+		private static string GetAnsiColorControlCode (ConsoleColor color, bool isForeground)
 		{
 			// lighter fg colours are 90 -> 97 rather than 30 -> 37
 			// lighter bg colours are 100 -> 107 rather than 40 -> 47
 			bool light;
-			int code = TranslateColor(color, out light) + (isForeground ? 30 : 40) + (light ? 60 : 0);
-			return String.Format("\x001b[{0}m", code);
+			int code = TranslateColor (color, out light) + (isForeground ? 30 : 40) + (light ? 60 : 0);
+			return String.Format ("\x001b[{0}m", code);
 		}
 
-		private static string GetAnsiResetControlCode()
+		private static string GetAnsiResetControlCode ()
 		{
 			return "\x001b[0m";
 		}
@@ -162,37 +164,38 @@ namespace LongoMatch.Core.Common
 		#region xterm Detection
 
 		private static bool? xterm_colors = null;
+
 		public static bool XtermColors {
 			get {
-				if(xterm_colors == null) {
-					DetectXtermColors();
+				if (xterm_colors == null) {
+					DetectXtermColors ();
 				}
 
 				return xterm_colors.Value;
 			}
 		}
 
-		[System.Runtime.InteropServices.DllImport("libc", EntryPoint="isatty")]
-		private extern static int _isatty(int fd);
+		[System.Runtime.InteropServices.DllImport ("libc", EntryPoint = "isatty")]
+		private extern static int _isatty (int fd);
 
-		private static bool isatty(int fd)
+		private static bool isatty (int fd)
 		{
 			try {
-				return _isatty(fd) == 1;
+				return _isatty (fd) == 1;
 			} catch {
 				return false;
 			}
 		}
 
-		private static void DetectXtermColors()
+		private static void DetectXtermColors ()
 		{
 			bool _xterm_colors = false;
 
-			switch(Environment.GetEnvironmentVariable("TERM")) {
+			switch (Environment.GetEnvironmentVariable ("TERM")) {
 			case "xterm":
 			case "rxvt":
 			case "rxvt-unicode":
-				if(Environment.GetEnvironmentVariable("COLORTERM") != null) {
+				if (Environment.GetEnvironmentVariable ("COLORTERM") != null) {
 					_xterm_colors = true;
 				}
 				break;
@@ -201,7 +204,7 @@ namespace LongoMatch.Core.Common
 				break;
 			}
 
-			xterm_colors = _xterm_colors && isatty(1) && isatty(2);
+			xterm_colors = _xterm_colors && isatty (1) && isatty (2);
 		}
 
 		#endregion
@@ -209,10 +212,11 @@ namespace LongoMatch.Core.Common
 		#region Runtime Detection
 
 		private static bool? runtime_is_mono;
+
 		public static bool RuntimeIsMono {
 			get {
-				if(runtime_is_mono == null) {
-					runtime_is_mono = Type.GetType("System.MonoType") != null;
+				if (runtime_is_mono == null) {
+					runtime_is_mono = Type.GetType ("System.MonoType") != null;
 				}
 
 				return runtime_is_mono.Value;
@@ -223,54 +227,54 @@ namespace LongoMatch.Core.Common
 
 		#region Tests
 
-		public static void Test()
+		public static void Test ()
 		{
-			TestSelf();
-			Console.WriteLine();
-			TestAnsi();
-			Console.WriteLine();
-			TestRuntime();
+			TestSelf ();
+			Console.WriteLine ();
+			TestAnsi ();
+			Console.WriteLine ();
+			TestRuntime ();
 		}
 
-		private static void TestSelf()
+		private static void TestSelf ()
 		{
-			Console.WriteLine("==SELF TEST==");
-			foreach(ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
+			Console.WriteLine ("==SELF TEST==");
+			foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
 				ForegroundColor = color;
-				Console.Write(color);
-				ResetColor();
-				Console.Write(" :: ");
+				Console.Write (color);
+				ResetColor ();
+				Console.Write (" :: ");
 				BackgroundColor = color;
-				Console.Write(color);
-				ResetColor();
-				Console.WriteLine();
+				Console.Write (color);
+				ResetColor ();
+				Console.WriteLine ();
 			}
 		}
 
-		private static void TestAnsi()
+		private static void TestAnsi ()
 		{
-			Console.WriteLine("==ANSI TEST==");
-			foreach(ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
-				string color_code_fg = GetAnsiColorControlCode(color, true);
-				string color_code_bg = GetAnsiColorControlCode(color, false);
-				Console.Write("{0}{1}: {2}{3} :: {4}{1}: {5}{3}", color_code_fg, color, color_code_fg.Substring(2),
-				              GetAnsiResetControlCode(), color_code_bg, color_code_bg.Substring(2));
-				Console.WriteLine();
+			Console.WriteLine ("==ANSI TEST==");
+			foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
+				string color_code_fg = GetAnsiColorControlCode (color, true);
+				string color_code_bg = GetAnsiColorControlCode (color, false);
+				Console.Write ("{0}{1}: {2}{3} :: {4}{1}: {5}{3}", color_code_fg, color, color_code_fg.Substring (2),
+					GetAnsiResetControlCode (), color_code_bg, color_code_bg.Substring (2));
+				Console.WriteLine ();
 			}
 		}
 
-		private static void TestRuntime()
+		private static void TestRuntime ()
 		{
-			Console.WriteLine("==RUNTIME TEST==");
-			foreach(ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
+			Console.WriteLine ("==RUNTIME TEST==");
+			foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
 				Console.ForegroundColor = color;
-				Console.Write(color);
-				Console.ResetColor();
-				Console.Write(" :: ");
+				Console.Write (color);
+				Console.ResetColor ();
+				Console.Write (" :: ");
 				Console.BackgroundColor = color;
-				Console.Write(color);
-				Console.ResetColor();
-				Console.WriteLine();
+				Console.Write (color);
+				Console.ResetColor ();
+				Console.WriteLine ();
 			}
 		}
 

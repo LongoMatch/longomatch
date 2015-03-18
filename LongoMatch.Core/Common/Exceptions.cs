@@ -24,76 +24,77 @@ namespace LongoMatch.Core.Common
 {
 	public class DBLockedException: Exception
 	{
-		public DBLockedException (Exception innerException):
-			base (Catalog.GetString("Database locked:" + innerException.Message),
+		public DBLockedException (Exception innerException) :
+			base (Catalog.GetString ("Database locked:" + innerException.Message),
 			      innerException)
 		{
 		}
 	}
-	
+
 	public class UnknownDBErrorException: Exception
 	{
-		public UnknownDBErrorException (Exception innerException):
-			base (Catalog.GetString("Unknown database error:" + innerException),
+		public UnknownDBErrorException (Exception innerException) :
+			base (Catalog.GetString ("Unknown database error:" + innerException),
 			      innerException)
 		{
 		}
 	}
-	
-	public class SubstitutionException: Exception {
-		public SubstitutionException (string error): base (error)
+
+	public class SubstitutionException: Exception
+	{
+		public SubstitutionException (string error) : base (error)
 		{
 		}
 	}
-	
+
 	public class ProjectDeserializationException: Exception
 	{
-		public ProjectDeserializationException (Exception innerException):
-			base (Catalog.GetString("Project loading failed:") + innerException,
+		public ProjectDeserializationException (Exception innerException) :
+			base (Catalog.GetString ("Project loading failed:") + innerException,
 			      innerException)
 		{
 		}
 	}
-	
+
 	public class ProjectNotFoundException: Exception
 	{
-		public ProjectNotFoundException (string file):
-			base (Catalog.GetString("Project file not found:\n") + file)
+		public ProjectNotFoundException (string file) :
+			base (Catalog.GetString ("Project file not found:\n") + file)
 		{
 		}
 	}
-	
+
 	public class InvalidTemplateFilenameException: Exception
 	{
-		public InvalidTemplateFilenameException (List<char> invalidChars):
-			base (Catalog.GetString("The name contains invalid characters: ") + String.Join (" ", invalidChars))
+		public InvalidTemplateFilenameException (List<char> invalidChars) :
+			base (Catalog.GetString ("The name contains invalid characters: ") + String.Join (" ", invalidChars))
 		{
 		}
 	}
 
 	public class TemplateNotFoundException : Exception
 	{
-		public TemplateNotFoundException (string name):
-			base (Catalog.GetString("Template not found:\n") + name)
+		public TemplateNotFoundException (string name) :
+			base (Catalog.GetString ("Template not found:\n") + name)
 		{
 		}
 	}
 
 	public class HotkeyAlreadyInUse: Exception
 	{
-		public HotkeyAlreadyInUse (HotKey hotkey):
-			base (Catalog.GetString("Hotkey already in use: ") + hotkey)
+		public HotkeyAlreadyInUse (HotKey hotkey) :
+			base (Catalog.GetString ("Hotkey already in use: ") + hotkey)
 		{
 		}
 	}
-	
+
 	public class TimerNotRunningException: Exception
 	{
 	}
 
 	public class AddinRequestShutdownException: Exception
 	{
-		public AddinRequestShutdownException (string reason):
+		public AddinRequestShutdownException (string reason) :
 			base (reason)
 		{
 		}

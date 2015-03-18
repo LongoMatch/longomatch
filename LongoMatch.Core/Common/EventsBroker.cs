@@ -72,7 +72,7 @@ namespace LongoMatch.Core.Common
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
 		public event QuitApplicationHandler QuitApplicationEvent;
-		public event ManageJobsHandler ManageJobsEvent; 
+		public event ManageJobsHandler ManageJobsEvent;
 		public event ManageTeamsHandler ManageTeamsEvent;
 		public event ManageDashboardsHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
@@ -97,28 +97,30 @@ namespace LongoMatch.Core.Common
 
 		public void EmitNewTag (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
 		                        List<Tag> tags = null, Time start = null, Time stop = null,
-		                        Time eventTime = null, Score score = null, PenaltyCard card = null) {
+		                        Time eventTime = null, Score score = null, PenaltyCard card = null)
+		{
 			if (NewTagEvent != null)
 				NewTagEvent (eventType, players, team, tags, start, stop, eventTime, score, card);
 		}
-		
-		public void EmitNewEvent (TimelineEvent evt) {
+
+		public void EmitNewEvent (TimelineEvent evt)
+		{
 			if (NewTimelineEventEvent != null)
 				NewTimelineEventEvent (evt);
 		}
 
-		public void EmitEventsDeleted(List<TimelineEvent> events)
+		public void EmitEventsDeleted (List<TimelineEvent> events)
 		{
 			if (EventsDeletedEvent != null)
-				EventsDeletedEvent(events);
+				EventsDeletedEvent (events);
 		}
-		
+
 		public void EmitLoadEvent (TimelineEvent evt)
 		{
 			if (LoadEventEvent != null)
 				LoadEventEvent (evt);
 		}
-		
+
 		public void EmitEventLoaded (TimelineEvent play)
 		{
 			if (EventLoadedEvent != null)
@@ -131,50 +133,52 @@ namespace LongoMatch.Core.Common
 				EventEditedEvent (play);
 			}
 		}
-		
-		public void EmitSnapshotSeries(TimelineEvent play)
+
+		public void EmitSnapshotSeries (TimelineEvent play)
 		{
 			if (SnapshotSeries != null)
-				SnapshotSeries(play);
+				SnapshotSeries (play);
 		}
-		
-		public void EmitRenderPlaylist(Playlist playlist) {
+
+		public void EmitRenderPlaylist (Playlist playlist)
+		{
 			if (RenderPlaylist != null)
-				RenderPlaylist(playlist);
+				RenderPlaylist (playlist);
 		}
-		
+
 		public void EmitNewPlaylist (Project project)
 		{
 			if (NewPlaylistEvent != null) {
 				NewPlaylistEvent (project);
 			}
 		}
-		
+
 		public void EmitAddPlaylistElement (Playlist playlist, List<IPlaylistElement> plays)
 		{
 			if (AddPlaylistElementEvent != null)
 				AddPlaylistElementEvent (playlist, plays);
 		}
-		
+
 		public void EmitPlaylistElementSelected (Playlist playlist, IPlaylistElement element)
 		{
 			if (PlaylistElementSelectedEvent != null)
 				PlaylistElementSelectedEvent (playlist, element);
 		}
-		
+
 		public void EmitTimeNodeChanged (TimeNode tn, Time time)
 		{
 			if (TimeNodeChanged != null)
 				TimeNodeChanged (tn, time);
 		}
-		
-		public virtual void EmitMoveToEventType(TimelineEvent evnt, EventType eventType)
+
+		public virtual void EmitMoveToEventType (TimelineEvent evnt, EventType eventType)
 		{
-			if(MoveToEventTypeEvent != null)
-				MoveToEventTypeEvent(evnt, eventType);
+			if (MoveToEventTypeEvent != null)
+				MoveToEventTypeEvent (evnt, eventType);
 		}
-		
-		public void EmitTagEvent(TimelineEvent evt) {
+
+		public void EmitTagEvent (TimelineEvent evt)
+		{
 			if (TagEventEvent != null)
 				TagEventEvent (evt);
 		}
@@ -184,24 +188,28 @@ namespace LongoMatch.Core.Common
 			if (DuplicateEventsEvent != null)
 				DuplicateEventsEvent (events);
 		}
-		
-		public void EmitKeyPressed(object sender, HotKey key) {
+
+		public void EmitKeyPressed (object sender, HotKey key)
+		{
 			if (KeyPressed != null)
-				KeyPressed(sender, key);
+				KeyPressed (sender, key);
 		}
-		
-		public bool EmitCloseOpenedProject () {
+
+		public bool EmitCloseOpenedProject ()
+		{
 			if (CloseOpenedProjectEvent != null)
 				return CloseOpenedProjectEvent ();
 			return false;
 		}
-		
-		public void EmitShowProjectStats (Project project) {
+
+		public void EmitShowProjectStats (Project project)
+		{
 			if (ShowProjectStatsEvent != null)
 				ShowProjectStatsEvent (project);
 		}
-		
-		public void EmitTagSubcategories (bool active) {
+
+		public void EmitTagSubcategories (bool active)
+		{
 			if (TagSubcategoriesChangedEvent != null)
 				TagSubcategoriesChangedEvent (active);
 		}
@@ -212,89 +220,100 @@ namespace LongoMatch.Core.Common
 				ShowFullScreenEvent (active);
 			}
 		}
-		
-		public void EmitSaveProject (Project project, ProjectType projectType) {
+
+		public void EmitSaveProject (Project project, ProjectType projectType)
+		{
 			if (SaveProjectEvent != null)
 				SaveProjectEvent (project, projectType);
 		}
-		
-		public void EmitNewProject (Project project) {
+
+		public void EmitNewProject (Project project)
+		{
 			if (NewProjectEvent != null)
-				NewProjectEvent(project);
+				NewProjectEvent (project);
 		}
-		
-		public void EmitOpenProject () {
-			if(OpenProjectEvent != null)
-				OpenProjectEvent();
+
+		public void EmitOpenProject ()
+		{
+			if (OpenProjectEvent != null)
+				OpenProjectEvent ();
 		}
-				
+
 		public void EmitEditPreferences ()
 		{
 			if (EditPreferencesEvent != null)
-				EditPreferencesEvent();
+				EditPreferencesEvent ();
 		}
-		
-		public void EmitManageJobs() {
-			if(ManageJobsEvent != null)
-				ManageJobsEvent();
+
+		public void EmitManageJobs ()
+		{
+			if (ManageJobsEvent != null)
+				ManageJobsEvent ();
 		}
-		
-		public void EmitManageTeams() {
-			if(ManageTeamsEvent != null)
-				ManageTeamsEvent();
+
+		public void EmitManageTeams ()
+		{
+			if (ManageTeamsEvent != null)
+				ManageTeamsEvent ();
 		}
-		
-		public void EmitManageProjects()
+
+		public void EmitManageProjects ()
 		{
 			if (ManageProjectsEvent != null)
-				ManageProjectsEvent();
+				ManageProjectsEvent ();
 		}
-		
-		public void EmitManageDatabases()
+
+		public void EmitManageDatabases ()
 		{
 			if (ManageDatabasesEvent != null)
-				ManageDatabasesEvent();
+				ManageDatabasesEvent ();
 		}
-		
-		public void EmitManageCategories() {
-			if(ManageCategoriesEvent != null)
-				ManageCategoriesEvent();
+
+		public void EmitManageCategories ()
+		{
+			if (ManageCategoriesEvent != null)
+				ManageCategoriesEvent ();
 		}
-		
-		public void EmitImportProject () {
+
+		public void EmitImportProject ()
+		{
 			if (ImportProjectEvent != null)
 				ImportProjectEvent ();
 		}
-		
-		public void EmitExportProject (Project project) {
-			if(ExportProjectEvent != null)
+
+		public void EmitExportProject (Project project)
+		{
+			if (ExportProjectEvent != null)
 				ExportProjectEvent (project);
 		}
-		
-		public void EmitOpenProjectID (Guid projectID ) {
+
+		public void EmitOpenProjectID (Guid projectID)
+		{
 			if (OpenProjectIDEvent != null) {
 				OpenProjectIDEvent (projectID);
 			}
 		}
-		
+
 		public void EmitOpenNewProject (Project project, ProjectType projectType, CaptureSettings captureSettings)
 		{
 			if (OpenNewProjectEvent != null) {
 				OpenNewProjectEvent (project, projectType, captureSettings);
 			}
 		}
-		
-		public void EmitConvertVideoFiles (List<MediaFile> files, EncodingSettings settings) {
+
+		public void EmitConvertVideoFiles (List<MediaFile> files, EncodingSettings settings)
+		{
 			if (ConvertVideoFilesEvent != null)
 				ConvertVideoFilesEvent (files, settings);
 		}
-		
-		public void EmitQuitApplication () {
+
+		public void EmitQuitApplication ()
+		{
 			if (QuitApplicationEvent != null) {
 				QuitApplicationEvent ();
 			}
 		}
-		
+
 		public  void EmitOpenedProjectChanged (Project project, ProjectType projectType,
 		                                       EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
@@ -309,28 +328,28 @@ namespace LongoMatch.Core.Common
 				CapturerTick (currentTime);
 			}
 		}
-		
+
 		public void EmitPlayerTick (Time currentTime)
 		{
 			if (PlayerTick != null) {
 				PlayerTick (currentTime);
 			}
 		}
-		
+
 		public void EmitTeamTagsChanged ()
 		{
 			if (TeamTagsChanged != null) {
 				TeamTagsChanged ();
 			}
 		}
-		
+
 		public void EmitCaptureFinished (bool close)
 		{
 			if (CaptureFinished != null) {
 				CaptureFinished (close);
 			}
 		}
-		
+
 		public void EmitCaptureError (string message)
 		{
 			if (CaptureError != null) {
@@ -351,14 +370,14 @@ namespace LongoMatch.Core.Common
 				Detach ();
 			}
 		}
-		
+
 		public void EmitNextPlaylistElement (Playlist playlist)
 		{
 			if (NextPlaylistElementEvent != null) {
 				NextPlaylistElementEvent (playlist);
 			}
 		}
-		
+
 		public void EmitPreviousPlaylistElement (Playlist playlist)
 		{
 			if (PreviousPlaylistElementEvent != null) {
@@ -379,13 +398,15 @@ namespace LongoMatch.Core.Common
 				PlaybackRateChanged (val);
 			}
 		}
-		
-		public void EmitPlaylistsChanged (object sender) {
+
+		public void EmitPlaylistsChanged (object sender)
+		{
 			if (PlaylistsChangedEvent != null)
 				PlaylistsChangedEvent (sender);
 		}
-		
-		public void EmitPressButton (DashboardButton button) {
+
+		public void EmitPressButton (DashboardButton button)
+		{
 		}
 
 		public void EmitSubstitutionEvent (Team team, Player p1, Player p2,
@@ -395,35 +416,35 @@ namespace LongoMatch.Core.Common
 				PlayerSubstitutionEvent (team, p1, p2, reason, time);
 			}
 		}
-		
+
 		public void EmitDashboardEdited ()
 		{
 			if (DashboardEditedEvent != null) {
 				DashboardEditedEvent ();
 			}
 		}
-		
+
 		public void EmitSeekEvent (Time time, bool accurate)
 		{
 			if (SeekEvent != null) {
 				SeekEvent (time, accurate);
 			}
 		}
-		
+
 		public void EmitTogglePlayEvent (bool playing)
 		{
 			if (TogglePlayEvent != null) {
 				TogglePlayEvent (playing);
 			}
 		}
-		
+
 		public void EmitMigrateDB ()
 		{
 			if (MigrateDB != null) {
 				MigrateDB ();
 			}
 		}
-		
+
 		public void EmitTimerNodeAddedEvent (Timer timer, TimeNode node)
 		{
 			if (TimerNodeAddedEvent != null) {
@@ -439,4 +460,3 @@ namespace LongoMatch.Core.Common
 		}
 	}
 }
-

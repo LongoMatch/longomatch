@@ -41,8 +41,9 @@ namespace LongoMatch.Addins
 		{
 			Log.Information ("Delete addins cache at " + configPath);
 			try {
-			Directory.Delete (configPath, true);
-			} catch (Exception ex) {}
+				Directory.Delete (configPath, true);
+			} catch (Exception ex) {
+			}
 			searchPath = Path.GetFullPath (searchPath);
 			Log.Information ("Initializing addins at path: " + searchPath);
 			try {
@@ -57,7 +58,7 @@ namespace LongoMatch.Addins
 				string addinPath = addin.Description.AddinFile;
 				
 				if (!addinPath.StartsWith (searchPath) &&
-					!addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
+				    !addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
 					AddinManager.Registry.DisableAddin (addin.Id);
 					Log.Debug ("Disable addin at path " + addinPath);
 				} else {
@@ -101,7 +102,7 @@ namespace LongoMatch.Addins
 				try {
 					Log.Information ("Adding export entry from plugin: " + exportProject.Name);
 					mainWindow.AddExportEntry (exportProject.GetMenuEntryName (), exportProject.GetMenuEntryShortName (),
-					                           new Action<Project, IGUIToolkit> (exportProject.ExportProject));
+						new Action<Project, IGUIToolkit> (exportProject.ExportProject));
 				} catch (Exception ex) {
 					Log.Error ("Error adding export entry");
 					Log.Exception (ex);
@@ -114,11 +115,11 @@ namespace LongoMatch.Addins
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
 				importer.RegisterImporter (new Func<string, Project> (importProject.ImportProject),
-				                           importProject.Description,
-				                           importProject.FilterName,
-				                           importProject.FilterExtensions,
-				                           importProject.NeedsEdition,
-				                           importProject.CanOverwrite);
+					importProject.Description,
+					importProject.FilterName,
+					importProject.FilterExtensions,
+					importProject.NeedsEdition,
+					importProject.CanOverwrite);
 			}
 		}
 
@@ -156,7 +157,8 @@ namespace LongoMatch.Addins
 			get { return pluginsDict; }
 		}
 
-		private static Dictionary<AddinDescription, List<ConfigurablePlugin>> ListPlugins () {
+		private static Dictionary<AddinDescription, List<ConfigurablePlugin>> ListPlugins ()
+		{
 			HashSet <string> paths;
 			Dictionary<AddinDescription, List<ConfigurablePlugin>> plugins;
 			

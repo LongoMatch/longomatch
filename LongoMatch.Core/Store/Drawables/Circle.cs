@@ -27,16 +27,17 @@ namespace LongoMatch.Core.Store.Drawables
 		public Circle ()
 		{
 		}
-		public Circle (Point center, double radius):
+
+		public Circle (Point center, double radius) :
 			base (center, radius, radius)
 		{
 		}
-		
+
 		public double Radius {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public override double AxisY {
 			get {
@@ -46,7 +47,7 @@ namespace LongoMatch.Core.Store.Drawables
 				Radius = value;
 			}
 		}
-		
+
 		[JsonIgnore]
 		public override double AxisX {
 			get {
@@ -61,7 +62,7 @@ namespace LongoMatch.Core.Store.Drawables
 		public override Area Area {
 			get {
 				return new Area (new Point (Center.X - Radius, Center.Y - Radius),
-				                 Radius * 2, Radius * 2);
+					Radius * 2, Radius * 2);
 			}
 		}
 	}

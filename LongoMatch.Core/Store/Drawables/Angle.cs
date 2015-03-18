@@ -34,22 +34,22 @@ namespace LongoMatch.Core.Store.Drawables
 			Center = center;
 			Stop = stop;
 		}
-		
+
 		public Point Start {
 			get;
 			set;
 		}
-		
+
 		public Point Center {
 			get;
 			set;
 		}
-		
+
 		public Point Stop {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public double Degrees {
 			get {
@@ -60,8 +60,9 @@ namespace LongoMatch.Core.Store.Drawables
 				return a;
 			}
 		}
-		
-		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
+
+		public override Selection GetSelection (Point p, double pr = 0.05, bool inMotion = false)
+		{
 			if (p.Distance (Start) < pr) {
 				return new Selection (this, SelectionPosition.AngleStart, p.Distance (Start));
 			} else if (p.Distance (Stop) < pr) {
@@ -72,8 +73,9 @@ namespace LongoMatch.Core.Store.Drawables
 				return null;
 			}
 		}
-		
-		public override void Move (Selection sel, Point p, Point start) {
+
+		public override void Move (Selection sel, Point p, Point start)
+		{
 			switch (sel.Position) {
 			case SelectionPosition.AngleStart:
 				Start = p;

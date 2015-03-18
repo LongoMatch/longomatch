@@ -28,58 +28,59 @@ namespace LongoMatch.Core.Store.Drawables
 		public Cross ()
 		{
 		}
-		
+
 		public Cross (Point start, Point stop, LineStyle style)
 		{
 			Start = start;
 			Stop = stop;
 			Style = style;
 		}
-		
+
 		public Point Start {
 			set;
 			get;
 		}
-		
+
 		public Point Stop {
 			set;
 			get;
 		}
-		
+
 		[JsonIgnore]
 		public override Area Area {
 			get {
 				Point tl = new Point (Math.Min (Start.X, Stop.X),
-				                      Math.Min (Start.Y, Stop.Y));
+					           Math.Min (Start.Y, Stop.Y));
 				return new Area (tl, Math.Abs (Start.X - Stop.X),
-				                 Math.Abs (Start.Y - Stop.Y));
+					Math.Abs (Start.Y - Stop.Y));
 			}
 		}
-		
+
 		[JsonIgnore]
 		public Point StartI {
 			get {
 				return new Point (Stop.X, Start.Y);
 			}
 		}
-		
+
 		[JsonIgnore]
 		public Point StopI {
 			get {
 				return new Point (Start.X, Stop.Y);
 			}
 		}
-		
+
 		public override void Reorder ()
 		{
-			Point [] array = new Point[] {Start, Stop, StartI, StopI};
+			Point[] array = new Point[] { Start, Stop, StartI, StopI };
 			
-			array = array.OrderBy (p=> p.X).ThenBy (p=> p.Y).ToArray();
-			Start = array[0];
-			Stop = array[3];
+			array = array.OrderBy (p => p.X).ThenBy (p => p.Y).ToArray ();
+			Start = array [0];
+			Stop = array [3];
 		}
-		
-		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
+
+		public override Selection GetSelection (Point p, double pr = 0.05, bool inMotion = false)
+		{
 			double d;
 			Selection sel;
 			
@@ -96,10 +97,10 @@ namespace LongoMatch.Core.Store.Drawables
 			} else if (MatchPoint (StopI, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.BottomLeft, d);
 			} else {
-				Line aline = new Line {Start = Start, Stop = Stop};
+				Line aline = new Line { Start = Start, Stop = Stop };
 				sel = aline.GetSelection (p, pr);
 				if (sel == null) {
-					Line bline = new Line {Start = StartI, Stop = StopI};
+					Line bline = new Line { Start = StartI, Stop = StopI };
 					sel = bline.GetSelection (p, pr);
 				}
 				if (sel != null) {
@@ -108,9 +109,10 @@ namespace LongoMatch.Core.Store.Drawables
 				return sel;
 			}
 		}
-		
-		public override void Move (Selection sel, Point p, Point moveStart) {
-						switch (sel.Position) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
+			switch (sel.Position) {
 			case SelectionPosition.TopLeft:
 				Start = p;
 				break;

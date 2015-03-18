@@ -30,19 +30,22 @@ namespace LongoMatch.Core.Common
 		public AudioEncoderType AudioEncoder;
 		public VideoMuxerType Muxer;
 
-		public EncodingProfile () {}
+		public EncodingProfile ()
+		{
+		}
 
-		public EncodingProfile(string name, string extension,
-		                       VideoEncoderType videoEncoder,
-		                       AudioEncoderType audioEncoder,
-		                       VideoMuxerType muxer) {
-		    Name = name;
-		    Extension = extension;
+		public EncodingProfile (string name, string extension,
+		                        VideoEncoderType videoEncoder,
+		                        AudioEncoderType audioEncoder,
+		                        VideoMuxerType muxer)
+		{
+			Name = name;
+			Extension = extension;
 			VideoEncoder = videoEncoder;
 			AudioEncoder = audioEncoder;
 			Muxer = muxer;
 		}
-		
+
 		public override bool Equals (object obj)
 		{
 			EncodingProfile prof;
@@ -50,45 +53,46 @@ namespace LongoMatch.Core.Common
 				return false;
 			prof = (EncodingProfile)obj;
 			return prof.Name == Name &&
-				prof.Extension == Extension &&
-				prof.VideoEncoder == VideoEncoder &&
-				prof.AudioEncoder == AudioEncoder &&
-				prof.Muxer == Muxer;
+			prof.Extension == Extension &&
+			prof.VideoEncoder == VideoEncoder &&
+			prof.AudioEncoder == AudioEncoder &&
+			prof.Muxer == Muxer;
 		}
 
 		public override int GetHashCode ()
 		{
 			return String.Format ("{0}-{1}-{2}-{3}-{4}", Name, Extension,
-			                      VideoEncoder, AudioEncoder, Muxer).GetHashCode();
+				VideoEncoder, AudioEncoder, Muxer).GetHashCode ();
 		}
 	}
-	
-	public class EncodingProfiles {
-		public static EncodingProfile WebM = new EncodingProfile("WebM (VP8 + Vorbis)", "webm",
-		                                                         VideoEncoderType.VP8,
-		                                                         AudioEncoderType.Vorbis,
-		                                                         VideoMuxerType.WebM);
+
+	public class EncodingProfiles
+	{
+		public static EncodingProfile WebM = new EncodingProfile ("WebM (VP8 + Vorbis)", "webm",
+			                                     VideoEncoderType.VP8,
+			                                     AudioEncoderType.Vorbis,
+			                                     VideoMuxerType.WebM);
 		                                                                     
-		public static EncodingProfile Avi = new EncodingProfile("AVI (Mpeg4 + MP3)", "avi",
-		                                                        VideoEncoderType.Mpeg4,
-		                                                        AudioEncoderType.Mp3,
-		                                                        VideoMuxerType.Avi);
+		public static EncodingProfile Avi = new EncodingProfile ("AVI (Mpeg4 + MP3)", "avi",
+			                                    VideoEncoderType.Mpeg4,
+			                                    AudioEncoderType.Mp3,
+			                                    VideoMuxerType.Avi);
 
-		public static EncodingProfile MP4 = new EncodingProfile("MP4 (H264 + AAC)", "mp4",
-		                                                        VideoEncoderType.H264,
-		                                                        AudioEncoderType.Aac,
-		                                                        VideoMuxerType.Mp4);
+		public static EncodingProfile MP4 = new EncodingProfile ("MP4 (H264 + AAC)", "mp4",
+			                                    VideoEncoderType.H264,
+			                                    AudioEncoderType.Aac,
+			                                    VideoMuxerType.Mp4);
 		                                                        
-		public static EncodingProfile MatroskaMpeg4 = new EncodingProfile("Matroska (Mpeg4 + Vorbis)", "avi",
-		                                                        VideoEncoderType.Mpeg4,
-		                                                        AudioEncoderType.Vorbis,
-		                                                        VideoMuxerType.Matroska);
+		public static EncodingProfile MatroskaMpeg4 = new EncodingProfile ("Matroska (Mpeg4 + Vorbis)", "avi",
+			                                              VideoEncoderType.Mpeg4,
+			                                              AudioEncoderType.Vorbis,
+			                                              VideoMuxerType.Matroska);
 
-		public static EncodingProfile MatroskaH264 = new EncodingProfile("Matroska (H264 + AAC)", "mp4",
-		                                                        VideoEncoderType.H264,
-		                                                        AudioEncoderType.Aac,
-		                                                        VideoMuxerType.Matroska);
-		
+		public static EncodingProfile MatroskaH264 = new EncodingProfile ("Matroska (H264 + AAC)", "mp4",
+			                                             VideoEncoderType.H264,
+			                                             AudioEncoderType.Aac,
+			                                             VideoMuxerType.Matroska);
+
 		public static List<EncodingProfile> Capture {
 			get {
 				List<EncodingProfile> list = new List<EncodingProfile> ();
@@ -96,7 +100,7 @@ namespace LongoMatch.Core.Common
 				return list;
 			}
 		}
-		
+
 		public static List<EncodingProfile> Render {
 			get {
 				List<EncodingProfile> list = new List<EncodingProfile> ();

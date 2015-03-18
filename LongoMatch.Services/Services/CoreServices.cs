@@ -84,7 +84,7 @@ namespace LongoMatch.Services
 
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			ts = new TemplatesService (new FileStorage(Config.DBDir));
+			ts = new TemplatesService (new FileStorage (Config.DBDir));
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
@@ -150,7 +150,7 @@ namespace LongoMatch.Services
 		{
 			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
 		}
-		
+
 		static void HandleQuitApplicationEvent ()
 		{
 			if (videoRenderer.PendingJobs.Count > 0) {

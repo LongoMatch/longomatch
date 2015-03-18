@@ -80,11 +80,11 @@ namespace LongoMatch.Core.Stats
 			
 			subs = project.EventsByType (project.SubstitutionsEventType).
 				Where (s => !(s is LineupEvent) && ((s as SubstitutionEvent).In == Player ||
-				                                    (s as SubstitutionEvent).Out == Player))
+			(s as SubstitutionEvent).Out == Player))
 				.OrderBy (e => e.EventTime).Select (e => e as SubstitutionEvent).ToList ();
 
 			if (lineup.AwayStartingPlayers.Contains (Player) ||
-				lineup.HomeStartingPlayers.Contains (Player)) {
+			    lineup.HomeStartingPlayers.Contains (Player)) {
 				start = lineup.EventTime;
 			} else {
 				SubstitutionEvent sub = subs.Where (s => s.In == Player).FirstOrDefault ();

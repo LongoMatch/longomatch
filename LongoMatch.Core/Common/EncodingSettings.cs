@@ -16,15 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	public struct EncodingSettings
 	{
-		public EncodingSettings(VideoStandard videoStandard, EncodingProfile encodingProfile,
-		                        EncodingQuality encodingQuality, uint fr_n, uint fr_d,
-		                        string outputFile, bool enableAudio, bool enableTitle,
-		                        uint titleSize) {
+		public EncodingSettings (VideoStandard videoStandard, EncodingProfile encodingProfile,
+		                         EncodingQuality encodingQuality, uint fr_n, uint fr_d,
+		                         string outputFile, bool enableAudio, bool enableTitle,
+		                         uint titleSize)
+		{
 			VideoStandard = videoStandard;
 			EncodingProfile = encodingProfile;
 			EncodingQuality = encodingQuality;
@@ -35,7 +37,7 @@ namespace LongoMatch.Core.Common
 			EnableAudio = enableAudio;
 			EnableTitle = enableTitle;
 		}
-		
+
 		public VideoStandard VideoStandard;
 		public EncodingProfile EncodingProfile;
 		public EncodingQuality EncodingQuality;
@@ -45,15 +47,16 @@ namespace LongoMatch.Core.Common
 		public uint TitleSize;
 		public bool EnableAudio;
 		public bool EnableTitle;
+
 		
-		
-		public static EncodingSettings DefaultRenderingSettings (string outputFilepath) {
+		public static EncodingSettings DefaultRenderingSettings (string outputFilepath)
+		{
 			return new EncodingSettings (Config.RenderVideoStandard,
-			                             Config.RenderEncodingProfile,
-			                             Config.RenderEncodingQuality,
-			                             Config.FPS_N, Config.FPS_D,
-			                             outputFilepath,
-			                             Config.EnableAudio, Config.OverlayTitle, 20);
+				Config.RenderEncodingProfile,
+				Config.RenderEncodingQuality,
+				Config.FPS_N, Config.FPS_D,
+				outputFilepath,
+				Config.EnableAudio, Config.OverlayTitle, 20);
 		}
 	}
 }

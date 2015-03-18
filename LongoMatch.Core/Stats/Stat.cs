@@ -32,22 +32,22 @@ namespace LongoMatch.Core.Stats
 			LocalTeamCount = localTeamCount;
 			VisitorTeamCount = visitorTeamCount;
 		}
-	
+
 		public string Name {
 			get;
 			set;
 		}
-		
+
 		public int TotalCount {
 			get;
 			set;
 		}
-		
+
 		public int LocalTeamCount {
 			get;
 			set;
 		}
-		
+
 		public int VisitorTeamCount {
 			get;
 			set;

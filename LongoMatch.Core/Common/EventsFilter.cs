@@ -72,7 +72,7 @@ namespace LongoMatch.Core.Common
 			protected set;
 		}
 
-		public void ClearAll (bool update=true)
+		public void ClearAll (bool update = true)
 		{
 			eventsFilter.Clear ();
 			playersFilter.Clear ();
@@ -129,6 +129,7 @@ namespace LongoMatch.Core.Common
 					tagsFilter.Remove (tag);
 			}
 		}
+
 		public void FilterTimer (Timer timer, bool visible)
 		{
 			if (visible) {
@@ -236,7 +237,7 @@ namespace LongoMatch.Core.Common
 					}
 				}
 
-				if (play.Players.Count == 0 && VisiblePlayers.Count == 
+				if (play.Players.Count == 0 && VisiblePlayers.Count ==
 				    project.LocalTeamTemplate.PlayingPlayersList.Count +
 				    project.VisitorTeamTemplate.PlayingPlayersList.Count) {
 					player_match = true;

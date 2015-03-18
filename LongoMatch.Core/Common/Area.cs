@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
-	[JsonObject(MemberSerialization.OptIn)]
+	[JsonObject (MemberSerialization.OptIn)]
 	public class Area
 	{
 		public Area (Point start, double width, double height)
@@ -129,7 +129,7 @@ namespace LongoMatch.Core.Common
 		public bool IntersectsWith (Area area)
 		{
 			return !((Left >= area.Right) || (Right <= area.Left) ||
-				(Top >= area.Bottom) || (Bottom <= area.Top));
+			(Top >= area.Bottom) || (Bottom <= area.Top));
 		}
 
 		public override string ToString ()

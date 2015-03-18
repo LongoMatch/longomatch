@@ -58,7 +58,7 @@ namespace LongoMatch.Core.Stats
 			get;
 			set;
 		}
-		
+
 		public TeamStats AwayTeamStats {
 			get;
 			set;
@@ -82,7 +82,7 @@ namespace LongoMatch.Core.Stats
 				return AwayTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
 			}
 		}
- 
+
 		public void CreateStats ()
 		{
 			EventTypeStats = new List <EventTypeStats> ();
