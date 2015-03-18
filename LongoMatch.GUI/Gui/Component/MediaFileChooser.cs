@@ -58,8 +58,8 @@ namespace LongoMatch.Gui.Component
 
 			nameentry.TooltipText = Catalog.GetString ("Edit to change camera name");
 
-			ProposedFileName = String.Format ("LongoMatch-{0}.mp4", DateTime.Now.ToShortDateString ());
-			ProposedDirectoryName = String.Format ("LongoMatch-{0}", DateTime.Now.ToShortDateString ()); 
+			ProposedFileName = String.Format ("{0}-{1}.mp4", Constants.SOFTWARE_NAME, DateTime.Now.ToShortDateString ());
+			ProposedDirectoryName = String.Format ("{0}-{1}", Constants.SOFTWARE_NAME, DateTime.Now.ToShortDateString ()); 
 		}
 
 		public MediaFileChooser () : this (null)

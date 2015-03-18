@@ -397,10 +397,10 @@ namespace LongoMatch.Gui.Dialog
 
 		void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
-			string proposed_filename = String.Format ("LongoMatch-{0}.png",
-				DateTime.Now.ToShortDateString ().Replace ('/', '-'));
+			string proposed_filename = String.Format ("{0}-{1}.png", Constants.SOFTWARE_NAME,
+				                           DateTime.Now.ToShortDateString ().Replace ('/', '-'));
 			string filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Save File as..."),
-				proposed_filename, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
+				                  proposed_filename, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");
 				blackboard.Save (filename);

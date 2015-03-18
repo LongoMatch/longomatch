@@ -47,8 +47,8 @@ namespace LongoMatch.Gui.Dialog
 			maxHeight = supportedVideoStandards [0].Height;
 			mediafilechooser1.FileChooserMode = FileChooserMode.File;
 			mediafilechooser1.ChangedEvent += HandleFileChanges;
-			mediafilechooser1.ProposedFileName = String.Format ("LongoMatch-Video-{0}.mp4",
-			                                                    DateTime.Now.ToShortDateString ().Replace ('/', '-')); 
+			mediafilechooser1.ProposedFileName = String.Format ("{0}-Video-{1}.mp4", Constants.SOFTWARE_NAME,
+				DateTime.Now.ToShortDateString ().Replace ('/', '-')); 
 			FillStandards ();
 			FillBitrates ();
 			addbutton1.Clicked += OnAddbuttonClicked;
