@@ -35,11 +35,11 @@ namespace LongoMatch.DB
 	public static class DocumentsSerializer
 	{
 
-		public static void SaveObject (IStorable obj, Database db, StorablesConverter storablesConverter = null)
+		public static void SaveObject (IStorable obj, Database db, IDReferenceResolver resolver = null)
 		{
 			Document doc = db.GetDocument (obj.ID.ToString ());
 			doc.Update ((UnsavedRevision rev) => {
-				JObject jo = SerializeObject (obj, rev, db, storablesConverter);
+				JObject jo = SerializeObject (obj, rev, db, resolver);
 				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
 				/* SetProperties sets a new properties dictionary, removing the attachments we
 					 * added in the serialization */
@@ -51,10 +51,10 @@ namespace LongoMatch.DB
 			});
 		}
 
-		public static object LoadObject (Type objType, Guid id, Database db, StorablesConverter storablesConverter = null)
+		public static object LoadObject (Type objType, Guid id, Database db, IDReferenceResolver resolver = null)
 		{
 			Document doc = db.GetExistingDocument (id.ToString ());
-			return DeserializeObject (objType, doc, db, storablesConverter);
+			return DeserializeObject (objType, doc, db, resolver);
 		}
 
 		/// <summary>
@@ -66,10 +66,10 @@ namespace LongoMatch.DB
 		/// <param name="localStorables">A list of <see cref="LongoMatch.Core.Interfaces.IStorable"/>
 		/// types that should be serialized as local referencies instead of by document ID.</param>
 		internal static JObject SerializeObject (IStorable obj, Revision rev, Database db,
-		                                         StorablesConverter storablesConverter = null)
+		                                         IDReferenceResolver resolver = null)
 		{
 			JsonSerializer serializer = GetSerializer (obj.GetType (), rev, db,
-				                            storablesConverter, GetLocalTypes (obj.GetType ()));
+				                            resolver, GetLocalTypes (obj.GetType ()));
 
 			JObject jo = JObject.FromObject (obj, serializer);
 			jo ["DocType"] = obj.GetType ().Name;
@@ -85,30 +85,31 @@ namespace LongoMatch.DB
 		/// <param name = "serializer">The serializer to use when deserializing the object</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		internal static object DeserializeObject (Type type, Document doc, Database db,
-		                                          StorablesConverter storablesConverter = null)
+		                                          IDReferenceResolver resolver = null)
 		{
 			JObject jo = JObject.FromObject (doc.Properties);
 			JsonSerializer serializer = GetSerializer (type, doc.CurrentRevision, db,
-				                            storablesConverter, GetLocalTypes (type));
+				                            resolver, GetLocalTypes (type));
 			return jo.ToObject (type, serializer);
 		}
 
-		static List<Type> GetLocalTypes (Type objType)
+		internal static List<Type> GetLocalTypes (Type objType)
 		{
 			List<Type> localStorables = new List<Type> ();
 			if (objType == typeof(Project)) {
 				localStorables.Add (typeof(Team));
 				localStorables.Add (typeof(Dashboard));
 				localStorables.Add (typeof(Player));
+				localStorables.Add (typeof(AnalysisEventType));
 			}
 			return localStorables;
 		}
 
 		static JsonSerializer GetSerializer (Type serType, Revision rev, Database db,
-		                                     StorablesConverter storablesConverter, List<Type> localTypes)
+		                                     IDReferenceResolver resolver, List<Type> localTypes)
 		{
-			if (storablesConverter == null) {
-				storablesConverter = new StorablesConverter (db, localTypes);
+			if (resolver == null) {
+				resolver = new IDReferenceResolver ();
 			}
 			if (localTypes == null) {
 				localTypes = new List<Type> ();
@@ -120,9 +121,9 @@ namespace LongoMatch.DB
 			settings.TypeNameHandling = TypeNameHandling.Objects;
 			settings.Converters.Add (new ImageConverter (rev));
 			settings.Converters.Add (new VersionConverter ());
-			settings.Converters.Add (storablesConverter);
+			settings.Converters.Add (new StorablesConverter (db, resolver, localTypes));
 			settings.Converters.Add (new LongoMatchConverter (false));
-			settings.ReferenceResolver = storablesConverter;
+			settings.ReferenceResolver = resolver;
 			return JsonSerializer.Create (settings);
 		}
 	}
@@ -199,42 +200,110 @@ namespace LongoMatch.DB
 		}
 	}
 
-	/// <summary>
-	/// Serialize objects matching any of the types lists passed in the constructor
-	/// using their object ID.
-	/// </summary>
-	public class StorablesConverter : JsonConverter, IReferenceResolver
+	public class IDReferenceResolver: IReferenceResolver
 	{
-		List<Type> localTypes;
-		Database db;
 		int _references;
 		readonly Dictionary<string, object> _idtoobjects;
 		readonly Dictionary<object, string> _objectstoid;
 
-		public StorablesConverter (Database db, List<Type> localTypes)
+		public IDReferenceResolver ()
+		{
+			_references = 0;
+			_idtoobjects = new Dictionary<string, object> ();
+			_objectstoid = new Dictionary<object, string> ();
+		}
+
+		public bool IsCached (string id)
+		{
+			return _idtoobjects.ContainsKey (id);
+		}
+
+		#region IReferenceResolver implementation
+
+		public object ResolveReference (object context, string reference)
+		{
+			object p;
+			_idtoobjects.TryGetValue (reference, out p);
+			return p;
+		}
+
+		public string GetReference (object context, object value)
+		{
+			string referenceStr;
+			if (value is IIDObject) {
+				referenceStr = (value as IIDObject).ID.ToString ();
+			} else {
+				if (!_objectstoid.TryGetValue (value, out referenceStr)) {
+					_references++;
+					referenceStr = _references.ToString (CultureInfo.InvariantCulture); 
+				}
+			}
+			_idtoobjects [referenceStr] = value;
+			_objectstoid [value] = referenceStr;
+			return referenceStr;
+		}
+
+		public bool IsReferenced (object context, object value)
+		{
+			/* IStorable are always serialized by ID and not by reference */
+			if (value is IStorable) {
+				return false;
+			}
+			return _objectstoid.ContainsKey (value);
+		}
+
+		public void AddReference (object context, string reference, object value)
+		{
+			_idtoobjects [reference] = value;
+			_objectstoid [value] = reference;
+		}
+
+		#endregion
+	}
+
+	/// <summary>
+	/// Serialize objects matching any of the types lists passed in the constructor
+	/// using their object ID.
+	/// </summary>
+	public class StorablesConverter : JsonConverter
+	{
+		List<Type> localTypes;
+		Database db;
+		IDReferenceResolver idResolver;
+
+		public StorablesConverter (Database db, IDReferenceResolver idResolver, List<Type> localTypes)
 		{
 			this.db = db;
+			this.idResolver = idResolver;
 			this.localTypes = localTypes;
 			if (this.localTypes == null) {
 				this.localTypes = new List<Type> ();
 			}
-
-			_references = 0;
-			_idtoobjects = new Dictionary<string, object> ();
-			_objectstoid = new Dictionary<object, string> ();
 		}
 
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			IStorable storable = value as IStorable;
 			writer.WriteValue (storable.ID);
-			DocumentsSerializer.SaveObject (storable, db);
+			/* Only persist objects once per session */
+			if (!idResolver.IsCached (storable.ID.ToString ())) {
+				DocumentsSerializer.SaveObject (storable, db, idResolver);
+				idResolver.AddReference (this, storable.ID.ToString (), storable);
+			}
 		}
 
 		public override object ReadJson (JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			Guid id = Guid.Parse (reader.Value as string);
-			return DocumentsSerializer.LoadObject (objectType, id, db);
+			string idStr = reader.Value as string;
+			object obj;
+
+			/* Return the cached object instance instead a new one */
+			obj = idResolver.ResolveReference (this, idStr);
+			if (obj == null) {
+				obj = DocumentsSerializer.LoadObject (objectType, Guid.Parse (idStr), db, idResolver);
+				idResolver.AddReference (this, idStr, obj);
+			}
+			return obj;
 		}
 
 		public override bool CanConvert (Type objectType)
@@ -249,40 +318,6 @@ namespace LongoMatch.DB
 			return ret;
 		}
 
-		public object ResolveReference (object context, string reference)
-		{
-			object p;
-			_idtoobjects.TryGetValue (reference, out p);
-			return p;
-		}
-
-		public string GetReference (object context, object value)
-		{
-			string referenceStr;
-			if (value is IStorable) {
-				IStorable p = value as IStorable;
-				referenceStr = p.ID.ToString ();
-			} else {
-				if (!_objectstoid.TryGetValue (value, out referenceStr)) {
-					_references++;
-					referenceStr = _references.ToString (CultureInfo.InvariantCulture); 
-				}
-			}
-			_idtoobjects [referenceStr] = value;
-			_objectstoid [value] = referenceStr;
-			return referenceStr;
-		}
-
-		public bool IsReferenced (object context, object value)
-		{
-			return _objectstoid.ContainsKey (value);
-		}
-
-		public void AddReference (object context, string reference, object value)
-		{
-			_idtoobjects [reference] = value;
-			_objectstoid [value] = reference;
-		}
 	}
 }
 
