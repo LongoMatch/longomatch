@@ -17,6 +17,7 @@
 //
 
 using System;
+
 #if HAVE_GTK
 using Gdk;
 #endif
@@ -24,21 +25,22 @@ using Gdk;
 
 namespace LongoMatch.Core.Common
 {
-	public class Constants {
+	public class Constants
+	{
 		public const string SOFTWARE_NAME = "LongoMatch";
 
 		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 
 		public const string DEFAULT_DB_NAME = "longomatch";
 		
-		public const string COPYRIGHT =  "Copyright ©2007-2014 Andoni Morales Alastruey";
+		public const string COPYRIGHT = "Copyright ©2007-2014 Andoni Morales Alastruey";
 		
 		public const string FAKE_PROJECT = "@Fake Project@";
 		
 		public const string PORTABLE_FILE = "longomatch.portable";
 		
 		public const string LICENSE =
-		        @"This program is free software; you can redistribute it and/or modify
+			@"This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
@@ -49,7 +51,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.";
 
 		public const string TRANSLATORS =
-		        @"Andoni Morales Alastruey (es)
+			@"Andoni Morales Alastruey (es)
 Aron Xu (cn_ZH)
 Barkın Tanmann (tr)
 Bruno Brouard (fr)
@@ -76,19 +78,19 @@ Xavier Queralt Mateu (ca)";
 
 		public const string MANUAL = "http://www.longomatch.com/documentation/manual.html";
 
-#if HAVE_GTK
-		public const int STEP = (int) Gdk.ModifierType.ShiftMask;
+		#if HAVE_GTK
+		public const int STEP = (int)Gdk.ModifierType.ShiftMask;
 
-		public const int SEEK_BACKWARD = (int) Gdk.Key.Left;
+		public const int SEEK_BACKWARD = (int)Gdk.Key.Left;
 
-		public const int SEEK_FORWARD = (int) Gdk.Key.Right;
+		public const int SEEK_FORWARD = (int)Gdk.Key.Right;
 
-		public const int FRAMERATE_UP = (int) Gdk.Key.Up;
+		public const int FRAMERATE_UP = (int)Gdk.Key.Up;
 
-		public const int FRAMERATE_DOWN = (int) Gdk.Key.Down;
+		public const int FRAMERATE_DOWN = (int)Gdk.Key.Down;
 
-		public const int TOGGLE_PLAY = (int) Gdk.Key.space;
-#endif
+		public const int TOGGLE_PLAY = (int)Gdk.Key.space;
+		#endif
 
 		public const string TEMPLATES_DIR = "templates";
 		public const string TEAMS_TEMPLATE_EXT = ".ltt";
