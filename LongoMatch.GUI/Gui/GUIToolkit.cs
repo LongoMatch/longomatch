@@ -38,27 +38,27 @@ namespace LongoMatch.Gui
 	{
 		static GUIToolkit instance;
 		MainWindow mainWindow;
-		
+
 		public GUIToolkit (Version version)
 		{
 			Version = version;
-			mainWindow = new MainWindow(this);
-			(mainWindow as MainWindow).Show();
+			mainWindow = new MainWindow (this);
+			(mainWindow as MainWindow).Show ();
 			instance = this;
 		}
-		
+
 		public static GUIToolkit Instance {
 			get {
 				return instance;
 			}
 		}
-		
+
 		public IMainController MainController {
 			get {
 				return mainWindow;
 			}
 		}
-		
+
 		public IRenderingStateBar RenderingStateBar {
 			get {
 				return mainWindow.RenderingStateBar;
@@ -70,78 +70,81 @@ namespace LongoMatch.Gui
 				if (mainWindow != null) {
 					if (value)
 						mainWindow.GdkWindow.Fullscreen ();
-					else 
+					else
 						mainWindow.GdkWindow.Unfullscreen ();
 				}
 			}
 		}
-		
+
 		public Version Version {
 			get;
 			set;
 		}
-		
-		public void InfoMessage(string message, object parent=null) {
+
+		public void InfoMessage (string message, object parent = null)
+		{
 			if (parent == null)
 				parent = mainWindow as Widget;
-			MessagesHelpers.InfoMessage(parent as Widget, message);
+			MessagesHelpers.InfoMessage (parent as Widget, message);
 		}
-		
-		public void ErrorMessage(string message, object parent=null) {
+
+		public void ErrorMessage (string message, object parent = null)
+		{
 			if (parent == null)
 				parent = mainWindow as Widget;
 			MessagesHelpers.ErrorMessage (parent as Widget, message);
 		}
-		
-		public void WarningMessage(string message, object parent=null) {
+
+		public void WarningMessage (string message, object parent = null)
+		{
 			if (parent == null)
 				parent = mainWindow as Widget;
 			MessagesHelpers.WarningMessage (parent as Widget, message);
 		}
-		
-		public bool QuestionMessage (string question, string title, object parent=null)
+
+		public bool QuestionMessage (string question, string title, object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow as Widget;
 			return MessagesHelpers.QuestionMessage (parent as Widget, question, title);
 		}
-		
-		public string QueryMessage (string key, string title=null, string value="", object parent=null)
+
+		public string QueryMessage (string key, string title = null, string value = "", object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow;
 			return MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
 		}
-		
-		public string SaveFile(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter)
+
+		public string SaveFile (string title, string defaultName, string defaultFolder,
+		                       string filterName, string[] extensionFilter)
 		{
 			return FileChooserHelper.SaveFile (mainWindow as Widget, title, defaultName,
-			                                   defaultFolder, filterName, extensionFilter);
-		}
-		
-		public string SelectFolder(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter)
-		{
-			return FileChooserHelper.SelectFolder (mainWindow as Widget, title, defaultName,
-			                                       defaultFolder, filterName, extensionFilter);
-		}
-		
-		public string OpenFile(string title, string defaultName, string defaultFolder,
-			string filterName = null, string[] extensionFilter = null)
-		{
-			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
-			                                   defaultFolder, filterName, extensionFilter);
-		}
-		
-		public List<string> OpenFiles(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter)
-		{
-			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
-			                                    defaultFolder, filterName, extensionFilter);
+				defaultFolder, filterName, extensionFilter);
 		}
 
-		public object ChooseOption (Dictionary<string, object> options, object parent=null)
+		public string SelectFolder (string title, string defaultName, string defaultFolder,
+		                           string filterName, string[] extensionFilter)
+		{
+			return FileChooserHelper.SelectFolder (mainWindow as Widget, title, defaultName,
+				defaultFolder, filterName, extensionFilter);
+		}
+
+		public string OpenFile (string title, string defaultName, string defaultFolder,
+		                       string filterName = null, string[] extensionFilter = null)
+		{
+			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
+				defaultFolder, filterName, extensionFilter);
+		}
+
+		public List<string> OpenFiles (string title, string defaultName, string defaultFolder,
+		                              string filterName, string[] extensionFilter)
+		{
+			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
+				defaultFolder, filterName, extensionFilter);
+		}
+
+		public object ChooseOption (Dictionary<string, object> options, object parent = null)
 		{
 			object res = null;
 			ChooseOptionDialog dialog = new ChooseOptionDialog ();
@@ -204,45 +207,45 @@ namespace LongoMatch.Gui
 							name = "image";
 							ext = "png";
 						}
-						filename = String.Format ("{0}-{1}.{2}", i.ToString("d4"), name, ext);
+						filename = String.Format ("{0}-{1}.{2}", i.ToString ("d4"), name, ext);
 						
-						pl.Elements.Add(play);
+						pl.Elements.Add (play);
 						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
-						jobs.Add(new EditionJob(pl, settings));
+						jobs.Add (new EditionJob (pl, settings));
 						i++;
 					}
 				}
 			}
-			vep.Destroy();
+			vep.Destroy ();
 			return jobs;
 		}
-		
-		public void ExportFrameSeries(Project openedProject, TimelineEvent play, string snapshotsDir) {
+
+		public void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
+		{
 			SnapshotsDialog sd;
 			uint interval;
 			string seriesName;
 			string outDir;
 
 			Log.Information ("Export frame series");
-			sd= new SnapshotsDialog();
-			sd.TransientFor= mainWindow as Gtk.Window;
+			sd = new SnapshotsDialog ();
+			sd.TransientFor = mainWindow as Gtk.Window;
 			sd.Play = play.Name;
 
-			if(sd.Run() == (int)ResponseType.Ok) {
+			if (sd.Run () == (int)ResponseType.Ok) {
 				interval = sd.Interval;
 				seriesName = sd.SeriesName;
-				sd.Destroy();
-				outDir = System.IO.Path.Combine(snapshotsDir, seriesName);
+				sd.Destroy ();
+				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
 				var fsc = new FramesSeriesCapturer (openedProject.Description.FileSet, play, interval, outDir);
-				var fcpd = new FramesCaptureProgressDialog(fsc);
+				var fcpd = new FramesCaptureProgressDialog (fsc);
 				fcpd.TransientFor = mainWindow as Gtk.Window;
-				fcpd.Run();
-				fcpd.Destroy();
-			}
-			else
-				sd.Destroy();
+				fcpd.Run ();
+				fcpd.Destroy ();
+			} else
+				sd.Destroy ();
 		}
-		
+
 		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
 		{
 			if (play is StatEvent) {
@@ -255,13 +258,14 @@ namespace LongoMatch.Gui
 			} else {
 				PlayEditor dialog = new PlayEditor ();
 				dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
-				dialog.Run();
-				dialog.Destroy();
+				dialog.Run ();
+				dialog.Destroy ();
 			}
 		}
 
-		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing, Project project) {
-			DrawingTool dialog = new DrawingTool();
+		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing, Project project)
+		{
+			DrawingTool dialog = new DrawingTool ();
 			dialog.Show ();
 
 			Log.Information ("Drawing tool");
@@ -271,10 +275,10 @@ namespace LongoMatch.Gui
 				dialog.LoadPlay (play, image, drawing, project);
 			}
 			dialog.TransientFor = mainWindow as Gtk.Window;
-			dialog.Run();
-			dialog.Destroy();	
+			dialog.Run ();
+			dialog.Destroy ();	
 		}
-		
+
 		public ProjectDescription ChooseProject (List<ProjectDescription> projects)
 		{
 			Log.Information ("Choosing project");
@@ -287,61 +291,64 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 			return pd;
 		}
-		
-		public void SelectProject(List<ProjectDescription> projects) {
+
+		public void SelectProject (List<ProjectDescription> projects)
+		{
 			Log.Information ("Select project");
 			mainWindow.SelectProject (projects);
 		}
-		
-		public void OpenCategoriesTemplatesManager()
+
+		public void OpenCategoriesTemplatesManager ()
 		{
 			SportsTemplatesPanel panel = new SportsTemplatesPanel ();
 			Log.Information ("Open sports templates manager");
 			mainWindow.SetPanel (panel);
 		}
 
-		public void OpenTeamsTemplatesManager()
+		public void OpenTeamsTemplatesManager ()
 		{
 			TeamsTemplatesPanel panel = new TeamsTemplatesPanel ();
 			Log.Information ("Open teams templates manager");
 			mainWindow.SetPanel (panel);
 		}
-		
-		public void OpenProjectsManager(Project openedProject)
+
+		public void OpenProjectsManager (Project openedProject)
 		{
 			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject);
 			Log.Information ("Open projects manager");
 			mainWindow.SetPanel (panel);
 		}
-		
-		public void OpenPreferencesEditor()
+
+		public void OpenPreferencesEditor ()
 		{
 			PreferencesPanel panel = new PreferencesPanel ();
 			Log.Information ("Open preferences");
 			mainWindow.SetPanel (panel);
 		}
-		
-		public void OpenDatabasesManager()
+
+		public void OpenDatabasesManager ()
 		{
 			DatabasesManager dm = new DatabasesManager ();
 			Log.Information ("Open db manager");
 			dm.TransientFor = mainWindow as Gtk.Window;
-			dm.Run();
-			dm.Destroy();
+			dm.Run ();
+			dm.Destroy ();
 		}
-		
-		public void ManageJobs() {
+
+		public void ManageJobs ()
+		{
 			RenderingJobsDialog dialog = new RenderingJobsDialog ();
 			Log.Information ("Manage jobs");
 			dialog.TransientFor = mainWindow as Gtk.Window;
-			dialog.Run();
-			dialog.Destroy();
+			dialog.Run ();
+			dialog.Destroy ();
 		}
-		
-		public IBusyDialog BusyDialog(string message, object parent=null) {
+
+		public IBusyDialog BusyDialog (string message, object parent = null)
+		{
 			BusyDialog dialog;
 
-			dialog = new BusyDialog();
+			dialog = new BusyDialog ();
 			if (parent != null) {
 				dialog.TransientFor = (parent as Widget).Toplevel as Gtk.Window;
 			} else {
@@ -350,65 +357,70 @@ namespace LongoMatch.Gui
 			dialog.Message = message; 
 			return dialog;
 		}
-		
-		public void CreateNewProject(Project project=null) {
+
+		public void CreateNewProject (Project project = null)
+		{
 			mainWindow.CreateNewProject (project);
 		}
-		
-		public void ShowProjectStats (Project project) {
+
+		public void ShowProjectStats (Project project)
+		{
 			Log.Information ("Show project stats");
 			Addins.AddinsManager.ShowStats (project);
-			System.GC.Collect();
+			System.GC.Collect ();
 		}
-		
-		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer) {
+
+		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer)
+		{
 			Log.Information ("Remux file");
 			Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
-			                               outputFile, muxer);
+				                  outputFile, muxer);
 			return remuxer.Remux (mainWindow as Gtk.Window);
 		}
-		
+
 		public void OpenProject (Project project, ProjectType projectType, 
 		                         CaptureSettings props, EventsFilter filter,
-			                     out IAnalysisWindow analysisWindow)
+		                         out IAnalysisWindow analysisWindow)
 		{
 			Log.Information ("Open project");
 			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
 		}
-		
+
 		public void CloseProject ()
 		{
 			Log.Information ("Close project");
 			mainWindow.CloseProject ();
 		}
-		
-		public DateTime SelectDate (DateTime date, object widget) {
+
+		public DateTime SelectDate (DateTime date, object widget)
+		{
 			CalendarDialog dialog = new CalendarDialog (date);
 			dialog.TransientFor = (widget as Widget).Toplevel as Gtk.Window;
-			dialog.Run();
+			dialog.Run ();
 			date = dialog.Date;
 			dialog.Destroy ();
 			return date;
 		}
-		
-		public EndCaptureResponse EndCapture (string filepath) {
+
+		public EndCaptureResponse EndCapture (string filepath)
+		{
 			int res;
 			EndCaptureDialog dialog = new EndCaptureDialog (filepath);
 			dialog.TransientFor = mainWindow.Toplevel as Gtk.Window;
-			res = dialog.Run();
-			dialog.Destroy();
+			res = dialog.Run ();
+			dialog.Destroy ();
 			return (EndCaptureResponse)res;
 		}
-		
+
 		public bool SelectMediaFiles (Project project)
 		{
 			bool ret = false;
 			MediaFileSetSelection fileselector = new MediaFileSetSelection ();
 			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select video files"),
-			                               mainWindow.Toplevel as Gtk.Window,
-			                               DialogFlags.Modal | DialogFlags.DestroyWithParent,
-			                               Gtk.Stock.Cancel, ResponseType.Cancel,
-			                               Gtk.Stock.Ok, ResponseType.Ok);
+				               mainWindow.Toplevel as Gtk.Window,
+				               DialogFlags.Modal | DialogFlags.DestroyWithParent,
+				               Gtk.Stock.Cancel, ResponseType.Cancel,
+				               Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
 			fileselector.FileSet = project.Description.FileSet;
 			d.VBox.Add (fileselector);
@@ -429,11 +441,12 @@ namespace LongoMatch.Gui
 			return ret;
 		}
 
-		public void Quit () {
+		public void Quit ()
+		{
 			Log.Information ("Quit application");
 			Gtk.Application.Quit ();
 		}
-		
+
 		public HotKey SelectHotkey (HotKey hotkey, object parent = null)
 		{
 			HotKeySelectorDialog dialog;
@@ -450,8 +463,9 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 			return hotkey;
 		}
-		
-		public void Invoke (EventHandler handler) {
+
+		public void Invoke (EventHandler handler)
+		{
 			Gtk.Application.Invoke (handler);
 		}
 	}
