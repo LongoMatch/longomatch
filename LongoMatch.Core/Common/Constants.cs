@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Common
 
 		public const string DEFAULT_DB_NAME = "longomatch";
 		
-		public const string COPYRIGHT = "Copyright ©2007-2014 Andoni Morales Alastruey";
+		public const string COPYRIGHT = "Copyright ©2014-2015 FLUENDO S.A.\nCopyright ©2007-2014 Andoni Morales Alastruey";
 		
 		public const string FAKE_PROJECT = "@Fake Project@";
 		
