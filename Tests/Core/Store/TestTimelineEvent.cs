@@ -23,37 +23,38 @@ using NUnit.Framework;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestTimelineEvent
 	{
 		EventType evtType1;
-		
-		public TimelineEvent CreateTimelineEvent () {
-			TimelineEvent evt = new TimelineEvent();
-			evtType1 = new EventType {Name="Cat1"};
+
+		public TimelineEvent CreateTimelineEvent ()
+		{
+			TimelineEvent evt = new TimelineEvent ();
+			evtType1 = new EventType { Name = "Cat1" };
 			
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Selected = true;
 			evt.Team = TeamType.LOCAL;
-			evt.FieldPosition = new Coordinates();
+			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
 			evt.HalfFieldPosition = new Coordinates ();
-			evt.HalfFieldPosition.Points.Add (new Point (4,5));
+			evt.HalfFieldPosition.Points.Add (new Point (4, 5));
 			evt.GoalPosition = new Coordinates ();
 			evt.GoalPosition.Points.Add (new Point (6, 7));
 			evt.Rate = 1.5f;
 			evt.Name = "Play";
-			evt.Start = new Time(1000);
-			evt.EventTime = new Time(1500);
-			evt.Stop = new Time(2000);
+			evt.Start = new Time (1000);
+			evt.EventTime = new Time (1500);
+			evt.Stop = new Time (2000);
 			evt.Rate = 2.3f;
-			
-			evt.Tags.Add(new Tag ("test"));
+
+			evt.Tags.Add (new Tag ("test"));
 			return evt;
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestSerialization ()
 		{
 			TimelineEvent p = new TimelineEvent ();
@@ -73,9 +74,11 @@ namespace Tests.Core.Store
 			Assert.AreEqual (p.Start, newp.Start);
 			Assert.AreEqual (p.Stop, newp.Stop);
 			Assert.AreEqual (p.Rate, newp.Rate);
+			Assert.AreEqual (p.CamerasVisible, new List<int> { 0 });
+			Assert.IsNull (p.CamerasLayout);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestProperties ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
@@ -84,8 +87,8 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.Description,
 				String.Format ("Play\ntest\n0:01,000 - 0:02,000 ({0}X)", 2.3));
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestTagsDescription ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
@@ -96,7 +99,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.TagsDescription (), "");
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestTimesDescription ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
@@ -106,10 +109,10 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.TimesDesription (), "0:01,000 - 0:02,000");
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestAddDefaultPositions ()
 		{
-			TimelineEvent evt = new TimelineEvent();
+			TimelineEvent evt = new TimelineEvent ();
 			evt.EventType = new EventType ();
 			evt.EventType.TagFieldPosition = false;
 			evt.EventType.TagHalfFieldPosition = false;
@@ -144,34 +147,34 @@ namespace Tests.Core.Store
 			Assert.IsNotNull (evt.HalfFieldPosition);
 			Assert.IsNotNull (evt.GoalPosition);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestCoordinatesInFieldPosition ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
 			Assert.AreEqual (evt.CoordinatesInFieldPosition (FieldPositionType.Field),
-			                 evt.FieldPosition);
+				evt.FieldPosition);
 			Assert.AreEqual (evt.CoordinatesInFieldPosition (FieldPositionType.HalfField),
-			                 evt.HalfFieldPosition);
+				evt.HalfFieldPosition);
 			Assert.AreEqual (evt.CoordinatesInFieldPosition (FieldPositionType.Goal),
-			                 evt.GoalPosition);
+				evt.GoalPosition);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestUpdateCoordinates ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
-			evt.UpdateCoordinates (FieldPositionType.Field, new List<Point> {new Point (4, 5)});
-			Assert.AreEqual (evt.FieldPosition.Points[0].X, 4);
-			Assert.AreEqual (evt.FieldPosition.Points[0].Y, 5);
+			evt.UpdateCoordinates (FieldPositionType.Field, new List<Point> { new Point (4, 5) });
+			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
+			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.HalfField, new List<Point> {new Point (4, 5)});
-			Assert.AreEqual (evt.HalfFieldPosition.Points[0].X, 4);
-			Assert.AreEqual (evt.HalfFieldPosition.Points[0].Y, 5);
+			evt.UpdateCoordinates (FieldPositionType.HalfField, new List<Point> { new Point (4, 5) });
+			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
+			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.Goal, new List<Point> {new Point (4, 5)});
-			Assert.AreEqual (evt.GoalPosition.Points[0].X, 4);
-			Assert.AreEqual (evt.GoalPosition.Points[0].Y, 5);
+			evt.UpdateCoordinates (FieldPositionType.Goal, new List<Point> { new Point (4, 5) });
+			Assert.AreEqual (evt.GoalPosition.Points [0].X, 4);
+			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
 		}
 	}
 }

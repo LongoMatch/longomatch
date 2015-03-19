@@ -315,7 +315,7 @@ namespace LongoMatch.Migration
 				LongoMatch.Core.Common.Coordinates c;
 
 				var newplay = new LongoMatch.Core.Store.TimelineEvent ();
-				newplay.ActiveViews.Add (LongoMatch.Core.Common.MediaFileAngle.Angle1);
+				newplay.CamerasVisible.Add (0);
 				var fd = ConvertFrameDrawing (play.KeyFrameDrawing);
 				if (fd != null) {
 					newplay.Drawings.Add (fd);

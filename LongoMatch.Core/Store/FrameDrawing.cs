@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
-		public MediaFileAngle Angle {
+		public int CameraIndex {
 			get;
 			set;
 		}

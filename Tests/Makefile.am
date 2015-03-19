@@ -16,6 +16,7 @@ SOURCES = Core/Common/TestColor.cs \
 	Core/Store/Drawables/TestQuadrilateral.cs \
 	Core/Store/Drawables/TestRectangle.cs \
 	Core/Store/Drawables/TestText.cs \
+	Core/Store/Playlists/TestPlaylistPlayElement.cs \
 	Core/Store/Templates/TestTeamTemplate.cs \
 	Core/Store/TestCoordinates.cs \
 	Core/Store/TestDashboardButton.cs \

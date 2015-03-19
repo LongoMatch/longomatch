@@ -19,14 +19,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Video;
-using LongoMatch.Video.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Multimedia.Utils;
 using Gtk;
 
 namespace LongoMatch.Video.Utils
@@ -59,8 +57,8 @@ namespace LongoMatch.Video.Utils
 			this.stop = evt.Stop;
 			this.interval = interval;
 			this.outputDir = outputDir;
-			this.seriesName = System.IO.Path.GetFileName(outputDir);
-			this.totalFrames = ((int)Math.Floor((double)((stop - start).MSeconds / interval))+1) * evt.ActiveViews.Count;
+			this.seriesName = System.IO.Path.GetFileName (outputDir);
+			this.totalFrames = ((int)Math.Floor ((double)((stop - start).MSeconds / interval)) + 1) * evt.CamerasVisible.Count;
 			this.cancel = false;
 		}
 
@@ -77,6 +75,7 @@ namespace LongoMatch.Video.Utils
 		{
 			Time pos;
 			LongoMatch.Core.Common.Image frame;
+			List<int> cameras;
 			bool quit = false;
 			int i = 0;
 			int j = 0;
@@ -85,11 +84,16 @@ namespace LongoMatch.Video.Utils
 
 			Log.Debug ("Start frames series capture with interval: " + interval);
 			Log.Debug ("Total frames to be captured: " + totalFrames);
-			foreach (MediaFileAngle angle in evt.ActiveViews) {
+			if (evt.CamerasVisible.Count == 0) {
+				cameras = new List<int> { 0 };
+			} else {
+				cameras = evt.CamerasVisible;
+			}
+			foreach (int cameraIndex in cameras) {
 				if (quit) {
 					break;
 				}
-				Log.Debug ("Start frames series capture for angle " + angle);
+				Log.Debug ("Start frames series capture for angle " + cameraIndex);
 				MediaFile file = fileSet.First ();
 				capturer.Open (file.FilePath);
 				pos = new Time {MSeconds = start.MSeconds};
@@ -102,12 +106,12 @@ namespace LongoMatch.Video.Utils
 				j = 0;
 				while(pos <= stop) {
 					Log.Debug ("Capturing fame " + j);
-					if(!cancel) {
-						frame = capturer.GetFrame(pos + file.Offset, true);
-						if(frame != null) {
-							string path = String.Format("{0}_angle{1}_{2}.png", seriesName, angle, j);
-							frame.Save(System.IO.Path.Combine(outputDir, path));
-							frame.ScaleInplace(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+					if (!cancel) {
+						frame = capturer.GetFrame (pos + file.Offset, true);
+						if (frame != null) {
+							string path = String.Format ("{0}_angle{1}_{2}.png", seriesName, cameraIndex, j);
+							frame.Save (System.IO.Path.Combine (outputDir, path));
+							frame.ScaleInplace (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 						}
 						
 						if(Progress != null) {

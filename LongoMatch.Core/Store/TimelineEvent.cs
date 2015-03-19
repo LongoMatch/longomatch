@@ -24,11 +24,12 @@ using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
 	/// <summary>
-	/// Represents a Play in the game.
+	/// Represents a tagged event in the game at a specific position in the timeline.
 	/// </summary>
 
 	[Serializable]
@@ -44,18 +45,39 @@ namespace LongoMatch.Core.Store
 			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			ActiveViews = new HashSet<MediaFileAngle>();
-			ActiveViews.Add (MediaFileAngle.Angle1);
+			CamerasVisible = new List<int> ();
 		}
+
+		internal void InitializeLists ()
+		{
+			if (CamerasVisible.Count == 0) {
+				CamerasVisible.Add (0);
+			}
+		}
+
+		[OnDeserialized]
+		internal void OnDeserializedMethod (StreamingContext context)
+		{
+			InitializeLists ();
+		}
+
+		[OnSerializing]
+		internal void OnSerializingMethod (StreamingContext context)
+		{
+			InitializeLists ();
+		}
+
 		#endregion
+
 		#region Properties
+
 		public Guid ID {
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// Category in which this play is tagged
+		/// The <see cref="EventType"/> in wich this event is tagged
 		/// </summary>
 		public EventType EventType {
 			get;
@@ -63,7 +85,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// A string with the play's notes
+		/// Event notes
 		/// </summary>
 		public string Notes {
 			get;
@@ -71,7 +93,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// Get/Set wheter this play is actually loaded. Used in  <see cref="LongoMatch.Gui.Component.TimeScale">
+		/// Whether this event is currently selected.
 		/// </summary>
 		[JsonIgnore]
 		public bool Selected {
@@ -80,7 +102,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// List of drawings for this play
+		/// List of drawings for this event
 		/// </summary>
 		public List<FrameDrawing> Drawings {
 			get;
@@ -88,7 +110,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// Get wether the play has at least a frame drawing
+		/// Whether this event has at least one <see cref="FrameDrawing"/>
 		/// </summary>
 		[JsonIgnore]
 		public bool HasDrawings {
@@ -97,37 +119,70 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		/// <summary>
+		/// List of players tagged in this event.
+		/// </summary>
 		public List<Player> Players {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The team tagged in this event.
+		/// </summary>
+		/// <value>The team.</value>
 		public TeamType Team {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// List of tags describing this event.
+		/// </summary>
+		/// <value>The tags.</value>
 		public List<Tag> Tags {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Position of this event in the field.
+		/// </summary>
+		/// <value>The field position.</value>
 		public Coordinates FieldPosition {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Position of this event in the half field.
+		/// </summary>
 		public Coordinates HalfFieldPosition {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Position of this event in the goal.
+		/// </summary>
 		public Coordinates GoalPosition {
 			get;
 			set;
 		}
 
-		public HashSet<MediaFileAngle> ActiveViews {
+		/// <summary>
+		/// An opaque object used by the view to describe the cameras layout.
+		/// </summary>
+		public object CamerasLayout {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// A list of camera indexes visible for this event, where the index
+		/// is the position of the camera in the <see cref="MediaFileSet"/>
+		/// </summary>
+		public List<int> CamerasVisible {
 			get;
 			set;
 		}
@@ -137,8 +192,8 @@ namespace LongoMatch.Core.Store
 			get {
 				return 
 					(Name + "\n" +
-					TagsDescription () + "\n" +
-					TimesDesription ());
+				TagsDescription () + "\n" +
+				TimesDesription ());
 			}
 		}
 
@@ -148,8 +203,11 @@ namespace LongoMatch.Core.Store
 				return EventType.Color;
 			}
 		}
+
 		#endregion
+
 		#region Public methods
+
 		public string TagsDescription ()
 		{
 			return String.Join ("-", Tags.Select (t => t.Value));
@@ -175,7 +233,7 @@ namespace LongoMatch.Core.Store
 			if (Drawings.Count == 0) {
 				Miniature = null;
 			} else {
-				Miniature = Drawings[0].Miniature;
+				Miniature = Drawings [0].Miniature;
 			}
 		}
 
@@ -243,9 +301,13 @@ namespace LongoMatch.Core.Store
 		{
 			return Description;
 		}
+
 		#endregion
 	}
 
+	/// <summary>
+	/// An event in the game for a penalty.
+	/// </summary>
 	[Serializable]
 	public class PenaltyCardEvent: TimelineEvent
 	{
@@ -281,8 +343,8 @@ namespace LongoMatch.Core.Store
 		public override string Description {
 			get {
 				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
-				                      TagsDescription (), Start.ToMSecondsString (),
-				                      Stop.ToMSecondsString ());
+					TagsDescription (), Start.ToMSecondsString (),
+					Stop.ToMSecondsString ());
 			}
 		}
 	}
@@ -298,7 +360,7 @@ namespace LongoMatch.Core.Store
 				EventTime = value;
 			}
 		}
-		
+
 		public override Time Stop {
 			get {
 				return EventTime;
@@ -308,7 +370,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 	}
-	
+
 	[Serializable]
 	public class SubstitutionEvent: StatEvent
 	{
@@ -321,10 +383,10 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public override string Name {
 			get {
-				return Reason.ToString();
+				return Reason.ToString ();
 			}
 			set {
 			}
@@ -358,17 +420,17 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public List<Player> HomeBenchPlayers {
 			get;
 			set;
 		}
-		
+
 		public List<Player> AwayStartingPlayers {
 			get;
 			set;
 		}
-		
+
 		public List<Player> AwayBenchPlayers {
 			get;
 			set;

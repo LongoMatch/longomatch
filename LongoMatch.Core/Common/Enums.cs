@@ -364,6 +364,7 @@ namespace LongoMatch.Core.Common
 		Directory,
 	}
 
+	[Obsolete]
 	public enum MediaFileAngle
 	{
 		Angle1,

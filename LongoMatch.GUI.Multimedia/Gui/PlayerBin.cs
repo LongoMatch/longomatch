@@ -68,7 +68,7 @@ namespace LongoMatch.Gui
 		bool ignoreTick, stillimageLoaded, delayedOpen;
 		MediaFileSet fileSet;
 		MediaFile activeFile;
-		MediaFileAngle angle;
+		int cameraIndex;
 		double previousVLevel = 1;
 		double[] seeksQueue;
 		object[] pendingSeek;
@@ -172,11 +172,18 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public MediaFileAngle ActiveAngle {
+		public object CamerasLayout {
 			get {
-				return angle;
+				return 0;
 			}
 		}
+
+		public List<int> CamerasVisible {
+			get {
+				return new List<int> { 0 };
+			}
+		}
+
 		public bool SeekingEnabled {
 			set {
 				timescale.Sensitive = value;
@@ -1001,7 +1008,7 @@ namespace LongoMatch.Gui
 
 		void OnDrawButtonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitDrawFrame (null, -1, angle, true);
+			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasVisible [0], true);
 		}
 
 		void HandleReady (object sender, EventArgs e)

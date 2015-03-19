@@ -24,17 +24,17 @@ using NUnit.Framework;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestFrameDrawing
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			FrameDrawing d = new FrameDrawing ();
 			d.Miniature = Utils.LoadImageFromFile ();
 			d.Freehand = Utils.LoadImageFromFile ();
-			d.Drawables = new List<Drawable> {new Line (), new Rectangle()};
-			d.Angle = MediaFileAngle.Angle2;
+			d.Drawables = new List<Drawable> { new Line (), new Rectangle () };
+			d.CameraIndex = 2;
 			d.Render = new Time (1000);
 			d.Pause = new Time (2000);
 			Utils.CheckSerialization (d);
@@ -42,7 +42,7 @@ namespace Tests.Core.Store
 			FrameDrawing d2 = Utils.SerializeDeserialize (d);
 			Assert.AreEqual (d.Render, d2.Render);
 			Assert.AreEqual (d.Pause, d2.Pause);
-			Assert.AreEqual (d.Angle, d2.Angle);
+			Assert.AreEqual (d.CameraIndex, d2.CameraIndex);
 			Assert.AreEqual (d2.Drawables.Count, d.Drawables.Count);
 			Assert.IsNotNull (d2.Freehand);
 			Assert.IsNotNull (d2.Miniature);

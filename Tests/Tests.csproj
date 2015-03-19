@@ -81,6 +81,7 @@
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
     <Compile Include="Services\TestRenderingJobsManager.cs" />
+    <Compile Include="Core\Store\Playlists\TestPlaylistPlayElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
@@ -107,5 +108,6 @@
     <Folder Include="Core\Store\Templates\" />
     <Folder Include="Services\" />
     <Folder Include="DB\" />
+    <Folder Include="Core\Store\Playlists\" />
   </ItemGroup>
 </Project>

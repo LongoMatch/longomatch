@@ -207,13 +207,19 @@ namespace LongoMatch.Gui
 				return playerbin.Playing;
 			}
 		}
-		
-		public MediaFileAngle ActiveAngle {
+
+		public object CamerasLayout {
 			get {
-				return playerbin.ActiveAngle;
+				return playerbin.CamerasLayout;
 			}
 		}
-		
+
+		public List<int> CamerasVisible {
+			get {
+				return playerbin.CamerasVisible;
+			}
+		}
+
 		public bool SeekingEnabled {
 			set {
 				playerbin.SeekingEnabled = value;

@@ -174,7 +174,7 @@ namespace LongoMatch.Services
 			guiToolkit.ShowProjectStats (project);
 		}
 
-		void HandleDrawFrame (TimelineEvent play, int drawingIndex, MediaFileAngle angle, bool current)
+		void HandleDrawFrame (TimelineEvent play, int drawingIndex, int cameraIndex, bool current)
 		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
@@ -188,7 +188,7 @@ namespace LongoMatch.Services
 				if (drawingIndex == -1) {
 					drawing = new FrameDrawing ();
 					drawing.Render = player.CurrentTime;
-					drawing.Angle = angle;
+					drawing.CameraIndex = cameraIndex;
 				} else {
 					drawing = play.Drawings [drawingIndex];
 				}
@@ -268,6 +268,8 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 			}
+			play.CamerasLayout = player.CamerasLayout;
+			play.CamerasVisible = player.CamerasVisible;
 
 			filter.Update ();
 			analysisWindow.AddPlay (play);

@@ -280,7 +280,7 @@ namespace LongoMatch.Services
 						evt = (loadedElement as PlaylistPlayElement).Play;
 					}
 					if (evt != null) {
-						Config.EventsBroker.EmitDrawFrame (evt, -1, player.ActiveAngle, true);
+						Config.EventsBroker.EmitDrawFrame (evt, -1, player.CamerasVisible [0], true);
 					}
 					return;
 				case KeyAction.TogglePlay:
