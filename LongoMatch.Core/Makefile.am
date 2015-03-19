@@ -59,6 +59,7 @@ SOURCES = Common/Area.cs \
 	Interfaces/Multimedia/IFramesCapturer.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
 	Interfaces/Multimedia/IPlayer.cs \
+	Interfaces/Multimedia/IPlayerController.cs \
 	Interfaces/Multimedia/IRemuxer.cs \
 	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
