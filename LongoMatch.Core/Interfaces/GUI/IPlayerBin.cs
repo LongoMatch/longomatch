@@ -27,33 +27,54 @@ namespace LongoMatch.Core.Interfaces.GUI
 	public interface IPlayerBin
 	{
 		event StateChangeHandler PlayStateChanged;
-		
-		Time CurrentTime {get;}
-		Time StreamLength {get;}
-		Image CurrentMiniatureFrame {get;}
-		Image CurrentFrame {get;}
-		bool Opened {get;}
-		bool SeekingEnabled {set;}
-		bool Sensitive {set; get;}
+
+		Time CurrentTime { get; }
+
+		Time StreamLength { get; }
+
+		Image CurrentMiniatureFrame { get; }
+
+		Image CurrentFrame { get; }
+
+		bool Opened { get; }
+
+		bool SeekingEnabled { set; }
+
+		bool Sensitive { set; get; }
+
 		bool Playing { get; }
-		MediaFileAngle ActiveAngle { get; }
 
 		void Open (MediaFileSet fileSet);
-		void Close();
+
+		void Close ();
+
 		void Play ();
+
 		void Pause ();
+
 		void TogglePlay ();
-		void ResetGui();
+
+		void ResetGui ();
+
 		void Seek (Time time, bool accurate);
-		void StepForward();
-		void StepBackward();
-		void SeekToNextFrame();
-		void SeekToPreviousFrame();
-		void FramerateUp();
-		void FramerateDown();
+
+		void StepForward ();
+
+		void StepBackward ();
+
+		void SeekToNextFrame ();
+
+		void SeekToPreviousFrame ();
+
+		void FramerateUp ();
+
+		void FramerateDown ();
+
 		void LoadPlay (MediaFileSet file, TimelineEvent play, Time seekTime, bool playing);
+
 		void LoadPlayListPlay (Playlist playlist, IPlaylistElement play);
-		void CloseSegment();
+
+		void CloseSegment ();
 	}
 }
 

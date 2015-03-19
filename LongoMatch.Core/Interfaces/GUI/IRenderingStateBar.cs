@@ -23,11 +23,14 @@ namespace LongoMatch.Core.Interfaces.GUI
 	{
 		event EventHandler Cancel;
 		event EventHandler ManageJobs;
-		
-		bool JobRunning {set;}
-		string Text {set;}
-		string ProgressText {set;}
-		double Fraction {set; get;}
+
+		bool JobRunning { set; }
+
+		string Text { set; }
+
+		string ProgressText { set; }
+
+		double Fraction { set; get; }
 	}
 }
 

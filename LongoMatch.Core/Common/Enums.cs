@@ -21,14 +21,16 @@ using System;
 namespace LongoMatch.Core.Common
 {
 
-	public enum SerializationType {
+	public enum SerializationType
+	{
 		Binary,
 		Xml,
 		Json
 	}
-		
 
-	public enum ProjectType {
+
+	public enum ProjectType
+	{
 		CaptureProject,
 		URICaptureProject,
 		FakeCaptureProject,
@@ -36,32 +38,37 @@ namespace LongoMatch.Core.Common
 		EditProject,
 		None,
 	}
-	
-	public enum CapturerType {
+
+	public enum CapturerType
+	{
 		Fake,
 		Live,
 	}
 
-	public enum EndCaptureResponse {
+	public enum EndCaptureResponse
+	{
 		Return = 234,
 		Quit = 235,
 		Save = 236
 	}
 
-	public enum TagMode {
+	public enum TagMode
+	{
 		Predefined,
 		Free,
 		Edit
 	}
 
-	public enum SortMethodType {
+	public enum SortMethodType
+	{
 		SortByName = 0,
 		SortByStartTime = 1,
 		SortByStopTime = 2,
 		SortByDuration = 3
 	}
 
-	public enum ProjectSortType {
+	public enum ProjectSortType
+	{
 		SortByName = 0,
 		SortByDate = 1,
 		SortByModificationDate = 2,
@@ -76,16 +83,18 @@ namespace LongoMatch.Core.Common
 		VISITOR = 2,
 		BOTH = 3,
 	}
-	
-	public enum JobState {
+
+	public enum JobState
+	{
 		NotStarted,
 		Running,
 		Finished,
 		Cancelled,
 		Error,
 	}
-	
-	public enum VideoEncoderType {
+
+	public enum VideoEncoderType
+	{
 		Mpeg4,
 		Xvid,
 		Theora,
@@ -94,13 +103,15 @@ namespace LongoMatch.Core.Common
 		VP8,
 	}
 
-	public enum AudioEncoderType {
+	public enum AudioEncoderType
+	{
 		Mp3,
 		Aac,
 		Vorbis,
 	}
 
-	public enum VideoMuxerType {
+	public enum VideoMuxerType
+	{
 		Avi,
 		Mp4,
 		Matroska,
@@ -108,8 +119,9 @@ namespace LongoMatch.Core.Common
 		MpegPS,
 		WebM,
 	}
-	
-	public enum DrawTool {
+
+	public enum DrawTool
+	{
 		Pen,
 		Line,
 		Ellipse,
@@ -124,20 +136,22 @@ namespace LongoMatch.Core.Common
 		Text,
 		Counter,
 	}
-	
-	public enum CaptureSourceType {
+
+	public enum CaptureSourceType
+	{
 		None,
 		DV,
 		System,
 		URI,
 	}
-	
-	public enum GameUnitEventType {
-		Start, 
+
+	public enum GameUnitEventType
+	{
+		Start,
 		Stop,
 		Cancel
 	}
-	
+
 	public enum EditorState
 	{
 		START = 0,
@@ -145,13 +159,15 @@ namespace LongoMatch.Core.Common
 		CANCELED = -1,
 		ERROR = -2
 	}
-	
-	public enum JobType {
+
+	public enum JobType
+	{
 		VideoEdition,
 		VideoConversion
 	}
-	
-	public enum VideoAnalysisMode {
+
+	public enum VideoAnalysisMode
+	{
 		PredefinedTagging,
 		ManualTagging,
 		Timeline,
@@ -161,7 +177,8 @@ namespace LongoMatch.Core.Common
 	/// <summary>
 	/// Node selection mode.
 	/// </summary>
-	public enum NodeSelectionMode {
+	public enum NodeSelectionMode
+	{
 		/// <summary>
 		/// The node is not selectable at all.
 		/// </summary>
@@ -183,7 +200,8 @@ namespace LongoMatch.Core.Common
 	/// <summary>
 	/// Node dragging mode.
 	/// </summary>
-	public enum NodeDraggingMode {
+	public enum NodeDraggingMode
+	{
 		/// <summary>
 		/// The node is not draggable at all.
 		/// </summary>
@@ -201,8 +219,9 @@ namespace LongoMatch.Core.Common
 		/// </summary>
 		All,
 	}
-	
-	public enum SelectionPosition {
+
+	public enum SelectionPosition
+	{
 		TopLeft,
 		TopRight,
 		BottomLeft,
@@ -219,102 +238,117 @@ namespace LongoMatch.Core.Common
 		CircleBorder,
 		All,
 	}
-	
-	public enum LineStyle {
+
+	public enum LineStyle
+	{
 		Normal,
 		Dashed,
 		Pointed
 	}
-	
-	public enum LineType {
+
+	public enum LineType
+	{
 		Simple,
 		Arrow,
 		DoubleArrow,
 		Dot,
 		DoubleDot
 	}
-	
-	public enum FontSlant {
+
+	public enum FontSlant
+	{
 		Italic,
 		Normal,
 		Oblique,
 	}
-	
-	public enum FontWeight {
+
+	public enum FontWeight
+	{
 		Light,
 		Normal,
 		Bold
 	}
-	
-	public enum FontAlignment {
+
+	public enum FontAlignment
+	{
 		Left,
 		Right,
 		Center,
 	}
-	
-	public enum ButtonType {
+
+	public enum ButtonType
+	{
 		None,
 		Left,
 		Center,
 		Right
 	}
-	
-	public enum ButtonModifier {
+
+	public enum ButtonModifier
+	{
 		None,
 		Shift,
 		Control,
 		Meta
 	}
-	
-	public enum CursorType {
+
+	public enum CursorType
+	{
 		Arrow,
 		DoubleArrow,
 		Selection,
 		Cross,
 	}
-	
-	public enum MultiSelectionMode {
+
+	public enum MultiSelectionMode
+	{
 		Single,
 		Multiple,
 		MultipleWithModifier,
 	}
-	
-	public enum PlayersIconSize {
+
+	public enum PlayersIconSize
+	{
 		Smallest = 20,
 		Small = 30,
 		Medium = 40,
 		Large = 50,
 		ExtraLarge = 60
 	}
-	
-	public enum FieldPositionType {
+
+	public enum FieldPositionType
+	{
 		Field,
 		HalfField,
 		Goal
 	}
-	
-	public enum CardShape {
+
+	public enum CardShape
+	{
 		Rectangle,
 		Triangle,
 		Circle
 	}
-	
-	public enum FitMode {
+
+	public enum FitMode
+	{
 		Fill,
 		Fit,
 		Original
 	}
-	
+
 	[Flags]
-	public enum CellState {
+	public enum CellState
+	{
 		Selected = 1,
 		Prelit = 2,
 		Insensitive = 4,
 		Sorted = 8,
 		Focused = 16
 	}
-	
-	public enum SubstitutionReason {
+
+	public enum SubstitutionReason
+	{
 		PlayersSubstitution,
 		PositionChange,
 		BenchPositionChange,
@@ -322,21 +356,24 @@ namespace LongoMatch.Core.Common
 		TemporalExclusion,
 		Exclusion,
 	}
-	
-	public enum FileChooserMode {
+
+	public enum FileChooserMode
+	{
 		MediaFile,
 		File,
 		Directory,
 	}
 
-	public enum MediaFileAngle {
+	public enum MediaFileAngle
+	{
 		Angle1,
 		Angle2,
 		Angle3,
 		Angle4,
 	}
-	
-	public enum KeyAction {
+
+	public enum KeyAction
+	{
 		None,
 		TogglePlay,
 		FrameUp,
@@ -365,7 +402,8 @@ namespace LongoMatch.Core.Common
 		FitTimeline,
 	}
 
-	public enum ProjectSortMethod {
+	public enum ProjectSortMethod
+	{
 		Name,
 		Date,
 		ModificationDate,

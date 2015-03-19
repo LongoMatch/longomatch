@@ -21,7 +21,7 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IIDObject
 	{
-		Guid ID {get;set;}
+		Guid ID { get; set; }
 	}
 }
 

@@ -23,27 +23,27 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Handlers
 {
-	public delegate void PlayListSegmentDoneHandler();
-	public delegate void SegmentClosedHandler();
-	public delegate void SegmentDoneHandler();
-	public delegate void SeekEventHandler(Time pos, bool accurate);
-	public delegate void TogglePlayEventHandler(bool playing);
-	public delegate void VolumeChangedHandler(double level);
-	public delegate void NextButtonClickedHandler();
-	public delegate void PrevButtonClickedHandler();
-	public delegate void ProgressHandler(float progress);
-	public delegate void FramesProgressHandler(int actual, int total, Image frame);
-	public delegate void DrawFrameHandler (TimelineEvent play, int drawingIndex, MediaFileAngle angle, bool current);
-	public delegate void EllpasedTimeHandler(Time ellapsedTime);
+	public delegate void PlayListSegmentDoneHandler ();
+	public delegate void SegmentClosedHandler ();
+	public delegate void SegmentDoneHandler ();
+	public delegate void SeekEventHandler (Time pos,bool accurate);
+	public delegate void TogglePlayEventHandler (bool playing);
+	public delegate void VolumeChangedHandler (double level);
+	public delegate void NextButtonClickedHandler ();
+	public delegate void PrevButtonClickedHandler ();
+	public delegate void ProgressHandler (float progress);
+	public delegate void FramesProgressHandler (int actual,int total,Image frame);
+	public delegate void DrawFrameHandler (TimelineEvent play,int drawingIndex,MediaFileAngle angle,bool current);
+	public delegate void EllpasedTimeHandler (Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
 	
-	public delegate void DeviceChangeHandler(int deviceID);
+	public delegate void DeviceChangeHandler (int deviceID);
 	public delegate void CaptureFinishedHandler (bool close);
-	public delegate void ErrorHandler(string message);
-	public delegate void PercentCompletedHandler(float percent);
-	public delegate void StateChangeHandler(bool playing);
-	public delegate void TickHandler(Time currentTime);
-	public delegate void MediaInfoHandler(int width, int height, int parN, int parD);
-	public delegate void EosHandler();
-	public delegate void ReadyToSeekHandler();
+	public delegate void ErrorHandler (string message);
+	public delegate void PercentCompletedHandler (float percent);
+	public delegate void StateChangeHandler (bool playing);
+	public delegate void TickHandler (Time currentTime);
+	public delegate void MediaInfoHandler (int width,int height,int parN,int parD);
+	public delegate void EosHandler ();
+	public delegate void ReadyToSeekHandler ();
 }

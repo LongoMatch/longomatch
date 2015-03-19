@@ -23,10 +23,15 @@ namespace LongoMatch.Core.Interfaces
 	public interface IDataBaseManager
 	{
 		void SetActiveByName (string name);
+
 		IDatabase Add (string name);
+
 		bool Delete (IDatabase db);
+
 		IDatabase ActiveDB { get; set; }
+
 		void UpdateDatabases ();
+
 		List<IDatabase> Databases { get; set; }
 	}
 }

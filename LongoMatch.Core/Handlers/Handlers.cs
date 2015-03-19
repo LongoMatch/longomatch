@@ -36,14 +36,14 @@ namespace LongoMatch.Core.Handlers
 	/* An event has been created */
 	public delegate void EventCreatedHandler (TimelineEvent evt);
 	/* A new play needs to be create for a specific category at the current play time */
-	public delegate void NewEventHandler (EventType eventType,List<Player> players, TeamType team,
-	                                      List<Tag> tags,Time start,Time stop, Time EventTime,
-	                                      Score score, PenaltyCard card);
+	public delegate void NewEventHandler (EventType eventType,List<Player> players,TeamType team,
+	                                      List<Tag> tags,Time start,Time stop,Time EventTime,
+	                                      Score score,PenaltyCard card);
 	/* Add a new play to the current project */
 	public delegate void NewTimelineEventHandler (TimelineEvent evt);
 	/* An event was edited */
-	public delegate void TimeNodeChangedHandler (TimeNode tNode, Time time);
-	public delegate void TimerNodeAddedHandler (Timer timer, TimeNode tn);
+	public delegate void TimeNodeChangedHandler (TimeNode tNode,Time time);
+	public delegate void TimerNodeAddedHandler (Timer timer,TimeNode tn);
 	/* Edit EventType properties */
 	public delegate void EditEventTypeHandler (EventType cat);
 	/* A list of plays needs to be deleted */
@@ -114,13 +114,13 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayerPropertiesHandler (Player player);
 	public delegate void PlayersPropertiesHandler (List<Player> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (Team team, Player p1, Player p2, SubstitutionReason reason, Time time);
+	public delegate void PlayersSubstitutionHandler (Team team,Player p1,Player p2,SubstitutionReason reason,Time time);
 	public delegate void PlayersSelectionChangedHandler (List<Player> players);
 	public delegate void TeamSelectionChangedHandler (TeamType team);
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);
 	public delegate void ProjectSelectedHandler (ProjectDescription project);
-	public delegate void KeyHandler (object sender, HotKey key);
+	public delegate void KeyHandler (object sender,HotKey key);
 	/* The plays filter was updated */
 	public delegate void FilterUpdatedHandler ();
 	public delegate void DetachPlayerHandler ();
@@ -133,12 +133,12 @@ namespace LongoMatch.Core.Handlers
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays,EventType cat,Time time);
 	public delegate void ShowTimersMenuHandler (List<TimeNode> timenodes);
-	public delegate void ShowTimerMenuHandler (Timer timer, Time time);
+	public delegate void ShowTimerMenuHandler (Timer timer,Time time);
 	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
 	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
-	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable, DrawTool tool);
+	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable,DrawTool tool);
 	public delegate void DrawableChangedHandler (IBlackboardObject drawable);
 	public delegate void BackEventHandle ();
 	/* Camera dragging */
-	public delegate void CameraDraggedHandler (MediaFile file, TimeNode timenode);
+	public delegate void CameraDraggedHandler (MediaFile file,TimeNode timenode);
 }

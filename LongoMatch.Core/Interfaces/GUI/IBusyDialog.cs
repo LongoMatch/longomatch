@@ -21,9 +21,12 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IBusyDialog
 	{
-		void Pulse();
-		void Destroy();
+		void Pulse ();
+
+		void Destroy ();
+
 		void Show ();
+
 		void ShowSync ();
 	}
 }

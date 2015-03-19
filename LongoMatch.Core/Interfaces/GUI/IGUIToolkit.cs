@@ -31,66 +31,82 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IGUIToolkit
 	{
-		IMainController MainController {get;}
-		IRenderingStateBar RenderingStateBar {get;}
-		Version Version {get;}
-		bool FullScreen {set;}
-	
+		IMainController MainController { get; }
+
+		IRenderingStateBar RenderingStateBar { get; }
+
+		Version Version { get; }
+
+		bool FullScreen { set; }
+
 		void Quit ();
 		
 		/* Messages */
-		void InfoMessage(string message, object parent=null);
-		void WarningMessage(string message, object parent=null);
-		void ErrorMessage(string message, object parent=null);
-		bool QuestionMessage(string message, string title, object parent=null);
-		string QueryMessage (string key, string title=null, string value="", object parent=null);
+		void InfoMessage (string message, object parent = null);
+
+		void WarningMessage (string message, object parent = null);
+
+		void ErrorMessage (string message, object parent = null);
+
+		bool QuestionMessage (string message, string title, object parent = null);
+
+		string QueryMessage (string key, string title = null, string value = "", object parent = null);
 		
 		/* Files/Folders IO */
-		string SaveFile(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter);
-		string OpenFile(string title, string defaultName, string defaultFolder,
-			string filterName = null, string[] extensionFilter = null);
-		List<string> OpenFiles(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter);
-		string SelectFolder(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter);
-			
-		object ChooseOption (Dictionary<string, object> options, object parent=null);
+		string SaveFile (string title, string defaultName, string defaultFolder,
+		                 string filterName, string[] extensionFilter);
 
-		IBusyDialog BusyDialog(string message, object parent=null);
-			
+		string OpenFile (string title, string defaultName, string defaultFolder,
+		                 string filterName = null, string[] extensionFilter = null);
+
+		List<string> OpenFiles (string title, string defaultName, string defaultFolder,
+		                        string filterName, string[] extensionFilter);
+
+		string SelectFolder (string title, string defaultName, string defaultFolder,
+		                     string filterName, string[] extensionFilter);
+
+		object ChooseOption (Dictionary<string, object> options, object parent = null);
+
+		IBusyDialog BusyDialog (string message, object parent = null);
+
 		List<EditionJob> ConfigureRenderingJob (Playlist playlist);
-		void ExportFrameSeries(Project openenedProject, TimelineEvent play, string snapshotDir);
-		
+
+		void ExportFrameSeries (Project openenedProject, TimelineEvent play, string snapshotDir);
+
 		void OpenProject (Project project, ProjectType projectType, 
 		                  CaptureSettings props, EventsFilter filter,
 		                  out IAnalysisWindow analysisWindow);
-		void CloseProject ();
-			                     
-		void SelectProject(List<ProjectDescription> projects);
 
-		ProjectDescription ChooseProject(List<ProjectDescription> projects);
-		
-		void CreateNewProject (Project project=null);
-		
+		void CloseProject ();
+
+		void SelectProject (List<ProjectDescription> projects);
+
+		ProjectDescription ChooseProject (List<ProjectDescription> projects);
+
+		void CreateNewProject (Project project = null);
+
 		void ShowProjectStats (Project project);
-		
+
 		void OpenProjectsManager (Project openedProject);
+
 		void OpenCategoriesTemplatesManager ();
+
 		void OpenTeamsTemplatesManager ();
+
 		void OpenDatabasesManager ();
+
 		void OpenPreferencesEditor ();
-		
+
 		void ManageJobs ();
-		
+
 		void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
 
-		void DrawingTool(Image pixbuf, TimelineEvent play, FrameDrawing drawing, Project project);
-		
+		void DrawingTool (Image pixbuf, TimelineEvent play, FrameDrawing drawing, Project project);
+
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
-		
+
 		DateTime SelectDate (DateTime date, object widget);
-		
+
 		EndCaptureResponse EndCapture (string filepath);
 
 		bool SelectMediaFiles (Project project);

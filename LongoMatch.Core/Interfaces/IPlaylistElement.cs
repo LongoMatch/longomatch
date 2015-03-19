@@ -25,11 +25,11 @@ namespace LongoMatch.Core.Interfaces
 		string Description {
 			get;
 		}
-		
+
 		Image Miniature {
 			get;
 		}
-		
+
 		bool Selected {
 			get;
 			set;

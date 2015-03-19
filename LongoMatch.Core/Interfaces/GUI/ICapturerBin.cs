@@ -27,20 +27,31 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface ICapturerBin
 	{
-		Time CurrentCaptureTime {get;}
-		bool Capturing {get;}
-		Image CurrentCaptureFrame {get;}
-		CaptureSettings CaptureSettings {get;}
-		List<string> PeriodsNames {set;}
+		Time CurrentCaptureTime { get; }
+
+		bool Capturing { get; }
+
+		Image CurrentCaptureFrame { get; }
+
+		CaptureSettings CaptureSettings { get; }
+
+		List<string> PeriodsNames { set; }
+
 		List<Period> Periods { get; set; }
+
 		ICapturer Capturer { get; }
 
 		void Run (CaptureSettings settings, MediaFile outputFile);
-		void StartPeriod();
-		void PausePeriod();
-		void ResumePeriod();
-		void StopPeriod();
-		void Close();
+
+		void StartPeriod ();
+
+		void PausePeriod ();
+
+		void ResumePeriod ();
+
+		void StopPeriod ();
+
+		void Close ();
 	}
 }
 

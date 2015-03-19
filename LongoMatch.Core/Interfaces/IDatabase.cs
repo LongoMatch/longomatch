@@ -23,31 +23,31 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IDatabase
 	{
-		List<ProjectDescription> GetAllProjects();
+		List<ProjectDescription> GetAllProjects ();
 
-		Project GetProject(Guid id);
-		
-		void AddProject(Project project);
-		
-		bool RemoveProject(Guid id);
-		
-		void UpdateProject(Project project);
-		
-		bool Exists(Project project);
-		
+		Project GetProject (Guid id);
+
+		void AddProject (Project project);
+
+		bool RemoveProject (Guid id);
+
+		void UpdateProject (Project project);
+
+		bool Exists (Project project);
+
 		bool Backup ();
-		
+
 		bool Delete ();
-		
+
 		void Reload ();
-		
-		string Name {get;}
-		
-		DateTime LastBackup {get;}
-		
-		int Count {get;}
-		
-		Version Version {get; set;}
+
+		string Name { get; }
+
+		DateTime LastBackup { get; }
+
+		int Count { get; }
+
+		Version Version { get; set; }
 	}
 }
 
