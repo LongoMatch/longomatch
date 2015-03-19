@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Common;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
@@ -29,13 +30,13 @@ namespace LongoMatch.Plugins
 	{
 		public string Name {
 			get {
-				return Catalog.GetString ("LongoMatch default dashboard");
+				return String.Format ("{0} {1}", Constants.SOFTWARE_NAME, Catalog.GetString ("default dashboard"));
 			}
 		}
 
 		public string Description {
 			get {
-				return Catalog.GetString ("LongoMatch default dashboard");
+				return String.Format ("{0} {1}", Constants.SOFTWARE_NAME, Catalog.GetString ("default dashboard"));
 			}
 		}
 
