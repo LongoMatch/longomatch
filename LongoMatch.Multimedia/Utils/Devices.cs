@@ -37,16 +37,21 @@ namespace LongoMatch.Multimedia.Utils
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr lgm_device_video_format_get_info (IntPtr raw, out int width, out int height,
 		                                                       out int fps_n, out int fps_d);
-		#if OSTYPE_OS_X
-		static string[] devices = new string[1] {"avfvideosrc"};
-		#elif OSTYPE_WINDOWS
-		static string[] devices = new string[2] {"ksvideosrc", "dshowvideosrc"};
-		#else
-		static string[] devices = new string[2] { "v4l2src", "dv1394src" };
-		#endif
+
+		static readonly string[] devices_osx = new string[1] {"avfvideosrc"};
+		static readonly string[] devices_win = new string[2] {"ksvideosrc", "dshowvideosrc"};
+		static readonly string[] devices_lin = new string[2] { "v4l2src", "dv1394src" };
 		
 		static public List<Device> ListVideoDevices ()
 		{
+			string[] devices;
+			if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+				devices = devices_osx;
+			else if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				devices = devices_win;
+			else
+				devices = devices_lin;
+
 			List<Device> devicesList = new List<Device> ();
 
 			foreach (string source in devices) {
