@@ -204,14 +204,8 @@ lgm_device_parse_structure (GstStructure *s, GHashTable *table)
   } else if (G_VALUE_TYPE (val) == GST_TYPE_FRACTION_RANGE) {
     const GValue *fr_val;
 
-    lgm_device_add_format_from_fps_val (table, width, height,
-        gst_value_get_fraction_range_min (val));
-    /* For sources returning template caps set framerate to 0/0 */
-    fr_val = gst_value_get_fraction_range_min (val);
-    if (!gst_value_get_fraction_numerator (fr_val) == 0) {
-      lgm_device_add_format_from_fps_val (table, width, height,
-          gst_value_get_fraction_range_max (val));
-    }
+    /* For sources returning template caps or ranges set framerate to 0/0 */
+    lgm_device_add_format (table, width, height, 0, 0);
   } else if (G_VALUE_TYPE (val) == GST_TYPE_ARRAY) {
     guint n, len;
 

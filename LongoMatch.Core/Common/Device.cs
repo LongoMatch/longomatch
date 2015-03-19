@@ -78,6 +78,9 @@ namespace LongoMatch.Core.Common
 			if (width == 0 && height == 0 && fps_n == 0 && fps_d == 0) {
 				return Catalog.GetString ("Default");
 			}
+			if (fps_n == 0 && fps_d == 0) {
+				return string.Format ("{0}x{1}", width, height);
+			}
 			return string.Format ("{0}x{1}@{2}fps", width, height,
 				((double)fps_n / fps_d).ToString ("#.##"));
 		}
