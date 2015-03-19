@@ -24,6 +24,8 @@ namespace LongoMatch.Gui.Helpers
 	public class FileChooserHelper
 	{
 	
+		static string lastDirectory = null;
+
 		static public string SaveFile (Widget parent, string title, string defaultName,
 		                               string defaultFolder, string filterName,
 		                               string[] extensions)
@@ -83,36 +85,43 @@ namespace LongoMatch.Gui.Helpers
 			else
 				button = "gtk-open";
 			
-			if(parent != null)
+			if (parent != null)
 				toplevel = parent.Toplevel as Window;
 			else
 				toplevel = null;
 				
-			fChooser = new FileChooserDialog(title, toplevel, action,
-				"gtk-cancel",ResponseType.Cancel, button, ResponseType.Accept);
+			fChooser = new FileChooserDialog (title, toplevel, action,
+				"gtk-cancel", ResponseType.Cancel, button, ResponseType.Accept);
 				
 			fChooser.SelectMultiple = allowMultiple;
-			if (defaultFolder != null)
-				fChooser.SetCurrentFolder(defaultFolder);
+			if (defaultFolder != null) {
+				fChooser.SetCurrentFolder (defaultFolder);
+			} else if (lastDirectory != null) {
+				fChooser.SetCurrentFolder (lastDirectory);
+			}
 			if (defaultName != null)
 				fChooser.CurrentName = defaultName;
 			if (filterName != null) {
-				filter = new FileFilter();
+				filter = new FileFilter ();
 				filter.Name = filterName;
 				if (extensions != null) {
 					foreach (string p in extensions) {
-						filter.AddPattern(p);
+						filter.AddPattern (p);
 					}
 				}
 				fChooser.Filter = filter;
 			}
 			
-			if (fChooser.Run() != (int)ResponseType.Accept) 
-				path = new List<string>();
-			else
-				path =  new List<string>(fChooser.Filenames);
-			
-			fChooser.Destroy();
+			if (fChooser.Run () != (int)ResponseType.Accept) {
+				path = new List<string> ();
+			} else {
+				path = new List<string> (fChooser.Filenames);
+				if (defaultFolder == null && fChooser.Filenames.Length > 0) {
+					lastDirectory = System.IO.Path.GetDirectoryName (fChooser.Filenames [0]);
+				}
+			}
+
+			fChooser.Destroy ();
 			return path;
 		}
 	}
