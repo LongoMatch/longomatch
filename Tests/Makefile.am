@@ -39,6 +39,7 @@ SOURCES = Core/Common/TestColor.cs \
 	DB/TestStorage.cs \
 	Services/TestFileStorage.cs \
 	Services/TestRenderingJobsManager.cs \
+	Services/TestTemplatesService.cs \
 	Utils.cs
 
 RESOURCES = Core/dibujo.svg
