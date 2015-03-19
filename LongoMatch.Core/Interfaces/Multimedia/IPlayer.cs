@@ -42,6 +42,8 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		IntPtr WindowHandle {set;}
 
 		bool Open (string mrl);
+		// EnableMediaFile(MediaFileSet files, List<IntPtr> windows);
+		// DisableMediaFile(MediaFileSet files);
 		void Play();
 		void Pause();
 		void Stop();
@@ -51,5 +53,11 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		bool SeekToPreviousFrame();
 		Image GetCurrentFrame (int width=-1, int height=-1);
 		void Expose ();
+		// Functions to add that belonged to IPlayerBin
+		// void Open (MediaFileSet fileSet);
+		// void Seek (Time time, bool accurate);
+		// void FramerateUp();
+		// void FramerateDown();
+		// void TogglePlay ();
 	}
 }

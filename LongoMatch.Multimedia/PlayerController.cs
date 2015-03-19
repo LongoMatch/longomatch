@@ -17,6 +17,8 @@
 //
 using System;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
@@ -35,22 +37,28 @@ namespace LongoMatch.Core.Store
 		}
 
 		#region IPlayerController implementation
-		IPlayer IPlayerController.GetPlayer ()
+		public IPlayer Player
 		{
-			return player;
+			get {
+				return player;
+			}
 		}
-		void IPlayerController.LoadPlay (MediaFileSet file, TimelineEvent play, Time seekTime, bool playing)
-		{
-			throw new NotImplementedException ();
-		}
-		void IPlayerController.LoadPlayListPlay (LongoMatch.Core.Store.Playlists.Playlist playlist, LongoMatch.Core.Interfaces.IPlaylistElement play)
-		{
-			throw new NotImplementedException ();
-		}
-		void IPlayerController.CloseSegment ()
+
+		public void LoadEvent (MediaFileSet file, TimelineEvent ev, Time seekTime, bool playing)
 		{
 			throw new NotImplementedException ();
 		}
+
+		public void LoadPlayListEvent (Playlist playlist, IPlaylistElement ev)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void UnloadCurrentEvent()
+		{
+			throw new NotImplementedException ();
+		}
+
 		#endregion
 	}
 }
