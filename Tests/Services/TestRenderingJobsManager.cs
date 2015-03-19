@@ -24,6 +24,7 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Services;
+using System.Collections.Generic;
 
 namespace Tests.Services
 {
@@ -31,12 +32,14 @@ namespace Tests.Services
 	public class TestRenderingJobsManager
 	{
 		[Test ()]
-		public void TestMediaFileUsage ()
+		public void TestRenderedCamera ()
 		{
 			Project p = Utils.CreateProject ();
 
 			try {
-				PlaylistPlayElement element = new PlaylistPlayElement (p.Timeline [0], p.Description.FileSet);
+				TimelineEvent evt = p.Timeline [0];
+				evt.CamerasVisible = new List<int> { 0 };
+				PlaylistPlayElement element = new PlaylistPlayElement (evt, p.Description.FileSet);
 
 				// Playlist with one event
 				var playlist = new Playlist ();
@@ -61,10 +64,35 @@ namespace Tests.Services
 				renderer.AddJob (job);
 
 				// Check that AddSegment is called with the right video file.
-				var mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
-				mock.Verify (m => m.AddSegment (It.Is<string> (f => f == p.Description.FileSet [0].FilePath),
-					It.IsAny<long> (), It.IsAny<long> (), It.IsAny<double> (), It.IsAny<string> (), It.IsAny<bool> ()));
+				Mock<IVideoEditor> mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
+				mock.Verify (m => m.AddSegment (p.Description.FileSet [0].FilePath,
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
 
+				/* Test with a camera index bigger than the total cameras */
+				mtk = Mock.Of<IMultimediaToolkit> (m => m.GetVideoEditor () == Mock.Of<IVideoEditor> ());
+				renderer = new RenderingJobsManager (mtk, gtk);
+				mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
+				evt = p.Timeline [1];
+				evt.CamerasVisible = new List<int> { 1 };
+				element = new PlaylistPlayElement (evt, p.Description.FileSet);
+				playlist.Elements [0] = element; 
+				job = new EditionJob (playlist, settings);
+				renderer.AddJob (job);
+				mock.Verify (m => m.AddSegment (p.Description.FileSet [1].FilePath,
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
+
+				/* Test with the secondary camera */
+				mtk = Mock.Of<IMultimediaToolkit> (m => m.GetVideoEditor () == Mock.Of<IVideoEditor> ());
+				renderer = new RenderingJobsManager (mtk, gtk);
+				mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
+				evt = p.Timeline [1];
+				evt.CamerasVisible = new List<int> { 2 };
+				element = new PlaylistPlayElement (evt, p.Description.FileSet);
+				playlist.Elements [0] = element; 
+				job = new EditionJob (playlist, settings);
+				renderer.AddJob (job);
+				mock.Verify (m => m.AddSegment (p.Description.FileSet [0].FilePath,
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
 			} finally {
 				Utils.DeleteProject (p);
 			}

@@ -244,14 +244,26 @@ namespace LongoMatch.Services
 			TimelineEvent play;
 			MediaFile file;
 			IEnumerable<FrameDrawing> drawings;
+			int cameraIndex;
 
 			play = element.Play;
 			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
 			
 			lastTS = play.Start;
-			/* FIXME: for now we only support rendering the first angle in the list */
-			file = element.FileSet.FirstOrDefault ();
-			drawings = play.Drawings.Where (d => d.Angle == element.Angles.FirstOrDefault ());
+			if (element.CamerasVisible.Count == 0) {
+				cameraIndex = 0;
+			} else {
+				cameraIndex = element.CamerasVisible [0];
+			}
+			if (cameraIndex >= element.FileSet.Count) {
+				Log.Error (string.Format ("Camera index={0} not matching for current fileset count={1}",
+					cameraIndex, element.FileSet.Count));
+				file = element.FileSet [0];
+			} else {
+				file = element.FileSet [cameraIndex];
+			}
+			drawings = play.Drawings.Where (d => d.CameraIndex == cameraIndex);
+
 			if (file == null || drawings == null) {
 				return false;
 			}
