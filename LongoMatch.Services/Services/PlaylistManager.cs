@@ -32,7 +32,7 @@ namespace LongoMatch.Services
 	public class PlaylistManager
 	{
 		IGUIToolkit guiToolkit;
-		IPlayerBin player;
+		IPlayerController player;
 		IRenderingJobsManager videoRenderer;
 		Project openedProject;
 		ProjectType openedProjectType;
@@ -68,14 +68,14 @@ namespace LongoMatch.Services
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			play.Selected = true;
-			player.LoadPlay (openedProject.Description.FileSet, play,
-			                 seekTime, playing);
+			player.LoadEvent (openedProject.Description.FileSet, play,
+				seekTime, playing);
 			loadedPlay = play;
 			if (playing) {
 				player.Play ();
 			}
 		}
-		
+
 		void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element)
 		{
 			if (loadedElement != null) {
@@ -122,7 +122,7 @@ namespace LongoMatch.Services
 			if (element != null) {
 				playlist.SetActive (element);
 			}
-			player.LoadPlayListPlay (playlist, element);
+			player.LoadPlayListEvent (playlist, element);
 		}
 
 		void HandleLoadPlayEvent (TimelineEvent play)
@@ -137,7 +137,7 @@ namespace LongoMatch.Services
 				if (play != null) {
 					LoadPlay (play, play.Start, true);
 				} else {
-					player.CloseSegment ();
+					player.UnloadCurrentEvent ();
 				}
 				Config.EventsBroker.EmitEventLoaded (play);
 			}

@@ -17,11 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
-
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -59,7 +56,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void TagTeam (TeamType team);
 
-		IPlayerBin Player{ get; }
+		IPlayerController Player{ get; }
 
 		ICapturerBin Capturer{ get; }
 	}

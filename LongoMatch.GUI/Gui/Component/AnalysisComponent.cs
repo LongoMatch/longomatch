@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.GUI.Helpers;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Gui.Component
 {
@@ -46,7 +47,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public IPlayerBin Player {
+		public IPlayerController Player {
 			get {
 				return playercapturer.Player;
 			}

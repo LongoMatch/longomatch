@@ -68,9 +68,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void StepBackward ();
 
-		void SeekToNextFrame ();
+		bool SeekToNextFrame ();
 
-		void SeekToPreviousFrame ();
+		bool SeekToPreviousFrame ();
 
 		void FramerateUp ();
 

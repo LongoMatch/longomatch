@@ -44,7 +44,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 
-	public partial class PlayerBin : Gtk.Bin, IPlayerBin
+	public partial class PlayerBin : Gtk.Bin, IPlayerBin, IPlayerController
 	{
 		struct Segment
 		{
@@ -177,11 +177,15 @@ namespace LongoMatch.Gui
 			get {
 				return 0;
 			}
+			set {
+			}
 		}
 
 		public List<int> CamerasVisible {
 			get {
 				return new List<int> { 0 };
+			}
+			set {
 			}
 		}
 
@@ -377,27 +381,29 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void SeekToNextFrame ()
+		public bool SeekToNextFrame ()
 		{
 			if (ImageLoaded) {
-				return;
+				return false;
 			}
 			DrawingsVisible = false;
 			if (CurrentTime < segment.Stop) {
 				player.SeekToNextFrame ();
 				OnTick ();
 			}
+			return true;
 		}
 
-		public void SeekToPreviousFrame ()
+		public bool SeekToPreviousFrame ()
 		{
 			if (ImageLoaded) {
-				return;
+				return false;
 			}
 			DrawingsVisible = false;
 			if (CurrentTime > segment.Start) {
 				seeker.Seek (SeekType.StepDown);
 			}
+			return true;
 		}
 
 		public void StepForward ()
@@ -1044,6 +1050,94 @@ namespace LongoMatch.Gui
 				Seek (start, type == SeekType.Accurate);
 			}
 		}
+
+		#endregion
+
+		#region IPlayerController Additions
+
+		public event TimeChangedHandler TimeChangedEvent;
+
+		public event StateChangeHandler PlaybackStateChangedEvent;
+
+		public event LoadImageHander LoadImageEvent;
+
+		public event PlaybackRateChangedHandler PlaybackRateChangedEvent;
+
+		public event VolumeChangedHandler VolumeChangedEvent;
+
+		public event ElementLoadedHandler ElementLoadedEvent;
+
+		public event ElementUnloadedHandler ElementUnloadedEvent;
+
+		public event PARChangedHandler PARChangedEvent;
+
+		public void LoadEvent (MediaFileSet file, TimelineEvent play, Time seekTime, bool playing)
+		{
+			LoadPlay (file, play, seekTime, playing);
+		}
+
+		public void LoadPlayListEvent (Playlist playlist, IPlaylistElement play)
+		{
+			LoadPlayListEvent (playlist, play);
+		}
+
+		public void UnloadCurrentEvent ()
+		{
+			CloseSegment ();
+		}
+
+		public Time Step {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public bool IgnoreTicks {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public void Stop ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool Seek (Time time, bool accurate = false, bool synchronous = false)
+		{
+			Seek (time, accurate);
+			return true;
+		}
+
+		public void Expose ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public double Rate {
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public List<IntPtr> WindowHandles {
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public IntPtr WindowHandle {
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
 		#endregion
 	}
 }

@@ -16,10 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
-using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
@@ -107,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.TagTeam (team);
 		}
 
-		public IPlayerBin Player {
+		public IPlayerController Player {
 			get {
 				return null;
 			}

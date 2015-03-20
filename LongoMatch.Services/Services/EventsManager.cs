@@ -42,7 +42,7 @@ namespace LongoMatch.Services
 		EventsFilter filter;
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
-		IPlayerBin player;
+		IPlayerController player;
 		ICapturerBin capturer;
 		IFramesCapturer framesCapturer;
 		IRenderingJobsManager renderer;

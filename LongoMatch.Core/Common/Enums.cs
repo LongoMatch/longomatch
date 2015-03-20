@@ -411,4 +411,11 @@ namespace LongoMatch.Core.Common
 		Season,
 		Competition
 	}
+
+	public enum PlayerViewOperationMode
+	{
+		Synchronization,
+		LiveAnalysisReview,
+		Analysis,
+	}
 }
