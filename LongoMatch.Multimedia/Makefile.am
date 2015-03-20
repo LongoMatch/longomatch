@@ -16,7 +16,6 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Editor/VideoSegment.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
-	PlayerController.cs \
 	Remuxer/GstRemuxer.cs \
 	Remuxer/ObjectManager.cs \
 	Utils/Devices.cs \
