@@ -55,6 +55,7 @@ namespace LongoMatch.Gui
 		public event TickHandler Tick;
 		public event StateChangeHandler PlayStateChanged;
 		public event EventHandler CloseEvent;
+		public event PrepareLoadEventHandler PrepareLoadEvent;
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
@@ -331,6 +332,9 @@ namespace LongoMatch.Gui
 
 		public void LoadPlay (MediaFileSet fileSet, TimelineEvent evt, Time seekTime, bool playing)
 		{
+			if (PrepareLoadEvent != null) {
+				PrepareLoadEvent (fileSet);
+			}
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedPlay = evt;

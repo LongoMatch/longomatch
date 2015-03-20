@@ -21,35 +21,32 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PlayerCapturerBin : Gtk.Bin, IPlayerBin, ICapturerBin
-	{	
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
+	public partial class PlayerCapturerBin : Gtk.Bin
+	{
 		/* Player Events */
 		public event StateChangeHandler PlayStateChanged;
-		
-		public enum PlayerOperationMode {
+
+		public enum PlayerOperationMode
+		{
 			Player,
 			Capturer,
 			FakeCapturer,
 			PreviewCapturer,
 		}
-		
+
 		PlayerOperationMode mode;
 		bool backLoaded = false;
-		
+
 		public PlayerCapturerBin ()
 		{
 			this.Build ();
-			ConnectSignals();
+			ConnectSignals ();
 			replayhbox.HeightRequest = livebox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			replayimage.Pixbuf = Misc.LoadIcon ("longomatch-replay", StyleConf.PlayerCapturerIconSize);
 			liveimage.Pixbuf = Misc.LoadIcon ("longomatch-live", StyleConf.PlayerCapturerIconSize);
@@ -57,6 +54,7 @@ namespace LongoMatch.Gui
 			replaylabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
 			livebox.Visible = replayhbox.Visible = false;
 			playerbin.CloseEvent += HandleCloseClicked;
+			playerbin.PrepareLoadEvent += HandlePrepareLoadEvent;
 		}
 
 		protected override void OnDestroyed ()
@@ -65,22 +63,28 @@ namespace LongoMatch.Gui
 			capturerbin.Destroy ();
 			base.OnDestroyed ();
 		}
-		
+
 		public IPlayerBin Player {
 			get {
 				return playerbin;
 			}
 		}
-		
+
+		public ICapturerBin Capturer {
+			get {
+				return capturerbin;
+			}
+		}
+
 		public PlayerOperationMode Mode {
 			set {
 				mode = value;
 				if (mode == PlayerOperationMode.Player) {
-					ShowPlayer();
+					ShowPlayer ();
 					playerbin.Compact = false;
 					playerbin.CloseAlwaysVisible = false;
 				} else {
-					ShowCapturer();
+					ShowCapturer ();
 					playerbin.CloseAlwaysVisible = true;
 					playerbin.Compact = true;
 				}
@@ -88,8 +92,9 @@ namespace LongoMatch.Gui
 				backLoaded = false;
 			}
 		}
-		
-		public void ShowPlayer () {
+
+		public void ShowPlayer ()
+		{
 			playerbox.Visible = true;
 			replayhbox.Visible = false;
 			if (mode == PlayerOperationMode.PreviewCapturer && Config.ReviewPlaysInSameWindow)
@@ -97,8 +102,9 @@ namespace LongoMatch.Gui
 			else
 				capturerbox.Visible = false;
 		}
-		
-		public void ShowCapturer () {
+
+		public void ShowCapturer ()
+		{
 			playerbox.Visible = false;
 			livebox.Visible = false;
 			capturerbox.Visible = true;
@@ -113,237 +119,42 @@ namespace LongoMatch.Gui
 			playerbin.Pause ();
 			ShowCapturer ();
 		}
-		
-#region Common
-		public void Close () {
+
+		#region Common
+
+		public void Close ()
+		{
 			playerbin.Close ();
 			capturerbin.Close ();
 		}
-		
-#endregion
 
-#region Capturer
+		#endregion
 
-		public ICapturer Capturer {
-			get {
-				return capturerbin.Capturer;
-			}
-		}
-
-		public Time CurrentCaptureTime {
-			get {
-				return capturerbin.CurrentCaptureTime;
-			}
-		}
-		
-		public Image CurrentCaptureFrame {
-			get {
-				return capturerbin.CurrentCaptureFrame;
-			}
-		}
-		
-		public CaptureSettings CaptureSettings {
-			get {
-				return capturerbin.CaptureSettings;
-			}
-		}
-		
-		public bool Capturing {
-			get {
-				return capturerbin.Capturing;
-			}
-		}
-		
-		public List<string> PeriodsNames {
-			set {
-				capturerbin.PeriodsNames = value;
-			}
-		}
-		
-		public List<Period> Periods {
-			get {
-				return capturerbin.Periods;
-			}
-			set {
-				capturerbin.Periods = value;
-			}
-		}
-
-		public void StartPeriod () {
-			capturerbin.StartPeriod ();
-		}
-		
-		public void StopPeriod () {
-			capturerbin.StopPeriod ();
-		}
-		
-		public void Run (CaptureSettings settings, MediaFile outputFile) {
-			capturerbin.Run (settings, outputFile);
-		}
-		
-		public void PausePeriod ()
+		void HandlePrepareLoadEvent (MediaFileSet fileSet)
 		{
-			capturerbin.PausePeriod ();
-		}
-
-		public void ResumePeriod ()
-		{
-			capturerbin.ResumePeriod ();
-		}
-
-#endregion
-		
-		
-#region Player
-
-		public Time CurrentTime {
-			get {
-				return playerbin.CurrentTime;
-			}
-		}
-		
-		public bool Playing {
-			get {
-				return playerbin.Playing;
-			}
-		}
-
-		public object CamerasLayout {
-			get {
-				return playerbin.CamerasLayout;
-			}
-		}
-
-		public List<int> CamerasVisible {
-			get {
-				return playerbin.CamerasVisible;
-			}
-		}
-
-		public bool SeekingEnabled {
-			set {
-				playerbin.SeekingEnabled = value;
-			}
-		}
-		
-		public Time StreamLength {
-			get {
-				return playerbin.StreamLength;
-			}
-		}
-		
-		public Image CurrentFrame {
-			get {
-				return playerbin.CurrentFrame;
-			}
-		}
-		
-		public Image CurrentMiniatureFrame {
-			get {
-				return playerbin.CurrentMiniatureFrame;
-			}
-		}
-		
-		public bool Opened {
-			get {
-				return playerbin.Opened;
-			}
-		}
-		
-		public bool FullScreen {
-			set {
-				playerbin.FullScreen = value;
-			}
-		}
-		
-		public void Open (MediaFileSet fileSet) {
-			playerbin.Open (fileSet);
-		}
-		
-		public void Play () {
-			playerbin.Play ();
-		}
-		
-		public void Pause () {
-			playerbin.Pause ();
-		}
-		
-		public void TogglePlay () {
-			playerbin.TogglePlay ();
-		}
-		
-		public void ResetGui () {
-			playerbin.ResetGui ();
-		}
-		
-		public void LoadPlayListPlay (Playlist playlist, IPlaylistElement play) {
-			playerbin.LoadPlayListPlay (playlist, play);
-		}
-		
-		public void LoadPlay (MediaFileSet fileSet, TimelineEvent play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				ShowPlayer ();
-				LoadBackgroundPlayer(fileSet);
+				LoadBackgroundPlayer (fileSet);
 				livebox.Visible = replayhbox.Visible = true;
 			}
-			playerbin.LoadPlay (fileSet, play, seekTime, playing);
 		}
-		
-		public void Seek (Time time, bool accurate) {
-			playerbin.Seek (time, accurate);
-		}
-		
-		public void SeekToNextFrame () {
-			playerbin.SeekToNextFrame ();
-		}
-		
-		public void SeekToPreviousFrame () {
-			playerbin.SeekToPreviousFrame ();
-		}
-		
-		public void StepForward () {
-			playerbin.StepForward ();
-		}
-		
-		public void StepBackward () {
-			playerbin.StepBackward ();
-		}
-		
-		public void FramerateUp () {
-			playerbin.FramerateUp ();
-		}
-		
-		public void FramerateDown () {
-			playerbin.FramerateDown ();
-		}
-		
-		public void CloseSegment () {
-			playerbin.CloseSegment ();
-		}
-		
-		public void SetSensitive () {
-			playerbin.SetSensitive ();
-		}
-		
-		public void UnSensitive () {
-			playerbin.UnSensitive ();
-		}
-#endregion
 
 		protected void OnBacktolivebuttonClicked (object sender, System.EventArgs e)
 		{
-			playerbin.Pause();
+			playerbin.Pause ();
 			ShowCapturer ();
 		}
-		
-		void ConnectSignals () {
+
+		void ConnectSignals ()
+		{
 			playerbin.PlayStateChanged += delegate (bool playing) {
 				if (PlayStateChanged != null)
 					PlayStateChanged (playing);
 			};
 		}
-		
-		void LoadBackgroundPlayer (MediaFileSet file) {
+
+		void LoadBackgroundPlayer (MediaFileSet file)
+		{
 			if (backLoaded)
 				return;
 				

@@ -36,6 +36,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void DrawFrameHandler (TimelineEvent play,int drawingIndex,int cameraIndex,bool current);
 	public delegate void EllpasedTimeHandler (Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
+	public delegate void PrepareLoadEventHandler (MediaFileSet fileset);
 	
 	public delegate void DeviceChangeHandler (int deviceID);
 	public delegate void CaptureFinishedHandler (bool close);
@@ -43,7 +44,16 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PercentCompletedHandler (float percent);
 	public delegate void StateChangeHandler (bool playing);
 	public delegate void TickHandler (Time currentTime);
+	public delegate void TimeChangedHandler (Time currentTime,Time duration,bool seekable);
 	public delegate void MediaInfoHandler (int width,int height,int parN,int parD);
 	public delegate void EosHandler ();
 	public delegate void ReadyToSeekHandler ();
+
+	public delegate void LoadImageHander (Image image,FrameDrawing frameDrawing);
+
+	public delegate void ElementLoadedHandler (bool hasNext);
+
+	public delegate void ElementUnloadedHandler ();
+
+	public delegate void PARChangedHandler (float par);
 }

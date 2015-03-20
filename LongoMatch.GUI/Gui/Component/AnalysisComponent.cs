@@ -48,13 +48,13 @@ namespace LongoMatch.Gui.Component
 
 		public IPlayerBin Player {
 			get {
-				return playercapturer;
+				return playercapturer.Player;
 			}
 		}
 
 		public ICapturerBin Capturer {
 			get {
-				return playercapturer;
+				return playercapturer.Capturer;
 			}
 		}
 
@@ -122,11 +122,11 @@ namespace LongoMatch.Gui.Component
 
 		public void DetachPlayer ()
 		{
-			bool isPlaying = playercapturer.Playing;
+			bool isPlaying = Player.Playing;
 			
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
-			playercapturer.Pause ();
+			Player.Pause ();
 			if (!detachedPlayer) {
 				Log.Debug ("Detaching player");
 				
@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 			}
 			if (isPlaying) {
-				playercapturer.Play ();
+				Player.Play ();
 			}
 			detachedPlayer = !detachedPlayer;
 		}
@@ -178,8 +178,8 @@ namespace LongoMatch.Gui.Component
 				} else {
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
 				}
-				playercapturer.PeriodsNames = project.Dashboard.GamePeriods;
-				playercapturer.Periods = project.Periods;
+				Capturer.PeriodsNames = project.Dashboard.GamePeriods;
+				Capturer.Periods = project.Periods;
 			}
 		}
 

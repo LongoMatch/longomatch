@@ -28,6 +28,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 	public interface IPlayerBin
 	{
 		event StateChangeHandler PlayStateChanged;
+		event PrepareLoadEventHandler PrepareLoadEvent;
 
 		Time CurrentTime { get; }
 
