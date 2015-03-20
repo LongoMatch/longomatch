@@ -137,7 +137,7 @@
     <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="Interfaces\IStorable.cs" />
     <Compile Include="Store\Templates\Team.cs" />
-    <Compile Include="Interfaces\Multimedia\IPlayerController.cs" />
+    <Compile Include="Interfaces\IPlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

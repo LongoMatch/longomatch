@@ -37,42 +37,56 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
-	public interface IPlayer: IDisposable
+	public interface IPlayback: IDisposable
 	{
-		// Events
-		event         ErrorHandler Error;
-		event         EosHandler Eos;
-		event         StateChangeHandler StateChange;
-		event         ReadyToSeekHandler ReadyToSeek;
 
-		Time StreamLength {get;}
-		Time CurrentTime {get;}
-		double Volume {get;set;}
-		bool Playing {get;}
-		double Rate {set;}
+		Time StreamLength { get; }
+
+		Time CurrentTime { get; }
+
+		double Volume { get; set; }
+
+		bool Playing { get; }
+
+		double Rate { set; }
 
 		List<IntPtr> WindowHandles { set; }
+
 		IntPtr WindowHandle { set; }
 
+		void Play ();
+
+		void Pause ();
+
+		void Stop ();
+
+		void Close ();
+
+		bool Seek (Time time, bool accurate = false, bool synchronous = false);
+
+		bool SeekToNextFrame ();
+
+		bool SeekToPreviousFrame ();
+
+		void Expose ();
+	}
+
+	public interface IPlayer: IPlayback
+	{
+		// Events
+		event ErrorHandler Error;
+		event EosHandler Eos;
+		event StateChangeHandler StateChange;
+		event ReadyToSeekHandler ReadyToSeek;
+
 		bool Open (List<string> mrls);
+
 		bool Open (string mrl);
+
 		bool Open (MediaFileSet mfs);
+
 		bool Open (MediaFile mf);
 
-		void Play();
-		void Pause();
-		void Stop();
-		void Close();
-		bool Seek (Time time, bool accurate = false, bool synchronous = false);
-		bool SeekToNextFrame();
-		bool SeekToPreviousFrame();
-		Image GetCurrentFrame (int width=-1, int height=-1);
-		void Expose ();
-		// Functions to add that belonged to IPlayerBin
-		// void Open (MediaFileSet fileSet);
-		// void Seek (Time time, bool accurate);
-		// void FramerateUp();
-		// void FramerateDown();
-		// void TogglePlay ();
+		Image GetCurrentFrame (int width = -1, int height = -1);
 	}
 }
