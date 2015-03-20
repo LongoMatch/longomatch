@@ -41,7 +41,7 @@ namespace LongoMatch.Multimedia.Utils
 		public const string MPEG2_TS = "MPEG-2 Transport Stream";
 		public const string ASF = "Advanced Streaming Format (ASF)";
 		public const string FLV = "Flash";
-		const string REGISTRY_PATH = "longomatch_gst_registry.bin";
+		const string REGISTRY_PATH = Constants.SOFTWARE_NAME + "_gst_registry.bin";
 
 		public static void Init ()
 		{
