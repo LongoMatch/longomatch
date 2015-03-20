@@ -38,6 +38,7 @@ namespace LongoMatch.Gui
 	{
 		static GUIToolkit instance;
 		MainWindow mainWindow;
+		Registry registry;
 
 		public GUIToolkit (Version version)
 		{
@@ -45,6 +46,7 @@ namespace LongoMatch.Gui
 			mainWindow = new MainWindow (this);
 			(mainWindow as MainWindow).Show ();
 			instance = this;
+			registry = new Registry ("GUI backend");
 		}
 
 		public static GUIToolkit Instance {
@@ -79,6 +81,11 @@ namespace LongoMatch.Gui
 		public Version Version {
 			get;
 			set;
+		}
+
+		public void Register (int priority, Type interfac, Type elementType)
+		{
+			registry.Register (priority, interfac, elementType);
 		}
 
 		public void InfoMessage (string message, object parent = null)

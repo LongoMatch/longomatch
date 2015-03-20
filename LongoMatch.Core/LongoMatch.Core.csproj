@@ -138,6 +138,7 @@
     <Compile Include="Interfaces\IStorable.cs" />
     <Compile Include="Store\Templates\Team.cs" />
     <Compile Include="Interfaces\IPlayerController.cs" />
+    <Compile Include="Common\Registry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

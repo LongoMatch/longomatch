@@ -31,6 +31,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IGUIToolkit
 	{
+		void Register (int priority, Type interfac, Type elementType);
+
 		IMainController MainController { get; }
 
 		IRenderingStateBar RenderingStateBar { get; }

@@ -36,11 +36,11 @@ namespace LongoMatch.Video
 {
 	public class MultimediaFactory
 	{
-		Dictionary<Type, List<BackendElement>> elements;
+		Registry registry;
 
 		public MultimediaFactory ()
 		{
-			elements = new Dictionary<Type, List<BackendElement>> ();
+			registry = new Registry ("Multimedia Factory");
 			/* Register default elements */
 			Register (0, typeof(IPlayer), typeof(GstPlayer));
 			Register (0, typeof(IFramesCapturer), typeof(GstFramesCapturer));
@@ -53,47 +53,44 @@ namespace LongoMatch.Video
 
 		public void Register (int priority, Type interfac, Type elementType)
 		{
-			if (!elements.ContainsKey (interfac)) {
-				elements [interfac] = new List<BackendElement> ();
-			}
-			elements [interfac].Add (new BackendElement (elementType, priority));
+			registry.Register (priority, interfac, elementType);
 		}
 
 		public IPlayer GetPlayer ()
 		{
-			return GetDefaultElement<IPlayer> (typeof(IPlayer));
+			return registry.GetDefault<IPlayer> (typeof(IPlayer));
 		}
 
 		public IFramesCapturer GetFramesCapturer ()
 		{
-			return GetDefaultElement<IFramesCapturer> (typeof(IFramesCapturer));
+			return registry.GetDefault<IFramesCapturer> (typeof(IFramesCapturer));
 		}
 
 		public IVideoEditor GetVideoEditor ()
 		{
-			return GetDefaultElement<IVideoEditor> (typeof(IVideoEditor));
+			return registry.GetDefault<IVideoEditor> (typeof(IVideoEditor));
 		}
 
 		public IVideoConverter GetVideoConverter (string filename)
 		{
-			return GetDefaultElement<IVideoConverter> (typeof(IVideoConverter), filename);
+			return registry.GetDefault<IVideoConverter> (typeof(IVideoConverter), filename);
 		}
 
 		public IDiscoverer GetDiscoverer ()
 		{
-			return GetDefaultElement<IDiscoverer> (typeof(IDiscoverer));
+			return registry.GetDefault<IDiscoverer> (typeof(IDiscoverer));
 		}
 
 		public ICapturer GetCapturer ()
 		{
-			return GetDefaultElement<ICapturer> (typeof(ICapturer), "test.avi");
+			return registry.GetDefault<ICapturer> (typeof(ICapturer), "test.avi");
 		}
 
 		public IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer)
 		{
-			return GetDefaultElement<IRemuxer> (typeof(IRemuxer),
-			                                    inputFile.FilePath,
-			                                    outputFile, muxer);
+			return registry.GetDefault<IRemuxer> (typeof(IRemuxer),
+				inputFile.FilePath,
+				outputFile, muxer);
 		}
 
 		public MediaFile DiscoverFile (string file, bool takeScreenshot = true)
@@ -112,35 +109,12 @@ namespace LongoMatch.Video
 			return GStreamer.FileNeedsRemux (file);
 		}
 
-		[DllImport("libgstreamer-0.10.dll")]
+		[DllImport ("libgstreamer-0.10.dll")]
 		static extern void gst_init (int argc, string argv);
 
 		public static void InitBackend ()
 		{
 			gst_init (0, "");
-		}
-
-		T GetDefaultElement<T> (Type interfac, params object[] args)
-		{
-			Type elementType;
-			
-			if (!elements.ContainsKey (interfac)) {
-				throw new Exception (String.Format ("No {0} available in the multimedia backend", interfac));
-			}
-			elementType = elements [interfac].OrderByDescending (e => e.priority).First ().type;
-			return (T)Activator.CreateInstance (elementType, args);
-		}
-
-		internal class BackendElement
-		{
-			public Type type;
-			public int priority;
-
-			public BackendElement (Type type, int priority)
-			{
-				this.type = type;
-				this.priority = priority;
-			}
 		}
 	}
 }
