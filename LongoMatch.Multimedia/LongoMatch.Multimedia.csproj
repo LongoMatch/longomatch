@@ -50,7 +50,6 @@
     <Compile Include="Player\ObjectManager.cs" />
     <Compile Include="Utils\WindowHandle.cs" />
     <Compile Include="Utils\Devices.cs" />
-    <Compile Include="PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Capturer\" />
