@@ -22,14 +22,8 @@ using LongoMatch.Core.Store.Playlists;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
-	public interface IPlayerController
+	public interface IPlayerController : IPlayer
 	{
-		/// <summary>
-		/// Gets the player.
-		/// </summary>
-		/// <returns>The player.</returns>
-		IPlayer Player { get; }
-
 		void LoadEvent (MediaFileSet file, TimelineEvent ev, Time seekTime, bool playing);
 		void LoadPlayListEvent (Playlist playlist, IPlaylistElement ev);
 		void UnloadCurrentEvent();

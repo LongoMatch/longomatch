@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2015 jl
+//  Copyright (C) 2015 FLUENDO S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,10 +19,13 @@ using System;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Handlers;
+using System.Collections.Generic;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Core.Store
 {
-	public class PlayerController : IPlayerController
+	public class PlayerController : IPlayerController, IDisposable
 	{
 		IPlayer player;
 
@@ -31,19 +34,121 @@ namespace LongoMatch.Core.Store
 			player = Config.MultimediaToolkit.GetPlayer ();
 		}
 
-		~PlayerController ()
+		#region IDisposable implementation
+		public void Dispose ()
 		{
 			player.Dispose ();
 		}
+		#endregion
 
-		#region IPlayerController implementation
-		public IPlayer Player
-		{
+		#region IPlayer implementation
+		public event ErrorHandler Error;
+		public event EosHandler Eos;
+		public event StateChangeHandler StateChange;
+		public event ReadyToSeekHandler ReadyToSeek;
+
+		public Time StreamLength {
 			get {
-				return player;
+				throw new NotImplementedException ();
 			}
 		}
 
+		public Time CurrentTime {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public double Volume {
+			get {
+				throw new NotImplementedException ();
+			}
+
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public bool Playing {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public double Rate {
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public List<IntPtr> WindowHandles {
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public IntPtr WindowHandle { 
+			set {
+				throw new NotImplementedException ();
+			}
+		}
+
+		public bool Open (List<string> mrls)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool Open (string mrl)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Play()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Pause()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Stop()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Close()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool Seek (Time time, bool accurate = false, bool synchronous = false)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool SeekToNextFrame()
+		{
+			throw new NotImplementedException ();
+		}
+		public bool SeekToPreviousFrame()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public Image GetCurrentFrame (int width=-1, int height=-1)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void Expose ()
+		{
+			throw new NotImplementedException ();
+		}
+		#endregion
+
+		#region IPlayerController implementation
 		public void LoadEvent (MediaFileSet file, TimelineEvent ev, Time seekTime, bool playing)
 		{
 			throw new NotImplementedException ();
