@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Cairo
 			get;
 			protected set;
 		}
-		
+
 		public Layout PangoLayout {
 			get;
 			protected set;

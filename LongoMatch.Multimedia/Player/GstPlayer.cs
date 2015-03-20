@@ -36,78 +36,78 @@ namespace LongoMatch.Video.Player
 		public event ReadyToSeekHandler ReadyToSeek;
 		public event EosHandler Eos;
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_video_player_get_type ();
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern unsafe IntPtr lgm_video_player_new (int use_type, out IntPtr error);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern unsafe IntPtr lgm_video_player_set_window_handle (IntPtr raw, IntPtr window_handle);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_open (IntPtr raw, IntPtr uri, out IntPtr error);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_play (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_is_playing (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_pause (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_stop (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_close (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_seek (IntPtr raw, double position);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_seek_time (IntPtr raw, long time, bool accurate, bool synchronous);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_seek_to_next_frame (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_seek_to_previous_frame (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern double lgm_video_player_get_position (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern long lgm_video_player_get_current_time (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern long lgm_video_player_get_stream_length (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_set_rate (IntPtr raw, double rate);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_set_volume (IntPtr raw, double volume);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern double lgm_video_player_get_volume (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_video_player_get_current_frame (IntPtr raw);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_unref_pixbuf (IntPtr pixbuf);
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_expose (IntPtr pixbuf);
 
-		public unsafe GstPlayer () : base(IntPtr.Zero)
+		public unsafe GstPlayer () : base (IntPtr.Zero)
 		{
 			Init (PlayerUseType.Video);
 		}
 
-		public unsafe GstPlayer (PlayerUseType type) : base(IntPtr.Zero)
+		public unsafe GstPlayer (PlayerUseType type) : base (IntPtr.Zero)
 		{
 			Init (type);
 		}
@@ -135,7 +135,7 @@ namespace LongoMatch.Video.Player
 			};
 
 			this.GlibEos += (sender, e) => {
-				if  (Eos != null)
+				if (Eos != null)
 					Eos ();
 			};
 		}
@@ -163,7 +163,7 @@ namespace LongoMatch.Video.Player
 			OverrideVirtualMethod (gtype, "ready_to_seek", ReadyToSeekVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod="OverrideReadyToSeek")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod = "OverrideReadyToSeek")]
 		protected virtual void OnReadyToSeek ()
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -176,7 +176,7 @@ namespace LongoMatch.Video.Player
 				v.Dispose ();
 		}
 
-		[GLib.Signal("ready_to_seek")]
+		[GLib.Signal ("ready_to_seek")]
 		public event System.EventHandler GlibReadyToSeek {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "ready_to_seek");
@@ -210,7 +210,7 @@ namespace LongoMatch.Video.Player
 			OverrideVirtualMethod (gtype, "state_change", StateChangeVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod="OverrideStateChange")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod = "OverrideStateChange")]
 		protected virtual void OnStateChange (bool playing)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -225,7 +225,7 @@ namespace LongoMatch.Video.Player
 				v.Dispose ();
 		}
 
-		[GLib.Signal("state_change")]
+		[GLib.Signal ("state_change")]
 		public event GlibStateChangeHandler GlibStateChange {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "state_change", typeof(StateChangeArgs));
@@ -259,7 +259,7 @@ namespace LongoMatch.Video.Player
 			OverrideVirtualMethod (gtype, "eos", EosVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod="OverrideEos")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod = "OverrideEos")]
 		protected virtual void OnEos ()
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -272,7 +272,7 @@ namespace LongoMatch.Video.Player
 				v.Dispose ();
 		}
 
-		[GLib.Signal("eos")]
+		[GLib.Signal ("eos")]
 		public event System.EventHandler GlibEos {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "eos");
@@ -306,7 +306,7 @@ namespace LongoMatch.Video.Player
 			OverrideVirtualMethod (gtype, "error", ErrorVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod="OverrideError")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod = "OverrideError")]
 		protected virtual void OnError (string message)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -321,7 +321,7 @@ namespace LongoMatch.Video.Player
 				v.Dispose ();
 		}
 
-		[GLib.Signal("error")]
+		[GLib.Signal ("error")]
 		public event GlibErrorHandler GlibError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof(ErrorArgs));
@@ -355,7 +355,7 @@ namespace LongoMatch.Video.Player
 			OverrideVirtualMethod (gtype, "tick", TickVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod="OverrideTick")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Player.GstPlayer), ConnectionMethod = "OverrideTick")]
 		protected virtual void OnTick (long current_time, long stream_length, double current_position)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -374,7 +374,7 @@ namespace LongoMatch.Video.Player
 				v.Dispose ();
 		}
 
-		[GLib.Signal("tick")]
+		[GLib.Signal ("tick")]
 		public event GlibTickHandler GlibTick {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "tick", typeof(TickArgs));
@@ -402,14 +402,14 @@ namespace LongoMatch.Video.Player
 		public Time CurrentTime {
 			get {
 				long ret = lgm_video_player_get_current_time (Handle);
-				return new Time { NSeconds=ret };
+				return new Time { NSeconds = ret };
 			}
 		}
 
 		public Time StreamLength {
 			get {
 				long ret = lgm_video_player_get_stream_length (Handle);
-				return new Time { NSeconds=ret };
+				return new Time { NSeconds = ret };
 			}
 		}
 
@@ -476,7 +476,7 @@ namespace LongoMatch.Video.Player
 
 		public bool Open (MediaFileSet mfs)
 		{
-			return Open (mfs[0]);
+			return Open (mfs [0]);
 		}
 
 		public bool Open (MediaFile mf)
@@ -486,7 +486,7 @@ namespace LongoMatch.Video.Player
 
 		public bool Open (List<string> mrls)
 		{
-			return Open (mrls[0]);
+			return Open (mrls [0]);
 		}
 
 		public bool Open (string mrl)
@@ -501,7 +501,7 @@ namespace LongoMatch.Video.Player
 			return ret;
 		}
 
-		public Image GetCurrentFrame (int outwidth=-1, int outheight=-1)
+		public Image GetCurrentFrame (int outwidth = -1, int outheight = -1)
 		{
 			Gdk.Pixbuf managed, unmanaged;
 			IntPtr raw_ret;
@@ -555,7 +555,7 @@ namespace LongoMatch.Video.Player
 		{
 		}
 
-		public Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1)
+		public Image GetFrame (Time pos, bool accurate, int outwidth = -1, int outheight = -1)
 		{
 			Image img = null;
 			

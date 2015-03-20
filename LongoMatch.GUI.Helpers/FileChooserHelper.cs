@@ -30,49 +30,49 @@ namespace LongoMatch.Gui.Helpers
 		                               string defaultFolder, string filterName,
 		                               string[] extensions)
 		{
-			return FileChooser(parent, title, defaultName, defaultFolder, filterName,
-			                   extensions, FileChooserAction.Save);
+			return FileChooser (parent, title, defaultName, defaultFolder, filterName,
+				extensions, FileChooserAction.Save);
 		}
-		
+
 		static public string SelectFolder (Widget parent, string title, string defaultName,
 		                                   string defaultFolder, string filterName,
 		                                   string[] extensions)
 		{
-			return FileChooser(parent, title, defaultName, defaultFolder, filterName,
-			                   extensions, FileChooserAction.SelectFolder);
+			return FileChooser (parent, title, defaultName, defaultFolder, filterName,
+				extensions, FileChooserAction.SelectFolder);
 		}
-		
+
 		static public string OpenFile (Widget parent, string title, string defaultName,
 		                               string defaultFolder, string filterName,
 		                               string[] extensions)
 		{
-			return FileChooser(parent, title, defaultName, defaultFolder, filterName,
-			                   extensions, FileChooserAction.Open);
+			return FileChooser (parent, title, defaultName, defaultFolder, filterName,
+				extensions, FileChooserAction.Open);
 		}
-		
-		static public List<string> OpenFiles(Widget parent, string title, string defaultName,
-		                                     string defaultFolder, string filterName,
-		                                     string[] extensions)
+
+		static public List<string> OpenFiles (Widget parent, string title, string defaultName,
+		                                      string defaultFolder, string filterName,
+		                                      string[] extensions)
 		{
 			return MultiFileChooser (parent, title, defaultName, defaultFolder, filterName,
-			                         extensions, FileChooserAction.Open);
+				extensions, FileChooserAction.Open);
 		}
-	
-		static string FileChooser(Widget parent, string title, string defaultName,
-		                          string defaultFolder, string filterName,
-		                          string[] extensions, FileChooserAction action)
+
+		static string FileChooser (Widget parent, string title, string defaultName,
+		                           string defaultFolder, string filterName,
+		                           string[] extensions, FileChooserAction action)
 		{
-			List<string> res = MultiFileChooser(parent, title, defaultName, defaultFolder,
-			                                    filterName, extensions, action, false);
+			List<string> res = MultiFileChooser (parent, title, defaultName, defaultFolder,
+				                   filterName, extensions, action, false);
 			if (res.Count == 1)
-				return res[0];
+				return res [0];
 			return null;
 		}
-		
-		static List<string>  MultiFileChooser(Widget parent, string title, string defaultName,
-		                                      string defaultFolder, string filterName,
-		                                      string[] extensions, FileChooserAction action,
-		                                      bool allowMultiple=true)
+
+		static List<string>  MultiFileChooser (Widget parent, string title, string defaultName,
+		                                       string defaultFolder, string filterName,
+		                                       string[] extensions, FileChooserAction action,
+		                                       bool allowMultiple = true)
 		{
 			Window toplevel;
 			FileChooserDialog fChooser;

@@ -41,8 +41,8 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 
 	public partial class PlayerBin : Gtk.Bin, IPlayerBin, IPlayerController
 	{
@@ -81,26 +81,27 @@ namespace LongoMatch.Gui
 		uint timeout;
 
 		#region Constructors
+
 		public PlayerBin ()
 		{
 			this.Build ();
 
 			closebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-cancel-rec",
-			                                                 StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			drawbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-draw",
-			                                                StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			playbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-play",
-			                                                StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			pausebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-pause",
-			                                                 StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			prevbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-rw",
-			                                                StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			nextbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-ff",
-			                                                StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-volume-hi",
-			                                                  StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
-			                                                  StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
@@ -139,13 +140,17 @@ namespace LongoMatch.Gui
 			
 			CreatePlayer ();
 		}
+
 		#endregion
+
 		protected override void OnDestroyed ()
 		{
 			Close ();
 			base.OnDestroyed ();
 		}
+
 		#region Properties
+
 		public MediaFileSet MediaFileSet {
 			get {
 				return fileSet;
@@ -234,7 +239,7 @@ namespace LongoMatch.Gui
 				vscale1.Visible = value;
 			}
 		}
-		
+
 		public bool Playing {
 			get {
 				return player != null ? player.Playing : false;
@@ -253,9 +258,11 @@ namespace LongoMatch.Gui
 			get;
 			set;
 		}
-		
+
 		#endregion
+
 		#region Public methods
+
 		public void Open (MediaFileSet fileSet)
 		{
 			if (videowindow.Ready) {
@@ -464,8 +471,11 @@ namespace LongoMatch.Gui
 			controlsbox.Sensitive = false;
 			vscale1.Sensitive = false;
 		}
+
 		#endregion
+
 		#region Private methods
+
 		bool DrawingsVisible {
 			set {
 				videowindow.Visible = !value;
@@ -473,7 +483,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void Open (MediaFileSet fileSet, bool seek, bool force=false, bool play=false)
+		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
 		{
 			ResetGui ();
 			CloseSegment ();
@@ -525,7 +535,7 @@ namespace LongoMatch.Gui
 			set {
 				stillimageLoaded = value;
 				if (stillimageLoaded) {
-					player.Pause();
+					player.Pause ();
 					imageLoadedTS = new Time (0);
 					ReconfigureTimeout (TIMEOUT_MS);
 				}
@@ -563,8 +573,8 @@ namespace LongoMatch.Gui
 		                  bool playing, float rate = 1)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
-			                          start.ToMSecondsString (),
-			                          stop.ToMSecondsString (), rate));
+				start.ToMSecondsString (),
+				stop.ToMSecondsString (), rate));
 			if (fileSet != this.fileSet) {
 				Open (fileSet, false);
 			}
@@ -576,7 +586,7 @@ namespace LongoMatch.Gui
 			ImageLoaded = false;
 			if (readyToSeek) {
 				Log.Debug ("Player is ready to seek, seeking to " +
-					seekTime.ToMSecondsString ());
+				seekTime.ToMSecondsString ());
 				SetScaleValue (rate);
 				player.Rate = (double)rate;
 				Seek (seekTime, true);
@@ -743,8 +753,11 @@ namespace LongoMatch.Gui
 			}
 			OnTick ();
 		}
+
 		#endregion
+
 		#region Callbacks
+
 		void HandleExposeEvent (object sender, ExposeEventArgs args)
 		{
 			player.Expose ();
@@ -831,11 +844,10 @@ namespace LongoMatch.Gui
 		[GLib.ConnectBefore]
 		void OnTimescaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
 		{
-			if (args.Event.Button == 1)
-			{
-				GtkGlue.EventButtonSetButton(args.Event, 2);
+			if (args.Event.Button == 1) {
+				GtkGlue.EventButtonSetButton (args.Event, 2);
 			} else {
-				GtkGlue.EventButtonSetButton(args.Event, 1);
+				GtkGlue.EventButtonSetButton (args.Event, 1);
 			}
 
 			if (!seeking) {
@@ -849,11 +861,10 @@ namespace LongoMatch.Gui
 		[GLib.ConnectBefore]
 		void OnTimescaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
 		{
-			if (args.Event.Button == 1)
-			{
-				GtkGlue.EventButtonSetButton(args.Event, 2);
+			if (args.Event.Button == 1) {
+				GtkGlue.EventButtonSetButton (args.Event, 2);
 			} else {
-				GtkGlue.EventButtonSetButton(args.Event, 1);
+				GtkGlue.EventButtonSetButton (args.Event, 1);
 			}
 
 			if (seeking) {
@@ -889,7 +900,7 @@ namespace LongoMatch.Gui
 		{
 			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon (name, IconSize.Button, 0);
 		}
-		
+
 		void OnVolumeChanged (double level)
 		{
 			double prevLevel;

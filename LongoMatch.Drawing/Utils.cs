@@ -72,7 +72,7 @@ namespace LongoMatch.Drawing
 		public static ICanvasSelectableObject CanvasFromDrawableObject (IBlackboardObject drawable)
 		{
 			string objecttype = String.Format ("LongoMatch.Drawing.CanvasObjects.{0}Object",
-			                                   drawable.GetType ().ToString ().Split ('.').Last ());
+				                    drawable.GetType ().ToString ().Split ('.').Last ());
 			ObjectHandle handle = Activator.CreateInstance (null, objecttype);
 			ICanvasDrawableObject d = (ICanvasDrawableObject)handle.Unwrap ();
 			d.IDrawableObject = drawable;
@@ -111,7 +111,7 @@ namespace LongoMatch.Drawing
 		public static Point ToUserCoords (Point p, Point offset, double scaleX, double scaleY)
 		{
 			return new Point ((p.X - offset.X) / scaleX,
-			                  (p.Y - offset.Y) / scaleY);
+				(p.Y - offset.Y) / scaleY);
 		
 		}
 	}

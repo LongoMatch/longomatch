@@ -85,40 +85,40 @@ namespace LongoMatch.Video.Capturer
 			get {
 				return 0;
 			}
-			set {}
+			set { }
 		}
 
 		public uint OutputHeight {
 			get {
- return 0;
+				return 0;
 			}
-			set {}
+			set { }
 		}
 
 		public string OutputFile {
 			get {
- return Catalog.GetString ("Fake live source");
+				return Catalog.GetString ("Fake live source");
 			}
-			set {}
+			set { }
 		}
 
 		public uint VideoQuality {
 			get {
- return 0;
+				return 0;
 			}
-			set {}
+			set { }
 		}
 
 		public uint AudioQuality {
 			get {
- return 0;
+				return 0;
 			}
-			set {}
+			set { }
 		}
 
 		public Image CurrentFrame {
 			get {
- return null;
+				return null;
 			}
 		}
 
@@ -126,12 +126,12 @@ namespace LongoMatch.Video.Capturer
 			get {
 				return "";
 			}
-			set {}
+			set { }
 		}
 
 		public bool SetVideoEncoder (VideoEncoderType type)
 		{
- return true;
+			return true;
 		}
 
 		public bool SetAudioEncoder (AudioEncoderType type)
@@ -148,8 +148,9 @@ namespace LongoMatch.Video.Capturer
 		{
 			return true;
 		}
-		
-		public void Expose () {
+
+		public void Expose ()
+		{
 		}
 	}
 }

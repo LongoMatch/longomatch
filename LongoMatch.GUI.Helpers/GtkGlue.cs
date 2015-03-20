@@ -25,17 +25,20 @@ namespace LongoMatch
 	public class GtkGlue
 	{
 		
-		[DllImport("libgtk-2.0.dll") /* willfully unmapped */ ]
+		[DllImport ("libgtk-2.0.dll") /* willfully unmapped */]
 		static extern void gtk_menu_item_set_label (IntPtr menu, IntPtr label);
+
 		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_gtk_glue_gdk_event_button_set_button (IntPtr evt, uint button);
-		
-		public static void MenuItemSetLabel (MenuItem menu, string label) {
+
+		public static void MenuItemSetLabel (MenuItem menu, string label)
+		{
 			gtk_menu_item_set_label (menu.Handle, GLib.Marshaller.StringToFilenamePtr (label));
 		}
 
 
-		public static void EventButtonSetButton (EventButton ev, uint button) {
+		public static void EventButtonSetButton (EventButton ev, uint button)
+		{
 			lgm_gtk_glue_gdk_event_button_set_button (ev.Handle, button);
 		}
 

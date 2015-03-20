@@ -36,7 +36,7 @@ namespace LongoMatch.Drawing.Widgets
 		ISurface backbuffer;
 		bool handdrawing, inObjectCreation;
 
-		public Blackboard (IWidget widget): base(widget)
+		public Blackboard (IWidget widget) : base (widget)
 		{
 			Accuracy = 5;
 			SelectionMode = MultiSelectionMode.Single;
@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing.Widgets
 						Add (d);
 					}
 					backbuffer = tk.CreateSurface (Background.Width, Background.Height,
-					                               drawing.Freehand);
+						drawing.Freehand);
 				} else {
 					backbuffer = tk.CreateSurface (Background.Width, Background.Height);
 				}
@@ -189,13 +189,13 @@ namespace LongoMatch.Drawing.Widgets
 			switch (Tool) {
 			case DrawTool.Line:
 				drawable = new Line (start, new Point (start.X + 1, start.Y + 1),
-				                     LineType, LineStyle);
+					LineType, LineStyle);
 				drawable.FillColor = Color;
 				pos = SelectionPosition.LineStop;
 				break;
 			case DrawTool.Cross:
 				drawable = new Cross (start, new Point (start.X + 1, start.Y + 1),
-				                      LineStyle);
+					LineStyle);
 				break;
 			case DrawTool.Ellipse:
 				drawable = new Ellipse (start, 2, 2);
@@ -233,7 +233,7 @@ namespace LongoMatch.Drawing.Widgets
 					Config.DrawingToolkit.MeasureText (text.Value, out width, out heigth,
 						Config.Style.Font, FontSize, FontWeight.Normal);
 					text.Update (new Point (start.X - width / 2, start.Y - heigth / 2),
-				             width, heigth);
+						width, heigth);
 					text.TextColor = TextColor.Copy ();
 					text.FillColor = text.StrokeColor = TextBackgroundColor.Copy ();
 					text.TextSize = FontSize;
@@ -311,7 +311,7 @@ namespace LongoMatch.Drawing.Widgets
 			         Objects.Select  (o => (o as ICanvasDrawableObject).IDrawableObject)) {
 				if (bo is Counter) {
 					(bo as Counter).Count = index;
-					index ++;
+					index++;
 				}
 			}
 		}

@@ -43,8 +43,8 @@ namespace LongoMatch.Video.Utils
 		bool cancel;
 		TimelineEvent evt;
 		MediaFileSet fileSet;
-		private const int THUMBNAIL_MAX_HEIGHT=250;
-		private const int THUMBNAIL_MAX_WIDTH=300;
+		private const int THUMBNAIL_MAX_HEIGHT = 250;
+		private const int THUMBNAIL_MAX_WIDTH = 300;
 
 		public event LongoMatch.Core.Handlers.FramesProgressHandler Progress;
 
@@ -53,7 +53,7 @@ namespace LongoMatch.Video.Utils
 			this.capturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			this.fileSet = fileSet;
 			this.evt = evt;
-			this.start= evt.Start;
+			this.start = evt.Start;
 			this.stop = evt.Stop;
 			this.interval = interval;
 			this.outputDir = outputDir;
@@ -62,13 +62,15 @@ namespace LongoMatch.Video.Utils
 			this.cancel = false;
 		}
 
-		public void Cancel() {
+		public void Cancel ()
+		{
 			cancel = true;
 		}
 
-		public void Start() {
-			Thread thread = new Thread(new ThreadStart(CaptureFrames));
-			thread.Start();
+		public void Start ()
+		{
+			Thread thread = new Thread (new ThreadStart (CaptureFrames));
+			thread.Start ();
 		}
 
 		public void CaptureFrames ()
@@ -96,15 +98,15 @@ namespace LongoMatch.Video.Utils
 				Log.Debug ("Start frames series capture for angle " + cameraIndex);
 				MediaFile file = fileSet.First ();
 				capturer.Open (file.FilePath);
-				pos = new Time {MSeconds = start.MSeconds};
-				if(Progress != null) {
+				pos = new Time { MSeconds = start.MSeconds };
+				if (Progress != null) {
 					Application.Invoke (delegate {
-						Progress(i,totalFrames,null);
+						Progress (i, totalFrames, null);
 					});
 				}
 				
 				j = 0;
-				while(pos <= stop) {
+				while (pos <= stop) {
 					Log.Debug ("Capturing fame " + j);
 					if (!cancel) {
 						frame = capturer.GetFrame (pos + file.Offset, true);
@@ -114,19 +116,18 @@ namespace LongoMatch.Video.Utils
 							frame.ScaleInplace (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 						}
 						
-						if(Progress != null) {
+						if (Progress != null) {
 							Application.Invoke (delegate {
-								Progress(i+1, totalFrames, frame);
+								Progress (i + 1, totalFrames, frame);
 							});
 						}
-						pos.MSeconds += (int) interval;
+						pos.MSeconds += (int)interval;
 						i++;
 						j++;
-					}
-					else {
+					} else {
 						Log.Debug ("Capture cancelled, deleting output directory");
-						System.IO.Directory.Delete(outputDir,true);
-						cancel=false;
+						System.IO.Directory.Delete (outputDir, true);
+						cancel = false;
 						quit = true;
 						break;
 					}

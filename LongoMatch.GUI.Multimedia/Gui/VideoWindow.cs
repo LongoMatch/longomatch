@@ -20,10 +20,11 @@ using Gtk;
 
 namespace LongoMatch.Gui
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class VideoWindow : Gtk.Bin
 	{
 		AspectFrame frame;
+
 		public event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
 		public new event ButtonPressEventHandler ButtonPressEvent;
@@ -97,7 +98,7 @@ namespace LongoMatch.Gui
 		{
 			
 		}
-		
+
 		public DrawingArea Window {
 			get;
 			protected set;

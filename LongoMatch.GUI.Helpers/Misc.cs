@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Helpers
 			return pimage;
 		}
 
-		public static Pixbuf Scale (Pixbuf pixbuf, int max_width, int max_height, bool dispose=true)
+		public static Pixbuf Scale (Pixbuf pixbuf, int max_width, int max_height, bool dispose = true)
 		{
 			int ow, oh, h, w;
 
@@ -130,7 +130,7 @@ namespace LongoMatch.Gui.Helpers
 				formatStore.AppendValues (std.Name, std);
 				if (std.Equals (def))
 					active = index;
-				index ++;
+				index++;
 			} 
 			formatBox.Model = formatStore;
 			formatBox.Active = active;
@@ -286,7 +286,7 @@ namespace LongoMatch.Gui.Helpers
 			try {
 				Exception ex = null;
 				busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Analyzing video file:") + "\n" +
-					filename, parent);
+				filename, parent);
 				Task task = new Task (() => {
 					try {
 						mediaFile = Config.MultimediaToolkit.DiscoverFile (filename);
@@ -335,11 +335,11 @@ namespace LongoMatch.Gui.Helpers
 					if (multimedia.FileNeedsRemux (mediaFile)) {
 						if (!Config.SupportsFullHD) {
 							string msg = Catalog.GetString ("This file is not in a supported format, " +
-							                                "convert it with the video conversion tool");
+							             "convert it with the video conversion tool");
 							throw new Exception (msg);
 						} else {
 							string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
-							                              "(This step will only take a few minutes)");
+							           "(This step will only take a few minutes)");
 							if (gui.QuestionMessage (q, null, parent)) {
 								string newFilename = multimedia.RemuxFile (mediaFile, parent);
 								if (newFilename != null) {

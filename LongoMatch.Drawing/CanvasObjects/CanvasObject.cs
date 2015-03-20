@@ -27,7 +27,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	{
 		public event CanvasHandler ClickedEvent;
 		public event RedrawHandler RedrawEvent;
-		
+
 		bool disposed;
 		bool highlighted;
 		bool selected;
@@ -39,7 +39,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		~CanvasObject ()
 		{
-			if (! disposed) {
+			if (!disposed) {
 				Log.Error (String.Format ("Canvas object {0} not disposed correctly", this));
 				Dispose (true);
 			}
@@ -91,12 +91,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 			}
 		}
-		
+
 		public virtual void ResetDrawArea ()
 		{
 			DrawArea = null;
 		}
-		
+
 		protected Area DrawArea {
 			get;
 			set;
@@ -133,7 +133,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			return DrawArea == null || area == null || area.IntersectsWith (DrawArea);
 		}
-		
+
 		protected virtual bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
 		{
 			if (NeedsRedraw (redrawArea)) {
@@ -143,14 +143,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return false;
 			}
 		}
-		
+
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 
 	public abstract class CanvasButtonObject: CanvasObject
 	{
 		bool active;
-	
+
 		public bool Toggle {
 			get;
 			set;
@@ -184,9 +184,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public void Click () {
+		public void Click ()
+		{
 			ClickPressed (new Point (Position.X + 1, Position.Y + 1),
-			              ButtonModifier.None);
+				ButtonModifier.None);
 			
 			ClickReleased ();
 		}
@@ -237,7 +238,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Selection sel = Drawable.GetSelection (point, precision, inMotion);
 			if (sel != null) {
@@ -259,8 +260,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineStyle = LineStyle.Normal;
 			tk.LineWidth = 0;
 			tk.DrawRectangle (new Point (p.X - selectionSize,
-			                             p.Y - selectionSize),
-			                  selectionSize * 2, selectionSize * 2);
+				p.Y - selectionSize),
+				selectionSize * 2, selectionSize * 2);
 		}
 
 		protected void DrawCenterSelection (IDrawingToolkit tk, Point p)
@@ -270,7 +271,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawCircle (p, selectionSize);
 		}
-		
+
 		protected override bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
 		{
 			if (NeedsRedraw (redrawArea)) {

@@ -104,7 +104,7 @@ namespace LongoMatch.Services
 				filter.Update ();
 			}
 		}
-		
+
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
@@ -146,10 +146,10 @@ namespace LongoMatch.Services
 		void HandleNext (Playlist playlist)
 		{
 			if (playlist != null && playlist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Next());
+				Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Next ());
 			}
 		}
-		
+
 		void HandlePrev (Playlist playlist)
 		{
 			/* Select the previous element if it's a regular play */
@@ -169,11 +169,11 @@ namespace LongoMatch.Services
 				}
 				/* Load the next playlist element */
 				if (playlist.HasPrev ()) {
-					Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Prev());
+					Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Prev ());
 				}
 			}
 		}
-		
+
 		void HandlePlaybackRateChanged (float rate)
 		{
 			if (loadedElement != null && loadedElement is PlaylistPlayElement) {
@@ -201,9 +201,9 @@ namespace LongoMatch.Services
 			Playlist playlist = null;
 			
 			name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null,
-			                                       Catalog.GetString ("New playlist"));
+				Catalog.GetString ("New playlist"));
 			if (name != null) {
-				playlist = new Playlist {Name = name};
+				playlist = new Playlist { Name = name };
 				project.Playlists.Add (playlist);
 				Config.EventsBroker.EmitPlaylistsChanged (this);
 			}
@@ -218,14 +218,14 @@ namespace LongoMatch.Services
 			foreach (Job job in jobs)
 				videoRenderer.AddJob (job);
 		}
-		
+
 		void HandleSeekEvent (Time pos, bool accurate)
 		{
 			if (player != null) {
 				player.Seek (pos, accurate);
 			}
 		}
-		
+
 		void HandleTogglePlayEvent (bool playing)
 		{
 			if (player != null) {
@@ -236,15 +236,15 @@ namespace LongoMatch.Services
 				}
 			}
 		}
-		
+
 		void HandleKeyPressed (object sender, HotKey key)
 		{
 			if (openedProject == null)
 				return;
 
 			if (openedProjectType != ProjectType.CaptureProject &&
-				openedProjectType != ProjectType.URICaptureProject &&
-				openedProjectType != ProjectType.FakeCaptureProject) {
+			    openedProjectType != ProjectType.URICaptureProject &&
+			    openedProjectType != ProjectType.FakeCaptureProject) {
 				KeyAction action;
 				if (player == null)
 					return;

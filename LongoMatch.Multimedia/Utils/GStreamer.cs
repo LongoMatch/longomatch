@@ -27,13 +27,13 @@ namespace LongoMatch.Multimedia.Utils
 	public class GStreamer
 	{
 		
-		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
+		[DllImport ("libgstreamer-0.10.dll") /* willfully unmapped */]
 		static extern IntPtr gst_registry_get_default ();
 
-		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
+		[DllImport ("libgstreamer-0.10.dll") /* willfully unmapped */]
 		static extern IntPtr gst_registry_lookup_feature (IntPtr raw, string name);
 
-		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
+		[DllImport ("libgstreamer-0.10.dll") /* willfully unmapped */]
 		static extern void gst_object_unref (IntPtr raw);
 
 		public const string MPEG1_PS = "MPEG-1 System Stream";
@@ -65,8 +65,8 @@ namespace LongoMatch.Multimedia.Utils
 		public static bool FileNeedsRemux (MediaFile file)
 		{
 			if (file.Container == MPEG1_PS || file.Container == MPEG2_PS ||
-				file.Container == MPEG2_TS || file.Container == FLV ||
-				file.Container == ASF)
+			    file.Container == MPEG2_TS || file.Container == FLV ||
+			    file.Container == ASF)
 				return true;
 			return false;
 		}
@@ -76,7 +76,7 @@ namespace LongoMatch.Multimedia.Utils
 			/* Use a custom path for the registry in Windows */
 			Environment.SetEnvironmentVariable ("GST_REGISTRY", GetRegistryPath ());
 			Environment.SetEnvironmentVariable ("GST_PLUGIN_PATH",
-			                                    Config.RelativeToPrefix (Path.Combine("lib", "gstreamer-0.10")));
+				Config.RelativeToPrefix (Path.Combine ("lib", "gstreamer-0.10")));
 		}
 
 		private static string GetRegistryPath ()

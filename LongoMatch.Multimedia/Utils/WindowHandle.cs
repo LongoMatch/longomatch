@@ -22,7 +22,7 @@ namespace LongoMatch.Multimedia.Utils
 {
 	public class WindowHandle
 	{
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_get_window_handle (IntPtr window);
 
 		public static IntPtr GetWindowHandle (Gdk.Window window)

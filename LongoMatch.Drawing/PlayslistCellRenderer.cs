@@ -73,15 +73,15 @@ namespace LongoMatch.Drawing
 				if (!isExpanded) {
 					if (ArrowRight == null) {
 						ArrowRight = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-						                                                                StyleConf.ListArrowRightPath));
+							StyleConf.ListArrowRightPath));
 					}
 					arrow = ArrowRight;
 					arrowY = new Point (cellArea.Start.X + 1,
-					                    cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
+						cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
 				} else {
 					if (ArrowDown == null) {
 						ArrowDown = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-						                                                               StyleConf.ListArrowDownPath));
+							StyleConf.ListArrowDownPath));
 					}
 					arrow = ArrowDown;
 					arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
@@ -99,7 +99,7 @@ namespace LongoMatch.Drawing
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 14;
 			tk.DrawText (new Point (countX1, countY), StyleConf.ListCountWidth,
-			             2 * StyleConf.ListCountRadio, count.ToString ());
+				2 * StyleConf.ListCountRadio, count.ToString ());
 		}
 
 		static void RenderBackgroundAndText (bool isExpanded, IDrawingToolkit tk, Area backgroundArea, Point textP, double textW, string text)
@@ -134,7 +134,7 @@ namespace LongoMatch.Drawing
 
 			image = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			text = new Point (image.X + StyleConf.ListRowSeparator + StyleConf.ListImageWidth,
-			                  cellArea.Start.Y);
+				cellArea.Start.Y);
 			textWidth = cellArea.Start.X + cellArea.Width - text.X;
 
 			tk.Context = context;
@@ -165,7 +165,7 @@ namespace LongoMatch.Drawing
 			Point textP = new Point (StyleConf.ListTextOffset, cellArea.Start.Y);
 			tk.Context = context;
 			tk.Begin ();
-			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP , cellArea.Width - textP.X, cat.Name);
+			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, cat.Name);
 			RenderCount (isExpanded, cat.Color, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
@@ -220,8 +220,8 @@ namespace LongoMatch.Drawing
 		}
 
 		public static void RenderSubstitution (Color color, Time evt, Player playerIn, Player playerOut, bool selected,
-		                                     bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
-		                                     Area cellArea, CellState state)
+		                                       bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
+		                                       Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
 			Point inPoint, imgPoint, outPoint, timePoint;
@@ -234,7 +234,7 @@ namespace LongoMatch.Drawing
 			tk.Begin ();
 
 			RenderTimelineEventBase (color, null, selected, null, tk, context, backgroundArea, cellArea, state,
-			                         out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
+				out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
 			inPoint = textPoint;
 			imgPoint = new Point (textPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y);
 			outPoint = new Point (imgPoint.X + 20 + StyleConf.ListRowSeparator, imgPoint.Y);
@@ -263,7 +263,7 @@ namespace LongoMatch.Drawing
 			tk.Begin ();
 
 			RenderTimelineEventBase (color, ss, selected, desc, tk, context, backgroundArea, cellArea, state,
-			                         out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
+				out selectPoint, out textPoint, out imagePoint, out circlePoint, out textWidth);
 
 			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 			if (players != null && players.Count > 0) {
@@ -281,15 +281,15 @@ namespace LongoMatch.Drawing
 		{
 			if (item is EventType) {
 				RenderAnalysisCategory (item as EventType, count, isExpanded, tk,
-				                        context, backgroundArea, cellArea);
+					context, backgroundArea, cellArea);
 			} else if (item is SubstitutionEvent) {
 				SubstitutionEvent s = item as SubstitutionEvent;
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Selected, isExpanded, tk, context,
-				                    backgroundArea, cellArea, state);
+					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
 				TimelineEvent p = item as TimelineEvent;
 				RenderPlay (p.Color, p.Miniature, p.Players, p.Selected, p.Description, count, isExpanded, tk,
-				            context, backgroundArea, cellArea, state);
+					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is Playlist) {
@@ -297,11 +297,11 @@ namespace LongoMatch.Drawing
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
 				RenderPlay (p.Play.EventType.Color, p.Miniature, null, p.Selected, p.Description, count, isExpanded, tk,
-				            context, backgroundArea, cellArea, state);
+					context, backgroundArea, cellArea, state);
 			} else if (item is IPlaylistElement) {
 				IPlaylistElement p = item as IPlaylistElement;
 				RenderPlay (Config.Style.PaletteActive, p.Miniature, null, p.Selected, p.Description,
-				            count, isExpanded, tk, context, backgroundArea, cellArea, state);
+					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType ());
 			}

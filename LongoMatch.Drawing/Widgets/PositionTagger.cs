@@ -35,7 +35,7 @@ namespace LongoMatch.Drawing.Widgets
 		EventsFilter filter;
 		TimelineEvent playSelected;
 
-		public PositionTagger (IWidget widget): base (widget)
+		public PositionTagger (IWidget widget) : base (widget)
 		{
 			Accuracy = Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		public PositionTagger (IWidget widget, Project project, List<TimelineEvent> plays,
-		                       Image background, FieldPositionType position): base (widget)
+		                       Image background, FieldPositionType position) : base (widget)
 		{
 			Project = project;
 			Background = background;
@@ -75,7 +75,7 @@ namespace LongoMatch.Drawing.Widgets
 				filter.FilterUpdated += HandleFilterUpdated;
 			}
 		}
-		
+
 		public FieldPositionType FieldPosition {
 			get;
 			set;
@@ -112,7 +112,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
+
 		public List<Point> Points {
 			set {
 				ClearObjects ();
@@ -139,7 +139,7 @@ namespace LongoMatch.Drawing.Widgets
 				return;
 			
 			po = new PositionObject (coords.Points, Background.Width,
-			                         Background.Height);
+				Background.Height);
 			po.Play = play;
 			po.Project = Project;
 			if (Filter != null) {
@@ -182,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 				ShowMenuEvent (plays);
 			}
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			tk.Context = context;

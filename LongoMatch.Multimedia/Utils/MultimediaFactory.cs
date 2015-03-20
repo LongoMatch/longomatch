@@ -40,7 +40,7 @@ namespace LongoMatch.Video
 
 		public MultimediaFactory ()
 		{
-			registry = new Registry ("Multimedia Factory");
+			registry = new Registry ("Multimedia backend");
 			/* Register default elements */
 			Register (0, typeof(IPlayer), typeof(GstPlayer));
 			Register (0, typeof(IFramesCapturer), typeof(GstFramesCapturer));

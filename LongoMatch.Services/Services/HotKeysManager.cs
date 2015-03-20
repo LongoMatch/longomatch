@@ -68,7 +68,7 @@ namespace LongoMatch.Services
 			inPlayerTagging = false;
 			this.playerNumber = "";
 		}
-		
+
 		void ReloadHotkeys ()
 		{
 			dashboardHotkeys.Clear ();
@@ -148,8 +148,8 @@ namespace LongoMatch.Services
 				}
 				
 				if (projectType == ProjectType.CaptureProject ||
-					projectType == ProjectType.FakeCaptureProject ||
-					projectType == ProjectType.URICaptureProject) {
+				    projectType == ProjectType.FakeCaptureProject ||
+				    projectType == ProjectType.URICaptureProject) {
 					switch (action) {
 					case KeyAction.PauseClock:
 						if (capturer.Capturing) {

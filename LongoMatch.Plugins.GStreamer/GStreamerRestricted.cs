@@ -28,10 +28,10 @@ namespace LongoMatch.Plugins.GStreamer
 	[Extension]
 	public class GStreamerRestricted: IGStreamerPluginsProvider
 	{
-		[DllImport("libgstreamer-0.10.dll")]
+		[DllImport ("libgstreamer-0.10.dll")]
 		static extern bool gst_registry_scan_path (IntPtr registry, IntPtr path);
 
-		[DllImport("libgstreamer-0.10.dll")]
+		[DllImport ("libgstreamer-0.10.dll")]
 		static extern IntPtr gst_registry_get_default ();
 
 		public string Name {
@@ -51,7 +51,7 @@ namespace LongoMatch.Plugins.GStreamer
 			string gstdir = Path.Combine (Config.PluginsDir, "gstreamer-0.10");
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				Environment.SetEnvironmentVariable ("PATH",
-				                                    Environment.GetEnvironmentVariable ("PATH") + ";" + gstdir);
+					Environment.GetEnvironmentVariable ("PATH") + ";" + gstdir);
 			}
 			Log.Information ("Registering plugins in directory " + gstdir);
 			IntPtr p = GLib.Marshaller.StringToPtrGStrdup (gstdir);

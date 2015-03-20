@@ -57,7 +57,7 @@ namespace LongoMatch.Drawing.Cairo
 			LineStyle = LineStyle.Normal;
 			FontAlignment = FontAlignment.Center;
 			if (layout == null) {
-				layout = new Layout (Gdk.PangoHelper.ContextGet());
+				layout = new Layout (Gdk.PangoHelper.ContextGet ());
 			}
 
 			ClearOperation = false;
@@ -152,7 +152,7 @@ namespace LongoMatch.Drawing.Cairo
 			return CreateSurface (img.Width, img.Height, img, warnOnDispose);
 		}
 
-		public ISurface CreateSurface (int width, int height, Image image=null, bool warnOnDispose = true)
+		public ISurface CreateSurface (int width, int height, Image image = null, bool warnOnDispose = true)
 		{
 			return new Surface (width, height, image, warnOnDispose);
 		}
@@ -264,7 +264,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawArea (params Point[] vertices)
 		{
-			for (int i=0; i < vertices.Length - 1; i++) {
+			for (int i = 0; i < vertices.Length - 1; i++) {
 				double x1, y1, x2, y2;
 				
 				x1 = vertices [i].X;
@@ -282,9 +282,9 @@ namespace LongoMatch.Drawing.Cairo
 		public void DrawRectangle (Point start, double width, double height)
 		{
 			CContext.Rectangle (new global::Cairo.Rectangle (start.X + LineWidth / 2,
-			                                                 start.Y + LineWidth / 2,
-			                                                 width - LineWidth,
-			                                                 height - LineWidth));
+				start.Y + LineWidth / 2,
+				width - LineWidth,
+				height - LineWidth));
 			StrokeAndFill (false);
 		}
 
@@ -296,8 +296,8 @@ namespace LongoMatch.Drawing.Cairo
 		public static global::Cairo.Color RGBToCairoColor (Color c)
 		{
 			return new global::Cairo.Color (ByteToDouble (c.R),
-			                                ByteToDouble (c.G),
-			                                ByteToDouble (c.B));
+				ByteToDouble (c.G),
+				ByteToDouble (c.B));
 		}
 
 		public void DrawRoundedRectangle (Point start, double width, double height, double radius)
@@ -343,7 +343,7 @@ namespace LongoMatch.Drawing.Cairo
 		}
 
 		public void DrawText (Point point, double width, double height, string text,
-		                    bool escape=false, bool ellipsize=false)
+		                      bool escape = false, bool ellipsize = false)
 		{
 			Layout layout = null;
 			Pango.Rectangle inkRect, logRect;
@@ -388,7 +388,7 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Paint ();
 		}
 
-		public void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked=false)
+		public void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked = false)
 		{
 			double scaleX, scaleY;
 			Point offset;
@@ -477,7 +477,7 @@ namespace LongoMatch.Drawing.Cairo
 				canvas.Draw (c, new Area (new Point (0, 0), width, height));
 			}
 			img = new Image (Gdk.Pixbuf.FromDrawable (pm, Colormap.System, 0, 0, 0, 0,
-			                                          (int)width, (int)height));
+				(int)width, (int)height));
 			disableScalling = false;
 			Context = null;
 			return img;
@@ -487,7 +487,7 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			ImageSurface pngSurface = new ImageSurface (Format.ARGB32, (int)width, (int)height);
 			disableScalling = true;
-			using (CairoContext c = new CairoContext (new global::Cairo.Context(pngSurface))) {
+			using (CairoContext c = new CairoContext (new global::Cairo.Context (pngSurface))) {
 				canvas.Draw (c, new Area (new Point (0, 0), width, height));
 			}
 			pngSurface.WriteToPng (filename);
@@ -508,7 +508,7 @@ namespace LongoMatch.Drawing.Cairo
 				CContext.SetDash (new double[] { }, 0);
 				break;	
 			default:
-				CContext.SetDash (new double[] { 10 * LineWidth / 2 , 10 * LineWidth / 2 }, 0);
+				CContext.SetDash (new double[] { 10 * LineWidth / 2, 10 * LineWidth / 2 }, 0);
 				break;
 			}
 		}
@@ -539,21 +539,23 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			if (color != null) {
 				CContext.SetSourceRGBA ((double)color.R / byte.MaxValue,
-				                        (double)color.G / byte.MaxValue,
-				                        (double)color.B / byte.MaxValue,
-				                        (double)color.A / byte.MaxValue);
+					(double)color.G / byte.MaxValue,
+					(double)color.B / byte.MaxValue,
+					(double)color.A / byte.MaxValue);
 			} else {
 				CContext.SetSourceRGBA (0, 0, 0, 0);
 			}
 		}
 
-		public void Invoke (EventHandler handler) {
+		public void Invoke (EventHandler handler)
+		{
 			Gtk.Application.Invoke (handler);
 		}
-		
-		public void MeasureText(string text, out int width, out int height,
-		                        string fontFamily, int fontSize, FontWeight fontWeight) {
-			FontDescription desc =  new FontDescription();
+
+		public void MeasureText (string text, out int width, out int height,
+		                         string fontFamily, int fontSize, FontWeight fontWeight)
+		{
+			FontDescription desc = new FontDescription ();
 			desc.Family = fontFamily;
 			desc.Size = Pango.Units.FromPixels (fontSize);
 			desc.Weight = WeightToPangoWeight (fontWeight);

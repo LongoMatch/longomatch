@@ -29,7 +29,7 @@ namespace LongoMatch.Gui
 		public event VolumeChangedHandler VolumeChanged;
 
 		public VolumeWindow () :
-		base(Gtk.WindowType.Toplevel)
+			base (Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
 			volumescale.Adjustment.PageIncrement = 0.0001;

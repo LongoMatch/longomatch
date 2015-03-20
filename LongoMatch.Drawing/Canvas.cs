@@ -49,7 +49,7 @@ namespace LongoMatch.Drawing
 
 		~ Canvas ()
 		{
-			if (! disposed) {
+			if (!disposed) {
 				Log.Error (String.Format ("Canvas {0} was not disposed correctly", this));
 				Dispose (true);
 			}
@@ -103,7 +103,7 @@ namespace LongoMatch.Drawing
 		protected Point ToUserCoords (Point p)
 		{
 			return new Point ((p.X - translation.X) / scaleX,
-			                  (p.Y - translation.Y) / scaleY);
+				(p.Y - translation.Y) / scaleY);
 		
 		}
 
@@ -162,7 +162,7 @@ namespace LongoMatch.Drawing
 		Selection clickedSel;
 		CanvasObject highlighted;
 
-		public SelectionCanvas (IWidget widget): base (widget)
+		public SelectionCanvas (IWidget widget) : base (widget)
 		{
 			Selections = new List<Selection> ();
 			SelectionMode = MultiSelectionMode.Single;
@@ -284,7 +284,7 @@ namespace LongoMatch.Drawing
 			Selections.Clear ();
 		}
 
-		protected void UpdateSelection (Selection sel, bool notify=true)
+		protected void UpdateSelection (Selection sel, bool notify = true)
 		{
 			ICanvasSelectableObject so;
 			Selection seldup;
@@ -300,7 +300,7 @@ namespace LongoMatch.Drawing
 			so = sel.Drawable as ICanvasSelectableObject;
 			if (Selections.Count > 0) {
 				if (SingleSelectionObjects.Contains (so.GetType ()) ||
-					SingleSelectionObjects.Contains (Selections [0].Drawable.GetType ())) {
+				    SingleSelectionObjects.Contains (Selections [0].Drawable.GetType ())) {
 					return;
 				}
 			}
@@ -319,7 +319,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		Selection GetSelection (Point coords, bool inMotion=false)
+		Selection GetSelection (Point coords, bool inMotion = false)
 		{
 			Selection sel = null;
 
@@ -361,9 +361,9 @@ namespace LongoMatch.Drawing
 			}
 
 			if ((SelectionMode == MultiSelectionMode.Multiple) ||
-				(SelectionMode == MultiSelectionMode.MultipleWithModifier &&
-				(modif == ButtonModifier.Control ||
-				modif == ButtonModifier.Shift))) {
+			    (SelectionMode == MultiSelectionMode.MultipleWithModifier &&
+			    (modif == ButtonModifier.Control ||
+			    modif == ButtonModifier.Shift))) {
 				if (sel != null) {
 					sel.Position = SelectionPosition.All;
 					UpdateSelection (sel);
@@ -439,7 +439,7 @@ namespace LongoMatch.Drawing
 
 		Image background;
 
-		public BackgroundCanvas (IWidget widget): base (widget)
+		public BackgroundCanvas (IWidget widget) : base (widget)
 		{
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
 		}
@@ -458,7 +458,7 @@ namespace LongoMatch.Drawing
 		{
 			if (background != null) {
 				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
-				                        out scaleY, out translation);
+					out scaleY, out translation);
 			}
 		}
 

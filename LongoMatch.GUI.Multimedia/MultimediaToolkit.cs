@@ -29,11 +29,12 @@ namespace LongoMatch.Video
 
 	public class MultimediaToolkit:MultimediaFactory, IMultimediaToolkit
 	{
-		public string RemuxFile (MediaFile file, object window) {
+		public string RemuxFile (MediaFile file, object window)
+		{
 			string outputFile = Config.GUIToolkit.SaveFile (Catalog.GetString ("Output file"),
-			                                                Path.ChangeExtension (file.FilePath, ".mp4"),
-			                                                Path.GetDirectoryName (file.FilePath),
-			                                                "MP4 (.mp4)", new string[] { ".mp4"});
+				                    Path.ChangeExtension (file.FilePath, ".mp4"),
+				                    Path.GetDirectoryName (file.FilePath),
+				                    "MP4 (.mp4)", new string[] { ".mp4" });
 			outputFile = Path.ChangeExtension (outputFile, ".mp4");
 			Utils.Remuxer remuxer = new Utils.Remuxer (file, outputFile, VideoMuxerType.Mp4);
 			return remuxer.Remux (window as Gtk.Window);

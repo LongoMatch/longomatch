@@ -25,7 +25,7 @@ namespace LongoMatch.GUI.Helpers
 	{
 		EventBox box;
 
-		public ExternalWindow (): base (WindowType.Toplevel)
+		public ExternalWindow () : base (WindowType.Toplevel)
 		{
 			Icon = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch", IconSize.Menu);
 			
@@ -45,8 +45,9 @@ namespace LongoMatch.GUI.Helpers
 				return box;
 			}
 		}
-		
-		new public void Add (Widget widget) {
+
+		new public void Add (Widget widget)
+		{
 			box.Add (widget);
 		}
 	}

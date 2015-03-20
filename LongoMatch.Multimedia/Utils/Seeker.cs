@@ -30,14 +30,14 @@ namespace LongoMatch.Video.Utils
 		float rate;
 		SeekType seekType;
 
-		public Seeker (uint timeoutMS=80)
+		public Seeker (uint timeoutMS = 80)
 		{
 			timeout = timeoutMS;
 			pendingSeekId = -1;
 			seekType = SeekType.None;
 		}
 
-		public void Seek (SeekType seekType, Time start=null, float rate=1)
+		public void Seek (SeekType seekType, Time start = null, float rate = 1)
 		{
 			this.seekType = seekType;
 			this.start = start;

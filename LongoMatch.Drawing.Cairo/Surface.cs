@@ -27,12 +27,12 @@ namespace LongoMatch.Drawing.Cairo
 		ImageSurface surface;
 		bool disposed, warnOnDispose;
 
-		public Surface (int width, int height, Image image, bool warnOnDispose=true)
+		public Surface (int width, int height, Image image, bool warnOnDispose = true)
 		{
 			this.warnOnDispose = warnOnDispose;
 			surface = new ImageSurface (Format.ARGB32, width, height);
 			if (image != null) {
-				using (Context context = new Context(surface)) {
+				using (Context context = new Context (surface)) {
 					Gdk.CairoHelper.SetSourcePixbuf (context, image.Value, 0, 0);
 					context.Paint ();
 				}
@@ -41,7 +41,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		~Surface ()
 		{
-			if (! disposed && warnOnDispose) {
+			if (!disposed && warnOnDispose) {
 				Log.Error (String.Format ("Surface {0} was not disposed correctly", this));
 				Dispose (true);
 			}

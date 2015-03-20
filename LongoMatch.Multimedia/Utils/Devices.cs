@@ -26,22 +26,26 @@ namespace LongoMatch.Multimedia.Utils
 {
 	public class Devices
 	{
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_device_enum_video_devices (string source);
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_device_get_formats (IntPtr raw);
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_device_get_device_name (IntPtr raw);
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_device_free (IntPtr raw);
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_device_video_format_get_info (IntPtr raw, out int width, out int height,
 		                                                       out int fps_n, out int fps_d);
 
-		static readonly string[] devices_osx = new string[1] {"avfvideosrc"};
-		static readonly string[] devices_win = new string[2] {"ksvideosrc", "dshowvideosrc"};
+		static readonly string[] devices_osx = new string[1] { "avfvideosrc" };
+		static readonly string[] devices_win = new string[2] { "ksvideosrc", "dshowvideosrc" };
 		static readonly string[] devices_lin = new string[2] { "v4l2src", "dv1394src" };
-		
+
 		static public List<Device> ListVideoDevices ()
 		{
 			string[] devices;
@@ -56,14 +60,14 @@ namespace LongoMatch.Multimedia.Utils
 
 			foreach (string source in devices) {
 				GLib.List devices_raw = new GLib.List (lgm_device_enum_video_devices (source),
-				                                       typeof (IntPtr), true, false);
+					                        typeof(IntPtr), true, false);
 				
 				foreach (IntPtr device_raw in devices_raw) {
 					/* The Direct Show GStreamer element seems to have problems with the
 					 * BlackMagic DeckLink cards, so filter them out. They are also
 					 * available through the ksvideosrc element. */
 					if (source == "dshowvideosrc" &&
-						Regex.Match (source, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
+					    Regex.Match (source, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
 						continue;
 					}
 					
@@ -72,11 +76,11 @@ namespace LongoMatch.Multimedia.Utils
 					device.SourceElement = source;
 					device.ID = GLib.Marshaller.PtrToStringGFree (lgm_device_get_device_name (device_raw));
 					GLib.List formats_raw = new GLib.List (lgm_device_get_formats (device_raw),
-					                                       typeof (IntPtr), false, false);
+						                        typeof(IntPtr), false, false);
 					foreach (IntPtr format_raw in formats_raw) {
 						DeviceVideoFormat format = new DeviceVideoFormat ();
 						lgm_device_video_format_get_info (format_raw, out format.width, out format.height,
-						                                  out format.fps_n, out format.fps_d);
+							out format.fps_n, out format.fps_d);
 						device.Formats.Add (format);
 					}
 					devicesList.Add (device);

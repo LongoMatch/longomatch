@@ -38,7 +38,7 @@ namespace LongoMatch.Video.Utils
 
 			if (_h > 0)
 				return String.Format ("{0}:{1}:{2}", _h, _m.ToString ("d2"),
-				                      _s.ToString ("d2"));
+					_s.ToString ("d2"));
 
 			return String.Format ("{0}:{1}", _m, _s.ToString ("d2"));
 		}
@@ -54,7 +54,7 @@ namespace LongoMatch.Video.Utils
 
 			if (_h > 0)
 				return String.Format ("{0}:{1}:{2},{3}", _h, _m.ToString ("d2"),
-				                      _s.ToString ("d2"), _ms.ToString ("d3"));
+					_s.ToString ("d2"), _ms.ToString ("d3"));
 
 			return String.Format ("{0}:{1},{2}", _m, _s.ToString ("d2"), _ms.ToString ("d3"));
 		}
@@ -69,7 +69,7 @@ namespace LongoMatch.Video.Utils
 
 			if (_h > 0)
 				return String.Format ("{0}:{1}:{2}", _h, _m.ToString ("d2"),
-				                      _s.ToString ("d2"));
+					_s.ToString ("d2"));
 
 			return String.Format ("{0}:{1}", _m, _s.ToString ("d2"));
 		}

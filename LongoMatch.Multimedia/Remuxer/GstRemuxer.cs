@@ -31,18 +31,18 @@ namespace LongoMatch.Video.Remuxer
 		public event LongoMatch.Core.Handlers.ProgressHandler Progress;
 		public event LongoMatch.Core.Handlers.ErrorHandler Error;
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_remuxer_new (IntPtr input_file, IntPtr output_file, VideoMuxerType muxer, out IntPtr err);
 
-		public unsafe GstRemuxer (string inputFile, string outputFile, VideoMuxerType muxer) : base(IntPtr.Zero)
+		public unsafe GstRemuxer (string inputFile, string outputFile, VideoMuxerType muxer) : base (IntPtr.Zero)
 		{
 			if (GetType () != typeof(GstRemuxer)) {
 				throw new InvalidOperationException ("Can't override this constructor.");
 			}
 			IntPtr error = IntPtr.Zero;
 			Raw = gst_remuxer_new (GLib.Marshaller.StringToPtrGStrdup (inputFile),
-			                       GLib.Marshaller.StringToPtrGStrdup (outputFile),
-			                       muxer, out error);
+				GLib.Marshaller.StringToPtrGStrdup (outputFile),
+				muxer, out error);
 			if (error != IntPtr.Zero)
 				throw new GLib.GException (error);
 			
@@ -58,6 +58,7 @@ namespace LongoMatch.Video.Remuxer
 		}
 		#pragma warning disable 0169
 		#region Error
+
 		[UnmanagedFunctionPointer (CallingConvention.Cdecl)]
 		delegate void ErrorSignalDelegate (IntPtr arg0,IntPtr arg1,IntPtr gch);
 
@@ -100,7 +101,7 @@ namespace LongoMatch.Video.Remuxer
 			OverrideVirtualMethod (gtype, "error", ErrorVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Remuxer.GstRemuxer), ConnectionMethod="OverrideError")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Remuxer.GstRemuxer), ConnectionMethod = "OverrideError")]
 		protected virtual void OnError (string message)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -115,7 +116,7 @@ namespace LongoMatch.Video.Remuxer
 				v.Dispose ();
 		}
 
-		[GLib.Signal("error")]
+		[GLib.Signal ("error")]
 		public event GlibErrorHandler GstError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "error", new ErrorSignalDelegate (ErrorSignalCallback));
@@ -126,8 +127,11 @@ namespace LongoMatch.Video.Remuxer
 				sig.RemoveDelegate (value);
 			}
 		}
+
 		#endregion
+
 		#region Percent-completed
+
 		[UnmanagedFunctionPointer (CallingConvention.Cdecl)]
 		delegate void PercentCompletedVMDelegate (IntPtr gvc,float percent);
 
@@ -150,7 +154,7 @@ namespace LongoMatch.Video.Remuxer
 			OverrideVirtualMethod (gtype, "percent_completed", PercentCompletedVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Remuxer.GstRemuxer), ConnectionMethod="OverridePercentCompleted")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Remuxer.GstRemuxer), ConnectionMethod = "OverridePercentCompleted")]
 		protected virtual void OnPercentCompleted (float percent)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -165,7 +169,7 @@ namespace LongoMatch.Video.Remuxer
 				v.Dispose ();
 		}
 
-		[GLib.Signal("percent_completed")]
+		[GLib.Signal ("percent_completed")]
 		public event GlibPercentCompletedHandler PercentCompleted {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof(PercentCompletedArgs));
@@ -176,8 +180,10 @@ namespace LongoMatch.Video.Remuxer
 				sig.RemoveDelegate (value);
 			}
 		}
+
 		#endregion
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_remuxer_cancel (IntPtr raw);
 
 		public void Cancel ()
@@ -185,7 +191,7 @@ namespace LongoMatch.Video.Remuxer
 			gst_remuxer_cancel (Handle);
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_remuxer_start (IntPtr raw);
 
 		public void Start ()
@@ -197,6 +203,7 @@ namespace LongoMatch.Video.Remuxer
 		{
 			LongoMatch.GtkSharp.Remuxer.ObjectManager.Initialize ();
 		}
+
 		#endregion
 	}
 }

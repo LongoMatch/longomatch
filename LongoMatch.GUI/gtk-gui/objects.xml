@@ -303,6 +303,7 @@
         <property name="CloseAlwaysVisible" />
         <property name="Sensitive" />
         <property name="Volume" />
+        <property name="IgnoreTicks" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -310,14 +311,20 @@
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
         <signal name="CloseEvent" />
+        <signal name="PrepareLoadEvent" />
+        <signal name="TimeChangedEvent" />
+        <signal name="PlaybackStateChangedEvent" />
+        <signal name="LoadImageEvent" />
+        <signal name="PlaybackRateChangedEvent" />
+        <signal name="VolumeChangedEvent" />
+        <signal name="ElementLoadedEvent" />
+        <signal name="ElementUnloadedEvent" />
+        <signal name="PARChangedEvent" />
       </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
-      <itemgroup label="IPlayerBin Properties">
-        <property name="Sensitive" />
-      </itemgroup>
     </itemgroups>
     <signals>
       <itemgroup label="IPlayerBin Signals">

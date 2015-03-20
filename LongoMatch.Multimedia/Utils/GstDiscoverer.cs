@@ -29,7 +29,7 @@ namespace LongoMatch.Video.Utils
 		const int THUMBNAIL_MAX_HEIGHT = 72;
 		const int THUMBNAIL_MAX_WIDTH = 96;
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern unsafe uint lgm_discover_uri (string uri, out long duration,
 		                                            out uint width, out uint height,
 		                                            out uint fps_n, out uint fps_d,
@@ -53,8 +53,8 @@ namespace LongoMatch.Video.Utils
 			IFramesCapturer thumbnailer;
 
 			ret = lgm_discover_uri (filePath, out duration, out width, out height, out fps_n,
-			                        out fps_d, out par_n, out par_d, out container_ptr,
-			                        out video_codec_ptr, out audio_codec_ptr, out error);
+				out fps_d, out par_n, out par_d, out container_ptr,
+				out video_codec_ptr, out audio_codec_ptr, out error);
 			if (error != IntPtr.Zero)
 				throw new GLib.GException (error);
 			if (ret != 0) {
@@ -77,14 +77,14 @@ namespace LongoMatch.Video.Utils
 					thumbnailer = factory.GetFramesCapturer ();
 					thumbnailer.Open (filePath);
 					preview = thumbnailer.GetFrame (new Time { TotalSeconds = 2 }, false,
-					THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+						THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 					thumbnailer.Dispose ();
 				}
 			}
 			
 			return new LongoMatch.Core.Store.MediaFile (filePath, duration, (ushort)fps, has_audio, has_video,
-			                                       container, video_codec, audio_codec, width, height,
-			                                       par, preview, null);
+				container, video_codec, audio_codec, width, height,
+				par, preview, null);
 		}
 	}
 }

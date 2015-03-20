@@ -33,8 +33,8 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui
 {
-	[System.ComponentModel.Category("CesarPlayer")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("CesarPlayer")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class CapturerBin : Gtk.Bin, ICapturerBin
 	{
 		CapturerType type;
@@ -75,21 +75,21 @@ namespace LongoMatch.Gui
 			playlastbutton.TooltipMarkup = Catalog.GetString ("Replay event");
 
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record",
-			                                 StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			stopimage.Pixbuf = Misc.LoadIcon ("longomatch-stop",
-			                                  StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			pauseimage.Pixbuf = Misc.LoadIcon ("longomatch-pause-clock",
-			                                   StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			resumeimage.Pixbuf = Misc.LoadIcon ("longomatch-resume-clock",
-			                                    StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			saveimage.Pixbuf = Misc.LoadIcon ("longomatch-save",
-			                                  StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			cancelimage.Pixbuf = Misc.LoadIcon ("longomatch-cancel-rec",
-			                                    StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			deletelastimage.Pixbuf = Misc.LoadIcon ("longomatch-delete",
-			                                        StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			playlastimage.Pixbuf = Misc.LoadIcon ("longomatch-control-play",
-			                                      StyleConf.PlayerCapturerIconSize);
+				StyleConf.PlayerCapturerIconSize);
 			lasteventbox.Visible = false;
 			deletelastbutton.Clicked += HandleDeleteLast;
 			playlastbutton.Clicked += HandlePlayLast;
@@ -295,7 +295,7 @@ namespace LongoMatch.Gui
 			periodlabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
 
 		}
-		
+
 		bool UpdateTime ()
 		{
 			if (currentTimeNode != null) {
@@ -331,7 +331,7 @@ namespace LongoMatch.Gui
 				Capturer = Config.MultimediaToolkit.GetCapturer ();
 				this.outputFile = outputFile;
 				this.settings = settings;
-				videowindow.Ratio = (float) outputFile.VideoWidth / outputFile.VideoHeight;
+				videowindow.Ratio = (float)outputFile.VideoWidth / outputFile.VideoHeight;
 				Capturer.Error += OnError;
 				Capturer.MediaInfo += HandleMediaInfo;
 				Capturer.DeviceChange += OnDeviceChange;
@@ -373,7 +373,7 @@ namespace LongoMatch.Gui
 				if (image.Value == null)
 					return null;
 				image.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE,
-				                    Constants.MAX_THUMBNAIL_SIZE);
+					Constants.MAX_THUMBNAIL_SIZE);
 				return image;
 			}
 		}
@@ -460,7 +460,7 @@ namespace LongoMatch.Gui
 				Capturer.Expose ();
 			}
 		}
-		
+
 		void HandleEventCreated (TimelineEvent evt)
 		{
 			lasteventbox.Visible = true;
@@ -479,7 +479,7 @@ namespace LongoMatch.Gui
 		void HandleDeleteLast (object sender, EventArgs e)
 		{
 			if (lastevent != null) {
-				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {lastevent});
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { lastevent });
 				lastevent = null;
 				lasteventbox.Visible = false;
 			}
@@ -489,10 +489,10 @@ namespace LongoMatch.Gui
 		void HandleMediaInfo (int width, int height, int parN, int parD)
 		{
 			Application.Invoke (delegate {
-				videowindow.Ratio = (float) width / height * parN / parD;
-				outputFile.VideoWidth = (uint) width;
-				outputFile.VideoHeight = (uint) height;
-				outputFile.Par = (float) parN / parD;
+				videowindow.Ratio = (float)width / height * parN / parD;
+				outputFile.VideoWidth = (uint)width;
+				outputFile.VideoHeight = (uint)height;
+				outputFile.Par = (float)parN / parD;
 			});
 		}
 	}

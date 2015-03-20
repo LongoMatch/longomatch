@@ -112,8 +112,8 @@ namespace LongoMatch.Drawing.Cairo
 			} else {
 				widget.GdkWindow.InvalidateRect (
 					new Gdk.Rectangle ((int)area.Start.X - 1, (int)area.Start.Y - 1,
-				                   (int)Math.Ceiling (area.Width) + 2,
-				                   (int)Math.Ceiling (area.Height) + 2),
+						(int)Math.Ceiling (area.Width) + 2,
+						(int)Math.Ceiling (area.Height) + 2),
 					true);
 			}
 			widget.GdkWindow.ProcessUpdates (true);
@@ -200,7 +200,7 @@ namespace LongoMatch.Drawing.Cairo
 				widget.GdkWindow.Cursor = null;
 			} else {
 				Cursor c = new Cursor (widget.Display,
-				                       Gdk.Pixbuf.LoadFromResource (cursor), 0, 0);
+					           Gdk.Pixbuf.LoadFromResource (cursor), 0, 0);
 				widget.GdkWindow.Cursor = c;
 			}
 		}
@@ -337,7 +337,7 @@ namespace LongoMatch.Drawing.Cairo
 				bt = ParseButtonType (args.Event.Button);
 				bm = ParseButtonModifier (args.Event.State);
 				ButtonPressEvent (new Point (args.Event.X, args.Event.Y),
-				                  args.Event.Time, bt, bm);
+					args.Event.Time, bt, bm);
 			}
 		}
 
