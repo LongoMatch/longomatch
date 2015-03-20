@@ -9,6 +9,7 @@ SOURCES = AddinsManager.cs \
 	ExtensionPoints/IConfigModifier.cs \
 	ExtensionPoints/IExportProject.cs \
 	ExtensionPoints/IGStreamerPluginsProvider.cs \
+	ExtensionPoints/IGUIBackend.cs \
 	ExtensionPoints/IImportProject.cs \
 	ExtensionPoints/ILongoMatchPlugin.cs \
 	ExtensionPoints/IMultimediaBackend.cs \

@@ -24,6 +24,7 @@ SOURCES = Common/Area.cs \
 	Common/Job.cs \
 	Common/Keyboard.cs \
 	Common/Log.cs \
+	Common/Registry.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \
 	Common/Utils.cs \
@@ -47,6 +48,7 @@ SOURCES = Common/Area.cs \
 	Interfaces/IDataBaseManager.cs \
 	Interfaces/IDatabase.cs \
 	Interfaces/IIDObject.cs \
+	Interfaces/IPlayerController.cs \
 	Interfaces/IPlaylistElement.cs \
 	Interfaces/IProjectsImporter.cs \
 	Interfaces/IRenderingJobsManager.cs \
@@ -59,7 +61,6 @@ SOURCES = Common/Area.cs \
 	Interfaces/Multimedia/IFramesCapturer.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
 	Interfaces/Multimedia/IPlayer.cs \
-	Interfaces/Multimedia/IPlayerController.cs \
 	Interfaces/Multimedia/IRemuxer.cs \
 	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
