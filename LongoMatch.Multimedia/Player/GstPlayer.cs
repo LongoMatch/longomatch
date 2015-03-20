@@ -24,6 +24,7 @@ using LongoMatch.Video.Utils;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
+using System.Collections.Generic;
 
 namespace LongoMatch.Video.Player
 {
@@ -392,6 +393,12 @@ namespace LongoMatch.Video.Player
 			}
 		}
 
+		public List<IntPtr> WindowHandles {
+			set {
+				WindowHandle = value [0];
+			}
+		}
+
 		public Time CurrentTime {
 			get {
 				long ret = lgm_video_player_get_current_time (Handle);
@@ -467,9 +474,15 @@ namespace LongoMatch.Video.Player
 			lgm_video_player_close (Handle);
 		}
 
-		public bool Open (string uri)
+		public bool Open (List<string> mrls)
 		{
-			IntPtr native_uri = GLib.Marshaller.StringToPtrGStrdup (uri);
+			return Open (mrls[0]);
+		}
+
+		public bool Open (string mrl)
+		{
+			// FIXME this player only supports one stream
+			IntPtr native_uri = GLib.Marshaller.StringToPtrGStrdup (mrl);
 			IntPtr error = IntPtr.Zero;
 			bool ret = lgm_video_player_open (Handle, native_uri, out error);
 			GLib.Marshaller.Free (native_uri);
@@ -531,7 +544,7 @@ namespace LongoMatch.Video.Player
 		public unsafe GstFramesCapturer () : base (PlayerUseType.Capture)
 		{
 		}
-		
+
 		public Image GetFrame (Time pos, bool accurate, int outwidth=-1, int outheight=-1)
 		{
 			Image img = null;
