@@ -30,6 +30,8 @@ using Image = LongoMatch.Core.Common.Image;
 // Functions/Properties added/modified:
 // List<IntPtr> WindowHandles { set; }
 // bool Open (List<string> mrls);
+// bool Open (MediaFileSet mfs);
+// bool Open (MediaFile mf);
 // Their simple cases are still there, we need to get rid of them later
 using System.Collections.Generic;
 
@@ -54,6 +56,8 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		bool Open (List<string> mrls);
 		bool Open (string mrl);
+		bool Open (MediaFileSet mfs);
+		bool Open (MediaFile mf);
 
 		void Play();
 		void Pause();

@@ -474,6 +474,16 @@ namespace LongoMatch.Video.Player
 			lgm_video_player_close (Handle);
 		}
 
+		public bool Open (MediaFileSet mfs)
+		{
+			return Open (mfs[0]);
+		}
+
+		public bool Open (MediaFile mf)
+		{
+			return Open (mf.FilePath);
+		}
+
 		public bool Open (List<string> mrls)
 		{
 			return Open (mrls[0]);
