@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-02 11:09+0000\n"
-"PO-Revision-Date: 2015-03-02 19:00+0100\n"
+"POT-Creation-Date: 2015-03-22 11:05+0000\n"
+"PO-Revision-Date: 2015-03-22 23:43+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -82,7 +82,7 @@ msgstr "Protokol byl uložen do: "
 msgid "Please, fill a bug report "
 msgstr "Prosím vyplňte protokol chybového hlášení."
 
-#: ../LongoMatch.Core/Common/Device.cs:78
+#: ../LongoMatch.Core/Common/Device.cs:79
 #: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:53
 msgid "Default"
 msgstr "Výchozí"
@@ -95,130 +95,134 @@ msgstr "Databáze uzamčena:"
 msgid "Unknown database error:"
 msgstr "Neznámá chyba databáze:"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:52
+#: ../LongoMatch.Core/Common/Exceptions.cs:53
 msgid "Project loading failed:"
 msgstr "Načtení projektu selhalo"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:61
+#: ../LongoMatch.Core/Common/Exceptions.cs:62
 msgid "Project file not found:\n"
 msgstr "Soubor projektu nenalezen:\n"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:69
+#: ../LongoMatch.Core/Common/Exceptions.cs:70
 msgid "The name contains invalid characters: "
 msgstr "Název obsahuje neplatné znaky: "
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:77
+#: ../LongoMatch.Core/Common/Exceptions.cs:78
+msgid "Template not found:\n"
+msgstr "Šablona nebyla nalezena:\n"
+
+#: ../LongoMatch.Core/Common/Exceptions.cs:86
 #: ../LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs:73
 msgid "Hotkey already in use: "
 msgstr "Horká klávesa je již použita: "
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:55
+#: ../LongoMatch.Core/Common/Hotkeys.cs:56
 msgid "Delete selected event"
 msgstr "Smazat vybranou událost"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:56
+#: ../LongoMatch.Core/Common/Hotkeys.cs:57
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:108
 msgid "Draw frame"
 msgstr "Vykreslit snímek"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:57
+#: ../LongoMatch.Core/Common/Hotkeys.cs:58
 msgid "Edit selected event"
 msgstr "Upravit vybranou událost"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:58
+#: ../LongoMatch.Core/Common/Hotkeys.cs:59
 msgid "Adjust timeline to current position"
 msgstr "Přizpůsobit časovou osu aktuální pozici"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:59
+#: ../LongoMatch.Core/Common/Hotkeys.cs:60
 msgid "Frame step backward"
 msgstr "O snímek vpřed"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:60
+#: ../LongoMatch.Core/Common/Hotkeys.cs:61
 msgid "Frame step forward"
 msgstr "O snímek zpět"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:61
+#: ../LongoMatch.Core/Common/Hotkeys.cs:62
 msgid "Jump backward"
 msgstr "Posunout se vpřed"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:62
+#: ../LongoMatch.Core/Common/Hotkeys.cs:63
 msgid "Jump forward"
 msgstr "Posunout se zpět"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:63
+#: ../LongoMatch.Core/Common/Hotkeys.cs:64
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs:107
 msgid "Close loaded event"
 msgstr "Zavřít načtenou událost"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:64
-#: ../LongoMatch.Core/Common/Hotkeys.cs:71
+#: ../LongoMatch.Core/Common/Hotkeys.cs:65
+#: ../LongoMatch.Core/Common/Hotkeys.cs:72
 msgid "Start tagging home player"
 msgstr "Začít štítkování domácího hráče"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:65
-#: ../LongoMatch.Core/Common/Hotkeys.cs:72
+#: ../LongoMatch.Core/Common/Hotkeys.cs:66
+#: ../LongoMatch.Core/Common/Hotkeys.cs:73
 msgid "Start tagging away player"
 msgstr "Začít štítkování hostujícího hráče"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:66
+#: ../LongoMatch.Core/Common/Hotkeys.cs:67
 msgid "Jump to next event"
 msgstr "Přejít na následující událost"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:67
+#: ../LongoMatch.Core/Common/Hotkeys.cs:68
 msgid "Jump to prev event"
 msgstr "Přejít na předchozí událost"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:68
+#: ../LongoMatch.Core/Common/Hotkeys.cs:69
 msgid "Show dashboard"
 msgstr "Zobrazit ovládací panel"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:69
+#: ../LongoMatch.Core/Common/Hotkeys.cs:70
 msgid "Show zonal tags"
 msgstr "Zobrazit zónové štítkování"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:70
+#: ../LongoMatch.Core/Common/Hotkeys.cs:71
 msgid "Show timeline"
 msgstr "Zobrazit časovou osu"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:73
+#: ../LongoMatch.Core/Common/Hotkeys.cs:74
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:32
 msgid "Increase playback speed"
 msgstr "Zvýšit rychlost přehrávání"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:74
+#: ../LongoMatch.Core/Common/Hotkeys.cs:75
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:33
 msgid "Decrease playback speed"
 msgstr "Snížit rychlost přehrávání"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:75
+#: ../LongoMatch.Core/Common/Hotkeys.cs:76
 msgid "Pause/Resume capture clock"
 msgstr "Pozastavit/spustit hodiny nahrávání"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
-#: ../LongoMatch.Core/Common/Hotkeys.cs:76
+#: ../LongoMatch.Core/Common/Hotkeys.cs:77
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:68
 msgid "Start recording period"
 msgstr "Začít nahrávání části hry"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:77
+#: ../LongoMatch.Core/Common/Hotkeys.cs:78
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:69
 msgid "Stop recording period"
 msgstr "Zastavit nahrávání části hry"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:78
+#: ../LongoMatch.Core/Common/Hotkeys.cs:79
 msgid "Toggle substitutions mode"
 msgstr "Přepnout režim střídání"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:79
+#: ../LongoMatch.Core/Common/Hotkeys.cs:80
 msgid "Toggle playback"
 msgstr "Přepnout přehrávání"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:80
+#: ../LongoMatch.Core/Common/Hotkeys.cs:81
 msgid "Zoom timeline in"
 msgstr "Přiblížit časovou osu"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:81
+#: ../LongoMatch.Core/Common/Hotkeys.cs:82
 msgid "Zoom timeline out"
 msgstr "Oddálit časovou osu"
 
@@ -227,17 +231,17 @@ msgid "Keep original size"
 msgstr "Zachovat původní velikost"
 
 #: ../LongoMatch.Core/Stats/PlayerEventTypeStats.cs:62
-#: ../LongoMatch.Core/Store/EventType.cs:161
+#: ../LongoMatch.Core/Store/EventType.cs:162
 msgid "Score"
 msgstr "Skóre"
 
 #: ../LongoMatch.Core/Stats/PlayerEventTypeStats.cs:72
-#: ../LongoMatch.Core/Store/EventType.cs:138
+#: ../LongoMatch.Core/Store/EventType.cs:139
 msgid "Penalties"
 msgstr "Tresty"
 
-#: ../LongoMatch.Core/Store/EventType.cs:87
-#: ../LongoMatch.Core/Store/EventType.cs:95
+#: ../LongoMatch.Core/Store/EventType.cs:88
+#: ../LongoMatch.Core/Store/EventType.cs:96
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:366
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:51
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:86
@@ -246,8 +250,8 @@ msgstr "Tresty"
 msgid "Sort by name"
 msgstr "Řadit podle názvu"
 
-#: ../LongoMatch.Core/Store/EventType.cs:89
-#: ../LongoMatch.Core/Store/EventType.cs:99
+#: ../LongoMatch.Core/Store/EventType.cs:90
+#: ../LongoMatch.Core/Store/EventType.cs:100
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:367
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:87
 #: ../LongoMatch.Migration/Core/Category.cs:156
@@ -255,8 +259,8 @@ msgstr "Řadit podle názvu"
 msgid "Sort by start time"
 msgstr "Řadit podle času začátku"
 
-#: ../LongoMatch.Core/Store/EventType.cs:91
-#: ../LongoMatch.Core/Store/EventType.cs:101
+#: ../LongoMatch.Core/Store/EventType.cs:92
+#: ../LongoMatch.Core/Store/EventType.cs:102
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:368
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:88
 #: ../LongoMatch.Migration/Core/Category.cs:158
@@ -264,8 +268,8 @@ msgstr "Řadit podle času začátku"
 msgid "Sort by stop time"
 msgstr "Řadit podle času konce"
 
-#: ../LongoMatch.Core/Store/EventType.cs:93
-#: ../LongoMatch.Core/Store/EventType.cs:103
+#: ../LongoMatch.Core/Store/EventType.cs:94
+#: ../LongoMatch.Core/Store/EventType.cs:104
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:369
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:89
 #: ../LongoMatch.Migration/Core/Category.cs:160
@@ -273,18 +277,33 @@ msgstr "Řadit podle času konce"
 msgid "Sort by duration"
 msgstr "Řadit podle délky"
 
-#: ../LongoMatch.Core/Store/EventType.cs:184
+#: ../LongoMatch.Core/Store/EventType.cs:185
 msgid "Substitution"
 msgstr "Střídání"
 
-#: ../LongoMatch.Core/Store/HotKey.cs:119
+#: ../LongoMatch.Core/Store/HotKey.cs:118
 #: ../LongoMatch.Migration/Core/HotKey.cs:142
 msgid "Not defined"
 msgstr "Není definován"
 
-#: ../LongoMatch.Core/Store/MediaFile.cs:139
-msgid "No video file associated"
-msgstr "Není přiřazeno žádné video"
+#. Add the first media file chooser for main camera
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:63
+#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:54
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:401
+msgid "Main camera angle"
+msgstr "Úhel hlavní kamery"
+
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:66
+msgid "Angle 2"
+msgstr "Úhel 2"
+
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:69
+msgid "Angle 3"
+msgstr "Úhel 3"
+
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:72
+msgid "Angle 4"
+msgstr "Úhel 4"
 
 #: ../LongoMatch.Core/Store/Project.cs:345
 msgid "No lineup events found"
@@ -304,51 +323,51 @@ msgstr "Základní sestava"
 msgid "The file you are trying to load is not a valid project"
 msgstr "Soubor, který se pokoušíte načíst, není platný projekt"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:163
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:178
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:180
 msgid "Success"
 msgstr "Úspěch"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:164
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:166
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:179
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:181
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:177
 msgid "Outcome"
 msgstr "Výsledek"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:165
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:180
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:181
 msgid "Failure"
 msgstr "Chyba"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:221
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:226
 msgid "Attack"
 msgstr "Útok"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:226
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:231
 msgid "Defense"
 msgstr "Obrana"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:231
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:236
 msgid "Red card"
 msgstr "Červená karta"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:237
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:242
 msgid "Yellow card"
 msgstr "Žlutá karta"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:244
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:249
 msgid "Free play goal"
 msgstr "Gól z volné hry"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:252
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:257
 msgid "Penalty goal"
 msgstr "Gól z penalty"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:259
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:264
 msgid "Ball playing"
 msgstr "Držení balonu"
 
-#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
+#: ../LongoMatch.Core/Store/Templates/Team.cs:41
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:512
 #: ../LongoMatch.Migration/Core/SubCategory.cs:167
 #: ../LongoMatch.Migration/Core/Templates/TeamTemplate.cs:173
@@ -356,6 +375,7 @@ msgid "Team"
 msgstr "Tým"
 
 #. Periods
+#: ../LongoMatch.Drawing/Widgets/CamerasLabels.cs:75
 #: ../LongoMatch.Drawing/Widgets/TimelineLabels.cs:78
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:434
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:51
@@ -497,17 +517,17 @@ msgid "Group"
 msgstr "Skupina"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:61
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:310
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:398
 msgid "page1"
 msgstr "Strana1"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:74
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:895
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:955
 msgid "page2"
 msgstr "Strana2"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:908
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:968
 msgid "page3"
 msgstr "Strana3"
 
@@ -572,22 +592,6 @@ msgstr ""
 "Vykreslovat nové události automaticky\n"
 "(vyžaduje výkonný procesor)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:59
-msgid "<b>Main camera angle</b>"
-msgstr "<b>Úhel hlavní kamery</b>"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:112
-msgid "<b>Angle 2</b>"
-msgstr "<b>Úhel 2</b>"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:167
-msgid "<b>Angle 3</b>"
-msgstr "<b>Úhel 3</b>"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs:222
-msgid "<b>Angle 4</b>"
-msgstr "<b>Úhel 4</b>"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:36
 msgid "  Events   "
 msgstr "Události"
@@ -609,7 +613,7 @@ msgid "Name:"
 msgstr "Jméno:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:125
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:198
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:239
 msgid "Description:"
 msgstr "Popis:"
 
@@ -751,7 +755,7 @@ msgstr "Formát kódování"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:115
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:234
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:634
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:722
 msgid "Quality"
 msgstr "Kvalita"
 
@@ -1188,99 +1192,99 @@ msgstr "Zobrazit statistiku projektu"
 msgid "Migration Tool"
 msgstr "Migrační nástroj"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:165
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:256
 msgid "Video file"
 msgstr "Soubor videa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:207
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:297
 msgid "Capture device"
 msgstr "Nahrávací zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:249
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:338
 msgid "Fake capture device"
 msgstr "Falešné nahrávací zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:291
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:379
 msgid "Ip camera"
 msgstr "IP kamera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:347
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:166
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:436
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:176
 msgid "Competition"
 msgstr "Utkání"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:358
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:165
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:175
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:383
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:472
 msgid "Description"
 msgstr "Popis"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:423
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:167
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:512
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:177
 msgid "Season"
 msgstr "Sezóna"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:497
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:585
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:175
 #: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:33
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
 msgid "Output file"
 msgstr "Výstupní soubor"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:527
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:615
 msgid "URL"
 msgstr "URL"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:546
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:634
 msgid "Device"
 msgstr "Zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:575
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:663
 msgid "Device format"
 msgstr "Formát zařízení"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:615
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:703
 msgid "Output size"
 msgstr "Výstupní velikost"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:645
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:733
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:85
 msgid "Format"
 msgstr "Formát"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:672
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:760
 msgid "Dashboard"
 msgstr "Ovládací panel"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:722
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:803
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:810
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:877
 msgid "Tactics"
 msgstr "Taktiky"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:129
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:169
 msgid "Information"
 msgstr "Informace"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:156
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:197
 msgid "Competition:"
 msgstr "Utkání:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:209
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:250
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:222
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:263
 msgid "Analysis Template:"
 msgstr "Analyzační šablona"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:244
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:285
 msgid "Season:"
 msgstr "Sezóna:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:271
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:312
 msgid "Videos"
 msgstr "Videa"
 
@@ -1388,11 +1392,11 @@ msgid "1:1 dashboard"
 msgstr "Ovládací panel 1∶1"
 
 #: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:390
-#: ../LongoMatch.GUI/Gui/Component/Timeline.cs:217
+#: ../LongoMatch.GUI/Gui/Component/Timeline.cs:219
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:478
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:102
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:133
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:62
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:66
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:160
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:195
 msgid "Delete"
@@ -1406,17 +1410,25 @@ msgstr "Nelze analyzovat část hry."
 msgid "Time: "
 msgstr "Čas:"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:118
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:59
+msgid "Edit to change camera name"
+msgstr "Úpravou změníte název kamery"
+
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:144
 msgid "Select folder..."
 msgstr "Vybrat složku…"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:120
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:146
 msgid "Select file..."
 msgstr "Vyber soubor..."
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:141
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:182
 msgid "Output folder"
 msgstr "Výstupní složka"
+
+#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:121
+msgid "Angle"
+msgstr "Úhel"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
@@ -1436,16 +1448,29 @@ msgstr "Filtr kategorií"
 msgid "Players filter"
 msgstr "Filtr hráčů"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectPeriods.cs:65
-msgid "Synchronize the game periods"
-msgstr "Synchronizování částí hry"
+#: ../LongoMatch.GUI/Gui/Component/ProjectPeriods.cs:423
+msgid ""
+"Drag the bars in the timeline to synchronize secondary video files with the "
+"main video"
+msgstr ""
+"Přetažením pruhů na časové ose sesynchronizujte dodatečné video s hlavním "
+"videem"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectPeriods.cs:426
+msgid "Camera out of scope"
+msgstr "Kamera je mimo záběr"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectPeriods.cs:454
+#: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:94
+msgid "Offset"
+msgstr "Posun"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:125
 msgid "Do you want to delete player: "
 msgstr "Přejete se smazat hráče:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:257
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:580
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:581
 msgid "Could not parse tactics string"
 msgstr "Neni mozne rozpoznat takticky řetězec"
 
@@ -1677,17 +1702,17 @@ msgid "The Project has been edited, do you want to save the changes?"
 msgstr "V projektu byly provedeny změny. Přejete si změny uložit?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:227
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:265
 msgid "This Project is actually in use."
 msgstr "Tento projekt je aktuálně používán."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:228
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:266
 msgid "Close it first to allow its removal from the database"
 msgstr "Abyste jej mohli odstranit z databáze, nejdříve jej zavřete."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:231
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:269
 msgid "Do you really want to delete:"
 msgstr "Skutečně chcete odstranit:"
 
@@ -1783,7 +1808,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Stále schází některé videosoubory pro tento projekt."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:422
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:341
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:340
 msgid "You need at least 1 video file for the main angle"
 msgstr "Potřebujete nejméně jedno video pro hlavní úhel"
 
@@ -1828,31 +1853,31 @@ msgstr "Přesunout do"
 msgid "Drawings"
 msgstr "Kresby"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:263
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:262
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:325
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:324
 msgid "PROJECT TYPE"
 msgstr "TYP PROJEKTU"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:327
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:326
 msgid "PROJECT PROPERTIES"
 msgstr "VLASTNOSTI PROJEKTU"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:329
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:328
 msgid "PERIODS SYNCHRONIZATION"
 msgstr "SYNCHRONIZACE ČÁSTÍ HRY"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:353
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:352
 msgid "No output video file"
 msgstr "Žádný výstupní soubor videa"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:359
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:358
 msgid "No input URI"
 msgstr "Žádné vstupní URI"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:467
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:466
 msgid "No capture devices found in the system"
 msgstr "V systému nebylo nalezeno žádné nahrávací zařízení"
 
@@ -1886,29 +1911,29 @@ msgstr "Zásuvné moduly"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:59
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:63
 msgid "Save"
 msgstr "Uložit"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:60
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:64
 msgid "Export"
 msgstr "Exportovat"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:61
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:65
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
 msgid "Open"
 msgstr "Otevřít"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:80
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:85
 msgid "PROJECTS MANAGER"
 msgstr "SPRÁVA PROJEKTU"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:105
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:111
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:220
 msgid "Do you want to save the current template"
 msgstr "Přejete si uložit aktuální šablonu"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:196
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:234
 msgid "Export project"
 msgstr "Export projektu"
 
@@ -2493,21 +2518,21 @@ msgstr "Statistiky hry"
 msgid "Show the game statistics"
 msgstr "Zobrazit statistiky hry"
 
-#: ../LongoMatch.Services/Services/CoreServices.cs:156
+#: ../LongoMatch.Services/Services/CoreServices.cs:157
 msgid ""
 "A rendering job is running in the background. Do you really want to quit?"
 msgstr "Na pozadí se provádí vykreslování. Opravdu chcete skončit?"
 
-#: ../LongoMatch.Services/Services/DataBaseManager.cs:143
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:145
 msgid "Close the current project to open the database manager"
 msgstr "Aby se mohla otevřít správa databází, je třeba zavřít aktuální projekt"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:207
+#: ../LongoMatch.Services/Services/EventsManager.cs:208
 msgid "Error capturing video frame"
 msgstr "Chyba při nahrávání snímku videa"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:296
-#: ../LongoMatch.Services/Services/EventsManager.cs:324
+#: ../LongoMatch.Services/Services/EventsManager.cs:297
+#: ../LongoMatch.Services/Services/EventsManager.cs:325
 msgid "Video capture is stopped"
 msgstr "Nahrávání videa je stopnuto"
 
@@ -2519,11 +2544,11 @@ msgstr "Název seznamu utkání:"
 msgid "New playlist"
 msgstr "Nový seznam utkání"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:154
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:156
 msgid "An error occured saving the project:\n"
 msgstr "Vyskytla se chyba při ukládání projektu:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:155
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:157
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -2531,19 +2556,19 @@ msgstr ""
 "Soubor s videem a záloha projektu byly uloženy. Zkuste je později "
 "naimportovat:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:190
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:192
 msgid "An error occurred opening this project:"
 msgstr "Vyskytla se chyba při otevírání tohoto projektu:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:245
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:247
 msgid "Do you want to close the current project?"
 msgstr "Chcete zavřít současný projekt?"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:372
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:375
 msgid "The following error happened and the current project will be closed:"
 msgstr "Vyskytla se následující chyba a současný projekt bude uzavřen:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:396
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:399
 msgid "The following error happened and the current capture will be closed:"
 msgstr "Následující problém nastal a aktuální nahrávání bude ukončeno:"
 
@@ -2571,11 +2596,6 @@ msgstr "Nastala chyba ve vedeo editoru."
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:355
 msgid "Please, try again."
 msgstr "Zkuste to prosím znovu."
-
-#: ../LongoMatch.Services/Services/TemplatesService.cs:154
-#: ../LongoMatch.Services/Services/TemplatesService.cs:185
-msgid "A template already exists with the name: "
-msgstr "Již existuje šablona s názvem: "
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.Services/Services/ToolsManager.cs:47
