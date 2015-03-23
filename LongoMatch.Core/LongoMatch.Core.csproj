@@ -56,7 +56,6 @@
     <Compile Include="Interfaces\IDatabase.cs" />
     <Compile Include="Store\TimelineNode.cs" />
     <Compile Include="Interfaces\GUI\IRenderingStateBar.cs" />
-    <Compile Include="Interfaces\GUI\IPlayerBin.cs" />
     <Compile Include="Handlers\Multimedia.cs" />
     <Compile Include="Interfaces\GUI\IAnalysisWindow.cs" />
     <Compile Include="Interfaces\GUI\ICapturerBin.cs" />
