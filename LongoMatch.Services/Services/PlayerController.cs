@@ -227,6 +227,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Play");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (TIMEOUT_MS);
+				EmitPlaybackStateChanged (true);
 			} else {
 				EmitLoadDrawings (null);
 				player.Play ();
@@ -239,6 +240,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Pause");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (0);
+				EmitPlaybackStateChanged (false);
 			} else {
 				player.Pause ();
 			}
@@ -444,7 +446,10 @@ namespace LongoMatch.Services
 		public void Previous ()
 		{
 			Log.Debug ("Previous");
-			if (loadedPlaylistElement != null) {
+			if (StillImageLoaded) {
+				imageLoadedTS = new Time (0);
+				OnTick ();
+			} else if (loadedPlaylistElement != null) {
 				if (loadedPlaylist.HasPrev ()) {
 					Config.EventsBroker.EmitPreviousPlaylistElement (loadedPlaylist);
 				}
@@ -565,6 +570,7 @@ namespace LongoMatch.Services
 			set {
 				stillimageLoaded = value;
 				if (stillimageLoaded) {
+					EmitPlaybackStateChanged (true);
 					player.Pause ();
 					imageLoadedTS = new Time (0);
 					ReconfigureTimeout (TIMEOUT_MS);
