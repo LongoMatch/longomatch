@@ -243,6 +243,7 @@ namespace LongoMatch.Gui
 			timescale.ButtonReleaseEvent += OnTimescaleButtonRelease;
 			vscale1.FormatValue += OnVscale1FormatValue;
 			vscale1.ValueChanged += OnVscale1ValueChanged;
+			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
 
 		}
 
@@ -526,6 +527,11 @@ namespace LongoMatch.Gui
 		void OnDrawButtonClicked (object sender, System.EventArgs e)
 		{
 			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasVisible [0], true);
+		}
+
+		void HandleJumpValueChanged (object sender, EventArgs e)
+		{
+			Player.Step = new Time (jumpspinbutton.ValueAsInt * 1000);
 		}
 
 		void HandleReady (object sender, EventArgs e)
