@@ -267,9 +267,12 @@ namespace LongoMatch.Services
 			play.Start.MSeconds = Math.Max (0, play.Start.MSeconds);
 			if (projectType == ProjectType.FileProject) {
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
+				play.CamerasLayout = player.CamerasLayout;
+				play.CamerasVisible = player.CamerasVisible;
+			} else {
+				play.CamerasLayout = null;
+				play.CamerasVisible = new List<int> { 0 };
 			}
-			play.CamerasLayout = player.CamerasLayout;
-			play.CamerasVisible = player.CamerasVisible;
 
 			filter.Update ();
 			analysisWindow.AddPlay (play);
@@ -330,7 +333,7 @@ namespace LongoMatch.Services
 			}
 
 			if (!openedProject.Dashboard.DisablePopupWindow) {
-				if (player != null) {
+				if (projectType == ProjectType.FileProject) {
 					bool playing = player.Playing;
 					player.Pause ();
 					Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);

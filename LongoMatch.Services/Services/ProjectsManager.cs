@@ -170,14 +170,9 @@ namespace LongoMatch.Services
 				
 			PlaysFilter = new EventsFilter (project);
 			project.CleanupTimers ();
-			/* FIXME: the controller is created here and passed to the view
-			 * Player = new PlayerController ();
-			 * analysisWindow.Player = Player;
-			*/
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
 				out analysisWindow);
 			Player = analysisWindow.Player;
-			/* FIXME: CapturerBin should be also split into controller + view */
 			Capturer = analysisWindow.Capturer;
 			OpenedProject = project;
 			OpenedProjectType = projectType;
@@ -282,10 +277,11 @@ namespace LongoMatch.Services
 				return;
 				
 			Log.Debug ("Closing project " + OpenedProject.ID);
-			if (OpenedProjectType != ProjectType.FileProject) {
+			if (Capturer != null) {
 				Capturer.Close ();
-			} else {
-				Player.Close ();
+			}
+			if (Player != null) {
+				Player.Dispose ();
 			}
 
 			if (save)
