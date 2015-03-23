@@ -82,7 +82,7 @@ namespace LongoMatch.Services
 
 		#endregion
 
-		#region Properties
+		#region IPlayerController implementation
 
 		public bool IgnoreTicks {
 			get;
@@ -180,19 +180,6 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		#endregion
-
-		#region Private Properties
-
-		IPlayer Player {
-			get;
-			set;
-		}
-
-		#endregion
-
-		#region Public methods
-
 		public void Dispose ()
 		{
 			IgnoreTicks = true;
@@ -257,10 +244,10 @@ namespace LongoMatch.Services
 		public void Close ()
 		{
 			Log.Debug ("Close");
-			player.Error -= OnError;
-			player.StateChange -= OnStateChanged;
-			player.Eos -= OnEndOfStream;
-			player.ReadyToSeek -= OnReadyToSeek;
+			player.Error -= HandleError;
+			player.StateChange -= HandleStateChange;
+			player.Eos -= HandleEndOfStream;
+			player.ReadyToSeek -= HandleReadyToSeek;
 			ReconfigureTimeout (0);
 			player.Dispose ();
 			FileSet = null;
@@ -287,7 +274,7 @@ namespace LongoMatch.Services
 						Log.Debug (string.Format ("Seeking to {0} accurate:{1} synchronous:{2} throttled:{3}",
 							time, accurate, synchronous, throtlled));
 						player.Seek (time, accurate, synchronous);
-						OnTick ();
+						Tick ();
 					}
 				} else {
 					Log.Debug ("Delaying seek until player is ready");
@@ -332,7 +319,7 @@ namespace LongoMatch.Services
 				EmitLoadDrawings (null);
 				if (CurrentTime < loadedSegment.Stop) {
 					player.SeekToNextFrame ();
-					OnTick ();
+					Tick ();
 				}
 			}
 			return true;
@@ -357,7 +344,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			EmitLoadDrawings (null);
-			DoStep (Step);
+			PerformStep (Step);
 		}
 
 		public void StepBackward ()
@@ -367,7 +354,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			EmitLoadDrawings (null);
-			DoStep (new Time (-Step.MSeconds));
+			PerformStep (new Time (-Step.MSeconds));
 		}
 
 		public void FramerateUp ()
@@ -473,7 +460,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Previous");
 			if (StillImageLoaded) {
 				imageLoadedTS = new Time (0);
-				OnTick ();
+				Tick ();
 			} else if (loadedPlaylistElement != null) {
 				if (loadedPlaylist.HasPrev ()) {
 					Config.EventsBroker.EmitPreviousPlaylistElement (loadedPlaylist);
@@ -545,8 +532,66 @@ namespace LongoMatch.Services
 
 		#endregion
 
+		#region Private Properties
+
+		IPlayer Player {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Indicates if a still image is loaded instead of a video segment.
+		/// </summary>
+		bool StillImageLoaded {
+			set {
+				stillimageLoaded = value;
+				if (stillimageLoaded) {
+					EmitPlaybackStateChanged (true);
+					player.Pause ();
+					imageLoadedTS = new Time (0);
+					ReconfigureTimeout (TIMEOUT_MS);
+				}
+			}
+			get {
+				return stillimageLoaded;
+			}
+		}
+
+		/// <summary>
+		/// Inidicates if a video segment is loaded.
+		/// </summary>
+		bool SegmentLoaded {
+			get {
+				return loadedSegment.Start.MSeconds != -1;
+			}
+		}
+
+		/// <summary>
+		/// Gets the list of drawing for the loaded event.
+		/// </summary>
+		List<FrameDrawing> EventDrawings {
+			get {
+				if (loadedEvent != null) {
+					return loadedEvent.Drawings;
+				} else if (loadedPlaylistElement is PlaylistPlayElement) {
+					return (loadedPlaylistElement as PlaylistPlayElement).Play.Drawings;
+				}
+				return null;
+			}
+		}
+
+
+		#endregion
+
 		#region Private methods
 
+		/// <summary>
+		/// Open the specified file set.
+		/// </summary>
+		/// <param name="fileSet">the files to open.</param>
+		/// <param name="seek">If set to <c>true</c>, seeks to the beginning of the stream.</param>
+		/// <param name="force">If set to <c>true</c>, opens the fileset even if it was already set.</param>
+		/// <param name="play">If set to <c>true</c>, sets the player to play.</param>
 		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
 		{
 			Reset ();
@@ -576,6 +621,9 @@ namespace LongoMatch.Services
 			}
 		}
 
+		/// <summary>
+		/// Reset the player segment information.
+		/// </summary>
 		void Reset ()
 		{
 			SetRate (1);
@@ -585,44 +633,24 @@ namespace LongoMatch.Services
 			loadedEvent = null;
 		}
 
+		/// <summary>
+		/// Sets the rate and notifies the change.
+		/// </summary>
 		void SetRate (float rate)
 		{
 			Rate = rate;
 			EmitRateChanged (rate);
 		}
 
-		bool StillImageLoaded {
-			set {
-				stillimageLoaded = value;
-				if (stillimageLoaded) {
-					EmitPlaybackStateChanged (true);
-					player.Pause ();
-					imageLoadedTS = new Time (0);
-					ReconfigureTimeout (TIMEOUT_MS);
-				}
-			}
-			get {
-				return stillimageLoaded;
-			}
-		}
-
-		bool SegmentLoaded {
-			get {
-				return loadedSegment.Start.MSeconds != -1;
-			}
-		}
-
-		List<FrameDrawing> EventDrawings {
-			get {
-				if (loadedEvent != null) {
-					return loadedEvent.Drawings;
-				} else if (loadedPlaylistElement is PlaylistPlayElement) {
-					return (loadedPlaylistElement as PlaylistPlayElement).Play.Drawings;
-				}
-				return null;
-			}
-		}
-
+		/// <summary>
+		/// Loads a video segment in the player.
+		/// </summary>
+		/// <param name="fileSet">File set.</param>
+		/// <param name="start">Start time.</param>
+		/// <param name="stop">Stop time.</param>
+		/// <param name="seekTime">Seek time.</param>
+		/// <param name="playing">If set to <c>true</c> starts playing.</param>
+		/// <param name="rate">Rate.</param>
 		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
 		                  bool playing, float rate = 1)
 		{
@@ -680,7 +708,10 @@ namespace LongoMatch.Services
 			EmitLoadDrawings (drawing);
 		}
 
-		void DoStep (Time step)
+		/// <summary>
+		/// Performs a step using the configured <see cref="Step"/> time.
+		/// </summary>
+		void PerformStep (Time step)
 		{
 			Time pos = CurrentTime + step;
 			if (pos.MSeconds < 0)
@@ -691,16 +722,24 @@ namespace LongoMatch.Services
 			Seek (pos, true);
 		}
 
+		/// <summary>
+		/// Creates the backend video player.
+		/// </summary>
 		void CreatePlayer ()
 		{
 			player = Config.MultimediaToolkit.GetPlayer ();
 
-			player.Error += OnError;
-			player.StateChange += OnStateChanged;
-			player.Eos += OnEndOfStream;
-			player.ReadyToSeek += OnReadyToSeek;
+			player.Error += HandleError;
+			player.StateChange += HandleStateChange;
+			player.Eos += HandleEndOfStream;
+			player.ReadyToSeek += HandleReadyToSeek;
 		}
 
+		/// <summary>
+		/// Reconfigures the timeout for the timer emitting the timming events.
+		/// If set to <code>0</code>, the timer is topped
+		/// </summary>
+		/// <param name="mseconds">Mseconds.</param>
 		void ReconfigureTimeout (uint mseconds)
 		{
 			if (mseconds == 0) {
@@ -710,85 +749,11 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void DoStateChanged (bool playing)
-		{
-			if (playing) {
-				ReconfigureTimeout (TIMEOUT_MS);
-			} else {
-				if (!StillImageLoaded) {
-					ReconfigureTimeout (0);
-				}
-			}
-			EmitPlaybackStateChanged (playing);
-		}
-
-		void DoReadyToSeek ()
-		{
-			readyToSeek = true;
-			streamLenght = player.StreamLength;
-			if (pendingSeek != null) {
-				SetRate ((float)pendingSeek [1]);
-				player.Seek ((Time)pendingSeek [0], true);
-				if ((bool)pendingSeek [2]) {
-					Play ();
-				}
-				pendingSeek = null;
-			}
-			OnTick ();
-			player.Expose ();
-		}
-
-		#endregion
-
-		#region Backend Callbacks
-
-		/* These callbacks are triggered by the multimedia backend and need to
-		 * be deferred to the UI main thread */
-		void OnStateChanged (bool playing)
-		{
-			Config.DrawingToolkit.Invoke (delegate {
-				DoStateChanged (playing);
-			});
-		}
-
-		void OnReadyToSeek ()
-		{
-			Config.DrawingToolkit.Invoke (delegate {
-				DoReadyToSeek ();
-			});
-		}
-
-		void OnEndOfStream ()
-		{
-			Config.DrawingToolkit.Invoke (delegate {
-				if (loadedPlaylistElement is PlaylistVideo) {
-					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
-				} else {
-					Seek (new Time (0), true);
-					Pause ();
-				}
-			});
-		}
-
-		void OnError (string message)
-		{
-			Config.DrawingToolkit.Invoke (delegate {
-				Config.EventsBroker.EmitMultimediaError (message);
-			});
-		}
-
-		#endregion
-
-		#region Callbacks
-
-		void HandleTimeout (Object state)
-		{
-			Config.DrawingToolkit.Invoke (delegate {
-				OnTick ();
-			});
-		}
-
-		bool OnTick ()
+		/// <summary>
+		/// Called periodically to update the current time and check if and has reached
+		/// its stop time, or drawings must been shonw.
+		/// </summary>
+		bool Tick ()
 		{
 			if (IgnoreTicks) {
 				return true;
@@ -832,6 +797,74 @@ namespace LongoMatch.Services
 			}
 		}
 
+		#endregion
+
+		#region Backend Callbacks
+
+		/* These callbacks are triggered by the multimedia backend and need to
+		 * be deferred to the UI main thread */
+		void HandleStateChange (bool playing)
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				if (playing) {
+					ReconfigureTimeout (TIMEOUT_MS);
+				} else {
+					if (!StillImageLoaded) {
+						ReconfigureTimeout (0);
+					}
+				}
+				EmitPlaybackStateChanged (playing);
+			});
+		}
+
+		void HandleReadyToSeek ()
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				readyToSeek = true;
+				streamLenght = player.StreamLength;
+				if (pendingSeek != null) {
+					SetRate ((float)pendingSeek [1]);
+					player.Seek ((Time)pendingSeek [0], true);
+					if ((bool)pendingSeek [2]) {
+						Play ();
+					}
+					pendingSeek = null;
+				}
+				Tick ();
+				player.Expose ();
+			});
+		}
+
+		void HandleEndOfStream ()
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				if (loadedPlaylistElement is PlaylistVideo) {
+					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+				} else {
+					Seek (new Time (0), true);
+					Pause ();
+				}
+			});
+		}
+
+		void HandleError (string message)
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				Config.EventsBroker.EmitMultimediaError (message);
+			});
+		}
+
+		#endregion
+
+		#region Callbacks
+
+		void HandleTimeout (Object state)
+		{
+			Config.DrawingToolkit.Invoke (delegate {
+				Tick ();
+			});
+		}
+
 		void HandleSeekEvent (SeekType type, Time start, float rate)
 		{
 			Config.DrawingToolkit.Invoke (delegate {
@@ -844,7 +877,7 @@ namespace LongoMatch.Services
 						player.SeekToPreviousFrame ();
 					else
 						player.SeekToNextFrame ();
-					OnTick ();
+					Tick ();
 				}
 				if (type == SeekType.Accurate || type == SeekType.Keyframe) {
 					SetRate (rate);
