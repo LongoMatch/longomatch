@@ -7,12 +7,6 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-    </itemgroups>
-    <signals>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
     </itemgroups>
@@ -33,5 +27,9 @@
         <signal name="ScrollEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.PlayerView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

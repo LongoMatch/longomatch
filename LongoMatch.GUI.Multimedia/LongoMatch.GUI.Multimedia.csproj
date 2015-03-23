@@ -42,12 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\CapturerBin.cs" />
-    <Compile Include="Gui\PlayerBin.cs" />
     <Compile Include="Gui\VolumeWindow.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs" />
     <Compile Include="Gui\PlayerCapturerBin.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.PlayerCapturerBin.cs" />
     <Compile Include="Gui\Utils\Remuxer.cs" />
@@ -55,6 +53,8 @@
     <Compile Include="Gui\Utils\FramesCapturer.cs" />
     <Compile Include="Gui\VideoWindow.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.VideoWindow.cs" />
+    <Compile Include="Gui\PlayerView.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

@@ -40,7 +40,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 
-	public partial class PlayerBin : Gtk.Bin
+	public partial class PlayerView : Gtk.Bin
 	{
 		const int SCALE_FPS = 25;
 		IPlayerController player;
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui
 
 		#region Constructors
 
-		public PlayerBin ()
+		public PlayerView ()
 		{
 			this.Build ();
 

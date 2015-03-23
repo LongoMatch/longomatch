@@ -74,7 +74,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerBin" design-size="1080 433">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerView" design-size="1080 433">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox3">

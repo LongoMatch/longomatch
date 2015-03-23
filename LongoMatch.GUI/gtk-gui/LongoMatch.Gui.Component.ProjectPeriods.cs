@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.VBox main_cam_vbox;
 		
-		private global::LongoMatch.Gui.PlayerBin main_cam_playerbin;
+		private global::LongoMatch.Gui.PlayerView main_cam_playerbin;
 		
 		private global::Gtk.HBox main_cam_hbox;
 		
@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.VBox sec_cam_vbox;
 		
-		private global::LongoMatch.Gui.PlayerBin sec_cam_playerbin;
+		private global::LongoMatch.Gui.PlayerView sec_cam_playerbin;
 		
 		private global::Gtk.HBox sec_cam_hbox;
 		
@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Component
 			this.main_cam_vbox.Name = "main_cam_vbox";
 			this.main_cam_vbox.Spacing = 6;
 			// Container child main_cam_vbox.Gtk.Box+BoxChild
-			this.main_cam_playerbin = new global::LongoMatch.Gui.PlayerBin ();
+			this.main_cam_playerbin = new global::LongoMatch.Gui.PlayerView ();
 			this.main_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.main_cam_playerbin.Name = "main_cam_playerbin";
 			this.main_cam_vbox.Add (this.main_cam_playerbin);
@@ -138,7 +138,7 @@ namespace LongoMatch.Gui.Component
 			this.sec_cam_vbox.Name = "sec_cam_vbox";
 			this.sec_cam_vbox.Spacing = 6;
 			// Container child sec_cam_vbox.Gtk.Box+BoxChild
-			this.sec_cam_playerbin = new global::LongoMatch.Gui.PlayerBin ();
+			this.sec_cam_playerbin = new global::LongoMatch.Gui.PlayerView ();
 			this.sec_cam_playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.sec_cam_playerbin.Name = "sec_cam_playerbin";
 			this.sec_cam_vbox.Add (this.sec_cam_playerbin);

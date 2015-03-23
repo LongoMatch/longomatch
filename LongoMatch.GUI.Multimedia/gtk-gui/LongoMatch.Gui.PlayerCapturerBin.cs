@@ -14,7 +14,7 @@ namespace LongoMatch.Gui
 		
 		private global::Gtk.Label replaylabel;
 		
-		private global::LongoMatch.Gui.PlayerBin playerbin;
+		private global::LongoMatch.Gui.PlayerView playerbin;
 		
 		private global::Gtk.VBox capturerbox;
 		
@@ -68,7 +68,7 @@ namespace LongoMatch.Gui
 			w3.Expand = false;
 			w3.Fill = false;
 			// Container child playerbox.Gtk.Box+BoxChild
-			this.playerbin = new global::LongoMatch.Gui.PlayerBin ();
+			this.playerbin = new global::LongoMatch.Gui.PlayerView ();
 			this.playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin.Name = "playerbin";
 			this.playerbox.Add (this.playerbin);
