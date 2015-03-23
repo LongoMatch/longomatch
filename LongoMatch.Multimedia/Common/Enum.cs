@@ -118,12 +118,4 @@ namespace LongoMatch.Video.Common
 		Par,
 	}
 
-	public enum SeekType
-	{
-		Keyframe,
-		Accurate,
-		StepUp,
-		StepDown,
-		None
-	}
 }

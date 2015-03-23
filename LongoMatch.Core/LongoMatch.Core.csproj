@@ -139,6 +139,7 @@
     <Compile Include="Store\Templates\Team.cs" />
     <Compile Include="Interfaces\IPlayerController.cs" />
     <Compile Include="Common\Registry.cs" />
+    <Compile Include="Common\Seeker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

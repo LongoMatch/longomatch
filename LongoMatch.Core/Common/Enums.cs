@@ -403,6 +403,15 @@ namespace LongoMatch.Core.Common
 		FitTimeline,
 	}
 
+	public enum SeekType
+	{
+		Keyframe,
+		Accurate,
+		StepUp,
+		StepDown,
+		None
+	}
+
 	public enum ProjectSortMethod
 	{
 		Name,
