@@ -172,13 +172,9 @@ namespace LongoMatch.Gui.Component
 			codingwidget.SetProject (project, projectType, filter);
 			playsSelection.SetProject (project, filter);
 			if (projectType == ProjectType.FileProject) {
-				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
+				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {
-				if (projectType == ProjectType.FakeCaptureProject) {
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.FakeCapturer;
-				} else {
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
-				}
+				playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
 				Capturer.PeriodsNames = project.Dashboard.GamePeriods;
 				Capturer.Periods = project.Periods;
 			}

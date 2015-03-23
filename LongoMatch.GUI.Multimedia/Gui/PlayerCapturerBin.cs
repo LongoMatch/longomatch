@@ -30,32 +30,19 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayerCapturerBin : Gtk.Bin
 	{
-		/* Player Events */
-		public event StateChangeHandler PlayStateChanged;
-
-		public enum PlayerOperationMode
-		{
-			Player,
-			Capturer,
-			FakeCapturer,
-			PreviewCapturer,
-		}
-
-		PlayerOperationMode mode;
 		bool backLoaded = false;
+		PlayerViewOperationMode mode;
 
 		public PlayerCapturerBin ()
 		{
 			this.Build ();
-			ConnectSignals ();
 			replayhbox.HeightRequest = livebox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			replayimage.Pixbuf = Misc.LoadIcon ("longomatch-replay", StyleConf.PlayerCapturerIconSize);
 			liveimage.Pixbuf = Misc.LoadIcon ("longomatch-live", StyleConf.PlayerCapturerIconSize);
 			livelabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
 			replaylabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
-			livebox.Visible = replayhbox.Visible = false;
-			playerbin.CloseEvent += HandleCloseClicked;
-			playerbin.PrepareLoadEvent += HandlePrepareLoadEvent;
+			livebox.Visible = replayhbox.Visible = true;
+			Player = playerbin.Player;
 		}
 
 		protected override void OnDestroyed ()
@@ -66,8 +53,12 @@ namespace LongoMatch.Gui
 		}
 
 		public IPlayerController Player {
+			set {
+				Player.ElementLoadedEvent += HandleElementLoadedEvent;
+			}
+
 			get {
-				return playerbin;
+				return playerbin.Player;
 			}
 		}
 
@@ -77,18 +68,15 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public PlayerOperationMode Mode {
+		public PlayerViewOperationMode Mode {
 			set {
 				mode = value;
-				if (mode == PlayerOperationMode.Player) {
+				if (mode == PlayerViewOperationMode.Analysis) {
 					ShowPlayer ();
-					playerbin.Compact = false;
-					playerbin.CloseAlwaysVisible = false;
 				} else {
 					ShowCapturer ();
-					playerbin.CloseAlwaysVisible = true;
-					playerbin.Compact = true;
 				}
+				playerbin.Mode = value;
 				Log.Debug ("CapturerPlayer setting mode " + value);
 				backLoaded = false;
 			}
@@ -98,7 +86,7 @@ namespace LongoMatch.Gui
 		{
 			playerbox.Visible = true;
 			replayhbox.Visible = false;
-			if (mode == PlayerOperationMode.PreviewCapturer && Config.ReviewPlaysInSameWindow)
+			if (mode == PlayerViewOperationMode.LiveAnalysisReview && Config.ReviewPlaysInSameWindow)
 				capturerbox.Visible = true;
 			else
 				capturerbox.Visible = false;
@@ -111,47 +99,28 @@ namespace LongoMatch.Gui
 			capturerbox.Visible = true;
 		}
 
-		void HandleCloseClicked (object sender, EventArgs e)
+		void HandleElementLoadedEvent (object element, bool hasNext)
 		{
-			if (mode == PlayerOperationMode.Player) {
-				return;
-			}
-			livebox.Visible = replayhbox.Visible = false;
-			playerbin.Pause ();
-			ShowCapturer ();
-		}
-
-		#region Common
-
-		public void Close ()
-		{
-			playerbin.Close ();
-			capturerbin.Close ();
-		}
-
-		#endregion
-
-		void HandlePrepareLoadEvent (MediaFileSet fileSet)
-		{
-			if (mode == PlayerOperationMode.PreviewCapturer) {
-				ShowPlayer ();
-				LoadBackgroundPlayer (fileSet);
-				livebox.Visible = replayhbox.Visible = true;
+			if (element == null) {
+				if (mode == PlayerViewOperationMode.Analysis) {
+					return;
+				}
+				livebox.Visible = replayhbox.Visible = false;
+				Player.Pause ();
+				ShowCapturer ();
+			} else {
+				if (element is TimelineEvent && mode == PlayerViewOperationMode.LiveAnalysisReview) {
+					ShowPlayer ();
+					LoadBackgroundPlayer (Player.FileSet);
+					livebox.Visible = replayhbox.Visible = true;
+				}
 			}
 		}
 
 		protected void OnBacktolivebuttonClicked (object sender, System.EventArgs e)
 		{
-			playerbin.Pause ();
+			Player.Pause ();
 			ShowCapturer ();
-		}
-
-		void ConnectSignals ()
-		{
-			playerbin.PlayStateChanged += delegate (bool playing) {
-				if (PlayStateChanged != null)
-					PlayStateChanged (playing);
-			};
 		}
 
 		void LoadBackgroundPlayer (MediaFileSet file)
@@ -161,8 +130,7 @@ namespace LongoMatch.Gui
 				
 			/* The output video file is now created, it's time to 
 				 * load it in the player */
-			playerbin.Open (file);
-			playerbin.SeekingEnabled = false;
+			Player.Open (file);
 			Log.Debug ("Loading encoded file in the backround player");
 			backLoaded = true;
 		}
