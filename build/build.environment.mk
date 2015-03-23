@@ -68,6 +68,7 @@ REF_DEP_LONGOMATCH_GUI_MULTIMEDIA = \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_MULTIMEDIA) \
                      $(LINK_LONGOMATCH_GUI_HELPERS) \
+                     $(LINK_LONGOMATCH_SERVICES) \
                      $(LINK_LONGOMATCH_DRAWING) \
                      $(LINK_LONGOMATCH_DRAWING_CAIRO)
 

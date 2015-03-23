@@ -17,12 +17,12 @@ SUBDIRS = \
 	LongoMatch.Multimedia \
 	LongoMatch.Drawing \
 	LongoMatch.Drawing.Cairo \
+	LongoMatch.Services \
 	LongoMatch.GUI.Helpers \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
 	LongoMatch.Plugins \
 	LongoMatch.Plugins.Stats \
-	LongoMatch.Services \
 	LongoMatch \
 	po
 
