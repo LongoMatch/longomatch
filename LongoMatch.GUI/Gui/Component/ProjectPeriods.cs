@@ -419,6 +419,9 @@ namespace LongoMatch.Gui.Component
 		/// </summary>
 		void ShowDidactic (DidacticMessage message)
 		{
+			if (project.Description.FileSet.Count == 1) {
+				return;
+			}
 			// Show didactic message, hide secondary player
 			HideSecondaryPlayer ();
 			switch (message) {
