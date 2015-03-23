@@ -20,7 +20,7 @@ namespace LongoMatch.Gui
 		
 		private global::Gtk.VBox vbox5;
 		
-		private global::Gtk.VScale vscale1;
+		private global::Gtk.VScale ratescale;
 		
 		private global::Gtk.EventBox lightbackgroundeventbox;
 		
@@ -125,24 +125,24 @@ namespace LongoMatch.Gui
 			this.vbox5.Name = "vbox5";
 			this.vbox5.Spacing = 6;
 			// Container child vbox5.Gtk.Box+BoxChild
-			this.vscale1 = new global::Gtk.VScale (null);
-			this.vscale1.TooltipMarkup = "Playback speed";
-			this.vscale1.WidthRequest = 36;
-			this.vscale1.Sensitive = false;
-			this.vscale1.Name = "vscale1";
-			this.vscale1.UpdatePolicy = ((global::Gtk.UpdateType)(1));
-			this.vscale1.Inverted = true;
-			this.vscale1.Adjustment.Lower = 1;
-			this.vscale1.Adjustment.Upper = 30;
-			this.vscale1.Adjustment.PageIncrement = 3;
-			this.vscale1.Adjustment.PageSize = 1;
-			this.vscale1.Adjustment.StepIncrement = 1;
-			this.vscale1.Adjustment.Value = 25;
-			this.vscale1.DrawValue = true;
-			this.vscale1.Digits = 0;
-			this.vscale1.ValuePos = ((global::Gtk.PositionType)(3));
-			this.vbox5.Add (this.vscale1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.vscale1]));
+			this.ratescale = new global::Gtk.VScale (null);
+			this.ratescale.TooltipMarkup = "Playback speed";
+			this.ratescale.WidthRequest = 36;
+			this.ratescale.Sensitive = false;
+			this.ratescale.Name = "ratescale";
+			this.ratescale.UpdatePolicy = ((global::Gtk.UpdateType)(1));
+			this.ratescale.Inverted = true;
+			this.ratescale.Adjustment.Lower = 1;
+			this.ratescale.Adjustment.Upper = 30;
+			this.ratescale.Adjustment.PageIncrement = 3;
+			this.ratescale.Adjustment.PageSize = 1;
+			this.ratescale.Adjustment.StepIncrement = 1;
+			this.ratescale.Adjustment.Value = 25;
+			this.ratescale.DrawValue = true;
+			this.ratescale.Digits = 0;
+			this.ratescale.ValuePos = ((global::Gtk.PositionType)(3));
+			this.vbox5.Add (this.ratescale);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.ratescale]));
 			w6.Position = 0;
 			this.mainbox.Add (this.vbox5);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainbox [this.vbox5]));

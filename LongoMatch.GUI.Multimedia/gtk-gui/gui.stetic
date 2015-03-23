@@ -140,7 +140,7 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.VScale" id="vscale1">
+                  <widget class="Gtk.VScale" id="ratescale">
                     <property name="MemberName" />
                     <property name="WidthRequest">36</property>
                     <property name="Sensitive">False</property>

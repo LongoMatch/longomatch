@@ -76,7 +76,7 @@ namespace LongoMatch.Gui
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
-			vscale1.TooltipMarkup = Catalog.GetString ("Playback speed");
+			ratescale.TooltipMarkup = Catalog.GetString ("Playback speed");
 			closebutton.TooltipMarkup = Catalog.GetString ("Close loaded event");
 			drawbutton.TooltipMarkup = Catalog.GetString ("Draw frame");
 			playbutton.TooltipMarkup = Catalog.GetString ("Play");
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui
 			LongoMatch.Gui.Helpers.Misc.SetFocus (vbox3, false);
 			videowindow.CanFocus = true;
 			detachbutton.Clicked += (sender, e) => Config.EventsBroker.EmitDetach ();
-			vscale1.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
+			ratescale.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
 			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 
 			Player = new PlayerController ();
@@ -185,14 +185,14 @@ namespace LongoMatch.Gui
 		bool ControlsSensitive {
 			set {
 				controlsbox.Sensitive = value;
-				vscale1.Sensitive = value;
+				ratescale.Sensitive = value;
 			}
 		}
 
 		bool ShowControls {
 			set {
 				controlsbox.Visible = value;
-				vscale1.Visible = value;
+				ratescale.Visible = value;
 			}
 		}
 
@@ -200,7 +200,7 @@ namespace LongoMatch.Gui
 			set {
 				prevbutton.Visible = nextbutton.Visible = jumplabel.Visible =
 					jumpspinbutton.Visible = tlabel.Visible = timelabel.Visible =
-						detachbutton.Visible = vscale1.Visible = !value;
+						detachbutton.Visible = ratescale.Visible = !value;
 			}
 		}
 
@@ -231,18 +231,18 @@ namespace LongoMatch.Gui
 		void ConnectSignals ()
 		{
 			vwin.VolumeChanged += new VolumeChangedHandler (OnVolumeChanged);
-			closebutton.Clicked += OnClosebuttonClicked;
-			prevbutton.Clicked += OnPrevbuttonClicked;
-			nextbutton.Clicked += OnNextbuttonClicked;
-			playbutton.Clicked += OnPlaybuttonClicked;
-			pausebutton.Clicked += OnPausebuttonClicked;
-			drawbutton.Clicked += OnDrawButtonClicked;
-			volumebutton.Clicked += OnVolumebuttonClicked;
-			timescale.ValueChanged += OnTimescaleValueChanged;
-			timescale.ButtonPressEvent += OnTimescaleButtonPress;
-			timescale.ButtonReleaseEvent += OnTimescaleButtonRelease;
-			vscale1.FormatValue += OnVscale1FormatValue;
-			vscale1.ValueChanged += OnVscale1ValueChanged;
+			closebutton.Clicked += HandleClosebuttonClicked;
+			prevbutton.Clicked += HandlePrevbuttonClicked;
+			nextbutton.Clicked += HandleNextbuttonClicked;
+			playbutton.Clicked += HandlePlaybuttonClicked;
+			pausebutton.Clicked += HandlePausebuttonClicked;
+			drawbutton.Clicked += HandleDrawButtonClicked;
+			volumebutton.Clicked += HandleVolumebuttonClicked;
+			timescale.ValueChanged += HandleTimescaleValueChanged;
+			timescale.ButtonPressEvent += HandleTimescaleButtonPress;
+			timescale.ButtonReleaseEvent += HandleTimescaleButtonRelease;
+			ratescale.FormatValue += HandleVscale1FormatValue;
+			ratescale.ValueChanged += OnVscale1ValueChanged;
 			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
 
 		}
@@ -261,7 +261,7 @@ namespace LongoMatch.Gui
 
 		float GetRateFromScale ()
 		{
-			VScale scale = vscale1;
+			VScale scale = ratescale;
 			double val = scale.Value;
 
 			if (val > SCALE_FPS) {
@@ -321,9 +321,9 @@ namespace LongoMatch.Gui
 		{
 			ignoreRate = true;
 			if (rate > 1) {
-				vscale1.Value = rate - 1 + SCALE_FPS;
+				ratescale.Value = rate - 1 + SCALE_FPS;
 			} else {
-				vscale1.Value = rate * SCALE_FPS;
+				ratescale.Value = rate * SCALE_FPS;
 			}
 			ignoreRate = true;
 		}
@@ -375,7 +375,7 @@ namespace LongoMatch.Gui
 		}
 
 		[GLib.ConnectBefore]
-		void OnTimescaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
+		void HandleTimescaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
 		{
 			if (args.Event.Button == 1) {
 				GtkGlue.EventButtonSetButton (args.Event, 2);
@@ -392,7 +392,7 @@ namespace LongoMatch.Gui
 		}
 
 		[GLib.ConnectBefore]
-		void OnTimescaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
+		void HandleTimescaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
 		{
 			if (args.Event.Button == 1) {
 				GtkGlue.EventButtonSetButton (args.Event, 2);
@@ -408,19 +408,19 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnTimescaleValueChanged (object sender, System.EventArgs e)
+		void HandleTimescaleValueChanged (object sender, System.EventArgs e)
 		{
 			if (seeking) {
 				Player.SeekRelative (timescale.Value);
 			}
 		}
 
-		void OnPlaybuttonClicked (object sender, System.EventArgs e)
+		void HandlePlaybuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.Play ();
 		}
 
-		void OnVolumebuttonClicked (object sender, System.EventArgs e)
+		void HandleVolumebuttonClicked (object sender, System.EventArgs e)
 		{
 			vwin.SetLevel (Player.Volume);
 			vwin.Show ();
@@ -447,27 +447,27 @@ namespace LongoMatch.Gui
 				muted = false;
 		}
 
-		void OnPausebuttonClicked (object sender, System.EventArgs e)
+		void HandlePausebuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.Pause ();
 		}
 
-		void OnClosebuttonClicked (object sender, System.EventArgs e)
+		void HandleClosebuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.UnloadCurrentEvent ();
 		}
 
-		void OnPrevbuttonClicked (object sender, System.EventArgs e)
+		void HandlePrevbuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.Previous ();
 		}
 
-		void OnNextbuttonClicked (object sender, System.EventArgs e)
+		void HandleNextbuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.Next ();
 		}
 
-		void OnVscale1FormatValue (object o, Gtk.FormatValueArgs args)
+		void HandleVscale1FormatValue (object o, Gtk.FormatValueArgs args)
 		{
 			double val = args.Value;
 			if (val >= SCALE_FPS) {
@@ -524,7 +524,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnDrawButtonClicked (object sender, System.EventArgs e)
+		void HandleDrawButtonClicked (object sender, System.EventArgs e)
 		{
 			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasVisible [0], true);
 		}
