@@ -302,7 +302,7 @@ namespace LongoMatch.Services
 			return Seek (time, accurate, synchronous, false);
 		}
 
-		public void SeekRelative (double pos)
+		public void Seek (double pos)
 		{
 			Time seekPos, timePos, duration;
 			bool accurate;
@@ -414,7 +414,7 @@ namespace LongoMatch.Services
 			player.Expose ();
 		}
 
-		public void LoadPlayListEvent (Playlist playlist, IPlaylistElement element)
+		public void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element)
 		{
 			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element.Description));
 

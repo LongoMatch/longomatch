@@ -412,7 +412,7 @@ namespace LongoMatch.Gui
 		void HandleTimescaleValueChanged (object sender, System.EventArgs e)
 		{
 			if (seeking) {
-				Player.SeekRelative (timescale.Value);
+				Player.Seek (timescale.Value);
 			}
 		}
 
