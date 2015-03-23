@@ -83,6 +83,9 @@ namespace LongoMatch.Gui.Component
 			main_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
 			sec_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
 
+			main_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
+			sec_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
+
 			ConnectSignals ();
 
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
@@ -96,8 +99,8 @@ namespace LongoMatch.Gui.Component
 			main_cam_audio_button.Toggled += HandleAudioToggled;
 			sec_cam_audio_button.Toggled += HandleAudioToggled;
 
-			main_cam_playerbin.Tick += HandleTick;
-			main_cam_playerbin.PlayStateChanged += HandleStateChanged;
+			main_cam_playerbin.Player.TimeChangedEvent += HandleTick;
+			main_cam_playerbin.Player.PlaybackStateChangedEvent += HandleStateChanged;
 
 			// Listen for seek events from the timerule
 			Config.EventsBroker.SeekEvent += Seek;
@@ -144,21 +147,21 @@ namespace LongoMatch.Gui.Component
 
 		public void Pause ()
 		{
-			if (main_cam_playerbin.Opened) {
-				main_cam_playerbin.Pause ();
+			if (main_cam_playerbin.Player.Opened) {
+				main_cam_playerbin.Player.Pause ();
 			}
-			if (sec_cam_playerbin.Opened) {
-				sec_cam_playerbin.Pause ();
+			if (sec_cam_playerbin.Player.Opened) {
+				sec_cam_playerbin.Player.Pause ();
 			}
 		}
 
 		public void Seek (Time time, bool accurate)
 		{
-			if (main_cam_playerbin.Opened) {
-				main_cam_playerbin.Seek (time, accurate);
+			if (main_cam_playerbin.Player.Opened) {
+				main_cam_playerbin.Player.Seek (time, accurate);
 			}
-			if (sec_cam_playerbin.Opened) {
-				sec_cam_playerbin.Seek (time, accurate);
+			if (sec_cam_playerbin.Player.Opened) {
+				sec_cam_playerbin.Player.Seek (time, accurate);
 			}
 		}
 
@@ -230,8 +233,7 @@ namespace LongoMatch.Gui.Component
 
 				// Open media file
 				main_cam_label.Text = fileSet.First ().Name;
-				main_cam_playerbin.ShowControls = false;
-				main_cam_playerbin.Open (fileSet);
+				main_cam_playerbin.Player.Open (fileSet);
 
 				if (fileSet.Count > 1) {
 					// Start with initial didactic message
@@ -274,7 +276,7 @@ namespace LongoMatch.Gui.Component
 		/// Handles the tick from media player to update Current Time in timelines.
 		/// </summary>
 		/// <param name="currentTime">Current time.</param>
-		void HandleTick (Time currentTime)
+		void HandleTick (Time currentTime, Time duration, bool seekable)
 		{
 			timerule.CurrentTime = currentTime;
 			camerasTimeline.CurrentTime = currentTime;
@@ -301,12 +303,12 @@ namespace LongoMatch.Gui.Component
 		void HandleStateChanged (bool playing)
 		{
 			if (playing) {
-				if (sec_cam_playerbin.Opened) {
-					sec_cam_playerbin.Play ();
+				if (sec_cam_playerbin.Player.Opened) {
+					sec_cam_playerbin.Player.Play ();
 				}
 			} else {
-				if (sec_cam_playerbin.Opened) {
-					sec_cam_playerbin.Pause ();
+				if (sec_cam_playerbin.Player.Opened) {
+					sec_cam_playerbin.Player.Pause ();
 				}
 			}
 		}
@@ -333,12 +335,12 @@ namespace LongoMatch.Gui.Component
 				CameraObject camera = camerasTimeline.SelectedCamera;
 				if (camera != null) {
 					Pause ();
-					Time before = sec_cam_playerbin.CurrentTime;
+					Time before = sec_cam_playerbin.Player.CurrentTime;
 					if (action == KeyAction.FrameUp)
-						sec_cam_playerbin.SeekToNextFrame ();
+						sec_cam_playerbin.Player.SeekToNextFrame ();
 					else
-						sec_cam_playerbin.SeekToPreviousFrame ();
-					Time diff = sec_cam_playerbin.CurrentTime - before;
+						sec_cam_playerbin.Player.SeekToPreviousFrame ();
+					Time diff = sec_cam_playerbin.Player.CurrentTime - before;
 
 					// Reflect change in offset
 					camera.MediaFile.Offset += diff.MSeconds;
@@ -357,10 +359,10 @@ namespace LongoMatch.Gui.Component
 		void HandleAudioToggled (object sender, EventArgs args)
 		{
 			if (sender == main_cam_audio_button) {
-				main_cam_playerbin.Volume = main_cam_audio_button.Active ? 1 : 0;
+				main_cam_playerbin.Player.Volume = main_cam_audio_button.Active ? 1 : 0;
 				main_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (main_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
 			} else if (sender == sec_cam_audio_button) {
-				sec_cam_playerbin.Volume = sec_cam_audio_button.Active ? 1 : 0;
+				sec_cam_playerbin.Player.Volume = sec_cam_audio_button.Active ? 1 : 0;
 				sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (sec_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
 			}
 		}
@@ -370,8 +372,8 @@ namespace LongoMatch.Gui.Component
 		/// </summary>
 		void HideSecondaryPlayer ()
 		{
-			if (sec_cam_playerbin.Opened && sec_cam_playerbin.Playing) {
-				sec_cam_playerbin.Pause ();
+			if (sec_cam_playerbin.Player.Opened && sec_cam_playerbin.Player.Playing) {
+				sec_cam_playerbin.Player.Pause ();
 			}
 			sec_cam_vbox.Hide ();
 		}
@@ -383,7 +385,7 @@ namespace LongoMatch.Gui.Component
 		bool ShowSecondaryPlayer ()
 		{
 			// Only show secondary player if we have a camera selected
-			if (!sec_cam_vbox.Visible && sec_cam_playerbin.Opened) {
+			if (!sec_cam_vbox.Visible && sec_cam_playerbin.Player.Opened) {
 				HideDidactic ();
 				sec_cam_vbox.Show ();
 				return true;
@@ -397,10 +399,10 @@ namespace LongoMatch.Gui.Component
 		/// <returns><c>true</c>, if secondary player was synced, <c>false</c> otherwise.</returns>
 		bool SyncSecondaryPlayer ()
 		{
-			if (main_cam_playerbin.Opened && sec_cam_playerbin.Opened) {
-				sec_cam_playerbin.Seek (main_cam_playerbin.CurrentTime, true);
-				if (main_cam_playerbin.Playing) {
-					sec_cam_playerbin.Play ();
+			if (main_cam_playerbin.Player.Opened && sec_cam_playerbin.Player.Opened) {
+				sec_cam_playerbin.Player.Seek (main_cam_playerbin.Player.CurrentTime, true);
+				if (main_cam_playerbin.Player.Playing) {
+					sec_cam_playerbin.Player.Play ();
 				}
 				return true;
 			}
@@ -474,13 +476,12 @@ namespace LongoMatch.Gui.Component
 			CameraObject camera = camerasTimeline.SelectedCamera;
 			if (camera != null) {
 				// Check if we need to reopen the player
-				if (!sec_cam_playerbin.Opened ||
-				    sec_cam_playerbin.MediaFileSet.FirstOrDefault () != camera.MediaFile) {
+				if (!sec_cam_playerbin.Player.Opened ||
+				    sec_cam_playerbin.Player.FileSet.FirstOrDefault () != camera.MediaFile) {
 					MediaFileSet fileSet = new MediaFileSet ();
 					fileSet.Add (camera.MediaFile);
 
-					sec_cam_playerbin.ShowControls = false;
-					sec_cam_playerbin.Open (fileSet);
+					sec_cam_playerbin.Player.Open (fileSet);
 
 					// Configure audio
 					HandleAudioToggled (sec_cam_audio_button, new EventArgs ());
