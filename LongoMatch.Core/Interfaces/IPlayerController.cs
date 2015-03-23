@@ -31,12 +31,13 @@ namespace LongoMatch.Core.Interfaces
 	{
 		event TimeChangedHandler TimeChangedEvent;
 		event StateChangeHandler PlaybackStateChangedEvent;
-		event LoadImageHander LoadImageEvent;
+		event LoadDrawingsHandler LoadDrawingsEvent;
 		event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		event VolumeChangedHandler VolumeChangedEvent;
 		event ElementLoadedHandler ElementLoadedEvent;
-		event ElementUnloadedHandler ElementUnloadedEvent;
 		event PARChangedHandler PARChangedEvent;
+
+		MediaFileSet FileSet { get; }
 
 		Image CurrentMiniatureFrame { get; }
 
@@ -45,6 +46,8 @@ namespace LongoMatch.Core.Interfaces
 		Time Step { get; set; }
 
 		bool IgnoreTicks { get; set; }
+
+		bool Opened { get; }
 
 		object CamerasLayout { get; set; }
 
@@ -68,5 +71,14 @@ namespace LongoMatch.Core.Interfaces
 
 		void UnloadCurrentEvent ();
 
+		void SeekRelative (double pos);
+
+		bool Seek (Time time, bool accurate = false, bool synchronous = false, bool throttled = false);
+
+		void Next ();
+
+		void Previous ();
+
+		void Ready ();
 	}
 }

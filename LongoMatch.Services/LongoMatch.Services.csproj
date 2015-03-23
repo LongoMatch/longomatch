@@ -40,6 +40,7 @@
     <Compile Include="Services\ToolsManager.cs" />
     <Compile Include="Services\FileDB.cs" />
     <Compile Include="Services\FileStorage.cs" />
+    <Compile Include="Services\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\" />

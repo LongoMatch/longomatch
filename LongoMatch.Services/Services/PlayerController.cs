@@ -25,21 +25,18 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Video.Common;
-using LongoMatch.Video.Utils;
 using Timer = System.Threading.Timer;
 
-namespace LongoMatch.Services.Services
+namespace LongoMatch.Services
 {
 	public class PlayerController: IPlayerController
 	{
 		public event TimeChangedHandler TimeChangedEvent;
 		public event StateChangeHandler PlaybackStateChangedEvent;
-		public event LoadImageHander LoadImageEvent;
+		public event LoadDrawingsHandler LoadDrawingsEvent;
 		public event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		public event VolumeChangedHandler VolumeChangedEvent;
 		public event ElementLoadedHandler ElementLoadedEvent;
-		public event ElementUnloadedHandler ElementUnloadedEvent;
 		public event PARChangedHandler PARChangedEvent;
 
 		const int TIMEOUT_MS = 20;
@@ -50,12 +47,13 @@ namespace LongoMatch.Services.Services
 		Playlist loadedPlaylist;
 
 		Time streamLenght, videoTS, imageLoadedTS;
-		bool readyToSeek, stillimageLoaded;
+		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
 		MediaFile activeFile;
 		Seeker seeker;
 		Segment loadedSegment;
 		object[] pendingSeek;
 		Timer timer;
+		IntPtr windowHandle;
 
 		struct Segment
 		{
@@ -76,6 +74,7 @@ namespace LongoMatch.Services.Services
 			streamLenght = new Time (0);
 			Step = new Time (5000);
 			timer = new Timer (HandleTimeout);
+			ready = false;
 			CreatePlayer ();
 		}
 
@@ -106,7 +105,11 @@ namespace LongoMatch.Services.Services
 
 		public IntPtr WindowHandle {
 			set {
-				throw new NotImplementedException ();
+				windowHandle = value;
+				player.WindowHandle = value;
+			}
+			get {
+				return windowHandle;
 			}
 		}
 
@@ -154,14 +157,14 @@ namespace LongoMatch.Services.Services
 			set;
 		}
 
-		public MediaFileSet MediaFileSet {
+		public MediaFileSet FileSet {
 			get;
 			protected set;
 		}
 
 		public bool Opened {
 			get {
-				return MediaFileSet != null;
+				return FileSet != null;
 			}
 		}
 
@@ -181,31 +184,51 @@ namespace LongoMatch.Services.Services
 
 		#endregion
 
-
 		#region Public methods
-
-		public void Stop ()
-		{
-			Pause ();
-		}
-
 
 		public void Dispose ()
 		{
-			throw new NotImplementedException ();
+			IgnoreTicks = true;
+			timer.Dispose ();
+			player.Dispose ();
+		}
+
+		public void Ready ()
+		{
+			Log.Debug ("Player ready");
+			if (delayedOpen) {
+				Log.Debug ("Openning delayed file set");
+				Open (FileSet, true, true);
+			}
+			ready = true;
+			delayedOpen = false;
 		}
 
 		public void Open (MediaFileSet fileSet)
 		{
-			player.Open (fileSet [0].FilePath);
+			Log.Debug ("Openning file set");
+			if (ready) {
+				Open (fileSet, true);
+			} else {
+				Log.Debug ("Player is not ready, delaying ...");
+				delayedOpen = true;
+			}
+			FileSet = fileSet;
+		}
+
+		public void Stop ()
+		{
+			Log.Debug ("Stop");
+			Pause ();
 		}
 
 		public void Play ()
 		{
+			Log.Debug ("Play");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (TIMEOUT_MS);
 			} else {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 				player.Play ();
 			}
 			Playing = true;
@@ -213,6 +236,7 @@ namespace LongoMatch.Services.Services
 
 		public void Pause ()
 		{
+			Log.Debug ("Pause");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (0);
 			} else {
@@ -223,30 +247,39 @@ namespace LongoMatch.Services.Services
 
 		public void Close ()
 		{
+			Log.Debug ("Close");
 			player.Error -= OnError;
 			player.StateChange -= OnStateChanged;
 			player.Eos -= OnEndOfStream;
 			player.ReadyToSeek -= OnReadyToSeek;
 			ReconfigureTimeout (0);
 			player.Dispose ();
-			MediaFileSet = null;
+			FileSet = null;
 		}
 
 		public void TogglePlay ()
 		{
+			Log.Debug ("Toggle playback");
 			if (Playing)
 				Pause ();
 			else
 				Play ();
 		}
 
-		public bool Seek (Time time, bool accurate, bool synchronous = false)
+		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
 		{
 			if (!StillImageLoaded) {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 				if (readyToSeek) {
-					player.Seek (time + activeFile.Offset, accurate, synchronous);
-					OnTick ();
+					if (throtlled) {
+						Log.Debug ("Throttled seek");
+						seeker.Seek (accurate ? SeekType.Accurate : SeekType.Keyframe, time);
+					} else {
+						Log.Debug (string.Format ("Seeking to {0} accurate:{1} synchronous:{2} throttled:{3}",
+							time, accurate, synchronous, throtlled));
+						player.Seek (time, accurate, synchronous);
+						OnTick ();
+					}
 				} else {
 					Log.Debug ("Delaying seek until player is ready");
 					pendingSeek = new object[3] { time, 1.0f, false };
@@ -255,10 +288,39 @@ namespace LongoMatch.Services.Services
 			return true;
 		}
 
+		public bool Seek (Time time, bool accurate, bool synchronous)
+		{
+			return Seek (time, accurate, synchronous, false);
+		}
+
+		public void SeekRelative (double pos)
+		{
+			Time seekPos, timePos, duration;
+			bool accurate;
+			bool throthled;
+
+			Log.Debug (string.Format ("Seek relative to {0}", pos));
+			if (SegmentLoaded) {
+				duration = loadedSegment.Stop - loadedSegment.Start;
+				timePos = duration * pos;
+				seekPos = loadedSegment.Start + timePos;
+				accurate = true;
+				throthled = true;
+			} else {
+				duration = streamLenght;
+				seekPos = timePos = streamLenght * pos;
+				accurate = false;
+				throthled = false;
+			}
+			Seek (seekPos, accurate, false, throthled);
+			EmitTimeChanged (timePos, duration);
+		}
+
 		public bool SeekToNextFrame ()
 		{
+			Log.Debug ("Seek to next frame");
 			if (!StillImageLoaded) {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 				if (CurrentTime < loadedSegment.Stop) {
 					player.SeekToNextFrame ();
 					OnTick ();
@@ -269,8 +331,9 @@ namespace LongoMatch.Services.Services
 
 		public bool SeekToPreviousFrame ()
 		{
+			Log.Debug ("Seek to previous frame");
 			if (!StillImageLoaded) {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 				if (CurrentTime > loadedSegment.Start) {
 					seeker.Seek (SeekType.StepDown);
 				}
@@ -280,26 +343,29 @@ namespace LongoMatch.Services.Services
 
 		public void StepForward ()
 		{
+			Log.Debug ("Step forward");
 			if (StillImageLoaded) {
 				return;
 			}
-			EmitLoadImage (null);
+			EmitLoadDrawings (null);
 			DoStep (Step);
 		}
 
 		public void StepBackward ()
 		{
+			Log.Debug ("Step backward");
 			if (StillImageLoaded) {
 				return;
 			}
-			EmitLoadImage (null);
+			EmitLoadDrawings (null);
 			DoStep (new Time (-Step.MSeconds));
 		}
 
 		public void FramerateUp ()
 		{
+			Log.Debug ("Framerate up");
 			if (!StillImageLoaded) {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 			}
 
 			/* FIXME */
@@ -308,8 +374,9 @@ namespace LongoMatch.Services.Services
 
 		public void FramerateDown ()
 		{
+			Log.Debug ("Framerate down");
 			if (!StillImageLoaded) {
-				EmitLoadImage (null);
+				EmitLoadDrawings (null);
 			}
 			/* FIXME */
 			//vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
@@ -322,10 +389,11 @@ namespace LongoMatch.Services.Services
 
 		public void LoadPlayListEvent (Playlist playlist, IPlaylistElement element)
 		{
+			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element.Description));
+
 			loadedEvent = null;
 			loadedPlaylist = playlist;
 			loadedPlaylistElement = element;
-			EmitElementLoaded (playlist.HasNext ());
 
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
@@ -338,10 +406,13 @@ namespace LongoMatch.Services.Services
 			} else if (element is PlaylistDrawing) {
 				LoadFrameDrawing (element as PlaylistDrawing);
 			}
+			EmitElementLoaded (element, playlist.HasNext ());
 		}
 
 		public void LoadEvent (MediaFileSet fileSet, TimelineEvent evt, Time seekTime, bool playing)
 		{
+			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
+
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedEvent = evt;
@@ -352,41 +423,59 @@ namespace LongoMatch.Services.Services
 			} else {
 				Log.Error ("Event does not have timing info: " + evt);
 			}
+			EmitElementLoaded (evt, false);
 		}
 
 		public void UnloadCurrentEvent ()
 		{
+			Log.Debug ("Unload current event");
+			Reset ();
 			EmitEventUnloaded ();
-			SetRate (1);
-			StillImageLoaded = false;
-			loadedSegment.Start = new Time (-1);
-			loadedSegment.Stop = new Time (int.MaxValue);
-			loadedEvent = null;
+		}
+
+		public void Next ()
+		{
+			Log.Debug ("Next");
+			if (loadedPlaylistElement != null && loadedPlaylist.HasNext ()) {
+				Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+			}
+		}
+
+		public void Previous ()
+		{
+			Log.Debug ("Previous");
+			if (loadedPlaylistElement != null) {
+				if (loadedPlaylist.HasPrev ()) {
+					Config.EventsBroker.EmitPreviousPlaylistElement (loadedPlaylist);
+				}
+			} else if (loadedEvent != null) {
+				Seek (loadedEvent.Start, true);
+			} else {
+				Seek (new Time (0), true);
+			}
 		}
 
 		#endregion
 
 		#region Signals
 
-		void EmitLoadImage (Image image, FrameDrawing drawing = null, bool isStill = false)
+		void EmitLoadDrawings (FrameDrawing drawing = null)
 		{
-			if (LoadImageEvent != null) {
-				LoadImageEvent (image, drawing);
+			if (LoadDrawingsEvent != null) {
+				LoadDrawingsEvent (drawing);
 			}
 		}
 
-		void EmitElementLoaded (bool hasNext)
+		void EmitElementLoaded (object element, bool hasNext)
 		{
 			if (ElementLoadedEvent != null) {
-				ElementLoadedEvent (hasNext);
+				ElementLoadedEvent (element, hasNext);
 			}
 		}
 
 		void EmitEventUnloaded ()
 		{
-			if (ElementUnloadedEvent != null) {
-				ElementUnloadedEvent ();
-			}
+			EmitElementLoaded (null, false);
 		}
 
 		void EmitRateChanged (float rate)
@@ -406,14 +495,14 @@ namespace LongoMatch.Services.Services
 		void EmitTimeChanged (Time currentTime, Time duration)
 		{
 			if (TimeChangedEvent != null) {
-				TimeChangedEvent (currentTime, duration, StillImageLoaded);
+				TimeChangedEvent (currentTime, duration, !StillImageLoaded);
 			}
 		}
 
-		void EmitPARChanged (float par)
+		void EmitPARChanged (IntPtr windowHandle, float par)
 		{
 			if (PARChangedEvent != null) {
-				PARChangedEvent (par);
+				PARChangedEvent (windowHandle, par);
 			}
 		}
 
@@ -427,6 +516,44 @@ namespace LongoMatch.Services.Services
 		#endregion
 
 		#region Private methods
+
+		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
+		{
+			Reset ();
+			if (fileSet != this.FileSet || force) {
+				readyToSeek = false;
+				FileSet = fileSet;
+				activeFile = fileSet.First ();
+				if (activeFile.VideoHeight != 0) {
+					EmitPARChanged (WindowHandle, (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight));
+				} else {
+					EmitPARChanged (WindowHandle, 1);
+				}
+				try {
+					Log.Debug ("Opening new file " + activeFile.FilePath);
+					player.Open (fileSet);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					//We handle this error async
+				}
+			} else {
+				if (seek) {
+					Seek (new Time (0), true);
+				}
+			}
+			if (play) {
+				player.Play ();
+			}
+		}
+
+		void Reset ()
+		{
+			SetRate (1);
+			StillImageLoaded = false;
+			loadedSegment.Start = new Time (-1);
+			loadedSegment.Stop = new Time (int.MaxValue);
+			loadedEvent = null;
+		}
 
 		void SetRate (float rate)
 		{
@@ -445,35 +572,6 @@ namespace LongoMatch.Services.Services
 			}
 			get {
 				return stillimageLoaded;
-			}
-		}
-
-		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
-		{
-			UnloadCurrentEvent ();
-			if (fileSet != this.MediaFileSet || force) {
-				readyToSeek = false;
-				MediaFileSet = fileSet;
-				activeFile = fileSet.First ();
-				if (activeFile.VideoHeight != 0) {
-					EmitPARChanged ((float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight));
-				} else {
-					EmitPARChanged (1);
-				}
-				try {
-					Log.Debug ("Opening new file " + activeFile.FilePath);
-					player.Open (fileSet);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					//We handle this error async
-				}
-			} else {
-				if (seek) {
-					Seek (new Time (0), true);
-				}
-			}
-			if (play) {
-				player.Play ();
 			}
 		}
 
@@ -500,14 +598,13 @@ namespace LongoMatch.Services.Services
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				start.ToMSecondsString (),
 				stop.ToMSecondsString (), rate));
-			if (fileSet != this.MediaFileSet) {
+			if (fileSet != this.FileSet) {
 				Open (fileSet, false);
 			}
 			Pause ();
 			loadedSegment.Start = start;
 			loadedSegment.Stop = stop;
 			rate = rate == 0 ? 1 : rate;
-			EmitElementLoaded (false);
 			StillImageLoaded = false;
 			if (readyToSeek) {
 				Log.Debug ("Player is ready to seek, seeking to " +
@@ -523,25 +620,16 @@ namespace LongoMatch.Services.Services
 			}
 		}
 
-		void LoadImage (Image image, FrameDrawing drawing)
-		{
-			EmitLoadImage (image, drawing);
-		}
-
 		void LoadStillImage (PlaylistImage image)
 		{
 			loadedPlaylistElement = image;
-			UnloadCurrentEvent ();
 			StillImageLoaded = true;
-			LoadImage (image.Image, null);
 		}
 
 		void LoadFrameDrawing (PlaylistDrawing drawing)
 		{
 			loadedPlaylistElement = drawing;
-			UnloadCurrentEvent ();
 			StillImageLoaded = true;
-			LoadImage (null, drawing.Drawing);
 		}
 
 		void LoadVideo (PlaylistVideo video)
@@ -556,9 +644,9 @@ namespace LongoMatch.Services.Services
 		{
 			Pause ();
 			IgnoreTicks = true;
-			player.Seek (drawing.Render + activeFile.Offset, true, true);
+			player.Seek (drawing.Render, true, true);
 			IgnoreTicks = false;
-			LoadImage (CurrentFrame, drawing);
+			EmitLoadDrawings (drawing);
 		}
 
 		void DoStep (Time step)
@@ -568,26 +656,8 @@ namespace LongoMatch.Services.Services
 				pos.MSeconds = 0;
 			Log.Debug (String.Format ("Stepping {0} seconds from {1} to {2}",
 				step, CurrentTime, pos));
-			EmitLoadImage (null);
+			EmitLoadDrawings (null);
 			Seek (pos, true);
-		}
-
-		void SeekFromTimescale (double pos)
-		{
-			Time seekPos, duration;
-			SeekType seekType;
-
-			if (SegmentLoaded) {
-				duration = loadedSegment.Stop - loadedSegment.Start;
-				seekPos = loadedSegment.Start + duration * pos;
-				seekType = SeekType.Accurate;
-			} else {
-				duration = streamLenght;
-				seekPos = streamLenght * pos;
-				seekType = SeekType.Keyframe;
-			}
-			seeker.Seek (seekType, seekPos);
-			EmitTimeChanged (seekPos, duration);
 		}
 
 		void CreatePlayer ()
@@ -634,6 +704,7 @@ namespace LongoMatch.Services.Services
 				pendingSeek = null;
 			}
 			OnTick ();
+			player.Expose ();
 		}
 
 		#endregion
@@ -681,7 +752,9 @@ namespace LongoMatch.Services.Services
 
 		void HandleTimeout (Object state)
 		{
-			OnTick ();
+			Config.DrawingToolkit.Invoke (delegate {
+				OnTick ();
+			});
 		}
 
 		bool OnTick ()
@@ -730,21 +803,23 @@ namespace LongoMatch.Services.Services
 
 		void HandleSeekEvent (SeekType type, Time start, float rate)
 		{
-			EmitLoadImage (null, null);
-			/* We only use it for backwards framestepping for now */
-			if (type == SeekType.StepDown || type == SeekType.StepUp) {
-				if (player.Playing)
-					Pause ();
-				if (type == SeekType.StepDown)
-					player.SeekToPreviousFrame ();
-				else
-					player.SeekToNextFrame ();
-				OnTick ();
-			}
-			if (type == SeekType.Accurate || type == SeekType.Keyframe) {
-				SetRate (rate);
-				Seek (start, type == SeekType.Accurate);
-			}
+			Config.DrawingToolkit.Invoke (delegate {
+				EmitLoadDrawings (null);
+				/* We only use it for backwards framestepping for now */
+				if (type == SeekType.StepDown || type == SeekType.StepUp) {
+					if (player.Playing)
+						Pause ();
+					if (type == SeekType.StepDown)
+						player.SeekToPreviousFrame ();
+					else
+						player.SeekToNextFrame ();
+					OnTick ();
+				}
+				if (type == SeekType.Accurate || type == SeekType.Keyframe) {
+					SetRate (rate);
+					Seek (start, type == SeekType.Accurate, false, false);
+				}
+			});
 		}
 
 		#endregion
