@@ -140,6 +140,7 @@
     <Compile Include="Interfaces\IPlayerController.cs" />
     <Compile Include="Common\Registry.cs" />
     <Compile Include="Common\Seeker.cs" />
+    <Compile Include="Interfaces\GUI\IPlayerView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

@@ -16,17 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Mono.Addins;
-using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Addins.ExtensionPoints
+namespace LongoMatch.Core.Interfaces.GUI
 {
-	[TypeExtensionPoint]
-	public interface IGUIBackend
+	public interface IPlayerView
 	{
-		string Name { get; }
+		IPlayerController Player { get; }
 
-		void RegisterElements (IGUIToolkit gtoolkit);
+		PlayerViewOperationMode Mode  { get; set; }
+
+		bool SupportsMultipleCameras { get; }
 	}
 }
 

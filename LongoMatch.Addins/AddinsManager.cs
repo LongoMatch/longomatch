@@ -136,6 +136,19 @@ namespace LongoMatch.Addins
 			}
 		}
 
+		public static void LoadUIBackendsAddins (IGUIToolkit gtoolkit)
+		{
+			foreach (IGUIBackend backend in AddinManager.GetExtensionObjects<IGUIBackend> ()) {
+				try {
+					Log.Information ("Registering UI backend from plugin: " + backend.Name);
+					backend.RegisterElements (gtoolkit);
+				} catch (Exception ex) {
+					Log.Error ("Error registering multimedia backend");
+					Log.Exception (ex);
+				}
+			}
+		}
+
 		public static void ShutdownMultimediaBackends ()
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {

@@ -14,8 +14,6 @@ namespace LongoMatch.Gui
 		
 		private global::Gtk.Label replaylabel;
 		
-		private global::LongoMatch.Gui.PlayerView playerbin;
-		
 		private global::Gtk.VBox capturerbox;
 		
 		private global::Gtk.HBox livebox;
@@ -67,16 +65,9 @@ namespace LongoMatch.Gui
 			w3.Position = 0;
 			w3.Expand = false;
 			w3.Fill = false;
-			// Container child playerbox.Gtk.Box+BoxChild
-			this.playerbin = new global::LongoMatch.Gui.PlayerView ();
-			this.playerbin.Events = ((global::Gdk.EventMask)(256));
-			this.playerbin.Name = "playerbin";
-			this.playerbox.Add (this.playerbin);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.playerbox [this.playerbin]));
-			w4.Position = 1;
 			this.hbox4.Add (this.playerbox);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.playerbox]));
-			w5.Position = 0;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.playerbox]));
+			w4.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.capturerbox = new global::Gtk.VBox ();
 			this.capturerbox.Name = "capturerbox";
@@ -89,35 +80,35 @@ namespace LongoMatch.Gui
 			this.liveimage = new global::Gtk.Image ();
 			this.liveimage.Name = "liveimage";
 			this.livebox.Add (this.liveimage);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.livebox [this.liveimage]));
-			w6.Position = 0;
-			w6.Expand = false;
-			w6.Fill = false;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.livebox [this.liveimage]));
+			w5.Position = 0;
+			w5.Expand = false;
+			w5.Fill = false;
 			// Container child livebox.Gtk.Box+BoxChild
 			this.livelabel = new global::Gtk.Label ();
 			this.livelabel.Name = "livelabel";
 			this.livelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Live");
 			this.livebox.Add (this.livelabel);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.livebox [this.livelabel]));
-			w7.Position = 1;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.livebox [this.livelabel]));
+			w6.Position = 1;
+			w6.Expand = false;
+			w6.Fill = false;
+			this.capturerbox.Add (this.livebox);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.livebox]));
+			w7.Position = 0;
 			w7.Expand = false;
 			w7.Fill = false;
-			this.capturerbox.Add (this.livebox);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.livebox]));
-			w8.Position = 0;
-			w8.Expand = false;
-			w8.Fill = false;
 			// Container child capturerbox.Gtk.Box+BoxChild
 			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
 			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
 			this.capturerbin.Name = "capturerbin";
 			this.capturerbin.Capturing = false;
 			this.capturerbox.Add (this.capturerbin);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.capturerbin]));
-			w9.Position = 1;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.capturerbox [this.capturerbin]));
+			w8.Position = 1;
 			this.hbox4.Add (this.capturerbox);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.capturerbox]));
-			w10.Position = 1;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.capturerbox]));
+			w9.Position = 1;
 			this.Add (this.hbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

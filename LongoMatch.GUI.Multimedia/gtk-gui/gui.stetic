@@ -845,14 +845,7 @@
               </packing>
             </child>
             <child>
-              <widget class="LongoMatch.Gui.PlayerBin" id="playerbin">
-                <property name="MemberName" />
-                <property name="Events">ButtonPressMask</property>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-              </packing>
+              <placeholder />
             </child>
           </widget>
           <packing>

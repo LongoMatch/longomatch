@@ -27,6 +27,7 @@ using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
@@ -61,6 +62,8 @@ namespace LongoMatch
 				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
 				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
 				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
+				AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
+				Config.GUIToolkit.Register (0, typeof(IPlayerView), typeof(PlayerView));
 
 				if (!haveCodecs) {
 					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();

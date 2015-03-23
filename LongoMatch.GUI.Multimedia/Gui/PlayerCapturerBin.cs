@@ -31,6 +31,7 @@ namespace LongoMatch.Gui
 	public partial class PlayerCapturerBin : Gtk.Bin
 	{
 		bool backLoaded = false;
+		IPlayerView playerview;
 		PlayerViewOperationMode mode;
 
 		public PlayerCapturerBin ()
@@ -42,12 +43,15 @@ namespace LongoMatch.Gui
 			livelabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
 			replaylabel.ModifyFg (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteActive));
 			livebox.Visible = replayhbox.Visible = true;
-			Player = playerbin.Player;
+			playerview = Config.GUIToolkit.GetPlayerView ();
+			playerbox.PackEnd (playerview as Gtk.Widget);
+			(playerview as Gtk.Widget).ShowAll ();
+			Player = playerview.Player;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			playerbin.Destroy ();
+			(playerview as Gtk.Widget).Destroy ();
 			capturerbin.Destroy ();
 			base.OnDestroyed ();
 		}
@@ -58,7 +62,7 @@ namespace LongoMatch.Gui
 			}
 
 			get {
-				return playerbin.Player;
+				return playerview.Player;
 			}
 		}
 
@@ -76,7 +80,7 @@ namespace LongoMatch.Gui
 				} else {
 					ShowCapturer ();
 				}
-				playerbin.Mode = value;
+				playerview.Mode = value;
 				Log.Debug ("CapturerPlayer setting mode " + value);
 				backLoaded = false;
 			}

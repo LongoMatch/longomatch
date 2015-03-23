@@ -25,6 +25,7 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.Cairo;
@@ -40,7 +41,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 
-	public partial class PlayerView : Gtk.Bin
+	public partial class PlayerView : Gtk.Bin, IPlayerView
 	{
 		const int SCALE_FPS = 25;
 		IPlayerController player;
@@ -115,6 +116,12 @@ namespace LongoMatch.Gui
 		}
 
 		#region Properties
+
+		public bool SupportsMultipleCameras {
+			get {
+				return false;
+			}
+		}
 
 		public IPlayerController Player {
 			get {

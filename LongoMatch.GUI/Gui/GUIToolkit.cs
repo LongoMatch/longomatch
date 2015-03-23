@@ -88,6 +88,11 @@ namespace LongoMatch.Gui
 			registry.Register (priority, interfac, elementType);
 		}
 
+		public IPlayerView GetPlayerView ()
+		{
+			return registry.GetDefault<IPlayerView> (typeof(IPlayerView));
+		}
+
 		public void InfoMessage (string message, object parent = null)
 		{
 			if (parent == null)

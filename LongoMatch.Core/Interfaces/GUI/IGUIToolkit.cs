@@ -31,7 +31,10 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IGUIToolkit
 	{
+		/* Plugable views */
 		void Register (int priority, Type interfac, Type elementType);
+
+		IPlayerView GetPlayerView ();
 
 		IMainController MainController { get; }
 
