@@ -55,6 +55,8 @@ namespace Tests.Services
 				var mtk = Mock.Of<IMultimediaToolkit> (m => m.GetVideoEditor () == Mock.Of<IVideoEditor> ());
 				// and guitoolkit
 				var gtk = Mock.Of<IGUIToolkit> (g => g.RenderingStateBar == Mock.Of<IRenderingStateBar> ());
+				// and a video editor
+				Mock<IVideoEditor> mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
 				// And eventbroker
 				Config.EventsBroker = Mock.Of<EventsBroker> ();
 
@@ -64,14 +66,12 @@ namespace Tests.Services
 				renderer.AddJob (job);
 
 				// Check that AddSegment is called with the right video file.
-				Mock<IVideoEditor> mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
 				mock.Verify (m => m.AddSegment (p.Description.FileSet [0].FilePath,
 					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
 
 				/* Test with a camera index bigger than the total cameras */
-				mtk = Mock.Of<IMultimediaToolkit> (m => m.GetVideoEditor () == Mock.Of<IVideoEditor> ());
-				renderer = new RenderingJobsManager (mtk, gtk);
-				mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
+				renderer.CancelAllJobs ();
+				mock.ResetCalls ();
 				evt = p.Timeline [1];
 				evt.CamerasVisible = new List<int> { 1 };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
@@ -82,9 +82,8 @@ namespace Tests.Services
 					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
 
 				/* Test with the secondary camera */
-				mtk = Mock.Of<IMultimediaToolkit> (m => m.GetVideoEditor () == Mock.Of<IVideoEditor> ());
-				renderer = new RenderingJobsManager (mtk, gtk);
-				mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
+				renderer.CancelAllJobs ();
+				mock.ResetCalls ();
 				evt = p.Timeline [1];
 				evt.CamerasVisible = new List<int> { 2 };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
