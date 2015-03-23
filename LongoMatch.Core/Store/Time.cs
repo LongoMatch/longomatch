@@ -32,17 +32,21 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class Time :  IComparable
 	{
-		private const int MS = 1000000 ;
+		private const int MS = 1000000;
 		public const int SECONDS_TO_TIME = 1000;
 		public const int TIME_TO_NSECONDS = 1000000;
 
 		#region Constructors
-		public Time() {
+
+		public Time ()
+		{
 		}
-		
-		public Time(int mSeconds) {
+
+		public Time (int mSeconds)
+		{
 			MSeconds = mSeconds;
 		}
+
 		#endregion
 
 		//// <summary>
@@ -60,13 +64,13 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public int TotalSeconds {
 			get {
-				return MSeconds/SECONDS_TO_TIME;
+				return MSeconds / SECONDS_TO_TIME;
 			}
 			set {
 				MSeconds = value * SECONDS_TO_TIME;
 			}
 		}
-		
+
 		/// <summary>
 		/// Time in nano seconds
 		/// </summary>		
@@ -76,24 +80,24 @@ namespace LongoMatch.Core.Store
 				return  (long)MSeconds * TIME_TO_NSECONDS;
 			}
 			set {
-				MSeconds = (int) (value / TIME_TO_NSECONDS);
+				MSeconds = (int)(value / TIME_TO_NSECONDS);
 			}
 		}
-		
+
 		[JsonIgnore]
 		public int Seconds {
 			get {
 				return (TotalSeconds % 3600) % 60;
 			}
 		}
-		
+
 		[JsonIgnore]
 		public int Minutes {
 			get {
 				return (TotalSeconds % 3600) / 60;
 			}
 		}
-		
+
 		[JsonIgnore]
 		public int Hours {
 			get {
@@ -104,19 +108,20 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Public methods
+
 		/// <summary>
 		/// String representation in seconds
 		/// </summary>
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToSecondsString(bool includeHour=false)
+		public  string ToSecondsString (bool includeHour = false)
 		{
-			if(Hours > 0 || includeHour)
-				return String.Format("{0}:{1}:{2}", Hours, Minutes.ToString("d2"),
-				                     Seconds.ToString("d2"));
+			if (Hours > 0 || includeHour)
+				return String.Format ("{0}:{1}:{2}", Hours, Minutes.ToString ("d2"),
+					Seconds.ToString ("d2"));
 
-			return String.Format("{0}:{1}", Minutes, Seconds.ToString("d2"));
+			return String.Format ("{0}:{1}", Minutes, Seconds.ToString ("d2"));
 		}
 
 		/// <summary>
@@ -125,38 +130,45 @@ namespace LongoMatch.Core.Store
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToMSecondsString(bool includeHour=false)
+		public  string ToMSecondsString (bool includeHour = false)
 		{
-			int _ms ;
-			_ms = ((MSeconds % 3600000)%60000)%1000;
+			int _ms;
+			_ms = ((MSeconds % 3600000) % 60000) % 1000;
 
-			return String.Format("{0},{1}", ToSecondsString(includeHour), _ms.ToString("d3"));
+			return String.Format ("{0},{1}", ToSecondsString (includeHour), _ms.ToString ("d3"));
 		}
 
-		public override bool Equals(object o)
+		public override string ToString ()
 		{
-			if(o is Time) {
+			return ToMSecondsString (true);
+		}
+
+		public override bool Equals (object o)
+		{
+			if (o is Time) {
 				return ((Time)o).MSeconds == MSeconds;
-			}
-			else return false;
+			} else
+				return false;
 		}
 
-		public override int GetHashCode()
+		public override int GetHashCode ()
 		{
-			return base.GetHashCode();
+			return base.GetHashCode ();
 		}
 
-		public int CompareTo(object obj) {
-			if(obj is Time)
-			{
-				Time  otherTime = (Time) obj;
-				return MSeconds.CompareTo(otherTime.MSeconds);
-			}
-			else throw new ArgumentException("Object is not a Temperature");
+		public int CompareTo (object obj)
+		{
+			if (obj is Time) {
+				Time otherTime = (Time)obj;
+				return MSeconds.CompareTo (otherTime.MSeconds);
+			} else
+				throw new ArgumentException ("Object is not a Temperature");
 		}
+
 		#endregion
 
 		#region Operators
+
 		public static bool operator == (Time t1, Time t2)
 		{
 			if (Object.ReferenceEquals (t1, t2)) {
@@ -169,50 +181,62 @@ namespace LongoMatch.Core.Store
 			
 			return t1.Equals (t2);
 		}
-		
-		public static bool operator != (Time t1,Time t2) {
-			return ! (t1 == t2);
+
+		public static bool operator != (Time t1, Time t2)
+		{
+			return !(t1 == t2);
 		}
 
-		public static bool operator < (Time t1,Time t2) {
+		public static bool operator < (Time t1, Time t2)
+		{
 			return t1.MSeconds < t2.MSeconds;
 		}
 
-		public static bool operator > (Time t1,Time t2) {
+		public static bool operator > (Time t1, Time t2)
+		{
 			return t1.MSeconds > t2.MSeconds;
 		}
 
-		public static bool operator <= (Time t1,Time t2) {
+		public static bool operator <= (Time t1, Time t2)
+		{
 			return t1.MSeconds <= t2.MSeconds;
 		}
 
-		public static bool operator >= (Time t1,Time t2) {
+		public static bool operator >= (Time t1, Time t2)
+		{
 			return t1.MSeconds >= t2.MSeconds;
 		}
 
-		public static Time operator +(Time t1,int t2) {
-			return new Time {MSeconds = t1.MSeconds+t2};
+		public static Time operator + (Time t1, int t2)
+		{
+			return new Time { MSeconds = t1.MSeconds + t2 };
 		}
 
-		public static Time operator +(Time t1,Time t2) {
-			return new Time {MSeconds = t1.MSeconds+t2.MSeconds};
+		public static Time operator + (Time t1, Time t2)
+		{
+			return new Time { MSeconds = t1.MSeconds + t2.MSeconds };
 		}
 
-		public  static Time operator -(Time t1,Time t2) {
-			return new Time {MSeconds = t1.MSeconds-t2.MSeconds};
+		public  static Time operator - (Time t1, Time t2)
+		{
+			return new Time { MSeconds = t1.MSeconds - t2.MSeconds };
 		}
 
-		public  static Time operator -(Time t1,int t2) {
-			return new Time {MSeconds = t1.MSeconds-t2};
+		public  static Time operator - (Time t1, int t2)
+		{
+			return new Time { MSeconds = t1.MSeconds - t2 };
 		}
-		
-		public static Time operator *(Time t1, double t2) {
-			return new Time {MSeconds = (int) (t1.MSeconds * t2)};
+
+		public static Time operator * (Time t1, double t2)
+		{
+			return new Time { MSeconds = (int)(t1.MSeconds * t2) };
 		}
-		
-		public static Time operator /(Time t1, int t2) {
-			return new Time {MSeconds = (int) (t1.MSeconds / t2)};
+
+		public static Time operator / (Time t1, int t2)
+		{
+			return new Time { MSeconds = (int)(t1.MSeconds / t2) };
 		}
+
 		#endregion
 	}
 }
