@@ -44,7 +44,6 @@ SOURCES = Common/Area.cs \
 	Interfaces/GUI/IGUIToolkit.cs \
 	Interfaces/GUI/IMainController.cs \
 	Interfaces/GUI/IPanel.cs \
-	Interfaces/GUI/IPlayerBin.cs \
 	Interfaces/GUI/IPlayerView.cs \
 	Interfaces/GUI/IRenderingStateBar.cs \
 	Interfaces/IDataBaseManager.cs \
