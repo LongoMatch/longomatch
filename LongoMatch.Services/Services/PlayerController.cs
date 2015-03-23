@@ -40,6 +40,7 @@ namespace LongoMatch.Services
 		public event PARChangedHandler PARChangedEvent;
 
 		const int TIMEOUT_MS = 20;
+		const int SCALE_FPS = 25;
 
 		IPlayer player;
 		TimelineEvent loadedEvent;
@@ -48,6 +49,7 @@ namespace LongoMatch.Services
 
 		Time streamLenght, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
+		double rate;
 		MediaFile activeFile;
 		Seeker seeker;
 		Segment loadedSegment;
@@ -124,7 +126,12 @@ namespace LongoMatch.Services
 
 		public double Rate {
 			set {
+				rate = value;
 				player.Rate = value;
+				Log.Debug ("Rate set to " + value);
+			}
+			get {
+				return rate;
 			}
 		}
 
@@ -365,23 +372,41 @@ namespace LongoMatch.Services
 
 		public void FramerateUp ()
 		{
-			Log.Debug ("Framerate up");
 			if (!StillImageLoaded) {
-				EmitLoadDrawings (null);
-			}
+				float rate;
 
-			/* FIXME */
-			//vscale1.Adjustment.Value += vscale1.Adjustment.StepIncrement;
+				EmitLoadDrawings (null);
+				rate = (float)Rate;
+				if (rate >= 5) {
+					return;
+				}
+				Log.Debug ("Framerate up");
+				if (rate < 1) {
+					SetRate (rate + (float)1 / SCALE_FPS);
+				} else {
+					SetRate (rate + 1);
+				}
+			}
 		}
 
 		public void FramerateDown ()
 		{
-			Log.Debug ("Framerate down");
+
 			if (!StillImageLoaded) {
+				float rate;
+
 				EmitLoadDrawings (null);
+				rate = (float)Rate;
+				if (rate <= (float)1 / SCALE_FPS) {
+					return;
+				}
+				Log.Debug ("Framerate down");
+				if (rate > 1) {
+					SetRate (rate - 1);
+				} else {
+					SetRate (rate - (float)1 / SCALE_FPS);
+				}
 			}
-			/* FIXME */
-			//vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
 		}
 
 		public void Expose ()
