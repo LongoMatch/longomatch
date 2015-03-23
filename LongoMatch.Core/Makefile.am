@@ -25,6 +25,7 @@ SOURCES = Common/Area.cs \
 	Common/Keyboard.cs \
 	Common/Log.cs \
 	Common/Registry.cs \
+	Common/Seeker.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \
 	Common/Utils.cs \

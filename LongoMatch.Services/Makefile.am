@@ -9,6 +9,7 @@ SOURCES = Services/CoreServices.cs \
 	Services/FileDB.cs \
 	Services/FileStorage.cs \
 	Services/HotKeysManager.cs \
+	Services/PlayerController.cs \
 	Services/PlaylistManager.cs \
 	Services/ProjectsManager.cs \
 	Services/RenderingJobsManager.cs \

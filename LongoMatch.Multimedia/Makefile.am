@@ -22,7 +22,6 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Utils/GStreamer.cs \
 	Utils/GstDiscoverer.cs \
 	Utils/MultimediaFactory.cs \
-	Utils/Seeker.cs \
 	Utils/TimeString.cs \
 	Utils/WindowHandle.cs
 
