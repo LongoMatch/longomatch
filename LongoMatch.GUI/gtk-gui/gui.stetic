@@ -9693,7 +9693,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="LongoMatch.Gui.PlayerBin" id="main_cam_playerbin">
+                      <widget class="LongoMatch.Gui.PlayerView" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                       </widget>
@@ -9761,7 +9761,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="Visible">False</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="LongoMatch.Gui.PlayerBin" id="sec_cam_playerbin">
+                      <widget class="LongoMatch.Gui.PlayerView" id="sec_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                       </widget>
