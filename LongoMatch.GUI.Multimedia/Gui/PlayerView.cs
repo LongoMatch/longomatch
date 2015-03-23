@@ -241,8 +241,8 @@ namespace LongoMatch.Gui
 			timescale.ValueChanged += HandleTimescaleValueChanged;
 			timescale.ButtonPressEvent += HandleTimescaleButtonPress;
 			timescale.ButtonReleaseEvent += HandleTimescaleButtonRelease;
-			ratescale.FormatValue += HandleVscale1FormatValue;
-			ratescale.ValueChanged += OnVscale1ValueChanged;
+			ratescale.FormatValue += HandleRateFormatValue;
+			ratescale.ValueChanged += HandleRateValueChanged;
 			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
 
 		}
@@ -325,7 +325,7 @@ namespace LongoMatch.Gui
 			} else {
 				ratescale.Value = rate * SCALE_FPS;
 			}
-			ignoreRate = true;
+			ignoreRate = false;
 		}
 
 		void HandlePARChangedEvent (IntPtr windowHandle, float par)
@@ -467,9 +467,9 @@ namespace LongoMatch.Gui
 			Player.Next ();
 		}
 
-		void HandleVscale1FormatValue (object o, Gtk.FormatValueArgs args)
+		void HandleRateFormatValue (object o, Gtk.FormatValueArgs args)
 		{
-			double val = args.Value;
+			int val = (int)args.Value;
 			if (val >= SCALE_FPS) {
 				val = val + 1 - SCALE_FPS;
 				args.RetVal = val + "X";
@@ -478,7 +478,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnVscale1ValueChanged (object sender, System.EventArgs e)
+		void HandleRateValueChanged (object sender, System.EventArgs e)
 		{
 			float val = GetRateFromScale ();
 
