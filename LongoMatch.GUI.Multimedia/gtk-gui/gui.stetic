@@ -848,7 +848,6 @@
               <widget class="LongoMatch.Gui.PlayerBin" id="playerbin">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
-                <property name="CloseAlwaysVisible">False</property>
               </widget>
               <packing>
                 <property name="Position">1</property>

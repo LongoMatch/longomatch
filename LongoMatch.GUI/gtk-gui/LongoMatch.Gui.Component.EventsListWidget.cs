@@ -5,11 +5,17 @@ namespace LongoMatch.Gui.Component
 	public partial class EventsListWidget
 	{
 		private global::Gtk.Notebook playsnotebook;
+		
 		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playsList;
+		
 		private global::Gtk.Label playsList1;
+		
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget localPlayersList;
+		
 		private global::Gtk.Label localPlaysList;
+		
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
+		
 		private global::Gtk.Label visitorPlaysList;
 
 		protected virtual void Build ()

@@ -5,13 +5,21 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget
 	{
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::LongoMatch.Gui.Component.PlayListTreeView playlisttreeview1;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Button newbutton;
+		
 		private global::Gtk.Image newimage;
+		
 		private global::Gtk.Button newvideobutton;
+		
 		private global::Gtk.Image recimage;
 
 		protected virtual void Build ()

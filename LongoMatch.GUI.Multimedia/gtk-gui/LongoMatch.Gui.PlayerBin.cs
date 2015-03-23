@@ -5,38 +5,71 @@ namespace LongoMatch.Gui
 	public partial class PlayerBin
 	{
 		private global::Gtk.VBox vbox3;
+		
 		private global::Gtk.HBox mainbox;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.HBox videobox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::LongoMatch.Gui.VideoWindow videowindow;
+		
 		private global::Gtk.DrawingArea blackboarddrawingarea;
+		
 		private global::Gtk.VBox vbox5;
+		
 		private global::Gtk.VScale vscale1;
+		
 		private global::Gtk.EventBox lightbackgroundeventbox;
+		
 		private global::Gtk.HBox controlsbox;
+		
 		private global::Gtk.HBox buttonsbox;
+		
 		private global::Gtk.Button closebutton;
+		
 		private global::Gtk.Image closebuttonimage;
+		
 		private global::Gtk.Button drawbutton;
+		
 		private global::Gtk.Image drawbuttonimage;
+		
 		private global::Gtk.Button playbutton;
+		
 		private global::Gtk.Image playbuttonimage;
+		
 		private global::Gtk.Button pausebutton;
+		
 		private global::Gtk.Image pausebuttonimage;
+		
 		private global::Gtk.Button prevbutton;
+		
 		private global::Gtk.Image prevbuttonimage;
+		
 		private global::Gtk.Button nextbutton;
+		
 		private global::Gtk.Image nextbuttonimage;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.Label jumplabel;
+		
 		private global::Gtk.SpinButton jumpspinbutton;
+		
 		private global::Gtk.Label tlabel;
+		
 		private global::Gtk.HScale timescale;
+		
 		private global::Gtk.Label timelabel;
+		
 		private global::Gtk.Button volumebutton;
+		
 		private global::Gtk.Image volumebuttonimage;
+		
 		private global::Gtk.Button detachbutton;
+		
 		private global::Gtk.Image detachbuttonimage;
 
 		protected virtual void Build ()

@@ -5,18 +5,31 @@ namespace LongoMatch.Gui.Component
 	public partial class Timeline
 	{
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.VBox leftbox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Button focusbutton;
+		
 		private global::Gtk.Image focusbuttonimage;
+		
 		private global::Gtk.DrawingArea labelsarea;
+		
 		private global::Gtk.HBox zoomhbox;
+		
 		private global::Gtk.Image zoominimage;
+		
 		private global::Gtk.HScale focusscale;
+		
 		private global::Gtk.Image zoomoutimage;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::Gtk.DrawingArea timerulearea;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.DrawingArea timelinearea;
 
 		protected virtual void Build ()

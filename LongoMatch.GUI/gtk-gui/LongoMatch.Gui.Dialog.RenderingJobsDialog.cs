@@ -5,12 +5,19 @@ namespace LongoMatch.Gui.Dialog
 	public partial class RenderingJobsDialog
 	{
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::LongoMatch.Gui.Component.RenderingJobsTreeView renderingjobstreeview2;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.Button clearbutton;
+		
 		private global::Gtk.Button cancelbutton;
+		
 		private global::Gtk.Button retrybutton;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

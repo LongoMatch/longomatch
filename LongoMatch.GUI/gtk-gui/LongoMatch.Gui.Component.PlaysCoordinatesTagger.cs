@@ -5,8 +5,11 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysCoordinatesTagger
 	{
 		private global::Gtk.HBox mainbox;
+		
 		private global::LongoMatch.Gui.Component.CoordinatesTagger field;
+		
 		private global::LongoMatch.Gui.Component.CoordinatesTagger hfield;
+		
 		private global::LongoMatch.Gui.Component.CoordinatesTagger goal;
 
 		protected virtual void Build ()

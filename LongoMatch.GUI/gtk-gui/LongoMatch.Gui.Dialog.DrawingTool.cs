@@ -5,62 +5,119 @@ namespace LongoMatch.Gui.Dialog
 	public partial class DrawingTool
 	{
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.VBox vbox3;
+		
 		private global::Gtk.Label toolslabel;
+		
 		private global::Gtk.Table toolstable;
+		
 		private global::Gtk.RadioButton anglebutton;
+		
 		private global::Gtk.Image anglebuttonimage;
+		
 		private global::Gtk.RadioButton crossbutton;
+		
 		private global::Gtk.Image crossbuttonimage;
+		
 		private global::Gtk.RadioButton ellipsebutton;
+		
 		private global::Gtk.Image ellipsebuttonimage;
+		
 		private global::Gtk.RadioButton ellipsefilledbutton;
+		
 		private global::Gtk.Image ellipsefilledbuttonimage;
+		
 		private global::Gtk.RadioButton eraserbutton;
+		
 		private global::Gtk.Image eraserbuttonimage;
+		
 		private global::Gtk.RadioButton linebutton;
+		
 		private global::Gtk.Image linebuttonimage;
+		
 		private global::Gtk.RadioButton numberbutton;
+		
 		private global::Gtk.Image numberbuttonimage;
+		
 		private global::Gtk.RadioButton penbutton;
+		
 		private global::Gtk.Image penbuttonimage;
+		
 		private global::Gtk.RadioButton playerbutton;
+		
 		private global::Gtk.Image playerbuttonimage;
+		
 		private global::Gtk.RadioButton rectanglebutton;
+		
 		private global::Gtk.Image rectanglebuttonimage;
+		
 		private global::Gtk.RadioButton rectanglefilledbutton;
+		
 		private global::Gtk.Image rectanglefilledbuttonimage;
+		
 		private global::Gtk.RadioButton selectbutton;
+		
 		private global::Gtk.Image selectbuttonimage;
+		
 		private global::Gtk.RadioButton textbutton;
+		
 		private global::Gtk.Image textbuttonimage;
+		
 		private global::Gtk.Frame linesframe;
+		
 		private global::Gtk.Alignment GtkAlignment4;
+		
 		private global::Gtk.Table table1;
+		
 		private global::Gtk.ColorButton colorbutton;
+		
 		private global::Gtk.Label colorslabel;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.Label label4;
+		
 		private global::Gtk.Label label5;
+		
 		private global::Gtk.SpinButton linesizespinbutton;
+		
 		private global::Gtk.ComboBox stylecombobox;
+		
 		private global::Gtk.ComboBox typecombobox;
+		
 		private global::Gtk.Label GtkLabel4;
+		
 		private global::Gtk.Frame textframe;
+		
 		private global::Gtk.Alignment GtkAlignment13;
+		
 		private global::Gtk.Table table4;
+		
 		private global::Gtk.ColorButton backgroundcolorbutton;
+		
 		private global::Gtk.Label backgroundcolorslabel2;
+		
 		private global::Gtk.Label backgroundcolorslabel3;
+		
 		private global::Gtk.ColorButton textcolorbutton;
+		
 		private global::Gtk.Label textcolorslabel2;
+		
 		private global::Gtk.SpinButton textspinbutton;
+		
 		private global::Gtk.Label GtkLabel5;
+		
 		private global::Gtk.Button clearbutton;
+		
 		private global::Gtk.Button savetoprojectbutton;
+		
 		private global::Gtk.Button savebutton;
+		
 		private global::Gtk.DrawingArea drawingarea;
+		
 		private global::Gtk.Button closebutton;
 
 		protected virtual void Build ()

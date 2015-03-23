@@ -5,9 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class DatePicker
 	{
 		private global::Gtk.EventBox dateentryeventbox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Entry dateentry;
+		
 		private global::Gtk.Button datebutton;
+		
 		private global::Gtk.Image datebuttonimage;
 
 		protected virtual void Build ()

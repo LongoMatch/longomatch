@@ -9696,8 +9696,6 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="LongoMatch.Gui.PlayerBin" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
-                        <property name="Volume">1</property>
-                        <property name="CloseAlwaysVisible">False</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -9766,8 +9764,6 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="LongoMatch.Gui.PlayerBin" id="sec_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
-                        <property name="Volume">0</property>
-                        <property name="CloseAlwaysVisible">False</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>

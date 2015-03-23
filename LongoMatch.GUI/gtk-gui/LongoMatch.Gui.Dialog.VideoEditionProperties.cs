@@ -5,26 +5,47 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoEditionProperties
 	{
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.ComboBox qualitycombobox;
+		
 		private global::Gtk.HBox hbox4;
+		
 		private global::Gtk.Label label2;
+		
 		private global::Gtk.ComboBox sizecombobox;
+		
 		private global::Gtk.HBox hbox5;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.ComboBox formatcombobox;
+		
 		private global::Gtk.HBox hbox6;
+		
 		private global::Gtk.CheckButton descriptioncheckbutton;
+		
 		private global::Gtk.CheckButton audiocheckbutton;
+		
 		private global::Gtk.CheckButton splitfilesbutton;
+		
 		private global::Gtk.HBox filebox;
+		
 		private global::Gtk.Label filenamelabel;
+		
 		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser1;
+		
 		private global::Gtk.HBox dirbox;
+		
 		private global::Gtk.Label directorynamelabel1;
+		
 		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser2;
+		
 		private global::Gtk.Button buttonCancel;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

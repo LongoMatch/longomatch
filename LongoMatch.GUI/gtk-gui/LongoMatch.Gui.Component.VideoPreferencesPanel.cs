@@ -5,30 +5,55 @@ namespace LongoMatch.Gui.Component
 	public partial class VideoPreferencesPanel
 	{
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.Label fameratelabel;
+		
 		private global::Gtk.ComboBox fpscombobox;
+		
 		private global::Gtk.Frame frame1;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::Gtk.Table rendertable;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.Label label2;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.Label label8;
+		
 		private global::Gtk.Label label9;
+		
 		private global::Gtk.ComboBox renderenccombo;
+		
 		private global::Gtk.ComboBox renderimagecombo;
+		
 		private global::Gtk.ComboBox renderqualcombo;
+		
 		private global::Gtk.Label GtkLabel;
+		
 		private global::Gtk.Frame frame2;
+		
 		private global::Gtk.Alignment GtkAlignment1;
+		
 		private global::Gtk.Table capturetable;
+		
 		private global::Gtk.ComboBox captureenccombo;
+		
 		private global::Gtk.ComboBox captureimagecombo;
+		
 		private global::Gtk.ComboBox capturequalcombo;
+		
 		private global::Gtk.Label label4;
+		
 		private global::Gtk.Label label5;
+		
 		private global::Gtk.Label label6;
+		
 		private global::Gtk.Label GtkLabel1;
 
 		protected virtual void Build ()

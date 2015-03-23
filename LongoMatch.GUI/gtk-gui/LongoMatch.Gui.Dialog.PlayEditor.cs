@@ -5,20 +5,35 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayEditor
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow2;
+		
 		private global::Gtk.VBox vbox3;
+		
 		private global::Gtk.HBox hbox4;
+		
 		private global::Gtk.Frame nameframe;
+		
 		private global::Gtk.Alignment GtkAlignment3;
+		
 		private global::Gtk.HBox hbox3;
+		
 		private global::Gtk.Entry nameentry;
+		
 		private global::Gtk.Label GtkLabel3;
+		
 		private global::Gtk.Frame notesframe;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
+		
 		private global::Gtk.Label GtkLabel;
+		
 		private global::Gtk.VBox tagsvbox;
+		
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger tagger;
+		
 		private global::Gtk.DrawingArea drawingarea3;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

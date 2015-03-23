@@ -105,6 +105,10 @@
       <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
       <Name>LongoMatch.Drawing.Cairo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

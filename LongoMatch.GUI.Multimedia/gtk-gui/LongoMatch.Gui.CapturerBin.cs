@@ -5,37 +5,69 @@ namespace LongoMatch.Gui
 	public partial class CapturerBin
 	{
 		private global::Gtk.VBox vbox1;
+		
 		private global::LongoMatch.Gui.VideoWindow videowindow;
+		
 		private global::Gtk.Alignment alignment1;
+		
 		private global::Gtk.HBox controllerbox;
+		
 		private global::Gtk.EventBox hourseventbox;
+		
 		private global::Gtk.Label hourlabel;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.EventBox minuteseventbox;
+		
 		private global::Gtk.Label minuteslabel;
+		
 		private global::Gtk.Label label2;
+		
 		private global::Gtk.EventBox secondseventbox;
+		
 		private global::Gtk.Label secondslabel;
+		
 		private global::Gtk.Label periodlabel;
+		
 		private global::Gtk.VSeparator vseparator1;
+		
 		private global::Gtk.Button recbutton;
+		
 		private global::Gtk.Image recimage;
+		
 		private global::Gtk.Button stopbutton;
+		
 		private global::Gtk.Image stopimage;
+		
 		private global::Gtk.Button pausebutton;
+		
 		private global::Gtk.Image pauseimage;
+		
 		private global::Gtk.Button resumebutton;
+		
 		private global::Gtk.Image resumeimage;
+		
 		private global::Gtk.Button savebutton;
+		
 		private global::Gtk.Image saveimage;
+		
 		private global::Gtk.Button cancelbutton;
+		
 		private global::Gtk.Image cancelimage;
+		
 		private global::Gtk.VSeparator vseparator2;
+		
 		private global::Gtk.HBox lasteventbox;
+		
 		private global::Gtk.Label lastlabel;
+		
 		private global::Gtk.Button deletelastbutton;
+		
 		private global::Gtk.Image deletelastimage;
+		
 		private global::Gtk.Button playlastbutton;
+		
 		private global::Gtk.Image playlastimage;
 
 		protected virtual void Build ()

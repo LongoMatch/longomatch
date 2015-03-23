@@ -5,8 +5,11 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ChooseOptionDialog
 	{
 		private global::Gtk.Alignment alignment1;
+		
 		private global::Gtk.VBox optionsbox;
+		
 		private global::Gtk.Button buttonCancel;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

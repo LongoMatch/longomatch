@@ -5,12 +5,19 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysSelectionWidget
 	{
 		private global::Gtk.Notebook notebook;
+		
 		private global::LongoMatch.Gui.Component.EventsListWidget eventslistwidget;
+		
 		private global::Gtk.Label label1;
+		
 		private global::LongoMatch.Gui.Component.PlayListWidget playlistwidget;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.VBox filtersvbox;
+		
 		private global::Gtk.Notebook filtersnotebook;
+		
 		private global::Gtk.Label label2;
 
 		protected virtual void Build ()

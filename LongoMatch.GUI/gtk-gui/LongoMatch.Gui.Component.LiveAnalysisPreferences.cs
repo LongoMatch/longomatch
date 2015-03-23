@@ -5,9 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class LiveAnalysisPreferences
 	{
 		private global::Gtk.Table table1;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.Label label4;
+		
 		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser1;
 
 		protected virtual void Build ()

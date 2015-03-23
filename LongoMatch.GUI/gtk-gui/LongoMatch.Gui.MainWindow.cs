@@ -5,38 +5,71 @@ namespace LongoMatch.Gui
 	public partial class MainWindow
 	{
 		private global::Gtk.UIManager UIManager;
+		
 		private global::Gtk.Action FileAction;
+		
 		private global::Gtk.Action NewPojectAction;
+		
 		private global::Gtk.Action openAction;
+		
 		private global::Gtk.Action QuitAction;
+		
 		private global::Gtk.Action CloseProjectAction;
+		
 		private global::Gtk.Action ToolsAction;
+		
 		private global::Gtk.Action ProjectsManagerAction;
+		
 		private global::Gtk.Action CategoriesTemplatesManagerAction;
+		
 		private global::Gtk.Action ViewAction;
+		
 		private global::Gtk.ToggleAction FullScreenAction;
+		
 		private global::Gtk.Action SaveProjectAction;
+		
 		private global::Gtk.Action HelpAction;
+		
 		private global::Gtk.Action AboutAction;
+		
 		private global::Gtk.Action ExportProjectToCSVFileAction;
+		
 		private global::Gtk.Action TeamsTemplatesManagerAction;
+		
 		private global::Gtk.Action HelpAction1;
+		
 		private global::Gtk.Action ImportProjectAction;
+		
 		private global::Gtk.Action ExportProjectAction;
+		
 		private global::Gtk.Action ExportProjectAction1;
+		
 		private global::Gtk.Action Action;
+		
 		private global::Gtk.Action ExportToProjectFileAction;
+		
 		private global::Gtk.Action ImportFromFileAction;
+		
 		private global::Gtk.Action VideoConverterToolAction;
+		
 		private global::Gtk.Action DatabasesManagerAction;
+		
 		private global::Gtk.Action PreferencesAction;
+		
 		private global::Gtk.Action ShowProjectStatsAction;
+		
 		private global::Gtk.Action MigrationToolAction;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::Gtk.VBox menubox;
+		
 		private global::Gtk.MenuBar menubar1;
+		
 		private global::Gtk.HBox centralbox;
+		
 		private global::LongoMatch.Gui.Panel.WelcomePanel welcomepanel;
+		
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
 
 		protected virtual void Build ()
