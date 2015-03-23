@@ -292,7 +292,7 @@ namespace LongoMatch.Gui
 
 		void HandleVolumeChangedEvent (double level)
 		{
-
+			/* Unused: volume is retrieved before launching the volume window */
 		}
 
 		void HandleTimeChangedEvent (Time currentTime, Time duration, bool seekable)
@@ -345,6 +345,7 @@ namespace LongoMatch.Gui
 		void HandleElementLoadedEvent (object element, bool hasNext)
 		{
 			if (element == null) {
+				DrawingsVisible = false;
 				if (Mode != PlayerViewOperationMode.LiveAnalysisReview) {
 					closebutton.Visible = false;
 				}
