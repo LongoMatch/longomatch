@@ -76,6 +76,9 @@
     <Compile Include="Stats\StatsDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Plugins.Stats.GameViewer.cs" />
     <Compile Include="StatsUIPlugin.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

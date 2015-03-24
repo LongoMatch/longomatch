@@ -140,6 +140,9 @@
     <Compile Include="Common\Registry.cs" />
     <Compile Include="Common\Seeker.cs" />
     <Compile Include="Interfaces\GUI\IPlayerView.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

@@ -4,7 +4,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 
-SOURCES = Canvas.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Canvas.cs \
 	CanvasObjects/BenchObject.cs \
 	CanvasObjects/ButtonObject.cs \
 	CanvasObjects/CameraObject.cs \

@@ -154,6 +154,7 @@ pkgconfig/longomatch-gui.pc
 pkgconfig/longomatch-gui-helpers.pc
 pkgconfig/longomatch-oxyplot.pc
 
+AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
@@ -171,7 +172,6 @@ LongoMatch.Services/Makefile
 LongoMatch/Makefile
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop.in
-LongoMatch/AssemblyInfo.cs
 Tests/Makefile
 tools/deb-pkg.sh
 

@@ -3,7 +3,7 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_DB)
 
-SOURCES = AssemblyInfo.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CouchbaseStorage.cs \
 	DocumentsSerializer.cs
 

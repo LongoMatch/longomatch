@@ -4,7 +4,8 @@ INSTALL_DIR = $(pkglibdir)/plugins
 
 LINK = $(REF_DEP_LONGOMATCH_PLUGINS_STATS)
 
-SOURCES = Stats/CategoriesViewer.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Stats/CategoriesViewer.cs \
 	Stats/CategoryViewer.cs \
 	Stats/GameViewer.cs \
 	Stats/PangoTextMeasurer.cs \

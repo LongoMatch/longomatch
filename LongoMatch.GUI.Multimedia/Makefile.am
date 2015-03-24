@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_GUI_MULTIMEDIA)
 
-SOURCES = Gui/CapturerBin.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Gui/CapturerBin.cs \
 	Gui/PlayerCapturerBin.cs \
 	Gui/PlayerView.cs \
 	Gui/Utils/FramesCapturer.cs \

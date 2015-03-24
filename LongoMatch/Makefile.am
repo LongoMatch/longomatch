@@ -2,7 +2,7 @@ ASSEMBLY = LongoMatch
 TARGET = exe
 LINK = $(REF_DEP_LONGOMATCH)
 
-SOURCES = AssemblyInfo.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	GtkOSXApplication.cs \
 	Main.cs
 

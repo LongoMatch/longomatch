@@ -31,7 +31,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Andoni Morales Alastruey")]
+[assembly: AssemblyCopyright("Andoni Morales Alastruey; Fluendo S.A.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -49,3 +49,4 @@ using System.Runtime.CompilerServices;
 // This is not required, if you don't want signing let these attributes like they're.
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
+[assembly: InternalsVisibleTo("Tests")]

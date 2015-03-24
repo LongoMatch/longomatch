@@ -179,6 +179,9 @@
     <Compile Include="Gui\Dialog\ChooseOptionDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseOptionDialog.cs" />
     <Compile Include="Gui\Dialog\BusyDialog.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

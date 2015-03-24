@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_ADDINS)
 
-SOURCES = AddinsManager.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	AddinsManager.cs \
 	ConfigurablePlugin.cs \
 	ExtensionPoints/IAnalisysDashboardsProvider.cs \
 	ExtensionPoints/IConfigModifier.cs \

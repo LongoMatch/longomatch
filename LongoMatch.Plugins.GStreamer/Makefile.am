@@ -4,7 +4,8 @@ INSTALL_DIR = $(pkglibdir)/plugins/LongoMatch.Plugins.GStreamer/
 
 LINK = $(REF_DEP_LONGOMATCH_PLUGINS_GSTREAMER)
 
-SOURCES = Assembly.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Assembly.cs \
 	GStreamerRestricted.cs
 
 RESOURCES = 

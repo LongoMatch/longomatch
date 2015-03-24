@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_MULTIMEDIA)
 
-SOURCES = Capturer/FakeCapturer.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Capturer/FakeCapturer.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \

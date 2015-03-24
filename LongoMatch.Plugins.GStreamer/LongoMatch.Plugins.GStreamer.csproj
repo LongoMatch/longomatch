@@ -31,6 +31,9 @@
   <ItemGroup>
     <Compile Include="Assembly.cs" />
     <Compile Include="GStreamerRestricted.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">

@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_GUI)
 
-SOURCES = Gui/Cairo.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Gui/Cairo.cs \
 	Gui/Component/AnalysisComponent.cs \
 	Gui/Component/BackgroundWidget.cs \
 	Gui/Component/CategoryProperties.cs \

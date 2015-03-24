@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_CORE)
 
-SOURCES = Common/Area.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Common/Area.cs \
 	Common/CaptureSettings.cs \
 	Common/Cloner.cs \
 	Common/Color.cs \

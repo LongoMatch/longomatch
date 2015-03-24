@@ -36,6 +36,9 @@
     <Compile Include="Misc.cs" />
     <Compile Include="GtkGlue.cs" />
     <Compile Include="ExternalWindow.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

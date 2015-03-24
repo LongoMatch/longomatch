@@ -3,7 +3,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_DRAWING_CAIRO)
 
-SOURCES = CairoBackend.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	CairoBackend.cs \
 	CairoContext.cs \
 	Surface.cs \
 	WidgetWrapper.cs

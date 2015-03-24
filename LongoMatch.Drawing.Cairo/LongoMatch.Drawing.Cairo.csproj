@@ -30,6 +30,9 @@
     <Compile Include="WidgetWrapper.cs" />
     <Compile Include="Surface.cs" />
     <Compile Include="CairoContext.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\images\cursors\text">

@@ -4,7 +4,8 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_GUI_HELPERS)
 
-SOURCES = ExternalWindow.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	ExternalWindow.cs \
 	FileChooserHelper.cs \
 	GtkGlue.cs \
 	MessagesHelpers.cs \

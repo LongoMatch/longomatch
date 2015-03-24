@@ -28,7 +28,7 @@ def mdptoam(mdp):
         except:
             assembly = "library"
         try:
-            files = re.findall('<Compile Include="([^"]*)" />', l)
+            files = re.findall('<Compile Include="([^"]*)"*', l)
             files = [x.replace('\\', '/') for x in files]
         except:
             files = []
