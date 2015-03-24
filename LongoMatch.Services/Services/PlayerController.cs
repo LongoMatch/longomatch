@@ -26,6 +26,7 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Timer = System.Threading.Timer;
+using Mono.Unix;
 
 namespace LongoMatch.Services
 {
@@ -603,6 +604,11 @@ namespace LongoMatch.Services
 			EmitMediaFileSetLoaded (fileSet);
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
+				if (CamerasVisible == null) {
+					Config.EventsBroker.EmitMultimediaError (Catalog.GetString ("Invalid camera configuration"));
+					FileSet = null;
+					return;
+				}
 				foreach (int index in CamerasVisible) {
 					try {
 						MediaFile file = fileSet [index];
@@ -613,7 +619,10 @@ namespace LongoMatch.Services
 							EmitPARChanged (windowHandle, 1);
 						}
 					} catch (Exception ex) {
+						Config.EventsBroker.EmitMultimediaError (Catalog.GetString ("Invalid camera configuration"));
+						FileSet = null;
 						Log.Exception (ex);
+						return;
 					}
 				}
 				try {
