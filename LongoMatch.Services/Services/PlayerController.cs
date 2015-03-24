@@ -822,7 +822,7 @@ namespace LongoMatch.Services
 		 * be deferred to the UI main thread */
 		void HandleStateChange (bool playing)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				if (playing) {
 					ReconfigureTimeout (TIMEOUT_MS);
 				} else {
@@ -836,7 +836,7 @@ namespace LongoMatch.Services
 
 		void HandleReadyToSeek ()
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				readyToSeek = true;
 				streamLenght = player.StreamLength;
 				if (pendingSeek != null) {
@@ -854,7 +854,7 @@ namespace LongoMatch.Services
 
 		void HandleEndOfStream ()
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
 					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
 				} else {
@@ -866,7 +866,7 @@ namespace LongoMatch.Services
 
 		void HandleError (string message)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				Config.EventsBroker.EmitMultimediaError (message);
 			});
 		}
@@ -877,14 +877,14 @@ namespace LongoMatch.Services
 
 		void HandleTimeout (Object state)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				Tick ();
 			});
 		}
 
 		void HandleSeekEvent (SeekType type, Time start, float rate)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			Config.GUIToolkit.Invoke (delegate {
 				EmitLoadDrawings (null);
 				/* We only use it for backwards framestepping for now */
 				if (type == SeekType.StepDown || type == SeekType.StepUp) {
