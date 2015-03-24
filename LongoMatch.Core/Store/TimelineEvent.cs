@@ -243,18 +243,18 @@ namespace LongoMatch.Core.Store
 				if (FieldPosition == null) {
 					FieldPosition = new Coordinates ();
 					FieldPosition.Points.Add (new Point (0.5, 0.5));
-				}
-				if (EventType.FieldPositionIsDistance) {
-					FieldPosition.Points.Add (new Point (0.5, 0.1));
+					if (EventType.FieldPositionIsDistance) {
+						FieldPosition.Points.Add (new Point (0.5, 0.1));
+					}
 				}
 			}
 			if (EventType.TagHalfFieldPosition) {
 				if (HalfFieldPosition == null) {
 					HalfFieldPosition = new Coordinates ();
 					HalfFieldPosition.Points.Add (new Point (0.5, 0.5));
-				}
-				if (EventType.HalfFieldPositionIsDistance) {
-					HalfFieldPosition.Points.Add (new Point (0.5, 0.1));
+					if (EventType.HalfFieldPositionIsDistance) {
+						HalfFieldPosition.Points.Add (new Point (0.5, 0.1));
+					}
 				}
 			}
 			

@@ -146,6 +146,19 @@ namespace Tests.Core.Store
 			Assert.IsNotNull (evt.FieldPosition);
 			Assert.IsNotNull (evt.HalfFieldPosition);
 			Assert.IsNotNull (evt.GoalPosition);
+
+			/* Adding the default positions doesn't not overwrite the existing data */
+			evt.EventType.FieldPositionIsDistance = true;
+			evt.EventType.HalfFieldPositionIsDistance = true;
+			evt.FieldPosition.Points [0].X = 100;
+			evt.FieldPosition.Points [0].Y = 100;
+			evt.HalfFieldPosition.Points [0].X = 100;
+			evt.HalfFieldPosition.Points [0].Y = 100;
+			evt.AddDefaultPositions ();
+			Assert.AreEqual (1, evt.FieldPosition.Points.Count);
+			Assert.AreEqual (1, evt.HalfFieldPosition.Points.Count);
+			Assert.AreEqual (100, evt.FieldPosition.Points [0].X);
+			Assert.AreEqual (100, evt.HalfFieldPosition.Points [0].X);
 		}
 
 		[Test ()]
