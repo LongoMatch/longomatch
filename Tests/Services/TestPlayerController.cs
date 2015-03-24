@@ -24,6 +24,8 @@ using LongoMatch;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using System.Collections.Generic;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store.Playlists;
 
 namespace Tests.Services
 {
@@ -33,6 +35,9 @@ namespace Tests.Services
 		Mock<IPlayer> playerMock;
 		PlayerController player;
 		Time currentTime, streamLength;
+		TimelineEvent evt;
+		PlaylistImage plImage;
+		Playlist playlist;
 		double rate;
 
 		[SetUp ()]
@@ -43,13 +48,24 @@ namespace Tests.Services
 			/* Mock properties without setter */
 			playerMock.Setup (p => p.CurrentTime).Returns (() => currentTime);
 			playerMock.Setup (p => p.StreamLength).Returns (() => streamLength);
+			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, true);
+			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, false);
 
 			var mtk = Mock.Of<IMultimediaToolkit> (m => m.GetPlayer () == playerMock.Object);
 			Config.MultimediaToolkit = mtk;
 
+			var ftk = new Mock<IGUIToolkit> ();
+			ftk.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
+			Config.GUIToolkit = ftk.Object;
+
 			Config.EventsBroker = new EventsBroker ();
 
 			player = new PlayerController ();
+			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200) };
+			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5));
+			playlist = new Playlist ();
+			playlist.Elements.Add (new PlaylistPlayElement (evt));
+			playlist.Elements.Add (plImage);
 		}
 
 		[Test ()]
@@ -98,6 +114,15 @@ namespace Tests.Services
 			Assert.IsFalse (player.Opened);
 			player.Open (new MediaFileSet ());
 			Assert.IsTrue (player.Opened);
+		}
+
+		[Test ()]
+		public void Dispose ()
+		{
+			player.Dispose ();
+			playerMock.Verify (p => p.Dispose (), Times.Once ());
+			Assert.IsTrue (player.IgnoreTicks);
+			Assert.IsNull (player.FileSet);
 		}
 
 		[Test ()]
@@ -152,6 +177,64 @@ namespace Tests.Services
 			Assert.AreEqual ((float)320 / 240, par);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
+		}
+
+		[Test ()]
+		public void TestPlayPause ()
+		{
+			bool loadSent = false;
+			bool playing = false;
+			FrameDrawing drawing = null;
+
+
+			player.PlaybackStateChangedEvent += (p) => {
+				playing = p;
+			};
+			player.LoadDrawingsEvent += (f) => {
+				loadSent = true;
+				drawing = f;
+			};
+
+			/* Start playing */
+			player.Play ();
+			Assert.IsTrue (loadSent);
+			Assert.IsNull (drawing);
+			playerMock.Verify (p => p.Play (), Times.Once ());
+			Assert.IsTrue (player.Playing);
+			Assert.IsTrue (playing);
+
+			/* Go to pause */
+			loadSent = false;
+			player.Pause ();
+			Assert.IsFalse (loadSent);
+			Assert.IsNull (drawing);
+			playerMock.Verify (p => p.Pause (), Times.Once ());
+			Assert.IsFalse (player.Playing);
+			Assert.IsFalse (playing);
+
+			/* Check now with a still image loaded */
+			playerMock.ResetCalls ();
+			player.LoadPlaylistEvent (playlist, plImage);
+			player.Play ();
+			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Pause (), Times.Once ());
+			Assert.IsTrue (player.Playing);
+
+			/* Go to pause */
+			playerMock.ResetCalls ();
+			player.Pause ();
+			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Pause (), Times.Never ());
+			Assert.IsFalse (player.Playing);
+		}
+
+		[Test ()]
+		public void TestTogglePlay ()
+		{
+			player.TogglePlay ();
+			Assert.IsTrue (player.Playing);
+			player.TogglePlay ();
+			Assert.IsFalse (player.Playing);
 		}
 	}
 }
