@@ -101,6 +101,7 @@ namespace LongoMatch.Gui
 
 			Player = new PlayerController ();
 			Player.CamerasVisible = new List<int> { 0 };
+			Player.Step = new Time { TotalSeconds = jumpspinbutton.ValueAsInt };
 			Mode = PlayerViewOperationMode.Analysis;
 			CreateWindows ();
 			ResetGui ();
