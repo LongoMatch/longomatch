@@ -41,7 +41,7 @@
     <Compile Include="Services\FileDB.cs" />
     <Compile Include="Services\FileStorage.cs" />
     <Compile Include="Services\PlayerController.cs" />
-    <Compile Include="..\AssemblyInfo.cs">
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
