@@ -1,0 +1,10 @@
+prefix=/home/andoni/oneplay-build/dist/linux_x86_64
+exec_prefix=/home/andoni/oneplay-build/dist/linux_x86_64
+libdir=${exec_prefix}/lib
+longomatchdir=${exec_prefix}/lib/longomatch
+
+Name: LongoMatch.GUI.Multimedia
+Description: LongoMatch GTK# Multimedia UI framework for .NET
+Version: 1.0.2
+Requires: longomatch-core longomatch-drawing longomatch-drawing-cairo longomatch-gui-helpers longomatch-multimedia longomatch-services
+Libs: -r:${longomatchdir}/LongoMatch.GUI.Multimedia.dll

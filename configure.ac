@@ -152,7 +152,10 @@ pkgconfig/longomatch-drawing.pc
 pkgconfig/longomatch-drawing-cairo.pc
 pkgconfig/longomatch-gui.pc
 pkgconfig/longomatch-gui-helpers.pc
+pkgconfig/longomatch-gui-multimedia.pc
+pkgconfig/longomatch-multimedia.pc
 pkgconfig/longomatch-oxyplot.pc
+pkgconfig/longomatch-services.pc
 
 AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile

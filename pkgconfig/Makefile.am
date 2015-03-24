@@ -5,6 +5,9 @@ pcfiles = \
 	longomatch-drawing-cairo.pc \
 	longomatch-gui.pc \
 	longomatch-gui-helpers.pc \
+	longomatch-gui-multimedia.pc \
+	longomatch-multimedia.pc \
+	longomatch-services.pc \
 	longomatch-oxyplot.pc
 
 pkgconfigdir = $(libdir)/pkgconfig
