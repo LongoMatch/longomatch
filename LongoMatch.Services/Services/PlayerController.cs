@@ -620,6 +620,7 @@ namespace LongoMatch.Services
 				try {
 					Log.Debug ("Opening new file set " + fileSet);
 					player.Open (fileSet);
+					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					//We handle this error async
