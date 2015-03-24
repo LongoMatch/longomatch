@@ -39,6 +39,7 @@ SOURCES = Core/Common/TestColor.cs \
 	Core/Store/TestTimer.cs \
 	DB/TestStorage.cs \
 	Services/TestFileStorage.cs \
+	Services/TestPlayerController.cs \
 	Services/TestRenderingJobsManager.cs \
 	Services/TestTemplatesService.cs \
 	Utils.cs
