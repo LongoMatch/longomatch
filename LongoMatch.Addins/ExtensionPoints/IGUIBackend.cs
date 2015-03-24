@@ -22,10 +22,8 @@ using LongoMatch.Core.Interfaces.GUI;
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IGUIBackend
+	public interface IGUIBackend: ILongoMatchPlugin
 	{
-		string Name { get; }
-
 		void RegisterElements (IGUIToolkit gtoolkit);
 	}
 }
