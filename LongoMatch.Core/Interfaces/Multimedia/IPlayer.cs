@@ -58,8 +58,6 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		void Stop ();
 
-		void Close ();
-
 		bool Seek (Time time, bool accurate = false, bool synchronous = false);
 
 		bool SeekToNextFrame ();
@@ -76,6 +74,8 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event EosHandler Eos;
 		event StateChangeHandler StateChange;
 		event ReadyToSeekHandler ReadyToSeek;
+
+		void Close ();
 
 		bool Open (List<string> mrls);
 

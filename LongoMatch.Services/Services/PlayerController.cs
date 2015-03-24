@@ -181,9 +181,16 @@ namespace LongoMatch.Services
 
 		public void Dispose ()
 		{
+			Log.Debug ("Disposing PlayerController");
 			IgnoreTicks = true;
 			timer.Dispose ();
+			player.Error -= HandleError;
+			player.StateChange -= HandleStateChange;
+			player.Eos -= HandleEndOfStream;
+			player.ReadyToSeek -= HandleReadyToSeek;
+			ReconfigureTimeout (0);
 			player.Dispose ();
+			FileSet = null;
 		}
 
 		public void Ready ()
@@ -238,18 +245,6 @@ namespace LongoMatch.Services
 				player.Pause ();
 			}
 			Playing = false;
-		}
-
-		public void Close ()
-		{
-			Log.Debug ("Close");
-			player.Error -= HandleError;
-			player.StateChange -= HandleStateChange;
-			player.Eos -= HandleEndOfStream;
-			player.ReadyToSeek -= HandleReadyToSeek;
-			ReconfigureTimeout (0);
-			player.Dispose ();
-			FileSet = null;
 		}
 
 		public void TogglePlay ()
