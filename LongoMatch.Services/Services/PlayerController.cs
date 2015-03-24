@@ -38,6 +38,7 @@ namespace LongoMatch.Services
 		public event VolumeChangedHandler VolumeChangedEvent;
 		public event ElementLoadedHandler ElementLoadedEvent;
 		public event PARChangedHandler PARChangedEvent;
+		public event MediaFileSetLoadedHandler MediaFileSetLoadedEvent;
 
 		const int TIMEOUT_MS = 20;
 		const int SCALE_FPS = 25;
@@ -530,6 +531,13 @@ namespace LongoMatch.Services
 			}
 		}
 
+		void EmitMediaFileSetLoaded (MediaFileSet fileSet)
+		{
+			if (MediaFileSetLoadedEvent != null) {
+				EmitMediaFileSetLoaded (fileSet);
+			}
+		}
+
 		#endregion
 
 		#region Private Properties
@@ -595,6 +603,7 @@ namespace LongoMatch.Services
 		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
 		{
 			Reset ();
+			EmitMediaFileSetLoaded (fileSet);
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
