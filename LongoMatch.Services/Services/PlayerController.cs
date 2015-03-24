@@ -204,8 +204,8 @@ namespace LongoMatch.Services
 			} else {
 				Log.Debug ("Player is not ready, delaying ...");
 				delayedOpen = true;
+				FileSet = fileSet;
 			}
-			FileSet = fileSet;
 		}
 
 		public void Stop ()
@@ -603,7 +603,6 @@ namespace LongoMatch.Services
 			EmitMediaFileSetLoaded (fileSet);
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
-				FileSet = fileSet;
 				foreach (int index in CamerasVisible) {
 					try {
 						MediaFile file = fileSet [index];
