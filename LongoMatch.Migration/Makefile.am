@@ -5,7 +5,8 @@ BUILD_DIR = bin/migration
 
 LINK = $(REF_DEP_LONGOMATCH_MIGRATION)
 
-SOURCES = Common/Color.cs \
+SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Common/Color.cs \
 	Common/Config.cs \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
@@ -46,7 +47,6 @@ SOURCES = Common/Color.cs \
 	DataBase.cs \
 	MainWindow.cs \
 	Program.cs \
-	Properties/AssemblyInfo.cs \
 	gtk-gui/MainWindow.cs \
 	gtk-gui/generated.cs
 
