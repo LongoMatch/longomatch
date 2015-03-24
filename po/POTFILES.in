@@ -141,6 +141,7 @@ LongoMatch.Plugins.Stats/StatsUIPlugin.cs
 LongoMatch.Services/Services/CoreServices.cs
 LongoMatch.Services/Services/DataBaseManager.cs
 LongoMatch.Services/Services/EventsManager.cs
+LongoMatch.Services/Services/PlayerController.cs
 LongoMatch.Services/Services/PlaylistManager.cs
 LongoMatch.Services/Services/ProjectsManager.cs
 LongoMatch.Services/Services/RenderingJobsManager.cs
