@@ -51,12 +51,10 @@ namespace LongoMatch.Services
 		Time streamLenght, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
 		double rate;
-		MediaFile activeFile;
 		Seeker seeker;
 		Segment loadedSegment;
 		object[] pendingSeek;
 		Timer timer;
-		IntPtr windowHandle;
 
 		struct Segment
 		{
@@ -101,18 +99,17 @@ namespace LongoMatch.Services
 		}
 
 		public List<IntPtr> WindowHandles {
-			set {
-				throw new NotImplementedException ();
-			}
+			set;
+			protected get;
 		}
 
 		public IntPtr WindowHandle {
 			set {
-				windowHandle = value;
+				WindowHandles = new List<IntPtr> { value };
 				player.WindowHandle = value;
 			}
 			get {
-				return windowHandle;
+				return WindowHandles [0];
 			}
 		}
 
@@ -607,14 +604,21 @@ namespace LongoMatch.Services
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
-				activeFile = fileSet.First ();
-				if (activeFile.VideoHeight != 0) {
-					EmitPARChanged (WindowHandle, (float)(activeFile.VideoWidth * activeFile.Par / activeFile.VideoHeight));
-				} else {
-					EmitPARChanged (WindowHandle, 1);
+				foreach (int index in CamerasVisible) {
+					try {
+						MediaFile file = fileSet [index];
+						IntPtr windowHandle = WindowHandles [index];
+						if (file.VideoHeight != 0) {
+							EmitPARChanged (windowHandle, (float)(file.VideoWidth * file.Par / file.VideoHeight));
+						} else {
+							EmitPARChanged (windowHandle, 1);
+						}
+					} catch (Exception ex) {
+						Log.Exception (ex);
+					}
 				}
 				try {
-					Log.Debug ("Opening new file " + activeFile.FilePath);
+					Log.Debug ("Opening new file set " + fileSet);
 					player.Open (fileSet);
 				} catch (Exception ex) {
 					Log.Exception (ex);

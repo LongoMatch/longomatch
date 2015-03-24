@@ -50,8 +50,6 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		double Rate { set; }
 
-		List<IntPtr> WindowHandles { set; }
-
 		IntPtr WindowHandle { set; }
 
 		void Play ();

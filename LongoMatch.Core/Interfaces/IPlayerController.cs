@@ -81,6 +81,11 @@ namespace LongoMatch.Core.Interfaces
 		List<int> CamerasVisible { get; set; }
 
 		/// <summary>
+		/// List of window handles set by the view as view ports.
+		/// </summary>
+		List<IntPtr> WindowHandles { set; }
+
+		/// <summary>
 		/// Open the specified fileSet.
 		/// </summary>
 		void Open (MediaFileSet fileSet);
@@ -159,6 +164,10 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		void Previous ();
 
+		/// <summary>
+		/// The view should call it when it's ready to start playback,
+		/// once it has set a valid window handle to start rendering.
+		/// </summary>
 		void Ready ();
 	}
 }
