@@ -36,6 +36,8 @@ namespace LongoMatch.Video.Player
 		public event ReadyToSeekHandler ReadyToSeek;
 		public event EosHandler Eos;
 
+		double rate;
+
 		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr lgm_video_player_get_type ();
 
@@ -114,6 +116,7 @@ namespace LongoMatch.Video.Player
 
 		void Init (PlayerUseType type)
 		{
+			rate = 1;
 			IntPtr error = IntPtr.Zero;
 			Raw = lgm_video_player_new ((int)type, out error);
 			if (error != IntPtr.Zero)
@@ -431,6 +434,10 @@ namespace LongoMatch.Video.Player
 		public double Rate {
 			set {
 				lgm_video_player_set_rate (Handle, value);
+				rate = value;
+			}
+			get {
+				return rate;
 			}
 		}
 

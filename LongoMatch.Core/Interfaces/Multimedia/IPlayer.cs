@@ -48,7 +48,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		bool Playing { get; }
 
-		double Rate { set; }
+		double Rate { get; set; }
 
 		IntPtr WindowHandle { set; }
 

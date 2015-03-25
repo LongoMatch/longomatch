@@ -52,7 +52,6 @@ namespace LongoMatch.Services
 
 		Time streamLenght, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
-		double rate;
 		Seeker seeker;
 		Segment loadedSegment;
 		PendingSeek pendingSeek;
@@ -144,12 +143,11 @@ namespace LongoMatch.Services
 
 		public double Rate {
 			set {
-				rate = value;
 				player.Rate = value;
 				Log.Debug ("Rate set to " + value);
 			}
 			get {
-				return rate;
+				return player.Rate;
 			}
 		}
 
