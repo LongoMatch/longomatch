@@ -1,4 +1,3 @@
-prefix=/home/andoni/oneplay-build/dist/linux_x86_64
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
