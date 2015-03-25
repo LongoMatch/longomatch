@@ -31,7 +31,7 @@ using System.IO;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: ITemplate, IDeserializationCallback
+	public class Team: ITemplate
 	{
 		private const int MAX_WIDTH = 100;
 		private const int MAX_HEIGHT = 100;
@@ -39,9 +39,7 @@ namespace LongoMatch.Core.Store.Templates
 		public Team ()
 		{
 			TeamName = Catalog.GetString ("Team");
-			if (Formation == null) {
-				FormationStr = "1-4-3-3";
-			}
+			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
 			List = new List<Player> ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
@@ -55,6 +53,7 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [0] = Color.Blue1;
 			Colors [1] = Color.Red1;
 		}
+
 
 		public Guid ID {
 			get;
@@ -174,17 +173,6 @@ namespace LongoMatch.Core.Store.Templates
 				}
 			}
 		}
-
-		#region IDeserializationCallback implementation
-
-		void IDeserializationCallback.OnDeserialization (object sender)
-		{
-			if (Formation == null) {
-				FormationStr = "1-4-3-3";
-			}
-		}
-
-		#endregion
 
 		public void RemovePlayers (List<Player> players, bool delete)
 		{
