@@ -260,7 +260,7 @@ namespace LongoMatch.Gui.Panel
 				
 			deletedProjects = new List<ProjectDescription> ();
 			foreach (ProjectDescription selectedProject in selectedProjects) {
-				if (openedProject != null && openedProject.ID == selectedProject.ID) {
+				if (openedProject != null && openedProject.ID == selectedProject.ProjectID) {
 					MessagesHelpers.WarningMessage (this,
 						Catalog.GetString ("This Project is actually in use.") + "\n" +
 						Catalog.GetString ("Close it first to allow its removal from the database"));
@@ -269,10 +269,10 @@ namespace LongoMatch.Gui.Panel
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" + selectedProject.Title;
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
-					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
+					if (loadedProject != null && loadedProject.ID == selectedProject.ProjectID) {
 						loadedProject = null;
 					}
-					DB.RemoveProject (selectedProject.ID);
+					DB.RemoveProject (selectedProject.ProjectID);
 					deletedProjects.Add (selectedProject);
 				}
 			}
