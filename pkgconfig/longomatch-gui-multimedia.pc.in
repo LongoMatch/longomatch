@@ -1,7 +1,8 @@
 prefix=/home/andoni/oneplay-build/dist/linux_x86_64
-exec_prefix=/home/andoni/oneplay-build/dist/linux_x86_64
-libdir=${exec_prefix}/lib
-longomatchdir=${exec_prefix}/lib/longomatch
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+longomatchdir=@libdir@/@PACKAGE@
 
 Name: LongoMatch.GUI.Multimedia
 Description: LongoMatch GTK# Multimedia UI framework for .NET
