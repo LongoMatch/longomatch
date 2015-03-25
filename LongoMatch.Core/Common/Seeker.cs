@@ -1,17 +1,19 @@
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
-using Timer = System.Threading.Timer;
+using System;
 using System.Threading;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store;
+using Timer = System.Threading.Timer;
 
 namespace LongoMatch.Core.Common
 {
-	public class Seeker
+	public class Seeker: IDisposable
 	{
 		public event SeekHandler SeekEvent;
 
 		uint timeout;
 		bool pendingSeek;
 		bool waiting;
+		bool disposed;
 		Time start;
 		float rate;
 		SeekType seekType;
@@ -21,9 +23,20 @@ namespace LongoMatch.Core.Common
 		{
 			timeout = timeoutMS;
 			pendingSeek = false;
+			disposed = false;
 			seekType = SeekType.None;
 			timer = new Timer (HandleSeekTimeout);
 		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+			disposed = true;
+			timer.Dispose ();
+		}
+
+		#endregion
 
 		public void Seek (SeekType seekType, Time start = null, float rate = 1)
 		{
@@ -43,6 +56,10 @@ namespace LongoMatch.Core.Common
 
 		void HandleSeekTimeout (object state)
 		{
+			if (disposed) {
+				return;
+			}
+
 			waiting = false;
 			if (pendingSeek) {
 				if (seekType != SeekType.None) {

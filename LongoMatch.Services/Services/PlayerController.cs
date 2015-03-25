@@ -202,6 +202,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Disposing PlayerController");
 			IgnoreTicks = true;
+			seeker.Dispose ();
 			timer.Dispose ();
 			player.Error -= HandleError;
 			player.StateChange -= HandleStateChange;
