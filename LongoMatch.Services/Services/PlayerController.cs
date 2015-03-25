@@ -550,7 +550,7 @@ namespace LongoMatch.Services
 		void EmitMediaFileSetLoaded (MediaFileSet fileSet)
 		{
 			if (MediaFileSetLoadedEvent != null) {
-				EmitMediaFileSetLoaded (fileSet);
+				MediaFileSetLoadedEvent (fileSet);
 			}
 		}
 

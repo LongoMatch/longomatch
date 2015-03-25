@@ -77,6 +77,7 @@ namespace Tests.Services
 		{
 			playerMock.ResetCalls ();
 			player = new PlayerController ();
+			playlist.SetActive (playlist.Elements [0]);
 		}
 
 		[TearDown ()]
@@ -158,6 +159,7 @@ namespace Tests.Services
 			int parCount = 0, timeCount = 0;
 			bool multimediaError = false;
 			Time curTime = null, duration = null;
+			MediaFileSet fileSet = null;
 
 			player.PARChangedEvent += (w, p) => {
 				par = p;
@@ -167,6 +169,9 @@ namespace Tests.Services
 				curTime = c;
 				duration = d;
 				timeCount++;
+			};
+			player.MediaFileSetLoadedEvent += (fileset) => {
+				fileSet = fileset;
 			};
 
 			/* Open but view is not ready */
@@ -198,6 +203,7 @@ namespace Tests.Services
 			Assert.AreEqual ((float)320 / 240, par);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
+			Assert.AreEqual (fileSet, mfs);
 		}
 
 		[Test ()]
@@ -512,6 +518,27 @@ namespace Tests.Services
 			playlist.Next ();
 			player.Previous ();
 			Assert.AreEqual (1, prevSent);
+		}
+
+		[Test ()]
+		public void TestEOS ()
+		{
+			PreparePlayer ();
+			playerMock.Raise (p => p.Eos += null);
+			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
+			playerMock.Verify (p => p.Pause (), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestError ()
+		{
+			string msg = null;
+
+			Config.EventsBroker.MultimediaError += (message) => {
+				msg = message;
+			};
+			playerMock.Raise (p => p.Error += null, "error");
+			Assert.AreEqual ("error", msg);
 		}
 
 	}
