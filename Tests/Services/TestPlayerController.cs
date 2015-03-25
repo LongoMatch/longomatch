@@ -467,6 +467,53 @@ namespace Tests.Services
 			Assert.AreEqual ((double)1 / 25, player.Rate, 0.01);
 		}
 
+		[Test ()]
+		public void TestNext ()
+		{
+			int nextSent = 0;
+			PreparePlayer ();
+			Config.EventsBroker.NextPlaylistElementEvent += (p) => nextSent++;
+
+			player.Next ();
+			Assert.AreEqual (0, nextSent);
+
+			player.LoadPlaylistEvent (playlist, plImage);
+			player.Next ();
+			Assert.AreEqual (1, nextSent);
+
+			playlist.Next ();
+			Assert.IsFalse (playlist.HasNext ());
+			player.Next ();
+			Assert.AreEqual (1, nextSent);
+		}
+
+		[Test ()]
+		public void TestPrevious ()
+		{
+			int prevSent = 0;
+			currentTime = new Time (4000);
+			PreparePlayer ();
+			Config.EventsBroker.PreviousPlaylistElementEvent += (p) => prevSent++;
+
+			player.Previous ();
+			playerMock.Verify (p => p.Seek (new Time (0), true, false));
+			Assert.AreEqual (0, prevSent);
+	
+			player.LoadEvent (mfs, evt, evt.Start, false);
+			playerMock.ResetCalls ();
+			player.Previous ();
+			playerMock.Verify (p => p.Seek (evt.Start, true, false));
+			Assert.AreEqual (0, prevSent);
+
+			player.LoadPlaylistEvent (playlist, plImage);
+			playerMock.ResetCalls ();
+			player.Previous ();
+			Assert.AreEqual (0, prevSent);
+			playlist.Next ();
+			player.Previous ();
+			Assert.AreEqual (1, prevSent);
+		}
+
 	}
 }
 

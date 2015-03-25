@@ -153,7 +153,11 @@ namespace LongoMatch.Services
 
 		public Time CurrentTime {
 			get {
-				return player.CurrentTime;
+				if (StillImageLoaded) {
+					return imageLoadedTS;
+				} else {
+					return player.CurrentTime;
+				}
 			}
 		}
 
@@ -276,7 +280,9 @@ namespace LongoMatch.Services
 
 		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
 		{
-			if (!StillImageLoaded) {
+			if (StillImageLoaded) {
+				imageLoadedTS = time;
+			} else {
 				EmitLoadDrawings (null);
 				if (readyToSeek) {
 					if (throtlled) {
@@ -472,10 +478,7 @@ namespace LongoMatch.Services
 		public void Previous ()
 		{
 			Log.Debug ("Previous");
-			if (StillImageLoaded) {
-				imageLoadedTS = new Time (0);
-				Tick ();
-			} else if (loadedPlaylistElement != null) {
+			if (loadedPlaylistElement != null) {
 				if (loadedPlaylist.HasPrev ()) {
 					Config.EventsBroker.EmitPreviousPlaylistElement (loadedPlaylist);
 				}
