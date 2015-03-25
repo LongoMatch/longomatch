@@ -51,11 +51,12 @@ namespace LongoMatch.Services
 		List<IntPtr> windowHandles;
 
 		Time streamLenght, videoTS, imageLoadedTS;
-		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
+		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed;
 		Seeker seeker;
 		Segment loadedSegment;
 		PendingSeek pendingSeek;
-		Timer timer;
+		readonly Timer timer;
+		readonly ManualResetEvent TimerDisposed;
 
 		struct Segment
 		{
@@ -86,6 +87,7 @@ namespace LongoMatch.Services
 			streamLenght = new Time (0);
 			Step = new Time (5000);
 			timer = new Timer (HandleTimeout);
+			TimerDisposed = new ManualResetEvent (false);
 			ready = false;
 			CreatePlayer ();
 		}
@@ -202,17 +204,22 @@ namespace LongoMatch.Services
 
 		public void Dispose ()
 		{
-			Log.Debug ("Disposing PlayerController");
-			ReconfigureTimeout (0);
-			IgnoreTicks = true;
-			seeker.Dispose ();
-			timer.Dispose ();
-			player.Error -= HandleError;
-			player.StateChange -= HandleStateChange;
-			player.Eos -= HandleEndOfStream;
-			player.ReadyToSeek -= HandleReadyToSeek;
-			player.Dispose ();
-			FileSet = null;
+			if (!disposed) {
+				Log.Debug ("Disposing PlayerController");
+				ReconfigureTimeout (0);
+				IgnoreTicks = true;
+				seeker.Dispose ();
+				timer.Dispose (TimerDisposed);
+				TimerDisposed.WaitOne ();
+				TimerDisposed.Dispose ();
+				player.Error -= HandleError;
+				player.StateChange -= HandleStateChange;
+				player.Eos -= HandleEndOfStream;
+				player.ReadyToSeek -= HandleReadyToSeek;
+				player.Dispose ();
+				FileSet = null;
+			}
+			disposed = true;
 		}
 
 		public void Ready ()

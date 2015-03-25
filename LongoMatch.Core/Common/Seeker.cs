@@ -17,7 +17,8 @@ namespace LongoMatch.Core.Common
 		Time start;
 		float rate;
 		SeekType seekType;
-		Timer timer;
+		readonly Timer timer;
+		readonly ManualResetEvent TimerDisposed;
 
 		public Seeker (uint timeoutMS = 80)
 		{
@@ -26,14 +27,19 @@ namespace LongoMatch.Core.Common
 			disposed = false;
 			seekType = SeekType.None;
 			timer = new Timer (HandleSeekTimeout);
+			TimerDisposed = new ManualResetEvent (false);
 		}
 
 		#region IDisposable implementation
 
 		public void Dispose ()
 		{
+			if (!disposed) {
+				timer.Dispose (TimerDisposed);
+				TimerDisposed.WaitOne ();
+				TimerDisposed.Dispose ();
+			}
 			disposed = true;
-			timer.Dispose ();
 		}
 
 		#endregion
