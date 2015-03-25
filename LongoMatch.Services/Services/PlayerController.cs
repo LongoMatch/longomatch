@@ -54,13 +54,23 @@ namespace LongoMatch.Services
 		double rate;
 		Seeker seeker;
 		Segment loadedSegment;
-		object[] pendingSeek;
+		PendingSeek pendingSeek;
 		Timer timer;
 
 		struct Segment
 		{
 			public Time Start;
 			public Time Stop;
+		}
+
+		class PendingSeek
+		{
+			public Time time;
+			public float rate;
+			public bool playing;
+			public bool accurate;
+			public bool syncrhonous;
+			public bool throttled;
 		}
 
 		#region Constructors
@@ -272,7 +282,13 @@ namespace LongoMatch.Services
 					}
 				} else {
 					Log.Debug ("Delaying seek until player is ready");
-					pendingSeek = new object[3] { time, 1.0f, false };
+					pendingSeek = new PendingSeek {
+						time = time,
+						rate = 1.0f,
+						accurate = accurate,
+						syncrhonous = synchronous,
+						throttled = throtlled
+					};
 				}
 			}
 			return true;
@@ -303,7 +319,6 @@ namespace LongoMatch.Services
 				throthled = false;
 			}
 			Seek (seekPos, accurate, false, throthled);
-			EmitTimeChanged (timePos, duration);
 		}
 
 		public bool SeekToNextFrame ()
@@ -623,6 +638,7 @@ namespace LongoMatch.Services
 				try {
 					Log.Debug ("Opening new file set " + fileSet);
 					player.Open (fileSet);
+					FileSet = fileSet;
 					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -692,7 +708,12 @@ namespace LongoMatch.Services
 				}
 			} else {
 				Log.Debug ("Delaying seek until player is ready");
-				pendingSeek = new object[3] { seekTime, rate, playing };
+				pendingSeek = new PendingSeek {
+					time = seekTime,
+					rate = 1.0f,
+					playing = playing,
+					accurate = true,
+				};
 			}
 		}
 
@@ -731,8 +752,11 @@ namespace LongoMatch.Services
 		void PerformStep (Time step)
 		{
 			Time pos = CurrentTime + step;
-			if (pos.MSeconds < 0)
+			if (pos.MSeconds < 0) {
 				pos.MSeconds = 0;
+			} else if (pos >= StreamLength) {
+				pos = StreamLength;
+			}
 			Log.Debug (String.Format ("Stepping {0} seconds from {1} to {2}",
 				step, CurrentTime, pos));
 			EmitLoadDrawings (null);
@@ -840,9 +864,9 @@ namespace LongoMatch.Services
 				readyToSeek = true;
 				streamLenght = player.StreamLength;
 				if (pendingSeek != null) {
-					SetRate ((float)pendingSeek [1]);
-					player.Seek ((Time)pendingSeek [0], true);
-					if ((bool)pendingSeek [2]) {
+					SetRate (pendingSeek.rate);
+					player.Seek (pendingSeek.time, pendingSeek.accurate, pendingSeek.syncrhonous);
+					if (pendingSeek.playing) {
 						Play ();
 					}
 					pendingSeek = null;

@@ -33,6 +33,7 @@ namespace Tests.Services
 	public class TestPlayerController
 	{
 		Mock<IPlayer> playerMock;
+		MediaFileSet mfs;
 		PlayerController player;
 		Time currentTime, streamLength;
 		TimelineEvent evt;
@@ -40,8 +41,8 @@ namespace Tests.Services
 		Playlist playlist;
 		double rate;
 
-		[SetUp ()]
-		public void Setup ()
+		[TestFixtureSetUp ()]
+		public void FixtureSetup ()
 		{
 			playerMock = new Mock<IPlayer> ();
 			playerMock.SetupAllProperties ();
@@ -60,12 +61,31 @@ namespace Tests.Services
 
 			Config.EventsBroker = new EventsBroker ();
 
-			player = new PlayerController ();
+			mfs = new MediaFileSet ();
+			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
+			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
+
 			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200) };
 			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5));
 			playlist = new Playlist ();
 			playlist.Elements.Add (new PlaylistPlayElement (evt));
 			playlist.Elements.Add (plImage);
+		}
+
+		[SetUp ()]
+		public void Setup ()
+		{
+			playerMock.ResetCalls ();
+			player = new PlayerController ();
+		}
+
+		void PreparePlayer ()
+		{
+			player.CamerasVisible = new List<int> { 0, 1 };
+			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			player.Ready ();
+			player.Open (mfs);
+			playerMock.Raise (p => p.ReadyToSeek += null);
 		}
 
 		[Test ()]
@@ -132,9 +152,6 @@ namespace Tests.Services
 			int parCount = 0, timeCount = 0;
 			bool multimediaError = false;
 			Time curTime = null, duration = null;
-			MediaFileSet mfs = new MediaFileSet ();
-			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
-			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 
 			player.PARChangedEvent += (w, p) => {
 				par = p;
@@ -165,15 +182,13 @@ namespace Tests.Services
 
 			/* Open with the view ready */
 			streamLength = new Time { TotalSeconds = 5000 };
-			player.CamerasVisible = new List<int> { 0, 1 };
-			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
-			player.Ready ();
-			player.Open (mfs);
+			currentTime = new Time (0);
+			PreparePlayer ();
 			playerMock.Verify (p => p.Open (mfs), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 			Assert.AreEqual (2, parCount);
-			Assert.AreEqual (1, timeCount);
+			Assert.AreEqual (2, timeCount);
 			Assert.AreEqual ((float)320 / 240, par);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
@@ -236,6 +251,130 @@ namespace Tests.Services
 			player.TogglePlay ();
 			Assert.IsFalse (player.Playing);
 		}
+
+		[Test ()]
+		public void TestSeek ()
+		{
+			int drawingsCount = 0;
+			int timeChanged = 0;
+			Time curTime = new Time (0);
+			Time strLenght = new Time (0);
+
+			player.TimeChangedEvent += (c, d, s) => {
+				timeChanged++;
+				curTime = c;
+				strLenght = d;
+			};
+			player.LoadDrawingsEvent += (f) => drawingsCount++;
+			player.Ready ();
+			player.Open (mfs);
+			Assert.AreEqual (0, timeChanged);
+
+			/* Not ready, seek queued */
+			currentTime = new Time (2000);
+			player.Seek (currentTime, false, false, false);
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+			Assert.AreEqual (1, drawingsCount);
+			Assert.AreEqual (0, timeChanged);
+			playerMock.ResetCalls ();
+
+			/* Once ready the seek kicks in */
+			currentTime = new Time (2000);
+			playerMock.Raise (p => p.ReadyToSeek += null);
+			/* ReadyToSeek emits TimeChanged */
+			Assert.AreEqual (1, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime, false, false), Times.Once ());
+			Assert.AreEqual (1, drawingsCount);
+			Assert.AreEqual (currentTime, curTime);
+			Assert.AreEqual (strLenght, streamLength);
+			playerMock.ResetCalls ();
+
+			/* Seek when player ready to seek */
+			currentTime = new Time (4000);
+			player.Seek (currentTime, true, true, false);
+			playerMock.Verify (p => p.Seek (currentTime, true, true), Times.Once ());
+			Assert.AreEqual (2, drawingsCount);
+			Assert.AreEqual (2, timeChanged);
+			Assert.AreEqual (currentTime, curTime);
+			Assert.AreEqual (strLenght, streamLength);
+			playerMock.ResetCalls ();
+
+			currentTime = new Time (5000);
+			player.LoadPlaylistEvent (playlist, plImage);
+			player.Seek (currentTime, true, true, false);
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+			Assert.AreEqual (2, drawingsCount);
+			playerMock.ResetCalls ();
+		}
+
+		[Test ()]
+		public void TestSeekProportional ()
+		{
+			int seekPos;
+			int timeChanged = 0;
+			Time curTime = new Time (0);
+			Time strLenght = new Time (0);
+
+			streamLength = new Time { TotalSeconds = 5000 };
+			player.TimeChangedEvent += (c, d, s) => {
+				timeChanged++;
+				curTime = c;
+				strLenght = d;
+			};
+			PreparePlayer ();
+
+			/* Seek without any segment loaded */
+			seekPos = (int)(streamLength.MSeconds * 0.1); 
+			currentTime = new Time (seekPos);
+			player.Seek (0.1f);
+			playerMock.Verify (p => p.Seek (new Time (seekPos), false, false), Times.Once ());
+			Assert.IsTrue (timeChanged != 0);
+			Assert.AreEqual (seekPos, curTime.MSeconds);
+			Assert.AreEqual (strLenght.MSeconds, streamLength.MSeconds);
+
+			/* Seek with a segment loaded */
+			timeChanged = 0;
+			seekPos = (int)(evt.Start.MSeconds + evt.Duration.MSeconds * 0.5);
+			currentTime = new Time (seekPos);
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			playerMock.ResetCalls ();
+			player.Seek (0.5f);
+			playerMock.Verify (p => p.Seek (new Time (seekPos), true, false), Times.Once ());
+			Assert.IsTrue (timeChanged != 0);
+			/* current time is now relative to the loaded segment's duration */
+			Assert.AreEqual (evt.Duration * 0.5, curTime);
+			Assert.AreEqual (evt.Duration, strLenght);
+		}
+
+		[Test ()]
+		public void TestStepping ()
+		{
+			int timeChanged = 0;
+			Time curTime = new Time (0);
+			Time strLenght = new Time (0);
+
+			currentTime = new Time { TotalSeconds = 2000 };
+			streamLength = new Time { TotalSeconds = 5000 };
+			PreparePlayer ();
+			player.TimeChangedEvent += (c, d, s) => {
+				timeChanged++;
+				curTime = c;
+				strLenght = d;
+			};
+
+			player.SeekToNextFrame ();
+			playerMock.Verify (p => p.SeekToNextFrame (), Times.Once ());
+			Assert.AreEqual (1, timeChanged);
+			Assert.AreEqual (currentTime, curTime);
+			Assert.AreEqual (streamLength, strLenght);
+
+			player.SeekToPreviousFrame ();
+			playerMock.Verify (p => p.SeekToPreviousFrame (), Times.Once ());
+			Assert.AreEqual (2, timeChanged);
+			Assert.AreEqual (currentTime, curTime);
+			Assert.AreEqual (streamLength, strLenght);
+		}
+
 	}
 }
 
