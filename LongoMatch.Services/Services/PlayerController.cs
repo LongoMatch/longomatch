@@ -48,6 +48,7 @@ namespace LongoMatch.Services
 		TimelineEvent loadedEvent;
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
+		List<IntPtr> windowHandles;
 
 		Time streamLenght, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen;
@@ -110,8 +111,16 @@ namespace LongoMatch.Services
 		}
 
 		public List<IntPtr> WindowHandles {
-			set;
-			protected get;
+			set {
+				/* FIXME: handle multiple handles when IMultiplayer is implemented */
+				if (value != null) {
+					player.WindowHandle = value [0];
+				}
+				windowHandles = value;
+			}
+			protected get {
+				return windowHandles;
+			}
 		}
 
 		public IntPtr WindowHandle {
@@ -338,7 +347,6 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Seek to previous frame");
 			if (!StillImageLoaded) {
-				EmitLoadDrawings (null);
 				if (CurrentTime > loadedSegment.Start) {
 					seeker.Seek (SeekType.StepDown);
 				}
@@ -352,7 +360,6 @@ namespace LongoMatch.Services
 			if (StillImageLoaded) {
 				return;
 			}
-			EmitLoadDrawings (null);
 			PerformStep (Step);
 		}
 
@@ -362,7 +369,6 @@ namespace LongoMatch.Services
 			if (StillImageLoaded) {
 				return;
 			}
-			EmitLoadDrawings (null);
 			PerformStep (new Time (-Step.MSeconds));
 		}
 
@@ -759,7 +765,6 @@ namespace LongoMatch.Services
 			}
 			Log.Debug (String.Format ("Stepping {0} seconds from {1} to {2}",
 				step, CurrentTime, pos));
-			EmitLoadDrawings (null);
 			Seek (pos, true);
 		}
 
