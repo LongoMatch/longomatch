@@ -203,6 +203,7 @@ namespace LongoMatch.Services
 		public void Dispose ()
 		{
 			Log.Debug ("Disposing PlayerController");
+			ReconfigureTimeout (0);
 			IgnoreTicks = true;
 			seeker.Dispose ();
 			timer.Dispose ();
@@ -210,7 +211,6 @@ namespace LongoMatch.Services
 			player.StateChange -= HandleStateChange;
 			player.Eos -= HandleEndOfStream;
 			player.ReadyToSeek -= HandleReadyToSeek;
-			ReconfigureTimeout (0);
 			player.Dispose ();
 			FileSet = null;
 		}
