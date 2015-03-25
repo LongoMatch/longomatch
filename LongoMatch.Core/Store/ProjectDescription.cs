@@ -35,13 +35,14 @@ namespace LongoMatch.Core.Store
 		public ProjectDescription ()
 		{
 			ID = Guid.NewGuid ();
+			ProjectID = ID;
 			MatchDate = LastModified = DateTime.Now;
 		}
 
 		[OnDeserialized]
 		internal void OnDeserializedMethod (StreamingContext context)
 		{
-			// For old projects missing ProjectID 
+			// For old projects missing ProjectID
 			if (ProjectID == Guid.Empty) {
 				ProjectID = ID;
 			}
