@@ -79,6 +79,12 @@ namespace Tests.Services
 			player = new PlayerController ();
 		}
 
+		[TearDown ()]
+		public void TearDown ()
+		{
+			player.Dispose ();
+		}
+
 		void PreparePlayer ()
 		{
 			player.CamerasVisible = new List<int> { 0, 1 };
@@ -350,6 +356,7 @@ namespace Tests.Services
 		public void TestStepping ()
 		{
 			int timeChanged = 0;
+			int loadDrawingsChanged = 0;
 			Time curTime = new Time (0);
 			Time strLenght = new Time (0);
 
@@ -361,18 +368,103 @@ namespace Tests.Services
 				curTime = c;
 				strLenght = d;
 			};
+			player.LoadDrawingsEvent += (f) => {
+				if (f == null) {
+					loadDrawingsChanged++;
+				}
+			};
+
+			/* Without a segment loaded */
 
 			player.SeekToNextFrame ();
 			playerMock.Verify (p => p.SeekToNextFrame (), Times.Once ());
+			Assert.AreEqual (1, loadDrawingsChanged);
 			Assert.AreEqual (1, timeChanged);
 			Assert.AreEqual (currentTime, curTime);
 			Assert.AreEqual (streamLength, strLenght);
 
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
 			player.SeekToPreviousFrame ();
 			playerMock.Verify (p => p.SeekToPreviousFrame (), Times.Once ());
-			Assert.AreEqual (2, timeChanged);
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
 			Assert.AreEqual (currentTime, curTime);
 			Assert.AreEqual (streamLength, strLenght);
+
+			playerMock.ResetCalls ();
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.StepForward ();
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime + player.Step, true, false), Times.Once ());
+
+			playerMock.ResetCalls ();
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.StepBackward ();
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime - player.Step, true, false), Times.Once ());
+
+			/* Now with an image loaded */
+			playerMock.ResetCalls ();
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.LoadPlaylistEvent (playlist, plImage);
+			player.SeekToNextFrame ();
+			playerMock.Verify (p => p.SeekToNextFrame (), Times.Never ());
+			Assert.AreEqual (0, loadDrawingsChanged);
+			Assert.AreEqual (0, timeChanged);
+
+			player.SeekToPreviousFrame ();
+			playerMock.Verify (p => p.SeekToPreviousFrame (), Times.Never ());
+			Assert.AreEqual (0, loadDrawingsChanged);
+			Assert.AreEqual (0, timeChanged);
+
+			player.StepForward ();
+			Assert.AreEqual (0, loadDrawingsChanged);
+			Assert.AreEqual (0, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime + player.Step, true, false), Times.Never ());
+
+			player.StepBackward ();
+			Assert.AreEqual (0, loadDrawingsChanged);
+			Assert.AreEqual (0, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime - player.Step, true, false), Times.Never ());
+		}
+
+		[Test ()]
+		public void TestChangeFramerate ()
+		{
+			float rate = 1;
+
+			playerMock.Object.Rate = 1;
+			player.PlaybackRateChangedEvent += (r) => rate = r;
+
+			for (int i = 1; i < 5; i++) {
+				player.FramerateUp ();
+				playerMock.VerifySet (p => p.Rate = 1 + i);
+				Assert.AreEqual (1 + i, rate);
+			}
+			/* Max is 5 */
+			Assert.AreEqual (5, player.Rate);
+			player.FramerateUp ();
+			playerMock.VerifySet (p => p.Rate = 5);
+			Assert.AreEqual (5, rate);
+
+			player.Rate = 1;
+			for (int i = 1; i < 25; i++) {
+				player.FramerateDown ();
+				double _rate = player.Rate;
+				playerMock.VerifySet (p => p.Rate = _rate);
+				Assert.AreEqual (1 - (double)i / 25, rate, 0.01);
+			}
+
+			/* Min is 1 / 30 */
+			Assert.AreEqual ((double)1 / 25, player.Rate, 0.01);
+			player.FramerateDown ();
+			Assert.AreEqual ((double)1 / 25, player.Rate, 0.01);
 		}
 
 	}
