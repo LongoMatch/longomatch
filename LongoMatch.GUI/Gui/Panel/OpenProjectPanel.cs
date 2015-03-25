@@ -26,7 +26,7 @@ using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class OpenProjectPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
@@ -43,12 +43,12 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
-		public List<ProjectDescription> Projects{
+		public List<ProjectDescription> Projects {
 			set {
 				projectlistwidget.Fill (value);
 			}
 		}
-		
+
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (BackEvent != null)
@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleProjectSelected (ProjectDescription project)
 		{
-			Config.EventsBroker.EmitOpenProjectID  (project.ID);
+			Config.EventsBroker.EmitOpenProjectID (project.ProjectID);
 		}
 	}
 }
