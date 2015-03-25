@@ -206,7 +206,7 @@ namespace LongoMatch.Gui.Panel
 			selectedProjects = projects;
 			if (projects.Count == 1) {
 				try {
-					LoadProject (DB.GetProject (projects [0].ID));
+					LoadProject (DB.GetProject (projects [0].ProjectID));
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					Config.GUIToolkit.ErrorMessage (ex.Message, this);

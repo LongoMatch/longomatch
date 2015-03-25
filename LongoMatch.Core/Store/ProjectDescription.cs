@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
@@ -35,6 +36,15 @@ namespace LongoMatch.Core.Store
 		{
 			ID = Guid.NewGuid ();
 			MatchDate = LastModified = DateTime.Now;
+		}
+
+		[OnDeserialized]
+		internal void OnDeserializedMethod (StreamingContext context)
+		{
+			// For old projects missing ProjectID 
+			if (ProjectID == Guid.Empty) {
+				ProjectID = ID;
+			}
 		}
 
 		/// <summary>
