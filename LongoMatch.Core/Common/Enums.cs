@@ -427,10 +427,4 @@ namespace LongoMatch.Core.Common
 		LiveAnalysisReview,
 		Analysis,
 	}
-
-	public enum PlayerControllerType
-	{
-		Simple,
-		Multiple
-	}
 }
