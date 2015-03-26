@@ -30,41 +30,42 @@ using LongoMatch.Video.Common;
 namespace LongoMatch.Gui.Dialog
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(false)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (false)]
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
 	{
 		private FramesSeriesCapturer capturer;
 
-		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
+		public FramesCaptureProgressDialog (FramesSeriesCapturer capturer)
 		{
-			this.Build();
+			this.Build ();
 			this.Deletable = false;
 			this.capturer = capturer;
 			capturer.Progress += Update;
-			capturer.Start();
+			capturer.Start ();
 		}
 
-		protected virtual void Update(int actual, int total, LongoMatch.Core.Common.Image frame) {
-			if(actual <= total) {
-				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
-				progressbar.Fraction = (double)actual/(double)total;
-				if(frame != null) {
-					if(image.Pixbuf != null)
-						image.Pixbuf.Dispose();
+		protected virtual void Update (int actual, int total, LongoMatch.Core.Common.Image frame)
+		{
+			if (actual <= total) {
+				progressbar.Text = Catalog.GetString ("Capturing frame: ") + actual + "/" + total;
+				progressbar.Fraction = (double)actual / (double)total;
+				if (frame != null) {
+					if (image.Pixbuf != null)
+						image.Pixbuf.Dispose ();
 					image.Pixbuf = frame.Value;
 				}
 			}
-			if(actual == total) {
-				progressbar.Text= Catalog.GetString("Done");
+			if (actual == total) {
+				progressbar.Text = Catalog.GetString ("Done");
 				cancelbutton.Visible = false;
 				okbutton.Visible = true;
 			}
 		}
 
-		protected virtual void OnButtonCancelClicked(object sender, System.EventArgs e)
+		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
 		{
-			capturer.Cancel();
+			capturer.Cancel ();
 		}
 	}
 }

@@ -28,31 +28,33 @@ namespace LongoMatch.Gui.Dialog
 	public partial class RenderingJobsDialog : Gtk.Dialog
 	{
 		IRenderingJobsManager manager;
-		
+
 		public RenderingJobsDialog ()
 		{
 			this.Build ();
 			this.manager = Config.RenderingJobsManger;
-			UpdateModel();
+			UpdateModel ();
 			cancelbutton.Clicked += OnCancelbuttonClicked;
 			clearbutton.Clicked += OnClearbuttonClicked;
 			retrybutton.Clicked += OnRetrybuttonClicked;
 			renderingjobstreeview2.Selection.Changed += OnSelectionChanged;
 		}
-		
-		private void UpdateModel() {
-			TreeStore model = new TreeStore(typeof(Job));
+
+		private void UpdateModel ()
+		{
+			TreeStore model = new TreeStore (typeof(Job));
 			
 			foreach (Job job in manager.Jobs)
-				model.AppendValues(job);
+				model.AppendValues (job);
 			renderingjobstreeview2.Model = model;
-			QueueDraw();
+			QueueDraw ();
 		}
-		
-		private void UpdateSelection() {
+
+		private void UpdateSelection ()
+		{
 			/* FIXME: Add support for multiple selection */
 			Job job;
-			List<Job> jobs = renderingjobstreeview2.SelectedJobs();
+			List<Job> jobs = renderingjobstreeview2.SelectedJobs ();
 			
 			cancelbutton.Visible = false;
 			retrybutton.Visible = false;
@@ -60,7 +62,7 @@ namespace LongoMatch.Gui.Dialog
 			if (jobs.Count == 0)
 				return;
 			
-			job = jobs[0];
+			job = jobs [0];
 			
 			if (job.State == JobState.NotStarted ||
 			    job.State == JobState.Running)
@@ -69,31 +71,31 @@ namespace LongoMatch.Gui.Dialog
 			if (job.State == JobState.Error || job.State == JobState.Cancelled)
 				retrybutton.Visible = true;
 		}
-		
+
 		protected virtual void OnClearbuttonClicked (object sender, System.EventArgs e)
 		{
-			manager.ClearDoneJobs();
-			UpdateModel();
-			UpdateSelection();
+			manager.ClearDoneJobs ();
+			UpdateModel ();
+			UpdateSelection ();
 		}
-		
+
 		protected virtual void OnCancelbuttonClicked (object sender, System.EventArgs e)
 		{
-			manager.CancelJobs(renderingjobstreeview2.SelectedJobs());
-			UpdateSelection();
-			QueueDraw();
+			manager.CancelJobs (renderingjobstreeview2.SelectedJobs ());
+			UpdateSelection ();
+			QueueDraw ();
 		}
-		
+
 		protected virtual void OnRetrybuttonClicked (object sender, System.EventArgs e)
 		{
-			manager.RetryJobs(renderingjobstreeview2.SelectedJobs());
-			UpdateModel();
-			UpdateSelection();
+			manager.RetryJobs (renderingjobstreeview2.SelectedJobs ());
+			UpdateModel ();
+			UpdateSelection ();
 		}
-		
+
 		protected virtual void OnSelectionChanged (object sender, System.EventArgs e)
 		{
-			UpdateSelection();
+			UpdateSelection ();
 		}
 	}
 }

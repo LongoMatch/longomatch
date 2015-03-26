@@ -30,18 +30,18 @@ namespace LongoMatch.Gui.Component
 {
 
 
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayersListTreeWidget : Gtk.Bin
 	{
 
 		TreeStore team;
 
-		public PlayersListTreeWidget()
+		public PlayersListTreeWidget ()
 		{
-			this.Build();
+			this.Build ();
 			playerstreeview.NewRenderingJob += OnNewRenderingJob;
 		}
-		
+
 		public Project Project {
 			set;
 			get;
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public EventsFilter Filter {
-			set{
+			set {
 				playerstreeview.Filter = value;
 			}
 		}
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 				team.IterNext (ref piter);
 			}
 		}
-		
+
 		public void RemoveEvents (List<TimelineEvent> events)
 		{
 			TreeIter piter;
@@ -96,24 +96,25 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam(Team template, List<TimelineEvent> plays) {
-			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
+		public void SetTeam (Team template, List<TimelineEvent> plays)
+		{
+			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter> ();
 			
-			Log.Debug("Updating teams models with template:" + template);
-			team = new TreeStore(typeof(object));
+			Log.Debug ("Updating teams models with template:" + template);
+			team = new TreeStore (typeof(object));
 
-			foreach(var player in template.List) {
+			foreach (var player in template.List) {
 				/* Add a root in the tree with the option name */
-				var iter = team.AppendValues(player);
-				playersDict.Add(player, iter);
-				Log.Debug("Adding new player to the model: " + player);
+				var iter = team.AppendValues (player);
+				playersDict.Add (player, iter);
+				Log.Debug ("Adding new player to the model: " + player);
 			}
 			
 			foreach (var play in plays) {
 				foreach (var player in play.Players) {
-					if (playersDict.ContainsKey(player)) {
-						team.AppendValues(playersDict[player], new object[1] {play});
-						Log.Debug("Adding new play to player: " + player);
+					if (playersDict.ContainsKey (player)) {
+						team.AppendValues (playersDict [player], new object[1] { play });
+						Log.Debug ("Adding new play to player: " + player);
 					}
 				}
 			}
@@ -122,22 +123,23 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.Project = Project;
 		}
 
-		public void Clear() {
+		public void Clear ()
+		{
 			playerstreeview.Model = null;
 		}
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
-			Playlist playlist = new Playlist();
-			TreePath[] paths = playerstreeview.Selection.GetSelectedRows();
+			Playlist playlist = new Playlist ();
+			TreePath[] paths = playerstreeview.Selection.GetSelectedRows ();
 
-			foreach(var path in paths) {
+			foreach (var path in paths) {
 				TreeIter iter;
 				PlaylistPlayElement element;
 				
-				playerstreeview.Model.GetIter(out iter, path);
-				element = new PlaylistPlayElement (playerstreeview.Model.GetValue(iter, 0) as TimelineEvent,
-				                                   Project.Description.FileSet);
+				playerstreeview.Model.GetIter (out iter, path);
+				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as TimelineEvent,
+					Project.Description.FileSet);
 				playlist.Elements.Add (element);
 			}
 			

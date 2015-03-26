@@ -24,14 +24,14 @@ using Gdk;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class TeamsComboBox: Gtk.ComboBox
 	{
 		ListStore store;
 		CellRendererPixbuf pixrender;
 		CellRendererText texrender;
-		
+
 		public TeamsComboBox ()
 		{
 		}
@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 			SetAttributes (pixrender, "pixbuf", 0);
 			Model = store;
 		
-		} 
+		}
 
 		public Team ActiveTeam {
 			get {
@@ -79,21 +79,23 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 	}
-	
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class HomeTeamsComboBox: TeamsComboBox
 	{
-		public HomeTeamsComboBox () {
+		public HomeTeamsComboBox ()
+		{
 			Direction = TextDirection.Rtl;
 		}
 	}
-	
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class AwayTeamsComboBox: TeamsComboBox
 	{
-		public AwayTeamsComboBox () {
+		public AwayTeamsComboBox ()
+		{
 			Direction = TextDirection.Ltr;
 		}
 	}

@@ -23,7 +23,7 @@ using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class CoordinatesTagger : Gtk.Bin
 	{
 		public CoordinatesTagger ()
@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			Tagger = new PositionTagger (new WidgetWrapper (drawingarea));
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			Tagger.Dispose ();

@@ -30,15 +30,16 @@ namespace LongoMatch.Gui.Dialog
 			projectlistwidget1.SelectionMode = Gtk.SelectionMode.Single;
 			projectlistwidget1.ProjectsSelected += (projects) => {
 				if (projects != null && projects.Count == 1) {
-					Project = projects[0];
+					Project = projects [0];
 				}
 			};
 		}
 
-		public void Fill (List<ProjectDescription> projects) {
+		public void Fill (List<ProjectDescription> projects)
+		{
 			projectlistwidget1.Fill (Config.DatabaseManager.ActiveDB.GetAllProjects ());
 		}
-		
+
 		public ProjectDescription Project {
 			get;
 			set;

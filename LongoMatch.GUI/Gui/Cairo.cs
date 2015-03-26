@@ -24,65 +24,69 @@ namespace LongoMatch.Core.Common
 {
 	public class CairoUtils
 	{
-		public static void DrawRoundedRectangle(Cairo.Context gr, double x, double y,
-		                                        double width, double height, double radius,
-		                                        Cairo.Color color, Cairo.Color borderColor)
+		public static void DrawRoundedRectangle (Cairo.Context gr, double x, double y,
+		                                         double width, double height, double radius,
+		                                         Cairo.Color color, Cairo.Color borderColor)
 		{
-			gr.Save();
+			gr.Save ();
 
-			if((radius > height / 2) || (radius > width / 2))
-				radius = Math.Min(height / 2, width / 2);
+			if ((radius > height / 2) || (radius > width / 2))
+				radius = Math.Min (height / 2, width / 2);
 
-			gr.MoveTo(x, y + radius);
-			gr.Arc(x + radius, y + radius, radius, Math.PI, -Math.PI / 2);
-			gr.LineTo(x + width - radius, y);
-			gr.Arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0);
-			gr.LineTo(x + width, y + height - radius);
-			gr.Arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
-			gr.LineTo(x + radius, y + height);
-			gr.Arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
-			gr.ClosePath();
-			gr.Restore();
+			gr.MoveTo (x, y + radius);
+			gr.Arc (x + radius, y + radius, radius, Math.PI, -Math.PI / 2);
+			gr.LineTo (x + width - radius, y);
+			gr.Arc (x + width - radius, y + radius, radius, -Math.PI / 2, 0);
+			gr.LineTo (x + width, y + height - radius);
+			gr.Arc (x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
+			gr.LineTo (x + radius, y + height);
+			gr.Arc (x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
+			gr.ClosePath ();
+			gr.Restore ();
 
 			gr.LineJoin = LineJoin.Round;
 			gr.Color = borderColor;
-			gr.StrokePreserve();
+			gr.StrokePreserve ();
 			gr.Color = color;
-			gr.Fill();
+			gr.Fill ();
 		}
 
-		public static void DrawLine(Cairo.Context g, double x1, double y1,
-		                            double x2, double y2,
-		                            int width, Cairo.Color color) {
+		public static void DrawLine (Cairo.Context g, double x1, double y1,
+		                             double x2, double y2,
+		                             int width, Cairo.Color color)
+		{
 			g.Color = color;
 			g.Operator = Operator.Over;
 			g.LineWidth = width;
-			g.MoveTo(x1, y1);
-			g.LineTo(x2,y2);
-			g.Stroke();
+			g.MoveTo (x1, y1);
+			g.LineTo (x2, y2);
+			g.Stroke ();
 		}
 
-		public static void DrawTriangle(Cairo.Context g, double x, double y,
-		                                int width, int height, Cairo.Color color) {
+		public static void DrawTriangle (Cairo.Context g, double x, double y,
+		                                 int width, int height, Cairo.Color color)
+		{
 			g.Color = color;
-			g.MoveTo(x, y);
-			g.LineTo(x + width/2, y-height);
-			g.LineTo(x - width/2, y-height);
-			g.ClosePath();
-			g.Fill();
-			g.Stroke();
+			g.MoveTo (x, y);
+			g.LineTo (x + width / 2, y - height);
+			g.LineTo (x - width / 2, y - height);
+			g.ClosePath ();
+			g.Fill ();
+			g.Stroke ();
 		}
 
-		public static Cairo.Color RGBToCairoColor(Gdk.Color gdkColor) {
+		public static Cairo.Color RGBToCairoColor (Gdk.Color gdkColor)
+		{
 			return new Cairo.Color (Misc.ShortToDouble (gdkColor.Red),
-			                        Misc.ShortToDouble (gdkColor.Green),
-			                        Misc.ShortToDouble (gdkColor.Blue));
+				Misc.ShortToDouble (gdkColor.Green),
+				Misc.ShortToDouble (gdkColor.Blue));
 		}
-		
-		public static Cairo.Color ColorFromRGB (byte r, byte g, byte b) {
+
+		public static Cairo.Color ColorFromRGB (byte r, byte g, byte b)
+		{
 			return new Cairo.Color (Misc.ByteToDouble (r),
-			                        Misc.ByteToDouble (g),
-			                        Misc.ByteToDouble (b));
+				Misc.ByteToDouble (g),
+				Misc.ByteToDouble (b));
 		}
 	}
 }

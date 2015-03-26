@@ -25,18 +25,18 @@ namespace LongoMatch.Gui.Dialog
 {
 
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(false)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (false)]
 	public partial class EntryDialog : Gtk.Dialog
 	{
 
 		bool showCount;
 
-		public EntryDialog()
+		public EntryDialog ()
 		{
-			this.Build();
+			this.Build ();
 			ShowCount = false;
-			setAvailableTemplatesVisible(false);
+			setAvailableTemplatesVisible (false);
 		}
 
 		public string Text {
@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Dialog
 				playersspinbutton.Value = value;
 			}
 		}
-		
+
 		public string CountText {
 			set {
 				playerslabel.Text = value;
@@ -76,35 +76,36 @@ namespace LongoMatch.Gui.Dialog
 
 		public List<string> AvailableTemplates {
 			set {
-				if(value.Count > 0) {
-					foreach(String text in value)
-						combobox.AppendText(text);
-					setAvailableTemplatesVisible(true);
+				if (value.Count > 0) {
+					foreach (String text in value)
+						combobox.AppendText (text);
+					setAvailableTemplatesVisible (true);
 					combobox.Active = 0;
-				}
-				else
-					setAvailableTemplatesVisible(false);
+				} else
+					setAvailableTemplatesVisible (false);
 			}
 		}
 
 		public string SelectedTemplate {
 			get {
-				if(checkbutton.Active)
+				if (checkbutton.Active)
 					return combobox.ActiveText;
-				else return null;
+				else
+					return null;
 			}
 		}
 
-		private void setAvailableTemplatesVisible(bool visible) {
+		private void setAvailableTemplatesVisible (bool visible)
+		{
 			combobox.Visible = visible;
 			existentemplatelabel.Visible = visible;
 			checkbutton.Visible = visible;
 		}
 
-		protected virtual void OnCheckbuttonToggled(object sender, System.EventArgs e)
+		protected virtual void OnCheckbuttonToggled (object sender, System.EventArgs e)
 		{
 			bool active = checkbutton.Active;
-			if(ShowCount) {
+			if (ShowCount) {
 				playerslabel.Sensitive = !active;
 				playersspinbutton.Sensitive = !active;
 			}

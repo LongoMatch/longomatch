@@ -26,16 +26,17 @@ namespace LongoMatch.Gui.Dialog
 		public AboutDialog (Version version)
 		{
 			ProgramName = Config.SoftwareName;
-			Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
+			Version = String.Format ("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 			Copyright = Config.Copyright;
 			Website = Constants.WEBSITE;
 			License = Config.License;
-			Authors = new string[] {"Andoni Morales Alastruey", "Fluendo" };
+			Authors = new string[] { "Andoni Morales Alastruey", "Fluendo" };
 			TranslatorCredits = Constants.TRANSLATORS;
-			SetUrlHook(delegate(Gtk.AboutDialog dialog, string url) {
+			SetUrlHook (delegate(Gtk.AboutDialog dialog, string url) {
 				try {
-					System.Diagnostics.Process.Start(url);
-				} catch {}
+					System.Diagnostics.Process.Start (url);
+				} catch {
+				}
 			});
 		}
 	}

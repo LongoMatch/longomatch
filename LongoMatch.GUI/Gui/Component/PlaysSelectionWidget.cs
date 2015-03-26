@@ -26,7 +26,7 @@ using Helpers = LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysSelectionWidget : Gtk.Bin
 	{
 	
@@ -60,7 +60,9 @@ namespace LongoMatch.Gui.Component
 			playlistwidget.Destroy ();
 			base.OnDestroyed ();
 		}
+
 		#region Plubic Methods
+
 		public void SetProject (Project project, EventsFilter filter)
 		{
 			this.project = project;
@@ -79,7 +81,9 @@ namespace LongoMatch.Gui.Component
 		{
 			eventslistwidget.RemovePlays (plays);
 		}
+
 		#endregion
+
 		void LoadIcons ()
 		{
 			int s = StyleConf.NotebookTabIconSize;

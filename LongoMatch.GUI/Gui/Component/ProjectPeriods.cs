@@ -360,10 +360,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (sender == main_cam_audio_button) {
 				main_cam_playerbin.Player.Volume = main_cam_audio_button.Active ? 1 : 0;
-				main_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (main_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
+				main_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (main_cam_audio_button.Active ?
+					"longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
 			} else if (sender == sec_cam_audio_button) {
 				sec_cam_playerbin.Player.Volume = sec_cam_audio_button.Active ? 1 : 0;
-				sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (sec_cam_audio_button.Active ? "longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
+				sec_cam_audio_button_image.Pixbuf = Helpers.Misc.LoadIcon (sec_cam_audio_button.Active ?
+					"longomatch-control-volume-hi" : "longomatch-control-volume-off", IconSize.Button);
 			}
 		}
 
@@ -426,7 +428,8 @@ namespace LongoMatch.Gui.Component
 			HideSecondaryPlayer ();
 			switch (message) {
 			case DidacticMessage.Initial:
-				sec_cam_didactic_label.Text = Catalog.GetString ("Drag the bars in the timeline to synchronize secondary video files with the main video");
+				sec_cam_didactic_label.Text = Catalog.GetString ("Drag the bars in the timeline "
+				+ "to synchronize secondary video files with the main video");
 				break;
 			case DidacticMessage.CameraOutOfScope:
 				sec_cam_didactic_label.Text = Catalog.GetString ("Camera out of scope");
@@ -445,7 +448,8 @@ namespace LongoMatch.Gui.Component
 			if (camera == null) {
 				return false;
 			}
-			if (camera.TimeNode.Start <= timerule.CurrentTime && timerule.CurrentTime <= camera.TimeNode.Stop) {
+			if (camera.TimeNode.Start <= timerule.CurrentTime &&
+			    timerule.CurrentTime <= camera.TimeNode.Stop) {
 				return true;
 			} else {
 				return false;
@@ -457,7 +461,10 @@ namespace LongoMatch.Gui.Component
 			CameraObject camera = camerasTimeline.SelectedCamera;
 
 			if (camera != null) {
-				sec_cam_label.Markup = String.Format ("<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>", camera.MediaFile.Name, Config.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
+				sec_cam_label.Markup = String.Format (
+					"<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>",
+					camera.MediaFile.Name, Config.Style.PaletteActive.ToRGBString (false),
+					Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
 			}
 		}
 

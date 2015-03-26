@@ -37,28 +37,30 @@ namespace LongoMatch.Gui.Menus
 		EventType eventType;
 		Time time;
 		Project project;
-	
+
 		
 		public PlaysMenu ()
 		{
 			CreateMenu ();
 		}
-		
-		public void ShowListMenu (Project project, List<TimelineEvent> plays) {
+
+		public void ShowListMenu (Project project, List<TimelineEvent> plays)
+		{
 			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		public void ShowMenu (Project project, List<TimelineEvent> plays) {
+		public void ShowMenu (Project project, List<TimelineEvent> plays)
+		{
 			ShowMenu (project, plays, null, null, null, false);
 		}
-		
+
 		public void ShowTimelineMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time)
 		{
 			ShowMenu (project, plays, eventType, time, null, false);
 		}
-		
+
 		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
-		                     List<EventType> eventTypes, bool editableName)
+		                       List<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
 
@@ -126,7 +128,7 @@ namespace LongoMatch.Gui.Menus
 			
 			if (drawings.Visible) {
 				Menu drawingsMenu = new Menu ();
-				for (int i=0; i < plays[0].Drawings.Count; i++) {
+				for (int i = 0; i < plays [0].Drawings.Count; i++) {
 					int index = i;
 					MenuItem drawingItem = new MenuItem (Catalog.GetString ("Drawing ") + (i + 1));
 					MenuItem editItem = new MenuItem (Catalog.GetString ("Edit"));
@@ -156,13 +158,13 @@ namespace LongoMatch.Gui.Menus
 				MenuItem item;
 
 				foreach (Playlist pl in project.Playlists) {
-					 item = new MenuItem (pl.Name);
+					item = new MenuItem (pl.Name);
 					plMenu.Append (item);
 					item.Activated += (sender, e) => {
 						IEnumerable<IPlaylistElement> elements;
 						
 						elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
-						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList());
+						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList ());
 					}; 
 				}
 				
@@ -171,18 +173,19 @@ namespace LongoMatch.Gui.Menus
 				item.Activated += (sender, e) => {
 					IEnumerable<IPlaylistElement> elements;
 					elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
-					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList());
+					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList ());
 				}; 
 				
 				plMenu.ShowAll ();
 				addPLN.Submenu = plMenu;
 			}
 
-			Popup();
+			Popup ();
 		}
-		
-		void CreateMenu () {
-			newPlay = new MenuItem("");
+
+		void CreateMenu ()
+		{
+			newPlay = new MenuItem ("");
 			Add (newPlay);
 			newPlay.Activated += HandleNePlayActivated;
 
@@ -215,8 +218,8 @@ namespace LongoMatch.Gui.Menus
 			render.Activated += (sender, e) => EmitRenderPlaylist (plays);
 			Add (render);
 			
-			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays[0]);
+			snapshot = new MenuItem (Catalog.GetString ("Export to PGN images"));
+			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays [0]);
 			Add (snapshot);
 
 			ShowAll ();
@@ -225,14 +228,14 @@ namespace LongoMatch.Gui.Menus
 		void HandleNePlayActivated (object sender, EventArgs e)
 		{
 			Config.EventsBroker.EmitNewTag (eventType,
-			                                eventTime: time,
-			                                start: time - new Time {TotalSeconds = 10},
-			                                stop: time + new Time {TotalSeconds = 10});
+				eventTime: time,
+				start: time - new Time { TotalSeconds = 10 },
+				stop: time + new Time { TotalSeconds = 10 });
 		}
-		
+
 		void EmitRenderPlaylist (List<TimelineEvent> plays)
 		{
-			Playlist pl = new Playlist();
+			Playlist pl = new Playlist ();
 			foreach (TimelineEvent p in plays) {
 				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.FileSet));
 			}

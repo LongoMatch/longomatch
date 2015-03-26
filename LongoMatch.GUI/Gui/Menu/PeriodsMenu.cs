@@ -46,21 +46,22 @@ namespace LongoMatch.Gui.Menus
 			delitem.Visible = project != null && timer != null;
 			Popup ();
 		}
-		
+
 		void CreateMenu ()
 		{
 			additem = new MenuItem (Catalog.GetString ("Add period"));
 			additem.Activated += (sender, e) => {
 				string periodname = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
-				                                                    (project.Periods.Count + 1).ToString(),
-				                                                    this);
+					                    (project.Periods.Count + 1).ToString (),
+					                    this);
 				if (periodname != null) {
 					project.Dashboard.GamePeriods.Add (periodname);
-					Period p = new Period {Name = periodname};
+					Period p = new Period { Name = periodname };
 					p.Nodes.Add (new TimeNode {
 						Name = periodname,
-						Start = new Time {TotalSeconds = time.TotalSeconds - 10},
-						Stop = new Time {TotalSeconds = time.TotalSeconds + 10}});
+						Start = new Time { TotalSeconds = time.TotalSeconds - 10 },
+						Stop = new Time { TotalSeconds = time.TotalSeconds + 10 }
+					});
 					project.Periods.Add (p);
 					if (timertimeline != null) {
 						timertimeline.AddTimer (p);

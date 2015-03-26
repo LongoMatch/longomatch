@@ -28,8 +28,8 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class PlaysTreeView : ListTreeViewBase
 	{
 		
@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 			TreeIter childIter = childModel.AppendValues (evtTter, evt);
 			TreePath childPath = childModel.GetPath (childIter);
 			TreePath path = modelSort.ConvertChildPathToPath (
-				modelFilter.ConvertChildPathToPath (childPath));
+				                modelFilter.ConvertChildPathToPath (childPath));
 			return path;
 		}
 
@@ -104,16 +104,16 @@ namespace LongoMatch.Gui.Component
 			manager.InsertActionGroup (g, 0);
 
 			manager.AddUiFromString ("<ui>" +
-				"  <popup action='CategoryMenu'>" +
-				"    <menuitem action='EditPropAction'/>" +
-				"    <menu action='SortMenuAction'>" +
-				"      <menuitem action='SortByNameAction'/>" +
-				"      <menuitem action='SortByStartAction'/>" +
-				"      <menuitem action='SortByStopAction'/>" +
-				"      <menuitem action='SortByDurationAction'/>" +
-				"    </menu>" +
-				"  </popup>" +
-				"</ui>");
+			"  <popup action='CategoryMenu'>" +
+			"    <menuitem action='EditPropAction'/>" +
+			"    <menu action='SortMenuAction'>" +
+			"      <menuitem action='SortByNameAction'/>" +
+			"      <menuitem action='SortByStartAction'/>" +
+			"      <menuitem action='SortByStopAction'/>" +
+			"      <menuitem action='SortByDurationAction'/>" +
+			"    </menu>" +
+			"  </popup>" +
+			"</ui>");
 
 			categoriesMenu = manager.GetWidget ("/CategoryMenu") as Menu;
 
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component
 			// Dont't store categories
 			if (objecta is EventType && objectb is EventType) {
 				return int.Parse (model.GetPath (a).ToString ())
-					- int.Parse (model.GetPath (b).ToString ());
+				- int.Parse (model.GetPath (b).ToString ());
 			} else if (objecta is TimelineEvent && objectb is TimelineEvent) {
 				tna = objecta as TimelineEvent;
 				tnb = objectb as TimelineEvent;
@@ -267,7 +267,7 @@ namespace LongoMatch.Gui.Component
 			Console.WriteLine (logical + " " + expand + " " + open_all);
 			return base.OnExpandCollapseCursorRow (logical, expand, open_all);
 		}
-		
+
 		override protected bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
 			TreePath[] paths = Selection.GetSelectedRows ();

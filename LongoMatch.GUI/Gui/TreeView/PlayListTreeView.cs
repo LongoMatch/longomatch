@@ -29,8 +29,8 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
 		Project project;
@@ -95,13 +95,13 @@ namespace LongoMatch.Gui.Component
 				PlaylistVideo video = new PlaylistVideo (file);
 				int index = playlist.Elements.IndexOf (element);
 				if (!prepend) {
-					index ++;
+					index++;
 				}
 				playlist.Elements.Insert (index, video);
 				(Model as TreeStore).InsertWithValues (parent, index, video);
 			}
 		}
-		
+
 		void AddImage (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent)
 		{
 			Pixbuf pix = LongoMatch.Gui.Helpers.Misc.OpenImage (this);
@@ -110,14 +110,15 @@ namespace LongoMatch.Gui.Component
 				PlaylistImage plimage = new PlaylistImage (image, new Time (5000));
 				int index = playlist.Elements.IndexOf (element);
 				if (!prepend) {
-					index ++;
+					index++;
 				}
 				playlist.Elements.Insert (index, plimage);
 				(Model as TreeStore).InsertWithValues (parent, index, plimage);
 			}
 		}
 
-		Menu CreateExternalsMenu (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent) {
+		Menu CreateExternalsMenu (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent)
+		{
 			Menu addMenu = new Menu ();
 			MenuItem video = new MenuItem (Catalog.GetString ("External video"));
 			video.Activated += (sender, e) => AddVideo (playlist, element, prepend, parent);
@@ -141,7 +142,7 @@ namespace LongoMatch.Gui.Component
 				edit = new MenuItem (Catalog.GetString ("Edit name"));
 				edit.Activated += (sender, e) => {
 					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-					                                              pl.Title);
+						              pl.Title);
 					if (!String.IsNullOrEmpty (name)) {
 						pl.Title = name;
 					}
@@ -179,7 +180,7 @@ namespace LongoMatch.Gui.Component
 			edit = new MenuItem (Catalog.GetString ("Edit name"));
 			edit.Activated += (sender, e) => {
 				string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-				                                              playlist.Name);
+					              playlist.Name);
 				if (!String.IsNullOrEmpty (name)) {
 					playlist.Name = name;
 				}
@@ -222,7 +223,7 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			} else {
-				GetPathAtPos ((int) evnt.X, (int) evnt.Y, out pathClicked);
+				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out pathClicked);
 			}
 			return base.OnButtonPressEvent (evnt);
 		}
@@ -346,7 +347,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Selection.GetSelected (out selectedIter);
 			FillElementAndPlaylist (selectedIter, out dragSourcePlaylist,
-			                        out dragSourceElement);
+				out dragSourceElement);
 			dragStarted = true;
 			base.OnDragBegin (context);
 		}
@@ -363,7 +364,7 @@ namespace LongoMatch.Gui.Component
 			}
 			return base.OnButtonReleaseEvent (evnt);
 		}
-		
+
 		protected override void OnDragEnd (DragContext context)
 		{
 			base.OnDragEnd (context);

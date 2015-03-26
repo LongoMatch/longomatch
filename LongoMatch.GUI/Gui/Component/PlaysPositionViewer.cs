@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysPositionViewer : Gtk.Bin
 	{
 	
@@ -42,8 +42,9 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			menu = new PlaysMenu ();
 		}
-		
-		public void LoadProject (Project project, EventsFilter filter) {
+
+		public void LoadProject (Project project, EventsFilter filter)
+		{
 			this.project = project;
 			if (project != null) {
 				field.Tagger.Project = project;
@@ -60,21 +61,23 @@ namespace LongoMatch.Gui.Component
 				goal.Tagger.Filter = filter;
 			}
 		}
-		
-		public void AddPlay (TimelineEvent play) {
+
+		public void AddPlay (TimelineEvent play)
+		{
 			field.Tagger.AddPlay (play);
 			hfield.Tagger.AddPlay (play);
 			goal.Tagger.AddPlay (play);
 			QueueDraw ();
 		}
-		
-		public void RemovePlays (List<TimelineEvent> plays) {
+
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
 			field.Tagger.RemovePlays (plays);
 			hfield.Tagger.RemovePlays (plays);
 			goal.Tagger.RemovePlays (plays);
 			QueueDraw ();
 		}
-		
+
 		void HandlePlayLoaded (TimelineEvent play)
 		{
 			if (play != null) {

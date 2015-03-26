@@ -26,34 +26,34 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class WelcomePanel : Gtk.Bin
 	{
 	
-		static WelcomeButton [] buttons = {
+		static WelcomeButton[] buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
-			                   new Action (() => Config.EventsBroker.EmitNewProject (null))),
+				new Action (() => Config.EventsBroker.EmitNewProject (null))),
 			new WelcomeButton ("longomatch-project-open", Catalog.GetString ("Open"),
-			                   new Action (() => Config.EventsBroker.EmitOpenProject ())),
+				new Action (() => Config.EventsBroker.EmitOpenProject ())),
 			new WelcomeButton ("longomatch-project-import", Catalog.GetString ("Import"),
-			                   new Action (() => Config.EventsBroker.EmitImportProject ())),
+				new Action (() => Config.EventsBroker.EmitImportProject ())),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
-			                   new Action (() => Config.EventsBroker.EmitManageProjects ())),
+				new Action (() => Config.EventsBroker.EmitManageProjects ())),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nDashboards\nmanager"),
-			                   new Action (() => Config.EventsBroker.EmitManageCategories ())),
+				new Action (() => Config.EventsBroker.EmitManageCategories ())),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams\nmanager"),
-			                   new Action (() => Config.EventsBroker.EmitManageTeams ())),
+				new Action (() => Config.EventsBroker.EmitManageTeams ())),
 			                   
 		};
 		List<Widget> buttonWidgets;
 		Gtk.Image logoImage;
 		SizeGroup sizegroup;
-		
+
 		public WelcomePanel ()
 		{
 			this.Build ();
 
-			buttonWidgets = new List<Widget>();
+			buttonWidgets = new List<Widget> ();
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 			Create ();
@@ -62,10 +62,10 @@ namespace LongoMatch.Gui.Panel
 
 		uint NRows {
 			get {
-				return (uint) (buttons.Length / StyleConf.WelcomeIconsPerRow);
+				return (uint)(buttons.Length / StyleConf.WelcomeIconsPerRow);
 			}
 		}
-		
+
 		void HandlePreferencesClicked (object sender, EventArgs e)
 		{
 			Config.EventsBroker.EmitEditPreferences ();
@@ -74,13 +74,13 @@ namespace LongoMatch.Gui.Panel
 		void Create ()
 		{
 			// One extra row for our logo
-			tablewidget.NRows = (uint) NRows + 1;
+			tablewidget.NRows = (uint)NRows + 1;
 			tablewidget.NColumns = StyleConf.WelcomeIconsPerRow;
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 
 			Gtk.Image prefImage = new Gtk.Image (
-				Helpers.Misc.LoadIcon ("longomatch-preferences",
-			                            StyleConf.WelcomeIconSize, 0));
+				                      Helpers.Misc.LoadIcon ("longomatch-preferences",
+					                      StyleConf.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
@@ -88,32 +88,33 @@ namespace LongoMatch.Gui.Panel
 			// Our logo
 			logoImage = new Gtk.Image ();
 			logoImage.Pixbuf = Config.Background.Scale (StyleConf.WelcomeLogoWidth,
-			                                            StyleConf.WelcomeLogoHeight).Value;
+				StyleConf.WelcomeLogoHeight).Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
 			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,
-			                    AttachOptions.Expand | AttachOptions.Fill,
-			                    AttachOptions.Expand | AttachOptions.Fill,
-			                    0, StyleConf.WelcomeIconsVSpacing / 2);
+				AttachOptions.Expand | AttachOptions.Fill,
+				AttachOptions.Expand | AttachOptions.Fill,
+				0, StyleConf.WelcomeIconsVSpacing / 2);
 
-			for (uint i=0; i < buttons.Length; i++) {
+			for (uint i = 0; i < buttons.Length; i++) {
 				Widget b;
 				uint c, l;
 
 				c = i % StyleConf.WelcomeIconsPerRow;
 				l = i / StyleConf.WelcomeIconsPerRow + 1;
 
-				b = CreateButton (buttons[i]);
+				b = CreateButton (buttons [i]);
 				tablewidget.Attach (b, c, c + 1, l, l + 1,
-				                    AttachOptions.Expand | AttachOptions.Fill,
-				                    AttachOptions.Expand | AttachOptions.Fill,
-				                    0, StyleConf.WelcomeIconsVSpacing / 2);
+					AttachOptions.Expand | AttachOptions.Fill,
+					AttachOptions.Expand | AttachOptions.Fill,
+					0, StyleConf.WelcomeIconsVSpacing / 2);
 				buttonWidgets.Add (b);
 			}
 			
 		}
-		
-		Widget CreateButton (WelcomeButton b) {
+
+		Widget CreateButton (WelcomeButton b)
+		{
 			Button button;
 			VBox box;
 			Gtk.Image image;
@@ -124,7 +125,7 @@ namespace LongoMatch.Gui.Panel
 				Helpers.Misc.LoadIcon (b.name, StyleConf.WelcomeIconImageSize, 0));
 
 			button = new Button ();
-			button.Clicked += (sender, e) => (b.func());
+			button.Clicked += (sender, e) => (b.func ());
 			button.HeightRequest = StyleConf.WelcomeIconSize;
 			button.WidthRequest = StyleConf.WelcomeIconSize;
 			button.Add (image);
@@ -146,13 +147,15 @@ namespace LongoMatch.Gui.Panel
 			return box;
 		}
 	}
-	
-	public struct WelcomeButton {
+
+	public struct WelcomeButton
+	{
 		public string name;
 		public string text;
 		public Action func;
 
-		public WelcomeButton (string name, string text, Action func) {
+		public WelcomeButton (string name, string text, Action func)
+		{
 			this.name = name;
 			this.text = text;
 			this.func = func;

@@ -30,8 +30,8 @@ using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ProjectListWidget : Gtk.Bin
 	{
 		public event ProjectsSelectedHandler ProjectsSelected;
@@ -155,13 +155,13 @@ namespace LongoMatch.Gui.Component
 					store.SetValue (first, COL_DISPLAY_NAME, FormatDesc (description));
 					store.SetValue (first, COL_PROJECT_DESCRIPTION, description);
 					// Also update our internal list
-					projects[projects.IndexOf (pd)] = description;
+					projects [projects.IndexOf (pd)] = description;
 					break;
 				}
 				store.IterNext (ref first);
 			}
 		}
-		
+
 
 		public void ClearSearch ()
 		{
@@ -171,17 +171,17 @@ namespace LongoMatch.Gui.Component
 		static string FormatDesc (ProjectDescription pdesc)
 		{
 			string desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
-			                             pdesc.LocalName, pdesc.VisitorName, pdesc.LocalGoals,
-			                             pdesc.VisitorGoals, Catalog.GetString ("Date"),
-			                             pdesc.MatchDate.ToShortDateString (), Catalog.GetString ("Competition"),
-			                             pdesc.Competition, Catalog.GetString ("Season"), pdesc.Season);
+				              pdesc.LocalName, pdesc.VisitorName, pdesc.LocalGoals,
+				              pdesc.VisitorGoals, Catalog.GetString ("Date"),
+				              pdesc.MatchDate.ToShortDateString (), Catalog.GetString ("Competition"),
+				              pdesc.Competition, Catalog.GetString ("Season"), pdesc.Season);
 			return desc;
 		}
 
 		ListStore CreateStore ()
 		{
 			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf),
-			                       typeof(Gdk.Pixbuf), typeof(ProjectDescription));
+				typeof(Gdk.Pixbuf), typeof(ProjectDescription));
 			
 			filter = new Gtk.TreeModelFilter (store, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
@@ -200,7 +200,7 @@ namespace LongoMatch.Gui.Component
 			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
 			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
 
-			return ProjectDescription.Sort (p1, p2, (ProjectSortType) sortcombobox.Active);
+			return ProjectDescription.Sort (p1, p2, (ProjectSortType)sortcombobox.Active);
 		}
 
 		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
@@ -240,10 +240,10 @@ namespace LongoMatch.Gui.Component
 		{
 			HandleSelectionChanged (iconview.Model, iconview.SelectedItems);
 		}
-		
+
 		void HandleTreeviewSelectionChanged (object sender, EventArgs e)
 		{
-			HandleSelectionChanged (treeview.Model, treeview.Selection.GetSelectedRows());
+			HandleSelectionChanged (treeview.Model, treeview.Selection.GetSelectedRows ());
 		}
 
 		void HandleItemActivated (object o, ItemActivatedArgs args)

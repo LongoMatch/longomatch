@@ -24,7 +24,7 @@ using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class BackgroundWidget : Gtk.Bin
 	{
 		public BackgroundWidget ()
@@ -32,12 +32,12 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			drawingarea.ExposeEvent += HandleExposeEvent;
 		}
-		
+
 		public Pixbuf Background {
 			get;
 			set;
 		}
-		
+
 		void HandleExposeEvent (object o, ExposeEventArgs args)
 		{
 			Pixbuf frame;
@@ -52,25 +52,25 @@ namespace LongoMatch.Gui.Component
 			allocWidth = Allocation.Width;
 			allocHeight = Allocation.Height;
 			
-			frame = new Pixbuf  (Colorspace.Rgb, false, 8, this.Allocation.Width,
-			                     this.Allocation.Height);
+			frame = new Pixbuf (Colorspace.Rgb, false, 8, this.Allocation.Width,
+				this.Allocation.Height);
 			
-			ratio = Math.Min ((float) allocWidth / (float) width,
-				                       (float) allocHeight / (float) height); 
+			ratio = Math.Min ((float)allocWidth / (float)width,
+				(float)allocHeight / (float)height); 
 				                       
-			logoX = (int) ((allocWidth / 2) - (width * ratio / 2));
-			logoY = (int) ((allocHeight / 2) - (height * ratio / 2));
+			logoX = (int)((allocWidth / 2) - (width * ratio / 2));
+			logoY = (int)((allocHeight / 2) - (height * ratio / 2));
 
 			/* Scaling to available space */
 			Background.Composite (frame, 0, 0, allocWidth, allocHeight,
-			                      logoX, logoY, ratio, ratio,
-			                      InterpType.Bilinear, 255);
+				logoX, logoY, ratio, ratio,
+				InterpType.Bilinear, 255);
 			                       
 			/* Drawing our frame */
 			frame.RenderToDrawable (drawingarea.GdkWindow, Style.BlackGC, 0, 0,
-			                        args.Event.Area.X, args.Event.Area.Y,
-			                        args.Event.Area.Width, args.Event.Area.Height,
-			                        RgbDither.Normal, args.Event.Area.X, args.Event.Area.Y);
+				args.Event.Area.X, args.Event.Area.Y,
+				args.Event.Area.Width, args.Event.Area.Height,
+				RgbDither.Normal, args.Event.Area.X, args.Event.Area.Y);
 			frame.Dispose ();
 			return;
 		}

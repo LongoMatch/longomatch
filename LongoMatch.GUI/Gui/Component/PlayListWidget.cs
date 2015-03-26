@@ -28,8 +28,8 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		Project project;
@@ -75,21 +75,21 @@ namespace LongoMatch.Gui.Component
 
 		void HandleRowActivated (object o, RowActivatedArgs args)
 		{
-				TreeIter iter;
-				Playlist playlist;
-				IPlaylistElement element;
+			TreeIter iter;
+			Playlist playlist;
+			IPlaylistElement element;
 				
-				playlisttreeview1.Model.GetIterFromString (out iter, args.Path.ToString ());
-				var el = playlisttreeview1.Model.GetValue (iter, 0);
-				if (el is Playlist) {
-					playlist = el as Playlist;
-					element = playlist.Elements.FirstOrDefault ();
-				} else {
-					TreeIter parent;
-					playlisttreeview1.Model.IterParent (out parent, iter);
-					playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
-					element = el as IPlaylistElement;
-				}
+			playlisttreeview1.Model.GetIterFromString (out iter, args.Path.ToString ());
+			var el = playlisttreeview1.Model.GetValue (iter, 0);
+			if (el is Playlist) {
+				playlist = el as Playlist;
+				element = playlist.Elements.FirstOrDefault ();
+			} else {
+				TreeIter parent;
+				playlisttreeview1.Model.IterParent (out parent, iter);
+				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
+				element = el as IPlaylistElement;
+			}
 			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
 		}
 

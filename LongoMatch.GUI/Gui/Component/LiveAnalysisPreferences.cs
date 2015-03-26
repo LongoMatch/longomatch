@@ -24,32 +24,36 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class LiveAnalysisPreferences : Gtk.Bin
 	{
 		CheckButton rendercb, reviewcb;
-		
+
 		public LiveAnalysisPreferences ()
 		{
 			this.Build ();
 			
-			rendercb  = new CheckButton();
+			rendercb = new CheckButton ();
 			table1.Attach (rendercb, 1, 2, 0, 1,
-			               AttachOptions.Shrink,
-			               AttachOptions.Shrink, 0, 0);
+				AttachOptions.Shrink,
+				AttachOptions.Shrink, 0, 0);
 			rendercb.CanFocus = false;
-			rendercb.Show();
+			rendercb.Show ();
 			rendercb.Active = Config.AutoRenderPlaysInLive;
-			rendercb.Toggled += (sender, e) => {Config.AutoRenderPlaysInLive = rendercb.Active;};
+			rendercb.Toggled += (sender, e) => {
+				Config.AutoRenderPlaysInLive = rendercb.Active;
+			};
 			
-			reviewcb  = new CheckButton();
+			reviewcb = new CheckButton ();
 			table1.Attach (reviewcb, 1, 2, 2, 3,
-			               AttachOptions.Shrink,
-			               AttachOptions.Shrink, 0, 0);
+				AttachOptions.Shrink,
+				AttachOptions.Shrink, 0, 0);
 			reviewcb.CanFocus = false;
-			reviewcb.Show();
+			reviewcb.Show ();
 			reviewcb.Active = Config.ReviewPlaysInSameWindow;
-			reviewcb.Toggled += (sender, e) => {Config.ReviewPlaysInSameWindow = reviewcb.Active;};
+			reviewcb.Toggled += (sender, e) => {
+				Config.ReviewPlaysInSameWindow = reviewcb.Active;
+			};
 			
 			mediafilechooser1.FileChooserMode = FileChooserMode.Directory;
 			mediafilechooser1.CurrentPath = Config.AutoRenderDir;

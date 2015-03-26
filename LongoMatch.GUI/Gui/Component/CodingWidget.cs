@@ -29,7 +29,7 @@ using LongoMatch.GUI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class CodingWidget : Gtk.Bin
 	{
 		TeamTagger teamtagger;
@@ -78,7 +78,8 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeletedEvent;
 			Config.EventsBroker.TimerNodeAddedEvent += HandleTimerNodeAddedEvent;
-			Config.EventsBroker.EventEditedEvent += HandleEventEdited;;
+			Config.EventsBroker.EventEditedEvent += HandleEventEdited;
+			;
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			
 			buttonswidget.Mode = TagMode.Free;
@@ -154,7 +155,7 @@ namespace LongoMatch.Gui.Component
 		{
 			teamtagger.Select (player);
 		}
-		
+
 		public void TagTeam (TeamType team)
 		{
 			teamtagger.Select (team);
@@ -171,7 +172,7 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Mode = TagMode.Predefined;
 			teamtagger.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-			                      project.Dashboard.FieldBackground);
+				project.Dashboard.FieldBackground);
 			teamtagger.CurrentTime = new Time (0);
 			if (projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
@@ -225,7 +226,7 @@ namespace LongoMatch.Gui.Component
 
 		void SelectPage (Widget widget)
 		{
-			for (int i=0; i < notebook.NPages; i++) {
+			for (int i = 0; i < notebook.NPages; i++) {
 				if (notebook.GetNthPage (i) == widget) {
 					notebook.Page = i;
 					break;
@@ -363,14 +364,14 @@ namespace LongoMatch.Gui.Component
 		{
 			timeline.AddTimerNode (timer, tn);
 		}
-		
+
 		void HandleEventEdited (TimelineEvent play)
 		{
 			if (play is SubstitutionEvent) {
 				teamtagger.Reload ();
 			}
 		}
-		
+
 		void HandleEventsDeletedEvent (List<TimelineEvent> events)
 		{
 			if (events.Count (e => e is SubstitutionEvent) != 0) {

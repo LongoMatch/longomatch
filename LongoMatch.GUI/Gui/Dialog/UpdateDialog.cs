@@ -23,18 +23,19 @@ using System;
 namespace LongoMatch.Gui.Dialog
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(false)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (false)]
 	public partial class UpdateDialog : Gtk.Dialog
 	{
 
-		public UpdateDialog()
+		public UpdateDialog ()
 		{
-			this.Build();
+			this.Build ();
 		}
 
-		public void Fill(Version version, string URL) {
-			this.label5.Text = "The new version is: LongoMatch "+version.ToString();
+		public void Fill (Version version, string URL)
+		{
+			this.label5.Text = "The new version is: LongoMatch " + version.ToString ();
 			this.label7.Text = URL;
 		}
 

@@ -27,8 +27,8 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
 
@@ -81,11 +81,11 @@ namespace LongoMatch.Gui.Component
 					if (plays.Contains (play)) {
 						removeIters.Add (child);
 					}
-				} while(model.IterNext(ref child));
-			} while(model.IterNext(ref iter));
+				} while(model.IterNext (ref child));
+			} while(model.IterNext (ref iter));
 
 			/* Remove the selected iters now */
-			for (int i=0; i < removeIters.Count; i++) {
+			for (int i = 0; i < removeIters.Count; i++) {
 				iter = removeIters [i];
 				model.Remove (ref iter);
 			}
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component
 				
 				treeview.Model.GetIter (out iter, path);
 				element = new PlaylistPlayElement (treeview.Model.GetValue (iter, 0) as TimelineEvent,
-				                                   project.Description.FileSet);
+					project.Description.FileSet);
 				playlist.Elements.Add (element);
 			}
 			

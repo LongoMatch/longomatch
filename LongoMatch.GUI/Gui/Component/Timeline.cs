@@ -28,7 +28,7 @@ using LongoMatch.Gui.Menus;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class Timeline : Gtk.Bin
 	{
 		const uint TIMEOUT_MS = 100;
@@ -101,15 +101,18 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Fit () {
+		public void Fit ()
+		{
 			focusbutton.Click ();
 		}
 
-		public void ZoomIn () {
+		public void ZoomIn ()
+		{
 			focusscale.Adjustment.Value -= focusscale.Adjustment.StepIncrement;
 		}
-		
-		public void ZoomOut () {
+
+		public void ZoomOut ()
+		{
 			focusscale.Adjustment.Value += focusscale.Adjustment.StepIncrement;
 		}
 

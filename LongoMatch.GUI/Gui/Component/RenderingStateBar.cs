@@ -20,12 +20,12 @@ using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class RenderingStateBar : Gtk.Bin, IRenderingStateBar
 	{
 		public event EventHandler Cancel;
 		public event EventHandler ManageJobs;
-		
+
 		public RenderingStateBar ()
 		{
 			this.Build ();
@@ -35,12 +35,12 @@ namespace LongoMatch.Gui.Component
 			
 			statebutton.Clicked += delegate(object sender, EventArgs e) {
 				if (ManageJobs != null)
-					ManageJobs(this, null);
+					ManageJobs (this, null);
 			};
 			
 			cancellbutton.Clicked += delegate(object sender, EventArgs e) {
 				if (Cancel != null)
-					Cancel(this, null);
+					Cancel (this, null);
 			};
 		}
 
@@ -49,19 +49,19 @@ namespace LongoMatch.Gui.Component
 				Visible = value;
 			}
 		}
-		
+
 		public string Text {
 			set {
 				statebutton.Label = value;
 			}
 		}
-		
+
 		public string ProgressText {
 			set {
 				progressbar.Text = value;
 			}
 		}
-		
+
 		public double Fraction {
 			set {
 				progressbar.Fraction = value;

@@ -25,16 +25,16 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EditCategoryDialog : Gtk.Dialog
 	{
 
-		public EditCategoryDialog(Project project, DashboardButton tagger)
+		public EditCategoryDialog (Project project, DashboardButton tagger)
 		{
-			this.Build();
+			this.Build ();
 			timenodeproperties2.Tagger = tagger;
 			timenodeproperties2.Dashboard = project.Dashboard;
 		}
 
-		public EditCategoryDialog(Project project, EventType eventType)
+		public EditCategoryDialog (Project project, EventType eventType)
 		{
-			this.Build();
+			this.Build ();
 			timenodeproperties2.EventType = eventType;
 			timenodeproperties2.Dashboard = project.Dashboard;
 		}
@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			base.OnRealized ();
 			Resize (Allocation.Width, ActionArea.Allocation.Height +
-			        timenodeproperties2.Allocation.Height);
+			timenodeproperties2.Allocation.Height);
 		}
 	}
 }

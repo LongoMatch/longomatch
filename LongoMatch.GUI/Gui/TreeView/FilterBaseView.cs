@@ -34,21 +34,22 @@ namespace LongoMatch.Gui.Component
 		protected string firstColumnName = "";
 		protected TreeStore store;
 		protected EventsFilter filter;
-		
+
 		public FilterTreeViewBase ()
 		{
-			PrepareTree();
-			CreateMenu();
+			PrepareTree ();
+			CreateMenu ();
 		}
-		
-		public virtual void SetFilter (EventsFilter filter, Project project) {
-			this.project  = project;
+
+		public virtual void SetFilter (EventsFilter filter, Project project)
+		{
+			this.project = project;
 			this.filter = filter;
-			FillTree();
+			FillTree ();
 		}
-		
+
 		public new TreeModel Model {
-			set{
+			set {
 				base.Model = value;
 				store = value as TreeStore;
 			}
@@ -56,79 +57,83 @@ namespace LongoMatch.Gui.Component
 				return base.Model;
 			}
 		}
-		
-		private void PrepareTree () {
+
+		private void PrepareTree ()
+		{
 			TreeViewColumn nameColumn = new TreeViewColumn ();
 			CellRendererText nameCell = new CellRendererText ();
-			nameColumn.Title = Catalog.GetString(firstColumnName);
+			nameColumn.Title = Catalog.GetString (firstColumnName);
 			nameColumn.PackStart (nameCell, true);
 			nameColumn.SetCellDataFunc (nameCell, new TreeCellDataFunc (RenderColumn));
  
 			TreeViewColumn filterColumn = new TreeViewColumn ();
 			CellRendererToggle filterCell = new CellRendererToggle ();
-			filterColumn.Title = Catalog.GetString("Visible");
+			filterColumn.Title = Catalog.GetString ("Visible");
 			filterCell.Toggled += HandleFilterCellToggled;
 			filterColumn.PackStart (filterCell, true);
-			filterColumn.AddAttribute(filterCell, "active", 1);
+			filterColumn.AddAttribute (filterCell, "active", 1);
 
 			AppendColumn (nameColumn);
 			AppendColumn (filterColumn);
 		}
-		
-		void CreateMenu() {
+
+		void CreateMenu ()
+		{
 			Gtk.Action select_all;
 			Gtk.Action select_none;
 			UIManager manager;
 			ActionGroup g;
 
-			manager= new UIManager();
-			g = new ActionGroup("MenuGroup");
+			manager = new UIManager ();
+			g = new ActionGroup ("MenuGroup");
 
-			select_all = new Gtk.Action("AllAction", Mono.Unix.Catalog.GetString("Select all"), null, "gtk-edit");
-			select_none = new Gtk.Action("NoneAction", Mono.Unix.Catalog.GetString("Unselect all"), null, "gtk-edit");
+			select_all = new Gtk.Action ("AllAction", Mono.Unix.Catalog.GetString ("Select all"), null, "gtk-edit");
+			select_none = new Gtk.Action ("NoneAction", Mono.Unix.Catalog.GetString ("Unselect all"), null, "gtk-edit");
 
-			g.Add(select_all, null);
-			g.Add(select_none, null);
+			g.Add (select_all, null);
+			g.Add (select_none, null);
 
-			manager.InsertActionGroup(g,0);
+			manager.InsertActionGroup (g, 0);
 
-			manager.AddUiFromString("<ui>"+
-			                        "  <popup action='Menu'>"+
-			                        "    <menuitem action='AllAction'/>"+
-			                        "    <menuitem action='NoneAction'/>"+
-			                        "  </popup>"+
-			                        "</ui>");
+			manager.AddUiFromString ("<ui>" +
+			"  <popup action='Menu'>" +
+			"    <menuitem action='AllAction'/>" +
+			"    <menuitem action='NoneAction'/>" +
+			"  </popup>" +
+			"</ui>");
 
-			playersMenu = manager.GetWidget("/Menu") as Menu;
+			playersMenu = manager.GetWidget ("/Menu") as Menu;
 
-			select_all.Activated += (sender, e) => Select(true);
-			select_none.Activated += (sender, e) => Select(false);
+			select_all.Activated += (sender, e) => Select (true);
+			select_none.Activated += (sender, e) => Select (false);
 		}
 
 		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			if(Misc.RightButtonClicked (evnt))
-				playersMenu.Popup();
+			if (Misc.RightButtonClicked (evnt))
+				playersMenu.Popup ();
 			return base.OnButtonPressEvent (evnt);
 		}
-		
+
 		protected void HandleFilterCellToggled (object o, ToggledArgs args)
 		{
 			Gtk.TreeIter iter;
 			
-			if (store.GetIterFromString(out iter, args.Path))
-			{
-				bool active = !((bool) store.GetValue(iter, 1));
-				UpdateSelection(iter, active);
+			if (store.GetIterFromString (out iter, args.Path)) {
+				bool active = !((bool)store.GetValue (iter, 1));
+				UpdateSelection (iter, active);
 			}
 		}
-		
+
 
 		protected abstract void FillTree ();
-		protected abstract void UpdateSelection (TreeIter iter, bool active); 
+
+		protected abstract void UpdateSelection (TreeIter iter, bool active);
+
 		protected abstract void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter);
-		protected abstract void Select(bool select_all);
-		
+
+		protected abstract void Select (bool select_all);
+
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			return false;

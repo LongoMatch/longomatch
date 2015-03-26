@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Dialog
 			var tagsByGroup = eventType.Tags.GroupBy (t => t.Group);
 			
 			foreach (var tagsGroup in tagsByGroup) {
-				AddNewGroup (tagsGroup.Key, tagsGroup.ToList());
+				AddNewGroup (tagsGroup.Key, tagsGroup.ToList ());
 			}
 			newGroupButton = CreateAddGroupButton ();
 			mainvbox.PackEnd (newGroupButton, false, true, 0);
@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Dialog
 			t = CreateTagsTable (g);
 			vbox.PackStart (hbox, true, true, 0);
 			vbox.PackStart (t, true, true, 0);
-			vbox.PackEnd (new HSeparator(), true, true, 0);
+			vbox.PackEnd (new HSeparator (), true, true, 0);
 			vbox.ShowAll ();
 			mainvbox.PackStart (vbox, true, true, 0);
 		}
@@ -124,7 +124,7 @@ namespace LongoMatch.Gui.Dialog
 				g.container.ShowAll ();
 			}
 		}
-		
+
 		void AddTag (TagsGroup g)
 		{
 			Tag t = new Tag (Catalog.GetString ("New tag"), g.nameEntry.Text);
@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Dialog
 			};
 			return b;
 		}
-		
+
 		Button CreateAddTagButton (TagsGroup g)
 		{
 			Button b = CreateButton (Catalog.GetString ("Add new tag"), IconSize.Button);

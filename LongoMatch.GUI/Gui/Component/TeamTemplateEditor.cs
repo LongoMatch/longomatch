@@ -31,7 +31,7 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class TeamTemplateEditor : Gtk.Bin
 	{
 		public event EventHandler TemplateSaved;
@@ -92,8 +92,8 @@ namespace LongoMatch.Gui.Component
 				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
-				colorbutton1.Color = Misc.ToGdkColor (value.Colors[0]);
-				colorbutton2.Color = Misc.ToGdkColor (value.Colors[1]);
+				colorbutton1.Color = Misc.ToGdkColor (value.Colors [0]);
+				colorbutton2.Color = Misc.ToGdkColor (value.Colors [1]);
 				ignoreChanges = false;
 				Edited = false;
 			}
@@ -156,8 +156,9 @@ namespace LongoMatch.Gui.Component
 			mailentry.Changed += HandleEntryChanged;
 			bdaydatepicker.ValueChanged += HandleEntryChanged;
 			
-			applybutton.Clicked += (s,e) => {
-				ParseTactics ();}; 
+			applybutton.Clicked += (s, e) => {
+				ParseTactics ();
+			}; 
 
 			Edited = false;
 		}
@@ -334,7 +335,7 @@ namespace LongoMatch.Gui.Component
 			
 			player = new Image (pix);
 			player.ScaleInplace (Constants.MAX_PLAYER_ICON_SIZE,
-			                     Constants.MAX_PLAYER_ICON_SIZE); 
+				Constants.MAX_PLAYER_ICON_SIZE); 
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Value;
 				loadedPlayer.Photo = player;
@@ -355,7 +356,7 @@ namespace LongoMatch.Gui.Component
 			shield = new Image (pix);
 			if (shield != null) {
 				shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
-				                     Constants.MAX_SHIELD_ICON_SIZE); 
+					Constants.MAX_SHIELD_ICON_SIZE); 
 				template.Shield = shield;
 				shieldimage.Pixbuf = shield.Scale (SHIELD_SIZE, SHIELD_SIZE).Value;
 				Edited = true;
@@ -369,7 +370,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger.Substitute (p1, p2, team);
 			Edited = true;
 		}
-		
+
 		void HandleColorSet (object sender, EventArgs e)
 		{
 			if (ignoreChanges)

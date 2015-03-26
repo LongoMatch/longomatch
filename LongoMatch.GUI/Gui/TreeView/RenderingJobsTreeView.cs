@@ -25,58 +25,59 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class RenderingJobsTreeView : Gtk.TreeView
 	{
 		public RenderingJobsTreeView ()
 		{
-			TreeViewColumn nameColumn = new TreeViewColumn();
-			nameColumn.Title = Catalog.GetString("Job name");
-			CellRendererText nameCell = new CellRendererText();
-			nameColumn.PackStart(nameCell, true);
+			TreeViewColumn nameColumn = new TreeViewColumn ();
+			nameColumn.Title = Catalog.GetString ("Job name");
+			CellRendererText nameCell = new CellRendererText ();
+			nameColumn.PackStart (nameCell, true);
 
-			TreeViewColumn stateColumn = new TreeViewColumn();
-			stateColumn.Title = Catalog.GetString("State");
-			CellRendererPixbuf stateCell = new CellRendererPixbuf();
-			stateColumn.PackStart(stateCell, true);
+			TreeViewColumn stateColumn = new TreeViewColumn ();
+			stateColumn.Title = Catalog.GetString ("State");
+			CellRendererPixbuf stateCell = new CellRendererPixbuf ();
+			stateColumn.PackStart (stateCell, true);
 
-			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
-			stateColumn.SetCellDataFunc(stateCell, new Gtk.TreeCellDataFunc(RenderState));
+			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
+			stateColumn.SetCellDataFunc (stateCell, new Gtk.TreeCellDataFunc (RenderState));
 
-			AppendColumn(nameColumn);
-			AppendColumn(stateColumn);
+			AppendColumn (nameColumn);
+			AppendColumn (stateColumn);
 		}
-		
-		public List<Job> SelectedJobs () {
+
+		public List<Job> SelectedJobs ()
+		{
 			/* FIXME: Only single selection is supported for now */
 			TreeIter iter;
 			List<Job> list;
 			TreePath[] pathArray;
 
-			list = new List<Job>();
-			pathArray = Selection.GetSelectedRows();
+			list = new List<Job> ();
+			pathArray = Selection.GetSelectedRows ();
 
-			for(int i=0; i< pathArray.Length; i++) {
-				Model.GetIterFromString(out iter, pathArray[i].ToString());
-				list.Add((Job) Model.GetValue(iter, 0));
+			for (int i = 0; i < pathArray.Length; i++) {
+				Model.GetIterFromString (out iter, pathArray [i].ToString ());
+				list.Add ((Job)Model.GetValue (iter, 0));
 			}
 			
 			return list;
 		}
-		
-		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+
+		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Job job = (Job) model.GetValue(iter, 0);
+			Job job = (Job)model.GetValue (iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = job.Name;
 		}
 
 
-		private void RenderState(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		private void RenderState (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Job job = (Job) model.GetValue(iter, 0);
+			Job job = (Job)model.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererPixbuf).Pixbuf = IconLoader.LoadIcon(this, job.StateIconName, IconSize.Button);
+			(cell as Gtk.CellRendererPixbuf).Pixbuf = IconLoader.LoadIcon (this, job.StateIconName, IconSize.Button);
 		}
 	}
 }

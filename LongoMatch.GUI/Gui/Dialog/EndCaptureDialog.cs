@@ -27,21 +27,21 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EndCaptureDialog : Gtk.Dialog
 	{
 
-		public EndCaptureDialog(string filepath)
+		public EndCaptureDialog (string filepath)
 		{
-			this.Build();
+			this.Build ();
 			image439.Pixbuf = Helpers.Misc.LoadStockIcon (this, "gtk-dialog-question", Gtk.IconSize.Dialog);
 			savebutton.Visible = System.IO.File.Exists (filepath);
 		}
 
-		protected virtual void OnQuit(object sender, System.EventArgs e)
+		protected virtual void OnQuit (object sender, System.EventArgs e)
 		{
-			if(sender == quitbutton)
-				Respond((int)EndCaptureResponse.Quit);
-			else if(sender == savebutton)
-				Respond((int)EndCaptureResponse.Save);
+			if (sender == quitbutton)
+				Respond ((int)EndCaptureResponse.Quit);
+			else if (sender == savebutton)
+				Respond ((int)EndCaptureResponse.Save);
 			else
-				Respond((int)EndCaptureResponse.Return);
+				Respond ((int)EndCaptureResponse.Return);
 		}
 	}
 }

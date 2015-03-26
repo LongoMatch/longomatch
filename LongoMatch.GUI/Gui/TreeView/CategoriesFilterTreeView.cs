@@ -24,12 +24,12 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
 
-		public CategoriesFilterTreeView (): base()
+		public CategoriesFilterTreeView () : base ()
 		{
 			firstColumnName = Catalog.GetString ("Category");
 			HeadersVisible = false;
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
 
-		void UpdateSelectionPriv (TreeIter iter, bool active, bool checkParents=true, bool recurse=true)
+		void UpdateSelectionPriv (TreeIter iter, bool active, bool checkParents = true, bool recurse = true)
 		{
 			TreeIter child, parent;
 			
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Component
 			if (recurse) {
 				filter.IgnoreUpdates = true;
 				store.IterChildren (out child, iter);
-				while (store.IterIsValid(child)) {
+				while (store.IterIsValid (child)) {
 					UpdateSelectionPriv (child, active, false, false);
 					store.IterNext (ref child);
 				}
@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Component
 			
 			filter.Silent = true;
 			store.GetIterFirst (out iter);
-			while (store.IterIsValid(iter)) {
+			while (store.IterIsValid (iter)) {
 				UpdateSelection (iter, select_all);
 				store.IterNext (ref iter);
 			}

@@ -58,8 +58,8 @@ namespace LongoMatch.Gui.Dialog
 			this.play = play;
 			notesframe.Visible = editNotes;
 			tagger.Visible = editPos && (play.EventType.TagFieldPosition ||
-				play.EventType.TagHalfFieldPosition ||
-				play.EventType.TagGoalPosition);
+			play.EventType.TagHalfFieldPosition ||
+			play.EventType.TagGoalPosition);
 			drawingarea3.Visible = editPlayers;
 			nameframe.Visible = editTags;
 			tagsvbox.Visible = editTags;
@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Dialog
 			if (editPlayers) {
 				teamtagger.Project = project;
 				teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
-				                      project.Dashboard.FieldBackground);
+					project.Dashboard.FieldBackground);
 				/* Force lineup update */
 				teamtagger.CurrentTime = play.EventTime;
 				teamtagger.Select (play.Players, play.Team);
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Dialog
 					tags.Insert (0, noneTag);
 				}
 
-				for (int i=0; i < tags.Count; i++) {
+				for (int i = 0; i < tags.Count; i++) {
 					uint row_top, row_bottom, col_left, col_right;
 					Tag t = tags [i];
 					CheckButton tb;
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			play.Players = players.ToList (); 
 		}
-		
+
 		void HandleTeamSelectionChangedEvent (TeamType team)
 		{
 			play.Team = team;

@@ -25,17 +25,18 @@ using Gdk;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PreferencesPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
+
 		Widget selectedPanel;
 		ListStore prefsStore;
-		
+
 		public PreferencesPanel ()
 		{
 			this.Build ();
-			prefsStore = new ListStore(typeof(Pixbuf), typeof(string), typeof(Widget));
+			prefsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(Widget));
 			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);  
 			treeview.AppendColumn ("Desc", new CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
@@ -44,50 +45,53 @@ namespace LongoMatch.Gui.Panel
 			treeview.EnableGridLines = TreeViewGridLines.None;
 			treeview.EnableTreeLines = false;
 			AddPanels ();
-			treeview.SetCursor (new TreePath("0"), null, false);
+			treeview.SetCursor (new TreePath ("0"), null, false);
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Catalog.GetString ("PREFERENCES");
 			panelheader1.BackClicked += (sender, e) => {
 				if (BackEvent != null) {
 					BackEvent ();
-				};
+				}
+				;
 			};
 		}
-		
-		void AddPanels () {
+
+		void AddPanels ()
+		{
 			AddPane (Catalog.GetString ("General"),
-			         Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
-			         new GeneralPreferencesPanel());
+				Helpers.Misc.LoadIcon ("longomatch-preferences", IconSize.Dialog, 0),
+				new GeneralPreferencesPanel ());
 			AddPane (Catalog.GetString ("Keyboard shortcuts"),
-			         Helpers.Misc.LoadIcon ("longomatch-shortcut", IconSize.Dialog, 0),
-			         new HotkeysConfiguration ());
+				Helpers.Misc.LoadIcon ("longomatch-shortcut", IconSize.Dialog, 0),
+				new HotkeysConfiguration ());
 			AddPane (Catalog.GetString ("Video"),
-			         Helpers.Misc.LoadIcon ("longomatch-record", IconSize.Dialog, 0),
-			         new VideoPreferencesPanel());
+				Helpers.Misc.LoadIcon ("longomatch-record", IconSize.Dialog, 0),
+				new VideoPreferencesPanel ());
 			AddPane (Catalog.GetString ("Live analysis"),
-			         Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
-			         new LiveAnalysisPreferences());
+				Helpers.Misc.LoadIcon ("longomatch-video-device", IconSize.Dialog, 0),
+				new LiveAnalysisPreferences ());
 			AddPane (Catalog.GetString ("Plugins"),
-			         Helpers.Misc.LoadIcon ("longomatch-plugin", IconSize.Dialog, 0),
-			         new PluginsPreferences());
+				Helpers.Misc.LoadIcon ("longomatch-plugin", IconSize.Dialog, 0),
+				new PluginsPreferences ());
 		}
-		
-		void AddPane (string desc, Pixbuf icon, Widget pane) {
-			prefsStore.AppendValues(icon, desc, pane);
+
+		void AddPane (string desc, Pixbuf icon, Widget pane)
+		{
+			prefsStore.AppendValues (icon, desc, pane);
 		}
-		
+
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
 			Widget newPanel;
 			TreeIter iter;
 			
 			if (selectedPanel != null)
-				propsvbox.Remove(selectedPanel);
+				propsvbox.Remove (selectedPanel);
 			
-			treeview.Selection.GetSelected(out iter);
-			newPanel = prefsStore.GetValue(iter, 2) as Widget;
+			treeview.Selection.GetSelected (out iter);
+			newPanel = prefsStore.GetValue (iter, 2) as Widget;
 			newPanel.Visible = true;
-			propsvbox.PackStart(newPanel, true, true, 0);
+			propsvbox.PackStart (newPanel, true, true, 0);
 			selectedPanel = newPanel;
 		}
 	}

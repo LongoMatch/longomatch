@@ -26,14 +26,15 @@ namespace LongoMatch.Gui.Component
 {
 
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
 
 		TreePath pathClicked;
 
-		public PlayersTreeView() {
+		public PlayersTreeView ()
+		{
 			this.Team = TeamType.LOCAL;
 		}
 
@@ -42,15 +43,16 @@ namespace LongoMatch.Gui.Component
 			get;
 		}
 
-		protected override int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
+		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
+		{
 			object oa;
 			object ob;
 
-			if(model == null)
+			if (model == null)
 				return 0;
 
-			oa = model.GetValue(a, 0);
-			ob = model.GetValue(b, 0);
+			oa = model.GetValue (a, 0);
+			ob = model.GetValue (b, 0);
 
 			if (oa == null && ob == null) {
 				return 0;
@@ -60,13 +62,13 @@ namespace LongoMatch.Gui.Component
 				return 1;
 			}
 
-			if(oa is Player)
-				return (oa as Player).Number.CompareTo((ob as Player).Number);
+			if (oa is Player)
+				return (oa as Player).Number.CompareTo ((ob as Player).Number);
 			else
-				return (oa as TimeNode).Start.CompareTo((ob as TimeNode).Start);
+				return (oa as TimeNode).Start.CompareTo ((ob as TimeNode).Start);
 		}
 
-		override protected bool OnKeyPressEvent(Gdk.EventKey evnt)
+		override protected bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;
 		}
@@ -106,19 +108,20 @@ namespace LongoMatch.Gui.Component
 					ShowMenu ();
 				}
 			} else {
-				GetPathAtPos ((int) evnt.X, (int) evnt.Y, out pathClicked);
-				base.OnButtonPressEvent(evnt);
+				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out pathClicked);
+				base.OnButtonPressEvent (evnt);
 			}
 			return true;
 		}
 
-		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected) {
+		override protected bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected)
+		{
 			// Don't allow multiselection for Players
-			if(!selected && selection.GetSelectedRows().Length > 0) {
-				if(selection.GetSelectedRows().Length == 1 &&
-				                GetValueFromPath(selection.GetSelectedRows()[0]) is Player)
+			if (!selected && selection.GetSelectedRows ().Length > 0) {
+				if (selection.GetSelectedRows ().Length == 1 &&
+				    GetValueFromPath (selection.GetSelectedRows () [0]) is Player)
 					return false;
-				return !(GetValueFromPath(path) is Player);
+				return !(GetValueFromPath (path) is Player);
 			}
 			// Always unselect
 			else

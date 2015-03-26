@@ -28,30 +28,38 @@ namespace LongoMatch.Gui.Dialog
 	public partial class HotKeySelectorDialog : Gtk.Dialog
 	{
 		HotKey hotKey;
+
 		#region Constructors
+
 		public HotKeySelectorDialog ()
 		{
 			hotKey = new HotKey ();
 			this.Build ();
 		}
+
 		#endregion
+
 		#region Properties
+
 		public HotKey HotKey {
 			get {
 				return this.hotKey;
 			}
 		}
+
 		#endregion
+
 		#region Overrides
+
 		bool IsSupportedModifier (Gdk.Key key)
 		{
 			return key == Gdk.Key.Shift_L ||
-				key == Gdk.Key.Shift_R ||
-				key == Gdk.Key.Alt_L ||
-				key == Gdk.Key.Alt_R ||
-				key == Gdk.Key.Control_L ||
-				key == Gdk.Key.Control_R ||
-				key == (Gdk.Key) ModifierType.None;
+			key == Gdk.Key.Shift_R ||
+			key == Gdk.Key.Alt_L ||
+			key == Gdk.Key.Alt_R ||
+			key == Gdk.Key.Control_L ||
+			key == Gdk.Key.Control_R ||
+			key == (Gdk.Key)ModifierType.None;
 		}
 
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
@@ -66,8 +74,8 @@ namespace LongoMatch.Gui.Dialog
 
 			hotKey = Keyboard.ParseEvent (evnt);
 			if (hotKey.Modifier != -1 && !IsSupportedModifier ((Gdk.Key)hotKey.Modifier)) {
-				string msg = Keyboard.NameFromKeyval ((uint) hotKey.Modifier) +
-					Catalog.GetString ("is not a valid key modifier: Alt, Shift or Ctrl");
+				string msg = Keyboard.NameFromKeyval ((uint)hotKey.Modifier) +
+				             Catalog.GetString ("is not a valid key modifier: Alt, Shift or Ctrl");
 				Config.GUIToolkit.WarningMessage (msg, this);
 				hotKey = null;
 				return true;
@@ -75,6 +83,7 @@ namespace LongoMatch.Gui.Dialog
 			Respond (ResponseType.Ok);
 			return true;
 		}
+
 		#endregion
 	}
 }

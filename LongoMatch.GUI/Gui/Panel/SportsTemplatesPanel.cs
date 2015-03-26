@@ -32,7 +32,7 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class SportsTemplatesPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
@@ -81,25 +81,30 @@ namespace LongoMatch.Gui.Panel
 			addcategorybutton.Entered += HandleEnterTagButton;
 			addcategorybutton.Left += HandleLeftTagButton;
 			addcategorybutton.Clicked += (object sender, EventArgs e) => {
-				buttonswidget.AddButton ("Category"); };
+				buttonswidget.AddButton ("Category");
+			};
 			addtagbutton1.Entered += HandleEnterTagButton;
 			addtagbutton1.Left += HandleLeftTagButton;
 			addtagbutton1.Clicked += (object sender, EventArgs e) => {
-				buttonswidget.AddButton ("Tag"); };
+				buttonswidget.AddButton ("Tag");
+			};
 			scorebutton.Entered += HandleEnterTagButton;
 			scorebutton.Left += HandleLeftTagButton;
 			scorebutton.Clicked += (object sender, EventArgs e) => {
-				buttonswidget.AddButton ("Score"); };
+				buttonswidget.AddButton ("Score");
+			};
 			cardbutton.Entered += HandleEnterTagButton;
 			cardbutton.Left += HandleLeftTagButton;
 			cardbutton.Clicked += (object sender, EventArgs e) => {
-				buttonswidget.AddButton ("Card"); };
+				buttonswidget.AddButton ("Card");
+			};
 			timerbutton.Entered += HandleEnterTagButton;
 			timerbutton.Left += HandleLeftTagButton;
 			timerbutton.Clicked += (object sender, EventArgs e) => {
-				buttonswidget.AddButton ("Timer"); };
+				buttonswidget.AddButton ("Timer");
+			};
 
-			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof (string), typeof(bool));
+			templates = new ListStore (typeof(Pixbuf), typeof(string), typeof(string), typeof(bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = templates;
@@ -188,7 +193,7 @@ namespace LongoMatch.Gui.Panel
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-					                                          loadedTemplate.Name + "_copy", this);
+						loadedTemplate.Name + "_copy", this);
 					if (newName == null)
 						break;
 					if (provider.TemplatesNames.Contains (newName)) {
@@ -325,11 +330,10 @@ namespace LongoMatch.Gui.Panel
 
 					while (provider.Exists (new_dashboard.Name) && !abort) {
 						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
-							Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
+							              Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
 						if (name == null) {
 							abort = true;
-						}
-						else {
+						} else {
 							new_dashboard.Name = name;
 						}
 					}
@@ -351,10 +355,9 @@ namespace LongoMatch.Gui.Panel
 						Load (new_dashboard.Name);
 					}
 				}
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing template:") +
-					"\n" + ex.Message);
+				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
 			}
@@ -372,13 +375,13 @@ namespace LongoMatch.Gui.Panel
 			dialog.CountText = Catalog.GetString ("Event types:");
 			dialog.AvailableTemplates = provider.TemplatesNames;
 			
-			while (dialog.Run() == (int)ResponseType.Ok) {
+			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
 					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The dashboard already exists. " +
-						"Do you want to overwrite it?");
+					          "Do you want to overwrite it?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						force = true;

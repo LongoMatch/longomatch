@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Dialog
 					first = new RadioButton (first, desc);
 					first.Toggled += (sender, e) => {
 						if ((sender as RadioButton).Active) {
-							SelectedOption = value[desc];
+							SelectedOption = value [desc];
 						}
 					};
 					first.ShowAll ();
@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 		}
-		
+
 		public object SelectedOption {
 			get;
 			protected set;

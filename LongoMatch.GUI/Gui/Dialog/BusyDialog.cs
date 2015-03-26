@@ -74,8 +74,9 @@ namespace LongoMatch.Gui.Dialog
 			GLib.Timeout.Add (200, OnTimeout);
 			Run ();
 		}
-	
-		bool OnTimeout () {
+
+		bool OnTimeout ()
+		{
 			Pulse ();
 			return true;
 		}

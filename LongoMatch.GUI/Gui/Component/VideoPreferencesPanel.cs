@@ -22,11 +22,11 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class VideoPreferencesPanel : Gtk.Bin
 	{
 		CheckButton overlayTitle, enableSound;
-		
+
 		public VideoPreferencesPanel ()
 		{
 			this.Build ();
@@ -60,23 +60,25 @@ namespace LongoMatch.Gui.Component
 			
 			enableSound = new CheckButton ();
 			rendertable.Attach (enableSound, 1, 2, 3, 4,
-			                    AttachOptions.Fill,
-			                    AttachOptions.Fill, 0, 0);
+				AttachOptions.Fill,
+				AttachOptions.Fill, 0, 0);
 			enableSound.CanFocus = false;
 			enableSound.Show ();
 			enableSound.Active = Config.EnableAudio;
 			enableSound.Toggled += (sender, e) => {
-				Config.EnableAudio = enableSound.Active;};
+				Config.EnableAudio = enableSound.Active;
+			};
 
 			overlayTitle = new CheckButton ();
 			rendertable.Attach (overlayTitle, 1, 2, 4, 5,
-			                    AttachOptions.Fill,
-			                    AttachOptions.Fill, 0, 0);
+				AttachOptions.Fill,
+				AttachOptions.Fill, 0, 0);
 			overlayTitle.CanFocus = false;
 			overlayTitle.Show ();
 			overlayTitle.Active = Config.OverlayTitle;
 			overlayTitle.Toggled += (sender, e) => {
-				Config.OverlayTitle = overlayTitle.Active;};
+				Config.OverlayTitle = overlayTitle.Active;
+			};
 			
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
 			foreach (Widget w in capturetable) {
@@ -115,7 +117,7 @@ namespace LongoMatch.Gui.Component
 			
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
-			qual = (EncodingQuality) store.GetValue(iter, 1);
+			qual = (EncodingQuality)store.GetValue (iter, 1);
 			
 			if (combo == renderqualcombo)
 				Config.RenderEncodingQuality = qual;
@@ -132,7 +134,7 @@ namespace LongoMatch.Gui.Component
 			
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
-			std = (VideoStandard) store.GetValue(iter, 1);
+			std = (VideoStandard)store.GetValue (iter, 1);
 			
 			if (combo == renderimagecombo)
 				Config.RenderVideoStandard = std;
@@ -150,7 +152,7 @@ namespace LongoMatch.Gui.Component
 			
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
-			enc = (EncodingProfile) store.GetValue(iter, 1);
+			enc = (EncodingProfile)store.GetValue (iter, 1);
 			
 			if (combo == renderenccombo)
 				Config.RenderEncodingProfile = enc;

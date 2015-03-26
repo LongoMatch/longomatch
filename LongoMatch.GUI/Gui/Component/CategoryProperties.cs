@@ -30,8 +30,8 @@ using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial  class CategoryProperties : Gtk.Bin
 	{
 
@@ -209,9 +209,9 @@ namespace LongoMatch.Gui.Component
 			}
 			if (eventButton != null) {
 				SetPositionCombo (fieldcombobox, eventButton.EventType.TagFieldPosition,
-				                  eventButton.EventType.FieldPositionIsDistance);
+					eventButton.EventType.FieldPositionIsDistance);
 				SetPositionCombo (hfieldcombobox, eventButton.EventType.TagHalfFieldPosition,
-				                  eventButton.EventType.HalfFieldPositionIsDistance);
+					eventButton.EventType.HalfFieldPositionIsDistance);
 				SetPositionCombo (goalcombobox, eventButton.EventType.TagGoalPosition, false);
 				sortmethodcombobox.Active = (int)eventButton.EventType.SortMethod;
 			}
@@ -326,7 +326,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			timedButton.Start = new Time { TotalSeconds=(int)leadtimebutton.Value };
+			timedButton.Start = new Time { TotalSeconds = (int)leadtimebutton.Value };
 			Edited = true;
 		}
 
@@ -335,7 +335,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			timedButton.Stop = new Time { TotalSeconds=(int)lagtimebutton.Value };
+			timedButton.Stop = new Time { TotalSeconds = (int)lagtimebutton.Value };
 			Edited = true;
 		}
 
@@ -382,7 +382,7 @@ namespace LongoMatch.Gui.Component
 			timerButton.Timer.Team = (TeamType)teamcombobox.Active;
 			Edited = true;
 		}
-		
+
 		void HandleGroupChanged (object sender, EventArgs e)
 		{
 			if (ignore)

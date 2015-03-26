@@ -23,48 +23,52 @@ using System.Globalization;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class GeneralPreferencesPanel : Gtk.Bin
 	{
 	
 		ListStore langsStore;
 		ListStore templates;
 		CheckButton autosavecb;
-		
+
 		public GeneralPreferencesPanel ()
 		{
 			this.Build ();
-			FillLangs();
+			FillLangs ();
 			FillTemplates ();
-			autosavecb  = new CheckButton();
+			autosavecb = new CheckButton ();
 			table1.Attach (autosavecb, 1, 2, 1, 2,
-			               AttachOptions.Shrink,
-			               AttachOptions.Shrink, 0, 0);
+				AttachOptions.Shrink,
+				AttachOptions.Shrink, 0, 0);
 			autosavecb.CanFocus = false;
-			autosavecb.Show();
+			autosavecb.Show ();
 			autosavecb.Active = Config.AutoSave;
-			autosavecb.Toggled += (sender, e) => {Config.AutoSave = autosavecb.Active;};
+			autosavecb.Toggled += (sender, e) => {
+				Config.AutoSave = autosavecb.Active;
+			};
 		}
-		
-		void FillLangs () {
+
+		void FillLangs ()
+		{
 			int index = 0, active = 0;
 			
-			langsStore = new ListStore(typeof(string), typeof(CultureInfo));
+			langsStore = new ListStore (typeof(string), typeof(CultureInfo));
 			langsStore.AppendValues (Catalog.GetString ("Default"), null);
-			index ++;
+			index++;
 			
 			foreach (CultureInfo lang in Gettext.Languages) {
-				langsStore.AppendValues(lang.DisplayName, lang);
+				langsStore.AppendValues (lang.DisplayName, lang);
 				if (lang.Name == Config.Lang)
 					active = index;
-				index ++;
+				index++;
 			}
 			langcombobox.Model = langsStore;
 			langcombobox.Active = active;
 			langcombobox.Changed += HandleChanged;
 		}
 
-		void FillTemplates () {
+		void FillTemplates ()
+		{
 			int i = 0, active = -1;
 			templates = new ListStore (typeof(string));
 
@@ -80,7 +84,8 @@ namespace LongoMatch.Gui.Component
 				templatescombobox.Active = active;
 			}
 			templatescombobox.Changed += (sender, e) => {
-				Config.DefaultTemplate = templatescombobox.ActiveText;};
+				Config.DefaultTemplate = templatescombobox.ActiveText;
+			};
 		}
 
 		void HandleChanged (object sender, EventArgs e)
@@ -89,7 +94,7 @@ namespace LongoMatch.Gui.Component
 			CultureInfo info;
 			
 			langcombobox.GetActiveIter (out iter);
-			info = (CultureInfo) langsStore.GetValue (iter, 1);
+			info = (CultureInfo)langsStore.GetValue (iter, 1);
 			if (info == null) {
 				Config.Lang = null;
 			} else {

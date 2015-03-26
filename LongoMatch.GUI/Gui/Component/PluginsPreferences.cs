@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PluginsPreferences : Gtk.Bin
 	{
 		ListStore pluginsStore;
@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 		public PluginsPreferences ()
 		{
 			this.Build ();
-			pluginsStore = new ListStore (typeof(string), typeof(AddinDescription), typeof (ILongoMatchPlugin));
+			pluginsStore = new ListStore (typeof(string), typeof(AddinDescription), typeof(ILongoMatchPlugin));
 			treeview1.Model = pluginsStore;
 			treeview1.HeadersVisible = false;
 			treeview1.AppendColumn ("Text", new CellRendererText (), "text", 0); 
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			if (pluginsStore.GetIterFirst (out first)) {
 				treeview1.Selection.SelectIter (first);
 				LoadAddin (pluginsStore.GetValue (first, 1) as AddinDescription,
-				           pluginsStore.GetValue (first, 2) as List<ConfigurablePlugin>);
+					pluginsStore.GetValue (first, 2) as List<ConfigurablePlugin>);
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Component
 					foreach (AttributeAndProperty attrprop in plugin.Properties) {
 						if (attrprop.Property.PropertyType == typeof(Boolean)) {
 							CheckButton button = new CheckButton (attrprop.Attribute.description);
-							button.Active = (bool) attrprop.Property.GetValue (plugin, null);
+							button.Active = (bool)attrprop.Property.GetValue (plugin, null);
 							button.Clicked += (sender, e) => {
 								attrprop.Property.SetValue (plugin, button.Active, null);
 							};
@@ -91,14 +91,14 @@ namespace LongoMatch.Gui.Component
 				configframe.Visible = false;
 			}
 		}
-		
+
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
 
 			treeview1.Selection.GetSelected (out iter);
 			LoadAddin (pluginsStore.GetValue (iter, 1) as AddinDescription,
-			           pluginsStore.GetValue (iter, 2) as List<ConfigurablePlugin>);
+				pluginsStore.GetValue (iter, 2) as List<ConfigurablePlugin>);
 		}
 		
 	}

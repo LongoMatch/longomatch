@@ -26,18 +26,18 @@ using LongoMatch.Core.Handlers;
 namespace LongoMatch.Gui.Component
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class NotesWidget : Gtk.Bin
 	{
 		TextBuffer buf;
 		TimelineEvent play;
 
-		public NotesWidget()
+		public NotesWidget ()
 		{
-			this.Build();
+			this.Build ();
 			this.buf = textview1.Buffer;
-			buf.Changed += new EventHandler(OnEdition);
+			buf.Changed += new EventHandler (OnEdition);
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 		}
 
@@ -56,11 +56,11 @@ namespace LongoMatch.Gui.Component
 
 		string Notes {
 			set {
-				buf.Clear();
-				buf.InsertAtCursor(value);
+				buf.Clear ();
+				buf.InsertAtCursor (value);
 			}
 			get {
-				return buf.GetText(buf.StartIter,buf.EndIter,true);
+				return buf.GetText (buf.StartIter, buf.EndIter, true);
 			}
 		}
 

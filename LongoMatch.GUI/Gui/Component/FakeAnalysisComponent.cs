@@ -24,7 +24,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class FakeAnalysisComponent : Gtk.Bin,  IAnalysisWindow
 	{
 
@@ -33,7 +33,9 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
 		}
+
 		#region IAnalysisWindow implementation
+
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			codingwidget1.SetProject (project, projectType, filter);
@@ -119,6 +121,7 @@ namespace LongoMatch.Gui.Component
 				return capturerbin;
 			}
 		}
+
 		#endregion
 	}
 }

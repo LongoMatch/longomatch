@@ -19,7 +19,7 @@ using System;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class DatePicker : Gtk.Bin
 	{
 		public event EventHandler ValueChanged;

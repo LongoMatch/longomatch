@@ -27,35 +27,37 @@ using LongoMatch.Core.Store.Templates;
 namespace LongoMatch.Gui.Component
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayersFilterTreeView: FilterTreeViewBase
 	{
 		Team local, visitor;
 		Player localTeam, visitorTeam;
 		TreeIter localIter, visitorIter;
-		
-		public PlayersFilterTreeView (): base()
+
+		public PlayersFilterTreeView () : base ()
 		{
-			visitorTeam = new Player();
-			localTeam = new Player();
+			visitorTeam = new Player ();
+			localTeam = new Player ();
 			HeadersVisible = false;
 		}
-		
-		public override void SetFilter (EventsFilter filter, Project project) {
+
+		public override void SetFilter (EventsFilter filter, Project project)
+		{
 			this.local = project.LocalTeamTemplate;
 			this.visitor = project.VisitorTeamTemplate;
 			localTeam.Name = local.TeamName;
 			visitorTeam.Name = visitor.TeamName;
-			base.SetFilter(filter, project);
+			base.SetFilter (filter, project);
 		}
-		
-		protected override void FillTree () {
-			TreeStore store = new TreeStore (typeof (Player), typeof (bool));
+
+		protected override void FillTree ()
+		{
+			TreeStore store = new TreeStore (typeof(Player), typeof(bool));
 			localIter = store.AppendValues (localTeam);
 			visitorIter = store.AppendValues (visitorTeam);
-			store.SetValue(localIter, 1, false);
-			store.SetValue(visitorIter, 1, false);
+			store.SetValue (localIter, 1, false);
+			store.SetValue (visitorIter, 1, false);
 			
 			filter.IgnoreUpdates = true;
 			foreach (Player player in local.PlayingPlayersList) {
@@ -71,24 +73,24 @@ namespace LongoMatch.Gui.Component
 			filter.Update ();
 			Model = store;
 		}
- 
+
 		
-		protected override void UpdateSelection(TreeIter iter, bool active) {
+		protected override void UpdateSelection (TreeIter iter, bool active)
+		{
 			TreeStore store = Model as TreeStore;
-			Player player = (Player) store.GetValue(iter, 0);
+			Player player = (Player)store.GetValue (iter, 0);
 			
 			/* Check all children */
-			if (player == localTeam || player == visitorTeam)
-			{
+			if (player == localTeam || player == visitorTeam) {
 				TreeIter child;
-				store.IterChildren(out child, iter);
+				store.IterChildren (out child, iter);
 				
 				filter.IgnoreUpdates = true;
-				while (store.IterIsValid(child)) {
-					Player childPlayer = (Player) store.GetValue(child, 0);
+				while (store.IterIsValid (child)) {
+					Player childPlayer = (Player)store.GetValue (child, 0);
 					filter.FilterPlayer (childPlayer, active);
-					store.SetValue(child, 1, active);
-					store.IterNext(ref child);
+					store.SetValue (child, 1, active);
+					store.IterNext (ref child);
 				}
 				filter.IgnoreUpdates = false;
 			} else {
@@ -96,33 +98,34 @@ namespace LongoMatch.Gui.Component
 				if (!active) {
 					TreeIter team;
 					/* Uncheck the team check button */
-					if (local.List.Contains(player))
+					if (local.List.Contains (player))
 						team = localIter;
 					else
 						team = visitorIter;
-					store.SetValue(team, 1, false);
+					store.SetValue (team, 1, false);
 				}
 			}
 			
-			store.SetValue(iter, 1, active);
-			filter.Update();
+			store.SetValue (iter, 1, active);
+			filter.Update ();
 		}
-		
+
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			Player player = (Player) model.GetValue (iter, 0);
-			string name = player.ToString();
+			Player player = (Player)model.GetValue (iter, 0);
+			string name = player.ToString ();
 			if (player == localTeam || player == visitorTeam) {
 				name = player.Name;
 			}
 			(cell as CellRendererText).Text = name;
 		}
-		
-		protected override void Select(bool select_all) {
-			UpdateSelection(localIter, select_all);
-			UpdateSelection(visitorIter, select_all);
+
+		protected override void Select (bool select_all)
+		{
+			UpdateSelection (localIter, select_all);
+			UpdateSelection (visitorIter, select_all);
 		}
-		
+
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;

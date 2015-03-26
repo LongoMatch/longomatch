@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Dialog
 
 		public CalendarDialog (DateTime date)
 		{
-			this.Build();
+			this.Build ();
 			SkipPagerHint = true;
 			SkipTaskbarHint = true;
 			//Decorated = false;
@@ -42,13 +42,13 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		protected virtual void OnCalendar1DaySelectedDoubleClick(object sender, System.EventArgs e)
+		protected virtual void OnCalendar1DaySelectedDoubleClick (object sender, System.EventArgs e)
 		{
 			selectedDate = calendar1.Date;
-			this.Respond(ResponseType.Accept);
+			this.Respond (ResponseType.Accept);
 		}
 
-		protected virtual void OnCalendar1DaySelected(object sender, System.EventArgs e)
+		protected virtual void OnCalendar1DaySelected (object sender, System.EventArgs e)
 		{
 			DateTime d = calendar1.Date;
 			selectedDate = new DateTime (d.Year, d.Month, d.Day, 0, 0, 0, DateTimeKind.Utc);

@@ -35,8 +35,8 @@ using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class DashboardWidget : Gtk.Bin
 	{
 		public event NewEventHandler NewTagEvent;
@@ -51,9 +51,9 @@ namespace LongoMatch.Gui.Component
 		bool internalButtons, edited, ignoreChanges;
 		Project project;
 
-		public DashboardWidget()
+		public DashboardWidget ()
 		{
-			this.Build();
+			this.Build ();
 
 			addcatbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", IconSize.Button);
 			addtimerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", IconSize.Button);
@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 				tagger.CurrentTime = value;
 			}
 		}
-		
+
 		public FitMode FitMode {
 			set {
 				ignoreChanges = true;
@@ -177,10 +177,10 @@ namespace LongoMatch.Gui.Component
 				editbutton.Active = value == TagMode.Edit;
 				if (value == TagMode.Edit) {
 					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
-					                                          22, IconLookupFlags.ForceSvg);
+						22, IconLookupFlags.ForceSvg);
 				} else {
 					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit",
-					                                          22, IconLookupFlags.ForceSvg);
+						22, IconLookupFlags.ForceSvg);
 				}
 				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == TagMode.Edit);
 				if (project != null) {
@@ -210,24 +210,28 @@ namespace LongoMatch.Gui.Component
 		{
 			tagger.Click (button, tag);
 		}
-		
-		public void Refresh (DashboardButton b = null) {
+
+		public void Refresh (DashboardButton b = null)
+		{
 			tagger.Refresh (b);
 		}
 
-		public void AddButton (string buttontype) {
+		public void AddButton (string buttontype)
+		{
 			DashboardButton button = null;
 
 			if (buttontype == "Card") {
 				button = new PenaltyCardButton {
-					PenaltyCard = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle)};
+					PenaltyCard = new PenaltyCard ("Red", Color.Red, CardShape.Rectangle)
+				};
 			} else if (buttontype == "Score") {
 				button = new ScoreButton {
-					Score = new Score ("Score", 1)};
+					Score = new Score ("Score", 1)
+				};
 			} else if (buttontype == "Timer") {
-				button = new TimerButton {Timer = new Timer {Name = "Timer"}};
+				button = new TimerButton { Timer = new Timer { Name = "Timer" } };
 			} else if (buttontype == "Tag") {
-				button = new TagButton {Tag = new Tag ("Tag", "")};
+				button = new TagButton { Tag = new Tag ("Tag", "") };
 			} else if (buttontype == "Category") {
 				button = template.AddDefaultItem (template.List.Count);
 			} else {
@@ -241,24 +245,26 @@ namespace LongoMatch.Gui.Component
 			edited = true;
 			Refresh (button);
 		}
-		
-		void RemoveButton (DashboardButton button) {
+
+		void RemoveButton (DashboardButton button)
+		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
-				button.Name + "?";
+			             button.Name + "?";
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 				template.List.Remove (button);
 				Edited = true;
 				Refresh ();
 			}
 		}
-		
-		void FillToolbar () {
+
+		void FillToolbar ()
+		{
 			Toolbar toolbar = new Toolbar ();
 			toolbar.Orientation = Orientation.Vertical;
 			toolbar.ToolbarStyle = ToolbarStyle.Icons;
 			
 			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
-			                                          22, IconLookupFlags.ForceSvg));
+				22, IconLookupFlags.ForceSvg));
 			editbutton = new ToggleToolButton ();
 			editbutton.IconWidget = editimage;
 			editbutton.Active = true;
@@ -276,7 +282,7 @@ namespace LongoMatch.Gui.Component
 			toolbar.Add (popupbutton);
 			toolbar.Add (new SeparatorToolItem ());
 			
-			fitbutton = new RadioToolButton ((GLib.SList) null);
+			fitbutton = new RadioToolButton ((GLib.SList)null);
 			fitbutton.IconName = "longomatch-dash-fit";
 			fitbutton.Toggled += HandleFitModeToggled;
 			fitbutton.TooltipText = Catalog.GetString ("Fit dashboard");
@@ -309,7 +315,7 @@ namespace LongoMatch.Gui.Component
 			}
 			Edited = true;
 		}
-		
+
 		void HandlePopupToggled (object sender, EventArgs e)
 		{
 			if (ignoreChanges) {
@@ -333,8 +339,8 @@ namespace LongoMatch.Gui.Component
 		void HandleTaggersSelectedEvent (List<DashboardButton> taggers)
 		{
 			if (taggers.Count == 1) {
-				selected = taggers[0];
-				tagproperties.Tagger = taggers[0];
+				selected = taggers [0];
+				tagproperties.Tagger = taggers [0];
 				tagproperties.Sensitive = true;
 			} else {
 				selected = null;
@@ -342,7 +348,7 @@ namespace LongoMatch.Gui.Component
 				tagproperties.Sensitive = false;
 			}
 		}
-		
+
 		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
 			LongoMatch.Core.Common.Image background;
@@ -354,7 +360,7 @@ namespace LongoMatch.Gui.Component
 			
 			background = new Image (pix);
 			background.ScaleInplace (Constants.MAX_BACKGROUND_WIDTH,
-			                         Constants.MAX_BACKGROUND_HEIGHT);
+				Constants.MAX_BACKGROUND_HEIGHT);
 			if (o == fieldeventbox) {
 				UpdateBackground (background, 0);
 			} else if (o == hfieldeventbox) {
@@ -369,14 +375,14 @@ namespace LongoMatch.Gui.Component
 		{
 			tagger.CurrentTime = currentTime;
 		}
-		
+
 		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
 		{
 			if (args.Event.Key == Gdk.Key.Delete && selected != null) {
 				RemoveButton (selected);
 			}
 		}
-		
+
 		void HandleShowMenuEvent (DashboardButton taggerbutton, Tag tag)
 		{
 			Menu menu;
@@ -388,13 +394,16 @@ namespace LongoMatch.Gui.Component
 			
 			menu = new Menu ();
 			delbut = new MenuItem (Catalog.GetString ("Delete"));
-			delbut.Activated += (sender, e) => {RemoveButton (taggerbutton);};
+			delbut.Activated += (sender, e) => {
+				RemoveButton (taggerbutton);
+			};
 			menu.Add (delbut);
 			menu.ShowAll ();
 			menu.Popup ();
 		}
 
-		void HandleAddClicked (object sender, EventArgs e) {
+		void HandleAddClicked (object sender, EventArgs e)
+		{
 			if (sender == addcardbutton) {
 				AddButton ("Card");
 			} else if (sender == addscorebutton) {
@@ -409,13 +418,13 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 		}
-		
+
 		void HandleNewTagEvent (EventType evntType, List<Player> players, TeamType team, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
 		{
 			/* Forward event until we have players integrted in the dashboard layout */
 			if (NewTagEvent != null) {
-				NewTagEvent (evntType , players, team, tags, start, stop, eventTime, score, card);
+				NewTagEvent (evntType, players, team, tags, start, stop, eventTime, score, card);
 			}
 			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
@@ -456,14 +465,14 @@ namespace LongoMatch.Gui.Component
 			}
 			
 		}
-		
+
 		void HandlePropertiedEditedEvent (object sender, EventArgs e)
 		{
 			if (selected != null) {
 				tagger.RedrawButton (selected);
 			}
 		}
-		
+
 		void HandleApplyClicked (object sender, EventArgs e)
 		{
 			try {

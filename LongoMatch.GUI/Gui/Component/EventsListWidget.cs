@@ -23,7 +23,7 @@ using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class EventsListWidget : Gtk.Bin
 	{
 		Project project;
@@ -37,17 +37,17 @@ namespace LongoMatch.Gui.Component
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
 			playsList.Project = null;
-			localPlayersList.Clear();
-			visitorPlayersList.Clear();
+			localPlayersList.Clear ();
+			visitorPlayersList.Clear ();
 			playsList1.Destroy ();
 			base.OnDestroyed ();
 		}
-		
+
 		public void SetProject (Project project, EventsFilter filter)
 		{
 			this.project = project;
@@ -62,24 +62,27 @@ namespace LongoMatch.Gui.Component
 			SetTabProps (visitorPlayersList, false);
 			UpdateTeamsModels ();
 		}
-		
-		public void AddPlay(TimelineEvent play) {
-			playsList.AddPlay(play);
+
+		public void AddPlay (TimelineEvent play)
+		{
+			playsList.AddPlay (play);
 			localPlayersList.AddEvent (play);
 			visitorPlayersList.AddEvent (play);
 		}
-		
-		public void RemovePlays (List<TimelineEvent> plays) {
-			playsList.RemovePlays(plays);
+
+		public void RemovePlays (List<TimelineEvent> plays)
+		{
+			playsList.RemovePlays (plays);
 			localPlayersList.RemoveEvents (plays);
 			visitorPlayersList.RemoveEvents (plays);
 		}
-		
-		void UpdateTeamsModels() {
+
+		void UpdateTeamsModels ()
+		{
 			if (project == null)
 				return;
-			localPlayersList.SetTeam(project.LocalTeamTemplate, project.Timeline);
-			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.Timeline);
+			localPlayersList.SetTeam (project.LocalTeamTemplate, project.Timeline);
+			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, project.Timeline);
 		}
 
 		void SetTabProps (Gtk.Widget widget, bool active)
@@ -100,14 +103,14 @@ namespace LongoMatch.Gui.Component
 			} else if (widget == localPlayersList) {
 				if (project.LocalTeamTemplate.Shield != null) {
 					icon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                                               StyleConf.NotebookTabIconSize).Value;
+						StyleConf.NotebookTabIconSize).Value;
 				} else {
 					icon = Misc.LoadIcon ("longomatch-default-shield", StyleConf.NotebookTabIconSize);
 				}
 			} else if (widget == visitorPlayersList) {
 				if (project.VisitorTeamTemplate.Shield != null) {
 					icon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-					                                                 StyleConf.NotebookTabIconSize).Value;
+						StyleConf.NotebookTabIconSize).Value;
 				} else {
 					icon = Misc.LoadIcon ("longomatch-default-shield", StyleConf.NotebookTabIconSize);
 				}

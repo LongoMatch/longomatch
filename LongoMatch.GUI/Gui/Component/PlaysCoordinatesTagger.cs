@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysCoordinatesTagger : Gtk.Bin
 	{
 		
@@ -42,12 +42,13 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.Accuracy = 20;
 		}
 
-		public void LoadBackgrounds (Project project) {
+		public void LoadBackgrounds (Project project)
+		{
 			field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
 			hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
 			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
 		}
-		
+
 		public void LoadStats (EventTypeStats stats, TeamType team)
 		{
 			Visible = false;
@@ -59,7 +60,7 @@ namespace LongoMatch.Gui.Component
 			hfield.Tagger.ObjectsCanMove = false;
 			goal.Tagger.ObjectsCanMove = false;
 		}
-		
+
 		public void LoadStats (PlayerEventTypeStats stats, TeamType team)
 		{
 			Visible = false;
@@ -71,8 +72,9 @@ namespace LongoMatch.Gui.Component
 			hfield.Tagger.ObjectsCanMove = false;
 			goal.Tagger.ObjectsCanMove = false;
 		}
-		
-		public void LoadPlay (TimelineEvent play) {
+
+		public void LoadPlay (TimelineEvent play)
+		{
 			field.Visible = play.EventType.TagFieldPosition;
 			hfield.Visible = play.EventType.TagHalfFieldPosition;
 			goal.Visible = play.EventType.TagGoalPosition;
@@ -85,11 +87,11 @@ namespace LongoMatch.Gui.Component
 			if (play.HalfFieldPosition != null) {
 				hfield.Tagger.Points = play.HalfFieldPosition.Points;
 			}
-			if (play.GoalPosition != null ) {
+			if (play.GoalPosition != null) {
 				goal.Tagger.Points = play.GoalPosition.Points;
 			}
 		}
-		
+
 		void UpdateTags (List<Coordinates> coords, CoordinatesTagger tagger)
 		{
 			if (coords.Count > 0) {

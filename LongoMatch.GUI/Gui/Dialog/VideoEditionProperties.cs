@@ -28,19 +28,21 @@ using LongoMatch.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Dialog
 {
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(false)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (false)]
 	public partial class VideoEditionProperties : Gtk.Dialog
 	{
 		EncodingSettings encSettings;
 		ListStore stdStore, encStore, qualStore;
+
 		#region Constructors
+
 		public VideoEditionProperties ()
 		{
 			this.Build ();
 			encSettings = new EncodingSettings ();
 			stdStore = Misc.FillImageFormat (sizecombobox, VideoStandards.Rendering,
-			                                 Config.RenderVideoStandard);
+				Config.RenderVideoStandard);
 			encStore = Misc.FillEncodingFormat (formatcombobox, Config.RenderEncodingProfile);
 			qualStore = Misc.FillQuality (qualitycombobox, Config.RenderEncodingQuality);
 			descriptioncheckbutton.Active = Config.OverlayTitle;
@@ -51,10 +53,15 @@ namespace LongoMatch.Gui.Dialog
 				"*.avi", "*.mpg", "*.vob"
 			};
 			mediafilechooser2.FileChooserMode = FileChooserMode.Directory;
-			mediafilechooser2.ChangedEvent += (sender, e) => {OutputDir = mediafilechooser2.CurrentPath;};
+			mediafilechooser2.ChangedEvent += (sender, e) => {
+				OutputDir = mediafilechooser2.CurrentPath;
+			};
 		}
+
 		#endregion
+
 		#region Properties
+
 		public EncodingSettings EncodingSettings {
 			get {
 				return encSettings;
@@ -79,16 +86,20 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 		}
-		
+
 		#endregion Properties
+
 		#region Private Methods
+
 		string GetExtension ()
 		{
 			TreeIter iter;
 			formatcombobox.GetActiveIter (out iter);
 			return ((EncodingProfile)encStore.GetValue (iter, 1)).Extension;
 		}
+
 		#endregion
+
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			TreeIter iter;

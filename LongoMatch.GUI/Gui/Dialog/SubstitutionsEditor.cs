@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Dialog
 			tagger.SubstitutionMode = true;
 			tagger.ShowSubstitutionButtons = false;
 			LoadTeams (project, lineup.HomeStartingPlayers, lineup.HomeBenchPlayers,
-			           lineup.AwayStartingPlayers, lineup.AwayBenchPlayers);
+				lineup.AwayStartingPlayers, lineup.AwayBenchPlayers);
 		}
 
 		public void LoadSubstitution (Project project, SubstitutionEvent substitution)
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		void LoadTeams (Project project, List<Player> homeFieldPlayers, List<Player> homeBenchPlayers,
-		              List<Player> awayFieldPlayers, List<Player> awayBenchPlayers)
+		                List<Player> awayFieldPlayers, List<Player> awayBenchPlayers)
 		{
 			List<Player> homeTeamPlayers, awayTeamPlayers;
 
@@ -178,7 +178,7 @@ namespace LongoMatch.Gui.Dialog
 				selectedPlayer = null;
 			}
 		}
-		
+
 		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
 			tagger.Substitute (p1, p2, team);

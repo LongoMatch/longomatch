@@ -23,7 +23,7 @@ using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class GameDescriptionHeader : Gtk.Bin
 	{
 		SizeGroup namesGroup, scoreGroup;
@@ -59,8 +59,9 @@ namespace LongoMatch.Gui.Component
 				awayscorelabel.Text = value.VisitorGoals.ToString ();
 			}
 		}
-		
-		void SetStyle () {
+
+		void SetStyle ()
+		{
 			Pango.FontDescription numDesc = Pango.FontDescription.FromString (Config.Style.Font + " 48px");
 			Pango.FontDescription nameDesc = Pango.FontDescription.FromString (Config.Style.Font + " 30px");
 

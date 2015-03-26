@@ -25,18 +25,13 @@ using LongoMatch.Core.Handlers;
 namespace LongoMatch.Gui.Dialog
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(false)]
+	[System.ComponentModel.Category ("LongoMatch")]
+	[System.ComponentModel.ToolboxItem (false)]
 	public partial class SnapshotsDialog : Gtk.Dialog
 	{
-
-
-
-
-
-		public SnapshotsDialog()
+		public SnapshotsDialog ()
 		{
-			this.Build();
+			this.Build ();
 		}
 
 		public string Play {
@@ -48,7 +43,7 @@ namespace LongoMatch.Gui.Dialog
 
 		public uint Interval {
 			get {
-				return 1000/(uint)spinbutton1.Value;
+				return 1000 / (uint)spinbutton1.Value;
 			}
 		}
 

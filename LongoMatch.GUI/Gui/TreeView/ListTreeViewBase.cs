@@ -218,11 +218,11 @@ namespace LongoMatch.Gui.Component
 			
 			using (IContext context = new CairoContext (window)) {
 				Area bkg = new Area (new Point (backgroundArea.X, backgroundArea.Y),
-				                     backgroundArea.Width, backgroundArea.Height);
+					           backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
-				                      cellArea.Width, cellArea.Height);
+					            cellArea.Width, cellArea.Height);
 				PlayslistCellRenderer.Render (Item, Count, IsExpanded, Config.DrawingToolkit,
-				                              context, bkg, cell, state);
+					context, bkg, cell, state);
 			}
 		}
 	}

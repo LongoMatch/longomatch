@@ -21,7 +21,7 @@ using Gtk;
 
 namespace LongoMatch.Gui.Panel
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PanelHeader : Gtk.Bin
 	{
 	
@@ -42,27 +42,27 @@ namespace LongoMatch.Gui.Panel
 				}
 			};
 			logoimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch", 45,
-			                                               IconLookupFlags.ForceSvg);
+				IconLookupFlags.ForceSvg);
 			backrectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-back", 40,
-			                                               IconLookupFlags.ForceSvg);
-			applyroundedbuttonimage.Pixbuf  = Helpers.Misc.LoadIcon ("longomatch-apply", 40,
-			                                                         IconLookupFlags.ForceSvg);
+				IconLookupFlags.ForceSvg);
+			applyroundedbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", 40,
+				IconLookupFlags.ForceSvg);
 			headerhbox.HeightRequest = StyleConf.HeaderHeight;
 		}
-		
+
 		public string Title {
 			set {
 				titlelabel.Markup = String.Format ("<span font_desc=\"{0}\"><b>{1}</b></span>",
-				                                   StyleConf.HeaderFontSize, value);
+					StyleConf.HeaderFontSize, value);
 			}
 		}
-		
+
 		public bool BackVisible {
 			set {
 				backrectbutton.Visible = value;
 			}
 		}
-		
+
 		public bool ApplyVisible {
 			set {
 				applyroundedbutton.Visible = value;
