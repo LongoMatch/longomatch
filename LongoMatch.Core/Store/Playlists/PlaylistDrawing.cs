@@ -40,12 +40,12 @@ namespace LongoMatch.Core.Store.Playlists
 			get;
 			set;
 		}
-		
+
 		public int Height {
 			get;
 			set;
 		}
-		
+
 		public FrameDrawing Drawing {
 			get;
 			set;
@@ -58,7 +58,7 @@ namespace LongoMatch.Core.Store.Playlists
 
 		public string Description {
 			get {
-				return Duration.ToMSecondsString ();
+				return Duration == null ? "" : Duration.ToMSecondsString ();
 			}
 		}
 
