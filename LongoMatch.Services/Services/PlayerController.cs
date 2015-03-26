@@ -838,7 +838,8 @@ namespace LongoMatch.Services
 						var drawings = EventDrawings;
 						if (drawings != null) {
 							/* Check if the event has drawings to display */
-							FrameDrawing fd = drawings.FirstOrDefault (f => f.Render > videoTS && f.Render <= currentTime);
+							FrameDrawing fd = drawings.FirstOrDefault (f => f.Render > videoTS &&
+							                  f.Render <= currentTime && f.CameraIndex == CamerasVisible [0]);
 							if (fd != null) {
 								LoadPlayDrawing (fd);
 							}

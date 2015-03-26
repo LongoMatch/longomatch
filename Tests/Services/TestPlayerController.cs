@@ -65,7 +65,9 @@ namespace Tests.Services
 			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 
-			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200) };
+			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+				CamerasVisible = new List<int> { 0 }
+			};
 			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5));
 			playlist = new Playlist ();
 			playlist.Elements.Add (new PlaylistPlayElement (evt));
@@ -708,6 +710,43 @@ namespace Tests.Services
 			player.Seek (currentTime, true, false);
 			Assert.IsFalse (player.Playing);
 			Assert.AreEqual (1, nextLoaded);
+		}
+
+		[Test ()]
+		public void TestEventDrawings ()
+		{
+			FrameDrawing dr, drSent = null;
+
+			player.LoadDrawingsEvent += (frameDrawing) => {
+				drSent = frameDrawing;
+			};
+
+			dr = new FrameDrawing { Render = evt.Start + 50,
+				CameraIndex = 0
+			};
+			currentTime = evt.Start;
+			PreparePlayer ();
+
+			/* Checks drawings are loaded when the clock reaches the render time */
+			evt.Drawings.Add (dr);
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			Assert.IsTrue (player.Playing);
+			currentTime = dr.Render;
+			player.Seek (currentTime, true, false);
+			Assert.IsFalse (player.Playing);
+			Assert.AreEqual (dr, drSent); 
+			player.Play ();
+			Assert.IsNull (drSent); 
+
+			/* Check only drawings for the first camera are loaded */
+			dr.CameraIndex = 1;
+			currentTime = evt.Start;
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			Assert.IsTrue (player.Playing);
+			currentTime = dr.Render;
+			player.Seek (currentTime, true, false);
+			Assert.IsTrue (player.Playing);
+			Assert.IsNull (drSent); 
 		}
 
 	}
