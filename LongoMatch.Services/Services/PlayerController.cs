@@ -438,8 +438,8 @@ namespace LongoMatch.Services
 
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
-				TimelineEvent play = ple.Play;
-				LoadSegment (ple.FileSet, play.Start, play.Stop, play.Start, true, ple.Rate);
+				TimelineEvent evt = ple.Play;
+				LoadSegment (ple.FileSet, evt, evt.Start, true);
 			} else if (element is PlaylistVideo) {
 				LoadVideo (element as PlaylistVideo);
 			} else if (element is PlaylistImage) {
@@ -458,7 +458,7 @@ namespace LongoMatch.Services
 			loadedPlaylistElement = null;
 			loadedEvent = evt;
 			if (evt.Start != null && evt.Start != null) {
-				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, playing, evt.Rate);
+				LoadSegment (fileSet, evt, seekTime, playing);
 			} else if (evt.EventTime != null) {
 				Seek (evt.EventTime, true);
 			} else {
@@ -686,37 +686,37 @@ namespace LongoMatch.Services
 		/// </summary>
 		void SetRate (float rate)
 		{
+			if (rate == 0)
+				rate = 1;
 			Rate = rate;
 			EmitRateChanged (rate);
 		}
 
 		/// <summary>
-		/// Loads a video segment in the player.
+		/// Loads a video segment defined by a <see cref="TimelineEvent"/> in the player.
 		/// </summary>
 		/// <param name="fileSet">File set.</param>
-		/// <param name="start">Start time.</param>
-		/// <param name="stop">Stop time.</param>
+		/// <param name="evt">The timeline event to load.</param>
 		/// <param name="seekTime">Seek time.</param>
 		/// <param name="playing">If set to <c>true</c> starts playing.</param>
-		/// <param name="rate">Rate.</param>
-		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
-		                  bool playing, float rate = 1)
+		void LoadSegment (MediaFileSet fileSet, TimelineEvent evt, Time seekTime, bool playing)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
-				start.ToMSecondsString (),
-				stop.ToMSecondsString (), rate));
+				evt.Start, evt.Stop, evt.Rate));
+
+			CamerasVisible = evt.CamerasVisible;
+			CamerasLayout = evt.CamerasLayout;
 			if (fileSet != this.FileSet) {
 				Open (fileSet, false);
 			}
 			Pause ();
-			loadedSegment.Start = start;
-			loadedSegment.Stop = stop;
-			rate = rate == 0 ? 1 : rate;
+			loadedSegment.Start = evt.Start;
+			loadedSegment.Stop = evt.Stop;
 			StillImageLoaded = false;
 			if (readyToSeek) {
 				Log.Debug ("Player is ready to seek, seeking to " +
 				seekTime.ToMSecondsString ());
-				SetRate (rate);
+				SetRate (evt.Rate);
 				Seek (seekTime, true);
 				if (playing) {
 					Play ();
@@ -749,6 +749,8 @@ namespace LongoMatch.Services
 			loadedPlaylistElement = video;
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
+			CamerasVisible = new List<int> { 0 };
+			CamerasLayout = null;
 			Open (fileSet, false, true, true);
 		}
 
