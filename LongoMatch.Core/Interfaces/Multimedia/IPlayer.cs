@@ -77,14 +77,20 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		void Close ();
 
-		bool Open (List<string> mrls);
-
 		bool Open (string mrl);
-
-		bool Open (MediaFileSet mfs);
 
 		bool Open (MediaFile mf);
 
 		Image GetCurrentFrame (int width = -1, int height = -1);
+	}
+
+	public interface IMultiPlayer: IPlayer
+	{
+		bool Open (MediaFileSet mfs);
+
+		List<IntPtr> WindowHandles { set; }
+
+		List<int> CamerasVisible { set; }
+
 	}
 }
