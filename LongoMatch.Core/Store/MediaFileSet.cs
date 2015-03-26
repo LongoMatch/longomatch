@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-	[JsonObject(MemberSerialization.OptIn)]
+	[JsonObject (MemberSerialization.OptIn)]
 	[Serializable]
 	public class MediaFileSet : List<MediaFile>
 	{
@@ -118,7 +118,8 @@ namespace LongoMatch.Core.Store
 		/// <param name="name">Name to use for the search.</param>
 		/// <param name="file">File.</param>
 		/// <returns><c>true</c> if the name was found and a substitution happened, <c>false</c> otherwise.</returns>
-		public bool Replace (String name, MediaFile file) {
+		public bool Replace (String name, MediaFile file)
+		{
 			MediaFile old_file = this.Where (mf => mf.Name == name).FirstOrDefault ();
 			return Replace (old_file, file);
 		}
@@ -131,7 +132,8 @@ namespace LongoMatch.Core.Store
 		/// <param name="old_file">Old file.</param>
 		/// <param name="new_file">New file.</param>
 		/// <returns>><c>true</c> if the old file was found and a substitution happened, <c>false</c> otherwise.</returns>
-		public bool Replace (MediaFile old_file, MediaFile new_file) {
+		public bool Replace (MediaFile old_file, MediaFile new_file)
+		{
 			bool found = false;
 
 			if (Contains (old_file)) {

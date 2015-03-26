@@ -21,7 +21,7 @@ using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
-    /* FIXME: Code duplicated from Play, unfortunately we can't
+	/* FIXME: Code duplicated from Play, unfortunately we can't
       * modify the class hierachy */
 	[Serializable]
 	public class TimelineNode: TimeNode
@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Store
 		public TimelineNode ()
 		{
 		}
-		
+
 		/// <summary>
 		/// Video framerate in frames per second. This value is taken from the
 		/// video file properties and used to translate from seconds
@@ -49,7 +49,7 @@ namespace LongoMatch.Core.Store
 				return (uint)(Start.MSeconds * Fps / 1000);
 			}
 			set {
-				Start = new Time {MSeconds = (int)(1000 * value / Fps)};
+				Start = new Time { MSeconds = (int)(1000 * value / Fps) };
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace LongoMatch.Core.Store
 				return (uint)(Stop.MSeconds * Fps / 1000);
 			}
 			set {
-				Stop = new Time {MSeconds = (int)(1000 * value / Fps)};
+				Stop = new Time { MSeconds = (int)(1000 * value / Fps) };
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public uint CentralFrame {
 			get {
-				return StopFrame-((TotalFrames)/2);
+				return StopFrame - ((TotalFrames) / 2);
 			}
 		}
 
@@ -90,10 +90,10 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public uint TotalFrames {
 			get {
-				return StopFrame-StartFrame;
+				return StopFrame - StartFrame;
 			}
 		}
-		
+
 		/// <summary>
 		/// Get the key frame number if this play as key frame drawing or 0
 		/// </summary>
@@ -102,7 +102,7 @@ namespace LongoMatch.Core.Store
 				return 0;
 			}
 		}
-		
+
 		public bool HasDrawings {
 			get;
 			set;
@@ -117,8 +117,9 @@ namespace LongoMatch.Core.Store
 		/// <returns>
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
-		public bool HasFrame(int frame) {
-			return (frame>=StartFrame && frame<StopFrame);
+		public bool HasFrame (int frame)
+		{
+			return (frame >= StartFrame && frame < StopFrame);
 		}
 	}
 }

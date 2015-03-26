@@ -100,12 +100,13 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimedDashboardButton: DashboardButton
 	{
-		public TimedDashboardButton () {
+		public TimedDashboardButton ()
+		{
 			TagMode = TagMode.Predefined;
-			Start = new Time {TotalSeconds = 10};
-			Stop = new Time {TotalSeconds = 10};
+			Start = new Time { TotalSeconds = 10 };
+			Stop = new Time { TotalSeconds = 10 };
 		}
-		
+
 		public TagMode TagMode {
 			get;
 			set;
@@ -125,10 +126,11 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TagButton: DashboardButton
 	{
-		public TagButton () {
+		public TagButton ()
+		{
 			BackgroundColor = StyleConf.ButtonTagColor;
 		}
-		
+
 		public Tag Tag {
 			get;
 			set;
@@ -160,10 +162,11 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimerButton: DashboardButton
 	{
-		public TimerButton () {
+		public TimerButton ()
+		{
 			BackgroundColor = StyleConf.ButtonTimerColor;
 		}
-		
+
 		public Timer Timer {
 			get;
 			set;
@@ -215,11 +218,12 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class AnalysisEventButton: EventButton
 	{
-		public AnalysisEventButton () {
+		public AnalysisEventButton ()
+		{
 			TagsPerRow = 2;
 			ShowSubcategories = true;
 		}
-		
+
 		public bool ShowSubcategories {
 			get;
 			set;

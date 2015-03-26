@@ -28,28 +28,28 @@ namespace LongoMatch.Core.Common
 		{
 			Points = new List<Point> ();
 		}
-		
+
 		public List<Point> Points {
 			get;
 			set;
 		}
-		
+
 		public override bool Equals (object obj)
 		{
 			Coordinates c = obj as Coordinates;
-            if (c == null)
+			if (c == null)
 				return false;
 				
 			if (c.Points.Count != Points.Count)
 				return false;
 			
-			for (int i=0; i < Points.Count; i++) {
-				if (!c.Points[i].Equals (Points[i]))
+			for (int i = 0; i < Points.Count; i++) {
+				if (!c.Points [i].Equals (Points [i]))
 					return false;
 			}
 			return true;
 		}
-		
+
 		public override int GetHashCode ()
 		{
 			string s = "";
@@ -58,11 +58,11 @@ namespace LongoMatch.Core.Common
 				return base.GetHashCode ();
 			}
 			
-			for (int i=0; i < Points.Count; i++) {
-				s += this.Points[i].X.ToString() +  this.Points[i].Y.ToString();
+			for (int i = 0; i < Points.Count; i++) {
+				s += this.Points [i].X.ToString () + this.Points [i].Y.ToString ();
 			}
 			
-			return int.Parse(s);
+			return int.Parse (s);
 		}
 	}
 	

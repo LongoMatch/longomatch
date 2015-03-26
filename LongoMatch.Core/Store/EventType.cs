@@ -108,7 +108,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 	}
-	
+
 	[Serializable]
 	public class AnalysisEventType: EventType
 	{
@@ -125,7 +125,7 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public Dictionary<string, List<Tag>> TagsByGroup {
 			get {
-				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList());
+				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());
 			}
 		}
 	}
@@ -146,13 +146,13 @@ namespace LongoMatch.Core.Store
 				return false;
 			return pc.ID == ID;
 		}
-		
+
 		public override int GetHashCode ()
 		{
 			return ID.GetHashCode ();
 		}
 	}
-	
+
 	[Serializable]
 	public class ScoreEventType: EventType
 	{

@@ -68,8 +68,8 @@ namespace LongoMatch.Core.Store
 		public String Title {
 			get {
 				return String.Format ("{0} - {1} ({2}-{3}) {4} {5}",
-				                      LocalName, VisitorName, LocalGoals, VisitorGoals,
-				                      Competition, Season);
+					LocalName, VisitorName, LocalGoals, VisitorGoals,
+					Competition, Season);
 			}
 		}
 
@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Store
 		public String DateTitle {
 			get {
 				string ret = String.Format ("{0}-{1} {2}", LocalName, VisitorName,
-				                            MatchDate.ToShortDateString ());
+					             MatchDate.ToShortDateString ());
 				if (!String.IsNullOrEmpty (Season)) {
 					ret += " " + Season;
 				}

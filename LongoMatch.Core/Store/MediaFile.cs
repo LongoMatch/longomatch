@@ -33,18 +33,18 @@ namespace LongoMatch.Core.Store
 		}
 
 		public MediaFile (string filePath,
-		                 long length,
-		                 ushort fps,
-		                 bool hasAudio,
-		                 bool hasVideo,
-		                 string container,
-		                 string videoCodec,
-		                 string audioCodec,
-		                 uint videoWidth,
-		                 uint videoHeight,
-		                 double par,
-		                 Image preview,
-                         String name)
+		                  long length,
+		                  ushort fps,
+		                  bool hasAudio,
+		                  bool hasVideo,
+		                  string container,
+		                  string videoCodec,
+		                  string audioCodec,
+		                  uint videoWidth,
+		                  uint videoHeight,
+		                  double par,
+		                  Image preview,
+		                  String name)
 		{
 			FilePath = filePath;
 			Duration = new Time ((int)length);
@@ -139,7 +139,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public bool Exists () {
+		public bool Exists ()
+		{
 			return System.IO.File.Exists (FilePath);
 		}
 	}

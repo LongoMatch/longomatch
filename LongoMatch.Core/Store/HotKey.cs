@@ -33,6 +33,7 @@ namespace LongoMatch.Core.Store
 	public class HotKey : IEquatable<HotKey>
 	{
 		#region Constructors
+
 		/// <summary>
 		/// Creates a new undefined HotKey
 		/// </summary>
@@ -41,8 +42,11 @@ namespace LongoMatch.Core.Store
 			Key = -1;
 			Modifier = -1;
 		}
+
 		#endregion
+
 		#region Properties
+
 		/// <summary>
 		/// Gdk Key
 		/// </summary>
@@ -68,16 +72,22 @@ namespace LongoMatch.Core.Store
 				return (Key != -1);
 			}
 		}
+
 		#endregion
+
 		#region Public Methods
+
 		public bool Equals (HotKey hotkeyComp)
 		{
 			if (hotkeyComp == null)
 				return false;
 			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
 		}
+
 		#endregion
+
 		#region Operators
+
 		static public bool operator == (HotKey a, HotKey b)
 		{
 			// If both are null, or both are same instance, return true.
@@ -96,8 +106,11 @@ namespace LongoMatch.Core.Store
 		{
 			return !(a == b);
 		}
+
 		#endregion
+
 		#region Overrides
+
 		public override bool Equals (object obj)
 		{
 			if (obj is HotKey) {
@@ -118,6 +131,7 @@ namespace LongoMatch.Core.Store
 				return Catalog.GetString ("Not defined");
 			return Keyboard.HotKeyName (this);
 		}
+
 		#endregion
 	}
 }
