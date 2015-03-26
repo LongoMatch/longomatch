@@ -83,16 +83,19 @@ namespace Tests.Services
 		[TearDown ()]
 		public void TearDown ()
 		{
+			player.Stop ();
 			player.Dispose ();
 		}
 
-		void PreparePlayer ()
+		void PreparePlayer (bool readyToSeek = true)
 		{
 			player.CamerasVisible = new List<int> { 0, 1 };
 			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
 			player.Ready ();
 			player.Open (mfs);
-			playerMock.Raise (p => p.ReadyToSeek += null);
+			if (readyToSeek) {
+				playerMock.Raise (p => p.ReadyToSeek += null);
+			}
 		}
 
 		[Test ()]
@@ -539,6 +542,93 @@ namespace Tests.Services
 			};
 			playerMock.Raise (p => p.Error += null, "error");
 			Assert.AreEqual ("error", msg);
+		}
+
+		[Test ()]
+		public void TestUnloadEvent ()
+		{
+			int elementLoaded = 0;
+			PreparePlayer ();
+			player.ElementLoadedEvent += (element, hasNext) => {
+				if (element == null) {
+					elementLoaded++;
+				}
+			};
+			player.UnloadCurrentEvent ();
+			Assert.AreEqual (1, elementLoaded);
+		}
+
+		[Test ()]
+		public void TestLoadEvent ()
+		{
+			int elementLoaded = 0;
+
+			player.ElementLoadedEvent += (element, hasNext) => {
+				if (element != null) {
+					elementLoaded++;
+				}
+			};
+
+			/* Not ready to seek */
+			player.CamerasVisible = new List<int> { 0, 1 };
+			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			player.Ready ();
+			Assert.IsNull (player.FileSet);
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			Assert.AreEqual (mfs, player.FileSet);
+			Assert.IsFalse (player.Playing);
+			Assert.AreEqual (1, elementLoaded);
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+
+
+			/* Ready to seek */
+			currentTime = evt.Start;
+			playerMock.Raise (p => p.ReadyToSeek += null);
+			Assert.IsTrue (player.Playing);
+			playerMock.Verify (p => p.Open (mfs));
+			playerMock.Verify (p => p.Seek (evt.Start, true, false), Times.Once ());
+			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.VerifySet (p => p.Rate = 1);
+			Assert.AreEqual (1, elementLoaded);
+			elementLoaded = 0;
+			playerMock.ResetCalls ();
+
+			/* Open with a new MediaFileSet and also check seekTime and playing values*/
+			MediaFileSet nfs = Cloner.Clone (mfs);
+			player.LoadEvent (nfs, evt, evt.Stop, false);
+			Assert.AreEqual (1, elementLoaded);
+			elementLoaded = 0;
+			Assert.AreEqual (nfs, player.FileSet);
+			playerMock.Verify (p => p.Open (nfs));
+			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.VerifySet (p => p.Rate = 1);
+			playerMock.Raise (p => p.ReadyToSeek += null);
+			playerMock.Verify (p => p.Seek (evt.Stop, true, false), Times.Once ());
+			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.ResetCalls ();
+
+			/* Open another event with the same MediaFileSet and already ready to seek
+			 * and check the cameras layout and visibility is respected */
+			TimelineEvent evt2 = new TimelineEvent { Start = new Time (400), Stop = new Time (50000),
+				CamerasVisible = new List<int> { 1, 0 },
+				CamerasLayout = "test"
+			};
+
+			player.LoadEvent (nfs, evt2, evt2.Start, true);
+			Assert.AreEqual (1, elementLoaded);
+			elementLoaded = 0;
+			playerMock.Verify (p => p.Open (nfs), Times.Never ());
+			playerMock.Verify (p => p.Seek (evt2.Start, true, false), Times.Once ());
+			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.VerifySet (p => p.Rate = 1);
+			Assert.AreEqual (evt2.CamerasVisible, player.CamerasVisible);
+			Assert.AreEqual (evt2.CamerasLayout, player.CamerasLayout);
+		}
+
+		[Test ()]
+		public void TestLoadPlaylistEvent ()
+		{
 		}
 
 	}
