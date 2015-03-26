@@ -182,7 +182,7 @@ namespace Tests.Services
 			/* Open but view is not ready */
 			player.Open (mfs);
 			Assert.AreEqual (mfs, player.FileSet);
-			playerMock.Verify (p => p.Open (mfs), Times.Never ());
+			playerMock.Verify (p => p.Open (mfs [0]), Times.Never ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 
@@ -200,7 +200,7 @@ namespace Tests.Services
 			streamLength = new Time { TotalSeconds = 5000 };
 			currentTime = new Time (0);
 			PreparePlayer ();
-			playerMock.Verify (p => p.Open (mfs), Times.Once ());
+			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 			Assert.AreEqual (2, parCount);
@@ -587,7 +587,7 @@ namespace Tests.Services
 			currentTime = evt.Start;
 			playerMock.Raise (p => p.ReadyToSeek += null);
 			Assert.IsTrue (player.Playing);
-			playerMock.Verify (p => p.Open (mfs));
+			playerMock.Verify (p => p.Open (mfs [0]));
 			playerMock.Verify (p => p.Seek (evt.Start, true, false), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
@@ -601,7 +601,7 @@ namespace Tests.Services
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
 			Assert.AreEqual (nfs, player.FileSet);
-			playerMock.Verify (p => p.Open (nfs));
+			playerMock.Verify (p => p.Open (nfs [0]));
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Pause (), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
@@ -619,7 +619,7 @@ namespace Tests.Services
 			player.LoadEvent (nfs, evt2, evt2.Start, true);
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
-			playerMock.Verify (p => p.Open (nfs), Times.Never ());
+			playerMock.Verify (p => p.Open (nfs [0]), Times.Never ());
 			playerMock.Verify (p => p.Seek (evt2.Start, true, false), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
@@ -654,7 +654,7 @@ namespace Tests.Services
 			elementLoaded = 0;
 			Assert.AreEqual (el1.CamerasVisible, player.CamerasVisible);
 			Assert.AreEqual (el1.CamerasLayout, player.CamerasLayout);
-			playerMock.Verify (p => p.Open (nfs), Times.Once ());
+			playerMock.Verify (p => p.Open (nfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Seek (el1.Play.Start, true, false), Times.Never ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.VerifySet (p => p.Rate = 1);

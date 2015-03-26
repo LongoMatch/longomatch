@@ -61,6 +61,11 @@ namespace LongoMatch.Video
 			return registry.GetDefault<IPlayer> (typeof(IPlayer));
 		}
 
+		public IMultiPlayer GetMultiPlayer ()
+		{
+			return registry.GetDefault<IMultiPlayer> (typeof(IMultiPlayer));
+		}
+
 		public IFramesCapturer GetFramesCapturer ()
 		{
 			return registry.GetDefault<IFramesCapturer> (typeof(IFramesCapturer));

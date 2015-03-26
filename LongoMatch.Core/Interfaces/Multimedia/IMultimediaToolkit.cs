@@ -27,24 +27,26 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	{
 		void Register (int priority, Type interfac, Type elementType);
 
-		IPlayer GetPlayer();
+		IPlayer GetPlayer ();
 
-		IVideoEditor GetVideoEditor();
-		
+		IMultiPlayer GetMultiPlayer ();
+
+		IVideoEditor GetVideoEditor ();
+
 		IVideoConverter GetVideoConverter (string filename);
-		
-		IFramesCapturer GetFramesCapturer();
-		
-		IRemuxer GetRemuxer(MediaFile inputFile, string outputFile, VideoMuxerType muxer);
-		
-		ICapturer GetCapturer();
-		
-		MediaFile DiscoverFile(string path, bool takeScreenshot=true);
-		
-		List<Device> VideoDevices {get;}
-		
+
+		IFramesCapturer GetFramesCapturer ();
+
+		IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer);
+
+		ICapturer GetCapturer ();
+
+		MediaFile DiscoverFile (string path, bool takeScreenshot = true);
+
+		List<Device> VideoDevices { get; }
+
 		bool FileNeedsRemux (MediaFile file);
-		
+
 		string RemuxFile (MediaFile file, object parent);
 	}
 }

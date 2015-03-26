@@ -45,10 +45,12 @@ namespace LongoMatch.Services
 		const int SCALE_FPS = 25;
 
 		IPlayer player;
+		IMultiPlayer multiPlayer;
 		TimelineEvent loadedEvent;
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
 		List<IntPtr> windowHandles;
+		List<int> camerasVisible;
 
 		Time streamLenght, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed;
@@ -76,7 +78,7 @@ namespace LongoMatch.Services
 
 		#region Constructors
 
-		public PlayerController ()
+		public PlayerController (bool supportsMultipleStreams = false)
 		{
 			seeker = new Seeker ();
 			seeker.SeekEvent += HandleSeekEvent;
@@ -89,7 +91,7 @@ namespace LongoMatch.Services
 			timer = new Timer (HandleTimeout);
 			TimerDisposed = new ManualResetEvent (false);
 			ready = false;
-			CreatePlayer ();
+			CreatePlayer (supportsMultipleStreams);
 		}
 
 		#endregion
@@ -102,8 +104,15 @@ namespace LongoMatch.Services
 		}
 
 		public List<int> CamerasVisible {
-			get;
-			set;
+			set {
+				camerasVisible = value;
+				if (multiPlayer != null) {
+					multiPlayer.CamerasVisible = value;
+				}
+			}
+			get {
+				return camerasVisible;
+			}
 		}
 
 		public object CamerasLayout {
@@ -113,9 +122,12 @@ namespace LongoMatch.Services
 
 		public List<IntPtr> WindowHandles {
 			set {
-				/* FIXME: handle multiple handles when IMultiplayer is implemented */
 				if (value != null) {
-					player.WindowHandle = value [0];
+					if (multiPlayer == null) {
+						player.WindowHandle = value [0];
+					} else {
+						multiPlayer.WindowHandles = value;
+					}
 				}
 				windowHandles = value;
 			}
@@ -652,7 +664,11 @@ namespace LongoMatch.Services
 				}
 				try {
 					Log.Debug ("Opening new file set " + fileSet);
-					player.Open (fileSet);
+					if (multiPlayer != null) {
+						multiPlayer.Open (fileSet);
+					} else {
+						player.Open (fileSet [0]);
+					}
 					FileSet = fileSet;
 					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
@@ -782,10 +798,17 @@ namespace LongoMatch.Services
 		/// <summary>
 		/// Creates the backend video player.
 		/// </summary>
-		void CreatePlayer ()
+		void CreatePlayer (bool supportsMultipleStreams)
 		{
-			player = Config.MultimediaToolkit.GetPlayer ();
-
+			if (supportsMultipleStreams) {
+				player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
+				if (player == null) {
+					throw new Exception ("A player that supports multiple cameras was not found");
+				}
+			} else {
+				player = Config.MultimediaToolkit.GetPlayer ();
+				multiPlayer = null;
+			}
 			player.Error += HandleError;
 			player.StateChange += HandleStateChange;
 			player.Eos += HandleEndOfStream;
