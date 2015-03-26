@@ -78,7 +78,7 @@ namespace LongoMatch.Services
 
 		#region Constructors
 
-		public PlayerController (bool supportsMultipleStreams = false)
+		public PlayerController ()
 		{
 			seeker = new Seeker ();
 			seeker.SeekEvent += HandleSeekEvent;
@@ -91,7 +91,7 @@ namespace LongoMatch.Services
 			timer = new Timer (HandleTimeout);
 			TimerDisposed = new ManualResetEvent (false);
 			ready = false;
-			CreatePlayer (supportsMultipleStreams);
+			CreatePlayer ();
 		}
 
 		#endregion
@@ -798,16 +798,12 @@ namespace LongoMatch.Services
 		/// <summary>
 		/// Creates the backend video player.
 		/// </summary>
-		void CreatePlayer (bool supportsMultipleStreams)
+		void CreatePlayer ()
 		{
-			if (supportsMultipleStreams) {
-				player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
-				if (player == null) {
-					throw new Exception ("A player that supports multiple cameras was not found");
-				}
-			} else {
+			player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
+			if (player == null) {
+				Log.Error ("Player with support for multiple cameras not found");
 				player = Config.MultimediaToolkit.GetPlayer ();
-				multiPlayer = null;
 			}
 			player.Error += HandleError;
 			player.StateChange += HandleStateChange;

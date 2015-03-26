@@ -52,8 +52,10 @@ namespace Tests.Services
 			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, true);
 			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, false);
 
-			var mtk = Mock.Of<IMultimediaToolkit> (m => m.GetPlayer () == playerMock.Object);
-			Config.MultimediaToolkit = mtk;
+			var mtk = new Mock<IMultimediaToolkit> ();
+			mtk.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
+			mtk.Setup (m => m.GetMultiPlayer ());
+			Config.MultimediaToolkit = mtk.Object;
 
 			var ftk = new Mock<IGUIToolkit> ();
 			ftk.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
