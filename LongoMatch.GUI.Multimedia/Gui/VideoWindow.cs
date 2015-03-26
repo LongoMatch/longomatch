@@ -69,7 +69,7 @@ namespace LongoMatch.Gui
 		void HandleScrollEvent (object o, ScrollEventArgs args)
 		{
 			if (ScrollEvent != null) {
-				ScrollEvent (o, args);
+				ScrollEvent (this, args);
 			}
 			
 		}
@@ -78,19 +78,19 @@ namespace LongoMatch.Gui
 		{
 			if (!Ready) {
 				if (ReadyEvent != null) {
-					ReadyEvent (o, null);
+					ReadyEvent (this, null);
 				}
 				Ready = true;
 			}
 			if (ExposeEvent != null) {
-				ExposeEvent (o, args);
+				ExposeEvent (this, args);
 			}
 		}
 
 		void HandleButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
 			if (ButtonPressEvent != null) {
-				ButtonPressEvent (o, args);
+				ButtonPressEvent (this, args);
 			}
 		}
 
