@@ -40,30 +40,75 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	public interface IPlayback: IDisposable
 	{
 
+		/// <summary>
+		/// Gets the length of the opened media file.
+		/// </summary>
 		Time StreamLength { get; }
 
+		/// <summary>
+		/// Gets the current playback time of the player.
+		/// </summary>
 		Time CurrentTime { get; }
 
+		/// <summary>
+		/// Gets or sets the volume of the player.
+		/// </summary>
 		double Volume { get; set; }
 
+		/// <summary>
+		/// <c>true</c> if the playing is in a playing state or <c>false</c> if it's paused.
+		/// </summary>
 		bool Playing { get; }
 
+		/// <summary>
+		/// Gets or sets the playback rate.
+		/// </summary>
+		/// <value>The rate.</value>
 		double Rate { get; set; }
 
+		/// <summary>
+		/// Sets the window handle in when the video sink can draw.
+		/// </summary>
 		IntPtr WindowHandle { set; }
 
+		/// <summary>
+		/// Starts playing.
+		/// </summary>
 		void Play ();
 
+		/// <summary>
+		/// Pauses the player.
+		/// </summary>
 		void Pause ();
 
+		/// <summary>
+		/// Stops the player.
+		/// </summary>
 		void Stop ();
 
+		/// <summary>
+		/// Seek the specified time.
+		/// </summary>
+		/// <param name="time">Seek position.</param>
+		/// <param name="accurate">If set to <c>true</c>, does and Accurate seek,
+		///  otherwise a Keyframe seek.</param>
+		/// <param name="synchronous">If set to <c>true</c>, does a synchronous
+		///  seek waiting for the seek to finish.</param>
 		bool Seek (Time time, bool accurate = false, bool synchronous = false);
 
+		/// <summary>
+		/// Seeks to next frame.
+		/// </summary>
 		bool SeekToNextFrame ();
 
+		/// <summary>
+		/// Seeks to previous frame.
+		/// </summary>
 		bool SeekToPreviousFrame ();
 
+		/// <summary>
+		/// Force a redraw of the last frame.
+		/// </summary>
 		void Expose ();
 	}
 
@@ -75,21 +120,54 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event StateChangeHandler StateChange;
 		event ReadyToSeekHandler ReadyToSeek;
 
+		/// <summary>
+		/// Closes the opened media file.
+		/// </summary>
 		void Close ();
 
+		/// <summary>
+		/// Open the specified url.
+		/// </summary>
+		/// <param name="mrl">An URL with the file to open.</param>
 		bool Open (string mrl);
 
+		/// <summary>
+		/// Open the specified media file.
+		/// </summary>
+		/// <param name="mf">A media file to open.</param>
 		bool Open (MediaFile mf);
 
+		/// <summary>
+		/// Gets the current frame, scalling it to the desired width and height.
+		/// If width and height are -1, the frame is returning with its original size.
+		/// </summary>
+		/// <returns>The current frame.</returns>
+		/// <param name="width">Output width.</param>
+		/// <param name="height">Output height.</param>
 		Image GetCurrentFrame (int width = -1, int height = -1);
 	}
 
 	public interface IMultiPlayer: IPlayer
 	{
+		/// <summary>
+		/// Open a set of media files.
+		/// </summary>
+		/// <param name="mfs">The set of files to open.</param>
 		bool Open (MediaFileSet mfs);
 
+		/// <summary>
+		/// A list of window handles set by the view on which the player can draw.
+		/// </summary>
 		List<IntPtr> WindowHandles { set; }
 
+		/// <summary>
+		/// A list with the current cameras visibles.
+		/// The value of the integer is the index of the <see cref="MediaFile"/>
+		/// to use from the <see cref="MediaFileSet"/> opened.
+		/// The position in the list is the WindowHandle on which it should e drawn.
+		/// {0, 1} will play MediaFileSet[0] in WindowHandles[0] and MediaFileSet[1] in WindowsHandles[1]
+		/// {2, 3} will play MediaFileSet[2] in WindowHandles[0] and MediaFileSet[3] in WindowsHandles[1]
+		/// </summary>
 		List<int> CamerasVisible { set; }
 
 	}
