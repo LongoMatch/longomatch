@@ -648,6 +648,7 @@ namespace LongoMatch.Services
 				}
 				foreach (int index in CamerasVisible) {
 					try {
+						if (index >= fileSet.Count) continue;
 						MediaFile file = fileSet [index];
 						IntPtr windowHandle = WindowHandles [index];
 						if (file.VideoHeight != 0) {
