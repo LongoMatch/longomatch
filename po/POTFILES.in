@@ -111,6 +111,7 @@ LongoMatch.GUI.Helpers/Misc.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
+LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VideoWindow.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/PlayerView.cs
 LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
