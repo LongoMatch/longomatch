@@ -268,7 +268,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Play");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (TIMEOUT_MS);
-				EmitPlaybackStateChanged (true);
+				EmitPlaybackStateChanged (this, true);
 			} else {
 				EmitLoadDrawings (null);
 				player.Play ();
@@ -281,7 +281,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Pause");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (0);
-				EmitPlaybackStateChanged (false);
+				EmitPlaybackStateChanged (this, false);
 			} else {
 				player.Pause ();
 			}
@@ -559,10 +559,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void EmitPlaybackStateChanged (bool playing)
+		void EmitPlaybackStateChanged (object sender, bool playing)
 		{
 			if (PlaybackStateChangedEvent != null) {
-				PlaybackStateChangedEvent (playing);
+				PlaybackStateChangedEvent (sender, playing);
 			}
 		}
 
@@ -589,7 +589,7 @@ namespace LongoMatch.Services
 			set {
 				stillimageLoaded = value;
 				if (stillimageLoaded) {
-					EmitPlaybackStateChanged (true);
+					EmitPlaybackStateChanged (this, true);
 					player.Pause ();
 					imageLoadedTS = new Time (0);
 					ReconfigureTimeout (TIMEOUT_MS);
@@ -642,7 +642,8 @@ namespace LongoMatch.Services
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
 				if (CamerasVisible == null) {
-					Config.EventsBroker.EmitMultimediaError (Catalog.GetString ("Invalid camera configuration"));
+					Config.EventsBroker.EmitMultimediaError (this, 
+						Catalog.GetString ("Invalid camera configuration"));
 					FileSet = null;
 					return;
 				}
@@ -658,7 +659,8 @@ namespace LongoMatch.Services
 							EmitPARChanged (windowHandle, 1);
 						}
 					} catch (Exception ex) {
-						Config.EventsBroker.EmitMultimediaError (Catalog.GetString ("Invalid camera configuration"));
+						Config.EventsBroker.EmitMultimediaError (this,
+							Catalog.GetString ("Invalid camera configuration"));
 						FileSet = null;
 						Log.Exception (ex);
 						return;
@@ -889,7 +891,7 @@ namespace LongoMatch.Services
 
 		/* These callbacks are triggered by the multimedia backend and need to
 		 * be deferred to the UI main thread */
-		void HandleStateChange (bool playing)
+		void HandleStateChange (object sender, bool playing)
 		{
 			Config.GUIToolkit.Invoke (delegate {
 				if (playing) {
@@ -899,11 +901,11 @@ namespace LongoMatch.Services
 						ReconfigureTimeout (0);
 					}
 				}
-				EmitPlaybackStateChanged (playing);
+				EmitPlaybackStateChanged (this, playing);
 			});
 		}
 
-		void HandleReadyToSeek ()
+		void HandleReadyToSeek (object sender)
 		{
 			Config.GUIToolkit.Invoke (delegate {
 				readyToSeek = true;
@@ -921,7 +923,7 @@ namespace LongoMatch.Services
 			});
 		}
 
-		void HandleEndOfStream ()
+		void HandleEndOfStream (object sender)
 		{
 			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
@@ -933,10 +935,10 @@ namespace LongoMatch.Services
 			});
 		}
 
-		void HandleError (string message)
+		void HandleError (object sender, string message)
 		{
 			Config.GUIToolkit.Invoke (delegate {
-				Config.EventsBroker.EmitMultimediaError (message);
+				Config.EventsBroker.EmitMultimediaError (sender, message);
 			});
 		}
 

@@ -51,10 +51,12 @@ namespace LongoMatch.Video.Editor
 			};
 			InternalError += delegate(object o, ErrorArgs args) {
 				if (Error != null)
-					Error (args.Message);
+					Error (this, args.Message);
 			};
 		}
+
 		#region GSignals
+
 		#pragma warning disable 0169
 		[GLib.CDeclCallback]
 		delegate void ErrorVMDelegate (IntPtr gvc,IntPtr message);

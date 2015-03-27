@@ -307,7 +307,7 @@ namespace LongoMatch.Gui
 			timescale.Sensitive = seekable;
 		}
 
-		void HandlePlaybackStateChangedEvent (bool playing)
+		void HandlePlaybackStateChangedEvent (object sender, bool playing)
 		{
 			if (playing) {
 				playbutton.Hide ();

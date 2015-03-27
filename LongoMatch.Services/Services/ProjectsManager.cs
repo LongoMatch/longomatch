@@ -371,7 +371,7 @@ namespace LongoMatch.Services
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
-		void HandleMultimediaError (string message)
+		void HandleMultimediaError (object sender, string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current project will be closed:") + "\n" + message);
@@ -395,7 +395,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleCaptureError (string message)
+		void HandleCaptureError (object sender, string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + message);

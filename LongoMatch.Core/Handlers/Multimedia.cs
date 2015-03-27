@@ -40,16 +40,17 @@ namespace LongoMatch.Core.Handlers
 
 	public delegate void DeviceChangeHandler (int deviceID);
 	public delegate void CaptureFinishedHandler (bool close);
-	public delegate void ErrorHandler (string message);
 	public delegate void PercentCompletedHandler (float percent);
-	public delegate void StateChangeHandler (bool playing);
 	public delegate void TickHandler (Time currentTime);
 	public delegate void TimeChangedHandler (Time currentTime,Time duration,bool seekable);
 	public delegate void MediaInfoHandler (int width,int height,int parN,int parD);
-	public delegate void EosHandler ();
-	public delegate void ReadyToSeekHandler ();
 	public delegate void LoadDrawingsHandler (FrameDrawing frameDrawing);
 	public delegate void ElementLoadedHandler (object element,bool hasNext);
 	public delegate void PARChangedHandler (IntPtr windowHandle,float par);
 	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset);
+
+	public delegate void ErrorHandler (object sender,string message);
+	public delegate void EosHandler (object sender);
+	public delegate void ReadyToSeekHandler (object sender);
+	public delegate void StateChangeHandler (object sender,bool playing);
 }

@@ -350,17 +350,17 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitCaptureError (string message)
+		public void EmitCaptureError (object sender, string message)
 		{
 			if (CaptureError != null) {
-				CaptureError (message);
+				CaptureError (sender, message);
 			}
 		}
 
-		public void EmitMultimediaError (string message)
+		public void EmitMultimediaError (object sender, string message)
 		{
 			if (MultimediaError != null) {
-				MultimediaError (message);
+				MultimediaError (sender, message);
 			}
 		}
 

@@ -61,7 +61,7 @@ namespace LongoMatch.Video.Converter
 			};
 			InternalError += delegate(object o, ErrorArgs args) {
 				if (Error != null)
-					Error (args.Message);
+					Error (this, args.Message);
 			};
 		}
 

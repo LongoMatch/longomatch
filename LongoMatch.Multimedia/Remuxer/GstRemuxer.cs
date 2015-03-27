@@ -53,7 +53,7 @@ namespace LongoMatch.Video.Remuxer
 			
 			GstError += delegate(object o, ErrorArgs args) {
 				if (Error != null)
-					Error (args.Message);
+					Error (this, args.Message);
 			};
 		}
 		#pragma warning disable 0169

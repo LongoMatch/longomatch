@@ -106,7 +106,7 @@ namespace LongoMatch.Video.Capturer
 			
 			this.GlibError += (o, args) => {
 				if (Error != null) {
-					Error (args.Message);
+					Error (this, args.Message);
 				}
 			};
 			

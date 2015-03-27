@@ -122,7 +122,7 @@ namespace LongoMatch.Video.Utils
 			Cancel ();
 		}
 
-		void HandleRemuxerError (string error)
+		void HandleRemuxerError (object sender, string error)
 		{
 			Application.Invoke (delegate {
 				Error (error);

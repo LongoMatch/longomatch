@@ -440,10 +440,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnError (string message)
+		void OnError (object sender, string message)
 		{
 			Application.Invoke (delegate {
-				Config.EventsBroker.EmitCaptureError (message);
+				Config.EventsBroker.EmitCaptureError (sender, message);
 			});
 		}
 

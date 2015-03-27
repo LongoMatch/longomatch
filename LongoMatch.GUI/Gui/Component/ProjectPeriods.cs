@@ -304,7 +304,7 @@ namespace LongoMatch.Gui.Component
 		/// Try to slave the secondary player to the first 
 		/// </summary>
 		/// <param name="playing">If set to <c>true</c> playing.</param>
-		void HandleStateChanged (bool playing)
+		void HandleStateChanged (object sender, bool playing)
 		{
 			if (playing) {
 				if (sec_cam_playerbin.Player.Opened) {

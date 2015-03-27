@@ -124,22 +124,22 @@ namespace LongoMatch.Video.Player
 			
 			this.GlibError += (o, args) => {
 				if (Error != null)
-					Error (args.Message);
+					Error (this, args.Message);
 			};
 			
 			this.GlibStateChange += (o, args) => {
 				if (StateChange != null)
-					StateChange (args.Playing);
+					StateChange (this, args.Playing);
 			};
 			
 			this.GlibReadyToSeek += (sender, e) => {
 				if (ReadyToSeek != null)
-					ReadyToSeek ();
+					ReadyToSeek (this);
 			};
 
 			this.GlibEos += (sender, e) => {
 				if (Eos != null)
-					Eos ();
+					Eos (this);
 			};
 		}
 		#pragma warning disable 0169
