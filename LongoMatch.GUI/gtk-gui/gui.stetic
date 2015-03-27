@@ -9699,7 +9699,7 @@ You can continue with the current capture, cancel it or save your project.
                       </widget>
                       <packing>
                         <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>
@@ -9767,7 +9767,7 @@ You can continue with the current capture, cancel it or save your project.
                       </widget>
                       <packing>
                         <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>

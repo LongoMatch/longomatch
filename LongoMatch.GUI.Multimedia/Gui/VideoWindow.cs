@@ -36,6 +36,7 @@ namespace LongoMatch.Gui
 			frame = new AspectFrame (null, 0.5f, 0.5f, 1f, false);
 			frame.Shadow = ShadowType.None;
 
+			disabledtext.NoShowAll = true;
 			Window = new DrawingArea ();
 			Window.DoubleBuffered = false;
 			Window.ExposeEvent += HandleExposeEvent;
@@ -46,10 +47,10 @@ namespace LongoMatch.Gui
 				// Workaround for GTK bugs on Windows not showing the video window
 				videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
 			}
-
 			frame.Add (Window);
 			videoeventbox.Add (frame);
-			ShowAll ();
+			videoeventbox.ShowAll ();
+			Enabled = true;
 		}
 
 		void HandleVisibilityNotifyEvent (object o, VisibilityNotifyEventArgs args)

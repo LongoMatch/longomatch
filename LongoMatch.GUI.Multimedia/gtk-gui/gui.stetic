@@ -85,54 +85,35 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox2">
+              <widget class="Gtk.HBox" id="hbox3">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.HBox" id="videobox">
+                  <widget class="LongoMatch.Gui.VideoWindow" id="videowindow">
                     <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="Gtk.HBox" id="hbox2">
-                        <property name="MemberName" />
-                        <child>
-                          <widget class="LongoMatch.Gui.VideoWindow" id="videowindow">
-                            <property name="MemberName" />
-                            <property name="Visible">False</property>
-                            <property name="Events">ButtonPressMask</property>
-                            <property name="Ready">False</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.DrawingArea" id="blackboarddrawingarea">
-                            <property name="MemberName" />
-                            <property name="Visible">False</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
-                      </packing>
-                    </child>
+                    <property name="Visible">False</property>
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Ready">False</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
                     <property name="AutoSize">True</property>
                   </packing>
                 </child>
+                <child>
+                  <widget class="Gtk.DrawingArea" id="blackboarddrawingarea">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
               </packing>
             </child>
             <child>
@@ -173,7 +154,7 @@
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
@@ -916,7 +897,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.VideoWindow" design-size="742 342">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.VideoWindow" design-size="742 423">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
