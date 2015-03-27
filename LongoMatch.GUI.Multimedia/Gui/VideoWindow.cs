@@ -109,6 +109,13 @@ namespace LongoMatch.Gui
 				frame.Ratio = value;
 			}
 		}
+
+		public bool Enabled {
+			set {
+				videoeventbox.Visible = value;
+				disabledtext.Visible = !value;
+			}
+		}
 	}
 }
 
