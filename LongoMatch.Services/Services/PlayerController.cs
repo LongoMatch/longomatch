@@ -78,7 +78,7 @@ namespace LongoMatch.Services
 
 		#region Constructors
 
-		public PlayerController ()
+		public PlayerController (bool supportMultipleCameras = false)
 		{
 			seeker = new Seeker ();
 			seeker.SeekEvent += HandleSeekEvent;
@@ -91,7 +91,7 @@ namespace LongoMatch.Services
 			timer = new Timer (HandleTimeout);
 			TimerDisposed = new ManualResetEvent (false);
 			ready = false;
-			CreatePlayer ();
+			CreatePlayer (supportMultipleCameras);
 		}
 
 		#endregion
@@ -648,7 +648,8 @@ namespace LongoMatch.Services
 				}
 				foreach (int index in CamerasVisible) {
 					try {
-						if (index >= fileSet.Count) continue;
+						if (index >= fileSet.Count)
+							continue;
 						MediaFile file = fileSet [index];
 						IntPtr windowHandle = WindowHandles [index];
 						if (file.VideoHeight != 0) {
@@ -799,14 +800,20 @@ namespace LongoMatch.Services
 		/// <summary>
 		/// Creates the backend video player.
 		/// </summary>
-		void CreatePlayer ()
+		void CreatePlayer (bool supportMultipleCameras)
 		{
-			try {
-				player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
-			} catch {
-				Log.Error ("Player with support for multiple cameras not found");
+			if (supportMultipleCameras) {
+				try {
+					player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
+				} catch {
+					Log.Error ("Player with support for multiple cameras not found");
+				}
+			}
+			if (player == null) {
 				player = Config.MultimediaToolkit.GetPlayer ();
 			}
+
+
 			player.Error += HandleError;
 			player.StateChange += HandleStateChange;
 			player.Eos += HandleEndOfStream;
