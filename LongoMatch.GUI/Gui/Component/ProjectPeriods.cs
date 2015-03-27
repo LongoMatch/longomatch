@@ -105,9 +105,7 @@ namespace LongoMatch.Gui.Component
 			// Listen for seek events from the timerule
 			Config.EventsBroker.SeekEvent += Seek;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
-			// Handle dragging of cameras and periods
-			camerasTimeline.CameraDragged += HandleCameraDragged;
-			camerasTimeline.SelectedCameraChanged += HandleSelectedCameraChanged;
+			// Handle dragging of periods
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 
@@ -238,7 +236,13 @@ namespace LongoMatch.Gui.Component
 				if (fileSet.Count > 1) {
 					// Start with initial didactic message
 					ShowDidactic (DidacticMessage.Initial);
+					// Connect secondary camera event handlers
+					camerasTimeline.CameraDragged += HandleCameraDragged;
+					camerasTimeline.SelectedCameraChanged += HandleSelectedCameraChanged;
 				} else {
+					// Disconnect secondary camera event handlers
+					camerasTimeline.CameraDragged -= HandleCameraDragged;
+					camerasTimeline.SelectedCameraChanged -= HandleSelectedCameraChanged;
 					// Just in case it was previously visible, a mediafile might still be loaded if 
 					// the user is going back and forth adding/removing files to the set.
 					HideSecondaryPlayer ();
@@ -421,9 +425,6 @@ namespace LongoMatch.Gui.Component
 		/// </summary>
 		void ShowDidactic (DidacticMessage message)
 		{
-			if (project.Description.FileSet.Count == 1) {
-				return;
-			}
 			// Show didactic message, hide secondary player
 			HideSecondaryPlayer ();
 			switch (message) {
