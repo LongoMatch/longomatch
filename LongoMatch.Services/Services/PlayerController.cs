@@ -800,8 +800,9 @@ namespace LongoMatch.Services
 		/// </summary>
 		void CreatePlayer ()
 		{
-			player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
-			if (player == null) {
+			try {
+				player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
+			} catch {
 				Log.Error ("Player with support for multiple cameras not found");
 				player = Config.MultimediaToolkit.GetPlayer ();
 			}
