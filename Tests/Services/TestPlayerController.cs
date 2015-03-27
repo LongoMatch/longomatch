@@ -54,7 +54,7 @@ namespace Tests.Services
 
 			var mtk = new Mock<IMultimediaToolkit> ();
 			mtk.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
-			mtk.Setup (m => m.GetMultiPlayer ());
+			mtk.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
 			Config.MultimediaToolkit = mtk.Object;
 
 			var ftk = new Mock<IGUIToolkit> ();
