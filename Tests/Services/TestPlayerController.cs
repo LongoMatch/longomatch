@@ -564,6 +564,24 @@ namespace Tests.Services
 		}
 
 		[Test ()]
+		public void TestCamerasVisibleValidation ()
+		{
+			// Create an event referencing unknown MediaFiles in the set.
+			TimelineEvent evt2 = new TimelineEvent { Start = new Time (150), Stop = new Time (200),
+				CamerasVisible = new List<int> { 0, 1, 4, 6 }
+			};
+
+			player.CamerasVisible = new List<int> { 0, 1 };
+			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			player.Ready ();
+			player.LoadEvent (mfs, evt2, evt2.Start, true);
+			// Only valid cameras should be visible
+			Assert.AreEqual (player.CamerasVisible.Count, 2);
+			Assert.AreEqual (player.CamerasVisible [0], 0);
+			Assert.AreEqual (player.CamerasVisible [1], 1);
+		}
+
+		[Test ()]
 		public void TestLoadEvent ()
 		{
 			int elementLoaded = 0;
