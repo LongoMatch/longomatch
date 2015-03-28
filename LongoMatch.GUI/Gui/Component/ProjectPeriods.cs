@@ -104,6 +104,7 @@ namespace LongoMatch.Gui.Component
 
 			// Listen for seek events from the timerule
 			Config.EventsBroker.SeekEvent += Seek;
+			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			// Handle dragging of periods
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
@@ -557,6 +558,16 @@ namespace LongoMatch.Gui.Component
 		{
 			menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline);
 		}
+
+		void HandleTogglePlayEvent (bool playing)
+		{
+			if (playing) {
+				main_cam_playerbin.Player.Play ();
+			} else {
+				Pause ();
+			}
+		}
+
 	}
 }
 
