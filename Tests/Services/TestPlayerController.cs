@@ -49,8 +49,8 @@ namespace Tests.Services
 			/* Mock properties without setter */
 			playerMock.Setup (p => p.CurrentTime).Returns (() => currentTime);
 			playerMock.Setup (p => p.StreamLength).Returns (() => streamLength);
-			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, true);
-			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, false);
+			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, this, true);
+			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, this, false);
 
 			var mtk = new Mock<IMultimediaToolkit> ();
 			mtk.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
@@ -98,7 +98,7 @@ namespace Tests.Services
 			player.Ready ();
 			player.Open (mfs);
 			if (readyToSeek) {
-				playerMock.Raise (p => p.ReadyToSeek += null);
+				playerMock.Raise (p => p.ReadyToSeek += null, this);
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 
 			/* Open with an invalid camera configuration */
-			Config.EventsBroker.MultimediaError += (message) => {
+			Config.EventsBroker.MultimediaError += (o, message) => {
 				multimediaError = true;
 			};
 			player.Ready ();
@@ -204,7 +204,7 @@ namespace Tests.Services
 			PreparePlayer ();
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
-			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
+			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
 			Assert.AreEqual (2, parCount);
 			Assert.AreEqual (2, timeCount);
 			Assert.AreEqual ((float)320 / 240, par);
@@ -221,7 +221,7 @@ namespace Tests.Services
 			FrameDrawing drawing = null;
 
 
-			player.PlaybackStateChangedEvent += (p) => {
+			player.PlaybackStateChangedEvent += (o, p) => {
 				playing = p;
 			};
 			player.LoadDrawingsEvent += (f) => {
@@ -299,7 +299,7 @@ namespace Tests.Services
 
 			/* Once ready the seek kicks in */
 			currentTime = new Time (2000);
-			playerMock.Raise (p => p.ReadyToSeek += null);
+			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			/* ReadyToSeek emits TimeChanged */
 			Assert.AreEqual (1, timeChanged);
 			playerMock.Verify (p => p.Seek (currentTime, false, false), Times.Once ());
@@ -531,7 +531,8 @@ namespace Tests.Services
 		public void TestEOS ()
 		{
 			PreparePlayer ();
-			playerMock.Raise (p => p.Eos += null);
+			playerMock.ResetCalls ();
+			playerMock.Raise (p => p.Eos += null, this);
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
 			playerMock.Verify (p => p.Pause (), Times.Once ());
 		}
@@ -541,10 +542,10 @@ namespace Tests.Services
 		{
 			string msg = null;
 
-			Config.EventsBroker.MultimediaError += (message) => {
+			Config.EventsBroker.MultimediaError += (o, message) => {
 				msg = message;
 			};
-			playerMock.Raise (p => p.Error += null, "error");
+			playerMock.Raise (p => p.Error += null, this, "error");
 			Assert.AreEqual ("error", msg);
 		}
 
@@ -587,7 +588,7 @@ namespace Tests.Services
 
 			/* Ready to seek */
 			currentTime = evt.Start;
-			playerMock.Raise (p => p.ReadyToSeek += null);
+			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			Assert.IsTrue (player.Playing);
 			playerMock.Verify (p => p.Open (mfs [0]));
 			playerMock.Verify (p => p.Seek (evt.Start, true, false), Times.Once ());
@@ -607,7 +608,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Pause (), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
-			playerMock.Raise (p => p.ReadyToSeek += null);
+			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			playerMock.Verify (p => p.Seek (evt.Stop, true, false), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.ResetCalls ();
@@ -660,7 +661,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Seek (el1.Play.Start, true, false), Times.Never ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.VerifySet (p => p.Rate = 1);
-			playerMock.Raise (p => p.ReadyToSeek += null);
+			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			playerMock.Verify (p => p.Seek (el1.Play.Start, true, false), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Once ());
 
