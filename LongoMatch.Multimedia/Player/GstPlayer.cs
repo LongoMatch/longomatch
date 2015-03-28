@@ -36,6 +36,7 @@ namespace LongoMatch.Video.Player
 		public event ReadyToSeekHandler ReadyToSeek;
 		public event EosHandler Eos;
 
+		MediaFile file;
 		double rate;
 
 		[DllImport ("libcesarplayer.dll")]
@@ -405,7 +406,7 @@ namespace LongoMatch.Video.Player
 		public Time CurrentTime {
 			get {
 				long ret = lgm_video_player_get_current_time (Handle);
-				return new Time { NSeconds = ret };
+				return new Time { NSeconds = ret } - file.Offset;
 			}
 		}
 
@@ -441,14 +442,16 @@ namespace LongoMatch.Video.Player
 			}
 		}
 
-		public bool Seek (double position)
-		{
-			return lgm_video_player_seek (Handle, position);
+		public Time Offset {
+			get {
+				return file.Offset;
+			}
 		}
 
 		public bool Seek (Time time, bool accurate, bool synchronous)
 		{
-			return lgm_video_player_seek_time (Handle, time.NSeconds, accurate, synchronous);
+			return lgm_video_player_seek_time (Handle, time.NSeconds + Offset.NSeconds,
+				accurate, synchronous);
 		}
 
 		public bool SeekToPreviousFrame ()
@@ -481,31 +484,21 @@ namespace LongoMatch.Video.Player
 			lgm_video_player_close (Handle);
 		}
 
-		public bool Open (MediaFileSet mfs)
+		public bool Open (MediaFile file)
 		{
-			return Open (mfs [0]);
-		}
-
-		public bool Open (MediaFile mf)
-		{
-			return Open (mf.FilePath);
-		}
-
-		public bool Open (List<string> mrls)
-		{
-			return Open (mrls [0]);
-		}
-
-		public bool Open (string mrl)
-		{
-			// FIXME this player only supports one stream
-			IntPtr native_uri = GLib.Marshaller.StringToPtrGStrdup (mrl);
+			this.file = file;
+			IntPtr native_uri = GLib.Marshaller.StringToPtrGStrdup (file.FilePath);
 			IntPtr error = IntPtr.Zero;
 			bool ret = lgm_video_player_open (Handle, native_uri, out error);
 			GLib.Marshaller.Free (native_uri);
 			if (error != IntPtr.Zero)
 				throw new GLib.GException (error);
 			return ret;
+		}
+
+		public bool Open (string filePath)
+		{
+			return Open (new MediaFile { FilePath = filePath, Offset = new Time (0) });
 		}
 
 		public Image GetCurrentFrame (int outwidth = -1, int outheight = -1)
