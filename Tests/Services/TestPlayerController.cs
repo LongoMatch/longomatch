@@ -571,14 +571,20 @@ namespace Tests.Services
 				CamerasVisible = new List<int> { 0, 1, 4, 6 }
 			};
 
-			player.CamerasVisible = new List<int> { 0, 1 };
+			player.CamerasVisible = new List<int> { 1, 0 };
 			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
 			player.Ready ();
 			player.LoadEvent (mfs, evt2, evt2.Start, true);
+			// Only valid cameras should be visible although no fileset was opened.
+			Assert.AreEqual (2, player.CamerasVisible.Count);
+			Assert.AreEqual (0, player.CamerasVisible [0]);
+			Assert.AreEqual (1, player.CamerasVisible [1]);
+			// Again now that the fileset is opened
+			player.LoadEvent (mfs, evt2, evt2.Start, true);
 			// Only valid cameras should be visible
-			Assert.AreEqual (player.CamerasVisible.Count, 2);
-			Assert.AreEqual (player.CamerasVisible [0], 0);
-			Assert.AreEqual (player.CamerasVisible [1], 1);
+			Assert.AreEqual (2, player.CamerasVisible.Count);
+			Assert.AreEqual (0, player.CamerasVisible [0]);
+			Assert.AreEqual (1, player.CamerasVisible [1]);
 		}
 
 		[Test ()]
