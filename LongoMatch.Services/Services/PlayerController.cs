@@ -677,10 +677,9 @@ namespace LongoMatch.Services
 					Log.Exception (ex);
 					//We handle this error async
 				}
-			} else {
-				if (seek) {
-					Seek (new Time (0), true);
-				}
+			}
+			if (seek) {
+				Seek (new Time (0), true);
 			}
 			if (play) {
 				player.Play ();
