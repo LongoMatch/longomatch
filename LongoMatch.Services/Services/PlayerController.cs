@@ -334,20 +334,18 @@ namespace LongoMatch.Services
 
 		public void Seek (double pos)
 		{
-			Time seekPos, timePos, duration;
+			Time seekPos;
 			bool accurate;
 			bool throthled;
 
 			Log.Debug (string.Format ("Seek relative to {0}", pos));
 			if (SegmentLoaded) {
-				duration = loadedSegment.Stop - loadedSegment.Start;
-				timePos = duration * pos;
-				seekPos = loadedSegment.Start + timePos;
+				Time duration = loadedSegment.Stop - loadedSegment.Start;
+				seekPos = loadedSegment.Start + duration * pos;
 				accurate = true;
 				throthled = true;
 			} else {
-				duration = streamLenght;
-				seekPos = timePos = streamLenght * pos;
+				seekPos = streamLenght * pos;
 				accurate = false;
 				throthled = false;
 			}
