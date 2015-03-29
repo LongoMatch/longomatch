@@ -106,8 +106,9 @@ namespace LongoMatch.Services
 		public List<int> CamerasVisible {
 			set {
 				camerasVisible = value;
+				ValidateVisibleCameras ();
 				if (multiPlayer != null) {
-					multiPlayer.CamerasVisible = value;
+					multiPlayer.CamerasVisible = camerasVisible;
 				}
 			}
 			get {
@@ -627,6 +628,16 @@ namespace LongoMatch.Services
 		#region Private methods
 
 		/// <summary>
+		/// Validates that the list of visible cameras indexes are consistent with fileset
+		/// </summary>
+		void ValidateVisibleCameras ()
+		{
+			if (FileSet != null && camerasVisible != null) {
+				camerasVisible = camerasVisible.Where (i => i < FileSet.Count).ToList<int> ();
+			}
+		}
+
+		/// <summary>
 		/// Open the specified file set.
 		/// </summary>
 		/// <param name="fileSet">the files to open.</param>
@@ -636,19 +647,24 @@ namespace LongoMatch.Services
 		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
 		{
 			Reset ();
+			// This event gives a chance to the view to define camera visibility.
+			// As there might already be a configuration defined (loading an event for example), the view
+			// should adapt if needed.
 			EmitMediaFileSetLoaded (fileSet);
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
+				FileSet = fileSet;
+				// Check if the view failed to configure a proper cam config
 				if (CamerasVisible == null) {
 					Config.EventsBroker.EmitMultimediaError (this, 
 						Catalog.GetString ("Invalid camera configuration"));
 					FileSet = null;
 					return;
 				}
+				// Validate Cam config against fileset
+				ValidateVisibleCameras ();
 				foreach (int index in CamerasVisible) {
 					try {
-						if (index >= fileSet.Count)
-							continue;
 						MediaFile file = fileSet [index];
 						IntPtr windowHandle = WindowHandles [index];
 						if (file.VideoHeight != 0) {
@@ -671,7 +687,6 @@ namespace LongoMatch.Services
 					} else {
 						player.Open (fileSet [0]);
 					}
-					FileSet = fileSet;
 					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
 					Log.Exception (ex);
