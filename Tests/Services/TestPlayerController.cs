@@ -556,11 +556,20 @@ namespace Tests.Services
 			PreparePlayer ();
 			player.ElementLoadedEvent += (element, hasNext) => {
 				if (element == null) {
+					elementLoaded--;
+				} else {
 					elementLoaded++;
 				}
 			};
-			player.UnloadCurrentEvent ();
+			// Load
+			player.LoadEvent (mfs, evt, evt.Start, true);
 			Assert.AreEqual (1, elementLoaded);
+			Assert.AreEqual (evt.CamerasVisible, player.CamerasVisible);
+			// Unload
+			player.UnloadCurrentEvent ();
+			Assert.AreEqual (0, elementLoaded);
+			// Check that cameras have been restored
+			Assert.AreSame (new List<int> { 0, 1 }, player.CamerasVisible);
 		}
 
 		[Test ()]
