@@ -52,7 +52,7 @@ namespace LongoMatch.Services
 		List<IntPtr> windowHandles;
 		List<int> camerasVisible;
 
-		Time streamLenght, videoTS, imageLoadedTS;
+		Time streamLength, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed;
 		Seeker seeker;
 		Segment loadedSegment;
@@ -86,7 +86,7 @@ namespace LongoMatch.Services
 			loadedSegment.Stop = new Time (int.MaxValue);
 			videoTS = new Time (0);
 			imageLoadedTS = new Time (0);
-			streamLenght = new Time (0);
+			streamLength = new Time (0);
 			Step = new Time (5000);
 			timer = new Timer (HandleTimeout);
 			TimerDisposed = new ManualResetEvent (false);
@@ -345,7 +345,7 @@ namespace LongoMatch.Services
 				accurate = true;
 				throthled = true;
 			} else {
-				seekPos = streamLenght * pos;
+				seekPos = streamLength * pos;
 				accurate = false;
 				throthled = false;
 			}
@@ -873,7 +873,7 @@ namespace LongoMatch.Services
 						}
 					}
 				} else {
-					EmitTimeChanged (currentTime, streamLenght);
+					EmitTimeChanged (currentTime, streamLength);
 				}
 				videoTS = currentTime;
 
@@ -906,7 +906,7 @@ namespace LongoMatch.Services
 		{
 			Config.GUIToolkit.Invoke (delegate {
 				readyToSeek = true;
-				streamLenght = player.StreamLength;
+				streamLength = player.StreamLength;
 				if (pendingSeek != null) {
 					SetRate (pendingSeek.rate);
 					player.Seek (pendingSeek.time, pendingSeek.accurate, pendingSeek.syncrhonous);
