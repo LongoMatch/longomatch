@@ -245,7 +245,6 @@ namespace LongoMatch.Gui
 			ratescale.FormatValue += HandleRateFormatValue;
 			ratescale.ValueChanged += HandleRateValueChanged;
 			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
-
 		}
 
 		void LoadImage (Image image, FrameDrawing drawing)
