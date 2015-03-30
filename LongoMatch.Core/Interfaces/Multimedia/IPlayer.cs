@@ -150,6 +150,8 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	public interface IMultiPlayer: IPlayer
 	{
 
+		event ScopeStateChangedHandler ScopeChangedEvent;
+
 		/// <summary>
 		/// Open a set of media files.
 		/// </summary>

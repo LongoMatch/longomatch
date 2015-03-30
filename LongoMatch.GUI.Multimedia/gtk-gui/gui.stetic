@@ -915,7 +915,7 @@
         <child>
           <widget class="Gtk.Label" id="messageLabel">
             <property name="MemberName" />
-            <property name="LabelProp">Message label</property>
+            <property name="LabelProp" translatable="yes">Out of scope</property>
           </widget>
           <packing>
             <property name="Position">1</property>

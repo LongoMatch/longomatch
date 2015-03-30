@@ -805,6 +805,7 @@ namespace LongoMatch.Services
 			if (supportMultipleCameras) {
 				try {
 					player = multiPlayer = Config.MultimediaToolkit.GetMultiPlayer ();
+					multiPlayer.ScopeChangedEvent += HandleScopeChangedEvent;
 				} catch {
 					Log.Error ("Player with support for multiple cameras not found");
 				}
@@ -938,6 +939,11 @@ namespace LongoMatch.Services
 			Config.GUIToolkit.Invoke (delegate {
 				Config.EventsBroker.EmitMultimediaError (sender, message);
 			});
+		}
+
+		void HandleScopeChangedEvent (int index, bool visible)
+		{
+			ViewPorts [index].MessageVisible = !visible;
 		}
 
 		#endregion
