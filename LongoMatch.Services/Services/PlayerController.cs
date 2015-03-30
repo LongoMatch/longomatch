@@ -51,6 +51,7 @@ namespace LongoMatch.Services
 		Playlist loadedPlaylist;
 		List<IViewPort> viewPorts;
 		List<int> camerasVisible;
+		List<int> defaultCamerasVisible;
 
 		Time streamLength, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, ignoreCameras;
@@ -234,7 +235,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Player ready");
 			if (delayedOpen) {
 				Log.Debug ("Openning delayed file set");
-				Open (FileSet, true, true);
+				Open (FileSet, true, true, false, true);
 			}
 			ready = true;
 			delayedOpen = false;
@@ -244,7 +245,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Openning file set");
 			if (ready) {
-				Open (fileSet, true);
+				Open (fileSet, true, true, false, true);
 			} else {
 				Log.Debug ("Player is not ready, delaying ...");
 				delayedOpen = true;
@@ -476,6 +477,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
+			CamerasVisible = defaultCamerasVisible;
 			EmitEventUnloaded ();
 		}
 
@@ -644,7 +646,8 @@ namespace LongoMatch.Services
 		/// <param name="seek">If set to <c>true</c>, seeks to the beginning of the stream.</param>
 		/// <param name="force">If set to <c>true</c>, opens the fileset even if it was already set.</param>
 		/// <param name="play">If set to <c>true</c>, sets the player to play.</param>
-		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
+		/// <param name="storeCamsConfig">If set to <c>true</c>, store the cameras configuration as the default one.</param>
+		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false, bool storeCamsConfig = true)
 		{
 			Reset ();
 			ignoreCameras = true;
@@ -653,6 +656,9 @@ namespace LongoMatch.Services
 			// should adapt if needed.
 			EmitMediaFileSetLoaded (fileSet, camerasVisible);
 			ignoreCameras = false;
+			if (storeCamsConfig) {
+				defaultCamerasVisible = CamerasVisible;
+			}
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
 				FileSet = fileSet;

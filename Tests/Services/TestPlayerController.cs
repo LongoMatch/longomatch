@@ -567,7 +567,7 @@ namespace Tests.Services
 			player.UnloadCurrentEvent ();
 			Assert.AreEqual (0, elementLoaded);
 			// Check that cameras have been restored
-			Assert.AreSame (new List<int> { 0, 1 }, player.CamerasVisible);
+			Assert.AreEqual (new List<int> { 0, 1 }, player.CamerasVisible);
 		}
 
 		[Test ()]
