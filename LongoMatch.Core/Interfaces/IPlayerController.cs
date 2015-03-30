@@ -16,12 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 
 
 namespace LongoMatch.Core.Interfaces
@@ -35,7 +36,6 @@ namespace LongoMatch.Core.Interfaces
 		event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		event VolumeChangedHandler VolumeChangedEvent;
 		event ElementLoadedHandler ElementLoadedEvent;
-		event PARChangedHandler PARChangedEvent;
 		event MediaFileSetLoadedHandler MediaFileSetLoadedEvent;
 
 		/// <summary>
@@ -81,9 +81,9 @@ namespace LongoMatch.Core.Interfaces
 		List<int> CamerasVisible { get; set; }
 
 		/// <summary>
-		/// List of window handles set by the view as view ports.
+		/// List of view ports set by the view.
 		/// </summary>
-		List<IntPtr> WindowHandles { set; }
+		List<IViewPort> ViewPorts { set; }
 
 		/// <summary>
 		/// Open the specified fileSet.

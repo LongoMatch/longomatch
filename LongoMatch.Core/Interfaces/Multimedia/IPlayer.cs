@@ -67,11 +67,6 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		double Rate { get; set; }
 
 		/// <summary>
-		/// Sets the window handle in when the video sink can draw.
-		/// </summary>
-		IntPtr WindowHandle { set; }
-
-		/// <summary>
 		/// Starts playing.
 		/// </summary>
 		void Play ();
@@ -121,6 +116,11 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event ReadyToSeekHandler ReadyToSeek;
 
 		/// <summary>
+		/// Sets the window handle in when the video sink can draw.
+		/// </summary>
+		IntPtr WindowHandle { set; }
+
+		/// <summary>
 		/// Closes the opened media file.
 		/// </summary>
 		void Close ();
@@ -149,6 +149,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 	public interface IMultiPlayer: IPlayer
 	{
+
 		/// <summary>
 		/// Open a set of media files.
 		/// </summary>

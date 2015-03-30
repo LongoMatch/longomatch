@@ -913,9 +913,9 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="disabledtext">
+          <widget class="Gtk.Label" id="messageLabel">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Unavailable</property>
+            <property name="LabelProp">Message label</property>
           </widget>
           <packing>
             <property name="Position">1</property>

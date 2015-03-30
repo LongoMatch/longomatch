@@ -132,7 +132,6 @@ namespace LongoMatch.Gui
 				player = value;
 				player.ElementLoadedEvent += HandleElementLoadedEvent;
 				player.LoadDrawingsEvent += HandleLoadDrawingsEvent;
-				player.PARChangedEvent += HandlePARChangedEvent;
 				player.PlaybackRateChangedEvent += HandlePlaybackRateChangedEvent;
 				player.PlaybackStateChangedEvent += HandlePlaybackStateChangedEvent;
 				player.TimeChangedEvent += HandleTimeChangedEvent;
@@ -326,11 +325,6 @@ namespace LongoMatch.Gui
 				ratescale.Value = rate * SCALE_FPS;
 			}
 			ignoreRate = false;
-		}
-
-		void HandlePARChangedEvent (IntPtr windowHandle, float par)
-		{
-			videowindow.Ratio = par;
 		}
 
 		void HandleLoadDrawingsEvent (FrameDrawing frameDrawing)
@@ -537,8 +531,7 @@ namespace LongoMatch.Gui
 
 		void HandleReady (object sender, EventArgs e)
 		{
-			IntPtr handle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
-			Player.WindowHandle = handle;
+			Player.ViewPorts = new List<IViewPort> { videowindow };
 			Player.Ready ();
 		}
 

@@ -8,7 +8,7 @@ namespace LongoMatch.Gui
 		
 		private global::Gtk.EventBox videoeventbox;
 		
-		private global::Gtk.Label disabledtext;
+		private global::Gtk.Label messageLabel;
 
 		protected virtual void Build ()
 		{
@@ -26,11 +26,11 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.totalbox [this.videoeventbox]));
 			w1.Position = 0;
 			// Container child totalbox.Gtk.Box+BoxChild
-			this.disabledtext = new global::Gtk.Label ();
-			this.disabledtext.Name = "disabledtext";
-			this.disabledtext.LabelProp = global::Mono.Unix.Catalog.GetString ("Unavailable");
-			this.totalbox.Add (this.disabledtext);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.totalbox [this.disabledtext]));
+			this.messageLabel = new global::Gtk.Label ();
+			this.messageLabel.Name = "messageLabel";
+			this.messageLabel.LabelProp = "Message label";
+			this.totalbox.Add (this.messageLabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.totalbox [this.messageLabel]));
 			w2.Position = 1;
 			this.Add (this.totalbox);
 			if ((this.Child != null)) {

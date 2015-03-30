@@ -22,11 +22,12 @@ using System.Threading;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
-using Timer = System.Threading.Timer;
 using Mono.Unix;
+using Timer = System.Threading.Timer;
 
 namespace LongoMatch.Services
 {
@@ -38,7 +39,6 @@ namespace LongoMatch.Services
 		public event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		public event VolumeChangedHandler VolumeChangedEvent;
 		public event ElementLoadedHandler ElementLoadedEvent;
-		public event PARChangedHandler PARChangedEvent;
 		public event MediaFileSetLoadedHandler MediaFileSetLoadedEvent;
 
 		const int TIMEOUT_MS = 20;
@@ -49,7 +49,7 @@ namespace LongoMatch.Services
 		TimelineEvent loadedEvent;
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
-		List<IntPtr> windowHandles;
+		List<IViewPort> viewPorts;
 		List<int> camerasVisible;
 
 		Time streamLength, videoTS, imageLoadedTS;
@@ -125,29 +125,19 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public List<IntPtr> WindowHandles {
+		public List<IViewPort> ViewPorts {
 			set {
 				if (value != null) {
 					if (multiPlayer == null) {
-						player.WindowHandle = value [0];
+						player.WindowHandle = value [0].WindowHandle;
 					} else {
-						multiPlayer.WindowHandles = value;
+						multiPlayer.WindowHandles = value.Select (v => v.WindowHandle).ToList ();
 					}
 				}
-				windowHandles = value;
+				viewPorts = value;
 			}
 			protected get {
-				return windowHandles;
-			}
-		}
-
-		public IntPtr WindowHandle {
-			set {
-				WindowHandles = new List<IntPtr> { value };
-				player.WindowHandle = value;
-			}
-			get {
-				return WindowHandles [0];
+				return viewPorts;
 			}
 		}
 
@@ -555,13 +545,6 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void EmitPARChanged (IntPtr windowHandle, float par)
-		{
-			if (PARChangedEvent != null) {
-				PARChangedEvent (windowHandle, par);
-			}
-		}
-
 		void EmitPlaybackStateChanged (object sender, bool playing)
 		{
 			if (PlaybackStateChangedEvent != null) {
@@ -643,21 +626,14 @@ namespace LongoMatch.Services
 
 		void UpdatePar ()
 		{
-			foreach (int index in CamerasVisible) {
-				try {
-					MediaFile file = FileSet [index];
-					IntPtr windowHandle = WindowHandles [index];
-					if (file.VideoHeight != 0) {
-						EmitPARChanged (windowHandle, (float)(file.VideoWidth * file.Par / file.VideoHeight));
-					} else {
-						EmitPARChanged (windowHandle, 1);
-					}
-				} catch (Exception ex) {
-					Config.EventsBroker.EmitMultimediaError (this, Catalog.GetString ("Invalid camera configuration"));
-					FileSet = null;
-					Log.Exception (ex);
-					return;
+			for (int i = 0; i < Math.Min (CamerasVisible.Count, ViewPorts.Count); i++) {
+				int index = CamerasVisible [i];
+				MediaFile file = FileSet [index];
+				float par = 1;
+				if (file.VideoHeight != 0) {
+					par = (float)(file.VideoWidth * file.Par / file.VideoHeight);
 				}
+				ViewPorts [i].Ratio = par;
 			}
 		}
 

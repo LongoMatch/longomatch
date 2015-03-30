@@ -47,7 +47,6 @@
     <Compile Include="Utils\MultimediaFactory.cs" />
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />
-    <Compile Include="Utils\WindowHandle.cs" />
     <Compile Include="Utils\Devices.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>

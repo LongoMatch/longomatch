@@ -47,6 +47,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Interfaces/GUI/IPanel.cs \
 	Interfaces/GUI/IPlayerView.cs \
 	Interfaces/GUI/IRenderingStateBar.cs \
+	Interfaces/GUI/IViewPort.cs \
 	Interfaces/IDataBaseManager.cs \
 	Interfaces/IDatabase.cs \
 	Interfaces/IIDObject.cs \

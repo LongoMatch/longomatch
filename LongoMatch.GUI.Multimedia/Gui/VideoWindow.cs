@@ -16,14 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Runtime.InteropServices;
 using Gtk;
+using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Gui
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class VideoWindow : Gtk.Bin
+	public partial class VideoWindow : Gtk.Bin, IViewPort
 	{
 		AspectFrame frame;
+		DrawingArea drawingWindow;
 
 		public event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
@@ -36,10 +39,10 @@ namespace LongoMatch.Gui
 			frame = new AspectFrame (null, 0.5f, 0.5f, 1f, false);
 			frame.Shadow = ShadowType.None;
 
-			disabledtext.NoShowAll = true;
-			Window = new DrawingArea ();
-			Window.DoubleBuffered = false;
-			Window.ExposeEvent += HandleExposeEvent;
+			messageLabel.NoShowAll = true;
+			drawingWindow = new DrawingArea ();
+			drawingWindow.DoubleBuffered = false;
+			drawingWindow.ExposeEvent += HandleExposeEvent;
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
@@ -47,18 +50,46 @@ namespace LongoMatch.Gui
 				// Workaround for GTK bugs on Windows not showing the video window
 				videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
 			}
-			frame.Add (Window);
+			frame.Add (drawingWindow);
 			videoeventbox.Add (frame);
 			videoeventbox.ShowAll ();
-			Enabled = true;
+			MessageVisible = false;
 		}
 
 		void HandleVisibilityNotifyEvent (object o, VisibilityNotifyEventArgs args)
 		{
-			if (videoeventbox.Visible && Window.GdkWindow != null) {
+			if (videoeventbox.Visible && drawingWindow.GdkWindow != null) {
 				// Hack for Windows. Force video window visibility as
 				// EventBox window's might prevent it to be mapped again.
-				Window.GdkWindow.Show ();
+				drawingWindow.GdkWindow.Show ();
+			}
+		}
+
+		public IntPtr WindowHandle {
+			get {
+				return GetWindowHandle (drawingWindow.GdkWindow);
+			}
+		}
+
+		public string Message {
+			set {
+				messageLabel.Text = value;
+			}
+		}
+
+		public bool MessageVisible {
+			set {
+				videoeventbox.Visible = !value;
+				messageLabel.Visible = value;
+			}
+		}
+
+		public float Ratio {
+			set {
+				frame.Ratio = value;
+			}
+			get {
+				return frame.Ratio;
 			}
 		}
 
@@ -78,10 +109,10 @@ namespace LongoMatch.Gui
 		void HandleExposeEvent (object o, ExposeEventArgs args)
 		{
 			if (!Ready) {
+				Ready = true;
 				if (ReadyEvent != null) {
 					ReadyEvent (this, null);
 				}
-				Ready = true;
 			}
 			if (ExposeEvent != null) {
 				ExposeEvent (this, args);
@@ -100,22 +131,12 @@ namespace LongoMatch.Gui
 			
 		}
 
-		public DrawingArea Window {
-			get;
-			protected set;
-		}
+		[DllImport ("libcesarplayer.dll")]
+		static extern IntPtr lgm_get_window_handle (IntPtr window);
 
-		public float Ratio {
-			set {
-				frame.Ratio = value;
-			}
-		}
-
-		public bool Enabled {
-			set {
-				videoeventbox.Visible = value;
-				disabledtext.Visible = !value;
-			}
+		IntPtr GetWindowHandle (Gdk.Window window)
+		{
+			return lgm_get_window_handle (window.Handle);
 		}
 	}
 }

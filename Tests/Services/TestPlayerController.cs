@@ -33,6 +33,7 @@ namespace Tests.Services
 	public class TestPlayerController
 	{
 		Mock<IPlayer> playerMock;
+		Mock<IViewPort> viewPortMock;
 		MediaFileSet mfs;
 		PlayerController player;
 		Time currentTime, streamLength;
@@ -79,6 +80,7 @@ namespace Tests.Services
 		[SetUp ()]
 		public void Setup ()
 		{
+			currentTime = new Time (0);
 			playerMock.ResetCalls ();
 			player = new PlayerController ();
 			playlist.SetActive (playlist.Elements [0]);
@@ -94,7 +96,9 @@ namespace Tests.Services
 		void PreparePlayer (bool readyToSeek = true)
 		{
 			player.CamerasVisible = new List<int> { 0, 1 };
-			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			viewPortMock = new Mock <IViewPort> ();
+			viewPortMock.SetupAllProperties ();
+			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
 			player.Ready ();
 			player.Open (mfs);
 			if (readyToSeek) {
@@ -162,16 +166,11 @@ namespace Tests.Services
 		[Test ()]
 		public void Open ()
 		{
-			float par = 0;
-			int parCount = 0, timeCount = 0;
+			int timeCount = 0;
 			bool multimediaError = false;
 			Time curTime = null, duration = null;
 			MediaFileSet fileSet = null;
 
-			player.PARChangedEvent += (w, p) => {
-				par = p;
-				parCount++;
-			};
 			player.TimeChangedEvent += (c, d, seekable) => {
 				curTime = c;
 				duration = d;
@@ -205,9 +204,8 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
-			Assert.AreEqual (2, parCount);
 			Assert.AreEqual (2, timeCount);
-			Assert.AreEqual ((float)320 / 240, par);
+			Assert.AreEqual ((float)320 / 240, viewPortMock.Object.Ratio);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
 			Assert.AreEqual (fileSet, mfs);
@@ -581,7 +579,9 @@ namespace Tests.Services
 			};
 
 			player.CamerasVisible = new List<int> { 1, 0 };
-			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			viewPortMock = new Mock <IViewPort> ();
+			viewPortMock.SetupAllProperties ();
+			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
 			player.Ready ();
 			player.LoadEvent (mfs, evt2, evt2.Start, true);
 			// Only valid cameras should be visible although no fileset was opened.
@@ -609,7 +609,9 @@ namespace Tests.Services
 
 			/* Not ready to seek */
 			player.CamerasVisible = new List<int> { 0, 1 };
-			player.WindowHandles = new List<IntPtr> { IntPtr.Zero, IntPtr.Zero };
+			viewPortMock = new Mock <IViewPort> ();
+			viewPortMock.SetupAllProperties ();
+			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
 			player.Ready ();
 			Assert.IsNull (player.FileSet);
 			player.LoadEvent (mfs, evt, evt.Start, true);

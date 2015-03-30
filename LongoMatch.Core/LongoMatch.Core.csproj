@@ -143,6 +143,7 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Interfaces\GUI\IViewPort.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

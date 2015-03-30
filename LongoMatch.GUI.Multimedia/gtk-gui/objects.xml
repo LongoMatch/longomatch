@@ -17,6 +17,8 @@
     <itemgroups>
       <itemgroup label="VideoWindow Properties">
         <property name="Ready" />
+        <property name="Visible" />
+        <property name="Ratio" />
       </itemgroup>
     </itemgroups>
     <signals>

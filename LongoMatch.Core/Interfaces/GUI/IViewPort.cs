@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Runtime.InteropServices;
 
-namespace LongoMatch.Multimedia.Utils
+namespace LongoMatch.Core.Interfaces.GUI
 {
-	public class WindowHandle
+	public interface IViewPort
 	{
-		[DllImport ("libcesarplayer.dll")]
-		static extern IntPtr lgm_get_window_handle (IntPtr window);
+		float Ratio { set; get; }
 
-		public static IntPtr GetWindowHandle (Gdk.Window window)
-		{
-			return lgm_get_window_handle (window.Handle);
-		}
+		IntPtr WindowHandle { get; }
+
+		string Message { set; }
+
+		bool MessageVisible { set; }
+
+		bool Visible { get; set; }
 	}
 }
 

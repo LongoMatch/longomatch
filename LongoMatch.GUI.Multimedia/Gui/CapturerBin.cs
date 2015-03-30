@@ -410,7 +410,7 @@ namespace LongoMatch.Gui
 			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
 				settings.EncodingSettings.EncodingProfile.Muxer = VideoMuxerType.Matroska;
 			}
-			windowHandle = WindowHandle.GetWindowHandle (videowindow.Window.GdkWindow);
+			windowHandle = videowindow.WindowHandle;
 			Capturer.Configure (settings, windowHandle); 
 			settings.EncodingSettings.EncodingProfile.Muxer = muxer;
 			delayStart = false;
