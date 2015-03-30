@@ -170,5 +170,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		/// </summary>
 		List<int> CamerasVisible { set; }
 
+		void ApplyCamerasConfig ();
+
 	}
 }

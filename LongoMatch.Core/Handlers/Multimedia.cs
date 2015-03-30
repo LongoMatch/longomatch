@@ -17,7 +17,7 @@
 //
 
 using System;
-
+using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 
@@ -47,7 +47,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void LoadDrawingsHandler (FrameDrawing frameDrawing);
 	public delegate void ElementLoadedHandler (object element,bool hasNext);
 	public delegate void PARChangedHandler (IntPtr windowHandle,float par);
-	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset);
+	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset,List<int> camerasVisible = null);
 
 	public delegate void ErrorHandler (object sender,string message);
 	public delegate void EosHandler (object sender);

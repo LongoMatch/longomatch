@@ -177,7 +177,7 @@ namespace Tests.Services
 				duration = d;
 				timeCount++;
 			};
-			player.MediaFileSetLoadedEvent += (fileset) => {
+			player.MediaFileSetLoadedEvent += (fileset, cameras) => {
 				fileSet = fileset;
 			};
 

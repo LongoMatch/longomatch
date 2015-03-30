@@ -53,7 +53,7 @@ namespace LongoMatch.Services
 		List<int> camerasVisible;
 
 		Time streamLength, videoTS, imageLoadedTS;
-		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed;
+		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, ignoreCameras;
 		Seeker seeker;
 		Segment loadedSegment;
 		PendingSeek pendingSeek;
@@ -109,6 +109,10 @@ namespace LongoMatch.Services
 				ValidateVisibleCameras ();
 				if (multiPlayer != null) {
 					multiPlayer.CamerasVisible = camerasVisible;
+					if (!ignoreCameras && Opened) {
+						multiPlayer.ApplyCamerasConfig ();
+						UpdatePar ();
+					}
 				}
 			}
 			get {
@@ -565,10 +569,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void EmitMediaFileSetLoaded (MediaFileSet fileSet)
+		void EmitMediaFileSetLoaded (MediaFileSet fileSet, List<int> camerasVisible)
 		{
 			if (MediaFileSetLoadedEvent != null) {
-				MediaFileSetLoadedEvent (fileSet);
+				MediaFileSetLoadedEvent (fileSet, camerasVisible);
 			}
 		}
 
@@ -637,6 +641,26 @@ namespace LongoMatch.Services
 			}
 		}
 
+		void UpdatePar ()
+		{
+			foreach (int index in CamerasVisible) {
+				try {
+					MediaFile file = FileSet [index];
+					IntPtr windowHandle = WindowHandles [index];
+					if (file.VideoHeight != 0) {
+						EmitPARChanged (windowHandle, (float)(file.VideoWidth * file.Par / file.VideoHeight));
+					} else {
+						EmitPARChanged (windowHandle, 1);
+					}
+				} catch (Exception ex) {
+					Config.EventsBroker.EmitMultimediaError (this, Catalog.GetString ("Invalid camera configuration"));
+					FileSet = null;
+					Log.Exception (ex);
+					return;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Open the specified file set.
 		/// </summary>
@@ -647,10 +671,12 @@ namespace LongoMatch.Services
 		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false)
 		{
 			Reset ();
+			ignoreCameras = true;
 			// This event gives a chance to the view to define camera visibility.
 			// As there might already be a configuration defined (loading an event for example), the view
 			// should adapt if needed.
-			EmitMediaFileSetLoaded (fileSet);
+			EmitMediaFileSetLoaded (fileSet, camerasVisible);
+			ignoreCameras = false;
 			if (fileSet != this.FileSet || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
@@ -663,23 +689,7 @@ namespace LongoMatch.Services
 				}
 				// Validate Cam config against fileset
 				ValidateVisibleCameras ();
-				foreach (int index in CamerasVisible) {
-					try {
-						MediaFile file = fileSet [index];
-						IntPtr windowHandle = WindowHandles [index];
-						if (file.VideoHeight != 0) {
-							EmitPARChanged (windowHandle, (float)(file.VideoWidth * file.Par / file.VideoHeight));
-						} else {
-							EmitPARChanged (windowHandle, 1);
-						}
-					} catch (Exception ex) {
-						Config.EventsBroker.EmitMultimediaError (this,
-							Catalog.GetString ("Invalid camera configuration"));
-						FileSet = null;
-						Log.Exception (ex);
-						return;
-					}
-				}
+				UpdatePar ();
 				try {
 					Log.Debug ("Opening new file set " + fileSet);
 					if (multiPlayer != null) {
