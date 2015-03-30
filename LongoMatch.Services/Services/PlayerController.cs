@@ -52,6 +52,7 @@ namespace LongoMatch.Services
 		List<IViewPort> viewPorts;
 		List<int> camerasVisible;
 		List<int> defaultCamerasVisible;
+		MediaFileSet defaultFileSet;
 
 		Time streamLength, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, ignoreCameras;
@@ -235,7 +236,7 @@ namespace LongoMatch.Services
 			Log.Debug ("Player ready");
 			if (delayedOpen) {
 				Log.Debug ("Openning delayed file set");
-				Open (FileSet, true, true, false, true);
+				InternalOpen (FileSet, true, true, false, true);
 			}
 			ready = true;
 			delayedOpen = false;
@@ -245,7 +246,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Openning file set");
 			if (ready) {
-				Open (fileSet, true, true, false, true);
+				InternalOpen (fileSet, true, true, false, true);
 			} else {
 				Log.Debug ("Player is not ready, delaying ...");
 				delayedOpen = true;
@@ -477,8 +478,13 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
-			CamerasVisible = defaultCamerasVisible;
 			EmitEventUnloaded ();
+			if (FileSet != defaultFileSet) {
+				camerasVisible = defaultCamerasVisible;
+				Open (defaultFileSet);
+			} else {
+				CamerasVisible = defaultCamerasVisible;
+			}
 		}
 
 		public void Next ()
@@ -626,6 +632,9 @@ namespace LongoMatch.Services
 			}
 		}
 
+		/// <summary>
+		/// Updates the pixel aspect ration in all the view ports.
+		/// </summary>
 		void UpdatePar ()
 		{
 			for (int i = 0; i < Math.Min (CamerasVisible.Count, ViewPorts.Count); i++) {
@@ -646,22 +655,25 @@ namespace LongoMatch.Services
 		/// <param name="seek">If set to <c>true</c>, seeks to the beginning of the stream.</param>
 		/// <param name="force">If set to <c>true</c>, opens the fileset even if it was already set.</param>
 		/// <param name="play">If set to <c>true</c>, sets the player to play.</param>
-		/// <param name="storeCamsConfig">If set to <c>true</c>, store the cameras configuration as the default one.</param>
-		void Open (MediaFileSet fileSet, bool seek, bool force = false, bool play = false, bool storeCamsConfig = true)
+		/// <param name="defaultFile">If set to <c>true</c>, store this as the default file set to use.</param>
+		void InternalOpen (MediaFileSet fileSet, bool seek, bool force = false, bool play = false, bool defaultFile = false)
 		{
+			MediaFileSet previousFileSet = FileSet;
+
 			Reset ();
+			FileSet = fileSet;
 			ignoreCameras = true;
 			// This event gives a chance to the view to define camera visibility.
 			// As there might already be a configuration defined (loading an event for example), the view
 			// should adapt if needed.
 			EmitMediaFileSetLoaded (fileSet, camerasVisible);
 			ignoreCameras = false;
-			if (storeCamsConfig) {
+			if (defaultFile) {
 				defaultCamerasVisible = CamerasVisible;
+				defaultFileSet = fileSet;
 			}
-			if (fileSet != this.FileSet || force) {
+			if (previousFileSet != FileSet || force) {
 				readyToSeek = false;
-				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
 				if (CamerasVisible == null) {
 					Config.EventsBroker.EmitMultimediaError (this, 
@@ -731,7 +743,7 @@ namespace LongoMatch.Services
 			CamerasVisible = evt.CamerasVisible;
 			CamerasLayout = evt.CamerasLayout;
 			if (fileSet != this.FileSet) {
-				Open (fileSet, false);
+				InternalOpen (fileSet, false);
 			}
 			Pause ();
 			loadedSegment.Start = evt.Start;
@@ -773,9 +785,10 @@ namespace LongoMatch.Services
 			loadedPlaylistElement = video;
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
+			EmitLoadDrawings (null);
 			CamerasVisible = new List<int> { 0 };
 			CamerasLayout = null;
-			Open (fileSet, false, true, true);
+			InternalOpen (fileSet, false, true, true);
 		}
 
 		void LoadPlayDrawing (FrameDrawing drawing)
