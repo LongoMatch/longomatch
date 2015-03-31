@@ -449,7 +449,7 @@ namespace LongoMatch.Gui
 
 		void HandleClosebuttonClicked (object sender, System.EventArgs e)
 		{
-			Player.UnloadCurrentEvent ();
+			Config.EventsBroker.EmitLoadEvent (null);
 		}
 
 		void HandlePrevbuttonClicked (object sender, System.EventArgs e)
