@@ -100,7 +100,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public void Move (Selection s, Point p, Point start)
 		{
 			if (s.Position == SelectionPosition.All) {
-				X = p.X;
+				X = Math.Max (p.X, 0);
 			}
 		}
 	}
