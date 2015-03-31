@@ -165,8 +165,8 @@ namespace LongoMatch.Services.Services
 					}
 
 					if (ret.GetType () == entry.Value.GetType ()) {
-						if (Object.Equals (ret, entry.Value)) {
-							matches = true;
+						if (!Object.Equals (ret, entry.Value)) {
+							matches = false;
 						}
 					}
 				}

@@ -105,7 +105,23 @@ namespace Tests.Services
 			Assert.IsNotNull (ts2);
 			Assert.AreEqual (ts1.ID, ts2.ID);
 
-			Assert.IsNull (fs.Retrieve<TestStorable> (Guid.NewGuid()));
+			Assert.IsNull (fs.Retrieve<TestStorable> (Guid.NewGuid ()));
+		}
+
+		[Test ()]
+		public void TestRetrieveFiltered ()
+		{
+			TestStorable ts1 = new TestStorable ("first");
+			fs.Store<TestStorable> (ts1);
+
+			/* Test with a dictionary combination that exists */
+			Dictionary<string, object> dict = new Dictionary<string, object> ();
+			dict.Add ("memberString", "first");
+			Assert.AreEqual (1, fs.Retrieve<TestStorable> (dict).Count);
+
+			/* Test with a dictionary combination that doesn't exist */
+			dict ["memberString"] = "second";
+			Assert.AreEqual (0, fs.Retrieve<TestStorable> (dict).Count);
 		}
 	}
 }
