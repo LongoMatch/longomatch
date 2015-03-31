@@ -25,6 +25,8 @@ namespace LongoMatch.Core.Interfaces
 	public interface ITemplate: IStorable
 	{
 		string Name { get; set; }
+
+		bool Static  { get; set; }
 	}
 
 	public interface ITemplateProvider

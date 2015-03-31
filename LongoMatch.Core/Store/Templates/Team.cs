@@ -60,6 +60,12 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
+		[JsonIgnore]
+		public bool Static {
+			get;
+			set;
+		}
+
 		public List<Player> List {
 			get;
 			set;
