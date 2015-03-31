@@ -480,7 +480,7 @@ namespace LongoMatch.Services
 			Reset ();
 			EmitEventUnloaded ();
 			if (FileSet != defaultFileSet) {
-				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout, false);
+				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
 				Open (defaultFileSet);
 			} else {
 				CamerasVisible = defaultCamerasVisible;
@@ -571,11 +571,6 @@ namespace LongoMatch.Services
 
 		#region Private Properties
 
-		IPlayer Player {
-			get;
-			set;
-		}
-
 		/// <summary>
 		/// Indicates if a still image is loaded instead of a video segment.
 		/// </summary>
@@ -622,14 +617,23 @@ namespace LongoMatch.Services
 
 		#region Private methods
 
-		void UpdateCamerasConfig (List<int> camerasConfig, object layout, bool update)
+		/// <summary>
+		/// Updates the cameras configuration internally without applying the new
+		/// configuration in the <see cref="IMultiPlayer"/>.
+		/// </summary>
+		/// <param name="camerasConfig">The cameras configuration.</param>
+		/// <param name="layout">The cameras layout.</param>
+		void UpdateCamerasConfig (List<int> camerasConfig, object layout)
 		{
-			skipApplyCamerasConfig = !update;
+			skipApplyCamerasConfig = true;
 			CamerasVisible = camerasConfig;
 			CamerasLayout = layout;
 			skipApplyCamerasConfig = false;
 		}
 
+		/// <summary>
+		/// Applies the current cameras configuration.
+		/// </summary>
 		void ApplyCamerasConfig ()
 		{
 			ValidateVisibleCameras ();
@@ -647,7 +651,7 @@ namespace LongoMatch.Services
 			if (FileSet != null && camerasVisible != null && camerasVisible.Max () >= FileSet.Count) {
 				Log.Error ("Invalid cameras configuration, fixing list of cameras");
 				UpdateCamerasConfig (camerasVisible.Where (i => i < FileSet.Count).ToList<int> (),
-					CamerasLayout, false);
+					CamerasLayout);
 			}
 		}
 
@@ -758,7 +762,7 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				evt.Start, evt.Stop, evt.Rate));
 
-			UpdateCamerasConfig (evt.CamerasVisible, evt.CamerasLayout, false);
+			UpdateCamerasConfig (evt.CamerasVisible, evt.CamerasLayout);
 			if (fileSet != this.FileSet) {
 				InternalOpen (fileSet, false);
 			} else {
@@ -806,7 +810,7 @@ namespace LongoMatch.Services
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
-			UpdateCamerasConfig (new List<int> { 0 }, null, false);
+			UpdateCamerasConfig (new List<int> { 0 }, null);
 			InternalOpen (fileSet, false, true, true);
 		}
 
@@ -1019,4 +1023,3 @@ namespace LongoMatch.Services
 		#endregion
 	}
 }
-
