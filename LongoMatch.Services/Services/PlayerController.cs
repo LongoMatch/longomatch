@@ -632,8 +632,8 @@ namespace LongoMatch.Services
 
 		void ApplyCamerasConfig ()
 		{
+			ValidateVisibleCameras ();
 			if (multiPlayer != null) {
-				ValidateVisibleCameras ();
 				multiPlayer.ApplyCamerasConfig ();
 				UpdatePar ();
 			}
@@ -646,7 +646,8 @@ namespace LongoMatch.Services
 		{
 			if (FileSet != null && camerasVisible != null && camerasVisible.Max () >= FileSet.Count) {
 				Log.Error ("Invalid cameras configuration, fixing list of cameras");
-				camerasVisible = camerasVisible.Where (i => i < FileSet.Count).ToList<int> ();
+				UpdateCamerasConfig (camerasVisible.Where (i => i < FileSet.Count).ToList<int> (),
+					CamerasLayout, false);
 			}
 		}
 
