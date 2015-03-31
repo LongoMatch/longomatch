@@ -93,6 +93,18 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public float Xalign {
+			set {
+				frame.Xalign = value;
+			}
+		}
+
+		public float Yalign {
+			set {
+				frame.Yalign = value;
+			}
+		}
+
 		public bool Ready {
 			get;
 			set;
