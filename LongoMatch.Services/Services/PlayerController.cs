@@ -52,10 +52,11 @@ namespace LongoMatch.Services
 		List<IViewPort> viewPorts;
 		List<int> camerasVisible;
 		List<int> defaultCamerasVisible;
+		object defaultCamerasLayout;
 		MediaFileSet defaultFileSet;
 
 		Time streamLength, videoTS, imageLoadedTS;
-		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, ignoreCameras;
+		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, skipApplyCamerasConfig;
 		Seeker seeker;
 		Segment loadedSegment;
 		PendingSeek pendingSeek;
@@ -107,13 +108,12 @@ namespace LongoMatch.Services
 
 		public List<int> CamerasVisible {
 			set {
+				Log.Debug ("Updating cameras configuration: ", string.Join ("-", value));
 				camerasVisible = value;
-				ValidateVisibleCameras ();
 				if (multiPlayer != null) {
 					multiPlayer.CamerasVisible = camerasVisible;
-					if (!ignoreCameras && Opened) {
-						multiPlayer.ApplyCamerasConfig ();
-						UpdatePar ();
+					if (!skipApplyCamerasConfig && Opened) {
+						ApplyCamerasConfig ();
 					}
 				}
 			}
@@ -480,7 +480,7 @@ namespace LongoMatch.Services
 			Reset ();
 			EmitEventUnloaded ();
 			if (FileSet != defaultFileSet) {
-				camerasVisible = defaultCamerasVisible;
+				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout, false);
 				Open (defaultFileSet);
 			} else {
 				CamerasVisible = defaultCamerasVisible;
@@ -622,12 +622,30 @@ namespace LongoMatch.Services
 
 		#region Private methods
 
+		void UpdateCamerasConfig (List<int> camerasConfig, object layout, bool update)
+		{
+			skipApplyCamerasConfig = !update;
+			CamerasVisible = camerasConfig;
+			CamerasLayout = layout;
+			skipApplyCamerasConfig = false;
+		}
+
+		void ApplyCamerasConfig ()
+		{
+			if (multiPlayer != null) {
+				ValidateVisibleCameras ();
+				multiPlayer.ApplyCamerasConfig ();
+				UpdatePar ();
+			}
+		}
+
 		/// <summary>
 		/// Validates that the list of visible cameras indexes are consistent with fileset
 		/// </summary>
 		void ValidateVisibleCameras ()
 		{
-			if (FileSet != null && camerasVisible != null) {
+			if (FileSet != null && camerasVisible != null && camerasVisible.Max () >= FileSet.Count) {
+				Log.Error ("Invalid cameras configuration, fixing list of cameras");
 				camerasVisible = camerasVisible.Where (i => i < FileSet.Count).ToList<int> ();
 			}
 		}
@@ -658,22 +676,21 @@ namespace LongoMatch.Services
 		/// <param name="defaultFile">If set to <c>true</c>, store this as the default file set to use.</param>
 		void InternalOpen (MediaFileSet fileSet, bool seek, bool force = false, bool play = false, bool defaultFile = false)
 		{
-			MediaFileSet previousFileSet = FileSet;
-
 			Reset ();
-			FileSet = fileSet;
-			ignoreCameras = true;
+			skipApplyCamerasConfig = true;
 			// This event gives a chance to the view to define camera visibility.
 			// As there might already be a configuration defined (loading an event for example), the view
 			// should adapt if needed.
 			EmitMediaFileSetLoaded (fileSet, camerasVisible);
-			ignoreCameras = false;
+			skipApplyCamerasConfig = false;
 			if (defaultFile) {
 				defaultCamerasVisible = CamerasVisible;
+				defaultCamerasLayout = CamerasLayout;
 				defaultFileSet = fileSet;
 			}
-			if (previousFileSet != FileSet || force) {
+			if (fileSet != FileSet || force) {
 				readyToSeek = false;
+				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
 				if (CamerasVisible == null) {
 					Config.EventsBroker.EmitMultimediaError (this, 
@@ -740,11 +757,13 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				evt.Start, evt.Stop, evt.Rate));
 
-			CamerasVisible = evt.CamerasVisible;
-			CamerasLayout = evt.CamerasLayout;
+			UpdateCamerasConfig (evt.CamerasVisible, evt.CamerasLayout, false);
 			if (fileSet != this.FileSet) {
 				InternalOpen (fileSet, false);
+			} else {
+				ApplyCamerasConfig ();
 			}
+
 			Pause ();
 			loadedSegment.Start = evt.Start;
 			loadedSegment.Stop = evt.Stop;
@@ -786,8 +805,7 @@ namespace LongoMatch.Services
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
-			CamerasVisible = new List<int> { 0 };
-			CamerasLayout = null;
+			UpdateCamerasConfig (new List<int> { 0 }, null, false);
 			InternalOpen (fileSet, false, true, true);
 		}
 
