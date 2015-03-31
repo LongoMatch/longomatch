@@ -118,7 +118,7 @@ namespace LongoMatch.Services
 				}
 			}
 			get {
-				return camerasVisible;
+				return camerasVisible.ToList ();
 			}
 		}
 
