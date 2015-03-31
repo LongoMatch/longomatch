@@ -118,7 +118,11 @@ namespace LongoMatch.Services
 				}
 			}
 			get {
-				return camerasVisible.ToList ();
+				if (camerasVisible != null) {
+					return camerasVisible.ToList ();
+				} else {
+					return null;
+				}
 			}
 		}
 
