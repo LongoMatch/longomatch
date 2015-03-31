@@ -212,6 +212,7 @@ namespace LongoMatch.Services
 			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
 			T t = (T)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
+			t.Static = true;
 			// TODO split the registration from the creation, i.e: this function must return T
 			// and let the constructor register the returned template. For that we need to refactor
 			// the ITemplateProvider and ITemplateProvider<T>, no need to have them separated
