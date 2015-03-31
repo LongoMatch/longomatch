@@ -434,8 +434,9 @@ namespace LongoMatch.Gui.Panel
 					args.RetVal = false;
 				} else {
 					try {
-						provider.Copy (name, args.NewText);
-						provider.Delete (name);
+						Dashboard dashboard = provider.Load (name);
+						dashboard.Name = args.NewText;
+						provider.Save (dashboard);
 						// Change displayed name and template name in our store
 						templates.SetValue (iter, 1, args.NewText);
 						templates.SetValue (iter, 2, args.NewText);
