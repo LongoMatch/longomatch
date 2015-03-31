@@ -33,7 +33,6 @@ namespace LongoMatch.DB
 		string dbName;
 		TimeSpan maxDaysWithoutBackup = new TimeSpan (5, 0, 0, 0);
 
-
 		public DataBase (string dbDirPath)
 		{
 			dbName = Path.GetFileNameWithoutExtension (dbDirPath);

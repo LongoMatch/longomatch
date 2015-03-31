@@ -37,9 +37,9 @@ namespace LongoMatch.Services
 		{
 			dict = new Dictionary<Type, ITemplateProvider> ();
 			dict.Add (typeof(Team),
-			          new TeamTemplatesProvider (storage));
+				new TeamTemplatesProvider (storage));
 			dict.Add (typeof(Dashboard),
-			          new CategoriesTemplatesProvider (storage));
+				new CategoriesTemplatesProvider (storage));
 		}
 
 		public ITemplateProvider<T> GetTemplateProvider<T> () where T: ITemplate
@@ -85,7 +85,7 @@ namespace LongoMatch.Services
 			Dictionary<string, object> dict = new Dictionary<string, object> ();
 			dict.Add ("Name", name);
 
-			List<T> list = storage.Retrieve<T>(dict);
+			List<T> list = storage.Retrieve<T> (dict);
 			if (list.Count == 0)
 				return false;
 			else
@@ -98,10 +98,10 @@ namespace LongoMatch.Services
 		/// <value>The templates.</value>
 		public List<T> Templates {
 			get {
-				List<T> templates = storage.RetrieveAll<T>();
+				List<T> templates = storage.RetrieveAll<T> ();
 				// Now add the system templates, use a copy to prevent modification of system templates.
 				foreach (T stemplate in systemTemplates) {
-					templates.Add (Cloner.Clone(stemplate));
+					templates.Add (Cloner.Clone (stemplate));
 				}
 				return templates;
 			}
@@ -118,9 +118,8 @@ namespace LongoMatch.Services
 			get {
 				List<string> l = new List<string> ();
 				List<T> templates = Templates;
-				foreach (T template in templates)
-				{
-					l.Add(template.Name);
+				foreach (T template in templates) {
+					l.Add (template.Name);
 				}
 				return l.Concat (systemTemplates.Select (t => t.Name)).ToList ();
 			}
@@ -138,18 +137,18 @@ namespace LongoMatch.Services
 				Dictionary<string, object> dict = new Dictionary<string, object> ();
 				dict.Add ("Name", name);
 
-				List<T> list = storage.Retrieve<T>(dict);
+				List<T> list = storage.Retrieve<T> (dict);
 				if (list.Count == 0)
 					throw new TemplateNotFoundException (name);
 				else
-					return list[0];
+					return list [0];
 			}
 		}
 
 		public T LoadFile (string filename)
 		{
 			Log.Information ("Loading template file " + filename);
-			T template = FileStorage.RetrieveFrom<T>(filename);
+			T template = FileStorage.RetrieveFrom<T> (filename);
 			return template;
 		}
 
@@ -157,14 +156,14 @@ namespace LongoMatch.Services
 		{
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
-			storage.Store<T>(template);
+			storage.Store<T> (template);
 		}
 
 		public void Update (T template)
 		{
 			CheckInvalidChars (template.Name);
 			Log.Information ("Updating template " + template.Name);
-			Save(template);
+			Save (template);
 		}
 
 		public void Register (T template)
@@ -195,9 +194,9 @@ namespace LongoMatch.Services
 		{
 			try {
 				Log.Information ("Deleting template " + templateName);
-				T template = Load(templateName);
+				T template = Load (templateName);
 				if (template != null)
-					storage.Delete<T>(template);
+					storage.Delete<T> (template);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
@@ -232,14 +231,14 @@ namespace LongoMatch.Services
 
 	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
 	{
-		public TeamTemplatesProvider (IStorage storage): base (storage)
+		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
 		}
 	}
 
 	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
 	{
-		public CategoriesTemplatesProvider (IStorage storage) : base(storage)
+		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{
 		}
 	}
