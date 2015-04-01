@@ -186,7 +186,7 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Label label13;
 		
-		private global::LongoMatch.Gui.Component.ProjectPeriods projectperiods1;
+		private global::LongoMatch.Gui.Component.SynchronizationWidget projectperiods1;
 		
 		private global::Gtk.Label label14;
 
@@ -956,7 +956,7 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1.SetTabLabel (this.vbox5, this.label13);
 			this.label13.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.projectperiods1 = new global::LongoMatch.Gui.Component.ProjectPeriods ();
+			this.projectperiods1 = new global::LongoMatch.Gui.Component.SynchronizationWidget ();
 			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
 			this.projectperiods1.Name = "projectperiods1";
 			this.notebook1.Add (this.projectperiods1);

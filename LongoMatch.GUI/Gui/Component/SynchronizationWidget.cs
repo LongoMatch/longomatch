@@ -32,7 +32,7 @@ using LongoMatch.Gui.Helpers;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class ProjectPeriods : Gtk.Bin
+	public partial class SynchronizationWidget : Gtk.Bin
 	{
 		CamerasLabels camerasLabels;
 		CamerasTimeline camerasTimeline;
@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 			CameraOutOfScope,
 		}
 
-		public ProjectPeriods ()
+		public SynchronizationWidget ()
 		{
 			this.Build ();
 

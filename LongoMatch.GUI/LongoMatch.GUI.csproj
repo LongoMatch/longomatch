@@ -137,8 +137,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.Timeline.cs" />
     <Compile Include="Gui\Component\CodingWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
-    <Compile Include="Gui\Component\ProjectPeriods.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectPeriods.cs" />
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
     <Compile Include="Gui\Menu\PlaysMenu.cs" />
@@ -182,6 +180,8 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Gui\Component\SynchronizationWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.SynchronizationWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

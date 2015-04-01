@@ -9671,7 +9671,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectPeriods" design-size="3263 475">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.SynchronizationWidget" design-size="3263 475">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

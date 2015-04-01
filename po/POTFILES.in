@@ -73,7 +73,7 @@ LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs
 LongoMatch.GUI/Gui/Component/PlayListWidget.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
-LongoMatch.GUI/Gui/Component/ProjectPeriods.cs
+LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs
 LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/Timeline.cs
 LongoMatch.GUI/Gui/Component/TimeScale.cs

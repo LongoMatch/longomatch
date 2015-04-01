@@ -29,8 +29,8 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Gui/Component/PlaysSelectionWidget.cs \
 	Gui/Component/PluginsPreferences.cs \
 	Gui/Component/ProjectListWidget.cs \
-	Gui/Component/ProjectPeriods.cs \
 	Gui/Component/RenderingStateBar.cs \
+	Gui/Component/SynchronizationWidget.cs \
 	Gui/Component/TeamTemplateEditor.cs \
 	Gui/Component/TeamsComboBox.cs \
 	Gui/Component/Timeline.cs \
@@ -102,8 +102,8 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ProjectPeriods.cs \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
+	gtk-gui/LongoMatch.Gui.Component.SynchronizationWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.Timeline.cs \
 	gtk-gui/LongoMatch.Gui.Component.VideoFileInfo.cs \
