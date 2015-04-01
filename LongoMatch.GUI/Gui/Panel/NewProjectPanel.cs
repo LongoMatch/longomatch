@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Panel
 		Dashboard analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
+		bool resyncEvents;
 
 		public NewProjectPanel (Project project)
 		{
@@ -84,6 +85,7 @@ namespace LongoMatch.Gui.Panel
 				notebook1.Page = firstPage = 1;
 				this.project = project;
 				projectType = ProjectType.EditProject;
+				resyncEvents = true;
 				SetProjectType ();
 				FillProjectDetails ();
 			}
@@ -516,7 +518,7 @@ namespace LongoMatch.Gui.Panel
 			} else if (notebook1.Page == PROJECT_PERIODS) {
 				// Pause playback and then save periods changes into the project. Fileset has already been updated.
 				projectperiods1.Pause ();
-				projectperiods1.SaveChanges ();
+				projectperiods1.SaveChanges (resyncEvents);
 				StartProject ();
 				return;
 			}

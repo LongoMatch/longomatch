@@ -41,7 +41,6 @@ namespace LongoMatch.Gui.Component
 		Project project;
 		PeriodsMenu menu;
 		Dictionary<Period, Period> periodsDict;
-		bool projectHasPeriods;
 		double maxSecondsPerPixels;
 
 		enum DidacticMessage
@@ -164,10 +163,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SaveChanges ()
+		public void SaveChanges (bool resyncEvents)
 		{
-			if (!projectHasPeriods)
+
+			if (!resyncEvents)
 				return;
+
 			foreach (Period p in periodsDict.Keys) {
 				Period newp = periodsDict [p];
 				TimeNode tn = p.PeriodNode;
@@ -210,7 +211,6 @@ namespace LongoMatch.Gui.Component
 						start += pDuration;
 					}
 					value.Periods = periods;
-					projectHasPeriods = false;
 				} else {
 					periodsDict = new Dictionary <Period, Period> ();
 					foreach (Period p in project.Periods) {
@@ -218,7 +218,6 @@ namespace LongoMatch.Gui.Component
 						newp.Nodes.Add (p.PeriodNode);
 						periodsDict.Add (p, newp);
 					}
-					projectHasPeriods = true;
 					periods = periodsDict.Values.ToList ();
 				}
 

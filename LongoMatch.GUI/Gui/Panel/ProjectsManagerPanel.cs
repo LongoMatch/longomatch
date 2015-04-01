@@ -167,7 +167,10 @@ namespace LongoMatch.Gui.Panel
 				}
 			} else {
 				projectperiods1.Pause ();
-				projectperiods1.SaveChanges ();
+				/* FIXME: we don't support adding new cameras, so there is nothing
+				 * to fix or update */
+				//projectperiods1.SaveChanges (false);
+
 				// We need to reload project details
 				LoadProject (loadedProject);
 				// And remember that the project has changed
