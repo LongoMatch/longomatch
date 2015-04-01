@@ -322,10 +322,9 @@ namespace LongoMatch.Gui.Helpers
 			MediaFile mediaFile;
 			IGUIToolkit gui = Config.GUIToolkit;
 			IMultimediaToolkit multimedia = Config.MultimediaToolkit;
-			string folder, filename;
+			string filename;
 			
-			folder = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			filename = gui.OpenFile (Catalog.GetString ("Open file"), null, folder);
+			filename = gui.OpenFile (Catalog.GetString ("Open file"), null, null);
 			if (filename == null)
 				return null;
 			
