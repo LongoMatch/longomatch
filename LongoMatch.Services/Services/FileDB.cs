@@ -246,10 +246,10 @@ namespace LongoMatch.DB
 
 		public bool Add (ProjectDescription desc)
 		{
-			if (ProjectsDict.ContainsKey (desc.ID)) {
-				ProjectsDict [desc.ID] = desc;
+			if (ProjectsDict.ContainsKey (desc.ProjectID)) {
+				ProjectsDict [desc.ProjectID] = desc;
 			} else {
-				ProjectsDict.Add (desc.ID, desc);
+				ProjectsDict.Add (desc.ProjectID, desc);
 			}
 			return Save ();
 		}
