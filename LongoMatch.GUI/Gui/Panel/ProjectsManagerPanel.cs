@@ -140,6 +140,8 @@ namespace LongoMatch.Gui.Panel
 			}
 			videoFileInfos.Clear ();
 
+			resyncbutton.Sensitive = project.Description.FileSet.Count > 1;
+
 			foreach (MediaFile mf in project.Description.FileSet) {
 				VideoFileInfo vfi = new VideoFileInfo ();
 
