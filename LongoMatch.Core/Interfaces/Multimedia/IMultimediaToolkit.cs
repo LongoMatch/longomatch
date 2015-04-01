@@ -25,7 +25,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 {
 	public interface IMultimediaToolkit
 	{
-		void Register (int priority, Type interfac, Type elementType);
+		void Register <I, C> (int priority);
 
 		IPlayer GetPlayer ();
 

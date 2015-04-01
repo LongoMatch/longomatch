@@ -83,14 +83,14 @@ namespace LongoMatch.Gui
 			set;
 		}
 
-		public void Register (int priority, Type interfac, Type elementType)
+		public void Register <I, C> (int priority)
 		{
-			registry.Register (priority, interfac, elementType);
+			registry.Register<I, C> (priority);
 		}
 
 		public IPlayerView GetPlayerView ()
 		{
-			return registry.GetDefault<IPlayerView> (typeof(IPlayerView));
+			return registry.Retrieve<IPlayerView> ();
 		}
 
 		public void InfoMessage (string message, object parent = null)

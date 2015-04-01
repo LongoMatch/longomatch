@@ -63,7 +63,7 @@ namespace LongoMatch
 				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
 				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
 				AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
-				Config.GUIToolkit.Register (0, typeof(IPlayerView), typeof(PlayerView));
+				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
 
 				if (!haveCodecs) {
 					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();

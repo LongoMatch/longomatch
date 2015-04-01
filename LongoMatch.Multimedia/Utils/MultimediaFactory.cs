@@ -42,60 +42,58 @@ namespace LongoMatch.Video
 		{
 			registry = new Registry ("Multimedia backend");
 			/* Register default elements */
-			Register (0, typeof(IPlayer), typeof(GstPlayer));
-			Register (0, typeof(IFramesCapturer), typeof(GstFramesCapturer));
-			Register (0, typeof(IVideoConverter), typeof(GstVideoConverter));
-			Register (0, typeof(IVideoEditor), typeof(GstVideoSplitter));
-			Register (0, typeof(IRemuxer), typeof(GstRemuxer));
-			Register (0, typeof(ICapturer), typeof(GstCameraCapturer));
-			Register (0, typeof(IDiscoverer), typeof(GstDiscoverer));
+			Register<IPlayer, GstPlayer> (0);
+			Register<IFramesCapturer, GstFramesCapturer> (0);
+			Register<IVideoConverter, GstVideoConverter> (0);
+			Register<IVideoEditor, GstVideoSplitter> (0);
+			Register<IRemuxer, GstRemuxer> (0);
+			Register<ICapturer, GstCameraCapturer> (0);
+			Register<IDiscoverer, GstDiscoverer> (0);
 		}
 
-		public void Register (int priority, Type interfac, Type elementType)
+		public void Register <I, C> (int priority)
 		{
-			registry.Register (priority, interfac, elementType);
+			registry.Register<I, C> (priority);
 		}
 
 		public IPlayer GetPlayer ()
 		{
-			return registry.GetDefault<IPlayer> (typeof(IPlayer));
+			return registry.Retrieve<IPlayer> ();
 		}
 
 		public IMultiPlayer GetMultiPlayer ()
 		{
-			return registry.GetDefault<IMultiPlayer> (typeof(IMultiPlayer));
+			return registry.Retrieve<IMultiPlayer> ();
 		}
 
 		public IFramesCapturer GetFramesCapturer ()
 		{
-			return registry.GetDefault<IFramesCapturer> (typeof(IFramesCapturer));
+			return registry.Retrieve<IFramesCapturer> ();
 		}
 
 		public IVideoEditor GetVideoEditor ()
 		{
-			return registry.GetDefault<IVideoEditor> (typeof(IVideoEditor));
+			return registry.Retrieve<IVideoEditor> ();
 		}
 
 		public IVideoConverter GetVideoConverter (string filename)
 		{
-			return registry.GetDefault<IVideoConverter> (typeof(IVideoConverter), filename);
+			return registry.Retrieve<IVideoConverter> (filename);
 		}
 
 		public IDiscoverer GetDiscoverer ()
 		{
-			return registry.GetDefault<IDiscoverer> (typeof(IDiscoverer));
+			return registry.Retrieve<IDiscoverer> ();
 		}
 
 		public ICapturer GetCapturer ()
 		{
-			return registry.GetDefault<ICapturer> (typeof(ICapturer), "test.avi");
+			return registry.Retrieve<ICapturer> ("test.avi");
 		}
 
 		public IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer)
 		{
-			return registry.GetDefault<IRemuxer> (typeof(IRemuxer),
-				inputFile.FilePath,
-				outputFile, muxer);
+			return registry.Retrieve<IRemuxer> (inputFile.FilePath, outputFile, muxer);
 		}
 
 		public MediaFile DiscoverFile (string file, bool takeScreenshot = true)

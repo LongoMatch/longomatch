@@ -32,7 +32,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 	public interface IGUIToolkit
 	{
 		/* Plugable views */
-		void Register (int priority, Type interfac, Type elementType);
+		void Register <I, C> (int priority);
 
 		IPlayerView GetPlayerView ();
 

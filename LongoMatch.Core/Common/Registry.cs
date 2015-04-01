@@ -44,16 +44,19 @@ namespace LongoMatch.Core.Common
 			elements = new Dictionary<Type, List<RegistryElement>> ();
 		}
 
-		public void Register (int priority, Type interfac, Type elementType)
+		public void Register<I, C> (int priority)
 		{
+			Type interfac = typeof(I);
+			Type klass = typeof(C);
 			if (!elements.ContainsKey (interfac)) {
 				elements [interfac] = new List<RegistryElement> ();
 			}
-			elements [interfac].Add (new RegistryElement (elementType, priority));
+			elements [interfac].Add (new RegistryElement (klass, priority));
 		}
 
-		public T GetDefault<T> (Type interfac, params object[] args)
+		public T Retrieve<T> (params object[] args)
 		{
+			Type interfac = typeof(T);
 			Type elementType;
 
 			if (!elements.ContainsKey (interfac)) {
