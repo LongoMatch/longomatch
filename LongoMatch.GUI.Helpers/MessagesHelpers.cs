@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Helpers
 			int ret;
 			
 			if (sender != null)
-				toplevel = (Window)sender.Toplevel;
+				toplevel = sender.Toplevel as Window;
 			else
 				toplevel = null;
 
@@ -90,7 +90,7 @@ namespace LongoMatch.Gui.Helpers
 			Window parent;
 			
 			if (sender != null)
-				parent = (Window)sender.Toplevel;
+				parent = sender.Toplevel as Window;
 			else
 				parent = null;
 				
