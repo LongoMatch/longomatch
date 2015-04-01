@@ -165,6 +165,16 @@ namespace LongoMatch.Gui.Component
 
 		public void SaveChanges (bool resyncEvents)
 		{
+			foreach (TimelineEvent evt in project.Timeline) {
+				int cc = evt.CamerasVisible.Count;
+				int fc = project.Description.FileSet.Count;
+
+				if (cc < fc) {
+					for (int i = cc; i < fc; i++) {
+						evt.CamerasVisible.Add (i);
+					}
+				}
+			}
 
 			if (!resyncEvents)
 				return;
