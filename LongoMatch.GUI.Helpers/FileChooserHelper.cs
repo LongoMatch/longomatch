@@ -24,8 +24,6 @@ namespace LongoMatch.Gui.Helpers
 	public class FileChooserHelper
 	{
 	
-		static string lastDirectory = null;
-
 		static public string SaveFile (Widget parent, string title, string defaultName,
 		                               string defaultFolder, string filterName,
 		                               string[] extensions)
@@ -96,8 +94,8 @@ namespace LongoMatch.Gui.Helpers
 			fChooser.SelectMultiple = allowMultiple;
 			if (defaultFolder != null) {
 				fChooser.SetCurrentFolder (defaultFolder);
-			} else if (lastDirectory != null) {
-				fChooser.SetCurrentFolder (lastDirectory);
+			} else if (Config.LastDir != null) {
+				fChooser.SetCurrentFolder (Config.LastDir);
 			}
 			if (defaultName != null)
 				fChooser.CurrentName = defaultName;
@@ -117,7 +115,7 @@ namespace LongoMatch.Gui.Helpers
 			} else {
 				path = new List<string> (fChooser.Filenames);
 				if (defaultFolder == null && fChooser.Filenames.Length > 0) {
-					lastDirectory = System.IO.Path.GetDirectoryName (fChooser.Filenames [0]);
+					Config.LastDir = System.IO.Path.GetDirectoryName (fChooser.Filenames [0]);
 				}
 			}
 

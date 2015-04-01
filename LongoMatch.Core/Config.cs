@@ -464,6 +464,16 @@ namespace LongoMatch
 			}
 		}
 
+		public static string LastDir {
+			get {
+				return state.lastDir;
+			}
+			set {
+				state.lastDir = value;
+				Save ();
+			}
+		}
+
 		public static string LastRenderDir {
 			get {
 				return state.lastRenderDir;
@@ -539,6 +549,7 @@ namespace LongoMatch
 		public bool autorender;
 		public string autorenderDir;
 		public string lastRenderDir;
+		public string lastDir;
 		public bool reviewPlaysInSameWindow;
 		public string defaultTemplate;
 		public Hotkeys hotkeys;
@@ -564,6 +575,7 @@ namespace LongoMatch
 			autorender = false;
 			autorenderDir = null;
 			lastRenderDir = null;
+			lastDir = null;
 			reviewPlaysInSameWindow = true;
 			defaultTemplate = null;
 			hotkeys = new Hotkeys ();
