@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Dialog
 			this.play = play;
 			this.drawing = drawing;
 			this.project = project;
-			scaleFactor = frame.Width / 500;
+			scaleFactor = (double)frame.Width / 500;
 			blackboard.Background = frame;
 			savetoprojectbutton.Visible = true;
 			blackboard.Drawing = drawing;
@@ -151,7 +151,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.project = project;
 			drawing = new FrameDrawing ();
-			scaleFactor = frame.Width / 500;
+			scaleFactor = (double)frame.Width / 500;
 			blackboard.Background = frame;
 			blackboard.Drawing = drawing;
 			savetoprojectbutton.Visible = false;
