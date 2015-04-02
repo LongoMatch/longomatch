@@ -484,12 +484,12 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
+			UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
 			EmitEventUnloaded ();
 			if (FileSet != defaultFileSet) {
-				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
 				Open (defaultFileSet);
 			} else {
-				CamerasVisible = defaultCamerasVisible;
+				ApplyCamerasConfig ();
 			}
 		}
 
@@ -688,17 +688,17 @@ namespace LongoMatch.Services
 		void InternalOpen (MediaFileSet fileSet, bool seek, bool force = false, bool play = false, bool defaultFile = false)
 		{
 			Reset ();
-			skipApplyCamerasConfig = true;
 			// This event gives a chance to the view to define camera visibility.
 			// As there might already be a configuration defined (loading an event for example), the view
 			// should adapt if needed.
+			skipApplyCamerasConfig = true;
 			EmitMediaFileSetLoaded (fileSet, camerasVisible);
 			skipApplyCamerasConfig = false;
+
 			if (defaultFile) {
-				defaultCamerasVisible = CamerasVisible;
-				defaultCamerasLayout = CamerasLayout;
 				defaultFileSet = fileSet;
 			}
+
 			if (fileSet != FileSet || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
@@ -773,6 +773,11 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				start, stop, rate));
+
+			if (!SegmentLoaded) {
+				defaultCamerasVisible = CamerasVisible;
+				defaultCamerasLayout = CamerasLayout;
+			}
 
 			UpdateCamerasConfig (camerasConfig, camerasLayout);
 
