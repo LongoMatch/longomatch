@@ -34,13 +34,13 @@ namespace Tests.Services
 	{
 		Mock<IPlayer> playerMock;
 		Mock<IViewPort> viewPortMock;
+		Mock<IMultimediaToolkit> mtkMock;
 		MediaFileSet mfs;
 		PlayerController player;
 		Time currentTime, streamLength;
 		TimelineEvent evt;
 		PlaylistImage plImage;
 		Playlist playlist;
-		double rate;
 
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
@@ -53,10 +53,10 @@ namespace Tests.Services
 			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, this, true);
 			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, this, false);
 
-			var mtk = new Mock<IMultimediaToolkit> ();
-			mtk.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
-			mtk.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
-			Config.MultimediaToolkit = mtk.Object;
+			mtkMock = new Mock<IMultimediaToolkit> ();
+			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
+			Config.MultimediaToolkit = mtkMock.Object;
 
 			var ftk = new Mock<IGUIToolkit> ();
 			ftk.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
@@ -799,6 +799,78 @@ namespace Tests.Services
 			Assert.IsNull (drSent); 
 		}
 
+		[Test ()]
+		public void TestMultiplayerCamerasConfig ()
+		{
+			TimelineEvent evt1;
+			List<int> cams1, cams2;
+			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
+
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);
+			player = new PlayerController (true);
+			PreparePlayer ();
+
+			/* Only called internally in the openning */
+			cams1 = new List<int> { 0, 1 };
+			cams2 = new List<int> { 1, 0 };
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Never ());
+			Assert.AreEqual (cams1, player.CamerasVisible);
+
+			player.CamerasVisible = cams2;
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (cams2, player.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* Now load an event */
+			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+				CamerasVisible = new List<int> { 1, 1 }
+			};
+			player.LoadEvent (mfs, evt1, evt1.Start, true);
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (evt1.CamerasVisible, player.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* Change event cams config */
+			player.CamerasVisible = new List<int> { 0, 0 };
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (new List<int> { 0, 0 }, evt1.CamerasVisible);
+			Assert.AreEqual (player.CamerasVisible, evt1.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* Unload and check the original cams config is set back*/
+			player.UnloadCurrentEvent ();
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (cams2, player.CamerasVisible);
+			Assert.AreEqual (new List<int> { 0, 0 }, evt1.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* And changing the config does not affects the unloaded event */
+			player.CamerasVisible = cams1;
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (new List<int> { 0, 0 }, evt1.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* Now load a playlist video */
+			PlaylistVideo plv = new PlaylistVideo (mfs [0]);
+			player.LoadPlaylistEvent (playlist, plv);
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Never ());
+			Assert.AreEqual (new List<int> { 0 }, player.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+			player.UnloadCurrentEvent ();
+			/* Called by Open internally () */
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Never ());
+			Assert.AreEqual (cams2, player.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+
+			/* Now load a playlist event and make sure its config is loaded
+			 * and not the event's one */
+			PlaylistPlayElement ple = new PlaylistPlayElement (evt, mfs);
+			ple.CamerasVisible = cams2;
+			player.LoadPlaylistEvent (playlist, ple);
+			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
+			Assert.AreEqual (cams2, player.CamerasVisible);
+			multiplayerMock.ResetCalls ();
+		}
 	}
 }
 
