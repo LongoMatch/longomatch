@@ -248,6 +248,7 @@ namespace LongoMatch.Core.Store.Templates
 
 	/* Keep this for backwards compatibility importing old project files */
 	[Obsolete ("Use Team instead of TeamTeamplate in new code", true)]
+	[Serializable]
 	public class TeamTemplate: Team
 	{
 	}
