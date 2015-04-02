@@ -484,12 +484,12 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
-			UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
 			EmitEventUnloaded ();
 			if (FileSet != defaultFileSet) {
+				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
 				Open (defaultFileSet);
 			} else {
-				ApplyCamerasConfig ();
+				CamerasVisible = defaultCamerasVisible;
 			}
 		}
 

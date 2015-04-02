@@ -568,6 +568,18 @@ namespace Tests.Services
 			Assert.AreEqual (0, elementLoaded);
 			// Check that cameras have been restored
 			Assert.AreEqual (new List<int> { 0, 1 }, player.CamerasVisible);
+
+			/* Change again the cameras visible */
+			player.CamerasVisible = new List<int>  { 2, 3 };
+			Assert.AreEqual (evt.CamerasVisible, new List <int> { 0 });
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			Assert.AreEqual (1, elementLoaded);
+			Assert.AreEqual (evt.CamerasVisible, player.CamerasVisible);
+			/* And unload */
+			player.UnloadCurrentEvent ();
+			Assert.AreEqual (0, elementLoaded);
+			// Check that cameras have been restored
+			Assert.AreEqual (new List<int> { 2, 3 }, player.CamerasVisible);
 		}
 
 		[Test ()]
