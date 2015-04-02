@@ -110,6 +110,11 @@ namespace LongoMatch.Services
 			set {
 				Log.Debug ("Updating cameras configuration: ", string.Join ("-", value));
 				camerasVisible = value;
+				if (loadedEvent != null) {
+					loadedEvent.CamerasVisible = value.ToList ();
+				} else if (loadedPlaylistElement is PlaylistPlayElement) {
+					(loadedPlaylistElement as PlaylistPlayElement).CamerasVisible = value.ToList ();
+				}
 				if (multiPlayer != null) {
 					multiPlayer.CamerasVisible = camerasVisible;
 					if (!skipApplyCamerasConfig && Opened) {
