@@ -86,17 +86,26 @@ namespace LongoMatch.Video.Utils
 
 			Log.Debug ("Start frames series capture with interval: " + interval);
 			Log.Debug ("Total frames to be captured: " + totalFrames);
-			if (evt.CamerasVisible.Count == 0) {
+			if (evt.CamerasVisible.Count == 0 || fileSet.Count == 1) {
 				cameras = new List<int> { 0 };
 			} else {
 				cameras = evt.CamerasVisible;
 			}
+
 			foreach (int cameraIndex in cameras) {
+				MediaFile file;
+
 				if (quit) {
 					break;
 				}
 				Log.Debug ("Start frames series capture for angle " + cameraIndex);
-				MediaFile file = fileSet.First ();
+				try {
+					file = fileSet [cameraIndex];
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					Log.Error (string.Format ("Camera index {0} not found in fileset", cameraIndex));
+					continue;
+				}
 				capturer.Open (file.FilePath);
 				pos = new Time { MSeconds = start.MSeconds };
 				if (Progress != null) {
