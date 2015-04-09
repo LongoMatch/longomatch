@@ -449,6 +449,12 @@ namespace LongoMatch.Gui
 				ret = true;
 				break;
 			}
+			if (ret) {
+				// We need to update the fileset as it might have changed. Indeed if multi camera is not supported
+				// widget will propose only one media file selector and will return a smaller fileset than the 
+				// one provided originally.
+				project.Description.FileSet = fileselector.FileSet;
+			}
 			d.Destroy ();
 			return ret;
 		}
