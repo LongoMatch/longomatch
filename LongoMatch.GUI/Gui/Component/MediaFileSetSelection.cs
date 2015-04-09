@@ -46,9 +46,14 @@ namespace LongoMatch.Gui.Component
 				fileSet = value;
 
 				if (fileSet.Count > 0) {
-					// Create all choosers
-					foreach (MediaFile mf in fileSet) {
-						AddMediaFileChooser (mf.Name);
+					if (Config.SupportsMultiCamera) {
+						// Create all choosers
+						foreach (MediaFile mf in fileSet) {
+							AddMediaFileChooser (mf.Name);
+						}
+					} else {
+						// Or just one if we don't support multi camera
+						AddMediaFileChooser (fileSet.First ().Name);
 					}
 				} else {
 					// Add the first media file chooser for main camera
@@ -141,7 +146,11 @@ namespace LongoMatch.Gui.Component
 					fileSet.Add (chooser.MediaFile);
 				} else {
 					// Mark for removal as we only want one empty file chooser at most
-					to_remove.Add (chooser);
+					if (fileChoosers.Count > 1) {
+						to_remove.Add (chooser);
+					} else {
+						have_empty_chooser = true;
+					}
 				}
 			}
 
@@ -153,7 +162,7 @@ namespace LongoMatch.Gui.Component
 
 			to_remove.Clear ();
 
-			if (!have_empty_chooser) {
+			if (!have_empty_chooser && Config.SupportsMultiCamera) {
 				AddMediaFileChooser (null);
 			}
 		}
