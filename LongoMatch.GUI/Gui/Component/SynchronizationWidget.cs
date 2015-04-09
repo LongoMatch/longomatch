@@ -280,7 +280,7 @@ namespace LongoMatch.Gui.Component
 		void UpdateTimeLineSize (MediaFileSet fileSet)
 		{
 			// Number of media files plus period sync line
-			int visibleItems = Math.Min (StyleConf.TimelineCameraMaxLines, project.Description.FileSet.Count + 1);
+			int visibleItems = Math.Min (StyleConf.TimelineCameraMaxLines, fileSet.Count + 1);
 			int height = scrolledwindow2.HScrollbar.Requisition.Height * 2;
 			height += visibleItems * StyleConf.TimelineCameraHeight;
 			vpaned2.Position = vpaned2.Allocation.Height - height;
