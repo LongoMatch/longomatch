@@ -267,6 +267,11 @@ namespace LongoMatch
 			set;
 		}
 
+		static public bool SupportsMultiCamera {
+			get;
+			set;
+		}
+
 		static public bool SupportsFullHD {
 			get;
 			set;
