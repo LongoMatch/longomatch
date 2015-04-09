@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Menus
 
 			if (eventType != null) {
 				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new event"), eventType.Name);
-				GtkGlue.MenuItemSetLabel (newPlay, label); 
+				newPlay.SetLabel (label); 
 				newPlay.Visible = true;
 			} else {
 				newPlay.Visible = false;
@@ -102,13 +102,13 @@ namespace LongoMatch.Gui.Menus
 
 			if (plays.Count > 0) {
 				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count);
-				GtkGlue.MenuItemSetLabel (del, label);
+				del.SetLabel (label);
 				label = String.Format ("{0} ({1})", Catalog.GetString ("Add to playlist"), plays.Count);
-				GtkGlue.MenuItemSetLabel (addPLN, label);
+				addPLN.SetLabel (label);
 				label = String.Format ("{0} ({1})", Catalog.GetString ("Export to video file"), plays.Count);
-				GtkGlue.MenuItemSetLabel (render, label);
+				render.SetLabel (label);
 				label = String.Format ("{0} ({1})", Catalog.GetString ("Duplicate "), plays.Count);
-				GtkGlue.MenuItemSetLabel (duplicate, label);
+				duplicate.SetLabel (label);
 			}
 			
 			if (moveCat.Visible) {

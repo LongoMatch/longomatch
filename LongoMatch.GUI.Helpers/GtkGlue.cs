@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 namespace LongoMatch
 {
-	public class GtkGlue
+	public static class GtkGlue
 	{
 		
 		[DllImport ("libgtk-2.0.dll") /* willfully unmapped */]
@@ -31,13 +31,13 @@ namespace LongoMatch
 		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_gtk_glue_gdk_event_button_set_button (IntPtr evt, uint button);
 
-		public static void MenuItemSetLabel (MenuItem menu, string label)
+		public static void SetLabel (this MenuItem menu, string label)
 		{
 			gtk_menu_item_set_label (menu.Handle, GLib.Marshaller.StringToFilenamePtr (label));
 		}
 
 
-		public static void EventButtonSetButton (EventButton ev, uint button)
+		public static void SetButton (this EventButton ev, uint button)
 		{
 			lgm_gtk_glue_gdk_event_button_set_button (ev.Handle, button);
 		}
@@ -47,7 +47,7 @@ namespace LongoMatch
 		/// </summary>
 		/// <param name="label">GtkLabel to set the handler for.</param>
 		/// <param name="urlHandler">URL handler.</param>
-		public static void SetLinkHandler (Gtk.Label label, Action<string> urlHandler)
+		public static void SetLinkHandler (this Label label, Action<string> urlHandler)
 		{
 			new UrlHandlerClosure (urlHandler).ConnectTo (label);
 		}

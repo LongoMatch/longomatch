@@ -373,9 +373,9 @@ namespace LongoMatch.Gui
 		void HandleTimescaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
 		{
 			if (args.Event.Button == 1) {
-				GtkGlue.EventButtonSetButton (args.Event, 2);
+				args.Event.SetButton (2);
 			} else {
-				GtkGlue.EventButtonSetButton (args.Event, 1);
+				args.Event.SetButton (1);
 			}
 
 			if (!seeking) {
@@ -390,9 +390,9 @@ namespace LongoMatch.Gui
 		void HandleTimescaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
 		{
 			if (args.Event.Button == 1) {
-				GtkGlue.EventButtonSetButton (args.Event, 2);
+				args.Event.SetButton (2);
 			} else {
-				GtkGlue.EventButtonSetButton (args.Event, 1);
+				args.Event.SetButton (1);
 			}
 
 			if (seeking) {

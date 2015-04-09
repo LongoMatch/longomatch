@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Dialog
 			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
 
 			// Configure URL handler for the links
-			GtkGlue.SetLinkHandler (label1, (url) => {
+			label1.SetLinkHandler (url => {
 				try {
 					System.Diagnostics.Process.Start (url);
 				} catch {
