@@ -29,25 +29,24 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Services\TemplatesService.cs" />
-    <Compile Include="Services\RenderingJobsManager.cs" />
-    <Compile Include="Services\CoreServices.cs" />
-    <Compile Include="Services\HotKeysManager.cs" />
-    <Compile Include="Services\EventsManager.cs" />
-    <Compile Include="Services\PlaylistManager.cs" />
-    <Compile Include="Services\ProjectsManager.cs" />
-    <Compile Include="Services\DataBaseManager.cs" />
-    <Compile Include="Services\ToolsManager.cs" />
-    <Compile Include="Services\FileDB.cs" />
-    <Compile Include="Services\FileStorage.cs" />
-    <Compile Include="Services\PlayerController.cs" />
+    <Compile Include="TemplatesService.cs" />
+    <Compile Include="RenderingJobsManager.cs" />
+    <Compile Include="CoreServices.cs" />
+    <Compile Include="HotKeysManager.cs" />
+    <Compile Include="EventsManager.cs" />
+    <Compile Include="PlaylistManager.cs" />
+    <Compile Include="ProjectsManager.cs" />
+    <Compile Include="DataBaseManager.cs" />
+    <Compile Include="ToolsManager.cs" />
+    <Compile Include="FileDB.cs" />
+    <Compile Include="FileStorage.cs" />
+    <Compile Include="PlayerController.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
