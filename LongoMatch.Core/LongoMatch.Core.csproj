@@ -144,6 +144,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Interfaces\GUI\IViewPort.cs" />
+    <Compile Include="Store\ActionLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

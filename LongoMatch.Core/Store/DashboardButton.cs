@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace LongoMatch.Core.Store
 {
@@ -34,6 +35,7 @@ namespace LongoMatch.Core.Store
 			BackgroundColor = Color.Red;
 			TextColor = Config.Style.PaletteBackgroundLight;
 			HotKey = new HotKey ();
+			ActionLinks = new List<ActionLink> ();
 		}
 
 		public virtual string Name {
@@ -72,6 +74,14 @@ namespace LongoMatch.Core.Store
 		}
 
 		public virtual Image BackgroundImage {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// A list with all the outgoing links of this button
+		/// </summary>
+		public List<ActionLink> ActionLinks {
 			get;
 			set;
 		}

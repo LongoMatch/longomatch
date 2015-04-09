@@ -76,6 +76,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Stats/SubCategoryStat.cs \
 	Stats/TeamStats.cs \
 	Stats/TimerStats.cs \
+	Store/ActionLink.cs \
 	Store/Coordinates.cs \
 	Store/DashboardButton.cs \
 	Store/Drawables/Angle.cs \

@@ -99,5 +99,9 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+
+	public class CircularDependencyException: Exception
+	{
+	}
 }
 

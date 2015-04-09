@@ -427,4 +427,17 @@ namespace LongoMatch.Core.Common
 		LiveAnalysisReview,
 		Analysis,
 	}
+
+	public enum LinkAction
+	{
+		Toggle,
+		Replicate,
+	}
+
+	public enum TeamLinkAction
+	{
+		Clear,
+		Keep,
+		Invert
+	}
 }

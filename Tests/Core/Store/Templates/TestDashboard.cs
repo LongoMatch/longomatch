@@ -24,10 +24,10 @@ using LongoMatch.Core.Store.Templates;
 
 namespace Tests.Core
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestDashboard
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			Dashboard cat = new Dashboard ();
@@ -38,9 +38,9 @@ namespace Tests.Core
 			cat.GamePeriods = new List<string> ();
 			cat.GamePeriods.Add ("1");
 			cat.GamePeriods.Add ("2");
-			cat.List.Add ( new AnalysisEventButton {Name = "cat1"});
-			cat.List.Add ( new {Name = "cat2"});
-			cat.List.Add ( new CategoryButton {Name = "cat3"});
+			cat.List.Add (new AnalysisEventButton { Name = "cat1" });
+			cat.List.Add (new AnalysisEventButton { Name = "cat2" });
+			cat.List.Add (new AnalysisEventButton { Name = "cat3" });
 			
 			Utils.CheckSerialization (cat);
 			
@@ -48,12 +48,28 @@ namespace Tests.Core
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
 			Assert.AreEqual (cat.GamePeriods.Count, newcat.GamePeriods.Count);
-			Assert.AreEqual (cat.GamePeriods[0], newcat.GamePeriods[0]);
-			Assert.AreEqual (cat.GamePeriods[1], newcat.GamePeriods[1]);
+			Assert.AreEqual (cat.GamePeriods [0], newcat.GamePeriods [0]);
+			Assert.AreEqual (cat.GamePeriods [1], newcat.GamePeriods [1]);
 			Assert.AreEqual (cat.List.Count, newcat.List.Count);
-			Assert.AreEqual (cat.CategoriesList[0].ID, newcat.CategoriesList[0].ID);
-			Assert.AreEqual (cat.CategoriesList[1].ID, newcat.CategoriesList[1].ID);
-			Assert.AreEqual (cat.CategoriesList[2].ID, newcat.CategoriesList[2].ID);
+		}
+
+		[Test ()]
+		public void TestCircularDepdencies ()
+		{
+			Dashboard dashboard = new Dashboard ();
+			DashboardButton b1 = new DashboardButton ();
+			DashboardButton b2 = new DashboardButton ();
+			DashboardButton b3 = new DashboardButton ();
+			dashboard.List.Add (b1);
+			dashboard.List.Add (b2);
+			dashboard.List.Add (b3);
+
+			b1.ActionLinks.Add (new ActionLink { DestinationButton = b2 });
+			Assert.IsFalse (dashboard.HasCircularDependencies ());
+			b2.ActionLinks.Add (new ActionLink { DestinationButton = b3 });
+			Assert.IsFalse (dashboard.HasCircularDependencies ());
+			b3.ActionLinks.Add (new ActionLink { DestinationButton = b1 });
+			Assert.IsTrue (dashboard.HasCircularDependencies ());
 		}
 	}
 }

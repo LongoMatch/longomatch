@@ -21,25 +21,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
-
-using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Mono.Unix;
+using Newtonsoft.Json;
 
 using Image = LongoMatch.Core.Common.Image;
-using System.Collections.ObjectModel;
 
 namespace LongoMatch.Core.Store.Templates
 {
 
 	/// <summary>
-	/// I am a template for the analysis categories used in a project.
-	/// I describe each one of the categories and provide the default values
-	/// to use to create plys in a specific category.
-	/// The position of the category in the index is very important and should
-	/// respect the same index used in the plays list inside a project.
-	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
+	/// A dashboard contains a set of <see cref="DashboardButton"/> disposed
+	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
 	public class Dashboard: IStorable, ITemplate
@@ -50,9 +44,6 @@ namespace LongoMatch.Core.Store.Templates
 		const int MIN_WIDTH = 320;
 		const int MIN_HEIGHT = 240;
 
-		/// <summary>
-		/// Creates a new template
-		/// </summary>
 		public Dashboard ()
 		{
 			try {
@@ -88,58 +79,96 @@ namespace LongoMatch.Core.Store.Templates
 			InitializeLists ();
 		}
 
-		
+		/// <summary>
+		/// Unique ID describing the dashboard
+		/// </summary>
 		public Guid ID {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// When set to <c>true</c> the dashboard is treated as a system dashboard
+		/// and it can't be modified
+		/// </summary>
 		[JsonIgnore]
 		public bool Static {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// A list with all the buttons in this dashboard
+		/// </summary>
 		public List<DashboardButton> List {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The name of the dashboard
+		/// </summary>
 		public string Name {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// A list with the default periods for this dashboard.
+		/// When a new project is created this list will be used
+		/// to the same amount of periods in this list and with
+		/// the same names
+		/// </summary>
+		/// <value>The game periods.</value>
 		public List<string> GamePeriods {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The icon used for this dashboard
+		/// </summary>
 		public Image Image {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The field background image
+		/// </summary>
 		public Image FieldBackground {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The half field background image
+		/// </summary>
 		public Image HalfFieldBackground {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The goal background image
+		/// </summary>
 		public Image GoalBackground {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// When set to <c>true</c>, creating a new event does not show the dialog
+		/// window to edit the event details.
+		/// </summary>
 		public bool DisablePopupWindow {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// A list with all the timers used in this dashboard
+		/// </summary>
 		[JsonIgnore]
 		public List<Timer> Timers {
 			get {
@@ -175,6 +204,12 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		/// <summary>
+		/// Changes a hotkey for a button in the dashboard checking
+		/// the hotkey is not already in use.
+		/// </summary>
+		/// <param name="button">Button to change the hotkey.</param>
+		/// <param name="hotkey">New hotkey for the button.</param>
 		public void ChangeHotkey (DashboardButton button, HotKey hotkey)
 		{
 			if (List.Count (d => d.HotKey == hotkey) > 0) {
@@ -184,6 +219,10 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		/// <summary>
+		/// Adds the default tags to a button
+		/// </summary>
+		/// <param name="ev">The event type where the tags will be added</param>
 		public void AddDefaultTags (AnalysisEventType ev)
 		{
 			ev.Tags.Add (new Tag (Catalog.GetString ("Success"),
@@ -192,6 +231,27 @@ namespace LongoMatch.Core.Store.Templates
 				Catalog.GetString ("Outcome")));
 		}
 
+		/// <summary>
+		/// Checks if there are circular depedencies in the buttons links.
+		/// </summary>
+		/// <returns><c>false</c> if no circular dependencies where found.</returns>
+		public bool HasCircularDependencies ()
+		{
+			foreach (DashboardButton button in List) {
+				try {
+					CheckButtonLinks (button, new List<DashboardButton> ());
+				} catch (CircularDependencyException) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Adds a new <see cref="AnalysisEventButton"/> with the default values
+		/// </summary>
+		/// <returns>A new button.</returns>
+		/// <param name="index">Index of this button used to name it</param>
 		public AnalysisEventButton AddDefaultItem (int index)
 		{
 			AnalysisEventButton button;
@@ -221,6 +281,11 @@ namespace LongoMatch.Core.Store.Templates
 			return button;
 		}
 
+		/// <summary>
+		/// Creates a new dashboard with a default set of buttons
+		/// </summary>
+		/// <returns>the new dashboadrd.</returns>
+		/// <param name="count">Number of <see cref="AnalysisEventButton"/> to add.</param>
 		public static Dashboard DefaultTemplate (int count)
 		{
 			TagButton tagbutton;
@@ -289,10 +354,26 @@ namespace LongoMatch.Core.Store.Templates
 			return template;
 		}
 
-		private void FillDefaultTemplate (int count)
+		void FillDefaultTemplate (int count)
 		{
 			for (int i = 1; i <= count; i++)
 				AddDefaultItem (i - 1);
+		}
+
+		void CheckButtonLinks (DashboardButton button, List<DashboardButton> traversed = null)
+		{
+			if (traversed == null)
+				traversed = new List<DashboardButton> ();
+
+			if (traversed.Contains (button)) {
+				throw new CircularDependencyException ();
+			} else {
+				traversed.Add (button);
+			}
+
+			foreach (ActionLink l in button.ActionLinks) {
+				CheckButtonLinks (l.DestinationButton, traversed);
+			}
 		}
 	}
 }
