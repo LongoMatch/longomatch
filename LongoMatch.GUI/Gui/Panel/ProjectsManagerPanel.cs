@@ -88,6 +88,9 @@ namespace LongoMatch.Gui.Panel
 			
 			projectlistwidget1.ShowList = true;
 
+			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
+			resyncbutton.Visible = Config.SupportsMultiCamera;
+
 			SetStyle ();
 		}
 
@@ -142,7 +145,14 @@ namespace LongoMatch.Gui.Panel
 
 			resyncbutton.Sensitive = project.Description.FileSet.Count > 1;
 
-			foreach (MediaFile mf in project.Description.FileSet) {
+			int max = project.Description.FileSet.Count;
+			// Cap to one media file for non multi camera version
+			if (!Config.SupportsMultiCamera) {
+				max = Math.Min (max, 1);
+			}
+
+			for (int i = 0; i < max; i++) {
+				MediaFile mf = project.Description.FileSet [i];
 				VideoFileInfo vfi = new VideoFileInfo ();
 
 				vfi.SetMediaFileSet (project.Description.FileSet, mf);
