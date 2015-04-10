@@ -187,7 +187,7 @@ namespace LongoMatch.Gui.Menus
 		{
 			newPlay = new MenuItem ("");
 			Add (newPlay);
-			newPlay.Activated += HandleNePlayActivated;
+			newPlay.Activated += HandleNewPlayActivated;
 
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Menus
 			ShowAll ();
 		}
 
-		void HandleNePlayActivated (object sender, EventArgs e)
+		void HandleNewPlayActivated (object sender, EventArgs e)
 		{
 			Config.EventsBroker.EmitNewTag (eventType,
 				eventTime: time,
