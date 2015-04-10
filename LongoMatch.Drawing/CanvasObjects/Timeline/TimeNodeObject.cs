@@ -16,14 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Drawables;
 using System.IO;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{
@@ -113,7 +112,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		protected double CenterX {
 			get {
 				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
-				                        SecondsPerPixel);
+					SecondsPerPixel);
 			}
 		}
 
@@ -121,11 +120,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				double ls = StyleConf.TimelineLineSize;
 				return new Area (new Point (StartX - ls, OffsetY),
-				                 (StopX - StartX) + 2 * ls, Height);
+					(StopX - StartX) + 2 * ls, Height);
 			}
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			if (SelectionMode == NodeSelectionMode.Borders || SelectionMode == NodeSelectionMode.All) {
 				double accuracy;
@@ -154,15 +153,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (DraggingMode == NodeDraggingMode.None)
 				return;
 			switch (sel.Position) {
-				case SelectionPosition.Left:
-				case SelectionPosition.Right:
-					if (DraggingMode == NodeDraggingMode.Segment)
-						return;
-					break;
-				case SelectionPosition.All:
-					if (DraggingMode == NodeDraggingMode.Borders)
-						return;
-					break;
+			case SelectionPosition.Left:
+			case SelectionPosition.Right:
+				if (DraggingMode == NodeDraggingMode.Segment)
+					return;
+				break;
+			case SelectionPosition.All:
+				if (DraggingMode == NodeDraggingMode.Borders)
+					return;
+				break;
 			}
 
 			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
@@ -180,25 +179,25 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 
 			switch (sel.Position) {
-				case SelectionPosition.Left:
-					if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
-						TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
-					} else {
-						TimeNode.Start = newTime;
-					}
-					break;
-				case SelectionPosition.Right:
-					if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
-						TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
-					} else {
-						TimeNode.Stop = newTime;
-					}
-					break;
-				case SelectionPosition.All:
-					Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
-					TimeNode.Start += diff;
-					TimeNode.Stop += diff;
-					break;
+			case SelectionPosition.Left:
+				if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
+					TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
+				} else {
+					TimeNode.Start = newTime;
+				}
+				break;
+			case SelectionPosition.Right:
+				if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
+					TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
+				} else {
+					TimeNode.Stop = newTime;
+				}
+				break;
+			case SelectionPosition.All:
+				Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
+				TimeNode.Start += diff;
+				TimeNode.Stop += diff;
+				break;
 			}
 			movingPos = sel.Position;
 		}
@@ -234,7 +233,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.DrawSurface (needle, new Point (c - needle.Width / 2, linepos - 9)); 
 			} else {
 				tk.DrawLine (new Point (StartX, linepos),
-				             new Point (StopX, linepos));
+					new Point (StopX, linepos));
 				tk.DrawSurface (needle, new Point (StartX - needle.Width / 2, linepos - 9)); 
 				tk.DrawSurface (needle, new Point (StopX - needle.Width / 2, linepos - 9)); 
 			}
@@ -253,7 +252,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 	public class TimerTimeNodeObject: TimeNodeObject
 	{
-		public TimerTimeNodeObject (Timer t, TimeNode tn): base (tn)
+		public TimerTimeNodeObject (Timer t, TimeNode tn) : base (tn)
 		{
 			Timer = t;
 		}

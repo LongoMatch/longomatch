@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Drawables;
 using System.IO;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class NeedleObject: CanvasObject, ICanvasSelectableObject
 	{
@@ -30,7 +30,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public NeedleObject ()
 		{
 			if (needle == null) {
-				string  path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
+				string path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
 				Image img = Image.LoadFromFile (path);
 				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 			}
@@ -64,31 +64,32 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return needle.Height;
 			}
 		}
-		
+
 		public Point TopLeft {
 			get {
 				return new Point (X - Width / 2, TimelineHeight - needle.Height);
 			}
 		}
-		
+
 		Area Area {
 			get {
 				return new Area (TopLeft, Width, Width);
 			}
 		}
-		
+
 		public override void Draw (IDrawingToolkit tk, LongoMatch.Core.Common.Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
-			};
+			}
+			;
 			
 			tk.Begin ();
 			tk.DrawSurface (needle, TopLeft);
 			tk.End ();
 		}
-		
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			if ((Math.Abs (point.X - X) < Width / 2 + precision)) {
 				return new Selection (this, SelectionPosition.All, 0);

@@ -6,7 +6,6 @@ LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 
 SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Canvas.cs \
-	CanvasObjects/BenchObject.cs \
 	CanvasObjects/Blackboard/CounterObject.cs \
 	CanvasObjects/Blackboard/CrossObject.cs \
 	CanvasObjects/Blackboard/EllipseObject.cs \
@@ -15,7 +14,6 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/Blackboard/RectangleObject.cs \
 	CanvasObjects/Blackboard/TextObject.cs \
 	CanvasObjects/ButtonObject.cs \
-	CanvasObjects/CameraObject.cs \
 	CanvasObjects/CanvasObject.cs \
 	CanvasObjects/Dashboard/CardObject.cs \
 	CanvasObjects/Dashboard/CategoryObject.cs \
@@ -23,15 +21,17 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/Dashboard/ScoreObject.cs \
 	CanvasObjects/Dashboard/TagObject.cs \
 	CanvasObjects/Dashboard/TimerObject.cs \
-	CanvasObjects/FieldObject.cs \
-	CanvasObjects/LabelObject.cs \
-	CanvasObjects/NeedleObject.cs \
-	CanvasObjects/PlayObject.cs \
-	CanvasObjects/PlayerObject.cs \
-	CanvasObjects/PlayersTaggerObject.cs \
 	CanvasObjects/PositionObject.cs \
-	CanvasObjects/TimeNodeObject.cs \
-	CanvasObjects/TimelineObject.cs \
+	CanvasObjects/Teams/BenchObject.cs \
+	CanvasObjects/Teams/FieldObject.cs \
+	CanvasObjects/Teams/PlayerObject.cs \
+	CanvasObjects/Teams/PlayersTaggerObject.cs \
+	CanvasObjects/Timeline/CameraObject.cs \
+	CanvasObjects/Timeline/LabelObject.cs \
+	CanvasObjects/Timeline/NeedleObject.cs \
+	CanvasObjects/Timeline/TimeNodeObject.cs \
+	CanvasObjects/Timeline/TimelineEventObject.cs \
+	CanvasObjects/Timeline/TimelineObject.cs \
 	Constants.cs \
 	PlayslistCellRenderer.cs \
 	Utils.cs \

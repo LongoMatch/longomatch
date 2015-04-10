@@ -16,13 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
-using System.IO;
-using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -37,9 +35,9 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time currentTime;
 
-		public Timerule (IWidget widget):base (widget)
+		public Timerule (IWidget widget) : base (widget)
 		{
-			needle = new NeedleObject();
+			needle = new NeedleObject ();
 			AddObject (needle);
 			SecondsPerPixel = 0.1;
 			currentTime = new Time (0);
@@ -107,8 +105,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X + Scroll , 0),
-			                                                    SecondsPerPixel), false);
+			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0),
+				SecondsPerPixel), false);
 		}
 
 		public override void Draw (IContext context, Area area)
@@ -133,24 +131,24 @@ namespace LongoMatch.Drawing.Widgets
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = StyleConf.TimelineRuleFontSize;
 			tk.DrawLine (new Point (area.Start.X, height),
-			             new Point (area.Start.X + area.Width, height));
+				new Point (area.Start.X + area.Width, height));
 
 			startX = (int)(area.Start.X + Scroll);
 			start = (startX - (startX % TIME_SPACING));
 			stop = (int)(startX + area.Width + TIME_SPACING);
 
 			/* Draw big lines each 10 * secondsPerPixel */
-			for (int i=start; i <= stop; i += TIME_SPACING) {
+			for (int i = start; i <= stop; i += TIME_SPACING) {
 				double pos = i - Scroll;
 				tk.DrawLine (new Point (pos, height),
-				             new Point (pos, height - BIG_LINE_HEIGHT));
+					new Point (pos, height - BIG_LINE_HEIGHT));
 				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 2), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 2,
-				             new Time { TotalSeconds = (int) (i * SecondsPerPixel) }.ToSecondsString ());
+					new Time { TotalSeconds = (int)(i * SecondsPerPixel) }.ToSecondsString ());
 			}
 
 			start = (startX - (startX % (TIME_SPACING / 10))) + (TIME_SPACING / 10);
 			/* Draw small lines each 1 * secondsPerPixel */
-			for (int i=start; i<= stop; i+= TIME_SPACING / 10) {
+			for (int i = start; i <= stop; i += TIME_SPACING / 10) {
 				double pos;
 				
 				if (i % TIME_SPACING == 0)
@@ -158,7 +156,7 @@ namespace LongoMatch.Drawing.Widgets
 					
 				pos = i - Scroll;
 				tk.DrawLine (new Point (pos, height),
-				             new Point (pos, height - SMALL_LINE_HEIGHT));
+					new Point (pos, height - SMALL_LINE_HEIGHT));
 			}
 			
 			/* Draw position triangle */

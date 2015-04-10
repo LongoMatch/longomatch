@@ -15,12 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Common;
 using System;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class LabelObject: CanvasObject, ICanvasObject
 	{
@@ -38,7 +38,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public virtual Color Color {
 			get;
 			set;
@@ -48,7 +48,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public double Height {
 			get;
 			set;
@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				int width, height;
 				Config.DrawingToolkit.MeasureText (
-					Name, out width, out height, Config.Style.Font ,
+					Name, out width, out height, Config.Style.Font,
 					DEFAULT_FONT_SIZE, FontWeight.Normal);
 				return TextOffset + width;
 			}
@@ -84,7 +84,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				return Height - StyleConf.TimelineLabelVSpacing * 2;
 			}
 		}
-		
+
 		double TextOffset {
 			get {
 				return StyleConf.TimelineLabelHSpacing * 2 + RectSize;
@@ -121,38 +121,40 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 	}
-	
-	public class EventTypeLabelObject: LabelObject {
+
+	public class EventTypeLabelObject: LabelObject
+	{
 		EventType eventType;
 
-		public EventTypeLabelObject (EventType eventType, double width, double height, double offsetY):
+		public EventTypeLabelObject (EventType eventType, double width, double height, double offsetY) :
 			base (width, height, offsetY)
 		{
 			this.eventType = eventType;
 		}
-		
+
 		public override Color Color {
 			get {
 				return eventType.Color;
 			}
 		}
-		
+
 		public override string Name {
 			get {
 				return eventType.Name;
 			}
 		}
 	}
-	
-	public class TimerLabelObject: LabelObject {
+
+	public class TimerLabelObject: LabelObject
+	{
 		Timer timer;
 
-		public TimerLabelObject (Timer timer, double width, double height, double offsetY):
+		public TimerLabelObject (Timer timer, double width, double height, double offsetY) :
 			base (width, height, offsetY)
 		{
 			this.timer = timer;
 		}
-		
+
 		public override string Name {
 			get {
 				return timer.Name;
@@ -160,9 +162,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 	}
 
-	public class CameraLabelObject: LabelObject {
-		public CameraLabelObject (double width, double height, double offsetY):
-		base (width, height, offsetY)
+	public class CameraLabelObject: LabelObject
+	{
+		public CameraLabelObject (double width, double height, double offsetY) :
+			base (width, height, offsetY)
 		{
 		}
 

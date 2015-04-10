@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
+using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 using Mono.Unix;
 
 namespace LongoMatch.Drawing.Widgets
@@ -32,9 +32,9 @@ namespace LongoMatch.Drawing.Widgets
 		EventsFilter filter;
 		Dictionary<LabelObject, object> labelToObject;
 
-		public TimelineLabels (IWidget widget): base (widget)
+		public TimelineLabels (IWidget widget) : base (widget)
 		{
-			labelToObject = new Dictionary<LabelObject, object>();
+			labelToObject = new Dictionary<LabelObject, object> ();
 		}
 
 		public double Scroll {
@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.Widgets
 		void AddLabel (LabelObject label, object obj)
 		{
 			Objects.Add (label);
-			labelToObject[label] = obj;
+			labelToObject [label] = obj;
 		}
 
 		void FillCanvas ()
@@ -103,7 +103,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			int i = 0;
 			foreach (LabelObject label in Objects) {
-				if (filter.IsVisible (labelToObject[label])) {
+				if (filter.IsVisible (labelToObject [label])) {
 					label.OffsetY = i * label.Height;
 					label.Visible = true;
 					label.BackgroundColor = Utils.ColorForRow (i);
@@ -114,7 +114,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			widget.ReDraw ();
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			tk.Context = context;

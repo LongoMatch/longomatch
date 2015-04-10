@@ -18,8 +18,8 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 using Mono.Unix;
-using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Gui.Menus
 {

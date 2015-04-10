@@ -30,18 +30,16 @@
     <Folder Include="Widgets\" />
     <Folder Include="CanvasObjects\Dashboard\" />
     <Folder Include="CanvasObjects\Blackboard\" />
+    <Folder Include="CanvasObjects\Timeline\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.cs" />
     <Compile Include="Widgets\Timerule.cs" />
-    <Compile Include="CanvasObjects\PlayObject.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Widgets\PlaysTimeline.cs" />
-    <Compile Include="CanvasObjects\TimelineObject.cs" />
     <Compile Include="CanvasObjects\CanvasObject.cs" />
     <Compile Include="CanvasObjects\PlayerObject.cs" />
     <Compile Include="Widgets\TeamTagger.cs" />
-    <Compile Include="CanvasObjects\TimeNodeObject.cs" />
     <Compile Include="Widgets\TimersTimeline.cs" />
     <Compile Include="Widgets\PositionTagger.cs" />
     <Compile Include="CanvasObjects\PositionObject.cs" />
@@ -54,8 +52,6 @@
     <Compile Include="Widgets\DashboardCanvas.cs" />
     <Compile Include="CanvasObjects\ButtonObject.cs" />
     <Compile Include="Widgets\TimelineLabels.cs" />
-    <Compile Include="CanvasObjects\NeedleObject.cs" />
-    <Compile Include="CanvasObjects\CameraObject.cs" />
     <Compile Include="Widgets\CamerasTimeline.cs" />
     <Compile Include="Widgets\CamerasLabels.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
@@ -74,7 +70,12 @@
     <Compile Include="CanvasObjects\Blackboard\QuadrilateralObject.cs" />
     <Compile Include="CanvasObjects\Blackboard\RectangleObject.cs" />
     <Compile Include="CanvasObjects\Blackboard\TextObject.cs" />
-    <Compile Include="CanvasObjects\LabelObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\NeedleObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\LabelObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\TimelineObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\TimeNodeObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\CameraObject.cs" />
+    <Compile Include="CanvasObjects\Timeline\TimelineEventObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

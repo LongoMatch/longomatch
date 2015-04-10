@@ -16,14 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using System.Collections.Generic;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		MediaFileSet fileSet;
 
-		public CamerasTimeline (IWidget widget): base(widget)
+		public CamerasTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
@@ -132,8 +132,8 @@ namespace LongoMatch.Drawing.Widgets
 			// And for the cameras
 			for (int i = 1; i < fileSet.Count; i++) {
 				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], false, true, duration, i * StyleConf.TimelineCameraHeight,
-					Config.Style.PaletteBackground,
-					Config.Style.PaletteBackgroundLight);
+					                                Config.Style.PaletteBackground,
+					                                Config.Style.PaletteBackgroundLight);
 				AddTimeLine (cameraTimeLine);
 			}
 			Update ();

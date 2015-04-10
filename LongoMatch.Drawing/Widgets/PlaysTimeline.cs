@@ -18,12 +18,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -120,7 +121,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 
 			foreach (CategoryTimeline tl in eventsTimelines.Values) {
-				PlayObject loaded = tl.Load (play);
+				TimelineEventObject loaded = tl.Load (play);
 				if (loaded != null) {
 					ClearSelection ();
 					UpdateSelection (new Selection (loaded, SelectionPosition.All, 0), false);
@@ -157,7 +158,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			foreach (TimelineEvent p in plays) {
 				eventsTimelines [p.EventType].RemoveNode (p);
-				Selections.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
+				Selections.RemoveAll (s => (s.Drawable as TimelineEventObject).Event == p);
 			}
 		}
 
@@ -248,7 +249,7 @@ namespace LongoMatch.Drawing.Widgets
 			EventType ev = null;
 			List<TimelineEvent> plays;
 			
-			plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
+			plays = Selections.Select (p => (p.Drawable as TimelineEventObject).Event).ToList ();
 
 			ev = eventsTimelines.GetKeyByValue (catTimeline);
 			if (ev != null && ShowMenuEvent != null) {
@@ -261,8 +262,8 @@ namespace LongoMatch.Drawing.Widgets
 			TimelineEvent ev = null;
 			if (selections.Count > 0) {
 				CanvasObject d = selections.Last ().Drawable as CanvasObject;
-				if (d is PlayObject) {
-					ev = (d as PlayObject).Play;
+				if (d is TimelineEventObject) {
+					ev = (d as TimelineEventObject).Event;
 					loadedEvent = ev;
 				}
 			}
@@ -314,8 +315,8 @@ namespace LongoMatch.Drawing.Widgets
 			
 			co = (sel.Drawable as CanvasObject);
 			
-			if (co is PlayObject) {
-				play = (co as PlayObject).Play;
+			if (co is TimelineEventObject) {
+				play = (co as TimelineEventObject).Event;
 				
 				if (sel.Position == SelectionPosition.Right) {
 					moveTime = play.Stop;

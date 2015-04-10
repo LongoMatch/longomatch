@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
-	public class PlayObject: TimeNodeObject
+	public class TimelineEventObject: TimeNodeObject
 	{
-		public PlayObject (TimelineEvent play, Project project):base (play)
+		public TimelineEventObject (TimelineEvent play, Project project) : base (play)
 		{
 			Project = project;
 			// Only event boundaries can be dragged
@@ -48,11 +48,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override string Description {
 			get {
-				return Play.Name;
+				return Event.Name;
 			}
 		}
 
-		public TimelineEvent Play {
+		public TimelineEvent Event {
 			get {
 				return TimeNode as TimelineEvent;
 			}
@@ -62,7 +62,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				double ls = SelectionLeft.Width / 2;
 				return new Area (new Point (StartX - ls, OffsetY),
-				                 (StopX - StartX) + 2 * ls, Height);
+					(StopX - StartX) + 2 * ls, Height);
 			}
 		}
 
@@ -72,14 +72,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			y = OffsetY + Height / 2;
 			tk.LineWidth = lineWidth;
-			tk.FillColor = Play.Color;
-			tk.StrokeColor = Play.Color;
+			tk.FillColor = Event.Color;
+			tk.StrokeColor = Event.Color;
 			if (stop - start <= lineWidth) {
 				tk.LineWidth = 0;
 				tk.DrawCircle (new Point (start + (stop - start) / 2, y), 3);
 			} else {
 				tk.DrawLine (new Point (start + lineWidth / 2, y),
-				             new Point (stop - lineWidth / 2, y));
+					new Point (stop - lineWidth / 2, y));
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			team = Project.EventTaggedTeam (Play);
+			team = Project.EventTaggedTeam (Event);
 			if (team == TeamType.LOCAL) {
 				color = Project.LocalTeamTemplate.Color;
 			} else if (team == TeamType.VISITOR) {
@@ -113,7 +113,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			

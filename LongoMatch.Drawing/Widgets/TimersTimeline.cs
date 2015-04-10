@@ -15,14 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using System.Collections.Generic;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		Time duration;
 		Dictionary <Timer, TimerTimeline> timers;
 
-		public TimersTimeline (IWidget widget): base(widget)
+		public TimersTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
@@ -100,8 +100,8 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			widget.Height = Constants.TIMER_HEIGHT;
 			timertimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, 0,
-			                                   Config.Style.PaletteBackground,
-			                                   Config.Style.PaletteBackgroundLight);
+				Config.Style.PaletteBackground,
+				Config.Style.PaletteBackgroundLight);
 			foreach (Timer t in timers) {
 				this.timers [t] = timertimeline;
 			}

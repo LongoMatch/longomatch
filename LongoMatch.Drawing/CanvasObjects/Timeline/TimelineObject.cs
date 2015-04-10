@@ -16,16 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
 using System.IO;
+using System.Linq;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public abstract class TimelineObject: CanvasObject, ICanvasSelectableObject
 	{
@@ -48,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			SecondsPerPixel = 0.1;
 			Height = height;
 		}
-		
+
 		protected override void Dispose (bool disposing)
 		{
 			ClearObjects ();
@@ -111,7 +110,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		protected void ClearObjects () {
+		protected void ClearObjects ()
+		{
 			foreach (TimeNodeObject tn in nodes) {
 				RemoveObject (tn, false);
 			}
@@ -126,12 +126,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 				nodes.Remove (to);
 			}
 		}
-		
+
 		protected virtual bool TimeNodeObjectIsVisible (TimeNodeObject tn)
 		{
 			return true;
 		}
-		
+
 		protected virtual void DrawBackground (IDrawingToolkit tk, Area area)
 		{
 			tk.FillColor = BackgroundColor;
@@ -155,7 +155,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (!UpdateDrawArea (tk, area, new Area (new Point (0, OffsetY), Width, Height))) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			DrawBackground (tk, area);
@@ -179,12 +180,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			position = Utils.TimeToPos (CurrentTime, secondsPerPixel);
 			tk.DrawLine (new Point (position, OffsetY),
-			             new Point (position, OffsetY + Height));
+				new Point (position, OffsetY + Height));
 			
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Selection selection = null;
 
@@ -213,7 +214,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			s.Drawable.Move (s, p, start);
 		}
-		
+
 		ISurface LoadBorder (string name)
 		{
 			Image img = Image.LoadFromFile (Path.Combine (Config.IconsDir, name));
@@ -228,7 +229,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		Project project;
 
 		public CategoryTimeline (Project project, List<TimelineEvent> plays, Time maxTime,
-		                         double offsetY, Color background, EventsFilter filter):
+		                         double offsetY, Color background, EventsFilter filter) :
 			base (maxTime, StyleConf.TimelineCategoryHeight, offsetY, background)
 		{
 			this.filter = filter;
@@ -238,19 +239,19 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public PlayObject Load (TimelineEvent evt)
+		public TimelineEventObject Load (TimelineEvent evt)
 		{
-			return nodes.FirstOrDefault (n => (n as PlayObject).Play == evt) as PlayObject;
+			return nodes.FirstOrDefault (n => (n as TimelineEventObject).Event == evt) as TimelineEventObject;
 		}
 
 		protected override bool TimeNodeObjectIsVisible (TimeNodeObject tn)
 		{
-			return filter.IsVisible ((tn as PlayObject).Play);
+			return filter.IsVisible ((tn as TimelineEventObject).Event);
 		}
 
 		public void AddPlay (TimelineEvent play)
 		{
-			PlayObject po = new PlayObject (play, project);
+			TimelineEventObject po = new TimelineEventObject (play, project);
 			po.SelectionLeft = selectionBorderL; 
 			po.SelectionRight = selectionBorderR; 
 			po.OffsetY = OffsetY;
@@ -267,7 +268,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		List<Timer> timers;
 
 		public TimerTimeline (List<Timer> timers, bool showName, NodeDraggingMode draggingMode, bool showLine,
-				Time maxTime, int height, double offsetY,  Color background, Color lineColor) :
+		                      Time maxTime, int height, double offsetY, Color background, Color lineColor) :
 			base (maxTime, height, offsetY, background)
 		{
 			this.timers = timers;
@@ -280,8 +281,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 
 		public TimerTimeline (List<Timer> timers, bool showName, NodeDraggingMode draggingMode, bool showLine,
-			Time maxTime, double offsetY, Color background, Color lineColor) :
-			this (timers, showName, draggingMode, showLine, maxTime, StyleConf.TimelineCategoryHeight, offsetY,  background, lineColor)
+		                      Time maxTime, double offsetY, Color background, Color lineColor) :
+			this (timers, showName, draggingMode, showLine, maxTime, StyleConf.TimelineCategoryHeight, offsetY, background, lineColor)
 		{
 
 		}
@@ -295,12 +296,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		bool ShowName {
 			get;
 			set;
 		}
-		
+
 		NodeDraggingMode DraggingMode {
 			get;
 			set;
@@ -315,8 +316,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		{
 			return timers.Contains (timer);
 		}
-		
-		public void AddTimer (Timer timer, bool newtimer=true)
+
+		public void AddTimer (Timer timer, bool newtimer = true)
 		{
 			foreach (TimeNode tn in timer.Nodes) {
 				AddTimeNode (timer, tn);
@@ -329,7 +330,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public void RemoveTimer (Timer timer)
 		{
-			TimerTimeNodeObject to = (TimerTimeNodeObject) nodes.FirstOrDefault (t => (t as TimerTimeNodeObject).Timer == timer);
+			TimerTimeNodeObject to = (TimerTimeNodeObject)nodes.FirstOrDefault (t => (t as TimerTimeNodeObject).Timer == timer);
 			if (to != null) {
 				RemoveObject (to, true);
 			}
@@ -366,12 +367,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			if (ShowLine) {
 				// We want the background line and overlay to use the same starting point although they have different sizes.
-				double linepos = OffsetY + Height / 2  + StyleConf.TimelineLineSize / 2;
+				double linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
 				tk.FillColor = Config.Style.PaletteBackgroundDark;
 				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;
 				tk.DrawLine (new Point (0, linepos),
-				             new Point (Width, linepos));
+					new Point (Width, linepos));
 			}
 		}
 	}
@@ -379,7 +380,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class CameraTimeline: TimelineObject
 	{
 		public CameraTimeline (MediaFile mediaFile, bool showName, bool showLine,
-			Time maxTime, double offsetY, Color background, Color lineColor):
+		                       Time maxTime, double offsetY, Color background, Color lineColor) :
 			base (maxTime, StyleConf.TimelineCameraHeight, offsetY, background)
 		{
 			ShowName = showName;

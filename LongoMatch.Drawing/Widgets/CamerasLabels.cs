@@ -17,11 +17,10 @@
 //
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
-using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 using Mono.Unix;
 
 namespace LongoMatch.Drawing.Widgets
@@ -30,7 +29,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		MediaFileSet fileSet;
 
-		public CamerasLabels (IWidget widget): base (widget)
+		public CamerasLabels (IWidget widget) : base (widget)
 		{
 		}
 
@@ -67,18 +66,27 @@ namespace LongoMatch.Drawing.Widgets
 			widget.Width = w;
 
 			// Main camera
-			l = new CameraLabelObject (w, h, i * h) { Name = fileSet[0].Name, BackgroundColor = Config.Style.PaletteBackgroundLight };
+			l = new CameraLabelObject (w, h, i * h) {
+				Name = fileSet [0].Name,
+				BackgroundColor = Config.Style.PaletteBackgroundLight
+			};
 			AddLabel (l);
 			i++;
 
 			// Periods
-			l = new CameraLabelObject (w, h, i * h) { Name = Catalog.GetString ("Periods"), BackgroundColor = Config.Style.PaletteBackgroundLight };
+			l = new CameraLabelObject (w, h, i * h) {
+				Name = Catalog.GetString ("Periods"),
+				BackgroundColor = Config.Style.PaletteBackgroundLight
+			};
 			AddLabel (l);
 			i++;
 
 			// Secondary cams
 			for (int j = 1; j < fileSet.Count; j++) {
-				l = new CameraLabelObject (w, h, i * h) { Name = fileSet[j].Name, BackgroundColor = Config.Style.PaletteBackground };
+				l = new CameraLabelObject (w, h, i * h) {
+					Name = fileSet [j].Name,
+					BackgroundColor = Config.Style.PaletteBackground
+				};
 				AddLabel (l);
 				i++;
 			}

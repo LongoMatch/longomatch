@@ -16,18 +16,20 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class CameraObject: TimeNodeObject
 	{
 		MediaFile mediaFile;
 
-		public CameraObject (MediaFile mf) : 
-			base (new TimeNode () { Start = new Time (-mf.Offset.MSeconds), Stop = mf.Duration - mf.Offset, Name = mf.Name })
+		public CameraObject (MediaFile mf) :
+			base (new TimeNode { Start = new Time (-mf.Offset.MSeconds),
+				Stop = mf.Duration - mf.Offset, Name = mf.Name
+			})
 		{
 			mediaFile = mf;
 			// Video boundaries can't be changed, only the segment can move.
