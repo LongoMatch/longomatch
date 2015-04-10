@@ -243,26 +243,15 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void ShowPlaysMenu (Point coords)
+		void ShowPlaysMenu (Point coords, CategoryTimeline catTimeline)
 		{
 			EventType ev = null;
 			List<TimelineEvent> plays;
 			
 			plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
-			
-			foreach (EventType evType in eventsTimelines.Keys) {
-				TimelineObject tl;
 
-				tl = eventsTimelines [evType];
-				if (!tl.Visible)
-					continue;
-				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + tl.Height) {
-					ev = evType;
-					break;
-				}
-			}
-			
-			if ((ev != null || plays.Count > 0) && ShowMenuEvent != null) {
+			ev = eventsTimelines.GetKeyByValue (catTimeline);
+			if (ev != null && ShowMenuEvent != null) {
 				ShowMenuEvent (plays, ev, Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
@@ -305,8 +294,13 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			if (Selections.Count >= 1 && Selections.Last ().Drawable is PlayObject) {
-				ShowPlaysMenu (coords);
+			CategoryTimeline catTimeline = eventsTimelines.Values.Where (
+				                               t => t.Visible &&
+				                               coords.Y >= t.OffsetY &&
+				                               coords.Y < t.OffsetY + t.Height).FirstOrDefault (); 
+
+			if (catTimeline != null) {
+				ShowPlaysMenu (coords, catTimeline);
 			} else {
 				ShowTimersMenu (coords);
 			}
