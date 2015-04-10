@@ -10,6 +10,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Mono.Unix;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -17,18 +18,18 @@ namespace LongoMatch.Services
 
 	public class UpdatesNotifier
 	{
-		readonly Version actual;
-		Version update;
+		readonly Version currentVersion;
+		Version latestVersion;
 
 		const string UPDATE_INFO_URL="http://oneplay-cdn.fluendo.com/latest.json";
-		string temp_file;
+		string tempFile;
 		string downloadURL;
 
 		#region Constructors
 		public UpdatesNotifier()
 		{
-			actual = Assembly.GetExecutingAssembly().GetName().Version;
-			temp_file = Path.Combine(Config.HomeDir, "latest.json");
+			currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+			tempFile = Path.Combine(Config.HomeDir, "latest.json");
 
 			var thread = new Thread(new ThreadStart(CheckForUpdates));
 			thread.Start();
@@ -39,18 +40,19 @@ namespace LongoMatch.Services
 		void FetchNewVersion() {
 			var wb = new WebClient();
 			try {
-				wb.DownloadFile(UPDATE_INFO_URL,temp_file);
-				var fileStream = new FileStream(temp_file, FileMode.Open);
+				wb.DownloadFile(UPDATE_INFO_URL,tempFile);
+				var fileStream = new FileStream(tempFile, FileMode.Open);
 				var sr = new StreamReader (fileStream);
-				JObject latest = JsonConvert.DeserializeObject<JObject> (sr.ReadToEnd ());
+				JObject latestObject = JsonConvert.DeserializeObject<JObject> (sr.ReadToEnd ());
 				fileStream.Close ();
 
-				update = new Version (latest["version"].Value<string> ());
-				downloadURL = latest["url"].Value<string> ();
+				latestVersion = new Version (latestObject["version"].Value<string> ());
+				downloadURL = latestObject["url"].Value<string> ();
 			}
 			catch(Exception ex) {
-				Console.WriteLine("Error downloading version file:\n"+ex);
-				update = actual;
+				Log.Warning("Error processing version file: " + UPDATE_INFO_URL);
+				Log.Exception (ex);
+				latestVersion = currentVersion;
 			}
 		}
 
@@ -60,17 +62,17 @@ namespace LongoMatch.Services
 				return true;
 			}
 			catch {
-				update = actual;
+				latestVersion = currentVersion;
 				return false;
 			}
 		}
 
 		bool IsOutDated() {
-			if(update.Major > actual.Major)
+			if(latestVersion.Major > currentVersion.Major)
 				return true;
-			if(update.Minor > actual.Minor)
+			if(latestVersion.Minor > currentVersion.Minor)
 				return true;
-			if(update.Build > actual.Build)
+			if(latestVersion.Build > currentVersion.Build)
 				return true;
 			return false;
 		}
@@ -78,14 +80,16 @@ namespace LongoMatch.Services
 		void CheckForUpdates() {
 			if(ConectionExists())
 				FetchNewVersion();
-			if(update != null && IsOutDated()) {
+			Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}",
+				currentVersion, latestVersion);
+			if(IsOutDated()) {
 				Config.GUIToolkit.Invoke (delegate {
 					Config.GUIToolkit.InfoMessage (
 						string.Format (
 							Catalog.GetString("Version {0} is available!\n" +
 								"(You are using version {1})\n" +
 								"<a href=\"{2}\">Click here to get it.</a>"),
-							update, actual, downloadURL));
+							latestVersion, currentVersion, downloadURL));
 				});
 			}
 		}
