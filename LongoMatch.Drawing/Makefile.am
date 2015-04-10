@@ -7,29 +7,29 @@ LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Canvas.cs \
 	CanvasObjects/BenchObject.cs \
+	CanvasObjects/Blackboard/CounterObject.cs \
+	CanvasObjects/Blackboard/CrossObject.cs \
+	CanvasObjects/Blackboard/EllipseObject.cs \
+	CanvasObjects/Blackboard/LineObject.cs \
+	CanvasObjects/Blackboard/QuadrilateralObject.cs \
+	CanvasObjects/Blackboard/RectangleObject.cs \
+	CanvasObjects/Blackboard/TextObject.cs \
 	CanvasObjects/ButtonObject.cs \
 	CanvasObjects/CameraObject.cs \
 	CanvasObjects/CanvasObject.cs \
-	CanvasObjects/CounterObject.cs \
-	CanvasObjects/CrossObject.cs \
 	CanvasObjects/Dashboard/CardObject.cs \
 	CanvasObjects/Dashboard/CategoryObject.cs \
 	CanvasObjects/Dashboard/DashboardButtonObject.cs \
 	CanvasObjects/Dashboard/ScoreObject.cs \
 	CanvasObjects/Dashboard/TagObject.cs \
 	CanvasObjects/Dashboard/TimerObject.cs \
-	CanvasObjects/EllipseObject.cs \
 	CanvasObjects/FieldObject.cs \
 	CanvasObjects/LabelObject.cs \
-	CanvasObjects/LineObject.cs \
 	CanvasObjects/NeedleObject.cs \
 	CanvasObjects/PlayObject.cs \
 	CanvasObjects/PlayerObject.cs \
 	CanvasObjects/PlayersTaggerObject.cs \
 	CanvasObjects/PositionObject.cs \
-	CanvasObjects/QuadrilateralObject.cs \
-	CanvasObjects/RectangleObject.cs \
-	CanvasObjects/TextObject.cs \
 	CanvasObjects/TimeNodeObject.cs \
 	CanvasObjects/TimelineObject.cs \
 	Constants.cs \

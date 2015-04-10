@@ -16,40 +16,38 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class TextObject: CanvasDrawableObject<Text>, ICanvasSelectableObject
+	public class EllipseObject: CanvasDrawableObject<Ellipse>
 	{
-		public TextObject ()
+
+		public EllipseObject ()
 		{
 		}
 
-		public TextObject (Text text)
+		public EllipseObject (Ellipse ellipse)
 		{
-			Drawable = text;
+			Drawable = ellipse;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = 1;
-			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
-			tk.StrokeColor = Drawable.TextColor;
-			tk.FontSize = Drawable.TextSize;
-			tk.FontAlignment = FontAlignment.Center;
-			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
-			             Drawable.Value);
+			tk.LineWidth = Drawable.LineWidth;
+			tk.LineStyle = Drawable.Style;
+			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

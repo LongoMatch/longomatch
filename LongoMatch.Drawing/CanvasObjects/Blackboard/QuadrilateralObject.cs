@@ -16,38 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class CrossObject: CanvasDrawableObject<Cross>, ICanvasSelectableObject
+	public class QuadrilateralObject: CanvasDrawableObject<Quadrilateral>
 	{
-		public CrossObject ()
+		public QuadrilateralObject ()
 		{
 		}
 
-		public CrossObject (Cross cross)
+		public QuadrilateralObject (Quadrilateral quadrilateral)
 		{
-			Drawable = cross;
+			Drawable = quadrilateral;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawLine (Drawable.Start, Drawable.Stop);
-			tk.DrawLine (Drawable.StartI, Drawable.StopI);
-			DrawSelectionArea (tk);
+			tk.DrawArea (Drawable.TopLeft, Drawable.TopRight,
+				Drawable.BottomRight, Drawable.BottomLeft);
 			tk.End ();
 		}
 	}

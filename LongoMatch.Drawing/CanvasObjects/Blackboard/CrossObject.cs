@@ -17,28 +17,28 @@
 //
 using System;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class LineObject: CanvasDrawableObject<Line>, ICanvasSelectableObject
+	public class CrossObject: CanvasDrawableObject<Cross>
 	{
-		public LineObject ()
+		public CrossObject ()
 		{
 		}
 
-		public LineObject (Line line)
+		public CrossObject (Cross cross)
 		{
-			Drawable = line;
+			Drawable = cross;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
@@ -46,27 +46,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.LineWidth = Drawable.LineWidth;
 			tk.LineStyle = Drawable.Style;
 			tk.DrawLine (Drawable.Start, Drawable.Stop);
-			tk.LineStyle = LineStyle.Normal;
-			if (Drawable.Type == LineType.Arrow ||
-				Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Start, Drawable.Stop, 5 * Drawable.LineWidth / 2, 0.3, true);
-			}
-			if (Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Stop, Drawable.Start, 5 * Drawable.LineWidth / 2, 0.3, true);
-			}
-			if (Drawable.Type == LineType.Dot ||
-				Drawable.Type == LineType.DoubleDot) {
-				tk.DrawPoint (Drawable.Stop);
-			}
-			if (Drawable.Type == LineType.DoubleDot) {
-				tk.DrawPoint (Drawable.Start);
-			}
-			
-			if (Selected) {
-				DrawCornerSelection (tk, Drawable.Start);
-				DrawCornerSelection (tk, Drawable.Stop);
-				DrawSelectionArea (tk);
-			}
+			tk.DrawLine (Drawable.StartI, Drawable.StopI);
+			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}

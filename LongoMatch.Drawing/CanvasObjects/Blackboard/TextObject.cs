@@ -16,36 +16,40 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class RectangleObject: CanvasDrawableObject<Rectangle>, ICanvasSelectableObject
+	public class TextObject: CanvasDrawableObject<Text>
 	{
-		public RectangleObject ()
+		public TextObject ()
 		{
 		}
 
-		public RectangleObject (Rectangle rectangle)
+		public TextObject (Text text)
 		{
-			Drawable = rectangle;
+			Drawable = text;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
+			tk.LineWidth = 1;
 			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
+			tk.StrokeColor = Drawable.TextColor;
+			tk.FontSize = Drawable.TextSize;
+			tk.FontAlignment = FontAlignment.Center;
+			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
+				Drawable.Value);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

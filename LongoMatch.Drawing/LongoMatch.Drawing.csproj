@@ -29,6 +29,7 @@
     <Folder Include="CanvasObjects\" />
     <Folder Include="Widgets\" />
     <Folder Include="CanvasObjects\Dashboard\" />
+    <Folder Include="CanvasObjects\Blackboard\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.cs" />
@@ -44,14 +45,7 @@
     <Compile Include="Widgets\TimersTimeline.cs" />
     <Compile Include="Widgets\PositionTagger.cs" />
     <Compile Include="CanvasObjects\PositionObject.cs" />
-    <Compile Include="CanvasObjects\LineObject.cs" />
-    <Compile Include="CanvasObjects\CrossObject.cs" />
-    <Compile Include="CanvasObjects\RectangleObject.cs" />
-    <Compile Include="CanvasObjects\QuadrilateralObject.cs" />
     <Compile Include="Widgets\Blackboard.cs" />
-    <Compile Include="CanvasObjects\EllipseObject.cs" />
-    <Compile Include="CanvasObjects\TextObject.cs" />
-    <Compile Include="CanvasObjects\CounterObject.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="CanvasObjects\BenchObject.cs" />
     <Compile Include="CanvasObjects\FieldObject.cs" />
@@ -59,7 +53,6 @@
     <Compile Include="PlayslistCellRenderer.cs" />
     <Compile Include="Widgets\DashboardCanvas.cs" />
     <Compile Include="CanvasObjects\ButtonObject.cs" />
-    <Compile Include="CanvasObjects\LabelObject.cs" />
     <Compile Include="Widgets\TimelineLabels.cs" />
     <Compile Include="CanvasObjects\NeedleObject.cs" />
     <Compile Include="CanvasObjects\CameraObject.cs" />
@@ -74,6 +67,14 @@
     <Compile Include="CanvasObjects\Dashboard\ScoreObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\TagObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\TimerObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\CounterObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\CrossObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\EllipseObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\LineObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\QuadrilateralObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\RectangleObject.cs" />
+    <Compile Include="CanvasObjects\Blackboard\TextObject.cs" />
+    <Compile Include="CanvasObjects\LabelObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -16,38 +16,57 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class EllipseObject: CanvasDrawableObject<Ellipse>, ICanvasSelectableObject
+	public class LineObject: CanvasDrawableObject<Line>
 	{
-
-		public EllipseObject ()
+		public LineObject ()
 		{
 		}
 
-		public EllipseObject (Ellipse ellipse)
+		public LineObject (Line line)
 		{
-			Drawable = ellipse;
+			Drawable = line;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
 			tk.LineStyle = Drawable.Style;
-			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
-			DrawSelectionArea (tk);
+			tk.DrawLine (Drawable.Start, Drawable.Stop);
+			tk.LineStyle = LineStyle.Normal;
+			if (Drawable.Type == LineType.Arrow ||
+			    Drawable.Type == LineType.DoubleArrow) {
+				tk.DrawArrow (Drawable.Start, Drawable.Stop, 5 * Drawable.LineWidth / 2, 0.3, true);
+			}
+			if (Drawable.Type == LineType.DoubleArrow) {
+				tk.DrawArrow (Drawable.Stop, Drawable.Start, 5 * Drawable.LineWidth / 2, 0.3, true);
+			}
+			if (Drawable.Type == LineType.Dot ||
+			    Drawable.Type == LineType.DoubleDot) {
+				tk.DrawPoint (Drawable.Stop);
+			}
+			if (Drawable.Type == LineType.DoubleDot) {
+				tk.DrawPoint (Drawable.Start);
+			}
+			
+			if (Selected) {
+				DrawCornerSelection (tk, Drawable.Start);
+				DrawCornerSelection (tk, Drawable.Stop);
+				DrawSelectionArea (tk);
+			}
 			tk.End ();
 		}
 	}

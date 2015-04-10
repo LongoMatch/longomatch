@@ -16,43 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {
-	public class CounterObject: CanvasDrawableObject<Counter>, ICanvasSelectableObject
+	public class RectangleObject: CanvasDrawableObject<Rectangle>
 	{
-
-		public CounterObject ()
+		public RectangleObject ()
 		{
 		}
 
-		public CounterObject (Counter counter)
+		public RectangleObject (Rectangle rectangle)
 		{
-			Drawable = counter;
+			Drawable = rectangle;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Area darea;
-			
-			darea = Drawable.Area;
-			if (!UpdateDrawArea (tk, area, darea)) {
+			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
-			};
+			}
+			;
+
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
-			tk.DrawCircle (Drawable.Center, Drawable.Radius);
-			tk.StrokeColor = Drawable.TextColor;
-			tk.FontAlignment = FontAlignment.Center;
-			tk.FontSize = (int) Drawable.AxisX;
-			tk.DrawText (darea.Start, darea.Width, darea.Height,
-			             Drawable.Count.ToString ());
+			tk.LineStyle = Drawable.Style;
+			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}
