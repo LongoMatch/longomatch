@@ -16,13 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using LongoMatch.Core.Interfaces.Drawing;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
 	public class FieldObject: CanvasObject, ICanvasSelectableObject
 	{
@@ -112,7 +111,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 
 			/* Columns */
-			for (int col=0; col < formation.Length; col ++) {
+			for (int col = 0; col < formation.Length; col++) {
 				double colX, rowHeight;
 				
 				if (players.Count == index)
@@ -125,9 +124,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 				}
 				rowHeight = Height / formation [col];
 
-				for (int row=0; row < formation[col]; row ++) {
+				for (int row = 0; row < formation [col]; row++) {
 					double rowY;
-					PlayerObject po = players[index];
+					PlayerObject po = players [index];
 
 					if (team == TeamType.LOCAL) {
 						rowY = rowHeight * row + rowHeight / 2;
@@ -137,7 +136,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 					po.Position = new Point (colX, rowY);
 					po.Size = playerSize;
-					index ++;
+					index++;
 					if (players.Count == index)
 						break;
 				}

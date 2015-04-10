@@ -16,16 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
-using System.IO;
+using LongoMatch.Drawing.CanvasObjects.Teams;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -36,9 +34,10 @@ namespace LongoMatch.Drawing.Widgets
 		public event TeamSelectionChangedHandler TeamSelectionChangedEvent;
 		public event PlayersSubstitutionHandler PlayersSubstitutionEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
+
 		PlayersTaggerObject tagger;
 
-		public TeamTagger (IWidget widget): base (widget)
+		public TeamTagger (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
@@ -51,7 +50,7 @@ namespace LongoMatch.Drawing.Widgets
 			ObjectsCanMove = false;
 			AddObject (tagger);
 		}
-		
+
 		protected override void Dispose (bool disposing)
 		{
 			base.Dispose (disposing);
@@ -75,7 +74,7 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.Project = value;
 			}
 		}
-		
+
 		public bool Compact {
 			set {
 				tagger.Compact = value;
@@ -87,7 +86,7 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.CurrentTime = value;
 			}
 		}
-		
+
 		public bool SubstitutionMode {
 			set {
 				tagger.SubstitutionMode = value;
@@ -105,7 +104,7 @@ namespace LongoMatch.Drawing.Widgets
 				tagger.ShowTeamsButtons = value;
 			}
 		}
-		
+
 		public new MultiSelectionMode SelectionMode {
 			set {
 				tagger.SelectionMode = value;
@@ -117,11 +116,11 @@ namespace LongoMatch.Drawing.Widgets
 				return tagger.SelectedTeam;
 			}
 		}
-		
+
 		public void ResetSelection ()
 		{
 			tagger.ResetSelection ();
-		} 
+		}
 
 		public void Select (TeamType team)
 		{
@@ -132,7 +131,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tagger.Select (players, team);
 		}
-		
+
 		public void Select (Player p)
 		{
 			tagger.Select (p);
@@ -181,7 +180,7 @@ namespace LongoMatch.Drawing.Widgets
 				PlayersSelectionChangedEvent (players);
 			}
 		}
-		
+
 		void HandleTeamSelectionChangedEvent (TeamType team)
 		{
 			if (TeamSelectionChangedEvent != null) {

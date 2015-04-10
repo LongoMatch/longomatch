@@ -21,7 +21,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
 	public class PlayerObject: CanvasButtonObject, ICanvasSelectableObject
 	{
@@ -89,7 +89,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Point position = new Point (Position.X - Width / 2, Position.Y - Height / 2);
 
@@ -182,7 +182,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.FontSize = 18;
 			}
 			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
-			             Player.Number.ToString ());
+				Player.Number.ToString ());
 			
 			if (Active) {
 				Color c = Color.Copy ();

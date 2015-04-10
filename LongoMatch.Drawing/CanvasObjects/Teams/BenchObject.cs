@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Common;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
 	public class BenchObject: CanvasObject, ICanvasSelectableObject
 	{
@@ -39,7 +39,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public Point Position {
 			get;
 			set;
@@ -64,7 +64,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public void Update ()
 		{
 			if (BenchPlayers == null) {
@@ -108,7 +108,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.End ();
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Selection selection = null;
 

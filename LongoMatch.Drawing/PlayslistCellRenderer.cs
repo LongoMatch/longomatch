@@ -16,14 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
+using System.Collections.Generic;
+using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
-using System.IO;
-using System.Collections.Generic;
-using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Drawing.CanvasObjects.Teams;
 
 namespace LongoMatch.Drawing
 {
