@@ -87,8 +87,8 @@ namespace LongoMatch.Services
 
 		private void ConnectSignals ()
 		{
-			Config.EventsBroker.NewTagEvent += OnNewTag;
-			Config.EventsBroker.NewTimelineEventEvent += HandleNewPlay;
+			Config.EventsBroker.NewEventEvent += OnNewTag;
+			Config.EventsBroker.NewDashboardEventEvent += HandleNewPlay;
 			Config.EventsBroker.EventsDeletedEvent += OnPlaysDeleted;
 			Config.EventsBroker.MoveToEventTypeEvent += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;

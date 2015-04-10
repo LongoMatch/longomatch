@@ -29,8 +29,8 @@ namespace LongoMatch.Core.Common
 	public class EventsBroker
 	{
 	
-		public event NewEventHandler NewTagEvent;
-		public event NewTimelineEventHandler NewTimelineEventEvent;
+		public event NewEventHandler NewEventEvent;
+		public event NewTimelineEventHandler NewDashboardEventEvent;
 		public event EventCreatedHandler EventCreatedEvent;
 		public event DeleteEventsHandler EventsDeletedEvent;
 		public event LoadEventHandler LoadEventEvent;
@@ -40,7 +40,6 @@ namespace LongoMatch.Core.Common
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
-		public event TagEventHandler TagEventEvent;
 		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
@@ -95,18 +94,18 @@ namespace LongoMatch.Core.Common
 		public event SeekEventHandler SeekEvent;
 		public event TogglePlayEventHandler TogglePlayEvent;
 
-		public void EmitNewTag (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
-		                        List<Tag> tags = null, Time start = null, Time stop = null,
-		                        Time eventTime = null, Score score = null, PenaltyCard card = null)
+		public void EmitNewEvent (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
+		                          List<Tag> tags = null, Time start = null, Time stop = null,
+		                          Time eventTime = null, Score score = null, PenaltyCard card = null)
 		{
-			if (NewTagEvent != null)
-				NewTagEvent (eventType, players, team, tags, start, stop, eventTime, score, card);
+			if (NewEventEvent != null)
+				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card);
 		}
 
 		public void EmitNewDashboardEvent (TimelineEvent evt)
 		{
-			if (NewTimelineEventEvent != null)
-				NewTimelineEventEvent (evt);
+			if (NewDashboardEventEvent != null)
+				NewDashboardEventEvent (evt);
 		}
 
 		public void EmitEventsDeleted (List<TimelineEvent> events)
@@ -175,12 +174,6 @@ namespace LongoMatch.Core.Common
 		{
 			if (MoveToEventTypeEvent != null)
 				MoveToEventTypeEvent (evnt, eventType);
-		}
-
-		public void EmitTagEvent (TimelineEvent evt)
-		{
-			if (TagEventEvent != null)
-				TagEventEvent (evt);
 		}
 
 		public void EmitDuplicateEvent (List<TimelineEvent> events)

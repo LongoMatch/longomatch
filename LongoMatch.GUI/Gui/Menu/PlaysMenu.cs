@@ -227,7 +227,7 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNewPlayActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitNewTag (eventType,
+			Config.EventsBroker.EmitNewEvent (eventType,
 				eventTime: time,
 				start: time - new Time { TotalSeconds = 10 },
 				stop: time + new Time { TotalSeconds = 10 });
