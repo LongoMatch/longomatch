@@ -107,6 +107,7 @@ namespace LongoMatch
 			Copyright = Constants.COPYRIGHT;
 			License = Constants.LICENSE;
 			SoftwareName = Constants.SOFTWARE_NAME;
+			LatestVersionURL = Constants.LATEST_VERSION_URL;
 		}
 
 		public static void Save ()
@@ -273,6 +274,11 @@ namespace LongoMatch
 		}
 
 		static public bool SupportsFullHD {
+			get;
+			set;
+		}
+
+		static public string LatestVersionURL {
 			get;
 			set;
 		}

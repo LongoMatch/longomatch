@@ -21,7 +21,6 @@ namespace LongoMatch.Services
 		readonly Version currentVersion;
 		Version latestVersion;
 
-		const string UPDATE_INFO_URL="http://oneplay-cdn.fluendo.com/latest.json";
 		string tempFile;
 		string downloadURL;
 
@@ -40,30 +39,21 @@ namespace LongoMatch.Services
 		void FetchNewVersion() {
 			var wb = new WebClient();
 			try {
-				wb.DownloadFile(UPDATE_INFO_URL,tempFile);
+				wb.DownloadFile(Config.LatestVersionURL,tempFile);
 				var fileStream = new FileStream(tempFile, FileMode.Open);
 				var sr = new StreamReader (fileStream);
 				JObject latestObject = JsonConvert.DeserializeObject<JObject> (sr.ReadToEnd ());
 				fileStream.Close ();
+				Log.InformationFormat ("UpdatesNotifier: Got latest version from {0}",
+					Config.LatestVersionURL);
 
 				latestVersion = new Version (latestObject["version"].Value<string> ());
 				downloadURL = latestObject["url"].Value<string> ();
 			}
 			catch(Exception ex) {
-				Log.Warning("Error processing version file: " + UPDATE_INFO_URL);
+				Log.Warning("Error processing version file: " + Config.LatestVersionURL);
 				Log.Exception (ex);
 				latestVersion = currentVersion;
-			}
-		}
-
-		bool ConectionExists() {
-			try {
-				Dns.GetHostEntry("oneplay-cdn.fluendo.com");
-				return true;
-			}
-			catch {
-				latestVersion = currentVersion;
-				return false;
 			}
 		}
 
@@ -78,8 +68,7 @@ namespace LongoMatch.Services
 		}
 
 		void CheckForUpdates() {
-			if(ConectionExists())
-				FetchNewVersion();
+			FetchNewVersion();
 			Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}",
 				currentVersion, latestVersion);
 			if(IsOutDated()) {
