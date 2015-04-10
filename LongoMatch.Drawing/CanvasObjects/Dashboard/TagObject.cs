@@ -16,24 +16,22 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class TagObject: DashboardButtonObject
 	{
 		static Image iconImage;
 
-		public TagObject (TagButton tagger): base (tagger)
+		public TagObject (TagButton tagger) : base (tagger)
 		{
 			TagButton = tagger;
 			Toggle = true;
 			if (iconImage == null) {
 				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
-				                                               StyleConf.ButtonTagIcon));
+					StyleConf.ButtonTagIcon));
 			}
 		}
 

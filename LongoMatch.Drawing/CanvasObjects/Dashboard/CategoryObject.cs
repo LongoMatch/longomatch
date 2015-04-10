@@ -24,7 +24,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class CategoryObject: TimedTaggerObject
 	{
@@ -48,7 +48,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		Rectangle editRect, cancelRect, applyRect;
 		double catWidth, heightPerRow;
 
-		public CategoryObject (AnalysisEventButton category): base (category)
+		public CategoryObject (AnalysisEventButton category) : base (category)
 		{
 			Button = category;
 			rects = new Dictionary <Rectangle, object> ();
@@ -59,23 +59,23 @@ namespace LongoMatch.Drawing.CanvasObjects
 			applyRect = new Rectangle (new Point (0, 0), 0, 0);
 			if (iconImage == null) {
 				iconImage = new Image (Path.Combine (Config.ImagesDir,
-				                                     StyleConf.ButtonEventIcon));
+					StyleConf.ButtonEventIcon));
 			}
 			if (recImage == null) {
 				recImage = new Image (Path.Combine (Config.IconsDir,
-				                                    StyleConf.RecordButton));
+					StyleConf.RecordButton));
 			}
 			if (editImage == null) {
 				editImage = new Image (Path.Combine (Config.IconsDir,
-				                                     StyleConf.EditButton));
+					StyleConf.EditButton));
 			}
 			if (cancelImage == null) {
 				cancelImage = new Image (Path.Combine (Config.IconsDir,
-				                                       StyleConf.CancelButton));
+					StyleConf.CancelButton));
 			}
 			if (applyImage == null) {
 				applyImage = new Image (Path.Combine (Config.IconsDir,
-				                                      StyleConf.ApplyButton));
+					StyleConf.ApplyButton));
 			}
 			MinWidth = 100;
 			MinHeight = HeaderHeight * 2;
@@ -110,8 +110,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		bool ShowApplyButton {
 			get {
 				return ShowTags && tagsByGroup.Count > 1
-					&& Button.TagMode == TagMode.Predefined
-					&& Mode != TagMode.Edit;
+				&& Button.TagMode == TagMode.Predefined
+				&& Mode != TagMode.Edit;
 			}
 		}
 
@@ -169,7 +169,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		override protected void Clear ()
 		{
-			base.Clear();
+			base.Clear ();
 			emitEvent = false;
 			cancelClicked = false;
 			SelectedTags.Clear ();
@@ -321,7 +321,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.FontWeight = FontWeight.Light;
 
 			/* Draw tags */
-			for (int i=0; i < tags.Count; i++) {
+			for (int i = 0; i < tags.Count; i++) {
 				Point pos;
 				int col;
 				Tag tag;
@@ -329,7 +329,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				row = i / tagsPerRow;
 				col = i % tagsPerRow;
 				pos = new Point (start.X + col * rowwidth,
-				                 start.Y + yptr + row * heightPerRow);
+					start.Y + yptr + row * heightPerRow);
 
 				tk.StrokeColor = Button.DarkColor;
 				tk.LineWidth = 1;
@@ -420,7 +420,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
 			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
-			                 Position.Y + Height - height);
+				Position.Y + Height - height);
 			tk.LineWidth = 0;
 			tk.FillColor = new Color (c.R, c.G, c.B, 200);
 			tk.StrokeColor = BackgroundColor;
@@ -449,7 +449,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					tk.DrawRectangle (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height);
 					tk.StrokeColor = BackgroundColor;
 					tk.DrawText (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height,
-					             (obj as Tag).Value);
+						(obj as Tag).Value);
 				}
 			}
 		}
@@ -462,15 +462,15 @@ namespace LongoMatch.Drawing.CanvasObjects
 					tk.FontWeight = FontWeight.Normal;
 					tk.StrokeColor = BackgroundColor;
 					tk.DrawText (new Point (Position.X + HeaderTextOffset, Position.Y),
-					             HeaderTextWidth, HeaderHeight,
-					             (CurrentTime - Start).ToSecondsString ());
+						HeaderTextWidth, HeaderHeight,
+						(CurrentTime - Start).ToSecondsString ());
 				} else {
 					tk.FontSize = 24;
 					tk.FontWeight = FontWeight.Bold;
 					tk.StrokeColor = BackgroundColor;
 					tk.DrawText (new Point (Position.X, Position.Y + HeaderHeight),
-					             Width, Height - HeaderHeight,
-					             (CurrentTime - Start).ToSecondsString ());
+						Width, Height - HeaderHeight,
+						(CurrentTime - Start).ToSecondsString ());
 				}
 			}
 		}
@@ -486,7 +486,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			
 			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
-			                 Position.Y);
+				Position.Y);
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
 			tk.FillColor = Config.Style.PaletteBackgroundDark;
@@ -511,7 +511,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 			
 			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
-			                 Position.Y);
+				Position.Y);
 			bpos = new Point (pos.X, pos.Y + 5);
 			
 			width = StyleConf.ButtonRecWidth;
@@ -556,7 +556,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 						tk.FillColor = TextColor;
 					}
 					tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-					              Icon.Width, Icon.Height, Icon, false, true);
+						Icon.Width, Icon.Height, Icon, false, true);
 				}
 			}
 		}
@@ -575,7 +575,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 			tk.Begin ();
 			tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
-			                      new Point (1, 1));
+				new Point (1, 1));
 			tk.FontWeight = FontWeight.Bold;
 
 			/* Draw Rectangle */

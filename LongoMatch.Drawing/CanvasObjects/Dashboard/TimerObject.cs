@@ -19,21 +19,21 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class TimerObject: DashboardButtonObject
 	{
 		Time currentTime;
 		static Image iconImage;
 
-		public TimerObject (TimerButton timer): base (timer)
+		public TimerObject (TimerButton timer) : base (timer)
 		{
 			Button = timer;
 			Toggle = true;
 			CurrentTime = new Time (0);
 			if (iconImage == null) {
 				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
-				                                               StyleConf.ButtonTimerIcon));
+					StyleConf.ButtonTimerIcon));
 			}
 			MinWidth = StyleConf.ButtonMinWidth;
 			MinHeight = iconImage.Height + StyleConf.ButtonTimerFontSize;
@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 					}
 				}
 				if (value != null && currentTime != null &&
-					currentTime.TotalSeconds != value.TotalSeconds) {
+				    currentTime.TotalSeconds != value.TotalSeconds) {
 					update = true;
 				}
 				currentTime = value;
@@ -135,13 +135,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 				tk.FontSize = StyleConf.ButtonHeaderFontSize;
 				tk.FontAlignment = FontAlignment.Left;
 				tk.DrawText (new Point (Position.X + TextHeaderX, Position.Y),
-				             Button.Width - TextHeaderX, iconImage.Height, Button.Timer.Name);
+					Button.Width - TextHeaderX, iconImage.Height, Button.Timer.Name);
 				tk.FontWeight = FontWeight.Bold;
 				tk.FontSize = StyleConf.ButtonTimerFontSize;
 				tk.FontAlignment = FontAlignment.Center;
 				tk.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
-				             Button.Width, Button.Height - iconImage.Height,
-				             PartialTime.ToSecondsString (), false, true);
+					Button.Width, Button.Height - iconImage.Height,
+					PartialTime.ToSecondsString (), false, true);
 			} else {
 				Text = Button.Timer.Name;
 				DrawText (tk);
@@ -150,7 +150,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			
 			if (TeamImage != null) {
 				tk.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
-				              iconImage.Height, TeamImage, true);
+					iconImage.Height, TeamImage, true);
 			}
 			tk.End ();
 		}

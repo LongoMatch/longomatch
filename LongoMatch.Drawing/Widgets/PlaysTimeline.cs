@@ -43,7 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		Dictionary<TimelineObject, object> timelineToFilter;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
 
-		public PlaysTimeline (IWidget widget): base(widget)
+		public PlaysTimeline (IWidget widget) : base (widget)
 		{
 			eventsTimelines = new Dictionary<EventType, CategoryTimeline> ();
 			timelineToFilter = new Dictionary<TimelineObject, object> ();
@@ -86,7 +86,7 @@ namespace LongoMatch.Drawing.Widgets
 					tl.CurrentTime = value;
 				}
 				if (currentTime < value) {
-					start = Utils.TimeToPos (currentTime,SecondsPerPixel);
+					start = Utils.TimeToPos (currentTime, SecondsPerPixel);
 					stop = Utils.TimeToPos (value, SecondsPerPixel);
 				} else {
 					start = Utils.TimeToPos (value, SecondsPerPixel);
@@ -187,23 +187,23 @@ namespace LongoMatch.Drawing.Widgets
 
 			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList (),
 				true, NodeDraggingMode.All, false, duration,
-			                        i * StyleConf.TimelineCategoryHeight,
-			                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+				i * StyleConf.TimelineCategoryHeight,
+				Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
 			PeriodsTimeline = tl as TimerTimeline;
 			i++;
 
 			foreach (Timer t in project.Timers) {
 				tl = new TimerTimeline (new List<Timer> { t }, false, NodeDraggingMode.All, false, duration,
-				                        i * StyleConf.TimelineCategoryHeight,
-				                        Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+					i * StyleConf.TimelineCategoryHeight,
+					Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
 			}
 			                        
 			foreach (EventType type in project.EventTypes) {
 				tl = new CategoryTimeline (project, project.EventsByType (type), duration,
-				                           i * StyleConf.TimelineCategoryHeight,
-				                           Utils.ColorForRow (i), playsFilter);
+					i * StyleConf.TimelineCategoryHeight,
+					Utils.ColorForRow (i), playsFilter);
 				AddTimeline (tl, type);
 				i++;
 			}
@@ -230,7 +230,7 @@ namespace LongoMatch.Drawing.Widgets
 		void ShowTimersMenu (Point coords)
 		{
 			if (coords.Y >= PeriodsTimeline.OffsetY &&
-				coords.Y < PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
+			    coords.Y < PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
 				Timer t = Selections.Select (p => (p.Drawable as TimerTimeNodeObject).Timer).FirstOrDefault ();
 				if (ShowTimerMenuEvent != null) {
 					ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));

@@ -16,16 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -44,7 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		FitMode fitMode;
 		bool modeChanged;
 
-		public DashboardCanvas (IWidget widget): base (widget)
+		public DashboardCanvas (IWidget widget) : base (widget)
 		{
 			Accuracy = 5;
 			TagMode = TagMode.Edit;
@@ -300,8 +299,8 @@ namespace LongoMatch.Drawing.Widgets
 				translation = new Point (0, 0);
 			} else if (FitMode == FitMode.Fit) {
 				Image.ScaleFactor (templateWidth, templateHeight,
-				                   (int)widget.Width, (int)widget.Height,
-				                   out scaleX, out scaleY, out translation);
+					(int)widget.Width, (int)widget.Height,
+					out scaleX, out scaleY, out translation);
 			}
 			if (modeChanged) {
 				modeChanged = false;

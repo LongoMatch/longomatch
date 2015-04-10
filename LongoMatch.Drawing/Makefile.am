@@ -10,11 +10,14 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/ButtonObject.cs \
 	CanvasObjects/CameraObject.cs \
 	CanvasObjects/CanvasObject.cs \
-	CanvasObjects/CardObject.cs \
-	CanvasObjects/CategoryObject.cs \
 	CanvasObjects/CounterObject.cs \
 	CanvasObjects/CrossObject.cs \
-	CanvasObjects/DashboardButtonObject.cs \
+	CanvasObjects/Dashboard/CardObject.cs \
+	CanvasObjects/Dashboard/CategoryObject.cs \
+	CanvasObjects/Dashboard/DashboardButtonObject.cs \
+	CanvasObjects/Dashboard/ScoreObject.cs \
+	CanvasObjects/Dashboard/TagObject.cs \
+	CanvasObjects/Dashboard/TimerObject.cs \
 	CanvasObjects/EllipseObject.cs \
 	CanvasObjects/FieldObject.cs \
 	CanvasObjects/LabelObject.cs \
@@ -26,12 +29,9 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/PositionObject.cs \
 	CanvasObjects/QuadrilateralObject.cs \
 	CanvasObjects/RectangleObject.cs \
-	CanvasObjects/ScoreObject.cs \
-	CanvasObjects/TagObject.cs \
 	CanvasObjects/TextObject.cs \
 	CanvasObjects/TimeNodeObject.cs \
 	CanvasObjects/TimelineObject.cs \
-	CanvasObjects/TimerObject.cs \
 	Constants.cs \
 	PlayslistCellRenderer.cs \
 	Utils.cs \

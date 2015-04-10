@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class DashboardButtonObject: ButtonObject, ICanvasSelectableObject
 	{
@@ -121,6 +119,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get {
 				return 1;
 			}
+		}
+
+		public virtual Point GetLinkAnchor (List<Tag> tag)
+		{
+			return new Point (Position.X + 5, Position.Y + 5);
 		}
 	}
 

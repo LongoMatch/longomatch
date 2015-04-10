@@ -19,18 +19,18 @@ using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Drawing.CanvasObjects
+namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class ScoreObject: TimedTaggerObject
 	{
 		static Image iconImage;
 
-		public ScoreObject (ScoreButton score): base (score)
+		public ScoreObject (ScoreButton score) : base (score)
 		{
 			Button = score;
 			if (iconImage == null) {
 				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
-				                                               StyleConf.ButtonScoreIcon));
+					StyleConf.ButtonScoreIcon));
 			}
 		}
 
