@@ -103,7 +103,7 @@ namespace LongoMatch.Core.Common
 				NewTagEvent (eventType, players, team, tags, start, stop, eventTime, score, card);
 		}
 
-		public void EmitNewEvent (TimelineEvent evt)
+		public void EmitNewDashboardEvent (TimelineEvent evt)
 		{
 			if (NewTimelineEventEvent != null)
 				NewTimelineEventEvent (evt);
