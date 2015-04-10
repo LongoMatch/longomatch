@@ -42,7 +42,7 @@ namespace LongoMatch.Services
 		static PlaylistManager plManager;
 		static ToolsManager toolsManager;
 		static TemplatesService ts;
-				
+		static UpdatesNotifier updatesNotifier;
 
 		public static IProjectsImporter ProjectsImporter;
 		#if OSTYPE_WINDOWS
@@ -111,6 +111,9 @@ namespace LongoMatch.Services
 
 			/* Start playlists manager */
 			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
+
+			/* Start the Update Notifier */
+			updatesNotifier = new UpdatesNotifier ();
 		}
 
 		public static void CheckDirs ()
