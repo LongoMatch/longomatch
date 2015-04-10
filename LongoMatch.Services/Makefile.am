@@ -15,6 +15,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	ProjectsManager.cs \
 	RenderingJobsManager.cs \
 	TemplatesService.cs \
-	ToolsManager.cs
+	ToolsManager.cs \
+	UpdatesNotifier.cs
 
 include $(top_srcdir)/build/build.mk

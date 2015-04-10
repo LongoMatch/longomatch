@@ -118,7 +118,8 @@ REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_GLIB) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_ADDINS) \
-                     $(LINK_LONGOMATCH_DRAWING)
+                     $(LINK_LONGOMATCH_DRAWING) \
+                     $(LINK_JSON)
 
 REF_DEP_LONGOMATCH = \
                      $(LINK_MONO_POSIX) \
