@@ -154,6 +154,8 @@ namespace LongoMatch.Gui.Panel
 		void LoadTeams (Project project)
 		{
 			List<Team> teams;
+			bool hasLocalTeam = false;
+			bool hasAwayTeam = false;
 			
 			drawingarea.HeightRequest = 200;
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
@@ -162,19 +164,35 @@ namespace LongoMatch.Gui.Panel
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			teams = Config.TeamTemplatesProvider.Templates;
+
+			// Fill the combobox with project values or the templates ones
 			if (project != null) {
-				hometeamscombobox.Load (new List<Team> { project.LocalTeamTemplate });
+				if (project.LocalTeamTemplate != null)
+					hasLocalTeam = true;
+				if (project.VisitorTeamTemplate != null)
+					hasAwayTeam = true;
+			}
+
+			// Update the combobox
+			if (hasAwayTeam) {
 				awayteamscombobox.Load (new List<Team> { project.VisitorTeamTemplate });
 			} else {
-				hometeamscombobox.Load (teams);
-				hometeamscombobox.Changed += (sender, e) => {
-					LoadTemplate (hometeamscombobox.ActiveTeam, TeamType.LOCAL, false);
-				};
 				awayteamscombobox.Load (teams);
 				awayteamscombobox.Changed += (sender, e) => {
 					LoadTemplate (awayteamscombobox.ActiveTeam, TeamType.VISITOR, false);
 				};
 			}
+
+			if (hasLocalTeam) {
+				hometeamscombobox.Load (new List<Team> { project.LocalTeamTemplate });
+			} else {
+				hometeamscombobox.Load (teams);
+				hometeamscombobox.Changed += (sender, e) => {
+					LoadTemplate (hometeamscombobox.ActiveTeam, TeamType.LOCAL, false);
+				};
+
+			}
+
 			hometeamscombobox.Active = 0;
 			awayteamscombobox.Active = 0;
 		}
@@ -203,13 +221,27 @@ namespace LongoMatch.Gui.Panel
 			datepicker1.Date = project.Description.MatchDate;
 			desctextview.Buffer.Clear ();
 			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
-			hometeamscombobox.Sensitive = false;
-			awayteamscombobox.Sensitive = false;
+			// In case the project does have a team, do not allow a modification
+			// otherwise set the loaded template
+			if (project.LocalTeamTemplate != null) {
+				hometeamscombobox.Sensitive = false;
+				LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
+			} else {
+				project.LocalTeamTemplate = hometemplate;
+			}
+
+			if (project.VisitorTeamTemplate != null) {
+				awayteamscombobox.Sensitive = false;
+				LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
+			} else {
+				project.VisitorTeamTemplate = awaytemplate;
+			}
+
+			// FIXME In case the project provides a dashboard, use it, otherwise, enable the combobox
+			// we can not set the dashboard to null otherwise a lot of segv happen
 			tagscombobox.Visible = false;
 			analysislabel.Visible = false;
 			analysisTemplate = project.Dashboard;
-			LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
-			LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
 			mediafilesetselection1.Visible = true;
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
