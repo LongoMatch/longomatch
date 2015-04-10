@@ -148,3 +148,4 @@ LongoMatch.Services/ProjectsManager.cs
 LongoMatch.Services/RenderingJobsManager.cs
 LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
+LongoMatch.Services/UpdatesNotifier.cs
