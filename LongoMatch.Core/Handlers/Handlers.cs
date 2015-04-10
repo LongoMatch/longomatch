@@ -37,10 +37,10 @@ namespace LongoMatch.Core.Handlers
 	public delegate void EventCreatedHandler (TimelineEvent evt);
 	/* A new play needs to be created for a specific category at the current play time */
 	public delegate void NewEventHandler (EventType eventType,List<Player> players,TeamType team,
-	                                      List<Tag> tags,Time start,Time stop,Time EventTime,
-	                                      Score score,PenaltyCard card);
-	/* Add a new play to the current project */
-	public delegate void NewTimelineEventHandler (TimelineEvent evt);
+											List<Tag> tags,Time start,Time stop,Time EventTime,
+											Score score,PenaltyCard card,DashboardButton btn);
+	/* Add a new play to the current project from Dashboard */
+	public delegate void NewDashboardEventHandler (TimelineEvent evt,DashboardButton btn);
 	/* An event was edited */
 	public delegate void TimeNodeChangedHandler (TimeNode tNode,Time time);
 	public delegate void TimerNodeAddedHandler (Timer timer,TimeNode tn);

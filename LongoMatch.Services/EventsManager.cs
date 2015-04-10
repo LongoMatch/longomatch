@@ -291,7 +291,7 @@ namespace LongoMatch.Services
 		}
 
 		public void OnNewTag (EventType evType, List<Player> players, TeamType team, List<Tag> tags,
-		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
+		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
 			if (player == null || openedProject == null)
 				return;
@@ -318,7 +318,7 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		public void HandleNewPlay (TimelineEvent play)
+		public void HandleNewPlay (TimelineEvent play, DashboardButton btn)
 		{
 			if (openedProject == null)
 				return;

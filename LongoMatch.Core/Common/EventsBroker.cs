@@ -30,7 +30,7 @@ namespace LongoMatch.Core.Common
 	{
 	
 		public event NewEventHandler NewEventEvent;
-		public event NewTimelineEventHandler NewDashboardEventEvent;
+		public event NewDashboardEventHandler NewDashboardEventEvent;
 		public event EventCreatedHandler EventCreatedEvent;
 		public event DeleteEventsHandler EventsDeletedEvent;
 		public event LoadEventHandler LoadEventEvent;
@@ -99,13 +99,13 @@ namespace LongoMatch.Core.Common
 		                          Time eventTime = null, Score score = null, PenaltyCard card = null)
 		{
 			if (NewEventEvent != null)
-				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card);
+				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card, null);
 		}
 
-		public void EmitNewDashboardEvent (TimelineEvent evt)
+		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn)
 		{
 			if (NewDashboardEventEvent != null)
-				NewDashboardEventEvent (evt);
+				NewDashboardEventEvent (evt, btn);
 		}
 
 		public void EmitEventsDeleted (List<TimelineEvent> events)

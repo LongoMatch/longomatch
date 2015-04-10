@@ -334,7 +334,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		void HandleNewTagEvent (EventType eventType, List<Player> players, TeamType team, List<Tag> tags,
-		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card)
+		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
 			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
 			play.Team = teamtagger.SelectedTeam;
@@ -342,7 +342,7 @@ namespace LongoMatch.Gui.Component
 			play.Tags = tags ?? new List<Tag> ();
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
-			Config.EventsBroker.EmitNewDashboardEvent (play);
+			Config.EventsBroker.EmitNewDashboardEvent (play, btn);
 		}
 
 		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,
