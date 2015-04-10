@@ -209,6 +209,7 @@ namespace LongoMatch.Gui.Component
 				file = fileSet.FirstOrDefault ();
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
+				periodsDict = new Dictionary <Period, Period> ();
 				// If no periods are provided create from dashboard
 				if (project.Periods == null || project.Periods.Count == 0) {
 					periods = new List<Period> ();
@@ -222,7 +223,6 @@ namespace LongoMatch.Gui.Component
 					}
 					value.Periods = periods;
 				} else {
-					periodsDict = new Dictionary <Period, Period> ();
 					foreach (Period p in project.Periods) {
 						Period newp = new Period { Name = p.Name };
 						newp.Nodes.Add (p.PeriodNode);
