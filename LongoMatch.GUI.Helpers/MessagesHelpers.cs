@@ -21,6 +21,7 @@ using System;
 using Gtk;
 using Dialog = Gtk.Dialog;
 using Mono.Unix;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -79,6 +80,23 @@ namespace LongoMatch.Gui.Helpers
 				                   ButtonsType.Ok,
 				                   errorMessage);
 			md.Icon = Misc.LoadIcon ("longomatch", Gtk.IconSize.Dialog, 0);
+			try {
+				var vbox = md.MessageDialogGetMessageArea ();
+				var label = (Label)vbox.Children [0];
+
+				label.SetLinkHandler (url => {
+					try {
+						System.Diagnostics.Process.Start (url);
+					} catch (Exception ex) {
+						Log.WarningFormat ("Could not spawn process for url {0}\n{1}",
+							url, ex);
+					}
+				});
+			} catch (Exception ex) {
+				Log.WarningFormat ("Could not set link handler for Message Dialog\n{0}",
+					ex);
+			}
+
 			ret = md.Run ();
 			md.Destroy ();
 			return ret;

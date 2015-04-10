@@ -28,12 +28,22 @@ namespace LongoMatch
 		[DllImport ("libgtk-2.0.dll") /* willfully unmapped */]
 		static extern void gtk_menu_item_set_label (IntPtr menu, IntPtr label);
 
+		[DllImport ("libgtk-2.0.dll") /* willfully unmapped */]
+		static extern IntPtr gtk_message_dialog_get_message_area (IntPtr dialog);
+
 		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_gtk_glue_gdk_event_button_set_button (IntPtr evt, uint button);
 
 		public static void SetLabel (this MenuItem menu, string label)
 		{
 			gtk_menu_item_set_label (menu.Handle, GLib.Marshaller.StringToFilenamePtr (label));
+		}
+
+		public static VBox MessageDialogGetMessageArea (this MessageDialog dialog)
+		{
+			IntPtr handle = gtk_message_dialog_get_message_area (dialog.Handle);
+
+			return new VBox (handle);
 		}
 
 
