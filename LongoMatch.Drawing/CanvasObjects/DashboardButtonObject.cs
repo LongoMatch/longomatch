@@ -25,43 +25,43 @@ using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class TaggerObject: ButtonObject, ICanvasSelectableObject
+	public class DashboardButtonObject: ButtonObject, ICanvasSelectableObject
 	{
 
-		public TaggerObject (DashboardButton tagger)
+		public DashboardButtonObject (DashboardButton tagger)
 		{
-			Tagger = tagger;
+			Button = tagger;
 		}
 
-		public DashboardButton Tagger {
+		public DashboardButton Button {
 			get;
 			set;
 		}
 
 		public override Point Position {
 			get {
-				return Tagger.Position;
+				return Button.Position;
 			}
 			set {
-				Tagger.Position = value;
+				Button.Position = value;
 			}
 		}
 
 		public override double Width {
 			get {
-				return Tagger.Width;
+				return Button.Width;
 			}
 			set {
-				Tagger.Width = (int)value;
+				Button.Width = (int)value;
 			}
 		}
 
 		public override double Height {
 			get {
-				return Tagger.Height;
+				return Button.Height;
 			}
 			set {
-				Tagger.Height = (int)value;
+				Button.Height = (int)value;
 			}
 		}
 
@@ -72,37 +72,37 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override Color BackgroundColor {
 			get {
-				return Tagger.BackgroundColor;
+				return Button.BackgroundColor;
 			}
 		}
 
 		public override Color BackgroundColorActive {
 			get {
-				return Tagger.DarkColor;
+				return Button.DarkColor;
 			}
 		}
 
 		public override Color BorderColor {
 			get {
-				return Tagger.BackgroundColor;
+				return Button.BackgroundColor;
 			}
 		}
 
 		public override Color TextColor {
 			get {
-				return Tagger.TextColor;
+				return Button.TextColor;
 			}
 		}
 
 		public override Image BackgroundImage {
 			get {
-				return Tagger.BackgroundImage;
+				return Button.BackgroundImage;
 			}
 		}
 
 		public override Image BackgroundImageActive {
 			get {
-				return Tagger.BackgroundImage;
+				return Button.BackgroundImage;
 			}
 		}
 
@@ -124,11 +124,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 		}
 	}
 
-	public class TimedTaggerObject: TaggerObject
+	public class TimedTaggerObject: DashboardButtonObject
 	{
 		Time currentTime;
 
-		public TimedTaggerObject (TimedDashboardButton button): base (button)
+		public TimedTaggerObject (TimedDashboardButton button) : base (button)
 		{
 			TimedButton = button;
 			currentTime = new Time (0);

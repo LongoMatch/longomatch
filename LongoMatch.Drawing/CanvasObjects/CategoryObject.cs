@@ -103,7 +103,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public override Color BackgroundColor {
 			get {
-				return Tagger.BackgroundColor;
+				return Button.BackgroundColor;
 			}
 		}
 
@@ -288,7 +288,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public override void ClickReleased ()
 		{
 			if (editClicked && !moved && EditButtonTagsEvent != null) {
-				EditButtonTagsEvent (Tagger);
+				EditButtonTagsEvent (Button);
 			} else if (cancelClicked) {
 				Clear ();
 			} else if (emitEvent) {

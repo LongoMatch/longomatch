@@ -101,7 +101,7 @@ namespace LongoMatch.Drawing.Widgets
 				modeChanged = true;
 				tagMode = value;
 				ObjectsCanMove = tagMode == TagMode.Edit;
-				foreach (TaggerObject to in Objects) {
+				foreach (DashboardButtonObject to in Objects) {
 					to.Mode = value;
 				}
 				ClearSelection ();
@@ -124,7 +124,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void Click (DashboardButton b, Tag tag = null)
 		{
-			TaggerObject co = Objects.OfType<TaggerObject> ().FirstOrDefault (o => o.Tagger == b);
+			DashboardButtonObject co = Objects.OfType<DashboardButtonObject> ().FirstOrDefault (o => o.Button == b);
 			if (tag != null && co is CategoryObject) {
 				(co as CategoryObject).ClickTag (tag);
 			} else {
@@ -134,7 +134,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void RedrawButton (DashboardButton b)
 		{
-			TaggerObject co = Objects.OfType<TaggerObject>().FirstOrDefault (o => o.Tagger == b);
+			DashboardButtonObject co = Objects.OfType<DashboardButtonObject> ().FirstOrDefault (o => o.Button == b);
 			if (co != null) {
 				co.ReDraw ();
 			}
@@ -142,14 +142,14 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void Refresh (DashboardButton b = null)
 		{
-			TaggerObject to;
+			DashboardButtonObject to;
 			
 			if (Template == null) {
 				return;
 			}
 			
 			LoadTemplate ();
-			to = (TaggerObject)Objects.FirstOrDefault (o => (o as TaggerObject).Tagger == b);
+			to = (DashboardButtonObject)Objects.FirstOrDefault (o => (o as DashboardButtonObject).Button == b);
 			if (to != null) {
 				UpdateSelection (new Selection (to, SelectionPosition.All, 0));
 			}
@@ -163,8 +163,8 @@ namespace LongoMatch.Drawing.Widgets
 			
 			sel = Selections.LastOrDefault ();
 			if (sel != null) {
-				TaggerObject to = sel.Drawable as TaggerObject;
-				ShowMenuEvent (to.Tagger, null);
+				DashboardButtonObject to = sel.Drawable as DashboardButtonObject;
+				ShowMenuEvent (to.Button, null);
 			}
 		}
 
@@ -179,7 +179,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			List<DashboardButton> taggers;
 			
-			taggers = sel.Select (s => (s.Drawable as TaggerObject).Tagger).ToList ();
+			taggers = sel.Select (s => (s.Drawable as DashboardButtonObject).Button).ToList ();
 			if (TagMode == TagMode.Edit) {
 				if (TaggersSelectedEvent != null) {
 					TaggersSelectedEvent (taggers);
@@ -194,12 +194,12 @@ namespace LongoMatch.Drawing.Widgets
 			
 			if (sel != null && moved) {
 				int i = Constants.CATEGORY_TPL_GRID;
-				DashboardButton tb = (sel.Drawable as TaggerObject).Tagger;
+				DashboardButton tb = (sel.Drawable as DashboardButtonObject).Button;
 				tb.Position.X = Utils.Round (tb.Position.X, i);
 				tb.Position.Y = Utils.Round (tb.Position.Y, i);
 				tb.Width = (int)Utils.Round (tb.Width, i);
 				tb.Height = (int)Utils.Round (tb.Height, i);
-				(sel.Drawable as TaggerObject).ResetDrawArea ();
+				(sel.Drawable as DashboardButtonObject).ResetDrawArea ();
 				widget.ReDraw ();
 			}
 
@@ -305,7 +305,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (modeChanged) {
 				modeChanged = false;
-				foreach (TaggerObject to in Objects) {
+				foreach (DashboardButtonObject to in Objects) {
 					to.ResetDrawArea ();
 				}
 			}
@@ -314,14 +314,14 @@ namespace LongoMatch.Drawing.Widgets
 
 		void HandleTaggerClickedEvent (ICanvasObject co)
 		{
-			TaggerObject tagger;
+			DashboardButtonObject tagger;
 			EventButton button;
 			Time start = null, stop = null, eventTime = null;
 			List<Tag> tags = null;
 			PenaltyCard card = null;
 			Score score = null;
 			
-			tagger = co as TaggerObject;
+			tagger = co as DashboardButtonObject;
 			
 			if (tagger is TagObject) {
 				TagObject tag = tagger as TagObject;
@@ -336,11 +336,11 @@ namespace LongoMatch.Drawing.Widgets
 				return;
 			}
 
-			if (NewTagEvent == null || !(tagger.Tagger is EventButton)) {
+			if (NewTagEvent == null || !(tagger.Button is EventButton)) {
 				return;
 			}
 
-			button = tagger.Tagger as EventButton;
+			button = tagger.Button as EventButton;
 			
 			if (TagMode == TagMode.Edit) {
 				return;

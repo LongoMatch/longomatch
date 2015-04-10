@@ -14,6 +14,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/CategoryObject.cs \
 	CanvasObjects/CounterObject.cs \
 	CanvasObjects/CrossObject.cs \
+	CanvasObjects/DashboardButtonObject.cs \
 	CanvasObjects/EllipseObject.cs \
 	CanvasObjects/FieldObject.cs \
 	CanvasObjects/LabelObject.cs \
@@ -27,7 +28,6 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/RectangleObject.cs \
 	CanvasObjects/ScoreObject.cs \
 	CanvasObjects/TagObject.cs \
-	CanvasObjects/TaggerObject.cs \
 	CanvasObjects/TextObject.cs \
 	CanvasObjects/TimeNodeObject.cs \
 	CanvasObjects/TimelineObject.cs \

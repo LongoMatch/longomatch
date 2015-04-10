@@ -23,7 +23,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class TagObject: TaggerObject
+	public class TagObject: DashboardButtonObject
 	{
 		static Image iconImage;
 

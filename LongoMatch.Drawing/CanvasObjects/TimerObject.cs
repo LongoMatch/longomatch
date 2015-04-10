@@ -21,7 +21,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class TimerObject: TaggerObject
+	public class TimerObject: DashboardButtonObject
 	{
 		Time currentTime;
 		static Image iconImage;

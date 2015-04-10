@@ -53,7 +53,6 @@
     <Compile Include="CanvasObjects\CounterObject.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="CanvasObjects\CategoryObject.cs" />
-    <Compile Include="CanvasObjects\TaggerObject.cs" />
     <Compile Include="CanvasObjects\ScoreObject.cs" />
     <Compile Include="CanvasObjects\CardObject.cs" />
     <Compile Include="CanvasObjects\TimerObject.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CanvasObjects\DashboardButtonObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
