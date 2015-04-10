@@ -84,7 +84,7 @@ namespace LongoMatch.Services
 						string.Format (
 							Catalog.GetString("Version {0} is available!\n" +
 								"(You are using version {1})\n" +
-								"<a href=\"{2}/index.html\">Click here to get it.</a>"),
+								"<a href=\"{2}\">Click here to get it.</a>"),
 							update, actual, downloadURL));
 				});
 			}
