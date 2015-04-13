@@ -38,11 +38,6 @@ namespace LongoMatch.DB
 		{
 			this.DBDir = DBDir;
 			this.guiToolkit = guiToolkit;
-			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
-				OpenedProject = p;
-			};
-			UpdateDatabases ();
 		}
 
 		public Project OpenedProject {
@@ -159,17 +154,26 @@ namespace LongoMatch.DB
 
 		public string Name {
 			get {
-				return "Database manager";
+				return "Database";
 			}
 		}
 
 		public bool Start ()
 		{
+			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
+			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
+				OpenedProject = p;
+			};
+
+			UpdateDatabases ();
+
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.ManageDatabasesEvent -= HandleManageDatabase;
+
 			return true;
 		}
 

@@ -38,20 +38,6 @@ namespace LongoMatch.Services
 		{
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
-			ConnectSignals ();
-		}
-
-		public void ConnectSignals ()
-		{
-			Config.EventsBroker.NewProjectEvent += NewProject;
-			Config.EventsBroker.OpenProjectEvent += OpenProject;
-			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
-			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent += SaveProject;
-			Config.EventsBroker.CaptureError += HandleCaptureError;
-			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
-			Config.EventsBroker.MultimediaError += HandleMultimediaError;
 		}
 
 		public Project OpenedProject {
@@ -412,17 +398,35 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "Projects manager";
+				return "Projects";
 			}
 		}
 
 		public bool Start ()
 		{
+			Config.EventsBroker.NewProjectEvent += NewProject;
+			Config.EventsBroker.OpenProjectEvent += OpenProject;
+			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
+			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
+			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
+			Config.EventsBroker.SaveProjectEvent += SaveProject;
+			Config.EventsBroker.CaptureError += HandleCaptureError;
+			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
+			Config.EventsBroker.MultimediaError += HandleMultimediaError;
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.NewProjectEvent -= NewProject;
+			Config.EventsBroker.OpenProjectEvent -= OpenProject;
+			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;
+			Config.EventsBroker.OpenNewProjectEvent -= OpenNewProject;
+			Config.EventsBroker.CloseOpenedProjectEvent -= PromptCloseProject;
+			Config.EventsBroker.SaveProjectEvent -= SaveProject;
+			Config.EventsBroker.CaptureError -= HandleCaptureError;
+			Config.EventsBroker.CaptureFinished -= HandleCaptureFinished;
+			Config.EventsBroker.MultimediaError -= HandleMultimediaError;
 			return true;
 		}
 

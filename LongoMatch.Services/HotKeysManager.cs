@@ -47,11 +47,6 @@ namespace LongoMatch.Services
 		public HotKeysManager ()
 		{
 			dashboardHotkeys = new Dictionary<HotKey,DashboardButton> ();
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed += DashboardKeyListener;
-			Config.EventsBroker.KeyPressed += UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
-			timer = new System.Threading.Timer (HandleTimeout);
 		}
 
 		void TagPlayer ()
@@ -248,17 +243,26 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "HotKeys manager";
+				return "HotKeys";
 			}
 		}
 
 		public bool Start ()
 		{
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.KeyPressed += DashboardKeyListener;
+			Config.EventsBroker.KeyPressed += UIKeyListener;
+			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+			timer = new System.Threading.Timer (HandleTimeout);
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			Config.EventsBroker.KeyPressed -= DashboardKeyListener;
+			Config.EventsBroker.KeyPressed -= UIKeyListener;
+			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
 			return true;
 		}
 

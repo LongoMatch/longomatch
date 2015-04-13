@@ -51,7 +51,6 @@ namespace LongoMatch.Services
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			ConnectSignals ();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
@@ -83,32 +82,6 @@ namespace LongoMatch.Services
 			if (Config.AutoSave) {
 				Config.DatabaseManager.ActiveDB.UpdateProject (project);
 			}
-		}
-
-		private void ConnectSignals ()
-		{
-			Config.EventsBroker.NewEventEvent += OnNewTag;
-			Config.EventsBroker.NewDashboardEventEvent += HandleNewPlay;
-			Config.EventsBroker.EventsDeletedEvent += OnPlaysDeleted;
-			Config.EventsBroker.MoveToEventTypeEvent += OnPlayCategoryChanged;
-			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
-			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
-			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
-			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
-			
-			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
-			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
-			
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-
-			Config.EventsBroker.DrawFrame += HandleDrawFrame;
-			Config.EventsBroker.Detach += HandleDetach;
-			
-			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
-			
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 		}
 
 		void DeletePlays (List<TimelineEvent> plays, bool update = true)
@@ -437,17 +410,63 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "Events manager";
+				return "Events";
 			}
 		}
 
 		public bool Start ()
 		{
+			Config.EventsBroker.NewEventEvent += OnNewTag;
+			Config.EventsBroker.NewDashboardEventEvent += HandleNewPlay;
+			Config.EventsBroker.EventsDeletedEvent += OnPlaysDeleted;
+			Config.EventsBroker.MoveToEventTypeEvent += OnPlayCategoryChanged;
+			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
+			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
+			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
+			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
+			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+
+			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
+
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+
+			Config.EventsBroker.DrawFrame += HandleDrawFrame;
+			Config.EventsBroker.Detach += HandleDetach;
+
+			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
+
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
+
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.NewEventEvent -= OnNewTag;
+			Config.EventsBroker.NewDashboardEventEvent -= HandleNewPlay;
+			Config.EventsBroker.EventsDeletedEvent -= OnPlaysDeleted;
+			Config.EventsBroker.MoveToEventTypeEvent -= OnPlayCategoryChanged;
+			Config.EventsBroker.DuplicateEventsEvent -= OnDuplicatePlays;
+			Config.EventsBroker.SnapshotSeries -= OnSnapshotSeries;
+			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelectedEvent;
+			Config.EventsBroker.PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
+			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
+
+			Config.EventsBroker.ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
+			Config.EventsBroker.TagSubcategoriesChangedEvent -= HandleTagSubcategoriesChangedEvent;
+
+			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+
+			Config.EventsBroker.DrawFrame -= HandleDrawFrame;
+			Config.EventsBroker.Detach -= HandleDetach;
+
+			Config.EventsBroker.ShowFullScreenEvent -= HandleShowFullScreenEvent;
+
+			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
+
 			return true;
 		}
 

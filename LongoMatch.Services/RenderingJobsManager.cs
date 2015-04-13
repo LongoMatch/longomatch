@@ -47,13 +47,6 @@ namespace LongoMatch.Services
 			this.stateBar = guiToolkit.RenderingStateBar;
 			jobs = new List<Job> ();
 			pendingJobs = new List<Job> ();
-			stateBar.Cancel += (sender, e) => CancelCurrentJob ();
-			stateBar.ManageJobs += (sender, e) => ManageJobs ();
-			Config.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
-				ConversionJob job = new ConversionJob (inputFiles, encSettings);
-				AddJob (job);
-			};
-			; 
 		}
 
 		public List<Job> Jobs {
@@ -421,12 +414,19 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "Rendering jobs manager";
+				return "Rendering jobs";
 			}
 		}
 
 		public bool Start ()
 		{
+			stateBar.Cancel += (sender, e) => CancelCurrentJob ();
+			stateBar.ManageJobs += (sender, e) => ManageJobs ();
+			Config.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
+				ConversionJob job = new ConversionJob (inputFiles, encSettings);
+				AddJob (job);
+			};
+
 			return true;
 		}
 

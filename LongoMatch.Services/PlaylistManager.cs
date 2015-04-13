@@ -45,24 +45,6 @@ namespace LongoMatch.Services
 		{
 			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
-			BindEvents ();
-		}
-
-		void BindEvents ()
-		{
-			Config.EventsBroker.NewPlaylistEvent += HandleNewPlaylist;
-			Config.EventsBroker.AddPlaylistElementEvent += HandleAddPlaylistElement;
-			Config.EventsBroker.RenderPlaylist += HandleRenderPlaylist;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
-			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
-			Config.EventsBroker.LoadEventEvent += HandleLoadPlayEvent;
-			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
-			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
-			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
-			Config.EventsBroker.SeekEvent += HandleSeekEvent;
-			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 		}
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
@@ -318,17 +300,45 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "Playlist manager";
+				return "Playlists";
 			}
 		}
 
 		public bool Start ()
 		{
+			Config.EventsBroker.NewPlaylistEvent += HandleNewPlaylist;
+			Config.EventsBroker.AddPlaylistElementEvent += HandleAddPlaylistElement;
+			Config.EventsBroker.RenderPlaylist += HandleRenderPlaylist;
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
+			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
+			Config.EventsBroker.LoadEventEvent += HandleLoadPlayEvent;
+			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
+			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
+			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
+			Config.EventsBroker.SeekEvent += HandleSeekEvent;
+			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
+
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.NewPlaylistEvent -= HandleNewPlaylist;
+			Config.EventsBroker.AddPlaylistElementEvent -= HandleAddPlaylistElement;
+			Config.EventsBroker.RenderPlaylist -= HandleRenderPlaylist;
+			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			Config.EventsBroker.PreviousPlaylistElementEvent -= HandlePrev;
+			Config.EventsBroker.NextPlaylistElementEvent -= HandleNext;
+			Config.EventsBroker.LoadEventEvent -= HandleLoadPlayEvent;
+			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelected;
+			Config.EventsBroker.PlaybackRateChanged -= HandlePlaybackRateChanged;
+			Config.EventsBroker.TimeNodeChanged -= HandlePlayChanged;
+			Config.EventsBroker.SeekEvent -= HandleSeekEvent;
+			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
+			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
+
 			return true;
 		}
 

@@ -43,41 +43,6 @@ namespace LongoMatch.Services
 			this.guiToolkit = guiToolkit;
 			this.dbManager = dbManager;
 			ProjectImporters = new List<ProjectImporter> ();
-			
-			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
-				Constants.PROJECT_NAME,
-				new string[] { "*" + Constants.PROJECT_EXT }, false, false);
-
-			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
-				this.openedProject = pr;
-			};
-			
-			Config.EventsBroker.EditPreferencesEvent += () => {
-				guiToolkit.OpenPreferencesEditor ();
-			};
-			
-			Config.EventsBroker.ManageCategoriesEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenCategoriesTemplatesManager ();
-				}
-			};
-			
-			Config.EventsBroker.ManageTeamsEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenTeamsTemplatesManager ();
-				}
-			};
-			
-			Config.EventsBroker.ManageProjectsEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenProjectsManager (this.openedProject);
-				}
-			};
-			
-			Config.EventsBroker.MigrateDB += HandleMigrateDB;
-			
-			Config.EventsBroker.ExportProjectEvent += ExportProject;
-			Config.EventsBroker.ImportProjectEvent += ImportProject;
 		}
 
 		public void RegisterImporter (Func<string, Project> importFunction,
@@ -238,17 +203,57 @@ namespace LongoMatch.Services
 
 		public string Name {
 			get {
-				return "Tools manager";
+				return "Tools";
 			}
 		}
 
 		public bool Start ()
 		{
+			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
+				Constants.PROJECT_NAME,
+				new string[] { "*" + Constants.PROJECT_EXT }, false, false);
+
+			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
+				this.openedProject = pr;
+			};
+
+			Config.EventsBroker.EditPreferencesEvent += () => {
+				guiToolkit.OpenPreferencesEditor ();
+			};
+
+			Config.EventsBroker.ManageCategoriesEvent += () => {
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenCategoriesTemplatesManager ();
+				}
+			};
+
+			Config.EventsBroker.ManageTeamsEvent += () => {
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenTeamsTemplatesManager ();
+				}
+			};
+
+			Config.EventsBroker.ManageProjectsEvent += () => {
+				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+					guiToolkit.OpenProjectsManager (this.openedProject);
+				}
+			};
+
+			Config.EventsBroker.MigrateDB += HandleMigrateDB;
+
+			Config.EventsBroker.ExportProjectEvent += ExportProject;
+			Config.EventsBroker.ImportProjectEvent += ImportProject;
+
 			return true;
 		}
 
 		public bool Stop ()
 		{
+			Config.EventsBroker.MigrateDB -= HandleMigrateDB;
+
+			Config.EventsBroker.ExportProjectEvent -= ExportProject;
+			Config.EventsBroker.ImportProjectEvent -= ImportProject;
+
 			return true;
 		}
 
