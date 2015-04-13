@@ -104,7 +104,14 @@ namespace Tests.Core.Store.Templates
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (1, b1.ActionLinks.Count);
 
-			b1.ActionLinks [0].DestinationTags = new List<Tag> { b1.AnalysisEventType.Tags [0] };
+			b1.ActionLinks [0].DestinationTags = new List<Tag> { b2.AnalysisEventType.Tags [0] };
+			dashboard.RemoveDeadLinks (b2);
+			Assert.AreEqual (1, b1.ActionLinks.Count);
+
+			b2.AnalysisEventType.Tags.Remove (b2.AnalysisEventType.Tags [1]);
+			dashboard.RemoveDeadLinks (b2);
+			Assert.AreEqual (1, b1.ActionLinks.Count);
+			b2.AnalysisEventType.Tags.Remove (b2.AnalysisEventType.Tags [0]);
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (0, b1.ActionLinks.Count);
 		}

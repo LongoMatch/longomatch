@@ -464,13 +464,15 @@ namespace LongoMatch.Gui.Component
 
 		void EditEventSubcategories (DashboardButton dashboardButton)
 		{
-			AnalysisEventType evt = (dashboardButton as AnalysisEventButton).AnalysisEventType;
+			AnalysisEventButton button = (dashboardButton as AnalysisEventButton); 
+			AnalysisEventType evt = button.AnalysisEventType;
 			EventTypeTagsEditor dialog = new EventTypeTagsEditor ();
 			dialog.EventType = evt;
 			dialog.Run ();
 			dialog.Destroy ();
-			template.RemoveDeadLinks (dashboardButton);
+			template.RemoveDeadLinks (button);
 			Edited = true;
+			Refresh ();
 		}
 
 		void HandleResetField (object sender, EventArgs e)

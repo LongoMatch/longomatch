@@ -266,10 +266,12 @@ namespace LongoMatch.Core.Store.Templates
 		/// <param name="button">Dashboard button.</param>
 		public void RemoveDeadLinks (AnalysisEventButton button)
 		{
-
+			/* Remove all links pointing to a tag that does not exists anymore */
 			foreach (DashboardButton b in List) {
 				b.ActionLinks.RemoveAll (l => l.DestinationButton == button &&
-				l.DestinationTags.Intersect (button.AnalysisEventType.Tags).Any ());
+				l.DestinationTags != null &&
+				l.DestinationTags.Count > 0 &&
+				!l.DestinationTags.Intersect (button.AnalysisEventType.Tags).Any ());
 			}
 		}
 
