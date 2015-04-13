@@ -22,7 +22,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 
-namespace Tests.Core
+namespace Tests.Core.Store.Templates
 {
 	[TestFixture ()]
 	public class TestDashboard
@@ -70,6 +70,27 @@ namespace Tests.Core
 			Assert.IsFalse (dashboard.HasCircularDependencies ());
 			b3.ActionLinks.Add (new ActionLink { DestinationButton = b1 });
 			Assert.IsTrue (dashboard.HasCircularDependencies ());
+		}
+
+		[Test ()]
+		public void TestRemoveButton ()
+		{
+			Dashboard dashboard = new Dashboard ();
+			DashboardButton b1 = new DashboardButton ();
+			DashboardButton b2 = new DashboardButton ();
+			DashboardButton b3 = new DashboardButton ();
+			dashboard.List.Add (b1);
+			dashboard.List.Add (b2);
+			dashboard.List.Add (b3);
+
+			b1.ActionLinks.Add (new ActionLink { DestinationButton = b2 });
+			b2.ActionLinks.Add (new ActionLink { DestinationButton = b3 });
+			b3.ActionLinks.Add (new ActionLink { DestinationButton = b1 });
+
+			dashboard.RemoveButton (b3);
+			Assert.AreEqual (0, b2.ActionLinks.Count);
+			dashboard.RemoveButton (b2);
+			Assert.AreEqual (0, b1.ActionLinks.Count);
 		}
 	}
 }

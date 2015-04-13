@@ -22,7 +22,7 @@ using NUnit.Framework;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 
-namespace Tests.Core.Templates
+namespace Tests.Core.Store.Templates
 {
 	[TestFixture ()]
 	public class TestTeamTemplate

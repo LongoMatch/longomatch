@@ -248,6 +248,18 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		/// <summary>
+		/// Removes a button from the list remving also dead links.
+		/// </summary>
+		/// <param name="button">The button to remove.</param>
+		public void RemoveButton (DashboardButton button)
+		{
+			List.Remove (button);
+			foreach (DashboardButton b in List) {
+				b.ActionLinks.RemoveAll (l => l.DestinationButton == button);
+			}
+		}
+
+		/// <summary>
 		/// Adds a new <see cref="AnalysisEventButton"/> with the default values
 		/// </summary>
 		/// <returns>A new button.</returns>
