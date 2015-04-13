@@ -33,7 +33,7 @@ namespace Tests.Core.Store
 			link.SourceButton = new DashboardButton ();
 			link.SourceTags = new List<Tag> { new Tag ("tag1") };
 			link.DestinationButton = new DashboardButton ();
-			link.DestionationTags = new List<Tag> { new Tag ("tag2") };
+			link.DestinationTags = new List<Tag> { new Tag ("tag2") };
 			link.Action = LinkAction.Toggle;
 			link.TeamAction = TeamLinkAction.Invert;
 			link.KeepCommonTags = false;
@@ -52,7 +52,7 @@ namespace Tests.Core.Store
 
 			ActionLink link2 = Utils.SerializeDeserialize (link);
 			Assert.AreEqual (link.SourceTags, link2.SourceTags);
-			Assert.AreEqual (link.DestionationTags, link2.DestionationTags);
+			Assert.AreEqual (link.DestinationTags, link2.DestinationTags);
 			Assert.AreEqual (link.Action, link2.Action);
 			Assert.AreEqual (link.TeamAction, link2.TeamAction);
 			Assert.AreEqual (link.KeepCommonTags, link2.KeepCommonTags);
@@ -72,7 +72,7 @@ namespace Tests.Core.Store
 			Assert.AreNotEqual (link, link2);
 			link2.SourceTags = new List<Tag> { new Tag ("tag1") }; 
 			Assert.AreNotEqual (link, link2);
-			link2.DestionationTags = new List<Tag> { new Tag ("tag2") }; 
+			link2.DestinationTags = new List<Tag> { new Tag ("tag2") }; 
 			Assert.IsTrue (link == link2);
 			Assert.IsTrue (link.Equals (link2));
 		}

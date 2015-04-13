@@ -35,7 +35,7 @@ namespace LongoMatch.Core.Store
 			KeepPlayerTags = true;
 			TeamAction = TeamLinkAction.Keep;
 			SourceTags = new List<Tag> ();
-			DestionationTags = new List<Tag> ();
+			DestinationTags = new List<Tag> ();
 		}
 
 		/// <summary>
@@ -65,7 +65,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of tags that needs to be set in the destination
 		/// </summary>
-		public List<Tag> DestionationTags {
+		public List<Tag> DestinationTags {
 			get;
 			set;
 		}
@@ -113,7 +113,7 @@ namespace LongoMatch.Core.Store
 				return false;
 			}
 			if (!link.SourceTags.SequenceEqualSafe (SourceTags) ||
-			    !link.DestionationTags.SequenceEqualSafe (DestionationTags)) {
+			    !link.DestinationTags.SequenceEqualSafe (DestinationTags)) {
 				return false;
 			}
 			return true;

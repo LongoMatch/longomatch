@@ -301,7 +301,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (destAnchor != null) {
 					ActionLink link = movingLink.Link;
 					link.DestinationButton = destAnchor.Button.Button;
-					link.DestionationTags = destAnchor.Tags;
+					link.DestinationTags = destAnchor.Tags;
 					link.SourceButton.ActionLinks.Add (link);
 					movingLink.Destination = destAnchor;
 					destAnchor.Highlighted = false;
@@ -414,7 +414,7 @@ namespace LongoMatch.Drawing.Widgets
 				foreach (ActionLink link in buttonObject.Button.ActionLinks) {
 					LinkAnchorObject sourceAnchor = buttonObject.GetAnchor (link.SourceTags);
 					LinkAnchorObject destAnchor = buttonsDict [link.DestinationButton].
-						GetAnchor (link.DestionationTags);
+						GetAnchor (link.DestinationTags);
 					ActionLinkObject linkObject = new ActionLinkObject (sourceAnchor,
 						                              destAnchor, link);
 					link.SourceButton = buttonObject.Button;
