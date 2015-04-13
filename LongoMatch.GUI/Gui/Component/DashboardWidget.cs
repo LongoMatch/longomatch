@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			tagger.ButtonsSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
-			tagger.EditButtonTagsEvent += HandleAddNewTagEvent;
+			tagger.EditButtonTagsEvent += EditEventSubcategories;
 			drawingarea.CanFocus = true;
 			drawingarea.KeyPressEvent += HandleKeyPressEvent;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
@@ -462,13 +462,14 @@ namespace LongoMatch.Gui.Component
 			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
 
-		void HandleAddNewTagEvent (DashboardButton taggerbutton)
+		void EditEventSubcategories (DashboardButton dashboardButton)
 		{
-			AnalysisEventType evt = (taggerbutton as AnalysisEventButton).AnalysisEventType;
+			AnalysisEventType evt = (dashboardButton as AnalysisEventButton).AnalysisEventType;
 			EventTypeTagsEditor dialog = new EventTypeTagsEditor ();
 			dialog.EventType = evt;
 			dialog.Run ();
 			dialog.Destroy ();
+			template.RemoveDeadLinks (dashboardButton);
 			Edited = true;
 		}
 

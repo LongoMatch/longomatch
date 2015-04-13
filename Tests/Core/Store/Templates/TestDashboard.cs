@@ -92,6 +92,22 @@ namespace Tests.Core.Store.Templates
 			dashboard.RemoveButton (b2);
 			Assert.AreEqual (0, b1.ActionLinks.Count);
 		}
+
+		[Test ()]
+		public void RemoveDeadLinks ()
+		{
+			Dashboard dashboard = new Dashboard ();
+			AnalysisEventButton b1 = dashboard.AddDefaultItem (0);
+			AnalysisEventButton b2 = dashboard.AddDefaultItem (1);
+
+			b1.ActionLinks.Add (new ActionLink { DestinationButton = b2 });
+			dashboard.RemoveDeadLinks (b2);
+			Assert.AreEqual (1, b1.ActionLinks.Count);
+
+			b1.ActionLinks [0].DestinationTags = new List<Tag> { b1.AnalysisEventType.Tags [0] };
+			dashboard.RemoveDeadLinks (b2);
+			Assert.AreEqual (0, b1.ActionLinks.Count);
+		}
 	}
 }
 

@@ -260,6 +260,20 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		/// <summary>
+		/// Removes dead links for this button, called after the event tags
+		/// have been edited.
+		/// </summary>
+		/// <param name="button">Dashboard button.</param>
+		public void RemoveDeadLinks (AnalysisEventButton button)
+		{
+
+			foreach (DashboardButton b in List) {
+				b.ActionLinks.RemoveAll (l => l.DestinationButton == button &&
+				l.DestinationTags.Intersect (button.AnalysisEventType.Tags).Any ());
+			}
+		}
+
+		/// <summary>
 		/// Adds a new <see cref="AnalysisEventButton"/> with the default values
 		/// </summary>
 		/// <returns>A new button.</returns>
