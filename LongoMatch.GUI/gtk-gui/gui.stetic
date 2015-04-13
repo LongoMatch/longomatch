@@ -743,11 +743,40 @@ Sort by competition</property>
                                     <property name="MemberName" />
                                     <property name="BorderWidth">6</property>
                                     <child>
-                                      <widget class="LongoMatch.Gui.Component.CategoryProperties" id="tagproperties">
+                                      <widget class="Gtk.Notebook" id="propertiesnotebook">
                                         <property name="MemberName" />
-                                        <property name="Sensitive">False</property>
-                                        <property name="Events">ButtonPressMask</property>
-                                        <property name="Edited">False</property>
+                                        <property name="CanFocus">True</property>
+                                        <property name="CurrentPage">0</property>
+                                        <property name="ShowBorder">False</property>
+                                        <property name="ShowTabs">False</property>
+                                        <child>
+                                          <widget class="LongoMatch.Gui.Component.CategoryProperties" id="tagproperties">
+                                            <property name="MemberName" />
+                                            <property name="Events">ButtonPressMask</property>
+                                            <property name="Edited">False</property>
+                                          </widget>
+                                        </child>
+                                        <child>
+                                          <widget class="Gtk.Label" id="label2">
+                                            <property name="MemberName" />
+                                            <property name="LabelProp" translatable="yes">page1</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="type">tab</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder />
+                                        </child>
+                                        <child>
+                                          <widget class="Gtk.Label" id="label3">
+                                            <property name="MemberName" />
+                                            <property name="LabelProp" translatable="yes">page2</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="type">tab</property>
+                                          </packing>
+                                        </child>
                                       </widget>
                                     </child>
                                   </widget>

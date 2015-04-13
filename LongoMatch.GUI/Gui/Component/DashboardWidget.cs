@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Component
 			Edited = false;
 			Mode = TagMode.Predefined;
 			// Initialize to a sane default value.
-			tagproperties.Sensitive = false;
+			propertiesnotebook.Page = 1;
 		}
 
 		protected override void OnDestroyed ()
@@ -159,7 +159,7 @@ namespace LongoMatch.Gui.Component
 				Edited = false;
 				// Start with disabled widget until something get selected
 				tagproperties.Tagger = null;
-				tagproperties.Sensitive = false;
+				propertiesnotebook.Page = 1;
 				tagproperties.Dashboard = value;
 				popupbutton.Active = value.DisablePopupWindow;
 			}
@@ -341,11 +341,11 @@ namespace LongoMatch.Gui.Component
 			if (taggers.Count == 1) {
 				selected = taggers [0];
 				tagproperties.Tagger = taggers [0];
-				tagproperties.Sensitive = true;
+				propertiesnotebook.Page = 0;
 			} else {
 				selected = null;
 				tagproperties.Tagger = null;
-				tagproperties.Sensitive = false;
+				propertiesnotebook.Page = 1;
 			}
 		}
 

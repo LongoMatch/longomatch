@@ -112,7 +112,13 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Alignment tagpropertiesalignment;
 		
+		private global::Gtk.Notebook propertiesnotebook;
+		
 		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
+		
+		private global::Gtk.Label label2;
+		
+		private global::Gtk.Label label3;
 
 		protected virtual void Build ()
 		{
@@ -533,27 +539,49 @@ namespace LongoMatch.Gui.Component
 			this.tagpropertiesalignment.Name = "tagpropertiesalignment";
 			this.tagpropertiesalignment.BorderWidth = ((uint)(6));
 			// Container child tagpropertiesalignment.Gtk.Container+ContainerChild
+			this.propertiesnotebook = new global::Gtk.Notebook ();
+			this.propertiesnotebook.CanFocus = true;
+			this.propertiesnotebook.Name = "propertiesnotebook";
+			this.propertiesnotebook.CurrentPage = 0;
+			this.propertiesnotebook.ShowBorder = false;
+			this.propertiesnotebook.ShowTabs = false;
+			// Container child propertiesnotebook.Gtk.Notebook+NotebookChild
 			this.tagproperties = new global::LongoMatch.Gui.Component.CategoryProperties ();
-			this.tagproperties.Sensitive = false;
 			this.tagproperties.Events = ((global::Gdk.EventMask)(256));
 			this.tagproperties.Name = "tagproperties";
 			this.tagproperties.Edited = false;
-			this.tagpropertiesalignment.Add (this.tagproperties);
+			this.propertiesnotebook.Add (this.tagproperties);
+			// Notebook tab
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
+			this.propertiesnotebook.SetTabLabel (this.tagproperties, this.label2);
+			this.label2.ShowAll ();
+			// Notebook tab
+			global::Gtk.Label w52 = new global::Gtk.Label ();
+			w52.Visible = true;
+			this.propertiesnotebook.Add (w52);
+			this.label3 = new global::Gtk.Label ();
+			this.label3.Name = "label3";
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
+			this.propertiesnotebook.SetTabLabel (w52, this.label3);
+			this.label3.ShowAll ();
+			this.tagpropertiesalignment.Add (this.propertiesnotebook);
 			w50.Add (this.tagpropertiesalignment);
 			this.propertiesscrolledwindow.Add (w50);
 			this.vbox10.Add (this.propertiesscrolledwindow);
-			global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
-			w54.Position = 2;
+			global::Gtk.Box.BoxChild w56 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
+			w56.Position = 2;
 			this.propertiesalignment.Add (this.vbox10);
 			this.propertiesframe.Add (this.propertiesalignment);
 			this.rightbox.Add (this.propertiesframe);
-			global::Gtk.Box.BoxChild w57 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
-			w57.Position = 0;
+			global::Gtk.Box.BoxChild w59 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
+			w59.Position = 0;
 			this.hbox2.Add (this.rightbox);
-			global::Gtk.Box.BoxChild w58 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
-			w58.Position = 1;
-			w58.Expand = false;
-			w58.Fill = false;
+			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			w60.Position = 1;
+			w60.Expand = false;
+			w60.Fill = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
