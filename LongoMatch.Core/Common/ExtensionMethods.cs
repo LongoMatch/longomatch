@@ -23,29 +23,42 @@ namespace LongoMatch.Core.Common
 {
 	public static class ExtensionMethods
 	{
-		public static void Swap<T>(this List<T> list, T e1, T e2)
+		public static void Swap<T> (this List<T> list, T e1, T e2)
 		{
 			int index1, index2;
 			
 			index1 = list.IndexOf (e1);
 			index2 = list.IndexOf (e2);
-			T temp = list[index1];
-			list[index1] = list[index2];
-			list[index2] = temp;
+			T temp = list [index1];
+			list [index1] = list [index2];
+			list [index2] = temp;
 		}
-		
-		public static T[] Merge<T>(this List<T[]> list) {
-			var res = new List<T>();
+
+		public static T[] Merge<T> (this List<T[]> list)
+		{
+			var res = new List<T> ();
 			
 			foreach (T[] t in list) {
 				res.AddRange (t);
 			}
 			return res.ToArray ();
 		}
-		
-		public static TKey GetKeyByValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TValue value)
+
+		public static TKey GetKeyByValue<TKey, TValue> (this Dictionary<TKey, TValue> dict, TValue value)
 		{
-			return dict.SingleOrDefault(x => x.Value.Equals(value)).Key;
+			return dict.SingleOrDefault (x => x.Value.Equals (value)).Key;
+		}
+
+		public static bool SequenceEqualSafe<T> (this List<T> first, List<T> second)
+		{
+			if (first == null && second == null) {
+				return true;
+			} else if (first == null || second == null) {
+				return false;
+			} else {
+				return first.SequenceEqual (second);
+			}
+
 		}
 	}
 }

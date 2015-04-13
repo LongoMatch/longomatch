@@ -41,7 +41,6 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// The source button of the link
 		/// </summary>
-		[JsonIgnore]
 		public DashboardButton SourceButton {
 			get;
 			set;
@@ -50,7 +49,6 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of tags that needs to match in the source
 		/// </summary>
-		[JsonIgnore]
 		public List<Tag> SourceTags {
 			get;
 			set;
@@ -114,8 +112,8 @@ namespace LongoMatch.Core.Store
 			    link.DestinationButton != DestinationButton) {
 				return false;
 			}
-			if (!link.SourceTags.SequenceEqual (SourceTags) ||
-			    !link.DestionationTags.SequenceEqual (DestionationTags)) {
+			if (!link.SourceTags.SequenceEqualSafe (SourceTags) ||
+			    !link.DestionationTags.SequenceEqualSafe (DestionationTags)) {
 				return false;
 			}
 			return true;
