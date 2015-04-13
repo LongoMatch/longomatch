@@ -45,8 +45,8 @@ namespace LongoMatch.Services
 			ProjectImporters = new List<ProjectImporter> ();
 			
 			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
-			                  Constants.PROJECT_NAME,
-			                  new string[] {"*"+Constants.PROJECT_EXT }, false, false);
+				Constants.PROJECT_NAME,
+				new string[] { "*" + Constants.PROJECT_EXT }, false, false);
 
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
@@ -87,11 +87,11 @@ namespace LongoMatch.Services
 		{
 			ProjectImporter importer = new ProjectImporter {
 				Description = description,
-				ImportFunction=importFunction,
-				FilterName=filterName,
-				Extensions=extensions,
-				NeedsEdition=needsEdition,
-				CanOverwrite=canOverwrite,
+				ImportFunction = importFunction,
+				FilterName = filterName,
+				Extensions = extensions,
+				NeedsEdition = needsEdition,
+				CanOverwrite = canOverwrite,
 			};
 			ProjectImporters.Add (importer);
 		}
@@ -108,7 +108,7 @@ namespace LongoMatch.Services
 			}
 			string proposed_filename = project.Description.Title + Constants.PROJECT_EXT;
 			string filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"), proposed_filename,
-			                                       Config.HomeDir, Constants.PROJECT_NAME, new string[] { Constants.PROJECT_EXT });
+				                  Config.HomeDir, Constants.PROJECT_NAME, new string[] { Constants.PROJECT_EXT });
 			
 			if (filename == null)
 				return;
@@ -127,9 +127,9 @@ namespace LongoMatch.Services
 		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
 		{
 			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter) Config.GUIToolkit.ChooseOption (options);
+			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options);
 		}
- 
+
 		void ImportProject ()
 		{
 			Project project;
@@ -144,7 +144,7 @@ namespace LongoMatch.Services
 			extensions = ExtensionMethods.Merge (ProjectImporters.Select (p => p.Extensions).ToList ()); 
 			/* Show a file chooser dialog to select the file to import */
 			fileName = guiToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
-			                                filterName, extensions);
+				filterName, extensions);
 				
 			if (fileName == null)
 				return;
@@ -153,12 +153,12 @@ namespace LongoMatch.Services
 			 * is not a valid project */
 			try {
 				string extension = "*" + Path.GetExtension (fileName);
-				IEnumerable<ProjectImporter> importers =  ProjectImporters.Where
+				IEnumerable<ProjectImporter> importers = ProjectImporters.Where
 					(p => p.Extensions.Contains (extension));
 				if (importers.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
 				} else if (importers.Count () == 1) {
-					importer = importers.First();
+					importer = importers.First ();
 				} else {
 					importer = ChooseImporter (importers);
 				}
@@ -178,8 +178,8 @@ namespace LongoMatch.Services
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
 						var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
-						                                      project.ID + "\n" +
-						                                      Catalog.GetString ("Do you want to overwrite it?"), null);
+						          project.ID + "\n" +
+						          Catalog.GetString ("Do you want to overwrite it?"), null);
 						if (!res)
 							return;
 						DB.UpdateProject (project);
@@ -190,12 +190,12 @@ namespace LongoMatch.Services
 				}
 			} catch (Exception ex) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
-				                         "\n" + ex.Message);
+				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
 			}
 		}
-		
+
 		void HandleMigrateDB ()
 		{
 			string db4oPath = Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
@@ -208,20 +208,20 @@ namespace LongoMatch.Services
 			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				startInfo.FileName = Path.Combine (Config.baseDirectory, "bin", "mono-sgen.exe");
-				startInfo.EnvironmentVariables["MONO_CFG_DIR"] = Path.GetFullPath (
+				startInfo.EnvironmentVariables ["MONO_CFG_DIR"] = Path.GetFullPath (
 					Path.Combine (Config.baseDirectory, "etc"));
 			} else {
 				startInfo.FileName = "mono-sgen";
 			}
 			if (startInfo.EnvironmentVariables.ContainsKey ("MONO_PATH")) {
-				startInfo.EnvironmentVariables["MONO_PATH"] += Path.PathSeparator + monoPath;
+				startInfo.EnvironmentVariables ["MONO_PATH"] += Path.PathSeparator + monoPath;
 			} else {
 				startInfo.EnvironmentVariables.Add ("MONO_PATH", monoPath);
 			}
 			Log.Information (String.Format ("Launching migration tool {0} {1}",
-			                                startInfo.FileName,
-			                                startInfo.EnvironmentVariables["MONO_PATH"]));
-			using (Process exeProcess = Process.Start(startInfo)) {
+				startInfo.FileName,
+				startInfo.EnvironmentVariables ["MONO_PATH"]));
+			using (Process exeProcess = Process.Start (startInfo)) {
 				exeProcess.WaitForExit ();
 				dbManager.UpdateDatabases ();
 				dbManager.SetActiveByName (dbManager.ActiveDB.Name);
@@ -266,7 +266,7 @@ namespace LongoMatch.Services
 			get;
 			set;
 		}
-		
+
 		public string [] Extensions {
 			get;
 			set;
