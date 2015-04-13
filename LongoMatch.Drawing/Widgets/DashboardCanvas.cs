@@ -211,7 +211,7 @@ namespace LongoMatch.Drawing.Widgets
 			tk.Begin ();
 			tk.Clear (Config.Style.PaletteBackground);
 			if (TagMode == TagMode.Edit) {
-				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
 				tk.LineWidth = 1;
 				tk.StrokeColor = Color.Grey1;
@@ -291,16 +291,21 @@ namespace LongoMatch.Drawing.Widgets
 			if (FitMode == FitMode.Original) {
 				widget.Width = templateWidth;
 				widget.Height = templateHeight;
-				scaleX = scaleY = 1;
-				translation = new Point (0, 0);
+				ScaleX = ScaleY = 1;
+				Translation = new Point (0, 0);
 			} else if (FitMode == FitMode.Fill) {
-				scaleX = (double)widget.Width / templateWidth;
-				scaleY = (double)widget.Height / templateHeight;
-				translation = new Point (0, 0);
+				ScaleX = (double)widget.Width / templateWidth;
+				ScaleY = (double)widget.Height / templateHeight;
+				Translation = new Point (0, 0);
 			} else if (FitMode == FitMode.Fit) {
+				double scaleX, scaleY;
+				Point translation;
 				Image.ScaleFactor (templateWidth, templateHeight,
 					(int)widget.Width, (int)widget.Height,
 					out scaleX, out scaleY, out translation);
+				ScaleX = scaleX;
+				ScaleY = scaleY;
+				Translation = translation;
 			}
 			if (modeChanged) {
 				modeChanged = false;

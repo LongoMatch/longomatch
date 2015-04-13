@@ -349,7 +349,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (backbuffer != null) {
 				tk.Context = context;
 				tk.Begin ();
-				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				tk.DrawSurface (backbuffer);
 				tk.End ();
 			}

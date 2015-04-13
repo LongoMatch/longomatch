@@ -28,7 +28,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 		const int SELECTION_SIZE = 6;
 		protected ISurface backBufferSurface;
 
-		public ButtonObject () {
+		public ButtonObject ()
+		{
 			BackgroundColor = Config.Style.PaletteBackgroundLight;
 			BackgroundColorActive = Config.Style.PaletteActive;
 			BorderColor = Config.Style.PaletteBackgroundDark;
@@ -36,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			MinWidth = 20;
 			MinHeight = 20;
 		}
-		
+
 		protected override void Dispose (bool disposing)
 		{
 			ResetBackbuffer ();
@@ -62,7 +63,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		public virtual Color BackgroundColorActive {
 			get;
 			set;
@@ -82,7 +83,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			get;
 			set;
 		}
-		
+
 		protected Color CurrentBackgroundColor {
 			get {
 				if (!Active) {
@@ -107,7 +108,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public virtual Area Area {
 			get {
 				return new Area (Position, Width + SELECTION_SIZE / 2 + 1,
-				                 Height + SELECTION_SIZE / 2 + 1);
+					Height + SELECTION_SIZE / 2 + 1);
 			}
 		}
 
@@ -136,7 +137,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public Selection GetSelection (Point p, double precision, bool inMotion=false)
+		public virtual Selection GetSelection (Point p, double precision, bool inMotion = false)
 		{
 			Selection s;
 
@@ -145,8 +146,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (s != null) {
 				s.Drawable = this;
 				if (s.Position != SelectionPosition.BottomRight &&
-					s.Position != SelectionPosition.Right &&
-					s.Position != SelectionPosition.Bottom) {
+				    s.Position != SelectionPosition.Right &&
+				    s.Position != SelectionPosition.Bottom) {
 					s.Position = SelectionPosition.All;
 				}
 			}
@@ -199,8 +200,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawRectangle (new Point (Position.X + Width - SELECTION_SIZE / 2,
-			                             Position.Y + Height - SELECTION_SIZE / 2),
-			                  SELECTION_SIZE, SELECTION_SIZE);
+				Position.Y + Height - SELECTION_SIZE / 2),
+				SELECTION_SIZE, SELECTION_SIZE);
 		}
 
 		protected void DrawButton (IDrawingToolkit tk)
@@ -214,7 +215,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			} else {
 				tk.LineWidth = 0;
 				front = TextColor;
-				back =  BackgroundColor;
+				back = BackgroundColor;
 			}
 			tk.FillColor = back;
 			tk.StrokeColor = front;
@@ -222,7 +223,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Icon != null) {
 				tk.FillColor = front;
 				tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-				              Icon.Width, Icon.Height, Icon, false, true);
+					Icon.Width, Icon.Height, Icon, false, true);
 			}
 		}
 
@@ -254,7 +255,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		void CreateBackBufferSurface () {
+		void CreateBackBufferSurface ()
+		{
 			IDrawingToolkit tk = Config.DrawingToolkit;
 
 			ResetBackbuffer ();
@@ -262,7 +264,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			using (IContext c = backBufferSurface.Context) {
 				tk.Context = c;
 				tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
-				                      new Point (1, 1));
+					new Point (1, 1));
 				DrawButton (tk);
 				DrawImage (tk);
 				DrawText (tk);

@@ -26,13 +26,13 @@ using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing
 {
+	/// <summary>
+	/// A canvas stores <see cref="ICanvasObjects"/>'s and draws them.
+	/// </summary>
 	public class Canvas: ICanvas
 	{
 		protected IDrawingToolkit tk;
 		protected IWidget widget;
-		protected double scaleX, scaleY;
-		protected Point translation;
-		protected bool ignoreRedraws;
 		bool disposed;
 
 		public Canvas (IWidget widget)
@@ -42,9 +42,9 @@ namespace LongoMatch.Drawing
 			Objects = new List<ICanvasObject> ();
 			widget.DrawEvent += Draw;
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
-			scaleX = 1;
-			scaleY = 1;
-			translation = new Point (0, 0);
+			ScaleX = 1;
+			ScaleY = 1;
+			Translation = new Point (0, 0);
 		}
 
 		~ Canvas ()
@@ -64,7 +64,7 @@ namespace LongoMatch.Drawing
 		protected virtual void Dispose (bool disposing)
 		{
 			// FIXME: Should we check if we are disposed already ?
-			ignoreRedraws = true;
+			IgnoreRedraws = true;
 			if (disposing) {
 				ClearObjects ();
 				Objects = null;
@@ -72,6 +72,9 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		/// <summary>
+		/// Removes all the objects from the canvas.
+		/// </summary>
 		protected virtual void ClearObjects ()
 		{
 			if (Objects != null) {
@@ -83,50 +86,112 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		/// <summary>
+		/// A list of the first level objects stored in the canvas.
+		/// Objects including other objects should take care of forwarding
+		/// the redraw events their self.
+		/// </summary>
 		public List<ICanvasObject> Objects {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Adds a new object to the canvas and a listener to its redraw event.
+		/// </summary>
+		/// <param name="co">The object to add.</param>
 		public void AddObject (ICanvasObject co)
 		{
 			Objects.Add (co);
 			co.RedrawEvent += HandleRedrawEvent;
 		}
 
+		/// <summary>
+		/// Removes and object from the canvas.
+		/// </summary>
+		/// <param name="co">The object to remove.</param>
 		public void RemoveObject (ICanvasObject co)
 		{
 			co.RedrawEvent -= HandleRedrawEvent;
 			Objects.Remove (co);
 		}
 
+		/// <summary>
+		/// Converts a point to the original position removing the applied
+		/// tanslation and invering the scale.
+		/// </summary>
+		/// <returns>The converted point.</returns>
+		/// <param name="p">The point to convert.</param>
 		protected Point ToUserCoords (Point p)
 		{
-			return new Point ((p.X - translation.X) / scaleX,
-				(p.Y - translation.Y) / scaleY);
+			return new Point ((p.X - Translation.X) / ScaleX,
+				(p.Y - Translation.Y) / ScaleY);
 		
+		}
+
+		/// <summary>
+		/// When set to <c>true</c> redraws events are not ignored
+		/// </summary>
+		protected bool IgnoreRedraws {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Applied scale on the X axis
+		/// </summary>
+		protected double ScaleX {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Applied scale on the Y axis.
+		/// </summary>
+		protected double ScaleY {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Applied XY translation.
+		/// </summary>
+		protected Point Translation {
+			get;
+			set;
 		}
 
 		void HandleRedrawEvent (ICanvasObject co, Area area)
 		{
-			if (!ignoreRedraws) {
+			if (!IgnoreRedraws) {
 				widget.ReDraw (area);
 			}
 		}
 
 		void HandleSizeChangedEvent ()
 		{
+			/* After a resize objects are rescalled and we need to invalidate
+			 * their cached surfaces */
 			foreach (CanvasObject to in Objects) {
 				to.ResetDrawArea ();
 			}
 		}
 
+		/// <summary>
+		/// Draws the canvas objects the specified context and area.
+		/// Object are drawn in the following order:
+		///  1) Regular objects
+		///  2) Selected objects
+		///  3) Highlithed objects
+		/// </summary>
+		/// <param name="context">The context where the canvas is drawn.</param>
+		/// <param name="area">The affected area.</param>
 		public virtual void Draw (IContext context, Area area)
 		{
 			List<CanvasObject> highlighted = new List<CanvasObject> ();
 			tk.Context = context;
 			tk.Begin ();
-			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+			tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 			foreach (ICanvasObject co in Objects) {
 				if (co.Visible) {
 					if (co is ICanvasSelectableObject) {
@@ -154,6 +219,10 @@ namespace LongoMatch.Drawing
 		}
 	}
 
+	/// <summary>
+	/// A selection canvas supports selecting <see cref="ICanvasSelectableObject"/>
+	/// objects from the canvas and moving, resizing them.
+	/// </summary>
 	public class SelectionCanvas: Canvas
 	{
 		protected bool moving, moved;
@@ -168,7 +237,6 @@ namespace LongoMatch.Drawing
 			SelectionMode = MultiSelectionMode.Single;
 			Accuracy = 1;
 			ClickRepeatMS = 100;
-			MoveWithoutSelection = false;
 			ObjectsCanMove = true;
 			SingleSelectionObjects = new List<Type> ();
 			
@@ -185,6 +253,9 @@ namespace LongoMatch.Drawing
 			base.Dispose (disposing);
 		}
 
+		/// <summary>
+		/// Clears the objects.
+		/// </summary>
 		protected override void ClearObjects ()
 		{
 			// Make sure we don't maintain a selection with invalid objects.
@@ -192,45 +263,61 @@ namespace LongoMatch.Drawing
 			base.ClearObjects ();
 		}
 
+		/// <summary>
+		/// Maximum time in milliseconds where 2 mouse clicks are
+		/// considered a single one
+		/// </summary>
 		public int ClickRepeatMS {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Set the tolerance for clicks in the dashboards. An accuracy of 5
+		/// lets select objects with clicks 5 points away from their position.
+		/// </summary>
 		public double Accuracy {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Set the selection mode.
+		/// </summary>
 		public MultiSelectionMode SelectionMode {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// A list of objects for which multiple selection is disabled.
+		/// </summary>
 		public List<Type> SingleSelectionObjects {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// If <c>true</c> objects can moved in the canvas
+		/// </summary>
 		public bool ObjectsCanMove {
 			get;
 			set;
 		}
 
-		protected bool MoveWithoutSelection {
-			get;
-			set;
-		}
-
+		/// <summary>
+		/// A list with all the selected objects
+		/// </summary>
 		protected List<Selection> Selections {
 			get;
 			set;
 		}
 
-		protected virtual void StartMove (Selection sel)
-		{
-		}
-
+		/// <summary>
+		/// Called when the cursor is being moved.
+		/// Highlights objects when the cursor passes over them. 
+		/// </summary>
+		/// <param name="coords">Coords.</param>
 		protected virtual void CursorMoved (Point coords)
 		{
 			CanvasObject current;
@@ -254,18 +341,43 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		/// <summary>
+		/// Notifies subclasses when an object starts to be moved.
+		/// </summary>
+		/// <param name="sel">The selection moved.</param>
+		protected virtual void StartMove (Selection sel)
+		{
+		}
+
+		/// <summary>
+		/// Notifies subclasses when an object has been moved.
+		/// </summary>
+		/// <param name="sel">The selection moved.</param>
 		protected virtual void SelectionMoved (Selection sel)
 		{
 		}
 
+		/// <summary>
+		/// Notifies subclass when the move process stops.
+		/// </summary>
+		/// <param name="moved">If set to <c>true</c>, the object position changed.</param>
 		protected virtual void StopMove (bool moved)
 		{
 		}
 
+		/// <summary>
+		/// Notifies subclasses when the selected objects has changed.
+		/// </summary>
+		/// <param name="sel">List of selected objects.</param>
 		protected virtual void SelectionChanged (List<Selection> sel)
 		{
 		}
 
+		/// <summary>
+		/// Notifies subclasses a menu should be displayed.
+		/// Canvas' with menus should override it to display their menu here.
+		/// </summary>
+		/// <param name="coords">Position where the click happens.</param>
 		protected virtual void ShowMenu (Point coords)
 		{
 		}
@@ -284,6 +396,14 @@ namespace LongoMatch.Drawing
 			Selections.Clear ();
 		}
 
+		/// <summary>
+		/// Updates the current selection. If <paramref name="sel"/> is <c>null</c>,
+		/// it clears the current selection. If <paramref name="sel"/> wasn't previously
+		/// selected, it's added to the list of selected objects, otherwise it's removed
+		/// from the list.
+		/// </summary>
+		/// <param name="sel">The selection.</param>
+		/// <param name="notify">If set to <c>true</c>, notifies about the changes.</param>
 		protected void UpdateSelection (Selection sel, bool notify = true)
 		{
 			ICanvasSelectableObject so;
@@ -457,8 +577,14 @@ namespace LongoMatch.Drawing
 		protected virtual void HandleSizeChangedEvent ()
 		{
 			if (background != null) {
+				double scaleX, scaleY;
+				Point translation;
+
 				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
 					out scaleY, out translation);
+				ScaleX = scaleX;
+				ScaleY = scaleY;
+				Translation = translation;
 			}
 		}
 
@@ -467,7 +593,7 @@ namespace LongoMatch.Drawing
 			if (Background != null) {
 				tk.Context = context;
 				tk.Begin ();
-				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				tk.DrawImage (Background);
 				tk.End ();
 			}
