@@ -133,9 +133,9 @@ namespace LongoMatch.Services
 		{
 			foreach (IService service in services.OrderBy (s => s.Level)) {
 				if (service.Start ()) {
-					Log.Information ("Started service {0} successfully");
+					Log.InformationFormat ("Started service {0} successfully", service.Name);
 				} else {
-					Log.Information ("Failed starting service {0}");
+					Log.InformationFormat ("Failed starting service {0}", service.Name);
 				}
 			}
 		}
@@ -144,9 +144,9 @@ namespace LongoMatch.Services
 		{
 			foreach (IService service in services.OrderByDescending (s => s.Level)) {
 				if (service.Stop ()) {
-					Log.Information ("Stopped service {0} successfully");
+					Log.InformationFormat ("Stopped service {0} successfully", service.Name);
 				} else {
-					Log.Information ("Failed stopping service {0}");
+					Log.InformationFormat ("Failed stopping service {0}", service.Name);
 				}
 			}
 		}
