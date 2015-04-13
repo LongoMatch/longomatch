@@ -56,6 +56,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 		bool QuestionMessage (string message, string title, object parent = null);
 
 		string QueryMessage (string key, string title = null, string value = "", object parent = null);
+
+		bool NewVersionAvailable (Version currentVersion, Version latestVersion,
+			string downloadURL, string changeLog, object parent = null);
 		
 		/* Files/Folders IO */
 		string SaveFile (string title, string defaultName, string defaultFolder,

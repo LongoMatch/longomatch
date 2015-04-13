@@ -24,6 +24,7 @@ namespace LongoMatch.Services
 
 		string tempFile;
 		string downloadURL;
+		string changeLog;
 
 		#region Constructors
 
@@ -31,9 +32,6 @@ namespace LongoMatch.Services
 		{
 			currentVersion = Assembly.GetExecutingAssembly ().GetName ().Version;
 			tempFile = Path.Combine (Config.HomeDir, "latest.json");
-
-			var thread = new Thread (new ThreadStart (CheckForUpdates));
-			thread.Start ();
 		}
 
 		#endregion
@@ -54,6 +52,7 @@ namespace LongoMatch.Services
 
 				latestVersion = new Version (latestObject ["version"].Value<string> ());
 				downloadURL = latestObject ["url"].Value<string> ();
+				changeLog = latestObject["changes"].Value<string> ();
 			} catch (Exception ex) {
 				Log.Warning ("Error processing version file: " + Config.LatestVersionURL);
 				Log.Exception (ex);
@@ -77,14 +76,20 @@ namespace LongoMatch.Services
 			FetchNewVersion ();
 			Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}",
 				currentVersion, latestVersion);
+			if (latestVersion == Config.IgnoreUpdaterVersion) {
+				Log.InformationFormat ("UpdatesNotifier: Version {0} has been silenced. Not warning user about update.",
+					latestVersion);
+				return;
+			}
 			if (IsOutDated ()) {
 				Config.GUIToolkit.Invoke (delegate {
-					Config.GUIToolkit.InfoMessage (
-						string.Format (
-							Catalog.GetString ("Version {0} is available!\n" +
-							"(You are using version {1})\n" +
-							"<a href=\"{2}\">Click here to get it.</a>"),
-							latestVersion, currentVersion, downloadURL));
+					bool ignore = Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
+						downloadURL, changeLog, null);
+					if (ignore) {
+						/* User requested to ignore this version */
+						Log.InformationFormat ("UpdatesNotifier: Marking version {0} as silenced.", latestVersion);
+						Config.IgnoreUpdaterVersion = latestVersion;
+					}
 				});
 			}
 		}
@@ -107,6 +112,9 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
+			var thread = new Thread (new ThreadStart (CheckForUpdates));
+			thread.Start ();
+
 			return true;
 		}
 

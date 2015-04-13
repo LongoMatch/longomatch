@@ -115,7 +115,7 @@ namespace LongoMatch
 			try {
 				Serializer.Save (state, Config.ConfigFile); 
 			} catch (Exception ex) {
-				Log.Error ("Errro saving config");
+				Log.Error ("Error saving config");
 				Log.Exception (ex);
 			}
 		}
@@ -535,6 +535,16 @@ namespace LongoMatch
 			}
 		}
 
+		public static Version IgnoreUpdaterVersion {
+			get {
+				return state.ignoreUpdaterVersion;
+			}
+			set {
+				state.ignoreUpdaterVersion = value;
+				Save ();
+			}
+		}
+
 		#endregion
 
 	}
@@ -565,6 +575,7 @@ namespace LongoMatch
 		public string defaultTemplate;
 		public Hotkeys hotkeys;
 		public ProjectSortMethod projectSortMethod;
+		public Version ignoreUpdaterVersion;
 
 		public ConfigState ()
 		{
@@ -591,6 +602,7 @@ namespace LongoMatch
 			defaultTemplate = null;
 			hotkeys = new Hotkeys ();
 			projectSortMethod = ProjectSortMethod.Date;
+			ignoreUpdaterVersion = null;
 		}
 	}
 }

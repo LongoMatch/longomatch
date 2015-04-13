@@ -128,6 +128,15 @@ namespace LongoMatch.Gui
 			return MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
 		}
 
+		public bool NewVersionAvailable (Version currentVersion, Version latestVersion,
+			string downloadURL, string changeLog, object parent = null)
+		{
+			if (parent == null)
+				parent = mainWindow;
+			return MessagesHelpers.NewVersionAvailable (currentVersion, latestVersion, downloadURL,
+				changeLog, parent as Widget);
+		}
+
 		public string SaveFile (string title, string defaultName, string defaultFolder,
 		                        string filterName, string[] extensionFilter)
 		{
