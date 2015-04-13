@@ -4,14 +4,13 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using System.Net;
+using System.Reflection;
 using System.Threading;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LongoMatch.Services
 {
