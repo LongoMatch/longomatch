@@ -62,6 +62,8 @@ namespace Tests.Services
 
 				// Create a rendering object with mocked interfaces
 				RenderingJobsManager renderer = new RenderingJobsManager (mtk, gtk);
+				// Start service
+				renderer.Start ();
 
 				renderer.AddJob (job);
 

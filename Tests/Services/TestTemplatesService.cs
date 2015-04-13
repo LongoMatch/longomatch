@@ -26,7 +26,7 @@ using LongoMatch.Core.Interfaces;
 
 namespace Tests.Services
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestTemplatesService
 	{
 		[TearDown]
@@ -38,12 +38,14 @@ namespace Tests.Services
 			}
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestSystemTemplates ()
 		{
 			FileStorage fs = new FileStorage (
 				                 Path.Combine (Path.GetTempPath (), "TestTemplatesService"));
 			TemplatesService ts = new TemplatesService (fs);
+			// Start service
+			ts.Start ();
 			ICategoriesTemplatesProvider ctp = ts.CategoriesTemplateProvider;
 
 			// We must have at least one template provider called 'Default'
