@@ -300,15 +300,20 @@ namespace LongoMatch.Core.Store
 
 		public void UpdateEventTypesAndTimers ()
 		{
-			IEnumerable<EventType> dashboardtypes, timelinetypes;
-			/* Timers */
-			IEnumerable<Timer> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer);
-			Timers.AddRange (timers.Except (Timers));
+			IEnumerable<EventType> dashboardtypes = new List<EventType> ();
+			IEnumerable<EventType> timelinetypes;
+
+			if (Dashboard != null) {
+				/* Timers */
+				IEnumerable<Timer> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer);
+				Timers.AddRange (timers.Except (Timers));
 			
-			/* Update event types list that changes when the user adds or remove a
-			 * a new button to the dashboard or after importing a project with events
-			 * tagged with a different dashboard */
-			dashboardtypes = Dashboard.List.OfType<EventButton> ().Select (b => b.EventType);
+				/* Update event types list that changes when the user adds or remove a
+				 * a new button to the dashboard or after importing a project with events
+				 * tagged with a different dashboard */
+				dashboardtypes = Dashboard.List.OfType<EventButton> ().Select (b => b.EventType);
+			}
+
 			/* Remove event types that have no events and are not in the dashboard anymore */
 			foreach (EventType evt in EventTypes.Except (dashboardtypes).ToList ()) {
 				if (evt == SubstitutionsEventType) {

@@ -238,10 +238,13 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			// FIXME In case the project provides a dashboard, use it, otherwise, enable the combobox
-			// we can not set the dashboard to null otherwise a lot of segv happen
-			tagscombobox.Visible = false;
-			analysislabel.Visible = false;
-			analysisTemplate = project.Dashboard;
+			if (project.Dashboard != null) {
+				tagscombobox.Visible = false;
+				analysislabel.Visible = false;
+				analysisTemplate = project.Dashboard;
+			} else {
+				project.Dashboard = analysisTemplate;
+			}
 			mediafilesetselection1.Visible = true;
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
