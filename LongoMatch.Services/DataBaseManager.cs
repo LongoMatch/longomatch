@@ -168,6 +168,8 @@ namespace LongoMatch.Services
 
 			UpdateDatabases ();
 
+			SetActiveByName (Config.CurrentDatabase);
+
 			return true;
 		}
 

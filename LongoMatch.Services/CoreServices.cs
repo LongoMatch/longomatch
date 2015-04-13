@@ -95,7 +95,6 @@ namespace LongoMatch.Services
 
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
-			dbManager.SetActiveByName (Config.CurrentDatabase);
 			services.Add (dbManager);
 			Config.DatabaseManager = dbManager;
 
