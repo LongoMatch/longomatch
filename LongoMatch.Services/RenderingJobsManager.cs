@@ -123,7 +123,7 @@ namespace LongoMatch.Services
 
 		public void CancelJob (Job job)
 		{
-			if (currentJob != job) 
+			if (currentJob != job)
 				return;
 			
 			if (job is EditionJob) {
@@ -163,7 +163,7 @@ namespace LongoMatch.Services
 			
 			foreach (MediaFile file in job.InputFiles) {
 				videoConverter.AddFile (file.FilePath, file.Duration.MSeconds,
-				                        file.VideoWidth, file.VideoHeight, file.Par);
+					file.VideoWidth, file.VideoHeight, file.Par);
 			}
 			
 			try {
@@ -207,7 +207,8 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void ProcessImage (Image image, Time duration) {
+		void ProcessImage (Image image, Time duration)
+		{
 			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			image.Save (path);
 			videoEditor.AddImageSegment (path, 0, duration.MSeconds, "");
@@ -216,7 +217,7 @@ namespace LongoMatch.Services
 		void ProcessImage (PlaylistImage image)
 		{
 			Log.Debug (String.Format ("Adding still image with duration {0}s",
-			                          image.Duration));
+				image.Duration));
 			ProcessImage (image.Image, image.Duration);
 		}
 
@@ -224,7 +225,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Adding external video " + video.File.FilePath);
 			videoEditor.AddSegment (video.File.FilePath, 0, video.File.Duration.MSeconds,
-			                        1, "", video.File.HasAudio);
+				1, "", video.File.HasAudio);
 		}
 
 		void ProcessDrawing (PlaylistDrawing drawing)
@@ -232,9 +233,9 @@ namespace LongoMatch.Services
 			Image img;
 			
 			Log.Debug (String.Format ("Adding still drawing with duration {0}s",
-			                          drawing.Duration));
+				drawing.Duration));
 			img = Drawing.Utils.RenderFrameDrawing (Config.DrawingToolkit, drawing.Width,
-			                                        drawing.Height, drawing.Drawing);
+				drawing.Height, drawing.Drawing);
 			ProcessImage (img, drawing.Duration);
 		}
 
@@ -273,7 +274,7 @@ namespace LongoMatch.Services
 			foreach (FrameDrawing fd in drawings) {
 				if (fd.Render < play.Start || fd.Render > play.Stop) {
 					Log.Warning ("Drawing is not in the segments boundaries " +
-					             fd.Render.ToMSecondsString ());
+					fd.Render.ToMSecondsString ());
 					continue;
 				}
 				string image_path = CreateStillImage (file.FilePath, fd);
@@ -281,14 +282,14 @@ namespace LongoMatch.Services
 					continue;
 				}
 				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
-				                       fd.Render.MSeconds - lastTS.MSeconds,
-				                       element.Rate, play.Name, file.HasAudio);
+					fd.Render.MSeconds - lastTS.MSeconds,
+					element.Rate, play.Name, file.HasAudio);
 				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name);
 				lastTS = fd.Render;
 			}
 			videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
-			                        play.Stop.MSeconds - lastTS.MSeconds,
-			                        element.Rate, play.Name, file.HasAudio);
+				play.Stop.MSeconds - lastTS.MSeconds,
+				element.Rate, play.Name, file.HasAudio);
 			return true;
 		}
 
@@ -303,7 +304,7 @@ namespace LongoMatch.Services
 			capturer.Dispose ();
 			if (frame == null) {
 				Log.Error (String.Format ("Could not get frame for file {0} at pos {1}",
-				                          filename, drawing.Render.ToMSecondsString ()));
+					filename, drawing.Render.ToMSecondsString ()));
 				return null;
 			}
 			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
@@ -343,13 +344,13 @@ namespace LongoMatch.Services
 		{
 			stateBar.Fraction = progress;
 			stateBar.ProgressText = String.Format ("{0}... {1:0.0}%", Catalog.GetString ("Rendering"),
-			                                      progress * 100);
+				progress * 100);
 		}
 
 		private void UpdateJobsStatus ()
 		{
 			stateBar.Text = String.Format ("{0} ({1} {2})", Catalog.GetString ("Rendering queue"),
-			                              pendingJobs.Count, Catalog.GetString ("Pending"));
+				pendingJobs.Count, Catalog.GetString ("Pending"));
 		}
 
 		private void RemoveCurrentFromPending ()
@@ -364,7 +365,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Job finished with errors");
 			guiToolkit.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
-				+ Catalog.GetString ("Please, try again."));
+			+ Catalog.GetString ("Please, try again."));
 			currentJob.State = JobState.Error;
 			CloseAndNext ();
 		}
@@ -372,7 +373,7 @@ namespace LongoMatch.Services
 		private void MainLoopOnProgress (float progress)
 		{
 			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
-				&& progress > stateBar.Fraction) {
+			    && progress > stateBar.Fraction) {
 				UpdateProgress (progress);
 			}
 
