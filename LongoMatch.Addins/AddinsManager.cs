@@ -26,9 +26,9 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
-using LongoMatch.Core.Stats;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -149,21 +149,6 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		/// <summary>
-		/// Gets all Services exposed by addins through the IServicesPlugin extension point.
-		/// </summary>
-		/// <returns>A List of services provided by addins.</returns>
-		public static List<IService> GetAddinsServices ()
-		{
-			List<IService> services = new List<IService> ();
-
-			foreach (IServicesPlugin plugin in AddinManager.GetExtensionObjects<IServicesPlugin> ()) {
-				services.AddRange (plugin.Services);
-			}
-
-			return services;
-		}
-
 		public static void ShutdownMultimediaBackends ()
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
@@ -177,6 +162,18 @@ namespace LongoMatch.Addins
 				foreach (Dashboard dashboard in plugin.Dashboards) {
 					dashboard.Static = true;
 					provider.Register (dashboard);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Register <see cref="IService"/> exposed by addins through the <see cref="IServicesPlugin"/> extension point.
+		/// </summary>
+		public static void LoadServicesAddins ()
+		{
+			foreach (IServicesPlugin plugin in AddinManager.GetExtensionObjects<IServicesPlugin> ()) {
+				foreach (IService service in plugin.Services) {
+					CoreServices.RegisterService (service);
 				}
 			}
 		}

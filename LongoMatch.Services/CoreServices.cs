@@ -25,7 +25,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Addins;
 using Mono.Unix;
 using LongoMatch.Services.Services;
 
@@ -133,11 +132,6 @@ namespace LongoMatch.Services
 			/* Start the Update Notifier */
 			updatesNotifier = new UpdatesNotifier ();
 			RegisterService (updatesNotifier);
-
-			/* Register services from addins */
-			foreach (IService service in AddinsManager.GetAddinsServices ()) {
-				RegisterService (service);
-			}
 		}
 
 		public static void StartServices ()

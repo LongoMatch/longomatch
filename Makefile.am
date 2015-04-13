@@ -13,11 +13,11 @@ SUBDIRS = \
 	oxyplot \
 	LongoMatch.Core \
 	LongoMatch.DB \
-	LongoMatch.Addins \
 	LongoMatch.Multimedia \
 	LongoMatch.Drawing \
 	LongoMatch.Drawing.Cairo \
 	LongoMatch.Services \
+	LongoMatch.Addins \
 	LongoMatch.GUI.Helpers \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
