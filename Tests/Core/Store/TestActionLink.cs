@@ -51,7 +51,7 @@ namespace Tests.Core.Store
 			link = CreateLink ();
 
 			ActionLink link2 = Utils.SerializeDeserialize (link);
-			Assert.AreEqual (link.SourceTags, link2.SourceTags);
+			Assert.AreNotEqual (link.SourceTags, link2.SourceTags);
 			Assert.AreEqual (link.DestinationTags, link2.DestinationTags);
 			Assert.AreEqual (link.Action, link2.Action);
 			Assert.AreEqual (link.TeamAction, link2.TeamAction);
