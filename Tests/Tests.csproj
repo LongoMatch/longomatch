@@ -85,6 +85,7 @@
     <Compile Include="Services\TestPlayerController.cs" />
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
+    <Compile Include="Services\TestServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
