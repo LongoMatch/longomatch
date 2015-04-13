@@ -127,7 +127,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 			tk.Begin ();
 			
-			if (Active && Mode != TagMode.Edit) {
+			if (Active && Mode != DashboardMode.Edit) {
 				tk.LineWidth = StyleConf.ButtonLineWidth;
 				tk.StrokeColor = Button.BackgroundColor;
 				tk.FillColor = Button.BackgroundColor;

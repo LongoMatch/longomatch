@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using LongoMatch.Core.Common;
@@ -47,6 +48,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		object applyButton = new object ();
 		Rectangle editRect, cancelRect, applyRect;
 		double catWidth, heightPerRow;
+		Dictionary <Tag, LinkAnchorObject> subcatAnchors, cachedAnchors;
 
 		public CategoryObject (AnalysisEventButton category) : base (category)
 		{
@@ -79,6 +81,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 			MinWidth = 100;
 			MinHeight = HeaderHeight * 2;
+			subcatAnchors = new Dictionary<Tag, LinkAnchorObject> ();
+			foreach (Tag tag in category.AnalysisEventType.Tags) {
+				AddSubcatAnchor (tag, new Point (0, 0));
+			}
 		}
 
 		protected override void Dispose (bool disposing)
@@ -86,6 +92,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			if (timer != null) {
 				timer.Dispose ();
 				timer = null;
+			}
+			foreach (LinkAnchorObject anchor in subcatAnchors.Values.ToList()) {
+				RemoveAnchor (anchor);
 			}
 			base.Dispose (disposing);
 		}
@@ -111,7 +120,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			get {
 				return ShowTags && tagsByGroup.Count > 1
 				&& Button.TagMode == TagMode.Predefined
-				&& Mode != TagMode.Edit;
+				&& Mode != DashboardMode.Edit;
 			}
 		}
 
@@ -175,6 +184,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			SelectedTags.Clear ();
 		}
 
+		void RemoveAnchor (LinkAnchorObject anchor)
+		{
+			anchor.Dispose ();
+			subcatAnchors.RemoveKeysByValue (anchor);
+		}
+
 		void EmitCreateEvent ()
 		{
 			EmitClickEvent ();
@@ -190,7 +205,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		void DelayTagClicked ()
 		{
-			if (tagsByGroup.Keys.Count == 1 || Mode == TagMode.Edit) {
+			if (tagsByGroup.Keys.Count == 1 || Mode == DashboardMode.Edit) {
 				TimerCallback (null);
 				return;
 			}
@@ -242,6 +257,22 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
+		void AddSubcatAnchor (Tag tag, Point point)
+		{
+			LinkAnchorObject anchor;
+
+			if (subcatAnchors.ContainsKey (tag)) {
+				anchor = subcatAnchors [tag];
+				anchor.RelativePosition = point;
+			} else {
+				anchor = new LinkAnchorObject (this, new List<Tag> { tag }, point);
+				anchor.RedrawEvent += (co, area) => {
+					EmitRedrawEvent (anchor, area);
+				};
+				subcatAnchors.Add (tag, anchor);
+			}
+		}
+
 		bool CheckRect (Point p, Rectangle rect, object obj)
 		{
 			Selection subsel;
@@ -267,9 +298,32 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			return false;
 		}
 
+		public override Selection GetSelection (Point p, double precision, bool inMotion = false)
+		{
+			Selection sel = anchor.GetSelection (p, precision, inMotion);
+			if (sel != null)
+				return sel;
+			foreach (LinkAnchorObject subcatAnchor in subcatAnchors.Values) {
+				sel = subcatAnchor.GetSelection (p, precision, inMotion);
+				if (sel != null)
+					return sel;
+			}
+			return base.GetSelection (p, precision, inMotion);
+		}
+
+		public override LinkAnchorObject GetAnchor (List<Tag> sourceTags)
+		{
+			/* Only one tag is supported for now */
+			if (sourceTags == null || sourceTags.Count == 0) {
+				return base.GetAnchor (sourceTags);
+			} else {
+				return subcatAnchors [sourceTags [0]];
+			}
+		}
+
 		public override void ClickPressed (Point p, ButtonModifier modif)
 		{
-			if (Mode == TagMode.Edit) {
+			if (Mode == DashboardMode.Edit) {
 				editClicked = CheckRect (p, editRect, editbutton);
 				return;
 			}
@@ -330,6 +384,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				col = i % tagsPerRow;
 				pos = new Point (start.X + col * rowwidth,
 					start.Y + yptr + row * heightPerRow);
+				tag = tags [i];
+
+				AddSubcatAnchor (tag, new Point (pos.X - Position.X, pos.Y - Position.Y));
+				if (!Button.ShowSubcategories) {
+					continue;
+				}
 
 				tk.StrokeColor = Button.DarkColor;
 				tk.LineWidth = 1;
@@ -357,7 +417,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					tk.LineStyle = LineStyle.Normal;
 				}
 				tk.StrokeColor = Button.TextColor;
-				tag = tags [i];
 				tk.DrawText (pos, rowwidth, heightPerRow, tag.Value);
 				rects.Add (new Rectangle (pos, rowwidth, heightPerRow), tag);
 			}
@@ -412,7 +471,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Color c;
 			double width, height;
 
-			if (Mode != TagMode.Edit) {
+			if (Mode != DashboardMode.Edit || ShowLinks || !Button.ShowSubcategories) {
 				return;
 			}
 
@@ -436,7 +495,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		void DrawSelectedTags (IDrawingToolkit tk)
 		{
-			if (Mode == TagMode.Edit) {
+			if (Mode == DashboardMode.Edit) {
 				return;
 			}
 			foreach (Rectangle r in rects.Keys) {
@@ -456,7 +515,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		void DrawRecordTime (IDrawingToolkit tk)
 		{
-			if (Recording && Mode != TagMode.Edit) {
+			if (Recording && Mode != DashboardMode.Edit) {
 				if (ShowTags) {
 					tk.FontSize = 12;
 					tk.FontWeight = FontWeight.Normal;
@@ -536,6 +595,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
+		void DrawAnchors (IDrawingToolkit tk)
+		{
+			if (!ShowLinks)
+				return;
+			DrawAnchor (tk, null);
+			foreach (LinkAnchorObject anchor in subcatAnchors.Values) {
+				anchor.Draw (tk, null);
+			}
+		}
+
 		new void DrawButton (IDrawingToolkit tk)
 		{
 			if (!ShowTags) {
@@ -564,6 +633,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		void DrawBackbuffer (IDrawingToolkit tk)
 		{
 			Point pos;
+			double yptr = 0;
 
 			rects.Clear ();
 			buttonsRects.Clear ();
@@ -584,13 +654,22 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			DrawHeader (tk);
 			DrawRecordButton (tk);
 
-			if (Button.ShowSubcategories) {
-				double yptr = 0;
-				foreach (List<Tag> tags in tagsByGroup.Values) {
-					DrawTagsGroup (tk, tags, ref yptr);
+			foreach (List<Tag> tags in tagsByGroup.Values) {
+				DrawTagsGroup (tk, tags, ref yptr);
+			}
+
+			/* Remove anchor object that where not reused
+				 * eg: after removinga a subcategory tag */
+			foreach (Tag tag in subcatAnchors.Keys.ToList ()) {
+				if (!Button.AnalysisEventType.Tags.Contains (tag)) {
+					RemoveAnchor (subcatAnchors [tag]);
 				}
 			}
-			DrawEditButton (tk);
+			if (!ShowLinks) {
+				DrawEditButton (tk);
+			}
+			if (Button.ShowSubcategories) {
+			}
 			tk.End ();
 		}
 
@@ -637,6 +716,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			DrawRecordTime (tk);
 			DrawApplyButton (tk);
 			DrawSelectionArea (tk);
+			DrawAnchors (tk);
 			tk.End ();
 		}
 	}

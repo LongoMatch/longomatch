@@ -41,12 +41,12 @@ namespace LongoMatch.Gui.Component
 	{
 		public event NewEventHandler NewTagEvent;
 
-		TagMode tagMode;
+		DashboardMode mode;
 		DashboardCanvas tagger;
 		Dashboard template;
 		DashboardButton selected;
-		Gtk.Image editimage;
-		ToggleToolButton editbutton, popupbutton;
+		Gtk.Image editimage, linksimage;
+		ToggleToolButton editbutton, linksbutton, popupbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
 		Project project;
@@ -63,7 +63,7 @@ namespace LongoMatch.Gui.Component
 			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
 
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
-			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
+			tagger.ButtonsSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.EditButtonTagsEvent += HandleAddNewTagEvent;
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Component
 			FillToolbar ();
 			FitMode = FitMode.Original;
 			Edited = false;
-			Mode = TagMode.Predefined;
+			Mode = DashboardMode.Code;
 			// Initialize to a sane default value.
 			propertiesnotebook.Page = 1;
 		}
@@ -165,26 +165,24 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public TagMode Mode {
+		public DashboardMode Mode {
 			set {
 				ignoreChanges = true;
-				tagMode = value;
-				tagger.TagMode = value;
+				mode = value;
+				tagger.Mode = value;
 				// Properties only visible in edit mode
-				rightbox.Visible = tagMode == TagMode.Edit;
+				rightbox.Visible = mode == DashboardMode.Edit;
 				// Add buttons for cards/tags/etc.. can be handled remotely.
-				hbuttonbox2.Visible = tagMode == TagMode.Edit && internalButtons;
-				editbutton.Active = value == TagMode.Edit;
-				if (value == TagMode.Edit) {
-					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
-						22, IconLookupFlags.ForceSvg);
+				hbuttonbox2.Visible = mode == DashboardMode.Edit && internalButtons;
+				editbutton.Active = value == DashboardMode.Edit;
+				if (value == DashboardMode.Edit) {
+					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22);
 				} else {
-					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit",
-						22, IconLookupFlags.ForceSvg);
+					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit", 22);
 				}
-				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == TagMode.Edit);
+				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == DashboardMode.Edit);
 				if (project != null) {
-					if (value == TagMode.Edit) {
+					if (value == DashboardMode.Edit) {
 						Edited = false;
 					} else {
 						if (Edited)
@@ -195,14 +193,14 @@ namespace LongoMatch.Gui.Component
 				ignoreChanges = false;
 			}
 			get {
-				return tagMode;
+				return mode;
 			}
 		}
 
 		public bool ButtonsVisible {
 			set {
 				internalButtons = value;
-				Mode = tagMode;
+				Mode = mode;
 			}
 		}
 
@@ -257,14 +255,24 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void RemoveLink (ActionLink link)
+		{
+			string msg = string.Format ("{0} {1} ?",
+				             Catalog.GetString ("Do you want to delete: "), link);
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+				link.SourceButton.ActionLinks.Remove (link);
+				Edited = true;
+				Refresh ();
+			}
+		}
+
 		void FillToolbar ()
 		{
 			Toolbar toolbar = new Toolbar ();
 			toolbar.Orientation = Orientation.Vertical;
 			toolbar.ToolbarStyle = ToolbarStyle.Icons;
 			
-			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active",
-				22, IconLookupFlags.ForceSvg));
+			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22));
 			editbutton = new ToggleToolButton ();
 			editbutton.IconWidget = editimage;
 			editbutton.Active = true;
@@ -272,10 +280,18 @@ namespace LongoMatch.Gui.Component
 			editbutton.TooltipText = Catalog.GetString ("Edit dashboard");
 			toolbar.Add (editbutton);
 			toolbar.Add (new SeparatorToolItem ());
-			
+
+			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22));
+			linksbutton = new ToggleToolButton ();
+			linksbutton.IconWidget = editimage;
+			linksbutton.Active = false;
+			linksbutton.Toggled += HandleLinksToggled;
+			linksbutton.TooltipText = Catalog.GetString ("Edit actions links");
+			toolbar.Add (linksbutton);
+			toolbar.Add (new SeparatorToolItem ());
+
 			popupbutton = new ToggleToolButton ();
-			popupbutton.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon
-			                                        ("longomatch-popup", 22));
+			popupbutton.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-popup", 22));
 			popupbutton.Active = true;
 			popupbutton.Toggled += HandlePopupToggled;
 			popupbutton.TooltipText = Catalog.GetString ("Disable popup window");
@@ -283,17 +299,17 @@ namespace LongoMatch.Gui.Component
 			toolbar.Add (new SeparatorToolItem ());
 			
 			fitbutton = new RadioToolButton ((GLib.SList)null);
-			fitbutton.IconName = "longomatch-dash-fit";
+			fitbutton.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-fit", 22));
 			fitbutton.Toggled += HandleFitModeToggled;
 			fitbutton.TooltipText = Catalog.GetString ("Fit dashboard");
 			toolbar.Add (fitbutton);
 			fillbutton = new RadioToolButton (fitbutton);
-			fillbutton.IconName = "longomatch-dash-fill";
+			fillbutton.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-fill", 22));
 			fillbutton.Toggled += HandleFitModeToggled;
 			fillbutton.TooltipText = Catalog.GetString ("Fill dashboard");
 			toolbar.Add (fillbutton);
 			d11button = new RadioToolButton (fitbutton);
-			d11button.IconName = "longomatch-dash-11";
+			d11button.IconWidget = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-11", 22));
 			d11button.Toggled += HandleFitModeToggled;
 			d11button.TooltipText = Catalog.GetString ("1:1 dashboard");
 			toolbar.Add (d11button);
@@ -330,10 +346,20 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 			if (editbutton.Active) {
-				Mode = TagMode.Edit;
+				Mode = DashboardMode.Edit;
+				linksbutton.Visible = true;
 			} else {
-				Mode = TagMode.Predefined;
+				Mode = DashboardMode.Code;
+				linksbutton.Visible = false;
 			}
+		}
+
+		void HandleLinksToggled (object sender, EventArgs e)
+		{
+			if (ignoreChanges) {
+				return;
+			}
+			tagger.ShowLinks = linksbutton.Active;
 		}
 
 		void HandleTaggersSelectedEvent (List<DashboardButton> taggers)
@@ -383,21 +409,28 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (DashboardButton taggerbutton, Tag tag)
+		void HandleShowMenuEvent (List<DashboardButton> buttons, List<ActionLink> links)
 		{
 			Menu menu;
 			MenuItem delbut;
 			
-			if (Mode != TagMode.Edit) {
+			if (Mode != DashboardMode.Edit) {
 				return;
 			}
 			
 			menu = new Menu ();
-			delbut = new MenuItem (Catalog.GetString ("Delete"));
-			delbut.Activated += (sender, e) => {
-				RemoveButton (taggerbutton);
-			};
-			menu.Add (delbut);
+			foreach (DashboardButton button in buttons) {
+				delbut = new MenuItem (string.Format ("{0}: {1}",
+					Catalog.GetString ("Delete"), button.Name));
+				delbut.Activated += (sender, e) => RemoveButton (button);
+				menu.Add (delbut);
+			}
+			foreach (ActionLink link in links) {
+				delbut = new MenuItem (string.Format ("{0}: {1}",
+					Catalog.GetString ("Delete"), link));
+				delbut.Activated += (sender, e) => RemoveLink (link);
+				menu.Add (delbut);
+			}
 			menu.ShowAll ();
 			menu.Popup ();
 		}

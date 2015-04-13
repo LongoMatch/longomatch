@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			;
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
 			
-			buttonswidget.Mode = TagMode.Free;
+			buttonswidget.Mode = DashboardMode.Code;
 			buttonswidget.FitMode = FitMode.Fit;
 			buttonswidget.ButtonsVisible = true;
 			buttonswidget.NewTagEvent += HandleNewTagEvent;
@@ -169,7 +169,7 @@ namespace LongoMatch.Gui.Component
 			if (project != null) {
 				buttonswidget.Project = project;
 			}
-			buttonswidget.Mode = TagMode.Predefined;
+			buttonswidget.Mode = DashboardMode.Code;
 			teamtagger.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 				project.Dashboard.FieldBackground);

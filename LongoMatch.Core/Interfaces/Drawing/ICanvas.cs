@@ -25,25 +25,29 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 	public interface ICanvas: IDisposable
 	{
-		 void Draw (IContext context, Area area);
+		void Draw (IContext context, Area area);
 	}
-	
+
 	public interface ICanvasObject: IDisposable
 	{
 		event CanvasHandler ClickedEvent;
 		event RedrawHandler RedrawEvent;
 
 		void Draw (IDrawingToolkit tk, Area area);
-		bool Visible {set; get;}
-		string Description {set; get;}
+
+		bool Visible { set; get; }
+
+		string Description { set; get; }
+
 		void ClickPressed (Point p, ButtonModifier modif);
+
 		void ClickReleased ();
 	}
-	
+
 	public interface ICanvasSelectableObject: ICanvasObject, IMovableObject
 	{
 	}
-	
+
 	public interface ICanvasDrawableObject: ICanvasSelectableObject
 	{
 		IBlackboardObject IDrawableObject {

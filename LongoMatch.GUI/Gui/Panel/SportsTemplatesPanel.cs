@@ -122,7 +122,7 @@ namespace LongoMatch.Gui.Panel
 			
 			buttonswidget.Sensitive = false;
 			buttonswidget.ButtonsVisible = false;
-			buttonswidget.Mode = TagMode.Edit;
+			buttonswidget.Mode = DashboardMode.Edit;
 			newtemplatebutton.Visible = true;
 			deletetemplatebutton.Visible = false;
 			

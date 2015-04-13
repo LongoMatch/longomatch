@@ -141,6 +141,12 @@ namespace LongoMatch.Core.Store
 		{
 			return !(l1 == l2);
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("{0}->{1}", SourceButton != null ? SourceButton.Name : "empty",
+				DestinationButton != null ? DestinationButton.Name : "empty");
+		}
 	}
 }
 

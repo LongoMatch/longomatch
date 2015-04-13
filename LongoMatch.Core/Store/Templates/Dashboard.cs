@@ -296,6 +296,7 @@ namespace LongoMatch.Core.Store.Templates
 			Dashboard template = new Dashboard ();
 			
 			template.FillDefaultTemplate (count);
+
 			periods.Add ("1");
 			periods.Add ("2");
 			template.GamePeriods = periods; 

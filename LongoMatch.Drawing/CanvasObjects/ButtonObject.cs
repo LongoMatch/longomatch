@@ -104,17 +104,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
+		public virtual bool DrawsSelectionArea {
+			get {
+				return true;
+			}
+		}
 
 		public virtual Area Area {
 			get {
 				return new Area (Position, Width + SELECTION_SIZE / 2 + 1,
 					Height + SELECTION_SIZE / 2 + 1);
 			}
-		}
-
-		public TagMode Mode {
-			get;
-			set;
 		}
 
 		public override void ReDraw ()
@@ -187,7 +187,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		protected void DrawSelectionArea (IDrawingToolkit tk)
 		{
-			if (!Selected || Mode != TagMode.Edit) {
+			if (!Selected || !DrawsSelectionArea) {
 				return;
 			}
 			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;

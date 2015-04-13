@@ -23,11 +23,12 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects;
+using LongoMatch.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing
 {
 	/// <summary>
-	/// A canvas stores <see cref="ICanvasObjects"/>'s and draws them.
+	/// A canvas stores <see cref="ICanvasObject"/>'s and draws them.
 	/// </summary>
 	public class Canvas: ICanvas
 	{
@@ -114,6 +115,7 @@ namespace LongoMatch.Drawing
 		{
 			co.RedrawEvent -= HandleRedrawEvent;
 			Objects.Remove (co);
+			co.Dispose ();
 		}
 
 		/// <summary>
@@ -382,6 +384,9 @@ namespace LongoMatch.Drawing
 		{
 		}
 
+		/// <summary>
+		/// Reset the list of select objects
+		/// </summary>
 		public void ClearSelection ()
 		{
 			foreach (Selection sel in Selections) {
@@ -439,20 +444,27 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		Selection GetSelection (Point coords, bool inMotion = false)
+		protected virtual Selection GetSelection (Point coords, bool inMotion = false, bool skipSelected = false)
 		{
 			Selection sel = null;
+			Selection selected = null;
 
-			/* Try with the selected item first */
 			if (Selections.Count > 0) {
-				sel = Selections.LastOrDefault ().Drawable.GetSelection (coords, Accuracy, inMotion);
+				selected = Selections.LastOrDefault ();
+				/* Try with the selected item first */
+				if (!skipSelected)
+					sel = selected.Drawable.GetSelection (coords, Accuracy, inMotion);
 			}
+
+			/* Iterate over all the objects now */
 			if (sel == null) {
 				foreach (ICanvasSelectableObject co in Objects) {
 					sel = co.GetSelection (coords, Accuracy, inMotion);
-					if (sel != null) {
-						break;
-					}
+					if (sel == null)
+						continue;
+					if (skipSelected && selected != null && sel.Drawable == selected.Drawable)
+						continue;
+					break;
 				}
 			}
 			return sel;

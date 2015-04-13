@@ -78,6 +78,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			}
 			DrawSelectionArea (tk);
+			if (ShowLinks) {
+				GetAnchor (null).Draw (tk, area);
+			}
 			tk.End ();
 		}
 	}

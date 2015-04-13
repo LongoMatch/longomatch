@@ -58,10 +58,15 @@ namespace LongoMatch.Core.Handlers
 	public delegate void DashboardEditedHandler ();
 	
 	/* Dashboard buttons selected */
-	public delegate void ButtonsSelectedHandlers (List<DashboardButton> taggerbuttons);
+	public delegate void ButtonsSelectedHandler (List<DashboardButton> taggerbuttons);
 	public delegate void ButtonSelectedHandler (DashboardButton taggerbutton);
-	/* Show dashborad menu */
-	public delegate void ShowButtonsTaggerMenuHandler (DashboardButton taggerbutton,Tag tag);
+
+	/* Dashboard link selected */
+	public delegate void ActionLinksSelectedHandler (List<ActionLink> actionLink);
+
+	/* Show dashboard menu */
+	public delegate void ShowDashboardMenuHandler (List<DashboardButton> selectedButtons,List<ActionLink> selectedLinks);
+
 	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
 	/* Project Events */

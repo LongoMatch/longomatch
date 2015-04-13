@@ -25,32 +25,38 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Dashboard;
+using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing.Widgets
 {
 	public class DashboardCanvas: SelectionCanvas
 	{
 	
-		public event ButtonsSelectedHandlers TaggersSelectedEvent;
+		public event ButtonsSelectedHandler ButtonsSelectedEvent;
 		public event ButtonSelectedHandler EditButtonTagsEvent;
-		public event ShowButtonsTaggerMenuHandler ShowMenuEvent;
+		public event ActionLinksSelectedHandler ActionLinksSelectedEvent;
+		public event ShowDashboardMenuHandler ShowMenuEvent;
 		public event NewEventHandler NewTagEvent;
 
 		Dashboard template;
-		TagMode tagMode;
+		DashboardMode mode;
 		Time currentTime;
 		int templateWidth, templateHeight;
 		FitMode fitMode;
-		bool modeChanged;
+		bool modeChanged, showLinks;
+		ActionLinkObject movingLink;
+		LinkAnchorObject destAnchor;
+		Dictionary<DashboardButton, DashboardButtonObject> buttonsDict;
 
 		public DashboardCanvas (IWidget widget) : base (widget)
 		{
 			Accuracy = 5;
-			TagMode = TagMode.Edit;
+			Mode = DashboardMode.Edit;
 			widget.SizeChangedEvent += SizeChanged;
 			FitMode = FitMode.Fit;
 			CurrentTime = new Time (0);
 			AddTag = new Tag ("", "");
+			buttonsDict = new Dictionary<DashboardButton, DashboardButtonObject> ();
 		}
 
 		public Project Project {
@@ -95,18 +101,37 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public TagMode TagMode {
+		public DashboardMode Mode {
 			set {
 				modeChanged = true;
-				tagMode = value;
-				ObjectsCanMove = tagMode == TagMode.Edit;
-				foreach (DashboardButtonObject to in Objects) {
+				mode = value;
+				ObjectsCanMove = mode == DashboardMode.Edit;
+				foreach (DashboardButtonObject to in Objects.OfType<DashboardButtonObject> ()) {
 					to.Mode = value;
 				}
 				ClearSelection ();
 			}
 			get {
-				return tagMode;
+				return mode;
+			}
+		}
+
+		public bool ShowLinks {
+			set {
+				showLinks = value;
+				foreach (DashboardButtonObject to in Objects.OfType<DashboardButtonObject> ()) {
+					to.ShowLinks = showLinks;
+					to.ResetDrawArea ();
+				}
+				foreach (ActionLinkObject ao in Objects.OfType<ActionLinkObject> ()) {
+					ao.Visible = showLinks;
+					ao.ResetDrawArea ();
+				}
+				ClearSelection ();
+				widget.ReDraw ();
+			}
+			get {
+				return showLinks;
 			}
 		}
 
@@ -148,7 +173,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			
 			LoadTemplate ();
-			to = (DashboardButtonObject)Objects.FirstOrDefault (o => (o as DashboardButtonObject).Button == b);
+			to = Objects.OfType<DashboardButtonObject> ().
+				FirstOrDefault (o => o.Button == b);
 			if (to != null) {
 				UpdateSelection (new Selection (to, SelectionPosition.All, 0));
 			}
@@ -156,52 +182,153 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			Selection sel;
-			if (ShowMenuEvent == null)
+			List<DashboardButton> buttons;
+			List<ActionLink> links;
+
+			if (ShowMenuEvent == null || Selections.Count == 0)
 				return;
-			
-			sel = Selections.LastOrDefault ();
-			if (sel != null) {
-				DashboardButtonObject to = sel.Drawable as DashboardButtonObject;
-				ShowMenuEvent (to.Button, null);
+
+			buttons = Selections.Where (s => s.Drawable is DashboardButtonObject).
+				Select (s => (s.Drawable as DashboardButtonObject).Button).ToList ();
+			links = Selections.Where (s => s.Drawable is ActionLinkObject).
+				Select (s => (s.Drawable as ActionLinkObject).Link).ToList ();
+			ShowMenuEvent (buttons, links);
+		}
+
+		protected override Selection GetSelection (Point coords, bool inMotion = false, bool skipSelected = false)
+		{
+			Selection sel = null;
+			Selection selected = null;
+
+			/* Regular GetSelection */
+			if (!ShowLinks)
+				return base.GetSelection (coords, inMotion, skipSelected);
+
+			/* With ShowLinks, only links and anchor can be selected */
+			if (Selections.Count > 0) {
+				selected = Selections.LastOrDefault ();
 			}
+
+			foreach (ICanvasSelectableObject co in Objects) {
+				sel = co.GetSelection (coords, Accuracy, inMotion);
+				if (sel == null || sel.Drawable is DashboardButtonObject)
+					continue;
+				if (skipSelected && selected != null && sel.Drawable == selected.Drawable)
+					continue;
+				break;
+			}
+			return sel;
 		}
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			SizeChanged ();
-			Edited = true;
+			if (sel.Drawable is DashboardButtonObject) {
+				SizeChanged ();
+				Edited = true;
+			} else if (sel.Drawable is ActionLinkObject) {
+				ActionLinkObject link = sel.Drawable as ActionLinkObject;
+				LinkAnchorObject anchor = null;
+				Selection destSel;
+
+				destSel = GetSelection (start, true, true);
+				if (destSel != null && destSel.Drawable is LinkAnchorObject) { 
+					anchor = destSel.Drawable as LinkAnchorObject;
+				}
+				/* Toggled highlited state */
+				if (anchor != destAnchor) {
+					if (destAnchor != null) {
+						destAnchor.Highlighted = false;
+					}
+					/* Only highlight valid targets */
+					if (link.Source.CanLink (anchor)) {
+						anchor.Highlighted = true;
+					}
+					destAnchor = anchor;
+				}
+			}
 			base.SelectionMoved (sel);
 		}
 
 		protected override void SelectionChanged (List<Selection> sel)
 		{
-			List<DashboardButton> taggers;
-			
-			taggers = sel.Select (s => (s.Drawable as DashboardButtonObject).Button).ToList ();
-			if (TagMode == TagMode.Edit) {
-				if (TaggersSelectedEvent != null) {
-					TaggersSelectedEvent (taggers);
+			if (sel.Count == 0) {
+				return;
+			}
+
+			if (sel [0].Drawable is DashboardButtonObject) {
+				List<DashboardButton> buttons;
+
+				buttons = sel.Select (s => (s.Drawable as DashboardButtonObject).Button).ToList ();
+				if (Mode == DashboardMode.Edit) {
+					if (ButtonsSelectedEvent != null) {
+						ButtonsSelectedEvent (buttons);
+					}
+				}
+			} else if (sel [0].Drawable is ActionLinkObject) {
+				List<ActionLink> links;
+
+				links = sel.Select (s => (s.Drawable as ActionLinkObject).Link).ToList ();
+				if (Mode == DashboardMode.Edit) {
+					if (ActionLinksSelectedEvent != null) {
+						ActionLinksSelectedEvent (links);
+					}
 				}
 			}
 			base.SelectionChanged (sel);
 		}
 
+		protected override void StartMove (Selection sel)
+		{
+			if (sel != null && sel.Drawable is LinkAnchorObject) {
+				LinkAnchorObject anchor = sel.Drawable as LinkAnchorObject;
+				ActionLink link = new ActionLink {
+					SourceButton = anchor.Button.Button,
+					SourceTags = anchor.Tags
+				}; 
+				movingLink = new ActionLinkObject (anchor, null, link);
+				AddObject (movingLink);
+				ClearSelection ();
+				UpdateSelection (new Selection (movingLink, SelectionPosition.LineStop, 0), false);
+			}
+			base.StartMove (sel);
+		}
+
 		protected override void StopMove (bool moved)
 		{
 			Selection sel = Selections.FirstOrDefault ();
-			
-			if (sel != null && moved) {
-				int i = Constants.CATEGORY_TPL_GRID;
-				DashboardButton tb = (sel.Drawable as DashboardButtonObject).Button;
-				tb.Position.X = Utils.Round (tb.Position.X, i);
-				tb.Position.Y = Utils.Round (tb.Position.Y, i);
-				tb.Width = (int)Utils.Round (tb.Width, i);
-				tb.Height = (int)Utils.Round (tb.Height, i);
-				(sel.Drawable as DashboardButtonObject).ResetDrawArea ();
-				widget.ReDraw ();
+
+			if (movingLink != null) {
+				if (destAnchor != null) {
+					ActionLink link = movingLink.Link;
+					link.DestinationButton = destAnchor.Button.Button;
+					link.DestionationTags = destAnchor.Tags;
+					link.SourceButton.ActionLinks.Add (link);
+					movingLink.Destination = destAnchor;
+					destAnchor.Highlighted = false;
+					Edited = true;
+				} else {
+					RemoveObject (movingLink);
+					widget.ReDraw ();
+				}
+				ClearSelection ();
+				movingLink = null;
+				destAnchor = null;
+				return;
 			}
 
+			if (sel != null && moved) {
+				if (sel.Drawable is DashboardButtonObject) {
+					/* Round the position of the button to match a corner in the grid */
+					int i = Constants.CATEGORY_TPL_GRID;
+					DashboardButton tb = (sel.Drawable as DashboardButtonObject).Button;
+					tb.Position.X = Utils.Round (tb.Position.X, i);
+					tb.Position.Y = Utils.Round (tb.Position.Y, i);
+					tb.Width = (int)Utils.Round (tb.Width, i);
+					tb.Height = (int)Utils.Round (tb.Height, i);
+					(sel.Drawable as DashboardButtonObject).ResetDrawArea ();
+					widget.ReDraw ();
+				}
+			}
 			base.StopMove (moved);
 		}
 
@@ -210,7 +337,7 @@ namespace LongoMatch.Drawing.Widgets
 			tk.Context = context;
 			tk.Begin ();
 			tk.Clear (Config.Style.PaletteBackground);
-			if (TagMode == TagMode.Edit) {
+			if (Mode != DashboardMode.Code) {
 				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
 				tk.LineWidth = 1;
@@ -230,40 +357,49 @@ namespace LongoMatch.Drawing.Widgets
 			base.Draw (context, area);
 		}
 
+		public void AddButton (DashboardButtonObject button)
+		{
+			button.ShowLinks = ShowLinks;
+			AddObject (button);
+			buttonsDict.Add (button.Button, button);
+		}
+
 		void LoadTemplate ()
 		{
 			ClearObjects ();
+			buttonsDict.Clear ();
+
 			foreach (TagButton tag in template.List.OfType<TagButton>()) {
 				TagObject to = new TagObject (tag);
 				to.ClickedEvent += HandleTaggerClickedEvent;
-				to.Mode = TagMode;
-				AddObject (to);
+				to.Mode = Mode;
+				AddButton (to);
 			}
 			
 			foreach (AnalysisEventButton cat in template.List.OfType<AnalysisEventButton>()) {
 				CategoryObject co = new CategoryObject (cat);
 				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.EditButtonTagsEvent += (t) => EditButtonTagsEvent (t);
-				co.Mode = TagMode;
-				AddObject (co);
+				co.Mode = Mode;
+				AddButton (co);
 			}
 			foreach (PenaltyCardButton c in template.List.OfType<PenaltyCardButton>()) {
 				CardObject co = new CardObject (c);
 				co.ClickedEvent += HandleTaggerClickedEvent;
-				co.Mode = TagMode;
-				AddObject (co);
+				co.Mode = Mode;
+				AddButton (co);
 			}
 			foreach (ScoreButton s in template.List.OfType<ScoreButton>()) {
 				ScoreObject co = new ScoreObject (s);
 				co.ClickedEvent += HandleTaggerClickedEvent;
-				co.Mode = TagMode;
-				AddObject (co);
+				co.Mode = Mode;
+				AddButton (co);
 			}
 
 			foreach (TimerButton t in template.List.OfType<TimerButton>()) {
 				TimerObject to = new TimerObject (t);
 				to.ClickedEvent += HandleTaggerClickedEvent;
-				to.Mode = TagMode;
+				to.Mode = Mode;
 				if (Project != null && t.BackgroundImage == null) {
 					if (t.Timer.Team == TeamType.LOCAL) {
 						to.TeamImage = Project.LocalTeamTemplate.Shield;
@@ -271,7 +407,20 @@ namespace LongoMatch.Drawing.Widgets
 						to.TeamImage = Project.VisitorTeamTemplate.Shield;
 					}
 				}
-				AddObject (to);
+				AddButton (to);
+			}
+
+			foreach (DashboardButtonObject buttonObject in buttonsDict.Values) {
+				foreach (ActionLink link in buttonObject.Button.ActionLinks) {
+					LinkAnchorObject sourceAnchor = buttonObject.GetAnchor (link.SourceTags);
+					LinkAnchorObject destAnchor = buttonsDict [link.DestinationButton].
+						GetAnchor (link.DestionationTags);
+					ActionLinkObject linkObject = new ActionLinkObject (sourceAnchor,
+						                              destAnchor, link);
+					link.SourceButton = buttonObject.Button;
+					linkObject.Visible = ShowLinks;
+					AddObject (linkObject);
+				}
 			}
 			Edited = false;
 			SizeChanged ();
@@ -309,8 +458,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (modeChanged) {
 				modeChanged = false;
-				foreach (DashboardButtonObject to in Objects) {
-					to.ResetDrawArea ();
+				foreach (CanvasObject co in Objects) {
+					co.ResetDrawArea ();
 				}
 			}
 			widget.ReDraw ();
@@ -346,7 +495,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			button = tagger.Button as EventButton;
 			
-			if (TagMode == TagMode.Edit) {
+			if (Mode == DashboardMode.Edit) {
 				return;
 			}
 			

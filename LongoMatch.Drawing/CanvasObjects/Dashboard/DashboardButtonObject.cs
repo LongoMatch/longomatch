@@ -20,20 +20,47 @@ using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class DashboardButtonObject: ButtonObject, ICanvasSelectableObject
 	{
+		protected LinkAnchorObject anchor;
 
 		public DashboardButtonObject (DashboardButton tagger)
 		{
 			Button = tagger;
+			anchor = new LinkAnchorObject (this, null, new Point (5, 5));
+			anchor.RedrawEvent += (co, area) => {
+				EmitRedrawEvent (anchor, area);
+			};
+		}
+
+		public DashboardMode Mode {
+			get;
+			set;
+		}
+
+		public bool ShowLinks {
+			get;
+			set;
 		}
 
 		public DashboardButton Button {
 			get;
 			set;
+		}
+
+		public bool EditActionLinks {
+			get;
+			set;
+		}
+
+		public override bool DrawsSelectionArea {
+			get {
+				return Mode == DashboardMode.Edit;
+			}
 		}
 
 		public override Point Position {
@@ -109,7 +136,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				return base.Active;
 			}
 			set {
-				if (Mode != TagMode.Edit) {
+				if (Mode != DashboardMode.Edit) {
 					base.Active = value;
 				}
 			}
@@ -121,9 +148,30 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		public virtual Point GetLinkAnchor (List<Tag> tag)
+		public virtual LinkAnchorObject GetAnchor (List<Tag> sourceTags)
 		{
-			return new Point (Position.X + 5, Position.Y + 5);
+			return anchor;
+		}
+
+		protected void DrawAnchor (IDrawingToolkit tk, Area area)
+		{
+			if (ShowLinks) {
+				anchor.Draw (tk, area);
+			}
+		}
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
+			base.Draw (tk, area);
+			DrawAnchor (tk, area);
+		}
+
+		public override Selection GetSelection (Point p, double precision, bool inMotion = false)
+		{
+			Selection sel = anchor.GetSelection (p, precision, inMotion);
+			if (sel != null)
+				return sel;
+			return base.GetSelection (p, precision, inMotion);
 		}
 	}
 

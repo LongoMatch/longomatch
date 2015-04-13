@@ -57,6 +57,7 @@
     <Compile Include="CanvasObjects\Dashboard\CardObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\DashboardButtonObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\CategoryObject.cs" />
+    <Compile Include="CanvasObjects\Dashboard\ActionLinkObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\ScoreObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\TagObject.cs" />
     <Compile Include="CanvasObjects\Dashboard\TimerObject.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="CanvasObjects\Teams\PlayerObject.cs" />
     <Compile Include="CanvasObjects\Teams\PlayersTaggerObject.cs" />
     <Compile Include="CanvasObjects\Teams\FieldObject.cs" />
+    <Compile Include="CanvasObjects\Dashboard\LinkAnchorObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

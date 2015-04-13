@@ -440,4 +440,10 @@ namespace LongoMatch.Core.Common
 		Keep,
 		Invert
 	}
+
+	public enum DashboardMode
+	{
+		Code,
+		Edit,
+	}
 }

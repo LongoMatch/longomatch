@@ -49,6 +49,16 @@ namespace LongoMatch.Core.Common
 			return dict.SingleOrDefault (x => x.Value.Equals (value)).Key;
 		}
 
+		public static void  RemoveKeysByValue<TKey, TValue> (this Dictionary<TKey, TValue> dict, TValue value)
+		{
+			foreach (var item in dict.Where(k => k.Value.Equals(value)).ToList()) {
+				try {
+					dict.Remove (item.Key);
+				} catch {
+				}
+			}
+		}
+
 		public static bool SequenceEqualSafe<T> (this List<T> first, List<T> second)
 		{
 			if (first == null && second == null) {

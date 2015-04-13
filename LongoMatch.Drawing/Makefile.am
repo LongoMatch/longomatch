@@ -15,9 +15,11 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	CanvasObjects/Blackboard/TextObject.cs \
 	CanvasObjects/ButtonObject.cs \
 	CanvasObjects/CanvasObject.cs \
+	CanvasObjects/Dashboard/ActionLinkObject.cs \
 	CanvasObjects/Dashboard/CardObject.cs \
 	CanvasObjects/Dashboard/CategoryObject.cs \
 	CanvasObjects/Dashboard/DashboardButtonObject.cs \
+	CanvasObjects/Dashboard/LinkAnchorObject.cs \
 	CanvasObjects/Dashboard/ScoreObject.cs \
 	CanvasObjects/Dashboard/TagObject.cs \
 	CanvasObjects/Dashboard/TimerObject.cs \
