@@ -24,8 +24,9 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.DB;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Services
 {
 	public class DataBaseManager: IDataBaseManager, IService
 	{
