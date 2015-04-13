@@ -27,7 +27,7 @@ using Mono.Unix;
 
 namespace LongoMatch.Services
 {
-	public class ProjectsManager
+	public class ProjectsManager: IService
 	{
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
@@ -402,5 +402,30 @@ namespace LongoMatch.Services
 			HandleCaptureFinished (true);
 		}
 
+		#region IService
+
+		public int Level {
+			get {
+				return 40;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Projects manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }

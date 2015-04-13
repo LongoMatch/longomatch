@@ -11,12 +11,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Mono.Unix;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Services
 {
 
 
-	public class UpdatesNotifier
+	public class UpdatesNotifier: IService
 	{
 		readonly Version currentVersion;
 		Version latestVersion;
@@ -82,6 +83,32 @@ namespace LongoMatch.Services
 				});
 			}
 		}
+		#endregion
+
+		#region IService
+
+		public int Level {
+			get {
+				return 90;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Updates notifier";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
 		#endregion
 	}
 }

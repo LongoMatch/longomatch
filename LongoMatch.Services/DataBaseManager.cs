@@ -27,7 +27,7 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.DB
 {
-	public class DataBaseManager: IDataBaseManager
+	public class DataBaseManager: IDataBaseManager, IService
 	{
 		string DBDir;
 		IGUIToolkit guiToolkit;
@@ -149,6 +149,31 @@ namespace LongoMatch.DB
 			}
 		}
 
+		#region IService
+
+		public int Level {
+			get {
+				return 20;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Database manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }
 

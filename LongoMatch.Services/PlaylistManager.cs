@@ -29,7 +29,7 @@ using System;
 
 namespace LongoMatch.Services
 {
-	public class PlaylistManager
+	public class PlaylistManager: IService
 	{
 		IGUIToolkit guiToolkit;
 		IPlayerController player;
@@ -307,7 +307,31 @@ namespace LongoMatch.Services
 				//	return;
 			}
 		}
-		
 
+		#region IService
+
+		public int Level {
+			get {
+				return 80;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Playlist manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }

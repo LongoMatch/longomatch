@@ -55,6 +55,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Interfaces/IPlaylistElement.cs \
 	Interfaces/IProjectsImporter.cs \
 	Interfaces/IRenderingJobsManager.cs \
+	Interfaces/IService.cs \
 	Interfaces/IStorable.cs \
 	Interfaces/IStorage.cs \
 	Interfaces/ITemplates.cs \

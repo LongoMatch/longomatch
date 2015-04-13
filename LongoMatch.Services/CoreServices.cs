@@ -17,6 +17,8 @@
 // 
 using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using LongoMatch;
 using LongoMatch.DB;
 using LongoMatch.Core.Common;
@@ -43,6 +45,7 @@ namespace LongoMatch.Services
 		static ToolsManager toolsManager;
 		static TemplatesService ts;
 		static UpdatesNotifier updatesNotifier;
+		static List<IService> services = new List<IService> ();
 
 		public static IProjectsImporter ProjectsImporter;
 		#if OSTYPE_WINDOWS
@@ -79,41 +82,73 @@ namespace LongoMatch.Services
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
 			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
-			StartServices (guiToolkit, multimediaToolkit);
+			RegisterServices (guiToolkit, multimediaToolkit);
+			StartServices ();
 		}
 
-		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
+		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
 			ts = new TemplatesService (new FileStorage (Config.DBDir));
+			services.Add (ts);
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
+			services.Add (dbManager);
 			Config.DatabaseManager = dbManager;
-			
+
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
+			services.Add (videoRenderer);
 			Config.RenderingJobsManger = videoRenderer;
-			
+
 			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
-			
+			services.Add (projectsManager);
+
 			/* State the tools manager */
 			toolsManager = new ToolsManager (guiToolkit, dbManager);
+			services.Add (toolsManager);
 			ProjectsImporter = toolsManager;
-			
+
 			/* Start the events manager */
 			eManager = new EventsManager (guiToolkit, videoRenderer);
-			
+			services.Add (eManager);
+
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
+			services.Add (hkManager);
 
 			/* Start playlists manager */
 			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
+			services.Add (plManager);
 
 			/* Start the Update Notifier */
 			updatesNotifier = new UpdatesNotifier ();
+			services.Add (updatesNotifier);
+		}
+
+		public static void StartServices ()
+		{
+			foreach (IService service in services.OrderBy (s => s.Level)) {
+				if (service.Start ()) {
+					Log.Information ("Started service {0} successfully");
+				} else {
+					Log.Information ("Failed starting service {0}");
+				}
+			}
+		}
+
+		public static void StopServices ()
+		{
+			foreach (IService service in services.OrderByDescending (s => s.Level)) {
+				if (service.Stop ()) {
+					Log.Information ("Stopped service {0} successfully");
+				} else {
+					Log.Information ("Failed stopping service {0}");
+				}
+			}
 		}
 
 		public static void CheckDirs ()

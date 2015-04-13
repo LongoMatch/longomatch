@@ -31,7 +31,7 @@ using System.Diagnostics;
 
 namespace LongoMatch.Services
 {
-	public class ToolsManager: IProjectsImporter
+	public class ToolsManager: IProjectsImporter, IService
 	{
 		
 		Project openedProject;
@@ -227,6 +227,32 @@ namespace LongoMatch.Services
 				dbManager.SetActiveByName (dbManager.ActiveDB.Name);
 			}
 		}
+
+		#region IService
+
+		public int Level {
+			get {
+				return 50;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Tools manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 
 	public class ProjectImporter

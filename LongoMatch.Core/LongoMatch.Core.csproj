@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="Interfaces\GUI\IViewPort.cs" />
     <Compile Include="Store\ActionLink.cs" />
+    <Compile Include="Interfaces\IService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

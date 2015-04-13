@@ -28,7 +28,7 @@ using LongoMatch.Core.Store.Playlists;
 
 namespace LongoMatch.Services
 {
-	public class RenderingJobsManager: IRenderingJobsManager
+	public class RenderingJobsManager: IRenderingJobsManager, IService
 	{
 		/* List of pending jobs */
 		List<Job> jobs, pendingJobs;
@@ -409,6 +409,32 @@ namespace LongoMatch.Services
 		{
 			MainLoopOnProgress (progress);
 		}
+
+		#region IService
+
+		public int Level {
+			get {
+				return 30;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Rendering jobs manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }
 

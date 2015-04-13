@@ -29,7 +29,7 @@ using LongoMatch.Services.Services;
 
 namespace LongoMatch.Services
 {
-	public class TemplatesService: ITemplatesService
+	public class TemplatesService: ITemplatesService, IService
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
 
@@ -60,6 +60,32 @@ namespace LongoMatch.Services
 				return (ICategoriesTemplatesProvider)dict [typeof(Dashboard)]; 
 			}
 		}
+
+		#region IService
+
+		public int Level {
+			get {
+				return 10;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Templates provider";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 
 	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate

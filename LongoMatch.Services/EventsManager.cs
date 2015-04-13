@@ -32,7 +32,7 @@ using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services
 {
-	public class EventsManager
+	public class EventsManager: IService
 	{
 		/* Current play loaded. null if no play is loaded */
 		TimelineEvent loadedPlay;
@@ -426,5 +426,31 @@ namespace LongoMatch.Services
 				break;
 			}
 		}
+
+		#region IService
+
+		public int Level {
+			get {
+				return 60;
+			}
+		}
+
+		public string Name {
+			get {
+				return "Events manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }

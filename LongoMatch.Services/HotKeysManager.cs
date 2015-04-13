@@ -22,13 +22,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services
 {
-	public class HotKeysManager
+	public class HotKeysManager: IService
 	{
 		Dictionary<HotKey, DashboardButton> dashboardHotkeys;
 		IAnalysisWindow analysisWindow;
@@ -236,5 +237,31 @@ namespace LongoMatch.Services
 				}
 			}
 		}
+
+		#region IService
+
+		public int Level {
+			get {
+				return 70;
+			}
+		}
+
+		public string Name {
+			get {
+				return "HotKeys manager";
+			}
+		}
+
+		public bool Start ()
+		{
+			return true;
+		}
+
+		public bool Stop ()
+		{
+			return true;
+		}
+
+		#endregion
 	}
 }
