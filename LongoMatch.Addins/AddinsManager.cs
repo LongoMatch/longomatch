@@ -149,6 +149,21 @@ namespace LongoMatch.Addins
 			}
 		}
 
+		/// <summary>
+		/// Gets all Services exposed by addins through the IServicesPlugin extension point.
+		/// </summary>
+		/// <returns>A List of services provided by addins.</returns>
+		public static List<IService> GetAddinsServices ()
+		{
+			List<IService> services = new List<IService> ();
+
+			foreach (IServicesPlugin plugin in AddinManager.GetExtensionObjects<IServicesPlugin> ()) {
+				services.AddRange (plugin.Services);
+			}
+
+			return services;
+		}
+
 		public static void ShutdownMultimediaBackends ()
 		{
 			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {

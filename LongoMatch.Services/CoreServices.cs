@@ -25,6 +25,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Addins;
 using Mono.Unix;
 using LongoMatch.Services.Services;
 
@@ -86,46 +87,57 @@ namespace LongoMatch.Services
 			StartServices ();
 		}
 
+		public static void RegisterService (IService service)
+		{
+			Log.InformationFormat ("Registering service {0}", service.Name);
+			services.Add (service);
+		}
+
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
 			ts = new TemplatesService (new FileStorage (Config.DBDir));
-			services.Add (ts);
+			RegisterService (ts);
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
-			services.Add (dbManager);
+			RegisterService (dbManager);
 			Config.DatabaseManager = dbManager;
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
-			services.Add (videoRenderer);
+			RegisterService (videoRenderer);
 			Config.RenderingJobsManger = videoRenderer;
 
 			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
-			services.Add (projectsManager);
+			RegisterService (projectsManager);
 
 			/* State the tools manager */
 			toolsManager = new ToolsManager (guiToolkit, dbManager);
-			services.Add (toolsManager);
+			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
 			/* Start the events manager */
 			eManager = new EventsManager (guiToolkit, videoRenderer);
-			services.Add (eManager);
+			RegisterService (eManager);
 
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
-			services.Add (hkManager);
+			RegisterService (hkManager);
 
 			/* Start playlists manager */
 			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
-			services.Add (plManager);
+			RegisterService (plManager);
 
 			/* Start the Update Notifier */
 			updatesNotifier = new UpdatesNotifier ();
-			services.Add (updatesNotifier);
+			RegisterService (updatesNotifier);
+
+			/* Register services from addins */
+			foreach (IService service in AddinsManager.GetAddinsServices ()) {
+				RegisterService (service);
+			}
 		}
 
 		public static void StartServices ()

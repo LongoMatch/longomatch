@@ -14,6 +14,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	ExtensionPoints/IImportProject.cs \
 	ExtensionPoints/ILongoMatchPlugin.cs \
 	ExtensionPoints/IMultimediaBackend.cs \
+	ExtensionPoints/IServicesPlugin.cs \
 	ExtensionPoints/IStatsUI.cs \
 	PreferencesAttribute.cs
 
