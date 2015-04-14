@@ -428,17 +428,21 @@ namespace LongoMatch.Core.Common
 		Analysis,
 	}
 
+	/* The values must be kept in sync with the combobox in
+	 * LongoMatch.GUI/Gui/Component/LinkProperties.cs */
 	public enum LinkAction
 	{
-		Toggle,
-		Replicate,
+		Toggle = 0,
+		Replicate = 1,
 	}
 
+	/* The values must be kept in sync with the combobox in
+	 * LongoMatch.GUI/Gui/Component/LinkProperties.cs */
 	public enum TeamLinkAction
 	{
-		Clear,
-		Keep,
-		Invert
+		Clear = 0,
+		Keep = 1,
+		Invert = 2
 	}
 
 	public enum DashboardMode
