@@ -86,6 +86,11 @@ namespace LongoMatch
 				Constants.SOFTWARE_NAME.ToLower ());
 		}
 
+		public static void LoadState (ConfigState newState)
+		{
+			state = newState;
+		}
+
 		public static void Load ()
 		{
 			if (File.Exists (Config.ConfigFile)) {
