@@ -64,6 +64,9 @@ namespace LongoMatch.Core.Handlers
 	/* Dashboard link selected */
 	public delegate void ActionLinksSelectedHandler (List<ActionLink> actionLink);
 
+	/* Dashboard link crated */
+	public delegate void ActionLinkCreatedHandler (ActionLink actionLink);
+
 	/* Show dashboard menu */
 	public delegate void ShowDashboardMenuHandler (List<DashboardButton> selectedButtons,List<ActionLink> selectedLinks);
 

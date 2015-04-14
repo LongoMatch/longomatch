@@ -72,6 +72,7 @@ namespace LongoMatch.Gui.Component
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.EditButtonTagsEvent += EditEventSubcategories;
 			tagger.ActionLinksSelectedEvent += HandleActionLinksSelectedEvent;
+			tagger.ActionLinkCreatedEvent += HandleActionLinkCreatedEvent;
 			drawingarea.CanFocus = true;
 			drawingarea.KeyPressEvent += HandleKeyPressEvent;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
@@ -266,11 +267,11 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void RemoveLink (ActionLink link)
+		void RemoveLink (ActionLink link, bool force = false)
 		{
 			string msg = string.Format ("{0} {1} ?",
 				             Catalog.GetString ("Do you want to delete: "), link);
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (force || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 				link.SourceButton.ActionLinks.Remove (link);
 				Edited = true;
 				Refresh ();
@@ -544,5 +545,15 @@ namespace LongoMatch.Gui.Component
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
 			}
 		}
+
+		void HandleActionLinkCreatedEvent (ActionLink actionLink)
+		{
+			if (template.HasCircularDependencies ()) {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString (
+					"This link has circular depdencie and will not be added."));
+				RemoveLink (actionLink, true);
+			}
+		}
+
 	}
 }

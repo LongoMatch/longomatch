@@ -35,6 +35,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ButtonsSelectedHandler ButtonsSelectedEvent;
 		public event ButtonSelectedHandler EditButtonTagsEvent;
 		public event ActionLinksSelectedHandler ActionLinksSelectedEvent;
+		public event ActionLinkCreatedHandler ActionLinkCreatedEvent;
 		public event ShowDashboardMenuHandler ShowMenuEvent;
 		public event NewEventHandler NewTagEvent;
 
@@ -310,6 +311,9 @@ namespace LongoMatch.Drawing.Widgets
 					link.SourceButton.ActionLinks.Add (link);
 					movingLink.Destination = destAnchor;
 					destAnchor.Highlighted = false;
+					if (ActionLinkCreatedEvent != null) {
+						ActionLinkCreatedEvent (link);
+					}
 					Edited = true;
 				} else {
 					RemoveObject (movingLink);

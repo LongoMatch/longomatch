@@ -239,7 +239,9 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			foreach (DashboardButton button in List) {
 				try {
-					CheckButtonLinks (button, new List<DashboardButton> ());
+					foreach (ActionLink link in button.ActionLinks) {
+						CheckLinks (link, new List<DashboardButton> ());
+					}
 				} catch (CircularDependencyException) {
 					return true;
 				}
@@ -389,19 +391,22 @@ namespace LongoMatch.Core.Store.Templates
 				AddDefaultItem (i - 1);
 		}
 
-		void CheckButtonLinks (DashboardButton button, List<DashboardButton> traversed = null)
+		void CheckLinks (ActionLink link, List<DashboardButton> traversed = null)
 		{
+			DashboardButton source;
+
 			if (traversed == null)
 				traversed = new List<DashboardButton> ();
 
-			if (traversed.Contains (button)) {
+			source = link.SourceButton;
+			if (traversed.Contains (source)) {
 				throw new CircularDependencyException ();
 			} else {
-				traversed.Add (button);
+				traversed.Add (source);
 			}
 
-			foreach (ActionLink l in button.ActionLinks) {
-				CheckButtonLinks (l.DestinationButton, traversed);
+			foreach (ActionLink l in link.DestinationButton.ActionLinks) {
+				CheckLinks (l, traversed);
 			}
 		}
 	}

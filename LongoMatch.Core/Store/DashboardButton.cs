@@ -105,6 +105,12 @@ namespace LongoMatch.Core.Store
 				return c.RGBColor ();
 			}
 		}
+
+		public void AddActionLink (ActionLink link)
+		{
+			link.SourceButton = this;
+			ActionLinks.Add (link);
+		}
 	}
 
 	[Serializable]

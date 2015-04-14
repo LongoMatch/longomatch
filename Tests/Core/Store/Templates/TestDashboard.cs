@@ -64,11 +64,11 @@ namespace Tests.Core.Store.Templates
 			dashboard.List.Add (b2);
 			dashboard.List.Add (b3);
 
-			b1.ActionLinks.Add (new ActionLink { DestinationButton = b2 });
+			b1.AddActionLink (new ActionLink { DestinationButton = b2 });
 			Assert.IsFalse (dashboard.HasCircularDependencies ());
-			b2.ActionLinks.Add (new ActionLink { DestinationButton = b3 });
+			b2.AddActionLink (new ActionLink { DestinationButton = b3 });
 			Assert.IsFalse (dashboard.HasCircularDependencies ());
-			b3.ActionLinks.Add (new ActionLink { DestinationButton = b1 });
+			b3.AddActionLink (new ActionLink { DestinationButton = b1 });
 			Assert.IsTrue (dashboard.HasCircularDependencies ());
 		}
 
