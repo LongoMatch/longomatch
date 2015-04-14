@@ -32,7 +32,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			Button = tagger;
 			SupportsLinks = true;
-			anchor = new LinkAnchorObject (this, null, new Point (5, 5));
+			anchor = new LinkAnchorObject (this, null, new Point (0, 0));
 			anchor.RedrawEvent += (co, area) => {
 				EmitRedrawEvent (anchor, area);
 			};

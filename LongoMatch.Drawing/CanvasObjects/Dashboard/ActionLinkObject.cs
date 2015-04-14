@@ -24,11 +24,14 @@ using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
+	/// <summary>
+	/// Represents an <see cref="ActionLink"/> in the canvas.
+	/// </summary>
 	public class ActionLinkObject: CanvasObject, ICanvasSelectableObject
 	{
-		Line line;
+		readonly Line line;
+		const int selectionSize = 4;
 		Point stop;
-		int selectionSize = 4;
 
 		public ActionLinkObject (LinkAnchorObject source,
 		                         LinkAnchorObject destination,
@@ -38,12 +41,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Source = source;
 			Destination = destination;
 			if (destination == null) {
-				stop = source.Position;
+				stop = source.Center;
 			} else {
-				stop = destination.Position;
+				stop = destination.Center;
 			}
 			line = new Line ();
-			line.Start = source.Position;
+			line.Start = source.Center;
 			line.Stop = stop;
 		}
 
@@ -64,9 +67,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public virtual Area Area {
 			get {
-				line.Start = Source.Position;
+				line.Start = Source.Center;
 				if (Destination != null) {
-					line.Stop = Destination.Position;
+					line.Stop = Destination.Center;
 				} else {
 					line.Stop = this.stop;
 				}

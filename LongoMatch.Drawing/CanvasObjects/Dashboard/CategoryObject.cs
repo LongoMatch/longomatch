@@ -83,7 +83,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			MinHeight = HeaderHeight * 2;
 			subcatAnchors = new Dictionary<Tag, LinkAnchorObject> ();
 			foreach (Tag tag in category.AnalysisEventType.Tags) {
-				AddSubcatAnchor (tag, new Point (0, 0));
+				AddSubcatAnchor (tag, new Point (0, 0), 100, HeaderHeight);
 			}
 		}
 
@@ -257,7 +257,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
-		void AddSubcatAnchor (Tag tag, Point point)
+		void AddSubcatAnchor (Tag tag, Point point, double width, double height)
 		{
 			LinkAnchorObject anchor;
 
@@ -271,6 +271,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				};
 				subcatAnchors.Add (tag, anchor);
 			}
+			anchor.Width = width;
+			anchor.Height = height;
 		}
 
 		bool CheckRect (Point p, Rectangle rect, object obj)
@@ -390,7 +392,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					start.Y + yptr + row * heightPerRow);
 				tag = tags [i];
 
-				AddSubcatAnchor (tag, new Point (pos.X - Position.X, pos.Y - Position.Y));
+				AddSubcatAnchor (tag, new Point (pos.X - Position.X, pos.Y - Position.Y),
+					rowwidth, heightPerRow);
 				if (!Button.ShowSubcategories) {
 					continue;
 				}
@@ -603,6 +606,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			if (!ShowLinks)
 				return;
+
+			if (Button.ShowSubcategories) {
+				anchor.Height = HeaderHeight;
+			} else {
+				anchor.Height = Button.Height;
+			}
 			DrawAnchor (tk, null);
 			foreach (LinkAnchorObject anchor in subcatAnchors.Values) {
 				anchor.Draw (tk, null);

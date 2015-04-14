@@ -27,10 +27,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 	public class LinkAnchorObject: CanvasObject, ICanvasSelectableObject
 	{
 
+		Rectangle rect;
+
+
 		public LinkAnchorObject (DashboardButtonObject button, List<Tag> tags, Point relPos)
 		{
 			RelativePosition = relPos;
+			Width = button.Width;
+			Height = button.Height;
 			Button = button;
+			rect = new Rectangle (Position, Width, Height);
 			if (tags == null)
 				tags = new List<Tag> ();
 			Tags = tags;
@@ -46,6 +52,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
+		public double Width {
+			get;
+			set;
+		}
+
+		public double Height {
+			get;
+			set;
+		}
+
 		public List<Tag> Tags {
 			get;
 			set;
@@ -54,6 +70,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		public Point Position {
 			get {
 				return Button.Position + RelativePosition;
+			}
+		}
+
+		public Point Center {
+			get {
+				Point pos = Position;
+				pos.X += Width / 2;
+				pos.Y += Height / 2;
+				return pos;
 			}
 		}
 
@@ -74,12 +99,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
-			Point pos = Position;
+			Selection sel;
 
-			if (Math.Abs (pos.X - point.X) < 2 && Math.Abs (pos.Y - point.Y) < 2) {
-				return new Selection (this, SelectionPosition.All, 0);
+			rect = new Rectangle (Position, Width, Height);
+			sel = rect.GetSelection (point, precision, inMotion);
+			if (sel != null) {
+				sel.Drawable = this;
+				sel.Position = SelectionPosition.All;
 			}
-			return null;
+			return sel;
 		}
 
 		public void Move (Selection s, Point dst, Point start)
@@ -97,7 +125,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			tk.LineWidth = 2;
 			tk.FillColor = color;
 			tk.StrokeColor = color;
-			tk.DrawCircle (Position, 2);
+			tk.DrawCircle (Center, 5);
 			tk.End ();
 		}
 	}
