@@ -27,8 +27,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 	public class LinkAnchorObject: CanvasObject, ICanvasSelectableObject
 	{
 
-		Rectangle rect;
-
+		readonly Circle circle;
+		const int radius = 5;
 
 		public LinkAnchorObject (DashboardButtonObject button, List<Tag> tags, Point relPos)
 		{
@@ -36,7 +36,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Width = button.Width;
 			Height = button.Height;
 			Button = button;
-			rect = new Rectangle (Position, Width, Height);
+			circle = new Circle (Center, radius);
 			if (tags == null)
 				tags = new List<Tag> ();
 			Tags = tags;
@@ -103,8 +103,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			Selection sel;
 
-			rect = new Rectangle (Position, Width, Height);
-			sel = rect.GetSelection (point, precision, inMotion);
+			circle.Center = Center;
+			sel = circle.GetSelection (point, precision, inMotion);
 			if (sel != null) {
 				sel.Drawable = this;
 				sel.Position = SelectionPosition.All;
