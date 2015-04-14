@@ -348,8 +348,10 @@ namespace LongoMatch.Gui.Component
 			if (editbutton.Active) {
 				Mode = DashboardMode.Edit;
 				linksbutton.Visible = true;
+				tagger.ShowLinks = linksbutton.Active;
 			} else {
 				Mode = DashboardMode.Code;
+				tagger.ShowLinks = false;
 				linksbutton.Visible = false;
 			}
 		}
