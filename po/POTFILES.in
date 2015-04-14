@@ -23,6 +23,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.EventsListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs
@@ -67,6 +68,7 @@ LongoMatch.GUI/Gui/Component/DashboardWidget.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
 LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
+LongoMatch.GUI/Gui/Component/LinkProperties.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
 LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs
