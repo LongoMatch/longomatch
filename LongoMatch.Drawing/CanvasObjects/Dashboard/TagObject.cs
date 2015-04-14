@@ -29,6 +29,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			TagButton = tagger;
 			Toggle = true;
+			SupportsLinks = false;
 			if (iconImage == null) {
 				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
 					StyleConf.ButtonTagIcon));

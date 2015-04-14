@@ -31,6 +31,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		public DashboardButtonObject (DashboardButton tagger)
 		{
 			Button = tagger;
+			SupportsLinks = true;
 			anchor = new LinkAnchorObject (this, null, new Point (5, 5));
 			anchor.RedrawEvent += (co, area) => {
 				EmitRedrawEvent (anchor, area);
@@ -44,6 +45,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		}
 
 		public DashboardMode Mode {
+			get;
+			set;
+		}
+
+		public bool SupportsLinks {
 			get;
 			set;
 		}
@@ -161,7 +167,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		protected void DrawAnchor (IDrawingToolkit tk, Area area)
 		{
-			if (ShowLinks) {
+			if (ShowLinks && SupportsLinks) {
 				anchor.Draw (tk, area);
 			}
 		}
@@ -174,9 +180,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public override Selection GetSelection (Point p, double precision, bool inMotion = false)
 		{
-			Selection sel = anchor.GetSelection (p, precision, inMotion);
-			if (sel != null)
-				return sel;
+			if (SupportsLinks) {
+				Selection sel = anchor.GetSelection (p, precision, inMotion);
+				if (sel != null)
+					return sel;
+			}
 			return base.GetSelection (p, precision, inMotion);
 		}
 	}
