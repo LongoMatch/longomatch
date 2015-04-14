@@ -114,11 +114,15 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Notebook propertiesnotebook;
 		
-		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
-		
 		private global::Gtk.Label label2;
 		
+		private global::LongoMatch.Gui.Component.CategoryProperties tagproperties;
+		
 		private global::Gtk.Label label3;
+		
+		private global::LongoMatch.Gui.Component.LinkProperties linkproperties;
+		
+		private global::Gtk.Label label5;
 
 		protected virtual void Build ()
 		{
@@ -542,46 +546,61 @@ namespace LongoMatch.Gui.Component
 			this.propertiesnotebook = new global::Gtk.Notebook ();
 			this.propertiesnotebook.CanFocus = true;
 			this.propertiesnotebook.Name = "propertiesnotebook";
-			this.propertiesnotebook.CurrentPage = 0;
+			this.propertiesnotebook.CurrentPage = 2;
 			this.propertiesnotebook.ShowBorder = false;
 			this.propertiesnotebook.ShowTabs = false;
+			// Notebook tab
+			global::Gtk.Label w51 = new global::Gtk.Label ();
+			w51.Visible = true;
+			this.propertiesnotebook.Add (w51);
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
+			this.propertiesnotebook.SetTabLabel (w51, this.label2);
+			this.label2.ShowAll ();
 			// Container child propertiesnotebook.Gtk.Notebook+NotebookChild
 			this.tagproperties = new global::LongoMatch.Gui.Component.CategoryProperties ();
 			this.tagproperties.Events = ((global::Gdk.EventMask)(256));
 			this.tagproperties.Name = "tagproperties";
 			this.tagproperties.Edited = false;
 			this.propertiesnotebook.Add (this.tagproperties);
+			global::Gtk.Notebook.NotebookChild w52 = ((global::Gtk.Notebook.NotebookChild)(this.propertiesnotebook [this.tagproperties]));
+			w52.Position = 1;
 			// Notebook tab
-			this.label2 = new global::Gtk.Label ();
-			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
-			this.propertiesnotebook.SetTabLabel (this.tagproperties, this.label2);
-			this.label2.ShowAll ();
-			// Notebook tab
-			global::Gtk.Label w52 = new global::Gtk.Label ();
-			w52.Visible = true;
-			this.propertiesnotebook.Add (w52);
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
-			this.propertiesnotebook.SetTabLabel (w52, this.label3);
+			this.propertiesnotebook.SetTabLabel (this.tagproperties, this.label3);
 			this.label3.ShowAll ();
+			// Container child propertiesnotebook.Gtk.Notebook+NotebookChild
+			this.linkproperties = new global::LongoMatch.Gui.Component.LinkProperties ();
+			this.linkproperties.Events = ((global::Gdk.EventMask)(256));
+			this.linkproperties.Name = "linkproperties";
+			this.propertiesnotebook.Add (this.linkproperties);
+			global::Gtk.Notebook.NotebookChild w53 = ((global::Gtk.Notebook.NotebookChild)(this.propertiesnotebook [this.linkproperties]));
+			w53.Position = 2;
+			// Notebook tab
+			this.label5 = new global::Gtk.Label ();
+			this.label5.Name = "label5";
+			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
+			this.propertiesnotebook.SetTabLabel (this.linkproperties, this.label5);
+			this.label5.ShowAll ();
 			this.tagpropertiesalignment.Add (this.propertiesnotebook);
 			w50.Add (this.tagpropertiesalignment);
 			this.propertiesscrolledwindow.Add (w50);
 			this.vbox10.Add (this.propertiesscrolledwindow);
-			global::Gtk.Box.BoxChild w56 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
-			w56.Position = 2;
+			global::Gtk.Box.BoxChild w57 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
+			w57.Position = 2;
 			this.propertiesalignment.Add (this.vbox10);
 			this.propertiesframe.Add (this.propertiesalignment);
 			this.rightbox.Add (this.propertiesframe);
-			global::Gtk.Box.BoxChild w59 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
-			w59.Position = 0;
+			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
+			w60.Position = 0;
 			this.hbox2.Add (this.rightbox);
-			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
-			w60.Position = 1;
-			w60.Expand = false;
-			w60.Fill = false;
+			global::Gtk.Box.BoxChild w61 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			w61.Position = 1;
+			w61.Expand = false;
+			w61.Fill = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

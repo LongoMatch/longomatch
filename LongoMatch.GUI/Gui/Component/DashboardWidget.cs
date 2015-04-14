@@ -39,6 +39,10 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class DashboardWidget : Gtk.Bin
 	{
+		const int PROPERTIES_NOTEBOOK_PAGE_EMPTY = 0;
+		const int PROPERTIES_NOTEBOOK_PAGE_TAGS = 1;
+		const int PROPERTIES_NOTEBOOK_PAGE_LINKS = 2;
+
 		public event NewEventHandler NewTagEvent;
 
 		DashboardMode mode;
@@ -67,6 +71,7 @@ namespace LongoMatch.Gui.Component
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.EditButtonTagsEvent += EditEventSubcategories;
+			tagger.ActionLinksSelectedEvent += HandleActionLinksSelectedEvent;
 			drawingarea.CanFocus = true;
 			drawingarea.KeyPressEvent += HandleKeyPressEvent;
 			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
@@ -87,8 +92,8 @@ namespace LongoMatch.Gui.Component
 			FitMode = FitMode.Original;
 			Edited = false;
 			Mode = DashboardMode.Code;
-			// Initialize to a sane default value.
-			propertiesnotebook.Page = 1;
+			// Initialize to the empty notebook page.
+			propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 		}
 
 		protected override void OnDestroyed ()
@@ -128,10 +133,10 @@ namespace LongoMatch.Gui.Component
 
 		public bool Edited {
 			get {
-				return edited || tagger.Edited || tagproperties.Edited;
+				return edited || tagger.Edited || tagproperties.Edited || linkproperties.Edited;
 			}
 			set {
-				edited = tagger.Edited = tagproperties.Edited = value;
+				edited = tagger.Edited = tagproperties.Edited = linkproperties.Edited = value;
 			}
 		}
 
@@ -159,7 +164,7 @@ namespace LongoMatch.Gui.Component
 				Edited = false;
 				// Start with disabled widget until something get selected
 				tagproperties.Tagger = null;
-				propertiesnotebook.Page = 1;
+				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 				tagproperties.Dashboard = value;
 				popupbutton.Active = value.DisablePopupWindow;
 			}
@@ -290,7 +295,7 @@ namespace LongoMatch.Gui.Component
 			linksbutton = new ToggleToolButton ();
 			linksbutton.IconWidget = linksimage;
 			linksbutton.Toggled += HandleLinksToggled;
-			linksbutton.TooltipText = Catalog.GetString ("Edit actions links");
+			linksbutton.TooltipText = Catalog.GetString ("Edit action links");
 			toolbar.Add (linksbutton);
 			toolbar.Add (new SeparatorToolItem ());
 
@@ -370,6 +375,7 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 			tagger.ShowLinks = linksbutton.Active;
+			propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 		}
 
 		void HandleTaggersSelectedEvent (List<DashboardButton> taggers)
@@ -377,11 +383,21 @@ namespace LongoMatch.Gui.Component
 			if (taggers.Count == 1) {
 				selected = taggers [0];
 				tagproperties.Tagger = taggers [0];
-				propertiesnotebook.Page = 0;
+				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_TAGS;
 			} else {
 				selected = null;
 				tagproperties.Tagger = null;
-				propertiesnotebook.Page = 1;
+				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
+			}
+		}
+
+		void HandleActionLinksSelectedEvent (List<ActionLink> actionLinks)
+		{
+			if (actionLinks.Count == 1) {
+				linkproperties.Link = actionLinks [0];
+				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_LINKS;
+			} else {
+				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 			}
 		}
 

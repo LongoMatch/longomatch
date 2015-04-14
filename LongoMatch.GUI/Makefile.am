@@ -17,6 +17,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Gui/Component/GameDescriptionHeader.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/HotkeysConfiguration.cs \
+	Gui/Component/LinkProperties.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/MediaFileChooser.cs \
 	Gui/Component/MediaFileSetSelection.cs \
@@ -90,6 +91,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.HotkeysConfiguration.cs \
+	gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileChooser.cs \
 	gtk-gui/LongoMatch.Gui.Component.MediaFileSetSelection.cs \
