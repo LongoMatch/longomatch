@@ -139,7 +139,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					Button.Width, Button.Height - iconImage.Height,
 					PartialTime.ToSecondsString (), false, true);
 			} else {
-				Text = Button.Timer.Name;
+				Text = Button.Name;
 				DrawText (tk);
 				Text = null;
 			}
