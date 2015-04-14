@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services.Services
 {
@@ -54,7 +55,20 @@ namespace LongoMatch.Services.Services
 
 		private string ResolvePath<T> ()
 		{
-			string typePath = Path.Combine (basePath, ResolveType (typeof(T)));
+			string sType = ResolveType (typeof(T));
+			string path;
+
+			// Add the different cases of t
+			// TODO this cases must go away once the DB is fully implemented
+			if (sType == "dashboard") {
+				path = "analysis";
+			} else if (sType == "team") {
+				path = "teams";
+			} else {
+				path = sType;
+			}
+
+			string typePath = Path.Combine (basePath, path);
 
 			if (!Directory.Exists (typePath)) {
 				Log.Information ("Creating directory " + typePath);
@@ -76,6 +90,21 @@ namespace LongoMatch.Services.Services
 			string part = parts [parts.Length - 1];
 			// Make it lowercase so we end into something like this: baseDir/template
 			return part.ToLower ();
+		}
+
+		// Get the name of the file for a template
+		static private string ResolveName (IStorable t)
+		{
+			string sType = ResolveType (t.GetType ());
+
+			// TODO remove this once the DB porting is done
+			if (sType == "dashboard") {
+				return ((Dashboard)t).Name;
+			} else if (sType == "team") {
+				return ((Team)t).Name;
+			} else {
+				return t.ID.ToString ();
+			}
 		}
 
 		static private string GetExtension (Type t)
@@ -103,6 +132,16 @@ namespace LongoMatch.Services.Services
 				T t = Serializer.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 				return t;
+			} else {
+				// In case the file is not stored by id
+				// TODO this must go away once the DB port is done
+				List<T> l = RetrieveAll<T> ();
+				foreach (T t in l) {
+					if (t.ID == id) {
+						Log.Information ("Found id " + id);
+						return t;
+					}
+				}
 			}
 			return default (T);
 		}
@@ -186,7 +225,7 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension (typeof(T));
 
 			// Save the object as a file on disk
-			string path = Path.Combine (typePath, t.ID.ToString ()) + extension;
+			string path = Path.Combine (typePath, ResolveName(t)) + extension;
 			Log.Information ("Storing " + path);
 			Serializer.Save<T> (t, path);
 		}
@@ -197,7 +236,7 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension (typeof(T));
 
 			try {
-				string path = Path.Combine (typePath, t.ID.ToString ()) + extension; 
+				string path = Path.Combine (typePath, ResolveName(t)) + extension; 
 				Log.Information ("Deleting " + path);
 				File.Delete (path);
 			} catch (Exception ex) {
