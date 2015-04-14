@@ -54,9 +54,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set {
 				bool update = false;
 
-				if (StartTime != null) {
-					if (value < StartTime) {
-						StartTime = null;
+				if (Button.StartTime != null) {
+					if (value < Button.StartTime) {
+						Button.Cancel ();
 						Active = false;
 					}
 				}
@@ -65,7 +65,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					update = true;
 				}
 				currentTime = value;
-				if (update && StartTime != null) {
+				if (update && Button.StartTime != null) {
+					// It is possible that the button is activated but not thtough a click
+					Active = true;
 					ReDraw ();
 				}
 			}
@@ -74,17 +76,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		Time StartTime {
-			get;
-			set;
-		}
-
 		Time PartialTime {
 			get {
-				if (StartTime == null) {
+				if (Button.StartTime == null) {
 					return new Time (0);
 				} else {
-					return CurrentTime - StartTime;
+					return CurrentTime - Button.StartTime;
 				}
 			}
 		}
@@ -97,17 +94,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		public override void ClickReleased ()
 		{
 			base.ClickReleased ();
-			if (StartTime == null) {
+			if (Button.StartTime == null) {
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
-				StartTime = CurrentTime;
+				Button.Start (CurrentTime);
 			} else {
 				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
-				if (StartTime.MSeconds != CurrentTime.MSeconds) {
-					var tn = Button.Timer.Start (StartTime);
-					Button.Timer.Stop (CurrentTime);
-					Config.EventsBroker.EmitTimerNodeAddedEvent (Button.Timer, tn);
+				if (Button.StartTime.MSeconds != CurrentTime.MSeconds) {
+					Button.Stop (CurrentTime);
+				} else {
+					Button.Cancel ();
 				}
-				StartTime = null;
 			}
 		}
 
