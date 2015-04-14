@@ -360,9 +360,9 @@ namespace LongoMatch.Gui.Component
 			
 		}
 
-		void HandleTimerNodeAddedEvent (Timer timer, TimeNode tn)
+		void HandleTimerNodeAddedEvent (TimerButton btn, TimeNode tn)
 		{
-			timeline.AddTimerNode (timer, tn);
+			timeline.AddTimerNode (btn.Timer, tn);
 		}
 
 		void HandleEventEdited (TimelineEvent play)

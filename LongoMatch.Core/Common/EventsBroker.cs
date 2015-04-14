@@ -438,10 +438,10 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitTimerNodeAddedEvent (Timer timer, TimeNode node)
+		public void EmitTimerNodeAddedEvent (TimerButton btn, TimeNode node)
 		{
 			if (TimerNodeAddedEvent != null) {
-				TimerNodeAddedEvent (timer, node);
+				TimerNodeAddedEvent (btn, node);
 			}
 		}
 
