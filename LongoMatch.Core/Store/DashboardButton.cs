@@ -178,9 +178,12 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimerButton: DashboardButton
 	{
+		TimeNode currentNode;
+
 		public TimerButton ()
 		{
 			BackgroundColor = StyleConf.ButtonTimerColor;
+			currentNode = null;
 		}
 
 		public Timer Timer {
@@ -196,6 +199,41 @@ namespace LongoMatch.Core.Store
 				if (Timer != null) {
 					Timer.Name = value;
 				}
+			}
+		}
+
+		public void Start (Time start) {
+			if (currentNode != null)
+				return;
+
+			if (Timer != null) {
+				currentNode = Timer.Start (start);
+			}
+		}
+
+		public void Stop (Time stop) {
+			if (currentNode == null)
+				return;
+
+			if (Timer != null) {
+				Timer.Stop (stop);
+				Config.EventsBroker.EmitTimerNodeAddedEvent (this, currentNode);
+				currentNode = null;
+			}
+		}
+
+		public void Cancel () {
+			if (currentNode == null)
+				return;
+			if (Timer != null) {
+				Timer.CancelCurrent ();
+				currentNode = null;
+			}
+		}
+
+		public Time StartTime {
+			get {
+				return currentNode == null ? null : currentNode.Start;
 			}
 		}
 	}
