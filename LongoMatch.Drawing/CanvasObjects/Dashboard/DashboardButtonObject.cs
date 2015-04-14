@@ -37,6 +37,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			};
 		}
 
+		protected override void Dispose (bool disposing)
+		{
+			anchor.Dispose ();
+			base.Dispose (disposing);
+		}
+
 		public DashboardMode Mode {
 			get;
 			set;
