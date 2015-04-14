@@ -302,13 +302,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public override Selection GetSelection (Point p, double precision, bool inMotion = false)
 		{
-			Selection sel = anchor.GetSelection (p, precision, inMotion);
-			if (sel != null)
-				return sel;
-			foreach (LinkAnchorObject subcatAnchor in subcatAnchors.Values) {
-				sel = subcatAnchor.GetSelection (p, precision, inMotion);
+			if (ShowLinks) {
+				Selection sel = anchor.GetSelection (p, precision, inMotion);
 				if (sel != null)
 					return sel;
+				foreach (LinkAnchorObject subcatAnchor in subcatAnchors.Values) {
+					sel = subcatAnchor.GetSelection (p, precision, inMotion);
+					if (sel != null)
+						return sel;
+				}
 			}
 			return base.GetSelection (p, precision, inMotion);
 		}
