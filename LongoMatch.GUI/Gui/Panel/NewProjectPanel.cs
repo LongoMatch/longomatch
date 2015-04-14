@@ -382,6 +382,9 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			if (project != null) {
+				/* Make sure event types and timers are updated in case we are importing
+				 * a project without dashboard */
+				project.UpdateEventTypesAndTimers ();
 				return true;
 			}
 			
