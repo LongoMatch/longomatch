@@ -909,10 +909,6 @@ namespace LongoMatch.Services
 		/// </summary>
 		bool Tick ()
 		{
-			if (IgnoreTicks) {
-				return true;
-			}
-
 			if (StillImageLoaded) {
 				EmitTimeChanged (imageLoadedTS, loadedPlaylistElement.Duration);
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
@@ -1021,7 +1017,9 @@ namespace LongoMatch.Services
 		void HandleTimeout (Object state)
 		{
 			Config.GUIToolkit.Invoke (delegate {
-				Tick ();
+				if (!IgnoreTicks) {
+					Tick ();
+				}
 			});
 		}
 
