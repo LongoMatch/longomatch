@@ -342,7 +342,7 @@ namespace LongoMatch.Gui.Component
 			play.Tags = tags ?? new List<Tag> ();
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
-			Config.EventsBroker.EmitNewDashboardEvent (play, btn);
+			Config.EventsBroker.EmitNewDashboardEvent (play, btn, true);
 		}
 
 		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,

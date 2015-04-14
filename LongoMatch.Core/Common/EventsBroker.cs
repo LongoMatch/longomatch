@@ -102,10 +102,10 @@ namespace LongoMatch.Core.Common
 				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card, null);
 		}
 
-		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn)
+		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit)
 		{
 			if (NewDashboardEventEvent != null)
-				NewDashboardEventEvent (evt, btn);
+				NewDashboardEventEvent (evt, btn, edit);
 		}
 
 		public void EmitEventsDeleted (List<TimelineEvent> events)

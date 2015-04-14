@@ -291,7 +291,7 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		public void HandleNewPlay (TimelineEvent play, DashboardButton btn)
+		public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit)
 		{
 			if (openedProject == null)
 				return;
@@ -305,7 +305,7 @@ namespace LongoMatch.Services
 				}
 			}
 
-			if (!openedProject.Dashboard.DisablePopupWindow) {
+			if (!openedProject.Dashboard.DisablePopupWindow && edit) {
 				if (projectType == ProjectType.FileProject) {
 					bool playing = player.Playing;
 					player.Pause ();
@@ -417,7 +417,7 @@ namespace LongoMatch.Services
 		public bool Start ()
 		{
 			Config.EventsBroker.NewEventEvent += OnNewTag;
-			Config.EventsBroker.NewDashboardEventEvent += HandleNewPlay;
+			Config.EventsBroker.NewDashboardEventEvent += HandleNewDashboardEvent;
 			Config.EventsBroker.EventsDeletedEvent += OnPlaysDeleted;
 			Config.EventsBroker.MoveToEventTypeEvent += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicateEventsEvent += OnDuplicatePlays;
@@ -445,7 +445,7 @@ namespace LongoMatch.Services
 		public bool Stop ()
 		{
 			Config.EventsBroker.NewEventEvent -= OnNewTag;
-			Config.EventsBroker.NewDashboardEventEvent -= HandleNewPlay;
+			Config.EventsBroker.NewDashboardEventEvent -= HandleNewDashboardEvent;
 			Config.EventsBroker.EventsDeletedEvent -= OnPlaysDeleted;
 			Config.EventsBroker.MoveToEventTypeEvent -= OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicateEventsEvent -= OnDuplicatePlays;
