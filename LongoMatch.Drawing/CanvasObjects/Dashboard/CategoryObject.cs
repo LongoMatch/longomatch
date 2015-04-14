@@ -319,11 +319,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			if (sourceTags == null || sourceTags.Count == 0) {
 				return base.GetAnchor (sourceTags);
 			} else {
-				if (subcatAnchors.ContainsKey (sourceTags [0])) {
-					return subcatAnchors [sourceTags [0]];
-				} else {
-					return null;
-				}
+				return subcatAnchors [sourceTags [0]];
 			}
 		}
 

@@ -421,8 +421,9 @@ namespace LongoMatch.Drawing.Widgets
 					ActionLinkObject linkObject;
 
 					sourceAnchor = buttonObject.GetAnchor (link.SourceTags);
-					destAnchor = buttonsDict [link.DestinationButton].GetAnchor (link.DestinationTags);
-					if (destAnchor == null) {
+					try {
+						destAnchor = buttonsDict [link.DestinationButton].GetAnchor (link.DestinationTags);
+					} catch {
 						Log.Error ("Skipping link with invalid destination tags");
 						continue;
 					}
