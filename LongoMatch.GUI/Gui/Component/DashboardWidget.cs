@@ -261,7 +261,7 @@ namespace LongoMatch.Gui.Component
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 			             button.Name + "?";
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-				template.List.Remove (button);
+				template.RemoveButton (button);
 				Edited = true;
 				Refresh ();
 			}
