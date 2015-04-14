@@ -242,8 +242,10 @@ namespace LongoMatch.Drawing.Widgets
 					/* Only highlight valid targets */
 					if (link.Source.CanLink (anchor)) {
 						anchor.Highlighted = true;
+						destAnchor = anchor;
+					} else {
+						destAnchor = null;
 					}
-					destAnchor = anchor;
 				}
 			}
 			base.SelectionMoved (sel);

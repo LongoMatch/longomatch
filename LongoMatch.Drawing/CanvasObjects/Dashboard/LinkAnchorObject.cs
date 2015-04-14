@@ -88,6 +88,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				return false;
 			else if (this == anchor)
 				return false;
+			else if (Button == anchor.Button)
+				return false;
 			else if (Button is TimerObject && anchor.Button is TimerObject)
 				return true;
 			else if (Button is TagObject && anchor.Button is TagObject)
