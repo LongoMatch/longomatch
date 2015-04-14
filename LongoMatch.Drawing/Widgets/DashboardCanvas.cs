@@ -412,11 +412,16 @@ namespace LongoMatch.Drawing.Widgets
 
 			foreach (DashboardButtonObject buttonObject in buttonsDict.Values) {
 				foreach (ActionLink link in buttonObject.Button.ActionLinks) {
-					LinkAnchorObject sourceAnchor = buttonObject.GetAnchor (link.SourceTags);
-					LinkAnchorObject destAnchor = buttonsDict [link.DestinationButton].
-						GetAnchor (link.DestinationTags);
-					ActionLinkObject linkObject = new ActionLinkObject (sourceAnchor,
-						                              destAnchor, link);
+					LinkAnchorObject sourceAnchor, destAnchor;
+					ActionLinkObject linkObject;
+
+					sourceAnchor = buttonObject.GetAnchor (link.SourceTags);
+					destAnchor = buttonsDict [link.DestinationButton].GetAnchor (link.DestinationTags);
+					if (destAnchor == null) {
+						Log.Error ("Skipping link with invalid destination tags");
+						continue;
+					}
+					linkObject = new ActionLinkObject (sourceAnchor, destAnchor, link);
 					link.SourceButton = buttonObject.Button;
 					linkObject.Visible = ShowLinks;
 					AddObject (linkObject);
