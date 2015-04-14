@@ -94,7 +94,7 @@ namespace Tests
 			return img;
 		}
 
-		public static Project CreateProject ()
+		public static Project CreateProject (bool withEvents = true)
 		{
 			TimelineEvent pl;
 			Project p = new Project ();
@@ -110,22 +110,25 @@ namespace Tests
 			p.Description = pd;
 			p.UpdateEventTypesAndTimers ();
 
-			AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
+			if (withEvents) {
+				AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
 
-			/* No tags, no players */
-			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
-			p.Timeline.Add (pl);
-			/* tags, but no players */
-			b = p.Dashboard.List [1] as AnalysisEventButton;
-			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
-			pl.Tags.Add (b.AnalysisEventType.Tags [0]);
-			p.Timeline.Add (pl);
-			/* tags and players */
-			b = p.Dashboard.List [2] as AnalysisEventButton;
-			pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
-			pl.Tags.Add (b.AnalysisEventType.Tags [1]);
-			pl.Players.Add (p.LocalTeamTemplate.List [0]);
-			p.Timeline.Add (pl);
+				/* No tags, no players */
+				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				p.Timeline.Add (pl);
+				/* tags, but no players */
+				b = p.Dashboard.List [1] as AnalysisEventButton;
+				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				pl.Tags.Add (b.AnalysisEventType.Tags [0]);
+				p.Timeline.Add (pl);
+				/* tags and players */
+				b = p.Dashboard.List [2] as AnalysisEventButton;
+				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				pl.Tags.Add (b.AnalysisEventType.Tags [1]);
+				pl.Players.Add (p.LocalTeamTemplate.List [0]);
+				p.Timeline.Add (pl);
+			}
+
 			return p;
 		}
 
