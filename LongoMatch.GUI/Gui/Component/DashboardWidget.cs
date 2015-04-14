@@ -167,30 +167,7 @@ namespace LongoMatch.Gui.Component
 
 		public DashboardMode Mode {
 			set {
-				ignoreChanges = true;
-				mode = value;
-				tagger.Mode = value;
-				// Properties only visible in edit mode
-				rightbox.Visible = mode == DashboardMode.Edit;
-				// Add buttons for cards/tags/etc.. can be handled remotely.
-				hbuttonbox2.Visible = mode == DashboardMode.Edit && internalButtons;
-				editbutton.Active = value == DashboardMode.Edit;
-				if (value == DashboardMode.Edit) {
-					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22);
-				} else {
-					editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit", 22);
-				}
-				LongoMatch.Gui.Helpers.Misc.SetFocus (this, value == DashboardMode.Edit);
-				if (project != null) {
-					if (value == DashboardMode.Edit) {
-						Edited = false;
-					} else {
-						if (Edited)
-							Config.EventsBroker.EmitDashboardEdited ();
-					}
-					
-				}
-				ignoreChanges = false;
+				UpdateMode (value);
 			}
 			get {
 				return mode;
@@ -244,6 +221,35 @@ namespace LongoMatch.Gui.Component
 			Refresh (button);
 		}
 
+		void UpdateMode (DashboardMode mode)
+		{
+			ignoreChanges = true;
+			tagger.Mode = this.mode = mode;
+			// Add buttons for cards/tags/etc.. can be handled remotely.
+			hbuttonbox2.Visible = mode == DashboardMode.Edit && internalButtons;
+			editbutton.Active = rightbox.Visible = linksbutton.Visible = mode == DashboardMode.Edit;
+
+			if (mode == DashboardMode.Edit) {
+				editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22);
+				tagger.ShowLinks = linksbutton.Active;
+			} else {
+				editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit", 22);
+				tagger.ShowLinks = false;
+			}
+
+			LongoMatch.Gui.Helpers.Misc.SetFocus (this, mode == DashboardMode.Edit);
+			if (project != null) {
+				if (mode == DashboardMode.Edit) {
+					Edited = false;
+				} else {
+					if (Edited)
+						Config.EventsBroker.EmitDashboardEdited ();
+				}
+
+			}
+			ignoreChanges = false;
+		}
+
 		void RemoveButton (DashboardButton button)
 		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
@@ -275,16 +281,14 @@ namespace LongoMatch.Gui.Component
 			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22));
 			editbutton = new ToggleToolButton ();
 			editbutton.IconWidget = editimage;
-			editbutton.Active = true;
 			editbutton.Toggled += HandleEditToggled;
 			editbutton.TooltipText = Catalog.GetString ("Edit dashboard");
 			toolbar.Add (editbutton);
 			toolbar.Add (new SeparatorToolItem ());
 
-			editimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22));
+			linksimage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-link-disabled", 22));
 			linksbutton = new ToggleToolButton ();
-			linksbutton.IconWidget = editimage;
-			linksbutton.Active = false;
+			linksbutton.IconWidget = linksimage;
 			linksbutton.Toggled += HandleLinksToggled;
 			linksbutton.TooltipText = Catalog.GetString ("Edit actions links");
 			toolbar.Add (linksbutton);
@@ -315,6 +319,9 @@ namespace LongoMatch.Gui.Component
 			toolbar.Add (d11button);
 			toolbar.ShowAll ();
 			hbox2.PackEnd (toolbar, false, false, 0);
+
+			editbutton.Active = true;
+			linksbutton.Active = false;
 		}
 
 		void UpdateBackground (Image background, int index)
@@ -346,18 +353,19 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 			if (editbutton.Active) {
-				Mode = DashboardMode.Edit;
-				linksbutton.Visible = true;
-				tagger.ShowLinks = linksbutton.Active;
+				UpdateMode (DashboardMode.Edit);
 			} else {
-				Mode = DashboardMode.Code;
-				tagger.ShowLinks = false;
-				linksbutton.Visible = false;
+				UpdateMode (DashboardMode.Code);
 			}
 		}
 
 		void HandleLinksToggled (object sender, EventArgs e)
 		{
+			if (linksbutton.Active) {
+				linksimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-link-active", 22);
+			} else {
+				linksimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-link-disabled", 22);
+			}
 			if (ignoreChanges) {
 				return;
 			}

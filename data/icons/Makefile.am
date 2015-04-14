@@ -44,6 +44,8 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-field-full.svg \
 	hicolor/scalable/actions/longomatch-field-goal.svg \
 	hicolor/scalable/actions/longomatch-field-half.svg \
+	hicolor/scalable/actions/longomatch-link-active.svg \
+	hicolor/scalable/actions/longomatch-link-disabled.svg \
 	hicolor/scalable/actions/longomatch-live.svg \
 	hicolor/scalable/actions/longomatch-mark.svg \
 	hicolor/scalable/actions/longomatch-pause-clock.svg \
