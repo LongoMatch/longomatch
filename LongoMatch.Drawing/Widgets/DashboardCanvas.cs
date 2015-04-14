@@ -252,6 +252,9 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionChanged (List<Selection> sel)
 		{
 			if (sel.Count == 0) {
+				if (ButtonsSelectedEvent != null) {
+					ButtonsSelectedEvent (new List<DashboardButton> ());
+				}
 				return;
 			}
 
