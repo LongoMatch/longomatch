@@ -96,6 +96,7 @@ namespace LongoMatch.Core.Store.Drawables
 					slope = (Start.Y - Stop.Y) / (Start.X - Stop.X);
 					yi = Start.Y - (slope * Start.X);
 					d = Math.Abs ((slope * p.X) + yi - p.Y);
+					d /= 2;
 				}
 				
 				if (d < pr) {
