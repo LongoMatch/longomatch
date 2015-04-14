@@ -64,5 +64,9 @@ namespace LongoMatch.Core.Store
 				return base.GetHashCode ();
 			}
 		}
+
+		public override string ToString () {
+			return String.Format ("{0} ({1})", Value, Group);
+		}
 	}
 }
