@@ -52,17 +52,20 @@ namespace LongoMatch.Core.Store
 		SubstitutionEventType subsType;
 
 		#region Constructors
-		public Project() {
-			ID = System.Guid.NewGuid();
-			Timeline = new List<TimelineEvent>();
-			Dashboard = new Dashboard();
-			LocalTeamTemplate = new Team();
-			VisitorTeamTemplate = new Team();
+
+		public Project ()
+		{
+			ID = System.Guid.NewGuid ();
+			Timeline = new List<TimelineEvent> ();
+			Dashboard = new Dashboard ();
+			LocalTeamTemplate = new Team ();
+			VisitorTeamTemplate = new Team ();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
 			Playlists = new List<Playlist> ();
 			EventTypes = new List<EventType> ();
 		}
+
 		#endregion
 
 		#region Properties
@@ -74,14 +77,14 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public List<TimelineEvent> Timeline {
 			get;
 			set;
 		}
-		
+
 		public ProjectDescription Description {
-			get{
+			get {
 				return description;
 			}
 			set {
@@ -92,7 +95,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[JsonProperty(Order = -7)]
+		[JsonProperty (Order = -7)]
 		public List<EventType> EventTypes {
 			get;
 			set;
@@ -101,7 +104,7 @@ namespace LongoMatch.Core.Store
 		/// <value>
 		/// Categories template
 		/// </value>
-		[JsonProperty(Order = -10)]
+		[JsonProperty (Order = -10)]
 		public Dashboard Dashboard {
 			get;
 			set;
@@ -110,7 +113,7 @@ namespace LongoMatch.Core.Store
 		/// <value>
 		/// Local team template
 		/// </value>
-		[JsonProperty(Order = -9)]
+		[JsonProperty (Order = -9)]
 		public Team LocalTeamTemplate {
 			get;
 			set;
@@ -119,64 +122,64 @@ namespace LongoMatch.Core.Store
 		/// <value>
 		/// Visitor team template
 		/// </value>
-		[JsonProperty(Order = -8)]
+		[JsonProperty (Order = -8)]
 		public Team VisitorTeamTemplate {
 			get;
 			set;
 		}
-		
+
 		public List<Period> Periods {
 			get;
 			set;
 		}
-		
+
 		public List<Timer> Timers {
 			get;
 			set;
 		}
-		
+
 		public List<Playlist> Playlists {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public List<Score> Scores {
 			get {
 				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
-				return ScoreEvents.Select (e => e.Score).Union (scores).OrderByDescending (s=>s.Points).ToList();
+				return ScoreEvents.Select (e => e.Score).Union (scores).OrderByDescending (s => s.Points).ToList ();
 			}
 		}
-		
+
 		[JsonIgnore]
 		public List<PenaltyCard> PenaltyCards {
 			get {
 				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
-				return PenaltyCardsEvents.Select (e => e.PenaltyCard).Union (pc).ToList();
+				return PenaltyCardsEvents.Select (e => e.PenaltyCard).Union (pc).ToList ();
 			}
 		}
 
 		[JsonIgnore]
 		public List<ScoreEvent> ScoreEvents {
 			get {
-				return Timeline.OfType<ScoreEvent>().Select (t => t).ToList();
+				return Timeline.OfType<ScoreEvent> ().Select (t => t).ToList ();
 			}
 		}
-		
+
 		[JsonIgnore]
 		public List<PenaltyCardEvent> PenaltyCardsEvents {
 			get {
-				return Timeline.OfType<PenaltyCardEvent>().Select (t => t).ToList();
+				return Timeline.OfType<PenaltyCardEvent> ().Select (t => t).ToList ();
 			}
 		}
 
 		[JsonIgnore]
 		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByEventType {
 			get {
-				return Timeline.GroupBy(play => play.EventType);
+				return Timeline.GroupBy (play => play.EventType);
 			}
 		}
-		
+
 		[JsonIgnore]
 		public SubstitutionEventType SubstitutionsEventType {
 			get {
@@ -205,25 +208,28 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Public Methods
+
 		/// <summary>
 		/// Frees all the project's resources helping the GC
 		/// </summary>
-		public void Clear() {
-			Timeline.Clear();
-			Dashboard.List.Clear();
-			VisitorTeamTemplate.List.Clear();
-			LocalTeamTemplate.List.Clear();
-			Periods.Clear();
-			Timers.Clear();
+		public void Clear ()
+		{
+			Timeline.Clear ();
+			Dashboard.List.Clear ();
+			VisitorTeamTemplate.List.Clear ();
+			LocalTeamTemplate.List.Clear ();
+			Periods.Clear ();
+			Timers.Clear ();
 		}
 
-		public void UpdateScore () {
+		public void UpdateScore ()
+		{
 			Description.LocalGoals = GetScore (TeamType.LOCAL);
 			Description.VisitorGoals = GetScore (TeamType.VISITOR);
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                               Score score, PenaltyCard card, bool addToTimeline=true)
+		                               Score score, PenaltyCard card, bool addToTimeline = true)
 		{
 			TimelineEvent evt;
 			string count;
@@ -258,7 +264,7 @@ namespace LongoMatch.Core.Store
 			}
 			return evt;
 		}
-		
+
 		public void AddEvent (TimelineEvent play)
 		{
 			Timeline.Add (play);
@@ -266,7 +272,7 @@ namespace LongoMatch.Core.Store
 				UpdateScore ();
 			}
 		}
-		
+
 		/// <summary>
 		/// Delete a play from the project
 		/// </summary>
@@ -365,10 +371,10 @@ namespace LongoMatch.Core.Store
 		}
 
 		public void CurrentLineup (Time currentTime,
-		                         out List<Player> homeFieldPlayers,
-		                         out List<Player> homeBenchPlayers,
-		                         out List<Player> awayFieldPlayers,
-		                         out List<Player> awayBenchPlayers)
+		                           out List<Player> homeFieldPlayers,
+		                           out List<Player> homeBenchPlayers,
+		                           out List<Player> awayFieldPlayers,
+		                           out List<Player> awayBenchPlayers)
 		{
 			Team homeTeam, awayTeam;
 			List<Player> homeTeamPlayers, awayTeamPlayers;
@@ -407,7 +413,7 @@ namespace LongoMatch.Core.Store
 			return Timeline.OfType<SubstitutionEvent> ().
 				Count (s => s.EventTime > start && s.EventTime <= stop) > 0;
 		}
-		
+
 		public LineupEvent CreateLineupEvent ()
 		{
 			Time startTime;
@@ -416,7 +422,7 @@ namespace LongoMatch.Core.Store
 			if (Periods.Count == 0) {
 				startTime = new Time (0);
 			} else {
-				startTime = Periods[0].PeriodNode.Start;
+				startTime = Periods [0].PeriodNode.Start;
 			}
 
 			lineup = new LineupEvent {
@@ -426,22 +432,26 @@ namespace LongoMatch.Core.Store
 				HomeBenchPlayers = LocalTeamTemplate.BenchPlayersList,
 				AwayStartingPlayers = VisitorTeamTemplate.StartingPlayersList,
 				AwayBenchPlayers = VisitorTeamTemplate.BenchPlayersList, 
-				EventTime = startTime};
+				EventTime = startTime
+			};
 			Timeline.Add (lineup);
 
 			return lineup;
 		}
 
-		public List<TimelineEvent> EventsByType (EventType evType) {
-			return Timeline.Where(p => p.EventType.ID == evType.ID).ToList();
+		public List<TimelineEvent> EventsByType (EventType evType)
+		{
+			return Timeline.Where (p => p.EventType.ID == evType.ID).ToList ();
 		}
 
-		public int GetScore (TeamType team) {
-			return Timeline.OfType<ScoreEvent>().Where (s => EventTaggedTeam (s) == team).Sum(s => s.Score.Points); 
+		public int GetScore (TeamType team)
+		{
+			return Timeline.OfType<ScoreEvent> ().Where (s => EventTaggedTeam (s) == team).Sum (s => s.Score.Points); 
 		}
-		
-		public TeamType EventTaggedTeam (TimelineEvent play) {
-			bool home=false, away=false;
+
+		public TeamType EventTaggedTeam (TimelineEvent play)
+		{
+			bool home = false, away = false;
 			
 			if (play.Team == TeamType.LOCAL || play.Team == TeamType.BOTH ||
 			    play.Players.Count (p => LocalTeamTemplate.List.Contains (p)) > 0) {
@@ -462,8 +472,9 @@ namespace LongoMatch.Core.Store
 				return TeamType.NONE;
 			}
 		}
-		
-		public Image GetBackground (FieldPositionType pos) {
+
+		public Image GetBackground (FieldPositionType pos)
+		{
 			switch (pos) {
 			case FieldPositionType.Field:
 				return Dashboard.FieldBackground;
@@ -475,7 +486,8 @@ namespace LongoMatch.Core.Store
 			return null;
 		}
 
-		public void ConsolidateDescription () {
+		public void ConsolidateDescription ()
+		{
 			Description.LastModified = DateTime.UtcNow;
 			Description.LocalName = LocalTeamTemplate.Name;
 			Description.LocalShield = LocalTeamTemplate.Shield;
@@ -485,37 +497,40 @@ namespace LongoMatch.Core.Store
 			Description.VisitorGoals = GetScore (TeamType.VISITOR);
 		}
 
-		public bool Equals(Project project) {
-			if(project == null)
+		public bool Equals (Project project)
+		{
+			if (project == null)
 				return false;
 			else
 				return ID == project.ID;
 		}
 
-		public int CompareTo(object obj) {
-			if(obj is Project) {
-				Project project = (Project) obj;
-				return ID.CompareTo(project.ID);
-			}
-			else
-				throw new ArgumentException("object is not a Project and cannot be compared");
+		public int CompareTo (object obj)
+		{
+			if (obj is Project) {
+				Project project = (Project)obj;
+				return ID.CompareTo (project.ID);
+			} else
+				throw new ArgumentException ("object is not a Project and cannot be compared");
 		}
 
-		public static void Export(Project project, string file) {
-			file = Path.ChangeExtension(file, Constants.PROJECT_EXT);
-			Serializer.Save(project, file);
+		public static void Export (Project project, string file)
+		{
+			file = Path.ChangeExtension (file, Constants.PROJECT_EXT);
+			Serializer.Save (project, file);
 		}
 
-		public static Project Import(string file) {
+		public static Project Import (string file)
+		{
 			try {
-				return Serializer.Load<Project>(file);
-			}
-			catch  (Exception e){
+				return Serializer.Load<Project> (file);
+			} catch (Exception e) {
 				Log.Exception (e);
-				throw new Exception(Catalog.GetString("The file you are trying to load " +
-				                                      "is not a valid project"));
+				throw new Exception (Catalog.GetString ("The file you are trying to load " +
+				"is not a valid project"));
 			}
 		}
+
 		#endregion
 	}
 }
