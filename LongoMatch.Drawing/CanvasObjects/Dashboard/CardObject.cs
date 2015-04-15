@@ -72,6 +72,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 			/* Draw header */
 			tk.LineWidth = 2;
+			tk.FontSize = StyleConf.ButtonNameFontSize;
+			tk.FontWeight = FontWeight.Light;
+			tk.FontAlignment = FontAlignment.Center;
 			if (Recording) {
 				tk.DrawText (Position, Button.Width, Button.Height, (CurrentTime - Start).ToSecondsString ());
 			} else {
