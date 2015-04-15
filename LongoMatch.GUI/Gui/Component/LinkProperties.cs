@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 				Edited = true;
 			};
 			checkbuttonkeepcommontags.Toggled += (sender, e) => {
-				link.KeepCommonTags = checkbuttonkeepcommontags.Active;
+				link.KeepGenericTags = checkbuttonkeepcommontags.Active;
 				Edited = true;
 			};
 		}
@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Component
 
 				comboboxteamaction.Active = (int)link.TeamAction;
 				checkbuttonkeepplayertags.Active = link.KeepPlayerTags;
-				checkbuttonkeepcommontags.Active = link.KeepCommonTags;
+				checkbuttonkeepcommontags.Active = link.KeepGenericTags;
 			}
 		}
 	}

@@ -36,7 +36,7 @@ namespace Tests.Core.Store
 			link.DestinationTags = new List<Tag> { new Tag ("tag2") };
 			link.Action = LinkAction.Toggle;
 			link.TeamAction = TeamLinkAction.Invert;
-			link.KeepCommonTags = false;
+			link.KeepGenericTags = false;
 			link.KeepPlayerTags = false;
 			return link;
 		}
@@ -55,7 +55,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (link.DestinationTags, link2.DestinationTags);
 			Assert.AreEqual (link.Action, link2.Action);
 			Assert.AreEqual (link.TeamAction, link2.TeamAction);
-			Assert.AreEqual (link.KeepCommonTags, link2.KeepCommonTags);
+			Assert.AreEqual (link.KeepGenericTags, link2.KeepGenericTags);
 			Assert.AreEqual (link.KeepPlayerTags, link2.KeepPlayerTags);
 		}
 

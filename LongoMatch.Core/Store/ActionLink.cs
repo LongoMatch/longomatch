@@ -31,7 +31,7 @@ namespace LongoMatch.Core.Store
 	{
 		public ActionLink ()
 		{
-			KeepCommonTags = true;
+			KeepGenericTags = true;
 			KeepPlayerTags = true;
 			TeamAction = TeamLinkAction.Keep;
 			SourceTags = new List<Tag> ();
@@ -96,9 +96,9 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// If <c>true</c>, common tags will be copied
+		/// If <c>true</c>, generic tags will be copied.
 		/// </summary>
-		public bool KeepCommonTags {
+		public bool KeepGenericTags {
 			get;
 			set;
 		}
