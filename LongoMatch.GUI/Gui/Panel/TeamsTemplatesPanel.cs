@@ -380,6 +380,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					try {
 						Team team = provider.Load (name);
+						provider.Delete (name);
 						team.Name = args.NewText;
 						provider.Save (team);
 						teams.SetValue (iter, 1, args.NewText);
