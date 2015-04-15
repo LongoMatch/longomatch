@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.CapturerTick += HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeletedEvent;
-			Config.EventsBroker.TimerNodeAddedEvent += HandleTimerNodeAddedEvent;
+			Config.EventsBroker.TimeNodeStoppedEvent += HandleTimeNodeStoppedEvent;
 			Config.EventsBroker.EventEditedEvent += HandleEventEdited;
 			;
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.PlayerTick -= HandleTick;
 			Config.EventsBroker.CapturerTick -= HandleCapturerTick;
 			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
-			Config.EventsBroker.TimerNodeAddedEvent -= HandleTimerNodeAddedEvent;
+			Config.EventsBroker.TimeNodeStoppedEvent -= HandleTimeNodeStoppedEvent;
 			Config.EventsBroker.EventEditedEvent -= HandleEventEdited;
 			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeletedEvent;
 			buttonswidget.Destroy ();
@@ -360,7 +360,7 @@ namespace LongoMatch.Gui.Component
 			
 		}
 
-		void HandleTimerNodeAddedEvent (TimerButton btn, TimeNode tn)
+		void HandleTimeNodeStoppedEvent (TimeNode tn, TimerButton btn)
 		{
 			timeline.AddTimerNode (btn.Timer, tn);
 		}

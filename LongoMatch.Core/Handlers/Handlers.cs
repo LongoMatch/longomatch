@@ -43,7 +43,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void NewDashboardEventHandler (TimelineEvent evt,DashboardButton btn,bool edit);
 	/* An event was edited */
 	public delegate void TimeNodeChangedHandler (TimeNode tNode,Time time);
-	public delegate void TimerNodeAddedHandler (TimerButton btn,TimeNode tn);
+	public delegate void TimeNodeStartedHandler (TimeNode tn, TimerButton btn);
+	public delegate void TimeNodeStoppedHandler (TimeNode tn, TimerButton btn);
 	/* Edit EventType properties */
 	public delegate void EditEventTypeHandler (EventType cat);
 	/* A list of plays needs to be deleted */

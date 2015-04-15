@@ -208,6 +208,7 @@ namespace LongoMatch.Core.Store
 
 			if (Timer != null) {
 				currentNode = Timer.Start (start);
+				Config.EventsBroker.EmitTimeNodeStartedEvent (currentNode, this);
 			}
 		}
 
@@ -217,7 +218,7 @@ namespace LongoMatch.Core.Store
 
 			if (Timer != null) {
 				Timer.Stop (stop);
-				Config.EventsBroker.EmitTimerNodeAddedEvent (this, currentNode);
+				Config.EventsBroker.EmitTimeNodeStoppedEvent (currentNode, this);
 				currentNode = null;
 			}
 		}

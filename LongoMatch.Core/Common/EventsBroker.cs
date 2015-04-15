@@ -36,9 +36,10 @@ namespace LongoMatch.Core.Common
 		public event LoadEventHandler LoadEventEvent;
 		public event EventLoadedHandler EventLoadedEvent;
 		public event EventEditedHandler EventEditedEvent;
-		public event TimerNodeAddedHandler TimerNodeAddedEvent;
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event TimeNodeStartedHandler TimeNodeStartedEvent;
+		public event TimeNodeStoppedHandler TimeNodeStoppedEvent;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
@@ -438,10 +439,17 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitTimerNodeAddedEvent (TimerButton btn, TimeNode node)
+		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn)
 		{
-			if (TimerNodeAddedEvent != null) {
-				TimerNodeAddedEvent (btn, node);
+			if (TimeNodeStartedEvent != null) {
+				TimeNodeStartedEvent (node, btn);
+			}
+		}
+
+		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn)
+		{
+			if (TimeNodeStoppedEvent != null) {
+				TimeNodeStoppedEvent (node, btn);
 			}
 		}
 
