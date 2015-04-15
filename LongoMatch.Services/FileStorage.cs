@@ -171,6 +171,18 @@ namespace LongoMatch.Services.Services
 			if (dict == null)
 				return RetrieveAll<T> ();
 
+			// In case the only keyword is name try to find the files by name
+			if (dict.ContainsKey ("Name") && dict.Keys.Count == 1) {
+				string path = Path.Combine (typePath, dict["Name"] + GetExtension (typeof(T)));
+
+				if (File.Exists (path)) {
+					T t = Serializer.LoadSafe<T> (path);
+					Log.Information ("Retrieving by filename " + path);
+					l.Add (t);
+					return l;
+				}
+			}
+
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
