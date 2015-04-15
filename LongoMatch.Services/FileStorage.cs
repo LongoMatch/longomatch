@@ -157,6 +157,15 @@ namespace LongoMatch.Services.Services
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
 				T t = (T)Serializer.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
+
+				FieldInfo finfo = t.GetType ().GetField ("Name");
+				PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+
+				if (pinfo != null)
+					pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+				else
+					finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+
 				l.Add (t);
 			}
 			return l;
@@ -178,6 +187,16 @@ namespace LongoMatch.Services.Services
 				if (File.Exists (path)) {
 					T t = Serializer.LoadSafe<T> (path);
 					Log.Information ("Retrieving by filename " + path);
+					// To avoid cases where the name of the file does not match the name of the template
+					// overwrite the template name
+					FieldInfo finfo = t.GetType ().GetField ("Name");
+					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+
+					if (pinfo != null)
+						pinfo.SetValue (t, dict["Name"]);
+					else
+						finfo.SetValue (t, dict["Name"]);
+
 					l.Add (t);
 					return l;
 				}
