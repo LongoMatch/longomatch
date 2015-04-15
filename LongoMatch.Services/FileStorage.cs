@@ -163,7 +163,7 @@ namespace LongoMatch.Services.Services
 
 				if (pinfo != null)
 					pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
-				else
+				else if (finfo != null)
 					finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
 
 				l.Add (t);
@@ -194,7 +194,7 @@ namespace LongoMatch.Services.Services
 
 					if (pinfo != null)
 						pinfo.SetValue (t, dict["Name"]);
-					else
+					else if (finfo != null)
 						finfo.SetValue (t, dict["Name"]);
 
 					l.Add (t);
