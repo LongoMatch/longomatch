@@ -100,7 +100,7 @@ namespace LongoMatch.Services.Services
 			// TODO remove this once the DB porting is done
 			if (sType == "dashboard") {
 				return ((Dashboard)t).Name;
-			} else if (sType == "team") {
+			} else if (sType == "team" || sType == "teamtemplate") {
 				return ((Team)t).Name;
 			} else {
 				return t.ID.ToString ();
