@@ -550,7 +550,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (template.HasCircularDependencies ()) {
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString (
-					"This link has circular depdencie and will not be added."));
+					"This linking option is not valid: infinite loop."));
 				RemoveLink (actionLink, true);
 			}
 		}
