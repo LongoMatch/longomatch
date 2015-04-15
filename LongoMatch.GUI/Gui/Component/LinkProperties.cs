@@ -50,14 +50,35 @@ namespace LongoMatch.Gui.Component
 		}
 
 		void UpdateUI () {
-			entryfrom.Text = Link.SourceButton.Name;
-			entryfromtags.Text = String.Join (", ", Link.SourceTags);
-			entryto.Text = Link.DestinationButton.Name;
-			entrytotags.Text = String.Join (", ", Link.DestinationTags);
-			comboboxaction.Active = (int)link.Action;
-			comboboxteamaction.Active = (int)link.TeamAction;
-			checkbuttonkeepplayertags.Active = link.KeepPlayerTags;
-			checkbuttonkeepcommontags.Active = link.KeepCommonTags;
+			labelfromdata.Text = Link.SourceButton.Name;
+			labelfromtagsdata.Text = String.Join (", ", Link.SourceTags);
+			labelfromtagsdata.Visible = (Link.SourceTags.Count != 0);
+			// This wonrderful hack is required for the label to re-wrap its content
+			labelfromtagsdata.WidthRequest = labelfromtagsdata.Allocation.Width;
+
+			labeltodata.Text = Link.DestinationButton.Name;
+			labeltotagsdata.Text = String.Join (", ", Link.DestinationTags);
+			labeltotagsdata.Visible = (Link.DestinationTags.Count != 0);
+			// This wonrderful hack is required for the label to re-wrap its content
+			labeltotagsdata.WidthRequest = labeltotagsdata.Allocation.Width;
+
+			if (Link.SourceButton is TimerButton && Link.DestinationButton is TimerButton) {
+				comboboxaction.Visible = labelaction.Visible = true;
+				comboboxteamaction.Visible = labelteamaction.Visible = false;
+				checkbuttonkeepcommontags.Visible = labelkeepcommontags.Visible = false;
+				checkbuttonkeepplayertags.Visible = labelkeepplayertags.Visible = false;
+
+				comboboxaction.Active = (int)link.Action;
+			} else {
+				comboboxaction.Visible = labelaction.Visible = false;
+				comboboxteamaction.Visible = labelteamaction.Visible = true;
+				checkbuttonkeepcommontags.Visible = labelkeepcommontags.Visible = true;
+				checkbuttonkeepplayertags.Visible = labelkeepplayertags.Visible = true;
+
+				comboboxteamaction.Active = (int)link.TeamAction;
+				checkbuttonkeepplayertags.Active = link.KeepPlayerTags;
+				checkbuttonkeepcommontags.Active = link.KeepCommonTags;
+			}
 		}
 	}
 }
