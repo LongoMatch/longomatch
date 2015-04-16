@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Panel
 		ListStore teams;
 		Team loadedTeam;
 		ITeamTemplatesProvider provider;
+		TreeIter selectedIter;
+		List<string> templatesNames;
 
 		public TeamsTemplatesPanel ()
 		{
@@ -121,13 +123,14 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;
-			
+
+			templatesNames = new List<string> ();
 			teams.Clear ();
 			foreach (Team template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
 				string name = template.Name;
-				
+
 				if (template.Shield != null) {
 					img = template.Shield.Scale (StyleConf.TeamsShieldIconSize,
 						StyleConf.TeamsShieldIconSize).Value;
@@ -137,6 +140,8 @@ namespace LongoMatch.Gui.Panel
 				}
 				if (template.Static) {
 					name += " (" + Catalog.GetString ("System") + ")";
+				} else {
+					templatesNames.Add (name);
 				}
 				iter = teams.AppendValues (img, name, template.Name);
 				if (first || template.Name == templateName) {
@@ -228,7 +233,7 @@ namespace LongoMatch.Gui.Panel
 						loadedTeam.Name + "_copy", this);
 					if (newName == null)
 						break;
-					if (provider.TemplatesNames.Contains (newName)) {
+					if (templatesNames.Contains (newName)) {
 						msg = Catalog.GetString ("A team with the same name already exists"); 
 						Config.GUIToolkit.ErrorMessage (msg, this);
 					} else {
@@ -252,15 +257,16 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedTeam != null && teamtemplateeditor1.Edited) {
 				if (loadedTeam.Static) {
-					/* prompt=false when we click the save button */
 					if (!prompt) {
 						SaveStatic ();
 					}
-				} else {
+				} else if (prompt) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
 					if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 						SaveLoadedTeam ();
 					}
+				} else {
+					SaveLoadedTeam ();
 				}
 			}
 		}
@@ -277,11 +283,10 @@ namespace LongoMatch.Gui.Panel
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
 			Team selected;
-			TreeIter iter;
 
-			teamseditortreeview.Selection.GetSelected (out iter);
+			teamseditortreeview.Selection.GetSelected (out selectedIter);
 			try {
-				selected = Config.TeamTemplatesProvider.Load (teams.GetValue (iter, 2) as string);
+				selected = Config.TeamTemplatesProvider.Load (teams.GetValue (selectedIter, 2) as string);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
@@ -297,17 +302,22 @@ namespace LongoMatch.Gui.Panel
 		void HandleDeleteTeamClicked (object sender, EventArgs e)
 		{
 			if (loadedTeam != null) {
-				if (loadedTeam.Name == "default") {
-					MessagesHelpers.ErrorMessage (this,
-						Catalog.GetString ("The default team can't be deleted"));
+				if (loadedTeam.Static) {
+					string msg = Catalog.GetString ("System teams can't be deleted");
+					MessagesHelpers.WarningMessage (this, msg);
 					return;
-				}
-				string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
-				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-					provider.Delete (loadedTeam.Name);
+				} else {
+					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
+					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+						provider.Delete (loadedTeam.Name);
+						teams.Remove (ref selectedIter);
+						templatesNames.Remove (loadedTeam.Name);
+						selectedIter = TreeIter.Zero;
+						teamseditortreeview.Selection.SelectPath (new TreePath ("0"));
+						HandleSelectionChanged (null, null);
+					}
 				}
 			}
-			Load ("default");
 		}
 
 		void HandleNewTeamClicked (object sender, EventArgs e)
@@ -319,7 +329,7 @@ namespace LongoMatch.Gui.Panel
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = true;
 			dialog.Text = Catalog.GetString ("New team");
-			dialog.AvailableTemplates = provider.TemplatesNames;
+			dialog.AvailableTemplates = templatesNames;
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
@@ -369,13 +379,14 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleEdited (object o, EditedArgs args)
 		{
-			Gtk.TreeIter iter;
-			teams.GetIter (out iter, new Gtk.TreePath (args.Path));
+			TreeIter iter;
+			teams.GetIter (out iter, new TreePath (args.Path));
  
 			string name = (string)teams.GetValue (iter, 2);
 			if (name != args.NewText) {
-				if (provider.TemplatesNames.Contains (args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A team with the same name already exists"), this);
+				if (templatesNames.Contains (args.NewText)) {
+					Config.GUIToolkit.ErrorMessage (
+						Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
 					try {
@@ -383,6 +394,8 @@ namespace LongoMatch.Gui.Panel
 						team.Name = args.NewText;
 						provider.Save (team);
 						provider.Delete (name);
+						templatesNames.Remove (name);
+						templatesNames.Add (team.Name);
 						teams.SetValue (iter, 1, args.NewText);
 						teams.SetValue (iter, 2, args.NewText);
 					} catch (Exception ex) {
