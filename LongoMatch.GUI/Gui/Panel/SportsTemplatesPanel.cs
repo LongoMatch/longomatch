@@ -435,9 +435,9 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					try {
 						Dashboard dashboard = provider.Load (name);
-						provider.Delete (name);
 						dashboard.Name = args.NewText;
 						provider.Save (dashboard);
+						provider.Delete (name);
 						// Change displayed name and template name in our store
 						templates.SetValue (iter, 1, args.NewText);
 						templates.SetValue (iter, 2, args.NewText);
