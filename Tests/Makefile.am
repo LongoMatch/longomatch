@@ -45,9 +45,11 @@ SOURCES = Core/Common/TestColor.cs \
 	Services/TestRenderingJobsManager.cs \
 	Services/TestServices.cs \
 	Services/TestTemplatesService.cs \
+	Services/TestUpdatesNotifier.cs \
 	Utils.cs
 
-RESOURCES = Core/dibujo.svg
+RESOURCES = Core/dibujo.svg \
+	Services/latest-test.json
 
 include $(top_srcdir)/build/build.mk
 

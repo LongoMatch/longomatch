@@ -86,6 +86,7 @@
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
     <Compile Include="Services\TestServices.cs" />
+    <Compile Include="Services\TestUpdatesNotifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

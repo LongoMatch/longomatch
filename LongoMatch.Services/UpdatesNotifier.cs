@@ -57,18 +57,12 @@ namespace LongoMatch.Services
 			return true;
 		}
 
-		static bool IsOutDated (Version currentVersion, Version latestVersion)
+		static public bool IsOutDated (Version currentVersion, Version latestVersion)
 		{
-			if (latestVersion.Major > currentVersion.Major)
-				return true;
-			if (latestVersion.Minor > currentVersion.Minor)
-				return true;
-			if (latestVersion.Build > currentVersion.Build)
-				return true;
-			return false;
+			return latestVersion > currentVersion;
 		}
 
-		static void CheckForUpdates ()
+		static public void CheckForUpdates ()
 		{
 			string tempFile = Path.Combine (Config.HomeDir, "latest.json");
 			if (!FetchNewVersion (Config.LatestVersionURL, tempFile))
