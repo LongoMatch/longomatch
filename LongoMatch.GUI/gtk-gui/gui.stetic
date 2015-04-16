@@ -10657,7 +10657,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EventTypeTagsEditor" design-size="1009 532">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Edit event tags</property>
+    <property name="Title" translatable="yes">Edit event subcategory tags</property>
     <property name="Icon">stock:longomatch Menu</property>
     <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>

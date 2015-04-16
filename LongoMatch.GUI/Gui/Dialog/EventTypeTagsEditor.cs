@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void RemoveGroup (TagsGroup g)
 		{
-			string msg = Catalog.GetString ("Do you want to remove this group and all its tags?");
+			string msg = Catalog.GetString ("Do you want to remove this subcategory and all its tags?");
 			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 				EventType.Tags.RemoveAll (g.tags.Contains);
 				mainvbox.Remove (g.container);
@@ -145,16 +145,14 @@ namespace LongoMatch.Gui.Dialog
 			Entry entry = new Entry (name);
 			Button b = Button ("gtk-remove");
 			
-			l.Markup = Catalog.GetString ("<b>Group name:</b>");
+			l.Markup = Catalog.GetString ("<b>Subcategory name:</b>");
 			g.nameEntry = entry;
 			entry.Changed += (sender, e) => {
 				foreach (Tag t in g.tags) {
 					t.Group = entry.Text;
 				}
 			};
-			b.Clicked += (sender, e) => {
-				RemoveGroup (g);
-			};
+			b.Clicked += (sender, e) => RemoveGroup (g);
 			box.PackStart (l, false, false, 0);
 			box.PackStart (entry, false, true, 0);
 			box.PackStart (b, false, false, 0);
@@ -169,9 +167,7 @@ namespace LongoMatch.Gui.Dialog
 			Button editHK = Button ("gtk-edit");
 			Button b = Button ("gtk-remove");
 
-			b.Clicked += (sender, e) => {
-				RemoveTag (tag, g);
-			};
+			b.Clicked += (sender, e) => RemoveTag (tag, g);
 
 			editHK.Clicked += (sender, e) => {
 				HotKey hotkey = Config.GUIToolkit.SelectHotkey (tag.HotKey);
@@ -224,19 +220,17 @@ namespace LongoMatch.Gui.Dialog
 
 		Button CreateAddGroupButton ()
 		{
-			Button b = CreateButton (Catalog.GetString ("Add new group"), IconSize.LargeToolbar);
-			b.Clicked += (sender, e) => {
-				AddNewGroup (Catalog.GetString ("New group"), new List<Tag> ());
-			};
+			Button b = CreateButton (Catalog.GetString ("Add new subcategory"),
+				           IconSize.LargeToolbar);
+			b.Clicked += (sender, e) =>
+				AddNewGroup (Catalog.GetString ("New subcategory"), new List<Tag> ());
 			return b;
 		}
 
 		Button CreateAddTagButton (TagsGroup g)
 		{
 			Button b = CreateButton (Catalog.GetString ("Add new tag"), IconSize.Button);
-			b.Clicked += (sender, e) => {
-				AddTag (g);
-			};
+			b.Clicked += (sender, e) => AddTag (g);
 			return b;
 		}
 
