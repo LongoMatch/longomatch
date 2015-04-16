@@ -11816,7 +11816,7 @@ To avoid this, and to enjoy many additional functional benefits, we encourage yo
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.CheckButton" id="checkbuttonkeepcommontags">
+          <widget class="Gtk.CheckButton" id="checkbuttonkeepgenerictags">
             <property name="MemberName" />
             <property name="Label" translatable="yes" />
             <property name="DrawIndicator">True</property>
@@ -11995,10 +11995,10 @@ Invert</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="labelkeepcommontags">
+          <widget class="Gtk.Label" id="labelkeepgenerictags">
             <property name="MemberName" />
             <property name="Xalign">1</property>
-            <property name="LabelProp" translatable="yes">Keep common tags</property>
+            <property name="LabelProp" translatable="yes">Keep generic tags</property>
           </widget>
           <packing>
             <property name="TopAttach">7</property>

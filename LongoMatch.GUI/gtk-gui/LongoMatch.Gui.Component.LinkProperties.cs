@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.Table tabledata;
 		
-		private global::Gtk.CheckButton checkbuttonkeepcommontags;
+		private global::Gtk.CheckButton checkbuttonkeepgenerictags;
 		
 		private global::Gtk.CheckButton checkbuttonkeepplayertags;
 		
@@ -22,7 +22,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Label labelfromtagsdata;
 		
-		private global::Gtk.Label labelkeepcommontags;
+		private global::Gtk.Label labelkeepgenerictags;
 		
 		private global::Gtk.Label labelkeepplayertags;
 		
@@ -46,13 +46,13 @@ namespace LongoMatch.Gui.Component
 			this.tabledata.RowSpacing = ((uint)(6));
 			this.tabledata.ColumnSpacing = ((uint)(6));
 			// Container child tabledata.Gtk.Table+TableChild
-			this.checkbuttonkeepcommontags = new global::Gtk.CheckButton ();
-			this.checkbuttonkeepcommontags.Name = "checkbuttonkeepcommontags";
-			this.checkbuttonkeepcommontags.Label = "";
-			this.checkbuttonkeepcommontags.DrawIndicator = true;
-			this.checkbuttonkeepcommontags.UseUnderline = true;
-			this.tabledata.Add (this.checkbuttonkeepcommontags);
-			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.tabledata [this.checkbuttonkeepcommontags]));
+			this.checkbuttonkeepgenerictags = new global::Gtk.CheckButton ();
+			this.checkbuttonkeepgenerictags.Name = "checkbuttonkeepgenerictags";
+			this.checkbuttonkeepgenerictags.Label = "";
+			this.checkbuttonkeepgenerictags.DrawIndicator = true;
+			this.checkbuttonkeepgenerictags.UseUnderline = true;
+			this.tabledata.Add (this.checkbuttonkeepgenerictags);
+			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.tabledata [this.checkbuttonkeepgenerictags]));
 			w1.TopAttach = ((uint)(7));
 			w1.BottomAttach = ((uint)(8));
 			w1.LeftAttach = ((uint)(1));
@@ -149,12 +149,12 @@ namespace LongoMatch.Gui.Component
 			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child tabledata.Gtk.Table+TableChild
-			this.labelkeepcommontags = new global::Gtk.Label ();
-			this.labelkeepcommontags.Name = "labelkeepcommontags";
-			this.labelkeepcommontags.Xalign = 1F;
-			this.labelkeepcommontags.LabelProp = global::Mono.Unix.Catalog.GetString ("Keep common tags");
-			this.tabledata.Add (this.labelkeepcommontags);
-			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelkeepcommontags]));
+			this.labelkeepgenerictags = new global::Gtk.Label ();
+			this.labelkeepgenerictags.Name = "labelkeepgenerictags";
+			this.labelkeepgenerictags.Xalign = 1F;
+			this.labelkeepgenerictags.LabelProp = global::Mono.Unix.Catalog.GetString ("Keep generic tags");
+			this.tabledata.Add (this.labelkeepgenerictags);
+			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelkeepgenerictags]));
 			w9.TopAttach = ((uint)(7));
 			w9.BottomAttach = ((uint)(8));
 			w9.XOptions = ((global::Gtk.AttachOptions)(4));

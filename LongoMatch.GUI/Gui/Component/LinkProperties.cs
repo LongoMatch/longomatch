@@ -31,8 +31,8 @@ namespace LongoMatch.Gui.Component
 				link.KeepPlayerTags = checkbuttonkeepplayertags.Active;
 				Edited = true;
 			};
-			checkbuttonkeepcommontags.Toggled += (sender, e) => {
-				link.KeepGenericTags = checkbuttonkeepcommontags.Active;
+			checkbuttonkeepgenerictags.Toggled += (sender, e) => {
+				link.KeepGenericTags = checkbuttonkeepgenerictags.Active;
 				Edited = true;
 			};
 		}
@@ -65,19 +65,19 @@ namespace LongoMatch.Gui.Component
 			if (Link.SourceButton is TimerButton && Link.DestinationButton is TimerButton) {
 				comboboxaction.Visible = labelaction.Visible = true;
 				comboboxteamaction.Visible = labelteamaction.Visible = false;
-				checkbuttonkeepcommontags.Visible = labelkeepcommontags.Visible = false;
+				checkbuttonkeepgenerictags.Visible = labelkeepgenerictags.Visible = false;
 				checkbuttonkeepplayertags.Visible = labelkeepplayertags.Visible = false;
 
 				comboboxaction.Active = (int)link.Action;
 			} else {
 				comboboxaction.Visible = labelaction.Visible = false;
 				comboboxteamaction.Visible = labelteamaction.Visible = true;
-				checkbuttonkeepcommontags.Visible = labelkeepcommontags.Visible = true;
+				checkbuttonkeepgenerictags.Visible = labelkeepgenerictags.Visible = true;
 				checkbuttonkeepplayertags.Visible = labelkeepplayertags.Visible = true;
 
 				comboboxteamaction.Active = (int)link.TeamAction;
 				checkbuttonkeepplayertags.Active = link.KeepPlayerTags;
-				checkbuttonkeepcommontags.Active = link.KeepGenericTags;
+				checkbuttonkeepgenerictags.Active = link.KeepGenericTags;
 			}
 		}
 	}
