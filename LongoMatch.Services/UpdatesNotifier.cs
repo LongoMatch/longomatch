@@ -18,48 +18,46 @@ namespace LongoMatch.Services
 
 	public class UpdatesNotifier: IService
 	{
-		readonly Version currentVersion;
-		Version latestVersion;
-
-		string tempFile;
-		string downloadURL;
-		string changeLog;
-
-		#region Constructors
-
-		public UpdatesNotifier ()
+		static public bool FetchNewVersion (string url, string filename)
 		{
-			currentVersion = Assembly.GetExecutingAssembly ().GetName ().Version;
-			tempFile = Path.Combine (Config.HomeDir, "latest.json");
+			try {
+				var wb = new WebClient ();
+				wb.DownloadFile (url, filename);
+			} catch (Exception ex) {
+				Log.WarningFormat ("UpdatesNotifier: Error downloading version file from {0} to {1} ",
+						url, filename);
+				Log.Exception (ex);
+				return false;
+			}
+			Log.InformationFormat ("UpdatesNotifier: Downloaded latest version from {0} to {1}",
+				url, filename);
+			return true;
 		}
 
-		#endregion
-
-		#region Private methods
-
-		void FetchNewVersion ()
+		static public bool ParseNewVersion (string filename, out Version latestVersion, out string downloadURL, out string changeLog)
 		{
-			var wb = new WebClient ();
+			latestVersion = null;
+			downloadURL = null;
+			changeLog = null;
 			try {
-				wb.DownloadFile (Config.LatestVersionURL, tempFile);
-				var fileStream = new FileStream (tempFile, FileMode.Open);
+				var fileStream = new FileStream (filename, FileMode.Open);
 				var sr = new StreamReader (fileStream);
 				JObject latestObject = JsonConvert.DeserializeObject<JObject> (sr.ReadToEnd ());
 				fileStream.Close ();
-				Log.InformationFormat ("UpdatesNotifier: Got latest version from {0}",
-					Config.LatestVersionURL);
 
 				latestVersion = new Version (latestObject ["version"].Value<string> ());
 				downloadURL = latestObject ["url"].Value<string> ();
 				changeLog = latestObject["changes"].Value<string> ();
 			} catch (Exception ex) {
-				Log.Warning ("Error processing version file: " + Config.LatestVersionURL);
+				Log.WarningFormat ("UpdatesNotifier: Error parsing version file {0}", filename);
 				Log.Exception (ex);
-				latestVersion = currentVersion;
+				return false;
 			}
+			Log.InformationFormat ("UpdatesNotifier: Latest version is {0}", latestVersion);
+			return true;
 		}
 
-		bool IsOutDated ()
+		static bool IsOutDated (Version currentVersion, Version latestVersion)
 		{
 			if (latestVersion.Major > currentVersion.Major)
 				return true;
@@ -70,30 +68,43 @@ namespace LongoMatch.Services
 			return false;
 		}
 
-		void CheckForUpdates ()
+		static void CheckForUpdates ()
 		{
-			FetchNewVersion ();
-			Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}",
+			string tempFile = Path.Combine (Config.HomeDir, "latest.json");
+			if (!FetchNewVersion (Config.LatestVersionURL, tempFile))
+				return;
+
+			Version latestVersion;
+			string downloadURL;
+			string changeLog;
+			if (!ParseNewVersion (tempFile, out latestVersion, out downloadURL, out changeLog))
+				return;
+
+			Version currentVersion = Assembly.GetExecutingAssembly ().GetName ().Version;
+			if (!IsOutDated (currentVersion, latestVersion)) {
+				Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}: Update not needed.",
+					currentVersion, latestVersion);
+				return;
+			}
+			Log.InformationFormat ("UpdatesNotifier: Current version is {0} and latest available is {1}: Update needed.",
 				currentVersion, latestVersion);
+
 			if (latestVersion == Config.IgnoreUpdaterVersion) {
 				Log.InformationFormat ("UpdatesNotifier: Version {0} has been silenced. Not warning user about update.",
 					latestVersion);
 				return;
 			}
-			if (IsOutDated ()) {
-				Config.GUIToolkit.Invoke (delegate {
-					bool ignore = Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
-						downloadURL, changeLog, null);
-					if (ignore) {
-						/* User requested to ignore this version */
-						Log.InformationFormat ("UpdatesNotifier: Marking version {0} as silenced.", latestVersion);
-						Config.IgnoreUpdaterVersion = latestVersion;
-					}
-				});
-			}
-		}
 
-		#endregion
+			Config.GUIToolkit.Invoke (delegate {
+				bool ignore = Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
+					downloadURL, changeLog, null);
+				if (ignore) {
+					/* User requested to ignore this version */
+					Log.InformationFormat ("UpdatesNotifier: Marking version {0} as silenced.", latestVersion);
+					Config.IgnoreUpdaterVersion = latestVersion;
+				}
+			});
+		}
 
 		#region IService
 
