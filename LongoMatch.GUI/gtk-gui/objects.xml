@@ -324,4 +324,12 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="LinkProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
 </objects>

@@ -38,7 +38,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
 				return;
 			}
-			;
 
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
@@ -65,7 +64,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			if (Selected) {
 				DrawCornerSelection (tk, Drawable.Start);
 				DrawCornerSelection (tk, Drawable.Stop);
-				DrawSelectionArea (tk);
 			}
 			tk.End ();
 		}

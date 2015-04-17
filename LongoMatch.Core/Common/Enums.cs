@@ -122,6 +122,7 @@ namespace LongoMatch.Core.Common
 
 	public enum DrawTool
 	{
+		None,
 		Pen,
 		Line,
 		Ellipse,
@@ -135,6 +136,9 @@ namespace LongoMatch.Core.Common
 		Player,
 		Text,
 		Counter,
+		Zoom,
+		CanMove,
+		Move,
 	}
 
 	public enum CaptureSourceType

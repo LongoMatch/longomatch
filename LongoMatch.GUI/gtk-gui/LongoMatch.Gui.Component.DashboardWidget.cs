@@ -151,7 +151,6 @@ namespace LongoMatch.Gui.Component
 			this.addcatbuttonimage = new global::Gtk.Image ();
 			this.addcatbuttonimage.Name = "addcatbuttonimage";
 			this.addcatbutton.Add (this.addcatbuttonimage);
-			this.addcatbutton.Label = null;
 			this.hbuttonbox2.Add (this.addcatbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w2 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addcatbutton]));
 			w2.Expand = false;
@@ -164,7 +163,6 @@ namespace LongoMatch.Gui.Component
 			this.addtimerbuttonimage = new global::Gtk.Image ();
 			this.addtimerbuttonimage.Name = "addtimerbuttonimage";
 			this.addtimerbutton.Add (this.addtimerbuttonimage);
-			this.addtimerbutton.Label = null;
 			this.hbuttonbox2.Add (this.addtimerbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addtimerbutton]));
 			w4.Position = 1;
@@ -178,7 +176,6 @@ namespace LongoMatch.Gui.Component
 			this.addscorebuttonimage = new global::Gtk.Image ();
 			this.addscorebuttonimage.Name = "addscorebuttonimage";
 			this.addscorebutton.Add (this.addscorebuttonimage);
-			this.addscorebutton.Label = null;
 			this.hbuttonbox2.Add (this.addscorebutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addscorebutton]));
 			w6.Position = 2;
@@ -192,7 +189,6 @@ namespace LongoMatch.Gui.Component
 			this.addcardbuttonimage = new global::Gtk.Image ();
 			this.addcardbuttonimage.Name = "addcardbuttonimage";
 			this.addcardbutton.Add (this.addcardbuttonimage);
-			this.addcardbutton.Label = null;
 			this.hbuttonbox2.Add (this.addcardbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addcardbutton]));
 			w8.Position = 3;
@@ -206,7 +202,6 @@ namespace LongoMatch.Gui.Component
 			this.addtagbuttonimage = new global::Gtk.Image ();
 			this.addtagbuttonimage.Name = "addtagbuttonimage";
 			this.addtagbutton.Add (this.addtagbuttonimage);
-			this.addtagbutton.Label = null;
 			this.hbuttonbox2.Add (this.addtagbutton);
 			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.addtagbutton]));
 			w10.Position = 4;
@@ -518,7 +513,6 @@ namespace LongoMatch.Gui.Component
 			this.applyimage = new global::Gtk.Image ();
 			this.applyimage.Name = "applyimage";
 			this.applybutton.Add (this.applyimage);
-			this.applybutton.Label = null;
 			this.periodsbox.Add (this.applybutton);
 			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.applybutton]));
 			w48.Position = 2;
@@ -576,6 +570,7 @@ namespace LongoMatch.Gui.Component
 			this.linkproperties = new global::LongoMatch.Gui.Component.LinkProperties ();
 			this.linkproperties.Events = ((global::Gdk.EventMask)(256));
 			this.linkproperties.Name = "linkproperties";
+			this.linkproperties.Edited = false;
 			this.propertiesnotebook.Add (this.linkproperties);
 			global::Gtk.Notebook.NotebookChild w53 = ((global::Gtk.Notebook.NotebookChild)(this.propertiesnotebook [this.linkproperties]));
 			w53.Position = 2;

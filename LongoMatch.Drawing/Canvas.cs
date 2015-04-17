@@ -132,6 +132,14 @@ namespace LongoMatch.Drawing
 		}
 
 		/// <summary>
+		/// Defines a clip region
+		/// </summary>
+		protected Area ClipRegion {
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// When set to <c>true</c> redraws events are not ignored
 		/// </summary>
 		protected bool IgnoreRedraws {
@@ -170,13 +178,37 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		void HandleSizeChangedEvent ()
+		protected virtual void HandleSizeChangedEvent ()
 		{
 			/* After a resize objects are rescalled and we need to invalidate
 			 * their cached surfaces */
 			foreach (CanvasObject to in Objects) {
 				to.ResetDrawArea ();
 			}
+		}
+
+		/// <summary>
+		/// Must be called before any drawing operation is performed
+		/// to apply transformation, scalling and clipping.
+		/// </summary>
+		/// <param name="context">Context to draw</param>
+		protected void Begin (IContext context)
+		{
+			tk.Context = context;
+			tk.Begin ();
+			if (ClipRegion != null) {
+				tk.Clip (ClipRegion);
+			}
+			tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
+		}
+
+		/// <summary>
+		/// Must be called after drawing operations to restore the context
+		/// </summary>
+		protected void End ()
+		{
+			tk.End ();
+			tk.Context = null;
 		}
 
 		/// <summary>
@@ -191,9 +223,7 @@ namespace LongoMatch.Drawing
 		public virtual void Draw (IContext context, Area area)
 		{
 			List<CanvasObject> highlighted = new List<CanvasObject> ();
-			tk.Context = context;
-			tk.Begin ();
-			tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
+			Begin (context);
 			foreach (ICanvasObject co in Objects) {
 				if (co.Visible) {
 					if (co is ICanvasSelectableObject) {
@@ -216,8 +246,7 @@ namespace LongoMatch.Drawing
 			foreach (CanvasObject co in highlighted) {
 				co.Draw (tk, area);
 			}
-			tk.End ();
-			tk.Context = null;
+			End ();
 		}
 	}
 
@@ -229,9 +258,10 @@ namespace LongoMatch.Drawing
 	{
 		protected bool moving, moved;
 		protected Point start;
+		protected CanvasObject highlighted;
+
 		uint lastTime;
 		Selection clickedSel;
-		CanvasObject highlighted;
 
 		public SelectionCanvas (IWidget widget) : base (widget)
 		{
@@ -521,19 +551,19 @@ namespace LongoMatch.Drawing
 		protected virtual void HandleMotionEvent (Point coords)
 		{
 			Selection sel;
+			Point userCoords;
 
-			coords = ToUserCoords (coords);
+			userCoords = ToUserCoords (coords);
 			if (moving && Selections.Count != 0) {
 				sel = Selections [0];
-				sel.Drawable.Move (sel, coords, start);  
+				sel.Drawable.Move (sel, userCoords, start);  
 				widget.ReDraw (sel.Drawable);
 				SelectionMoved (sel);
-				start = coords;
 				moved = true;
 			} else {
-				CursorMoved (coords);
-				start = coords;
+				CursorMoved (userCoords);
 			}
+			start = ToUserCoords (coords);
 		}
 
 		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
@@ -568,12 +598,13 @@ namespace LongoMatch.Drawing
 
 	public abstract class BackgroundCanvas: SelectionCanvas
 	{
+		public event EventHandler RegionOfInterestChanged;
 
 		Image background;
+		Area regionOfInterest;
 
 		public BackgroundCanvas (IWidget widget) : base (widget)
 		{
-			widget.SizeChangedEvent += HandleSizeChangedEvent;
 		}
 
 		public Image Background {
@@ -586,7 +617,21 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		protected virtual void HandleSizeChangedEvent ()
+		public Area RegionOfInterest {
+			set {
+				regionOfInterest = value;
+				HandleSizeChangedEvent ();
+				widget.ReDraw ();
+				if (RegionOfInterestChanged != null) {
+					RegionOfInterestChanged (this, null);
+				}
+			}
+			get {
+				return regionOfInterest;
+			}
+		}
+
+		protected override void HandleSizeChangedEvent ()
 		{
 			if (background != null) {
 				double scaleX, scaleY;
@@ -594,20 +639,27 @@ namespace LongoMatch.Drawing
 
 				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
 					out scaleY, out translation);
+				ClipRegion = new Area (new Point (translation.X, translation.Y),
+					background.Width * scaleX, background.Height * scaleY);
 				ScaleX = scaleX;
 				ScaleY = scaleY;
 				Translation = translation;
+				if (RegionOfInterest != null) {
+					ScaleX *= background.Width / RegionOfInterest.Width;
+					ScaleY *= background.Height / RegionOfInterest.Height;
+					Translation -= new Point (RegionOfInterest.Start.X * ScaleX,
+						RegionOfInterest.Start.Y * ScaleY);
+				}
 			}
+			base.HandleSizeChangedEvent ();
 		}
 
 		public override void Draw (IContext context, Area area)
 		{
 			if (Background != null) {
-				tk.Context = context;
-				tk.Begin ();
-				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
+				Begin (context);
 				tk.DrawImage (Background);
-				tk.End ();
+				End ();
 			}
 			base.Draw (context, area);
 		}

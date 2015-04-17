@@ -156,51 +156,63 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void SetCursorForTool (DrawTool tool)
 		{
-			string cursor;
+			string cursorStr = null;
+			Gdk.Cursor cursor = null;
 			
 			switch (tool) {
 			case DrawTool.Line:
-				cursor = "arrow";
+				cursorStr = "arrow";
 				break;
 			case DrawTool.Cross:
-				cursor = "cross";
+				cursorStr = "cross";
 				break;
 			case DrawTool.Text:
-				cursor = "text";
+				cursorStr = "text";
 				break;
 			case DrawTool.Counter:
-				cursor = "number";
+				cursorStr = "number";
 				break;
 			case DrawTool.Ellipse:
 			case DrawTool.CircleArea:
-				cursor = "ellipse";
+				cursorStr = "ellipse";
 				break;
 			case DrawTool.Rectangle:
 			case DrawTool.RectangleArea:
-				cursor = "rect";
+				cursorStr = "rect";
 				break;
 			case DrawTool.Angle:
-				cursor = "angle";
+				cursorStr = "angle";
 				break;
 			case DrawTool.Pen:
-				cursor = "freehand";
+				cursorStr = "freehand";
 				break;
 			case DrawTool.Eraser:
-				cursor = "eraser";
+				cursorStr = "eraser";
 				break;
 			case DrawTool.Player:
-				cursor = "player";
+				cursorStr = "player";
+				break;
+			case DrawTool.Zoom:
+				cursorStr = "zoom";
+				break;
+			case DrawTool.CanMove:
+				cursorStr = "hand_opened";
+				break;
+			case DrawTool.Move:
+				cursorStr = "hand_closed";
 				break;
 			case DrawTool.Selection:
+				cursorStr = "hand_select";
+				break;
 			default:
 				cursor = null;
 				break;
 			}
-			if (cursor == null) {
-				widget.GdkWindow.Cursor = null;
+			if (cursorStr == null) {
+				widget.GdkWindow.Cursor = cursor;
 			} else {
 				Cursor c = new Cursor (widget.Display,
-					           Gdk.Pixbuf.LoadFromResource (cursor), 0, 0);
+					           Gdk.Pixbuf.LoadFromResource (cursorStr), 0, 0);
 				widget.GdkWindow.Cursor = c;
 			}
 		}

@@ -21,6 +21,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
+using System;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -34,7 +35,8 @@ namespace LongoMatch.Drawing.Widgets
 		DrawTool tool;
 		FrameDrawing drawing;
 		ISurface backbuffer;
-		bool handdrawing, inObjectCreation;
+		bool handdrawing, inObjectCreation, inZooming;
+		double currentZoom;
 
 		public Blackboard (IWidget widget) : base (widget)
 		{
@@ -46,6 +48,8 @@ namespace LongoMatch.Drawing.Widgets
 			LineType = LineType.Arrow;
 			FontSize = 12;
 			tool = DrawTool.Selection;
+			currentZoom = 1;
+			MaxZoom = 4;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -124,6 +128,11 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public double MaxZoom {
+			get;
+			set;
+		}
+
 		public void DeleteSelection ()
 		{
 			foreach (ICanvasDrawableObject o in Selections.Select (s => s.Drawable)) {
@@ -166,6 +175,46 @@ namespace LongoMatch.Drawing.Widgets
 			tk.Save (this, Background.Width, Background.Height, filename);
 		}
 
+		public void Zoom (double zoom, Point center = null)
+		{
+			Area roi;
+			double width, height;
+
+			if (currentZoom == zoom)
+				return;
+
+			if (RegionOfInterest == null)
+				roi = new Area (new Point (0, 0),
+					Background.Width, Background.Height);
+			else
+				roi = RegionOfInterest;
+
+			width = Background.Width / zoom;
+			height = Background.Height / zoom;
+
+			if (center == null) {
+				roi.Start.X = roi.Start.X + roi.Width / 2 - width / 2; 
+				roi.Start.Y = roi.Start.Y + roi.Height / 2 - height / 2; 
+			} else {
+				roi.Start.X = center.X - width / 2;
+				roi.Start.Y = center.Y - height / 2;
+			}
+			roi.Width = width;
+			roi.Height = height;
+			ClipRoi (roi);
+			RegionOfInterest = roi;
+			currentZoom = zoom;
+		}
+
+		void ClipRoi (Area roi)
+		{
+			Point st = roi.Start;
+			st.X = Math.Max (st.X, 0);
+			st.Y = Math.Max (st.Y, 0);
+			st.X = Math.Min (st.X, (Background.Width - roi.Width));
+			st.Y = Math.Min (st.Y, (Background.Height - roi.Height));
+		}
+
 		ICanvasSelectableObject Add (IBlackboardObject drawable)
 		{
 			ICanvasSelectableObject cso = Utils.CanvasFromDrawableObject (drawable);
@@ -179,9 +228,14 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionPosition pos = SelectionPosition.BottomRight;
 			bool resize = true, copycolor = true, sele = true;
 
-			if (Tool == DrawTool.Selection)
+			if (Tool == DrawTool.Selection) {
+				if (Selections.Count == 0 && currentZoom != 1) {
+					widget.SetCursorForTool (DrawTool.Move);
+					inZooming = true;
+				}
 				return;
-			
+			}
+
 			if (sel != null) {
 				ClearSelection ();
 			}
@@ -245,8 +299,11 @@ namespace LongoMatch.Drawing.Widgets
 			case DrawTool.Eraser: 
 				handdrawing = true;
 				break;
+			case DrawTool.Zoom:
+				Zoom (Math.Min (currentZoom + 0.1, MaxZoom), start);
+				break;
 			}
-			
+
 			if (drawable != null) {
 				if (copycolor) {
 					drawable.StrokeColor = Color.Copy ();
@@ -273,6 +330,11 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void StopMove (bool moved)
 		{
 			Selection sel = Selections.FirstOrDefault ();
+
+			if (inZooming) {
+				widget.SetCursorForTool (DrawTool.CanMove);
+			}
+
 			if (sel != null) {
 				(sel.Drawable as ICanvasDrawableObject).IDrawableObject.Reorder ();
 			}
@@ -281,6 +343,7 @@ namespace LongoMatch.Drawing.Widgets
 				inObjectCreation = false;
 			}
 			handdrawing = false;
+			inZooming = false;
 		}
 
 		protected override void ShowMenu (Point coords)
@@ -318,7 +381,12 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void CursorMoved (Point coords)
 		{
-			if (handdrawing) {
+			if (inZooming && RegionOfInterest != null) {
+				Point diff = coords - start;
+				RegionOfInterest.Start -= diff;
+				ClipRoi (RegionOfInterest);
+				RegionOfInterest = RegionOfInterest;
+			} else if (handdrawing) {
 				using (IContext c = backbuffer.Context) {
 					tk.Context = c;
 					tk.Begin ();
@@ -335,6 +403,16 @@ namespace LongoMatch.Drawing.Widgets
 					tk.End ();
 				}
 				widget.ReDraw ();
+			} else {
+				base.CursorMoved (coords);
+				if (Tool == DrawTool.Selection) {
+					DrawTool moveTool = currentZoom == 1 ? DrawTool.None : DrawTool.CanMove;
+					if (highlighted == null) {
+						widget.SetCursorForTool (moveTool);
+					} else {
+						widget.SetCursorForTool (DrawTool.Selection);
+					}
+				}
 			}
 		}
 
@@ -347,11 +425,9 @@ namespace LongoMatch.Drawing.Widgets
 			
 			base.Draw (context, area);
 			if (backbuffer != null) {
-				tk.Context = context;
-				tk.Begin ();
-				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
+				Begin (context);
 				tk.DrawSurface (backbuffer);
-				tk.End ();
+				End ();
 			}
 		}
 	}

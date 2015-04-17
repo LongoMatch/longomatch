@@ -17,32 +17,32 @@
 //
 using System;
 using Gtk;
-using Mono.Unix;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Component;
-using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Drawing.Widgets;
-using LongoMatch.Drawing.Cairo;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Interfaces.Drawing;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Drawing.Cairo;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Gui.Helpers;
+using Mono.Unix;
 using Color = LongoMatch.Core.Common.Color;
 using Drawable = LongoMatch.Core.Store.Drawables.Drawable;
 using Image = LongoMatch.Core.Common.Image;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
 	public partial class DrawingTool : Gtk.Dialog
 	{
+		readonly Blackboard blackboard;
 		TimelineEvent play;
-		Blackboard blackboard;
 		FrameDrawing drawing;
 		Drawable selectedDrawable;
 		Gtk.Dialog playerDialog;
 		Text playerText;
 		Project project;
 		double scaleFactor;
+		bool ignoreChanges;
 
 		public DrawingTool ()
 		{
@@ -53,6 +53,7 @@ namespace LongoMatch.Gui.Dialog
 			blackboard.ConfigureObjectEvent += HandleConfigureObjectEvent;
 			blackboard.ShowMenuEvent += HandleShowMenuEvent;
 			blackboard.DrawableChangedEvent += HandleDrawableChangedEvent;
+			blackboard.RegionOfInterestChanged += HandleRegionOfInterestChanged;
 			
 			selectbutton.Active = true;
 
@@ -69,6 +70,9 @@ namespace LongoMatch.Gui.Dialog
 			playerbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-person", 20);
 			numberbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-counter", 20);
 			anglebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-angle", 20);
+			zoombuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-search", 20);
+			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
+			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
 
 			selectbutton.Toggled += HandleToolClicked;
 			eraserbutton.Toggled += HandleToolClicked;
@@ -83,6 +87,7 @@ namespace LongoMatch.Gui.Dialog
 			playerbutton.Toggled += HandleToolClicked;
 			anglebutton.Toggled += HandleToolClicked;
 			numberbutton.Toggled += HandleToolClicked;
+			zoombutton.Toggled += HandleToolClicked;
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
@@ -102,6 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			stylecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
 			typecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
 			clearbutton.TooltipMarkup = Catalog.GetString ("Clear all drawings");
+			zoombutton.TooltipMarkup = Catalog.GetString ("Zoom tool. Click to zoom in, Alt+Click to zoom out");
 
 			FillLineStyle ();
 			FillLineType ();
@@ -124,6 +130,14 @@ namespace LongoMatch.Gui.Dialog
 			linesizespinbutton.Value = 4;
 			
 			clearbutton.Clicked += HandleClearClicked;
+			zoomscale.CanFocus = false;
+			zoomscale.SetRange (1, 4);
+			zoomscale.SetIncrements (0.2, 0.2);
+			zoomscale.ValueChanged += HandleZoomValueChanged;
+			hscrollbar.ValueChanged += HandleScrollValueChanged;
+			wscrollbar.ValueChanged += HandleScrollValueChanged;
+			hscrollbar.Visible = wscrollbar.Visible = false;
+			zoomscale.Value = 1;
 		}
 
 		public override void Destroy ()
@@ -390,6 +404,8 @@ namespace LongoMatch.Gui.Dialog
 				blackboard.Tool = DrawTool.Angle;
 			} else if (sender == playerbutton) {
 				blackboard.Tool = DrawTool.Player;
+			} else if (sender == zoombutton) {
+				blackboard.Tool = DrawTool.Zoom;
 			}
 		}
 
@@ -497,5 +513,53 @@ namespace LongoMatch.Gui.Dialog
 				args.RetVal = true;
 			}
 		}
+
+		void HandleRegionOfInterestChanged (object sender, EventArgs e)
+		{
+			if (play != null) {
+				//play.RegionOfInterest = blackboard.RegionOfInterest;
+			}
+			if (blackboard.RegionOfInterest.Width == blackboard.Background.Width &&
+			    blackboard.RegionOfInterest.Height == blackboard.Background.Height) {
+				hscrollbar.Visible = false;
+				wscrollbar.Visible = false;
+			} else {
+				hscrollbar.Visible = true;
+				wscrollbar.Visible = true;
+				hscrollbar.SetRange (0, blackboard.Background.Height -
+				blackboard.RegionOfInterest.Height);
+				wscrollbar.SetRange (0, blackboard.Background.Width -
+				blackboard.RegionOfInterest.Width);
+				ignoreChanges = true;
+				wscrollbar.Value = blackboard.RegionOfInterest.Start.X;
+				hscrollbar.Value = blackboard.RegionOfInterest.Start.Y;
+				zoomscale.Value = blackboard.Background.Width / blackboard.RegionOfInterest.Width;
+				ignoreChanges = false;
+			}
+		}
+
+		void HandleScrollValueChanged (object sender, EventArgs e)
+		{
+			if (ignoreChanges)
+				return;
+
+			if (sender == wscrollbar) {
+				blackboard.RegionOfInterest.Start.X = wscrollbar.Value;
+			} else {
+				blackboard.RegionOfInterest.Start.Y = hscrollbar.Value;
+			}
+			blackboard.RegionOfInterest = blackboard.RegionOfInterest;
+		}
+
+		void HandleZoomValueChanged (object sender, EventArgs e)
+		{
+			zoomlabel.Text = string.Format ("{0,3}%", (int)(zoomscale.Value * 100));
+
+			if (ignoreChanges)
+				return;
+
+			blackboard.Zoom (zoomscale.Value);
+		}
+
 	}
 }

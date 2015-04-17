@@ -188,6 +188,13 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		public void Clip (Area area)
+		{
+			CContext.Rectangle (area.Start.X, area.Start.Y,
+				area.Width, area.Height);
+			CContext.Clip ();
+		}
+
 		public Area UserToDevice (Area a)
 		{
 			double x, y, x2, y2, x3, y3;
