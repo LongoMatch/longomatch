@@ -8,7 +8,7 @@
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,8 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework" />
-    <Reference Include="Moq" />
+    <Reference Include="nunit.framework">
+      <Package>nunit</Package>
+    </Reference>
+    <Reference Include="Moq">
+      <Package>moq</Package>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
     </Reference>
@@ -105,6 +109,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Core\dibujo.svg">
       <LogicalName>dibujo.svg</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\latest-test.json">
+      <LogicalName>latest-test.json</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
