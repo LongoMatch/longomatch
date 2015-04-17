@@ -56,19 +56,19 @@ namespace LongoMatch.Gui.Dialog
 			
 			selectbutton.Active = true;
 
-			selectbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-select", 20, IconLookupFlags.ForceSvg);
-			eraserbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-eraser", 20, IconLookupFlags.ForceSvg);
-			penbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-pencil", 20, IconLookupFlags.ForceSvg);
-			textbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-text", 20, IconLookupFlags.ForceSvg);
-			linebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-arrow", 20, IconLookupFlags.ForceSvg);
-			crossbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-mark", 20, IconLookupFlags.ForceSvg);
-			rectanglebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-square", 20, IconLookupFlags.ForceSvg);
-			ellipsebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-circle", 20, IconLookupFlags.ForceSvg);
-			rectanglefilledbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-square-fill", 20, IconLookupFlags.ForceSvg);
-			ellipsefilledbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-circle-fill", 20, IconLookupFlags.ForceSvg);
-			playerbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-person", 20, IconLookupFlags.ForceSvg);
-			numberbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-counter", 20, IconLookupFlags.ForceSvg);
-			anglebuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-angle", 20, IconLookupFlags.ForceSvg);
+			selectbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-select", 20);
+			eraserbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-eraser", 20);
+			penbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-pencil", 20);
+			textbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-text", 20);
+			linebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-arrow", 20);
+			crossbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-mark", 20);
+			rectanglebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-square", 20);
+			ellipsebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-circle", 20);
+			rectanglefilledbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-square-fill", 20);
+			ellipsefilledbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-circle-fill", 20);
+			playerbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-person", 20);
+			numberbuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-counter", 20);
+			anglebuttonimage.Pixbuf = Misc.LoadIcon ("longomatch-angle", 20);
 
 			selectbutton.Toggled += HandleToolClicked;
 			eraserbutton.Toggled += HandleToolClicked;
@@ -119,12 +119,8 @@ namespace LongoMatch.Gui.Dialog
 			blackboard.TextBackgroundColor = new Color (Color.Green1.R, Color.Green1.G,
 				Color.Green1.B, 0);
 			textspinbutton.Value = 12;
-			textspinbutton.ValueChanged += (sender, e) => {
-				UpdateTextSize ();
-			};
-			linesizespinbutton.ValueChanged += (sender, e) => {
-				UpdateLineWidth ();
-			};
+			textspinbutton.ValueChanged += (sender, e) => UpdateTextSize ();
+			linesizespinbutton.ValueChanged += (sender, e) => UpdateLineWidth ();
 			linesizespinbutton.Value = 4;
 			
 			clearbutton.Clicked += HandleClearClicked;
@@ -249,7 +245,7 @@ namespace LongoMatch.Gui.Dialog
 			if (playerDialog == null) {
 				Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select player"),
 					               this, DialogFlags.Modal | DialogFlags.DestroyWithParent,
-					               Gtk.Stock.Cancel, ResponseType.Cancel);
+					               Stock.Cancel, ResponseType.Cancel);
 				d.WidthRequest = 600;
 				d.HeightRequest = 400;
 				
@@ -298,7 +294,7 @@ namespace LongoMatch.Gui.Dialog
 				
 			typecombobox.GetActiveIter (out iter);
 			type = (LineType)typecombobox.Model.GetValue (iter, 1);
-			if (selectedDrawable != null && selectedDrawable is Line) {
+			if (selectedDrawable is Line) {
 				(selectedDrawable as Line).Type = type;
 				QueueDraw ();
 			} else {
@@ -336,7 +332,7 @@ namespace LongoMatch.Gui.Dialog
 				QueueDraw ();
 			} else {
 				blackboard.TextColor = Misc.ToLgmColor (textcolorbutton.Color);
-			}			
+			}
 		}
 
 		void HandleColorSet (object sender, EventArgs e)
@@ -399,10 +395,13 @@ namespace LongoMatch.Gui.Dialog
 
 		void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
-			string proposed_filename = String.Format ("{0}-{1}.png", Constants.SOFTWARE_NAME,
+			string proposed_filename = String.Format ("{0}-{1}.png",
+				                           Constants.SOFTWARE_NAME,
 				                           DateTime.Now.ToShortDateString ().Replace ('/', '-'));
-			string filename = FileChooserHelper.SaveFile (this, Catalog.GetString ("Save File as..."),
-				                  proposed_filename, Config.SnapshotsDir, "PNG Images", new string[] { "*.png" });
+			string filename = FileChooserHelper.SaveFile (this,
+				                  Catalog.GetString ("Save File as..."),
+				                  proposed_filename, Config.SnapshotsDir,
+				                  "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");
 				blackboard.Save (filename);
@@ -478,15 +477,11 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Menu m = new Menu ();
 			MenuItem item = new MenuItem (Catalog.GetString ("Delete"));
-			item.Activated += (sender, e) => {
-				blackboard.DeleteSelection ();
-			};
+			item.Activated += (sender, e) => blackboard.DeleteSelection ();
 			m.Add (item);
 			if (drawable is Text) {
 				MenuItem edit = new MenuItem (Catalog.GetString ("Edit"));
-				edit.Activated += (sender, e) => {
-					EditText (drawable as Text);
-				};
+				edit.Activated += (sender, e) => EditText (drawable as Text);
 				m.Add (edit);
 			}
 			m.ShowAll ();
