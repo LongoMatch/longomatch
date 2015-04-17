@@ -61,16 +61,11 @@ build-debug:
 
 $(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
 
+DEFAULT_MCS_FLAGS = -nowarn:0278 -nowarn:0078 -unsafe -define:HAVE_GTK -codepage:utf8 -sdk:4.5 -debug
+
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(BUILD_DIR_ABS)/migration
-	$(AM_V_GEN) $(MCS) \
-		$(GMCS_FLAGS) \
-		$(ASSEMBLY_BUILD_FLAGS) \
-		-nowarn:0278 -nowarn:0078 $$warn -unsafe \
-		-define:HAVE_GTK -codepage:utf8 -sdk:4.5 \
-		-debug -target:$(TARGET) -out:$@ \
-		$(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(ENABLE_ATK_FLAG) \
-		$(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
+	$(AM_V_GEN) $(MCS) $(GMCS_FLAGS) $(ASSEMBLY_BUILD_FLAGS) $(DEFAULT_MCS_FLAGS) -target:$(TARGET) -out:$@ $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 	@if [ ! -z "$(EXTRA_BUNDLE)" ]; then \
 		cp $(EXTRA_BUNDLE) $(BUILD_DIR_ABS); \
 	fi;
