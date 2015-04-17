@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Panel
 				bool save = edited;
 
 				if (edited && !force) {
-					string msg = Catalog.GetString ("Do you want to save the current template");
+					string msg = Catalog.GetString ("Do you want to save the current project?");
 					if (!Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 						save = false;
 					}
