@@ -71,7 +71,7 @@ namespace LongoMatch.Drawing
 
 		public static ICanvasSelectableObject CanvasFromDrawableObject (IBlackboardObject drawable)
 		{
-			string objecttype = String.Format ("LongoMatch.Drawing.CanvasObjects.{0}Object",
+			string objecttype = String.Format ("LongoMatch.Drawing.CanvasObjects.Blackboard.{0}Object",
 				                    drawable.GetType ().ToString ().Split ('.').Last ());
 			ObjectHandle handle = Activator.CreateInstance (null, objecttype);
 			ICanvasDrawableObject d = (ICanvasDrawableObject)handle.Unwrap ();
