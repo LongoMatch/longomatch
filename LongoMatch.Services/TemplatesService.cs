@@ -99,10 +99,6 @@ namespace LongoMatch.Services
 			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
 			systemTemplates = new List<T> ();
 			this.storage = storage;
-			// Create the default template, it will be added to the list
-			// of system templates to make it always available on the app 
-			// and also read-only
-			Create ("default", 20);
 		}
 
 		public bool Exists (string name)
@@ -259,6 +255,8 @@ namespace LongoMatch.Services
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
+			Create ("Home team", 20);
+			Create ("Away team", 20);
 		}
 	}
 
@@ -266,6 +264,10 @@ namespace LongoMatch.Services
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{
+			// Create the default template, it will be added to the list
+			// of system templates to make it always available on the app 
+			// and also read-only
+			Create ("Default dashboard", 20);
 		}
 	}
 }
