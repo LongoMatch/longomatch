@@ -51,6 +51,7 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Utils\WindowHandle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Capturer\" />

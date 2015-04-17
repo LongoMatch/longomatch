@@ -19,6 +19,7 @@ using System;
 using System.Runtime.InteropServices;
 using Gtk;
 using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch.Gui
 {
@@ -67,7 +68,7 @@ namespace LongoMatch.Gui
 
 		public IntPtr WindowHandle {
 			get {
-				return GetWindowHandle (drawingWindow.GdkWindow);
+				return drawingWindow.GdkWindow.GetWindowHandle ();
 			}
 		}
 
@@ -141,14 +142,6 @@ namespace LongoMatch.Gui
 		void HandleRealized (object sender, EventArgs e)
 		{
 			
-		}
-
-		[DllImport ("libcesarplayer.dll")]
-		static extern IntPtr lgm_get_window_handle (IntPtr window);
-
-		IntPtr GetWindowHandle (Gdk.Window window)
-		{
-			return lgm_get_window_handle (window.Handle);
 		}
 	}
 }

@@ -23,7 +23,8 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Utils/GStreamer.cs \
 	Utils/GstDiscoverer.cs \
 	Utils/MultimediaFactory.cs \
-	Utils/TimeString.cs
+	Utils/TimeString.cs \
+	Utils/WindowHandle.cs
 
 DLLCONFIG = LongoMatch.Multimedia.dll.config
 
