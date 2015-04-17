@@ -26,11 +26,10 @@ namespace LongoMatch.Core.Stats
 	public class ProjectStats: IDisposable
 	{
 		EventsFilter filter;
-		Project project;
 
 		public ProjectStats (Project project)
 		{
-			this.project = project;
+			Project = project;
 			filter = new EventsFilter (project);
 			CreateStats ();
 		}
@@ -76,7 +75,7 @@ namespace LongoMatch.Core.Stats
 
 		public PlayerStats GetPlayerStats (Player p)
 		{
-			if (project.LocalTeamTemplate.List.Contains (p)) {
+			if (Project.LocalTeamTemplate.List.Contains (p)) {
 				return HomeTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
 			} else {
 				return AwayTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
@@ -87,20 +86,20 @@ namespace LongoMatch.Core.Stats
 		{
 			EventTypeStats = new List <EventTypeStats> ();
 			
-			foreach (EventType evt in project.EventTypes) {
+			foreach (EventType evt in Project.EventTypes) {
 				if (evt is AnalysisEventType) {
-					EventTypeStats evstats = new EventTypeStats (project, filter, evt);
+					EventTypeStats evstats = new EventTypeStats (Project, filter, evt);
 					EventTypeStats.Add (evstats);
 				}
 			}
 
 			TimersStats = new List<TimerStats> ();
-			foreach (Timer t in project.Timers) {
-				TimersStats.Add (new TimerStats (project, t));
+			foreach (Timer t in Project.Timers) {
+				TimersStats.Add (new TimerStats (Project, t));
 			}
 
-			HomeTeamStats = new TeamStats (project, filter, TeamType.LOCAL);
-			AwayTeamStats = new TeamStats (project, filter, TeamType.VISITOR);
+			HomeTeamStats = new TeamStats (Project, filter, TeamType.LOCAL);
+			AwayTeamStats = new TeamStats (Project, filter, TeamType.VISITOR);
 			UpdateStats ();
 		}
 
