@@ -283,6 +283,11 @@ namespace LongoMatch
 			set;
 		}
 
+		static public bool SupportsActionLinks {
+			get;
+			set;
+		}
+
 		static public string LatestVersionURL {
 			get;
 			set;

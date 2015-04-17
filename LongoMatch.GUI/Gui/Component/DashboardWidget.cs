@@ -187,6 +187,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public bool LinksButtonVisible {
+			set {
+				if (!Config.SupportsActionLinks)
+					linksbutton.Visible = false;
+				else
+					linksbutton.Visible = value;
+			}
+		}
+
 		public void ClickButton (DashboardButton button, Tag tag = null)
 		{
 			tagger.Click (button, tag);
@@ -233,7 +242,7 @@ namespace LongoMatch.Gui.Component
 			tagger.Mode = this.mode = mode;
 			// Add buttons for cards/tags/etc.. can be handled remotely.
 			hbuttonbox2.Visible = mode == DashboardMode.Edit && internalButtons;
-			editbutton.Active = rightbox.Visible = linksbutton.Visible = mode == DashboardMode.Edit;
+			LinksButtonVisible = editbutton.Active = rightbox.Visible = mode == DashboardMode.Edit;
 
 			if (mode == DashboardMode.Edit) {
 				editimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-edit_active", 22);
