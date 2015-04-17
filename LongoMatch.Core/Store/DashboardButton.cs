@@ -202,23 +202,23 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Start (Time start) {
+		public void Start (Time start, List<DashboardButton> from) {
 			if (currentNode != null)
 				return;
 
 			if (Timer != null) {
 				currentNode = Timer.Start (start);
-				Config.EventsBroker.EmitTimeNodeStartedEvent (currentNode, this);
+				Config.EventsBroker.EmitTimeNodeStartedEvent (currentNode, this, from);
 			}
 		}
 
-		public void Stop (Time stop) {
+		public void Stop (Time stop, List<DashboardButton> from) {
 			if (currentNode == null)
 				return;
 
 			if (Timer != null) {
 				Timer.Stop (stop);
-				Config.EventsBroker.EmitTimeNodeStoppedEvent (currentNode, this);
+				Config.EventsBroker.EmitTimeNodeStoppedEvent (currentNode, this, from);
 				currentNode = null;
 			}
 		}

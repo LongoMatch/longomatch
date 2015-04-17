@@ -342,7 +342,7 @@ namespace LongoMatch.Gui.Component
 			play.Tags = tags ?? new List<Tag> ();
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
-			Config.EventsBroker.EmitNewDashboardEvent (play, btn, true);
+			Config.EventsBroker.EmitNewDashboardEvent (play, btn, true, null);
 		}
 
 		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,
@@ -360,7 +360,7 @@ namespace LongoMatch.Gui.Component
 			
 		}
 
-		void HandleTimeNodeStoppedEvent (TimeNode tn, TimerButton btn)
+		void HandleTimeNodeStoppedEvent (TimeNode tn, TimerButton btn, List<DashboardButton> from)
 		{
 			timeline.AddTimerNode (btn.Timer, tn);
 		}

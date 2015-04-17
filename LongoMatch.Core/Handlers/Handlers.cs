@@ -40,11 +40,11 @@ namespace LongoMatch.Core.Handlers
 											List<Tag> tags,Time start,Time stop,Time EventTime,
 											Score score,PenaltyCard card,DashboardButton btn);
 	/* Add a new play to the current project from Dashboard */
-	public delegate void NewDashboardEventHandler (TimelineEvent evt,DashboardButton btn,bool edit);
+	public delegate void NewDashboardEventHandler (TimelineEvent evt,DashboardButton btn,bool edit, List<DashboardButton> from);
 	/* An event was edited */
 	public delegate void TimeNodeChangedHandler (TimeNode tNode,Time time);
-	public delegate void TimeNodeStartedHandler (TimeNode tn, TimerButton btn);
-	public delegate void TimeNodeStoppedHandler (TimeNode tn, TimerButton btn);
+	public delegate void TimeNodeStartedHandler (TimeNode tn, TimerButton btn, List<DashboardButton> from);
+	public delegate void TimeNodeStoppedHandler (TimeNode tn, TimerButton btn, List<DashboardButton> from);
 	/* Edit EventType properties */
 	public delegate void EditEventTypeHandler (EventType cat);
 	/* A list of plays needs to be deleted */

@@ -96,11 +96,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			base.ClickReleased ();
 			if (Button.StartTime == null) {
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
-				Button.Start (CurrentTime);
+				Button.Start (CurrentTime, null);
 			} else {
 				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
 				if (Button.StartTime.MSeconds != CurrentTime.MSeconds) {
-					Button.Stop (CurrentTime);
+					Button.Stop (CurrentTime, null);
 				} else {
 					Button.Cancel ();
 				}

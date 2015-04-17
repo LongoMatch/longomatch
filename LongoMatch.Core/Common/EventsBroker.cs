@@ -103,10 +103,13 @@ namespace LongoMatch.Core.Common
 				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card, null);
 		}
 
-		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit)
+		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit, List<DashboardButton> from)
 		{
-			if (NewDashboardEventEvent != null)
-				NewDashboardEventEvent (evt, btn, edit);
+			if (NewDashboardEventEvent != null) {
+				if (from == null)
+					from = new List<DashboardButton> ();
+				NewDashboardEventEvent (evt, btn, edit, from);
+			}
 		}
 
 		public void EmitEventsDeleted (List<TimelineEvent> events)
@@ -439,17 +442,21 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn)
+		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
 		{
 			if (TimeNodeStartedEvent != null) {
-				TimeNodeStartedEvent (node, btn);
+				if (from == null)
+					from = new List<DashboardButton> ();
+				TimeNodeStartedEvent (node, btn, from);
 			}
 		}
 
-		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn)
+		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
 		{
 			if (TimeNodeStoppedEvent != null) {
-				TimeNodeStoppedEvent (node, btn);
+				if (from == null)
+					from = new List<DashboardButton> ();
+				TimeNodeStoppedEvent (node, btn, from);
 			}
 		}
 

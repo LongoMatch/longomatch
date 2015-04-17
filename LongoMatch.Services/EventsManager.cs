@@ -291,7 +291,7 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit)
+		public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit, List<DashboardButton> from)
 		{
 			if (openedProject == null)
 				return;
