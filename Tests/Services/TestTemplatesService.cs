@@ -49,7 +49,7 @@ namespace Tests.Services
 			ICategoriesTemplatesProvider ctp = ts.CategoriesTemplateProvider;
 
 			// We must have at least one template provider called 'Default'
-			Dashboard dash = ctp.Load ("default");
+			Dashboard dash = ctp.Load ("Default dashboard");
 			Assert.AreNotSame (dash, null);
 
 			// Test we dont have a template
