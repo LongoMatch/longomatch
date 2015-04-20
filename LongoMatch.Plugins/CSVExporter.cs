@@ -59,7 +59,7 @@ namespace LongoMatch.Plugins
 			string proposed_filename = project.Description.Title + ".csv";
 			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), proposed_filename,
 				                  Config.HomeDir, "CSV",
-				                  new string[] { ".csv" });
+				                  new string[] { "*.csv" });
 			
 			if (filename == null)
 				return;
