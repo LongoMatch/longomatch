@@ -161,7 +161,7 @@ namespace LongoMatch.Drawing.Widgets
 			
 			/* Draw position triangle */
 			needle.TimelineHeight = height;
-			if (!moving) {
+			if (!Moving) {
 				tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
 				tpos -= Scroll;
 				needle.X = tpos;

@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing
 {
@@ -64,7 +62,6 @@ namespace LongoMatch.Drawing
 
 		protected virtual void Dispose (bool disposing)
 		{
-			// FIXME: Should we check if we are disposed already ?
 			IgnoreRedraws = true;
 			if (disposing) {
 				ClearObjects ();
@@ -132,7 +129,8 @@ namespace LongoMatch.Drawing
 		}
 
 		/// <summary>
-		/// Defines a clip region
+		/// Defines a clip region, any drawing outside this region
+		/// will not be drawn.
 		/// </summary>
 		protected Area ClipRegion {
 			get;
@@ -256,9 +254,6 @@ namespace LongoMatch.Drawing
 	/// </summary>
 	public class SelectionCanvas: Canvas
 	{
-		protected bool moving, moved;
-		protected Point start;
-		protected CanvasObject highlighted;
 
 		uint lastTime;
 		Selection clickedSel;
@@ -346,6 +341,40 @@ namespace LongoMatch.Drawing
 		}
 
 		/// <summary>
+		/// The object that is currently highlited (mouse is over the object)
+		/// </summary>
+		public CanvasObject HighlightedObject {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The start point from which the object was moved.
+		/// It can be used to determine the distance of the move action.
+		/// </summary>
+		public Point MoveStart {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// When set to <c>true</c> it indicates an object has been moved
+		/// between the clik pressed + mouse move + click released.
+		/// </summary>
+		public bool Moved {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// When set to <c>true</c> it indicates when in the middle of a move action.
+		/// </summary>
+		public bool Moving {
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Called when the cursor is being moved.
 		/// Highlights objects when the cursor passes over them. 
 		/// </summary>
@@ -362,14 +391,14 @@ namespace LongoMatch.Drawing
 				current = sel.Drawable as CanvasObject;
 			}
 
-			if (current != highlighted) {
-				if (highlighted != null) {
-					highlighted.Highlighted = false;
+			if (current != HighlightedObject) {
+				if (HighlightedObject != null) {
+					HighlightedObject.Highlighted = false;
 				}
 				if (current != null) {
 					current.Highlighted = true;
 				}
-				highlighted = current;
+				HighlightedObject = current;
 			}
 		}
 
@@ -532,10 +561,10 @@ namespace LongoMatch.Drawing
 				}
 			} else {
 				ClearSelection ();
-				start = coords;
+				MoveStart = coords;
 				UpdateSelection (sel);
 				StartMove (sel);
-				moving = Selections.Count > 0 && ObjectsCanMove;
+				Moving = Selections.Count > 0 && ObjectsCanMove;
 			}
 		}
 
@@ -554,27 +583,27 @@ namespace LongoMatch.Drawing
 			Point userCoords;
 
 			userCoords = ToUserCoords (coords);
-			if (moving && Selections.Count != 0) {
+			if (Moving && Selections.Count != 0) {
 				sel = Selections [0];
-				sel.Drawable.Move (sel, userCoords, start);  
+				sel.Drawable.Move (sel, userCoords, MoveStart);  
 				widget.ReDraw (sel.Drawable);
 				SelectionMoved (sel);
-				moved = true;
+				Moved = true;
 			} else {
 				CursorMoved (userCoords);
 			}
-			start = ToUserCoords (coords);
+			MoveStart = ToUserCoords (coords);
 		}
 
 		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
 		{
-			moving = false;
+			Moving = false;
 			if (clickedSel != null) {
 				(clickedSel.Drawable as ICanvasSelectableObject).ClickReleased ();
 				clickedSel = null;
 			}
-			StopMove (moved);
-			moved = false;
+			StopMove (Moved);
+			Moved = false;
 		}
 
 		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)
@@ -607,6 +636,10 @@ namespace LongoMatch.Drawing
 		{
 		}
 
+		/// <summary>
+		/// Sets the background image of the canvas.
+		/// This property is not optional
+		/// </summary>
 		public Image Background {
 			set {
 				background = value;
@@ -617,6 +650,11 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		/// <summary>
+		/// Defines an area with the region of interest, which can
+		/// be used to zoom into the canvas.
+		/// </summary>
+		/// <value>The region of interest.</value>
 		public Area RegionOfInterest {
 			set {
 				regionOfInterest = value;
@@ -637,6 +675,7 @@ namespace LongoMatch.Drawing
 				double scaleX, scaleY;
 				Point translation;
 
+				/* Add black borders to the canvas to keep the DAR of the background image */
 				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
 					out scaleY, out translation);
 				ClipRegion = new Area (new Point (translation.X, translation.Y),
@@ -644,6 +683,8 @@ namespace LongoMatch.Drawing
 				ScaleX = scaleX;
 				ScaleY = scaleY;
 				Translation = translation;
+
+				/* If there is a region of interest set, combine the transformation */
 				if (RegionOfInterest != null) {
 					ScaleX *= background.Width / RegionOfInterest.Width;
 					ScaleY *= background.Height / RegionOfInterest.Height;

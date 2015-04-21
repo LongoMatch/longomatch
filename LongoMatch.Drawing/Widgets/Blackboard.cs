@@ -15,16 +15,21 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using System;
 
 namespace LongoMatch.Drawing.Widgets
 {
+
+	/// <summary>
+	/// A canvas that can be used as a blackboard in which objects are drawn
+	/// over the image set in <see cref="BackgroundCanvas.Background"/>.
+	/// </summary>
 	public class Blackboard: BackgroundCanvas
 	{
 	
@@ -62,6 +67,9 @@ namespace LongoMatch.Drawing.Widgets
 			base.Dispose (disposing);
 		}
 
+		/// <summary>
+		/// Sets the frame drawings in the canvas.
+		/// </summary>
 		public FrameDrawing Drawing {
 			set {
 				Clear (false);
@@ -82,41 +90,72 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		/// <summary>
+		/// Sets the color used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public Color Color {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the text color used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public Color TextColor {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the text background color used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public Color TextBackgroundColor {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the font size used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public int FontSize {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the line style used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public LineStyle LineStyle {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the line type used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public LineType LineType {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Sets the line width used for newly created objects or
+		/// changes it for the current selection.
+		/// </summary>
 		public int LineWidth {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Changes the current drawing tool used.
+		/// </summary>
 		public DrawTool Tool {
 			get {
 				return tool;
@@ -128,11 +167,17 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		/// <summary>
+		/// Sets the maximum zoom allowed
+		/// </summary>
 		public double MaxZoom {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Deletes the current selection from the frame drawing.
+		/// </summary>
 		public void DeleteSelection ()
 		{
 			foreach (ICanvasDrawableObject o in Selections.Select (s => s.Drawable)) {
@@ -144,6 +189,9 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
+		/// <summary>
+		/// Clears the drawing.
+		/// </summary>
 		public void Clear (bool resetDrawing = true)
 		{
 			ClearSelection ();
@@ -162,6 +210,9 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
+		/// <summary>
+		/// Saves the current canvas to an <see cref="Image"/>
+		/// </summary>
 		public Image Save ()
 		{
 			ClearSelection ();
@@ -169,6 +220,9 @@ namespace LongoMatch.Drawing.Widgets
 			return tk.Copy (this, Background.Width, Background.Height);
 		}
 
+		/// <summary>
+		/// Saves the current canvas to a file
+		/// </summary>
 		public void Save (string filename)
 		{
 			Area area;
@@ -181,6 +235,11 @@ namespace LongoMatch.Drawing.Widgets
 			tk.Save (this, area, filename);
 		}
 
+		/// <summary>
+		/// Zoom into the image and center it in the click.
+		/// </summary>
+		/// <param name="zoom">New zoom value.</param>
+		/// <param name="center">Mew image center.</param>
 		public void Zoom (double zoom, Point center = null)
 		{
 			Area roi;
@@ -248,33 +307,33 @@ namespace LongoMatch.Drawing.Widgets
 				
 			switch (Tool) {
 			case DrawTool.Line:
-				drawable = new Line (start, new Point (start.X + 1, start.Y + 1),
+				drawable = new Line (MoveStart, new Point (MoveStart.X + 1, MoveStart.Y + 1),
 					LineType, LineStyle);
 				drawable.FillColor = Color;
 				pos = SelectionPosition.LineStop;
 				break;
 			case DrawTool.Cross:
-				drawable = new Cross (start, new Point (start.X + 1, start.Y + 1),
+				drawable = new Cross (MoveStart, new Point (MoveStart.X + 1, MoveStart.Y + 1),
 					LineStyle);
 				break;
 			case DrawTool.Ellipse:
-				drawable = new Ellipse (start, 2, 2);
+				drawable = new Ellipse (MoveStart, 2, 2);
 				break;
 			case DrawTool.Rectangle:
-				drawable = new Rectangle (start, 2, 2);
+				drawable = new Rectangle (MoveStart, 2, 2);
 				break;
 			case DrawTool.CircleArea:
-				drawable = new Ellipse (start, 2, 2);
+				drawable = new Ellipse (MoveStart, 2, 2);
 				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				break;
 			case DrawTool.RectangleArea:
-				drawable = new Rectangle (start, 2, 2);
+				drawable = new Rectangle (MoveStart, 2, 2);
 				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				break;
 			case DrawTool.Counter:
-				drawable = new Counter (start, 3 * LineWidth, 0);
+				drawable = new Counter (MoveStart, 3 * LineWidth, 0);
 				drawable.FillColor = Color.Copy ();
 				(drawable as Counter).TextColor = Color.Grey2;
 				resize = false;
@@ -283,7 +342,7 @@ namespace LongoMatch.Drawing.Widgets
 			case DrawTool.Player:
 				{
 					int width, heigth;
-					Text text = new Text (start, 1, 1, "");
+					Text text = new Text (MoveStart, 1, 1, "");
 					if (ConfigureObjectEvent != null) {
 						ConfigureObjectEvent (text, Tool);
 					}
@@ -292,7 +351,7 @@ namespace LongoMatch.Drawing.Widgets
 					}
 					Config.DrawingToolkit.MeasureText (text.Value, out width, out heigth,
 						Config.Style.Font, FontSize, FontWeight.Normal);
-					text.Update (new Point (start.X - width / 2, start.Y - heigth / 2),
+					text.Update (new Point (MoveStart.X - width / 2, MoveStart.Y - heigth / 2),
 						width, heigth);
 					text.TextColor = TextColor.Copy ();
 					text.FillColor = text.StrokeColor = TextBackgroundColor.Copy ();
@@ -306,7 +365,7 @@ namespace LongoMatch.Drawing.Widgets
 				handdrawing = true;
 				break;
 			case DrawTool.Zoom:
-				Zoom (Math.Min (currentZoom + 0.1, MaxZoom), start);
+				Zoom (Math.Min (currentZoom + 0.1, MaxZoom), MoveStart);
 				break;
 			}
 
@@ -388,7 +447,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void CursorMoved (Point coords)
 		{
 			if (inZooming && RegionOfInterest != null) {
-				Point diff = coords - start;
+				Point diff = coords - MoveStart;
 				RegionOfInterest.Start -= diff;
 				ClipRoi (RegionOfInterest);
 				RegionOfInterest = RegionOfInterest;
@@ -405,7 +464,7 @@ namespace LongoMatch.Drawing.Widgets
 					} else {
 						tk.StrokeColor = tk.FillColor = Color;
 					}
-					tk.DrawLine (start, coords);
+					tk.DrawLine (MoveStart, coords);
 					tk.End ();
 				}
 				widget.ReDraw ();
@@ -413,7 +472,7 @@ namespace LongoMatch.Drawing.Widgets
 				base.CursorMoved (coords);
 				if (Tool == DrawTool.Selection) {
 					DrawTool moveTool = currentZoom == 1 ? DrawTool.None : DrawTool.CanMove;
-					if (highlighted == null) {
+					if (HighlightedObject == null) {
 						widget.SetCursorForTool (moveTool);
 					} else {
 						widget.SetCursorForTool (DrawTool.Selection);

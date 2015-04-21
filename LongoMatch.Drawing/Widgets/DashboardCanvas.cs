@@ -231,7 +231,7 @@ namespace LongoMatch.Drawing.Widgets
 				LinkAnchorObject anchor = null;
 				Selection destSel;
 
-				destSel = GetSelection (start, true, true);
+				destSel = GetSelection (MoveStart, true, true);
 				if (destSel != null && destSel.Drawable is LinkAnchorObject) { 
 					anchor = destSel.Drawable as LinkAnchorObject;
 				}
