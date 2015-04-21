@@ -21,13 +21,21 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
+using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
 	public class LinkAnchorObject: CanvasObject, ICanvasSelectableObject
 	{
 
-		readonly Circle circle;
+		static ISurface OutIcon;
+		static ISurface OutPrelightIcon;
+		static ISurface InIcon;
+		static ISurface InPrelightIcon;
+		static bool surfacesCached = false;
+
+		readonly int iconWidth;
+		readonly int iconHeight;
 		const int radius = 5;
 
 		public LinkAnchorObject (DashboardButtonObject button, List<Tag> tags, Point relPos)
@@ -36,10 +44,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Width = button.Width;
 			Height = button.Height;
 			Button = button;
-			circle = new Circle (Center, radius);
 			if (tags == null)
 				tags = new List<Tag> ();
 			Tags = tags;
+			LoadSurfaces ();
+			iconHeight = InIcon.Height;
+			iconWidth = InIcon.Width;
 		}
 
 		public DashboardButtonObject Button {
@@ -73,12 +83,27 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		public Point Center {
+		public Point Out {
 			get {
-				Point pos = Position;
-				pos.X += Width / 2;
-				pos.Y += Height / 2;
-				return pos;
+				Rectangle rect = SelectionArea;
+				return new Point (rect.TopLeft.X + iconWidth + 2 + iconWidth / 2,
+					rect.TopLeft.Y + iconHeight / 2);
+			}
+		}
+
+		public Point In {
+			get {
+				Rectangle rect = SelectionArea;
+				return new Point (rect.TopLeft.X + iconWidth / 2,
+					rect.TopLeft.Y + iconHeight / 2);
+			}
+		}
+
+		public Rectangle SelectionArea {
+			get {
+				return new Rectangle (
+					new Point (Position.X + Width - (iconWidth * 2 + 2), Position.Y),
+					(iconWidth * 2) + 2, iconHeight);
 			}
 		}
 
@@ -103,8 +128,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 			Selection sel;
 
-			circle.Center = Center;
-			sel = circle.GetSelection (point, precision, inMotion);
+			sel = SelectionArea.GetSelection (point, precision, inMotion);
 			if (sel != null) {
 				sel.Drawable = this;
 				sel.Position = SelectionPosition.All;
@@ -118,18 +142,40 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color color = Color.Red1;
+			ISurface linkIn, linkOut;
+
 			if (Highlighted) {
-				color = Config.Style.PaletteActive;
+				linkIn = InPrelightIcon;
+				linkOut = OutPrelightIcon;
+			} else {
+				linkIn = InIcon;
+				linkOut = OutIcon;
 			}
 
 			tk.Begin ();
-			tk.LineWidth = 2;
-			tk.FillColor = color;
-			tk.StrokeColor = color;
-			tk.DrawCircle (Center, 5);
+			tk.DrawSurface (linkIn, new Point (In.X - iconWidth / 2,
+				In.Y - iconHeight / 2));
+			tk.DrawSurface (linkOut, new Point (Out.X - iconWidth / 2,
+				In.Y - iconHeight / 2));
 			tk.End ();
 		}
+
+		void LoadSurfaces ()
+		{
+			if (!surfacesCached) {
+				InIcon = CreateSurface (StyleConf.LinkIn);
+				InPrelightIcon = CreateSurface (StyleConf.LinkInPrelight);
+				OutIcon = CreateSurface (StyleConf.LinkOut);
+				OutPrelightIcon = CreateSurface (StyleConf.LinkOutPrelight);
+				surfacesCached = true;
+			}
+		}
+
+		ISurface CreateSurface (string name)
+		{
+			return Config.DrawingToolkit.CreateSurface (
+				Path.Combine (Config.IconsDir, name), false);
+		}
+
 	}
 }
-

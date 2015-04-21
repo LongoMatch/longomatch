@@ -135,6 +135,14 @@ namespace LongoMatch.Core.Common
 		public int BenchLineWidth = 2;
 		public int TeamTaggerBenchBorder = 10;
 
+		public static Color ActionLinkNormal = Color.Parse ("#808080");
+		public static Color ActionLinkPrelight = Color.Parse ("#B3B3B3");
+		public static Color ActionLinkSelected = Color.Parse ("#ABD05C");
+		public const string LinkIn = "hicolor/scalable/actions/longomatch-link-in.svg";
+		public const string LinkInPrelight = "hicolor/scalable/actions/longomatch-link-in-prelight.svg";
+		public const string LinkOut = "hicolor/scalable/actions/longomatch-link-out.svg";
+		public const string LinkOutPrelight = "hicolor/scalable/actions/longomatch-link-out-prelight.svg";
+
 		public string Font = "Ubuntu";
 
 		public Color HomeTeamColor { get; set; }

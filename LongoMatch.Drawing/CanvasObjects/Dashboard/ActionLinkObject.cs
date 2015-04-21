@@ -41,12 +41,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Source = source;
 			Destination = destination;
 			if (destination == null) {
-				stop = source.Center;
+				stop = source.Out;
 			} else {
-				stop = destination.Center;
+				stop = destination.In;
 			}
 			line = new Line ();
-			line.Start = source.Center;
+			line.Start = source.Out;
 			line.Stop = stop;
 		}
 
@@ -67,11 +67,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public virtual Area Area {
 			get {
-				line.Start = Source.Center;
+				line.Start = Source.Out;
 				if (Destination != null) {
-					line.Stop = Destination.Center;
+					line.Stop = Destination.In;
 				} else {
-					line.Stop = this.stop;
+					line.Stop = stop;
 				}
 				Area area = line.Area;
 				area.Start.X -= selectionSize + 2;
@@ -106,12 +106,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				return;
 			}
 
-			if (Highlighted) {
-				lineColor = Config.Style.PaletteActive;
-			} else if (Selected) {
-				lineColor = Config.Style.PaletteSelected;
+			if (Selected) {
+				lineColor = StyleConf.ActionLinkSelected;
+			} else if (Highlighted) {
+				lineColor = StyleConf.ActionLinkPrelight;
 			} else {
-				lineColor = Color.Yellow;
+				lineColor = StyleConf.ActionLinkNormal;
 			}
 
 			tk.Begin ();
@@ -120,7 +120,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			tk.LineWidth = lineWidth;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawLine (line.Start, line.Stop);
-			tk.DrawArrow (line.Start, line.Stop, 2, 0.3, true);
 			tk.End ();
 		}
 	}

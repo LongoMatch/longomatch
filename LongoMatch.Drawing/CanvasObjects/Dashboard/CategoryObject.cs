@@ -570,7 +570,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Point pos, bpos;
 			double width, height;
 
-			if (Button.TagMode != TagMode.Free) {
+			if (Button.TagMode != TagMode.Free || ShowLinks) {
 				return;
 			}
 			
