@@ -24,6 +24,13 @@ namespace LongoMatch.Core.Common
 	[JsonObject (MemberSerialization.OptIn)]
 	public class Area
 	{
+		public Area (double x, double y, double width, double height)
+		{
+			Start = new Point (x, y);
+			Width = width;
+			Height = height;
+		}
+
 		public Area (Point start, double width, double height)
 		{
 			Start = start;
