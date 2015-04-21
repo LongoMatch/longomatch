@@ -46,11 +46,20 @@ namespace LongoMatch.Addins
 			}
 			searchPath = Path.GetFullPath (searchPath);
 			Log.Information ("Initializing addins at path: " + searchPath);
+			/* First initialization can fail after upgrades */
 			try {
 				AddinManager.Initialize (configPath, searchPath);
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				Directory.Delete (configPath, true);
+			} catch (Exception ex1) {
+				Log.Exception (ex1);
+				try {
+					Directory.Delete (configPath, true);
+				} catch (Exception ex2) {
+					Log.Exception (ex2);
+					/* Something can be very wrong at this point if we couldn't delete
+					 * the addins cache. This can happens in windows if the directory
+					 * is un use by another instance.
+					 * Ignore it and try to intialize again just in case. */
+				}
 				AddinManager.Initialize (configPath, searchPath);
 			}
 			AddinManager.Registry.Update ();
