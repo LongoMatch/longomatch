@@ -40,6 +40,7 @@ namespace LongoMatch.Drawing.Widgets
 		DrawTool tool;
 		FrameDrawing drawing;
 		ISurface backbuffer;
+		ButtonModifier modifier;
 		bool handdrawing, inObjectCreation, inZooming;
 		double currentZoom;
 
@@ -54,6 +55,7 @@ namespace LongoMatch.Drawing.Widgets
 			FontSize = 12;
 			tool = DrawTool.Selection;
 			currentZoom = 1;
+			MinZoom = 1;
 			MaxZoom = 4;
 		}
 
@@ -171,6 +173,14 @@ namespace LongoMatch.Drawing.Widgets
 		/// Sets the maximum zoom allowed
 		/// </summary>
 		public double MaxZoom {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Sets the minimum zoom allowed
+		/// </summary>
+		public double MinZoom {
 			get;
 			set;
 		}
@@ -365,8 +375,19 @@ namespace LongoMatch.Drawing.Widgets
 				handdrawing = true;
 				break;
 			case DrawTool.Zoom:
-				Zoom (Math.Min (currentZoom + 0.1, MaxZoom), MoveStart);
-				break;
+				{
+					double newZoom = currentZoom;
+
+					if (modifier == ButtonModifier.Shift) {
+						newZoom -= 0.1;
+					} else {
+						newZoom += 0.1;
+					}
+					newZoom = Math.Max (newZoom, MinZoom);
+					newZoom = Math.Min (newZoom, MaxZoom);
+					Zoom (newZoom, MoveStart);
+					break;
+				}
 			}
 
 			if (drawable != null) {
@@ -429,6 +450,12 @@ namespace LongoMatch.Drawing.Widgets
 					DrawableChangedEvent (null);
 				}
 			}
+		}
+
+		protected override void HandleLeftButton (Point coords, ButtonModifier modif)
+		{
+			modifier = modif;
+			base.HandleLeftButton (coords, modif);
 		}
 
 		void UpdateCounters ()

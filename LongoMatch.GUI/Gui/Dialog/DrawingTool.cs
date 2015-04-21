@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			stylecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
 			typecombobox.TooltipMarkup = Catalog.GetString ("Change the line style");
 			clearbutton.TooltipMarkup = Catalog.GetString ("Clear all drawings");
-			zoombutton.TooltipMarkup = Catalog.GetString ("Zoom tool. Click to zoom in, Alt+Click to zoom out");
+			zoombutton.TooltipMarkup = Catalog.GetString ("Zoom tool. Click to zoom in, Alt+Shift to zoom out");
 
 			FillLineStyle ();
 			FillLineType ();
