@@ -190,9 +190,11 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void Clip (Area area)
 		{
-			CContext.Rectangle (area.Start.X, area.Start.Y,
-				area.Width, area.Height);
-			CContext.Clip ();
+			if (!disableScalling) {
+				CContext.Rectangle (area.Start.X, area.Start.Y,
+					area.Width, area.Height);
+				CContext.Clip ();
+			}
 		}
 
 		public Area UserToDevice (Area a)
@@ -490,12 +492,13 @@ namespace LongoMatch.Drawing.Cairo
 			return img;
 		}
 
-		public void Save (ICanvas canvas, double width, double height, string filename)
+		public void Save (ICanvas canvas, Area area, string filename)
 		{
-			ImageSurface pngSurface = new ImageSurface (Format.ARGB32, (int)width, (int)height);
+			ImageSurface pngSurface = new ImageSurface (Format.ARGB32, (int)area.Width, (int)area.Height);
 			disableScalling = true;
 			using (CairoContext c = new CairoContext (new global::Cairo.Context (pngSurface))) {
-				canvas.Draw (c, new Area (new Point (0, 0), width, height));
+				(c.Value as global::Cairo.Context).Translate (-area.Start.X, -area.Start.Y);
+				canvas.Draw (c, null);
 			}
 			pngSurface.WriteToPng (filename);
 			disableScalling = false;

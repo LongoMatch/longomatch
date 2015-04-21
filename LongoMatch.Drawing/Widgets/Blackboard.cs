@@ -171,8 +171,14 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void Save (string filename)
 		{
+			Area area;
+
 			ClearSelection ();
-			tk.Save (this, Background.Width, Background.Height, filename);
+			area = RegionOfInterest;
+			if (area == null) {
+				area = new Area (0, 0, Background.Width, Background.Height); 
+			}
+			tk.Save (this, area, filename);
 		}
 
 		public void Zoom (double zoom, Point center = null)
