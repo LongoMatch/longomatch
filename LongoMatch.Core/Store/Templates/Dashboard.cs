@@ -406,7 +406,7 @@ namespace LongoMatch.Core.Store.Templates
 			}
 
 			foreach (ActionLink l in link.DestinationButton.ActionLinks) {
-				CheckLinks (l, traversed);
+				CheckLinks (l, traversed.ToList ());
 			}
 		}
 	}
