@@ -164,14 +164,14 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		List<IntPtr> WindowHandles { set; }
 
 		/// <summary>
-		/// A list with the current cameras visibles.
-		/// The value of the integer is the index of the <see cref="MediaFile"/>
+		/// A list with the current configurations of visible cameras.
+		/// Each configuration contains the camera index of the <see cref="MediaFile"/>
 		/// to use from the <see cref="MediaFileSet"/> opened.
-		/// The position in the list is the WindowHandle on which it should e drawn.
+		/// The position in the list matches with the WindowHandle on which it should be drawn.
 		/// {0, 1} will play MediaFileSet[0] in WindowHandles[0] and MediaFileSet[1] in WindowsHandles[1]
 		/// {2, 3} will play MediaFileSet[2] in WindowHandles[0] and MediaFileSet[3] in WindowsHandles[1]
 		/// </summary>
-		List<int> CamerasVisible { set; }
+		List<CameraConfig> CamerasConfig { set; }
 
 		void ApplyCamerasConfig ();
 

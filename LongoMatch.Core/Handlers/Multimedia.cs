@@ -46,7 +46,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void MediaInfoHandler (int width,int height,int parN,int parD);
 	public delegate void LoadDrawingsHandler (FrameDrawing frameDrawing);
 	public delegate void ElementLoadedHandler (object element,bool hasNext);
-	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset,List<int> camerasVisible = null);
+	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset,List<CameraConfig> camerasConfig = null);
 	public delegate void ScopeStateChangedHandler (int index,bool visible);
 
 	public delegate void ErrorHandler (object sender,string message);

@@ -45,13 +45,13 @@ namespace LongoMatch.Core.Store
 			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasVisible = new List<int> ();
+			CamerasConfig = new List<CameraConfig> ();
 		}
 
 		internal void InitializeLists ()
 		{
-			if (CamerasVisible.Count == 0) {
-				CamerasVisible.Add (0);
+			if (CamerasConfig.Count == 0) {
+				CamerasConfig.Add (new CameraConfig (0));
 			}
 		}
 
@@ -179,10 +179,9 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// A list of camera indexes visible for this event, where the index
-		/// is the position of the camera in the <see cref="MediaFileSet"/>
+		/// A list of visible <see cref="CameraConfig"/> for this event.
 		/// </summary>
-		public List<int> CamerasVisible {
+		public List<CameraConfig> CamerasConfig {
 			get;
 			set;
 		}

@@ -33,7 +33,7 @@ namespace Tests.Core.Store.Playlists
 			evt.Start = new Time (1000);
 			evt.Stop = new Time (2000);
 			evt.CamerasLayout = 1;
-			evt.CamerasVisible.Add (0);
+			evt.CamerasConfig.Add (new CameraConfig (0));
 
 			PlaylistPlayElement element = new PlaylistPlayElement (evt);
 			Utils.CheckSerialization (element);
@@ -44,7 +44,7 @@ namespace Tests.Core.Store.Playlists
 			Assert.AreEqual (element.Rate, element2.Rate);
 			Assert.AreEqual (element.RateString, element2.RateString);
 			Assert.AreEqual (element.Title, element2.Title);
-			Assert.AreEqual (new List<int> { 0 }, element2.CamerasVisible);
+			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0) }, element2.CamerasConfig);
 			Assert.AreEqual (element.CamerasLayout, element2.CamerasLayout);
 		}
 
@@ -55,13 +55,13 @@ namespace Tests.Core.Store.Playlists
 			evt.Start = new Time (1000);
 			evt.Stop = new Time (2000);
 			evt.CamerasLayout = 1;
-			evt.CamerasVisible = new List<int> { 2, 4 };
+			evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (2), new CameraConfig (4) };
 
 			PlaylistPlayElement element = new PlaylistPlayElement (evt);
 
 			Assert.AreEqual (evt.Duration, element.Duration);
 			Assert.AreEqual (evt.CamerasLayout, element.CamerasLayout);
-			Assert.AreEqual (evt.CamerasVisible, element.CamerasVisible);
+			Assert.AreEqual (evt.CamerasConfig, element.CamerasConfig);
 			Assert.AreEqual (evt.Rate, element.Rate);
 			Assert.AreEqual (evt.Name, element.Title);
 		}

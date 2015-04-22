@@ -58,7 +58,7 @@ namespace LongoMatch.Video.Utils
 			this.interval = interval;
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName (outputDir);
-			this.totalFrames = ((int)Math.Floor ((double)((stop - start).MSeconds / interval)) + 1) * evt.CamerasVisible.Count;
+			this.totalFrames = ((int)Math.Floor ((double)((stop - start).MSeconds / interval)) + 1) * evt.CamerasConfig.Count;
 			this.cancel = false;
 		}
 
@@ -77,7 +77,7 @@ namespace LongoMatch.Video.Utils
 		{
 			Time pos;
 			LongoMatch.Core.Common.Image frame;
-			List<int> cameras;
+			List<CameraConfig> cameras;
 			bool quit = false;
 			int i = 0;
 			int j = 0;
@@ -86,24 +86,24 @@ namespace LongoMatch.Video.Utils
 
 			Log.Debug ("Start frames series capture with interval: " + interval);
 			Log.Debug ("Total frames to be captured: " + totalFrames);
-			if (evt.CamerasVisible.Count == 0 || fileSet.Count == 1) {
-				cameras = new List<int> { 0 };
+			if (evt.CamerasConfig.Count == 0 || fileSet.Count == 1) {
+				cameras = new List<CameraConfig> { new CameraConfig (0) };
 			} else {
-				cameras = evt.CamerasVisible;
+				cameras = evt.CamerasConfig;
 			}
 
-			foreach (int cameraIndex in cameras) {
+			foreach (CameraConfig cameraConfig in cameras) {
 				MediaFile file;
 
 				if (quit) {
 					break;
 				}
-				Log.Debug ("Start frames series capture for angle " + cameraIndex);
+				Log.Debug ("Start frames series capture for angle " + cameraConfig.Index);
 				try {
-					file = fileSet [cameraIndex];
+					file = fileSet [cameraConfig.Index];
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					Log.Error (string.Format ("Camera index {0} not found in fileset", cameraIndex));
+					Log.Error (string.Format ("Camera index {0} not found in fileset", cameraConfig.Index));
 					continue;
 				}
 				capturer.Open (file.FilePath);
@@ -120,7 +120,7 @@ namespace LongoMatch.Video.Utils
 					if (!cancel) {
 						frame = capturer.GetFrame (pos + file.Offset, true);
 						if (frame != null) {
-							string path = String.Format ("{0}_angle{1}_{2}.png", seriesName, cameraIndex, j);
+							string path = String.Format ("{0}_angle{1}_{2}.png", seriesName, cameraConfig.Index, j);
 							frame.Save (System.IO.Path.Combine (outputDir, path));
 							frame.ScaleInplace (THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 						}

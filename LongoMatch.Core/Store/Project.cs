@@ -254,7 +254,7 @@ namespace LongoMatch.Core.Store
 			evt.EventType = type;
 			evt.Notes = "";
 			evt.Miniature = miniature;
-			evt.CamerasVisible = new List<int> { 0 };
+			evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
 
 			if (addToTimeline) {
 				Timeline.Add (evt);

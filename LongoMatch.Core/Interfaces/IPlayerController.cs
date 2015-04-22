@@ -76,9 +76,9 @@ namespace LongoMatch.Core.Interfaces
 		object CamerasLayout { get; set; }
 
 		/// <summary>
-		/// The list of visible cameras.
+		/// The list of configurations for visible cameras.
 		/// </summary>
-		List<int> CamerasVisible { get; set; }
+		List<CameraConfig> CamerasConfig { get; set; }
 
 		/// <summary>
 		/// List of view ports set by the view.

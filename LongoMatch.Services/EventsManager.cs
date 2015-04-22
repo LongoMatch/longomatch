@@ -241,10 +241,10 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 				play.CamerasLayout = player.CamerasLayout;
-				play.CamerasVisible = player.CamerasVisible;
+				play.CamerasConfig = player.CamerasConfig;
 			} else {
 				play.CamerasLayout = null;
-				play.CamerasVisible = new List<int> { 0 };
+				play.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
 			}
 
 			filter.Update ();

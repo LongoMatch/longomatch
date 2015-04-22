@@ -50,8 +50,8 @@ namespace LongoMatch.Services
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
 		List<IViewPort> viewPorts;
-		List<int> camerasVisible;
-		List<int> defaultCamerasVisible;
+		List<CameraConfig> camerasConfig;
+		List<CameraConfig> defaultCamerasConfig;
 		object defaultCamerasLayout;
 		MediaFileSet defaultFileSet;
 
@@ -106,28 +106,28 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public List<int> CamerasVisible {
+		public List<CameraConfig> CamerasConfig {
 			set {
 				Log.Debug ("Updating cameras configuration: ", string.Join ("-", value));
-				camerasVisible = value;
-				if (defaultCamerasVisible == null) {
-					defaultCamerasVisible = value;
+				camerasConfig = value;
+				if (defaultCamerasConfig == null) {
+					defaultCamerasConfig = value;
 				}
 				if (loadedEvent != null) {
-					loadedEvent.CamerasVisible = value.ToList ();
+					loadedEvent.CamerasConfig = value.ToList ();
 				} else if (loadedPlaylistElement is PlaylistPlayElement) {
-					(loadedPlaylistElement as PlaylistPlayElement).CamerasVisible = value.ToList ();
+					(loadedPlaylistElement as PlaylistPlayElement).CamerasConfig = value.ToList ();
 				}
 				if (multiPlayer != null) {
-					multiPlayer.CamerasVisible = camerasVisible;
+					multiPlayer.CamerasConfig = camerasConfig;
 					if (!skipApplyCamerasConfig && Opened) {
 						ApplyCamerasConfig ();
 					}
 				}
 			}
 			get {
-				if (camerasVisible != null) {
-					return camerasVisible.ToList ();
+				if (camerasConfig != null) {
+					return camerasConfig.ToList ();
 				} else {
 					return null;
 				}
@@ -458,7 +458,7 @@ namespace LongoMatch.Services
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
 				LoadSegment (ple.FileSet, ple.Play.Start, ple.Play.Stop,
-					ple.Play.Start, ple.Rate, ple.CamerasVisible,
+					ple.Play.Start, ple.Rate, ple.CamerasConfig,
 					ple.CamerasLayout, true);
 			} else if (element is PlaylistVideo) {
 				LoadVideo (element as PlaylistVideo);
@@ -479,7 +479,7 @@ namespace LongoMatch.Services
 			loadedEvent = evt;
 			if (evt.Start != null && evt.Start != null) {
 				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, evt.Rate,
-					evt.CamerasVisible, evt.CamerasLayout, playing);
+					evt.CamerasConfig, evt.CamerasLayout, playing);
 			} else if (evt.EventTime != null) {
 				Seek (evt.EventTime, true);
 			} else {
@@ -493,11 +493,11 @@ namespace LongoMatch.Services
 			Log.Debug ("Unload current event");
 			Reset ();
 			if (FileSet != defaultFileSet) {
-				UpdateCamerasConfig (defaultCamerasVisible, defaultCamerasLayout);
+				UpdateCamerasConfig (defaultCamerasConfig, defaultCamerasLayout);
 				EmitEventUnloaded ();
 				Open (defaultFileSet);
 			} else {
-				CamerasVisible = defaultCamerasVisible;
+				CamerasConfig = defaultCamerasConfig;
 				EmitEventUnloaded ();
 			}
 		}
@@ -575,10 +575,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void EmitMediaFileSetLoaded (MediaFileSet fileSet, List<int> camerasVisible)
+		void EmitMediaFileSetLoaded (MediaFileSet fileSet, List<CameraConfig> camerasVisible)
 		{
 			if (MediaFileSetLoadedEvent != null) {
-				MediaFileSetLoadedEvent (fileSet, camerasVisible);
+				MediaFileSetLoadedEvent (fileSet, camerasConfig);
 			}
 		}
 
@@ -638,10 +638,10 @@ namespace LongoMatch.Services
 		/// </summary>
 		/// <param name="camerasConfig">The cameras configuration.</param>
 		/// <param name="layout">The cameras layout.</param>
-		void UpdateCamerasConfig (List<int> camerasConfig, object layout)
+		void UpdateCamerasConfig (List<CameraConfig> camerasConfig, object layout)
 		{
 			skipApplyCamerasConfig = true;
-			CamerasVisible = camerasConfig;
+			CamerasConfig = camerasConfig;
 			CamerasLayout = layout;
 			skipApplyCamerasConfig = false;
 		}
@@ -663,9 +663,9 @@ namespace LongoMatch.Services
 		/// </summary>
 		void ValidateVisibleCameras ()
 		{
-			if (FileSet != null && camerasVisible != null && camerasVisible.Max () >= FileSet.Count) {
+			if (FileSet != null && camerasConfig != null && camerasConfig.Max (c => c.Index) >= FileSet.Count) {
 				Log.Error ("Invalid cameras configuration, fixing list of cameras");
-				UpdateCamerasConfig (camerasVisible.Where (i => i < FileSet.Count).ToList<int> (),
+				UpdateCamerasConfig (camerasConfig.Where (i => i.Index < FileSet.Count).ToList<CameraConfig> (),
 					CamerasLayout);
 			}
 		}
@@ -675,8 +675,8 @@ namespace LongoMatch.Services
 		/// </summary>
 		void UpdatePar ()
 		{
-			for (int i = 0; i < Math.Min (CamerasVisible.Count, ViewPorts.Count); i++) {
-				int index = CamerasVisible [i];
+			for (int i = 0; i < Math.Min (CamerasConfig.Count, ViewPorts.Count); i++) {
+				int index = CamerasConfig [i].Index;
 				MediaFile file = FileSet [index];
 				float par = 1;
 				if (file.VideoHeight != 0) {
@@ -701,7 +701,7 @@ namespace LongoMatch.Services
 			// As there might already be a configuration defined (loading an event for example), the view
 			// should adapt if needed.
 			skipApplyCamerasConfig = true;
-			EmitMediaFileSetLoaded (fileSet, camerasVisible);
+			EmitMediaFileSetLoaded (fileSet, camerasConfig);
 			skipApplyCamerasConfig = false;
 
 			if (defaultFile) {
@@ -712,7 +712,7 @@ namespace LongoMatch.Services
 				readyToSeek = false;
 				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
-				if (CamerasVisible == null) {
+				if (CamerasConfig == null) {
 					Config.EventsBroker.EmitMultimediaError (this, 
 						Catalog.GetString ("Invalid camera configuration"));
 					FileSet = null;
@@ -777,14 +777,14 @@ namespace LongoMatch.Services
 		/// <param name="camerasLayout">Cameras layout.</param>
 		/// <param name="playing">If set to <c>true</c> starts playing.</param>
 		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
-		                  float rate, List<int> camerasConfig, object camerasLayout,
+		                  float rate, List<CameraConfig> camerasConfig, object camerasLayout,
 		                  bool playing)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				start, stop, rate));
 
 			if (!SegmentLoaded) {
-				defaultCamerasVisible = CamerasVisible;
+				defaultCamerasConfig = CamerasConfig;
 				defaultCamerasLayout = CamerasLayout;
 			}
 
@@ -837,7 +837,7 @@ namespace LongoMatch.Services
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
-			UpdateCamerasConfig (new List<int> { 0 }, null);
+			UpdateCamerasConfig (new List<CameraConfig> { new CameraConfig (0) }, null);
 			InternalOpen (fileSet, false, true, true);
 		}
 
@@ -933,7 +933,7 @@ namespace LongoMatch.Services
 						if (drawings != null) {
 							/* Check if the event has drawings to display */
 							FrameDrawing fd = drawings.FirstOrDefault (f => f.Render > videoTS &&
-							                  f.Render <= currentTime && f.CameraIndex == CamerasVisible [0]);
+							                  f.Render <= currentTime && f.CameraIndex == CamerasConfig [0].Index);
 							if (fd != null) {
 								LoadPlayDrawing (fd);
 							}

@@ -244,10 +244,10 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
 			
 			lastTS = play.Start;
-			if (element.CamerasVisible.Count == 0) {
+			if (element.CamerasConfig.Count == 0) {
 				cameraIndex = 0;
 			} else {
-				cameraIndex = element.CamerasVisible [0];
+				cameraIndex = element.CamerasConfig [0].Index;
 			}
 			if (cameraIndex >= element.FileSet.Count) {
 				Log.Error (string.Format ("Camera index={0} not matching for current fileset count={1}",

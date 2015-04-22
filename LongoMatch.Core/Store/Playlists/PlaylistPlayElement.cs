@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Store.Playlists
 			Title = play.Name;
 			Rate = play.Rate;
 			CamerasLayout = play.CamerasLayout;
-			CamerasVisible = play.CamerasVisible.ToList ();
+			CamerasConfig = play.CamerasConfig.ToList ();
 			FileSet = fileset;
 		}
 
@@ -101,10 +101,10 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		/// <summary>
-		/// Override the default <see cref="TimelineEvent.CamerasVisible"/>
+		/// Override the default <see cref="TimelineEvent.CamerasConfig"/>
 		/// defined by the <see cref="TimelineEvent"/>
 		/// </summary>
-		public List<int> CamerasVisible {
+		public List<CameraConfig> CamerasConfig {
 			get;
 			set;
 		}

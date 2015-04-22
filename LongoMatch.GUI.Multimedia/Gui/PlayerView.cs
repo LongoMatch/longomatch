@@ -100,7 +100,7 @@ namespace LongoMatch.Gui
 			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 
 			Player = new PlayerController ();
-			Player.CamerasVisible = new List<int> { 0 };
+			Player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
 			Player.Step = new Time { TotalSeconds = jumpspinbutton.ValueAsInt };
 			Mode = PlayerViewOperationMode.Analysis;
 			CreateWindows ();

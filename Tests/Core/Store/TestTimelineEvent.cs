@@ -74,7 +74,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (p.Start, newp.Start);
 			Assert.AreEqual (p.Stop, newp.Stop);
 			Assert.AreEqual (p.Rate, newp.Rate);
-			Assert.AreEqual (p.CamerasVisible, new List<int> { 0 });
+			Assert.AreEqual (p.CamerasConfig, new List<CameraConfig> { new CameraConfig (0) });
 			Assert.IsNull (p.CamerasLayout);
 		}
 

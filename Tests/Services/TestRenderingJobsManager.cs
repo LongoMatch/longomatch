@@ -38,7 +38,7 @@ namespace Tests.Services
 
 			try {
 				TimelineEvent evt = p.Timeline [0];
-				evt.CamerasVisible = new List<int> { 0 };
+				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
 				PlaylistPlayElement element = new PlaylistPlayElement (evt, p.Description.FileSet);
 
 				// Playlist with one event
@@ -75,7 +75,7 @@ namespace Tests.Services
 				renderer.CancelAllJobs ();
 				mock.ResetCalls ();
 				evt = p.Timeline [1];
-				evt.CamerasVisible = new List<int> { 1 };
+				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (1) };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
 				playlist.Elements [0] = element; 
 				job = new EditionJob (playlist, settings);
@@ -87,7 +87,7 @@ namespace Tests.Services
 				renderer.CancelAllJobs ();
 				mock.ResetCalls ();
 				evt = p.Timeline [1];
-				evt.CamerasVisible = new List<int> { 2 };
+				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (2) };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
 				playlist.Elements [0] = element; 
 				job = new EditionJob (playlist, settings);
