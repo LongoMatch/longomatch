@@ -49,6 +49,41 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		public override bool Equals (object obj)
+		{
+			CameraConfig config = obj as CameraConfig;
+			if (config == null)
+				return false;
+			if (config.Index != Index ||
+			    config.RegionOfInterest != RegionOfInterest) {
+				return false;
+			}
+			return true;
+		}
+
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
+
+		public static bool operator == (CameraConfig c1, CameraConfig c2)
+		{
+			if (Object.ReferenceEquals (c1, c2)) {
+				return true;
+			}
+
+			if ((object)c1 == null || (object)c2 == null) {
+				return false;
+			}
+
+			return c1.Equals (c2);
+		}
+
+		public static bool operator != (CameraConfig c1, CameraConfig c2)
+		{
+			return !(c1 == c2);
+		}
 	}
 }
 

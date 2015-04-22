@@ -24,6 +24,13 @@ namespace LongoMatch.Core.Common
 	[JsonObject (MemberSerialization.OptIn)]
 	public class Area
 	{
+		public Area ()
+		{
+			Start = new Point (0, 0);
+			Width = 0;
+			Height = 0;
+		}
+
 		public Area (double x, double y, double width, double height)
 		{
 			Start = new Point (x, y);
@@ -137,6 +144,41 @@ namespace LongoMatch.Core.Common
 		{
 			return !((Left >= area.Right) || (Right <= area.Left) ||
 			(Top >= area.Bottom) || (Bottom <= area.Top));
+		}
+
+		public override bool Equals (object obj)
+		{
+			Area a = obj as Area;
+			if (a == null)
+				return false;
+			if (a.Start != Start ||
+			    a.Width != Width || a.Height != Height) {
+				return false;
+			}
+			return true;
+		}
+
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
+
+		public static bool operator == (Area a1, Area a2)
+		{
+			if (Object.ReferenceEquals (a1, a2)) {
+				return true;
+			}
+
+			if ((object)a1 == null || (object)a2 == null) {
+				return false;
+			}
+
+			return a1.Equals (a2);
+		}
+
+		public static bool operator != (Area a1, Area a2)
+		{
+			return !(a1 == a2);
 		}
 
 		public override string ToString ()

@@ -74,8 +74,26 @@ namespace LongoMatch.Core.Common
 			Point p = obj as Point;
 			if (p == null)
 				return false;
-				
+
 			return p.X == X && p.Y == Y;
+		}
+
+		public static bool operator == (Point p1, Point p2)
+		{
+			if (Object.ReferenceEquals (p1, p2)) {
+				return true;
+			}
+
+			if ((object)p1 == null || (object)p2 == null) {
+				return false;
+			}
+
+			return p1.Equals (p2);
+		}
+
+		public static bool operator != (Point p1, Point p2)
+		{
+			return !(p1 == p2);
 		}
 
 		public override int GetHashCode ()
