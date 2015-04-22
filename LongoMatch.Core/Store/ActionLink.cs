@@ -112,8 +112,8 @@ namespace LongoMatch.Core.Store
 			    link.DestinationButton != DestinationButton) {
 				return false;
 			}
-			if (!link.SourceTags.SequenceEqual (SourceTags) ||
-			    !link.DestinationTags.SequenceEqual (DestinationTags)) {
+			if (!link.SourceTags.SequenceEqualSafe (SourceTags) ||
+			    !link.DestinationTags.SequenceEqualSafe (DestinationTags)) {
 				return false;
 			}
 			return true;
