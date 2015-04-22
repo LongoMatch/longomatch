@@ -933,7 +933,8 @@ namespace LongoMatch.Services
 						if (drawings != null) {
 							/* Check if the event has drawings to display */
 							FrameDrawing fd = drawings.FirstOrDefault (f => f.Render > videoTS &&
-							                  f.Render <= currentTime && f.CameraIndex == CamerasConfig [0].Index);
+							                  f.Render <= currentTime &&
+							                  f.CameraConfig.Index == CamerasConfig [0].Index);
 							if (fd != null) {
 								LoadPlayDrawing (fd);
 							}

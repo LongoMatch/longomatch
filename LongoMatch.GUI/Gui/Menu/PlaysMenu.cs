@@ -140,7 +140,7 @@ namespace LongoMatch.Gui.Menus
 					drawingMenu.Append (deleteItem);
 					editItem.Activated += (sender, e) => {
 						Config.EventsBroker.EmitDrawFrame (plays [0], index,
-							plays [0].Drawings [index].CameraIndex, false);
+							plays [0].Drawings [index].CameraConfig, false);
 					}; 
 					deleteItem.Activated += (sender, e) => {
 						plays [0].Drawings.RemoveAt (index);

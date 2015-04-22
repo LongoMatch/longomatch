@@ -170,9 +170,9 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public List<int> CamerasVisible {
+		public List<CameraConfig> CamerasConfig {
 			get {
-				return new List<int> { 0 };
+				return new List<CameraConfig> { new CameraConfig (0) };
 			}
 			set {
 			}
@@ -521,7 +521,7 @@ namespace LongoMatch.Gui
 
 		void HandleDrawButtonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasVisible [0], true);
+			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasConfig [0], true);
 		}
 
 		void HandleJumpValueChanged (object sender, EventArgs e)

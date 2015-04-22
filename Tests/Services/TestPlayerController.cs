@@ -777,7 +777,7 @@ namespace Tests.Services
 			};
 
 			dr = new FrameDrawing { Render = evt.Start + 50,
-				CameraIndex = 0
+				CameraConfig = new CameraConfig (0),
 			};
 			currentTime = evt.Start;
 			PreparePlayer ();
@@ -794,7 +794,7 @@ namespace Tests.Services
 			Assert.IsNull (drSent); 
 
 			/* Check only drawings for the first camera are loaded */
-			dr.CameraIndex = 1;
+			dr.CameraConfig = new CameraConfig (1);
 			currentTime = evt.Start;
 			player.LoadEvent (mfs, evt, evt.Start, true);
 			Assert.IsTrue (player.Playing);

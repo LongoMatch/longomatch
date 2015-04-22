@@ -382,10 +382,10 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitDrawFrame (TimelineEvent play, int drawingIndex, int cameraIndex, bool current)
+		public void EmitDrawFrame (TimelineEvent play, int drawingIndex, CameraConfig camConfig, bool current)
 		{
 			if (DrawFrame != null) {
-				DrawFrame (play, drawingIndex, cameraIndex, current);
+				DrawFrame (play, drawingIndex, camConfig, current);
 			}
 		}
 

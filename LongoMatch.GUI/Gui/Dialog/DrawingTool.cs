@@ -37,6 +37,7 @@ namespace LongoMatch.Gui.Dialog
 		readonly Blackboard blackboard;
 		TimelineEvent play;
 		FrameDrawing drawing;
+		CameraConfig camConfig;
 		Drawable selectedDrawable;
 		Gtk.Dialog playerDialog;
 		Text playerText;
@@ -146,11 +147,13 @@ namespace LongoMatch.Gui.Dialog
 			base.Destroy ();
 		}
 
-		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing, Project project)
+		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing,
+		                      CameraConfig camConfig, Project project)
 		{
 			this.play = play;
 			this.drawing = drawing;
 			this.project = project;
+			this.camConfig = camConfig;
 			scaleFactor = (double)frame.Width / 500;
 			blackboard.Background = frame;
 			savetoprojectbutton.Visible = true;

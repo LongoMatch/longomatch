@@ -53,8 +53,13 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public Area RegionOfInterest {
+			get;
+			set;
+		}
+
 		/// <summary>
-		/// List of Drawable objects in the canvas
+		/// List of <see cref="Drawable"/> objects in the canvas
 		/// </summary>
 		public List<Drawable> Drawables {
 			get;
@@ -77,7 +82,7 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
-		public int CameraIndex {
+		public CameraConfig CameraConfig {
 			get;
 			set;
 		}

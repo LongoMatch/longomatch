@@ -147,7 +147,7 @@ namespace LongoMatch.Services
 			guiToolkit.ShowProjectStats (project);
 		}
 
-		void HandleDrawFrame (TimelineEvent play, int drawingIndex, int cameraIndex, bool current)
+		void HandleDrawFrame (TimelineEvent play, int drawingIndex, CameraConfig camConfig, bool current)
 		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
@@ -159,9 +159,11 @@ namespace LongoMatch.Services
 			}
 			if (play != null) {
 				if (drawingIndex == -1) {
-					drawing = new FrameDrawing ();
-					drawing.Render = player.CurrentTime;
-					drawing.CameraIndex = cameraIndex;
+					drawing = new FrameDrawing {
+						Render = player.CurrentTime,
+						CameraConfig = camConfig,
+						RegionOfInterest = camConfig.RegionOfInterest,
+					};
 				} else {
 					drawing = play.Drawings [drawingIndex];
 				}
@@ -180,7 +182,7 @@ namespace LongoMatch.Services
 			if (pixbuf == null) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error capturing video frame"));
 			} else {
-				guiToolkit.DrawingTool (pixbuf, play, drawing, openedProject);
+				guiToolkit.DrawingTool (pixbuf, play, drawing, camConfig, openedProject);
 			}
 		}
 

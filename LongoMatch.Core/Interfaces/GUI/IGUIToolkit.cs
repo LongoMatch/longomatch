@@ -109,7 +109,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
 
-		void DrawingTool (Image pixbuf, TimelineEvent play, FrameDrawing drawing, Project project);
+		void DrawingTool (Image pixbuf, TimelineEvent play, FrameDrawing drawing, CameraConfig config, Project project);
 
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 

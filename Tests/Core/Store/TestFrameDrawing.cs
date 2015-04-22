@@ -34,7 +34,7 @@ namespace Tests.Core.Store
 			d.Miniature = Utils.LoadImageFromFile ();
 			d.Freehand = Utils.LoadImageFromFile ();
 			d.Drawables = new List<Drawable> { new Line (), new Rectangle () };
-			d.CameraIndex = 2;
+			d.CameraConfig = new CameraConfig (2);
 			d.Render = new Time (1000);
 			d.Pause = new Time (2000);
 			Utils.CheckSerialization (d);
@@ -42,7 +42,7 @@ namespace Tests.Core.Store
 			FrameDrawing d2 = Utils.SerializeDeserialize (d);
 			Assert.AreEqual (d.Render, d2.Render);
 			Assert.AreEqual (d.Pause, d2.Pause);
-			Assert.AreEqual (d.CameraIndex, d2.CameraIndex);
+			Assert.AreEqual (d.CameraConfig, d2.CameraConfig);
 			Assert.AreEqual (d2.Drawables.Count, d.Drawables.Count);
 			Assert.IsNotNull (d2.Freehand);
 			Assert.IsNotNull (d2.Miniature);

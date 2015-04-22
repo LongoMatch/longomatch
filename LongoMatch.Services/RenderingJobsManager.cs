@@ -256,7 +256,7 @@ namespace LongoMatch.Services
 			} else {
 				file = element.FileSet [cameraIndex];
 			}
-			drawings = play.Drawings.Where (d => d.CameraIndex == cameraIndex);
+			drawings = play.Drawings.Where (d => d.CameraConfig.Index == cameraIndex);
 
 			if (file == null || drawings == null) {
 				return false;

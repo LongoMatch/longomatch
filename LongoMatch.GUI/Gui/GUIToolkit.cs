@@ -284,7 +284,8 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing, Project project)
+		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
+		                         CameraConfig camConfig, Project project)
 		{
 			DrawingTool dialog = new DrawingTool ();
 			dialog.Show ();
@@ -293,7 +294,7 @@ namespace LongoMatch.Gui
 			if (play == null) {
 				dialog.LoadFrame (image, project);
 			} else {
-				dialog.LoadPlay (play, image, drawing, project);
+				dialog.LoadPlay (play, image, drawing, camConfig, project);
 			}
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run ();
