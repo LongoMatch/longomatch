@@ -37,12 +37,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		readonly int iconWidth;
 		readonly int iconHeight;
 		const int radius = 5;
+		double width;
+		double height;
 
 		public LinkAnchorObject (DashboardButtonObject button, List<Tag> tags, Point relPos)
 		{
 			RelativePosition = relPos;
-			Width = button.Width;
-			Height = button.Height;
+			width = height = 0;
 			Button = button;
 			if (tags == null)
 				tags = new List<Tag> ();
@@ -63,13 +64,25 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		}
 
 		public double Width {
-			get;
-			set;
+			get {
+				if (width == 0)
+					return Button.Width;
+				return width;
+			}
+			set {
+				width = value;
+			}
 		}
 
 		public double Height {
-			get;
-			set;
+			get {
+				if (height == 0)
+					return Button.Height;
+				return height;
+			}
+			set {
+				height = value;
+			}
 		}
 
 		public List<Tag> Tags {
