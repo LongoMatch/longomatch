@@ -97,6 +97,24 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			stop = line.Stop;
 		}
 
+		public bool CanLink (LinkAnchorObject dest)
+		{
+			/* Check if the link is possible between the 2 types of anchors */
+			if (!Source.CanLink (dest)) {
+				return false;
+			}
+
+			/* Check if this link will result into a duplicated link */
+			foreach (ActionLink link in Source.Button.Button.ActionLinks) {
+				if (link.DestinationButton == dest.Button.Button &&
+				    link.SourceTags.SequenceEqualSafe (Source.Tags) &&
+				    link.DestinationTags.SequenceEqualSafe (dest.Tags)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			Color lineColor;
