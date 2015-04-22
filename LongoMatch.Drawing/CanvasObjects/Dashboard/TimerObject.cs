@@ -53,21 +53,38 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		public Time CurrentTime {
 			set {
 				bool update = false;
+				bool wasActive = Active;
+				bool isActive = wasActive;
 
-				if (Button.StartTime != null) {
-					if (value < Button.StartTime) {
+				if (!wasActive) {
+					if (Button.StartTime != null) {
+						isActive = true;
+						update = true;
+					}
+				} else {
+					// In case the node is no longer valid, unactivate it
+					if (Button.StartTime == null) {
+						isActive = false;
+						update = true;
+					} else if (value < Button.StartTime) {
+						// In case the application seeks to a position before the moment
+						// the button was clicked, make sure to cancel such node
 						Button.Cancel ();
-						Active = false;
+						update = true;
+						isActive = false;
 					}
 				}
+
 				if (value != null && currentTime != null &&
 				    currentTime.TotalSeconds != value.TotalSeconds) {
 					update = true;
 				}
+
 				currentTime = value;
-				if (update && Button.StartTime != null) {
+
+				if (update) {
 					// It is possible that the button is activated but not thtough a click
-					Active = true;
+					Active = isActive;
 					ReDraw ();
 				}
 			}
