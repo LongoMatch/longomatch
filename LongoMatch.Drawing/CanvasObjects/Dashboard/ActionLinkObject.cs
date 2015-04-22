@@ -138,6 +138,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			tk.LineWidth = lineWidth;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawLine (line.Start, line.Stop);
+			tk.FillColor = tk.StrokeColor = Config.Style.PaletteActive;
+			tk.DrawCircle (line.Stop, 2);
 			tk.End ();
 		}
 	}
