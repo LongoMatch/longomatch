@@ -557,11 +557,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleActionLinkCreatedEvent (ActionLink actionLink)
 		{
-			if (template.HasCircularDependencies ()) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString (
-					"This linking option is not valid: infinite loop."));
-				RemoveLink (actionLink, true);
-			}
+//			if (template.HasCircularDependencies ()) {
+//				Config.GUIToolkit.ErrorMessage (Catalog.GetString (
+//					"This linking option is not valid: infinite loop."));
+//				RemoveLink (actionLink, true);
+//			}
+			HandleActionLinksSelectedEvent (new List<ActionLink> { actionLink });
 		}
 
 	}
