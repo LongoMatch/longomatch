@@ -225,9 +225,15 @@ namespace LongoMatch.Drawing.Widgets
 		/// </summary>
 		public Image Save ()
 		{
+			Area roi;
+
 			ClearSelection ();
 			drawing.Freehand = backbuffer.Copy ();
-			return tk.Copy (this, Background.Width, Background.Height);
+			roi = RegionOfInterest;
+			if (roi == null || roi.Empty) {
+				roi = new Area (0, 0, Background.Width, Background.Height);
+			}
+			return tk.Copy (this, roi);
 		}
 
 		/// <summary>

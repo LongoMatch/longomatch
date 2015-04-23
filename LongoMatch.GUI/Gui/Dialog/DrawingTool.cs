@@ -158,6 +158,7 @@ namespace LongoMatch.Gui.Dialog
 			blackboard.Background = frame;
 			savetoprojectbutton.Visible = true;
 			blackboard.Drawing = drawing;
+			blackboard.RegionOfInterest = drawing.RegionOfInterest;
 		}
 
 		public void LoadFrame (Image frame, Project project)
@@ -431,6 +432,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void OnSavetoprojectbuttonClicked (object sender, System.EventArgs e)
 		{
+			drawing.RegionOfInterest = blackboard.RegionOfInterest;
 			if (!play.Drawings.Contains (drawing)) {
 				play.Drawings.Add (drawing);
 			}
@@ -519,9 +521,6 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleRegionOfInterestChanged (object sender, EventArgs e)
 		{
-			if (play != null) {
-				//play.RegionOfInterest = blackboard.RegionOfInterest;
-			}
 			if (blackboard.RegionOfInterest.Width == blackboard.Background.Width &&
 			    blackboard.RegionOfInterest.Height == blackboard.Background.Height) {
 				hscrollbar.Visible = false;

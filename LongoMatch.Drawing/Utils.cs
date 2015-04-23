@@ -79,14 +79,15 @@ namespace LongoMatch.Drawing
 			return d;
 		}
 
-		protected static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd, Image image)
+		protected static Image RenderFrameDrawing (IDrawingToolkit tk, Area area, FrameDrawing fd, Image image)
 		{
 			Image img;
 			ISurface surface;
 			
-			surface = tk.CreateSurface (image.Width, image.Height, image);
+			surface = tk.CreateSurface ((int)area.Width, (int)area.Height, image);
 			using (IContext c = surface.Context) {
 				tk.Context = c;
+				tk.TranslateAndScale (new Point (-area.Start.X, -area.Start.Y), new Point (1, 1));
 				foreach (Drawable d in fd.Drawables) {
 					ICanvasSelectableObject obj = CanvasFromDrawableObject (d);
 					obj.Draw (tk, null);
@@ -100,19 +101,21 @@ namespace LongoMatch.Drawing
 
 		public static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd)
 		{
-			return RenderFrameDrawing (tk, width, height, fd, null);
+			return RenderFrameDrawing (tk, new Area (0, 0, width, height), fd, null);
 		}
 
 		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
 		{
-			return RenderFrameDrawing (tk, image.Width, image.Height, fd, image);
+			Area area = fd.RegionOfInterest;
+			if (area == null || area.Empty)
+				area = new Area (0, 0, image.Width, image.Height);
+			return RenderFrameDrawing (tk, area, fd, image);
 		}
 
 		public static Point ToUserCoords (Point p, Point offset, double scaleX, double scaleY)
 		{
 			return new Point ((p.X - offset.X) / scaleX,
 				(p.Y - offset.Y) / scaleY);
-		
 		}
 	}
 }
