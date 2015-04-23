@@ -28,32 +28,47 @@ namespace LongoMatch.Gui
 	{
 		AspectFrame frame;
 		DrawingArea drawingWindow;
+		bool dragStarted;
 
 		public event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
 		public new event ButtonPressEventHandler ButtonPressEvent;
+		public new event ButtonReleaseEventHandler ButtonReleaseEvent;
 		public new event ScrollEventHandler ScrollEvent;
+		public event ButtonPressEventHandler VideoDragStarted;
+		public event ButtonReleaseEventHandler VideoDragStopped;
+		public new event MotionNotifyEventHandler VideoDragged;
 
 		public VideoWindow ()
 		{
 			this.Build ();
+
 			frame = new AspectFrame (null, 0.5f, 0.5f, 1f, false);
 			frame.Shadow = ShadowType.None;
 
 			messageLabel.NoShowAll = true;
+
 			drawingWindow = new DrawingArea ();
 			drawingWindow.DoubleBuffered = false;
 			drawingWindow.ExposeEvent += HandleExposeEvent;
+			drawingWindow.MotionNotifyEvent += HandleMotionNotifyEvent;
+			drawingWindow.ButtonPressEvent += HandleButtonPressEvent;
+			drawingWindow.ButtonReleaseEvent += HandleButtonReleaseEvent;
+			drawingWindow.AddEvents ((int)(Gdk.EventMask.ButtonPressMask | Gdk.EventMask.ButtonReleaseMask | Gdk.EventMask.PointerMotionMask | Gdk.EventMask.ScrollMask));
+
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
+			videoeventbox.ButtonReleaseEvent += HandleButtonReleaseEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				// Workaround for GTK bugs on Windows not showing the video window
 				videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
 			}
+
 			frame.Add (drawingWindow);
 			videoeventbox.Add (frame);
 			videoeventbox.ShowAll ();
+
 			MessageVisible = false;
 		}
 
@@ -111,12 +126,20 @@ namespace LongoMatch.Gui
 			set;
 		}
 
+		void HandleMotionNotifyEvent (object o, MotionNotifyEventArgs args)
+		{
+			if (dragStarted == true) {
+				if (VideoDragged != null) {
+					VideoDragged (this, args);
+				}
+			}
+		}
+
 		void HandleScrollEvent (object o, ScrollEventArgs args)
 		{
 			if (ScrollEvent != null) {
 				ScrollEvent (this, args);
 			}
-			
 		}
 
 		void HandleExposeEvent (object o, ExposeEventArgs args)
@@ -134,8 +157,29 @@ namespace LongoMatch.Gui
 
 		void HandleButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
-			if (ButtonPressEvent != null) {
-				ButtonPressEvent (this, args);
+			if (o == drawingWindow) {
+				dragStarted = true;
+				if (VideoDragStarted != null) {
+					VideoDragStarted (this, args);
+				}
+			} else {
+				if (ButtonPressEvent != null) {
+					ButtonPressEvent (this, args);
+				}
+			}
+		}
+
+		void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
+		{
+			if (o == drawingWindow) {
+				dragStarted = false;
+				if (VideoDragStopped != null) {
+					VideoDragStopped (this, args);
+				}
+			} else {
+				if (ButtonReleaseEvent != null) {
+					ButtonReleaseEvent (this, args);
+				}
 			}
 		}
 

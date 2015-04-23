@@ -93,6 +93,7 @@
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Events">ButtonPressMask</property>
+                    <property name="Ratio">0</property>
                     <property name="Ready">False</property>
                   </widget>
                   <packing>
@@ -437,6 +438,7 @@
             <property name="MemberName" />
             <property name="Visible">False</property>
             <property name="Events">ButtonPressMask</property>
+            <property name="Ratio">0</property>
             <property name="Ready">False</property>
           </widget>
           <packing>
