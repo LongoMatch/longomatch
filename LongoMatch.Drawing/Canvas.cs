@@ -685,7 +685,7 @@ namespace LongoMatch.Drawing
 				Translation = translation;
 
 				/* If there is a region of interest set, combine the transformation */
-				if (RegionOfInterest != null) {
+				if (RegionOfInterest != null && !RegionOfInterest.Empty) {
 					ScaleX *= background.Width / RegionOfInterest.Width;
 					ScaleY *= background.Height / RegionOfInterest.Height;
 					Translation -= new Point (RegionOfInterest.Start.X * ScaleX,

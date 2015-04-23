@@ -45,6 +45,13 @@ namespace LongoMatch.Core.Common
 			Height = height;
 		}
 
+		public bool Empty {
+			get {
+				return Start.X == 0 && Start.Y == 0 &&
+				Width == 0 && Height == 0;
+			}
+		}
+
 		[JsonProperty]
 		public Point Start {
 			get;
