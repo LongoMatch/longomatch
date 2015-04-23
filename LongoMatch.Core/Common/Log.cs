@@ -33,13 +33,13 @@ using System.Threading;
 
 namespace LongoMatch.Core.Common
 {
-	public delegate void LogNotifyHandler(LogNotifyArgs args);
+	public delegate void LogNotifyHandler (LogNotifyArgs args);
 
 	public class LogNotifyArgs : EventArgs
 	{
 		private LogEntry entry;
 
-		public LogNotifyArgs(LogEntry entry)
+		public LogNotifyArgs (LogEntry entry)
 		{
 			this.entry = entry;
 		}
@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Common
 		private string details;
 		private DateTime timestamp;
 
-		internal LogEntry(LogEntryType type, string message, string details)
+		internal LogEntry (LogEntryType type, string message, string details)
 		{
 			this.type = type;
 			this.message = message;
@@ -107,6 +107,7 @@ namespace LongoMatch.Core.Common
 		private static uint next_timer_id = 1;
 
 		private static bool debugging = false;
+
 		public static bool Debugging {
 			get {
 				return debugging;
@@ -116,14 +117,14 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public static void Commit(LogEntryType type, string message, string details, bool showUser)
+		public static void Commit (LogEntryType type, string message, string details, bool showUser)
 		{
-			if(type == LogEntryType.Debug && !Debugging) {
+			if (type == LogEntryType.Debug && !Debugging) {
 				return;
 			}
 
-			if(type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
-				switch(type) {
+			if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
+				switch (type) {
 				case LogEntryType.Error:
 					ConsoleCrayon.ForegroundColor = ConsoleColor.Red;
 					break;
@@ -139,31 +140,31 @@ namespace LongoMatch.Core.Common
 				}
 
 				var thread_name = String.Empty;
-				if(Debugging) {
+				if (Debugging) {
 					var thread = Thread.CurrentThread;
-					thread_name = String.Format("{0} ", thread.ManagedThreadId);
+					thread_name = String.Format ("{0} ", thread.ManagedThreadId);
 				}
 
-				Console.Write("[{5}{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString(type), DateTime.Now.Hour,
-				              DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, thread_name);
+				Console.Write ("[{5}{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
+					DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, thread_name);
 
-				ConsoleCrayon.ResetColor();
+				ConsoleCrayon.ResetColor ();
 
-				if(details != null) {
-					Console.WriteLine(" {0} - {1}", message, details);
+				if (details != null) {
+					Console.WriteLine (" {0} - {1}", message, details);
 				} else {
-					Console.WriteLine(" {0}", message);
+					Console.WriteLine (" {0}", message);
 				}
 			}
 
-			if(showUser) {
-				OnNotify(new LogEntry(type, message, details));
+			if (showUser) {
+				OnNotify (new LogEntry (type, message, details));
 			}
 		}
 
-		private static string TypeString(LogEntryType type)
+		private static string TypeString (LogEntryType type)
 		{
-			switch(type) {
+			switch (type) {
 			case LogEntryType.Debug:
 				return "Debug";
 			case LogEntryType.Warning:
@@ -176,114 +177,114 @@ namespace LongoMatch.Core.Common
 			return null;
 		}
 
-		private static void OnNotify(LogEntry entry)
+		private static void OnNotify (LogEntry entry)
 		{
 			LogNotifyHandler handler = Notify;
-			if(handler != null) {
-				handler(new LogNotifyArgs(entry));
+			if (handler != null) {
+				handler (new LogNotifyArgs (entry));
 			}
 		}
 
 		#region Timer Methods
 
-		public static uint DebugTimerStart(string message)
+		public static uint DebugTimerStart (string message)
 		{
-			return TimerStart(message, false);
+			return TimerStart (message, false);
 		}
 
-		public static uint InformationTimerStart(string message)
+		public static uint InformationTimerStart (string message)
 		{
-			return TimerStart(message, true);
+			return TimerStart (message, true);
 		}
 
-		private static uint TimerStart(string message, bool isInfo)
+		private static uint TimerStart (string message, bool isInfo)
 		{
-			if(!Debugging && !isInfo) {
+			if (!Debugging && !isInfo) {
 				return 0;
 			}
 
-			if(isInfo) {
-				Information(message);
+			if (isInfo) {
+				Information (message);
 			} else {
-				Debug(message);
+				Debug (message);
 			}
 
-			return TimerStart(isInfo);
+			return TimerStart (isInfo);
 		}
 
-		public static uint DebugTimerStart()
+		public static uint DebugTimerStart ()
 		{
-			return TimerStart(false);
+			return TimerStart (false);
 		}
 
-		public static uint InformationTimerStart()
+		public static uint InformationTimerStart ()
 		{
-			return TimerStart(true);
+			return TimerStart (true);
 		}
 
-		private static uint TimerStart(bool isInfo)
+		private static uint TimerStart (bool isInfo)
 		{
-			if(!Debugging && !isInfo) {
+			if (!Debugging && !isInfo) {
 				return 0;
 			}
 
 			uint timer_id = next_timer_id++;
-			timers.Add(timer_id, DateTime.Now);
+			timers.Add (timer_id, DateTime.Now);
 			return timer_id;
 		}
 
-		public static void DebugTimerPrint(uint id)
+		public static void DebugTimerPrint (uint id)
 		{
-			if(!Debugging) {
+			if (!Debugging) {
 				return;
 			}
 
-			TimerPrint(id, "Operation duration: {0}", false);
+			TimerPrint (id, "Operation duration: {0}", false);
 		}
 
-		public static void DebugTimerPrint(uint id, string message)
+		public static void DebugTimerPrint (uint id, string message)
 		{
-			if(!Debugging) {
+			if (!Debugging) {
 				return;
 			}
 
-			TimerPrint(id, message, false);
+			TimerPrint (id, message, false);
 		}
 
-		public static void InformationTimerPrint(uint id)
+		public static void InformationTimerPrint (uint id)
 		{
-			TimerPrint(id, "Operation duration: {0}", true);
+			TimerPrint (id, "Operation duration: {0}", true);
 		}
 
-		public static void InformationTimerPrint(uint id, string message)
+		public static void InformationTimerPrint (uint id, string message)
 		{
-			TimerPrint(id, message, true);
+			TimerPrint (id, message, true);
 		}
 
-		private static void TimerPrint(uint id, string message, bool isInfo)
+		private static void TimerPrint (uint id, string message, bool isInfo)
 		{
-			if(!Debugging && !isInfo) {
+			if (!Debugging && !isInfo) {
 				return;
 			}
 
 			DateTime finish = DateTime.Now;
 
-			if(!timers.ContainsKey(id)) {
+			if (!timers.ContainsKey (id)) {
 				return;
 			}
 
-			TimeSpan duration = finish - timers[id];
+			TimeSpan duration = finish - timers [id];
 			string d_message;
-			if(duration.TotalSeconds < 60) {
-				d_message = duration.TotalSeconds.ToString();
+			if (duration.TotalSeconds < 60) {
+				d_message = duration.TotalSeconds.ToString ();
 			} else {
-				d_message = duration.ToString();
+				d_message = duration.ToString ();
 			}
 
-			if(isInfo) {
-				InformationFormat(message, d_message);
+			if (isInfo) {
+				InformationFormat (message, d_message);
 			} else {
-				DebugFormat(message, d_message);
+				DebugFormat (message, d_message);
 			}
 		}
 
@@ -291,24 +292,24 @@ namespace LongoMatch.Core.Common
 
 		#region Public Debug Methods
 
-		public static void Debug(string message, string details)
+		public static void Debug (string message, string details)
 		{
-			if(Debugging) {
-				Commit(LogEntryType.Debug, message, details, false);
+			if (Debugging) {
+				Commit (LogEntryType.Debug, message, details, false);
 			}
 		}
 
-		public static void Debug(string message)
+		public static void Debug (string message)
 		{
-			if(Debugging) {
-				Debug(message, null);
+			if (Debugging) {
+				Debug (message, null);
 			}
 		}
 
-		public static void DebugFormat(string format, params object [] args)
+		public static void DebugFormat (string format, params object[] args)
 		{
-			if(Debugging) {
-				Debug(String.Format(format, args));
+			if (Debugging) {
+				Debug (String.Format (format, args));
 			}
 		}
 
@@ -316,126 +317,126 @@ namespace LongoMatch.Core.Common
 
 		#region Public Information Methods
 
-		public static void Information(string message)
+		public static void Information (string message)
 		{
-			Information(message, null);
+			Information (message, null);
 		}
 
-		public static void Information(string message, string details)
+		public static void Information (string message, string details)
 		{
-			Information(message, details, false);
+			Information (message, details, false);
 		}
 
-		public static void Information(string message, string details, bool showUser)
+		public static void Information (string message, string details, bool showUser)
 		{
-			Commit(LogEntryType.Information, message, details, showUser);
+			Commit (LogEntryType.Information, message, details, showUser);
 		}
 
-		public static void Information(string message, bool showUser)
+		public static void Information (string message, bool showUser)
 		{
-			Information(message, null, showUser);
+			Information (message, null, showUser);
 		}
 
-		public static void InformationFormat(string format, params object [] args)
+		public static void InformationFormat (string format, params object[] args)
 		{
-			Information(String.Format(format, args));
+			Information (String.Format (format, args));
 		}
 
 		#endregion
 
 		#region Public Warning Methods
 
-		public static void Warning(string message)
+		public static void Warning (string message)
 		{
-			Warning(message, null);
+			Warning (message, null);
 		}
 
-		public static void Warning(string message, string details)
+		public static void Warning (string message, string details)
 		{
-			Warning(message, details, false);
+			Warning (message, details, false);
 		}
 
-		public static void Warning(string message, string details, bool showUser)
+		public static void Warning (string message, string details, bool showUser)
 		{
-			Commit(LogEntryType.Warning, message, details, showUser);
+			Commit (LogEntryType.Warning, message, details, showUser);
 		}
 
-		public static void Warning(string message, bool showUser)
+		public static void Warning (string message, bool showUser)
 		{
-			Warning(message, null, showUser);
+			Warning (message, null, showUser);
 		}
 
-		public static void WarningFormat(string format, params object [] args)
+		public static void WarningFormat (string format, params object[] args)
 		{
-			Warning(String.Format(format, args));
+			Warning (String.Format (format, args));
 		}
 
 		#endregion
 
 		#region Public Error Methods
 
-		public static void Error(string message)
+		public static void Error (string message)
 		{
-			Error(message, null);
+			Error (message, null);
 		}
 
-		public static void Error(string message, string details)
+		public static void Error (string message, string details)
 		{
-			Error(message, details, false);
+			Error (message, details, false);
 		}
 
-		public static void Error(string message, string details, bool showUser)
+		public static void Error (string message, string details, bool showUser)
 		{
-			Commit(LogEntryType.Error, message, details, showUser);
+			Commit (LogEntryType.Error, message, details, showUser);
 		}
 
-		public static void Error(string message, bool showUser)
+		public static void Error (string message, bool showUser)
 		{
-			Error(message, null, showUser);
+			Error (message, null, showUser);
 		}
 
-		public static void ErrorFormat(string format, params object [] args)
+		public static void ErrorFormat (string format, params object[] args)
 		{
-			Error(String.Format(format, args));
+			Error (String.Format (format, args));
 		}
 
 		#endregion
 
 		#region Public Exception Methods
 
-		public static void DebugException(Exception e)
+		public static void DebugException (Exception e)
 		{
-			if(Debugging) {
-				Exception(e);
+			if (Debugging) {
+				Exception (e);
 			}
 		}
 
-		public static void Exception(Exception e)
+		public static void Exception (Exception e)
 		{
-			Exception(null, e);
+			Exception (null, e);
 		}
 
-		public static void Exception(string message, Exception e)
+		public static void Exception (string message, Exception e)
 		{
 			Stack<Exception> exception_chain = new Stack<Exception> ();
-			StringBuilder builder = new StringBuilder();
+			StringBuilder builder = new StringBuilder ();
 
-			while(e != null) {
-				exception_chain.Push(e);
+			while (e != null) {
+				exception_chain.Push (e);
 				e = e.InnerException;
 			}
 
-			while(exception_chain.Count > 0) {
-				e = exception_chain.Pop();
-				builder.AppendFormat("{0}: {1} (in `{2}')", e.GetType(), e.Message, e.Source).AppendLine();
-				builder.Append(e.StackTrace);
-				if(exception_chain.Count > 0) {
-					builder.AppendLine();
+			while (exception_chain.Count > 0) {
+				e = exception_chain.Pop ();
+				builder.AppendFormat ("{0}: {1} (in `{2}')", e.GetType (), e.Message, e.Source).AppendLine ();
+				builder.Append (e.StackTrace);
+				if (exception_chain.Count > 0) {
+					builder.AppendLine ();
 				}
 			}
 
 			// FIXME: We should save these to an actual log file
-			Log.Warning(message ?? "Caught an exception", builder.ToString(), false);
+			Log.Warning (message ?? "Caught an exception", builder.ToString (), false);
 		}
 
 		#endregion
