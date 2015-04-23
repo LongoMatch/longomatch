@@ -37,6 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			DraggingMode = NodeDraggingMode.All;
 			LineColor = Config.Style.PaletteBackgroundLight;
 			Height = StyleConf.TimelineCategoryHeight;
+			StrictClipping = true;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -114,6 +115,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
 					SecondsPerPixel);
 			}
+		}
+
+		protected bool StrictClipping {
+			get;
+			set;
 		}
 
 		Area Area {
@@ -197,9 +203,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				}
 				break;
 			case SelectionPosition.All:
+				Time tstart, tstop;
 				Time diff = Utils.PosToTime (new Point (diffX, p.Y), SecondsPerPixel);
-				if ((TimeNode.Start + diff) >= new Time (0) &&
-				    (TimeNode.Start + diff) < MaxTime) {
+
+				if (StrictClipping) {
+					tstart = TimeNode.Start;
+					tstop = TimeNode.Stop;
+				} else {
+					tstart = TimeNode.Stop;
+					tstop = TimeNode.Start;
+				}
+				if ((tstart + diff) >= new Time (0) && (tstop + diff) < MaxTime) {
 					TimeNode.Start += diff;
 					TimeNode.Stop += diff;
 				}
