@@ -30,6 +30,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 namespace LongoMatch.Core.Common
 {
@@ -103,6 +104,8 @@ namespace LongoMatch.Core.Common
 	{
 		public static event LogNotifyHandler Notify;
 
+		public static StreamWriter LogFile;
+
 		private static Dictionary<uint, DateTime> timers = new Dictionary<uint, DateTime> ();
 		private static uint next_timer_id = 1;
 
@@ -115,6 +118,15 @@ namespace LongoMatch.Core.Common
 			set {
 				debugging = value;
 			}
+		}
+
+		public static void SetLogFile (string filename)
+		{
+			if (LogFile != null) {
+				LogFile.Close ();
+			}
+			LogFile = File.CreateText (filename);
+			LogFile.AutoFlush = true;
 		}
 
 		public static void Commit (LogEntryType type, string message, string details, bool showUser)
@@ -145,21 +157,31 @@ namespace LongoMatch.Core.Common
 					thread_name = String.Format ("{0} ", thread.ManagedThreadId);
 				}
 
-				Console.Write ("[{5}{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
+				Write ("[{5}{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
 					DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, thread_name);
 
 				ConsoleCrayon.ResetColor ();
 
 				if (details != null) {
-					Console.WriteLine (" {0} - {1}", message, details);
+					Write (" {0} - {1}\n", message, details);
 				} else {
-					Console.WriteLine (" {0}", message);
+					Write (" {0}\n", message);
 				}
 			}
 
 			if (showUser) {
 				OnNotify (new LogEntry (type, message, details));
 			}
+		}
+
+		private static void Write (string format, params object[] args)
+		{
+			try {
+				if (LogFile != null)
+					LogFile.Write (format, args);
+			} catch {
+			}
+			Console.Write (format, args);
 		}
 
 		private static string TypeString (LogEntryType type)
