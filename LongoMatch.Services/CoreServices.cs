@@ -62,8 +62,8 @@ namespace LongoMatch.Services
 			/* Check default folders */
 			CheckDirs ();
 
-			Log.SetLogFile (Path.Combine (Config.HomeDir,
-				Constants.SOFTWARE_NAME.ToLower () + ".log"));
+			/* Redirects logs to a file */
+			Log.SetLogFile (Config.LogFile);
 
 			/* Load user config */
 			Config.Load ();

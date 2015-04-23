@@ -157,29 +157,17 @@ namespace LongoMatch
 		private static void ProcessExecutionError (Exception ex)
 		{
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
-			string message;
-
 			logFile = Utils.SanitizePath (logFile, ' ', ':');
-			logFile = System.IO.Path.Combine (Config.HomeDir, logFile);
-
-			message = SysInfo.PrintInfo (Assembly.GetExecutingAssembly ().GetName ().Version);
-			if (ex.InnerException != null)
-				message += String.Format ("{0}\n{1}\n{2}\n{3}\n{4}", ex.Message, ex.InnerException.Message, ex.Source, ex.StackTrace, ex.InnerException.StackTrace);
-			else
-				message += String.Format ("{0}\n{1}\n{2}", ex.Message, ex.Source, ex.StackTrace);
-
-			using (StreamWriter s = new StreamWriter(logFile)) {
-				s.WriteLine (message);
-				s.WriteLine ("\n\n\nStackTrace:");
-				s.WriteLine (System.Environment.StackTrace);
-			}
+			logFile = Path.Combine (Config.HomeDir, logFile);
+			Log.Information (SysInfo.PrintInfo (Assembly.GetExecutingAssembly ().GetName ().Version));
 			Log.Exception (ex);
+			File.Copy (Config.LogFile, logFile);
+
 			//TODO Add bug reports link
 			MessagesHelpers.ErrorMessage (null,
-			                              Catalog.GetString ("The application has finished with an unexpected error.") + "\n" +
+				Catalog.GetString ("The application has finished with an unexpected error.") + "\n" +
 				Catalog.GetString ("A log has been saved at: ") + logFile + "\n" +
 				Catalog.GetString ("Please, fill a bug report "));
-
 			Application.Quit ();
 		}
 	}

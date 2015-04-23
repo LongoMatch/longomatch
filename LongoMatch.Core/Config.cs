@@ -144,6 +144,13 @@ namespace LongoMatch
 			}
 		}
 
+		public static string LogFile {
+			get {
+				string filename = Constants.SOFTWARE_NAME.ToLower () + ".log";
+				return Path.Combine (Config.ConfigDir, filename);
+			}
+		}
+
 		public static string HomeDir {
 			get {
 				return homeDirectory;
