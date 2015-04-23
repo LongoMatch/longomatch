@@ -84,6 +84,11 @@ namespace LongoMatch.Core.Store
 		{
 			return !(c1 == c2);
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("{0}, {1}", Index, RegionOfInterest);
+		}
 	}
 }
 

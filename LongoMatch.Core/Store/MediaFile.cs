@@ -18,7 +18,7 @@
 //
 //
 using System;
-using Mono.Unix;
+using System.IO;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
@@ -139,9 +139,14 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("{0} {1}", Path.GetFileName (FilePath), ShortDescription);
+		}
+
 		public bool Exists ()
 		{
-			return System.IO.File.Exists (FilePath);
+			return File.Exists (FilePath);
 		}
 	}
 }
