@@ -115,16 +115,16 @@ namespace LongoMatch.Gui.Dialog
 
 			colorbutton.ColorSet += HandleColorSet;
 			colorbutton.Color = Misc.ToGdkColor (Color.Red1);
+			blackboard.Color = Color.Red1;
 			textcolorbutton.ColorSet += HandleTextColorSet;
 			textcolorbutton.Color = Misc.ToGdkColor (Color.White); 
+			blackboard.TextColor = Color.White;
 			backgroundcolorbutton.UseAlpha = true;
 			backgroundcolorbutton.Alpha = (ushort)(ushort.MaxValue * 0.8);
 			backgroundcolorbutton.ColorSet += HandleBackgroundColorSet;
 			backgroundcolorbutton.Color = Misc.ToGdkColor (Color.Green1); 
-			blackboard.Color = Color.Red1;
-			blackboard.TextColor = Color.Grey2;
-			blackboard.TextBackgroundColor = new Color (Color.Green1.R, Color.Green1.G,
-				Color.Green1.B, 0);
+			blackboard.TextBackgroundColor = Misc.ToLgmColor (backgroundcolorbutton.Color,
+				backgroundcolorbutton.Alpha);
 			textspinbutton.Value = 12;
 			textspinbutton.ValueChanged += (sender, e) => UpdateTextSize ();
 			linesizespinbutton.ValueChanged += (sender, e) => UpdateLineWidth ();
@@ -182,12 +182,12 @@ namespace LongoMatch.Gui.Dialog
 
 		int ScalledSize (int size)
 		{
-			return (int)(size * scaleFactor);
+			return (int)Math.Round (size * scaleFactor);
 		}
 
 		int OriginalSize (int size)
 		{
-			return (int)(size / scaleFactor);
+			return (int)Math.Round (size / scaleFactor);
 		}
 
 		void FillLineStyle ()
@@ -302,6 +302,9 @@ namespace LongoMatch.Gui.Dialog
 			TreeIter iter;
 			LineStyle style;
 				
+			if (ignoreChanges)
+				return;
+
 			stylecombobox.GetActiveIter (out iter);
 			style = (LineStyle)stylecombobox.Model.GetValue (iter, 1);
 			if (selectedDrawable != null) {
@@ -317,6 +320,9 @@ namespace LongoMatch.Gui.Dialog
 			TreeIter iter;
 			LineType type;
 				
+			if (ignoreChanges)
+				return;
+
 			typecombobox.GetActiveIter (out iter);
 			type = (LineType)typecombobox.Model.GetValue (iter, 1);
 			if (selectedDrawable is Line) {
@@ -338,6 +344,9 @@ namespace LongoMatch.Gui.Dialog
 		void HandleBackgroundColorSet (object sender, EventArgs e)
 		{
 			Color c;
+			if (ignoreChanges)
+				return;
+
 			
 			c = Misc.ToLgmColor (backgroundcolorbutton.Color,
 				backgroundcolorbutton.Alpha);
@@ -352,6 +361,9 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleTextColorSet (object sender, EventArgs e)
 		{
+			if (ignoreChanges)
+				return;
+
 			if (selectedDrawable is Text) {
 				(selectedDrawable as Text).TextColor = Misc.ToLgmColor (textcolorbutton.Color); 
 				QueueDraw ();
@@ -362,6 +374,9 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleColorSet (object sender, EventArgs e)
 		{
+			if (ignoreChanges)
+				return;
+
 			if (selectedDrawable != null) {
 				selectedDrawable.StrokeColor = Misc.ToLgmColor (colorbutton.Color);
 				if (selectedDrawable.FillColor != null) {
@@ -468,6 +483,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			colorbutton.Sensitive = !(drawable is Text);
 
+			ignoreChanges = true;
 			if (selectedDrawable == null) {
 				colorbutton.Color = Misc.ToGdkColor (blackboard.Color);
 				textcolorbutton.Color = Misc.ToGdkColor (blackboard.TextColor);
@@ -499,6 +515,7 @@ namespace LongoMatch.Gui.Dialog
 					stylecombobox.Active = 1;
 				}
 			}
+			ignoreChanges = false;
 		}
 
 		void HandleShowMenuEvent (IBlackboardObject drawable)
