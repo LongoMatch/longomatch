@@ -530,14 +530,14 @@ namespace LongoMatch.Services
 
 		void EmitLoadDrawings (FrameDrawing drawing = null)
 		{
-			if (LoadDrawingsEvent != null) {
+			if (LoadDrawingsEvent != null && !disposed) {
 				LoadDrawingsEvent (drawing);
 			}
 		}
 
 		void EmitElementLoaded (object element, bool hasNext)
 		{
-			if (ElementLoadedEvent != null) {
+			if (ElementLoadedEvent != null && !disposed) {
 				ElementLoadedEvent (element, hasNext);
 			}
 		}
@@ -549,35 +549,35 @@ namespace LongoMatch.Services
 
 		void EmitRateChanged (float rate)
 		{
-			if (PlaybackRateChangedEvent != null) {
+			if (PlaybackRateChangedEvent != null && !disposed) {
 				PlaybackRateChangedEvent (rate);
 			}
 		}
 
 		void EmitVolumeChanged (float volume)
 		{
-			if (VolumeChangedEvent != null) {
+			if (VolumeChangedEvent != null && !disposed) {
 				VolumeChangedEvent (volume);
 			}
 		}
 
 		void EmitTimeChanged (Time currentTime, Time duration)
 		{
-			if (TimeChangedEvent != null) {
+			if (TimeChangedEvent != null && !disposed) {
 				TimeChangedEvent (currentTime, duration, !StillImageLoaded);
 			}
 		}
 
 		void EmitPlaybackStateChanged (object sender, bool playing)
 		{
-			if (PlaybackStateChangedEvent != null) {
+			if (PlaybackStateChangedEvent != null && !disposed) {
 				PlaybackStateChangedEvent (sender, playing);
 			}
 		}
 
 		void EmitMediaFileSetLoaded (MediaFileSet fileSet, List<CameraConfig> camerasVisible)
 		{
-			if (MediaFileSetLoadedEvent != null) {
+			if (MediaFileSetLoadedEvent != null && !disposed) {
 				MediaFileSetLoadedEvent (fileSet, camerasConfig);
 			}
 		}
