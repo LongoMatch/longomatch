@@ -149,6 +149,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		public void Move (Selection sel, Point p, Point start)
 		{
+			double diffX;
+
 			// Apply dragging restrictions
 			if (DraggingMode == NodeDraggingMode.None)
 				return;
@@ -165,6 +167,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 
 			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
+			diffX = p.X - start.X;
 
 			if (p.X < 0) {
 				p.X = 0;
@@ -194,9 +197,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				}
 				break;
 			case SelectionPosition.All:
-				Time diff = Utils.PosToTime (new Point (p.X - start.X, p.Y), SecondsPerPixel);
-				TimeNode.Start += diff;
-				TimeNode.Stop += diff;
+				Time diff = Utils.PosToTime (new Point (diffX, p.Y), SecondsPerPixel);
+				if ((TimeNode.Start + diff) >= new Time (0) &&
+				    (TimeNode.Start + diff) < MaxTime) {
+					TimeNode.Start += diff;
+					TimeNode.Stop += diff;
+				}
 				break;
 			}
 			movingPos = sel.Position;
