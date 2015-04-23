@@ -191,7 +191,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void ShowMenu (Point coords)
 		{
-			if (ShowTimerMenuEvent != null) {
+			if (ShowTimerMenuEvent != null &&
+			    coords.Y >= PeriodsTimeline.OffsetY &&
+			    coords.Y <= PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
 				Timer t = null;
 				if (Selections.Count > 0) {
 					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
