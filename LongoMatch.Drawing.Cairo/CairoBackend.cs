@@ -475,34 +475,30 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
-		public Image Copy (ICanvas canvas, double width, double height)
+		public Image Copy (ICanvas canvas, Area area)
 		{
 			Image img;
 			Pixmap pm;
+			global::Cairo.Context ctx;
 			
-			pm = new Pixmap (null, (int)width, (int)height, 24);
+			pm = new Pixmap (null, (int)area.Width, (int)area.Height, 24);
+			ctx = Gdk.CairoHelper.Create (pm);
 			disableScalling = true;
-			using (CairoContext c = new CairoContext (Gdk.CairoHelper.Create (pm))) {
-				canvas.Draw (c, new Area (new Point (0, 0), width, height));
+			using (CairoContext c = new CairoContext (ctx)) {
+				ctx.Translate (-area.Start.X, -area.Start.Y);
+				canvas.Draw (c, null);
 			}
-			img = new Image (Gdk.Pixbuf.FromDrawable (pm, Colormap.System, 0, 0, 0, 0,
-				(int)width, (int)height));
 			disableScalling = false;
-			Context = null;
+			img = new Image (Pixbuf.FromDrawable (pm, Colormap.System, 0, 0, 0, 0,
+				(int)area.Width, (int)area.Height));
 			return img;
 		}
 
 		public void Save (ICanvas canvas, Area area, string filename)
 		{
-			ImageSurface pngSurface = new ImageSurface (Format.ARGB32, (int)area.Width, (int)area.Height);
-			disableScalling = true;
-			using (CairoContext c = new CairoContext (new global::Cairo.Context (pngSurface))) {
-				(c.Value as global::Cairo.Context).Translate (-area.Start.X, -area.Start.Y);
-				canvas.Draw (c, null);
-			}
-			pngSurface.WriteToPng (filename);
-			disableScalling = false;
-			pngSurface.Dispose ();
+			Image img = Copy (canvas, area);
+			img.Save (filename);
+			img.Dispose ();
 		}
 
 		global::Cairo.Context CContext {

@@ -107,7 +107,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		void Save (ICanvas canvas, Area area, string filename);
 
-		Image Copy (ICanvas canvas, double width, double height);
+		Image Copy (ICanvas canvas, Area area);
 
 		Area UserToDevice (Area area);
 
