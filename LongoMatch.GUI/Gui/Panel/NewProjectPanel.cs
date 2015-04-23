@@ -293,7 +293,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			videoDevices = devices;
 			bool includeSourceName;
-			
+
 			includeSourceName = devices.GroupBy (d => d.SourceElement).Count () > 1;
 
 			foreach (Device device in devices) {

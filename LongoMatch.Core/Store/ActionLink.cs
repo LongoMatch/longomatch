@@ -108,6 +108,7 @@ namespace LongoMatch.Core.Store
 			ActionLink link = obj as ActionLink;
 			if (link == null)
 				return false;
+
 			if (link.SourceButton != SourceButton ||
 			    link.DestinationButton != DestinationButton) {
 				return false;

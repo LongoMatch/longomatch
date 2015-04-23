@@ -155,7 +155,7 @@ namespace LongoMatch.Services
 
 			player.Pause ();
 			if (play == null) {
-				play = loadedPlay as TimelineEvent;
+				play = loadedPlay;
 			}
 			if (play != null) {
 				if (drawingIndex == -1) {

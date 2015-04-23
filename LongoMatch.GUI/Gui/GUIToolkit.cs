@@ -129,7 +129,7 @@ namespace LongoMatch.Gui
 		}
 
 		public bool NewVersionAvailable (Version currentVersion, Version latestVersion,
-			string downloadURL, string changeLog, object parent = null)
+		                                 string downloadURL, string changeLog, object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow;
@@ -296,9 +296,9 @@ namespace LongoMatch.Gui
 			} else {
 				dialog.LoadPlay (play, image, drawing, camConfig, project);
 			}
-			dialog.TransientFor = mainWindow as Gtk.Window;
+			dialog.TransientFor = mainWindow;
 			dialog.Run ();
-			dialog.Destroy ();	
+			dialog.Destroy ();
 		}
 
 		public ProjectDescription ChooseProject (List<ProjectDescription> projects)
