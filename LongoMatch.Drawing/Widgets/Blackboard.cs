@@ -55,8 +55,10 @@ namespace LongoMatch.Drawing.Widgets
 			FontSize = 12;
 			tool = DrawTool.Selection;
 			currentZoom = 1;
-			MinZoom = 1;
-			MaxZoom = 4;
+			MinZoom = MaxZoom = 1;
+			if (Config.SupportsZoom) {
+				MaxZoom = 4;
+			}
 		}
 
 		protected override void Dispose (bool disposing)

@@ -3228,7 +3228,7 @@ You can download it using this direct link:</property>
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox3">
+                  <widget class="Gtk.VBox" id="leftbox">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
@@ -3692,7 +3692,7 @@ You can download it using this direct link:</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.HBox" id="hbox2">
+                      <widget class="Gtk.HBox" id="zoombox">
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
@@ -3708,7 +3708,7 @@ You can download it using this direct link:</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.HBox" id="zoomhbox">
+                          <widget class="Gtk.HBox" id="zoomscalebox">
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
                             <child>
@@ -3727,10 +3727,10 @@ You can download it using this direct link:</property>
                             <child>
                               <widget class="Gtk.HScale" id="zoomscale">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
                                 <property name="Upper">100</property>
                                 <property name="PageIncrement">10</property>
                                 <property name="StepIncrement">1</property>
+                                <property name="Value">12</property>
                                 <property name="DrawValue">False</property>
                                 <property name="Digits">0</property>
                                 <property name="ValuePos">Top</property>
@@ -3787,7 +3787,6 @@ You can download it using this direct link:</property>
                                 <child>
                                   <widget class="Gtk.ColorButton" id="colorbutton">
                                     <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
                                     <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
                                     <property name="Alpha">-1</property>
                                   </widget>
@@ -3889,7 +3888,6 @@ You can download it using this direct link:</property>
                                 <child>
                                   <widget class="Gtk.SpinButton" id="linesizespinbutton">
                                     <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
                                     <property name="Lower">2</property>
                                     <property name="Upper">20</property>
                                     <property name="PageIncrement">10</property>
@@ -4000,7 +3998,6 @@ You can download it using this direct link:</property>
                                 <child>
                                   <widget class="Gtk.ColorButton" id="backgroundcolorbutton">
                                     <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
                                     <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
                                     <property name="Alpha">-1</property>
                                   </widget>
@@ -4064,7 +4061,6 @@ You can download it using this direct link:</property>
                                 <child>
                                   <widget class="Gtk.ColorButton" id="textcolorbutton">
                                     <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
                                     <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
                                     <property name="Alpha">-1</property>
                                   </widget>
@@ -4103,7 +4099,6 @@ You can download it using this direct link:</property>
                                 <child>
                                   <widget class="Gtk.SpinButton" id="textspinbutton">
                                     <property name="MemberName" />
-                                    <property name="CanFocus">True</property>
                                     <property name="Lower">6</property>
                                     <property name="Upper">100</property>
                                     <property name="PageIncrement">10</property>

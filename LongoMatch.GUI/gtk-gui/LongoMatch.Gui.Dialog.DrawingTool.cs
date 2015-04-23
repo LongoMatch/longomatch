@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		private global::Gtk.VBox vbox2;
 		
-		private global::Gtk.VBox vbox3;
+		private global::Gtk.VBox leftbox;
 		
 		private global::Gtk.Label toolslabel;
 		
@@ -70,11 +70,11 @@ namespace LongoMatch.Gui.Dialog
 		
 		private global::Gtk.Image zoombuttonimage;
 		
-		private global::Gtk.HBox hbox2;
+		private global::Gtk.HBox zoombox;
 		
 		private global::Gtk.Label zoomlabel;
 		
-		private global::Gtk.HBox zoomhbox;
+		private global::Gtk.HBox zoomscalebox;
 		
 		private global::Gtk.Image zoomoutimage;
 		
@@ -175,21 +175,21 @@ namespace LongoMatch.Gui.Dialog
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.vbox3 = new global::Gtk.VBox ();
-			this.vbox3.Name = "vbox3";
-			this.vbox3.Spacing = 6;
-			// Container child vbox3.Gtk.Box+BoxChild
+			this.leftbox = new global::Gtk.VBox ();
+			this.leftbox.Name = "leftbox";
+			this.leftbox.Spacing = 6;
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.toolslabel = new global::Gtk.Label ();
 			this.toolslabel.Name = "toolslabel";
 			this.toolslabel.Xalign = 0F;
 			this.toolslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Tools</b>");
 			this.toolslabel.UseMarkup = true;
-			this.vbox3.Add (this.toolslabel);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.toolslabel]));
+			this.leftbox.Add (this.toolslabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.toolslabel]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
-			// Container child vbox3.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.toolstable = new global::Gtk.Table (((uint)(7)), ((uint)(2)), true);
 			this.toolstable.Name = "toolstable";
 			this.toolstable.RowSpacing = ((uint)(6));
@@ -456,69 +456,69 @@ namespace LongoMatch.Gui.Dialog
 			w30.TopAttach = ((uint)(6));
 			w30.BottomAttach = ((uint)(7));
 			w30.YOptions = ((global::Gtk.AttachOptions)(4));
-			this.vbox3.Add (this.toolstable);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.toolstable]));
+			this.leftbox.Add (this.toolstable);
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.toolstable]));
 			w31.Position = 1;
 			w31.Expand = false;
-			// Container child vbox3.Gtk.Box+BoxChild
-			this.hbox2 = new global::Gtk.HBox ();
-			this.hbox2.Name = "hbox2";
-			this.hbox2.Spacing = 6;
-			// Container child hbox2.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
+			this.zoombox = new global::Gtk.HBox ();
+			this.zoombox.Name = "zoombox";
+			this.zoombox.Spacing = 6;
+			// Container child zoombox.Gtk.Box+BoxChild
 			this.zoomlabel = new global::Gtk.Label ();
 			this.zoomlabel.Name = "zoomlabel";
 			this.zoomlabel.LabelProp = "100%";
-			this.hbox2.Add (this.zoomlabel);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.zoomlabel]));
+			this.zoombox.Add (this.zoomlabel);
+			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.zoombox [this.zoomlabel]));
 			w32.Position = 0;
 			w32.Expand = false;
 			w32.Fill = false;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.zoomhbox = new global::Gtk.HBox ();
-			this.zoomhbox.Name = "zoomhbox";
-			this.zoomhbox.Spacing = 6;
-			// Container child zoomhbox.Gtk.Box+BoxChild
+			// Container child zoombox.Gtk.Box+BoxChild
+			this.zoomscalebox = new global::Gtk.HBox ();
+			this.zoomscalebox.Name = "zoomscalebox";
+			this.zoomscalebox.Spacing = 6;
+			// Container child zoomscalebox.Gtk.Box+BoxChild
 			this.zoomoutimage = new global::Gtk.Image ();
 			this.zoomoutimage.WidthRequest = 14;
 			this.zoomoutimage.HeightRequest = 8;
 			this.zoomoutimage.Name = "zoomoutimage";
-			this.zoomhbox.Add (this.zoomoutimage);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomoutimage]));
+			this.zoomscalebox.Add (this.zoomoutimage);
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.zoomscalebox [this.zoomoutimage]));
 			w33.Position = 0;
 			w33.Expand = false;
 			w33.Fill = false;
-			// Container child zoomhbox.Gtk.Box+BoxChild
+			// Container child zoomscalebox.Gtk.Box+BoxChild
 			this.zoomscale = new global::Gtk.HScale (null);
-			this.zoomscale.CanFocus = true;
 			this.zoomscale.Name = "zoomscale";
 			this.zoomscale.Adjustment.Upper = 100;
 			this.zoomscale.Adjustment.PageIncrement = 10;
 			this.zoomscale.Adjustment.StepIncrement = 1;
+			this.zoomscale.Adjustment.Value = 12;
 			this.zoomscale.DrawValue = false;
 			this.zoomscale.Digits = 0;
 			this.zoomscale.ValuePos = ((global::Gtk.PositionType)(2));
-			this.zoomhbox.Add (this.zoomscale);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoomscale]));
+			this.zoomscalebox.Add (this.zoomscale);
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.zoomscalebox [this.zoomscale]));
 			w34.Position = 1;
-			// Container child zoomhbox.Gtk.Box+BoxChild
+			// Container child zoomscalebox.Gtk.Box+BoxChild
 			this.zoominimage = new global::Gtk.Image ();
 			this.zoominimage.WidthRequest = 14;
 			this.zoominimage.HeightRequest = 8;
 			this.zoominimage.Name = "zoominimage";
-			this.zoomhbox.Add (this.zoominimage);
-			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.zoomhbox [this.zoominimage]));
+			this.zoomscalebox.Add (this.zoominimage);
+			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.zoomscalebox [this.zoominimage]));
 			w35.Position = 2;
 			w35.Expand = false;
 			w35.Fill = false;
-			this.hbox2.Add (this.zoomhbox);
-			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.zoomhbox]));
+			this.zoombox.Add (this.zoomscalebox);
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.zoombox [this.zoomscalebox]));
 			w36.Position = 1;
-			this.vbox3.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox2]));
+			this.leftbox.Add (this.zoombox);
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.zoombox]));
 			w37.Position = 2;
 			w37.Expand = false;
 			w37.Fill = false;
-			// Container child vbox3.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.linesframe = new global::Gtk.Frame ();
 			this.linesframe.Name = "linesframe";
 			this.linesframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -533,7 +533,6 @@ namespace LongoMatch.Gui.Dialog
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
 			this.colorbutton = new global::Gtk.ColorButton ();
-			this.colorbutton.CanFocus = true;
 			this.colorbutton.Events = ((global::Gdk.EventMask)(784));
 			this.colorbutton.Name = "colorbutton";
 			this.table1.Add (this.colorbutton);
@@ -589,7 +588,6 @@ namespace LongoMatch.Gui.Dialog
 			w42.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.linesizespinbutton = new global::Gtk.SpinButton (2, 20, 1);
-			this.linesizespinbutton.CanFocus = true;
 			this.linesizespinbutton.Name = "linesizespinbutton";
 			this.linesizespinbutton.Adjustment.PageIncrement = 10;
 			this.linesizespinbutton.ClimbRate = 1;
@@ -632,12 +630,12 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Lines</b>");
 			this.GtkLabel4.UseMarkup = true;
 			this.linesframe.LabelWidget = this.GtkLabel4;
-			this.vbox3.Add (this.linesframe);
-			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.linesframe]));
+			this.leftbox.Add (this.linesframe);
+			global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.linesframe]));
 			w48.Position = 3;
 			w48.Expand = false;
 			w48.Fill = false;
-			// Container child vbox3.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.textframe = new global::Gtk.Frame ();
 			this.textframe.Name = "textframe";
 			this.textframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -652,7 +650,6 @@ namespace LongoMatch.Gui.Dialog
 			this.table4.ColumnSpacing = ((uint)(6));
 			// Container child table4.Gtk.Table+TableChild
 			this.backgroundcolorbutton = new global::Gtk.ColorButton ();
-			this.backgroundcolorbutton.CanFocus = true;
 			this.backgroundcolorbutton.Events = ((global::Gdk.EventMask)(784));
 			this.backgroundcolorbutton.Name = "backgroundcolorbutton";
 			this.table4.Add (this.backgroundcolorbutton);
@@ -688,7 +685,6 @@ namespace LongoMatch.Gui.Dialog
 			w51.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table4.Gtk.Table+TableChild
 			this.textcolorbutton = new global::Gtk.ColorButton ();
-			this.textcolorbutton.CanFocus = true;
 			this.textcolorbutton.Events = ((global::Gdk.EventMask)(784));
 			this.textcolorbutton.Name = "textcolorbutton";
 			this.table4.Add (this.textcolorbutton);
@@ -708,7 +704,6 @@ namespace LongoMatch.Gui.Dialog
 			w53.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table4.Gtk.Table+TableChild
 			this.textspinbutton = new global::Gtk.SpinButton (6, 100, 1);
-			this.textspinbutton.CanFocus = true;
 			this.textspinbutton.Name = "textspinbutton";
 			this.textspinbutton.Adjustment.PageIncrement = 10;
 			this.textspinbutton.ClimbRate = 1;
@@ -728,12 +723,12 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkLabel5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Text</b>");
 			this.GtkLabel5.UseMarkup = true;
 			this.textframe.LabelWidget = this.GtkLabel5;
-			this.vbox3.Add (this.textframe);
-			global::Gtk.Box.BoxChild w57 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.textframe]));
+			this.leftbox.Add (this.textframe);
+			global::Gtk.Box.BoxChild w57 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.textframe]));
 			w57.Position = 4;
 			w57.Expand = false;
 			w57.Fill = false;
-			// Container child vbox3.Gtk.Box+BoxChild
+			// Container child leftbox.Gtk.Box+BoxChild
 			this.clearbutton = new global::Gtk.Button ();
 			this.clearbutton.TooltipMarkup = "Clear all drawings";
 			this.clearbutton.CanFocus = true;
@@ -742,14 +737,14 @@ namespace LongoMatch.Gui.Dialog
 			global::Gtk.Image w58 = new global::Gtk.Image ();
 			w58.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-clear", global::Gtk.IconSize.LargeToolbar);
 			this.clearbutton.Image = w58;
-			this.vbox3.Add (this.clearbutton);
-			global::Gtk.Box.BoxChild w59 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.clearbutton]));
+			this.leftbox.Add (this.clearbutton);
+			global::Gtk.Box.BoxChild w59 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.clearbutton]));
 			w59.PackType = ((global::Gtk.PackType)(1));
 			w59.Position = 5;
 			w59.Expand = false;
 			w59.Fill = false;
-			this.vbox2.Add (this.vbox3);
-			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.vbox3]));
+			this.vbox2.Add (this.leftbox);
+			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.leftbox]));
 			w60.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.savetoprojectbutton = new global::Gtk.Button ();

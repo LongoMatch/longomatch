@@ -139,6 +139,13 @@ namespace LongoMatch.Gui.Dialog
 			wscrollbar.ValueChanged += HandleScrollValueChanged;
 			hscrollbar.Visible = wscrollbar.Visible = false;
 			zoomscale.Value = 1;
+
+			if (!Config.SupportsZoom) {
+				zoombox.Visible = false;
+				zoombutton.Visible = false;
+				hscrollbar.Visible = false;
+				wscrollbar.Visible = false;
+			}
 		}
 
 		public override void Destroy ()

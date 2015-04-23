@@ -288,6 +288,11 @@ namespace LongoMatch
 			set;
 		}
 
+		static public bool SupportsZoom {
+			get;
+			set;
+		}
+
 		static public string LatestVersionURL {
 			get;
 			set;
