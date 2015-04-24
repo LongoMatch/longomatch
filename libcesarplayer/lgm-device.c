@@ -235,7 +235,11 @@ lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
   gint i;
 
   source = gst_element_factory_make (device->source_name, NULL);
-  g_object_set (source, prop_name, device->device_name, NULL);
+  if (!g_strcmp0 (device->source_name, "decklinkvideosrc")) {
+    g_object_set (source, prop_name, 0, NULL);
+  } else {
+    g_object_set (source, prop_name, device->device_name, NULL);
+  }
   gst_element_set_state (source, GST_STATE_READY);
   gst_element_get_state (source, NULL, NULL, 5 * GST_SECOND);
   pad = gst_element_get_static_pad (source, "src");
@@ -248,16 +252,20 @@ lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
 
   GST_DEBUG ("Filling formats for source:%s device:%s", device->source_name,
       device->device_name);
-  for (i=0; i < gst_caps_get_size (caps); i++) {
-    GstStructure *s;
+  if (!g_strcmp0 (device->source_name, "decklinkvideosrc")) {
+    lgm_device_add_format (table, 0, 0, 0, 0);
+  } else {
+    for (i=0; i < gst_caps_get_size (caps); i++) {
+      GstStructure *s;
 
-    s = gst_caps_get_structure (caps, i);
-    if (gst_structure_has_name (s, "video/x-raw-yuv") ||
-        gst_structure_has_name (s, "video/x-raw-rgb") ||
-        gst_structure_has_name (s, "video/x-dv")) {
-      lgm_device_parse_structure (s, table);
-    } else if (gst_structure_has_name (s, "video/x-dv")) {
-      lgm_device_add_format (table, 0, 0, 0, 0);
+      s = gst_caps_get_structure (caps, i);
+      if (gst_structure_has_name (s, "video/x-raw-yuv") ||
+          gst_structure_has_name (s, "video/x-raw-rgb") ||
+          gst_structure_has_name (s, "video/x-dv")) {
+        lgm_device_parse_structure (s, table);
+      } else if (gst_structure_has_name (s, "video/x-dv")) {
+        lgm_device_add_format (table, 0, 0, 0, 0);
+      }
     }
   }
   device->formats = g_hash_table_get_values (table);
@@ -294,6 +302,8 @@ lgm_device_enum_devices (const gchar * source_name,
   else if (!g_strcmp0 (source_name, "v4l2src") ||
       !g_strcmp0 (source_name, "avfvideosrc"))
     prop_name = "device";
+  else if (!g_strcmp0 (source_name, "decklinkvideosrc"))
+    prop_name = "device-number";
   else if (!g_strcmp0 (source_name, "filesrc"))
     prop_name = "location";
   else

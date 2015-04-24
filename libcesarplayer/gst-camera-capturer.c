@@ -2,19 +2,19 @@
 /*
 * Gstreamer DV capturer
 * Copyright (C)  Andoni Morales Alastruey 2008 <ylatuya@gmail.com>
-* 
+*
 * Gstreamer DV capturer is free software.
-* 
+*
 * You may redistribute it and/or modify it under the terms of the
 * GNU General Public License, as published by the Free Software
 * Foundation; either version 2 of the License, or (at your option)
 * any later version.
-* 
+*
 * Gstreamer DV is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU General Public License for more details.
-* 
+*
 * You should have received a copy of the GNU General Public License
 * along with foob.  If not, write to:
 *       The Free Software Foundation, Inc.,
@@ -312,8 +312,13 @@ gst_camera_capturer_update_device_id (GstCameraCapturer * gcc)
   else
     prop_name = "device-name";
 
-  if (prop_name)
-    g_object_set (gcc->priv->source, prop_name, gcc->priv->device_id, NULL);
+  if (!g_strcmp0 (gcc->priv->source_element_name, "decklinkvideosrc")) {
+    g_object_set (gcc->priv->source, "device-number", atoi(gcc->priv->device_id),
+        NULL);
+  } else {
+    if (prop_name)
+      g_object_set (gcc->priv->source, prop_name, gcc->priv->device_id, NULL);
+  }
 }
 
 static gboolean

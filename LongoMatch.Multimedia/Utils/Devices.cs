@@ -1,20 +1,20 @@
-// 
+//
 //  Copyright (C) 2011 Andoni Morales Alastruey
-// 
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using LongoMatch.Core.Common;
@@ -42,7 +42,7 @@ namespace LongoMatch.Multimedia.Utils
 		static extern IntPtr lgm_device_video_format_get_info (IntPtr raw, out int width, out int height,
 		                                                       out int fps_n, out int fps_d);
 
-		static readonly string[] devices_osx = new string[1] { "avfvideosrc" };
+		static readonly string[] devices_osx = new string[2] { "avfvideosrc", "decklinkvideosrc" };
 		static readonly string[] devices_win = new string[2] { "ksvideosrc", "dshowvideosrc" };
 		static readonly string[] devices_lin = new string[2] { "v4l2src", "dv1394src" };
 
@@ -61,7 +61,7 @@ namespace LongoMatch.Multimedia.Utils
 			foreach (string source in devices) {
 				GLib.List devices_raw = new GLib.List (lgm_device_enum_video_devices (source),
 					                        typeof(IntPtr), true, false);
-				
+
 				foreach (IntPtr device_raw in devices_raw) {
 					/* The Direct Show GStreamer element seems to have problems with the
 					 * BlackMagic DeckLink cards, so filter them out. They are also
@@ -70,7 +70,7 @@ namespace LongoMatch.Multimedia.Utils
 					    Regex.Match (source, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
 						continue;
 					}
-					
+
 					Device device = new Device ();
 					device.DeviceType = CaptureSourceType.System;
 					device.SourceElement = source;
