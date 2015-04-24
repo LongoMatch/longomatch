@@ -8,8 +8,6 @@
     <RootNamespace>LongoMatch.Drawing.Cairo</RootNamespace>
     <AssemblyName>LongoMatch.Drawing.Cairo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,57 +33,6 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\images\cursors\text">
-      <LogicalName>text</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\rect">
-      <LogicalName>rect</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\number">
-      <LogicalName>number</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\freehand">
-      <LogicalName>freehand</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\ellipse">
-      <LogicalName>ellipse</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\arrow">
-      <LogicalName>arrow</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\player">
-      <Link>player</Link>
-      <LogicalName>player</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\eraser">
-      <Link>eraser</Link>
-      <LogicalName>eraser</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\cross">
-      <Link>cross</Link>
-      <LogicalName>cross</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\zoom">
-      <Link>zoom</Link>
-      <LogicalName>zoom</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\hand_opened">
-      <Link>hand_opened</Link>
-      <LogicalName>hand_opened</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\hand_closed">
-      <Link>hand_closed</Link>
-      <LogicalName>hand_closed</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\cursors\hand_select">
-      <Link>hand_select</Link>
-      <LogicalName>hand_select</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\images\cursors\angle" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
