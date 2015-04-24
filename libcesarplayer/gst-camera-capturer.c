@@ -313,7 +313,8 @@ gst_camera_capturer_update_device_id (GstCameraCapturer * gcc)
     prop_name = "device-name";
 
   if (!g_strcmp0 (gcc->priv->source_element_name, "decklinkvideosrc")) {
-    g_object_set (gcc->priv->source, "device-number", atoi(gcc->priv->device_id),
+    /* The blackmagic device name we use conforms the pattern "Blackmagic%d" */
+    g_object_set (gcc->priv->source, "device-number", atoi(gcc->priv->device_id + 10),
         NULL);
   } else {
     if (prop_name)

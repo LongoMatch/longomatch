@@ -328,7 +328,17 @@ lgm_device_enum_devices (const gchar * source_name,
     if (!g_value_transform (v, &valstr))
       continue;
 
-    name = g_value_dup_string (&valstr);
+    /* Skip blackmagic on avfvideosrc as we only properly support them
+     * through decklinkvideosrc. */
+    if (!g_strcmp0 (source_name, "avfvideosrc"))
+      if (!g_strcmp0 (g_value_get_string (&valstr), "Blackmagic"))
+        continue;
+
+    /* Use the pattern "Blackmagic%d" for device name when decklinkvideosrc */
+    if (!g_strcmp0 (source_name, "decklinkvideosrc"))
+      name = g_strdup_printf ("Blackmagic%s", g_value_get_string (&valstr));
+    else
+      name = g_value_dup_string (&valstr);
     device = lgm_device_new (source_name, name, type);
     g_value_unset (&valstr);
     g_free (name);

@@ -75,9 +75,6 @@ namespace LongoMatch.Multimedia.Utils
 					device.DeviceType = CaptureSourceType.System;
 					device.SourceElement = source;
 					device.ID = GLib.Marshaller.PtrToStringGFree (lgm_device_get_device_name (device_raw));
-					if (source == "decklinkvideosrc") {
-						device.ID = "Blackmagic" + device.ID;
-					}
 
 					GLib.List formats_raw = new GLib.List (lgm_device_get_formats (device_raw),
 						                        typeof(IntPtr), false, false);
