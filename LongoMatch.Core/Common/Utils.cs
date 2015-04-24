@@ -22,16 +22,35 @@ namespace LongoMatch.Core.Common
 {
 	public class Utils
 	{
-		public static string SanitizePath(string path, params char[] replaceChars)
+		static int currentPlatformID = -1;
+
+		public static string SanitizePath (string path, params char[] replaceChars)
 		{
-			path = path.Trim();
+			path = path.Trim ();
 			foreach (char c in Path.GetInvalidFileNameChars ()) {
-				path = path.Replace(c, '_');
+				path = path.Replace (c, '_');
 			}
 			foreach (char c in replaceChars) {
-				path = path.Replace(c, '_');
+				path = path.Replace (c, '_');
 			}
 			return path;
+		}
+
+		public static PlatformID RunningPlatform ()
+		{
+			if (currentPlatformID == -1) {
+				currentPlatformID = (int)Environment.OSVersion.Platform;
+
+				if (currentPlatformID == (int)PlatformID.Unix) {
+					if (Directory.Exists ("/Applications")
+					    & Directory.Exists ("/System")
+					    & Directory.Exists ("/Users")
+					    & Directory.Exists ("/Volumes")) {
+						currentPlatformID = (int)PlatformID.MacOSX;
+					}
+				}
+			}
+			return (PlatformID)currentPlatformID;
 		}
 	}
 }
