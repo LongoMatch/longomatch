@@ -1,5 +1,19 @@
 imagesdir = @datadir@/@PACKAGE@/images
 nobase_dist_images_DATA = Makefile.am \
+	cursors/angle \
+	cursors/arrow \
+	cursors/cross \
+	cursors/ellipse \
+	cursors/eraser \
+	cursors/freehand \
+	cursors/hand_closed \
+	cursors/hand_opened \
+	cursors/hand_select \
+	cursors/number \
+	cursors/player \
+	cursors/rect \
+	cursors/text \
+	cursors/zoom \
 	dashboard/longomatch-event.svg \
 	dashboard/longomatch-penalties.svg \
 	dashboard/longomatch-score.svg \
