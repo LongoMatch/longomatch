@@ -313,6 +313,10 @@
         <signal name="ExposeEvent" />
         <signal name="ButtonPressEvent" />
         <signal name="ScrollEvent" />
+        <signal name="ButtonReleaseEvent" />
+        <signal name="VideoDragStarted" />
+        <signal name="VideoDragStopped" />
+        <signal name="VideoDragged" />
       </itemgroup>
     </signals>
   </object>
