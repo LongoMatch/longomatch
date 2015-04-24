@@ -876,6 +876,51 @@ namespace Tests.Services
 			Assert.AreEqual (cams2, player.CamerasConfig);
 			multiplayerMock.ResetCalls ();
 		}
+
+		[Test ()]
+		public void TestROICamerasConfig ()
+		{
+			TimelineEvent evt1;
+			List<CameraConfig> cams;
+			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
+
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);
+			player = new PlayerController (true);
+			PreparePlayer ();
+
+			/* ROI should be empty */
+			Assert.AreEqual (new Area (), player.CamerasConfig [0].RegionOfInterest);
+
+			/* Modify ROI */
+			cams = player.CamerasConfig;
+			cams [0].RegionOfInterest = new Area (10, 10, 20, 20);
+			/* And set */
+			player.CamerasConfig = cams;
+
+			/* Now create an event with current camera config */
+			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+				CamerasConfig = player.CamerasConfig
+			};
+			/* Check that ROI was copied in event */
+			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);
+
+			/* Change ROI again */
+			cams [0].RegionOfInterest = new Area (20, 20, 40, 40);
+			player.CamerasConfig = cams;
+
+			/* Check event was not impacted */
+			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);
+
+			/* And load event */
+			player.LoadEvent (mfs, evt1, evt1.Start, true);
+			Assert.AreEqual (new Area (10, 10, 20, 20), player.CamerasConfig [0].RegionOfInterest);
+
+			/* Unload and check the original cams config is set back*/
+			player.UnloadCurrentEvent ();
+			Assert.AreEqual (new Area (20, 20, 40, 40), player.CamerasConfig [0].RegionOfInterest);
+			/* check the event was not impacted */
+			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);
+		}
 	}
 }
 
