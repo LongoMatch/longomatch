@@ -16,8 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Runtime.InteropServices;
+
 using Gtk;
+using Gdk;
+
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Multimedia.Utils;
 
@@ -37,7 +39,7 @@ namespace LongoMatch.Gui
 		public new event ScrollEventHandler ScrollEvent;
 		public event ButtonPressEventHandler VideoDragStarted;
 		public event ButtonReleaseEventHandler VideoDragStopped;
-		public new event MotionNotifyEventHandler VideoDragged;
+		public event MotionNotifyEventHandler VideoDragged;
 
 		public VideoWindow ()
 		{
@@ -124,6 +126,12 @@ namespace LongoMatch.Gui
 		public bool Ready {
 			get;
 			set;
+		}
+
+		public Cursor Cursor {
+			set {
+				drawingWindow.GdkWindow.Cursor = value;
+			}
 		}
 
 		void HandleMotionNotifyEvent (object o, MotionNotifyEventArgs args)
