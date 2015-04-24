@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[longomatch.master]
+[longomatch.longomatch]
 file_filter = po/<lang>.po
 source_file = po/longomatch.pot
 source_lang = en
