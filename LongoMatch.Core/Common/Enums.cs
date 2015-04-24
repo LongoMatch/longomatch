@@ -405,6 +405,10 @@ namespace LongoMatch.Core.Common
 		ZoomIn,
 		ZoomOut,
 		FitTimeline,
+		VideoZoomOriginal,
+		VideoZoom1,
+		VideoZoom2,
+		VideoZoom3
 	}
 
 	public enum SeekType
