@@ -127,7 +127,7 @@ namespace LongoMatch.Services
 			}
 			get {
 				if (camerasConfig != null) {
-					return camerasConfig.ToList ();
+					return camerasConfig.Clone ();
 				} else {
 					return null;
 				}
