@@ -2,17 +2,17 @@
 /*
  * main.c
  * Copyright (C) Andoni Morales Alastruey 2008 <ylatuya@gmail.com>
- * 
+ *
  * main.c is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * main.c is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -57,7 +57,7 @@ on_realized_cb (GtkWidget * video)
       (CaptureSourceType) atoi(sargv[4]), sargv[2], sargv[3],
       0, 0, 0, 0,
       VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
-      VIDEO_MUXER_MP4, 1000, 100, TRUE, 320, 240, window);
+      VIDEO_MUXER_MP4, 1000, 100, TRUE, 640, 480, window);
   gst_camera_capturer_run (gvc);
   g_signal_connect (G_OBJECT (recbutton), "clicked",
       G_CALLBACK (rec_clicked_cb), gvc);
