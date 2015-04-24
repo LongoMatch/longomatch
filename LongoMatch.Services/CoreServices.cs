@@ -76,6 +76,8 @@ namespace LongoMatch.Services
 			}
 			InitTranslations ();
 
+			/* Fill up the descriptions again after initializing the translations */
+			Config.Hotkeys.FillActionsDescriptions ();
 		}
 
 		public static void InitTranslations ()

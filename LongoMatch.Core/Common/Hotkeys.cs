@@ -31,7 +31,8 @@ namespace LongoMatch.Core.Common
 		{
 			ActionsDescriptions = new Dictionary<KeyAction, string> ();
 			ActionsHotkeys = new Dictionary<KeyAction, HotKey> ();
-			FillDefaults ();
+			FillActionsDescriptions ();
+			FillDefaultMappings ();
 		}
 
 		[JsonIgnore]
@@ -51,7 +52,7 @@ namespace LongoMatch.Core.Common
 			ActionsHotkeys [action] = key;
 		}
 
-		void FillDefaults ()
+		public void FillActionsDescriptions ()
 		{
 			ActionsDescriptions [KeyAction.DeleteEvent] = Catalog.GetString ("Delete selected event");
 			ActionsDescriptions [KeyAction.DrawFrame] = Catalog.GetString ("Draw frame");
@@ -80,7 +81,10 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.TogglePlay] = Catalog.GetString ("Toggle playback");
 			ActionsDescriptions [KeyAction.ZoomIn] = Catalog.GetString ("Zoom timeline in");
 			ActionsDescriptions [KeyAction.ZoomOut] = Catalog.GetString ("Zoom timeline out");
-			
+		}
+
+		void FillDefaultMappings ()
+		{
 			UpdateMapping (KeyAction.DeleteEvent, "<Shift_L>+d");
 			UpdateMapping (KeyAction.DrawFrame, "<Shift_L>+f");
 			UpdateMapping (KeyAction.EditEvent, "<Shift_L>+e");
