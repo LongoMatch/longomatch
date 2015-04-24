@@ -6,8 +6,7 @@ LINK = $(REF_DEP_LONGOMATCH_PLUGINS)
 
 SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Assembly.cs \
-	CSVExporter.cs \
-	SystemDashboards.cs
+	CSVExporter.cs
 
 RESOURCES = 
 

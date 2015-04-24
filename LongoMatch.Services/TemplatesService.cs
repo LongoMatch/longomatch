@@ -138,12 +138,7 @@ namespace LongoMatch.Services
 		public List<string> TemplatesNames {
 			// FIXME we really need to avoid this. Too many roundtrips
 			get {
-				List<string> l = new List<string> ();
-				List<T> templates = Templates;
-				foreach (T template in templates) {
-					l.Add (template.Name);
-				}
-				return l.Concat (systemTemplates.Select (t => t.Name)).ToList ();
+				return Templates.Select (t => t.Name).ToList ();
 			}
 		}
 

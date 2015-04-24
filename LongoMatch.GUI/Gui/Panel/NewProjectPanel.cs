@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Panel
 			LoadIcons ();
 			GroupLabels ();
 			ConnectSignals ();
-			FillCategories ();
+			FillDahsboards ();
 			FillFormats ();
 			LoadTeams (project);
 			if (project == null) {
@@ -249,7 +249,7 @@ namespace LongoMatch.Gui.Panel
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
 
-		void FillCategories ()
+		void FillDahsboards ()
 		{
 			int i = 0;
 			int index = 0;

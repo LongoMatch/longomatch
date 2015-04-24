@@ -28,7 +28,6 @@
   <ItemGroup>
     <Compile Include="Assembly.cs" />
     <Compile Include="CSVExporter.cs" />
-    <Compile Include="SystemDashboards.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
