@@ -49,9 +49,9 @@ namespace LongoMatch.Multimedia.Utils
 		static public List<Device> ListVideoDevices ()
 		{
 			string[] devices;
-			if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+			if (LongoMatch.Core.Common.Utils.RunningPlatform () == PlatformID.MacOSX)
 				devices = devices_osx;
-			else if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+			else if (LongoMatch.Core.Common.Utils.RunningPlatform () == PlatformID.Win32NT)
 				devices = devices_win;
 			else
 				devices = devices_lin;
