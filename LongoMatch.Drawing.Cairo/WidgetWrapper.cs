@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.IO;
 using Gtk;
 using Gdk;
 using LongoMatch.Core.Common;
@@ -25,6 +26,7 @@ using Rectangle = Gdk.Rectangle;
 using Point = LongoMatch.Core.Common.Point;
 using CursorType = LongoMatch.Core.Common.CursorType;
 using GCursorType = Gdk.CursorType;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -211,8 +213,8 @@ namespace LongoMatch.Drawing.Cairo
 			if (cursorStr == null) {
 				widget.GdkWindow.Cursor = cursor;
 			} else {
-				Cursor c = new Cursor (widget.Display,
-					           Gdk.Pixbuf.LoadFromResource (cursorStr), 0, 0);
+				Image img = Image.LoadFromFile (Path.Combine (Config.ImagesDir, "cursors", cursorStr));
+				Cursor c = new Cursor (widget.Display, img.Value, 0, 0);
 				widget.GdkWindow.Cursor = c;
 			}
 		}
