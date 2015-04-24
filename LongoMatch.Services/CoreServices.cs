@@ -74,10 +74,21 @@ namespace LongoMatch.Services
 				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
 #endif
 			}
-			
-			/* Init internationalization support */
-			Catalog.Init (Constants.SOFTWARE_NAME.ToLower (), Config.RelativeToPrefix ("share/locale"));
+			InitTranslations ();
 
+		}
+
+		public static void InitTranslations ()
+		{
+			string localesDir = Config.RelativeToPrefix ("share/locale");
+
+			if (!Directory.Exists (localesDir)) {
+				localesDir = Path.Combine (
+					Environment.GetEnvironmentVariable ("CERBERO_PREFIX"),
+					"share", "locale");
+			}
+			/* Init internationalization support */
+			Catalog.Init (Constants.SOFTWARE_NAME.ToLower (), localesDir);
 		}
 
 		public static void Start (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
