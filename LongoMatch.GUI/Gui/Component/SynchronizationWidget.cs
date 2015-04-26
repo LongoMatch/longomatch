@@ -164,6 +164,8 @@ namespace LongoMatch.Gui.Component
 
 		public void SaveChanges (bool resyncEvents)
 		{
+			/* If a new camera has been added or a camera has been removed,
+			 * make sure events have a correct camera configuration */
 			foreach (TimelineEvent evt in project.Timeline) {
 				int cc = evt.CamerasConfig.Count;
 				int fc = project.Description.FileSet.Count;
@@ -178,6 +180,19 @@ namespace LongoMatch.Gui.Component
 			if (!resyncEvents)
 				return;
 
+			/* Resynchronize events with the new start times of the period they belong too.
+			 * Imported projects or fake analysis projects create events assuming periods
+			 * don't have gaps between them.
+			 * After adding a file to the project and synchronizing the periods with the
+			 * video file, all events must be offseted with the new start time of the period.
+			 * 
+			 * Before sync:
+			 *   Period 1: start=00:00:00 Period 2: start=00:30:00
+			 *   evt1 00:10:00            evt2 00:32:00
+			 * After sync:
+			 *   Period 1: start=00:05:00 Period 2: start= 00:39:00
+			 *   evt1 00:15:00            evt2 00:41:00
+			 */
 			foreach (Period p in periodsDict.Keys) {
 				Period newp = periodsDict [p];
 				TimeNode tn = p.PeriodNode;
@@ -209,8 +224,9 @@ namespace LongoMatch.Gui.Component
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
 				periodsDict = new Dictionary <Period, Period> ();
-				// If no periods are provided create from dashboard
 				if (project.Periods == null || project.Periods.Count == 0) {
+					/* If no periods are provided create the default ones
+					 * defined in the dashboard */
 					periods = new List<Period> ();
 					gamePeriods = value.Dashboard.GamePeriods;
 					foreach (string s in gamePeriods) {
@@ -222,6 +238,8 @@ namespace LongoMatch.Gui.Component
 					}
 					value.Periods = periods;
 				} else {
+					/* Create a copy of the original periods and a mapping
+					 * to resynchronize the events in SaveChanges() */
 					foreach (Period p in project.Periods) {
 						Period newp = new Period { Name = p.Name };
 						newp.Nodes.Add (p.PeriodNode);
