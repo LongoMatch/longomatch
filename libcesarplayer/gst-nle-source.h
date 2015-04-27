@@ -65,6 +65,7 @@ struct _GstNleSource
   GstPad *audio_pad;
   GstElement *video_appsrc;
   GstElement *audio_appsrc;
+  GstElement *videocrop;
   GstElement *textoverlay;
   gboolean video_linked;
   gboolean audio_linked;
@@ -82,12 +83,21 @@ struct _GstNleSource
   gboolean video_seek_done;
   gboolean audio_eos;
   gboolean video_eos;
+  gboolean roi_setup;
 
   GMutex stream_lock;
 
   GList *queue;
   gint index;
 };
+
+typedef struct
+{
+  guint x;
+  guint y;
+  guint width;
+  guint height;
+} GstNleRectangle;
 
 EXPORT GType gst_nle_source_get_type (void) G_GNUC_CONST;
 
@@ -106,7 +116,8 @@ EXPORT void gst_nle_source_add_item   (GstNleSource *nlesrc,
                                        guint64 start,
                                        guint64 stop,
                                        gfloat rate,
-                                       gboolean still_picture
+                                       gboolean still_picturie,
+                                       GstNleRectangle roi
                                      );
 G_END_DECLS
 #endif /* _GST_NLE_SOURCE_H_ */

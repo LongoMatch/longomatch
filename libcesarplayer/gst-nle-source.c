@@ -62,6 +62,7 @@ typedef struct
   guint64 duration;
   gfloat rate;
   gboolean still_picture;
+  GstNleRectangle roi;
 } GstNleSrcItem;
 
 static GstBinClass *parent_class = NULL;
@@ -80,7 +81,8 @@ G_DEFINE_TYPE (GstNleSource, gst_nle_source, GST_TYPE_BIN);
 
 static GstNleSrcItem *
 gst_nle_source_item_new (const gchar * file_path, const gchar * title,
-    guint64 start, guint64 stop, gfloat rate, gboolean still_picture)
+    guint64 start, guint64 stop, gfloat rate, gboolean still_picture,
+    GstNleRectangle roi)
 {
   GstNleSrcItem *item;
 
@@ -94,6 +96,7 @@ gst_nle_source_item_new (const gchar * file_path, const gchar * title,
   if (still_picture) {
     item->rate = 1;
   }
+  item->roi = roi;
   item->duration = stop - start;
   return item;
 }
@@ -185,6 +188,7 @@ gst_nle_source_setup (GstNleSource * nlesrc)
 
   nlesrc->video_appsrc = gst_element_factory_make ("appsrc", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
+  nlesrc->videocrop = gst_element_factory_make ("videocrop", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
   v_capsfilter = gst_element_factory_make ("capsfilter", NULL);
@@ -209,9 +213,10 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       NULL);
 
   gst_bin_add_many (GST_BIN (nlesrc), nlesrc->video_appsrc, videorate,
+      nlesrc->videocrop, videoscale, colorspace, v_capsfilter,
+      nlesrc->textoverlay, vident, NULL);
+  gst_element_link_many (nlesrc->video_appsrc, videorate, nlesrc->videocrop,
       videoscale, colorspace, v_capsfilter, nlesrc->textoverlay, vident, NULL);
-  gst_element_link_many (nlesrc->video_appsrc, videorate, videoscale,
-      colorspace, v_capsfilter, nlesrc->textoverlay, vident, NULL);
 
   v_pad = gst_element_get_pad (vident, "src");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_pad), v_pad);
@@ -271,6 +276,36 @@ gst_nle_source_update_overlay_title (GstNleSource * nlesrc)
   } else {
     gst_nle_source_apply_title_size (nlesrc, nlesrc->title_size);
   }
+}
+
+static void
+gst_nle_source_update_videocrop (GstNleSource * nlesrc, GstCaps * caps)
+{
+  GstNleSrcItem *item;
+  gint left, right, top, bottom;
+
+  left = right = top = bottom = 0;
+
+  item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
+
+  if (item->roi.width && item->roi.height) {
+    GstStructure *structure;
+    gint vwidth = 0, vheight = 0;
+
+    structure = gst_caps_get_structure (caps, 0);
+
+    if (gst_structure_get_int (structure, "width", &vwidth) &&
+             gst_structure_get_int (structure, "height", &vheight)) {
+      left = item->roi.x;
+      top = item->roi.y;
+      right = vwidth - item->roi.x - item->roi.width;
+      bottom = vheight - item->roi.y - item->roi.height;
+    }
+  }
+
+  g_object_set (G_OBJECT (nlesrc->videocrop), "left", left, "right", right,
+      "top", top, "bottom", bottom, NULL);
+  nlesrc->roi_setup = TRUE;
 }
 
 static GstFlowReturn
@@ -484,17 +519,24 @@ gst_nle_source_on_audio_eos (GstAppSink * appsink, gpointer data)
 }
 
 static gboolean
-gst_nle_source_video_pad_probe_cb (GstPad * pad, GstEvent * event,
+gst_nle_source_video_pad_probe_cb (GstPad * pad,  GstMiniObject * obj,
     GstNleSource * nlesrc)
 {
-  if (event->type == GST_EVENT_NEWSEGMENT) {
-    g_mutex_lock (&nlesrc->stream_lock);
-    if (!nlesrc->video_seek_done && nlesrc->seek_done) {
-      GST_DEBUG_OBJECT (nlesrc, "NEWSEGMENT on the video pad");
-      nlesrc->video_seek_done = TRUE;
-      gst_nle_source_update_overlay_title (nlesrc);
+  if (GST_IS_EVENT (obj)) {
+    GstEvent *event = GST_EVENT_CAST (obj);
+    if (event->type == GST_EVENT_NEWSEGMENT) {
+      g_mutex_lock (&nlesrc->stream_lock);
+      if (!nlesrc->video_seek_done && nlesrc->seek_done) {
+        GST_DEBUG_OBJECT (nlesrc, "NEWSEGMENT on the video pad");
+        nlesrc->video_seek_done = TRUE;
+        nlesrc->roi_setup = FALSE;
+        gst_nle_source_update_overlay_title (nlesrc);
+      }
+      g_mutex_unlock (&nlesrc->stream_lock);
     }
-    g_mutex_unlock (&nlesrc->stream_lock);
+  } else if (!nlesrc->roi_setup && GST_IS_BUFFER (obj)) {
+    GstBuffer * buffer = GST_BUFFER_CAST (obj);
+    gst_nle_source_update_videocrop (nlesrc, GST_BUFFER_CAPS (buffer));
   }
   return TRUE;
 }
@@ -545,7 +587,7 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
       gst_element_add_pad (GST_ELEMENT (nlesrc), nlesrc->video_pad);
       nlesrc->video_pad_added = TRUE;
     }
-    gst_pad_add_event_probe (GST_BASE_SINK_PAD (GST_BASE_SINK (appsink)),
+    gst_pad_add_data_probe (GST_BASE_SINK_PAD (GST_BASE_SINK (appsink)),
         (GCallback) gst_nle_source_video_pad_probe_cb, nlesrc);
     nlesrc->video_eos = FALSE;
   } else if (g_strrstr (mime, "audio") && nlesrc->with_audio
@@ -727,13 +769,14 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
 void
 gst_nle_source_add_item (GstNleSource * nlesrc, const gchar * file_path,
     const gchar * title, guint64 start, guint64 stop, gfloat rate,
-    gboolean still_picture)
+    gboolean still_picture, GstNleRectangle roi)
 {
   GstNleSrcItem *item;
   gchar *uri;
 
   uri = lgm_filename_to_uri (file_path);
-  item = gst_nle_source_item_new (uri, title, start, stop, rate, still_picture);
+  item = gst_nle_source_item_new (uri, title, start, stop, rate, still_picture,
+      roi);
   g_free (uri);
   nlesrc->queue = g_list_append (nlesrc->queue, item);
 
