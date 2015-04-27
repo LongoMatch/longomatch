@@ -162,7 +162,7 @@ namespace LongoMatch.Services
 					drawing = new FrameDrawing {
 						Render = player.CurrentTime,
 						CameraConfig = camConfig,
-						RegionOfInterest = camConfig.RegionOfInterest,
+						RegionOfInterest = camConfig.RegionOfInterest.Clone (),
 					};
 				} else {
 					drawing = play.Drawings [drawingIndex];
