@@ -86,8 +86,10 @@ EXPORT void gst_video_editor_set_encoding_format              (GstVideoEditor * 
 EXPORT void gst_video_editor_clear_segments_list (GstVideoEditor * gve);
 EXPORT void gst_video_editor_add_segment (GstVideoEditor * gve,
     gchar * file, gint64 start,
-    gint64 duration, gdouble rate, gchar * title, gboolean hasAudio);
+    gint64 duration, gdouble rate, gchar * title, gboolean hasAudio,
+    guint roi_x, guint roi_y, guint roi_w, guint roi_h);
 EXPORT void gst_video_editor_add_image_segment (GstVideoEditor * gve, gchar * file,
-    guint64 start, gint64 duration, gchar * title);
+    guint64 start, gint64 duration, gchar * title,
+    guint roi_x, guint roi_y, guint roi_w, guint roi_h);
 G_END_DECLS
 #endif /* _GST_VIDEO_EDITOR_H_ */

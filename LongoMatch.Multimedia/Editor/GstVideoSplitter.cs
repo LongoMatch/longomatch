@@ -30,13 +30,13 @@ namespace LongoMatch.Video.Editor
 	public class GstVideoSplitter : GLib.Object, IVideoEditor
 	{
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_editor_new (out IntPtr err);
 
 		public event LongoMatch.Core.Handlers.ProgressHandler Progress;
 		public event LongoMatch.Core.Handlers.ErrorHandler Error;
 
-		public unsafe GstVideoSplitter () : base(IntPtr.Zero)
+		public unsafe GstVideoSplitter () : base (IntPtr.Zero)
 		{
 			if (GetType () != typeof(GstVideoSplitter)) {
 				throw new InvalidOperationException ("Can't override this constructor.");
@@ -80,7 +80,7 @@ namespace LongoMatch.Video.Editor
 			OverrideVirtualMethod (gtype, "error", ErrorVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Editor.GstVideoSplitter), ConnectionMethod="OverrideError")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Editor.GstVideoSplitter), ConnectionMethod = "OverrideError")]
 		protected virtual void OnError (string message)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -95,7 +95,7 @@ namespace LongoMatch.Video.Editor
 				v.Dispose ();
 		}
 
-		[GLib.Signal("error")]
+		[GLib.Signal ("error")]
 		public event GlibErrorHandler InternalError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof(ErrorArgs));
@@ -129,7 +129,7 @@ namespace LongoMatch.Video.Editor
 			OverrideVirtualMethod (gtype, "percent_completed", PercentCompletedVMCallback);
 		}
 
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Editor.GstVideoSplitter), ConnectionMethod="OverridePercentCompleted")]
+		[GLib.DefaultSignalHandler (Type = typeof(LongoMatch.Video.Editor.GstVideoSplitter), ConnectionMethod = "OverridePercentCompleted")]
 		protected virtual void OnPercentCompleted (float percent)
 		{
 			GLib.Value ret = GLib.Value.Empty;
@@ -144,7 +144,7 @@ namespace LongoMatch.Video.Editor
 				v.Dispose ();
 		}
 
-		[GLib.Signal("percent_completed")]
+		[GLib.Signal ("percent_completed")]
 		public event GlibPercentCompletedHandler PercentCompleted {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof(PercentCompletedArgs));
@@ -157,8 +157,10 @@ namespace LongoMatch.Video.Editor
 		}
 		#pragma warning disable 0169
 		#endregion
+
 		#region Public Methods
-		[DllImport("libcesarplayer.dll")]
+
+		[DllImport ("libcesarplayer.dll")]
 		static extern IntPtr gst_video_editor_get_type ();
 
 		public static new GLib.GType GType {
@@ -169,7 +171,7 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_video_editor_clear_segments_list (IntPtr raw);
 
 		public void ClearList ()
@@ -177,23 +179,25 @@ namespace LongoMatch.Video.Editor
 			gst_video_editor_clear_segments_list (Handle);
 		}
 
-		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_editor_add_segment (IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title, bool hasAudio);
+		[DllImport ("libcesarplayer.dll")]
+		static extern void gst_video_editor_add_segment (IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title, bool hasAudio,
+		                                                 uint roi_x, uint roi_y, uint roi_w, uint roi_h);
 
-		public void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio)
+		public void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio, Area roi)
 		{
-			gst_video_editor_add_segment (Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup (title), true);
+			gst_video_editor_add_segment (Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup (title), true, (uint)roi.Start.X, (uint)roi.Start.Y, (uint)roi.Width, (uint)roi.Height);
 		}
 
-		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_editor_add_image_segment (IntPtr raw, string file_path, long start, long duration, IntPtr title);
+		[DllImport ("libcesarplayer.dll")]
+		static extern void gst_video_editor_add_image_segment (IntPtr raw, string file_path, long start, long duration, IntPtr title,
+		                                                       uint roi_x, uint roi_y, uint roi_w, uint roi_h);
 
-		public void AddImageSegment (string filePath, long start, long duration, string title)
+		public void AddImageSegment (string filePath, long start, long duration, string title, Area roi)
 		{
-			gst_video_editor_add_image_segment (Handle, filePath, start, duration, GLib.Marshaller.StringToPtrGStrdup (title));
+			gst_video_editor_add_image_segment (Handle, filePath, start, duration, GLib.Marshaller.StringToPtrGStrdup (title), (uint)roi.Start.X, (uint)roi.Start.Y, (uint)roi.Width, (uint)roi.Height);
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_video_editor_start (IntPtr raw);
 
 		public void Start ()
@@ -201,7 +205,7 @@ namespace LongoMatch.Video.Editor
 			gst_video_editor_start (Handle);
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_video_editor_cancel (IntPtr raw);
 
 		public void Cancel ()
@@ -213,7 +217,7 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern void gst_video_editor_init_backend (out int argc, IntPtr argv);
 
 		public static int InitBackend (string argv)
@@ -223,36 +227,36 @@ namespace LongoMatch.Video.Editor
 			return argc;
 		}
 
-		[DllImport("libcesarplayer.dll")]
+		[DllImport ("libcesarplayer.dll")]
 		static extern bool gst_video_editor_set_encoding_format (IntPtr raw,
-		                                                        string output_file,
-		                                                        VideoEncoderType video_codec,
-		                                                        AudioEncoderType audio_codec,
-		                                                        VideoMuxerType muxer,
-		                                                        uint video_quality,
-		                                                        uint audio_quality,
-		                                                        uint width,
-		                                                        uint height,
-		                                                        uint fps_n,
-		                                                        uint fps_d,
-		                                                        bool enable_audio,
-		                                                        bool enable_video);
+		                                                         string output_file,
+		                                                         VideoEncoderType video_codec,
+		                                                         AudioEncoderType audio_codec,
+		                                                         VideoMuxerType muxer,
+		                                                         uint video_quality,
+		                                                         uint audio_quality,
+		                                                         uint width,
+		                                                         uint height,
+		                                                         uint fps_n,
+		                                                         uint fps_d,
+		                                                         bool enable_audio,
+		                                                         bool enable_video);
 
 		public EncodingSettings EncodingSettings {
 			set {
 				gst_video_editor_set_encoding_format (Handle,
-				                                      value.OutputFile,
-				                                      value.EncodingProfile.VideoEncoder,
-				                                      value.EncodingProfile.AudioEncoder,
-				                                      value.EncodingProfile.Muxer,
-				                                      value.EncodingQuality.VideoQuality,
-				                                      value.EncodingQuality.AudioQuality,
-				                                      value.VideoStandard.Width,
-				                                      value.VideoStandard.Height,
-				                                      value.Framerate_n,
-				                                      value.Framerate_d,
-				                                      value.EnableAudio,
-				                                      value.EnableTitle);
+					value.OutputFile,
+					value.EncodingProfile.VideoEncoder,
+					value.EncodingProfile.AudioEncoder,
+					value.EncodingProfile.Muxer,
+					value.EncodingQuality.VideoQuality,
+					value.EncodingQuality.AudioQuality,
+					value.VideoStandard.Width,
+					value.VideoStandard.Height,
+					value.Framerate_n,
+					value.Framerate_d,
+					value.EnableAudio,
+					value.EnableTitle);
 			}
 		}
 
@@ -261,6 +265,7 @@ namespace LongoMatch.Video.Editor
 				;
 			}
 		}
+
 		#endregion
 	}
 }

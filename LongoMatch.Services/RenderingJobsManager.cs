@@ -204,7 +204,7 @@ namespace LongoMatch.Services
 		{
 			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			image.Save (path);
-			videoEditor.AddImageSegment (path, 0, duration.MSeconds, "");
+			videoEditor.AddImageSegment (path, 0, duration.MSeconds, "", new Area ());
 		}
 
 		void ProcessImage (PlaylistImage image)
@@ -218,7 +218,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Adding external video " + video.File.FilePath);
 			videoEditor.AddSegment (video.File.FilePath, 0, video.File.Duration.MSeconds,
-				1, "", video.File.HasAudio);
+				1, "", video.File.HasAudio, new Area ());
 		}
 
 		void ProcessDrawing (PlaylistDrawing drawing)
@@ -239,6 +239,7 @@ namespace LongoMatch.Services
 			MediaFile file;
 			IEnumerable<FrameDrawing> drawings;
 			int cameraIndex;
+			Area roi;
 
 			play = element.Play;
 			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
@@ -246,8 +247,10 @@ namespace LongoMatch.Services
 			lastTS = play.Start;
 			if (element.CamerasConfig.Count == 0) {
 				cameraIndex = 0;
+				roi = new Area ();
 			} else {
 				cameraIndex = element.CamerasConfig [0].Index;
+				roi = element.CamerasConfig [0].RegionOfInterest;
 			}
 			if (cameraIndex >= element.FileSet.Count) {
 				Log.Error (string.Format ("Camera index={0} not matching for current fileset count={1}",
@@ -276,13 +279,13 @@ namespace LongoMatch.Services
 				}
 				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 					fd.Render.MSeconds - lastTS.MSeconds,
-					element.Rate, play.Name, file.HasAudio);
-				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name);
+					element.Rate, play.Name, file.HasAudio, roi);
+				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name, fd.RegionOfInterest);
 				lastTS = fd.Render;
 			}
 			videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 				play.Stop.MSeconds - lastTS.MSeconds,
-				element.Rate, play.Name, file.HasAudio);
+				element.Rate, play.Name, file.HasAudio, roi);
 			return true;
 		}
 

@@ -498,7 +498,8 @@ gve_on_buffer_cb (GstPad * pad, GstBuffer * buf, GstVideoEditor * gve)
 void
 gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
     gint64 start, gint64 duration, gdouble rate,
-    gchar * title, gboolean hasAudio)
+    gchar * title, gboolean hasAudio,
+    guint roi_x, guint roi_y, guint roi_w, guint roi_h)
 {
   GstState cur_state;
 
@@ -525,7 +526,8 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
 
 void
 gst_video_editor_add_image_segment (GstVideoEditor * gve, gchar * file,
-    guint64 start, gint64 duration, gchar * title)
+    guint64 start, gint64 duration, gchar * title,
+    guint roi_x, guint roi_y, guint roi_w, guint roi_h)
 {
   GstState cur_state;
 

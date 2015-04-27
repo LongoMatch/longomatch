@@ -69,7 +69,7 @@ namespace Tests.Services
 
 				// Check that AddSegment is called with the right video file.
 				mock.Verify (m => m.AddSegment (p.Description.FileSet [0].FilePath,
-					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true, new Area ()), Times.Once ()); 
 
 				/* Test with a camera index bigger than the total cameras */
 				renderer.CancelAllJobs ();
@@ -81,7 +81,7 @@ namespace Tests.Services
 				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);
 				mock.Verify (m => m.AddSegment (p.Description.FileSet [1].FilePath,
-					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true, new Area ()), Times.Once ()); 
 
 				/* Test with the secondary camera */
 				renderer.CancelAllJobs ();
@@ -93,7 +93,7 @@ namespace Tests.Services
 				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);
 				mock.Verify (m => m.AddSegment (p.Description.FileSet [0].FilePath,
-					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true), Times.Once ()); 
+					evt.Start.MSeconds, evt.Stop.MSeconds, evt.Rate, evt.Name, true, new Area ()), Times.Once ()); 
 			} finally {
 				Utils.DeleteProject (p);
 			}

@@ -31,23 +31,23 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event ProgressHandler Progress;
 		event ErrorHandler Error;
 
-		EncodingSettings EncodingSettings{
+		EncodingSettings EncodingSettings {
 			set;
 		}
-		
+
 		string TempDir {
 			set;
 		}
 
-		void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
-		
-		void AddImageSegment(string filePath, long start, long duration, string title) ;
+		void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio, Area roi) ;
 
-		void ClearList();
+		void AddImageSegment (string filePath, long start, long duration, string title, Area roi) ;
 
-		void Start();
+		void ClearList ();
 
-		void Cancel();
+		void Start ();
+
+		void Cancel ();
 
 	}
 }
