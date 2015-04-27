@@ -85,9 +85,13 @@ namespace LongoMatch.Services
 			string localesDir = Config.RelativeToPrefix ("share/locale");
 
 			if (!Directory.Exists (localesDir)) {
-				localesDir = Path.Combine (
-					Environment.GetEnvironmentVariable ("CERBERO_PREFIX"),
-					"share", "locale");
+				var cerbero_prefix = Environment.GetEnvironmentVariable ("CERBERO_PREFIX");
+				if (cerbero_prefix != null) {
+					localesDir = Path.Combine (cerbero_prefix, "share", "locale");
+				} else {
+					Log.ErrorFormat ("'{0}' does not exist. This looks like an uninstalled execution." +
+						"Define CERBERO_PREFIX.", localesDir);
+				}
 			}
 			/* Init internationalization support */
 			Catalog.Init (Constants.SOFTWARE_NAME.ToLower (), localesDir);
