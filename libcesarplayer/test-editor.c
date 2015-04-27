@@ -102,10 +102,10 @@ main (int argc, char *argv[])
     stop = (guint64) g_strtod (argv[i], NULL);
     if (g_str_has_suffix (input_file, ".png")) {
       gst_video_editor_add_image_segment (editor, input_file, start,
-          stop - start, title);
+          stop - start, title, 0, 0, 0, 0);
     } else {
       gst_video_editor_add_segment (editor, input_file, start, stop - start,
-          (gfloat) 1, title, TRUE);
+          (gfloat) 1, title, TRUE, 0, 0, 0, 0);
     }
     g_free (title);
   }
