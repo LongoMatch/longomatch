@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 
 			// The name entry is only visible when not empty
 			nameentry.Visible = !String.IsNullOrEmpty (name);
-			nameentry.Text = name;
+			nameentry.Text = name ?? "";
 
 			addbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-browse", Gtk.IconSize.Button, 0);
 			clearbuttonimage.Pixbuf = Helpers.Misc.LoadStockIcon (clearbuttonimage, "gtk-clear", Gtk.IconSize.Button);
