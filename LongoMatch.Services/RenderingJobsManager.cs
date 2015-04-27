@@ -280,7 +280,8 @@ namespace LongoMatch.Services
 				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
 					fd.Render.MSeconds - lastTS.MSeconds,
 					element.Rate, play.Name, file.HasAudio, roi);
-				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name, fd.RegionOfInterest);
+				// Drawings have already been cropped to ROI by the canvas, we pass an empty area
+				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name, new Area ());
 				lastTS = fd.Render;
 			}
 			videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
