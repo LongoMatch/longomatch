@@ -545,7 +545,8 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandleRegionOfInterestChanged (object sender, EventArgs e)
 		{
-			if (blackboard.RegionOfInterest.Width == blackboard.Background.Width &&
+			if (blackboard.RegionOfInterest.Empty ||
+			    blackboard.RegionOfInterest.Width == blackboard.Background.Width &&
 			    blackboard.RegionOfInterest.Height == blackboard.Background.Height) {
 				hscrollbar.Visible = false;
 				wscrollbar.Visible = false;
