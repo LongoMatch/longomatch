@@ -215,8 +215,8 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   gst_bin_add_many (GST_BIN (nlesrc), nlesrc->video_appsrc, videorate,
       nlesrc->videocrop, videoscale, colorspace, v_capsfilter,
       nlesrc->textoverlay, vident, NULL);
-  gst_element_link_many (nlesrc->video_appsrc, videorate, nlesrc->videocrop,
-      videoscale, colorspace, v_capsfilter, nlesrc->textoverlay, vident, NULL);
+  gst_element_link_many (nlesrc->video_appsrc, nlesrc->videocrop,
+      videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
 
   v_pad = gst_element_get_pad (vident, "src");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_pad), v_pad);
@@ -529,7 +529,6 @@ gst_nle_source_video_pad_probe_cb (GstPad * pad,  GstMiniObject * obj,
       if (!nlesrc->video_seek_done && nlesrc->seek_done) {
         GST_DEBUG_OBJECT (nlesrc, "NEWSEGMENT on the video pad");
         nlesrc->video_seek_done = TRUE;
-        nlesrc->roi_setup = FALSE;
         gst_nle_source_update_overlay_title (nlesrc);
       }
       g_mutex_unlock (&nlesrc->stream_lock);
@@ -694,6 +693,7 @@ gst_nle_source_next (GstNleSource * nlesrc)
   nlesrc->start_ts = nlesrc->accu_time;
   nlesrc->video_linked = FALSE;
   nlesrc->audio_linked = FALSE;
+  nlesrc->roi_setup = FALSE;
 
   GST_DEBUG_OBJECT (nlesrc, "Start ts:%" GST_TIME_FORMAT,
       GST_TIME_ARGS (nlesrc->start_ts));
