@@ -217,7 +217,6 @@ namespace LongoMatch.Gui.Panel
 		{
 			seasonentry.Text = project.Description.Season;
 			competitionentry.Text = project.Description.Competition;
-			datelabel2.Text = project.Description.MatchDate.ToShortDateString ();
 			datepicker1.Date = project.Description.MatchDate;
 			desctextview.Buffer.Clear ();
 			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
