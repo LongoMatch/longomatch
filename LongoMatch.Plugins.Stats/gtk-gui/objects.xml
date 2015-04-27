@@ -248,10 +248,6 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectPeriods" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -273,6 +269,8 @@
       <itemgroup label="MediaFileChooser Properties">
         <property name="CurrentPath" />
         <property name="FilterName" />
+        <property name="ProposedFileName" />
+        <property name="ProposedDirectoryName" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -328,6 +326,22 @@
   </object>
   <object type="LongoMatch.Gui.Component.VideoFileInfo" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
+    <signals>
+      <itemgroup label="VideoFileInfo Signals">
+        <signal name="Changed" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="LinkProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
 </objects>
