@@ -220,6 +220,16 @@ namespace LongoMatch.Gui.Panel
 			datepicker1.Date = project.Description.MatchDate;
 			desctextview.Buffer.Clear ();
 			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
+
+			// In case the project provides a dashboard, use it, otherwise, enable the combobox
+			if (project.Dashboard != null) {
+				tagscombobox.Visible = false;
+				analysislabel.Visible = false;
+				analysisTemplate = project.Dashboard;
+			} else {
+				project.Dashboard = analysisTemplate;
+			}
+
 			// In case the project does have a team, do not allow a modification
 			// otherwise set the loaded template
 			if (project.LocalTeamTemplate != null) {
@@ -236,14 +246,6 @@ namespace LongoMatch.Gui.Panel
 				project.VisitorTeamTemplate = awaytemplate;
 			}
 
-			// FIXME In case the project provides a dashboard, use it, otherwise, enable the combobox
-			if (project.Dashboard != null) {
-				tagscombobox.Visible = false;
-				analysislabel.Visible = false;
-				analysisTemplate = project.Dashboard;
-			} else {
-				project.Dashboard = analysisTemplate;
-			}
 			mediafilesetselection1.Visible = true;
 			mediafilesetselection1.FileSet = project.Description.FileSet;
 		}
