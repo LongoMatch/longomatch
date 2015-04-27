@@ -91,7 +91,7 @@ namespace LongoMatch.Services
 	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate
 	{
 		readonly MethodInfo methodDefaultTemplate;
-		List<T> systemTemplates;
+		protected List<T> systemTemplates;
 		IStorage storage;
 
 		public TemplatesProvider (IStorage storage)
@@ -250,8 +250,10 @@ namespace LongoMatch.Services
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
-			Create ("Home team", 20);
-			Create ("Away team", 20);
+			Create (Catalog.GetString ("Home team"), 20);
+			systemTemplates.Last ().TeamName = Catalog.GetString ("Home");
+			Create (Catalog.GetString ("Away team"), 20);
+			systemTemplates.Last ().TeamName = Catalog.GetString ("Away");
 		}
 	}
 
@@ -262,7 +264,7 @@ namespace LongoMatch.Services
 			// Create the default template, it will be added to the list
 			// of system templates to make it always available on the app 
 			// and also read-only
-			Create ("Default dashboard", 20);
+			Create (Catalog.GetString ("Default dashboard"), 20);
 		}
 	}
 }
