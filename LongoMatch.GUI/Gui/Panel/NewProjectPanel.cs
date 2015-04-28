@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				awayteamscombobox.Load (teams);
 				awayteamscombobox.Changed += (sender, e) => {
-					LoadTemplate (awayteamscombobox.ActiveTeam, TeamType.VISITOR, false);
+					LoadTemplate (awayteamscombobox.ActiveTeam.Clone (), TeamType.VISITOR, false);
 				};
 			}
 
@@ -188,7 +188,7 @@ namespace LongoMatch.Gui.Panel
 			} else {
 				hometeamscombobox.Load (teams);
 				hometeamscombobox.Changed += (sender, e) => {
-					LoadTemplate (hometeamscombobox.ActiveTeam, TeamType.LOCAL, false);
+					LoadTemplate (hometeamscombobox.ActiveTeam.Clone (), TeamType.LOCAL, false);
 				};
 
 			}
@@ -330,7 +330,7 @@ namespace LongoMatch.Gui.Panel
 		void LoadTemplate (Team template, TeamType team, bool forceColor)
 		{
 			if (team == TeamType.LOCAL) {
-				hometemplate = Cloner.Clone (template);
+				hometemplate = template;
 				hometacticsentry.Text = hometemplate.FormationStr;
 				SetButtonColor (homecolor1, hometemplate.Colors [0]);
 				SetButtonColor (homecolor2, hometemplate.Colors [1]);
@@ -342,7 +342,7 @@ namespace LongoMatch.Gui.Panel
 					homecolor1button.Click ();
 				}
 			} else {
-				awaytemplate = Cloner.Clone (template);
+				awaytemplate = template;
 				awaytacticsentry.Text = awaytemplate.FormationStr;
 				SetButtonColor (awaycolor1, awaytemplate.Colors [0]);
 				SetButtonColor (awaycolor2, awaytemplate.Colors [1]);
