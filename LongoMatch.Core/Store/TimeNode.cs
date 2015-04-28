@@ -98,10 +98,14 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public Time Duration {
 			get {
-				return Stop-Start;
+				if (Stop != null && Start != null) {
+					return Stop - Start;
+				} else {
+					return new Time (0);
+				}
 			}
 		}
-		
+
 		/// <summary>
 		/// Play rate
 		/// </summary>
