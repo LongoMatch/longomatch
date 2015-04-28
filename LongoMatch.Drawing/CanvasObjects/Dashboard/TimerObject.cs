@@ -15,10 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using System.IO;
+using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -26,6 +27,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 	{
 		Time currentTime;
 		static Image iconImage;
+		static Image cancelImage;
+		Rectangle cancelRect;
+		bool cancelPressed;
 
 		public TimerObject (TimerButton timer) : base (timer)
 		{
@@ -33,11 +37,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Toggle = true;
 			CurrentTime = new Time (0);
 			if (iconImage == null) {
-				iconImage = new Image (System.IO.Path.Combine (Config.ImagesDir,
+				iconImage = new Image (Path.Combine (Config.ImagesDir,
 					StyleConf.ButtonTimerIcon));
+			}
+			if (cancelImage == null) {
+				cancelImage = new Image (Path.Combine (Config.IconsDir,
+					StyleConf.CancelButton));
 			}
 			MinWidth = StyleConf.ButtonMinWidth;
 			MinHeight = iconImage.Height + StyleConf.ButtonTimerFontSize;
+			cancelRect = new Rectangle ();
 		}
 
 		public TimerButton Button {
@@ -109,6 +118,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
+		public override void ClickPressed (Point p, ButtonModifier modif)
+		{
+			cancelPressed = cancelRect.GetSelection (p) != null;
+		}
+
 		public override void ClickReleased ()
 		{
 			base.ClickReleased ();
@@ -116,12 +130,23 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
 				Button.Start (CurrentTime, null);
 			} else {
-				Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
-				if (Button.StartTime.MSeconds != CurrentTime.MSeconds) {
-					Button.Stop (CurrentTime, null);
-				} else {
+				if (cancelPressed) {
+					Log.Debug ("Cancel timer from button");
 					Button.Cancel ();
+				} else {
+					Log.Debug ("Stop timer at " + CurrentTime.ToMSecondsString ());
+					if (Button.StartTime.MSeconds != CurrentTime.MSeconds) {
+						Button.Stop (CurrentTime, null);
+					} else {
+						Button.Cancel ();
+					}
 				}
+			}
+		}
+
+		int HeaderHeight {
+			get {
+				return iconImage.Height + 5;
 			}
 		}
 
@@ -140,7 +165,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			base.Draw (tk, area);
 
 			tk.Begin ();
-			
+
+			cancelRect = new Rectangle (
+				new Point ((Position.X + Width) - StyleConf.ButtonRecWidth, Position.Y),
+				StyleConf.ButtonRecWidth, HeaderHeight);
+
 			if (Active && Mode != DashboardMode.Edit) {
 				tk.LineWidth = StyleConf.ButtonLineWidth;
 				tk.StrokeColor = Button.BackgroundColor;
@@ -156,6 +185,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				tk.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
 					Button.Width, Button.Height - iconImage.Height,
 					PartialTime.ToSecondsString (), false, true);
+
+				tk.FillColor = tk.StrokeColor = BackgroundColor;
+				tk.DrawRectangle (cancelRect.TopLeft, cancelRect.Width, cancelRect.Height);
+				tk.StrokeColor = TextColor;
+				tk.FillColor = TextColor;
+				tk.DrawImage (new Point (cancelRect.TopLeft.X, cancelRect.TopLeft.Y + 5),
+					cancelRect.Width, cancelRect.Height - 10, cancelImage, true, true);
 			} else {
 				Text = Button.Name;
 				DrawText (tk);
