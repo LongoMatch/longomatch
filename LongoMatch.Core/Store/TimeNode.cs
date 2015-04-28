@@ -36,12 +36,16 @@ namespace LongoMatch.Core.Store
 		Time start, stop, eventTime;
 
 		#region Constructors
-		public TimeNode() {
+
+		public TimeNode ()
+		{
 			Rate = 1;
 		}
+
 		#endregion
 
 		#region Properties
+
 		/// <summary>
 		/// A short description of the time node
 		/// </summary>
@@ -134,24 +138,28 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public TimeNode Join (TimeNode tn) {
+		public TimeNode Join (TimeNode tn)
+		{
 			if (tn.Stop < Start || tn.Start > Stop)
 				return null;
 			else
 				return new TimeNode {
-				Start = new Time (Math.Min (Start.MSeconds, tn.Start.MSeconds)),
-				Stop = new Time (Math.Max (Stop.MSeconds, tn.Stop.MSeconds))};
+					Start = new Time (Math.Min (Start.MSeconds, tn.Start.MSeconds)),
+					Stop = new Time (Math.Max (Stop.MSeconds, tn.Stop.MSeconds))
+				};
 		}
-		
-		public TimeNode Intersect (TimeNode tn) {
+
+		public TimeNode Intersect (TimeNode tn)
+		{
 			if (tn.Stop == null || tn.Start == null || Start == null || Stop == null)
 				return null;
 			if (tn.Stop <= Start || tn.Start >= Stop)
 				return null;
 			else
 				return new TimeNode {
-				Start = new Time (Math.Max (Start.MSeconds, tn.Start.MSeconds)),
-				Stop = new Time (Math.Min (Stop.MSeconds, tn.Stop.MSeconds))};
+					Start = new Time (Math.Max (Start.MSeconds, tn.Start.MSeconds)),
+					Stop = new Time (Math.Min (Stop.MSeconds, tn.Stop.MSeconds))
+				};
 		}
 
 		#endregion
