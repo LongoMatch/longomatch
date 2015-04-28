@@ -143,7 +143,7 @@ namespace LongoMatch.Core.Common
 		public const string LinkOut = "hicolor/scalable/actions/longomatch-link-out.svg";
 		public const string LinkOutPrelight = "hicolor/scalable/actions/longomatch-link-out-prelight.svg";
 
-		public string Font = "Ubuntu";
+		public string Font = "Noto";
 
 		public Color HomeTeamColor { get; set; }
 

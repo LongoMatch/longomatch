@@ -84,7 +84,7 @@ style "longomatch-default"
   stock["gtk-save-as"] = {{ "Stock/gtk-save-as.svg" }}
   stock["gtk-save"] = {{ "Stock/gtk-save.svg" }}
 
-  font_name = "Ubuntu"
+  font_name = "Noto"
 
   # we should make this change on per OS basis as this will make the preferences look native
   engine "clearlooks"
