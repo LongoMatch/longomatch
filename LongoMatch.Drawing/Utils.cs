@@ -83,11 +83,13 @@ namespace LongoMatch.Drawing
 		{
 			Image img;
 			ISurface surface;
-			
-			surface = tk.CreateSurface ((int)area.Width, (int)area.Height, image);
+
+			Log.Debug ("Rendering frame drawing with ROI: " + area);
+			surface = tk.CreateSurface ((int)area.Width, (int)area.Height);
 			using (IContext c = surface.Context) {
 				tk.Context = c;
 				tk.TranslateAndScale (new Point (-area.Start.X, -area.Start.Y), new Point (1, 1));
+				tk.DrawImage (image);
 				foreach (Drawable d in fd.Drawables) {
 					ICanvasSelectableObject obj = CanvasFromDrawableObject (d);
 					obj.Draw (tk, null);
