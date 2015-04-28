@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 		Time duration;
 		Project project;
 		PeriodsMenu menu;
-		Dictionary<Period, Period> periodsDict;
+		List<Period> periods;
 		double maxSecondsPerPixels;
 
 		enum DidacticMessage
@@ -179,39 +179,13 @@ namespace LongoMatch.Gui.Component
 
 			if (!resyncEvents)
 				return;
-
-			/* Resynchronize events with the new start times of the period they belong too.
-			 * Imported projects or fake analysis projects create events assuming periods
-			 * don't have gaps between them.
-			 * After adding a file to the project and synchronizing the periods with the
-			 * video file, all events must be offseted with the new start time of the period.
-			 * 
-			 * Before sync:
-			 *   Period 1: start=00:00:00 Period 2: start=00:30:00
-			 *   evt1 00:10:00            evt2 00:32:00
-			 * After sync:
-			 *   Period 1: start=00:05:00 Period 2: start= 00:39:00
-			 *   evt1 00:15:00            evt2 00:41:00
-			 */
-			foreach (Period p in periodsDict.Keys) {
-				Period newp = periodsDict [p];
-				TimeNode tn = p.PeriodNode;
-				Time diff = newp.PeriodNode.Start - tn.Start;
-				foreach (TimelineEvent evt in project.Timeline.Where
-				         (e=>e.EventTime > tn.Start && e.EventTime < tn.Stop)) {
-					evt.Move (diff);
-				}
-				foreach (TimeNode t in p.Nodes) {
-					t.Move (diff);
-				}
-			}
+			project.ResyncEvents (periods);
 		}
 
 		public Project Project {
 			set {
 				Time start, pDuration;
 				List<string> gamePeriods;
-				List<Period> periods;
 				MediaFile file;
 
 				this.project = value;
@@ -223,7 +197,6 @@ namespace LongoMatch.Gui.Component
 				file = fileSet.FirstOrDefault ();
 				duration = file.Duration;
 				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
-				periodsDict = new Dictionary <Period, Period> ();
 				if (project.Periods == null || project.Periods.Count == 0) {
 					/* If no periods are provided create the default ones
 					 * defined in the dashboard */
@@ -238,14 +211,9 @@ namespace LongoMatch.Gui.Component
 					}
 					value.Periods = periods;
 				} else {
-					/* Create a copy of the original periods and a mapping
-					 * to resynchronize the events in SaveChanges() */
-					foreach (Period p in project.Periods) {
-						Period newp = new Period { Name = p.Name };
-						newp.Nodes.Add (p.PeriodNode);
-						periodsDict.Add (p, newp);
-					}
-					periods = periodsDict.Values.ToList ();
+					/* Create a copy of the project periods and keep the
+					 * project ones to resynchronize the events in SaveChanges() */
+					periods = project.Periods.Clone ();
 				}
 
 				camerasLabels.Load (fileSet);

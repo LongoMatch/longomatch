@@ -17,18 +17,18 @@
 //
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
+	[Serializable]
 	public class Period: Timer
 	{
 
 		public Period ()
 		{
 		}
-		
+
 		[JsonIgnore]
 		public TimeNode PeriodNode {
 			get {
@@ -39,8 +39,9 @@ namespace LongoMatch.Core.Store
 				if (stop.MSeconds == 0) {
 					stop = null;
 				}
-				return new TimeNode {Name=Name,
-					Start = start, Stop = stop};
+				return new TimeNode {Name = Name,
+					Start = start, Stop = stop
+				};
 			}
 			set {
 				foreach (TimeNode tn in Nodes) {

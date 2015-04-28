@@ -497,6 +497,54 @@ namespace LongoMatch.Core.Store
 			Description.VisitorGoals = GetScore (TeamType.VISITOR);
 		}
 
+
+		/// <summary>
+		/// Resynchronize events with the periods synced with the video file.
+		/// Imported projects or fake analysis projects create events assuming periods
+		/// don't have gaps between them.
+		/// After adding a file to the project and synchronizing the periods with the
+		/// video file, all events must be offseted with the new start time of the period.
+		/// 
+		/// Before sync:
+		///   Period 1: start=00:00:00 Period 2: start=00:30:00
+		///   evt1 00:10:00            evt2 00:32:00
+		/// After sync:
+		///   Period 1: start=00:05:00 Period 2: start= 00:39:00
+		///   evt1 00:15:00            evt2 00:41:00
+		/// </summary>
+		/// <param name="periods">The new periods syncrhonized with the video file.</param>
+		public void ResyncEvents (List<Period> periods)
+		{
+			List<TimelineEvent> newTimeline = new List<TimelineEvent> ();
+
+			if (periods.Count != Periods.Count) {
+				throw new IndexOutOfRangeException (
+					"Periods count is different from the project's ones");
+			}
+
+			for (int i = 0; i < periods.Count; i++) {
+				Period oldPeriod = Periods [i];
+				TimeNode oldTN = oldPeriod.PeriodNode;
+				TimeNode newTN = periods [i].PeriodNode;
+				Time diff = newTN.Start - oldTN.Start;
+
+				/* Find the events in this period */
+				var periodEvents = Timeline.Where (e =>
+					e.EventTime >= oldTN.Start &&
+				                   e.EventTime <= oldTN.Stop).ToList ();
+
+				/* Apply new offset and move the new timeline so that the next
+				 * iteration for the following period does not use them anymore */
+				periodEvents.ForEach (e => {
+					e.Move (diff);
+					newTimeline.Add (e);
+					Timeline.Remove (e);
+				});
+				oldPeriod.Nodes.ForEach (t => t.Move (diff));
+			}
+			Timeline = newTimeline;
+		}
+
 		public bool Equals (Project project)
 		{
 			if (project == null)
