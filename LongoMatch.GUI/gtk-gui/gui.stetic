@@ -9686,7 +9686,7 @@ You can continue with the current capture, cancel it or save your project.
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Image" id="zoominimage">
+                  <widget class="Gtk.Image" id="zoomoutimage">
                     <property name="MemberName" />
                     <property name="WidthRequest">14</property>
                     <property name="HeightRequest">8</property>
@@ -9716,7 +9716,7 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Image" id="zoomoutimage">
+                  <widget class="Gtk.Image" id="zoominimage">
                     <property name="MemberName" />
                     <property name="WidthRequest">14</property>
                     <property name="HeightRequest">8</property>
