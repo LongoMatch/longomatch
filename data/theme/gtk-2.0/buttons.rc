@@ -14,7 +14,7 @@ style "longomatch-button-nofocus" = "longomatch-default"
 
 style "longomatch-rounded-button" = "longomatch-default"
 {
-  font_name = "Noto 14"
+  font_name = "Ubuntu 14"
 
   engine "pixmap"
   {
