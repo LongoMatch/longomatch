@@ -126,8 +126,7 @@ namespace LongoMatch.Services
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug ("Reloading saved file: " + filePath);
-				MediaFile file = multimediaToolkit.DiscoverFile (filePath);
-				project.Description.FileSet.Add (file);
+				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
 				project.Periods = Capturer.Periods;
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
