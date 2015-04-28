@@ -1,7 +1,5 @@
 
 style "longomatch-default-entry" = "longomatch-default" {
-
-  font = "Ubuntu 12"
   xthickness = 2
   ythickness = 2
 }
