@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment2.Name = "GtkAlignment2";
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
+			this.GtkAlignment2.TopPadding = ((uint)(12));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
 			this.drawingarea2 = new global::Gtk.DrawingArea ();
 			this.drawingarea2.Name = "drawingarea2";
@@ -83,6 +84,7 @@ namespace LongoMatch.Gui.Dialog
 			this.GtkAlignment3 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment3.Name = "GtkAlignment3";
 			this.GtkAlignment3.LeftPadding = ((uint)(12));
+			this.GtkAlignment3.TopPadding = ((uint)(12));
 			// Container child GtkAlignment3.Gtk.Container+ContainerChild
 			this.drawingarea3 = new global::Gtk.DrawingArea ();
 			this.drawingarea3.Name = "drawingarea3";

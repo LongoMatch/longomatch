@@ -10705,6 +10705,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="Xalign">0</property>
                         <property name="Yalign">0</property>
                         <property name="LeftPadding">12</property>
+                        <property name="TopPadding">12</property>
                         <child>
                           <widget class="Gtk.DrawingArea" id="drawingarea2">
                             <property name="MemberName" />
@@ -10739,6 +10740,7 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="Xalign">0</property>
                         <property name="Yalign">0</property>
                         <property name="LeftPadding">12</property>
+                        <property name="TopPadding">12</property>
                         <child>
                           <widget class="Gtk.DrawingArea" id="drawingarea3">
                             <property name="MemberName" />
