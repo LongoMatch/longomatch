@@ -131,6 +131,8 @@ namespace LongoMatch.Gui.Component
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.SeekEvent -= Seek;
+			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
+			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
 
 			main_cam_playerbin.Destroy ();
 			sec_cam_playerbin.Destroy ();
