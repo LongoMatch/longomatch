@@ -26,7 +26,6 @@
 #include <gst/gst.h>
 #include <gst/video/video.h>
 #include <gst/app/gstappsink.h>
-#include <gst/app/gstappsrc.h>
 
 #include "lgm-utils.h"
 #include "gst-nle-source.h"
@@ -41,13 +40,23 @@ GST_DEBUG_CATEGORY (_nlesrc_gst_debug_cat);
 #define AUDIO_CAPS_STR "audio/x-raw-int, endianness=1234, signed=true, "\
       " width=16, depth=16, rate=44100, channels=2"
 
-static GstStaticPadTemplate video_tpl = GST_STATIC_PAD_TEMPLATE ("video",
+static GstStaticPadTemplate video_sink_tpl = GST_STATIC_PAD_TEMPLATE ("video",
+    GST_PAD_SINK,
+    GST_PAD_ALWAYS,
+    GST_STATIC_CAPS ("video/x-raw-yuv; video/x-raw-rgb"));
+
+static GstStaticPadTemplate audio_sink_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
+    GST_PAD_SINK,
+    GST_PAD_ALWAYS,
+    GST_STATIC_CAPS (AUDIO_CAPS_STR));
+
+static GstStaticPadTemplate video_src_tpl = GST_STATIC_PAD_TEMPLATE ("video",
     GST_PAD_SRC,
     GST_PAD_SOMETIMES,
     GST_STATIC_CAPS ("video/x-raw-yuv, format=(fourcc)I420, "
         "width=[1,2160], height=[1,2160], framerate={25/1, 30/1, 50/1, 60/1}"));
 
-static GstStaticPadTemplate audio_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
+static GstStaticPadTemplate audio_src_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
     GST_PAD_SRC,
     GST_PAD_SOMETIMES,
     GST_STATIC_CAPS (AUDIO_CAPS_STR));
@@ -114,10 +123,18 @@ gst_nle_source_item_free (GstNleSrcItem * item)
 static void
 gst_nle_source_init (GstNleSource * nlesrc)
 {
-  nlesrc->video_pad = gst_ghost_pad_new_no_target_from_template ("video",
-      gst_static_pad_template_get (&video_tpl));
-  nlesrc->audio_pad = gst_ghost_pad_new_no_target_from_template ("audio",
-      gst_static_pad_template_get (&audio_tpl));
+  nlesrc->video_srcpad = gst_ghost_pad_new_no_target_from_template ("video",
+      gst_static_pad_template_get (&video_src_tpl));
+  nlesrc->audio_srcpad = gst_ghost_pad_new_no_target_from_template ("audio",
+      gst_static_pad_template_get (&audio_src_tpl));
+  nlesrc->video_sinkpad = gst_ghost_pad_new_no_target_from_template ("video_sink",
+      gst_static_pad_template_get (&video_sink_tpl));
+  nlesrc->audio_sinkpad = gst_ghost_pad_new_no_target_from_template ("audio_sink",
+      gst_static_pad_template_get (&audio_sink_tpl));
+  gst_pad_set_active (nlesrc->video_sinkpad, TRUE);
+  gst_pad_set_active (nlesrc->audio_sinkpad, TRUE);
+  gst_element_add_pad (GST_ELEMENT (nlesrc), gst_object_ref (nlesrc->video_sinkpad));
+  gst_element_add_pad (GST_ELEMENT (nlesrc), gst_object_ref (nlesrc->audio_sinkpad));
   g_mutex_init (&nlesrc->stream_lock);
 }
 
@@ -168,6 +185,11 @@ gst_nle_source_dispose (GObject * object)
     nlesrc->decoder = NULL;
   }
 
+  gst_object_unref (nlesrc->video_srcpad);
+  gst_object_unref (nlesrc->video_sinkpad);
+  gst_object_unref (nlesrc->audio_srcpad);
+  gst_object_unref (nlesrc->audio_sinkpad);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -185,13 +207,13 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   GstElement *a_capsfilter, *v_capsfilter;
   GstPad *v_pad, *a_pad;
   GstCaps *v_caps, *a_caps;
+  gboolean ret = FALSE;
 
-  nlesrc->video_appsrc = gst_element_factory_make ("appsrc", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
   nlesrc->videocrop = gst_element_factory_make ("videocrop", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
-  v_capsfilter = gst_element_factory_make ("capsfilter", NULL);
+  v_capsfilter = gst_element_factory_make ("capsfilter", "video_capsfilter");
   nlesrc->textoverlay = gst_element_factory_make ("textoverlay", NULL);
   vident = gst_element_factory_make ("identity", NULL);
 
@@ -202,9 +224,8 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "framerate", GST_TYPE_FRACTION,
       (gint) nlesrc->fps_n, (gint) nlesrc->fps_d, NULL);
-  gst_pad_set_caps (nlesrc->video_pad, v_caps);
+  gst_pad_set_caps (nlesrc->video_srcpad, v_caps);
 
-  g_object_set (nlesrc->video_appsrc, "block", TRUE, NULL);
   g_object_set (videoscale, "add-borders", TRUE, NULL);
   g_object_set (vident, "single-segment", TRUE, NULL);
   g_object_set (v_capsfilter, "caps", v_caps, NULL);
@@ -212,42 +233,52 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       "auto-resize", TRUE, "wrap-mode", 0, "silent", !nlesrc->overlay_title,
       NULL);
 
-  gst_bin_add_many (GST_BIN (nlesrc), nlesrc->video_appsrc, videorate,
-      nlesrc->videocrop, videoscale, colorspace, v_capsfilter,
-      nlesrc->textoverlay, vident, NULL);
-  gst_element_link_many (nlesrc->video_appsrc, nlesrc->videocrop,
+  /* As videorate can duplicate a lot of buffers we want to put it last in this transformation bin */
+  gst_bin_add_many (GST_BIN (nlesrc), nlesrc->videocrop,
+      videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
+  ret = gst_element_link_many (nlesrc->videocrop,
       videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
 
+  /* Ghost source and sink pads */
   v_pad = gst_element_get_pad (vident, "src");
-  gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_pad), v_pad);
+  gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_srcpad), v_pad);
+  gst_object_unref (v_pad);
+
+  v_pad = gst_element_get_pad (nlesrc->videocrop, "sink");
+  gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_sinkpad), v_pad);
+  gst_object_unref (v_pad);
 
   if (nlesrc->with_audio) {
-    nlesrc->audio_appsrc = gst_element_factory_make ("appsrc", NULL);
     audiorate = gst_element_factory_make ("audiorate", NULL);
     audioconvert = gst_element_factory_make ("audioconvert", NULL);
     audioresample = gst_element_factory_make ("audioresample", NULL);
     a_capsfilter = gst_element_factory_make ("capsfilter", NULL);
     aident = gst_element_factory_make ("identity", NULL);
 
-    gst_bin_add_many (GST_BIN (nlesrc), nlesrc->audio_appsrc, audiorate,
-        audioconvert, audioresample, a_capsfilter, aident, NULL);
-    gst_element_link_many (nlesrc->audio_appsrc, audioresample, audioconvert,
+    gst_bin_add_many (GST_BIN (nlesrc), audioresample, audioconvert,
+        audiorate, a_capsfilter, aident, NULL);
+    gst_element_link_many (audioresample, audioconvert,
         audiorate, a_capsfilter, aident, NULL);
 
     a_caps = gst_nle_source_get_audio_caps (nlesrc);
-    gst_pad_set_caps (nlesrc->audio_pad, a_caps);
+    gst_pad_set_caps (nlesrc->audio_srcpad, a_caps);
     g_object_set (a_capsfilter, "caps", a_caps, NULL);
 
-    g_object_set (nlesrc->audio_appsrc, "block", TRUE, NULL);
     g_object_set (aident, "single-segment", TRUE, NULL);
-    a_pad = gst_element_get_pad (aident, "src");
-    gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->audio_pad), a_pad);
 
+    /* Ghost sink and source pads */
+    a_pad = gst_element_get_pad (aident, "src");
+    gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->audio_srcpad), a_pad);
+    gst_object_unref (a_pad);
+
+    a_pad = gst_element_get_pad (audioresample, "sink");
+    gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->audio_sinkpad), a_pad);
+    gst_object_unref (a_pad);
   }
   nlesrc->index = -1;
   nlesrc->accu_time = 0;
-  nlesrc->video_pad_added = FALSE;
-  nlesrc->audio_pad_added = FALSE;
+  nlesrc->video_srcpad_added = FALSE;
+  nlesrc->audio_srcpad_added = FALSE;
 }
 
 static void
@@ -305,14 +336,13 @@ gst_nle_source_update_videocrop (GstNleSource * nlesrc, GstCaps * caps)
 
   g_object_set (G_OBJECT (nlesrc->videocrop), "left", left, "right", right,
       "top", top, "bottom", bottom, NULL);
-  nlesrc->roi_setup = TRUE;
 }
 
 static GstFlowReturn
 gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
     gboolean is_audio)
 {
-  GstAppSrc *appsrc;
+  GstPad *sinkpad;
   gboolean push_buf;
   guint64 buf_ts, buf_rel_ts, last_ts;
   GstNleSrcItem *item;
@@ -336,12 +366,12 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
     push_buf = nlesrc->audio_seek_done;
     last_ts = nlesrc->audio_ts;
     nlesrc->audio_ts = buf_ts;
-    appsrc = GST_APP_SRC (nlesrc->audio_appsrc);
+    sinkpad = nlesrc->audio_sinkpad;
   } else {
     push_buf = nlesrc->video_seek_done;
     last_ts = nlesrc->video_ts;
     nlesrc->video_ts = buf_ts;
-    appsrc = GST_APP_SRC (nlesrc->video_appsrc);
+    sinkpad = nlesrc->video_sinkpad;
   }
 
   if (push_buf && GST_BUFFER_TIMESTAMP (buf) >= last_ts) {
@@ -359,9 +389,17 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
     if (new_ts >= nlesrc->accu_time) {
       nlesrc->accu_time = new_ts;
     }
+
+    if (G_UNLIKELY (!nlesrc->item_setup)) {
+      gst_nle_source_update_videocrop (nlesrc, GST_BUFFER_CAPS (buf));
+      gst_nle_source_update_overlay_title (nlesrc);
+      nlesrc->item_setup = TRUE;
+    }
+
     /* We need to unlock before pushing since push_buffer can block */
     g_mutex_unlock (&nlesrc->stream_lock);
-    return gst_app_src_push_buffer (appsrc, buf);
+
+    return gst_pad_chain (sinkpad, buf);
   } else {
     GST_LOG_OBJECT (nlesrc, "Discard %s buffer with ts: %" GST_TIME_FORMAT,
         is_audio ? "audio" : "video", GST_TIME_ARGS (buf_ts));
@@ -402,10 +440,10 @@ gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
 
     nlesrc->audio_seek_done = TRUE;
 
-    if (!nlesrc->audio_pad_added) {
-      gst_pad_set_active (nlesrc->audio_pad, TRUE);
-      gst_element_add_pad (GST_ELEMENT (nlesrc), nlesrc->audio_pad);
-      nlesrc->audio_pad_added = TRUE;
+    if (!nlesrc->audio_srcpad_added) {
+      gst_pad_set_active (nlesrc->audio_srcpad, TRUE);
+      gst_element_add_pad (GST_ELEMENT (nlesrc), gst_object_ref (nlesrc->audio_srcpad));
+      nlesrc->audio_srcpad_added = TRUE;
     }
     item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
     duration = item->duration / item->rate;
@@ -519,24 +557,18 @@ gst_nle_source_on_audio_eos (GstAppSink * appsink, gpointer data)
 }
 
 static gboolean
-gst_nle_source_video_pad_probe_cb (GstPad * pad,  GstMiniObject * obj,
+gst_nle_source_video_pad_probe_cb (GstPad * pad,  GstEvent * event,
     GstNleSource * nlesrc)
 {
-  if (GST_IS_EVENT (obj)) {
-    GstEvent *event = GST_EVENT_CAST (obj);
-    if (event->type == GST_EVENT_NEWSEGMENT) {
-      g_mutex_lock (&nlesrc->stream_lock);
-      if (!nlesrc->video_seek_done && nlesrc->seek_done) {
-        GST_DEBUG_OBJECT (nlesrc, "NEWSEGMENT on the video pad");
-        nlesrc->video_seek_done = TRUE;
-        gst_nle_source_update_overlay_title (nlesrc);
-      }
-      g_mutex_unlock (&nlesrc->stream_lock);
+  if (event->type == GST_EVENT_NEWSEGMENT) {
+    g_mutex_lock (&nlesrc->stream_lock);
+    if (!nlesrc->video_seek_done && nlesrc->seek_done) {
+      GST_DEBUG_OBJECT (nlesrc, "NEWSEGMENT on the video pad");
+      nlesrc->video_seek_done = TRUE;
     }
-  } else if (!nlesrc->roi_setup && GST_IS_BUFFER (obj)) {
-    GstBuffer * buffer = GST_BUFFER_CAST (obj);
-    gst_nle_source_update_videocrop (nlesrc, GST_BUFFER_CAPS (buffer));
+    g_mutex_unlock (&nlesrc->stream_lock);
   }
+
   return TRUE;
 }
 
@@ -581,12 +613,12 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
     appsink_cbs.new_preroll = gst_nle_source_on_preroll_buffer;
     appsink_cbs.new_buffer = gst_nle_source_on_video_buffer;
     nlesrc->video_linked = TRUE;
-    if (!nlesrc->video_pad_added) {
-      gst_pad_set_active (nlesrc->video_pad, TRUE);
-      gst_element_add_pad (GST_ELEMENT (nlesrc), nlesrc->video_pad);
-      nlesrc->video_pad_added = TRUE;
+    if (!nlesrc->video_srcpad_added) {
+      gst_pad_set_active (nlesrc->video_srcpad, TRUE);
+      gst_element_add_pad (GST_ELEMENT (nlesrc), gst_object_ref (nlesrc->video_srcpad));
+      nlesrc->video_srcpad_added = TRUE;
     }
-    gst_pad_add_data_probe (GST_BASE_SINK_PAD (GST_BASE_SINK (appsink)),
+    gst_pad_add_event_probe (GST_BASE_SINK_PAD (GST_BASE_SINK (appsink)),
         (GCallback) gst_nle_source_video_pad_probe_cb, nlesrc);
     nlesrc->video_eos = FALSE;
   } else if (g_strrstr (mime, "audio") && nlesrc->with_audio
@@ -597,10 +629,10 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
     appsink_cbs.new_preroll = gst_nle_source_on_preroll_buffer;
     appsink_cbs.new_buffer = gst_nle_source_on_audio_buffer;
     nlesrc->audio_linked = TRUE;
-    if (!nlesrc->audio_pad_added) {
-      gst_pad_set_active (nlesrc->audio_pad, TRUE);
-      gst_element_add_pad (GST_ELEMENT (nlesrc), nlesrc->audio_pad);
-      nlesrc->audio_pad_added = TRUE;
+    if (!nlesrc->audio_srcpad_added) {
+      gst_pad_set_active (nlesrc->audio_srcpad, TRUE);
+      gst_element_add_pad (GST_ELEMENT (nlesrc), gst_object_ref (nlesrc->audio_srcpad));
+      nlesrc->audio_srcpad_added = TRUE;
     }
     gst_pad_add_event_probe (GST_BASE_SINK_PAD (GST_BASE_SINK (appsink)),
         (GCallback) gst_nle_source_audio_pad_probe_cb, nlesrc);
@@ -623,12 +655,9 @@ gst_nle_source_push_eos (GstNleSource * nlesrc)
 {
   GST_INFO_OBJECT (nlesrc, "All items rendered, pushing eos");
 
-  if (nlesrc->video_appsrc) {
-    gst_app_src_end_of_stream (GST_APP_SRC (nlesrc->video_appsrc));
-  }
-  if (nlesrc->audio_appsrc) {
-    gst_app_src_end_of_stream (GST_APP_SRC (nlesrc->audio_appsrc));
-  }
+  /* push on both sink pads of our A/V prep bins */
+  gst_pad_send_event (nlesrc->video_sinkpad, gst_event_new_eos ());
+  gst_pad_send_event (nlesrc->audio_sinkpad, gst_event_new_eos ());
 }
 
 static void
@@ -693,7 +722,7 @@ gst_nle_source_next (GstNleSource * nlesrc)
   nlesrc->start_ts = nlesrc->accu_time;
   nlesrc->video_linked = FALSE;
   nlesrc->audio_linked = FALSE;
-  nlesrc->roi_setup = FALSE;
+  nlesrc->item_setup = FALSE;
 
   GST_DEBUG_OBJECT (nlesrc, "Start ts:%" GST_TIME_FORMAT,
       GST_TIME_ARGS (nlesrc->start_ts));

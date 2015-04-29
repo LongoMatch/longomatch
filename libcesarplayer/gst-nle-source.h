@@ -61,16 +61,16 @@ struct _GstNleSource
   gboolean overlay_title;
   gboolean with_audio;
 
-  GstPad *video_pad;
-  GstPad *audio_pad;
-  GstElement *video_appsrc;
-  GstElement *audio_appsrc;
+  GstPad *video_srcpad;
+  GstPad *video_sinkpad;
+  GstPad *audio_srcpad;
+  GstPad *audio_sinkpad;
   GstElement *videocrop;
   GstElement *textoverlay;
   gboolean video_linked;
   gboolean audio_linked;
-  gboolean video_pad_added;
-  gboolean audio_pad_added;
+  gboolean video_srcpad_added;
+  gboolean audio_srcpad_added;
 
   GstElement *decoder;
 
@@ -83,7 +83,7 @@ struct _GstNleSource
   gboolean video_seek_done;
   gboolean audio_eos;
   gboolean video_eos;
-  gboolean roi_setup;
+  gboolean item_setup;
 
   GMutex stream_lock;
 
