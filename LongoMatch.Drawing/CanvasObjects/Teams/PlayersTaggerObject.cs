@@ -350,9 +350,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			homeBench.Height = awayBench.Height = field.Height;
 			
 			border = Config.Style.TeamTaggerBenchBorder;
-			homeBench.Position = new Point (border, 0);
-			field.Position = new Point (awayBench.Width + 2 * border, 0);
-			awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
+			if (homeTeam == null || awayTeam == null) {
+				if (homeTeam != null) {
+					homeBench.Position = new Point (border, 0);
+					field.Position = new Point (border + homeBench.Width + border, 0);
+				} else {
+					field.Position = new Point (border, 0);
+					awayBench.Position = new Point (border + field.Width + border, 0);
+				}
+			} else {
+				homeBench.Position = new Point (border, 0);
+				field.Position = new Point (homeBench.Width + 2 * border, 0);
+				awayBench.Position = new Point (awayBench.Width + field.Width + 3 * border, 0);
+			}
 
 			Update ();
 		}
