@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			if (substitution.Team == TeamType.LOCAL) {
 				LoadTeams (project, hfp, hbp, null, null);
 			} else {
-				LoadTeams (project, afp, abp, null, null);
+				LoadTeams (project, null, null, afp, abp);
 			}
 			SwitchPlayer (substitution.In, substitution.Out);
 		}
@@ -117,15 +117,17 @@ namespace LongoMatch.Gui.Dialog
 		{
 			List<Player> homeTeamPlayers, awayTeamPlayers;
 
-			homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
-			homeTeam = new Team {
-				Colors = project.LocalTeamTemplate.Colors,
-				ActiveColor = project.LocalTeamTemplate.ActiveColor,
-				ID = project.LocalTeamTemplate.ID,
-				Formation = project.LocalTeamTemplate.Formation,
-				List = homeTeamPlayers
-			};
-			
+			if (homeFieldPlayers != null) {
+				homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
+				homeTeam = new Team {
+					Colors = project.LocalTeamTemplate.Colors,
+					ActiveColor = project.LocalTeamTemplate.ActiveColor,
+					ID = project.LocalTeamTemplate.ID,
+					Formation = project.LocalTeamTemplate.Formation,
+					List = homeTeamPlayers
+				};
+			}
+
 			if (awayFieldPlayers != null) {
 				awayTeamPlayers = awayFieldPlayers.Concat (awayBenchPlayers).ToList ();
 				awayTeam = new Team {
@@ -135,8 +137,6 @@ namespace LongoMatch.Gui.Dialog
 					Formation = project.VisitorTeamTemplate.Formation,
 					List = awayTeamPlayers
 				};
-			} else {
-				awayTeam = null;
 			}
 
 			tagger.LoadTeams (homeTeam, awayTeam, project.Dashboard.FieldBackground);
