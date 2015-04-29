@@ -232,7 +232,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   gve->priv->identity = gst_element_factory_make ("identity", "identity");
   gve->priv->ffmpegcolorspace =
       gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");
-  gve->priv->queue = gst_element_factory_make ("queue2", "video-encode-queue");
+  gve->priv->queue = gst_element_factory_make ("queue", "video-encode-queue");
   gve->priv->video_encoder =
       lgm_create_video_encoder (gve->priv->video_encoder_type,
       gve->priv->video_quality, FALSE, GVE_ERROR, &error);
@@ -284,7 +284,7 @@ gve_create_audio_encode_bin (GstVideoEditor * gve)
   gve->priv->aencode_bin = gst_element_factory_make ("bin", "aencodebin");
   gve->priv->audioidentity =
       gst_element_factory_make ("identity", "audio-identity");
-  gve->priv->audioqueue = gst_element_factory_make ("queue2", "audio-queue");
+  gve->priv->audioqueue = gst_element_factory_make ("queue", "audio-queue");
   gve->priv->audioencoder =
       lgm_create_audio_encoder (gve->priv->audio_encoder_type,
       gve->priv->audio_quality, GVE_ERROR, &error);
