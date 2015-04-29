@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-04-23 22:46+0000\n"
-"PO-Revision-Date: 2015-04-24 08:30+0000\n"
+"POT-Creation-Date: 2015-04-28 22:25+0000\n"
+"PO-Revision-Date: 2015-04-28 08:33+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/longomatch/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -109,113 +109,113 @@ msgstr ""
 msgid "Hotkey already in use: "
 msgstr "Hotkey wird bereits genutzt:"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:56
+#: ../LongoMatch.Core/Common/Hotkeys.cs:57
 msgid "Delete selected event"
 msgstr "Ausgewählte Veranstaltung löschen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:57
+#: ../LongoMatch.Core/Common/Hotkeys.cs:58
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerView.cs:81
 msgid "Draw frame"
 msgstr "Zeichenrahmen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:58
+#: ../LongoMatch.Core/Common/Hotkeys.cs:59
 msgid "Edit selected event"
 msgstr "Ausgewählte Veranstaltung bearbeiten"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:59
+#: ../LongoMatch.Core/Common/Hotkeys.cs:60
 msgid "Adjust timeline to current position"
 msgstr "Zeitachse an aktuelle Position anpassen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:60
+#: ../LongoMatch.Core/Common/Hotkeys.cs:61
 msgid "Frame step backward"
 msgstr "Bild Schritt zurück"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:61
+#: ../LongoMatch.Core/Common/Hotkeys.cs:62
 msgid "Frame step forward"
 msgstr "Bild Schritt vorwärts"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:62
+#: ../LongoMatch.Core/Common/Hotkeys.cs:63
 msgid "Jump backward"
 msgstr "Zurück"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:63
+#: ../LongoMatch.Core/Common/Hotkeys.cs:64
 msgid "Jump forward"
 msgstr "Vorwärts"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:64
+#: ../LongoMatch.Core/Common/Hotkeys.cs:65
 #: ../LongoMatch.GUI.Multimedia/Gui/PlayerView.cs:80
 msgid "Close loaded event"
 msgstr "Geladene Veranstaltung schließen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:65
-#: ../LongoMatch.Core/Common/Hotkeys.cs:72
+#: ../LongoMatch.Core/Common/Hotkeys.cs:66
+#: ../LongoMatch.Core/Common/Hotkeys.cs:73
 msgid "Start tagging home player"
 msgstr "Heimspieler taggen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:66
-#: ../LongoMatch.Core/Common/Hotkeys.cs:73
+#: ../LongoMatch.Core/Common/Hotkeys.cs:67
+#: ../LongoMatch.Core/Common/Hotkeys.cs:74
 msgid "Start tagging away player"
 msgstr "Auswärtsspieler taggen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:67
+#: ../LongoMatch.Core/Common/Hotkeys.cs:68
 msgid "Jump to next event"
 msgstr "Zur nächsten Veranstaltung"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:68
+#: ../LongoMatch.Core/Common/Hotkeys.cs:69
 msgid "Jump to prev event"
 msgstr "Zur vorherigen Veranstaltung"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:69
+#: ../LongoMatch.Core/Common/Hotkeys.cs:70
 msgid "Show dashboard"
 msgstr "Übersicht anzeigen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:70
+#: ../LongoMatch.Core/Common/Hotkeys.cs:71
 msgid "Show zonal tags"
 msgstr "Lokale Tags anzeigen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:71
+#: ../LongoMatch.Core/Common/Hotkeys.cs:72
 msgid "Show timeline"
 msgstr "Zeitachse anzeigen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:74
+#: ../LongoMatch.Core/Common/Hotkeys.cs:75
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:32
 msgid "Increase playback speed"
 msgstr "Wiedergabegeschwindigkeit erhöhen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:75
+#: ../LongoMatch.Core/Common/Hotkeys.cs:76
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:33
 msgid "Decrease playback speed"
 msgstr "Wiedergabegeschwindigkeit reduzieren"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:76
+#: ../LongoMatch.Core/Common/Hotkeys.cs:77
 msgid "Pause/Resume capture clock"
 msgstr "Pause/ Fortsetzen Erfassungszeit"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
-#: ../LongoMatch.Core/Common/Hotkeys.cs:77
+#: ../LongoMatch.Core/Common/Hotkeys.cs:78
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:68
 msgid "Start recording period"
 msgstr "Aufnahmezeit starten"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:78
+#: ../LongoMatch.Core/Common/Hotkeys.cs:79
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:69
 msgid "Stop recording period"
 msgstr "Aufnahmezeit stoppen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:79
+#: ../LongoMatch.Core/Common/Hotkeys.cs:80
 msgid "Toggle substitutions mode"
 msgstr "Umschalten zu Austauschmodus"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:80
+#: ../LongoMatch.Core/Common/Hotkeys.cs:81
 msgid "Toggle playback"
 msgstr "Umschalten zu Playback"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:81
+#: ../LongoMatch.Core/Common/Hotkeys.cs:82
 msgid "Zoom timeline in"
 msgstr "Zeitachse hereinzoomen"
 
-#: ../LongoMatch.Core/Common/Hotkeys.cs:82
+#: ../LongoMatch.Core/Common/Hotkeys.cs:83
 msgid "Zoom timeline out"
 msgstr "Zeitachse herauszoomen"
 
@@ -283,7 +283,7 @@ msgstr "Nicht definiert"
 #: ../LongoMatch.Core/Store/MediaFileSet.cs:63
 #: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:61
 #: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:95
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:443
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:444
 msgid "Main camera angle"
 msgstr ""
 
@@ -495,6 +495,7 @@ msgstr "Keine "
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs:57
 #: ../LongoMatch.Plugins.Stats/Stats/Plotter.cs:52
 #: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:36
+#: ../LongoMatch.Services/TemplatesService.cs:254
 msgid "Home"
 msgstr "Heim"
 
@@ -502,6 +503,7 @@ msgstr "Heim"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs:91
 #: ../LongoMatch.Plugins.Stats/Stats/Plotter.cs:53
 #: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:37
+#: ../LongoMatch.Services/TemplatesService.cs:256
 msgid "Away"
 msgstr "Gast"
 
@@ -1462,17 +1464,17 @@ msgstr "Kategorie Filter"
 msgid "Players filter"
 msgstr "Spieler Filter"
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:441
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:459
 msgid ""
 "Drag the bars in the timeline to synchronize secondary video files with the "
 "main video"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:445
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:463
 msgid "Camera out of scope"
 msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:477
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:495
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:94
 msgid "Offset"
 msgstr ""
@@ -1482,7 +1484,7 @@ msgid "Do you want to delete player: "
 msgstr "Soll der Spieler gelöscht werden:"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:258
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:627
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:628
 msgid "Could not parse tactics string"
 msgstr "Konnte die Taktik-Zeichenkette nicht verarbeiten"
 
@@ -1824,7 +1826,7 @@ msgid "Some video files are still missing for this project."
 msgstr "Es fehlen immernoch einige Videodateien für dieses Projekt "
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:456
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:379
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:380
 msgid "You need at least 1 video file for the main angle"
 msgstr "Sie benötigen mindestens eine Videodatei für den Hauptwinkel"
 
@@ -1869,31 +1871,31 @@ msgstr "Verschieben nach"
 msgid "Drawings"
 msgstr "Zeichnungen"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:301
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:302
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:363
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:364
 msgid "PROJECT TYPE"
 msgstr "PROJEKTTYP"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:365
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:366
 msgid "PROJECT PROPERTIES"
 msgstr "PROJEKTEIGENSCHAFTEN"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:367
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:368
 msgid "PERIODS SYNCHRONIZATION"
 msgstr "SYNCHRONISATIONS DER ZEITRÄUME"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:394
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:395
 msgid "No output video file"
 msgstr "Keine Ausgabedatei für das Video angegeben"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:400
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:401
 msgid "No input URI"
 msgstr "Keine URI für die Verbindung eingegeben"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:511
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:512
 msgid "No capture devices found in the system"
 msgstr "Keine Aufnahmegeräte im System gefunden"
 
@@ -2468,11 +2470,6 @@ msgstr "Projekt wurde erfolgreich exportiert"
 msgid "Error exporting project"
 msgstr "Fehler beim Exportieren des Projekts"
 
-#: ../LongoMatch.Plugins/SystemDashboards.cs:33
-#: ../LongoMatch.Plugins/SystemDashboards.cs:39
-msgid "default dashboard"
-msgstr ""
-
 #: ../LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs:39
 msgid "GStreamer open source plugins"
 msgstr "GStreamer open source plugins"
@@ -2557,7 +2554,7 @@ msgstr "Spielstatistiken"
 msgid "Show the game statistics"
 msgstr "Spielstatistiken anzeigen"
 
-#: ../LongoMatch.Services/CoreServices.cs:203
+#: ../LongoMatch.Services/CoreServices.cs:220
 msgid ""
 "A rendering job is running in the background. Do you really want to quit?"
 msgstr "Ein Rendering-Prozess läuft im Hintergrund. Wollen Sie diesen wirklich beenden?"
@@ -2587,29 +2584,29 @@ msgstr "Name der Wiedergabeliste:"
 msgid "New playlist"
 msgstr "Neue Wiedergabeliste"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:142
+#: ../LongoMatch.Services/ProjectsManager.cs:141
 msgid "An error occured saving the project:\n"
 msgstr "Ein Fehler ist beim Speichern des Projekts aufgetreten:\n"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:143
+#: ../LongoMatch.Services/ProjectsManager.cs:142
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
 msgstr "Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen Sie, diese später zu importieren:\n"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:178
+#: ../LongoMatch.Services/ProjectsManager.cs:177
 msgid "An error occurred opening this project:"
 msgstr "Ein Fehler ist beim Öffnen des Projekts aufgetreten:"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:233
+#: ../LongoMatch.Services/ProjectsManager.cs:232
 msgid "Do you want to close the current project?"
 msgstr "Wollen Sie das aktuelle Projekt schließen?"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:362
+#: ../LongoMatch.Services/ProjectsManager.cs:361
 msgid "The following error happened and the current project will be closed:"
 msgstr "Der folgende Fehler ist aufgetreten und das aktuelle Projekt wird geschlossen:"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:386
+#: ../LongoMatch.Services/ProjectsManager.cs:385
 msgid "The following error happened and the current capture will be closed:"
 msgstr "Der folgende Fehler ist aufgetreten und die Aufnahme wird beendet:"
 
@@ -2618,25 +2615,40 @@ msgstr "Der folgende Fehler ist aufgetreten und die Aufnahme wird beendet:"
 msgid "Error rendering job: "
 msgstr "Fehler bei der Filmerzeugung:"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:339
+#: ../LongoMatch.Services/RenderingJobsManager.cs:343
 msgid "Rendering"
 msgstr "Rendern"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:345
+#: ../LongoMatch.Services/RenderingJobsManager.cs:349
 msgid "Rendering queue"
 msgstr "Rendering-Warteschlange"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:346
+#: ../LongoMatch.Services/RenderingJobsManager.cs:350
 msgid "Pending"
 msgstr "Ausstehend"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:360
+#: ../LongoMatch.Services/RenderingJobsManager.cs:364
 msgid "An error has occurred in the video editor."
 msgstr "Ein Fehler ist im Video-Editor aufgetreten."
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:361
+#: ../LongoMatch.Services/RenderingJobsManager.cs:365
 msgid "Please, try again."
 msgstr "Bitte versuchen Sie es erneut."
+
+#: ../LongoMatch.Services/TemplatesService.cs:253
+msgid "Home team"
+msgstr ""
+
+#: ../LongoMatch.Services/TemplatesService.cs:255
+msgid "Away team"
+msgstr ""
+
+#. Create the default template, it will be added to the list
+#. of system templates to make it always available on the app
+#. and also read-only
+#: ../LongoMatch.Services/TemplatesService.cs:267
+msgid "Default dashboard"
+msgstr ""
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.Services/ToolsManager.cs:108
