@@ -231,7 +231,7 @@ namespace LongoMatch.Services
 				IgnoreTicks = true;
 				seeker.Dispose ();
 				timer.Dispose (TimerDisposed);
-				TimerDisposed.WaitOne ();
+				TimerDisposed.WaitOne (200);
 				TimerDisposed.Dispose ();
 				player.Error -= HandleError;
 				player.StateChange -= HandleStateChange;

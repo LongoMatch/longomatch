@@ -36,7 +36,7 @@ namespace LongoMatch.Core.Common
 		{
 			if (!disposed) {
 				timer.Dispose (TimerDisposed);
-				TimerDisposed.WaitOne ();
+				TimerDisposed.WaitOne (200);
 				TimerDisposed.Dispose ();
 			}
 			disposed = true;
