@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Store.Playlists
 			Title = play.Name;
 			Rate = play.Rate;
 			CamerasLayout = play.CamerasLayout;
-			CamerasConfig = play.CamerasConfig.ToList ();
+			CamerasConfig = play.CamerasConfig.Clone ();
 			FileSet = fileset;
 		}
 
