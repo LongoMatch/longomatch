@@ -93,6 +93,7 @@ namespace LongoMatch.Drawing
 				foreach (Drawable d in fd.Drawables) {
 					ICanvasSelectableObject obj = CanvasFromDrawableObject (d);
 					obj.Draw (tk, null);
+					obj.Dispose ();
 				}
 				tk.DrawImage (fd.Freehand);
 			}
