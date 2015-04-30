@@ -207,7 +207,6 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   GstElement *a_capsfilter, *v_capsfilter;
   GstPad *v_pad, *a_pad;
   GstCaps *v_caps, *a_caps;
-  gboolean ret = FALSE;
 
   videorate = gst_element_factory_make ("videorate", NULL);
   nlesrc->videocrop = gst_element_factory_make ("videocrop", NULL);
@@ -236,7 +235,7 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   /* As videorate can duplicate a lot of buffers we want to put it last in this transformation bin */
   gst_bin_add_many (GST_BIN (nlesrc), nlesrc->videocrop,
       videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
-  ret = gst_element_link_many (nlesrc->videocrop,
+  gst_element_link_many (nlesrc->videocrop,
       videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
 
   /* Ghost source and sink pads */
@@ -472,11 +471,48 @@ gst_nle_source_on_preroll_buffer (GstAppSink * appsink, gpointer data)
 }
 
 static GstFlowReturn
+gst_nle_source_push_still_picture (GstNleSource *nlesrc, GstNleSrcItem *item,
+    GstBuffer *buf)
+{
+  GstCaps *bcaps, *ncaps;
+  guint64 buf_dur;
+  gint i, n_bufs;
+  GstFlowReturn ret = GST_FLOW_OK;
+
+  buf_dur = GST_SECOND * nlesrc->fps_d / nlesrc->fps_n;
+  n_bufs = item->duration / buf_dur;
+
+  bcaps = gst_buffer_get_caps (buf);
+  ncaps = gst_caps_make_writable (bcaps);
+  gst_caps_set_simple (ncaps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
+        1, 1, NULL);
+  gst_buffer_set_caps (buf, ncaps);
+  gst_caps_unref (ncaps);
+
+  nlesrc->video_seek_done = TRUE;
+  for (i=0; i < n_bufs; i++) {
+    GstBuffer *new_buf;
+
+    new_buf = gst_buffer_copy (buf);
+    GST_BUFFER_TIMESTAMP (new_buf) = item->start + buf_dur * i;
+    GST_BUFFER_DURATION (new_buf) = buf_dur;
+    ret = gst_nle_source_push_buffer (nlesrc, new_buf, FALSE);
+    if (ret <= GST_FLOW_UNEXPECTED) {
+      break;
+    }
+  }
+
+  gst_buffer_unref (buf);
+  return ret;
+}
+
+static GstFlowReturn
 gst_nle_source_on_video_buffer (GstAppSink * appsink, gpointer data)
 {
   GstNleSrcItem *item;
   GstNleSource *nlesrc;
   GstBuffer *buf;
+  GstFlowReturn ret;
 
   nlesrc = GST_NLE_SOURCE (data);
   item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
@@ -484,34 +520,12 @@ gst_nle_source_on_video_buffer (GstAppSink * appsink, gpointer data)
   buf = gst_app_sink_pull_buffer (appsink);
 
   if (item->still_picture) {
-    GstBuffer *end_buf;
-    GstCaps *bcaps, *ncaps;
-
-    bcaps = gst_buffer_get_caps (buf);
-    ncaps = gst_caps_make_writable (bcaps);
-    gst_caps_set_simple (ncaps, "pixel-aspect-ratio", GST_TYPE_FRACTION,
-        1, 1, NULL);
-    gst_buffer_set_caps (buf, ncaps);
-    gst_caps_unref (ncaps);
-
-    end_buf = gst_buffer_copy (buf);
-
-    /* Push the start buffer and last 2 ones and let videorate fill the gap */
-    GST_BUFFER_TIMESTAMP (buf) = item->start;
-    GST_BUFFER_DURATION (buf) = 40 * GST_MSECOND;
-    nlesrc->video_seek_done = TRUE;
-    gst_nle_source_push_buffer (nlesrc, buf, FALSE);
-
-    buf = gst_buffer_copy (end_buf);
-    GST_BUFFER_TIMESTAMP (buf) = item->stop - 80 * GST_MSECOND;
-    GST_BUFFER_DURATION (buf) = 40 * GST_MSECOND;
-    gst_nle_source_push_buffer (nlesrc, buf, FALSE);
-
-    GST_BUFFER_TIMESTAMP (end_buf) = item->stop - 40 * GST_MSECOND;
-    GST_BUFFER_DURATION (buf) = 40 * GST_MSECOND;
-    buf = end_buf;
+    ret = gst_nle_source_push_still_picture (nlesrc, item, buf);
+  } else {
+    ret = gst_nle_source_push_buffer (nlesrc, buf, FALSE);
   }
-  return gst_nle_source_push_buffer (nlesrc, buf, FALSE);
+
+  return ret;
 }
 
 static GstFlowReturn
