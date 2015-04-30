@@ -127,6 +127,13 @@ namespace LongoMatch.Core.Store.Playlists
 				return Play.Miniature;
 			}
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("Duration={0}, Title={1}, Rate={2}, ROI={3}, Drawings={4}",
+				Duration, Title, RateString, CamerasConfig [0].RegionOfInterest,
+				Play.Drawings.Count);
+		}
 	}
 }
 

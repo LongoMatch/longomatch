@@ -242,7 +242,7 @@ namespace LongoMatch.Services
 			Area roi;
 
 			play = element.Play;
-			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
+			Log.Debug (String.Format ("Adding segment {0}", element));
 			
 			lastTS = play.Start;
 			if (element.CamerasConfig.Count == 0) {
