@@ -33,6 +33,8 @@ namespace Tests.Core.Store
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			ProjectDescription pd = new ProjectDescription ();
+			pd.ID = new Guid ();
+			pd.ProjectID = pd.ID;
 			Utils.CheckSerialization (pd);
 			
 			pd.FileSet = new MediaFileSet ();
