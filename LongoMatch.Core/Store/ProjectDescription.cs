@@ -35,7 +35,6 @@ namespace LongoMatch.Core.Store
 		public ProjectDescription ()
 		{
 			ID = Guid.NewGuid ();
-			ProjectID = ID;
 			MatchDate = LastModified = DateTime.Now;
 		}
 
