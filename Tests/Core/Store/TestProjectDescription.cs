@@ -16,10 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.IO;
 using System.Linq;
-using NUnit.Framework;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using NUnit.Framework;
 
 namespace Tests.Core.Store
 {
@@ -64,13 +65,34 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		public void TestsProjectIDMigration ()
+		{
+			String oldJson = @"{ 
+							      ""$id"": ""88"",
+							      ""$type"": ""LongoMatch.Core.Store.ProjectDescription, LongoMatch.Core"",
+							      ""ID"": ""49bb0f28-506b-452a-8158-f3007d3b4910"",
+                                }";
+			MemoryStream stream = new MemoryStream ();
+			StreamWriter writer = new StreamWriter (stream);
+			writer.Write (oldJson);
+			writer.Flush ();
+			stream.Position = 0;
+
+			// Deserialize and check the ProjectID
+			var newobj = Serializer.Load<ProjectDescription> (stream);
+
+			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ID);
+			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ProjectID);
+		}
+
+		[Test ()]
+		[Ignore ("Not implemented")]
 		public void TestSort ()
 		{
 		}
 
 		[Test ()]
-		[Ignore("Not implemented")]
+		[Ignore ("Not implemented")]
 		public void TestSearch ()
 		{
 		}
