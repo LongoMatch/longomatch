@@ -98,8 +98,11 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
+			Config.EventsBroker.QuitApplicationEvent -= HandleQuit;
+
 			teamtagger.Dispose ();
 			projectperiods1.Destroy ();
+
 			base.OnDestroyed ();
 		}
 
@@ -211,6 +214,7 @@ namespace LongoMatch.Gui.Panel
 			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
+			Config.EventsBroker.QuitApplicationEvent += HandleQuit;
 		}
 
 		void FillProjectDetails ()
@@ -521,6 +525,15 @@ namespace LongoMatch.Gui.Panel
 				projectType = ProjectType.URICaptureProject;
 			}
 			HandleNextClicked (this, e);
+		}
+
+		void HandleQuit ()
+		{
+			// When the application is quitting while we are on the new project panel we need to properly destroy widgets.
+			// To do that we go back to the welcome panel, a little bit like the analysis window closes the opened project first.
+			if (BackEvent != null) {
+				BackEvent ();
+			}
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
