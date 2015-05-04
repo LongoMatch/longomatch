@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-04-28 22:25+0000\n"
-"PO-Revision-Date: 2015-04-29 14:54+0000\n"
+"POT-Creation-Date: 2015-05-03 22:27+0000\n"
+"PO-Revision-Date: 2015-05-04 08:50+0000\n"
 "Last-Translator: Ivan Niu <ivanniu@vip.163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/longomatch/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -2199,15 +2199,15 @@ msgstr "版本 {0} 可用！\n（您正在使用版本 {1}）\n<a href=\"{2}\">�
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:149
 msgid "New version available"
-msgstr ""
+msgstr "新版本可用"
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:152
 msgid "Changes:"
-msgstr ""
+msgstr "更改："
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:156
 msgid "Do not notify me again until next version"
-msgstr ""
+msgstr "下一个版本前不再显示通知"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:58
 msgid "Choose an image"
@@ -2278,7 +2278,7 @@ msgstr "实时"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VideoWindow.cs:31
 msgid "Out of scope"
-msgstr ""
+msgstr "超出范围"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:70
 msgid "Pause clock"
@@ -2431,15 +2431,15 @@ msgstr "旧版本中无迁移内容"
 
 #: ../LongoMatch.Migration/MainWindow.cs:92
 msgid "Databases"
-msgstr ""
+msgstr "数据库"
 
 #: ../LongoMatch.Migration/MainWindow.cs:93
 msgid "Dashboards"
-msgstr ""
+msgstr "面板"
 
 #: ../LongoMatch.Migration/MainWindow.cs:94
 msgid "Teams"
-msgstr ""
+msgstr "球队"
 
 #: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:100
 msgid "Fake live source"
@@ -2575,7 +2575,7 @@ msgstr "视频捕获已停止"
 
 #: ../LongoMatch.Services/PlayerController.cs:717
 msgid "Invalid camera configuration"
-msgstr ""
+msgstr "无效摄像头配置"
 
 #: ../LongoMatch.Services/PlaylistManager.cs:185
 msgid "Playlist name:"
@@ -2638,18 +2638,18 @@ msgstr "请重试。"
 
 #: ../LongoMatch.Services/TemplatesService.cs:253
 msgid "Home team"
-msgstr ""
+msgstr "主队"
 
 #: ../LongoMatch.Services/TemplatesService.cs:255
 msgid "Away team"
-msgstr ""
+msgstr "客队"
 
 #. Create the default template, it will be added to the list
 #. of system templates to make it always available on the app
 #. and also read-only
 #: ../LongoMatch.Services/TemplatesService.cs:267
 msgid "Default dashboard"
-msgstr ""
+msgstr "默认面板"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.Services/ToolsManager.cs:108

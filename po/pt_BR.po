@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-04-28 22:25+0000\n"
-"PO-Revision-Date: 2015-04-28 08:33+0000\n"
-"Last-Translator: ylatuya <ylatuya@gmail.com>\n"
+"POT-Creation-Date: 2015-05-03 22:27+0000\n"
+"PO-Revision-Date: 2015-05-03 19:43+0000\n"
+"Last-Translator: Pasquale Oliva <pasqualeoliva1985@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/longomatch/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -581,47 +581,47 @@ msgstr "Modelo padrão de análise"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:79
 msgid "Activate -> Deactivate"
-msgstr ""
+msgstr "Ativar -> Desativar"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:80
 msgid "Activate -> Activate"
-msgstr ""
+msgstr "Ativar -> Ativar"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:93
 msgid "Clear"
-msgstr ""
+msgstr "Limpar"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:94
 msgid "Keep"
-msgstr ""
+msgstr "Manter"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:95
 msgid "Invert"
-msgstr ""
+msgstr "Invertir"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:109
 msgid "Action"
-msgstr ""
+msgstr "Ação"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:120
 msgid "From:"
-msgstr ""
+msgstr "De:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:155
 msgid "Keep generic tags"
-msgstr ""
+msgstr "Manter as tags genéricas"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:166
 msgid "Keep player tags"
-msgstr ""
+msgstr "Manter as tags do jogador"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:177
 msgid "Team action"
-msgstr ""
+msgstr "Ação da equipe"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:188
 msgid "To:"
-msgstr ""
+msgstr "Para:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs:33
 msgid "Review plays in the same window"
@@ -957,7 +957,7 @@ msgstr "Jogadores:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs:20
 msgid "Edit event subcategory tags"
-msgstr ""
+msgstr "Editar as tags da subcategoria do evento"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:22
 msgid "Capture Progress"
@@ -1392,7 +1392,7 @@ msgstr "Editar painel de controle"
 
 #: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:308
 msgid "Edit action links"
-msgstr ""
+msgstr "Editar os links da ação"
 
 #: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:316
 msgid "Disable popup window"
@@ -1649,7 +1649,7 @@ msgstr "Limpar todos os desenhos"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:111
 msgid "Zoom tool. Click to zoom in, Alt+Shift to zoom out"
-msgstr ""
+msgstr "Ferramenta zoom. Clicar para ampliar, Alt+Shift para reduzir"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:262
 msgid "Text"
@@ -1678,7 +1678,7 @@ msgstr "Você quer apagar o desenho atual?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:109
 msgid "Do you want to remove this subcategory and all its tags?"
-msgstr ""
+msgstr "Você quer remover esta subcategoria e todas suas tags?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:118
 msgid "Do you want to remove this tag?"
@@ -1690,15 +1690,15 @@ msgstr "Nova marcação"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:148
 msgid "<b>Subcategory name:</b>"
-msgstr ""
+msgstr "<b>Nome da subcategoria</b>"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:223
 msgid "Add new subcategory"
-msgstr ""
+msgstr "Adicionar nova subcategoria"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:226
 msgid "New subcategory"
-msgstr ""
+msgstr "Nova subcategoria"
 
 #: ../LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs:232
 msgid "Add new tag"
@@ -1953,7 +1953,7 @@ msgstr "GERENTE DE PROJETOS"
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:114
 msgid "Do you want to save the current project?"
-msgstr ""
+msgstr "Você quer salvar o projeto atual?"
 
 #: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:249
 msgid "Export project"
@@ -2095,7 +2095,7 @@ msgstr "Não foi possível carregar a equipe"
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:306
 msgid "System teams can't be deleted"
-msgstr ""
+msgstr "As equipes do sistema não podem ser eliminadas"
 
 #: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:336
 msgid "The template name is empty."
@@ -2199,19 +2199,19 @@ msgid ""
 "Version {0} is available!\n"
 "(You are using version {1})\n"
 "<a href=\"{2}\">Click here to get it.</a>"
-msgstr ""
+msgstr "A versão {0} está disponível!\n(Você está usando a versão {1})\n<a href=\"{2}\">Clique aqui para obtê-la</a>"
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:149
 msgid "New version available"
-msgstr ""
+msgstr "Nova versão disponível"
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:152
 msgid "Changes:"
-msgstr ""
+msgstr "Alterações:"
 
 #: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:156
 msgid "Do not notify me again until next version"
-msgstr ""
+msgstr "Não desejo receber notificações até a próxima versão"
 
 #: ../LongoMatch.GUI.Helpers/Misc.cs:58
 msgid "Choose an image"
@@ -2642,18 +2642,18 @@ msgstr "Por favor, tente novamente."
 
 #: ../LongoMatch.Services/TemplatesService.cs:253
 msgid "Home team"
-msgstr ""
+msgstr "Equipe de casa"
 
 #: ../LongoMatch.Services/TemplatesService.cs:255
 msgid "Away team"
-msgstr ""
+msgstr "Equipe hóspede"
 
 #. Create the default template, it will be added to the list
 #. of system templates to make it always available on the app
 #. and also read-only
 #: ../LongoMatch.Services/TemplatesService.cs:267
 msgid "Default dashboard"
-msgstr ""
+msgstr "Painel de controle padrão"
 
 #. Show a file chooser dialog to select the file to import
 #: ../LongoMatch.Services/ToolsManager.cs:108
