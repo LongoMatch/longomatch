@@ -197,7 +197,7 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			hometeamscombobox.Active = 0;
-			awayteamscombobox.Active = 0;
+			awayteamscombobox.Active = teams.Count == 1 ? 0 : 1;
 		}
 
 		void ConnectSignals ()
