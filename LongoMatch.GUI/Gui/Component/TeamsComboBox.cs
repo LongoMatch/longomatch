@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Component
 				} else {
 					shield = t.Shield.Scale (size, size).Value;
 				}
-				store.AppendValues (shield, t.TeamName, t);
+				store.AppendValues (shield, t.Name, t);
 			}
 			SetAttributes (texrender, "text", 1);
 			SetAttributes (pixrender, "pixbuf", 0);
