@@ -1831,7 +1831,7 @@ msgstr "Algunos ficheros de vídeo siguen sin encontrarse para este proyecto."
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:456
 #: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:380
 msgid "You need at least 1 video file for the main angle"
-msgstr "Necesitar al menos 1 fichero de vídeo para vista principal"
+msgstr "Necesita al menos 1 fichero de vídeo para la vista principal"
 
 #: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:52
 msgid "Add period"
