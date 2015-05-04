@@ -453,6 +453,10 @@ namespace LongoMatch.Gui.Component
 			if (Mode != DashboardMode.Edit) {
 				return;
 			}
+
+			if (buttons.Count == 0 && links.Count == 0) {
+				return;
+			}
 			
 			menu = new Menu ();
 			foreach (DashboardButton button in buttons) {
