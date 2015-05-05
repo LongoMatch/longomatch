@@ -296,6 +296,9 @@ namespace LongoMatch.Gui
 
 		void HandleTimeChangedEvent (Time currentTime, Time duration, bool seekable)
 		{
+			if (seeking)
+				return;
+
 			timelabel.Text = currentTime.ToMSecondsString (true) + "/" + duration.ToMSecondsString ();
 			if (duration.MSeconds == 0) {
 				timescale.Value = 0;
