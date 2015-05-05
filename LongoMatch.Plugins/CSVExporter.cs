@@ -31,10 +31,6 @@ namespace LongoMatch.Plugins
 	[Extension]
 	public class CSVExporter:IExportProject
 	{
-		readonly string InvalidChars =
-			new string(Path.GetInvalidFileNameChars()) +
-			new string(Path.GetInvalidPathChars());
-
 		public string Name {
 			get {
 				return Catalog.GetString ("CSV export plugin");
@@ -60,16 +56,9 @@ namespace LongoMatch.Plugins
 
 		public void ExportProject (Project project, IGUIToolkit guiToolkit)
 		{
-			string proposed_filename = project.Description.Title + ".csv";
-
-			// Sanitize proposed filename
-			foreach (char c in InvalidChars) {
-				proposed_filename = proposed_filename.Replace(c.ToString(), "");
-			}
-
-			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), proposed_filename,
-				                  Config.HomeDir, "CSV",
-				                  new string[] { "*.csv" });
+			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"),
+				                  Utils.SanitizePath (project.Description.Title + ".csv"),
+				                  Config.HomeDir, "CSV", new [] { "*.csv" });
 			
 			if (filename == null)
 				return;

@@ -65,17 +65,21 @@ namespace LongoMatch.Services
 
 		void ExportProject (Project project)
 		{
+			string filename;
+
 			if (project == null) {
 				Log.Warning ("Opened project is null and can't be exported");
 			}
-			string proposed_filename = project.Description.Title + Constants.PROJECT_EXT;
-			string filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"), proposed_filename,
-				                  Config.HomeDir, Constants.PROJECT_NAME, new string[] { Constants.PROJECT_EXT });
+
+			filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"),
+				Utils.SanitizePath (project.Description.Title + Constants.PROJECT_EXT),
+				Config.HomeDir, Constants.PROJECT_NAME,
+				new [] { Constants.PROJECT_EXT });
 			
 			if (filename == null)
 				return;
 			
-			System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
+			Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 			
 			try {
 				Project.Export (project, filename);
