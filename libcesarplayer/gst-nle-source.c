@@ -389,7 +389,7 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
       nlesrc->accu_time = new_ts;
     }
 
-    if (G_UNLIKELY (!nlesrc->item_setup)) {
+    if (G_UNLIKELY (!nlesrc->item_setup) && !is_audio) {
       gst_nle_source_update_videocrop (nlesrc, GST_BUFFER_CAPS (buf));
       gst_nle_source_update_overlay_title (nlesrc);
       nlesrc->item_setup = TRUE;
