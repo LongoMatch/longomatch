@@ -161,7 +161,14 @@ namespace LongoMatch
 			logFile = Path.Combine (Config.HomeDir, logFile);
 			Log.Information (SysInfo.PrintInfo (Assembly.GetExecutingAssembly ().GetName ().Version));
 			Log.Exception (ex);
-			File.Copy (Config.LogFile, logFile);
+			try {
+				if (File.Exists (logFile)) {
+					File.Delete (logFile);
+				}
+				File.Copy (Config.LogFile, logFile);
+			} catch (Exception ex1) {
+				Log.Exception (ex1);
+			}
 
 			//TODO Add bug reports link
 			MessagesHelpers.ErrorMessage (null,
