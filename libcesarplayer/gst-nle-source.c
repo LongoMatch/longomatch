@@ -318,6 +318,9 @@ gst_nle_source_update_videocrop (GstNleSource * nlesrc, GstCaps * caps)
 
   item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
 
+  GST_DEBUG_OBJECT (nlesrc, "Applying roi %d %d %dX%d\n",
+      item->roi.x, item->roi.y, item->roi.width, item->roi.height);
+
   if (item->roi.width && item->roi.height) {
     GstStructure *structure;
     gint vwidth = 0, vheight = 0;
@@ -333,6 +336,8 @@ gst_nle_source_update_videocrop (GstNleSource * nlesrc, GstCaps * caps)
     }
   }
 
+  GST_DEBUG_OBJECT (nlesrc, "Configuring videocrop left:%d "
+      "right:%d top:%d left:%d\n", left, right, top, bottom);
   g_object_set (G_OBJECT (nlesrc->videocrop), "left", left, "right", right,
       "top", top, "bottom", bottom, NULL);
 }
@@ -390,6 +395,7 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
     }
 
     if (G_UNLIKELY (!nlesrc->item_setup) && !is_audio) {
+      GST_DEBUG_OBJECT (nlesrc, "Applying roi and title properties for this segment");
       gst_nle_source_update_videocrop (nlesrc, GST_BUFFER_CAPS (buf));
       gst_nle_source_update_overlay_title (nlesrc);
       nlesrc->item_setup = TRUE;
