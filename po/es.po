@@ -1920,7 +1920,7 @@ msgstr "Atajos de teclado"
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:67
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Vídeo"
 
 #: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:70
 msgid "Live analysis"
