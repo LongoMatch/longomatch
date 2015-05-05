@@ -238,6 +238,8 @@ namespace LongoMatch.Gui.Panel
 			// otherwise set the loaded template
 			if (project.LocalTeamTemplate != null) {
 				hometeamscombobox.Sensitive = false;
+				hometeamscombobox.Load (new List<Team> { project.LocalTeamTemplate });
+				hometeamscombobox.Active = 0;
 				LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
 			} else {
 				project.LocalTeamTemplate = hometemplate;
@@ -245,6 +247,8 @@ namespace LongoMatch.Gui.Panel
 
 			if (project.VisitorTeamTemplate != null) {
 				awayteamscombobox.Sensitive = false;
+				awayteamscombobox.Load (new List<Team> { project.VisitorTeamTemplate });
+				awayteamscombobox.Active = 0;
 				LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
 			} else {
 				project.VisitorTeamTemplate = awaytemplate;
