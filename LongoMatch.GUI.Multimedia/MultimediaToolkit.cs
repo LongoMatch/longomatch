@@ -31,12 +31,16 @@ namespace LongoMatch.Video
 	{
 		public string RemuxFile (MediaFile file, object window)
 		{
+			VideoMuxerType muxType = VideoMuxerType.Mp4;
+			string ext = ".mp4";
+			string ext_desc = "MP4 (.mp4";
+
 			string outputFile = Config.GUIToolkit.SaveFile (Catalog.GetString ("Output file"),
-				                    Path.ChangeExtension (file.FilePath, ".mp4"),
+				                    Path.ChangeExtension (file.FilePath, ext),
 				                    Path.GetDirectoryName (file.FilePath),
-				                    "MP4 (.mp4)", new string[] { ".mp4" });
-			outputFile = Path.ChangeExtension (outputFile, ".mp4");
-			Utils.Remuxer remuxer = new Utils.Remuxer (file, outputFile, VideoMuxerType.Mp4);
+				                    ext_desc, new string[] { ext });
+			outputFile = Path.ChangeExtension (outputFile, ext);
+			Utils.Remuxer remuxer = new Utils.Remuxer (file, outputFile, muxType);
 			return remuxer.Remux (window as Gtk.Window);
 		}
 	}
