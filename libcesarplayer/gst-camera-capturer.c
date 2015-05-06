@@ -1006,26 +1006,64 @@ gst_camera_capturer_prepare_mpegts_source (GstCameraCapturer * gcc)
 }
 
 static gboolean
+gcc_fix_caps (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
+{
+  GstCaps *caps, *setter_caps;
+  const GstStructure *s;
+  gint fps_n = 0, fps_d = 0;
+  GstElement *capssetter, *uridecodebin;
+
+  caps = gst_pad_get_negotiated_caps (pad);
+
+  s = gst_caps_get_structure (caps, 0);
+
+  /* Multipart mjpeg streams outputs buffers without timestamps
+   * and with framerate=0/1. The capssetter fixes the framerate
+   * forcing it to 25/1 and  and configure uridecodebin to */
+  if (gst_structure_get_fraction (s, "framerate", &fps_d, &fps_d) &&
+    (fps_n == 0 && fps_d == 1)) {
+    capssetter = gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin),
+          "video-pad");
+    uridecodebin = gst_bin_get_by_name (GST_BIN (gcc->priv->source_bin),
+          "uridecodebin");
+    g_object_set (uridecodebin, "buffer-time", 20 * GST_MSECOND, NULL);
+
+    setter_caps = gst_caps_make_writable (caps);
+    gst_caps_set_simple (setter_caps, "framerate", GST_TYPE_FRACTION, 25, 1, NULL);
+    g_object_set (capssetter, "caps", setter_caps, NULL);
+    gst_caps_unref (setter_caps);
+  }
+
+  return TRUE;
+}
+
+static gboolean
 gst_camera_capturer_create_uri_source (GstCameraCapturer * gcc, GError ** err)
 {
-  GstElement *bin, *decodebin, *identity;
-  GstPad *video_pad;
+  GstElement *bin, *decodebin, *capssetter;
+  GstPad *setter_pad, *video_pad;
 
   GST_INFO_OBJECT (gcc, "Creating URI source %s\n", gcc->priv->device_id);
 
   gcc->priv->video_needs_keyframe_sync = FALSE;
 
   gcc->priv->source_bin = bin = gst_bin_new ("source");
-  decodebin = gst_element_factory_make ("uridecodebin", NULL);
+  decodebin = gst_element_factory_make ("uridecodebin", "uridecodebin");
   g_object_set (decodebin, "uri", gcc->priv->device_id, NULL);
   g_signal_connect (decodebin, "autoplug-select",
       G_CALLBACK (lgm_filter_video_decoders), gcc);
-  identity = gst_element_factory_make ("identity", "video-pad");
+  capssetter = gst_element_factory_make ("capssetter", "video-pad");
+  g_object_set (capssetter, "replace", TRUE, NULL);
 
-  gst_bin_add_many (GST_BIN (bin), decodebin, identity, NULL);
+
+  gst_bin_add_many (GST_BIN (bin), decodebin, capssetter, NULL);
+
+  /* Add callback to replace invalid framerate for mjpeg streams */
+  setter_pad = gst_element_get_static_pad (capssetter, "sink");
+  g_signal_connect (setter_pad, "notify::caps", G_CALLBACK (gcc_fix_caps), gcc);
 
   /* add ghostpad */
-  video_pad = gst_element_get_static_pad (identity, "src");
+  video_pad = gst_element_get_static_pad (capssetter, "src");
   gst_element_add_pad (bin, gst_ghost_pad_new ("video", video_pad));
   gst_object_unref (GST_OBJECT (video_pad));
 
@@ -1039,7 +1077,6 @@ gst_camera_capturer_create_uri_source (GstCameraCapturer * gcc, GError ** err)
 static gboolean
 gcc_source_caps_set (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
 {
-  GstStructure *s;
   GstCaps *caps;
 
   /* We only use the caps filter to select an output from the device
@@ -1048,6 +1085,8 @@ gcc_source_caps_set (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
    */
   caps = gst_pad_get_negotiated_caps (pad);
   g_object_set (gcc->priv->source_filter, "caps", caps, NULL);
+
+  return TRUE;
 }
 
 static gboolean
@@ -1303,6 +1342,11 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       /* we only care about playbin (pipeline) state changes */
       if (GST_MESSAGE_SRC (message) != GST_OBJECT (gcc->priv->main_pipeline))
         break;
+
+      if (new_state == GST_STATE_PLAYING) {
+        GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gcc->priv->main_pipeline),
+          GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-capture-playing");
+      }
     }
 
     case GST_MESSAGE_ELEMENT:
