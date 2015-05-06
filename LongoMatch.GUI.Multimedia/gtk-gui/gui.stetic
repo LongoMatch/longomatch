@@ -231,6 +231,7 @@
                     <child>
                       <widget class="Gtk.Button" id="pausebutton">
                         <property name="MemberName" />
+                        <property name="Visible">False</property>
                         <property name="Tooltip" translatable="yes">Pause</property>
                         <property name="Type">Custom</property>
                         <property name="Relief">None</property>

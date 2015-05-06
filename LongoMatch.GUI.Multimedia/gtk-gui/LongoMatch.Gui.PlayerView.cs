@@ -336,6 +336,7 @@ namespace LongoMatch.Gui
 			this.videowindow.Hide ();
 			this.blackboarddrawingarea.Hide ();
 			this.closebutton.Hide ();
+			this.pausebutton.Hide ();
 			this.prevbutton.Hide ();
 			this.nextbutton.Hide ();
 			this.controlsbox.Hide ();
