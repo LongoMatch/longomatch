@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		double secondsPerPixel;
-		Time duration;
+		Time currentTime, duration;
 
 		List<TimelineObject> timelines;
 		List<Timer> timers;
@@ -49,6 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			currentTime = new Time (0);
 		}
 
 		public void Load (List<Period> periods, MediaFileSet fileSet, Time duration)
@@ -72,9 +73,22 @@ namespace LongoMatch.Drawing.Widgets
 
 		public Time CurrentTime {
 			set {
+				Area area;
+				double start, stop;
+
 				foreach (TimelineObject tl in timelines) {
 					tl.CurrentTime = value;
 				}
+				if (currentTime < value) {
+					start = Utils.TimeToPos (currentTime, SecondsPerPixel);
+					stop = Utils.TimeToPos (value, SecondsPerPixel);
+				} else {
+					start = Utils.TimeToPos (value, SecondsPerPixel);
+					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
+				}
+				area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
+				currentTime = value;
+				widget.ReDraw (area);
 			}
 		}
 
