@@ -539,6 +539,15 @@ namespace LongoMatch.Services
 			}
 		}
 
+		public void ApplyROI (CameraConfig camConfig)
+		{
+			camerasConfig [camConfig.Index] = camConfig;
+			if (multiPlayer != null) {
+				multiPlayer.ApplyROI (camConfig);
+			}
+		}
+
+
 		#endregion
 
 		#region Signals

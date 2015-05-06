@@ -728,8 +728,7 @@ namespace Tests.Services
 			Assert.AreEqual (0, elementLoaded);
 			Assert.AreEqual (1, prepareView);
 
-
-
+			player.Ready ();
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
 			Assert.AreEqual (el1.CamerasConfig, player.CamerasConfig);
@@ -920,7 +919,7 @@ namespace Tests.Services
 			cams = player.CamerasConfig;
 			cams [0].RegionOfInterest = new Area (10, 10, 20, 20);
 			/* And set */
-			player.CamerasConfig = cams;
+			player.ApplyROI (cams [0]);
 
 			/* Now create an event with current camera config */
 			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
@@ -931,7 +930,7 @@ namespace Tests.Services
 
 			/* Change ROI again */
 			cams [0].RegionOfInterest = new Area (20, 20, 40, 40);
-			player.CamerasConfig = cams;
+			player.ApplyROI (cams [0]);
 
 			/* Check event was not impacted */
 			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);

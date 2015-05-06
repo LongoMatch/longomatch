@@ -170,5 +170,11 @@ namespace LongoMatch.Core.Interfaces
 		/// once it has set a valid window handle to start rendering.
 		/// </summary>
 		void Ready ();
+
+		/// <summary>
+		/// Applies the configured RegionOfInterest for a given camera.
+		/// </summary>
+		/// <param name="camConfig">The camera to update.</param>
+		void ApplyROI (CameraConfig camConfig);
 	}
 }
