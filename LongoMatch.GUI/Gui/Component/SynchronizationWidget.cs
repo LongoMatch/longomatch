@@ -294,7 +294,6 @@ namespace LongoMatch.Gui.Component
 					ShowDidactic (DidacticMessage.CameraOutOfScope);
 				}
 			}
-			QueueDraw ();
 		}
 
 		/// <summary>
