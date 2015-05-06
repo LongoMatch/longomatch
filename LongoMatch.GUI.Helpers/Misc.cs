@@ -332,6 +332,7 @@ namespace LongoMatch.Gui.Helpers
 			if (mediaFile != null) {
 				try {
 					if (multimedia.FileNeedsRemux (mediaFile)) {
+						// HACK: We only authorize remuxing in the pro version.
 						if (!Config.SupportsFullHD) {
 							string msg = Catalog.GetString ("This file is not in a supported format, " +
 							             "convert it with the video conversion tool");
