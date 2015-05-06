@@ -147,8 +147,7 @@ namespace LongoMatch.Gui.Dialog
 			TreeIter iter;
 
 			var msg = Catalog.GetString ("Add file");
-			List<string> paths = FileChooserHelper.OpenFiles (this, msg, null,
-				                     Config.HomeDir, null, null);
+			List<string> paths = FileChooserHelper.OpenFiles (this, msg, null, null, null, null);
 			foreach (string path in paths) {
 				MediaFile mediaFile = Misc.DiscoverFile (path, this);
 				if (mediaFile != null) {
