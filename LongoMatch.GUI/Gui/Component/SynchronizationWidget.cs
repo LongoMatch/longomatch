@@ -33,10 +33,12 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class SynchronizationWidget : Gtk.Bin
 	{
+		const uint TIMEOUT_MS = 100;
+		uint timeoutID;
 		CamerasLabels camerasLabels;
 		CamerasTimeline camerasTimeline;
 		Timerule timerule;
-		Time duration;
+		Time duration, currentTime, nextCurrentTime;
 		Project project;
 		PeriodsMenu menu;
 		List<Period> periods;
@@ -51,6 +53,8 @@ namespace LongoMatch.Gui.Component
 		public SynchronizationWidget ()
 		{
 			this.Build ();
+
+			timeoutID = 0;
 
 			zoomscale.CanFocus = false;
 			zoomscale.Adjustment.Lower = 0;
@@ -130,6 +134,11 @@ namespace LongoMatch.Gui.Component
 
 		protected override void OnDestroyed ()
 		{
+			if (timeoutID != 0) {
+				GLib.Source.Remove (timeoutID);
+				timeoutID = 0;
+			}
+
 			Config.EventsBroker.SeekEvent -= Seek;
 			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
 			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
@@ -245,6 +254,11 @@ namespace LongoMatch.Gui.Component
 					HideSecondaryPlayer ();
 					HideDidactic ();
 				}
+
+				// Start updating UI
+				if (timeoutID == 0) {
+					timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
+				}
 			}
 		}
 
@@ -273,14 +287,24 @@ namespace LongoMatch.Gui.Component
 			vpaned2.Position = vpaned2.Allocation.Height - height;
 		}
 
+		bool UpdateTime ()
+		{
+			if (nextCurrentTime != currentTime) {
+				currentTime = nextCurrentTime;
+				timerule.CurrentTime = currentTime;
+				camerasTimeline.CurrentTime = currentTime;
+			}
+			return true;
+		}
+
 		/// <summary>
 		/// Handles the tick from media player to update Current Time in timelines.
 		/// </summary>
 		/// <param name="currentTime">Current time.</param>
 		void HandleTick (Time currentTime, Time duration, bool seekable)
 		{
-			timerule.CurrentTime = currentTime;
-			camerasTimeline.CurrentTime = currentTime;
+			// Cache current time, the UI timeout will come and pick it up
+			nextCurrentTime = currentTime;
 
 			CameraObject camera = camerasTimeline.SelectedCamera;
 			// Detect when secondary camera goes in and out of scope while main camera is playing.
