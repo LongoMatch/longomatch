@@ -2,7 +2,7 @@ style "longomatch-range"
 {
   GtkRange::trough-border		= 0
   GtkRange::trough-side-details		= 1
-  GtkRange::activate-slider		= TRUE
+  GtkRange::activate-slider		= 1
   GtkRange::slider-width		= 20
   GtkScale::slider-length		= 20
 }
