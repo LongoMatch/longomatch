@@ -263,6 +263,8 @@ namespace LongoMatch.Services
 					}
 					if (evt != null) {
 						Config.EventsBroker.EmitDrawFrame (evt, -1, player.CamerasConfig [0], true);
+					} else {
+						Config.EventsBroker.EmitDrawFrame (null, -1, null, true);
 					}
 					return;
 				case KeyAction.TogglePlay:
