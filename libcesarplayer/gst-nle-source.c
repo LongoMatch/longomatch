@@ -48,7 +48,7 @@ static GstStaticPadTemplate video_sink_tpl = GST_STATIC_PAD_TEMPLATE ("video",
 static GstStaticPadTemplate audio_sink_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
     GST_PAD_SINK,
     GST_PAD_ALWAYS,
-    GST_STATIC_CAPS (AUDIO_CAPS_STR));
+    GST_STATIC_CAPS ("audio/x-raw-int; audio/x-raw-float"));
 
 static GstStaticPadTemplate video_src_tpl = GST_STATIC_PAD_TEMPLATE ("video",
     GST_PAD_SRC,
@@ -350,6 +350,7 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
   gboolean push_buf;
   guint64 buf_ts, buf_rel_ts, last_ts;
   GstNleSrcItem *item;
+  GstFlowReturn ret;
 
   item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
   buf_ts = GST_BUFFER_TIMESTAMP (buf);
@@ -404,7 +405,11 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
     /* We need to unlock before pushing since push_buffer can block */
     g_mutex_unlock (&nlesrc->stream_lock);
 
-    return gst_pad_chain (sinkpad, buf);
+    ret = gst_pad_chain (sinkpad, buf);
+    if (ret != GST_FLOW_OK) {
+      GST_WARNING_OBJECT (nlesrc, "pushing buffer returned %s", gst_flow_get_name (ret));
+    }
+    return ret;
   } else {
     GST_LOG_OBJECT (nlesrc, "Discard %s buffer with ts: %" GST_TIME_FORMAT,
         is_audio ? "audio" : "video", GST_TIME_ARGS (buf_ts));
