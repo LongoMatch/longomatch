@@ -35,7 +35,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.PlayerView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="PlayerView Properties">
+        <property name="TogglePlayOnClick" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
 </objects>

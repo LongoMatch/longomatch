@@ -103,6 +103,7 @@ namespace LongoMatch.Gui
 			Player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
 			Player.Step = new Time { TotalSeconds = jumpspinbutton.ValueAsInt };
 			Mode = PlayerViewOperationMode.Analysis;
+			TogglePlayOnClick = true;
 			CreateWindows ();
 			ResetGui ();
 		}
@@ -176,6 +177,11 @@ namespace LongoMatch.Gui
 			}
 			set {
 			}
+		}
+
+		public bool TogglePlayOnClick {
+			get;
+			set;
 		}
 
 		#endregion
@@ -501,7 +507,9 @@ namespace LongoMatch.Gui
 			 * Make sure to ungrab it in order to avoid clicks outisde the window
 			 * triggering this callback. This should be fixed properly.*/
 			Pointer.Ungrab (Gtk.Global.CurrentEventTime);
-			Player.TogglePlay ();
+			if (TogglePlayOnClick) {
+				Player.TogglePlay ();
+			}
 		}
 
 		void OnVideoboxScrollEvent (object o, Gtk.ScrollEventArgs args)
