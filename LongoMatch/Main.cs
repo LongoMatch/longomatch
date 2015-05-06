@@ -170,10 +170,10 @@ namespace LongoMatch
 				Log.Exception (ex1);
 			}
 
-			//TODO Add bug reports link
 			MessagesHelpers.ErrorMessage (null,
 				Catalog.GetString ("The application has finished with an unexpected error.") + "\n" +
-				Catalog.GetString ("A log has been saved at: ") + logFile + "\n" +
+				Catalog.GetString ("A log has been saved at: ") +
+                                "<a href=\"" + logFile + "\">" + logFile + "</a>\n" +
 				Catalog.GetString ("Please, fill a bug report "));
 			Application.Quit ();
 		}
