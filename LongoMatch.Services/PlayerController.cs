@@ -40,6 +40,7 @@ namespace LongoMatch.Services
 		public event VolumeChangedHandler VolumeChangedEvent;
 		public event ElementLoadedHandler ElementLoadedEvent;
 		public event MediaFileSetLoadedHandler MediaFileSetLoadedEvent;
+		public event PrepareViewHandler PrepareViewEvent;
 
 		const int TIMEOUT_MS = 20;
 		const int SCALE_FPS = 25;
@@ -56,7 +57,9 @@ namespace LongoMatch.Services
 		MediaFileSet defaultFileSet;
 
 		Time streamLength, videoTS, imageLoadedTS;
-		bool readyToSeek, stillimageLoaded, ready, delayedOpen, disposed, skipApplyCamerasConfig;
+		bool readyToSeek, stillimageLoaded, ready;
+		bool disposed, skipApplyCamerasConfig;
+		Action delayedOpen;
 		Seeker seeker;
 		Segment loadedSegment;
 		PendingSeek pendingSeek;
@@ -246,12 +249,12 @@ namespace LongoMatch.Services
 		public void Ready ()
 		{
 			Log.Debug ("Player ready");
-			if (delayedOpen) {
-				Log.Debug ("Openning delayed file set");
-				InternalOpen (FileSet, true, true, false, true);
-			}
 			ready = true;
-			delayedOpen = false;
+			if (delayedOpen != null) {
+				Log.Debug ("Calling delayed open");
+				delayedOpen ();
+				delayedOpen = null;
+			}
 		}
 
 		public void Open (MediaFileSet fileSet)
@@ -261,7 +264,7 @@ namespace LongoMatch.Services
 				InternalOpen (fileSet, true, true, false, true);
 			} else {
 				Log.Debug ("Player is not ready, delaying ...");
-				delayedOpen = true;
+				delayedOpen = () => InternalOpen (FileSet, true, true, false, true);
 				FileSet = fileSet;
 			}
 		}
@@ -474,6 +477,12 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
 
+			if (!ready) {
+				EmitPrepareViewEvent ();
+				delayedOpen = () => LoadEvent (fileSet, evt, seekTime, playing);
+				return;
+			}
+
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedEvent = evt;
@@ -492,7 +501,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
-			if (FileSet != defaultFileSet) {
+			if (defaultFileSet != null && FileSet != defaultFileSet) {
 				UpdateCamerasConfig (defaultCamerasConfig, defaultCamerasLayout);
 				EmitEventUnloaded ();
 				Open (defaultFileSet);
@@ -532,6 +541,13 @@ namespace LongoMatch.Services
 		{
 			if (LoadDrawingsEvent != null && !disposed) {
 				LoadDrawingsEvent (drawing);
+			}
+		}
+
+		void EmitPrepareViewEvent ()
+		{
+			if (PrepareViewEvent != null && !disposed) {
+				PrepareViewEvent ();
 			}
 		}
 

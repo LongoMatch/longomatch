@@ -30,7 +30,6 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayerCapturerBin : Gtk.Bin
 	{
-		bool backLoaded = false;
 		IPlayerView playerview;
 		PlayerViewOperationMode mode;
 
@@ -59,6 +58,7 @@ namespace LongoMatch.Gui
 		public IPlayerController Player {
 			set {
 				Player.ElementLoadedEvent += HandleElementLoadedEvent;
+				Player.PrepareViewEvent += HandlePrepareViewEvent;
 			}
 
 			get {
@@ -82,7 +82,6 @@ namespace LongoMatch.Gui
 				}
 				playerview.Mode = value;
 				Log.Debug ("CapturerPlayer setting mode " + value);
-				backLoaded = false;
 			}
 		}
 
@@ -103,6 +102,11 @@ namespace LongoMatch.Gui
 			capturerbox.Visible = true;
 		}
 
+		void HandlePrepareViewEvent ()
+		{
+			ShowPlayer ();
+		}
+
 		void HandleElementLoadedEvent (object element, bool hasNext)
 		{
 			if (element == null) {
@@ -115,7 +119,6 @@ namespace LongoMatch.Gui
 			} else {
 				if (element is TimelineEvent && mode == PlayerViewOperationMode.LiveAnalysisReview) {
 					ShowPlayer ();
-					LoadBackgroundPlayer (Player.FileSet);
 					livebox.Visible = replayhbox.Visible = true;
 				}
 			}
@@ -125,18 +128,6 @@ namespace LongoMatch.Gui
 		{
 			Player.Pause ();
 			ShowCapturer ();
-		}
-
-		void LoadBackgroundPlayer (MediaFileSet file)
-		{
-			if (backLoaded)
-				return;
-				
-			/* The output video file is now created, it's time to 
-				 * load it in the player */
-			Player.Open (file);
-			Log.Debug ("Loading encoded file in the backround player");
-			backLoaded = true;
 		}
 	}
 }

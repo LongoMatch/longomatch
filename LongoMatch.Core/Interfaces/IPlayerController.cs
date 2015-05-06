@@ -37,6 +37,7 @@ namespace LongoMatch.Core.Interfaces
 		event VolumeChangedHandler VolumeChangedEvent;
 		event ElementLoadedHandler ElementLoadedEvent;
 		event MediaFileSetLoadedHandler MediaFileSetLoadedEvent;
+		event PrepareViewHandler PrepareViewEvent;
 
 		/// <summary>
 		/// The file set currently openned by the player.

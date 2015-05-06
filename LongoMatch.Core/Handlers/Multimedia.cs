@@ -48,6 +48,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void ElementLoadedHandler (object element,bool hasNext);
 	public delegate void MediaFileSetLoadedHandler (MediaFileSet fileset,List<CameraConfig> camerasConfig = null);
 	public delegate void ScopeStateChangedHandler (int index,bool visible);
+	public delegate void PrepareViewHandler ();
 
 	public delegate void ErrorHandler (object sender,string message);
 	public delegate void EosHandler (object sender);
