@@ -379,6 +379,11 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.Text == "") {
 					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
 					continue;
+				} else if (dialog.Text == dialog.SelectedTemplate) {
+					/* The new template has the same name as the orignal one,
+					 * just reload it as if we where copying it */
+					Load (dialog.Text);
+					break;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The dashboard already exists. " +
 					          "Do you want to overwrite it?");
