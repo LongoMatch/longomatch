@@ -155,7 +155,7 @@ namespace Tests.Services
 		}
 
 		[Test ()]
-		public void Dispose ()
+		public void TestDispose ()
 		{
 			player.Dispose ();
 			playerMock.Verify (p => p.Dispose (), Times.Once ());
@@ -164,7 +164,7 @@ namespace Tests.Services
 		}
 
 		[Test ()]
-		public void Open ()
+		public void TestOpen ()
 		{
 			int timeCount = 0;
 			bool multimediaError = false;
@@ -246,6 +246,7 @@ namespace Tests.Services
 
 			/* Check now with a still image loaded */
 			playerMock.ResetCalls ();
+			player.Ready ();
 			player.LoadPlaylistEvent (playlist, plImage);
 			player.Play ();
 			playerMock.Verify (p => p.Play (), Times.Never ());
@@ -617,24 +618,36 @@ namespace Tests.Services
 		public void TestLoadEvent ()
 		{
 			int elementLoaded = 0;
+			int prepareView = 0;
 
 			player.ElementLoadedEvent += (element, hasNext) => {
 				if (element != null) {
 					elementLoaded++;
 				}
 			};
+			player.PrepareViewEvent += () => prepareView++;
 
 			/* Not ready to seek */
 			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
-			player.Ready ();
+			Assert.AreEqual (0, prepareView);
+
+			/* Loading an event with the player not ready should trigger the
+			 * PrepareViewEvent and wait until it's ready */
+			player.LoadEvent (mfs, evt, evt.Start, true);
+			Assert.AreEqual (1, prepareView);
 			Assert.IsNull (player.FileSet);
+
+			player.Ready ();
+			Assert.AreEqual (1, elementLoaded);
+			Assert.AreEqual (mfs, player.FileSet);
+
 			player.LoadEvent (mfs, evt, evt.Start, true);
 			Assert.AreEqual (mfs, player.FileSet);
 			Assert.IsFalse (player.Playing);
-			Assert.AreEqual (1, elementLoaded);
+			Assert.AreEqual (2, elementLoaded);
 			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 
 
@@ -646,7 +659,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Seek (evt.Start, true, false), Times.Once ());
 			playerMock.Verify (p => p.Play (), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
-			Assert.AreEqual (1, elementLoaded);
+			Assert.AreEqual (2, elementLoaded);
 			elementLoaded = 0;
 			playerMock.ResetCalls ();
 
@@ -688,6 +701,7 @@ namespace Tests.Services
 		public void TestLoadPlaylistEvent ()
 		{
 			int elementLoaded = 0;
+			int prepareView = 0;
 			MediaFileSet nfs;
 			PlaylistPlayElement el1;
 
@@ -696,15 +710,26 @@ namespace Tests.Services
 					elementLoaded++;
 				}
 			};
+			player.PrepareViewEvent += () => prepareView++;
 
-			PreparePlayer ();
+			/* Not ready to seek */
+			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			viewPortMock = new Mock <IViewPort> ();
+			viewPortMock.SetupAllProperties ();
+			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
+			Assert.AreEqual (0, prepareView);
 
 			/* Load playlist timeline event element */
-			nfs = Cloner.Clone (mfs);
+			nfs = mfs.Clone ();
 			el1 = playlist.Elements [0] as PlaylistPlayElement;
 			el1.FileSet = nfs;
 			currentTime = el1.Play.Start;
 			player.LoadPlaylistEvent (playlist, el1);
+			Assert.AreEqual (0, elementLoaded);
+			Assert.AreEqual (1, prepareView);
+
+
+
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
 			Assert.AreEqual (el1.CamerasConfig, player.CamerasConfig);

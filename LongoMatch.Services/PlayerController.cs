@@ -454,6 +454,12 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element.Description));
 
+			if (!ready) {
+				EmitPrepareViewEvent ();
+				delayedOpen = () => LoadPlaylistEvent (playlist, element);
+				return;
+			}
+
 			loadedEvent = null;
 			loadedPlaylist = playlist;
 			loadedPlaylistElement = element;

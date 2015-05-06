@@ -175,5 +175,10 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		void ApplyCamerasConfig ();
 
+		/// <summary>
+		/// Applies the configured RegionOfInterest for a given camera.
+		/// </summary>
+		/// <param name="camConfig">The camera to update.</param>
+		void ApplyROI (CameraConfig camConfig);
 	}
 }
