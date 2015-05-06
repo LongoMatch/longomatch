@@ -160,7 +160,8 @@ namespace LongoMatch.DB
 		public void AddProject (Project project)
 		{
 			string projectFile;
-			
+
+			Log.Debug (string.Format ("Add project {0}", project.ID));
 			projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
 			project.Description.LastModified = DateTime.UtcNow;
 			projectsDB.Add (project.Description);
@@ -177,7 +178,8 @@ namespace LongoMatch.DB
 		public bool RemoveProject (Guid id)
 		{
 			string projectFile;
-			
+
+			Log.Debug (string.Format ("Remove project {0}", id));
 			projectFile = Path.Combine (dbDirPath, id.ToString ());
 			if (File.Exists (projectFile)) {
 				File.Delete (projectFile);
@@ -187,6 +189,7 @@ namespace LongoMatch.DB
 
 		public void UpdateProject (Project project)
 		{
+			Log.Debug (string.Format ("Update project {0}", project.ID));
 			project.ConsolidateDescription ();
 			AddProject (project);
 		}
