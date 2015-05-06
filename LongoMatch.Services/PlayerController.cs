@@ -580,7 +580,7 @@ namespace LongoMatch.Services
 		void EmitTimeChanged (Time currentTime, Time duration)
 		{
 			if (TimeChangedEvent != null && !disposed) {
-				TimeChangedEvent (currentTime, duration, !StillImageLoaded);
+				TimeChangedEvent (currentTime, duration ?? currentTime, !StillImageLoaded);
 			}
 		}
 
