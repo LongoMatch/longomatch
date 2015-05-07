@@ -16,9 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
@@ -98,6 +99,10 @@ namespace LongoMatch.Gui.Menus
 				addPLN.Visible = plays.Count > 0;
 				render.Visible = plays.Count > 0;
 				duplicate.Visible = plays.Count > 0;
+			}
+
+			if (project.ProjectType == ProjectType.FakeCaptureProject) {
+				snapshot.Visible = render.Visible = false;
 			}
 
 			if (plays.Count > 0) {
