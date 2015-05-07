@@ -283,10 +283,17 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       } else {
         parser = gst_element_factory_make ("mpegaudioparse", "audio-parser");
       }
-    } else if (g_strrstr (mime, "audio/x-eac3")) {
+    } else if (g_strrstr (mime, "audio/x-eac3") ||
+        (g_strrstr (mime, "audio/x-ac3")) ||
+        (g_strrstr (mime, "audio/x-private1-ac3"))) {
       parser = gst_element_factory_make ("ac3parse", NULL);
-    } else if (g_strrstr (mime, "audio/x-ac3")) {
-      parser = gst_element_factory_make ("ac3parse", NULL);
+    } else if (g_strrstr (mime, "audio/x-private1-dts")) {
+      parser = gst_element_factory_make ("dcaparse", NULL);
+    } else if (g_strrstr (mime, "audio/x-private1-lpcm")) {
+      parser = gst_element_factory_make ("flulpcmdec", NULL);
+      if (parser == NULL) {
+        muxer_pad_name = NULL;
+      }
     }
     is_video = FALSE;
   }
