@@ -50,6 +50,7 @@ namespace LongoMatch.Gui
 		protected VolumeWindow vwin;
 		Blackboard blackboard;
 		PlayerViewOperationMode mode;
+		Time duration;
 
 		#region Constructors
 
@@ -297,6 +298,16 @@ namespace LongoMatch.Gui
 			volumebuttonimage.Pixbuf = Helpers.Misc.LoadIcon (name, IconSize.Button, 0);
 		}
 
+		void UpdateTime (Time currentTime, Time duration)
+		{
+			timelabel.Text = currentTime.ToMSecondsString (true) + "/" + duration.ToMSecondsString ();
+			if (duration.MSeconds == 0) {
+				timescale.Value = 0;
+			} else {
+				timescale.Value = (double)currentTime.MSeconds / duration.MSeconds;
+			}
+		}
+
 		#endregion
 
 		#region ControllerCallbacks
@@ -311,12 +322,8 @@ namespace LongoMatch.Gui
 			if (seeking)
 				return;
 
-			timelabel.Text = currentTime.ToMSecondsString (true) + "/" + duration.ToMSecondsString ();
-			if (duration.MSeconds == 0) {
-				timescale.Value = 0;
-			} else {
-				timescale.Value = (double)currentTime.MSeconds / duration.MSeconds;
-			}
+			this.duration = duration;
+			UpdateTime (currentTime, duration);
 			timescale.Sensitive = seekable;
 		}
 
@@ -422,6 +429,7 @@ namespace LongoMatch.Gui
 		{
 			if (seeking) {
 				Player.Seek (timescale.Value);
+				UpdateTime (duration * timescale.Value, duration); 
 			}
 		}
 
