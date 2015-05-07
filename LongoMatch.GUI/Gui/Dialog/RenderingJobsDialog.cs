@@ -29,8 +29,9 @@ namespace LongoMatch.Gui.Dialog
 	{
 		IRenderingJobsManager manager;
 
-		public RenderingJobsDialog ()
+		public RenderingJobsDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			this.manager = Config.RenderingJobsManger;
 			UpdateModel ();

@@ -33,8 +33,9 @@ namespace LongoMatch.Gui.Dialog
 		TeamTagger teamtagger;
 		TimelineEvent play;
 
-		public PlayEditor ()
+		public PlayEditor (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea3));
 			teamtagger.Compact = true;

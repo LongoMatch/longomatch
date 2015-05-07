@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Handlers;
 
@@ -29,8 +30,9 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem (false)]
 	public partial class SnapshotsDialog : Gtk.Dialog
 	{
-		public SnapshotsDialog ()
+		public SnapshotsDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 		}
 

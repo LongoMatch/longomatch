@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gtk;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -28,8 +29,9 @@ namespace LongoMatch.Gui.Dialog
 	public partial class UpdateDialog : Gtk.Dialog
 	{
 
-		public UpdateDialog ()
+		public UpdateDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 		}
 

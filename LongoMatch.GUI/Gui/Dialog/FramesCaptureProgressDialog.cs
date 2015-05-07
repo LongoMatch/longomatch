@@ -36,8 +36,9 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private FramesSeriesCapturer capturer;
 
-		public FramesCaptureProgressDialog (FramesSeriesCapturer capturer)
+		public FramesCaptureProgressDialog (FramesSeriesCapturer capturer, Gtk.Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			this.Deletable = false;
 			this.capturer = capturer;

@@ -168,13 +168,18 @@ namespace LongoMatch.Gui
 		public object ChooseOption (Dictionary<string, object> options, object parent = null)
 		{
 			object res = null;
-			ChooseOptionDialog dialog = new ChooseOptionDialog ();
-			dialog.Options = options;
+			Window parentWindow;
+			ChooseOptionDialog dialog; 
+
 			if (parent != null) {
-				dialog.TransientFor = (parent as Widget).Toplevel as Gtk.Window;
+				parentWindow = (parent as Widget).Toplevel as Gtk.Window;
 			} else {
-				dialog.TransientFor = mainWindow as Gtk.Window;
+				parentWindow = mainWindow as Gtk.Window;
 			}
+
+			dialog = new ChooseOptionDialog (parentWindow);
+			dialog.Options = options;
+
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				res = dialog.SelectedOption;
 			}
@@ -194,8 +199,7 @@ namespace LongoMatch.Gui
 				return null;
 			}
 
-			vep = new VideoEditionProperties ();
-			vep.TransientFor = mainWindow as Gtk.Window;
+			vep = new VideoEditionProperties (mainWindow as Gtk.Window);
 			vep.Playlist = playlist;
 			response = vep.Run ();
 			while (response == (int)ResponseType.Ok) {
@@ -249,8 +253,7 @@ namespace LongoMatch.Gui
 			string outDir;
 
 			Log.Information ("Export frame series");
-			sd = new SnapshotsDialog ();
-			sd.TransientFor = mainWindow as Gtk.Window;
+			sd = new SnapshotsDialog (mainWindow as Gtk.Window);
 			sd.Play = play.Name;
 
 			if (sd.Run () == (int)ResponseType.Ok) {
@@ -259,8 +262,7 @@ namespace LongoMatch.Gui
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
 				var fsc = new FramesSeriesCapturer (openedProject.Description.FileSet, play, interval, outDir);
-				var fcpd = new FramesCaptureProgressDialog (fsc);
-				fcpd.TransientFor = mainWindow as Gtk.Window;
+				var fcpd = new FramesCaptureProgressDialog (fsc, mainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
 			} else
@@ -270,14 +272,14 @@ namespace LongoMatch.Gui
 		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
 		{
 			if (play is StatEvent) {
-				SubstitutionsEditor dialog = new SubstitutionsEditor ();
+				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
 				dialog.Load (project, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
-				PlayEditor dialog = new PlayEditor ();
+				PlayEditor dialog = new PlayEditor (mainWindow as Gtk.Window);
 				dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
 				dialog.Run ();
 				dialog.Destroy ();
@@ -287,8 +289,8 @@ namespace LongoMatch.Gui
 		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
 		                         CameraConfig camConfig, Project project)
 		{
-			DrawingTool dialog = new DrawingTool ();
-			dialog.Show ();
+			DrawingTool dialog = new DrawingTool (mainWindow);
+			dialog.TransientFor = mainWindow;
 
 			Log.Information ("Drawing tool");
 			if (play == null) {
@@ -296,7 +298,7 @@ namespace LongoMatch.Gui
 			} else {
 				dialog.LoadPlay (play, image, drawing, camConfig, project);
 			}
-			dialog.TransientFor = mainWindow;
+			dialog.Show ();
 			dialog.Run ();
 			dialog.Destroy ();
 		}
@@ -305,7 +307,7 @@ namespace LongoMatch.Gui
 		{
 			Log.Information ("Choosing project");
 			ProjectDescription pd = null;
-			ChooseProjectDialog dialog = new ChooseProjectDialog ();
+			ChooseProjectDialog dialog = new ChooseProjectDialog (mainWindow);
 			dialog.Fill (projects);
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				pd = dialog.Project;
@@ -350,18 +352,16 @@ namespace LongoMatch.Gui
 
 		public void OpenDatabasesManager ()
 		{
-			DatabasesManager dm = new DatabasesManager ();
+			DatabasesManager dm = new DatabasesManager (mainWindow);
 			Log.Information ("Open db manager");
-			dm.TransientFor = mainWindow as Gtk.Window;
 			dm.Run ();
 			dm.Destroy ();
 		}
 
 		public void ManageJobs ()
 		{
-			RenderingJobsDialog dialog = new RenderingJobsDialog ();
+			RenderingJobsDialog dialog = new RenderingJobsDialog (mainWindow as Gtk.Window);
 			Log.Information ("Manage jobs");
-			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run ();
 			dialog.Destroy ();
 		}
@@ -369,13 +369,14 @@ namespace LongoMatch.Gui
 		public IBusyDialog BusyDialog (string message, object parent = null)
 		{
 			BusyDialog dialog;
+			Window parentWindow;
 
-			dialog = new BusyDialog ();
 			if (parent != null) {
-				dialog.TransientFor = (parent as Widget).Toplevel as Gtk.Window;
+				parentWindow = (parent as Widget).Toplevel as Gtk.Window;
 			} else {
-				dialog.TransientFor = mainWindow as Gtk.Window;
+				parentWindow = mainWindow as Gtk.Window;
 			}
+			dialog = new BusyDialog (parentWindow);
 			dialog.Message = message; 
 			return dialog;
 		}
@@ -427,8 +428,7 @@ namespace LongoMatch.Gui
 		public EndCaptureResponse EndCapture (string filepath)
 		{
 			int res;
-			EndCaptureDialog dialog = new EndCaptureDialog (filepath);
-			dialog.TransientFor = mainWindow.Toplevel as Gtk.Window;
+			EndCaptureDialog dialog = new EndCaptureDialog (filepath, mainWindow);
 			res = dialog.Run ();
 			dialog.Destroy ();
 			return (EndCaptureResponse)res;
@@ -481,8 +481,7 @@ namespace LongoMatch.Gui
 			Window w;
 			
 			w = parent != null ? (parent as Widget).Toplevel as Window : mainWindow;
-			dialog = new HotKeySelectorDialog ();
-			dialog.TransientFor = w;
+			dialog = new HotKeySelectorDialog (w);
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				hotkey = dialog.HotKey;
 			} else {

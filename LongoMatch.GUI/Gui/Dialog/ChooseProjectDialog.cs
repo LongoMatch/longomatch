@@ -17,14 +17,16 @@
 //
 using System;
 using System.Collections.Generic;
+using Gtk;
 using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
 	public partial class ChooseProjectDialog : Gtk.Dialog
 	{
-		public ChooseProjectDialog ()
+		public ChooseProjectDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			projectlistwidget1.ShowList = false;
 			projectlistwidget1.SelectionMode = Gtk.SelectionMode.Single;

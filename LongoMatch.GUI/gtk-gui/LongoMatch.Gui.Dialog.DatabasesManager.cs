@@ -35,6 +35,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Name = "LongoMatch.Gui.Dialog.DatabasesManager";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Databases manager");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			this.Gravity = ((global::Gdk.Gravity)(5));

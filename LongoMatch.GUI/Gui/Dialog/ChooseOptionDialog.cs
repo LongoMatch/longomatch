@@ -24,8 +24,9 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class ChooseOptionDialog : Gtk.Dialog
 	{
-		public ChooseOptionDialog ()
+		public ChooseOptionDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 		}
 

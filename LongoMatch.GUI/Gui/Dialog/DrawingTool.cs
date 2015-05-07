@@ -45,8 +45,9 @@ namespace LongoMatch.Gui.Dialog
 		double scaleFactor;
 		bool ignoreChanges;
 
-		public DrawingTool ()
+		public DrawingTool (Window parent)	
 		{
+			TransientFor = parent;
 			this.Build ();
 			savebutton.Clicked += OnSavebuttonClicked;
 			savetoprojectbutton.Clicked += OnSavetoprojectbuttonClicked;

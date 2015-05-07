@@ -32,8 +32,9 @@ namespace LongoMatch.Gui.Dialog
 		AnalysisEventType eventType;
 		Entry focusEntry;
 
-		public EventTypeTagsEditor ()
+		public EventTypeTagsEditor (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 		}
 

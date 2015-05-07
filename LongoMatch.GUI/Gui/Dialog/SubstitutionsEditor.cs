@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
@@ -40,8 +41,9 @@ namespace LongoMatch.Gui.Dialog
 		SubstitutionEvent substitution;
 		const int PLAYER_SIZE = 100;
 
-		public SubstitutionsEditor ()
+		public SubstitutionsEditor (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			tagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;

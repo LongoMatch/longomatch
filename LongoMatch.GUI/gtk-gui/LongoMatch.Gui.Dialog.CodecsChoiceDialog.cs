@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.CodecsChoiceDialog
 			this.Name = "LongoMatch.Gui.Dialog.CodecsChoiceDialog";
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
 			this.DestroyWithParent = true;
 			this.Gravity = ((global::Gdk.Gravity)(5));

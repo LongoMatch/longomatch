@@ -506,7 +506,7 @@ namespace LongoMatch.Gui.Component
 		{
 			AnalysisEventButton button = (dashboardButton as AnalysisEventButton); 
 			AnalysisEventType evt = button.AnalysisEventType;
-			EventTypeTagsEditor dialog = new EventTypeTagsEditor ();
+			EventTypeTagsEditor dialog = new EventTypeTagsEditor (this.Toplevel as Window);
 			dialog.EventType = evt;
 			dialog.Run ();
 			dialog.Destroy ();

@@ -17,6 +17,7 @@
 //
 
 using System;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
 
@@ -27,8 +28,9 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EndCaptureDialog : Gtk.Dialog
 	{
 
-		public EndCaptureDialog (string filepath)
+		public EndCaptureDialog (string filepath, Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			image439.Pixbuf = Helpers.Misc.LoadStockIcon (this, "gtk-dialog-question", Gtk.IconSize.Dialog);
 			savebutton.Visible = System.IO.File.Exists (filepath);

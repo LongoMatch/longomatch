@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using Gtk;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -32,8 +33,9 @@ namespace LongoMatch.Gui.Dialog
 
 		bool showCount;
 
-		public EntryDialog ()
+		public EntryDialog (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			ShowCount = false;
 			setAvailableTemplatesVisible (false);

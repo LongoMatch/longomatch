@@ -28,8 +28,9 @@ namespace LongoMatch.Gui.Dialog
 		ProgressBar progressBar;
 		uint timeout;
 
-		public BusyDialog ()
+		public BusyDialog (Window parent)
 		{
+			TransientFor = parent;
 			box = new VBox (false, 10);
 			titleLabel = new Label ();
 			progressBar = new ProgressBar ();

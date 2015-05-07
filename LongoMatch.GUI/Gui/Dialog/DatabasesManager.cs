@@ -33,8 +33,9 @@ namespace LongoMatch.Gui.Dialog
 		IDataBaseManager manager;
 		ListStore store;
 
-		public DatabasesManager ()
+		public DatabasesManager (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			this.manager = Config.DatabaseManager;
 			ActiveDB = manager.ActiveDB;

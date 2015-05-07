@@ -37,8 +37,9 @@ namespace LongoMatch.Gui.Dialog
 
 		#region Constructors
 
-		public VideoEditionProperties ()
+		public VideoEditionProperties (Window parent)
 		{
+			TransientFor = parent;
 			this.Build ();
 			encSettings = new EncodingSettings ();
 			stdStore = Misc.FillImageFormat (sizecombobox, VideoStandards.Rendering,

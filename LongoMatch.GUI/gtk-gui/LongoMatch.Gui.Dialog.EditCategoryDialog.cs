@@ -15,8 +15,10 @@ namespace LongoMatch.Gui.Dialog
 			this.Name = "LongoMatch.Gui.Dialog.EditCategoryDialog";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Properties");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
+			this.Gravity = ((global::Gdk.Gravity)(5));
 			// Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";

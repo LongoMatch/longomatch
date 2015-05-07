@@ -31,8 +31,9 @@ namespace LongoMatch.Gui.Dialog
 
 		#region Constructors
 
-		public HotKeySelectorDialog ()
+		public HotKeySelectorDialog (Gtk.Window parent)
 		{
+			TransientFor = parent;
 			hotKey = new HotKey ();
 			this.Build ();
 		}
