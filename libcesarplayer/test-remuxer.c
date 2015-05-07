@@ -53,11 +53,11 @@ main (int argc, char *argv[])
 
   gst_remuxer_init_backend (&argc, &argv);
 
-  if (argc != 3) {
-    g_print ("Usage: test-remuxer input_file output_file\n");
+  if (argc != 4) {
+    g_print ("Usage: test-remuxer input_file output_file muxer_type\n");
     return 1;
   }
-  remuxer = gst_remuxer_new (argv[1], argv[2], VIDEO_MUXER_MP4, NULL);
+  remuxer = gst_remuxer_new (argv[1], argv[2], (VideoMuxerType) atoi(argv[3]), NULL);
 
   loop = g_main_loop_new (NULL, FALSE);
 
