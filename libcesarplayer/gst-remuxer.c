@@ -257,6 +257,14 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       parser_pad = gst_element_get_static_pad (parser, "src");
       gst_pad_add_buffer_probe (parser_pad,
           (GCallback) gst_remuxer_fix_video_ts, remuxer);
+    } else  if (g_strrstr (mime, "video/mpeg")) {
+      GstPad *parser_pad;
+
+      parser = gst_element_factory_make ("mpegvideoparse", "video-parser");
+
+      parser_pad = gst_element_get_static_pad (parser, "src");
+      gst_pad_add_buffer_probe (parser_pad,
+          (GCallback) gst_remuxer_fix_video_ts, remuxer);
     }
     is_video = TRUE;
   } else if (g_strrstr (mime, "audio") && !remuxer->priv->audio_linked) {
