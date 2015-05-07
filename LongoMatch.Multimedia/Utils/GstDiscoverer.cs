@@ -86,5 +86,9 @@ namespace LongoMatch.Video.Utils
 				container, video_codec, audio_codec, width, height,
 				par, preview, null);
 		}
+
+		public void Dispose ()
+		{
+		}
 	}
 }

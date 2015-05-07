@@ -98,7 +98,10 @@ namespace LongoMatch.Video
 
 		public MediaFile DiscoverFile (string file, bool takeScreenshot = true)
 		{
-			return GetDiscoverer ().DiscoverFile (file, takeScreenshot);
+			IDiscoverer discoverer = GetDiscoverer ();
+			MediaFile mfile = discoverer.DiscoverFile (file, takeScreenshot);
+			discoverer.Dispose ();
+			return mfile;
 		}
 
 		public List<Device> VideoDevices {

@@ -20,7 +20,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
-	public interface IDiscoverer
+	public interface IDiscoverer: IDisposable
 	{
 		MediaFile DiscoverFile (string filePath, bool takeScreenshot = true);
 	}
