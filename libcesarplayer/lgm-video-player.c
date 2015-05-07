@@ -654,7 +654,8 @@ lgm_stop_play_pipeline (LgmVideoPlayer * lvp)
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_INFO ("processing pending state-change messages");
     bus = gst_element_get_bus (lvp->priv->play);
-    while ((msg = gst_bus_timed_pop_filtered (bus, 0, GST_MESSAGE_STATE_CHANGED))) {
+    while ((msg =
+            gst_bus_timed_pop_filtered (bus, 0, GST_MESSAGE_STATE_CHANGED))) {
       gst_bus_async_signal_func (bus, msg, NULL);
       gst_message_unref (msg);
     }

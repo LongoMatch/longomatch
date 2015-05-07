@@ -18,8 +18,8 @@
  */
 #include "lgm-gtk-glue.h"
 
-void lgm_gtk_glue_gdk_event_button_set_button (GdkEventButton *event, guint button)
+void
+lgm_gtk_glue_gdk_event_button_set_button (GdkEventButton * event, guint button)
 {
   event->button = button;
 }
-

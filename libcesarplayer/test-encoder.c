@@ -24,23 +24,24 @@
 static GMainLoop *loop;
 
 static gboolean
-percent_done_cb (GstVideoEncoder *remuxer, gfloat percent, GstVideoEncoder *editor)
+percent_done_cb (GstVideoEncoder * remuxer, gfloat percent,
+    GstVideoEncoder * editor)
 {
   if (percent == 1) {
-    g_print("SUCESS!\n");
+    g_print ("SUCESS!\n");
     g_main_loop_quit (loop);
   } else {
-    g_print("----> %f%%\n", percent);
+    g_print ("----> %f%%\n", percent);
   }
   return TRUE;
 }
 
 static gboolean
-error_cb (GstVideoEncoder *remuxer, gchar *error, GstVideoEncoder *editor)
+error_cb (GstVideoEncoder * remuxer, gchar * error, GstVideoEncoder * editor)
 {
-    g_print("ERROR: %s\n", error);
-    g_main_loop_quit (loop);
-    return TRUE;
+  g_print ("ERROR: %s\n", error);
+  g_main_loop_quit (loop);
+  return TRUE;
 }
 
 int
@@ -57,7 +58,7 @@ main (int argc, char *argv[])
   gst_video_encoder_init_backend (&argc, &argv);
 
   if (argc < 3) {
-    g_print("Usage: test-remuxer output_file input_files \n");
+    g_print ("Usage: test-remuxer output_file input_files \n");
     return 1;
   }
 
@@ -71,11 +72,11 @@ main (int argc, char *argv[])
   gst_video_encoder_set_encoding_format (encoder, video_encoder,
       audio_encoder, video_muxer, 500, 128, 240, 180, 25, 1);
 
-  for (i=2; i < argc; i++) {
+  for (i = 2; i < argc; i++) {
     guint64 duration;
     guint width, height, fps_n, fps_d, par_n, par_d;
     gchar *container, *video_codec, *audio_codec;
-    GError *err=NULL;
+    GError *err = NULL;
 
     lgm_discover_uri (argv[i], &duration, &width, &height, &fps_n,
         &fps_d, &par_n, &par_d, &container, &video_codec, &audio_codec, &err);
@@ -83,17 +84,16 @@ main (int argc, char *argv[])
       g_print ("Error parsing file %s \n", argv[i]);
       exit (1);
     }
-    gst_video_encoder_add_file (encoder, argv[i], duration / GST_MSECOND, width, height,
-        (gdouble)par_n/par_d);
+    gst_video_encoder_add_file (encoder, argv[i], duration / GST_MSECOND, width,
+        height, (gdouble) par_n / par_d);
   }
 
   loop = g_main_loop_new (NULL, FALSE);
   g_signal_connect (encoder, "error", G_CALLBACK (error_cb), encoder);
-  g_signal_connect (encoder, "percent_completed", G_CALLBACK(percent_done_cb),
+  g_signal_connect (encoder, "percent_completed", G_CALLBACK (percent_done_cb),
       encoder);
   gst_video_encoder_start (encoder);
   g_main_loop_run (loop);
 
   return 0;
 }
-

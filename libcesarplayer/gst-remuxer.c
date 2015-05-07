@@ -257,7 +257,7 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       parser_pad = gst_element_get_static_pad (parser, "src");
       gst_pad_add_buffer_probe (parser_pad,
           (GCallback) gst_remuxer_fix_video_ts, remuxer);
-    } else  if (g_strrstr (mime, "video/mpeg")) {
+    } else if (g_strrstr (mime, "video/mpeg")) {
       GstPad *parser_pad;
 
       parser = gst_element_factory_make ("mpegvideoparse", "video-parser");
@@ -275,7 +275,9 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       if (version == 4) {
         /* FIXME: aacparse doesn't seem to support adts to raw conversion */
         //parser = gst_element_factory_make ("aacparse", NULL);
-        parser = gst_parse_bin_from_description ("fluaacdec ! fluaacenc", TRUE, NULL);
+        parser =
+            gst_parse_bin_from_description ("fluaacdec ! fluaacenc", TRUE,
+            NULL);
         if (parser == NULL)
           parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
       } else if (version == 3) {
@@ -334,7 +336,8 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
       remuxer->priv->audio_linked = TRUE;
   }
   queue = gst_element_factory_make ("queue", NULL);
-  g_object_set (G_OBJECT (queue), "max-size-bytes", 0, "max-size-time", 0, "max-size-buffers", 0, NULL);
+  g_object_set (G_OBJECT (queue), "max-size-bytes", 0, "max-size-time", 0,
+      "max-size-buffers", 0, NULL);
   gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), queue);
   gst_element_set_state (queue, GST_STATE_PLAYING);
   queue_sink_pad = gst_element_get_static_pad (queue, "sink");

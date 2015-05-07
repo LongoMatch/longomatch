@@ -57,7 +57,8 @@ main (int argc, char *argv[])
     g_print ("Usage: test-remuxer input_file output_file muxer_type\n");
     return 1;
   }
-  remuxer = gst_remuxer_new (argv[1], argv[2], (VideoMuxerType) atoi(argv[3]), NULL);
+  remuxer =
+      gst_remuxer_new (argv[1], argv[2], (VideoMuxerType) atoi (argv[3]), NULL);
 
   loop = g_main_loop_new (NULL, FALSE);
 

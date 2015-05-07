@@ -23,7 +23,7 @@
 static LgmDeviceVideoFormat *
 lgm_device_video_format_new (gint width, gint height, gint fps_n, gint fps_d)
 {
-  LgmDeviceVideoFormat * format;
+  LgmDeviceVideoFormat *format;
 
   format = g_new0 (LgmDeviceVideoFormat, 1);
   format->width = width;
@@ -35,14 +35,14 @@ lgm_device_video_format_new (gint width, gint height, gint fps_n, gint fps_d)
 }
 
 static void
-lgm_device_video_format_free (LgmDeviceVideoFormat *format)
+lgm_device_video_format_free (LgmDeviceVideoFormat * format)
 {
   g_free (format);
 }
 
 static gint
-lgm_device_video_format_compare (LgmDeviceVideoFormat *f1,
-    LgmDeviceVideoFormat *f2)
+lgm_device_video_format_compare (LgmDeviceVideoFormat * f1,
+    LgmDeviceVideoFormat * f2)
 {
   if (f1->height != f2->height) {
     return f2->height - f1->height;
@@ -60,15 +60,15 @@ lgm_device_video_format_compare (LgmDeviceVideoFormat *f1,
 }
 
 gchar *
-lgm_device_video_format_to_string (LgmDeviceVideoFormat *format)
+lgm_device_video_format_to_string (LgmDeviceVideoFormat * format)
 {
   return g_strdup_printf ("%dx%d@%d/%d", format->width, format->height,
       format->fps_n, format->fps_d);
 }
 
 void
-lgm_device_video_format_get_info (LgmDeviceVideoFormat *format,
-    gint *width, gint *height, gint * fps_n, gint * fps_d)
+lgm_device_video_format_get_info (LgmDeviceVideoFormat * format,
+    gint * width, gint * height, gint * fps_n, gint * fps_d)
 {
   *width = format->width;
   *height = format->height;
@@ -77,7 +77,7 @@ lgm_device_video_format_get_info (LgmDeviceVideoFormat *format,
 }
 
 LgmDevice *
-lgm_device_new (const gchar *source_name, const gchar *device_name,
+lgm_device_new (const gchar * source_name, const gchar * device_name,
     LgmDeviceType type)
 {
   LgmDevice *device;
@@ -92,7 +92,7 @@ lgm_device_new (const gchar *source_name, const gchar *device_name,
 }
 
 void
-lgm_device_free (LgmDevice *device)
+lgm_device_free (LgmDevice * device)
 {
   if (device->source_name != NULL) {
     g_free (device->source_name);
@@ -111,25 +111,25 @@ lgm_device_free (LgmDevice *device)
 }
 
 GList *
-lgm_device_get_formats (LgmDevice *device)
+lgm_device_get_formats (LgmDevice * device)
 {
   return device->formats;
 }
 
 gchar *
-lgm_device_get_source_name (LgmDevice *device)
+lgm_device_get_source_name (LgmDevice * device)
 {
   return g_strdup (device->source_name);
 }
 
 gchar *
-lgm_device_get_device_name (LgmDevice *device)
+lgm_device_get_device_name (LgmDevice * device)
 {
   return g_strdup (device->device_name);
 }
 
 static int
-lgm_device_fixate_int_value (const GValue *val)
+lgm_device_fixate_int_value (const GValue * val)
 {
   int ret;
 
@@ -153,15 +153,15 @@ lgm_device_fixate_int_value (const GValue *val)
 }
 
 static void
-lgm_device_add_format (GHashTable *table, int width, int height,
+lgm_device_add_format (GHashTable * table, int width, int height,
     gint fps_n, gint fps_d)
 {
-  LgmDeviceVideoFormat * format;
+  LgmDeviceVideoFormat *format;
   gchar *format_str;
 
   format = lgm_device_video_format_new (width, height, fps_n, fps_d);
   format_str = lgm_device_video_format_to_string (format);
-  if (!g_hash_table_contains(table, format_str)) {
+  if (!g_hash_table_contains (table, format_str)) {
     g_hash_table_insert (table, format_str, format);
     GST_DEBUG ("Adding format: %s\n", format_str);
   } else {
@@ -171,8 +171,8 @@ lgm_device_add_format (GHashTable *table, int width, int height,
 }
 
 static void
-lgm_device_add_format_from_fps_val (GHashTable *table, int width, int height,
-    const GValue *val)
+lgm_device_add_format_from_fps_val (GHashTable * table, int width, int height,
+    const GValue * val)
 {
   gint fps_n, fps_d;
 
@@ -185,7 +185,7 @@ lgm_device_add_format_from_fps_val (GHashTable *table, int width, int height,
 }
 
 static void
-lgm_device_parse_structure (GstStructure *s, GHashTable *table)
+lgm_device_parse_structure (GstStructure * s, GHashTable * table)
 {
   gint width, height;
   const GValue *val;
@@ -226,7 +226,7 @@ lgm_device_parse_structure (GstStructure *s, GHashTable *table)
 }
 
 static void
-lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
+lgm_device_fill_formats (LgmDevice * device, gchar * prop_name)
 {
   GstCaps *source_caps, *caps;
   GstElement *source;
@@ -247,15 +247,14 @@ lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
   caps = gst_caps_copy (source_caps);
   gst_caps_unref (source_caps);
 
-  table = g_hash_table_new_full (g_str_hash, g_str_equal,
-      g_free, NULL);
+  table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   GST_DEBUG ("Filling formats for source:%s device:%s", device->source_name,
       device->device_name);
   if (!g_strcmp0 (device->source_name, "decklinkvideosrc")) {
     lgm_device_add_format (table, 0, 0, 0, 0);
   } else {
-    for (i=0; i < gst_caps_get_size (caps); i++) {
+    for (i = 0; i < gst_caps_get_size (caps); i++) {
       GstStructure *s;
 
       s = gst_caps_get_structure (caps, i);
@@ -280,8 +279,7 @@ lgm_device_fill_formats (LgmDevice *device, gchar *prop_name)
 }
 
 GList *
-lgm_device_enum_devices (const gchar * source_name,
-    LgmDeviceType type)
+lgm_device_enum_devices (const gchar * source_name, LgmDeviceType type)
 {
   GstElement *source;
   GstPropertyProbe *probe;

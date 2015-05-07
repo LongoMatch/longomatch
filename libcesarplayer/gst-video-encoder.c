@@ -695,8 +695,7 @@ gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar * file,
   }
   if ((gve->priv->last_width != 0 || gve->priv->last_height != 0) &&
       (gve->priv->last_width != width ||
-      gve->priv->last_height != height ||
-      gve->priv->last_par != par)) {
+          gve->priv->last_height != height || gve->priv->last_par != par)) {
     gve->priv->size_changes = TRUE;
   }
   gve->priv->last_width = width;

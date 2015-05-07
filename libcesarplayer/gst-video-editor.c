@@ -464,7 +464,7 @@ gve_error_msg (GstVideoEditor * gve, GstMessage * msg)
 
   g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
       GST_STR_NULL (dbg));
-  GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline),
+  GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (gve->priv->main_pipeline),
       GST_DEBUG_GRAPH_SHOW_ALL, "longomatch-editor-error");
   g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, err->message);
   g_error_free (err);

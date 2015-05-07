@@ -54,7 +54,7 @@ on_realized_cb (GtkWidget * video)
 
   gvc = gst_camera_capturer_new (&error);
   gst_camera_capturer_configure (gvc, sargv[1],
-      (CaptureSourceType) atoi(sargv[4]), sargv[2], sargv[3],
+      (CaptureSourceType) atoi (sargv[4]), sargv[2], sargv[3],
       0, 0, 0, 0,
       VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC,
       VIDEO_MUXER_MP4, 1000, 100, TRUE, 640, 480, window);
@@ -96,7 +96,8 @@ int
 main (int argc, char **argv)
 {
   if (argc != 5) {
-    g_print ("Usage: test-capturer output_file device_name device_id device_type \n");
+    g_print
+        ("Usage: test-capturer output_file device_name device_id device_type \n");
     return 1;
   }
   gtk_init (&argc, &argv);
