@@ -33,7 +33,13 @@ namespace LongoMatch.Video
 		{
 			VideoMuxerType muxType = VideoMuxerType.Mp4;
 			string ext = ".mp4";
-			string ext_desc = "MP4 (.mp4";
+			string ext_desc = "MP4 (.mp4)";
+
+			if (file.VideoCodec == "MPEG 1 Video") {
+				ext = ".mkv";
+				ext_desc = "MKV (.mkv)";
+				muxType = VideoMuxerType.Matroska;
+			}
 
 			string outputFile = Config.GUIToolkit.SaveFile (Catalog.GetString ("Output file"),
 				                    Path.ChangeExtension (file.FilePath, ext),
