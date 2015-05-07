@@ -110,6 +110,12 @@ namespace LongoMatch.Gui
 
 		#endregion
 
+		protected override void OnUnrealized ()
+		{
+			player.Stop ();
+			base.OnUnrealized ();
+		}
+
 		protected override void OnDestroyed ()
 		{
 			blackboard.Dispose ();
