@@ -333,7 +333,8 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
     else
       remuxer->priv->audio_linked = TRUE;
   }
-  queue = gst_element_factory_make ("queue2", NULL);
+  queue = gst_element_factory_make ("queue", NULL);
+  g_object_set (G_OBJECT (queue), "max-size-bytes", 0, "max-size-time", 0, "max-size-buffers", 0, NULL);
   gst_bin_add (GST_BIN (remuxer->priv->main_pipeline), queue);
   gst_element_set_state (queue, GST_STATE_PLAYING);
   queue_sink_pad = gst_element_get_static_pad (queue, "sink");
