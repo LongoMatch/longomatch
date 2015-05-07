@@ -205,6 +205,12 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		public ProjectType ProjectType {
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region Public Methods

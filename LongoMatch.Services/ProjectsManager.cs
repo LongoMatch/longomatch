@@ -155,6 +155,7 @@ namespace LongoMatch.Services
 				
 			PlaysFilter = new EventsFilter (project);
 			project.CleanupTimers ();
+			project.ProjectType = projectType;
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
 				out analysisWindow);
 			Player = analysisWindow.Player;
