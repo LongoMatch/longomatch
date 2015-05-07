@@ -37,6 +37,8 @@ namespace LongoMatch.Multimedia.Utils
 		static extern void gst_object_unref (IntPtr raw);
 
 		public const string MPEG1_PS = "MPEG-1 System Stream";
+		public const string MPEG1_VIDEO = "MPEG 1 Video";
+		public const string MPEG2_VIDEO = "MPEG 2 Video";
 		public const string MPEG2_PS = "MPEG-2 System Stream";
 		public const string MPEG2_TS = "MPEG-2 Transport Stream";
 		public const string ASF = "Advanced Streaming Format (ASF)";

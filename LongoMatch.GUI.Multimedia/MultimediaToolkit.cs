@@ -21,6 +21,7 @@ using LongoMatch.Video.Utils;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.Multimedia.Utils;
 using Mono.Unix;
 using System.IO;
 
@@ -35,7 +36,7 @@ namespace LongoMatch.Video
 			string ext = ".mp4";
 			string ext_desc = "MP4 (.mp4)";
 
-			if (file.VideoCodec == "MPEG 1 Video") {
+			if (file.VideoCodec == GStreamer.MPEG1_VIDEO || file.VideoCodec == GStreamer.MPEG2_VIDEO) {
 				ext = ".mkv";
 				ext_desc = "MKV (.mkv)";
 				muxType = VideoMuxerType.Matroska;
