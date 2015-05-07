@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2009-2014  Andoni Morales Alastruey <ylatuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -351,7 +351,7 @@ lgm_create_audio_encoder (AudioEncoderType type, guint quality,
     case AUDIO_ENCODER_AAC:
       encoder = gst_element_factory_make ("fluaacenc", "audio-encoder");
       if (encoder != NULL) {
-        g_object_set (encoder, "bitrate", 128, "output-format", 2, NULL);
+        g_object_set (encoder, "bitrate", 128, "outputformat", 2, NULL);
       } else {
         encoder = gst_element_factory_make ("faac", "audio-encoder");
         g_object_set (encoder, "bitrate", 128000, NULL);
