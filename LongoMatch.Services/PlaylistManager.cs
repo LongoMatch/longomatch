@@ -109,6 +109,10 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
+			if (openedProjectType == ProjectType.FakeCaptureProject) {
+				return;
+			}
+
 			if (play is SubstitutionEvent || play is LineupEvent) {
 				Switch (null, null, null);
 				Config.EventsBroker.EmitEventLoaded (null);
