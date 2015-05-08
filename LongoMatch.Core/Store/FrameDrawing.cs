@@ -17,10 +17,8 @@
 //
 
 using System;
-using Newtonsoft.Json;
-
-using LongoMatch.Core.Common;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Core.Store
@@ -41,6 +39,8 @@ namespace LongoMatch.Core.Store
 		{
 			Pause = new Time (DEFAULT_PAUSE_TIME);
 			Drawables = new List<Drawable> ();
+			CameraConfig = new CameraConfig (0);
+			RegionOfInterest = new Area ();
 		}
 
 		public Image Miniature {
@@ -49,11 +49,6 @@ namespace LongoMatch.Core.Store
 		}
 
 		public Image Freehand {
-			get;
-			set;
-		}
-
-		public Area RegionOfInterest {
 			get;
 			set;
 		}
@@ -82,9 +77,22 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
+		/// <summary>
+		/// The camera configuration for this event.
+		/// </summary>
 		public CameraConfig CameraConfig {
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// The region of interest for this drawing, can be used to override
+		/// the one in <see cref="CameraConfig"/>
+		/// </summary>
+		public Area RegionOfInterest {
+			get;
+			set;
+		}
+
 	}
 }
