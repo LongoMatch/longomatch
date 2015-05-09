@@ -32,6 +32,7 @@ namespace LongoMatch.Gui.Dialog
 			License = Config.License;
 			Authors = new string[] { "Andoni Morales Alastruey", "Fluendo" };
 			TranslatorCredits = Constants.TRANSLATORS;
+			WrapLicense = true;
 			SetUrlHook (delegate(Gtk.AboutDialog dialog, string url) {
 				try {
 					System.Diagnostics.Process.Start (url);
