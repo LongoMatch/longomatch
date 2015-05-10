@@ -575,7 +575,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
-			menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline);
+			menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline, camerasTimeline);
 		}
 
 		void HandleTogglePlayEvent (bool playing)

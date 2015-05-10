@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
-			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline);
+			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline, timeline);
 		}
 	}
 }

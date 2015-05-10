@@ -19,6 +19,7 @@ using System;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using LongoMatch.Drawing;
 using Mono.Unix;
 
 namespace LongoMatch.Gui.Menus
@@ -30,6 +31,7 @@ namespace LongoMatch.Gui.Menus
 		Time time;
 		Project project;
 		TimerTimeline timertimeline;
+		SelectionCanvas selectionCanvas;
 
 		public PeriodsMenu ()
 		{
@@ -37,12 +39,13 @@ namespace LongoMatch.Gui.Menus
 		}
 
 		public void ShowMenu (Project project, Timer timer, Time time,
-		                      TimerTimeline timertimeline)
+		                      TimerTimeline timertimeline, SelectionCanvas selectionCanvas)
 		{
 			this.timer = timer;
 			this.time = time;
 			this.project = project;
 			this.timertimeline = timertimeline;
+			this.selectionCanvas = selectionCanvas;
 			delitem.Visible = project != null && timer != null;
 			Popup ();
 		}
@@ -74,6 +77,7 @@ namespace LongoMatch.Gui.Menus
 				project.Periods.Remove (timer as Period);
 				if (timertimeline != null) {
 					timertimeline.RemoveTimer (timer);
+					selectionCanvas.ClearSelection ();
 				}
 			};
 			Add (delitem);
