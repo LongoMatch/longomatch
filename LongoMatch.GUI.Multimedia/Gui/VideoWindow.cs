@@ -31,6 +31,7 @@ namespace LongoMatch.Gui
 		AspectFrame frame;
 		DrawingArea drawingWindow;
 		bool dragStarted;
+		bool needShow;
 
 		public event EventHandler ReadyEvent;
 		public new event ExposeEventHandler ExposeEvent;
@@ -62,12 +63,33 @@ namespace LongoMatch.Gui
 			videoeventbox.ButtonReleaseEvent += HandleButtonReleaseEvent;
 			videoeventbox.ScrollEvent += HandleScrollEvent;
 			videoeventbox.BorderWidth = 0;
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				// Workaround for GTK bugs on Windows not showing the video window
+				videoeventbox.VisibilityNotifyEvent += HandleVisibilityNotifyEvent;
+				needShow = false;
+			}
 
 			frame.Add (drawingWindow);
 			videoeventbox.Add (frame);
 			videoeventbox.ShowAll ();
 
 			MessageVisible = false;
+		}
+
+		protected override void OnUnmapped ()
+		{
+			needShow = true;
+			base.OnUnmapped ();
+		}
+
+		void HandleVisibilityNotifyEvent (object o, VisibilityNotifyEventArgs args)
+		{
+			if (needShow && videoeventbox.Visible && drawingWindow.GdkWindow != null) {
+				// Hack for Windows. Force video window visibility as
+				// EventBox window's might prevent it to be mapped again.
+				drawingWindow.GdkWindow.Show ();
+				needShow = false;
+			}
 		}
 
 		public IntPtr WindowHandle {
