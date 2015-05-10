@@ -50,6 +50,11 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
+		public void SelectText ()
+		{
+			this.entry1.SelectRegion (0, -1);
+		}
+
 		public int Count {
 			get {
 				return (int)playersspinbutton.Value;

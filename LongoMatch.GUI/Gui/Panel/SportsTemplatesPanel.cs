@@ -371,6 +371,7 @@ namespace LongoMatch.Gui.Panel
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
 			dialog.Text = Catalog.GetString ("New dasboard");
+			dialog.SelectText ();
 			dialog.CountText = Catalog.GetString ("Event types:");
 			dialog.AvailableTemplates = templatesNames;
 			
