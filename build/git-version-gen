@@ -203,7 +203,7 @@ if test "x$v_from_git" != x; then
   # Don't declare a version "dirty" merely because a time stamp has changed.
   git update-index --refresh > /dev/null 2>&1
 
-  dirty=`exec 2>/dev/null;git diff-index --name-only HEAD` || dirty=
+  dirty=`exec 2>/dev/null;git diff-index --name-only HEAD | grep -v AssemblyInfo/AssemblyInfo.cs` || dirty=
   case "$dirty" in
       '') ;;
       *) # Append the suffix only if there isn't one already.
