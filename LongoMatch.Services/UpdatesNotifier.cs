@@ -20,10 +20,10 @@ namespace LongoMatch.Services
 	{
 		static public bool FetchNewVersion (string url, string filename)
 		{
-			var userAgent = String.Format ("{0};{1};{2};{3}",
+			var userAgent = String.Format ("{0}/{1} ({2};{3})",
 				Config.SoftwareName,
 				Assembly.GetExecutingAssembly ().GetName ().Version,
-				Environment.OSVersion.Platform,
+				Utils.RunningPlatform (),
 				Environment.OSVersion.VersionString);
 			try {
 				var wb = new WebClient ();
