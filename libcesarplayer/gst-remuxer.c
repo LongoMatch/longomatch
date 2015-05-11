@@ -249,6 +249,7 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
     if (g_strrstr (mime, "video/x-h264")) {
       GstPad *parser_pad;
 
+      GST_DEBUG_OBJECT (remuxer, "adding h264parse");
       parser = gst_element_factory_make ("h264parse", "video-parser");
       parser_caps =
           gst_caps_from_string
@@ -260,6 +261,7 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
     } else if (g_strrstr (mime, "video/mpeg")) {
       GstPad *parser_pad;
 
+      GST_DEBUG_OBJECT (remuxer, "adding mpegvideoparse");
       parser = gst_element_factory_make ("mpegvideoparse", "video-parser");
 
       parser_pad = gst_element_get_static_pad (parser, "src");
@@ -281,8 +283,10 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
         if (parser == NULL)
           parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
       } else if (version == 3) {
+        GST_DEBUG_OBJECT (remuxer, "adding mp3parse");
         parser = gst_element_factory_make ("mp3parse", "audio-parser");
       } else {
+        GST_DEBUG_OBJECT (remuxer, "adding mpegaudioparse");
         parser = gst_element_factory_make ("mpegaudioparse", "audio-parser");
       }
     } else if (g_strrstr (mime, "audio/x-eac3") ||
@@ -343,8 +347,10 @@ gst_remuxer_pad_added_cb (GstElement * demuxer, GstPad * pad,
   queue_sink_pad = gst_element_get_static_pad (queue, "sink");
   queue_src_pad = gst_element_get_static_pad (queue, "src");
 
-  gst_pad_link (pad, queue_sink_pad);
-  gst_pad_link (queue_src_pad, muxer_pad);
+  if (gst_pad_link (pad, queue_sink_pad) != GST_PAD_LINK_OK)
+    GST_WARNING_OBJECT (pad, "failed linking to queue sink pad");
+  if (gst_pad_link (queue_src_pad, muxer_pad) != GST_PAD_LINK_OK)
+    GST_WARNING_OBJECT (pad, "failed linking queue to muxer sink pad");
 
   gst_object_unref (muxer);
   gst_object_unref (queue_sink_pad);
@@ -475,6 +481,8 @@ remuxer_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
     case GST_MESSAGE_EOS:
     {
+      GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (remuxer->priv->main_pipeline),
+        GST_DEBUG_GRAPH_SHOW_ALL, "remux.dot");
       GST_INFO_OBJECT (remuxer, "EOS message");
       gst_remuxer_cancel (remuxer);
       g_signal_emit (remuxer, remuxer_signals[SIGNAL_PERCENT], 0, (gfloat) 1);
