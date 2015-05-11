@@ -102,7 +102,7 @@ namespace LongoMatch.Services
 					localesDir = Path.Combine (cerbero_prefix, "share", "locale");
 				} else {
 					Log.ErrorFormat ("'{0}' does not exist. This looks like an uninstalled execution." +
-						"Define CERBERO_PREFIX.", localesDir);
+					"Define CERBERO_PREFIX.", localesDir);
 				}
 			}
 			/* Init internationalization support */

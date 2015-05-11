@@ -66,7 +66,7 @@ namespace LongoMatch
 				if (!haveCodecs) {
 					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
 					int response = ccd.Run ();
-					if (response == (int) ResponseType.Accept) {
+					if (response == (int)ResponseType.Accept) {
 						try {
 							System.Diagnostics.Process.Start (Constants.WEBSITE);
 						} catch {
@@ -78,7 +78,7 @@ namespace LongoMatch
 					CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				} catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
-						"the application will be closed.");
+					             "the application will be closed.");
 					Config.GUIToolkit.ErrorMessage (msg);
 					Log.Exception (locked);
 					return;
@@ -89,7 +89,7 @@ namespace LongoMatch
 				ConfigureOSXApp ();
 
 				Application.Run ();
-			}  catch (AddinRequestShutdownException arse) {
+			} catch (AddinRequestShutdownException arse) {
 				// Abort gracefully
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
@@ -169,7 +169,7 @@ namespace LongoMatch
 			MessagesHelpers.ErrorMessage (null,
 				Catalog.GetString ("The application has finished with an unexpected error.") + "\n" +
 				Catalog.GetString ("A log has been saved at: ") +
-                                "<a href=\"" + logFile + "\">" + logFile + "</a>\n" +
+				"<a href=\"" + logFile + "\">" + logFile + "</a>\n" +
 				Catalog.GetString ("Please, fill a bug report "));
 			Application.Quit ();
 		}
