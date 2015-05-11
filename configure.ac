@@ -1,7 +1,9 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([LongoMatch], [1.1])
+AC_INIT([LongoMatch],
+	m4_esyscmd([build/git-version-gen .tarball-version]),
+	[contact@longomatch.com])
 AM_INIT_AUTOMAKE([1.11 foreign])
 AM_SILENT_RULES([yes])
 AM_MAINTAINER_MODE([enable])

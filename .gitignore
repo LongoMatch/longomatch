@@ -24,6 +24,7 @@ missing
 ChangeLog~
 INSTALL~
 autom4te.cache
+.version
 .mer*
 *.lo
 *.la

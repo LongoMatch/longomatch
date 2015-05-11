@@ -1,6 +1,15 @@
 EXTRA_DIST =\
-		expansions.m4 \
-		env.in
+	$(top_srcdir)/.version \
+	$(top_srcdir)/expansions.m4 \
+	$(top_srcdir)/env.in
+
+BUILT_SOURCES = $(top_srcdir)/.version
+
+$(top_srcdir)/.version:
+	echo $(VERSION) > $@-t && mv $@-t $@
+
+dist-hook:
+	echo $(VERSION) > $(distdir)/.tarball-version
 
 ACLOCAL_AMFLAGS = -I build/m4 -I build/m4/shamrock
 
