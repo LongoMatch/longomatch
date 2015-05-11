@@ -20,17 +20,23 @@ namespace LongoMatch.Services
 	{
 		static public bool FetchNewVersion (string url, string filename)
 		{
+			var userAgent = String.Format ("{0};{1};{2};{3}",
+				Config.SoftwareName,
+				Assembly.GetExecutingAssembly ().GetName ().Version,
+				Environment.OSVersion.Platform,
+				Environment.OSVersion.VersionString);
 			try {
 				var wb = new WebClient ();
+				wb.Headers.Add ("User-Agent", userAgent);
 				wb.DownloadFile (url, filename);
 			} catch (Exception ex) {
-				Log.WarningFormat ("UpdatesNotifier: Error downloading version file from {0} to {1} ",
-						url, filename);
+				Log.WarningFormat ("UpdatesNotifier: Error downloading version file from {0} to {1} (User-Agent: {2})",
+						url, filename, userAgent);
 				Log.Exception (ex);
 				return false;
 			}
-			Log.InformationFormat ("UpdatesNotifier: Downloaded latest version from {0} to {1}",
-				url, filename);
+			Log.InformationFormat ("UpdatesNotifier: Downloaded latest version from {0} to {1} (User-Agent: {2})",
+				url, filename, userAgent);
 			return true;
 		}
 
