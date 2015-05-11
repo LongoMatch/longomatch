@@ -349,7 +349,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
-			var about = new LongoMatch.Gui.Dialog.AboutDialog (guiToolKit.Version);
+			var about = new LongoMatch.Gui.Dialog.AboutDialog (Config.Version);
 			about.TransientFor = this;
 			about.Run ();
 			about.Destroy ();

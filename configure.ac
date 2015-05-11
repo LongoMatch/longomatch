@@ -27,6 +27,9 @@ SHAMROCK_EXPAND_DATADIR
 
 AC_PROG_INSTALL
 
+ASSEMBLY_VERSION=`echo $PACKAGE_VERSION |cut -d'-' -f1`
+AC_SUBST(ASSEMBLY_VERSION)
+
 #*******************************************************************************
 # Internationalization
 #*******************************************************************************

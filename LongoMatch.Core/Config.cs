@@ -260,6 +260,16 @@ namespace LongoMatch
 
 		#region Properties
 
+		static public Version Version {
+			get;
+			set;
+		}
+
+		static public string BuildVersion {
+			get;
+			set;
+		}
+
 		static public Image Background {
 			get;
 			set;

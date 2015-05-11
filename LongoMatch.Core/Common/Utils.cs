@@ -36,6 +36,17 @@ namespace LongoMatch.Core.Common
 			return path;
 		}
 
+		static public string SysInfo {
+			get {
+				return string.Format (
+					"Running LongoMatch {0} build:\"{1}\" OS:\"{2}\" OS Version:\"{3}\"",
+					Config.Version,
+					Config.BuildVersion,
+					Utils.RunningPlatform (),
+					Environment.OSVersion.VersionString);
+			}
+		}
+
 		public static PlatformID RunningPlatform ()
 		{
 			if (currentPlatformID == -1) {

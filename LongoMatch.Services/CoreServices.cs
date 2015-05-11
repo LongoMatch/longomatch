@@ -16,17 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
+using System.Reflection;
 using LongoMatch;
-using LongoMatch.DB;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using Mono.Unix;
 using LongoMatch.Services.Services;
+using Mono.Unix;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -57,6 +58,8 @@ namespace LongoMatch.Services
 			Log.Debugging = Debugging;
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 
+			FillVersion ();
+
 			Config.Init ();
 
 			/* Check default folders */
@@ -78,6 +81,15 @@ namespace LongoMatch.Services
 
 			/* Fill up the descriptions again after initializing the translations */
 			Config.Hotkeys.FillActionsDescriptions ();
+		}
+
+		static void FillVersion ()
+		{
+			Assembly assembly = Assembly.GetExecutingAssembly ();
+			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
+			Config.Version = assembly.GetName ().Version;
+			Config.BuildVersion = info.ProductVersion;
+			Log.Information (Utils.SysInfo);
 		}
 
 		public static void InitTranslations ()

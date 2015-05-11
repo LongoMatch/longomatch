@@ -40,8 +40,6 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		IRenderingStateBar RenderingStateBar { get; }
 
-		Version Version { get; }
-
 		bool FullScreen { set; }
 
 		void Quit ();

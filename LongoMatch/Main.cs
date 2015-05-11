@@ -18,16 +18,14 @@
 //
 using System;
 using System.IO;
-using System.Reflection;
 using Gtk;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
@@ -50,7 +48,6 @@ namespace LongoMatch
 			//	return;
 
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (OnException);
-			Version version = Assembly.GetExecutingAssembly ().GetName ().Version;
 
 			try {
 				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
@@ -58,7 +55,7 @@ namespace LongoMatch
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.EventsBroker = new EventsBroker ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
-				Config.GUIToolkit = new GUIToolkit (version);
+				Config.GUIToolkit = new GUIToolkit ();
 				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
 				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
 				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
@@ -159,7 +156,6 @@ namespace LongoMatch
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
 			logFile = Utils.SanitizePath (logFile, ' ', ':');
 			logFile = Path.Combine (Config.HomeDir, logFile);
-			Log.Information (SysInfo.PrintInfo (Assembly.GetExecutingAssembly ().GetName ().Version));
 			Log.Exception (ex);
 			try {
 				if (File.Exists (logFile)) {

@@ -40,9 +40,8 @@ namespace LongoMatch.Gui
 		MainWindow mainWindow;
 		Registry registry;
 
-		public GUIToolkit (Version version)
+		public GUIToolkit ()
 		{
-			Version = version;
 			mainWindow = new MainWindow (this);
 			(mainWindow as MainWindow).Show ();
 			instance = this;
@@ -76,11 +75,6 @@ namespace LongoMatch.Gui
 						mainWindow.GdkWindow.Unfullscreen ();
 				}
 			}
-		}
-
-		public Version Version {
-			get;
-			set;
 		}
 
 		public void Register <I, C> (int priority)

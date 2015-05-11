@@ -28,7 +28,6 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Common/Registry.cs \
 	Common/Seeker.cs \
 	Common/Serializer.cs \
-	Common/SysInfo.cs \
 	Common/Utils.cs \
 	Common/VideoStandards.cs \
 	Config.cs \
