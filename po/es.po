@@ -2109,7 +2109,7 @@ msgstr "La plantilla ya existe. ¿Quiere sobrescribirla?"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:34
 msgid "New"
-msgstr "Nueva"
+msgstr "Nuevo"
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:38
 msgid "Import"
