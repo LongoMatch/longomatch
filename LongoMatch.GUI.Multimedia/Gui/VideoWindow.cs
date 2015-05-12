@@ -108,6 +108,8 @@ namespace LongoMatch.Gui
 			set {
 				videoeventbox.Visible = !value;
 				messageLabel.Visible = value;
+				if (!value)
+					needShow = true;
 			}
 		}
 
