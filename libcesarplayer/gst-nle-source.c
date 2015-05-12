@@ -788,9 +788,9 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
   nlesrc = GST_NLE_SOURCE (element);
 
   switch (transition) {
-    case GST_STATE_CHANGE_READY_TO_PAUSED:
+    case GST_STATE_CHANGE_NULL_TO_READY:
+      /* We do our setup (adding internal elements) here */
       gst_nle_source_setup (nlesrc);
-      gst_nle_source_next (nlesrc);
       break;
     default:
       break;
@@ -801,6 +801,10 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
     return res;
 
   switch (transition) {
+    case GST_STATE_CHANGE_READY_TO_PAUSED:
+      /* Process next source when children elements have successfully changed state */
+      gst_nle_source_next (nlesrc);
+      break;
     case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
       if (nlesrc->decoder) {
         gst_element_set_state (nlesrc->decoder, GST_STATE_PAUSED);
