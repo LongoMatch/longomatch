@@ -90,6 +90,52 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
+		void AddTagsGroup (TimelineEvent evt, string grp, List<Tag> tags, SizeGroup sgroup)
+		{
+			HBox box = new HBox ();
+			Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
+			Table tagstable = new Table ((uint)(tags.Count / TAGS_PER_ROW), TAGS_PER_ROW, true);
+			RadioButton first = null;
+			Tag noneTag = new Tag (Catalog.GetString ("None"));
+			label.WidthRequest = 200;
+			if (!String.IsNullOrEmpty (grp)) {
+				tags.Insert (0, noneTag);
+			}
+			for (int i = 0; i < tags.Count; i++) {
+				uint row_top, row_bottom, col_left, col_right;
+				Tag t = tags [i];
+				CheckButton tb;
+				if (String.IsNullOrEmpty (grp)) {
+					tb = new CheckButton (t.Value);
+				} else {
+					if (first == null) {
+						tb = first = new RadioButton (t.Value);
+					} else {
+						tb = new RadioButton (first, t.Value);
+					}
+				}
+				tb.Active = evt.Tags.Contains (t);
+				tb.Toggled += (sender, e) => {
+					if (tb.Active && t != noneTag) {
+						evt.Tags.Add (t);
+					} else {
+						evt.Tags.Remove (t);
+					}
+				};
+				row_top = (uint)(i / tagstable.NColumns);
+				row_bottom = (uint)row_top + 1;
+				col_left = (uint)i % tagstable.NColumns;
+				col_right = (uint)col_left + 1;
+				tagstable.Attach (tb, col_left, col_right, row_top, row_bottom);
+			}
+			sgroup.AddWidget (label);
+			box.PackStart (label, false, true, 0);
+			box.PackEnd (tagstable, true, true, 0);
+			box.Spacing = 5;
+			tagsvbox.PackStart (box, false, true, 0);
+			tagsvbox.PackStart (new HSeparator ());
+		}
+
 		void FillTags (Project project, TimelineEvent evt)
 		{
 			Dictionary<string, List<Tag>> tagsByGroup;
@@ -101,57 +147,12 @@ namespace LongoMatch.Gui.Dialog
 				tagsByGroup = new Dictionary<string, List<Tag>> ();
 			}
 			
-			tagsByGroup = tagsByGroup.Concat (project.Dashboard.CommonTagsByGroup)
-				.ToDictionary (x => x.Key, x => x.Value);
-
 			tagsvbox.PackStart (new HSeparator ());
-			foreach (string grp in tagsByGroup.Keys) {
-				HBox box = new HBox ();
-				Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
-				List<Tag> tags = tagsByGroup [grp];
-				Table tagstable = new Table ((uint)(tags.Count / TAGS_PER_ROW), TAGS_PER_ROW, true);
-				RadioButton first = null;
-				Tag noneTag = new Tag (Catalog.GetString ("None")); 
-				
-				label.WidthRequest = 200;
-				if (!String.IsNullOrEmpty (grp)) {
-					tags.Insert (0, noneTag);
-				}
-
-				for (int i = 0; i < tags.Count; i++) {
-					uint row_top, row_bottom, col_left, col_right;
-					Tag t = tags [i];
-					CheckButton tb;
-					
-					if (String.IsNullOrEmpty (grp)) {
-						tb = new CheckButton (t.Value);
-					} else {
-						if (first == null) {
-							tb = first = new RadioButton (t.Value);
-						} else {
-							tb = new RadioButton (first, t.Value);
-						}
-					}
-					tb.Active = evt.Tags.Contains (t);
-					tb.Toggled += (sender, e) => {
-						if (tb.Active && t != noneTag) {
-							evt.Tags.Add (t);
-						} else {
-							evt.Tags.Remove (t);
-						}
-					};
-					row_top = (uint)(i / tagstable.NColumns);
-					row_bottom = (uint)row_top + 1;
-					col_left = (uint)i % tagstable.NColumns;
-					col_right = (uint)col_left + 1;
-					tagstable.Attach (tb, col_left, col_right, row_top, row_bottom);
-				}
-				sgroup.AddWidget (label);
-				box.PackStart (label, false, true, 0);
-				box.PackEnd (tagstable, true, true, 0);
-				box.Spacing = 5;
-				tagsvbox.PackStart (box, false, true, 0);
-				tagsvbox.PackStart (new HSeparator ());
+			foreach (var kv in project.Dashboard.CommonTagsByGroup) {
+				AddTagsGroup (evt, kv.Key, kv.Value, sgroup);
+			}
+			foreach (var kv in tagsByGroup) {
+				AddTagsGroup (evt, kv.Key, kv.Value, sgroup);
 			}
 			tagsvbox.ShowAll ();
 		}
