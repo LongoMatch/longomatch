@@ -24,7 +24,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class LabelObject: CanvasObject, ICanvasObject
 	{
-		int DEFAULT_FONT_SIZE = 12;
+		const int DEFAULT_FONT_SIZE = 12;
+		const FontWeight DEFAULT_FONT_WEIGHT = FontWeight.Bold;
 
 		public LabelObject (double width, double height, double offsetY)
 		{
@@ -59,7 +60,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				int width, height;
 				Config.DrawingToolkit.MeasureText (
 					Name, out width, out height, Config.Style.Font,
-					DEFAULT_FONT_SIZE, FontWeight.Normal);
+					DEFAULT_FONT_SIZE, DEFAULT_FONT_WEIGHT);
 				return TextOffset + width;
 			}
 		}
@@ -112,7 +113,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			
 			/* Draw category name */
 			tk.FontSlant = FontSlant.Normal;
-			tk.FontWeight = FontWeight.Bold;
+			tk.FontWeight = DEFAULT_FONT_WEIGHT;
 			tk.FontSize = DEFAULT_FONT_SIZE;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.FontAlignment = FontAlignment.Left;
