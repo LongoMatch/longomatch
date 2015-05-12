@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				Config.DrawingToolkit.MeasureText (
 					Name, out width, out height, Config.Style.Font,
 					DEFAULT_FONT_SIZE, DEFAULT_FONT_WEIGHT);
-				return TextOffset + width;
+				return TextOffset + width + StyleConf.TimelineLabelHSpacing;
 			}
 		}
 
