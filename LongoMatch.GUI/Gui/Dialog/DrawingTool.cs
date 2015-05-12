@@ -167,6 +167,8 @@ namespace LongoMatch.Gui.Dialog
 			savetoprojectbutton.Visible = true;
 			blackboard.Drawing = drawing;
 			blackboard.RegionOfInterest = drawing.RegionOfInterest;
+			UpdateLineWidth ();
+			UpdateTextSize ();
 		}
 
 		public void LoadFrame (Image frame, Project project)
