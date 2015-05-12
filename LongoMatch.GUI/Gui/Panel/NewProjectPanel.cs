@@ -307,6 +307,10 @@ namespace LongoMatch.Gui.Panel
 
 			foreach (Device device in devices) {
 				string deviceName;
+
+				if (device.Formats.Count == 0)
+					continue;
+
 				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
 				if (includeSourceName) {
 					deviceName += String.Format (" ({0})", device.SourceElement);
