@@ -168,7 +168,33 @@ namespace LongoMatch.Gui
 
 		public void Welcome ()
 		{
+			// Show the welcome panel
 			SetPanel (null);
+			// Populate the menu items from pluggable tools
+			List<ITool> tools = new List<ITool> ();
+
+			Config.EventsBroker.EmitQueryTools (tools);
+
+			Menu menu = (this.UIManager.GetWidget ("/menubar1/ToolsAction") as MenuItem).Submenu as Menu;
+			MenuItem before = this.UIManager.GetWidget ("/menubar1/ToolsAction/DatabasesManagerAction") as MenuItem;
+			int idx = 1;
+
+			// Find position of the database manager
+			foreach (Widget child in menu.Children) {
+				if (child == before)
+					break;
+				idx++;
+			}
+
+			// Insert our tools
+			foreach (ITool tool in tools) {
+				if (tool.MenubarLabel != null) {
+					MenuItem item = new MenuItem (tool.MenubarLabel);
+					item.Activated += (sender, e) => (tool.Load (Config.GUIToolkit));
+					item.Show ();
+					menu.Insert (item, idx++);
+				}
+			}
 		}
 
 		public void SelectProject (List<ProjectDescription> projects)
