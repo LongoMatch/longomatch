@@ -95,6 +95,9 @@ namespace LongoMatch.Core.Common
 		public event SeekEventHandler SeekEvent;
 		public event TogglePlayEventHandler TogglePlayEvent;
 
+		/* Query handlers */
+		public event QueryToolsHandler QueryTools;
+
 		public void EmitNewEvent (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
 		                          List<Tag> tags = null, Time start = null, Time stop = null,
 		                          Time eventTime = null, Score score = null, PenaltyCard card = null)
@@ -466,5 +469,20 @@ namespace LongoMatch.Core.Common
 				EventCreatedEvent (evt);
 			}
 		}
+
+		#region Queries
+
+		/// <summary>
+		/// Emit the QueryTools event so that listeners can provide a list of available tools.
+		/// </summary>
+		/// <param name="tools">an empty list of Tools that will get popuplated.</param>
+		public void EmitQueryTools (List<ITool> tools)
+		{
+			if (QueryTools != null) {
+				QueryTools (tools);
+			}
+		}
+
+		#endregion
 	}
 }
