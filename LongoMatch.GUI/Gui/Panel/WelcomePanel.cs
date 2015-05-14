@@ -16,10 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Common;
+
 using Mono.Unix;
 using Gtk;
+
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.GUI;
 
 using Action = System.Action;
 using System.Collections.Generic;
@@ -54,9 +57,13 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 
 			buttonWidgets = new List<Widget> ();
+
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
+
 			preferencesbutton.Clicked += HandlePreferencesClicked;
+
 			Create ();
+
 			Name = "WelcomePanel";
 		}
 
@@ -123,10 +130,10 @@ namespace LongoMatch.Gui.Panel
 			Label label;
 			
 			image = new Gtk.Image (
-				Helpers.Misc.LoadIcon (b.name, StyleConf.WelcomeIconImageSize, 0));
+				Helpers.Misc.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize, 0));
 
 			button = new Button ();
-			button.Clicked += (sender, e) => (b.func ());
+			button.Clicked += (sender, e) => (b.Func ());
 			button.HeightRequest = StyleConf.WelcomeIconSize;
 			button.WidthRequest = StyleConf.WelcomeIconSize;
 			button.Add (image);
@@ -134,7 +141,7 @@ namespace LongoMatch.Gui.Panel
 			alignment = new Alignment (0.5f, 0.5f, 0.0f, 0.0f);
 			alignment.Add (button);
 
-			label = new Label (b.text);
+			label = new Label (b.Text);
 			label.LineWrap = true;
 			label.LineWrapMode = Pango.WrapMode.Word;
 			label.Justify = Justification.Center;
@@ -143,23 +150,24 @@ namespace LongoMatch.Gui.Panel
 			box = new VBox (false, StyleConf.WelcomeIconsTextSpacing);
 			box.PackStart (alignment, false, false, 0);
 			box.PackStart (label, false, false, 0);
-			box.ShowAll ();
-			box.Name = b.name + "roundedbutton";
+
+			box.Name = b.Name + "roundedbutton";
+
 			return box;
 		}
 	}
 
 	public struct WelcomeButton
 	{
-		public string name;
-		public string text;
-		public Action func;
+		public string Name;
+		public string Text;
+		public Action Func;
 
 		public WelcomeButton (string name, string text, Action func)
 		{
-			this.name = name;
-			this.text = text;
-			this.func = func;
+			this.Name = name;
+			this.Text = text;
+			this.Func = func;
 		}
 		
 	}
