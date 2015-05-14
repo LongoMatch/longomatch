@@ -146,6 +146,8 @@
     <Compile Include="Store\ActionLink.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Store\CameraConfig.cs" />
+    <Compile Include="Interfaces\GUI\ITool.cs" />
+    <Compile Include="Handlers\Queries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

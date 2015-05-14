@@ -34,6 +34,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Handlers/Drawing.cs \
 	Handlers/Handlers.cs \
 	Handlers/Multimedia.cs \
+	Handlers/Queries.cs \
 	Interfaces/Drawing/ICanvas.cs \
 	Interfaces/Drawing/IDrawable.cs \
 	Interfaces/Drawing/IDrawingToolkit.cs \
@@ -46,6 +47,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Interfaces/GUI/IPanel.cs \
 	Interfaces/GUI/IPlayerView.cs \
 	Interfaces/GUI/IRenderingStateBar.cs \
+	Interfaces/GUI/ITool.cs \
 	Interfaces/GUI/IViewPort.cs \
 	Interfaces/IDataBaseManager.cs \
 	Interfaces/IDatabase.cs \
