@@ -375,6 +375,11 @@ namespace LongoMatch.Gui
 			return dialog;
 		}
 
+		public void Welcome ()
+		{
+			mainWindow.Welcome ();
+		}
+
 		public void CreateNewProject (Project project = null)
 		{
 			mainWindow.CreateNewProject (project);

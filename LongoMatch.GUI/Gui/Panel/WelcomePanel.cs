@@ -110,7 +110,8 @@ namespace LongoMatch.Gui.Panel
 					0, StyleConf.WelcomeIconsVSpacing / 2);
 				buttonWidgets.Add (b);
 			}
-			
+
+			ShowAll ();
 		}
 
 		Widget CreateButton (WelcomeButton b)

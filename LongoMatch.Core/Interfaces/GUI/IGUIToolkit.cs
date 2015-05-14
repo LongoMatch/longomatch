@@ -89,6 +89,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		ProjectDescription ChooseProject (List<ProjectDescription> projects);
 
+		void Welcome ();
+
 		void CreateNewProject (Project project = null);
 
 		void ShowProjectStats (Project project);

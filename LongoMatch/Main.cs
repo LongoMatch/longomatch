@@ -88,6 +88,8 @@ namespace LongoMatch
 
 				ConfigureOSXApp ();
 
+				Config.GUIToolkit.Welcome ();
+
 				Application.Run ();
 			} catch (AddinRequestShutdownException arse) {
 				// Abort gracefully

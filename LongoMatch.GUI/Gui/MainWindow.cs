@@ -101,6 +101,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		/// <summary>
+		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
+		/// </summary>
+		/// <param name="panel">Panel.</param>
 		public void SetPanel (Widget panel)
 		{
 			if (panel == null) {
@@ -117,7 +121,6 @@ namespace LongoMatch.Gui
 					(panel as IPanel).BackEvent += BackClicked;
 				}
 				centralbox.PackStart (panel, true, true, 0);
-				welcomepanel.Hide ();
 			}
 		}
 
@@ -161,6 +164,11 @@ namespace LongoMatch.Gui
 			(analysisWindow as Gtk.Widget).Destroy ();
 			analysisWindow = null;
 			ResetGUI ();
+		}
+
+		public void Welcome ()
+		{
+			SetPanel (null);
 		}
 
 		public void SelectProject (List<ProjectDescription> projects)
@@ -305,7 +313,9 @@ namespace LongoMatch.Gui
 			Title = Constants.SOFTWARE_NAME;
 			MakeActionsSensitive (false, projectType);
 			RemovePanel (false);
-			welcomepanel.Show ();
+			currentPanel = new WelcomePanel ();
+			currentPanel.Show ();
+			centralbox.PackStart (currentPanel, true, true, 0);
 		}
 
 		private void MakeActionsSensitive (bool sensitive, ProjectType projectType)
