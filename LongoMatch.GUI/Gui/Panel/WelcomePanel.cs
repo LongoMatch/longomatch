@@ -20,20 +20,19 @@ using System;
 using Mono.Unix;
 using Gtk;
 
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 
 using Action = System.Action;
 using System.Collections.Generic;
+using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class WelcomePanel : Gtk.Bin
 	{
-	
-		static WelcomeButton[] buttons = {
+		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
 				new Action (() => Config.EventsBroker.EmitNewProject (null))),
 			new WelcomeButton ("longomatch-project-open", Catalog.GetString ("Open"),
@@ -46,8 +45,9 @@ namespace LongoMatch.Gui.Panel
 				new Action (() => Config.EventsBroker.EmitManageCategories ())),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams\nmanager"),
 				new Action (() => Config.EventsBroker.EmitManageTeams ())),
-			                   
+
 		};
+		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
 		Gtk.Image logoImage;
 		SizeGroup sizegroup;
@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 
 			buttonWidgets = new List<Widget> ();
+			buttons = new List<WelcomeButton> (default_buttons);
 
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
 
@@ -69,7 +70,7 @@ namespace LongoMatch.Gui.Panel
 
 		uint NRows {
 			get {
-				return (uint)(buttons.Length / StyleConf.WelcomeIconsPerRow);
+				return (uint)(buttons.Count / StyleConf.WelcomeIconsPerRow);
 			}
 		}
 
@@ -78,8 +79,26 @@ namespace LongoMatch.Gui.Panel
 			Config.EventsBroker.EmitEditPreferences ();
 		}
 
+		void Populate ()
+		{
+			// Query for tools
+			List<ITool> tools = new List<ITool> ();
+
+			Config.EventsBroker.EmitQueryTools (tools);
+
+			foreach (ITool tool in tools) {
+				if (tool.WelcomePanelIcon != null) {
+					buttons.Add (new WelcomeButton (tool.WelcomePanelIcon, tool.Name,
+						new Action (() => tool.Load (Config.GUIToolkit))));
+				}
+			}
+		}
+
 		void Create ()
 		{
+			// Check if some additional tools are available that should be added to our buttons list
+			Populate ();
+
 			// One extra row for our logo
 			tablewidget.NRows = (uint)NRows + 1;
 			tablewidget.NColumns = StyleConf.WelcomeIconsPerRow;
@@ -103,14 +122,14 @@ namespace LongoMatch.Gui.Panel
 				AttachOptions.Expand | AttachOptions.Fill,
 				0, StyleConf.WelcomeIconsVSpacing / 2);
 
-			for (uint i = 0; i < buttons.Length; i++) {
+			for (uint i = 0; i < buttons.Count; i++) {
 				Widget b;
 				uint c, l;
 
 				c = i % StyleConf.WelcomeIconsPerRow;
 				l = i / StyleConf.WelcomeIconsPerRow + 1;
 
-				b = CreateButton (buttons [i]);
+				b = CreateButton (buttons [(int)i]);
 				tablewidget.Attach (b, c, c + 1, l, l + 1,
 					AttachOptions.Expand | AttachOptions.Fill,
 					AttachOptions.Expand | AttachOptions.Fill,
@@ -128,9 +147,13 @@ namespace LongoMatch.Gui.Panel
 			Gtk.Image image;
 			Gtk.Alignment alignment;
 			Label label;
-			
-			image = new Gtk.Image (
-				Helpers.Misc.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize, 0));
+
+			if (b.Icon == null) {
+				image = new Gtk.Image (
+					Helpers.Misc.LoadIcon (b.Name, StyleConf.WelcomeIconImageSize, 0));
+			} else {
+				image = new Gtk.Image (b.Icon.Value);
+			}
 
 			button = new Button ();
 			button.Clicked += (sender, e) => (b.Func ());
@@ -161,13 +184,23 @@ namespace LongoMatch.Gui.Panel
 	{
 		public string Name;
 		public string Text;
+		public Image Icon;
 		public Action Func;
 
 		public WelcomeButton (string name, string text, Action func)
 		{
-			this.Name = name;
-			this.Text = text;
-			this.Func = func;
+			Name = name;
+			Text = text;
+			Func = func;
+			Icon = null;
+		}
+
+		public WelcomeButton (Image icon, string text, Action func)
+		{
+			Icon = icon;
+			Text = text;
+			Func = func;
+			Name = null;
 		}
 		
 	}
