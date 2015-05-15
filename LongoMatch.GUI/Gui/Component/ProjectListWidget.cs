@@ -121,7 +121,7 @@ namespace LongoMatch.Gui.Component
 				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, pdesc);
 			}
 			swallowSignals = false;
-			iconview.SetCursor (new TreePath ("0"), null, false);
+			iconview.SelectPath (new TreePath ("0"));
 			treeview.SetCursor (new TreePath ("0"), null, false);
 		}
 
