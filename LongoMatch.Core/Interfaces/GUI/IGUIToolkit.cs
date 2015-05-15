@@ -91,6 +91,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void Welcome ();
 
+		void LoadPanel (IPanel panel);
+
 		void CreateNewProject (Project project = null);
 
 		void ShowProjectStats (Project project);

@@ -380,6 +380,11 @@ namespace LongoMatch.Gui
 			mainWindow.Welcome ();
 		}
 
+		public void LoadPanel (IPanel panel)
+		{
+			mainWindow.SetPanel ((Widget)panel);
+		}
+
 		public void CreateNewProject (Project project = null)
 		{
 			mainWindow.CreateNewProject (project);
