@@ -152,16 +152,20 @@ namespace LongoMatch.Gui
 				mode = value;
 				switch (mode) {
 				case PlayerViewOperationMode.Analysis:
-					Compact = false;
 					ShowControls = true;
+					Compact = false;
 					break;
 				case PlayerViewOperationMode.LiveAnalysisReview:
-					Compact = true;
 					ShowControls = true;
+					Compact = true;
 					break;
 				case PlayerViewOperationMode.Synchronization:
-					Compact = false;
 					ShowControls = false;
+					Compact = false;
+					break;
+				case PlayerViewOperationMode.Presentation:
+					ShowControls = true;
+					Compact = true;
 					break;
 				}
 			}

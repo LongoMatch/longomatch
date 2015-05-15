@@ -433,6 +433,7 @@ namespace LongoMatch.Core.Common
 		Synchronization,
 		LiveAnalysisReview,
 		Analysis,
+		Presentation,
 	}
 
 	/* The values must be kept in sync with the combobox in
