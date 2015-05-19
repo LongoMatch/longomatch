@@ -24,23 +24,36 @@ using LongoMatch.Core.Interfaces;
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
-	public class Playlist
+	public class Playlist: IStorable
 	{
 
 		int indexSelection = 0;
+
 		#region Constructors
+
 		public Playlist ()
 		{
+			ID = System.Guid.NewGuid ();
 			Elements = new List<IPlaylistElement> ();
 		}
+
 		#endregion
+
 		#region Properties
-		
+
+		/// <summary>
+		/// Unique ID for the playlist
+		/// </summary>
+		public Guid ID {
+			get;
+			set;
+		}
+
 		public string Name {
 			get;
 			set;
 		}
-		
+
 		public List<IPlaylistElement> Elements {
 			get;
 			set;
@@ -63,8 +76,11 @@ namespace LongoMatch.Core.Store.Playlists
 				return Elements [indexSelection];
 			}
 		}
+
 		#endregion
+
 		#region Public methods
+
 		public IPlaylistElement Next ()
 		{
 			if (HasNext ())
@@ -103,7 +119,7 @@ namespace LongoMatch.Core.Store.Playlists
 		{
 			bool ret = Elements.Remove (plNode);
 			if (CurrentIndex >= Elements.Count)
-				indexSelection --;
+				indexSelection--;
 			return ret;
 		}
 
@@ -137,6 +153,7 @@ namespace LongoMatch.Core.Store.Playlists
 		{
 			return (Playlist)(MemberwiseClone ());
 		}
+
 		#endregion
 	}
 }
