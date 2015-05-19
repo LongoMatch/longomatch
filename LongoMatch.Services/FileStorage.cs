@@ -158,13 +158,19 @@ namespace LongoMatch.Services.Services
 				T t = (T)Serializer.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 
-				FieldInfo finfo = t.GetType ().GetField ("Name");
-				PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+				string sType = ResolveType (typeof(T));
 
-				if (pinfo != null)
-					pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
-				else if (finfo != null)
-					finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+				// HACK: For backward compatibility issues we can't allow the file name to differ from the Name field
+				// for dashboard and teams as the previous file structure was assuming that they were identical.
+				if (sType == "dashboard" || sType == "team") {
+					FieldInfo finfo = t.GetType ().GetField ("Name");
+					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+
+					if (pinfo != null)
+						pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+					else if (finfo != null)
+						finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+				}
 
 				l.Add (t);
 			}
@@ -182,7 +188,7 @@ namespace LongoMatch.Services.Services
 
 			// In case the only keyword is name try to find the files by name
 			if (dict.ContainsKey ("Name") && dict.Keys.Count == 1) {
-				string path = Path.Combine (typePath, dict["Name"] + GetExtension (typeof(T)));
+				string path = Path.Combine (typePath, dict ["Name"] + GetExtension (typeof(T)));
 
 				if (File.Exists (path)) {
 					T t = Serializer.LoadSafe<T> (path);
@@ -193,9 +199,9 @@ namespace LongoMatch.Services.Services
 					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
 
 					if (pinfo != null)
-						pinfo.SetValue (t, dict["Name"]);
+						pinfo.SetValue (t, dict ["Name"]);
 					else if (finfo != null)
-						finfo.SetValue (t, dict["Name"]);
+						finfo.SetValue (t, dict ["Name"]);
 
 					l.Add (t);
 					return l;
@@ -256,7 +262,7 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension (typeof(T));
 
 			// Save the object as a file on disk
-			string path = Path.Combine (typePath, ResolveName(t)) + extension;
+			string path = Path.Combine (typePath, ResolveName (t)) + extension;
 			Log.Information ("Storing " + path);
 			Serializer.Save<T> (t, path);
 		}
@@ -267,7 +273,7 @@ namespace LongoMatch.Services.Services
 			string extension = GetExtension (typeof(T));
 
 			try {
-				string path = Path.Combine (typePath, ResolveName(t)) + extension; 
+				string path = Path.Combine (typePath, ResolveName (t)) + extension; 
 				Log.Information ("Deleting " + path);
 				File.Delete (path);
 			} catch (Exception ex) {
