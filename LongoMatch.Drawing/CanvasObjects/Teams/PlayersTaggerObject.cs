@@ -199,6 +199,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		public void Reload ()
 		{
 			LoadTeams (homeTeam, awayTeam, background);
+			UpdateLineup ();
 		}
 
 		public void Update ()

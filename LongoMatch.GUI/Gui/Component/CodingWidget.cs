@@ -367,7 +367,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEventEdited (TimelineEvent play)
 		{
-			if (play is SubstitutionEvent) {
+			if (play is SubstitutionEvent || play is LineupEvent) {
 				teamtagger.Reload ();
 			}
 		}
