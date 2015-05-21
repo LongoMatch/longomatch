@@ -57,6 +57,8 @@ namespace LongoMatch.Gui.Component
 			focusscale.Adjustment.Lower = 0;
 			focusscale.Adjustment.Upper = 12;
 			focusscale.ValueChanged += HandleValueChanged;
+			focusscale.ButtonPressEvent += HandleFocusScaleButtonPress;
+			focusscale.ButtonReleaseEvent += HandleFocusScaleButtonRelease;
 			timerulearea.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			leftbox.WidthRequest = StyleConf.TimelineLabelsWidth;
 			labelsarea.SizeRequested += (o, args) => {
@@ -190,6 +192,26 @@ namespace LongoMatch.Gui.Component
 			
 			pos = Math.Min (pos, maxPos);
 			scrolledwindow1.Hadjustment.Value = pos;
+		}
+
+		[GLib.ConnectBefore]
+		void HandleFocusScaleButtonPress (object o, Gtk.ButtonPressEventArgs args)
+		{
+			if (args.Event.Button == 1) {
+				args.Event.SetButton (2);
+			} else {
+				args.Event.SetButton (1);
+			}
+		}
+
+		[GLib.ConnectBefore]
+		void HandleFocusScaleButtonRelease (object o, Gtk.ButtonReleaseEventArgs args)
+		{
+			if (args.Event.Button == 1) {
+				args.Event.SetButton (2);
+			} else {
+				args.Event.SetButton (1);
+			}
 		}
 
 		void HandleValueChanged (object sender, EventArgs e)
