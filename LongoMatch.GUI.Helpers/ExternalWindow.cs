@@ -30,7 +30,7 @@ namespace LongoMatch.GUI.Helpers
 		public ExternalWindow () : base (WindowType.Toplevel)
 		{
 			// Configure window icon
-			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Button);
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
 
 			box = new EventBox ();
 			box.Name = "lightbackgroundeventbox";

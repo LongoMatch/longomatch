@@ -171,7 +171,7 @@ namespace LongoMatch.Gui
 		public void Welcome ()
 		{
 			// Configure window icon
-			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Button);
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
 
 			// Show the welcome panel
 			SetPanel (null);
