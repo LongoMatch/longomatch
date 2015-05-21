@@ -166,7 +166,6 @@ namespace LongoMatch.Gui
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "LongoMatch.Gui.MainWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString ("LongoMatch");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Gravity = ((global::Gdk.Gravity)(5));
 			// Container child LongoMatch.Gui.MainWindow.Gtk.Container+ContainerChild

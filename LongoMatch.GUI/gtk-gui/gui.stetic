@@ -1004,7 +1004,6 @@ Sort by competition</property>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
-    <property name="Icon">stock:longomatch Dialog</property>
     <property name="WindowPosition">Center</property>
     <property name="Gravity">Center</property>
     <child>

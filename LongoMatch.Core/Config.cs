@@ -112,6 +112,7 @@ namespace LongoMatch
 			Copyright = Constants.COPYRIGHT;
 			License = Constants.LICENSE;
 			SoftwareName = Constants.SOFTWARE_NAME;
+			SoftwareIconName = Constants.LOGO_ICON;
 			LatestVersionURL = Constants.LATEST_VERSION_URL;
 		}
 
@@ -286,6 +287,11 @@ namespace LongoMatch
 		}
 
 		static public string SoftwareName {
+			get;
+			set;
+		}
+
+		static public string SoftwareIconName {
 			get;
 			set;
 		}

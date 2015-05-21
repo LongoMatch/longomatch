@@ -19,6 +19,8 @@ using System;
 using Gtk;
 using LongoMatch.Core.Common;
 
+using Misc = LongoMatch.Gui.Helpers.Misc;
+
 namespace LongoMatch.GUI.Helpers
 {
 	public class ExternalWindow: Window
@@ -27,8 +29,9 @@ namespace LongoMatch.GUI.Helpers
 
 		public ExternalWindow () : base (WindowType.Toplevel)
 		{
-			Icon = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch", IconSize.Menu);
-			
+			// Configure window icon
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Button);
+
 			box = new EventBox ();
 			box.Name = "lightbackgroundeventbox";
 			box.KeyPressEvent += (o, args) => {

@@ -28,6 +28,8 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Panel;
 
+using Misc = LongoMatch.Gui.Helpers.Misc;
+
 namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category ("LongoMatch")]
@@ -168,6 +170,9 @@ namespace LongoMatch.Gui
 
 		public void Welcome ()
 		{
+			// Configure window icon
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Button);
+
 			// Show the welcome panel
 			SetPanel (null);
 			// Populate the menu items from pluggable tools
