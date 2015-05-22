@@ -1098,8 +1098,10 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
   GstElement *bin;
   GstElement *source;
   GstCaps *source_caps;
-  GstStructure *s = NULL;
   GstPad *source_pad;
+  GstCaps *raw_caps = gst_caps_from_string ("video/x-raw-yuv; video/x-raw-rgb");
+  GstCaps *dv_caps = gst_caps_from_string ("video/x-dv");
+  gboolean res = FALSE;
 
   gcc->priv->source_bin = bin = gst_bin_new ("source");
   gcc->priv->source = source =
@@ -1111,7 +1113,7 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
         "Failed to create the %s element. "
         "Please check your GStreamer installation.",
         gcc->priv->source_element_name);
-    return FALSE;
+    goto beach;
   }
   gst_bin_add (GST_BIN (bin), source);
 
@@ -1129,13 +1131,7 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
   g_signal_connect (source_pad, "notify::caps",
       G_CALLBACK (gcc_source_caps_set), gcc);
 
-  if (gst_caps_get_size (source_caps) != 0) {
-    s = gst_caps_get_structure (source_caps, 0);
-  }
-  if (s == NULL) {
-    gst_camera_capturer_fill_decodebin_source (gcc);
-  } else if (gst_structure_has_name (s, "video/x-raw-yuv") ||
-      gst_structure_has_name (s, "video/x-raw-rgb")) {
+  if (gst_caps_can_intersect (source_caps, raw_caps)) {
     GstPad *filter_pad;
     GstElement *filter;
     GstCaps *link_caps;
@@ -1154,8 +1150,10 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
     gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->source_bin);
     gst_camera_capturer_create_remainig (gcc);
     gcc->priv->audio_enabled = FALSE;
-  } else if (gst_structure_has_name (s, "video/x-dv")) {
+    res = TRUE;
+  } else if (gst_caps_can_intersect (source_caps, dv_caps)) {
     gst_camera_capturer_fill_decodebin_source (gcc);
+    res = TRUE;
   }
   gst_object_unref (source_pad);
   gst_caps_unref (source_caps);
@@ -1163,7 +1161,10 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
   GST_INFO_OBJECT (gcc, "Created video source %s",
       gcc->priv->source_element_name);
 
-  return TRUE;
+beach:
+  gst_caps_unref (raw_caps);
+  gst_caps_unref (dv_caps);
+  return res;
 }
 
 static gboolean
