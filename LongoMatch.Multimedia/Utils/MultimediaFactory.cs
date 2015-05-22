@@ -26,7 +26,6 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Video.Capturer;
-using LongoMatch.Video.Converter;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Remuxer;
@@ -44,7 +43,6 @@ namespace LongoMatch.Video
 			/* Register default elements */
 			Register<IPlayer, GstPlayer> (0);
 			Register<IFramesCapturer, GstFramesCapturer> (0);
-			Register<IVideoConverter, GstVideoConverter> (0);
 			Register<IVideoEditor, GstVideoSplitter> (0);
 			Register<IRemuxer, GstRemuxer> (0);
 			Register<ICapturer, GstCameraCapturer> (0);
@@ -74,11 +72,6 @@ namespace LongoMatch.Video
 		public IVideoEditor GetVideoEditor ()
 		{
 			return registry.Retrieve<IVideoEditor> ();
-		}
-
-		public IVideoConverter GetVideoConverter (string filename)
-		{
-			return registry.Retrieve<IVideoConverter> (filename);
 		}
 
 		public IDiscoverer GetDiscoverer ()

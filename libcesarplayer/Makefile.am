@@ -47,8 +47,6 @@ libcesarplayer_la_SOURCES = \
 	gst-remuxer.h\
 	gst-video-editor.c\
 	gst-video-editor.h\
-	gst-video-encoder.c\
-	gst-video-encoder.h\
 	gst-nle-source.c\
 	gst-nle-source.h\
 	lgm-utils.m\
@@ -67,13 +65,10 @@ EXTRA_DIST = \
 	baconvideowidget-marshal.list
 
 
-noinst_PROGRAMS = test-capturer test-encoder test-discoverer test-remuxer test-editor
+noinst_PROGRAMS = test-capturer test-discoverer test-remuxer test-editor
 
 test_capturer_SOURCES = test-capturer.c
 test_capturer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
-
-test_encoder_SOURCES = test-encoder.c
-test_encoder_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
 
 test_discoverer_SOURCES = test-discoverer.c
 test_discoverer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)

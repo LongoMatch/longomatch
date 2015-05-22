@@ -71,7 +71,6 @@
     <Compile Include="Stats\Stat.cs" />
     <Compile Include="Common\EventsFilter.cs" />
     <Compile Include="Interfaces\Multimedia\IRemuxer.cs" />
-    <Compile Include="Interfaces\Multimedia\IVideoConverter.cs" />
     <Compile Include="Interfaces\IDataBaseManager.cs" />
     <Compile Include="Common\EncodingQuality.cs" />
     <Compile Include="Common\Gettext.cs" />

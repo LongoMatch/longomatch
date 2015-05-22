@@ -33,8 +33,6 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 		IVideoEditor GetVideoEditor ();
 
-		IVideoConverter GetVideoConverter (string filename);
-
 		IFramesCapturer GetFramesCapturer ();
 
 		IRemuxer GetRemuxer (MediaFile inputFile, string outputFile, VideoMuxerType muxer);

@@ -11,8 +11,6 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Common/Constants.cs \
 	Common/Enum.cs \
 	Common/Handlers.cs \
-	Converter/GstVideoConverter.cs \
-	Converter/ObjectManager.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Player/GstPlayer.cs \

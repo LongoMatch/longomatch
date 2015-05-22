@@ -42,8 +42,6 @@
     <Compile Include="Common\Handlers.cs" />
     <Compile Include="Remuxer\GstRemuxer.cs" />
     <Compile Include="Remuxer\ObjectManager.cs" />
-    <Compile Include="Converter\GstVideoConverter.cs" />
-    <Compile Include="Converter\ObjectManager.cs" />
     <Compile Include="Utils\MultimediaFactory.cs" />
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />
@@ -59,7 +57,6 @@
     <Folder Include="Common\" />
     <Folder Include="Editor\" />
     <Folder Include="Remuxer\" />
-    <Folder Include="Converter\" />
     <Folder Include="Player\" />
   </ItemGroup>
   <ItemGroup>

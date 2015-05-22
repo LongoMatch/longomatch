@@ -67,7 +67,6 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
 	Interfaces/Multimedia/IPlayer.cs \
 	Interfaces/Multimedia/IRemuxer.cs \
-	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
 	Stats/EventTypeStats.cs \
 	Stats/PercentualStat.cs \

@@ -57,7 +57,6 @@
     <None Include="gst-video-editor.h" />
     <None Include="baconvideowidget-marshal.h" />
     <None Include="gst-remuxer.h" />
-    <None Include="gst-video-encoder.h" />
     <None Include="lgm-video-player.h" />
     <None Include="gst-nle-source.h" />
     <None Include="lgm-gtk-glue.h" />
@@ -71,7 +70,6 @@
     <Compile Include="gst-video-editor.c" />
     <Compile Include="baconvideowidget-marshal.c" />
     <Compile Include="gst-remuxer.c" />
-    <Compile Include="gst-video-encoder.c" />
     <Compile Include="gst-nle-source.c" />
     <Compile Include="lgm-video-player.c" />
     <Compile Include="lgm-gtk-glue.c" />
