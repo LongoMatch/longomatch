@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class VideoConversionTool : Gtk.Dialog
 	{
-		ListStore store;
 		ListStore stdStore;
 		ListStore bitStore;
 		uint maxHeight;
