@@ -946,10 +946,14 @@ lgm_video_player_new (LgmUseType type, GError ** err)
 
   if (type == LGM_USE_TYPE_VIDEO) {
     video_sink = gst_element_factory_make ("autovideosink", "video-sink");
-    audio_sink = gst_element_factory_make ("autoaudiosink", "video-sink");
+    audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+    if (gst_element_set_state (audio_sink, GST_STATE_READY) != GST_STATE_CHANGE_SUCCESS) {
+      gst_object_unref (audio_sink);
+      audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
+    }
   } else {
     video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
-    audio_sink = gst_element_factory_make ("fakesink", "video-sink");
+    audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
     if (video_sink)
       g_object_set (video_sink, "sync", TRUE, NULL);
     if (audio_sink)
