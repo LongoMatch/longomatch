@@ -343,10 +343,14 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitCaptureFinished (bool close)
+		/// <summary>
+		/// Emits the capture finished event.
+		/// </summary>
+		/// <param name="cancel">If set to <c>true</c> the capture was cancelled.</param>
+		public void EmitCaptureFinished (bool cancel)
 		{
 			if (CaptureFinished != null) {
-				CaptureFinished (close);
+				CaptureFinished (cancel);
 			}
 		}
 
