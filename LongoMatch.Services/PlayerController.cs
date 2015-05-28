@@ -381,8 +381,10 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Seek to previous frame");
 			if (!StillImageLoaded) {
+				EmitLoadDrawings (null);
 				if (CurrentTime > loadedSegment.Start) {
-					seeker.Seek (SeekType.StepDown);
+					player.SeekToPreviousFrame ();
+					Tick ();
 				}
 			}
 			return true;
