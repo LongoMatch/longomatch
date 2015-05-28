@@ -357,6 +357,8 @@ namespace Tests.Services
 			player.LoadEvent (mfs, evt, evt.Start, true);
 			playerMock.ResetCalls ();
 			player.Seek (0.5f);
+			// Seeks for loaded events are throtled by a timer.
+			System.Threading.Thread.Sleep (100);
 			playerMock.Verify (p => p.Seek (new Time (seekPos), true, false), Times.Once ());
 			Assert.IsTrue (timeChanged != 0);
 			/* current time is now relative to the loaded segment's duration */
