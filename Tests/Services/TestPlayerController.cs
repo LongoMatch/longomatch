@@ -356,9 +356,13 @@ namespace Tests.Services
 			currentTime = new Time (seekPos);
 			player.LoadEvent (mfs, evt, evt.Start, true);
 			playerMock.ResetCalls ();
+			player.Seek (0.1f);
 			player.Seek (0.5f);
 			// Seeks for loaded events are throtled by a timer.
 			System.Threading.Thread.Sleep (100);
+			// Check we got called only once
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), true, false), Times.Once ());
+			// And with the last value
 			playerMock.Verify (p => p.Seek (new Time (seekPos), true, false), Times.Once ());
 			Assert.IsTrue (timeChanged != 0);
 			/* current time is now relative to the loaded segment's duration */
