@@ -17,6 +17,7 @@ namespace LongoMatch.Core.Common
 		Time start;
 		float rate;
 		SeekType seekType;
+		static object lockObject = new Object ();
 		readonly Timer timer;
 		readonly ManualResetEvent TimerDisposed;
 
@@ -44,38 +45,57 @@ namespace LongoMatch.Core.Common
 
 		#endregion
 
+		/// <summary>
+		/// Schedule a throttled seek of the specified seekType, start and rate. The seek won't happen right away, instead
+		/// a timer will be put in place if none already exist and the seek value will be stored. When the timer is fired
+		/// the latest seek value will be used to do the seek. This is mostly useful to avoid flooding the media engine with
+		/// seek requests when the user is scrubbing the user interface.
+		/// </summary>
+		/// <param name="seekType">Seek type.</param>
+		/// <param name="start">Start.</param>
+		/// <param name="rate">Rate.</param>
 		public void Seek (SeekType seekType, Time start = null, float rate = 1)
 		{
-			this.seekType = seekType;
-			this.start = start;
-			this.rate = rate;
+			lock (lockObject) {
+				this.seekType = seekType;
+				this.start = start;
+				this.rate = rate;
 
-			pendingSeek = true;
-			if (waiting) {
-				return;
+				// If a we are already waiting for the timer, return.
+				if (waiting) {
+					return;
+				}
+
+				// Schedule timer
+				timer.Change (timeout, Timeout.Infinite);
+				// And remember we are waiting
+				waiting = true;
 			}
-
-			HandleSeekTimeout (this);
-			waiting = true;
-			timer.Change (timeout, Timeout.Infinite);
 		}
 
+
+		/// <summary>
+		/// Called when the timer is fired and will do the actual seek. Note that a lock is used to protect
+		/// member variables as the timers are called from a different thread.
+		/// </summary>
+		/// <param name="state">State.</param>
 		void HandleSeekTimeout (object state)
 		{
 			if (disposed) {
 				return;
 			}
 
-			waiting = false;
-			if (pendingSeek) {
+			lock (lockObject) {
 				if (seekType != SeekType.None) {
 					if (SeekEvent != null) {
 						SeekEvent (seekType, start, rate);
 					}
-					seekType = SeekType.None;
 				}
+				// Unschedule timer
+				timer.Change (Timeout.Infinite, Timeout.Infinite);
+				// We are not going to be called anymore until reschedule
+				waiting = false;
 			}
-			timer.Change (Timeout.Infinite, Timeout.Infinite);
 		}
 	}
 }
