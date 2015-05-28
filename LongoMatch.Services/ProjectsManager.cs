@@ -240,15 +240,14 @@ namespace LongoMatch.Services
 				EndCaptureResponse res;
 
 				// FIXME:
-				res = guiToolkit.EndCapture (OpenedProject.Description.FileSet.First ().FilePath);
+				res = guiToolkit.EndCapture ();
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
-					CloseOpenedProject (false);
+					HandleCaptureFinished (true);
 					return true;
 				} else if (res == EndCaptureResponse.Save) {
-					/* Close and save project */
-					CloseOpenedProject (true);
+					HandleCaptureFinished (false);
 					return true;
 				} else {
 					/* Continue with the current project */
