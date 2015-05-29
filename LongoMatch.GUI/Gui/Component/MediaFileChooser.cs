@@ -27,6 +27,7 @@ namespace LongoMatch.Gui.Component
 	public partial class MediaFileChooser : Gtk.Bin
 	{
 		public event EventHandler ChangedEvent;
+		public event EventHandler NameChangedEvent;
 
 		MediaFile mediaFile;
 		string path;
@@ -190,8 +191,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleNameChanged (object sender, EventArgs e)
 		{
-			if (ChangedEvent != null) {
-				ChangedEvent (this, null);
+			if (mediaFile != null) {
+				mediaFile.Name = nameentry.Text;
+			}
+
+			if (NameChangedEvent != null) {
+				NameChangedEvent (this, null);
 			}
 		}
 	}
