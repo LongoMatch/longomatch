@@ -317,7 +317,10 @@ namespace LongoMatch.Gui
 			}
 			if (stack) {
 				stackPanel = currentPanel;
-				stackPanel.Visible = false;
+				// Make sure to use Hide and not the visible member here. Indeed this behaves differently
+				// and widgets inside the panel would not get notified that they have been hidden on platforms
+				// like windows.
+				stackPanel.Hide ();
 			} else {
 				DestroyPanel (currentPanel);
 				currentPanel = null;
