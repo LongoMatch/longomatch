@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 
+using Misc = LongoMatch.Gui.Helpers.Misc;
+
 namespace LongoMatch.Gui.Dialog
 {
 
@@ -37,6 +39,8 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TransientFor = parent;
 			this.Build ();
+			// Configure window icon
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
 			ShowCount = false;
 			setAvailableTemplatesVisible (false);
 		}

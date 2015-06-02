@@ -2085,8 +2085,7 @@ Away</property>
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EntryDialog" design-size="339 195">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Select template name</property>
-    <property name="Icon">stock:longomatch Dialog</property>
+    <property name="Title" translatable="yes" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -2106,23 +2105,32 @@ Away</property>
             <property name="RowSpacing">6</property>
             <property name="ColumnSpacing">6</property>
             <child>
-              <widget class="Gtk.CheckButton" id="checkbutton">
+              <widget class="Gtk.Alignment" id="alignment1">
                 <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">True</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Toggled" handler="OnCheckbuttonToggled" />
+                <property name="Xscale">0</property>
+                <property name="Yscale">0</property>
+                <property name="Xalign">0</property>
+                <child>
+                  <widget class="Gtk.CheckButton" id="checkbutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="DrawIndicator">True</property>
+                    <property name="HasLabel">True</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Toggled" handler="OnCheckbuttonToggled" />
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="TopAttach">2</property>
                 <property name="BottomAttach">3</property>
                 <property name="LeftAttach">1</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
+                <property name="XOptions">Fill</property>
                 <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
+                <property name="XExpand">False</property>
                 <property name="XFill">True</property>
                 <property name="XShrink">False</property>
                 <property name="YExpand">False</property>

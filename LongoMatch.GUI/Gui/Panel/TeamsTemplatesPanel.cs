@@ -327,7 +327,7 @@ namespace LongoMatch.Gui.Panel
 			
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
-			dialog.Text = Catalog.GetString ("New team");
+			dialog.Title = dialog.Text = Catalog.GetString ("New team");
 			dialog.SelectText ();
 			dialog.AvailableTemplates = templatesNames;
 			
