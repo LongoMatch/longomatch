@@ -91,6 +91,8 @@
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
     <Compile Include="Services\TestServices.cs" />
     <Compile Include="Services\TestUpdatesNotifier.cs" />
+    <Compile Include="Services\TestProjectsManager.cs" />
+    <Compile Include="LocalDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

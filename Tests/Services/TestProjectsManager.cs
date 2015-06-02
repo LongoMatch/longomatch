@@ -1,0 +1,221 @@
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using LongoMatch;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
+using Moq;
+using NUnit.Framework;
+
+namespace Tests.Services
+{
+	[TestFixture ()]
+	public class TestProjectsManager
+	{
+		Mock<IMultimediaToolkit> mtkMock;
+		Mock<IGUIToolkit> gtkMock;
+		Mock<IAnalysisWindow> winMock;
+		Mock<ICapturer> capturerMock;
+		Mock<ICapturerBin> capturerBinMock;
+		PlayerController player;
+		ProjectsManager projectsManager;
+		Project project;
+		CaptureSettings settings;
+
+		[TestFixtureSetUp ()]
+		public void FixtureSetup ()
+		{
+			settings = new CaptureSettings ();
+			settings.EncodingSettings = new EncodingSettings ();
+			settings.EncodingSettings.EncodingProfile = EncodingProfiles.MP4;
+
+			var playerMock = new Mock<IPlayer> ();
+			playerMock.SetupAllProperties ();
+
+			capturerMock = new Mock<ICapturer> ();
+			capturerMock.SetupAllProperties ();
+
+			winMock = new Mock<IAnalysisWindow> ();
+			winMock.SetupAllProperties ();
+			IAnalysisWindow win = winMock.Object;
+
+			mtkMock = new Mock<IMultimediaToolkit> ();
+			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
+			mtkMock.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
+			mtkMock.Setup (m => m.GetCapturer ()).Returns (capturerMock.Object);
+			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), It.IsAny<bool> ()))
+				.Returns ((string s, bool b) => new MediaFile { FilePath = s });
+			Config.MultimediaToolkit = mtkMock.Object;
+
+			gtkMock = new Mock<IGUIToolkit> ();
+			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
+			gtkMock.Setup (m => m.OpenProject (It.IsAny<Project> (), It.IsAny<ProjectType> (),
+				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out win));
+			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
+				.Returns (() => settings.EncodingSettings.OutputFile)
+				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
+			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Save);
+			Config.GUIToolkit = gtkMock.Object;
+
+			capturerBinMock = new Mock<ICapturerBin> ();
+			capturerBinMock.Setup (w => w.Capturer).Returns (capturerMock.Object);
+			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
+			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
+			player = new PlayerController (); 
+			winMock.Setup (w => w.Capturer).Returns (capturerBinMock.Object);
+			winMock.Setup (w => w.Player).Returns (player);
+		}
+
+		[SetUp ()]
+		public void Setup ()
+		{
+			Config.EventsBroker = new EventsBroker ();
+			Config.DatabaseManager = new LocalDatabaseManager ();
+			projectsManager = new ProjectsManager (Config.GUIToolkit, Config.MultimediaToolkit);
+			projectsManager.Start ();
+			project = Utils.CreateProject ();
+			settings.EncodingSettings.OutputFile = Path.GetTempFileName ();
+		}
+
+		[TearDown ()]
+		public void TearDown ()
+		{
+			projectsManager.Stop ();
+			Utils.DeleteProject (project);
+			try {
+				File.Delete (settings.EncodingSettings.OutputFile);
+			} catch {
+			}
+		}
+
+		[Test ()]
+		public void TestLoadCaptureProject ()
+		{
+			bool projectOpened = false;
+
+			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
+				Assert.AreEqual (project, p);
+				Assert.AreEqual (ProjectType.CaptureProject, pt);
+				projectOpened = true;
+			};
+
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (project, projectsManager.OpenedProject);
+			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (player, projectsManager.Player);
+			Assert.AreEqual (capturerBinMock.Object, projectsManager.Capturer);
+			Assert.IsTrue (projectOpened);
+			capturerBinMock.Verify (c => c.Run (settings, project.Description.FileSet.First ()), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestCaptureProjectError ()
+		{
+			int projectOpened = 0;
+			Project testedProject = null;
+
+			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
+				Assert.AreEqual (testedProject, p);
+				projectOpened++;
+			};
+
+			testedProject = project;
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			Assert.AreEqual (1, projectOpened);
+			testedProject = null;
+			Config.EventsBroker.EmitCaptureError (null, "Error!");
+			/* Errors during a capture project should be handled gracefully
+			 * closing the current capture project and saving a copy of the
+			 * captured video and coded data, without loosing anything */
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, projectOpened);
+		}
+
+		[Test ()]
+		public void TestCaptureFinished ()
+		{
+			Config.EventsBroker.CaptureFinished += (c) => {
+			};
+
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			Config.EventsBroker.EmitCaptureFinished (true);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (null, projectsManager.OpenedProject);
+			capturerBinMock.Verify (c => c.Close (), Times.Once ());
+			capturerBinMock.ResetCalls ();
+			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
+			gtkMock.ResetCalls ();
+			Utils.DeleteProject (project);
+
+			project = Utils.CreateProject ();
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			Config.EventsBroker.EmitCaptureFinished (false);
+			capturerBinMock.Verify (c => c.Close (), Times.Once ());
+			/* We are not prompted to quit the capture */
+			gtkMock.Verify (g => g.EndCapture (), Times.Never ());
+			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
+			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
+				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (project, projectsManager.OpenedProject);
+			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
+		}
+
+		[Test ()]
+		public void TestCloseCaptureProject ()
+		{
+			int projectChanged = 0;
+
+			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, aw) => projectChanged++;
+			Config.EventsBroker.EmitCloseOpenedProject ();
+			Assert.AreEqual (0, projectChanged);
+
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			projectChanged = 0;
+
+			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Return);
+			Config.EventsBroker.EmitCloseOpenedProject ();
+			Assert.AreEqual (project, projectsManager.OpenedProject);
+			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (0, projectChanged);
+
+			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Quit);
+			Config.EventsBroker.EmitCloseOpenedProject ();
+			Assert.AreEqual (null, projectsManager.OpenedProject);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (1, projectChanged);
+
+			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			projectChanged = 0;
+			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Save);
+			Config.EventsBroker.EmitCloseOpenedProject ();
+			Assert.AreEqual (project, projectsManager.OpenedProject);
+			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, projectChanged);
+		}
+	}
+}
+

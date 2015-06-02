@@ -40,8 +40,10 @@ SOURCES = Core/Common/TestColor.cs \
 	Core/Store/TestTimelineEvent.cs \
 	Core/Store/TestTimer.cs \
 	DB/TestStorage.cs \
+	LocalDatabase.cs \
 	Services/TestFileStorage.cs \
 	Services/TestPlayerController.cs \
+	Services/TestProjectsManager.cs \
 	Services/TestRenderingJobsManager.cs \
 	Services/TestServices.cs \
 	Services/TestTemplatesService.cs \
