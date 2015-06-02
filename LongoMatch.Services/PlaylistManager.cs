@@ -276,9 +276,11 @@ namespace LongoMatch.Services
 					return;
 				case KeyAction.SpeedUp:
 					player.FramerateUp ();
+					Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
 					return;
 				case KeyAction.SpeedDown:
 					player.FramerateDown ();
+					Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
 					return;
 				case KeyAction.CloseEvent:
 					Config.EventsBroker.EmitLoadEvent (null);
