@@ -33,8 +33,7 @@ namespace LongoMatch.Services
 		IMultimediaToolkit multimediaToolkit;
 		IAnalysisWindow analysisWindow;
 
-		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
-		                        TemplatesService ts)
+		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;

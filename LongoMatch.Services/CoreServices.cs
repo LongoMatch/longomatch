@@ -141,7 +141,7 @@ namespace LongoMatch.Services
 			RegisterService (videoRenderer);
 			Config.RenderingJobsManger = videoRenderer;
 
-			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
+			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit);
 			RegisterService (projectsManager);
 
 			/* State the tools manager */
