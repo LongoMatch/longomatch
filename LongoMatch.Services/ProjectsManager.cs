@@ -243,10 +243,10 @@ namespace LongoMatch.Services
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
-					HandleCaptureFinished (true);
+					CaptureFinished (true, true);
 					return true;
 				} else if (res == EndCaptureResponse.Save) {
-					HandleCaptureFinished (false);
+					CaptureFinished (false, false);
 					return true;
 				} else {
 					/* Continue with the current project */
@@ -355,18 +355,11 @@ namespace LongoMatch.Services
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
-		void HandleMultimediaError (object sender, string message)
-		{
-			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
-			" the current project will be closed:") + "\n" + message);
-			CloseOpenedProject (true);
-		}
-
-		void HandleCaptureFinished (bool cancel)
+		void CaptureFinished (bool cancel, bool delete)
 		{
 			Guid id = OpenedProject.ID;
 			ProjectType type = OpenedProjectType;
-			if (cancel) {
+			if (delete) {
 				try {
 					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject.ID);
 				} catch (Exception ex) {
@@ -379,11 +372,23 @@ namespace LongoMatch.Services
 			}
 		}
 
+		void HandleMultimediaError (object sender, string message)
+		{
+			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
+			" the current project will be closed:") + "\n" + message);
+			CloseOpenedProject (true);
+		}
+
+		void HandleCaptureFinished (bool cancel)
+		{
+			CaptureFinished (cancel, cancel);
+		}
+
 		void HandleCaptureError (object sender, string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + message);
-			HandleCaptureFinished (true);
+			CaptureFinished (true, false);
 		}
 
 		#region IService
