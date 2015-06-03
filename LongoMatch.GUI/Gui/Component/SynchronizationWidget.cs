@@ -193,6 +193,15 @@ namespace LongoMatch.Gui.Component
 			project.ResyncEvents (periods);
 		}
 
+		/// <summary>
+		/// When set to <c>true</c>, periods can't be added or removed, for example
+		/// in a fake live projects, where periods are defined during the capture.
+		/// </summary>
+		public bool FixedPeriods {
+			get;
+			set;
+		}
+
 		public Project Project {
 			set {
 				Time start, pDuration;
@@ -575,7 +584,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
-			menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline, camerasTimeline);
+			if (!FixedPeriods)
+				menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline, camerasTimeline);
 		}
 
 		void HandleTogglePlayEvent (bool playing)

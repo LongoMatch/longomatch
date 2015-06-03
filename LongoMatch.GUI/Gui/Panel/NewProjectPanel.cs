@@ -86,6 +86,7 @@ namespace LongoMatch.Gui.Panel
 				this.project = project;
 				projectType = ProjectType.EditProject;
 				resyncEvents = true;
+				projectperiods1.FixedPeriods = project.IsFakeCapture;
 				SetProjectType ();
 				FillProjectDetails ();
 			}

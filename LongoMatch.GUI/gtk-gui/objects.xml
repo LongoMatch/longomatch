@@ -330,7 +330,11 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="SynchronizationWidget Properties">
+        <property name="FixedPeriods" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
