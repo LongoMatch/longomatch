@@ -214,7 +214,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				currentTime = value;
 				if (Start != null) {
 					bool secsChanged = (prevCurrentTime - Start).TotalSeconds != (value - Start).TotalSeconds;
-					if (currentTime < Start) {
+					/* Add a tolerance of 100ms, as sometimes after pausing and restarting
+					 * the clocks goes backwards by a few ms. So if a event has started recording
+					 * with the player paused, resuming playback might cancel the event started */
+					if (currentTime.MSeconds + 100 < Start.MSeconds) {
 						Clear ();
 					} else if (secsChanged) {
 						ReDraw ();
