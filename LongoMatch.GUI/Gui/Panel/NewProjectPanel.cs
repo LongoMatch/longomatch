@@ -518,14 +518,14 @@ namespace LongoMatch.Gui.Panel
 			if (sender == filebutton) {
 				projectType = ProjectType.FileProject;
 			} else if (sender == capturebutton) {
-				/* Only fill devices once */
-				if (videoDevices == null) {
+				if (videoDevices == null || videoDevices.Count == 0) {
 					FillDevices (mtoolkit.VideoDevices);
-					if (videoDevices == null || videoDevices.Count == 0) {
-						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
-							this);
-						return;
-					}
+				}
+
+				if (videoDevices == null || videoDevices.Count == 0) {
+					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
+						this);
+					return;
 				}
 				projectType = ProjectType.CaptureProject;
 			} else if (sender == fakebutton) {
