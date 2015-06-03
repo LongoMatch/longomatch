@@ -429,10 +429,10 @@ namespace LongoMatch.Gui
 			return date;
 		}
 
-		public EndCaptureResponse EndCapture ()
+		public EndCaptureResponse EndCapture (bool isCapturing)
 		{
 			int res;
-			EndCaptureDialog dialog = new EndCaptureDialog (mainWindow);
+			EndCaptureDialog dialog = new EndCaptureDialog (mainWindow, isCapturing);
 			res = dialog.Run ();
 			dialog.Destroy ();
 			return (EndCaptureResponse)res;

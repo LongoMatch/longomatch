@@ -28,10 +28,13 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EndCaptureDialog : Gtk.Dialog
 	{
 
-		public EndCaptureDialog (Window parent)
+		public EndCaptureDialog (Window parent, bool isCapturing)
 		{
 			TransientFor = parent;
 			this.Build ();
+			if (!isCapturing)
+				savebutton.Visible = false;
+
 			image439.Pixbuf = Helpers.Misc.LoadStockIcon (this, "gtk-dialog-question", Gtk.IconSize.Dialog);
 		}
 

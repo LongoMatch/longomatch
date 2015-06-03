@@ -238,8 +238,14 @@ namespace LongoMatch.Services
 			} else {
 				EndCaptureResponse res;
 
-				// FIXME:
-				res = guiToolkit.EndCapture ();
+				// Check if we need to show or not the stop and save button
+				bool isCapturing;
+				if (Capturer.Periods == null || Capturer.Periods.Count == 0)
+					isCapturing = false;
+				else
+					isCapturing = true;
+
+				res = guiToolkit.EndCapture (isCapturing);
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
