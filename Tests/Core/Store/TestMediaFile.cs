@@ -23,14 +23,14 @@ using LongoMatch.Core.Store;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestMediaFile
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, null, "Test asset");
+				               "aac", 320, 240, 1.3, null, "Test asset");
 			Utils.CheckSerialization (mf);
 			
 			MediaFile newmf = Utils.SerializeDeserialize (mf);
@@ -49,15 +49,15 @@ namespace Tests.Core.Store
 			Assert.AreEqual (mf.Name, newmf.Name);
 				
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestShortDescription ()
 		{
-			MediaFile mf = new MediaFile {VideoWidth = 320, VideoHeight = 240, Fps = 25};
+			MediaFile mf = new MediaFile { VideoWidth = 320, VideoHeight = 240, Fps = 25 };
 			Assert.AreEqual (mf.ShortDescription, "320x240@25fps");
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestExists ()
 		{
 			string path = Path.GetTempFileName ();
@@ -69,6 +69,15 @@ namespace Tests.Core.Store
 			} finally {
 				File.Delete (path);
 			}
+		}
+
+		[Test ()]
+		public void TestIsFakeCapture ()
+		{
+			MediaFile mf = new MediaFile ();
+			Assert.IsFalse (mf.IsFakeCapture);
+			mf.FilePath = Constants.FAKE_PROJECT;
+			Assert.IsTrue (mf.IsFakeCapture);
 		}
 	}
 }

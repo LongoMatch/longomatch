@@ -133,6 +133,13 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		public bool IsFakeCapture {
+			get {
+				return FilePath == Constants.FAKE_PROJECT;
+			}
+		}
+
+		[JsonIgnore]
 		public string ShortDescription {
 			get {
 				return String.Format ("{0}x{1}@{2}fps", VideoWidth, VideoHeight, Fps);

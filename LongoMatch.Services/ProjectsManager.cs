@@ -344,7 +344,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			// FIXME
-			if (project.Description.FileSet.First ().FilePath == Constants.FAKE_PROJECT) {
+			if (project.IsFakeCapture) {
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");

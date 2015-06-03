@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 			namelabel.Text = mediaFile.Name;
-			if (mediaFile.FilePath == Constants.FAKE_PROJECT) {
+			if (mediaFile.IsFakeCapture) {
 				filelabel.Text = Catalog.GetString ("No video file associated yet for live project");
 				snapshotimage.Pixbuf = Misc.LoadIcon ("longomatch-video-device-fake", 80);
 				table1.Visible = false;

@@ -85,6 +85,19 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
+		public void TestIsFakeCapture ()
+		{
+			Project p = new Project ();
+			p.Description = new ProjectDescription ();
+			p.Description.FileSet = new MediaFileSet ();
+			p.Description.FileSet.Add (new MediaFile ());
+			Assert.IsFalse (p.IsFakeCapture);
+			p.Description.FileSet [0].FilePath = Constants.FAKE_PROJECT;
+			Assert.IsTrue (p.IsFakeCapture);
+		}
+
+
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestGetScores ()
 		{

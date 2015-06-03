@@ -211,6 +211,13 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		public bool IsFakeCapture {
+			get {
+				return Description.FileSet.First ().IsFakeCapture;
+			}
+		}
+
 		#endregion
 
 		#region Public Methods

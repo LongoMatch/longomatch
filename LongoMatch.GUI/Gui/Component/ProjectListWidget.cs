@@ -100,7 +100,7 @@ namespace LongoMatch.Gui.Component
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects) {
 				MediaFile file = pdesc.FileSet.FirstOrDefault ();
-				if (file != null && file.FilePath == Constants.FAKE_PROJECT) {
+				if (file != null && file.IsFakeCapture) {
 					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
 				} else if (pdesc.FileSet.Preview != null) {
 					image = pdesc.FileSet.Preview.Value;
