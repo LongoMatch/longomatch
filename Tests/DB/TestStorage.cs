@@ -31,13 +31,35 @@ namespace Tests.DB
 {
 	class StorableContainerTest: IStorable
 	{
+		public StorableContainerTest ()
+		{
+			ID = Guid.NewGuid ();
+		}
+
 		public Guid ID { get; set; }
 
 		public StorableImageTest Image { get; set; }
 	}
 
+	class StorableListTest: IStorable
+	{
+		public StorableListTest ()
+		{
+			ID = Guid.NewGuid ();
+		}
+
+		public Guid ID { get; set; }
+
+		public List<StorableImageTest> Images { get; set; }
+	}
+
 	class StorableImageTest : IStorable
 	{
+		public StorableImageTest ()
+		{
+			ID = Guid.NewGuid ();
+		}
+
 		public Guid ID { get; set; }
 
 		public Image Image1 { get; set; }
@@ -45,6 +67,10 @@ namespace Tests.DB
 		public Image Image2 { get; set; }
 
 		public List<Image> Images { get; set; }
+	}
+
+	class StorableImageTest2: StorableImageTest
+	{
 	}
 
 	[TestFixture ()]
@@ -73,9 +99,12 @@ namespace Tests.DB
 		[TearDown]
 		public void CleanDB ()
 		{
-			foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
-				db.GetDocument (d.DocumentId).Delete ();
-			}
+			db.RunInTransaction (() => {
+				foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
+					db.GetDocument (d.DocumentId).Delete ();
+				}
+				return true;
+			});
 		}
 
 		[Test ()]
@@ -85,7 +114,8 @@ namespace Tests.DB
 				ID = Guid.NewGuid (),
 			};
 			Document doc = db.CreateDocument ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), db, null);
+			SerializationContext context = new SerializationContext (db, t.GetType ());
+			JObject jo = DocumentsSerializer.SerializeObject (t, doc.CreateRevision (), context);
 			Assert.AreEqual (t.ID, jo.Value<Guid> ("ID"));
 			Assert.AreEqual ("StorableImageTest", jo.Value<string> ("DocType"));
 		}
@@ -101,7 +131,8 @@ namespace Tests.DB
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, rev, db, null);
+			SerializationContext context = new SerializationContext (db, t.GetType ());
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, context);
 			Assert.IsNotNull (jo ["ID"]);
 			Assert.AreEqual ("attachment::Image1_1", jo ["Image1"].Value<string> ());
 			Assert.AreEqual ("attachment::Image2_1", jo ["Image2"].Value<string> ());
@@ -122,7 +153,8 @@ namespace Tests.DB
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (t, rev, db, null);
+			SerializationContext context = new SerializationContext (db, t.GetType ());
+			JObject jo = DocumentsSerializer.SerializeObject (t, rev, context);
 			int i = 0;
 			foreach (string name in rev.AttachmentNames) {
 				i++;
@@ -164,7 +196,8 @@ namespace Tests.DB
 			};
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
-			JObject jo = DocumentsSerializer.SerializeObject (cont, rev, db, null);
+			SerializationContext context = new SerializationContext (db, cont.GetType ());
+			JObject jo = DocumentsSerializer.SerializeObject (cont, rev, context);
 			Assert.AreEqual (img.ID, jo ["Image"].Value<Guid> ());
 			Assert.AreEqual (1, db.DocumentCount);
 			Assert.IsNotNull (storage.Retrieve<StorableImageTest> (img.ID));
@@ -184,9 +217,27 @@ namespace Tests.DB
 				Image = img,
 			};
 			storage.Store (cont);
+			Assert.AreEqual (2, db.DocumentCount);
 			var cont2 = storage.Retrieve <StorableContainerTest> (cont.ID);
 			Assert.IsNotNull (cont2.Image);
 			Assert.AreEqual (img.ID, cont2.Image.ID);
+		}
+
+		[Test ()]
+		public void TestDeserializeStorableListByReference ()
+		{
+			StorableListTest list = new StorableListTest ();
+			list.Images = new List<StorableImageTest> ();
+			list.Images.Add (new StorableImageTest ());
+			list.Images.Add (new StorableImageTest2 ());
+
+			storage.Store (list);
+			Assert.AreEqual (3, db.DocumentCount);
+
+			StorableListTest list2 = storage.Retrieve<StorableListTest> (list.ID);
+			Assert.AreEqual (2, list2.Images.Count);
+			Assert.AreEqual (typeof(StorableImageTest), list2.Images [0].GetType ());
+			Assert.AreEqual (typeof(StorableImageTest2), list2.Images [1].GetType ());
 		}
 
 		[Test ()]
@@ -196,7 +247,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (1, db.DocumentCount);
+			Assert.AreEqual (13, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -240,22 +291,20 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		[Ignore ("FIXME")]
 		public void TestSaveLoadTimelineEvent ()
 		{
-			IDReferenceResolver resolver = new IDReferenceResolver ();
 			Player p = new Player ();
 			AnalysisEventType evtType = new AnalysisEventType ();
 			TimelineEvent evt = new TimelineEvent ();
 
-			resolver.AddReference (null, p.ID.ToString (), p);
-			resolver.AddReference (null, evtType.ID.ToString (), evtType);
+			Document doc = db.GetDocument (evt.ID.ToString ());
+			SerializationContext context = new SerializationContext (db, evt.GetType ());
+			context.Cache.AddReference (p);
 			evt.Players.Add (p);
 			evt.EventType = evtType;
 
-			Document doc = db.GetDocument (evt.ID.ToString ());
 			doc.Update ((UnsavedRevision rev) => {
-				JObject jo = DocumentsSerializer.SerializeObject (evt, rev, db, resolver);
+				JObject jo = DocumentsSerializer.SerializeObject (evt, rev, context);
 				Assert.AreEqual (p.ID, jo ["Players"] [0].Value<Guid> ());
 				Assert.AreEqual (evtType.ID, jo ["EventType"].Value<Guid> ());
 				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
@@ -265,7 +314,10 @@ namespace Tests.DB
 
 			/* Player has not been added to the db, as it was already referenced
 			 * by the IDReferenceResolver */
-			Assert.AreEqual (1, db.DocumentCount);
+			Assert.AreEqual (2, db.DocumentCount);
+
+			DocumentsSerializer.SaveObject (p, db);
+			Assert.AreEqual (3, db.DocumentCount);
 
 			TimelineEvent evt2 = storage.Retrieve <TimelineEvent> (evt.ID);
 			Assert.IsNotNull (evt2.EventType);
@@ -302,10 +354,7 @@ namespace Tests.DB
 			p.Description = pd;
 
 			storage.Store<Project> (p);
-			/* 1 Project + 1 ProjectDescription 
-			 * Teams and Dashboard are serialized locally in the project
-			 */ 
-			Assert.AreEqual (1 + 1, db.DocumentCount);
+			Assert.AreEqual (40, db.DocumentCount);
 		}
 
 
@@ -335,15 +384,15 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
 			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
-			//Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
-			//	p2.Timeline [0].EventType);
+			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
+				p2.Timeline [0].EventType);
 		}
 	}
 }

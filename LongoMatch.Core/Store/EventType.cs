@@ -25,7 +25,7 @@ using LongoMatch.Core.Interfaces;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class EventType: IIDObject
+	public class EventType: IStorable
 	{
 
 		public EventType ()

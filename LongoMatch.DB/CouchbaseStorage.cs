@@ -65,17 +65,29 @@ namespace LongoMatch.DB
 
 		public void Store<T> (T t) where T : IStorable
 		{
-			DocumentsSerializer.SaveObject (t, db);
+			db.RunInTransaction (() => {
+				DocumentsSerializer.SaveObject (t, db);
+				return true;
+			});
 		}
 
 		public void Delete<T> (T t) where T : IStorable
 		{
-			db.GetDocument (t.ID.ToString ()).Delete ();
+			db.RunInTransaction (() => {
+				Delete (t);
+				/* Fixme iterate over children to delete them */
+				return true;
+			});
 		}
 
 		public void Reset ()
 		{
 			db.Manager.ForgetDatabase (db);
+		}
+
+		void Delete (IStorable storable)
+		{
+			db.GetDocument (storable.ID.ToString ()).Delete ();
 		}
 
 		#endregion
