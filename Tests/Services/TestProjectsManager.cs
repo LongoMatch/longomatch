@@ -75,7 +75,7 @@ namespace Tests.Services
 			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
 				.Returns (() => settings.EncodingSettings.OutputFile)
 				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
-			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Save);
+			gtkMock.Setup (g => g.EndCapture (true)).Returns (EndCaptureResponse.Save);
 			Config.GUIToolkit = gtkMock.Object;
 
 			capturerBinMock = new Mock<ICapturerBin> ();
@@ -174,7 +174,7 @@ namespace Tests.Services
 			Config.EventsBroker.EmitCaptureFinished (false);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			/* We are not prompted to quit the capture */
-			gtkMock.Verify (g => g.EndCapture (), Times.Never ());
+			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
 			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
@@ -195,13 +195,13 @@ namespace Tests.Services
 			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			projectChanged = 0;
 
-			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Return);
+			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (0, projectChanged);
 
-			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Quit);
+			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
@@ -209,7 +209,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			projectChanged = 0;
-			gtkMock.Setup (g => g.EndCapture ()).Returns (EndCaptureResponse.Save);
+			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
