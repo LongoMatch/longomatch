@@ -382,6 +382,21 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void FillProject () {
+			project.Dashboard = analysisTemplate;
+			project.LocalTeamTemplate = hometemplate;
+			project.VisitorTeamTemplate = awaytemplate;
+			project.Description.Competition = competitionentry.Text;
+			project.Description.MatchDate = datepicker1.Date;
+			project.Description.Description = desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
+				desctextview.Buffer.EndIter, true);
+			project.Description.Season = seasonentry.Text;
+			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
+			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
+			project.Description.FileSet = mediafilesetselection1.FileSet;
+			project.UpdateEventTypesAndTimers ();
+		}
+
 		bool CreateProject ()
 		{
 			TreeIter iter;
@@ -396,9 +411,7 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			if (project != null) {
-				/* Make sure event types and timers are updated in case we are importing
-				 * a project without dashboard */
-				project.UpdateEventTypesAndTimers ();
+				FillProject ();
 				return true;
 			}
 			
@@ -415,20 +428,11 @@ namespace LongoMatch.Gui.Panel
 					return false;
 				}
 			}
+
 			project = new Project ();
-			project.Dashboard = analysisTemplate;
-			project.LocalTeamTemplate = hometemplate;
-			project.VisitorTeamTemplate = awaytemplate;
 			project.Description = new ProjectDescription ();
-			project.Description.Competition = competitionentry.Text;
-			project.Description.MatchDate = datepicker1.Date;
-			project.Description.Description = desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
-				desctextview.Buffer.EndIter, true);
-			project.Description.Season = seasonentry.Text;
-			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
-			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
-			project.Description.FileSet = mediafilesetselection1.FileSet;
-			project.UpdateEventTypesAndTimers ();
+			FillProject ();
+
 			
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();
