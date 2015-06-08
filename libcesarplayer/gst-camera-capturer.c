@@ -931,7 +931,7 @@ cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer * gcc)
 }
 
 static gboolean
-gst_camera_capturer_fill_decodebin_source (GstCameraCapturer * gcc)
+gst_camera_capturer_fill_decodebin_source (GstCameraCapturer * gcc, GstCaps * filter)
 {
   GstElement *bin, *decodebin, *colorspace, *deinterlacer;
   GstPad *video_pad;
@@ -950,7 +950,7 @@ gst_camera_capturer_fill_decodebin_source (GstCameraCapturer * gcc)
     deinterlacer = gst_element_factory_make ("identity", NULL);
 
   gst_bin_add_many (GST_BIN (bin), decodebin, colorspace, deinterlacer, NULL);
-  gst_element_link (gcc->priv->source, decodebin);
+  gst_element_link_filtered (gcc->priv->source, decodebin, filter);
   gst_element_link (colorspace, deinterlacer);
 
   /* add ghostpad */
@@ -1102,7 +1102,7 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
   GstCaps *source_caps;
   GstPad *source_pad;
   GstCaps *raw_caps = gst_caps_from_string ("video/x-raw-yuv; video/x-raw-rgb");
-  GstCaps *dv_caps = gst_caps_from_string ("video/x-dv");
+  GstCaps *dv_caps = gst_caps_from_string ("video/x-dv, systemstream=true");
   gboolean res = FALSE;
 
   gcc->priv->source_bin = bin = gst_bin_new ("source");
@@ -1154,7 +1154,7 @@ gst_camera_capturer_create_source (GstCameraCapturer * gcc, GError ** err)
     gcc->priv->audio_enabled = FALSE;
     res = TRUE;
   } else if (gst_caps_can_intersect (source_caps, dv_caps)) {
-    gst_camera_capturer_fill_decodebin_source (gcc);
+    gst_camera_capturer_fill_decodebin_source (gcc, dv_caps);
     res = TRUE;
   }
   gst_object_unref (source_pad);
