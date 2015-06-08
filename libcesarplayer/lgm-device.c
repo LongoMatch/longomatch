@@ -259,8 +259,7 @@ lgm_device_fill_formats (LgmDevice * device, gchar * prop_name)
 
       s = gst_caps_get_structure (caps, i);
       if (gst_structure_has_name (s, "video/x-raw-yuv") ||
-          gst_structure_has_name (s, "video/x-raw-rgb") ||
-          gst_structure_has_name (s, "video/x-dv")) {
+          gst_structure_has_name (s, "video/x-raw-rgb")) {
         lgm_device_parse_structure (s, table);
       } else if (gst_structure_has_name (s, "video/x-dv")) {
         lgm_device_add_format (table, 0, 0, 0, 0);
