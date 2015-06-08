@@ -1080,14 +1080,16 @@ gst_camera_capturer_create_uri_source (GstCameraCapturer * gcc, GError ** err)
 static gboolean
 gcc_source_caps_set (GstPad * pad, GstPad * peer, GstCameraCapturer * gcc)
 {
-  GstCaps *caps;
+  if (gcc->priv->source_filter) {
+    GstCaps *caps;
 
-  /* We only use the caps filter to select an output from the device
-   * but the image size can change and we need to be able to adapt
-   * the filter to these changes (like a camera going from 4:3 to 16:9)
-   */
-  caps = gst_pad_get_negotiated_caps (pad);
-  g_object_set (gcc->priv->source_filter, "caps", caps, NULL);
+    /* We only use the caps filter to select an output from the device
+     * but the image size can change and we need to be able to adapt
+     * the filter to these changes (like a camera going from 4:3 to 16:9)
+     */
+    caps = gst_pad_get_negotiated_caps (pad);
+    g_object_set (gcc->priv->source_filter, "caps", caps, NULL);
+  }
 
   return TRUE;
 }
