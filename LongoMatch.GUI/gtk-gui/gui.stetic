@@ -5309,7 +5309,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Label" id="label2">
             <property name="MemberName" />
             <property name="Xalign">0</property>
-            <property name="LabelProp" translatable="yes">Autosave projects</property>
+            <property name="LabelProp" translatable="yes">Autosave projects:</property>
           </widget>
           <packing>
             <property name="TopAttach">1</property>
@@ -5329,7 +5329,7 @@ You can continue with the current capture, cancel it or save your project.
           <widget class="Gtk.Label" id="label3">
             <property name="MemberName" />
             <property name="Xalign">0</property>
-            <property name="LabelProp" translatable="yes">Default analysis template</property>
+            <property name="LabelProp" translatable="yes">Default analysis dashboard:</property>
           </widget>
           <packing>
             <property name="TopAttach">2</property>
