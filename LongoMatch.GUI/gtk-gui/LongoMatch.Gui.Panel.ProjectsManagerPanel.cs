@@ -260,7 +260,7 @@ namespace LongoMatch.Gui.Panel
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 1F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Analysis Template:");
+			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Analysis dashboard:");
 			this.table1.Add (this.label9);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1 [this.label9]));
 			w14.TopAttach = ((uint)(1));

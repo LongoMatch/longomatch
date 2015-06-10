@@ -8859,7 +8859,7 @@ You can continue with the current capture, cancel it or save your project.
                                               <widget class="Gtk.Label" id="label9">
                                                 <property name="MemberName" />
                                                 <property name="Xalign">1</property>
-                                                <property name="LabelProp" translatable="yes">Analysis Template:</property>
+                                                <property name="LabelProp" translatable="yes">Analysis dashboard:</property>
                                               </widget>
                                               <packing>
                                                 <property name="TopAttach">1</property>
