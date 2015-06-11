@@ -323,20 +323,20 @@ namespace Tests.DB
 			Assert.IsNotNull (evt2.EventType);
 		}
 
-		[Test ()]
-		public void TestSaveLoadProjectDescription ()
-		{
-			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null, "Test asset");
-			ProjectDescription pd1 = new ProjectDescription ();
-			pd1.FileSet = new MediaFileSet ();
-			pd1.FileSet.Add (mf);
-			storage.Store (pd1);
-			Assert.AreEqual (1, db.DocumentCount);
-
-			ProjectDescription pd2 = storage.Retrieve<ProjectDescription> (pd1.ID);
-			Assert.AreEqual (pd1.ID, pd2.ID);
-		}
+		//		[Test ()]
+		//		public void TestSaveLoadProjectDescription ()
+		//		{
+		//			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
+		//				               "aac", 320, 240, 1.3, null, "Test asset");
+		//			ProjectDescription pd1 = new ProjectDescription ();
+		//			pd1.FileSet = new MediaFileSet ();
+		//			pd1.FileSet.Add (mf);
+		//			storage.Store (pd1);
+		//			Assert.AreEqual (1, db.DocumentCount);
+		//
+		//			ProjectDescription pd2 = storage.Retrieve<ProjectDescription> (pd1.ID);
+		//			Assert.AreEqual (pd1.ID, pd2.ID);
+		//		}
 
 		[Test ()]
 		public void TestSaveLoadProject ()

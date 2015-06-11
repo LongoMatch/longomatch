@@ -20,25 +20,39 @@ using System.Collections.Generic;
 using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Interfaces;
-using Newtonsoft.Json.Linq;
+using LongoMatch.DB.Views;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.DB
 {
 	public class CouchbaseStorage: IStorage
 	{
 		Database db;
+		Dictionary<Type, object> views;
 
 		public CouchbaseStorage (string databaseDir, string databaseName)
 		{
 			Manager manager = new Manager (new System.IO.DirectoryInfo (databaseDir),
 				                  ManagerOptions.Default);
 			db = manager.GetDatabase (databaseName);
+			InitializeViews ();
 		}
 
 		internal Database Database {
 			get {
 				return db;
 			}
+		}
+
+		void InitializeViews ()
+		{
+			View view;
+			views = new Dictionary <Type, object> ();
+			views.Add (typeof(Dashboard), new DashboardsView (db));
+			views.Add (typeof(Team), new TeamsView (db));
+			views.Add (typeof(Project), new ProjectsView (db));
+			views.Add (typeof(Player), new PlayersView (db));
 		}
 
 		public object Retrieve (Type type, Guid id)
@@ -50,7 +64,8 @@ namespace LongoMatch.DB
 
 		public List<T> RetrieveAll<T> () where T : IStorable
 		{
-			throw new NotImplementedException ();
+			IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+			return qview.Query (null);
 		}
 
 		public T Retrieve<T> (Guid id) where T : IStorable
@@ -60,7 +75,8 @@ namespace LongoMatch.DB
 
 		public List<T> Retrieve<T> (Dictionary<string, object> filter) where T : IStorable
 		{
-			throw new NotImplementedException ();
+			IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+			return qview.Query (filter);
 		}
 
 		public void Store<T> (T t) where T : IStorable

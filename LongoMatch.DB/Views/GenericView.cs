@@ -1,0 +1,152 @@
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using Couchbase.Lite;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Templates;
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+using LongoMatch.Core.Common;
+
+namespace LongoMatch.DB.Views
+{
+	public abstract class GenericView<T>: IQueryView <T> where T : IStorable, new()
+	{
+		Database db;
+
+		public GenericView (Database db)
+		{
+			this.db = db;
+			GetView ();
+		}
+
+		abstract protected List<string> FilterProperties {
+			get;
+		}
+
+		abstract protected List<string> PreviewProperties {
+			get;
+		}
+
+		abstract protected string ViewVersion {
+			get;
+		}
+
+		virtual protected object GenKeys (IDictionary<string, object> document)
+		{
+			List<object> keys;
+
+			if (FilterProperties.Count == 0)
+				return null;
+
+			keys = new List<object> ();
+			foreach (string propName in FilterProperties) {
+				keys.Add (document [propName]);
+			}
+			return new PropertyKey (keys);
+		}
+
+		virtual protected string GenValue (IDictionary<string, object> document)
+		{
+			JObject jo;
+
+			if (FilterProperties.Count == 0)
+				return null;
+
+			jo = new JObject ();
+			foreach (string propName in PreviewProperties) {
+				object obj;
+				if (document.TryGetValue (propName, out obj)) {
+					if (obj is JObject) {
+						jo [propName] = obj as JObject;
+					} else {
+						jo [propName] = new JValue (obj);
+					}
+				}
+			}
+			return jo.ToString ();
+		}
+
+		virtual protected MapDelegate GetMap (string docType)
+		{
+			return (document, emitter) => {
+				if (docType.Equals (document [DocumentsSerializer.DOC_TYPE])) {
+					emitter (GenKeys (document), GenValue (document));
+				}
+			};
+		}
+
+		View GetView ()
+		{
+			string docType = typeof(T).Name; 
+			View view = db.GetView (docType);
+			if (view.Map == null) {
+				view.SetMap (GetMap (docType), ViewVersion);
+			}
+			return view;
+		}
+
+		public List<T> Query (Dictionary<string, object> filter)
+		{
+			List<T> elements = new List<T> ();
+			View view = GetView ();
+
+			Query q = view.CreateQuery ();
+			if (filter != null && filter.Count > 0 && FilterProperties.Count > 0) {
+				string sql = "";
+				int i = 0, j = 0;
+
+				foreach (string propName in FilterProperties) {
+					object val;
+
+					if (filter.TryGetValue (propName, out val)) {
+						string and = j == 0 ? "" : "AND";
+						string key = "key";
+						if (i != 0) {
+							key += i;
+						}
+						sql += String.Format (" {0} {1}='\"{2}\"' ", and, key, val);
+						j++;
+					}
+					i++;
+				}
+				if (j == 0) {
+					throw new InvalidQueryException ();
+				} else {
+					q.SQLSearch = sql;
+				}
+			}
+
+			QueryEnumerator ret = q.Run ();
+			foreach (QueryRow row in ret) {
+				T d = new T ();
+				d.ID = Guid.Parse (row.DocumentId);
+				Revision rev = row.Document.CurrentRevision;
+
+				d = DocumentsSerializer.DeserializeFromJson<T> (
+					row.Value as string, db, rev);
+				d.ID = Guid.Parse (row.DocumentId);
+				elements.Add (d);
+			}
+			return elements;
+		}
+	}
+}
+

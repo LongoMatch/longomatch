@@ -123,5 +123,9 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+
+	public class InvalidQueryException: Exception
+	{
+	}
 }
 

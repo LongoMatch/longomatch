@@ -108,6 +108,7 @@
     <Compile Include="LocalDatabase.cs" />
     <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestDataBaseFileDB.cs" />
+    <Compile Include="DB\TestViews.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

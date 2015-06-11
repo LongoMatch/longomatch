@@ -16,5 +16,12 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)SerializationContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectsCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TimelineEventsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TeamsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PlayersView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IQueryView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\GenericView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DashboardsView.cs" />
   </ItemGroup>
 </Project>

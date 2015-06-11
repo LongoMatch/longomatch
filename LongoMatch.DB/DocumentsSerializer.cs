@@ -67,6 +67,13 @@ namespace LongoMatch.DB
 			return DeserializeObject (doc, realType, context);
 		}
 
+		public static T DeserializeFromJson<T> (string json, Database db, Revision rev)
+		{
+			JsonSerializerSettings settings = GetSerializerSettings (typeof(T),
+				                                  new SerializationContext (db, typeof(T)), rev);
+			return JsonConvert.DeserializeObject<T> (json, settings);
+		}
+
 		/// <summary>
 		/// Serializes an object into a <c>JObject</c>.
 		/// </summary>
@@ -96,7 +103,8 @@ namespace LongoMatch.DB
 			return jo.ToObject (objType, GetSerializer (objType, context, doc.CurrentRevision));
 		}
 
-		internal static JsonSerializer GetSerializer (Type objType, SerializationContext context, Revision rev)
+		internal static JsonSerializerSettings GetSerializerSettings (Type objType,
+		                                                              SerializationContext context, Revision rev)
 		{
 			JsonSerializerSettings settings = new JsonSerializerSettings ();
 			settings.Formatting = Formatting.Indented;
@@ -106,7 +114,12 @@ namespace LongoMatch.DB
 			settings.Converters.Add (new VersionConverter ());
 			settings.Converters.Add (new LongoMatchConverter (false));
 			settings.Converters.Add (new StorablesConverter (objType, context));
-			return JsonSerializer.Create (settings);
+			return settings;
+		}
+
+		internal static JsonSerializer GetSerializer (Type objType, SerializationContext context, Revision rev)
+		{
+			return JsonSerializer.Create (GetSerializerSettings (objType, context, rev));
 		}
 	}
 

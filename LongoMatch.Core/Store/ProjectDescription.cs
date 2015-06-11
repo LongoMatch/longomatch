@@ -28,7 +28,7 @@ namespace LongoMatch.Core.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
-	public class ProjectDescription :  IComparable, IStorable
+	public class ProjectDescription :  IComparable
 	{
 		DateTime matchDate, lastModified;
 
