@@ -156,7 +156,7 @@ namespace LongoMatch.Services
 
 				List<T> list = storage.Retrieve<T> (dict);
 				if (list.Count == 0)
-					throw new TemplateNotFoundException (name);
+					throw new TemplateNotFoundException<T> (name);
 				else
 					return list [0];
 			}

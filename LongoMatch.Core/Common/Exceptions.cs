@@ -19,6 +19,8 @@ using System;
 using Mono.Unix;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Common
 {
@@ -72,11 +74,22 @@ namespace LongoMatch.Core.Common
 		}
 	}
 
-	public class TemplateNotFoundException : Exception
+	public class TemplateNotFoundException<T>: Exception where T: ITemplate
 	{
 		public TemplateNotFoundException (string name) :
-			base (Catalog.GetString ("Template not found:\n") + name)
+			base (GenerateMessage (name))
 		{
+		}
+
+		private static string GenerateMessage (string name)
+		{
+			if (typeof(T) == typeof(Team)) {
+				return Catalog.GetString ("Team not found:\n") + name;
+			} else if (typeof(T) == typeof(Dashboard)) {
+				return Catalog.GetString ("Dashboard not found:\n") + name;
+			} else {
+				return Catalog.GetString ("Template not found:\n") + name;
+			}
 		}
 	}
 
