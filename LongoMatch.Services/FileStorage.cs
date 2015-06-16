@@ -185,34 +185,36 @@ namespace LongoMatch.Services.Services
 			return l;
 		}
 
-		public List<T> Retrieve<T> (Dictionary<string,object> dict) where T : IStorable
+		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			List<T> l = new List<T> ();
 			string typePath = ResolvePath<T> ();
 			string extension = GetExtension (typeof(T));
 
-			if (dict == null)
+			if (filter == null)
 				return RetrieveAll<T> ();
 
 			// In case the only keyword is name try to find the files by name
-			if (dict.ContainsKey ("Name") && dict.Keys.Count == 1) {
-				string path = Path.Combine (typePath, dict ["Name"] + GetExtension (typeof(T)));
+			if (filter.ContainsKey ("Name") && filter.Keys.Count == 1) {
+				foreach (string name in filter["Name"]) {
+					string path = Path.Combine (typePath, name + GetExtension (typeof(T)));
 
-				if (File.Exists (path)) {
-					T t = serializer.LoadSafe<T> (path);
-					Log.Information ("Retrieving by filename " + path);
-					// To avoid cases where the name of the file does not match the name of the template
-					// overwrite the template name
-					FieldInfo finfo = t.GetType ().GetField ("Name");
-					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+					if (File.Exists (path)) {
+						T t = serializer.LoadSafe<T> (path);
+						Log.Information ("Retrieving by filename " + path);
+						// To avoid cases where the name of the file does not match the name of the template
+						// overwrite the template name
+						FieldInfo finfo = t.GetType ().GetField ("Name");
+						PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
 
-					if (pinfo != null)
-						pinfo.SetValue (t, dict ["Name"]);
-					else if (finfo != null)
-						finfo.SetValue (t, dict ["Name"]);
+						if (pinfo != null)
+							pinfo.SetValue (t, name);
+						else if (finfo != null)
+							finfo.SetValue (t, name);
 
-					l.Add (t);
-					return l;
+						l.Add (t);
+						return l;
+					}
 				}
 			}
 
@@ -222,35 +224,37 @@ namespace LongoMatch.Services.Services
 				T t = (T)serializer.LoadSafe<T> (path);
 				bool matches = true;
 
-				foreach (KeyValuePair<string, object> entry in dict) {
-					FieldInfo finfo = t.GetType ().GetField (entry.Key);
-					PropertyInfo pinfo = t.GetType ().GetProperty (entry.Key);
-					object ret = null;
+				foreach (KeyValuePair<string, List<object>> entry in filter) {
+					foreach (object val in entry.Value) {
+						FieldInfo finfo = t.GetType ().GetField (entry.Key);
+						PropertyInfo pinfo = t.GetType ().GetProperty (entry.Key);
+						object ret = null;
 
-					if (pinfo == null && finfo == null) {
-						Log.Warning ("Property/Field does not exist " + entry.Key);
-						matches = false;
-						break;
-					}
-
-					if (pinfo != null)
-						ret = pinfo.GetValue (t, null);
-					else
-						ret = finfo.GetValue (t);
-
-					if (ret == null && entry.Value != null) {
-						matches = false;
-						break;
-					}
-
-					if (ret != null && entry.Value == null) {
-						matches = false;
-						break;
-					}
-
-					if (ret.GetType () == entry.Value.GetType ()) {
-						if (!Object.Equals (ret, entry.Value)) {
+						if (pinfo == null && finfo == null) {
+							Log.Warning ("Property/Field does not exist " + entry.Key);
 							matches = false;
+							break;
+						}
+
+						if (pinfo != null)
+							ret = pinfo.GetValue (t, null);
+						else
+							ret = finfo.GetValue (t);
+
+						if (ret == null && val != null) {
+							matches = false;
+							break;
+						}
+
+						if (ret != null && val == null) {
+							matches = false;
+							break;
+						}
+
+						if (ret.GetType () == val.GetType ()) {
+							if (!Object.Equals (ret, val)) {
+								matches = false;
+							}
 						}
 					}
 				}

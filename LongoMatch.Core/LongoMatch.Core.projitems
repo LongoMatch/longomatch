@@ -129,5 +129,6 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\QueryFilter.cs" />
   </ItemGroup>
 </Project>

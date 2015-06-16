@@ -354,7 +354,7 @@ namespace Tests.DB
 			p.Description = pd;
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (40, db.DocumentCount);
+			Assert.AreEqual (39, db.DocumentCount);
 		}
 
 
@@ -384,9 +384,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (50, db.DocumentCount);
+			Assert.AreEqual (49, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (50, db.DocumentCount);
+			Assert.AreEqual (49, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);

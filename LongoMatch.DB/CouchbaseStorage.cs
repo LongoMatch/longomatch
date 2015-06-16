@@ -23,6 +23,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.DB.Views;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.DB
 {
@@ -73,7 +74,7 @@ namespace LongoMatch.DB
 			return (T)Retrieve (typeof(T), id);
 		}
 
-		public List<T> Retrieve<T> (Dictionary<string, object> filter) where T : IStorable
+		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
 			return qview.Query (filter);

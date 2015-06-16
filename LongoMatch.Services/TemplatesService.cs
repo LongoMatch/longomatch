@@ -104,10 +104,10 @@ namespace LongoMatch.Services
 		public bool Exists (string name)
 		{
 			// FIXME we can add an Exist(Dictionary args) method on the IStorage?
-			Dictionary<string, object> dict = new Dictionary<string, object> ();
-			dict.Add ("Name", name);
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Name", name);
 
-			List<T> list = storage.Retrieve<T> (dict);
+			List<T> list = storage.Retrieve<T> (filter);
 			if (list.Count == 0)
 				return false;
 			else
@@ -151,10 +151,10 @@ namespace LongoMatch.Services
 				// Return a copy to prevent modification of system templates.
 				return Cloner.Clone (template);
 			} else {
-				Dictionary<string, object> dict = new Dictionary<string, object> ();
-				dict.Add ("Name", name);
+				QueryFilter filter = new QueryFilter ();
+				filter.Add ("Name", name);
 
-				List<T> list = storage.Retrieve<T> (dict);
+				List<T> list = storage.Retrieve<T> (filter);
 				if (list.Count == 0)
 					throw new TemplateNotFoundException<T> (name);
 				else

@@ -86,19 +86,19 @@ namespace Tests.DB
 			dashboards = storage.RetrieveAll<Dashboard> (); 
 			Assert.AreEqual (6, dashboards.Count);
 
-			Dictionary<string, object> filter = new Dictionary<string, object> ();
+			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Dashboard1");
 			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
 
-			filter = new Dictionary<string, object> ();
+			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
 			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (0, dashboards.Count);
 
-			filter = new Dictionary<string, object> ();
+			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
@@ -130,19 +130,19 @@ namespace Tests.DB
 			teams = storage.RetrieveAll<Team> (); 
 			Assert.AreEqual (6, teams.Count);
 
-			Dictionary<string, object> filter = new Dictionary<string, object> ();
+			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Team1");
 			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
 
-			filter = new Dictionary<string, object> ();
+			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
 			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (0, teams.Count);
 
-			filter = new Dictionary<string, object> ();
+			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
@@ -169,7 +169,7 @@ namespace Tests.DB
 				projects = storage.Retrieve<Project> (null);
 				Assert.AreEqual (1, projects.Count);
 
-				var filter = new Dictionary<string, object> ();
+				var filter = new QueryFilter ();
 				filter.Add ("Competition", "COMP");
 				projects = storage.Retrieve<Project> (filter);
 				Assert.AreEqual (1, projects.Count);
@@ -193,6 +193,28 @@ namespace Tests.DB
 
 			List<Player> players = storage.RetrieveAll<Player> (); 
 			Assert.AreEqual (36, players.Count);
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Name", "andoni");
+			players = storage.Retrieve<Player> (filter);
+			Assert.AreEqual (9, players.Count);
+
+			filter = new QueryFilter ();
+			filter.Add ("Name", "andoni");
+			filter.Add ("LastName", "zabala");
+			players = storage.Retrieve<Player> (filter);
+			Assert.AreEqual (3, players.Count);
+
+			filter = new QueryFilter ();
+			filter.Add ("Name", "andoni", "aitor");
+			players = storage.Retrieve<Player> (filter);
+			Assert.AreEqual (18, players.Count);
+
+			filter = new QueryFilter ();
+			filter.Add ("Name", "andoni", "aitor");
+			filter.Add ("LastName", "zabala");
+			players = storage.Retrieve<Player> (filter);
+			Assert.AreEqual (6, players.Count);
 		}
 	}
 }

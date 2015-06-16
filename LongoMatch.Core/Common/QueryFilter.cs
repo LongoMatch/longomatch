@@ -16,15 +16,27 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Core.Common
 {
-	public interface IQueryView<T>
+	public class QueryFilter: Dictionary<string, List<object>>
 	{
-		List<T> Query (QueryFilter filter);
-	}
+		public QueryFilter ()
+		{
+			Operator = QueryOperator.And;
+		}
 
+		public void Add (string key, params object[] values)
+		{
+			this [key] = values.ToList ();
+		}
+
+		public QueryOperator Operator {
+			get;
+			set;
+		}
+	}
 }
 

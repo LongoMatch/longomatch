@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Interfaces
 {
@@ -26,7 +27,7 @@ namespace LongoMatch.Core.Interfaces
 		/// Retrieve every object of type T, where T must implement IStorable
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
-		List<T> RetrieveAll<T>() where T : IStorable;
+		List<T> RetrieveAll<T> () where T : IStorable;
 
 		/// <summary>
 		/// Retrieve an object with the specified id.
@@ -39,29 +40,29 @@ namespace LongoMatch.Core.Interfaces
 		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
-		/// <param name="filter">The dictionary used to filter the returned List</param>
-		List<T> Retrieve<T>(Dictionary<string,object> filter) where T : IStorable;
+		/// <param name="filter">The filter used to retrieve the objects</param>
+		List<T> Retrieve<T> (QueryFilter filter) where T : IStorable;
 
 		/// <summary>
 		/// Store the specified object
 		/// </summary>
 		/// <param name="t">The object to store.</param>
 		/// <typeparam name="T">The type of the object to store.</typeparam>
-		void Store<T>(T t) where T : IStorable;
+		void Store<T> (T t) where T : IStorable;
 
 		/// <summary>
 		/// Delete the specified object.
 		/// </summary>
 		/// <param name="t">The object to delete.</param>
 		/// <typeparam name="T">The type of the object to delete.</typeparam>
-		void Delete<T>(T t) where T : IStorable;
+		void Delete<T> (T t) where T : IStorable;
 
 		/// <summary>
 		/// Reset this instance. Basically will reset the storage to its initial state.
 		/// On a FS it can mean to remove every file. On a DB it can mean to remove every entry.
 		/// Make sure you know what you are doing before using this.
 		/// </summary>
-		void Reset();
+		void Reset ();
 	}
 }
 

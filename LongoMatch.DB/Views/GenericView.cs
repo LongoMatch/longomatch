@@ -103,7 +103,7 @@ namespace LongoMatch.DB.Views
 			return view;
 		}
 
-		public List<T> Query (Dictionary<string, object> filter)
+		public List<T> Query (QueryFilter filter)
 		{
 			List<T> elements = new List<T> ();
 			View view = GetView ();
@@ -113,16 +113,30 @@ namespace LongoMatch.DB.Views
 				string sql = "";
 				int i = 0, j = 0;
 
+				/* FIXME: add support for the OR operator */
 				foreach (string propName in FilterProperties) {
-					object val;
+					List<object> values;
 
-					if (filter.TryGetValue (propName, out val)) {
-						string and = j == 0 ? "" : "AND";
+					if (filter.TryGetValue (propName, out values)) {
+						string ope = "";
 						string key = "key";
+
+						/* Set the operator between keys */
+						if (j != 0) {
+							ope = filter.Operator == QueryOperator.And ? "AND" : "OR";
+						}
+
+						/* Set the key name */
 						if (i != 0) {
 							key += i;
 						}
-						sql += String.Format (" {0} {1}='\"{2}\"' ", and, key, val);
+
+						if (values.Count == 1) {
+							sql += String.Format (" {0} {1}='\"{2}\"' ", ope, key, values [0]);
+						} else {
+							string vals = String.Join (" , ", values.Select (x => "'\"" + x + "\"'"));
+							sql += String.Format (" {0} {1} IN ({2}) ", ope, key, vals);
+						}
 						j++;
 					}
 					i++;
