@@ -18,6 +18,7 @@
 //
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Gtk;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
@@ -35,7 +36,9 @@ namespace LongoMatch
 {
 	class MainClass
 	{
-		
+		[DllImport("libX11.dll", CallingConvention=CallingConvention.Cdecl)]
+		private static extern int XInitThreads();
+
 		public static void Main (string[] args)
 		{
 			CoreServices.Init ();
@@ -138,6 +141,13 @@ namespace LongoMatch
 			
 			styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
 			Config.Style = StyleConf.Load (styleConf);
+
+			/* We are having some race condition with XCB resulting on an invalid
+			 * message and thus an abort of the program, we better activate the
+			 * thread sae X11
+			 */
+			if (Utils.RunningPlatform () == PlatformID.Unix)
+				XInitThreads ();
 
 			Application.Init ();
 
