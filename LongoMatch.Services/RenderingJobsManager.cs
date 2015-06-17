@@ -372,7 +372,9 @@ namespace LongoMatch.Services
 				currentJob.State = JobState.Cancelled;
 				CloseAndNext ();
 			} else if (progress == (float)EditorState.START) {
-				Log.Debug ("Job started");
+				if (currentJob.State != JobState.Running) {
+					Log.Debug ("Job started");
+				}
 				currentJob.State = JobState.Running;
 				stateBar.JobRunning = true;
 				UpdateProgress (progress);
