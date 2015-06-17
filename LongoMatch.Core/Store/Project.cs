@@ -214,7 +214,15 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		public bool IsFakeCapture {
 			get {
-				return Description.FileSet.First ().IsFakeCapture;
+				if (Description != null) {
+					MediaFileSet fileSet = Description.FileSet;
+					if (fileSet != null) {
+						MediaFile file = fileSet.FirstOrDefault ();
+						if (file != null)
+							return file.IsFakeCapture;
+					}
+				}
+				return false;
 			}
 		}
 

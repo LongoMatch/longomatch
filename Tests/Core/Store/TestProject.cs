@@ -88,8 +88,11 @@ namespace Tests.Core.Store
 		public void TestIsFakeCapture ()
 		{
 			Project p = new Project ();
+			Assert.IsFalse (p.IsFakeCapture);
 			p.Description = new ProjectDescription ();
+			Assert.IsFalse (p.IsFakeCapture);
 			p.Description.FileSet = new MediaFileSet ();
+			Assert.IsFalse (p.IsFakeCapture);
 			p.Description.FileSet.Add (new MediaFile ());
 			Assert.IsFalse (p.IsFakeCapture);
 			p.Description.FileSet [0].FilePath = Constants.FAKE_PROJECT;
