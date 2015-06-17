@@ -108,26 +108,26 @@ namespace LongoMatch
 
 		static void ConfigureOSXApp ()
 		{
-			#if OSTYPE_OS_X
-			MenuItem quit;
-			GtkOSXApplication app;
+			if (Utils.RunningPlatform () == PlatformID.MacOSX) {
+				MenuItem quit;
+				GtkOSXApplication app;
 
-			app = new GtkOSXApplication ();
-			MainWindow window = Config.GUIToolkit.MainController as MainWindow;
-			app.NSApplicationBlockTermination += (o, a) => {
-				window.CloseAndQuit();
-			};
+				app = new GtkOSXApplication ();
+				MainWindow window = Config.GUIToolkit.MainController as MainWindow;
+				app.NSApplicationBlockTermination += (o, a) => {
+					window.CloseAndQuit ();
+				};
 
-			quit = window.QuitMenu;
-			quit.Visible = false;
-			app.SetMenuBar (window.Menu);
-			app.InsertAppMenuItem (window.AboutMenu, 0);
-			app.InsertAppMenuItem (new SeparatorMenuItem (), 1);
-			app.InsertAppMenuItem (window.PreferencesMenu, 2);
-			window.Menu.Visible = false;
-			app.UseQuartzAccelerators = false;
-			app.Ready ();
-			#endif
+				quit = window.QuitMenu;
+				quit.Visible = false;
+				app.SetMenuBar (window.Menu);
+				app.InsertAppMenuItem (window.AboutMenu, 0);
+				app.InsertAppMenuItem (new SeparatorMenuItem (), 1);
+				app.InsertAppMenuItem (window.PreferencesMenu, 2);
+				window.Menu.Visible = false;
+				app.UseQuartzAccelerators = false;
+				app.Ready ();
+			}
 		}
 
 		static void InitGtk ()
