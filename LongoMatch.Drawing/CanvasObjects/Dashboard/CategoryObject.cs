@@ -605,8 +605,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 			anchor.Height = HeaderHeight;
 			DrawAnchor (tk, null);
-			foreach (LinkAnchorObject anchor in subcatAnchors.Values) {
-				anchor.Draw (tk, null);
+			foreach (LinkAnchorObject a in subcatAnchors.Values) {
+				a.Draw (tk, null);
 			}
 		}
 
