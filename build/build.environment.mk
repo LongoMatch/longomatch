@@ -6,7 +6,7 @@ MONO_ADDINS_PATH =
 DEFAULT_INSTALL_DIR = $(pkglibdir)
 
 # Build Paths
-DEFAULT_BUILD_DIR = bin_sh
+DEFAULT_BUILD_DIR = bin
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
