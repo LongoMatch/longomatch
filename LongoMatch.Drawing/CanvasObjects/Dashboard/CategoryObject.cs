@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		bool ShowTags {
 			get {
-				return Button.ShowSubcategories && Button.AnalysisEventType.Tags.Count != 0;
+				return (Button.ShowSubcategories || ShowLinks) && Button.AnalysisEventType.Tags.Count != 0;
 			}
 		}
 
@@ -163,10 +163,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			int tagsPerRow = Math.Max (1, Button.TagsPerRow);
 			nrows = 0;
 
-			if (Button.ShowSubcategories) {
-				foreach (List<Tag> tags in tagsByGroup.Values) {
-					nrows += (int)Math.Ceiling ((float)tags.Count / tagsPerRow);
-				}
+			foreach (List<Tag> tags in tagsByGroup.Values) {
+				nrows += (int)Math.Ceiling ((float)tags.Count / tagsPerRow);
 			}
 		}
 
@@ -392,7 +390,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 				AddSubcatAnchor (tag, new Point (pos.X - Position.X, pos.Y - Position.Y),
 					rowwidth, heightPerRow);
-				if (!Button.ShowSubcategories) {
+				if (!ShowTags) {
 					continue;
 				}
 
@@ -605,11 +603,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			if (!ShowLinks)
 				return;
 
-			if (Button.ShowSubcategories) {
-				anchor.Height = HeaderHeight;
-			} else {
-				anchor.Height = Button.Height;
-			}
+			anchor.Height = HeaderHeight;
 			DrawAnchor (tk, null);
 			foreach (LinkAnchorObject anchor in subcatAnchors.Values) {
 				anchor.Draw (tk, null);
@@ -679,8 +673,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			if (!ShowLinks) {
 				DrawEditButton (tk);
 			}
-			if (Button.ShowSubcategories) {
-			}
+
 			tk.End ();
 		}
 
