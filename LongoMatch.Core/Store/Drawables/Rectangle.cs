@@ -134,5 +134,10 @@ namespace LongoMatch.Core.Store.Drawables
 				break;
 			}
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[Rectangle: Start={0} Width={1}, Height={2}]", TopLeft, Width, Height);
+		}
 	}
 }
