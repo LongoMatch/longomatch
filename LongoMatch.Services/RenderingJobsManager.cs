@@ -148,8 +148,9 @@ namespace LongoMatch.Services
 			videoEditor.Error += OnError;
 
 			foreach (MediaFile file in job.InputFiles) {
-				PlaylistVideo segment = new PlaylistVideo (file);
-				ConvertVideo (segment);
+				PlaylistVideo video = new PlaylistVideo (file);
+				Log.Debug ("Convert video " + video.File.FilePath);
+				videoEditor.AddSegment (video.File.FilePath, 0, -1, 1, "", video.File.HasAudio, new Area ());
 			}
 			
 			try {
@@ -212,13 +213,6 @@ namespace LongoMatch.Services
 			Log.Debug ("Adding external video " + video.File.FilePath);
 			videoEditor.AddSegment (video.File.FilePath, 0, video.File.Duration.MSeconds,
 				1, "", video.File.HasAudio, new Area ());
-		}
-
-		void ConvertVideo (PlaylistVideo video)
-		{
-			Log.Debug ("Convert video " + video.File.FilePath);
-			videoEditor.AddSegment (video.File.FilePath, 0, -1, 1, "",
-				video.File.HasAudio, new Area ());
 		}
 
 		void ProcessDrawing (PlaylistDrawing drawing)
