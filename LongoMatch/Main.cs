@@ -115,7 +115,7 @@ namespace LongoMatch
 				app = new GtkOSXApplication ();
 				MainWindow window = Config.GUIToolkit.MainController as MainWindow;
 				app.NSApplicationBlockTermination += (o, a) => {
-					window.CloseAndQuit ();
+					a.RetVal = window.CloseAndQuit ();
 				};
 
 				quit = window.QuitMenu;

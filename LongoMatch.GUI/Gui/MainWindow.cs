@@ -216,12 +216,17 @@ namespace LongoMatch.Gui
 			SetPanel (panel);
 		}
 
-		public void CloseAndQuit ()
+		/// <summary>
+		/// Quit application, proposing to close a potentially opened project before.
+		/// </summary>
+		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
+		public bool CloseAndQuit ()
 		{
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			if (openedProject == null) {
 				Config.EventsBroker.EmitQuitApplication ();
 			}
+			return openedProject != null;
 		}
 
 		#endregion
