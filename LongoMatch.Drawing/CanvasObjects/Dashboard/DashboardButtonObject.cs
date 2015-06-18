@@ -172,6 +172,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
+		public override void ResetDrawArea ()
+		{
+			anchor.ResetDrawArea ();
+			base.ResetDrawArea ();
+		}
+
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			base.Draw (tk, area);
