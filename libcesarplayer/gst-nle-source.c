@@ -106,7 +106,11 @@ gst_nle_source_item_new (const gchar * file_path, const gchar * title,
     item->rate = 1;
   }
   item->roi = roi;
-  item->duration = stop - start;
+  if (GST_CLOCK_TIME_IS_VALID (stop))
+    item->duration = stop - start;
+  else
+    item->duration = GST_CLOCK_TIME_NONE;
+
   return item;
 }
 
@@ -464,7 +468,10 @@ gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
       nlesrc->audio_srcpad_added = TRUE;
     }
     item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
-    duration = item->duration / item->rate;
+    if (GST_CLOCK_TIME_IS_VALID (item->duration))
+      duration = item->duration / item->rate;
+    else
+      duration = 60 * GST_MSECOND;
 
     /* Push the start buffer and last 2 ones and let audiorate fill the gap */
     buf =
@@ -770,14 +777,16 @@ gst_nle_source_next (GstNleSource * nlesrc)
   }
 
   nlesrc->seek_done = TRUE;
-  if (!item->still_picture) {
+  if (!item->still_picture && GST_CLOCK_TIME_IS_VALID (item->stop)) {
     GST_DEBUG_OBJECT (nlesrc, "Sending seek event");
     gst_element_seek (nlesrc->decoder, 1, GST_FORMAT_TIME,
         GST_SEEK_FLAG_ACCURATE,
         GST_SEEK_TYPE_SET, item->start, GST_SEEK_TYPE_SET, item->stop);
+  } else {
+    nlesrc->video_seek_done = TRUE;
+    nlesrc->audio_seek_done = TRUE;
   }
 }
-
 
 static GstStateChangeReturn
 gst_nle_source_change_state (GstElement * element, GstStateChange transition)
@@ -849,7 +858,7 @@ gst_nle_source_add_item (GstNleSource * nlesrc, const gchar * file_path,
   nlesrc->queue = g_list_append (nlesrc->queue, item);
 
   GST_INFO_OBJECT (nlesrc, "Added new item to the queue start:%"
-      GST_TIME_FORMAT " stop:%" GST_TIME_FORMAT "rate:%f",
+      GST_TIME_FORMAT " stop:%" GST_TIME_FORMAT " rate:%f",
       GST_TIME_ARGS (start), GST_TIME_ARGS (stop), rate);
 }
 

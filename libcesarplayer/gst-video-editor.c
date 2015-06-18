@@ -503,6 +503,7 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
 {
   GstState cur_state;
   GstNleRectangle roi = { roi_x, roi_y, roi_w, roi_h };
+  guint64 stop = -1;
 
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
@@ -512,11 +513,14 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
     return;
   }
 
-  duration = duration * GST_MSECOND;
   start = start * GST_MSECOND;
+  if (duration != -1) {
+    duration = duration * GST_MSECOND;
+    stop = start + duration;
+  }
 
   gst_nle_source_add_item (gve->priv->nle_source, file, title, start,
-      start + duration, rate, FALSE, roi);
+      stop, rate, FALSE, roi);
 
   GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
       GST_TIME_FORMAT "} ", GST_TIME_ARGS (gve->priv->duration),
