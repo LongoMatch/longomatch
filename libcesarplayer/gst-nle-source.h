@@ -72,6 +72,7 @@ struct _GstNleSource
   gboolean video_srcpad_added;
   gboolean audio_srcpad_added;
 
+  GstElement *source;
   GstElement *decoder;
 
   guint64 accu_time;
@@ -119,6 +120,13 @@ EXPORT void gst_nle_source_add_item   (GstNleSource *nlesrc,
                                        gboolean still_picturie,
                                        GstNleRectangle roi
                                      );
+
+EXPORT gboolean gst_nle_source_query_position_bytes (GstNleSource * nlesrc,
+                                                     gint64 * position);
+
+EXPORT gboolean gst_nle_source_query_duration_bytes (GstNleSource * nlesrc,
+                                                     gint64 * duration);
+
 G_END_DECLS
 #endif /* _GST_NLE_SOURCE_H_ */
 

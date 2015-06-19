@@ -188,8 +188,15 @@ gst_nle_source_dispose (GObject * object)
     g_list_free_full (nlesrc->queue, (GDestroyNotify) gst_nle_source_item_free);
     nlesrc->queue = NULL;
   }
+
+  if (nlesrc->source != NULL) {
+    gst_object_unref (nlesrc->source);
+    nlesrc->source = NULL;
+  }
+
   if (nlesrc->decoder != NULL) {
     gst_element_set_state (nlesrc->decoder, GST_STATE_NULL);
+    gst_object_unref (nlesrc->decoder);
     nlesrc->decoder = NULL;
   }
 
@@ -709,6 +716,17 @@ gst_nle_source_next_threaded (GstNleSource * nlesrc)
 }
 
 static void
+gst_nle_source_on_source_setup (GstElement * uridecodebin, GstElement * source,
+    GstNleSource * nlesrc)
+{
+  if (nlesrc->source != NULL) {
+    gst_object_unref (nlesrc->source);
+    nlesrc->source = NULL;
+  }
+  nlesrc->source = g_object_ref (source);
+}
+
+static void
 gst_nle_source_next (GstNleSource * nlesrc)
 {
   GstNleSrcItem *item;
@@ -724,6 +742,11 @@ gst_nle_source_next (GstNleSource * nlesrc)
     return;
   }
 
+  if (nlesrc->source != NULL) {
+    gst_object_unref (nlesrc->source);
+    nlesrc->source = NULL;
+  }
+
   if (nlesrc->decoder != NULL) {
     gst_element_set_state (GST_ELEMENT (nlesrc->decoder), GST_STATE_NULL);
     gst_element_get_state (GST_ELEMENT (nlesrc->decoder), NULL, NULL, 0);
@@ -732,6 +755,10 @@ gst_nle_source_next (GstNleSource * nlesrc)
 
   nlesrc->decoder = gst_pipeline_new ("decoder");
   uridecodebin = gst_element_factory_make ("uridecodebin", NULL);
+  /* Connect signal to recover source element for queries in bytes */
+  g_signal_connect (uridecodebin, "source-setup",
+      G_CALLBACK (gst_nle_source_on_source_setup), nlesrc); 
+
   gst_bin_add (GST_BIN (nlesrc->decoder), uridecodebin);
 
   g_signal_connect (uridecodebin, "autoplug-select",
@@ -830,6 +857,10 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
       }
       break;
     case GST_STATE_CHANGE_READY_TO_NULL:
+      if (nlesrc->source) {
+        gst_object_unref (nlesrc->source);
+        nlesrc->source = NULL;
+      }
       if (nlesrc->decoder) {
         gst_element_set_state (nlesrc->decoder, GST_STATE_NULL);
         gst_object_unref (nlesrc->decoder);
@@ -841,6 +872,30 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
   }
 
   return res;
+}
+
+gboolean
+gst_nle_source_query_position_bytes (GstNleSource * nlesrc, gint64 * position)
+{
+  if (nlesrc->source) {
+    GstFormat format = GST_FORMAT_BYTES;
+    return gst_element_query_position (nlesrc->source, &format, position);
+  }
+
+  *position = 0;
+  return FALSE;
+}
+
+gboolean
+gst_nle_source_query_duration_bytes (GstNleSource * nlesrc, gint64 * duration)
+{
+  if (nlesrc->source) {
+    GstFormat format = GST_FORMAT_BYTES;
+    return gst_element_query_duration (nlesrc->source, &format, duration);
+  }
+
+  *duration = GST_CLOCK_TIME_NONE;
+  return FALSE;
 }
 
 void
