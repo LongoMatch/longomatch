@@ -219,7 +219,6 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   GstElement *rotate, *videorate, *videoscale, *colorspace, *vident;
   GstElement *audiorate, *audioconvert, *audioresample, *aident;
   GstElement *a_capsfilter, *v_capsfilter;
-  GstElement *v_first;
   GstPad *v_pad, *a_pad;
   GstCaps *v_caps, *a_caps;
 
@@ -242,6 +241,8 @@ gst_nle_source_setup (GstNleSource * nlesrc)
 
   if (rotate) {
     gst_caps_set_simple (v_caps, "rotation", G_TYPE_INT, (gint) 0, NULL);
+  } else {
+    rotate = gst_element_factory_make ("identity", NULL); 
   }
 
   gst_pad_set_caps (nlesrc->video_srcpad, v_caps);
@@ -254,27 +255,17 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       NULL);
 
   /* As videorate can duplicate a lot of buffers we want to put it last in this transformation bin */
-  if (rotate) {
-    gst_bin_add_many (GST_BIN (nlesrc), rotate, nlesrc->videocrop,
-        videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
-        vident, NULL);
-    gst_element_link_many (rotate, nlesrc->videocrop, videoscale, colorspace,
-        nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
-    v_first = rotate;
-  } else {
-    gst_bin_add_many (GST_BIN (nlesrc), nlesrc->videocrop,
-        videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
-        vident, NULL);
-    gst_element_link_many (nlesrc->videocrop, videoscale, colorspace,
-        nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
-    v_first = nlesrc->videocrop;
-  }
+  gst_bin_add_many (GST_BIN (nlesrc), rotate, nlesrc->videocrop,
+      videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
+      vident, NULL);
+  gst_element_link_many (rotate, nlesrc->videocrop, videoscale, colorspace,
+      nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
   /* Ghost source and sink pads */
   v_pad = gst_element_get_pad (vident, "src");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_srcpad), v_pad);
   gst_object_unref (v_pad);
 
-  v_pad = gst_element_get_pad (v_first, "sink");
+  v_pad = gst_element_get_pad (rotate, "sink");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_sinkpad), v_pad);
   gst_object_unref (v_pad);
 
