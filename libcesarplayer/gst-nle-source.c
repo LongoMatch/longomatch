@@ -216,12 +216,14 @@ gst_nle_source_get_audio_caps (GstNleSource * nlesrc)
 static void
 gst_nle_source_setup (GstNleSource * nlesrc)
 {
-  GstElement *videorate, *videoscale, *colorspace, *vident;
+  GstElement *rotate, *videorate, *videoscale, *colorspace, *vident;
   GstElement *audiorate, *audioconvert, *audioresample, *aident;
   GstElement *a_capsfilter, *v_capsfilter;
+  GstElement *v_first;
   GstPad *v_pad, *a_pad;
   GstCaps *v_caps, *a_caps;
 
+  rotate = gst_element_factory_make ("flurotate", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
   nlesrc->videocrop = gst_element_factory_make ("videocrop", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
@@ -237,6 +239,11 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "framerate", GST_TYPE_FRACTION,
       (gint) nlesrc->fps_n, (gint) nlesrc->fps_d, NULL);
+
+  if (rotate) {
+    gst_caps_set_simple (v_caps, "rotation", G_TYPE_INT, (gint) 0, NULL);
+  }
+
   gst_pad_set_caps (nlesrc->video_srcpad, v_caps);
 
   g_object_set (videoscale, "add-borders", TRUE, NULL);
@@ -247,18 +254,27 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       NULL);
 
   /* As videorate can duplicate a lot of buffers we want to put it last in this transformation bin */
-  gst_bin_add_many (GST_BIN (nlesrc), nlesrc->videocrop,
-      videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
-      vident, NULL);
-  gst_element_link_many (nlesrc->videocrop, videoscale, colorspace,
-      nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
-
+  if (rotate) {
+    gst_bin_add_many (GST_BIN (nlesrc), rotate, nlesrc->videocrop,
+        videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
+        vident, NULL);
+    gst_element_link_many (rotate, nlesrc->videocrop, videoscale, colorspace,
+        nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
+    v_first = rotate;
+  } else {
+    gst_bin_add_many (GST_BIN (nlesrc), nlesrc->videocrop,
+        videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
+        vident, NULL);
+    gst_element_link_many (nlesrc->videocrop, videoscale, colorspace,
+        nlesrc->textoverlay, videorate, v_capsfilter, vident, NULL);
+    v_first = nlesrc->videocrop;
+  }
   /* Ghost source and sink pads */
   v_pad = gst_element_get_pad (vident, "src");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_srcpad), v_pad);
   gst_object_unref (v_pad);
 
-  v_pad = gst_element_get_pad (nlesrc->videocrop, "sink");
+  v_pad = gst_element_get_pad (v_first, "sink");
   gst_ghost_pad_set_target (GST_GHOST_PAD (nlesrc->video_sinkpad), v_pad);
   gst_object_unref (v_pad);
 
