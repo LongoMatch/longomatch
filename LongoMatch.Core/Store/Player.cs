@@ -19,7 +19,6 @@
 using System;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
@@ -27,7 +26,7 @@ namespace LongoMatch.Core.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: IStorable
+	public class Player: StorableBase
 	{
 
 		#region Constructors
@@ -39,11 +38,6 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
-		
-		public Guid ID {
-			get;
-			set;
-		}
 		
 		/// <summary>
 		/// My name

@@ -35,7 +35,7 @@ namespace LongoMatch.Core.Store.Templates
 	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
-	public class Dashboard: IStorable, ITemplate
+	public class Dashboard: StorableBase, ITemplate
 	{
 
 		const int CAT_WIDTH = 120;
@@ -78,12 +78,10 @@ namespace LongoMatch.Core.Store.Templates
 			InitializeLists ();
 		}
 
-		/// <summary>
-		/// Unique ID describing the dashboard
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
+		public override List<IStorable> Children {
+			get {
+				return List.OfType<EventButton> ().Select (b => (b.EventType as IStorable)).ToList();
+			}
 		}
 
 		/// <summary>

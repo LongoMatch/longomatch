@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2015 jl
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,38 @@
 //
 using System;
 using System.Collections.Generic;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Core.Store
 {
-	public interface IStorable : IIDObject
+	[Serializable]
+	public class StorableBase: IStorable
 	{
-		List<IStorable> Children { get; }
+		public StorableBase ()
+		{
+		}
+
+		#region IStorable implementation
+
+		[JsonIgnore]
+		public virtual List<IStorable> Children {
+			get {
+				return null;
+			}
+		}
+
+		#endregion
+
+		#region IIDObject implementation
+
+		[JsonProperty (Order = -100)]
+		public virtual Guid ID {
+			get;
+			set;
+		}
+
+		#endregion
 	}
 }
 

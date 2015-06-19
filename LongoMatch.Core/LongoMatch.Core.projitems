@@ -130,5 +130,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\QueryFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\StorableBase.cs" />
   </ItemGroup>
 </Project>

@@ -25,18 +25,13 @@ using LongoMatch.Core.Interfaces;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class EventType: IStorable
+	public class EventType: StorableBase
 	{
 
 		public EventType ()
 		{
 			ID = Guid.NewGuid ();
 			Color = Color.Red;
-		}
-
-		public Guid ID {
-			get;
-			set;
 		}
 
 		public string Name {

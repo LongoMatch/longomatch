@@ -20,8 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using LongoMatch.Services.Services;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace Tests.Services
 {
@@ -31,7 +31,7 @@ namespace Tests.Services
 
 		FileStorage fs;
 
-		private class TestStorable : IStorable
+		private class TestStorable : StorableBase
 		{
 			public string memberString;
 
@@ -39,11 +39,6 @@ namespace Tests.Services
 			{
 				this.memberString = memberString;
 				ID = Guid.NewGuid ();
-			}
-
-			public Guid ID {
-				get;
-				set;
 			}
 		}
 

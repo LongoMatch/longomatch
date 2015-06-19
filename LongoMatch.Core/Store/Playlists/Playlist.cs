@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
-	public class Playlist: IStorable
+	public class Playlist: StorableBase
 	{
 		int indexSelection = 0;
 
@@ -40,14 +40,6 @@ namespace LongoMatch.Core.Store.Playlists
 		#endregion
 
 		#region Properties
-
-		/// <summary>
-		/// Unique ID for the playlist
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
-		}
 
 		public string Name {
 			get;

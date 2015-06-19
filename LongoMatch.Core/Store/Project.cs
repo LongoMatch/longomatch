@@ -45,7 +45,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class Project : IComparable, IStorable
+	public class Project : StorableBase, IComparable
 	{
 		ProjectDescription description;
 		SubstitutionEventType subsType;
@@ -69,12 +69,16 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
-		/// <summary>
-		/// Unique ID for the project
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
+		public override List<IStorable> Children {
+			get {
+				List<IStorable> storables = 
+					new List<IStorable> {Dashboard, LocalTeamTemplate,
+					VisitorTeamTemplate};
+				storables.AddRange (Playlists);
+				storables.AddRange (Timeline);
+				storables.AddRange (EventTypes);
+				return storables;
+			}
 		}
 
 		public List<TimelineEvent> Timeline {

@@ -30,7 +30,7 @@ using System.IO;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: ITemplate
+	public class Team: StorableBase, ITemplate
 	{
 		private const int MAX_WIDTH = 100;
 		private const int MAX_HEIGHT = 100;
@@ -53,10 +53,10 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [1] = Color.Red1;
 		}
 
-
-		public Guid ID {
-			get;
-			set;
+		public override List<IStorable> Children {
+			get {
+				return new List<IStorable> (List);
+			}
 		}
 
 		[JsonIgnore]

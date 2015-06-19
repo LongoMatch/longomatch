@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>LongoMatch.Core</RootNamespace>
+    <AssemblyName>LongoMatch.Core</AssemblyName>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <DefineConstants>DEBUG HAVE_GTK</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin</OutputPath>
+    <DefineConstants>HAVE_GTK</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Common\Cloner.cs" />
+    <Compile Include="Common\ConsoleCrayon.cs" />
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Log.cs" />
+    <Compile Include="Store\HotKey.cs" />
+    <Compile Include="Store\PixbufTimeNode.cs" />
+    <Compile Include="Store\Player.cs" />
+    <Compile Include="Store\Project.cs" />
+    <Compile Include="Store\ProjectDescription.cs" />
+    <Compile Include="Store\Time.cs" />
+    <Compile Include="Store\TimeNode.cs" />
+    <Compile Include="Store\Templates\Dashboard.cs" />
+    <Compile Include="Interfaces\ITemplates.cs" />
+    <Compile Include="Store\MediaFile.cs" />
+    <Compile Include="Handlers\Handlers.cs" />
+    <Compile Include="Common\Job.cs" />
+    <Compile Include="Common\EncodingProfiles.cs" />
+    <Compile Include="Common\EncodingSettings.cs" />
+    <Compile Include="Common\VideoStandards.cs" />
+    <Compile Include="Common\CaptureSettings.cs" />
+    <Compile Include="Common\Device.cs" />
+    <Compile Include="Interfaces\IRenderingJobsManager.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Interfaces\ITemplatesService.cs" />
+    <Compile Include="Interfaces\IDatabase.cs" />
+    <Compile Include="Store\TimelineNode.cs" />
+    <Compile Include="Interfaces\GUI\IRenderingStateBar.cs" />
+    <Compile Include="Handlers\Multimedia.cs" />
+    <Compile Include="Interfaces\GUI\IAnalysisWindow.cs" />
+    <Compile Include="Interfaces\GUI\ICapturerBin.cs" />
+    <Compile Include="Interfaces\GUI\IGUIToolkit.cs" />
+    <Compile Include="Interfaces\Multimedia\IMultimediaToolkit.cs" />
+    <Compile Include="Interfaces\Multimedia\IVideoEditor.cs" />
+    <Compile Include="Interfaces\GUI\IBusyDialog.cs" />
+    <Compile Include="Interfaces\Multimedia\IFramesCapturer.cs" />
+    <Compile Include="Common\Image.cs" />
+    <Compile Include="Common\Color.cs" />
+    <Compile Include="Stats\ProjectStats.cs" />
+    <Compile Include="Stats\PercentualStat.cs" />
+    <Compile Include="Stats\Stat.cs" />
+    <Compile Include="Common\EventsFilter.cs" />
+    <Compile Include="Interfaces\Multimedia\IRemuxer.cs" />
+    <Compile Include="Interfaces\IDataBaseManager.cs" />
+    <Compile Include="Common\EncodingQuality.cs" />
+    <Compile Include="Common\Gettext.cs" />
+    <Compile Include="Common\Exceptions.cs" />
+    <Compile Include="Interfaces\GUI\IMainController.cs" />
+    <Compile Include="Interfaces\GUI\IPanel.cs" />
+    <Compile Include="Interfaces\Multimedia\ICapturer.cs" />
+    <Compile Include="Interfaces\Multimedia\IPlayer.cs" />
+    <Compile Include="Store\Drawables\Quadrilateral.cs" />
+    <Compile Include="Store\Drawables\Ellipse.cs" />
+    <Compile Include="Store\Drawables\Line.cs" />
+    <Compile Include="Store\Drawables\MultiPoints.cs" />
+    <Compile Include="Store\Drawables\Drawable.cs" />
+    <Compile Include="Store\Drawables\Cross.cs" />
+    <Compile Include="Store\Drawables\Rectangle.cs" />
+    <Compile Include="Store\Drawables\Selection.cs" />
+    <Compile Include="Store\Drawables\Angle.cs" />
+    <Compile Include="Store\Coordinates.cs" />
+    <Compile Include="Store\Point.cs" />
+    <Compile Include="Common\Area.cs" />
+    <Compile Include="Interfaces\Drawing\IDrawingToolkit.cs" />
+    <Compile Include="Interfaces\Drawing\IWidget.cs" />
+    <Compile Include="Handlers\Drawing.cs" />
+    <Compile Include="Interfaces\Drawing\IDrawable.cs" />
+    <Compile Include="Interfaces\Drawing\ICanvas.cs" />
+    <Compile Include="Common\ExtensionMethods.cs" />
+    <Compile Include="Store\Timer.cs" />
+    <Compile Include="Store\Period.cs" />
+    <Compile Include="Common\EventsBroker.cs" />
+    <Compile Include="Common\Serializer.cs" />
+    <Compile Include="Interfaces\IIDObject.cs" />
+    <Compile Include="Store\FrameDrawing.cs" />
+    <Compile Include="Store\Drawables\Text.cs" />
+    <Compile Include="Store\Drawables\Counter.cs" />
+    <Compile Include="Interfaces\IProjectsImporter.cs" />
+    <Compile Include="Store\Score.cs" />
+    <Compile Include="Store\PenaltyCard.cs" />
+    <Compile Include="Store\Tag.cs" />
+    <Compile Include="Stats\SubCategoryStat.cs" />
+    <Compile Include="Interfaces\Multimedia\IDiscoverer.cs" />
+    <Compile Include="Store\DashboardButton.cs" />
+    <Compile Include="Interfaces\IPlaylistElement.cs" />
+    <Compile Include="Store\Playlists\Playlist.cs" />
+    <Compile Include="Store\Playlists\PlaylistPlayElement.cs" />
+    <Compile Include="Store\Playlists\PlaylistDrawing.cs" />
+    <Compile Include="Store\Playlists\PlaylistImage.cs" />
+    <Compile Include="StyleConf.cs" />
+    <Compile Include="Store\EventType.cs" />
+    <Compile Include="Store\TimelineEvent.cs" />
+    <Compile Include="Stats\EventTypeStats.cs" />
+    <Compile Include="Store\Drawables\Circle.cs" />
+    <Compile Include="Store\MediaFileSet.cs" />
+    <Compile Include="Common\Hotkeys.cs" />
+    <Compile Include="Common\Keyboard.cs" />
+    <Compile Include="Store\Playlists\PlaylistVideo.cs" />
+    <Compile Include="Stats\TeamStats.cs" />
+    <Compile Include="Stats\PlayerEventTypeStats.cs" />
+    <Compile Include="Stats\PlayerStats.cs" />
+    <Compile Include="Stats\TimerStats.cs" />
+    <Compile Include="Common\Utils.cs" />
+    <Compile Include="Interfaces\IStorage.cs" />
+    <Compile Include="Interfaces\IStorable.cs" />
+    <Compile Include="Store\Templates\Team.cs" />
+    <Compile Include="Interfaces\IPlayerController.cs" />
+    <Compile Include="Common\Registry.cs" />
+    <Compile Include="Common\Seeker.cs" />
+    <Compile Include="Interfaces\GUI\IPlayerView.cs" />
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Interfaces\GUI\IViewPort.cs" />
+    <Compile Include="Store\ActionLink.cs" />
+    <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Store\CameraConfig.cs" />
+    <Compile Include="Interfaces\GUI\ITool.cs" />
+    <Compile Include="Handlers\Queries.cs" />
+    <Compile Include="Common\QueryFilter.cs" />
+    <Compile Include="Store\StorableBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\GUI\" />
+    <Folder Include="Interfaces\Multimedia\" />
+    <Folder Include="Stats\" />
+    <Folder Include="Store\Drawables\" />
+    <Folder Include="Interfaces\Drawing\" />
+    <Folder Include="Store\" />
+    <Folder Include="Store\Playlists\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
+      <Package>newtonsoft-json</Package>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

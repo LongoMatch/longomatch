@@ -29,38 +29,44 @@ using NUnit.Framework;
 
 namespace Tests.DB
 {
-	class StorableContainerTest: IStorable
+	class StorableContainerTest: StorableBase
 	{
 		public StorableContainerTest ()
 		{
 			ID = Guid.NewGuid ();
 		}
 
-		public Guid ID { get; set; }
-
 		public StorableImageTest Image { get; set; }
+
+		public override List<IStorable> Children {
+			get {
+				return new List<IStorable> {Image};
+			}
+		}
 	}
 
-	class StorableListTest: IStorable
+	class StorableListTest: StorableBase
 	{
 		public StorableListTest ()
 		{
 			ID = Guid.NewGuid ();
 		}
 
-		public Guid ID { get; set; }
-
 		public List<StorableImageTest> Images { get; set; }
+
+		public override List<IStorable> Children {
+			get {
+				return new List<IStorable> (Images);
+			}
+		}
 	}
 
-	class StorableImageTest : IStorable
+	class StorableImageTest : StorableBase
 	{
 		public StorableImageTest ()
 		{
 			ID = Guid.NewGuid ();
 		}
-
-		public Guid ID { get; set; }
 
 		public Image Image1 { get; set; }
 
@@ -167,6 +173,21 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestDeleteChildren ()
+		{
+			StorableListTest list = new StorableListTest ();
+			list.Images = new List<StorableImageTest> ();
+			list.Images.Add (new StorableImageTest ());
+			list.Images.Add (new StorableImageTest ());
+
+			storage.Store (list);
+			Assert.AreEqual (3, db.DocumentCount);
+
+			storage.Delete (list);
+			Assert.AreEqual (0, db.DocumentCount);
+		}
+
+		[Test ()]
 		public void TestDeserializeImages ()
 		{
 			Image img = Utils.LoadImageFromFile ();
@@ -241,7 +262,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSaveLoadDashboard ()
+		public void TestDashboards ()
 		{
 			Dashboard dashboard = Dashboard.DefaultTemplate (10);
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
@@ -258,11 +279,13 @@ namespace Tests.DB
 			Assert.IsNotNull (dashboard2.HalfFieldBackground);
 			Assert.IsNotNull (dashboard2.GoalBackground);
 			Assert.AreEqual (16, dashboard2.Image.Width); 
-			Assert.AreEqual (16, dashboard2.Image.Height); 
+			Assert.AreEqual (16, dashboard2.Image.Height);
+			storage.Delete (dashboard);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 		[Test ()]
-		public void TestSaveLoadPlayer ()
+		public void TestPlayer ()
 		{
 			Player player1 = new Player {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
@@ -277,10 +300,12 @@ namespace Tests.DB
 			Assert.AreEqual (player1.ID, player2.ID);
 			Assert.AreEqual (player1.ToString (), player2.ToString ());
 			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
+			storage.Delete (player1);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 		[Test ()]
-		public void TestSaveLoadTeam ()
+		public void TestTeam ()
 		{
 			Team team1 = Team.DefaultTemplate (10);
 			storage.Store<Team> (team1);
@@ -288,10 +313,12 @@ namespace Tests.DB
 			Team team2 = storage.Retrieve<Team> (team1.ID);
 			Assert.AreEqual (team1.ID, team2.ID);
 			Assert.AreEqual (team1.List.Count, team2.List.Count);
+			storage.Delete (team1);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 		[Test ()]
-		public void TestSaveLoadTimelineEvent ()
+		public void TestTimelineEvent ()
 		{
 			Player p = new Player ();
 			AnalysisEventType evtType = new AnalysisEventType ();
@@ -321,6 +348,13 @@ namespace Tests.DB
 
 			TimelineEvent evt2 = storage.Retrieve <TimelineEvent> (evt.ID);
 			Assert.IsNotNull (evt2.EventType);
+
+			storage.Delete (evt);
+			Assert.AreEqual (2, db.DocumentCount);
+			storage.Delete (p);
+			Assert.AreEqual (1, db.DocumentCount);
+			storage.Delete (evtType);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 		//		[Test ()]
@@ -339,7 +373,7 @@ namespace Tests.DB
 		//		}
 
 		[Test ()]
-		public void TestSaveLoadProject ()
+		public void TestProject ()
 		{
 			Project p = new Project ();
 			p.Dashboard = Dashboard.DefaultTemplate (10);
@@ -355,6 +389,8 @@ namespace Tests.DB
 
 			storage.Store<Project> (p);
 			Assert.AreEqual (39, db.DocumentCount);
+			storage.Delete (p);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 
@@ -393,6 +429,9 @@ namespace Tests.DB
 			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
 			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
 				p2.Timeline [0].EventType);
+
+			storage.Delete (p);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 	}
 }

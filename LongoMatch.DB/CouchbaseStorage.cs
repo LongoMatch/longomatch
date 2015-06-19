@@ -91,8 +91,7 @@ namespace LongoMatch.DB
 		public void Delete<T> (T t) where T : IStorable
 		{
 			db.RunInTransaction (() => {
-				Delete (t);
-				/* Fixme iterate over children to delete them */
+				DeleteFromDB (t);
 				return true;
 			});
 		}
@@ -102,9 +101,14 @@ namespace LongoMatch.DB
 			db.Manager.ForgetDatabase (db);
 		}
 
-		void Delete (IStorable storable)
+		void DeleteFromDB (IStorable storable)
 		{
 			db.GetDocument (storable.ID.ToString ()).Delete ();
+			if (storable.Children != null) {
+				foreach (IStorable child in storable.Children) {
+					DeleteFromDB (child);
+				}
+			}
 		}
 
 		#endregion

@@ -70,6 +70,12 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
+		public List<IStorable> Children {
+			get {
+				return new List<IStorable> ();
+			}
+		}
+
 		public Guid ID {
 			get;
 			set;
