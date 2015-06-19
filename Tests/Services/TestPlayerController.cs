@@ -540,6 +540,16 @@ namespace Tests.Services
 			playerMock.Raise (p => p.Eos += null, this);
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
 			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.ResetCalls ();
+
+			TimelineEvent evtLocal = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
+				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
+			};
+			player.LoadEvent (mfs, evtLocal, evtLocal.Start, true);
+			playerMock.ResetCalls ();
+			playerMock.Raise (p => p.Eos += null, this);
+			playerMock.Verify (p => p.Seek (evtLocal.Start, true, false), Times.Once ());
+			playerMock.Verify (p => p.Pause (), Times.Once ());
 		}
 
 		[Test ()]
@@ -950,25 +960,6 @@ namespace Tests.Services
 			Assert.AreEqual (new Area (20, 20, 40, 40), player.CamerasConfig [0].RegionOfInterest);
 			/* check the event was not impacted */
 			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);
-		}
-
-		[Test ()]
-		public void TestPlayBackEvent ()
-		{
-			PreparePlayer ();
-
-			TimelineEvent evt_local = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
-			};
-			player.LoadEvent (mfs, evt_local, evt_local.Start, true);
-
-
-			playerMock.ResetCalls ();
-			playerMock.Raise (p => p.Eos += null, this);
-			playerMock.Verify (p => p.Seek (evt_local.Start, true, false), Times.Once ());
-			playerMock.Verify (p => p.Pause (), Times.Once ());
-
-			playerMock.ResetCalls ();
 		}
 	}
 }
