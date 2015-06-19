@@ -1027,7 +1027,13 @@ namespace LongoMatch.Services
 				if (loadedPlaylistElement is PlaylistVideo) {
 					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
 				} else {
-					Seek (new Time (0), true);
+					Time position = null;
+					if(loadedEvent != null) {
+						position = loadedEvent.Start;
+					} else {
+						position = new Time (0);
+					}
+					Seek (position, true);
 					Pause ();
 				}
 			});
