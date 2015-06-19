@@ -57,6 +57,7 @@ namespace LongoMatch.Gui
 			drawingWindow.MotionNotifyEvent += HandleMotionNotifyEvent;
 			drawingWindow.ButtonPressEvent += HandleButtonPressEvent;
 			drawingWindow.ButtonReleaseEvent += HandleButtonReleaseEvent;
+			drawingWindow.Realized += HandleRealized;
 			drawingWindow.AddEvents ((int)(Gdk.EventMask.ButtonPressMask | Gdk.EventMask.ButtonReleaseMask | Gdk.EventMask.PointerMotionMask | Gdk.EventMask.ScrollMask));
 
 			videoeventbox.ButtonPressEvent += HandleButtonPressEvent;
@@ -93,9 +94,8 @@ namespace LongoMatch.Gui
 		}
 
 		public IntPtr WindowHandle {
-			get {
-				return drawingWindow.GdkWindow.GetWindowHandle ();
-			}
+			get;
+			private set;
 		}
 
 		public string Message {
@@ -204,7 +204,7 @@ namespace LongoMatch.Gui
 
 		void HandleRealized (object sender, EventArgs e)
 		{
-
+			WindowHandle = drawingWindow.GdkWindow.GetWindowHandle ();
 		}
 	}
 }
