@@ -58,7 +58,7 @@ include $(top_srcdir)/build/build.mk
 if ENABLE_TESTS
 check:
 	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
-	$(MONO) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
+	$(MONO) --debug $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
 
 if HAVE_COVEM
 do-coverage:
