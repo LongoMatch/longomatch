@@ -494,7 +494,7 @@ namespace LongoMatch.Services
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedEvent = evt;
-			if (evt.Start != null && evt.Start != null) {
+			if (evt.Start != null && evt.Stop != null) {
 				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, evt.Rate,
 					evt.CamerasConfig, evt.CamerasLayout, playing);
 			} else if (evt.EventTime != null) {
