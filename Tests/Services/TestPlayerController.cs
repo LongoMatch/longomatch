@@ -68,18 +68,18 @@ namespace Tests.Services
 			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 
-			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
-			};
-			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5));
-			playlist = new Playlist ();
-			playlist.Elements.Add (new PlaylistPlayElement (evt));
-			playlist.Elements.Add (plImage);
 		}
 
 		[SetUp ()]
 		public void Setup ()
 		{
+			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
+			};
+			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5000));
+			playlist = new Playlist ();
+			playlist.Elements.Add (new PlaylistPlayElement (evt));
+			playlist.Elements.Add (plImage);
 			currentTime = new Time (0);
 			playerMock.ResetCalls ();
 			player = new PlayerController ();
