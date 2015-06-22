@@ -349,6 +349,12 @@ namespace LongoMatch.Services
 				guiToolkit.ErrorMessage (ex.Message);
 				return;
 			}
+			if (project.Description.FileSet.Duration == null) {
+				Log.Error("Project " + projectID + " is empty.");
+				// TODO: remove the project from the DB ?
+				guiToolkit.ErrorMessage ("This project is empty.");
+				return;
+			}
 			// FIXME
 			if (project.IsFakeCapture) {
 				/* If it's a fake live project prompt for a video file and
