@@ -479,10 +479,10 @@ static gboolean
 gve_query_timeout (GstVideoEditor * gve)
 {
   gfloat progress = 0.0;
-  if (GST_CLOCK_TIME_IS_VALID (gve->priv->duration)) {
+  if (gve->priv->duration > 0) {
     progress = (float) gve->priv->last_pos / (float) gve->priv->duration;
   } else {
-    if (!GST_CLOCK_TIME_IS_VALID (gve->priv->duration)) {
+    if (!GST_CLOCK_TIME_IS_VALID (gve->priv->duration_bytes)) {
       gst_nle_source_query_duration_bytes (gve->priv->nle_source,
             &gve->priv->duration_bytes);
     }
@@ -545,7 +545,8 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
       GST_TIME_FORMAT "} ", GST_TIME_ARGS (gve->priv->duration),
       GST_TIME_ARGS (duration));
 
-  gve->priv->duration += duration;
+  if (duration != -1)
+    gve->priv->duration += duration;
 }
 
 void
