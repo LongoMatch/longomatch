@@ -37,6 +37,15 @@ def mdptoam(mdp):
             resources = [x.replace('\\', '/').replace("../", "$(top_srcdir)/") for x in resources]
         except:
             resources = []
+    if "Net45" in mdp:
+        with open (mdp.replace(".Net45.csproj", ".projitems")) as f:
+            l = f.read()
+            try:
+                newfiles = re.findall('<Compile Include="([^"]*)"*', l)
+                newfiles = [x.replace('\\', '/').replace("$(MSBuildThisFileDirectory)", "") for x in newfiles]
+                files += newfiles
+            except:
+                pass
     files.sort()
     am = os.path.join(mdp.rsplit('/', 1)[0], 'Makefile.am')
     if not os.path.exists(am):
