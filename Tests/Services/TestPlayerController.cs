@@ -760,6 +760,7 @@ namespace Tests.Services
 			/* Load still image */
 			player.LoadPlaylistEvent (playlist, plImage);
 			playerMock.ResetCalls ();
+			Assert.IsTrue (player.Playing);
 			player.Pause ();
 			playerMock.Verify (p => p.Pause (), Times.Never ());
 			Assert.IsFalse (player.Playing);
@@ -771,6 +772,7 @@ namespace Tests.Services
 			PlaylistDrawing dr = new PlaylistDrawing (new FrameDrawing ());
 			player.LoadPlaylistEvent (playlist, dr);
 			playerMock.ResetCalls ();
+			Assert.IsTrue (player.Playing);
 			player.Pause ();
 			playerMock.Verify (p => p.Pause (), Times.Never ());
 			Assert.IsFalse (player.Playing);
@@ -793,7 +795,7 @@ namespace Tests.Services
 
 			PreparePlayer ();
 
-			Config.EventsBroker.NextPlaylistElementEvent += (playlist) => {
+			Config.EventsBroker.NextPlaylistElementEvent += (pl) => {
 				nextLoaded++;
 			};
 
@@ -805,6 +807,15 @@ namespace Tests.Services
 			player.Seek (currentTime, true, false);
 			Assert.IsFalse (player.Playing);
 			Assert.AreEqual (1, nextLoaded);
+
+			/* Check the player is stopped when we pass the image stop time */
+			currentTime = new Time (0);
+			player.LoadPlaylistEvent (playlist, plImage);
+			Assert.IsTrue (player.Playing);
+			currentTime = plImage.Duration + 1000;
+			player.Seek (currentTime, true, false);
+			Assert.IsFalse (player.Playing);
+			Assert.AreEqual (2, nextLoaded);
 		}
 
 		[Test ()]
