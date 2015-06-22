@@ -45,23 +45,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix" />
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
       <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
       <Name>LongoMatch.GUI</Name>
@@ -69,10 +59,6 @@
     <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
       <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
       <Name>LongoMatch.Multimedia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
@@ -101,6 +87,14 @@
     <ProjectReference Include="..\LongoMatch.Plugins.Stats\LongoMatch.Plugins.Stats.csproj">
       <Project>{F03D161E-CC4D-4FE6-968A-04F884AB0939}</Project>
       <Name>LongoMatch.Plugins.Stats</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

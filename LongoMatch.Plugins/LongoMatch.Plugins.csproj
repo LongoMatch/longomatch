@@ -35,8 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <Private>False</Private>
-      <Package>mono-addins</Package>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Posix" />
   </ItemGroup>
@@ -45,9 +44,9 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core</Name>
+      <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

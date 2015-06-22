@@ -8,8 +8,6 @@
     <RootNamespace>LongoMatch.Services</RootNamespace>
     <AssemblyName>LongoMatch.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,24 +27,6 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TemplatesService.cs" />
-    <Compile Include="RenderingJobsManager.cs" />
-    <Compile Include="CoreServices.cs" />
-    <Compile Include="HotKeysManager.cs" />
-    <Compile Include="EventsManager.cs" />
-    <Compile Include="PlaylistManager.cs" />
-    <Compile Include="ProjectsManager.cs" />
-    <Compile Include="DataBaseManager.cs" />
-    <Compile Include="ToolsManager.cs" />
-    <Compile Include="FileDB.cs" />
-    <Compile Include="FileStorage.cs" />
-    <Compile Include="PlayerController.cs" />
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="UpdatesNotifier.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="..\" />
   </ItemGroup>
   <ItemGroup>
@@ -55,17 +35,19 @@
     <Reference Include="System.Core" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core</Name>
+      <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.csproj">
+    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
       <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
-      <Name>LongoMatch.Drawing</Name>
+      <Name>LongoMatch.Drawing.Net45</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

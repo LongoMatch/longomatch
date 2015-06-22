@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{EC75C6BF-0788-41EE-8946-47651FACFB54}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>LongoMatch.Services</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CoreServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlayerController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProjectsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderingJobsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToolsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UpdatesNotifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FileDB.cs" />
+  </ItemGroup>
+</Project>

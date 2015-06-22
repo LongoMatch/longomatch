@@ -76,4 +76,6 @@
     <Compile Include="lgm-device.c" />
     <Compile Include="lgm-utils.m" />
   </ItemGroup>
+  <Target Name="GetCopyToOutputDirectoryItems" Outputs="" />
+  <Target Name="GetTargetPath" />
 </Project>
