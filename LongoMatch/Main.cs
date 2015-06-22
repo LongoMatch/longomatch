@@ -36,7 +36,7 @@ namespace LongoMatch
 {
 	class MainClass
 	{
-		[DllImport("libX11.dll", CallingConvention=CallingConvention.Cdecl)]
+		[DllImport("libX11", CallingConvention=CallingConvention.Cdecl)]
 		private static extern int XInitThreads();
 
 		public static void Main (string[] args)
