@@ -233,7 +233,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			tk.Begin ();
 			if (needle == null) {
 				string path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleUP); 
-				Image img = Image.LoadFromFile (path);
+				Image img = new Image (path);
 				needle = tk.CreateSurface (img.Width, img.Height, img);
 			}
 			

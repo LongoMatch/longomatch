@@ -31,7 +31,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		{
 			if (needle == null) {
 				string path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
-				Image img = Image.LoadFromFile (path);
+				Image img = new Image (path);
 				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 			}
 			Width = needle.Width;

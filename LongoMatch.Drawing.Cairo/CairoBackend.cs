@@ -148,7 +148,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public ISurface CreateSurface (string filename, bool warnOnDispose = true)
 		{
-			Image img = Image.LoadFromFile (filename);
+			Image img = new Image (filename);
 			return CreateSurface (img.Width, img.Height, img, warnOnDispose);
 		}
 

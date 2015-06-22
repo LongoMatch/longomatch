@@ -318,7 +318,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homeF = homeTeam.Formation;
 				if (homeTeam.Shield == null) {
 					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
-					homeButton.BackgroundImage = Image.LoadFromFile (path);
+					homeButton.BackgroundImage = new Image (path);
 				} else {
 					homeButton.BackgroundImage = homeTeam.Shield;
 				}
@@ -333,7 +333,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayF = awayTeam.Formation;
 				if (awayTeam.Shield == null) {
 					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
-					awayButton.BackgroundImage = Image.LoadFromFile (path);
+					awayButton.BackgroundImage = new Image (path);
 				} else {
 					awayButton.BackgroundImage = awayTeam.Shield;
 				}
@@ -460,10 +460,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			subPlayers = new ButtonObject ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.SubsUnlock);
-			subPlayers.BackgroundImageActive = Image.LoadFromFile (path);
+			subPlayers.BackgroundImageActive = new Image (path);
 			subPlayers.BackgroundColorActive = Config.Style.PaletteBackground;
 			path = Path.Combine (Config.IconsDir, StyleConf.SubsLock);
-			subPlayers.BackgroundImage = Image.LoadFromFile (path);
+			subPlayers.BackgroundImage = new Image (path);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();

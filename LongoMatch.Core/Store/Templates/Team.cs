@@ -44,7 +44,7 @@ namespace LongoMatch.Core.Store.Templates
 			List = new List<Player> ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			try {
-				Shield = Image.LoadFromFile (path);
+				Shield = new Image (path);
 			} catch {
 				/* Ignore for unit tests */
 			}

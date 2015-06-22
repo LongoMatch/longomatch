@@ -217,7 +217,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		ISurface LoadBorder (string name)
 		{
-			Image img = Image.LoadFromFile (Path.Combine (Config.IconsDir, name));
+			Image img = new Image (Path.Combine (Config.IconsDir, name));
 			img.Scale (StyleConf.TimelineCategoryHeight, StyleConf.TimelineCategoryHeight);
 			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img);
 		}
