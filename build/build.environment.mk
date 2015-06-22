@@ -110,13 +110,13 @@ REF_DEP_LONGOMATCH_DRAWING_CAIRO = \
                      $(LINK_SYSTEM) \
                      $(LINK_GTK) \
                      $(LINK_ATK) \
-                     $(LINK_GDK) \
                      $(LINK_CAIRO) \
                      $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_MONO_POSIX) \
                      $(LINK_GLIB) \
+                     $(LINK_GTK) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_DRAWING) \
                      $(LINK_JSON)
@@ -144,7 +144,6 @@ REF_DEP_LONGOMATCH_MIGRATION = \
                      $(LINK_GLIB) \
                      $(LINK_GTK) \
                      $(LINK_ATK) \
-                     $(LINK_GDK) \
                      $(LINK_DB40) \
                      $(LINK_JSON)
 
@@ -172,11 +171,15 @@ REF_DEP_LONGOMATCH_PLUGINS_STATS = \
                      $(LINK_LONGOMATCH_ADDINS)
 
 REF_DEP_LONGOMATCH_DB = \
+                     $(LINK_GLIB) \
+                     $(LINK_GTK) \
                      $(LINK_JSON) \
                      $(LINK_COUCHBASE) \
                      $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_TESTS = \
+                     $(LINK_GLIB) \
+                     $(LINK_GTK) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_SERVICES) \
                      $(LINK_LONGOMATCH_DB) \

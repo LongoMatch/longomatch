@@ -22,6 +22,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	Common/Gettext.cs \
 	Common/Hotkeys.cs \
 	Common/Image.cs \
+	Common/ImageBase.cs \
 	Common/Job.cs \
 	Common/Keyboard.cs \
 	Common/Log.cs \
