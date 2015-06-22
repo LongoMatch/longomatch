@@ -22,205 +22,73 @@ namespace LongoMatch.Core.Common
 {
 	using System;
 	using System.IO;
-#if HAVE_GTK
-	using SImage = Gdk.Pixbuf;
-#else
-	using System.Drawing.Imaging;
-	using SImage = System.Drawing.Image;
-#endif
+	using Gdk;
 
 	[Serializable]
-	public class Image: ISerializable, IDisposable
+	public class Image: BaseImage<Pixbuf>
 	{
-		SImage image;
-		
-		public Image (SImage image)
+		public Image (Pixbuf image) : base (image)
 		{
-			this.image = image;
-		}
-		
-		public SImage Value {
-			get {
-				return image;
-			}
-		}
-		
-		public void Dispose() {
-			image.Dispose();
-		}
-		
-		public void ScaleInplace() {
-			ScaleInplace (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
-		}
-		
-		public void ScaleFactor (int destWidth, int destHeight,
-		                         out double scaleX, out double scaleY, out Point offset) {
-			ScaleFactor (Width, Height, destWidth, destHeight, out scaleX, out scaleY, out offset);
-		}
-		
-		public static void ScaleFactor (int imgWidth, int imgHeight, int destWidth, int destHeight,
-		                                out double scaleX, out double scaleY, out Point offset)
-		{
-			int oWidth = 0;
-			int oHeight = 0;
-			
-			ComputeScale (imgWidth, imgHeight, destWidth, destHeight, out oWidth, out oHeight);
-			scaleX = (double) oWidth / imgWidth;
-			scaleY = (double) oHeight / imgHeight;
-			offset = new Point ((destWidth - oWidth) / 2, (destHeight - oHeight) / 2);
-		}
-		
-		public static void ComputeScale (int inWidth, int inHeight, int maxOutWidth, int maxOutHeight,
-		                                 out int outWidth, out int outHeight)
-		{
-			outWidth = maxOutWidth;
-			outHeight = maxOutHeight;
-
-			double par = (double)inWidth /(double)inHeight;
-			double outPar = (double)maxOutWidth /(double)maxOutHeight;
-				
-			if (outPar > par) {
-				outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
-			} else {
-				outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
-			}
-		} 
-		
-		// this constructor is automatically called during deserialization
-		public Image (SerializationInfo info, StreamingContext context) {
-			try {
-				image = Deserialize ((byte[]) info.GetValue ("pngbuf", typeof (byte[]))).Value;
-			} catch {
-				image = null;
-			}
 		}
 
-		// this method is automatically called during serialization
-		public void GetObjectData(SerializationInfo info, StreamingContext context) {
-			try {
-				info.AddValue("pngbuf", Serialize());
-			} catch  {
-				info.AddValue("pngbuf", null);
-			}
-		}
-		
-		
-#if HAVE_GTK
-		
-		public Image (string filename)
+		public Image (string filepath) : base (filepath)
 		{
-			this.image = new SImage (filename);
 		}
-		
-		public virtual byte[] Serialize () {
-			if (image == null)
+
+		protected override Pixbuf LoadFromFile (string filepath)
+		{
+			return new Pixbuf (filepath);
+		}
+
+		public override byte[] Serialize ()
+		{
+			if (Value == null)
 				return null;
-			return image.SaveToBuffer("png");
+			return Value.SaveToBuffer ("png");
 		}
-		
-		public static Image Deserialize (byte[] ser) {
-			return new Image(new SImage(ser));
-		}
-		
-		public Image Scale(int maxWidth, int maxHeight) {
-			return new Image (Scale (image, maxWidth, maxHeight));
-		}
-		
-		public void ScaleInplace(int maxWidth, int maxHeight) {
-			SImage scalled;
-			
-			scalled = Scale (image, maxWidth, maxHeight);
-			image.Dispose();
-			image = scalled;
-		}
-		
-		public void Save (string filename) {
-			image.Save(filename, "png");
-		}
-		
-		public int Width {
-			get {
-				return image.Width;
-			}
-		}
-		
-		public int Height {
-			get {
-				return image.Height;
-			}
-		}
-		
-		public static Image LoadFromResource (string resource)
+
+		public static Image Deserialize (byte[] ser)
 		{
-			return new Image (SImage.LoadFromResource (resource));
+			return new Image (new Pixbuf (ser));
 		}
-		
-		public static Image LoadFromFile (string filename)
+
+		public override Image Scale (int maxWidth, int maxHeight)
 		{
-			return new Image (new SImage (filename));
+			return new Image (Scale (Value, maxWidth, maxHeight));
 		}
-		
-		public static Image LoadFromFile (string filename, int width, int height)
+
+		protected override Pixbuf Scale (Pixbuf pix, int maxWidth, int maxHeight)
 		{
-			return new Image (new SImage (filename, width, height));
-		}
-		
-		public static Image Composite(Image image1, Image image2) {
-			SImage dest = new SImage(image1.Value.Colorspace, true, image1.Value.BitsPerSample,
-			                         image1.Width, image1.Height);
-			image1.Value.Composite(dest, 0, 0, image2.Width, image2.Height, 0, 0, 1, 1,
-			                       Gdk.InterpType.Bilinear, 255);
-			image2.Value.Composite(dest, 0, 0, image2.Width, image2.Height, 0, 0, 1, 1,
-			                       Gdk.InterpType.Bilinear, 255);
-			return new Image(dest);
-		}
-		
-		SImage Scale (SImage pix, int maxWidth, int maxHeight) {
 			int width, height;
 			
-			ComputeScale(pix.Width, pix.Height, maxWidth, maxHeight, out width, out height);
-			return pix.ScaleSimple(width, height, Gdk.InterpType.Bilinear);	
+			ComputeScale (pix.Width, pix.Height, maxWidth, maxHeight, out width, out height);
+			return pix.ScaleSimple (width, height, Gdk.InterpType.Bilinear);	
+		}
+
+		public override void Save (string filename)
+		{
+			Value.Save (filename, "png");
+		}
+
+		protected override int GetWidth ()
+		{
+			return Value.Width;
+		}
+
+		protected override int GetHeight ()
+		{
+			return Value.Height;
+		}
+
+		public override Image Composite (Image image)
+		{
+			Pixbuf dest = new Pixbuf (Value.Colorspace, true, Value.BitsPerSample, Width, Height);
+			Value.Composite (dest, 0, 0, Width, Height, 0, 0, 1, 1,
+				Gdk.InterpType.Bilinear, 255);
+			image.Value.Composite (dest, 0, 0, image.Width, image.Height, 0, 0, 1, 1,
+				Gdk.InterpType.Bilinear, 255);
+			return new Image (dest);
 		}
 		
-#else
-		public byte[] Serialize () {
-			if (image == null)
-				return null;
-			using (MemoryStream stream = new MemoryStream()) {
-				image.Save(stream, ImageFormat.Png);
-				byte[] buf = new byte[stream.Length - 1];
-				stream.Position = 0;
-				stream.Read(buf, 0, buf.Length);
-				return buf;
-			}
-		}
-		
-		public void Scale(int maxWidth, int maxHeight) {
-			SImage scalled;
-			int width, height;
-			
-			ComputeScale(image.Width, image.Height, maxWidth, maxHeight, out width, out height);
-			scalled = image.GetThumbnailImage(width, height, new SImage.GetThumbnailImageAbort(ThumbnailAbort), IntPtr.Zero);
-			image.Dispose();
-			image = scalled;
-		}
-		
-		public static Image Deserialize (byte[] ser) {
-			Image img = null;
-			using (MemoryStream stream = new MemoryStream(ser)) {
-				img = new Image(System.Drawing.Image.FromStream(stream));
-			}
-			return img;
-		}
-		
-		public void Save (string filename) {
-			image.Save(filename, ImageFormat.Png);
-		}
-		
-		bool ThumbnailAbort () {
-			return false;
-		}
-#endif
 	}
 }
-

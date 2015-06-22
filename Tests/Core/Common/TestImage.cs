@@ -87,7 +87,7 @@ namespace Tests.Core.Common
 			string tmpFile = Path.GetTempFileName ();
 			try {
 				img.Save (tmpFile);
-				Image img2 = Image.LoadFromFile (tmpFile);
+				Image img2 = new Image (tmpFile);
 				Assert.AreEqual (img2.Width, 16);
 				Assert.AreEqual (img2.Height, 16);
 			} finally {
@@ -99,7 +99,7 @@ namespace Tests.Core.Common
 		public void TestComposite ()
 		{
 			Image img2 = Utils.LoadImageFromFile (true);
-			Image img3 = Image.Composite (img2, img);
+			Image img3 = img2.Composite (img);
 			Assert.AreEqual (img3.Width, 20);
 			Assert.AreEqual (img3.Height, 20);
 			

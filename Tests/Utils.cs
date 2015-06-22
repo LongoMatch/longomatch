@@ -82,9 +82,10 @@ namespace Tests
 			}
 			try {
 				if (!scaled) {
-					img = Image.LoadFromFile (tmpFile);
+					img = new Image (tmpFile);
 				} else {
-					img = Image.LoadFromFile (tmpFile, 20, 20);
+					img = new Image (tmpFile);
+					img.ScaleInplace (20, 20);
 				}
 			} catch (Exception ex) {
 				Assert.Fail (ex.Message);

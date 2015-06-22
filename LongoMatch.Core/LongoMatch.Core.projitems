@@ -28,7 +28,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Gettext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\Image.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Job.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Keyboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Log.cs" />
