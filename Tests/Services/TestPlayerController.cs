@@ -770,6 +770,7 @@ namespace Tests.Services
 
 			/* Load drawings */
 			PlaylistDrawing dr = new PlaylistDrawing (new FrameDrawing ());
+			dr.Duration = new Time (5000);
 			player.LoadPlaylistEvent (playlist, dr);
 			playerMock.ResetCalls ();
 			Assert.IsTrue (player.Playing);
