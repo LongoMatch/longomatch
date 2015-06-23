@@ -216,6 +216,29 @@ namespace Tests.Services
 			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
 			Assert.AreEqual (2, projectChanged);
 		}
+
+		[Test ()]
+		public void TestOpenBadProject ()
+		{
+			// Test to try opening a project with duration = null
+			Assert.Greater(project.Description.FileSet.Count, 0);
+			foreach (var file in project.Description.FileSet) {
+				file.Duration = null;
+			}
+
+			Config.DatabaseManager.ActiveDB.AddProject (project);
+
+			mtkMock.ResetCalls ();
+
+			Config.EventsBroker.EmitOpenProjectID (project.ID);
+
+			mtkMock.Verify(g => g.DiscoverFile(It.IsAny<string>(), true), Times.Exactly(project.Description.FileSet.Count));
+
+			IAnalysisWindow win = winMock.Object;
+			gtkMock.Verify (g => g.OpenProject (project, It.IsAny<ProjectType> (),
+				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out win), Times.Once ());
+
+		}
 	}
 }
 

@@ -350,10 +350,10 @@ namespace LongoMatch.Services
 				return;
 			}
 			if (project.Description.FileSet.Duration == null) {
-				Log.Error("Project " + projectID + " is empty.");
-				project.Description.FileSet[0] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet[0].FilePath);
-				// TODO: remove the project from the DB ?
-				guiToolkit.ErrorMessage ("This project is empty.");
+				Log.Warning("The selected project is empty. Rediscovering files");
+				for(int i = 0; i < project.Description.FileSet.Count; i++){
+					project.Description.FileSet[i] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet[i].FilePath);
+				}
 			}
 			// FIXME
 			if (project.IsFakeCapture) {
