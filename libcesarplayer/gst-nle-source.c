@@ -253,7 +253,8 @@ gst_nle_source_setup (GstNleSource * nlesrc)
       "auto-resize", TRUE, "wrap-mode", 0, "silent", !nlesrc->overlay_title,
       NULL);
 
-  /* As videorate can duplicate a lot of buffers we want to put it last in this transformation bin */
+  /* As videorate can duplicate a lot of buffers we want to put it last in this
+     transformation bin */
   gst_bin_add_many (GST_BIN (nlesrc), rotate, nlesrc->videocrop,
       videoscale, colorspace, nlesrc->textoverlay, videorate, v_capsfilter,
       vident, NULL);
@@ -582,6 +583,7 @@ gst_nle_source_check_eos (GstNleSource * nlesrc)
   if (nlesrc->video_eos && nlesrc->audio_eos) {
     nlesrc->audio_eos = FALSE;
     nlesrc->video_eos = FALSE;
+    nlesrc->cached_duration = 0;
     GST_DEBUG_OBJECT (nlesrc, "All pads are EOS");
     gst_nle_source_next_threaded (nlesrc);
   }
@@ -797,6 +799,7 @@ gst_nle_source_next (GstNleSource * nlesrc)
   nlesrc->video_linked = FALSE;
   nlesrc->audio_linked = FALSE;
   nlesrc->item_setup = FALSE;
+  nlesrc->cached_duration = 0;
 
   GST_DEBUG_OBJECT (nlesrc, "Start ts:%" GST_TIME_FORMAT,
       GST_TIME_ARGS (nlesrc->start_ts));
@@ -890,7 +893,12 @@ gst_nle_source_query_progress (GstNleSource * nlesrc, gfloat * progress)
 
   if (nlesrc->source) {
     GstFormat format = GST_FORMAT_BYTES;
-    gst_element_query_duration (nlesrc->source, &format, &duration);
+    if (nlesrc->cached_duration > 0)
+      duration = nlesrc->cached_duration;
+    else {
+      gst_element_query_duration (nlesrc->source, &format, &duration);
+      nlesrc->cached_duration = duration;
+    }
     if (duration > 0) {
       gst_element_query_position (nlesrc->source, &format, &position);
       tmp = (gfloat) position / (gfloat) duration;
@@ -899,6 +907,9 @@ gst_nle_source_query_progress (GstNleSource * nlesrc, gfloat * progress)
   }
 
   *progress += tmp;
+
+  GST_LOG ("progress(%d): %" G_GINT64_FORMAT "/%" G_GINT64_FORMAT "(%g%%)",
+      nlesrc->index, position, duration, *progress * 100);
 }
 
 void

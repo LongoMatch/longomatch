@@ -27,11 +27,10 @@
 #include "gst-nle-source.h"
 #include "lgm-utils.h"
 
-
 #define AUDIO_INT_CAPS "audio/x-raw-int, rate=44100, channels=2"
 #define AUDIO_FLOAT "audio/x-raw-float, rate=44100, channels=2"
 
-#define TIMEOUT 50
+#define TIMEOUT 200
 
 /* Signals */
 enum

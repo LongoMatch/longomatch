@@ -89,6 +89,8 @@ struct _GstNleSource
 
   GList *queue;
   gint index;
+
+  gint64 cached_duration;
 };
 
 typedef struct
