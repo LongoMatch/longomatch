@@ -789,8 +789,13 @@ gst_nle_source_next (GstNleSource * nlesrc)
   g_object_set (uridecodebin, "uri", item->file_path, NULL);
 
   nlesrc->seek_done = FALSE;
-  nlesrc->video_seek_done = FALSE;
-  nlesrc->audio_seek_done = FALSE;
+  if (GST_CLOCK_TIME_IS_VALID (item->stop)) {
+    nlesrc->video_seek_done = FALSE;
+    nlesrc->audio_seek_done = FALSE;
+  } else {
+    nlesrc->video_seek_done = TRUE;
+    nlesrc->audio_seek_done = TRUE;
+  }
   nlesrc->audio_eos = TRUE;
   nlesrc->video_eos = TRUE;
   nlesrc->audio_ts = 0;
@@ -817,9 +822,6 @@ gst_nle_source_next (GstNleSource * nlesrc)
     gst_element_seek (nlesrc->decoder, 1, GST_FORMAT_TIME,
         GST_SEEK_FLAG_ACCURATE,
         GST_SEEK_TYPE_SET, item->start, GST_SEEK_TYPE_SET, item->stop);
-  } else {
-    nlesrc->video_seek_done = TRUE;
-    nlesrc->audio_seek_done = TRUE;
   }
 }
 
