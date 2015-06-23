@@ -52,7 +52,6 @@ struct GstVideoEditorPrivate
 {
   gint64 duration;
   gint64 last_pos;
-  gint64 duration_bytes;
 
   /* Properties */
   gboolean audio_enabled;
@@ -207,7 +206,6 @@ gve_set_tick_timeout (GstVideoEditor * gve, guint msecs)
   g_return_if_fail (msecs > 0);
 
   GST_INFO ("adding tick timeout (at %ums)", msecs);
-  gve->priv->duration_bytes = GST_CLOCK_TIME_NONE;
   gve->priv->update_id =
       g_timeout_add (msecs, (GSourceFunc) gve_query_timeout, gve);
 }
@@ -392,7 +390,6 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       gve_error_msg (gve, message);
       if (gve->priv->main_pipeline)
         gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
-      gve->priv->duration_bytes = GST_CLOCK_TIME_NONE;
       break;
     case GST_MESSAGE_WARNING:
       GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
@@ -444,7 +441,6 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 1);
       /* Close file sink properly */
       g_object_set (G_OBJECT (gve->priv->file_sink), "location", "", NULL);
-      gve->priv->duration_bytes = GST_CLOCK_TIME_NONE;
       break;
     default:
       GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
@@ -482,16 +478,8 @@ gve_query_timeout (GstVideoEditor * gve)
   if (gve->priv->duration > 0) {
     progress = (float) gve->priv->last_pos / (float) gve->priv->duration;
   } else {
-    if (!GST_CLOCK_TIME_IS_VALID (gve->priv->duration_bytes)) {
-      gst_nle_source_query_duration_bytes (gve->priv->nle_source,
-            &gve->priv->duration_bytes);
-    }
- 
-    if (GST_CLOCK_TIME_IS_VALID (gve->priv->duration_bytes)) {
-      gint64 position = 0;
-      if (gst_nle_source_query_position_bytes (gve->priv->nle_source, &position))
-        progress = (float) position / (float) gve->priv->duration_bytes;
-    }
+    /* fallback to source progress reporting */
+    gst_nle_source_query_progress (gve->priv->nle_source, &progress);
   }
 
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, progress);
@@ -632,7 +620,6 @@ gst_video_editor_start (GstVideoEditor * gve)
   }
 
   gve->priv->last_pos = 0;
-  gve->priv->duration_bytes = GST_CLOCK_TIME_NONE;
   pad = gst_element_get_static_pad (gve->priv->file_sink, "sink");
   gst_pad_add_buffer_probe (pad, (GCallback) gve_on_buffer_cb, gve);
   gst_object_unref (pad);
@@ -653,7 +640,6 @@ gst_video_editor_cancel (GstVideoEditor * gve)
     gve->priv->update_id = 0;
   }
   gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
-  gve->priv->duration_bytes = GST_CLOCK_TIME_NONE;
 }
 
 void

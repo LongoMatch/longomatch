@@ -60,7 +60,6 @@ static GstStaticPadTemplate audio_src_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
     GST_PAD_SOMETIMES,
     GST_STATIC_CAPS (AUDIO_CAPS_STR));
 
-
 typedef struct
 {
   gchar *file_path;
@@ -880,28 +879,26 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
   return res;
 }
 
-gboolean
-gst_nle_source_query_position_bytes (GstNleSource * nlesrc, gint64 * position)
+void
+gst_nle_source_query_progress (GstNleSource * nlesrc, gfloat * progress)
 {
+  gint64 position = 0, duration = 0;
+  gfloat tmp = 0.0;
+  guint num_items = g_list_length (nlesrc->queue);
+
+  *progress = (gfloat) nlesrc->index / (gfloat) num_items;
+
   if (nlesrc->source) {
     GstFormat format = GST_FORMAT_BYTES;
-    return gst_element_query_position (nlesrc->source, &format, position);
+    gst_element_query_duration (nlesrc->source, &format, &duration);
+    if (duration > 0) {
+      gst_element_query_position (nlesrc->source, &format, &position);
+      tmp = (gfloat) position / (gfloat) duration;
+      tmp *= 1.0 / (gfloat) num_items;
+    }
   }
 
-  *position = 0;
-  return FALSE;
-}
-
-gboolean
-gst_nle_source_query_duration_bytes (GstNleSource * nlesrc, gint64 * duration)
-{
-  if (nlesrc->source) {
-    GstFormat format = GST_FORMAT_BYTES;
-    return gst_element_query_duration (nlesrc->source, &format, duration);
-  }
-
-  *duration = GST_CLOCK_TIME_NONE;
-  return FALSE;
+  *progress += tmp;
 }
 
 void

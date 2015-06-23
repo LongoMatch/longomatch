@@ -43,7 +43,6 @@ G_BEGIN_DECLS
 typedef struct _GstNleSourceClass GstNleSourceClass;
 typedef struct _GstNleSource GstNleSource;
 
-
 struct _GstNleSourceClass
 {
   GstBinClass parent_class;
@@ -121,11 +120,8 @@ EXPORT void gst_nle_source_add_item   (GstNleSource *nlesrc,
                                        GstNleRectangle roi
                                      );
 
-EXPORT gboolean gst_nle_source_query_position_bytes (GstNleSource * nlesrc,
-                                                     gint64 * position);
-
-EXPORT gboolean gst_nle_source_query_duration_bytes (GstNleSource * nlesrc,
-                                                     gint64 * duration);
+EXPORT void gst_nle_source_query_progress (GstNleSource * nlesrc,
+                                                     gfloat * position);
 
 G_END_DECLS
 #endif /* _GST_NLE_SOURCE_H_ */
