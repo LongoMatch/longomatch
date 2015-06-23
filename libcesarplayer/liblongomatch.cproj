@@ -78,4 +78,5 @@
   </ItemGroup>
   <Target Name="GetCopyToOutputDirectoryItems" Outputs="" />
   <Target Name="GetTargetPath" />
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" Outputs="$(TargetPath)"/>
 </Project>
