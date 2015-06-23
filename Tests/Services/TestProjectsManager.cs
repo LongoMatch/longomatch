@@ -43,22 +43,28 @@ namespace Tests.Services
 		Project project;
 		CaptureSettings settings;
 
+		List<Mock> mockList;
+
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
 		{
+			mockList = new List<Mock> ();
 			settings = new CaptureSettings ();
 			settings.EncodingSettings = new EncodingSettings ();
 			settings.EncodingSettings.EncodingProfile = EncodingProfiles.MP4;
 
 			var playerMock = new Mock<IPlayer> ();
 			playerMock.SetupAllProperties ();
+			mockList.Add (playerMock);
 
 			capturerMock = new Mock<ICapturer> ();
 			capturerMock.SetupAllProperties ();
+			mockList.Add (capturerMock);
 
 			winMock = new Mock<IAnalysisWindow> ();
 			winMock.SetupAllProperties ();
 			IAnalysisWindow win = winMock.Object;
+			mockList.Add (winMock);
 
 			mtkMock = new Mock<IMultimediaToolkit> ();
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
@@ -67,6 +73,7 @@ namespace Tests.Services
 			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), It.IsAny<bool> ()))
 				.Returns ((string s, bool b) => new MediaFile { FilePath = s });
 			Config.MultimediaToolkit = mtkMock.Object;
+			mockList.Add (mtkMock);
 
 			gtkMock = new Mock<IGUIToolkit> ();
 			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
@@ -77,11 +84,13 @@ namespace Tests.Services
 				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
 			gtkMock.Setup (g => g.EndCapture (true)).Returns (EndCaptureResponse.Save);
 			Config.GUIToolkit = gtkMock.Object;
+			mockList.Add (gtkMock);
 
 			capturerBinMock = new Mock<ICapturerBin> ();
 			capturerBinMock.Setup (w => w.Capturer).Returns (capturerMock.Object);
 			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
 			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
+			mockList.Add (capturerBinMock);
 			player = new PlayerController (); 
 			winMock.Setup (w => w.Capturer).Returns (capturerBinMock.Object);
 			winMock.Setup (w => w.Player).Returns (player);
@@ -106,6 +115,9 @@ namespace Tests.Services
 			try {
 				File.Delete (settings.EncodingSettings.OutputFile);
 			} catch {
+			}
+			foreach (Mock mock in mockList) {
+				mock.ResetCalls ();
 			}
 		}
 
@@ -227,8 +239,6 @@ namespace Tests.Services
 			}
 
 			Config.DatabaseManager.ActiveDB.AddProject (project);
-
-			mtkMock.ResetCalls ();
 
 			Config.EventsBroker.EmitOpenProjectID (project.ID);
 
