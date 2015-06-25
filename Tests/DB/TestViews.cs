@@ -24,9 +24,38 @@ using LongoMatch.DB;
 using NUnit.Framework;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.DB.Views;
+using LongoMatch.Core.Serialization;
 
 namespace Tests.DB
 {
+	public class PropertiesTest: StorableBase {
+	
+		[LongoMatchPropertyIndex (1)]
+		[LongoMatchPropertyPreload]
+		public string Key1 { get; set; }
+
+		[LongoMatchPropertyIndex (0)]
+		public string Key2 { get; set; }
+
+		[LongoMatchPropertyPreload]
+		public string Key3 { get; set; }
+
+		protected override void CheckIsLoaded () {
+		}
+	}
+
+	public class TestView: GenericView<PropertiesTest> {
+
+		public TestView (CouchbaseStorage storage) : base (storage) { }
+
+		protected override string ViewVersion { get { return "1"; } }
+
+		public List<string> PreloadProperties {get { return PreviewProperties; }}
+		public List<string> IndexedProperties {get { return FilterProperties; }}
+	}
+
+
 	[TestFixture ()]
 	public class TestViews
 	{
@@ -63,6 +92,42 @@ namespace Tests.DB
 				}
 				return true;
 			});
+		}
+
+		[Test ()]
+		public void TestIndexing () {
+			TestView view = new TestView (storage);
+
+			Assert.AreEqual (new List<string> {"Key2", "Key1"}, view.IndexedProperties);
+			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			storage.Store (test);
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Key3", "key3");
+			Assert.Throws<InvalidQueryException> (
+				delegate {
+					view.Query (filter);
+				});
+			filter.Add ("Key2", "key2");
+			Assert.AreEqual (1, view.Query (filter).Count);
+		}
+
+		[Test ()]
+		public void TestPreload () {
+			TestView view = new TestView (storage);
+
+			Assert.AreEqual (new List<string> {"Key1", "Key3"}, view.PreloadProperties);
+
+			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			storage.Store (test);
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Key2", "key2");
+			var test1 = view.Query (filter)[0];
+			Assert.IsFalse (test1.IsLoaded);
+			Assert.AreEqual (test.Key1, test1.Key1);
+			Assert.AreEqual (test.Key3, test1.Key3);
+			Assert.IsNull (test1.Key2);
 		}
 
 		[Test ()]

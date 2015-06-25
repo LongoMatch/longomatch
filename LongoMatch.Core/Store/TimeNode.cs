@@ -19,9 +19,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -49,6 +49,8 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A short description of the time node
 		/// </summary>
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex(0)]
 		public virtual string Name {
 			get;
 			set;

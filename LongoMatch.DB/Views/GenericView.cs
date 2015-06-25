@@ -24,6 +24,7 @@ using LongoMatch.Core.Store.Templates;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.DB.Views
 {
@@ -35,14 +36,25 @@ namespace LongoMatch.DB.Views
 		{
 			this.db = db;
 			GetView ();
+			PreviewProperties = typeof(T).GetProperties().
+				Where(prop => Attribute.IsDefined(prop, typeof(LongoMatchPropertyPreload))).
+				Select (p => p.Name).ToList ();
+
+			FilterProperties = typeof(T).GetProperties().
+				Select (p => new { P = p, A = p.GetCustomAttributes(typeof(LongoMatchPropertyIndex), true)}).
+				Where (x => x.A.Length == 1).
+				OrderBy (x => (x.A[0] as LongoMatchPropertyIndex).Index).
+				Select (x => x.P.Name).ToList();
 		}
 
-		abstract protected List<string> FilterProperties {
+		protected virtual List<string> FilterProperties {
 			get;
+			private set;
 		}
 
-		abstract protected List<string> PreviewProperties {
+		protected virtual List<string> PreviewProperties {
 			get;
+			private set;
 		}
 
 		abstract protected string ViewVersion {

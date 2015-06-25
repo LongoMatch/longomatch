@@ -20,10 +20,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
@@ -84,6 +85,8 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// The <see cref="EventType"/> in wich this event is tagged
 		/// </summary>
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex (1)]
 		public EventType EventType {
 			get;
 			set;

@@ -43,12 +43,6 @@ namespace LongoMatch.DB.Views
 			}
 		}
 
-		protected override List<string> PreviewProperties {
-			get {
-				return new List<string> { "Description" };
-			}
-		}
-
 		protected override object GenKeys (IDictionary<string, object> document)
 		{
 			List<object> keys = new List<object> ();

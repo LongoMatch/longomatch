@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
@@ -47,13 +48,7 @@ namespace LongoMatch.DB.Views
 
 		protected override List<string> FilterProperties {
 			get {
-				return new List<string> { "Name", "EventType", "Team", "Player", "ProjectID" };
-			}
-		}
-
-		protected override List<string> PreviewProperties {
-			get {
-				return new List<string> { "Name", "EventType" };
+				return base.FilterProperties.Concat ( new List<string> {"Player"}).ToList();
 			}
 		}
 

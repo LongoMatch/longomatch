@@ -16,23 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using Couchbase.Lite;
-using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Core.Serialization
 {
-	public class DashboardsView: GenericView <Dashboard>
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)]
+	public class LongoMatchPropertyPreload: Attribute
 	{
-		public DashboardsView (Database db) : base (db)
-		{
-		}
-
-		protected override string ViewVersion {
-			get {
-				return "1";
-			}
-		}
 	}
 }
 

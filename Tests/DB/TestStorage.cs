@@ -26,6 +26,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Newtonsoft.Json;
 
 namespace Tests.DB
 {
@@ -38,6 +39,7 @@ namespace Tests.DB
 
 		public StorableImageTest Image { get; set; }
 
+		[JsonIgnore]
 		public override List<IStorable> Children {
 			get {
 				return new List<IStorable> {Image};
@@ -54,6 +56,7 @@ namespace Tests.DB
 
 		public List<StorableImageTest> Images { get; set; }
 
+		[JsonIgnore]
 		public override List<IStorable> Children {
 			get {
 				return new List<IStorable> (Images);

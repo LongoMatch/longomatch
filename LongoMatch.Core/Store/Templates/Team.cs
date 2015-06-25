@@ -18,14 +18,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-
-using Newtonsoft.Json;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using System.IO;
+using LongoMatch.Core.Serialization;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Templates
 {
@@ -53,6 +52,7 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [1] = Color.Red1;
 		}
 
+		[JsonIgnore]
 		public override List<IStorable> Children {
 			get {
 				return new List<IStorable> (List);
@@ -70,16 +70,21 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
+		[LongoMatchPropertyIndex (0)]
+		[LongoMatchPropertyPreload]
 		public String Name {
 			get;
 			set;
 		}
 
+		[LongoMatchPropertyIndex (1)]
+		[LongoMatchPropertyPreload]
 		public String TeamName {
 			get;
 			set;
 		}
 
+		[LongoMatchPropertyPreload]
 		public Image Shield {
 			get;
 			set;

@@ -23,8 +23,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-
 using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Core.Store.Templates
@@ -78,6 +78,7 @@ namespace LongoMatch.Core.Store.Templates
 			InitializeLists ();
 		}
 
+		[JsonIgnore]
 		public override List<IStorable> Children {
 			get {
 				return List.OfType<EventButton> ().Select (b => (b.EventType as IStorable)).ToList();
@@ -105,6 +106,8 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// The name of the dashboard
 		/// </summary>
+		[LongoMatchPropertyIndex (0)]
+		[LongoMatchPropertyPreload]
 		public string Name {
 			get;
 			set;

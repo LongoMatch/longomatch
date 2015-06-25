@@ -22,13 +22,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -69,6 +69,7 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
+		[JsonIgnore]
 		public override List<IStorable> Children {
 			get {
 				List<IStorable> storables = 
@@ -86,6 +87,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[LongoMatchPropertyPreload]
 		public ProjectDescription Description {
 			get {
 				return description;

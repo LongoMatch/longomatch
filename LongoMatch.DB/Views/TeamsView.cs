@@ -28,18 +28,6 @@ namespace LongoMatch.DB.Views
 		{
 		}
 
-		protected override List<string> FilterProperties {
-			get {
-				return new List<string> { "Name" };
-			}
-		}
-
-		protected override List<string> PreviewProperties {
-			get {
-				return new List<string> { "Name", "Shield" };
-			}
-		}
-
 		protected override string ViewVersion {
 			get {
 				return "1";
