@@ -1,4 +1,5 @@
 .nuget/NuGet.exe
+obj
 ChangeLog
 LongoMatch/bin
 LongoMatch.userprefs
