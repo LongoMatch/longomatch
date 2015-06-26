@@ -35,6 +35,15 @@ namespace LongoMatch.Core.Common
 		{
 		}
 
+		// this constructor is automatically called during deserialization
+		public Image (SerializationInfo info, StreamingContext context) {
+			try {
+				Value = Deserialize ((byte[]) info.GetValue (BUF_PROPERTY, typeof (byte[]))).Value;
+			} catch {
+				Value = null;
+			}
+		}
+
 		protected override Pixbuf LoadFromFile (string filepath)
 		{
 			return new Pixbuf (filepath);

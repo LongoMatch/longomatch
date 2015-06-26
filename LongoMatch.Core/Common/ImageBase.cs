@@ -21,8 +21,14 @@ using System.Runtime.Serialization;
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
-	public abstract class BaseImage<T>: IDisposable where T: IDisposable
+	public abstract class BaseImage<T>: ISerializable, IDisposable where T: IDisposable
 	{
+
+		protected const string BUF_PROPERTY = "pngbuf";
+
+		public BaseImage ()
+		{
+		}
 
 		public BaseImage (T image)
 		{
@@ -102,6 +108,16 @@ namespace LongoMatch.Core.Common
 			scalled = Scale (Value, maxWidth, maxHeight);
 			Value.Dispose ();
 			Value = scalled;
+		}
+
+		// this method is automatically called during serialization
+		public void GetObjectData (SerializationInfo info, StreamingContext context)
+		{
+			try {
+				info.AddValue (BUF_PROPERTY, Serialize ());
+			} catch {
+				info.AddValue (BUF_PROPERTY, null);
+			}
 		}
 
 		public abstract Image Scale (int maxWidth, int maxHeight);
