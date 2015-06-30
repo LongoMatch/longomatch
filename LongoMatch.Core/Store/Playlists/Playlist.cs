@@ -19,8 +19,9 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.Core.Store.Playlists
 {
@@ -41,6 +42,8 @@ namespace LongoMatch.Core.Store.Playlists
 
 		#region Properties
 
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex (0)]
 		public string Name {
 			get;
 			set;

@@ -109,6 +109,8 @@
     <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestDataBaseFileDB.cs" />
     <Compile Include="DB\TestViews.cs" />
+    <Compile Include="Core\Store\TestStorables.cs" />
+    <Compile Include="MemoryStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

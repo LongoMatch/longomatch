@@ -23,6 +23,10 @@ namespace LongoMatch.Core.Interfaces
 	public interface IStorable : IIDObject
 	{
 		List<IStorable> Children { get; }
+
+		IStorage Storage {get; set;}
+
+		bool IsLoaded {get; set;}
 	}
 }
 

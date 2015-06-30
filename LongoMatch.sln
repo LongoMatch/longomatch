@@ -45,6 +45,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.DB", "LongoMatch
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Drawing", "LongoMatch.Drawing\LongoMatch.Drawing.shproj", "{71D588BD-1B61-459D-9B5F-9CAA7C59C2F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "Weavers\Weavers.csproj", "{A7BA3B58-76E6-461C-B842-3D4DC4995B42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7BA3B58-76E6-461C-B842-3D4DC4995B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7BA3B58-76E6-461C-B842-3D4DC4995B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7BA3B58-76E6-461C-B842-3D4DC4995B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7BA3B58-76E6-461C-B842-3D4DC4995B42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}.Release|Any CPU.ActiveCfg = Release|Any CPU

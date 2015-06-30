@@ -26,8 +26,10 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class StorableBase: IStorable
 	{
+
 		public StorableBase ()
 		{
+			IsLoaded = true;
 		}
 
 		#region IStorable implementation
@@ -36,6 +38,36 @@ namespace LongoMatch.Core.Store
 		public virtual List<IStorable> Children {
 			get {
 				return null;
+			}
+		}
+
+		[JsonIgnore]
+		public bool IsLoaded {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public IStorage Storage {
+			get;
+			set;
+		}
+
+		bool IsLoading {
+			get;
+			set;
+		}
+
+		protected virtual void CheckIsLoaded ()
+		{
+			if (!IsLoaded && !IsLoading) {
+				IsLoading = true;
+				if (Storage == null) {
+					throw new StorageException ("Storage not set in preloaded object");
+				}
+				Storage.Fill (this);
+				IsLoaded = true;
+				IsLoading = false;
 			}
 		}
 

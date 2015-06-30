@@ -31,10 +31,12 @@ namespace LongoMatch.DB.Views
 	public abstract class GenericView<T>: IQueryView <T> where T : IStorable, new()
 	{
 		Database db;
+		CouchbaseStorage storage;
 
-		public GenericView (Database db)
+		public GenericView (CouchbaseStorage storage)
 		{
-			this.db = db;
+			this.storage = storage;
+			db = storage.Database;
 			GetView ();
 			PreviewProperties = typeof(T).GetProperties().
 				Where(prop => Attribute.IsDefined(prop, typeof(LongoMatchPropertyPreload))).
@@ -169,6 +171,8 @@ namespace LongoMatch.DB.Views
 				d = DocumentsSerializer.DeserializeFromJson<T> (
 					row.Value as string, db, rev);
 				d.ID = Guid.Parse (row.DocumentId);
+				d.IsLoaded = false;
+				d.Storage = storage;
 				elements.Add (d);
 			}
 			return elements;

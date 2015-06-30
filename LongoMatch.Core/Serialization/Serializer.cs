@@ -16,20 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using LongoMatch.Core.Interfaces;
-using System.Reflection;
-using LongoMatch.Core.Store.Templates;
-using Newtonsoft.Json.Converters;
-using LongoMatch.Core.Store;
 using System.Globalization;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml.Serialization;
+using LongoMatch.Core.Store;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace LongoMatch.Core.Common
 {
@@ -122,6 +116,7 @@ namespace LongoMatch.Core.Common
 				settings.Formatting = Formatting.Indented;
 				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 				settings.TypeNameHandling = TypeNameHandling.Objects;
+				settings.ObjectCreationHandling = ObjectCreationHandling.Replace;
 				settings.Converters.Add (new VersionConverter ());
 				settings.Converters.Add (new LongoMatchConverter (true));
 				//settings.ReferenceResolver = new IdReferenceResolver ();

@@ -50,10 +50,10 @@ namespace LongoMatch.DB
 		{
 			View view;
 			views = new Dictionary <Type, object> ();
-			views.Add (typeof(Dashboard), new DashboardsView (db));
-			views.Add (typeof(Team), new TeamsView (db));
-			views.Add (typeof(Project), new ProjectsView (db));
-			views.Add (typeof(Player), new PlayersView (db));
+			views.Add (typeof(Dashboard), new DashboardsView (this));
+			views.Add (typeof(Team), new TeamsView (this));
+			views.Add (typeof(Project), new ProjectsView (this));
+			views.Add (typeof(Player), new PlayersView (this));
 		}
 
 		public object Retrieve (Type type, Guid id)
@@ -62,6 +62,10 @@ namespace LongoMatch.DB
 		}
 
 		#region IStorage implementation
+
+		public void Fill (IStorable storable) {
+			DocumentsSerializer.FillObject (storable, db);
+		}
 
 		public List<T> RetrieveAll<T> () where T : IStorable
 		{

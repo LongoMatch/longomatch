@@ -37,6 +37,12 @@ namespace LongoMatch.Core.Interfaces
 		T Retrieve<T> (Guid id) where T : IStorable;
 
 		/// <summary>
+		/// Fills a partial storable object returned from a query.
+		/// </summary>
+		/// <param name="storable">the object to fill.</param>
+		void Fill (IStorable storable);
+
+		/// <summary>
 		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>

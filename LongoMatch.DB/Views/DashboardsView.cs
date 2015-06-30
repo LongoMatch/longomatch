@@ -24,7 +24,7 @@ namespace LongoMatch.DB.Views
 {
 	public class DashboardsView: GenericView <Dashboard>
 	{
-		public DashboardsView (Database db) : base (db)
+		public DashboardsView (CouchbaseStorage storage) : base (storage)
 		{
 		}
 

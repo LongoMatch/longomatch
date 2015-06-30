@@ -24,6 +24,7 @@ using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -67,6 +68,17 @@ namespace LongoMatch.DB
 			return DeserializeObject (doc, realType, context);
 		}
 
+		public static object FillObject (IStorable storable, Database db)
+		{
+			Log.Debug ("Filling object " + storable);
+			SerializationContext context = new SerializationContext (db, storable.GetType ());
+			Document doc = db.GetExistingDocument (storable.ID.ToString ());
+			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
+			serializer.ContractResolver = new DocumentsContractResolver (storable);
+			return DeserializeObject (doc, storable.GetType (), context, serializer);
+		}
+
+
 		public static T DeserializeFromJson<T> (string json, Database db, Revision rev)
 		{
 			JsonSerializerSettings settings = GetSerializerSettings (typeof(T),
@@ -97,10 +109,14 @@ namespace LongoMatch.DB
 		/// <param name="doc">The document to deserialize.</param>
 		/// <param name = "objType"><see cref="Type"/> of the object to deserialize</param>
 		/// <param name="context">The serialization context"/>
-		internal static object DeserializeObject (Document doc, Type objType, SerializationContext context)
+		internal static object DeserializeObject (Document doc, Type objType,
+			SerializationContext context, JsonSerializer serializer = null)
 		{
+			if (serializer == null) {
+				serializer = GetSerializer (objType, context, doc.CurrentRevision); 
+			}
 			JObject jo = JObject.FromObject (doc.Properties);
-			return jo.ToObject (objType, GetSerializer (objType, context, doc.CurrentRevision));
+			return jo.ToObject (objType, serializer);
 		}
 
 		internal static JsonSerializerSettings GetSerializerSettings (Type objType,
@@ -110,6 +126,7 @@ namespace LongoMatch.DB
 			settings.Formatting = Formatting.Indented;
 			settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 			settings.TypeNameHandling = TypeNameHandling.Objects;
+			settings.ObjectCreationHandling = ObjectCreationHandling.Replace;
 			settings.Converters.Add (new ImageConverter (rev));
 			settings.Converters.Add (new VersionConverter ());
 			settings.Converters.Add (new LongoMatchConverter (false));
@@ -247,6 +264,27 @@ namespace LongoMatch.DB
 					return false;
 			}
 			return false;
+		}
+	}
+
+	public class DocumentsContractResolver : DefaultContractResolver
+	{
+		IStorable storable;
+
+		public DocumentsContractResolver (IStorable storable) {
+			this.storable = storable;
+		}
+
+		protected override JsonContract CreateContract (Type type)
+		{
+			JsonContract contract = base.CreateContract(type);
+			if (type == storable.GetType ()) {
+				contract.DefaultCreator = delegate
+				{
+					return storable;
+				};
+			}
+			return contract;
 		}
 	}
 }

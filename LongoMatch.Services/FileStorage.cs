@@ -125,6 +125,9 @@ namespace LongoMatch.Services.Services
 
 		#region IStorage implementation
 
+		public void Fill (IStorable storable) {
+		}
+
 		public T Retrieve<T> (Guid id) where T : IStorable
 		{
 			string typePath = ResolvePath<T> ();

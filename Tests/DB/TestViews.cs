@@ -42,6 +42,7 @@ namespace Tests.DB
 		public string Key3 { get; set; }
 
 		protected override void CheckIsLoaded () {
+			IsLoaded = true;
 		}
 	}
 
@@ -173,6 +174,20 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestLoadDashboards ()
+		{
+			Dashboard d = Dashboard.DefaultTemplate (5);
+			d.Name = "Dashboard1";
+			storage.Store (d);
+			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()) [0];
+			d1.IsLoaded = true;
+			Utils.AreEquals (d, d1, false);
+			d1.IsLoaded = false;
+			Utils.AreEquals (d, d1);
+		}
+
+
+		[Test ()]
 		public void TestListTeams ()
 		{
 			Team t = Team.DefaultTemplate (5);
@@ -217,6 +232,20 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestLoadTeam ()
+		{
+			Team t = Team.DefaultTemplate (5);
+			t.Name = "Team1";
+			t.Shield = Utils.LoadImageFromFile ();
+			storage.Store (t);
+			Team t1 = storage.Retrieve<Team> (new QueryFilter ()) [0];
+			t1.IsLoaded = true;
+			Utils.AreEquals (t, t1, false);
+			t1.IsLoaded = false;
+			Utils.AreEquals (t, t1);
+		}
+
+		[Test ()]
 		public void TestListProjects ()
 		{
 			Project p = Utils.CreateProject ();
@@ -227,7 +256,7 @@ namespace Tests.DB
 
 				List<Project> projects = storage.RetrieveAll<Project> ();
 				Assert.AreEqual (1, projects.Count);
-				Assert.AreNotEqual (p.Timeline.Count, projects [0].Timeline.Count);
+				Assert.AreEqual (p.Timeline.Count, projects [0].Timeline.Count);
 				Assert.AreEqual ("GRP", p.Description.Group);
 				Assert.AreEqual ("COMP", p.Description.Competition);
 

@@ -16,22 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using Couchbase.Lite;
-using LongoMatch.Core.Store.Templates;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Weaver
 {
-	public class TeamsView: GenericView <Team>
+	public class AssemblyInfo
 	{
-		public TeamsView (CouchbaseStorage storage) : base (storage)
+		public AssemblyInfo ()
 		{
-		}
-
-		protected override string ViewVersion {
-			get {
-				return "1";
-			}
 		}
 	}
 }

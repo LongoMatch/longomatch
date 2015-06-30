@@ -27,7 +27,7 @@ namespace LongoMatch.DB.Views
 	{
 		const string VERSION = "1";
 
-		public ProjectsView (Database db) : base (db)
+		public ProjectsView (CouchbaseStorage storage) : base (storage)
 		{
 		}
 

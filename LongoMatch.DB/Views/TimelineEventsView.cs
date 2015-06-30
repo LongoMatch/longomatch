@@ -25,7 +25,7 @@ namespace LongoMatch.DB.Views
 {
 	public class TimelineEventsView: GenericView <TimelineEvent>
 	{
-		public TimelineEventsView (Database db) : base (db)
+		public TimelineEventsView (CouchbaseStorage storage) : base (storage)
 		{
 		}
 

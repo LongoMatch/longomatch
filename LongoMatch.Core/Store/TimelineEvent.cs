@@ -36,10 +36,12 @@ namespace LongoMatch.Core.Store
 	public class  TimelineEvent : PixbufTimeNode, IStorable
 	{
 
+		bool filling;
 		#region Constructors
 
 		public TimelineEvent ()
 		{
+			IsLoaded = true;
 			Drawings = new List<FrameDrawing> ();
 			Players = new List<Player> ();
 			Tags = new List<Tag> ();
@@ -71,10 +73,28 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
+		[JsonIgnore]
 		public List<IStorable> Children {
 			get {
 				return new List<IStorable> ();
 			}
+		}
+
+		[JsonIgnore]
+		public bool IsLoaded {
+			get;
+			set;
+		}
+
+		bool IsLoading {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public IStorage Storage {
+			get;
+			set;
 		}
 
 		public Guid ID {
@@ -214,6 +234,18 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Public methods
+
+		protected void CheckIsLoaded () {
+			if (!IsLoaded && !IsLoading) {
+				IsLoading = true;
+				if (Storage == null) {
+					throw new StorageException ("Storage not set in preloaded object");
+				}
+				Storage.Fill (this);
+				IsLoaded = true;
+				IsLoading = false;
+			}
+		}
 
 		public string TagsDescription ()
 		{

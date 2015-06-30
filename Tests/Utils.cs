@@ -26,15 +26,11 @@ using LongoMatch.Core.Interfaces;
 
 namespace Tests
 {
-	public class Utils
+	public static class Utils
 	{
 		static bool debugLine = false;
 
 		static ISerializer serializer = new Serializer ();
-
-		public Utils ()
-		{
-		}
 
 		public static T SerializeDeserialize<T> (T obj)
 		{
@@ -139,7 +135,25 @@ namespace Tests
 		public static void DeleteProject (Project p)
 		{
 			foreach (MediaFile mf in p.Description.FileSet) {
-				File.Delete (mf.FilePath);
+				if (File.Exists (mf.FilePath)) {
+					File.Delete (mf.FilePath);
+				}
+			}
+		}
+
+		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals=true) {
+			var stream = new MemoryStream ();
+			Serializer.Save (obj1, stream, SerializationType.Json);
+			stream.Seek (0, SeekOrigin.Begin);
+			var obj1Str = new StreamReader (stream).ReadToEnd ();
+			stream = new MemoryStream ();
+			Serializer.Save (obj2, stream, SerializationType.Json);
+			stream.Seek (0, SeekOrigin.Begin);
+			var obj2Str = new StreamReader (stream).ReadToEnd ();
+			if (areEquals) {
+				Assert.AreEqual (obj1Str, obj2Str);
+			} else {
+				Assert.AreNotEqual (obj1Str, obj2Str);
 			}
 		}
 	}

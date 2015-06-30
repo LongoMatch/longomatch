@@ -24,7 +24,7 @@ namespace LongoMatch.DB.Views
 {
 	public class PlayersView: GenericView <Player>
 	{
-		public PlayersView (Database db) : base (db)
+		public PlayersView (CouchbaseStorage storage) : base (storage)
 		{
 		}
 
