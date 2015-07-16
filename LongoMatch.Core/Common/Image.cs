@@ -27,6 +27,12 @@ namespace LongoMatch.Core.Common
 	[Serializable]
 	public class Image: BaseImage<Pixbuf>
 	{
+
+		public Image (int width, int height)
+		{
+			Value = new Pixbuf (Colorspace.Rgb, true, 32, width, height);
+		}
+
 		public Image (Pixbuf image) : base (image)
 		{
 		}
