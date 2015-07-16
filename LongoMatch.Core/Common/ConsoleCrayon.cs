@@ -64,7 +64,9 @@ namespace LongoMatch.Core.Common
 			if (XtermColors) {
 				Console.Write (GetAnsiResetControlCode ());
 			} else if (Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
+				#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				Console.ResetColor ();
+				#endif
 			}
 		}
 
@@ -77,11 +79,13 @@ namespace LongoMatch.Core.Common
 			if (XtermColors) {
 				Console.Write (GetAnsiColorControlCode (color, isForeground));
 			} else if (Environment.OSVersion.Platform != PlatformID.Unix && !RuntimeIsMono) {
+				#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				if (isForeground) {
 					Console.ForegroundColor = color;
 				} else {
 					Console.BackgroundColor = color;
 				}
+				#endif
 			}
 		}
 
@@ -267,6 +271,7 @@ namespace LongoMatch.Core.Common
 		{
 			Console.WriteLine ("==RUNTIME TEST==");
 			foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
+				#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				Console.ForegroundColor = color;
 				Console.Write (color);
 				Console.ResetColor ();
@@ -275,6 +280,7 @@ namespace LongoMatch.Core.Common
 				Console.Write (color);
 				Console.ResetColor ();
 				Console.WriteLine ();
+				#endif
 			}
 		}
 

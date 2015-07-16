@@ -24,14 +24,23 @@ namespace LongoMatch.Core.Common
 	{
 		public static uint KeyvalFromName (string name)
 		{
+			#if ! OSTYPE_ANDROID && ! OSTYPE_IOS
 			return Gdk.Keyval.FromName (name);
+			#else
+			return 0;
+			#endif
 		}
 
 		public static string NameFromKeyval (uint keyval)
 		{
+			#if !OSTYPE_ANDROID && !OSTYPE_IOS
 			return Gdk.Keyval.Name (keyval);
+			#else
+			return "";
+			#endif
 		}
 
+		#if !OSTYPE_ANDROID && !OSTYPE_IOS
 		public static HotKey ParseEvent (Gdk.EventKey evt)
 		{
 			int modifier = 0;
@@ -43,9 +52,11 @@ namespace LongoMatch.Core.Common
 			} else if (evt.State == Gdk.ModifierType.ControlMask) {
 				modifier = (int)KeyvalFromName ("Control_L");
 			}
-			return new HotKey { Key = (int) Gdk.Keyval.ToLower (evt.KeyValue),
-				Modifier = modifier };
+			return new HotKey { Key = (int)Gdk.Keyval.ToLower (evt.KeyValue),
+				Modifier = modifier
+			};
 		}
+		#endif
 
 		public static HotKey ParseName (string name)
 		{
