@@ -135,5 +135,9 @@ namespace LongoMatch.Core.Common
 		protected abstract int GetWidth ();
 
 		protected abstract int GetHeight ();
+
+		public abstract IntPtr LockPixels ();
+
+		public abstract void UnlockPixels (IntPtr pixels);
 	}
 }

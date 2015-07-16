@@ -66,6 +66,15 @@ namespace LongoMatch.Core.Common
 			return new Image (Scale (Value, maxWidth, maxHeight));
 		}
 
+		public override IntPtr LockPixels ()
+		{
+			return Value.Pixels;
+		}
+
+		public override void UnlockPixels (IntPtr pixels)
+		{
+		}
+
 		protected override Pixbuf Scale (Pixbuf pix, int maxWidth, int maxHeight)
 		{
 			int width, height;
