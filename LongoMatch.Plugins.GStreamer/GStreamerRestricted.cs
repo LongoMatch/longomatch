@@ -20,7 +20,7 @@ using LongoMatch.Addins.ExtensionPoints;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 
 namespace LongoMatch.Plugins.GStreamer

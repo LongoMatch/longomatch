@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-using Mono.Unix;
 using Newtonsoft.Json;
 
 using LongoMatch.Core.Common;

@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using Mono.Unix;
 
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;

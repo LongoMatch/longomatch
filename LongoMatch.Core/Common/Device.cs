@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using Mono.Unix;
 
 
 namespace LongoMatch.Core.Common

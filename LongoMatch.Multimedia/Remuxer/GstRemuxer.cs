@@ -19,7 +19,7 @@ namespace LongoMatch.Video.Remuxer
 {
 	using System;
 	using System.Runtime.InteropServices;
-	using Mono.Unix;
+	using LongoMatch.Core;
 	using LongoMatch.Core.Common;
 	using LongoMatch.Video.Common;
 	using LongoMatch.Core.Interfaces.Multimedia;

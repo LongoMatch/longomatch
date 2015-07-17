@@ -21,7 +21,7 @@ using System.Collections;
 using System.IO;
 using Gtk;
 using Gdk;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LColor = LongoMatch.Core.Common.Color;
 using Color = Gdk.Color;

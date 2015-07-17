@@ -20,7 +20,6 @@ using System.Linq;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using Mono.Unix;
 
 namespace LongoMatch.Core.Stats
 {

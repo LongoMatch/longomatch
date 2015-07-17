@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Mono.Unix;
+using LongoMatch.Core;
 using GLib;
 
 using LongoMatch.Core.Common;

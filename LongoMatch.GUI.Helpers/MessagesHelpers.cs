@@ -20,7 +20,7 @@
 using System;
 using Gtk;
 using Dialog = Gtk.Dialog;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Helpers

@@ -24,9 +24,9 @@ using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
 
+using LongoMatch.Core;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Common;
-using Mono.Unix;
 using Gtk;
 
 namespace LongoMatch.Plugins.Stats

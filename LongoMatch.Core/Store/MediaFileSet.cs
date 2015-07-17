@@ -19,7 +19,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using Mono.Unix;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store

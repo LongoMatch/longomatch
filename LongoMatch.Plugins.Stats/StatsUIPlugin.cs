@@ -17,8 +17,8 @@
 //
 using Mono.Addins;
 using LongoMatch.Addins.ExtensionPoints;
+using LongoMatch.Core;
 using LongoMatch.Core.Store;
-using Mono.Unix;
 
 [assembly:Addin]
 [assembly:AddinAuthor ("LongoMatch Project")]
