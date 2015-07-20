@@ -4,6 +4,7 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_CORE)
 
 SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
+	Catalog.cs \
 	Common/Area.cs \
 	Common/CaptureSettings.cs \
 	Common/Cloner.cs \
