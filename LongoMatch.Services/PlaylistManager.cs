@@ -183,11 +183,24 @@ namespace LongoMatch.Services
 
 		Playlist HandleNewPlaylist (Project project)
 		{
-			string name;
+			string name = Catalog.GetString ("New playlist");
 			Playlist playlist = null;
-			
-			name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null,
-				Catalog.GetString ("New playlist"));
+			bool done = false;
+
+			while (name != null && !done) {
+				name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name);
+				if (name != null) {
+					done = true;
+					foreach (Playlist p in project.Playlists) {
+						if (p.Name == name) {
+							string msg = Catalog.GetString ("A playlist already exists with the same name");
+							Config.GUIToolkit.ErrorMessage (msg);
+							done = false;
+							break;
+						}
+					}
+				}
+			}
 			if (name != null) {
 				playlist = new Playlist { Name = name };
 				project.Playlists.Add (playlist);
