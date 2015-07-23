@@ -25,7 +25,7 @@ namespace LongoMatch.Core.Interfaces
 		void RegisterImporter (Func<string, Project> ImportFunction,
 		                       string description, string filterName,
 		                       string[] extensions, bool needsEdition,
-		                       bool canOverwrite);
+			bool canOverwrite, bool test);
 	}
 }
 

@@ -45,7 +45,7 @@ namespace LongoMatch.Services
 		public void RegisterImporter (Func<string, Project> importFunction,
 		                              string description, string filterName,
 		                              string[] extensions, bool needsEdition,
-		                              bool canOverwrite)
+			bool canOverwrite, bool test)
 		{
 			ProjectImporter importer = new ProjectImporter {
 				Description = description,
@@ -54,6 +54,7 @@ namespace LongoMatch.Services
 				Extensions = extensions,
 				NeedsEdition = needsEdition,
 				CanOverwrite = canOverwrite,
+				Test = test,
 			};
 			ProjectImporters.Add (importer);
 		}
@@ -109,18 +110,18 @@ namespace LongoMatch.Services
 			filterName = String.Join ("\n", ProjectImporters.Select (p => p.FilterName));
 			extensions = ExtensionMethods.Merge (ProjectImporters.Select (p => p.Extensions).ToList ()); 
 			/* Show a file chooser dialog to select the file to import */
-			fileName = guiToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
-				filterName, extensions);
-				
-			if (fileName == null)
-				return;
+//			fileName = guiToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
+//				filterName, extensions);
+//				
+//			if (fileName == null)
+//				return;
 
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
-				string extension = "*" + Path.GetExtension (fileName);
-				IEnumerable<ProjectImporter> importers = ProjectImporters.Where
-					(p => p.Extensions.Contains (extension));
+//				string extension = "*" + Path.GetExtension (fileName);
+				IEnumerable<ProjectImporter> importers = ProjectImporters.Where(p => p.Test == false);
+//					(p => p.Extensions.Contains (extension));
 				if (importers.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
 				} else if (importers.Count () == 1) {
@@ -131,7 +132,7 @@ namespace LongoMatch.Services
 				if (importer == null) {
 					return;
 				}
-				project = importer.ImportFunction (fileName);
+				project = importer.ImportFunction ("fileName");
 				if (importer.NeedsEdition) {
 					Config.EventsBroker.EmitNewProject (project);
 				} else {
@@ -212,7 +213,7 @@ namespace LongoMatch.Services
 		{
 			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
 				Constants.PROJECT_NAME,
-				new string[] { "*" + Constants.PROJECT_EXT }, false, false);
+				new string[] { "*" + Constants.PROJECT_EXT }, false, false, true);
 
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
