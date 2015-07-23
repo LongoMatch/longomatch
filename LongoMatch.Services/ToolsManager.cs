@@ -261,38 +261,5 @@ namespace LongoMatch.Services
 
 		#endregion
 	}
-
-	public class ProjectImporter
-	{
-		public Func<string, Project> ImportFunction {
-			get;
-			set;
-		}
-
-		public string Description {
-			get;
-			set;
-		}
-
-		public string [] Extensions {
-			get;
-			set;
-		}
-
-		public string FilterName {
-			get;
-			set;
-		}
-
-		public bool NeedsEdition {
-			get;
-			set;
-		}
-
-		public bool CanOverwrite {
-			get;
-			set;
-		}
-	}
 }
 
