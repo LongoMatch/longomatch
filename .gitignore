@@ -75,3 +75,4 @@ tools/deb-pkg.sh
 oneplay-longomatch
 *Result.xml
 *covcfg.*
+obj/
