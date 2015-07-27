@@ -42,10 +42,10 @@ namespace LongoMatch.Services
 			ProjectImporters = new List<ProjectImporter> ();
 		}
 
-		public void RegisterImporter (Func<string, Project> importFunction,
+		public void RegisterImporter (Func<Project> importFunction,
 		                              string description, string filterName,
 		                              string[] extensions, bool needsEdition,
-			bool canOverwrite, bool test)
+			bool canOverwrite, bool intern)
 		{
 			ProjectImporter importer = new ProjectImporter {
 				Description = description,
@@ -54,7 +54,7 @@ namespace LongoMatch.Services
 				Extensions = extensions,
 				NeedsEdition = needsEdition,
 				CanOverwrite = canOverwrite,
-				Test = test,
+				Internal = intern,
 			};
 			ProjectImporters.Add (importer);
 		}
@@ -110,17 +110,12 @@ namespace LongoMatch.Services
 			filterName = String.Join ("\n", ProjectImporters.Select (p => p.FilterName));
 			extensions = ExtensionMethods.Merge (ProjectImporters.Select (p => p.Extensions).ToList ()); 
 			/* Show a file chooser dialog to select the file to import */
-//			fileName = guiToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
-//				filterName, extensions);
-//				
-//			if (fileName == null)
-//				return;
 
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
 //				string extension = "*" + Path.GetExtension (fileName);
-				IEnumerable<ProjectImporter> importers = ProjectImporters.Where(p => p.Test == false);
+				IEnumerable<ProjectImporter> importers = ProjectImporters.Where(p => p.Internal == false);
 //					(p => p.Extensions.Contains (extension));
 				if (importers.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
@@ -129,10 +124,25 @@ namespace LongoMatch.Services
 				} else {
 					importer = ChooseImporter (importers);
 				}
+
+
+				if (importer != null && importer.FilterName == LongoMatch.Core.Common.Constants.PROJECT_NAME){
+					string extension = "*" + LongoMatch.Core.Common.Constants.PROJECT_EXT;
+					importers = ProjectImporters.Where(p => p.Extensions.Contains (extension));
+					if (importers.Count () == 0) {
+						throw new Exception (Catalog.GetString ("Plugin not found"));
+					} else if (importers.Count () == 1) {
+						importer = importers.First ();
+					} else {
+						importer = ChooseImporter (importers);
+					}
+				}
+
 				if (importer == null) {
 					return;
 				}
-				project = importer.ImportFunction ("fileName");
+
+				project = importer.ImportFunction ();
 				if (importer.NeedsEdition) {
 					Config.EventsBroker.EmitNewProject (project);
 				} else {

@@ -25,5 +25,6 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FileDB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
   </ItemGroup>
 </Project>

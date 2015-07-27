@@ -123,13 +123,13 @@ namespace LongoMatch.Addins
 		{
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
-				importer.RegisterImporter (new Func<string, Project> (importProject.ImportProject),
+				importer.RegisterImporter (new Func<Project> (importProject.ImportProject),
 					importProject.Description,
 					importProject.FilterName,
 					importProject.FilterExtensions,
 					importProject.NeedsEdition,
 					importProject.CanOverwrite,
-					importProject.Test);
+					importProject.Internal);
 			}
 		}
 

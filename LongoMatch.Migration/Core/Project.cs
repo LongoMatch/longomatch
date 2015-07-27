@@ -280,7 +280,16 @@ namespace LongoMatch.Store
 			SerializableObject.Save(project, file);
 		}
 
-		public static Project Import(string file) {
+		public static Project Import() {
+			string file = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir, Constants.PROJECT_NAME,
+				              new string[] { "*" + Constants.PROJECT_EXT });
+			if (file == null)
+				return null;
+			return Project.Import (file);
+		}
+		
+		public static Project Import(string file)
+		{
 			try {
 				return SerializableObject.Load<Project>(file);
 			}

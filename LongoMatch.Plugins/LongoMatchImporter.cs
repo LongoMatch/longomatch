@@ -16,46 +16,81 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using LongoMatch;
+using LongoMatch.Addins.ExtensionPoints;
+using LongoMatch.Core;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using Mono.Addins;
+
 
 namespace LongoMatch.Services
 {
-	public class ProjectImporter
+	[Extension]
+	public class LongoMatchImporter: ILongoMatchPlugin, IImportProject
 	{
-		public Func<Project> ImportFunction {
-			get;
-			set;
+		public LongoMatchImporter ()
+		{
+		}
+			
+
+		#region ILongoMatchPlugin implementation
+
+		public string Name {
+			get {
+				return Catalog.GetString ("LongoMatch Importer");
+			}
 		}
 
 		public string Description {
-			get;
-			set;
+			get {
+				return Catalog.GetString ("LongoMatch Importer");
+			}
 		}
 
-		public string [] Extensions {
-			get;
-			set;
+		#endregion
+
+		#region IImportProject implementation
+
+		public Project ImportProject ()
+		{
+			throw new NotImplementedException ("You should not call this importer");
 		}
 
 		public string FilterName {
-			get;
-			set;
+			get {
+				return LongoMatch.Core.Common.Constants.PROJECT_NAME;
+			}
+		}
+
+		public string[] FilterExtensions {
+			get {
+				return new string[] {};
+			}
 		}
 
 		public bool NeedsEdition {
-			get;
-			set;
+			get {
+				return false;
+			}
 		}
 
 		public bool CanOverwrite {
-			get;
-			set;
+			get {
+				return true;
+			}
 		}
 
 		public bool Internal {
-			get;
-			set;
+			get {
+				return false;
+			}
 		}
+
+		#endregion
 	}
 }
 

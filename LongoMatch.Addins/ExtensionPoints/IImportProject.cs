@@ -31,9 +31,9 @@ namespace LongoMatch.Addins.ExtensionPoints
 
 		bool CanOverwrite { get; }
 
-		bool Test { get; }
+		bool Internal { get; }
 
-		Project ImportProject (string filename);
+		Project ImportProject ();
 	}
 }
 

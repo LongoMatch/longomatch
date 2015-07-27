@@ -22,7 +22,7 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IProjectsImporter
 	{
-		void RegisterImporter (Func<string, Project> ImportFunction,
+		void RegisterImporter (Func<Project> ImportFunction,
 		                       string description, string filterName,
 		                       string[] extensions, bool needsEdition,
 			bool canOverwrite, bool test);
