@@ -115,5 +115,13 @@ namespace LongoMatch.Core.Common
 	public class CircularDependencyException: Exception
 	{
 	}
+
+	public class ImportException: Exception
+	{
+		public ImportException (string reason) :
+		base (reason)
+		{
+		}
+	}
 }
 
