@@ -1,5 +1,5 @@
 # Initializers
-MONO_BASE_PATH = 
+MONO_BASE_PATH =
 MONO_ADDINS_PATH =
 
 # Install Paths
@@ -47,6 +47,7 @@ REF_DEP_LONGOMATCH_PLUGINS = \
                      $(LINK_MONO_ADDINS) \
                      $(LINK_MONO_POSIX) \
                      $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_SERVICES) \
                      $(LINK_LONGOMATCH_ADDINS)
 
 REF_DEP_LONGOMATCH_CORE = \
