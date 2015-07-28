@@ -17,8 +17,9 @@
 //
 using System;
 using LongoMatch.Core.Store;
+using System.Collections.Generic;
 
-namespace LongoMatch.Services
+namespace LongoMatch.Core
 {
 	public class ProjectImporter
 	{

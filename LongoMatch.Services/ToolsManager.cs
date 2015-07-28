@@ -58,8 +58,8 @@ namespace LongoMatch.Services
 			};
 			ProjectImporters.Add (importer);
 		}
-
-		List<ProjectImporter> ProjectImporters {
+			
+		public List<ProjectImporter> ProjectImporters {
 			get;
 			set;
 		}
@@ -114,28 +114,14 @@ namespace LongoMatch.Services
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
-//				string extension = "*" + Path.GetExtension (fileName);
+
 				IEnumerable<ProjectImporter> importers = ProjectImporters.Where(p => p.Internal == false);
-//					(p => p.Extensions.Contains (extension));
 				if (importers.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
 				} else if (importers.Count () == 1) {
 					importer = importers.First ();
 				} else {
 					importer = ChooseImporter (importers);
-				}
-
-
-				if (importer != null && importer.FilterName == LongoMatch.Core.Common.Constants.PROJECT_NAME){
-					string extension = "*" + LongoMatch.Core.Common.Constants.PROJECT_EXT;
-					importers = ProjectImporters.Where(p => p.Extensions.Contains (extension));
-					if (importers.Count () == 0) {
-						throw new Exception (Catalog.GetString ("Plugin not found"));
-					} else if (importers.Count () == 1) {
-						importer = importers.First ();
-					} else {
-						importer = ChooseImporter (importers);
-					}
 				}
 
 				if (importer == null) {

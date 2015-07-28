@@ -22,20 +22,22 @@ using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Services;
 using Mono.Addins;
 
 
-namespace LongoMatch.Services
+namespace LongoMatch.Plugins
 {
 	[Extension]
 	public class LongoMatchImporter: ILongoMatchPlugin, IImportProject
 	{
+
 		public LongoMatchImporter ()
 		{
 		}
-			
 
 		#region ILongoMatchPlugin implementation
 
@@ -57,7 +59,24 @@ namespace LongoMatch.Services
 
 		public Project ImportProject ()
 		{
-			throw new NotImplementedException ("You should not call this importer");
+			List<ProjectImporter> importers;
+			var ToolsManagerImporters = ((ToolsManager)CoreServices.ProjectsImporter).ProjectImporters;
+			string extension = "*" + LongoMatch.Core.Common.Constants.PROJECT_EXT;
+			IEnumerable<ProjectImporter> longoMatchImporters = 
+				ToolsManagerImporters.Where(p => p.Internal == true && p.Extensions.Contains (extension));
+			foreach (ProjectImporter LMimporter in longoMatchImporters) {
+				importers.Add(LMimporter);
+			}
+			ProjectImporter importer;
+			if (importers.Count () == 0) {
+				throw new Exception (Catalog.GetString ("Plugin not found"));
+			} else if (importers.Count () == 1) {
+				importer = importers.First ();
+			} else {
+				importer = ChooseImporter (importers);
+			}
+
+			return importer.ImportFunction ();
 		}
 
 		public string FilterName {
@@ -66,9 +85,9 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public string[] FilterExtensions {
+		public string[] FilterExtensions { 
 			get {
-				return new string[] {};
+				return new string[] {"*" + LongoMatch.Core.Common.Constants.PROJECT_EXT};
 			}
 		}
 
@@ -91,6 +110,12 @@ namespace LongoMatch.Services
 		}
 
 		#endregion
+
+		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
+		{
+			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
+			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options);
+		}
 	}
 }
 
