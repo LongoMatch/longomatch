@@ -76,6 +76,10 @@ namespace LongoMatch.Plugins
 				importer = ChooseImporter (importers);
 			}
 
+			if (importer == null) {
+				throw new ImportException (Catalog.GetString("Error opening importer"));
+			}
+
 			return importer.ImportFunction ();
 		}
 
