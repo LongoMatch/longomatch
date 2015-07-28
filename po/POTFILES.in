@@ -129,6 +129,7 @@ LongoMatch.Migration/MainWindow.cs
 LongoMatch.Multimedia/Capturer/FakeCapturer.cs
 LongoMatch.Multimedia/Utils/GstDiscoverer.cs
 LongoMatch.Plugins/CSVExporter.cs
+LongoMatch.Plugins/LongoMatchImporter.cs
 LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs
 LongoMatch.Plugins.Stats/gtk-gui/LongoMatch.Plugins.Stats.CategoryViewer.cs
 LongoMatch.Plugins.Stats/gtk-gui/LongoMatch.Plugins.Stats.GameViewer.cs
