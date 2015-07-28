@@ -59,7 +59,7 @@ namespace LongoMatch.Plugins
 
 		public Project ImportProject ()
 		{
-			List<ProjectImporter> importers;
+			List<ProjectImporter> importers = new List<ProjectImporter>();
 			var ToolsManagerImporters = ((ToolsManager)CoreServices.ProjectsImporter).ProjectImporters;
 			string extension = "*" + LongoMatch.Core.Common.Constants.PROJECT_EXT;
 			IEnumerable<ProjectImporter> longoMatchImporters = 
