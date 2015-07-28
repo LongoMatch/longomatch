@@ -12,6 +12,7 @@ SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
 	HotKeysManager.cs \
 	PlayerController.cs \
 	PlaylistManager.cs \
+	ProjectImporter.cs \
 	ProjectsManager.cs \
 	RenderingJobsManager.cs \
 	TemplatesService.cs \
