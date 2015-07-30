@@ -155,24 +155,30 @@ namespace LongoMatch.Services.Services
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = (T)Serializer.LoadSafe<T> (path);
-				Log.Information ("Retrieving " + path);
+				try {
+					Log.Information ("Retrieving " + path);
+					T t = (T)Serializer.LoadSafe<T> (path);
 
-				string sType = ResolveType (typeof(T));
+					string sType = ResolveType (typeof(T));
 
-				// HACK: For backward compatibility issues we can't allow the file name to differ from the Name field
-				// for dashboard and teams as the previous file structure was assuming that they were identical.
-				if (sType == "dashboard" || sType == "team") {
-					FieldInfo finfo = t.GetType ().GetField ("Name");
-					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+					// HACK: For backward compatibility issues we can't allow the file name to differ from the Name field
+					// for dashboard and teams as the previous file structure was assuming that they were identical.
+					if (sType == "dashboard" || sType == "team") {
+						FieldInfo finfo = t.GetType ().GetField ("Name");
+						PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
 
-					if (pinfo != null)
-						pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
-					else if (finfo != null)
-						finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+						if (pinfo != null)
+							pinfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+						else if (finfo != null)
+							finfo.SetValue (t, Path.GetFileNameWithoutExtension (path));
+					}
+
+					l.Add (t);
+
+				} catch (Exception ex) {
+					Log.Warning ("Could not retrieve file <" + path + ">");
+					Log.Exception (ex);
 				}
-
-				l.Add (t);
 			}
 			return l;
 		}
