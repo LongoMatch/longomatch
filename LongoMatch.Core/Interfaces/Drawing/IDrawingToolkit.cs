@@ -66,7 +66,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		ISurface CreateSurface (string filename, bool warnOnDispose = true);
 
-		ISurface CreateSurface (int width, int height, Image image = null, bool wanrnOnDispose = true);
+		ISurface CreateSurface (int width, int height, Image image = null, bool warnOnDispose = true);
 
 		void DrawSurface (ISurface surface, Point p = null);
 

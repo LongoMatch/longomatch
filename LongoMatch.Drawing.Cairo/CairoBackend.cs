@@ -273,17 +273,16 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawArea (params Point[] vertices)
 		{
-			for (int i = 0; i < vertices.Length - 1; i++) {
-				double x1, y1, x2, y2;
-				
+			double x1, y1;
+			Point initial_point = vertices [0];
+			CContext.MoveTo (initial_point.X, initial_point.Y);
+			for (int i = 1; i < vertices.Length; i++) {
 				x1 = vertices [i].X;
 				y1 = vertices [i].Y;
-				x2 = vertices [i + 1].X;
-				y2 = vertices [i + 1].Y;
-				
-				CContext.MoveTo (x1, y1);
-				CContext.LineTo (x2, y2);
+				CContext.LineTo (x1, y1);
+
 			}
+
 			CContext.ClosePath ();
 			StrokeAndFill ();
 		}
