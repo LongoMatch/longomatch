@@ -86,7 +86,7 @@ namespace LongoMatch.Plugins
 
 		public bool CanOverwrite {
 			get {
-				return true;
+				return false;
 			}
 		}
 		#endregion
