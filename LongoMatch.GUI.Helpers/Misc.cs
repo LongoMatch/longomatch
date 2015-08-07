@@ -16,20 +16,19 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using Gtk;
+using System.Linq;
 using Gdk;
+using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LColor = LongoMatch.Core.Common.Color;
-using Color = Gdk.Color;
-using System.Collections.Generic;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using System.Threading.Tasks;
+using LongoMatch.Core.Store;
+using Color = Gdk.Color;
+using LColor = LongoMatch.Core.Common.Color;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -287,18 +286,14 @@ namespace LongoMatch.Gui.Helpers
 				Exception ex = null;
 				busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Analyzing video file:") + "\n" +
 				filename, parent);
-				Task task = new Task (() => {
+				System.Action action = () => {
 					try {
 						mediaFile = Config.MultimediaToolkit.DiscoverFile (filename);
 					} catch (Exception e) {
 						ex = e;
 					}
-					Config.GUIToolkit.Invoke (delegate {
-						busy.Destroy ();
-					});
-				});
-				task.Start ();
-				busy.ShowSync ();
+				};
+				busy.ShowSync (action);
 				
 				if (ex != null) {
 					throw ex;

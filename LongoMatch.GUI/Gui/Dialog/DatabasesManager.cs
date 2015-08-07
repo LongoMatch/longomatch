@@ -203,18 +203,14 @@ namespace LongoMatch.Gui.Dialog
 			IDatabase db = SelectedDB;
 			if (db != null) {
 				IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Scanning database..."), this);
-				Task task = new Task (() => {
+				System.Action action = () => {
 					try {
 						db.Reload ();
 					} catch (Exception ex) {
 						Log.Exception (ex);
 					}
-					Config.GUIToolkit.Invoke (delegate {
-						busy.Destroy ();
-					});
-				});
-				task.Start ();
-				busy.ShowSync ();
+				};
+				busy.ShowSync (action);
 				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Database scanned succesfully."));
 			}
 		}

@@ -16,6 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Interfaces.GUI;
 
@@ -27,6 +29,7 @@ namespace LongoMatch.Gui.Dialog
 		Label titleLabel;
 		ProgressBar progressBar;
 		uint timeout;
+		object lockObject;
 
 		public BusyDialog (Window parent)
 		{
@@ -70,14 +73,47 @@ namespace LongoMatch.Gui.Dialog
 			progressBar.Pulse ();
 		}
 
-		public void ShowSync ()
+		public void ShowSync (System.Action action, uint pulseIntervalMS=100)
 		{
-			GLib.Timeout.Add (200, OnTimeout);
+			Exception ex = null;
+			object lockObject = this.lockObject = new object ();
+
+			if (pulseIntervalMS == 0) {
+				pulseIntervalMS = 100;
+			}
+			Task task = new Task (() => {
+
+				try {
+					action.Invoke ();
+				} catch (Exception e) {
+					ex = e;
+				} finally  {
+					Config.GUIToolkit.Invoke (delegate {
+						lock (lockObject) {
+							Destroy ();
+						}
+					});
+				}
+			});
+			Monitor.Enter (lockObject);
+			task.Start ();
+			timeout = GLib.Timeout.Add (pulseIntervalMS, OnTimeout);
 			Run ();
+			if (ex != null)
+				throw ex;
+		}
+
+		public void Show (uint pulseIntervalMS=0)
+		{
+			timeout = GLib.Timeout.Add (pulseIntervalMS, OnTimeout);
 		}
 
 		bool OnTimeout ()
 		{
+			if (lockObject != null) {
+				Monitor.Exit (lockObject);
+				lockObject = null;
+			}
 			Pulse ();
 			return true;
 		}

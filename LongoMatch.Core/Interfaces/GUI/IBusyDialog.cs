@@ -21,13 +21,30 @@ namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IBusyDialog
 	{
+		/// <summary>
+		/// Advance the progress bar to indicate progress.
+		/// </summary>
 		void Pulse ();
 
+		/// <summary>
+		/// Hide and destroy the dualog.
+		/// </summary>
 		void Destroy ();
 
-		void Show ();
+		/// <summary>
+		/// Show the dialog asyncrhonously and pulse at the intervall defined by <paramref name="pulseIntervalMS"/>.
+		/// Use <see cref="Destroy()"/> to close the dialog.
+		/// </summary>
+		/// <param name="pulseIntervalMS">The pulse interval in milliseconds.</param>
+		void Show (uint pulseIntervalMS=100);
 
-		void ShowSync ();
+		/// <summary>
+		/// Show the dialog synchronously and run the <paramref name="action"/> in background.
+		/// The dialog is closed automatically once the task has finished.
+		/// </summary>
+		/// <param name="action">The action to run in the background.</param>
+		/// <param name="pulseIntervalMS">The pulse interval in milliseconds.</param>
+		void ShowSync (Action action, uint pulseIntervalMS=100);
 	}
 }
 
