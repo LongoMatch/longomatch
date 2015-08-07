@@ -119,6 +119,9 @@ namespace LongoMatch.Services
 				}
 
 				project = importer.ImportFunction ();
+				if (project == null) {
+					return;
+				}
 				if (importer.NeedsEdition) {
 					Config.EventsBroker.EmitNewProject (project);
 				} else {
