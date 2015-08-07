@@ -54,5 +54,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
   </ItemGroup>
 </Project>
