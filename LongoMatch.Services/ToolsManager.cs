@@ -100,16 +100,9 @@ namespace LongoMatch.Services
 		{
 			Project project;
 			ProjectImporter importer;
-			string fileName, filterName;
-			string[] extensions;
 			IDatabase DB = Config.DatabaseManager.ActiveDB;
 			
-			
 			Log.Debug ("Importing project");
-			filterName = String.Join ("\n", ProjectImporters.Select (p => p.FilterName));
-			extensions = ExtensionMethods.Merge (ProjectImporters.Select (p => p.Extensions).ToList ()); 
-			/* Show a file chooser dialog to select the file to import */
-
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
