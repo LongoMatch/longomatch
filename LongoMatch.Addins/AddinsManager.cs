@@ -128,8 +128,7 @@ namespace LongoMatch.Addins
 					importProject.FilterName,
 					importProject.FilterExtensions,
 					importProject.NeedsEdition,
-					importProject.CanOverwrite,
-					importProject.Internal);
+					importProject.CanOverwrite);
 			}
 		}
 

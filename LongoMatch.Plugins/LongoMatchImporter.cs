@@ -59,39 +59,22 @@ namespace LongoMatch.Plugins
 
 		public Project ImportProject ()
 		{
-			List<ProjectImporter> importers = new List<ProjectImporter>();
-			var ToolsManagerImporters = ((ToolsManager)CoreServices.ProjectsImporter).ProjectImporters;
-			string extension = "*" + LongoMatch.Core.Common.Constants.PROJECT_EXT;
-			IEnumerable<ProjectImporter> longoMatchImporters = 
-				ToolsManagerImporters.Where(p => p.Internal == true && p.Extensions.Contains (extension));
-			foreach (ProjectImporter LMimporter in longoMatchImporters) {
-				importers.Add(LMimporter);
-			}
-			ProjectImporter importer;
-			if (importers.Count () == 0) {
-				throw new Exception (Catalog.GetString ("Plugin not found"));
-			} else if (importers.Count () == 1) {
-				importer = importers.First ();
-			} else {
-				importer = ChooseImporter (importers);
-			}
-
-			if (importer == null) {
-				throw new ImportException (Catalog.GetString("Error opening importer"));
-			}
-
-			return importer.ImportFunction ();
+			string filename = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
+				FilterName, FilterExtensions);
+			if (filename == null)
+				return null;
+			return Project.Import (filename);
 		}
 
 		public string FilterName {
 			get {
-				return LongoMatch.Core.Common.Constants.PROJECT_NAME;
+				return Constants.PROJECT_NAME;
 			}
 		}
 
 		public string[] FilterExtensions { 
 			get {
-				return new string[] {"*" + LongoMatch.Core.Common.Constants.PROJECT_EXT};
+				return new string[] {"*" + Constants.PROJECT_EXT};
 			}
 		}
 
@@ -106,20 +89,7 @@ namespace LongoMatch.Plugins
 				return true;
 			}
 		}
-
-		public bool Internal {
-			get {
-				return false;
-			}
-		}
-
 		#endregion
-
-		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
-		{
-			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options);
-		}
 	}
 }
 

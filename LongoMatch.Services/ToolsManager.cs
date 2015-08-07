@@ -45,7 +45,7 @@ namespace LongoMatch.Services
 		public void RegisterImporter (Func<Project> importFunction,
 		                              string description, string filterName,
 		                              string[] extensions, bool needsEdition,
-			bool canOverwrite, bool intern)
+		                              bool canOverwrite)
 		{
 			ProjectImporter importer = new ProjectImporter {
 				Description = description,
@@ -54,11 +54,10 @@ namespace LongoMatch.Services
 				Extensions = extensions,
 				NeedsEdition = needsEdition,
 				CanOverwrite = canOverwrite,
-				Internal = intern,
 			};
 			ProjectImporters.Add (importer);
 		}
-			
+
 		public List<ProjectImporter> ProjectImporters {
 			get;
 			set;
@@ -114,14 +113,12 @@ namespace LongoMatch.Services
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
-
-				IEnumerable<ProjectImporter> importers = ProjectImporters.Where(p => p.Internal == false);
-				if (importers.Count () == 0) {
+				if (ProjectImporters.Count () == 0) {
 					throw new Exception (Catalog.GetString ("Plugin not found"));
-				} else if (importers.Count () == 1) {
-					importer = importers.First ();
+				} else if (ProjectImporters.Count () == 1) {
+					importer = ProjectImporters.First ();
 				} else {
-					importer = ChooseImporter (importers);
+					importer = ChooseImporter (ProjectImporters);
 				}
 
 				if (importer == null) {
@@ -207,10 +204,6 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			RegisterImporter (Project.Import, Catalog.GetString ("Import project"),
-				Constants.PROJECT_NAME,
-				new string[] { "*" + Constants.PROJECT_EXT }, false, false, true);
-
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
 			};
