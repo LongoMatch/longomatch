@@ -49,7 +49,7 @@ namespace LongoMatch.Plugins
 
 		public string Description {
 			get {
-				return Catalog.GetString ("LongoMatch Importer");
+				return Catalog.GetString ("Import LongoMatch project");
 			}
 		}
 
