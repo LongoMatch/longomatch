@@ -16,16 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services;
 using Mono.Addins;
 
 
@@ -59,11 +55,19 @@ namespace LongoMatch.Plugins
 
 		public Project ImportProject ()
 		{
+			Project project = null;
+
 			string filename = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
 				FilterName, FilterExtensions);
 			if (filename == null)
 				return null;
-			return Project.Import (filename);
+
+			IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
+			Action action = () => {
+				project = Project.Import (filename);
+			};
+			busy.ShowSync (action);
+			return project;
 		}
 
 		public string FilterName {
