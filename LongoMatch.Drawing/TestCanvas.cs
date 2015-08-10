@@ -111,21 +111,21 @@ namespace LongoMatch.Drawing
 
 		public void Draw (IContext context, Area area)
 		{
-			drawingToolkit.Context = context;
-			drawingToolkit.Begin ();
-			drawingToolkit.Begin ();
-			drawingToolkit.End ();
-			drawingToolkit.End ();
+			if (drawingToolkit != null) {
+				drawingToolkit.Context = context;
+				drawingToolkit.Begin ();
+				drawingToolkit.Begin ();
+				drawingToolkit.End ();
+				drawingToolkit.End ();
 
-			DrawGrid (area);
-			DrawTexts ();
-			if (TestImage != null) {
-				DrawImages ();
-				DrawSurface ();
+				DrawGrid (area);
+				DrawTexts ();
+				if (TestImage != null) {
+					DrawImages ();
+					DrawSurface ();
+				}
+				DrawShapes ();
 			}
-			DrawShapes ();
-
-
 		}
 
 
