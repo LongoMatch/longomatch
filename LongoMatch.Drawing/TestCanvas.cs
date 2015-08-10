@@ -137,6 +137,7 @@ namespace LongoMatch.Drawing
 			Point f5c3 = new Point (200, 400);
 			Point f5c4 = new Point (300, 400);
 			Point f5c5 = new Point (400, 400);
+			Point f5c6 = new Point (500, 400);
 			drawingToolkit.FillColor = new Color(255,0,0,255);
 			drawingToolkit.DrawRectangle (f5c1, 500, 100);
 			drawingToolkit.FillColor = new Color(0,0,255,255);
@@ -146,6 +147,17 @@ namespace LongoMatch.Drawing
 			drawingToolkit.DrawImage (f5c4, 100, 100, TestImage, true, true);
 			drawingToolkit.FillColor = new Color(0,0,255,128);
 			drawingToolkit.DrawImage (f5c5, 100, 100, TestImage, true, true);
+			drawingToolkit.FillColor = new Color(0,0,255,255);
+			drawingToolkit.Begin ();
+
+			double scaleX, scaleY;
+			LongoMatch.Core.Common.Point offset;
+			TestImage.ScaleFactor(100,100,out scaleX, out scaleY, out offset);
+			drawingToolkit.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
+			drawingToolkit.DrawImage (TestImage);
+
+			drawingToolkit.End ();
+
 		}
 
 		void DrawSurface(){
