@@ -162,6 +162,10 @@ namespace LongoMatch.Drawing
 
 		void DrawSurface(){
 			drawingToolkit.Begin ();
+
+			drawingToolkit.StrokeColor = drawingToolkit.FillColor = Color.Blue1;
+			drawingToolkit.DrawRectangle (new Point (400, 200), 300, 200);
+
 			IContext oldContext = drawingToolkit.Context;
 			ISurface surface = drawingToolkit.CreateSurface (200, 200, TestImage);
 			drawingToolkit.Context = surface.Context;
@@ -173,13 +177,12 @@ namespace LongoMatch.Drawing
 			drawingToolkit.DrawRectangle (new Point (0, 0), 198, 198);
 			drawingToolkit.Context = oldContext;
 			drawingToolkit.End ();
-			drawingToolkit.DrawSurface (surface, new Point (500, 100));
+			drawingToolkit.DrawSurface (surface, new Point (500, 200));
 
 			drawingToolkit.Begin ();
-			drawingToolkit.TranslateAndScale (new Point (400, 100), new Point (0.5, 0.5));
+			drawingToolkit.TranslateAndScale (new Point (400, 200), new Point (0.5, 0.5));
 			drawingToolkit.DrawSurface (surface);
 			drawingToolkit.End ();
-			//drawingToolkit.TranslateAndScale (new Point (-400, -100), new Point (1, 1));
 		}
 
 		void DrawTexts(){
