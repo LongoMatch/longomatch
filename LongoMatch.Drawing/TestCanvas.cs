@@ -113,6 +113,7 @@ namespace LongoMatch.Drawing
 		{
 			if (drawingToolkit != null) {
 				drawingToolkit.Context = context;
+
 				drawingToolkit.Begin ();
 				drawingToolkit.Begin ();
 				drawingToolkit.End ();
@@ -125,6 +126,7 @@ namespace LongoMatch.Drawing
 					DrawSurface ();
 				}
 				DrawShapes ();
+				DrawClipped ();
 			}
 		}
 
@@ -268,16 +270,13 @@ namespace LongoMatch.Drawing
 		}
 
 		void DrawShapes(){
-			Point newOrigin = new Point (0, 600);
+			Point newOrigin = new Point (0, 500);
 			drawingToolkit.Begin ();
-			drawingToolkit.Clip (new Area (newOrigin, 1000, 1000));
 			drawingToolkit.TranslateAndScale(newOrigin, new Point(1,1));
-			//drawingToolkit.Clear (Color.Black);
 
 			drawingToolkit.StrokeColor = new Color (0, 0, 0, 255);
 			drawingToolkit.FillColor = new Color (255, 200, 255, 255);
 
-			drawingToolkit.DrawRectangle (new Point (500, 0), 380, 380);
 			drawingToolkit.DrawLine (new Point (0, 0), new Point (760, 760));
 			drawingToolkit.DrawLine (new Point (760, 380), new Point (760, 760));
 			drawingToolkit.DrawLine (new Point (380, 760), new Point (760, 760));
@@ -287,9 +286,9 @@ namespace LongoMatch.Drawing
 			drawingToolkit.DrawRectangle (new Point (0, 0), 500, 500);
 			drawingToolkit.FillColor = new Color (0, 255, 0, 255);    
 			drawingToolkit.DrawRoundedRectangle (new Point (0, 0), 500, 500, 100);
-			drawingToolkit.FillColor = Color.Black;    
-			drawingToolkit.DrawTriangle (new Point (500,760), 100, 100, SelectionPosition.BottomLeft);
+
 			drawingToolkit.FillColor = new Color (255, 0, 0, 255);
+			drawingToolkit.StrokeColor = Color.Black;    
 			Point[] points = {
 				new Point (0, 0),
 				new Point (100, 0),
@@ -297,7 +296,6 @@ namespace LongoMatch.Drawing
 				new Point (200, 100),
 				new Point (200, 300),
 				new Point (54, 186),
-				//new Point (0, -100)
 			};
 			drawingToolkit.DrawArea (points);
 			drawingToolkit.FillColor = new Color (0, 0, 255, 255);
@@ -314,16 +312,43 @@ namespace LongoMatch.Drawing
 			drawingToolkit.ClearOperation = false;
 			drawingToolkit.DrawRectangle (new Point (450, 50), 50, 50);
 
+			drawingToolkit.FillColor = Color.Blue1;    
+			drawingToolkit.StrokeColor = Color.White;    
+			drawingToolkit.DrawTriangle (new Point (300,0), 100, 100, SelectionPosition.Top);
 
+			drawingToolkit.StrokeColor = drawingToolkit.FillColor = Color.Red;
+			// < 2 won't appear in android O_O
+			drawingToolkit.LineWidth = 2;
+			drawingToolkit.DrawPoint (new Point (250,50));
+		
 
 			drawingToolkit.End();
+		}
+
+		void DrawClipped(){
+			drawingToolkit.Begin ();
+			Area clipArea = new Area (new Point (600, 0), 168, 200);
+			drawingToolkit.Clip (clipArea);
+			drawingToolkit.Clear (Color.Red1);
+
+			drawingToolkit.FillColor = Color.Green1;
+			Point[] points = {
+				new Point (550, 100),
+				new Point (700, -100),
+				new Point (800, 100),
+				new Point (700, 300),
+			};
+			drawingToolkit.DrawArea (points);
+
+			drawingToolkit.End ();
+
 		}
 
 		void DrawGrid(Area area){
 			drawingToolkit.LineWidth = 1;
 			drawingToolkit.StrokeColor = Color.Green;
 			drawingToolkit.FillColor = Color.Grey1;
-			drawingToolkit.DrawRectangle (new Point(area.Left,area.Top), area.Width, area.Height);
+			drawingToolkit.Clear(Color.Grey1);
 
 			for (double i = area.Left; i < area.Right; i+=10) {
 				drawingToolkit.DrawLine (new Point (i, area.Top), new Point (i, area.Bottom));
