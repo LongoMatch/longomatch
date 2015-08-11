@@ -41,13 +41,6 @@ namespace LongoMatch.Drawing
 			widget.DrawEvent += Draw;
 		}
 
-		/// <summary>
-		/// TestCanvas Constructor. Needs to call Draw manually.
-		/// </summary>
-		public TestCanvas(){
-			Init ();
-		}
-
 		private void Init(){
 			drawingToolkit = Config.DrawingToolkit;
 			ScaleX = 1;
@@ -129,7 +122,9 @@ namespace LongoMatch.Drawing
 				DrawShapes ();
 				DrawClipped ();
 
-
+				// Save breaks both because of permissions
+				// Save ();
+				Copy();
 
 				drawingToolkit.Context = oldContext;
 
@@ -354,6 +349,20 @@ namespace LongoMatch.Drawing
 
 		}
 
+		void Save(){
+			Area toSave = new Area (new Point (0, 0), 200, 200);
+			var otherCanvas = new DummyCanvas (widget);
+			drawingToolkit.Save (otherCanvas, toSave, "testCanvas.png");
+		}
+
+		void Copy(){
+			Area toSave = new Area (new Point (0, 0), 200, 200);
+			var otherCanvas = new DummyCanvas (widget);
+			Image copied = drawingToolkit.Copy (otherCanvas, toSave);
+			drawingToolkit.DrawImage(new Point(600,400), 200, 200, copied,false);
+
+		}
+
 		void DrawGrid(Area area){
 			drawingToolkit.LineWidth = 1;
 			drawingToolkit.StrokeColor = Color.Green;
@@ -367,6 +376,25 @@ namespace LongoMatch.Drawing
 			for (double i = area.Top; i < area.Bottom; i+=10) {
 				drawingToolkit.DrawLine (new Point (area.Left, i), new Point (area.Right, i));
 			}
+		}
+
+		class DummyCanvas:Canvas
+		{
+			public DummyCanvas(IWidget widget):base(widget){}
+
+			#region ICanvas implementation
+			public override void Draw (IContext context, Area area)
+			{
+				IDrawingToolkit dt = Config.DrawingToolkit;
+				IContext oldcontext = dt.Context;
+				dt.Context = context;
+				dt.DrawCircle (new Point (0, 0), 50);
+
+				dt.Context = oldcontext;
+
+			}
+			#endregion
+			
 		}
 	}
 }
