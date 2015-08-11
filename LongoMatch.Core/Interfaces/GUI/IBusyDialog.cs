@@ -44,7 +44,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		/// </summary>
 		/// <param name="action">The action to run in the background.</param>
 		/// <param name="pulseIntervalMS">The pulse interval in milliseconds.</param>
-		void ShowSync (Action action, uint pulseIntervalMS=100);
+		void ShowSync (Action action, uint pulseIntervalMS=0);
 	}
 }
 
