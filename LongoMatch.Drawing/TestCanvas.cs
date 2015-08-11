@@ -124,7 +124,7 @@ namespace LongoMatch.Drawing
 
 				// Save breaks both because of permissions
 				// Save ();
-				Copy();
+				//Copy();
 
 				drawingToolkit.Context = oldContext;
 
