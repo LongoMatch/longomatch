@@ -112,6 +112,7 @@ namespace LongoMatch.Drawing
 		public void Draw (IContext context, Area area)
 		{
 			if (drawingToolkit != null) {
+				IContext oldContext = drawingToolkit.Context;
 				drawingToolkit.Context = context;
 
 				drawingToolkit.Begin ();
@@ -127,6 +128,11 @@ namespace LongoMatch.Drawing
 				}
 				DrawShapes ();
 				DrawClipped ();
+
+
+
+				drawingToolkit.Context = oldContext;
+
 			}
 		}
 
@@ -287,6 +293,7 @@ namespace LongoMatch.Drawing
 			drawingToolkit.FillColor = new Color (0, 255, 0, 255);    
 			drawingToolkit.DrawRoundedRectangle (new Point (0, 0), 500, 500, 100);
 
+
 			drawingToolkit.FillColor = new Color (255, 0, 0, 255);
 			drawingToolkit.StrokeColor = Color.Black;    
 			Point[] points = {
@@ -321,6 +328,9 @@ namespace LongoMatch.Drawing
 			drawingToolkit.LineWidth = 2;
 			drawingToolkit.DrawPoint (new Point (250,50));
 		
+			drawingToolkit.StrokeColor = drawingToolkit.FillColor = Color.Black;
+			Area transformed = drawingToolkit.UserToDevice (new Area (new Point (0, 0), 500, 500));
+			drawingToolkit.DrawText (new Point (0, 150), 500,350, "This rectangle is drawn at (0,0) but the real coords are " + transformed.TopLeft);
 
 			drawingToolkit.End();
 		}
