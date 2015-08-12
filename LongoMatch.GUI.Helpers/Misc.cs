@@ -335,7 +335,7 @@ namespace LongoMatch.Gui.Helpers
 						} else {
 							string q = Catalog.GetString ("This file needs to be converted into a more suitable format." +
 							           "(This step will only take a few minutes)");
-							if (gui.QuestionMessage (q, null, parent)) {
+							if (gui.QuestionMessage (q, null, parent).Result) {
 								string newFilename = multimedia.RemuxFile (mediaFile, parent);
 								if (newFilename != null) {
 									mediaFile = multimedia.DiscoverFile (newFilename);

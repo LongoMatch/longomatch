@@ -269,7 +269,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 			             button.Name + "?";
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				template.RemoveButton (button);
 				Edited = true;
 				Refresh ();
@@ -280,7 +280,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = string.Format ("{0} {1} ?",
 				             Catalog.GetString ("Do you want to delete: "), link);
-			if (force || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (force || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				link.SourceButton.ActionLinks.Remove (link);
 				Edited = true;
 				Refresh ();

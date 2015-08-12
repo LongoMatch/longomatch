@@ -229,7 +229,7 @@ namespace LongoMatch.Services
 			if (OpenedProjectType == ProjectType.FileProject) {
 				bool ret;
 				ret = guiToolkit.QuestionMessage (
-					Catalog.GetString ("Do you want to close the current project?"), null);
+					Catalog.GetString ("Do you want to close the current project?"), null).Result;
 				if (ret) {
 					CloseOpenedProject (true);
 					return true;

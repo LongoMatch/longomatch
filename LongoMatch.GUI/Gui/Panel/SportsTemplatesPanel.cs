@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else {
 					string msg = Catalog.GetString ("Do you want to save the current dashboard");
-					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						if (SaveTemplate (loadedTemplate)) {
 							buttonswidget.Edited = false;
 						}

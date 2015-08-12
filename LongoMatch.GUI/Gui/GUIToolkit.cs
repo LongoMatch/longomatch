@@ -31,6 +31,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
 using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace LongoMatch.Gui
 {
@@ -108,11 +109,12 @@ namespace LongoMatch.Gui
 			MessagesHelpers.WarningMessage (parent as Widget, message);
 		}
 
-		public bool QuestionMessage (string question, string title, object parent = null)
+		public Task<bool> QuestionMessage (string question, string title, object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow as Widget;
-			return MessagesHelpers.QuestionMessage (parent as Widget, question, title);
+			bool res = MessagesHelpers.QuestionMessage (parent as Widget, question, title);
+			return Task.Factory.StartNew(() => res);
 		}
 
 		public string QueryMessage (string key, string title = null, string value = "", object parent = null)

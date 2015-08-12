@@ -123,7 +123,7 @@ namespace LongoMatch.Gui.Component
 
 			foreach (Player p in selectedPlayers) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
-				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+				if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 					template.List.Remove (p);
 					edited = true;
 				}

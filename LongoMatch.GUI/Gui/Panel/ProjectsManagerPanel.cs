@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Panel
 
 				if (edited && !force) {
 					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					if (!Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						save = false;
 					}
 				}

@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Playlists;
 using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Interfaces.Multimedia;
+using System.Threading.Tasks;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -50,7 +51,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void ErrorMessage (string message, object parent = null);
 
-		bool QuestionMessage (string message, string title, object parent = null);
+		Task<bool> QuestionMessage (string message, string title, object parent = null);
 
 		string QueryMessage (string key, string title = null, string value = "", object parent = null);
 
