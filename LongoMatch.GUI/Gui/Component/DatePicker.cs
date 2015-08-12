@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleClicked (object sender, EventArgs e)
 		{
-			Date = Config.GUIToolkit.SelectDate (Date, this);
+			Date = Config.GUIToolkit.SelectDate (Date, this).Result;
 		}
 	}
 }

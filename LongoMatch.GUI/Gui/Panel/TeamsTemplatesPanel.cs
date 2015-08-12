@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Panel
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedTeam.Name + "_copy", this);
+						loadedTeam.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (templatesNames.Contains (newName)) {

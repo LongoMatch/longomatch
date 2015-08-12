@@ -193,7 +193,7 @@ namespace LongoMatch.Gui.Panel
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedTemplate.Name + "_copy", this);
+						loadedTemplate.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (templatesNames.Contains (newName)) {
@@ -333,7 +333,7 @@ namespace LongoMatch.Gui.Panel
 
 					while (provider.Exists (new_dashboard.Name) && !abort) {
 						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
-							              Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
+							Catalog.GetString ("Name conflict"), new_dashboard.Name + "#").Result;
 						if (name == null) {
 							abort = true;
 						} else {

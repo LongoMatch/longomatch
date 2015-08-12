@@ -93,7 +93,7 @@ namespace LongoMatch.Services
 		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
 		{
 			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options);
+			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options).Result;
 		}
 
 		void ImportProject ()

@@ -142,7 +142,7 @@ namespace LongoMatch.Gui.Component
 				edit = new MenuItem (Catalog.GetString ("Edit name"));
 				edit.Activated += (sender, e) => {
 					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						              pl.Title);
+						              pl.Title).Result;
 					if (!String.IsNullOrEmpty (name)) {
 						pl.Title = name;
 					}
@@ -180,7 +180,7 @@ namespace LongoMatch.Gui.Component
 			edit = new MenuItem (Catalog.GetString ("Edit name"));
 			edit.Activated += (sender, e) => {
 				string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-					              playlist.Name);
+					              playlist.Name).Result;
 				if (!String.IsNullOrEmpty (name)) {
 					playlist.Name = name;
 				}

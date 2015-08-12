@@ -117,11 +117,12 @@ namespace LongoMatch.Gui
 			return Task.Factory.StartNew(() => res);
 		}
 
-		public string QueryMessage (string key, string title = null, string value = "", object parent = null)
+		public Task<string> QueryMessage (string key, string title = null, string value = "", object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow;
-			return MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
+			string res = MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
+			return Task.Factory.StartNew (() => res);
 		}
 
 		public bool NewVersionAvailable (Version currentVersion, Version latestVersion,
@@ -161,7 +162,7 @@ namespace LongoMatch.Gui
 				defaultFolder, filterName, extensionFilter);
 		}
 
-		public object ChooseOption (Dictionary<string, object> options, object parent = null)
+		public Task<object> ChooseOption (Dictionary<string, object> options, object parent = null)
 		{
 			object res = null;
 			Window parentWindow;
@@ -180,7 +181,8 @@ namespace LongoMatch.Gui
 				res = dialog.SelectedOption;
 			}
 			dialog.Destroy ();
-			return res;
+			var task = Task.Factory.StartNew (() => res);
+			return task;
 		}
 
 		public List<EditionJob> ConfigureRenderingJob (Playlist playlist)
@@ -421,14 +423,15 @@ namespace LongoMatch.Gui
 			mainWindow.CloseProject ();
 		}
 
-		public DateTime SelectDate (DateTime date, object widget)
+		public Task<DateTime> SelectDate (DateTime date, object widget)
 		{
 			CalendarDialog dialog = new CalendarDialog (date);
 			dialog.TransientFor = (widget as Widget).Toplevel as Gtk.Window;
 			dialog.Run ();
 			date = dialog.Date;
 			dialog.Destroy ();
-			return date;
+			var task = Task.Factory.StartNew (() => date);
+			return task;
 		}
 
 		public EndCaptureResponse EndCapture (bool isCapturing)
