@@ -27,26 +27,36 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
+  <!-- NuGet.targets configuration to download NuGet.exe and restore packages
+       Only enabled when building from the makefiles -->
+  <PropertyGroup Condition="'$(BuildType)' == 'makefiles'">
+    <!-- Enable the restore command to run before builds -->
+    <RestorePackages>true</RestorePackages>
+    <!-- Determines if package restore consent is required to restore packages -->
+    <RequireRestoreConsent>false</RequireRestoreConsent>
+    <!-- Download NuGet.exe if it does not already exist -->
+    <DownloadNuGetExe>true</DownloadNuGetExe>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <Package>nunit</Package>
-    </Reference>
-    <Reference Include="Moq">
-      <Package>moq</Package>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
-      <SpecificVersion>False</SpecificVersion>
-      <Package>newtonsoft-json</Package>
-    </Reference>
     <Reference Include="Couchbase.Lite, Version=1.0.4.275, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <Package>couchbase-lite</Package>
     </Reference>
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\oneplay-longomatch\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\oneplay-longomatch\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\oneplay-longomatch\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\.nuget\NuGet.targets" />
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Core\Store\TestDashboardButton.cs" />
@@ -124,5 +134,8 @@
     <Folder Include="Services\" />
     <Folder Include="DB\" />
     <Folder Include="Core\Store\Playlists\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
