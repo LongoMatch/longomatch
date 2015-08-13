@@ -56,17 +56,17 @@ namespace LongoMatch.Services
 		public static void Init ()
 		{
 			Log.Debugging = Debugging;
-			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 
 			FillVersion ();
-
 			Config.Init ();
-
-			/* Check default folders */
-			CheckDirs ();
 
 			/* Redirects logs to a file */
 			Log.SetLogFile (Config.LogFile);
+			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
+			Log.Information (Utils.SysInfo);
+
+			/* Check default folders */
+			CheckDirs ();
 
 			/* Load user config */
 			Config.Load ();
@@ -89,7 +89,6 @@ namespace LongoMatch.Services
 			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
 			Config.Version = assembly.GetName ().Version;
 			Config.BuildVersion = info.ProductVersion;
-			Log.Information (Utils.SysInfo);
 		}
 
 		public static void InitTranslations ()
