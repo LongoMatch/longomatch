@@ -72,6 +72,9 @@ SHAMROCK_FIND_MONO_RUNTIME
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
+dnl Check for xbuild
+AC_PATH_PROG(XBUILD, xbuild)
+
 dnl Moq (optional) disable test if not found
 PKG_CHECK_MODULES(MOQ, moq,
 	do_tests="yes", do_tests="no")

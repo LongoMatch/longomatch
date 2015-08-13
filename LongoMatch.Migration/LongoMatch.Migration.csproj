@@ -6,7 +6,7 @@
     <ProjectGuid>{4D20F396-53C0-4298-9121-9F68C101CCAB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch.Migration</RootNamespace>
-    <AssemblyName>LongoMatch</AssemblyName>
+    <AssemblyName>LongoMatch.Migration</AssemblyName>
     <UseMSBuildEngine>False</UseMSBuildEngine>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>

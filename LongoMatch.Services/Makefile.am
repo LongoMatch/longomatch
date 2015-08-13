@@ -1,22 +1,6 @@
-ASSEMBLY = LongoMatch.Services
-TARGET = library
-
-LINK = $(REF_DEP_LONGOMATCH_SERVICES)
-
-SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
-	CoreServices.cs \
-	DataBaseManager.cs \
-	EventsManager.cs \
-	FileDB.cs \
-	FileStorage.cs \
-	HotKeysManager.cs \
-	PlayerController.cs \
-	PlaylistManager.cs \
-	ProjectImporter.cs \
-	ProjectsManager.cs \
-	RenderingJobsManager.cs \
-	TemplatesService.cs \
-	ToolsManager.cs \
-	UpdatesNotifier.cs
-
+PROJECT_FILE = LongoMatch.Services.Net45.csproj
+BUILD_DIR=$(top_builddir)/bin
+ASSEMBLY=LongoMatch.Services.dll
+ASSEMBLY_FILE=$(BUILD_DIR)/$(ASSEMBLY)
+OUTPUT_DIR = $(expanded_libdir)/longomatch/
 include $(top_srcdir)/build/build.mk

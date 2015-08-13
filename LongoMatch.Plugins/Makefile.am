@@ -1,15 +1,4 @@
-ASSEMBLY = LongoMatch.Plugins
-TARGET = library
-INSTALL_DIR = $(pkglibdir)/plugins
-
-LINK = $(REF_DEP_LONGOMATCH_PLUGINS)
-
-SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
-	Assembly.cs \
-	CSVExporter.cs \
-	LongoMatchImporter.cs
-
-RESOURCES = 
-
+PROJECT_FILE = LongoMatch.Plugins.csproj
+ASSEMBLY=LongoMatch.Plugins.dll
+OUTPUT_DIR = $(pkglibdir)/plugins
 include $(top_srcdir)/build/build.mk
-

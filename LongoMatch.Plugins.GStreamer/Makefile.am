@@ -1,16 +1,5 @@
-ASSEMBLY = LongoMatch.Plugins.GStreamer
-TARGET = library
-INSTALL_DIR = $(pkglibdir)/plugins/LongoMatch.Plugins.GStreamer/
-
-LINK = $(REF_DEP_LONGOMATCH_PLUGINS_GSTREAMER)
-
-SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
-	Assembly.cs \
-	GStreamerRestricted.cs
-
-RESOURCES = 
-
-DLLCONFIG = LongoMatch.Plugins.GStreamer.dll.config
-
+PROJECT_FILE = LongoMatch.Plugins.GStreamer.csproj
+ASSEMBLY=LongoMatch.Plugins.GStreamer.dll
+DLLCONFIG=LongoMatch.Plugins.GStreamer.dll.config
+OUTPUT_DIR = $(pkglibdir)/plugins
 include $(top_srcdir)/build/build.mk
-

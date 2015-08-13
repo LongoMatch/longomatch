@@ -1,14 +1,3 @@
-ASSEMBLY = LongoMatch.DB
-TARGET = library
-
-LINK = $(REF_DEP_LONGOMATCH_DB)
-
-SOURCES = ../AssemblyInfo/AssemblyInfo.cs \
-	CouchbaseStorage.cs \
-	DocumentsSerializer.cs
-
-RESOURCES = 
-
-EXTRA_BUNDLE = $(COUCHBASE_LIBS_PATHS)
-
+PROJECT_FILE = LongoMatch.DB.Net45.csproj
+ASSEMBLY=LongoMatch.DB.dll
 include $(top_srcdir)/build/build.mk
