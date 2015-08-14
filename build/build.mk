@@ -14,6 +14,9 @@ all: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE):
 	$(AM_V_GEN) $(XBUILD_CMD)
+	@if [ ! -z "$(EXTRA_BUNDLE)" ]; then \
+		cp $(EXTRA_BUNDLE) $(BUILD_DIR); \
+	fi;
 
 clean-local:
 	$(AM_V_GEN) $(XBUILD_CMD) /t:Clean
