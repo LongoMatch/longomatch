@@ -188,7 +188,7 @@ namespace LongoMatch.Services
 			bool done = false;
 
 			while (name != null && !done) {
-				name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name);
+				name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
 				if (name != null) {
 					done = true;
 					foreach (Playlist p in project.Playlists) {

@@ -229,7 +229,7 @@ namespace LongoMatch.Services
 		{
 			if (videoRenderer.PendingJobs.Count > 0) {
 				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");
-				if (!Config.GUIToolkit.QuestionMessage (msg, null)) {
+				if (!Config.GUIToolkit.QuestionMessage (msg, null).Result) {
 					return;
 				}
 			}

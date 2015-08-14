@@ -226,11 +226,11 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System teams can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedTeam.Name + "_copy", this);
+						loadedTeam.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (templatesNames.Contains (newName)) {
@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else if (prompt) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
-					if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						SaveLoadedTeam ();
 					}
 				} else {

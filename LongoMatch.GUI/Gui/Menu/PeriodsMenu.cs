@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Menus
 			additem.Activated += (sender, e) => {
 				string periodname = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
 					                    (project.Periods.Count + 1).ToString (),
-					                    null);
+					null).Result;
 				if (periodname != null) {
 					project.Dashboard.GamePeriods.Add (periodname);
 					Period p = new Period { Name = periodname };

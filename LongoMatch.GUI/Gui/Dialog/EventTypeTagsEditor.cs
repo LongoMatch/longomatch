@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveGroup (TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this subcategory and all its tags?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.RemoveAll (g.tags.Contains);
 				mainvbox.Remove (g.container);
 			}
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveTag (Tag tag, TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this tag?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.Remove (tag);
 				g.tags.Remove (tag);
 				g.container.Remove (g.table);

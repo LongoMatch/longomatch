@@ -189,11 +189,11 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
 					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedTemplate.Name + "_copy", this);
+						loadedTemplate.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (templatesNames.Contains (newName)) {
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else {
 					string msg = Catalog.GetString ("Do you want to save the current dashboard");
-					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						if (SaveTemplate (loadedTemplate)) {
 							buttonswidget.Edited = false;
 						}
@@ -333,7 +333,7 @@ namespace LongoMatch.Gui.Panel
 
 					while (provider.Exists (new_dashboard.Name) && !abort) {
 						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
-							              Catalog.GetString ("Name conflict"), new_dashboard.Name + "#");
+							Catalog.GetString ("Name conflict"), new_dashboard.Name + "#").Result;
 						if (name == null) {
 							abort = true;
 						} else {

@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Playlists;
 using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Interfaces.Multimedia;
+using System.Threading.Tasks;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -50,9 +51,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void ErrorMessage (string message, object parent = null);
 
-		bool QuestionMessage (string message, string title, object parent = null);
+		Task<bool> QuestionMessage (string message, string title, object parent = null);
 
-		string QueryMessage (string key, string title = null, string value = "", object parent = null);
+		Task<string> QueryMessage (string key, string title = null, string value = "", object parent = null);
 
 		bool NewVersionAvailable (Version currentVersion, Version latestVersion,
 		                          string downloadURL, string changeLog, object parent = null);
@@ -70,7 +71,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 		string SelectFolder (string title, string defaultName, string defaultFolder,
 		                     string filterName, string[] extensionFilter);
 
-		object ChooseOption (Dictionary<string, object> options, object parent = null);
+		Task<object> ChooseOption (Dictionary<string, object> options, object parent = null);
 
 		IBusyDialog BusyDialog (string message, object parent = null);
 
@@ -114,7 +115,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 
-		DateTime SelectDate (DateTime date, object widget);
+		Task<DateTime> SelectDate (DateTime date, object widget);
 
 		EndCaptureResponse EndCapture (bool isCapturing);
 

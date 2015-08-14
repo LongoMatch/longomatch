@@ -93,7 +93,7 @@ namespace LongoMatch.Services
 		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
 		{
 			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options);
+			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options).Result;
 		}
 
 		void ImportProject ()
@@ -135,7 +135,7 @@ namespace LongoMatch.Services
 					if (!importer.CanOverwrite && DB.Exists (project)) {
 						var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
 						          project.ID + "\n" +
-						          Catalog.GetString ("Do you want to overwrite it?"), null);
+							Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
 							return;
 						DB.UpdateProject (project);
