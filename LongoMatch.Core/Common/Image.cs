@@ -16,13 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
+using System;
+using Gdk;
 
 namespace LongoMatch.Core.Common
 {
-	using System;
-	using System.IO;
-	using Gdk;
 
 	[Serializable]
 	public class Image: BaseImage<Pixbuf>
