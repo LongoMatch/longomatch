@@ -57,12 +57,6 @@ dist: ChangeLog
 
 .PHONY: ChangeLog
 
-LM_DEPS = \
-	$(top_builddir)/bin/Couchbase.Lite.dll \
-	$(top_builddir)/bin/Newtonsoft.Json.dll \
-	$(top_builddir)/bin/SQLitePCL.raw.dll \
-	$(top_builddir)/bin/SQLitePCL.ugly.dll
-
+include $(top_srcdir)/buid/build_env.mk
 install-data-hook:
 	$(INSTALL) $(LM_DEPS) $(pkglibdir)
-
