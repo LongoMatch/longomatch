@@ -59,7 +59,6 @@ dist: ChangeLog
 
 LM_DEPS = \
 	$(top_builddir)/bin/Couchbase.Lite.dll \
-	$(top_builddir)/bin/Moq.dll \
 	$(top_builddir)/bin/Newtonsoft.Json.dll \
 	$(top_builddir)/bin/SQLitePCL.raw.dll \
 	$(top_builddir)/bin/SQLitePCL.ugly.dll
