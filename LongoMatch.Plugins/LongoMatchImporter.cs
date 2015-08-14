@@ -63,10 +63,7 @@ namespace LongoMatch.Plugins
 				return null;
 
 			IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
-			Action action = () => {
-				project = Project.Import (filename);
-			};
-			busy.ShowSync (action);
+			busy.ShowSync (() => { project = Project.Import (filename); });
 			return project;
 		}
 
