@@ -2,7 +2,12 @@ BUILD_DIR ?= $(top_builddir)/bin
 ASSEMBLY_FILE ?= $(BUILD_DIR)/$(ASSEMBLY)
 OUTPUT_DIR ?= $(pkglibdir)
 
-XBUILD_CMD = $(XBUILD) $(XBUILD_FLAGS) /property:BuildType=makefiles /property:BuildProjectReferences=false /property:OutDir=$(BUILD_DIR)/ $(PROJECT_FILE) $(XBUILD_EXTRA_FLAGS)
+
+XBUILD_CMD = $(XBUILD) $(XBUILD_FLAGS) \
+ /property:BuildType=makefiles \
+ /property:BuildProjectReferences=false \
+ /property:OutDir=$(BUILD_DIR)/ \
+ $(PROJECT_FILE) $(XBUILD_EXTRA_FLAGS)
 
 OUTPUT_FILES ?= \
 	$(ASSEMBLY_FILE) \
