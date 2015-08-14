@@ -57,6 +57,6 @@ dist: ChangeLog
 
 .PHONY: ChangeLog
 
-include $(top_srcdir)/buid/build_env.mk
+include $(top_srcdir)/build/build_env.mk
 install-data-hook:
 	$(INSTALL) $(LM_DEPS) $(pkglibdir)
