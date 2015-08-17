@@ -19,6 +19,7 @@ SUBDIRS = \
 	images \
 	pkgconfig \
 	libcesarplayer \
+	.nuget \
 	oxyplot \
 	LongoMatch.Core \
 	LongoMatch.DB \

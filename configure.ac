@@ -165,6 +165,8 @@ pkgconfig/longomatch-multimedia.pc
 pkgconfig/longomatch-oxyplot.pc
 pkgconfig/longomatch-services.pc
 
+.nuget/Makefile
+
 AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile
