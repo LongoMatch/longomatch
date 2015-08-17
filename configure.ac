@@ -91,6 +91,11 @@ AC_PATH_PROG(COV_GTK, cov-gtk, no)
 AC_PATH_PROG(COV_HTML, cov-html, no)
 AM_CONDITIONAL(HAVE_COVEM, test x$COVEM != xno)
 
+dnl Disable multimedia tools
+AC_ARG_WITH([multimedia-tools],
+	AS_HELP_STRING([--without-multimedia-tools], [Disable multimedia tools]))
+AM_CONDITIONAL(WITH_MULTIMEDIA_TOOLS, test x$with_multimedia_tools != xno)
+
 dnl package checks, common for all configs
 PKG_CHECK_MODULES([GLIBSHARP], [glib-sharp-2.0])
 AC_SUBST(GLIBSHARP_LIBS)

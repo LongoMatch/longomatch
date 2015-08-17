@@ -65,6 +65,7 @@ EXTRA_DIST = \
 	baconvideowidget-marshal.list
 
 
+if WITH_MULTIMEDIA_TOOLS
 noinst_PROGRAMS = test-capturer test-discoverer test-remuxer test-editor
 
 test_capturer_SOURCES = test-capturer.c
@@ -78,3 +79,4 @@ test_remuxer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
 
 test_editor_SOURCES = test-editor.c
 test_editor_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+endif
