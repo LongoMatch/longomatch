@@ -32,6 +32,7 @@ SUBDIRS = \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
 	LongoMatch.Plugins \
+	LongoMatch.Plugins.GStreamer \
 	LongoMatch.Plugins.Stats \
 	LongoMatch \
 	po
