@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class EventType: StorableBase
 	{
 
@@ -32,6 +32,12 @@ namespace LongoMatch.Core.Store
 		{
 			ID = Guid.NewGuid ();
 			Color = Color.Red;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string Name {

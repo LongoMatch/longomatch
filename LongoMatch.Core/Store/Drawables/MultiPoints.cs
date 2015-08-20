@@ -22,6 +22,7 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store.Drawables
 {
+	[Serializable]
 	public class MultiPoints: Rectangle
 	{
 		List<Point> points;

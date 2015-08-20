@@ -18,8 +18,8 @@
 
 using System;
 using LongoMatch.Core.Common;
-using Newtonsoft.Json;
 using LongoMatch.Core.Serialization;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {

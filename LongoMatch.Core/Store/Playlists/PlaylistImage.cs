@@ -27,6 +27,7 @@ using SImage = Gdk.Pixbuf;
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistImage: IPlaylistElement
 	{
 		public PlaylistImage (Image image, Time duration)
@@ -35,6 +36,12 @@ namespace LongoMatch.Core.Store.Playlists
 			Miniature = image.Scale (Constants.MAX_THUMBNAIL_SIZE,
 			                         Constants.MAX_THUMBNAIL_SIZE);
 			Duration = duration;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public Image Image {

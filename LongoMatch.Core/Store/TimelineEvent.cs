@@ -33,7 +33,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 
 	[Serializable]
-	public class  TimelineEvent : PixbufTimeNode, IStorable
+	public class TimelineEvent : PixbufTimeNode, IStorable
 	{
 
 		bool filling;
@@ -86,6 +86,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
 		bool IsLoading {
 			get;
 			set;

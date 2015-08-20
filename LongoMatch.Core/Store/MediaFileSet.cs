@@ -25,11 +25,18 @@ namespace LongoMatch.Core.Store
 {
 	[JsonObject (MemberSerialization.OptIn)]
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class MediaFileSet : List<MediaFile>
 	{
 
 		public MediaFileSet ()
 		{
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		[JsonProperty]

@@ -17,16 +17,24 @@
 // 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class Coordinates
 	{
 		
 		public Coordinates ()
 		{
 			Points = new List<Point> ();
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public List<Point> Points {

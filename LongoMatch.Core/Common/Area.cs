@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	[JsonObject (MemberSerialization.OptIn)]
 	public class Area
 	{
@@ -43,6 +44,12 @@ namespace LongoMatch.Core.Common
 			Start = start;
 			Width = width;
 			Height = height;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public bool Empty {

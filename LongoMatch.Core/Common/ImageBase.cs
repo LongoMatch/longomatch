@@ -17,10 +17,12 @@
 //
 using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public abstract class BaseImage<T>: ISerializable, IDisposable where T: IDisposable
 	{
 
@@ -38,6 +40,12 @@ namespace LongoMatch.Core.Common
 		public BaseImage (string filename)
 		{
 			Value = LoadFromFile (filename);
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public T Value {

@@ -17,14 +17,14 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
 		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset = null)
@@ -35,6 +35,12 @@ namespace LongoMatch.Core.Store.Playlists
 			CamerasLayout = play.CamerasLayout;
 			CamerasConfig = play.CamerasConfig.Clone ();
 			FileSet = fileset;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>

@@ -23,9 +23,9 @@ using System.Collections.Generic;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class DashboardButton
 	{
-
 		public DashboardButton ()
 		{
 			Name = "";
@@ -36,6 +36,12 @@ namespace LongoMatch.Core.Store
 			TextColor = Config.Style.PaletteBackgroundLight;
 			HotKey = new HotKey ();
 			ActionLinks = new List<ActionLink> ();
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public virtual string Name {

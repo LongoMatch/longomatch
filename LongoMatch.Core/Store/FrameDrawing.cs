@@ -20,11 +20,13 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Drawables;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class FrameDrawing
 	{
 		private const int DEFAULT_PAUSE_TIME = 5000;
@@ -41,6 +43,12 @@ namespace LongoMatch.Core.Store
 			Drawables = new List<Drawable> ();
 			CameraConfig = new CameraConfig (0);
 			RegionOfInterest = new Area ();
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public Image Miniature {

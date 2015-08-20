@@ -17,13 +17,13 @@
 //
 
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class Point
 	{
 
@@ -31,6 +31,12 @@ namespace LongoMatch.Core.Common
 		{
 			X = x;
 			Y = y;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public double X {

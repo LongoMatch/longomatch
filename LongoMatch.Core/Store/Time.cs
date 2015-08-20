@@ -30,6 +30,7 @@ namespace LongoMatch.Core.Store
 	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
 	/// </summary>
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class Time :  IComparable
 	{
 		private const int MS = 1000000;
@@ -49,10 +50,16 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
+		#region Properties
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		//// <summary>
 		/// Time in miliseconds
 		/// </summary>
-		#region Properties
 		public int MSeconds {
 			get;
 			set;

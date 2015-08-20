@@ -31,6 +31,7 @@ namespace LongoMatch.Core.Store
 	/// It has a name that describe it and a start and stop <see cref="LongoMatch.Store.Time"/>
 	/// </summary>
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class TimeNode
 	{
 		Time start, stop, eventTime;
@@ -45,6 +46,12 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// A short description of the time node

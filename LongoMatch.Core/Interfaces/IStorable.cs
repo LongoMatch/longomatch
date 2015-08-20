@@ -27,6 +27,8 @@ namespace LongoMatch.Core.Interfaces
 		IStorage Storage {get; set;}
 
 		bool IsLoaded {get; set;}
+
+		bool IsChanged {get; set;}
 	}
 }
 

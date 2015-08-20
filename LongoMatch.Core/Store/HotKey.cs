@@ -29,6 +29,7 @@ namespace LongoMatch.Core.Store
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class HotKey : IEquatable<HotKey>
 	{
 		#region Constructors
@@ -45,6 +46,12 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Gdk Key

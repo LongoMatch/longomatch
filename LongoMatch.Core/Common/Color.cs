@@ -16,12 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using Newtonsoft.Json;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class Color
 	{
 		public Color (byte r, byte g, byte b, byte a = byte.MaxValue)
@@ -30,6 +31,12 @@ namespace LongoMatch.Core.Common
 			G = g;
 			B = b;
 			A = a;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public byte R {

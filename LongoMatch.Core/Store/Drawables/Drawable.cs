@@ -24,12 +24,19 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public abstract class Drawable: IBlackboardObject
 	{
 		public Drawable ()
 		{
 		}
-		
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		public Color StrokeColor {
 			get;
 			set;

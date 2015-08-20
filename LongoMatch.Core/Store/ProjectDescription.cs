@@ -28,6 +28,7 @@ namespace LongoMatch.Core.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class ProjectDescription :  IComparable
 	{
 		DateTime matchDate, lastModified;
@@ -56,6 +57,12 @@ namespace LongoMatch.Core.Store
 			if (ProjectID == Guid.Empty) {
 				ProjectID = ID;
 			}
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>

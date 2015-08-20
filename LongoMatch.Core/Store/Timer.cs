@@ -25,12 +25,19 @@ using LongoMatch.Core.Common;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class Timer
 	{
 		public Timer ()
 		{
 			Nodes = new List<TimeNode> ();
 			Team = TeamType.NONE;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string Name {

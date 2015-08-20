@@ -17,7 +17,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
@@ -27,6 +26,7 @@ namespace LongoMatch.Core.Store
 	/// Defines an action link between 2 buttons in a <see cref="LongoMatch.Core.Store.Templates.Dashboard"/>.
 	/// </summary>
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class ActionLink
 	{
 		public ActionLink ()
@@ -36,6 +36,12 @@ namespace LongoMatch.Core.Store
 			TeamAction = TeamLinkAction.Keep;
 			SourceTags = new List<Tag> ();
 			DestinationTags = new List<Tag> ();
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>

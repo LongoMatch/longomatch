@@ -24,6 +24,7 @@ using LongoMatch.Core.Common;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class StorableBase: IStorable
 	{
 
@@ -53,7 +54,14 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
 		bool IsLoading {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public bool IsChanged {
 			get;
 			set;
 		}
