@@ -109,8 +109,7 @@
     <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestDataBaseFileDB.cs" />
     <Compile Include="DB\TestViews.cs" />
-    <Compile Include="Core\Store\TestStorables.cs" />
-    <Compile Include="MemoryStorage.cs" />
+    <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
@@ -141,6 +140,7 @@
     <Folder Include="Services\" />
     <Folder Include="DB\" />
     <Folder Include="Core\Store\Playlists\" />
+    <Folder Include="Core\Serialization\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
