@@ -100,6 +100,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			o.RedrawEvent += HandleRedrawEvent;
 		}
 
+		public void InsertNode (int index, TimeNodeObject o)
+		{
+			nodes.Insert (index, o);
+			o.RedrawEvent += HandleRedrawEvent;
+		}
+
 		public void RemoveNode (TimeNode node)
 		{
 			TimeNodeObject to;
