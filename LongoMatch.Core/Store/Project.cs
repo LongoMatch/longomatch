@@ -20,6 +20,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Common;
@@ -47,6 +49,11 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class Project : StorableBase, IComparable
 	{
+		ObservableCollection<TimelineEvent> timeline;
+		ObservableCollection<Period> periods;
+		ObservableCollection<Timer> timers;
+		ObservableCollection<Playlist> playlists;
+		ObservableCollection<EventType> eventTypes;
 		ProjectDescription description;
 		SubstitutionEventType subsType;
 
@@ -55,14 +62,14 @@ namespace LongoMatch.Core.Store
 		public Project ()
 		{
 			ID = System.Guid.NewGuid ();
-			Timeline = new List<TimelineEvent> ();
+			Timeline = new ObservableCollection<TimelineEvent> ();
 			Dashboard = new Dashboard ();
 			LocalTeamTemplate = new Team ();
 			VisitorTeamTemplate = new Team ();
-			Timers = new List<Timer> ();
-			Periods = new List<Period> ();
-			Playlists = new List<Playlist> ();
-			EventTypes = new List<EventType> ();
+			Timers = new ObservableCollection<Timer> ();
+			Periods = new ObservableCollection<Period> ();
+			Playlists = new ObservableCollection<Playlist> ();
+			EventTypes = new ObservableCollection<EventType> ();
 		}
 
 		#endregion
@@ -82,9 +89,19 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public List<TimelineEvent> Timeline {
-			get;
-			set;
+		public ObservableCollection<TimelineEvent> Timeline {
+			get {
+				return timeline;
+			}
+			set {
+				if (timeline != null) {
+					timeline.CollectionChanged -= ListChanged;
+				}
+				timeline = value;
+				if (timeline != null) {
+					timeline.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[LongoMatchPropertyPreload]
@@ -101,9 +118,19 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonProperty (Order = -7)]
-		public List<EventType> EventTypes {
-			get;
-			set;
+		public ObservableCollection<EventType> EventTypes {
+			get {
+				return eventTypes;
+			}
+			set {
+				if (eventTypes != null) {
+					eventTypes.CollectionChanged -= ListChanged;
+				}
+				eventTypes = value;
+				if (eventTypes != null) {
+					eventTypes.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <value>
@@ -133,19 +160,49 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public List<Period> Periods {
-			get;
-			set;
+		public ObservableCollection<Period> Periods {
+			get {
+				return periods;
+			}
+			set {
+				if (periods != null) {
+					periods.CollectionChanged -= ListChanged;
+				}
+				periods = value;
+				if (periods != null) {
+					periods.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
-		public List<Timer> Timers {
-			get;
-			set;
+		public ObservableCollection<Timer> Timers {
+			get {
+				return timers;
+			}
+			set {
+				if (timers != null) {
+					timers.CollectionChanged -= ListChanged;
+				}
+				timers = value;
+				if (timers != null) {
+					timers.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
-		public List<Playlist> Playlists {
-			get;
-			set;
+		public ObservableCollection<Playlist> Playlists {
+			get {
+				return playlists;
+			}
+			set {
+				if (playlists != null) {
+					playlists.CollectionChanged -= ListChanged;
+				}
+				playlists = value;
+				if (playlists != null) {
+					playlists.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
@@ -280,7 +337,7 @@ namespace LongoMatch.Core.Store
 			evt.EventType = type;
 			evt.Notes = "";
 			evt.Miniature = miniature;
-			evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
+			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 
 			if (addToTimeline) {
 				Timeline.Add (evt);
@@ -363,7 +420,7 @@ namespace LongoMatch.Core.Store
 			}
 
 			/* Remove null EventTypes just in case */
-			EventTypes = EventTypes.Where (e => e != null).ToList ();
+			EventTypes = new ObservableCollection<EventType> (EventTypes.Where (e => e != null));
 		}
 
 		public SubstitutionEvent SubsitutePlayer (Team template, Player playerIn, Player playerOut,
@@ -421,11 +478,11 @@ namespace LongoMatch.Core.Store
 
 			homeTeam = new Team {
 				Formation = LocalTeamTemplate.Formation,
-				List = homeTeamPlayers
+				List = new ObservableCollection<Player> (homeTeamPlayers)
 			};
 			awayTeam = new Team {
 				Formation = VisitorTeamTemplate.Formation,
-				List = awayTeamPlayers
+				List = new ObservableCollection<Player> (awayTeamPlayers)
 			};
 			
 			homeFieldPlayers = homeTeam.StartingPlayersList;
@@ -539,9 +596,9 @@ namespace LongoMatch.Core.Store
 		///   evt1 00:15:00            evt2 00:41:00
 		/// </summary>
 		/// <param name="periods">The new periods syncrhonized with the video file.</param>
-		public void ResyncEvents (List<Period> periods)
+		public void ResyncEvents (IList<Period> periods)
 		{
-			List<TimelineEvent> newTimeline = new List<TimelineEvent> ();
+			ObservableCollection<TimelineEvent> newTimeline = new ObservableCollection<TimelineEvent> ();
 
 			if (periods.Count != Periods.Count) {
 				throw new IndexOutOfRangeException (
@@ -566,7 +623,9 @@ namespace LongoMatch.Core.Store
 					newTimeline.Add (e);
 					Timeline.Remove (e);
 				});
-				oldPeriod.Nodes.ForEach (t => t.Move (diff));
+				foreach (TimeNode tn in oldPeriod.Nodes) {
+					tn.Move (diff);
+				}
 			}
 			Timeline = newTimeline;
 		}
@@ -614,6 +673,10 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 		#endregion
 	}
 }

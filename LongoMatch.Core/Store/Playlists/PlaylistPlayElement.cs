@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
@@ -27,13 +29,15 @@ namespace LongoMatch.Core.Store.Playlists
 	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
+		ObservableCollection<CameraConfig> camerasConfig;
+
 		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset = null)
 		{
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
 			CamerasLayout = play.CamerasLayout;
-			CamerasConfig = play.CamerasConfig.Clone ();
+			CamerasConfig = new ObservableCollection<CameraConfig> (play.CamerasConfig);
 			FileSet = fileset;
 		}
 
@@ -110,9 +114,19 @@ namespace LongoMatch.Core.Store.Playlists
 		/// Override the default <see cref="TimelineEvent.CamerasConfig"/>
 		/// defined by the <see cref="TimelineEvent"/>
 		/// </summary>
-		public List<CameraConfig> CamerasConfig {
-			get;
-			set;
+		public ObservableCollection<CameraConfig> CamerasConfig {
+			get {
+				return camerasConfig;
+			}
+			set {
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged -= ListChanged;
+				}
+				camerasConfig = value;
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 
@@ -146,6 +160,11 @@ namespace LongoMatch.Core.Store.Playlists
 					Play.Drawings.Count);
 			}
 
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

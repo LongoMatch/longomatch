@@ -19,8 +19,9 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
@@ -38,6 +39,7 @@ namespace LongoMatch.Core.Store.Templates
 	public class Dashboard: StorableBase, ITemplate
 	{
 
+		ObservableCollection<DashboardButton> list;
 		const int CAT_WIDTH = 120;
 		const int CAT_HEIGHT = 80;
 		const int MIN_WIDTH = 320;
@@ -53,8 +55,8 @@ namespace LongoMatch.Core.Store.Templates
 				/* Ingore for unit tests */
 			}
 			ID = Guid.NewGuid ();
-			List = new List<DashboardButton> ();
-			GamePeriods = new List<string> {"1", "2"};
+			List = new ObservableCollection<DashboardButton> ();
+			GamePeriods = new ObservableCollection<string> {"1", "2"};
 		}
 
 		[JsonIgnore]
@@ -77,9 +79,19 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// A list with all the buttons in this dashboard
 		/// </summary>
-		public List<DashboardButton> List {
-			get;
-			set;
+		public ObservableCollection<DashboardButton> List {
+			get {
+				return list;
+			}
+			set {
+				if (list != null) {
+					list.CollectionChanged -= ListChanged;
+				}
+				list = value;
+				if (list != null) {
+					list.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -99,7 +111,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// the same names
 		/// </summary>
 		/// <value>The game periods.</value>
-		public List<string> GamePeriods {
+		public ObservableCollection<string> GamePeriods {
 			get;
 			set;
 		}
@@ -301,14 +313,10 @@ namespace LongoMatch.Core.Store.Templates
 			TimerButton timerButton;
 			PenaltyCardButton cardButton;
 			ScoreButton scoreButton;
-			List<string> periods = new List<string> ();
 			Dashboard template = new Dashboard ();
 			
 			template.FillDefaultTemplate (count);
-
-			periods.Add ("1");
-			periods.Add ("2");
-			template.GamePeriods = periods; 
+			template.GamePeriods = new ObservableCollection<string> {"1", "2"};
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),
@@ -387,6 +395,11 @@ namespace LongoMatch.Core.Store.Templates
 			foreach (ActionLink l in link.DestinationButton.ActionLinks) {
 				CheckLinks (l, traversed.ToList ());
 			}
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

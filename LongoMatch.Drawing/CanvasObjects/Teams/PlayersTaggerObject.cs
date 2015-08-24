@@ -209,7 +209,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			field.Update ();
 		}
 
-		public void Select (List<Player> players, TeamType team)
+		public void Select (IList<Player> players, TeamType team)
 		{
 			ResetSelection ();
 			foreach (Player p in players) {

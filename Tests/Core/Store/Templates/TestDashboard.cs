@@ -17,10 +17,11 @@
 //
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using LongoMatch.Core.Common;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using NUnit.Framework;
+using LongoMatch.Core.Common;
 
 namespace Tests.Core.Store.Templates
 {
@@ -35,9 +36,7 @@ namespace Tests.Core.Store.Templates
 			Utils.CheckSerialization (cat);
 			
 			cat.Name = "test";
-			cat.GamePeriods = new List<string> ();
-			cat.GamePeriods.Add ("1");
-			cat.GamePeriods.Add ("2");
+			cat.GamePeriods = new ObservableCollection<string> {"1", "2"};
 			cat.List.Add (new AnalysisEventButton { Name = "cat1" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat2" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat3" });
@@ -104,7 +103,7 @@ namespace Tests.Core.Store.Templates
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (1, b1.ActionLinks.Count);
 
-			b1.ActionLinks [0].DestinationTags = new List<Tag> { b2.AnalysisEventType.Tags [0] };
+			b1.ActionLinks [0].DestinationTags = new ObservableCollection<Tag> { b2.AnalysisEventType.Tags [0] };
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (1, b1.ActionLinks.Count);
 
@@ -114,6 +113,41 @@ namespace Tests.Core.Store.Templates
 			b2.AnalysisEventType.Tags.Remove (b2.AnalysisEventType.Tags [0]);
 			dashboard.RemoveDeadLinks (b2);
 			Assert.AreEqual (0, b1.ActionLinks.Count);
+		}
+
+		[Test()]
+		public void TestIsChanged (){
+			Dashboard d = Dashboard.DefaultTemplate (10);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Name = "new";
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Image = new Image (10, 10);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.FieldBackground = new Image (10, 10);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.HalfFieldBackground = new Image (10, 10);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.DisablePopupWindow = true;
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.List.Remove (d.List[0]);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.List.Add (new DashboardButton ());
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.List = new ObservableCollection<DashboardButton> ();
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.List = null;
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+
 		}
 	}
 }

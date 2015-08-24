@@ -113,14 +113,14 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public List<Point> Points {
+		public IList<Point> Points {
 			set {
 				ClearObjects ();
 				AddObject (new PositionObject (value, Background.Width, Background.Height));
 			}
 		}
 
-		public List<TimelineEvent> Plays {
+		public IList<TimelineEvent> Plays {
 			set {
 				ClearObjects ();
 				foreach (TimelineEvent p in value) {

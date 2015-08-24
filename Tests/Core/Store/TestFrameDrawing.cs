@@ -16,11 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
 using NUnit.Framework;
+using LongoMatch.Core.Common;
 
 namespace Tests.Core.Store
 {
@@ -33,7 +33,7 @@ namespace Tests.Core.Store
 			FrameDrawing d = new FrameDrawing ();
 			d.Miniature = Utils.LoadImageFromFile ();
 			d.Freehand = Utils.LoadImageFromFile ();
-			d.Drawables = new List<Drawable> { new Line (), new Rectangle () };
+			d.Drawables = new ObservableCollection<Drawable> { new Line (), new Rectangle () };
 			d.CameraConfig = new CameraConfig (2);
 			d.Render = new Time (1000);
 			d.Pause = new Time (2000);
@@ -46,6 +46,37 @@ namespace Tests.Core.Store
 			Assert.AreEqual (d2.Drawables.Count, d.Drawables.Count);
 			Assert.IsNotNull (d2.Freehand);
 			Assert.IsNotNull (d2.Miniature);
+		}
+
+		[Test()]
+		public void TestIsChanged () {
+			FrameDrawing d = new FrameDrawing ();
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.CameraConfig = new CameraConfig (1);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Freehand = new Image (5, 5);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Miniature = new Image (5, 5);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Pause = new Time (5);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.RegionOfInterest = new Area (23, 23, 23, 23);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Render = new Time (2);
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Drawables.Add (new Line ());
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
+			d.Drawables = null;
+			Assert.IsTrue (d.IsChanged);
+			d.IsChanged = false;
 		}
 	}
 }

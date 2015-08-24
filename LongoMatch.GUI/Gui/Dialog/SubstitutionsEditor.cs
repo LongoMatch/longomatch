@@ -27,6 +27,7 @@ using LongoMatch.Drawing;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Drawing.Widgets;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -126,7 +127,7 @@ namespace LongoMatch.Gui.Dialog
 					ActiveColor = project.LocalTeamTemplate.ActiveColor,
 					ID = project.LocalTeamTemplate.ID,
 					Formation = project.LocalTeamTemplate.Formation,
-					List = homeTeamPlayers
+					List = new ObservableCollection<Player> (homeTeamPlayers)
 				};
 			}
 
@@ -137,7 +138,7 @@ namespace LongoMatch.Gui.Dialog
 					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
 					Formation = project.VisitorTeamTemplate.Formation,
-					List = awayTeamPlayers
+					List = new ObservableCollection<Player> (awayTeamPlayers)
 				};
 			}
 

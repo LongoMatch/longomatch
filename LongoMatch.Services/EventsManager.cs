@@ -29,6 +29,7 @@ using LongoMatch.Core;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Services
 {
@@ -251,10 +252,10 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 				play.CamerasLayout = player.CamerasLayout;
-				play.CamerasConfig = player.CamerasConfig;
+				play.CamerasConfig = new ObservableCollection<CameraConfig> (player.CamerasConfig);
 			} else {
 				play.CamerasLayout = null;
-				play.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
+				play.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 			}
 
 			filter.Update ();
@@ -293,10 +294,10 @@ namespace LongoMatch.Services
 			var play = openedProject.AddEvent (evType, start, stop, eventTime, null, score, card);
 			play.Team = team;
 			if (players != null) {
-				play.Players = players;
+				play.Players = new ObservableCollection<Player> (players);
 			}
 			if (tags != null) {
-				play.Tags = tags;
+				play.Tags = new ObservableCollection<Tag> (tags);
 			}
 			AddNewPlay (play);
 		}
@@ -347,7 +348,7 @@ namespace LongoMatch.Services
 				copy.ID = Guid.NewGuid ();
 				/* The category is also serialized and desarialized */
 				copy.EventType = play.EventType;
-				copy.Players = play.Players.ToList ();
+				copy.Players = new ObservableCollection<Player> (play.Players);
 				openedProject.AddEvent (copy);
 				analysisWindow.AddPlay (copy);
 			}

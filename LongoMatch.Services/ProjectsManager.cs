@@ -16,8 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.IO;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -126,7 +126,7 @@ namespace LongoMatch.Services
 			
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
-				project.Periods = Capturer.Periods;
+				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -302,7 +302,7 @@ namespace LongoMatch.Services
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
-				project.Periods = Capturer.Periods;
+				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
 				} catch (Exception ex) {

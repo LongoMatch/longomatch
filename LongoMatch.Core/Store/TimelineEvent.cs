@@ -25,6 +25,8 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store
 {
@@ -35,19 +37,22 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimelineEvent : PixbufTimeNode, IStorable
 	{
-
+		ObservableCollection<FrameDrawing> drawings;
+		ObservableCollection<Player> players;
+		ObservableCollection<Tag> tags;
+		ObservableCollection<CameraConfig> camerasConfig;
 		bool filling;
 		#region Constructors
 
 		public TimelineEvent ()
 		{
 			IsLoaded = true;
-			Drawings = new List<FrameDrawing> ();
-			Players = new List<Player> ();
-			Tags = new List<Tag> ();
+			Drawings = new ObservableCollection<FrameDrawing> ();
+			Players = new ObservableCollection<Player> ();
+			Tags = new ObservableCollection<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasConfig = new List<CameraConfig> () {new CameraConfig (0)};
+			CamerasConfig = new ObservableCollection<CameraConfig> {new CameraConfig (0)};
 		}
 
 		#endregion
@@ -114,9 +119,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of drawings for this event
 		/// </summary>
-		public List<FrameDrawing> Drawings {
-			get;
-			set;
+		public ObservableCollection<FrameDrawing> Drawings {
+			get {
+				return drawings;
+			}
+			set {
+				if (drawings != null) {
+					drawings.CollectionChanged -= ListChanged;
+				}
+				drawings = value;
+				if (drawings != null) {
+					drawings.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -132,9 +147,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of players tagged in this event.
 		/// </summary>
-		public List<Player> Players {
-			get;
-			set;
+		public ObservableCollection<Player> Players {
+			get {
+				return players;
+			}
+			set {
+				if (players != null) {
+					players.CollectionChanged -= ListChanged;
+				}
+				players = value;
+				if (players != null) {
+					players.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -150,9 +175,19 @@ namespace LongoMatch.Core.Store
 		/// List of tags describing this event.
 		/// </summary>
 		/// <value>The tags.</value>
-		public List<Tag> Tags {
-			get;
-			set;
+		public ObservableCollection<Tag> Tags {
+			get {
+				return tags;
+			}
+			set {
+				if (tags != null) {
+					tags.CollectionChanged -= ListChanged;
+				}
+				tags = value;
+				if (tags != null) {
+					tags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -191,9 +226,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of visible <see cref="CameraConfig"/> for this event.
 		/// </summary>
-		public List<CameraConfig> CamerasConfig {
-			get;
-			set;
+		public ObservableCollection<CameraConfig> CamerasConfig {
+			get {
+				return camerasConfig;
+			}
+			set {
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged -= ListChanged;
+				}
+				camerasConfig = value;
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
@@ -300,7 +345,7 @@ namespace LongoMatch.Core.Store
 			return null;
 		}
 
-		public void UpdateCoordinates (FieldPositionType pos, List<Point> points)
+		public void UpdateCoordinates (FieldPositionType pos, ObservableCollection<Point> points)
 		{
 			Coordinates co = new Coordinates ();
 			co.Points = points;
@@ -322,8 +367,12 @@ namespace LongoMatch.Core.Store
 		{
 			return Description;
 		}
-
 		#endregion
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 
 	/// <summary>

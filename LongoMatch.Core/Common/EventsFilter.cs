@@ -199,7 +199,7 @@ namespace LongoMatch.Core.Common
 		void UpdateVisibleCategories ()
 		{
 			if (eventsFilter.Count == 0) {
-				VisibleEventTypes = project.EventTypes;
+				VisibleEventTypes = project.EventTypes.ToList ();
 			} else {
 				VisibleEventTypes = eventsFilter.Keys.ToList ();
 			}

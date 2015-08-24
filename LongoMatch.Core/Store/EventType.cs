@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
@@ -24,7 +26,6 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
 	public class EventType: StorableBase
 	{
 
@@ -32,12 +33,6 @@ namespace LongoMatch.Core.Store
 		{
 			ID = Guid.NewGuid ();
 			Color = Color.Red;
-		}
-
-		[JsonIgnore]
-		public bool IsChanged {
-			get;
-			set;
 		}
 
 		public string Name {
@@ -112,14 +107,26 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class AnalysisEventType: EventType
 	{
+		ObservableCollection<Tag> tags;
+
 		public AnalysisEventType ()
 		{
-			Tags = new List<Tag> ();
+			Tags = new ObservableCollection<Tag> ();
 		}
 
-		public List<Tag> Tags {
-			get;
-			set;
+		public ObservableCollection<Tag> Tags {
+			get {
+				return tags;
+			}
+			set {
+				if (tags != null) {
+					tags.CollectionChanged -= ListChanged;
+				}
+				tags = value;
+				if (tags != null) {
+					tags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
@@ -127,6 +134,11 @@ namespace LongoMatch.Core.Store
 			get {
 				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());
 			}
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 

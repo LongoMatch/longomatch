@@ -27,6 +27,7 @@ using LongoMatch.DB;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace Tests.DB
 {
@@ -417,7 +418,7 @@ namespace Tests.DB
 					EventType = p.EventTypes [i],
 					Start = new Time (1000),
 					Stop = new Time (2000),
-					Players = new List<Player> { p.LocalTeamTemplate.List [0] }, 
+					Players = new ObservableCollection<Player> { p.LocalTeamTemplate.List [0] }, 
 				};
 				p.Timeline.Add (evt);
 			}

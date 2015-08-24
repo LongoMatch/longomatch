@@ -16,9 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace LongoMatch.Core.Store
 {
@@ -26,6 +28,8 @@ namespace LongoMatch.Core.Store
 	[PropertyChanged.ImplementPropertyChanged]
 	public class DashboardButton
 	{
+		ObservableCollection<ActionLink> actionLinks;
+
 		public DashboardButton ()
 		{
 			Name = "";
@@ -35,7 +39,7 @@ namespace LongoMatch.Core.Store
 			BackgroundColor = Color.Red;
 			TextColor = Config.Style.PaletteBackgroundLight;
 			HotKey = new HotKey ();
-			ActionLinks = new List<ActionLink> ();
+			ActionLinks = new ObservableCollection <ActionLink> ();
 		}
 
 		[JsonIgnore]
@@ -87,9 +91,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list with all the outgoing links of this button
 		/// </summary>
-		public List<ActionLink> ActionLinks {
-			get;
-			set;
+		public ObservableCollection<ActionLink> ActionLinks {
+			get {
+				return actionLinks;
+			}
+			set {
+				if (actionLinks != null) {
+					actionLinks.CollectionChanged -= ListChanged;
+				}
+				actionLinks = value;
+				if (actionLinks != null) {
+					actionLinks.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
@@ -116,6 +130,11 @@ namespace LongoMatch.Core.Store
 		{
 			link.SourceButton = this;
 			ActionLinks.Add (link);
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 
@@ -238,6 +257,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
 		public Time StartTime {
 			get {
 				return currentNode == null ? null : currentNode.Start;

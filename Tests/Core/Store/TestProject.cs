@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
 using System.Linq;
+using LongoMatch.Core.Store.Playlists;
 
 namespace Tests.Core.Store
 {
@@ -349,7 +350,7 @@ namespace Tests.Core.Store
 			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6200) });
 			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6500) });
 
-			List<TimelineEvent> oldTimeline = p.Timeline.Clone ();
+			IList<TimelineEvent> oldTimeline = p.Timeline.Clone ();
 
 			p.ResyncEvents (syncedPeriods);
 			Assert.AreEqual (oldTimeline [0].EventTime + offset1, p.Timeline [0].EventTime);
@@ -363,6 +364,55 @@ namespace Tests.Core.Store
 			Assert.AreEqual (oldTimeline [6].EventTime + offset3, p.Timeline [6].EventTime);
 			Assert.AreEqual (oldTimeline [7].EventTime + offset3, p.Timeline [7].EventTime);
 			Assert.AreEqual (oldTimeline [8].EventTime + offset3, p.Timeline [8].EventTime);
+		}
+
+		[Test()]
+		public void TestIsChanged () {
+			Project p = new Project ();
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Dashboard = new Dashboard ();
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.LocalTeamTemplate = new Team ();
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.VisitorTeamTemplate = new Team ();
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Description = new ProjectDescription ();
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Timeline.Add (new TimelineEvent ());
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Timeline = null;
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.EventTypes.Add (new EventType ());
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.EventTypes = null;
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Playlists.Add (new Playlist ());
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Playlists = null;
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Periods.Add (new Period ());
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Periods = null;
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Timers.Add (new Timer ());
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
+			p.Timers = null;
+			Assert.IsTrue (p.IsChanged);
+			p.IsChanged = false;
 		}
 	}
 }

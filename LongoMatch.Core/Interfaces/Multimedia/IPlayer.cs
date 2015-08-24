@@ -19,6 +19,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Handlers;
 using Image = LongoMatch.Core.Common.Image;
@@ -159,7 +161,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		/// {0, 1} will play MediaFileSet[0] in WindowHandles[0] and MediaFileSet[1] in WindowsHandles[1]
 		/// {2, 3} will play MediaFileSet[2] in WindowHandles[0] and MediaFileSet[3] in WindowsHandles[1]
 		/// </summary>
-		List<CameraConfig> CamerasConfig { set; }
+		ObservableCollection <CameraConfig> CamerasConfig { set; }
 
 		void ApplyCamerasConfig ();
 

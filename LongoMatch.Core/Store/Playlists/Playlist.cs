@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
@@ -29,13 +31,14 @@ namespace LongoMatch.Core.Store.Playlists
 	public class Playlist: StorableBase
 	{
 		int indexSelection = 0;
+		ObservableCollection<IPlaylistElement> elements;
 
 		#region Constructors
 
 		public Playlist ()
 		{
 			ID = System.Guid.NewGuid ();
-			Elements = new ObservableCollection<IPlaylistElement> ();
+			Elements = new ObservableCollection <IPlaylistElement> ();
 		}
 
 		#endregion
@@ -50,16 +53,28 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		public ObservableCollection<IPlaylistElement> Elements {
-			get;
-			set;
+			get {
+				return elements;
+			}
+			set {
+				if (elements != null) {
+					elements.CollectionChanged -= ListChanged;
+				}
+				elements = value;
+				if (elements != null) {
+					elements.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
+		[JsonIgnore]
 		public int CurrentIndex {
 			get {
 				return indexSelection;
 			}
 		}
 
+		[JsonIgnore]
 		public IPlaylistElement Selected {
 			get {
 				if (Elements.Count == 0) {
@@ -150,5 +165,10 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		#endregion
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 }

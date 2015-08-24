@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -28,8 +29,8 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using Mono.Unix;
 using LongoMatch.Gui.Dialog;
+using Mono.Unix;
 using Helpers = LongoMatch.Gui.Helpers;
 using Image = LongoMatch.Core.Common.Image;
 
@@ -552,7 +553,7 @@ namespace LongoMatch.Gui.Component
 		void HandleApplyClicked (object sender, EventArgs e)
 		{
 			try {
-				template.GamePeriods = periodsentry.Text.Split ('-').ToList ();
+				template.GamePeriods = new ObservableCollection<string> (periodsentry.Text.Split ('-'));
 				Edited = true;
 			} catch {
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));

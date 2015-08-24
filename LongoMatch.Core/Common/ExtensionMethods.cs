@@ -18,12 +18,13 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Core.Common
 {
 	public static class ExtensionMethods
 	{
-		public static void Swap<T> (this List<T> list, T e1, T e2)
+		public static void Swap<T> (this IList<T> list, T e1, T e2)
 		{
 			int index1, index2;
 			
@@ -59,7 +60,7 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public static bool SequenceEqualSafe<T> (this List<T> first, List<T> second)
+		public static bool SequenceEqualSafe<T> (this IList<T> first, IList<T> second)
 		{
 			if (first == null && second == null) {
 				return true;
@@ -68,7 +69,22 @@ namespace LongoMatch.Core.Common
 			} else {
 				return first.SequenceEqual (second);
 			}
+		}
 
+		public static int RemoveAll<T>(this ObservableCollection<T> coll, Func<T, bool> condition)
+		{
+			var itemsToRemove = coll.Where(condition).ToList();
+			foreach (var itemToRemove in itemsToRemove) {
+				coll.Remove(itemToRemove);
+			}
+			return itemsToRemove.Count;
+		}
+
+		public static void AddRange<T>(this ObservableCollection<T> coll, IEnumerable<T> range)
+		{
+			foreach (var item in range) {
+				coll.Add (item);
+			}
 		}
 	}
 }

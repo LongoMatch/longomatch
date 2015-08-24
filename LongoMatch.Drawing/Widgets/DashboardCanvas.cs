@@ -26,6 +26,7 @@ using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Dashboard;
 using LongoMatch.Drawing.CanvasObjects;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -289,7 +290,7 @@ namespace LongoMatch.Drawing.Widgets
 				LinkAnchorObject anchor = sel.Drawable as LinkAnchorObject;
 				ActionLink link = new ActionLink {
 					SourceButton = anchor.Button.Button,
-					SourceTags = anchor.Tags
+					SourceTags = new ObservableCollection<Tag> (anchor.Tags)
 				}; 
 				movingLink = new ActionLinkObject (anchor, null, link);
 				AddObject (movingLink);
@@ -307,7 +308,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (destAnchor != null) {
 					ActionLink link = movingLink.Link;
 					link.DestinationButton = destAnchor.Button.Button;
-					link.DestinationTags = destAnchor.Tags;
+					link.DestinationTags = new ObservableCollection<Tag> (destAnchor.Tags);
 					link.SourceButton.ActionLinks.Add (link);
 					movingLink.Destination = destAnchor;
 					destAnchor.Highlighted = false;

@@ -24,21 +24,24 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
 	public class Team: StorableBase, ITemplate
 	{
-		private const int MAX_WIDTH = 100;
-		private const int MAX_HEIGHT = 100;
+		const int MAX_WIDTH = 100;
+		const int MAX_HEIGHT = 100;
+		ObservableCollection<Player> list;
 
 		public Team ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
-			List = new List<Player> ();
+			List = new ObservableCollection<Player> ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			try {
 				Shield = new Image (path);
@@ -64,9 +67,19 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		public List<Player> List {
-			get;
-			set;
+		public ObservableCollection<Player> List {
+			get {
+				return list;
+			}
+			set {
+				if (list != null) {
+					list.CollectionChanged -= PlayersChanged;
+				}
+				list = value;
+				if (list != null) {
+					list.CollectionChanged += PlayersChanged;
+				}
+			}
 		}
 
 		[LongoMatchPropertyIndex (0)]
@@ -140,7 +153,11 @@ namespace LongoMatch.Core.Store.Templates
 				Formation = tactics;
 			}
 			get {
-				return String.Join ("-", Formation);
+				if (Formation != null) {
+					return String.Join ("-", Formation);
+				} else {
+					return "";
+				}
 			}
 		}
 
@@ -154,7 +171,7 @@ namespace LongoMatch.Core.Store.Templates
 		public List<Player> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
-					return List;
+					return List.ToList();
 				} else {
 					return List.Where (p => p.Playing).Select (p => p).ToList ();
 				}
@@ -246,6 +263,11 @@ namespace LongoMatch.Core.Store.Templates
 			List.Clear ();
 			for (int i = 1; i <= playersCount; i++)
 				AddDefaultItem (i - 1);
+		}
+
+		void PlayersChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 

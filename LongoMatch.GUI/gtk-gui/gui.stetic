@@ -7288,6 +7288,7 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="LongoMatch.Gui.Component.SynchronizationWidget" id="projectperiods1">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="FixedPeriods">False</property>
               </widget>
               <packing>
                 <property name="Position">2</property>
@@ -9121,6 +9122,7 @@ You can continue with the current capture, cancel it or save your project.
               <widget class="LongoMatch.Gui.Component.SynchronizationWidget" id="projectperiods1">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
+                <property name="FixedPeriods">False</property>
               </widget>
               <packing>
                 <property name="Position">1</property>

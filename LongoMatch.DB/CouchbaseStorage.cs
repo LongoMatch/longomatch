@@ -108,6 +108,7 @@ namespace LongoMatch.DB
 		void DeleteFromDB (IStorable storable)
 		{
 			db.GetDocument (storable.ID.ToString ()).Delete ();
+
 			if (storable.Children != null) {
 				foreach (IStorable child in storable.Children) {
 					DeleteFromDB (child);

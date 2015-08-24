@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.GUI;
@@ -79,7 +80,7 @@ namespace LongoMatch.Core.Interfaces
 		/// <summary>
 		/// The list of configurations for visible cameras.
 		/// </summary>
-		List<CameraConfig> CamerasConfig { get; set; }
+		ObservableCollection<CameraConfig> CamerasConfig { get; set; }
 
 		/// <summary>
 		/// List of view ports set by the view.

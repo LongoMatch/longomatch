@@ -90,6 +90,7 @@ namespace LongoMatch.Gui
 			this.videowindow = new global::LongoMatch.Gui.VideoWindow ();
 			this.videowindow.Events = ((global::Gdk.EventMask)(256));
 			this.videowindow.Name = "videowindow";
+			this.videowindow.Ratio = 0F;
 			this.videowindow.Ready = false;
 			this.hbox3.Add (this.videowindow);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.videowindow]));

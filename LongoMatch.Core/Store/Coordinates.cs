@@ -16,7 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
@@ -25,10 +26,11 @@ namespace LongoMatch.Core.Common
 	[PropertyChanged.ImplementPropertyChanged]
 	public class Coordinates
 	{
+		ObservableCollection<Point> points;
 		
 		public Coordinates ()
 		{
-			Points = new List<Point> ();
+			Points = new ObservableCollection<Point> ();
 		}
 
 		[JsonIgnore]
@@ -37,9 +39,19 @@ namespace LongoMatch.Core.Common
 			set;
 		}
 
-		public List<Point> Points {
-			get;
-			set;
+		public ObservableCollection<Point> Points {
+			get {
+				return points;
+			}
+			set {
+				if (points != null) {
+					points.CollectionChanged -= ListChanged;
+				}
+				points = value;
+				if (points != null) {
+					points.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		public override bool Equals (object obj)
@@ -72,7 +84,13 @@ namespace LongoMatch.Core.Common
 			
 			return int.Parse (s);
 		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
-	
+
+
 }
 

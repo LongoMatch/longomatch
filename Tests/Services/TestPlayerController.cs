@@ -26,6 +26,7 @@ using LongoMatch.Core.Common;
 using System.Collections.Generic;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Playlists;
+using System.Collections.ObjectModel;
 
 namespace Tests.Services
 {
@@ -74,7 +75,7 @@ namespace Tests.Services
 		public void Setup ()
 		{
 			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }
 			};
 			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5000));
 			playlist = new Playlist ();
@@ -95,7 +96,7 @@ namespace Tests.Services
 
 		void PreparePlayer (bool readyToSeek = true)
 		{
-			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -543,7 +544,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 
 			TimelineEvent evtLocal = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (0) }
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }
 			};
 			player.LoadEvent (mfs, evtLocal, evtLocal.Start, true);
 			playerMock.ResetCalls ();
@@ -587,7 +588,7 @@ namespace Tests.Services
 			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) }, player.CamerasConfig);
 
 			/* Change again the cameras visible */
-			player.CamerasConfig = new List<CameraConfig>  { new CameraConfig (2), new CameraConfig (3) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig>  { new CameraConfig (2), new CameraConfig (3) };
 			Assert.AreEqual (evt.CamerasConfig, new List <CameraConfig> { new CameraConfig (0) });
 			player.LoadEvent (mfs, evt, evt.Start, true);
 			Assert.AreEqual (1, elementLoaded);
@@ -604,7 +605,7 @@ namespace Tests.Services
 		{
 			// Create an event referencing unknown MediaFiles in the set.
 			TimelineEvent evt2 = new TimelineEvent { Start = new Time (150), Stop = new Time (200),
-				CamerasConfig = new List<CameraConfig> {
+				CamerasConfig = new ObservableCollection<CameraConfig> {
 					new CameraConfig (0),
 					new CameraConfig (1),
 					new CameraConfig (4),
@@ -612,7 +613,7 @@ namespace Tests.Services
 				}
 			};
 
-			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -644,7 +645,7 @@ namespace Tests.Services
 			player.PrepareViewEvent += () => prepareView++;
 
 			/* Not ready to seek */
-			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -697,7 +698,7 @@ namespace Tests.Services
 			/* Open another event with the same MediaFileSet and already ready to seek
 			 * and check the cameras layout and visibility is respected */
 			TimelineEvent evt2 = new TimelineEvent { Start = new Time (400), Stop = new Time (50000),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (1), new CameraConfig (0) },
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) },
 				CamerasLayout = "test"
 			};
 			player.LoadEvent (nfs, evt2, evt2.Start, true);
@@ -729,7 +730,7 @@ namespace Tests.Services
 			player.PrepareViewEvent += () => prepareView++;
 
 			/* Not ready to seek */
-			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new  ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -860,7 +861,7 @@ namespace Tests.Services
 		public void TestMultiplayerCamerasConfig ()
 		{
 			TimelineEvent evt1;
-			List<CameraConfig> cams1, cams2;
+			ObservableCollection<CameraConfig> cams1, cams2;
 			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
 
 			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);
@@ -868,8 +869,8 @@ namespace Tests.Services
 			PreparePlayer ();
 
 			/* Only called internally in the openning */
-			cams1 = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
-			cams2 = new List<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
+			cams1 = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			cams2 = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Never ());
 			Assert.AreEqual (cams1, player.CamerasConfig);
 
@@ -880,7 +881,7 @@ namespace Tests.Services
 
 			/* Now load an event */
 			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
-				CamerasConfig = new List<CameraConfig> { new CameraConfig (1), new CameraConfig (1) }
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (1) }
 			};
 			player.LoadEvent (mfs, evt1, evt1.Start, true);
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
@@ -888,7 +889,7 @@ namespace Tests.Services
 			multiplayerMock.ResetCalls ();
 
 			/* Change event cams config */
-			player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0), new CameraConfig (0) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (0) };
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
 			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0), new CameraConfig (0) }, evt1.CamerasConfig);
 			Assert.AreEqual (player.CamerasConfig, evt1.CamerasConfig);
@@ -933,7 +934,7 @@ namespace Tests.Services
 		public void TestROICamerasConfig ()
 		{
 			TimelineEvent evt1;
-			List<CameraConfig> cams;
+			ObservableCollection<CameraConfig> cams;
 			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
 
 			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);

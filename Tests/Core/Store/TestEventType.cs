@@ -119,5 +119,46 @@ namespace Tests.Core.Store
 			Assert.AreEqual (sub.ID, Constants.SubsID);
 			Assert.AreEqual (sub, new SubstitutionEventType ());
 		}
+
+		[Test()]
+		public void TestIsChanged (){
+			EventType et = new EventType ();
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.Color = Color.Green;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.FieldPositionIsDistance = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.HalfFieldPositionIsDistance = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.Name = "name";
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.SortMethod = SortMethodType.SortByStartTime;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagFieldPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagGoalPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagHalfFieldPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+
+			AnalysisEventType at = new AnalysisEventType ();
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
+			at.Tags.Add (new Tag (""));
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
+			at.Tags = null;
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
+		}
 	}
 }

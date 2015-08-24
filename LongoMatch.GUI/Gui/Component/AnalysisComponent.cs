@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
@@ -187,8 +188,8 @@ namespace LongoMatch.Gui.Component
 				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {
 				playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-				Capturer.PeriodsNames = project.Dashboard.GamePeriods;
-				Capturer.Periods = project.Periods;
+				Capturer.PeriodsNames = project.Dashboard.GamePeriods.ToList();
+				Capturer.Periods = project.Periods.ToList ();
 			}
 		}
 
