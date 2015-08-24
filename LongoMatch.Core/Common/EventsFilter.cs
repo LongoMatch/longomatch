@@ -218,7 +218,7 @@ namespace LongoMatch.Core.Common
 					cat_match = true;
 					if (eventsFilter.ContainsKey (play.EventType)) {
 						List<Tag> tags = eventsFilter [play.EventType];
-						if (tags.Count == 0 || tags.Intersect (play.Tags).Count () > 0) {
+						if (tags.Count == 0 || tags.Intersect (play.Tags).Any ()) {
 							cat_match = true;
 						} else {
 							cat_match = false;
@@ -230,7 +230,7 @@ namespace LongoMatch.Core.Common
 					if (play.Tags.Count > 0 && play.Tags [0].Value == "Layup") {
 						Console.WriteLine (tagsFilter.Intersect (play.Tags).Count ());
 					}
-					if (tagsFilter.Intersect (play.Tags).Count () == 0) {
+					if (!tagsFilter.Intersect (play.Tags).Any ()) {
 						tag_match = false;
 					} else {
 						tag_match = true;
@@ -242,7 +242,7 @@ namespace LongoMatch.Core.Common
 				    project.VisitorTeamTemplate.PlayingPlayersList.Count) {
 					player_match = true;
 				} else {
-					player_match = VisiblePlayers.Intersect (play.Players).Count () != 0;
+					player_match = VisiblePlayers.Intersect (play.Players).Any ();
 				}
 
 				if (timersFilter.Count != 0) {
