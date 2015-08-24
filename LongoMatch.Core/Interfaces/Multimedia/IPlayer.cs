@@ -23,18 +23,6 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Handlers;
 using Image = LongoMatch.Core.Common.Image;
 
-// FIXME In order to support multiple streams the current approach
-// is the simplest one. There is no stream selection, enabling, etc
-// just a modification on the functions that manage the player stream
-// to also receive a list for multiple streams:
-// Functions/Properties added/modified:
-// List<IntPtr> WindowHandles { set; }
-// bool Open (List<string> mrls);
-// bool Open (MediaFileSet mfs);
-// bool Open (MediaFile mf);
-// Their simple cases are still there, we need to get rid of them later
-using System.Collections.Generic;
-
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
 	public interface IPlayback: IDisposable
