@@ -54,28 +54,7 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			ID = Guid.NewGuid ();
 			List = new List<DashboardButton> ();
-		}
-
-		void InitializeLists ()
-		{
-			// After being deserialized, make sure to create a default GamePeriod
-			if (GamePeriods == null) {
-				GamePeriods = new List<string> ();
-				GamePeriods.Add ("1");
-				GamePeriods.Add ("2");
-			}
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			InitializeLists ();
-		}
-
-		[OnSerializing]
-		internal void OnSerializingMethod (StreamingContext context)
-		{
-			InitializeLists ();
+			GamePeriods = new List<string> {"1", "2"};
 		}
 
 		[JsonIgnore]

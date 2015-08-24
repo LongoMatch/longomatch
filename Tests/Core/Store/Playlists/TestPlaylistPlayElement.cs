@@ -33,7 +33,6 @@ namespace Tests.Core.Store.Playlists
 			evt.Start = new Time (1000);
 			evt.Stop = new Time (2000);
 			evt.CamerasLayout = 1;
-			evt.CamerasConfig.Add (new CameraConfig (0));
 
 			PlaylistPlayElement element = new PlaylistPlayElement (evt);
 			Utils.CheckSerialization (element);

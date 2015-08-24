@@ -47,26 +47,7 @@ namespace LongoMatch.Core.Store
 			Tags = new List<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasConfig = new List<CameraConfig> ();
-		}
-
-		internal void InitializeLists ()
-		{
-			if (CamerasConfig.Count == 0) {
-				CamerasConfig.Add (new CameraConfig (0));
-			}
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			InitializeLists ();
-		}
-
-		[OnSerializing]
-		internal void OnSerializingMethod (StreamingContext context)
-		{
-			InitializeLists ();
+			CamerasConfig = new List<CameraConfig> () {new CameraConfig (0)};
 		}
 
 		#endregion
