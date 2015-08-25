@@ -68,6 +68,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CurrentIndex {
 			get {
 				return indexSelection;
@@ -75,6 +76,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public IPlaylistElement Selected {
 			get {
 				if (Elements.Count == 0) {

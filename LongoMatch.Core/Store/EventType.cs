@@ -76,6 +76,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string SortMethodString {
 			get {
 				switch (SortMethod) {
@@ -130,6 +131,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Dictionary<string, List<Tag>> TagsByGroup {
 			get {
 				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());

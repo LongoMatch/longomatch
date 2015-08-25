@@ -47,6 +47,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Area Area {
 			get {
 				Point tl = new Point (Math.Min (Start.X, Stop.X),
@@ -57,6 +58,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point StartI {
 			get {
 				return new Point (Stop.X, Start.Y);
@@ -64,6 +66,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point StopI {
 			get {
 				return new Point (Start.X, Stop.Y);

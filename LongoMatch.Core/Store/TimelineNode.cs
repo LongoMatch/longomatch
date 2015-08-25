@@ -44,6 +44,7 @@ namespace LongoMatch.Core.Store
 		/// Start frame number
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public uint StartFrame {
 			get {
 				return (uint)(Start.MSeconds * Fps / 1000);
@@ -57,6 +58,7 @@ namespace LongoMatch.Core.Store
 		/// Stop frame number
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public uint StopFrame {
 			get {
 				return (uint)(Stop.MSeconds * Fps / 1000);
@@ -78,6 +80,7 @@ namespace LongoMatch.Core.Store
 		/// Central frame number using (stopFrame-startFrame)/2
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public uint CentralFrame {
 			get {
 				return StopFrame - ((TotalFrames) / 2);
@@ -88,6 +91,7 @@ namespace LongoMatch.Core.Store
 		/// Number of frames inside the play's boundaries
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public uint TotalFrames {
 			get {
 				return StopFrame - StartFrame;

@@ -77,6 +77,7 @@ namespace LongoMatch.Core.Store
 		#region Properties
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override List<IStorable> Children {
 			get {
 				List<IStorable> storables = 
@@ -206,6 +207,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Score> Scores {
 			get {
 				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
@@ -214,6 +216,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<PenaltyCard> PenaltyCards {
 			get {
 				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
@@ -222,6 +225,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<ScoreEvent> ScoreEvents {
 			get {
 				return Timeline.OfType<ScoreEvent> ().Select (t => t).ToList ();
@@ -229,6 +233,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<PenaltyCardEvent> PenaltyCardsEvents {
 			get {
 				return Timeline.OfType<PenaltyCardEvent> ().Select (t => t).ToList ();
@@ -236,6 +241,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByEventType {
 			get {
 				return Timeline.GroupBy (play => play.EventType);
@@ -243,6 +249,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public SubstitutionEventType SubstitutionsEventType {
 			get {
 				if (subsType == null) {
@@ -257,6 +264,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public LineupEvent Lineup {
 			get {
 				LineupEvent lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
@@ -268,12 +276,14 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public ProjectType ProjectType {
 			get;
 			set;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsFakeCapture {
 			get {
 				if (Description != null) {

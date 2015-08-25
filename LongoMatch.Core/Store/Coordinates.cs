@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Common
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;

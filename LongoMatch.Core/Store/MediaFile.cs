@@ -65,6 +65,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -141,6 +142,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsFakeCapture {
 			get {
 				return FilePath == Constants.FAKE_PROJECT;
@@ -148,6 +150,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string ShortDescription {
 			get {
 				return String.Format ("{0}x{1}@{2}fps", VideoWidth, VideoHeight, Fps);

@@ -37,6 +37,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -69,6 +70,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time TotalTime {
 			get {
 				return new Time (Nodes.Where (tn=>tn.Start != null && tn.Stop != null)

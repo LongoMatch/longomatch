@@ -49,6 +49,7 @@ namespace LongoMatch.Core.Store
 		#region Properties
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -74,6 +75,7 @@ namespace LongoMatch.Core.Store
 		/// Get whether the hotkey is defined or not
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Boolean Defined {
 			get {
 				return (Key != -1);

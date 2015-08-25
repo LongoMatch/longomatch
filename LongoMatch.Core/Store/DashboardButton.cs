@@ -46,6 +46,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -110,6 +111,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color LightColor {
 			get {
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
@@ -120,6 +122,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color DarkColor {
 			get {
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
@@ -263,6 +266,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time StartTime {
 			get {
 				return currentNode == null ? null : currentNode.Start;
@@ -329,6 +333,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public AnalysisEventType AnalysisEventType {
 			get {
 				return EventType as AnalysisEventType;
@@ -372,6 +377,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public PenaltyCardEventType PenaltyCardEventType {
 			get {
 				return EventType as PenaltyCardEventType;
@@ -425,6 +431,7 @@ namespace LongoMatch.Core.Store
 
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public ScoreEventType ScoreEventType {
 			get {
 				return EventType as ScoreEventType;

@@ -51,6 +51,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Degrees {
 			get {
 				double a = Math.Atan2 (Stop.Y, Stop.X) - Math.Atan2 (Start.Y, Start.X);

@@ -42,6 +42,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -56,6 +57,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;
@@ -131,6 +133,7 @@ namespace LongoMatch.Core.Store.Playlists
 
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string Description {
 			get {
 				if (Rate != 1) {
@@ -142,6 +145,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Image Miniature {
 			get {
 				return Play.Miniature;

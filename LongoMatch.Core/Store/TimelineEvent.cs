@@ -60,6 +60,7 @@ namespace LongoMatch.Core.Store
 		#region Properties
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<IStorable> Children {
 			get {
 				return new List<IStorable> ();
@@ -67,18 +68,21 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsLoaded {
 			get;
 			set;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		bool IsLoading {
 			get;
 			set;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public IStorage Storage {
 			get;
 			set;
@@ -111,6 +115,7 @@ namespace LongoMatch.Core.Store
 		/// Whether this event is currently selected.
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;
@@ -138,6 +143,7 @@ namespace LongoMatch.Core.Store
 		/// Whether this event has at least one <see cref="FrameDrawing"/>
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool HasDrawings {
 			get {
 				return Drawings.Count > 0;
@@ -242,6 +248,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual string Description {
 			get {
 				return 
@@ -252,6 +259,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual Color Color {
 			get {
 				return EventType.Color;
@@ -387,6 +395,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Color Color {
 			get {
 				return PenaltyCard != null ? PenaltyCard.Color : EventType.Color;
@@ -403,6 +412,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Color Color {
 			get {
 				return Score != null ? Score.Color : EventType.Color;
@@ -410,6 +420,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override string Description {
 			get {
 				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
@@ -468,6 +479,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override string Description {
 			get {
 				string desc = "";

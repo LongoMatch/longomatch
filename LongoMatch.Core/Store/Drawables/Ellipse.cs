@@ -63,6 +63,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Top {
 			get {
 				return new Point (Center.X, Center.Y + AxisY);
@@ -70,6 +71,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Bottom {
 			get {
 				return new Point (Center.X, Center.Y - AxisY);
@@ -77,6 +79,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Left {
 			get {
 				return new Point (Center.X - AxisX, Center.Y);
@@ -84,6 +87,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Right {
 			get {
 				return new Point (Center.X + AxisX, Center.Y);
@@ -91,6 +95,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Area Area {
 			get {
 				return new Area (new Point (Center.X - AxisX, Center.Y - AxisY),

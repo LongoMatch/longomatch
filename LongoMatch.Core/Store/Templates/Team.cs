@@ -55,6 +55,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override List<IStorable> Children {
 			get {
 				return new List<IStorable> (List);
@@ -62,6 +63,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;
 			set;
@@ -113,6 +115,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color Color {
 			get {
 				if (ActiveColor > 0 && ActiveColor <= Colors.Length) {
@@ -125,6 +128,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int StartingPlayers {
 			get {
 				return Formation.Sum ();
@@ -137,6 +141,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string FormationStr {
 			set {
 				string[] elements = value.Split ('-');
@@ -162,12 +167,14 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool TemplateEditorMode {
 			set;
 			get;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
@@ -179,6 +186,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> StartingPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;
@@ -188,6 +196,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> BenchPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;

@@ -60,6 +60,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override List<IStorable> Children {
 			get {
 				return List.OfType<EventButton> ().Select (b => (b.EventType as IStorable)).ToList();
@@ -71,6 +72,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// and it can't be modified
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;
 			set;
@@ -161,6 +163,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// A list with all the timers used in this dashboard
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Timer> Timers {
 			get {
 				return List.OfType<Timer> ().ToList ();
@@ -168,6 +171,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CanvasWidth {
 			get {
 				if (List.Count == 0) {
@@ -178,6 +182,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CanvasHeight {
 			get {
 				if (List.Count == 0) {
@@ -188,6 +193,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Dictionary<string, List<Tag>> CommonTagsByGroup {
 			get {
 				return List.OfType<TagButton> ().Select (t => t.Tag).

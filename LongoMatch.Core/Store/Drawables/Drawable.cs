@@ -32,6 +32,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -63,6 +64,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual Area Area {
 			get;
 			protected set;

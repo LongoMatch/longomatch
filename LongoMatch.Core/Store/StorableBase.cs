@@ -36,6 +36,7 @@ namespace LongoMatch.Core.Store
 		#region IStorable implementation
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual List<IStorable> Children {
 			get {
 				return null;
@@ -43,12 +44,14 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsLoaded {
 			get;
 			set;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public IStorage Storage {
 			get;
 			set;
@@ -59,12 +62,14 @@ namespace LongoMatch.Core.Store
 		/// to prevent infinite loops.
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		bool IsLoading {
 			get;
 			set;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;

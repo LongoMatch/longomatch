@@ -49,6 +49,7 @@ namespace LongoMatch.Core.Store
 		#region Properties
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -110,6 +111,7 @@ namespace LongoMatch.Core.Store
 		/// Duration (stop_time - start_time)
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time Duration {
 			get {
 				if (Stop != null && Start != null) {
@@ -129,6 +131,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string RateString {
 			get {
 				return String.Format ("{0}X", Rate);

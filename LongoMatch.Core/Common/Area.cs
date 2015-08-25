@@ -23,7 +23,6 @@ namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	[JsonObject (MemberSerialization.OptIn)]
 	public class Area: IChanged
 	{
 		public Area ()
@@ -48,11 +47,14 @@ namespace LongoMatch.Core.Common
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Empty {
 			get {
 				return Start.X == 0 && Start.Y == 0 &&
@@ -60,78 +62,95 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		[JsonProperty]
 		public Point Start {
 			get;
 			set;
 		}
 
-		[JsonProperty]
 		public double Width {
 			get;
 			set;
 		}
 
-		[JsonProperty]
 		public double Height {
 			get;
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Left {
 			get {
 				return Start.X;
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Top {
 			get {
 				return Start.Y;
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Right {
 			get {
 				return Start.X + Width;
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Bottom {
 			get {
 				return Start.Y + Height;
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point TopLeft {
 			get {
 				return new Point (Left, Top);
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point TopRight {
 			get {
 				return new Point (Right, Top);
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point BottomLeft {
 			get {
 				return new Point (Left, Bottom);
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point BottomRight {
 			get {
 				return new Point (Right, Bottom);
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Center {
 			get {
 				return new Point (Start.X + Width / 2, Start.Y + Height / 2);
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point[] Vertices {
 			get {
 				return new Point[] {
@@ -143,6 +162,8 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point[] VerticesCenter {
 			get {
 				Point[] points = Vertices;

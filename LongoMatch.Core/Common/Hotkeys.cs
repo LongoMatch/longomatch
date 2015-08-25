@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Common
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Dictionary<KeyAction, string> ActionsDescriptions {
 			get;
 			set;

@@ -52,6 +52,7 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
@@ -69,6 +70,7 @@ namespace LongoMatch.Core.Store
 		/// Time in seconds
 		/// </summary>		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int TotalSeconds {
 			get {
 				return MSeconds / SECONDS_TO_TIME;
@@ -82,6 +84,7 @@ namespace LongoMatch.Core.Store
 		/// Time in nano seconds
 		/// </summary>		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public long NSeconds {
 			get {
 				return  (long)MSeconds * TIME_TO_NSECONDS;
@@ -92,6 +95,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Seconds {
 			get {
 				return (TotalSeconds % 3600) % 60;
@@ -99,6 +103,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Minutes {
 			get {
 				return (TotalSeconds % 3600) / 60;
@@ -106,6 +111,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Hours {
 			get {
 				return (TotalSeconds / 3600);
