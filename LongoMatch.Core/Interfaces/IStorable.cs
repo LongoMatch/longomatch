@@ -24,8 +24,17 @@ namespace LongoMatch.Core.Interfaces
 	{
 		List<IStorable> Children { get; }
 
+		/// <summary>
+		/// The storage associated to this object in cases it's partially
+		/// loaded and needs to storage to be filled.
+		/// </summary>
 		IStorage Storage {get; set;}
 
+		/// <summary>
+		/// Defines if an object is partially or fully loaded.
+		/// Some database queries can return partially loaded objects
+		/// that are filled once the first unintialized property is accessed.
+		/// </summary>
 		bool IsLoaded {get; set;}
 	}
 }

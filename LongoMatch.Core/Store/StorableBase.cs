@@ -54,6 +54,10 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		/// <summary>
+		/// Set to <c>true</c> while the object is being loaded. Used internally
+		/// to prevent infinite loops.
+		/// </summary>
 		[JsonIgnore]
 		bool IsLoading {
 			get;

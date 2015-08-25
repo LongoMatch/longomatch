@@ -21,6 +21,11 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IChanged
 	{
+		/// <summary>
+		/// Set to <c>true</c> when a serializable property of this instance has been modified.
+		/// It' used to track objects changes to determine whether an object has modifications
+		/// from the last time it was loaded from the database.
+		/// </summary>
 		bool IsChanged { get; set; }
 	}
 }
