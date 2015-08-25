@@ -18,11 +18,14 @@
 using System;
 using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using System.Reflection;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -46,8 +49,13 @@ namespace Tests
 			return serializer.Load<T> (stream, SerializationType.Json);
 		}
 
-		public static void CheckSerialization<T> (T obj)
+		public static void CheckSerialization<T> (T obj, bool ignoreIsChanged = false)
 		{
+			List<IStorable> children, changed;
+
+			if (!ignoreIsChanged) {
+				Assert.IsInstanceOf<IChanged> (obj);
+			}
 			var stream = new MemoryStream ();
 			serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
@@ -58,7 +66,16 @@ namespace Tests
 			stream.Seek (0, SeekOrigin.Begin);
 			
 			var newobj = serializer.Load<T> (stream, SerializationType.Json);
-			
+			if (!ignoreIsChanged) {
+				ObjectChangedParser parser = new ObjectChangedParser ();
+				if (obj is IStorable) {
+					Assert.IsTrue (parser.ParseInternal (out children, out changed, newobj as IStorable, Serializer.JsonSettings));
+					Assert.IsEmpty (changed);
+				} else {
+					Assert.IsFalse ((newobj as IChanged).IsChanged);
+				}
+			}
+
 			stream = new MemoryStream ();
 			serializer.Save (newobj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);

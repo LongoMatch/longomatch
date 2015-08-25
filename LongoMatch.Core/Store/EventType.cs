@@ -32,7 +32,7 @@ namespace LongoMatch.Core.Store
 		public EventType ()
 		{
 			ID = Guid.NewGuid ();
-			Color = Color.Red;
+			Color = Color.Red.Copy (true);
 		}
 
 		public string Name {

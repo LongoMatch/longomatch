@@ -60,9 +60,13 @@ namespace LongoMatch.Core.Common
 			set;
 		}
 
-		public Color Copy ()
+		public Color Copy (bool resetChanged = false)
 		{
-			return new Color (R, G, B, A);
+			Color c = new Color (R, G, B, A);
+			if (resetChanged) {
+				c.IsChanged = false;
+			}
+			return c;
 		}
 
 		public override bool Equals (object obj)

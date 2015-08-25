@@ -24,6 +24,8 @@ using System.Xml.Serialization;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Common
 {
@@ -79,7 +81,9 @@ namespace LongoMatch.Core.Common
 				return (T)xmlformatter.Deserialize (stream);
 			case SerializationType.Json:
 				StreamReader sr = new StreamReader (stream, Encoding.UTF8);
-				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd (), JsonSettings);
+				JsonSerializerSettings settings = JsonSettings;
+				settings.ContractResolver = new IsChangedContractResolver ();
+				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd (), settings);
 			default:
 				throw new Exception ();
 			}
@@ -167,34 +171,40 @@ namespace LongoMatch.Core.Common
 						p.X.ToString (NumberFormatInfo.InvariantInfo),
 						p.Y.ToString (NumberFormatInfo.InvariantInfo)));
 				}
+			} else {
 			}
 		}
 
 		public override object ReadJson (JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
+			object ret = null;
+
 			if (reader.Value != null) {
 				if (objectType == typeof(Time)) {
 					if (reader.ValueType == typeof(Int64)) {
-						return new Time ((int)(Int64)reader.Value);
+						ret = new Time ((int)(Int64)reader.Value);
 					} else {
-						return new Time ((Int32)reader.Value);
+						ret = new Time ((Int32)reader.Value);
 					}
 				} else if (objectType == typeof(Color)) {
 					string rgbStr = (string)reader.Value;
-					return Color.Parse (rgbStr);
+					ret = Color.Parse (rgbStr);
 				} else if (objectType == typeof(Image)) {
 					byte[] buf = Convert.FromBase64String ((string)reader.Value); 
-					return Image.Deserialize (buf);
+					ret = Image.Deserialize (buf);
 				} else if (objectType == typeof(HotKey)) {
 					string[] hk = ((string)reader.Value).Split (' '); 
-					return new HotKey { Key = int.Parse (hk [0]), Modifier = int.Parse (hk [1]) };
+					ret = new HotKey { Key = int.Parse (hk [0]), Modifier = int.Parse (hk [1]) };
 				} else if (objectType == typeof(Point)) {
 					string[] ps = ((string)reader.Value).Split (' '); 
-					return new Point (double.Parse (ps [0], NumberFormatInfo.InvariantInfo),
+					ret = new Point (double.Parse (ps [0], NumberFormatInfo.InvariantInfo),
 						double.Parse (ps [1], NumberFormatInfo.InvariantInfo));
 				}
 			}
-			return null;
+			if (ret is IChanged) {
+				(ret as IChanged).IsChanged = false;
+			}
+			return ret;
 		}
 
 		public override bool CanConvert (Type objectType)
@@ -205,6 +215,22 @@ namespace LongoMatch.Core.Common
 			    objectType == typeof(Point) ||
 			    objectType == typeof(HotKey) ||
 			    objectType == typeof(Image) && handleImages);
+		}
+	}
+
+	public class IsChangedContractResolver : DefaultContractResolver
+	{
+
+		protected override JsonContract CreateContract (Type type)
+		{
+			JsonContract contract = base.CreateContract(type);
+			if (typeof(IChanged).IsAssignableFrom (type)) {
+				contract.OnDeserializedCallbacks.Add (
+					(o, context) => {
+						(o as IChanged).IsChanged = false;
+					});
+			}
+			return contract;
 		}
 	}
 }

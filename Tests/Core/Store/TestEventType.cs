@@ -37,7 +37,9 @@ namespace Tests.Core.Store
 			MemoryStream stream;
 			StreamReader reader;
 			
-			evType = new EventType ();
+			evType = new EventType();
+			Utils.CheckSerialization (evType);
+
 			evType.Color = new Color (255, 0, 0);
 			evType.Name = "test";
 			evType.SortMethod = SortMethodType.SortByDuration;

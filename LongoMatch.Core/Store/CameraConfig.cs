@@ -33,6 +33,7 @@ namespace LongoMatch.Core.Store
 		{
 			Index = index;
 			RegionOfInterest = new Area (0, 0, 0, 0);
+			RegionOfInterest.IsChanged = false;
 		}
 
 		[JsonIgnore]

@@ -36,11 +36,12 @@ namespace LongoMatch.Core.Store
 		{
 			Name = "";
 			Position = new Point (0, 0);
+			Position.IsChanged = false;
 			Width = Constants.BUTTON_WIDTH;
 			Height = Constants.BUTTON_HEIGHT;
-			BackgroundColor = Color.Red;
-			TextColor = Config.Style.PaletteBackgroundLight;
-			HotKey = new HotKey ();
+			BackgroundColor = Color.Red.Copy (true);
+			TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
+			HotKey = new HotKey {IsChanged = false};
 			ActionLinks = new ObservableCollection <ActionLink> ();
 		}
 
@@ -147,7 +148,9 @@ namespace LongoMatch.Core.Store
 		{
 			TagMode = TagMode.Predefined;
 			Start = new Time { TotalSeconds = 10 };
+			Start.IsChanged = false;
 			Stop = new Time { TotalSeconds = 10 };
+			Stop.IsChanged = false;
 		}
 
 		public TagMode TagMode {
@@ -171,7 +174,7 @@ namespace LongoMatch.Core.Store
 	{
 		public TagButton ()
 		{
-			BackgroundColor = StyleConf.ButtonTagColor;
+			BackgroundColor = StyleConf.ButtonTagColor.Copy (true);
 		}
 
 		public Tag Tag {
@@ -209,7 +212,7 @@ namespace LongoMatch.Core.Store
 
 		public TimerButton ()
 		{
-			BackgroundColor = StyleConf.ButtonTimerColor;
+			BackgroundColor = StyleConf.ButtonTimerColor.Copy (true);
 			currentNode = null;
 		}
 
@@ -296,6 +299,14 @@ namespace LongoMatch.Core.Store
 				}
 			}
 		}
+
+		[OnDeserialized()]
+		internal void OnDeserializedMethod(StreamingContext context)
+		{
+			if (EventType != null) {
+				EventType.IsChanged = false;
+			}
+		}
 	}
 
 	[Serializable]
@@ -366,6 +377,14 @@ namespace LongoMatch.Core.Store
 				return EventType as PenaltyCardEventType;
 			}
 		}
+
+		[OnDeserialized()]
+		internal void OnDeserialized(StreamingContext context)
+		{
+			if (PenaltyCard != null) {
+				PenaltyCard.IsChanged = false;
+			}
+		}
 	}
 
 	[Serializable]
@@ -409,6 +428,14 @@ namespace LongoMatch.Core.Store
 		public ScoreEventType ScoreEventType {
 			get {
 				return EventType as ScoreEventType;
+			}
+		}
+
+		[OnDeserialized()]
+		internal void OnDeserialized(StreamingContext context)
+		{
+			if (Score != null) {
+				Score.IsChanged = false;
 			}
 		}
 	}

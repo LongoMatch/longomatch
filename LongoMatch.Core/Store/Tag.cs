@@ -30,6 +30,7 @@ namespace LongoMatch.Core.Store
 			Group = grp;
 			Value = value;
 			HotKey = new HotKey ();
+			HotKey.IsChanged = false;
 		}
 
 		[JsonIgnore]
