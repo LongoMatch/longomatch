@@ -18,8 +18,9 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Newtonsoft.Json;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -30,7 +31,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class HotKey : IEquatable<HotKey>
+	public class HotKey : IEquatable<HotKey>, IChanged
 	{
 		#region Constructors
 

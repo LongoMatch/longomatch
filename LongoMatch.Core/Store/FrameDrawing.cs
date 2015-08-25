@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Drawables;
 using Newtonsoft.Json;
 
@@ -28,7 +29,7 @@ namespace LongoMatch.Core.Store
 
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class FrameDrawing
+	public class FrameDrawing: IChanged
 	{
 		ObservableCollection<Drawable> drawables;
 		const int DEFAULT_PAUSE_TIME = 5000;

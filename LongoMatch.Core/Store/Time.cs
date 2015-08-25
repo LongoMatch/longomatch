@@ -19,8 +19,8 @@
 //
 
 using System;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
-using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
@@ -31,7 +31,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Time :  IComparable
+	public class Time :  IComparable, IChanged
 	{
 		private const int MS = 1000000;
 		public const int SECONDS_TO_TIME = 1000;

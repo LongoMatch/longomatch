@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 
@@ -27,7 +28,7 @@ namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Timer
+	public class Timer: IChanged
 	{
 		public Timer ()
 		{

@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,47 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace LongoMatch.Core.Interfaces
 {
-	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
-	public class PenaltyCard: IChanged
+	public interface IChanged
 	{
-		public PenaltyCard ()
-		{
-		}
-
-		public PenaltyCard (string name, Color color, CardShape shape)
-		{
-			Name = name;
-			Color = color;
-			Shape = shape;
-		}
-
-		[JsonIgnore]
-		public bool IsChanged {
-			get;
-			set;
-		}
-
-		public string Name {
-			get;
-			set;
-		}
-
-		public Color Color {
-			get;
-			set;
-		}
-
-		public CardShape Shape {
-			get;
-			set;
-		}
+		bool IsChanged { get; set; }
 	}
 }
 

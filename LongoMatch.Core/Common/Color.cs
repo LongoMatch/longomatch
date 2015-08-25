@@ -17,13 +17,14 @@
 // 
 using System;
 using System.Globalization;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Color
+	public class Color: IChanged
 	{
 		public Color (byte r, byte g, byte b, byte a = byte.MaxValue)
 		{

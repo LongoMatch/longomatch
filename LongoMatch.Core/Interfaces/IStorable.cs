@@ -20,15 +20,13 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface IStorable : IIDObject
+	public interface IStorable : IIDObject, IChanged
 	{
 		List<IStorable> Children { get; }
 
 		IStorage Storage {get; set;}
 
 		bool IsLoaded {get; set;}
-
-		bool IsChanged {get; set;}
 	}
 }
 

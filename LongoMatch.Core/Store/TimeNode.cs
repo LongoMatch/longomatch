@@ -19,6 +19,7 @@
 //
 
 using System;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class TimeNode
+	public class TimeNode: IChanged
 	{
 		Time start, stop, eventTime;
 

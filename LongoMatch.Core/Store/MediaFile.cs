@@ -20,13 +20,14 @@
 using System;
 using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class MediaFile
+	public class MediaFile: IChanged
 	{
 		public MediaFile ()
 		{

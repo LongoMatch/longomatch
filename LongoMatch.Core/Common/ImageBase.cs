@@ -17,13 +17,14 @@
 //
 using System;
 using System.Runtime.Serialization;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public abstract class BaseImage<T>: ISerializable, IDisposable where T: IDisposable
+	public abstract class BaseImage<T>: ISerializable, IChanged, IDisposable where T: IDisposable
 	{
 
 		protected const string BUF_PROPERTY = "pngbuf";

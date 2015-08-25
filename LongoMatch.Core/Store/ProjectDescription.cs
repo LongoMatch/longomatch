@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class ProjectDescription :  IComparable
+	public class ProjectDescription :  IComparable, IChanged
 	{
 		DateTime matchDate, lastModified;
 

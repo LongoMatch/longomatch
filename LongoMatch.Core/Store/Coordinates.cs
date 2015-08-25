@@ -18,13 +18,14 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Coordinates
+	public class Coordinates: IChanged
 	{
 		ObservableCollection<Point> points;
 		

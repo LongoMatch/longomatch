@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
@@ -23,7 +24,7 @@ namespace LongoMatch.Core.Common
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
 	[JsonObject (MemberSerialization.OptIn)]
-	public class Area
+	public class Area: IChanged
 	{
 		public Area ()
 		{

@@ -20,7 +20,7 @@ using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface IPlaylistElement
+	public interface IPlaylistElement: IChanged
 	{
 		string Description {
 			get;

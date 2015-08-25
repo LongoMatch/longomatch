@@ -16,9 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
@@ -26,7 +27,7 @@ namespace LongoMatch.Core.Store
 	[JsonObject (MemberSerialization.OptIn)]
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class MediaFileSet : List<MediaFile>
+	public class MediaFileSet : List<MediaFile>, IChanged
 	{
 
 		public MediaFileSet ()

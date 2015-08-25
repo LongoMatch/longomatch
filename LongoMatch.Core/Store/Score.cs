@@ -17,13 +17,14 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Score
+	public class Score: IChanged
 	{
 		public Score ()
 		{

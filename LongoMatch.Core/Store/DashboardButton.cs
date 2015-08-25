@@ -20,13 +20,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class DashboardButton
+	public class DashboardButton: IChanged
 	{
 		ObservableCollection<ActionLink> actionLinks;
 
