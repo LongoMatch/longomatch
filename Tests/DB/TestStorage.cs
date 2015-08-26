@@ -39,13 +39,6 @@ namespace Tests.DB
 		}
 
 		public StorableImageTest Image { get; set; }
-
-		[JsonIgnore]
-		public override List<IStorable> Children {
-			get {
-				return new List<IStorable> {Image};
-			}
-		}
 	}
 
 	class StorableListTest: StorableBase
@@ -56,13 +49,6 @@ namespace Tests.DB
 		}
 
 		public List<StorableImageTest> Images { get; set; }
-
-		[JsonIgnore]
-		public override List<IStorable> Children {
-			get {
-				return new List<IStorable> (Images);
-			}
-		}
 	}
 
 	class StorableImageTest : StorableBase

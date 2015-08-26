@@ -37,14 +37,6 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public virtual List<IStorable> Children {
-			get {
-				return null;
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
 		public bool IsLoaded {
 			get;
 			set;

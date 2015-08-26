@@ -61,14 +61,6 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<IStorable> Children {
-			get {
-				return new List<IStorable> ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
 		public bool IsLoaded {
 			get;
 			set;

@@ -76,20 +76,6 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override List<IStorable> Children {
-			get {
-				List<IStorable> storables = 
-					new List<IStorable> {Dashboard, LocalTeamTemplate,
-					VisitorTeamTemplate};
-				storables.AddRange (Playlists);
-				storables.AddRange (Timeline);
-				storables.AddRange (EventTypes);
-				return storables;
-			}
-		}
-
 		public ObservableCollection<TimelineEvent> Timeline {
 			get {
 				return timeline;

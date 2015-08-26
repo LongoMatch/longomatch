@@ -22,8 +22,6 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IStorable : IIDObject, IChanged
 	{
-		List<IStorable> Children { get; }
-
 		/// <summary>
 		/// The storage associated to this object in cases it's partially
 		/// loaded and needs to storage to be filled.
@@ -36,6 +34,7 @@ namespace LongoMatch.Core.Interfaces
 		/// that are filled once the first unintialized property is accessed.
 		/// </summary>
 		bool IsLoaded {get; set;}
+
 	}
 }
 

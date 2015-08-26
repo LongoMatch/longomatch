@@ -59,14 +59,6 @@ namespace LongoMatch.Core.Store.Templates
 			GamePeriods = new ObservableCollection<string> {"1", "2"};
 		}
 
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override List<IStorable> Children {
-			get {
-				return List.OfType<EventButton> ().Select (b => (b.EventType as IStorable)).ToList();
-			}
-		}
-
 		/// <summary>
 		/// When set to <c>true</c> the dashboard is treated as a system dashboard
 		/// and it can't be modified

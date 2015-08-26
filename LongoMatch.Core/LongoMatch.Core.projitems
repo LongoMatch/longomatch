@@ -134,7 +134,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\LongoMatchPropertyPreload.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\LongoMatchPropertyIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\ObjectChangedParser.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\StorableNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\StorableNode.cs" />
   </ItemGroup>
 </Project>

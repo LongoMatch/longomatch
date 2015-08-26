@@ -28,7 +28,7 @@ namespace Tests.Core.Serialization
 	public class TestObjectBase: IStorable
 	{
 		public Guid ID {get; set;}
-		public List<IStorable> Children {get; set;}
+		public List<IStorable> storables {get; set;}
 		public IStorage Storage {get; set;}
 		public bool IsLoaded {get; set;}
 		public bool IsChanged {get;set;}
@@ -71,94 +71,116 @@ namespace Tests.Core.Serialization
 		[Test()]
 		public void TestParsed ()
 		{
-			List<IStorable> children, changed;
+			StorableNode parent;
+			List<IStorable> storables = null, changed = null;
 			TestObject1 obj1 = new TestObject1 ();
 			obj1.Storable = new TestObject2 ();
 			obj1.Ignored = new TestObject2 ();
 			ObjectChangedParser parser = new ObjectChangedParser ();
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (2, parser.parsed.Count);
 			Assert.AreEqual (0, changed.Count);
-			Assert.AreEqual (1, children.Count);
+			Assert.AreEqual (2, storables.Count);
 		}
 
 		[Test()]
 		public void TestParsedWithDependencyCycles ()
 		{
-			List<IStorable> children, changed;
+			StorableNode parent;
+			List<IStorable> storables = null, changed = null;
 			TestObject2 obj2 = new TestObject2 ();
 			obj2.Storable = new TestObject4 ();
 			obj2.Storable.DepCycle = obj2;
 			ObjectChangedParser parser = new ObjectChangedParser ();
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj2, Serializer.JsonSettings));
+			Assert.IsTrue (parser.ParseInternal (out parent, obj2, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (2, parser.parsed.Count);
 			Assert.AreEqual (0, changed.Count);
-			Assert.AreEqual (1, children.Count);
+			Assert.AreEqual (2, storables.Count);
 		}
 
 		[Test()]
 		public void TestParsedAndReset ()
 		{
-			List<IStorable> children, changed;
+			StorableNode parent;
+			List<IStorable> storables = null, changed = null;
 			ObjectChangedParser parser = new ObjectChangedParser ();
 			TestObject1 obj1 = new TestObject1 ();
 			obj1.IsChanged = true;
 
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (1, parser.parsed.Count);
 			Assert.AreEqual (1, changed.Count);
-			Assert.AreEqual (0, children.Count);
+			Assert.AreEqual (1, storables.Count);
 			Assert.IsFalse (obj1.IsChanged);
 
 			obj1.IsChanged = true;
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings, false));
+			storables = null;
+			changed = null;
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings, false));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (1, parser.parsed.Count);
 			Assert.AreEqual (1, changed.Count);
-			Assert.AreEqual (0, children.Count);
+			Assert.AreEqual (1, storables.Count);
 			Assert.IsTrue (obj1.IsChanged);
 		}
 
 		[Test()]
-		public void TestParsedAndResetChildren ()
+		public void TestParsedAndResetstorables ()
 		{
-			List<IStorable> children, changed;
+			StorableNode parent;
+			List<IStorable> storables = null, changed = null;
 			ObjectChangedParser parser = new ObjectChangedParser ();
 			TestObject1 obj1 = new TestObject1 ();
 			obj1.Storable = new TestObject2 ();
 			obj1.Ignored = new TestObject2 ();
 			obj1.IsChanged = true;
 			obj1.Storable.IsChanged = true;
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (2, parser.parsed.Count);
 			Assert.AreEqual (2, changed.Count);
-			Assert.AreEqual (1, children.Count);
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			Assert.AreEqual (2, storables.Count);
+			storables = null;
+			changed = null;
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (2, parser.parsed.Count);
 			Assert.AreEqual (0, changed.Count);
-			Assert.AreEqual (1, children.Count);
+			Assert.AreEqual (2, storables.Count);
 		}
 
 		[Test()]
 		public void TestAllObjectsParsed ()
 		{
-			List<IStorable> children, changed;
+			StorableNode parent;
+			List<IStorable> storables = null, changed = null;
 			List<object> objects = new List<object> ();
 			TestObject1 obj1 = CreateObject1 (objects);
 			ObjectChangedParser parser = new ObjectChangedParser ();
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (objects.Count, parser.parsed.Count);
 			Assert.AreEqual (0, changed.Count);
-			Assert.AreEqual (56, children.Count);
+			Assert.AreEqual (57, storables.Count);
 			obj1.Storable.IsChanged = true;
 			obj1.StorableList[2].IsChanged = true;
 			obj1.StorableDict["1"].IsChanged = true;
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings, false));
+			storables = null;
+			changed = null;
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings, false));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (3, changed.Count);
-			Assert.AreEqual (56, children.Count);
+			Assert.AreEqual (57, storables.Count);
 			obj1.NotStorableList[1].IsChanged = true;
-			Assert.IsTrue (parser.ParseInternal (out children, out changed, obj1, Serializer.JsonSettings));
+			storables = null;
+			changed = null;
+			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (4, changed.Count);
-			Assert.AreEqual (56, children.Count);
+			Assert.AreEqual (57, storables.Count);
 		}
 
 		TestObject1 CreateObject1 (List<object> objects) {

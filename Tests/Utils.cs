@@ -69,8 +69,9 @@ namespace Tests
 			if (!ignoreIsChanged) {
 				ObjectChangedParser parser = new ObjectChangedParser ();
 				if (obj is IStorable) {
-					Assert.IsTrue (parser.ParseInternal (out children, out changed, newobj as IStorable, Serializer.JsonSettings));
-					Assert.IsEmpty (changed);
+					StorableNode parentNode;
+					Assert.IsTrue (parser.ParseInternal (out parentNode, newobj as IStorable, Serializer.JsonSettings));
+					Assert.IsFalse (parentNode.HasChanges ());
 				} else {
 					Assert.IsFalse ((newobj as IChanged).IsChanged);
 				}

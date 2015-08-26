@@ -35,11 +35,9 @@ namespace LongoMatch.Core.Serialization
 	public class ObjectChangedParser
 	{
 
-		List<StorableStackObject> stack;
-		List<IStorable> changedStorables; 
-		List<IStorable> childrenStorables; 
+		StorableNode parentStorable;
+		StorableNode current;
 		internal List<object> parsed;
-		StorableStackObject current;
 		IContractResolver resolver;
 		JsonSerializerSettings settings;
 		bool reset;
@@ -57,41 +55,36 @@ namespace LongoMatch.Core.Serialization
 		/// <param name="storable">The storable object to parse.</param>
 		/// <param name="settings">The serialization settings.</param>
 		/// <param name="reset">If set to <c>true</c> reset the IsChanged flag.</param>
-		public bool Parse(out List<IStorable> children, out List<IStorable> changedStorables,
-			IStorable storable, JsonSerializerSettings settings, bool reset = true)
+		public bool Parse(out StorableNode parentNode, IStorable storable, JsonSerializerSettings settings,
+			bool reset = true)
 		{
-			bool ret = ParseInternal (out children , out changedStorables, storable, settings, reset);
-			if (ret && stack.Count != 0) {
+			bool ret = ParseInternal (out parentNode, storable, settings, reset);
+			if (ret && current != null) {
 				Log.Error ("Stack should be empty");
 				return false;
 			}
-			stack.Clear ();
 			parsed.Clear ();
 			return ret;
 		}
 
-		internal bool ParseInternal(out List<IStorable> children, out List<IStorable> changedStorables,
-			IStorable value, JsonSerializerSettings settings, bool reset = true)
+		internal bool ParseInternal(out StorableNode parentNode, IStorable value, JsonSerializerSettings settings,
+			bool reset = true)
 		{
-			stack = new List<StorableStackObject> ();
+			parentNode = new StorableNode (value);
 			parsed = new List<object> ();
-			this.changedStorables = changedStorables = new List<IStorable> ();
-			children = childrenStorables = new List<IStorable> ();
 			resolver = settings.ContractResolver ?? new DefaultContractResolver ();
 			this.settings = settings;
 			this.reset = reset;
 			try {
-				CheckValue (value);
+				CheckValue (value, parentNode);
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				children = null;
-				changedStorables = null;
 				return false;
 			}
 		}
 
-		void CheckValue (object value)
+		void CheckValue (object value, StorableNode node = null)
 		{
 			IStorable storable;
 
@@ -105,11 +98,14 @@ namespace LongoMatch.Core.Serialization
 			storable = value as IStorable;
 
 			if (storable != null) {
-				current = new StorableStackObject (storable);
-				stack.Add (current);
-				if (storable != stack[0].storable) {
-					childrenStorables.Add (storable);
+				if (node == null) {
+					node = new StorableNode (storable);
 				}
+				if (current != null) {
+					current.Children.Add (node);
+				}
+				node.Parent = current;
+				current = node;
 			}
 
 			JsonContract valueContract = resolver.ResolveContract(value.GetType());
@@ -125,12 +121,7 @@ namespace LongoMatch.Core.Serialization
 			}
 
 			if (storable != null) {
-				stack.Remove (current);
-				if (stack.Count > 0) {
-					current = stack [stack.Count - 1];
-				} else {
-					current = null;
-				}
+				current = current.Parent;
 			}
 		}
 
@@ -149,9 +140,8 @@ namespace LongoMatch.Core.Serialization
 						IValueProvider provider = property.ValueProvider;
 						bool changed = (bool) provider.GetValue(value);
 						if (changed) {
-							if (!current.addedToChangedList) {
-								changedStorables.Add (current.storable);
-								current.addedToChangedList = true;
+							if (!current.IsChanged) {
+								current.IsChanged = true;
 							}
 							if (reset) {
 								provider.SetValue (value, false);

@@ -54,15 +54,6 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [1] = Color.Red1;
 		}
 
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override List<IStorable> Children {
-			get {
-				return new List<IStorable> (List);
-			}
-		}
-
-		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;

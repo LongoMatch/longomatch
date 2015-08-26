@@ -24,6 +24,7 @@ using LongoMatch.DB.Views;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -95,7 +96,15 @@ namespace LongoMatch.DB
 		public void Delete<T> (T t) where T : IStorable
 		{
 			db.RunInTransaction (() => {
-				DeleteFromDB (t);
+				StorableNode node;
+				//if (t.DeleteChildren) {
+				if (true) {
+					ObjectChangedParser parser = new ObjectChangedParser ();
+					parser.Parse (out node, t, Serializer.JsonSettings);
+				} else {
+					node = new StorableNode (t);
+				}
+				DeleteFromDB (node);
 				return true;
 			});
 		}
@@ -105,14 +114,11 @@ namespace LongoMatch.DB
 			db.Manager.ForgetDatabase (db);
 		}
 
-		void DeleteFromDB (IStorable storable)
+		void DeleteFromDB (StorableNode node = null)
 		{
-			db.GetDocument (storable.ID.ToString ()).Delete ();
-
-			if (storable.Children != null) {
-				foreach (IStorable child in storable.Children) {
-					DeleteFromDB (child);
-				}
+			db.GetDocument (node.Storable.ID.ToString ()).Delete ();
+			foreach (StorableNode child in node.Children) {
+				DeleteFromDB (child);
 			}
 		}
 
