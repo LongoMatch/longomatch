@@ -73,16 +73,25 @@ namespace LongoMatch
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
-			if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE)))
+			if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE))) {
 				home = Config.baseDirectory;
-			else
-				home = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			
-			Config.homeDirectory = System.IO.Path.Combine (home, Constants.SOFTWARE_NAME);
+			}
+			else {
+				home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
+				if (!Directory.Exists (home)) {
+					Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
+					home = null;
+				}
+				if (home == null) {
+					home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+				}
+			}
+
+			Config.homeDirectory = Path.Combine (home, Constants.SOFTWARE_NAME);
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				Config.configDirectory = Config.homeDirectory;
 			else
-				Config.configDirectory = System.IO.Path.Combine (home, "." +
+				Config.configDirectory = Path.Combine (home, "." +
 				Constants.SOFTWARE_NAME.ToLower ());
 		}
 
