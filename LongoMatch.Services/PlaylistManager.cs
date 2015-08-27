@@ -191,13 +191,10 @@ namespace LongoMatch.Services
 				name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
 				if (name != null) {
 					done = true;
-					foreach (Playlist p in project.Playlists) {
-						if (p.Name == name) {
-							string msg = Catalog.GetString ("A playlist already exists with the same name");
-							Config.GUIToolkit.ErrorMessage (msg);
-							done = false;
-							break;
-						}
+					if (project.Playlists.Any (p => p.Name == name)) {
+						string msg = Catalog.GetString ("A playlist already exists with the same name");
+						Config.GUIToolkit.ErrorMessage (msg);
+						done = false;
 					}
 				}
 			}
