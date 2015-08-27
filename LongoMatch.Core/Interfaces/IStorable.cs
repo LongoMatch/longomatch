@@ -35,6 +35,17 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		bool IsLoaded {get; set;}
 
+		/// <summary>
+		/// A list of the storable children stored in the DB.
+		/// It's used to find orphaned children that have been removed from the <see cref="IStorable"/> and
+		/// should be deleted when it's updated or remove from the DB.
+		/// </summary>
+		List<IStorable> SavedChildren {get;set;}
+
+		/// <summary>
+		/// Defines if <see cref="IStorable"/> children should be deleted when deleting this object.
+		/// </summary>
+		bool DeleteChildren {get;}
 	}
 }
 

@@ -97,8 +97,7 @@ namespace LongoMatch.DB
 		{
 			db.RunInTransaction (() => {
 				StorableNode node;
-				//if (t.DeleteChildren) {
-				if (true) {
+				if (t.DeleteChildren) {
 					ObjectChangedParser parser = new ObjectChangedParser ();
 					parser.Parse (out node, t, Serializer.JsonSettings);
 				} else {

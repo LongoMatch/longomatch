@@ -51,6 +51,16 @@ namespace Tests.DB
 		public List<StorableImageTest> Images { get; set; }
 	}
 
+	class StorableListNoChildrenTest: StorableListTest
+	{
+		public override bool DeleteChildren {
+			get {
+				return false;
+			}
+		}
+	}
+
+
 	class StorableImageTest : StorableBase
 	{
 		public StorableImageTest ()
@@ -169,10 +179,32 @@ namespace Tests.DB
 			list.Images = new List<StorableImageTest> ();
 			list.Images.Add (new StorableImageTest ());
 			list.Images.Add (new StorableImageTest ());
-
 			storage.Store (list);
 			Assert.AreEqual (3, db.DocumentCount);
+			storage.Delete (list);
+			Assert.AreEqual (0, db.DocumentCount);
 
+			StorableListNoChildrenTest list2 = new StorableListNoChildrenTest ();
+			list2.Images = new List<StorableImageTest> ();
+			list2.Images.Add (new StorableImageTest ());
+			list2.Images.Add (new StorableImageTest ());
+			storage.Store (list2);
+			Assert.AreEqual (3, db.DocumentCount);
+			storage.Delete (list2);
+			Assert.AreEqual (2, db.DocumentCount);
+		}
+
+		[Test ()]
+		public void TestDeleteListsChildren ()
+		{
+			StorableListTest list = new StorableListTest ();
+			list.Images = new List<StorableImageTest> ();
+			list.Images.Add (new StorableImageTest ());
+			list.Images.Add (new StorableImageTest ());
+			storage.Store (list);
+			Assert.AreEqual (3, db.DocumentCount);
+			list = storage.Retrieve<StorableListTest> (list.ID);
+			list.Images.Remove (list.Images[0]);
 			storage.Delete (list);
 			Assert.AreEqual (0, db.DocumentCount);
 		}

@@ -49,6 +49,39 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public virtual bool DeleteChildren {
+			get {
+				return true;
+			}
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public List<IStorable> SavedChildren {
+			get;
+			set;
+		}
+		#endregion
+
+		#region IChanged implementation
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+		#endregion
+
+		#region IIDObject implementation
+		[JsonProperty (Order = -100)]
+		public virtual Guid ID {
+			get;
+			set;
+		}
+		#endregion
+
 		/// <summary>
 		/// Set to <c>true</c> while the object is being loaded. Used internally
 		/// to prevent infinite loops.
@@ -56,13 +89,6 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		bool IsLoading {
-			get;
-			set;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public bool IsChanged {
 			get;
 			set;
 		}
@@ -80,17 +106,19 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		#endregion
-
-		#region IIDObject implementation
-
-		[JsonProperty (Order = -100)]
-		public virtual Guid ID {
-			get;
-			set;
+		public override bool Equals (object obj)
+		{
+			StorableBase s = obj as StorableBase;
+			if (s == null)
+				return false;
+			return ID.Equals (s.ID);
 		}
 
-		#endregion
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode();
+		}
+
 	}
 }
 

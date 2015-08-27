@@ -41,7 +41,6 @@ namespace LongoMatch.Core.Store
 		ObservableCollection<Player> players;
 		ObservableCollection<Tag> tags;
 		ObservableCollection<CameraConfig> camerasConfig;
-		bool filling;
 		#region Constructors
 
 		public TimelineEvent ()
@@ -76,6 +75,21 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public IStorage Storage {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool DeleteChildren {
+			get {
+				return false;
+			}
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public List<IStorable> SavedChildren {
 			get;
 			set;
 		}
@@ -366,6 +380,19 @@ namespace LongoMatch.Core.Store
 		public override string ToString ()
 		{
 			return Description;
+		}
+
+		public override bool Equals (object obj)
+		{
+			TimelineEvent evt = obj as TimelineEvent;
+			if (evt == null)
+				return false;
+			return ID.Equals (evt.ID);
+		}
+
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode();
 		}
 		#endregion
 

@@ -32,7 +32,10 @@ namespace Tests.Core.Serialization
 		public IStorage Storage {get; set;}
 		public bool IsLoaded {get; set;}
 		public bool IsChanged {get;set;}
+		public bool DeleteChildren {get {return true;}}
+		public List<IStorable> SavedChildren { get; set;}
 	}
+
 	public class TestObject1: TestObjectBase
 	{
 		public string Name { get; set;}

@@ -79,6 +79,17 @@ namespace Tests.Core.Store
 			Assert.IsNull (p.CamerasLayout);
 		}
 
+		[Test()]
+		public void TestEquals() {
+			TimelineEvent evt1 = new TimelineEvent ();
+			TimelineEvent evt2 = new TimelineEvent ();
+			Assert.AreNotEqual (evt1, evt2);
+			evt2.ID = evt1.ID;
+			Assert.AreEqual (evt1, evt2);
+			evt2.ID = Guid.Parse (evt1.ID.ToString());
+			Assert.AreEqual (evt1, evt2);
+		}
+
 		[Test ()]
 		public void TestProperties ()
 		{

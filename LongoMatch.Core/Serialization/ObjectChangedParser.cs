@@ -121,6 +121,14 @@ namespace LongoMatch.Core.Serialization
 			}
 
 			if (storable != null) {
+				if (storable.DeleteChildren && storable.SavedChildren != null) {
+					var orphaned = storable.SavedChildren.Except (node.Children.Select (n => n.Storable));
+					foreach (IStorable st in orphaned) {
+						StorableNode onode = new StorableNode (st);
+						onode.Deleted = true;
+						CheckValue (st, onode);
+					}
+				}
 				current = current.Parent;
 			}
 		}
@@ -176,16 +184,6 @@ namespace LongoMatch.Core.Serialization
 				memberValue = null;
 				return false;
 			}
-		}
-	}
-
-	class StorableStackObject {
-		public IStorable storable;
-		public bool addedToChangedList;
-
-		public StorableStackObject (IStorable storable) {
-			this.storable = storable;
-			addedToChangedList = false;
 		}
 	}
 }

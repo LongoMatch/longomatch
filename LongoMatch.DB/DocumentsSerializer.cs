@@ -53,8 +53,10 @@ namespace LongoMatch.DB
 			});
 		}
 
-		public static object LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
+		public static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
 		{
+			IStorable storable, parent;
+
 			if (context == null) {
 				context = new SerializationContext (db, objType);
 			}
@@ -65,17 +67,22 @@ namespace LongoMatch.DB
 				Log.Error ("Error getting type " + doc.Properties [OBJ_TYPE] as string);
 				realType = objType;
 			}
-			return DeserializeObject (doc, realType, context);
+			storable = DeserializeObject (doc, realType, context) as IStorable;
+			if (context.Stack.Count != 0) {
+				parent = context.Stack.Peek ();
+				parent.SavedChildren.Add (storable);
+			}
+			return storable;
 		}
 
-		public static object FillObject (IStorable storable, Database db)
+		public static void FillObject (IStorable storable, Database db)
 		{
 			Log.Debug ("Filling object " + storable);
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
 			Document doc = db.GetExistingDocument (storable.ID.ToString ());
 			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
-			serializer.ContractResolver = new DocumentsContractResolver (storable);
-			return DeserializeObject (doc, storable.GetType (), context, serializer);
+			serializer.ContractResolver = new StorablesStackContractResolver (context, storable);
+			DeserializeObject (doc, storable.GetType (), context, serializer);
 		}
 
 
@@ -114,6 +121,7 @@ namespace LongoMatch.DB
 		{
 			if (serializer == null) {
 				serializer = GetSerializer (objType, context, doc.CurrentRevision); 
+				serializer.ContractResolver = new StorablesStackContractResolver (context, null);
 			}
 			JObject jo = JObject.FromObject (doc.Properties);
 			return jo.ToObject (objType, serializer);
@@ -267,22 +275,63 @@ namespace LongoMatch.DB
 		}
 	}
 
-	public class DocumentsContractResolver : DefaultContractResolver
-	{
-		IStorable storable;
 
-		public DocumentsContractResolver (IStorable storable) {
-			this.storable = storable;
+	/// <summary>
+	/// This custom <see cref="IContractResolver"/> is used for the following purposes:
+	/// <list type="bullet">
+	/// <item>
+	/// <description>Create a stack of deserialized <see cref="IStorable"/> objects</description>
+	/// </item>
+	/// <item>
+	/// <description>Re-use a partial <see cref="IStorable"/> to fill it instead of creating a new instance.</description>
+	/// </item>
+	/// </list>
+	/// 
+	/// The stack is updated overriding the default contructor to push the new object and adding
+	/// a deserialized callback to pop it.
+	/// 
+	/// When a storable is provided in the constructor, each time a new object of the same type is created this
+	/// storable is used instead of creating a new one. It's used to fill partial <see cref="IStorable"/> objects
+	/// calling <see cref="IStorage.Fill"/>, assuming they haven't children with the same type.
+	/// </summary>
+	public class StorablesStackContractResolver : DefaultContractResolver
+	{
+		SerializationContext context;
+		IStorable parentStorable;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="LongoMatch.DB.StorablesStackContractResolver"/> class.
+		/// If <paramref name="parentStorable"/> is not null, this storable will be used instead of creating
+		/// a new instance.
+		/// </summary>
+		/// <param name="context">The serialization context.</param>
+		/// <param name="parentStorable">The partially loaded storable that is going to be filled.</param>
+		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable) {
+			this.context = context;
+			this.parentStorable = parentStorable;
 		}
 
 		protected override JsonContract CreateContract (Type type)
 		{
 			JsonContract contract = base.CreateContract(type);
-			if (type == storable.GetType ()) {
-				contract.DefaultCreator = delegate
-				{
-					return storable;
-				};
+			if (typeof(IStorable).IsAssignableFrom (type)) {
+				contract.OnDeserializedCallbacks.Add (
+					(o, context) => this.context.Stack.Pop ());
+				if (parentStorable != null && type == parentStorable.GetType ()) {
+					contract.DefaultCreator = () =>	{
+						context.Stack.Push (parentStorable);
+						parentStorable.SavedChildren = new List<IStorable> ();
+						return parentStorable;
+					};
+				} else {
+					var defaultCreator = contract.DefaultCreator;
+					contract.DefaultCreator = () => {
+						IStorable storable = defaultCreator () as IStorable;
+						storable.SavedChildren = new List<IStorable> ();
+						context.Stack.Push (storable);
+						return storable;
+					};
+				}
 			}
 			return contract;
 		}

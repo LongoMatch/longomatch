@@ -31,6 +31,7 @@ namespace LongoMatch.DB
 			DB = db;
 			ParentType = parentType;
 			Cache = new StorableObjectsCache ();
+			Stack = new Stack<IStorable> ();
 		}
 
 		void Init (Database db, Revision rev, StorableObjectsCache cache)
@@ -54,6 +55,11 @@ namespace LongoMatch.DB
 		}
 
 		public StorableObjectsCache Cache {
+			get;
+			set;
+		}
+
+		public Stack<IStorable> Stack {
 			get;
 			set;
 		}

@@ -626,14 +626,6 @@ namespace LongoMatch.Core.Store
 			Timeline = newTimeline;
 		}
 
-		public bool Equals (Project project)
-		{
-			if (project == null)
-				return false;
-			else
-				return ID == project.ID;
-		}
-
 		public int CompareTo (object obj)
 		{
 			if (obj is Project) {
