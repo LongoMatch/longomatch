@@ -101,6 +101,7 @@ namespace LongoMatch.Core.Serialization
 				if (node == null) {
 					node = new StorableNode (storable);
 				}
+				// Update parent and children relations
 				if (current != null) {
 					current.Children.Add (node);
 				}
@@ -108,8 +109,10 @@ namespace LongoMatch.Core.Serialization
 				current = node;
 			}
 
+			// Figure out the type of object we are dealing with and parse it accordingly.
+			// Primitives are ignored (not being objects containers) and lists and dictionaries
+			// are traversed through all their children.
 			JsonContract valueContract = resolver.ResolveContract(value.GetType());
-
 			if (valueContract is JsonObjectContract) {
 				CheckObject (value, valueContract as JsonObjectContract);
 			} else if (valueContract is JsonArrayContract) {
@@ -120,6 +123,10 @@ namespace LongoMatch.Core.Serialization
 				// Skip primitive value
 			}
 
+			// Now try to find orphaned objects and create nodes with the Deleted flags.
+			// These objects are currently saved in the database and cached in IStorable.SavedChildren but
+			// the current IStorable does not reference them anymore as real children.
+			// We used this cache to find the orphaned children and mark them with the Deleted flag.
 			if (storable != null) {
 				if (storable.DeleteChildren && storable.SavedChildren != null) {
 					var orphaned = storable.SavedChildren.Except (node.Children.Select (n => n.Storable));
@@ -136,7 +143,8 @@ namespace LongoMatch.Core.Serialization
 		void CheckObject (object value, JsonObjectContract contract) {
 			parsed.Add (value);
 
-
+			// Traverse all properties in the same way the Json.NET serialized does,
+			// by taking in account only the serializable properties and skipping JsonIgnore ones.
 			for (int index = 0; index < contract.Properties.Count; index++)
 			{
 				JsonProperty property = contract.Properties[index];
@@ -144,6 +152,8 @@ namespace LongoMatch.Core.Serialization
 				{
 					object memberValue;
 
+					// Check if the object has the IsChanged flag and update the StorableNode
+					// Also reset the flag if it's required.
 					if (property.PropertyName == "IsChanged") {
 						IValueProvider provider = property.ValueProvider;
 						bool changed = (bool) provider.GetValue(value);
