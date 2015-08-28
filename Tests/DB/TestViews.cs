@@ -101,6 +101,7 @@ namespace Tests.DB
 
 			Assert.AreEqual (new List<string> {"Key2", "Key1"}, view.IndexedProperties);
 			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			test.IsChanged = true;
 			storage.Store (test);
 
 			QueryFilter filter = new QueryFilter ();
@@ -120,6 +121,7 @@ namespace Tests.DB
 			Assert.AreEqual (new List<string> {"Key1", "Key3"}, view.PreloadProperties);
 
 			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			test.IsChanged = true;
 			storage.Store (test);
 
 			QueryFilter filter = new QueryFilter ();

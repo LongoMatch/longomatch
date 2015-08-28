@@ -33,11 +33,20 @@ namespace LongoMatch.DB
 		public const string DOC_TYPE = "DocType";
 		public const string OBJ_TYPE = "ObjType";
 
-		public static void SaveObject (IStorable obj, Database db, SerializationContext context = null)
+		/// <summary>
+		/// Saves a storable object in the database.
+		/// </summary>
+		/// <param name="obj">Storable object to save.</param>
+		/// <param name="db">Database.</param>
+		/// <param name="context">Serialization context.</param>
+		/// <param name="serializeChildren">If set to <c>false</c>, <see cref="IStorable"/> children are not saved.</param>
+		public static void SaveObject (IStorable obj, Database db, SerializationContext context = null,
+			bool saveChildren = true)
 		{
 			if (context == null) {
 				context = new SerializationContext (db, obj.GetType ());
 			}
+			context.SaveChildren = saveChildren;
 			Document doc = db.GetDocument (obj.ID.ToString ());
 			doc.Update ((UnsavedRevision rev) => {
 				JObject jo = SerializeObject (obj, rev, context);
@@ -53,6 +62,14 @@ namespace LongoMatch.DB
 			});
 		}
 
+		/// <summary>
+		/// Loads and object from the database for a given type and ID.
+		/// </summary>
+		/// <returns>The storable object.</returns>
+		/// <param name="objType">Object type.</param>
+		/// <param name="id">Object ID.</param>
+		/// <param name="db">Database.</param>
+		/// <param name="context">Serialization context.</param>
 		public static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
 		{
 			IStorable storable, parent;
@@ -75,6 +92,11 @@ namespace LongoMatch.DB
 			return storable;
 		}
 
+		/// <summary>
+		/// Fills a partial storable object reusing the same instance passed in <paramref name="storable"/>.
+		/// </summary>
+		/// <param name="storable">Storable to fill.</param>
+		/// <param name="db">Database to use.</param>
 		public static void FillObject (IStorable storable, Database db)
 		{
 			Log.Debug ("Filling object " + storable);
@@ -85,7 +107,14 @@ namespace LongoMatch.DB
 			DeserializeObject (doc, storable.GetType (), context, serializer);
 		}
 
-
+		/// <summary>
+		/// Deserializes and object from its json string representation.
+		/// </summary>
+		/// <returns>The deserialized object.</returns>
+		/// <param name="json">Object json string.</param>
+		/// <param name="db">Database.</param>
+		/// <param name="rev">Document revision.</param>
+		/// <typeparam name="T">Object type.</typeparam>
 		public static T DeserializeFromJson<T> (string json, Database db, Revision rev)
 		{
 			JsonSerializerSettings settings = GetSerializerSettings (typeof(T),
@@ -152,8 +181,8 @@ namespace LongoMatch.DB
 	/// Converts fields with <see cref="LongoMatch.Core.Common.Image"/> objects 
 	/// into Attachments, using as field value the name of the attachment prefixed
 	/// with the <c>attachment::</c> string.
-	/// In the desrialization process, it loads <see cref="LongoMatch.Core.Common.Image"/>
-	/// from the attachment with the same as the set in the property.
+	/// In the deserialization process, it loads the <see cref="LongoMatch.Core.Common.Image"/>
+	/// from the attachment with the same as the one set in the property.
 	/// </summary>
 	class ImageConverter : JsonConverter
 	{
@@ -240,7 +269,7 @@ namespace LongoMatch.DB
 		{
 			IStorable storable = value as IStorable;
 
-			if (!context.Cache.IsCached (storable.ID)) {
+			if (context.SaveChildren && !context.Cache.IsCached (storable.ID)) {
 				DocumentsSerializer.SaveObject (storable, context.DB, context);
 				context.Cache.AddReference (storable);
 			}
@@ -260,6 +289,7 @@ namespace LongoMatch.DB
 				storable = DocumentsSerializer.LoadObject (objectType, id, context.DB, context) as IStorable;
 				context.Cache.AddReference (storable);
 			}
+
 			return storable;
 		}
 

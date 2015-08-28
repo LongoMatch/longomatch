@@ -17,14 +17,13 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.DB.Views;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.DB.Views;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.DB
 {
@@ -49,7 +48,6 @@ namespace LongoMatch.DB
 
 		void InitializeViews ()
 		{
-			View view;
 			views = new Dictionary <Type, object> ();
 			views.Add (typeof(Dashboard), new DashboardsView (this));
 			views.Add (typeof(Team), new TeamsView (this));
@@ -88,7 +86,10 @@ namespace LongoMatch.DB
 		public void Store<T> (T t) where T : IStorable
 		{
 			db.RunInTransaction (() => {
-				DocumentsSerializer.SaveObject (t, db);
+				StorableNode node;
+				ObjectChangedParser parser = new ObjectChangedParser ();
+				parser.Parse (out node, t, Serializer.JsonSettings);
+				Update (node);
 				return true;
 			});
 		}
@@ -103,7 +104,7 @@ namespace LongoMatch.DB
 				} else {
 					node = new StorableNode (t);
 				}
-				DeleteFromDB (node);
+				Delete (node);
 				return true;
 			});
 		}
@@ -113,11 +114,22 @@ namespace LongoMatch.DB
 			db.Manager.ForgetDatabase (db);
 		}
 
-		void DeleteFromDB (StorableNode node = null)
+		void Delete (StorableNode node = null)
 		{
 			db.GetDocument (node.Storable.ID.ToString ()).Delete ();
 			foreach (StorableNode child in node.Children) {
-				DeleteFromDB (child);
+				Delete (child);
+			}
+		}
+
+		void Update (StorableNode node) {
+			if (node.Deleted) {
+				Delete (node);
+			} else if (node.IsChanged) {
+				DocumentsSerializer.SaveObject (node.Storable, db, saveChildren:false);
+			}
+			foreach (StorableNode child in node.Children) {
+				Update (child);
 			}
 		}
 
