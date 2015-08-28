@@ -177,7 +177,7 @@ namespace LongoMatch.Services
 					return;
 				}
 			}
-			playlist.Elements.AddRange (element);
+			playlist.Elements.Concat (element);
 			Config.EventsBroker.EmitPlaylistsChanged (this);
 		}
 

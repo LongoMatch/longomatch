@@ -20,13 +20,13 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
 	public class Playlist: IStorable
 	{
-
 		int indexSelection = 0;
 
 		#region Constructors
@@ -34,7 +34,7 @@ namespace LongoMatch.Core.Store.Playlists
 		public Playlist ()
 		{
 			ID = System.Guid.NewGuid ();
-			Elements = new List<IPlaylistElement> ();
+			Elements = new ObservableCollection<IPlaylistElement> ();
 		}
 
 		#endregion
@@ -54,7 +54,7 @@ namespace LongoMatch.Core.Store.Playlists
 			set;
 		}
 
-		public List<IPlaylistElement> Elements {
+		public ObservableCollection<IPlaylistElement> Elements {
 			get;
 			set;
 		}

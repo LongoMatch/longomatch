@@ -468,7 +468,7 @@ namespace LongoMatch.Drawing
 		/// </summary>
 		/// <param name="sel">The selection.</param>
 		/// <param name="notify">If set to <c>true</c>, notifies about the changes.</param>
-		protected void UpdateSelection (Selection sel, bool notify = true)
+		protected virtual void UpdateSelection (Selection sel, bool notify = true)
 		{
 			ICanvasSelectableObject so;
 			Selection seldup;
