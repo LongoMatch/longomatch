@@ -194,8 +194,7 @@ namespace Tests.DB
 			Assert.AreEqual (2, db.DocumentCount);
 		}
 
-		[Test ()]
-		public void TestDeleteListsChildren ()
+		public void TestDeleteOrphanedChildrenOnDelete ()
 		{
 			StorableListTest list = new StorableListTest ();
 			list.Images = new List<StorableImageTest> ();
@@ -207,6 +206,20 @@ namespace Tests.DB
 			list.Images.Remove (list.Images[0]);
 			storage.Delete (list);
 			Assert.AreEqual (0, db.DocumentCount);
+		}
+
+		public void TestDeleteOrphanedChildrenOnUpdate ()
+		{
+			StorableListTest list = new StorableListTest ();
+			list.Images = new List<StorableImageTest> ();
+			list.Images.Add (new StorableImageTest ());
+			list.Images.Add (new StorableImageTest ());
+			storage.Store (list);
+			Assert.AreEqual (3, db.DocumentCount);
+			list = storage.Retrieve<StorableListTest> (list.ID);
+			list.Images.Remove (list.Images[0]);
+			storage.Store (list);
+			Assert.AreEqual (2, db.DocumentCount);
 		}
 
 		[Test ()]

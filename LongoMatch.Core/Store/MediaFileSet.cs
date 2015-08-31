@@ -42,6 +42,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonProperty]
+		[PropertyChanged.DoNotNotify]
 		List<MediaFile> MediaFiles {
 			get {
 				if (Count == 0) {

@@ -113,6 +113,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// The icon used for this dashboard
 		/// </summary>
+		[LongoMatchPropertyPreload]
 		public Image Image {
 			get;
 			set;

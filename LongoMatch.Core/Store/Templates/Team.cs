@@ -54,6 +54,7 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [1] = Color.Red1;
 		}
 
+		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;
