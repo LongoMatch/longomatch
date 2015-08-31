@@ -29,7 +29,7 @@ using Newtonsoft.Json;
 
 namespace LongoMatch
 {
-	public class Config
+	 public class Config
 	{
 		public static string homeDirectory = ".";
 		public static string baseDirectory = ".";

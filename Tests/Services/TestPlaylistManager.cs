@@ -39,9 +39,10 @@ namespace Tests.Services
 		Mock<IGUIToolkit> mockGuiToolkit;
 		Mock<IRenderingJobsManager> mockVideoRenderer;
 		Mock<IAnalysisWindow> mockAnalysisWindow;
-		Mock<IPlayerController> mockPlayerController ;
+		Mock<IPlayerController> mockPlayerController;
 
-		string queryMessage = "queried message";
+		bool eventLoaded;
+
 
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
@@ -52,6 +53,7 @@ namespace Tests.Services
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 
+			Config.EventsBroker.EventLoadedEvent += (TimelineEvent evt) => eventLoaded = true;
 		}
 
 		[SetUp ()]
@@ -62,7 +64,8 @@ namespace Tests.Services
 			plmanager = new PlaylistManager (mockGuiToolkit.Object, mockVideoRenderer.Object);
 			plmanager.Start ();
 
-			OpenProject (new Project());
+			OpenProject (new Project ());
+			eventLoaded = false;
 
 		}
 
@@ -71,28 +74,34 @@ namespace Tests.Services
 		{
 			plmanager.Stop ();
 			mockGuiToolkit.ResetCalls ();
+			mockPlayerController.ResetCalls ();
 		}
 
-		void OpenProject (Project project = null)
+		void OpenProject (Project project = null, ProjectType projectType = ProjectType.FileProject)
 		{
-			Config.EventsBroker.EmitOpenedProjectChanged (project, ProjectType.FileProject, new EventsFilter (project), mockAnalysisWindow.Object);
+			if (project != null) {
+				project.Description = new ProjectDescription ();
+				project.Description.FileSet = new MediaFileSet ();
+			}
+			Config.EventsBroker.EmitOpenedProjectChanged (project, projectType, new EventsFilter (project), mockAnalysisWindow.Object);
 		}
 
 		[Test ()]
 		public void TestNewPlaylist ()
 		{
+			string name = "name";
 			bool changedEvent = false;
 			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
-			mockGuiToolkit.Setup (m => m.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())).Returns (Task.Factory.StartNew (() => queryMessage));
+			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => name));
 
 			Project project = new Project ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 
-			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
 			Assert.IsTrue (changedEvent);
 			Assert.AreEqual (1, project.Playlists.Count);
-			Assert.AreEqual (queryMessage, project.Playlists [0].Name);
+			Assert.AreEqual (name, project.Playlists [0].Name);
 
 		}
 
@@ -106,7 +115,7 @@ namespace Tests.Services
 			Project project = new Project ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 
-			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
 			Assert.IsFalse (changedEvent);
 			Assert.AreEqual (0, project.Playlists.Count);
@@ -136,7 +145,7 @@ namespace Tests.Services
 			called = false;
 			Config.EventsBroker.EmitNewPlaylist (project);
 
-			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Exactly (3));
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (3));
 
 			Assert.IsTrue (changedEvent);
 			Assert.AreEqual (2, project.Playlists.Count);
@@ -152,14 +161,14 @@ namespace Tests.Services
 			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
 
 			var playlist = new Playlist { Name = "name" };
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
 			var elementList = new List<IPlaylistElement> ();
 			elementList.Add (element);
 
 			Config.EventsBroker.EmitAddPlaylistElement (playlist, elementList);
 
 			Assert.IsTrue (changedEvent);
-			Assert.AreEqual (elementList, playlist.Elements.ToList());
+			Assert.AreEqual (elementList, playlist.Elements.ToList ());
 
 
 		}
@@ -167,7 +176,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestAddPlaylistElementNewPlaylist ()
 		{
-			mockGuiToolkit.Setup (m => m.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())).Returns (Task.Factory.StartNew (() => "name"));
+			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => "name"));
 
 			bool changedEvent = false;
 			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
@@ -175,7 +184,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
 
-			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
 			Assert.IsTrue (changedEvent);
 
@@ -192,12 +201,70 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
 
-			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
 			Assert.IsFalse (changedEvent);
+		}
 
+		[Test ()]
+		public void TestLoadPlayEvent ()
+		{
+			TimelineEvent element = new TimelineEvent ();
+
+			Config.EventsBroker.EmitLoadEvent (element);
+
+			mockPlayerController.Verify (player => player.LoadEvent (It.IsAny<MediaFileSet> (), element, element.Start, true), Times.Once ());
+
+			Assert.IsTrue (eventLoaded);
 
 		}
+
+		[Test ()]
+		public void TestLoadPlayEventNull ()
+		{
+			
+
+			TimelineEvent element = null;
+
+			Config.EventsBroker.EmitLoadEvent (element);
+
+			mockPlayerController.Verify (player => player.UnloadCurrentEvent (), Times.Once ());
+
+			Assert.IsTrue (eventLoaded);
+
+		}
+
+		[Test ()]
+		public void TestLoadPlayEventSubs ()
+		{
+			TimelineEvent element = new SubstitutionEvent ();
+
+			Config.EventsBroker.EmitLoadEvent (element);
+
+			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Once ());
+			mockPlayerController.Verify (player => player.Play (), Times.Once ());
+
+			Assert.IsTrue (eventLoaded);
+
+		}
+
+		[Test ()]
+		public void TestLoadPlayEventFake ()
+		{
+			var project = new Project ();
+			OpenProject (project, ProjectType.FakeCaptureProject);
+
+			TimelineEvent element = new SubstitutionEvent ();
+
+			Config.EventsBroker.EmitLoadEvent (element);
+
+			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Never ());
+			mockPlayerController.Verify (player => player.Play (), Times.Never ());
+
+			Assert.IsFalse (eventLoaded);
+
+		}
+
 
 	}
 		
