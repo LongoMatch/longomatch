@@ -350,6 +350,12 @@ namespace LongoMatch.DB
 		protected override JsonContract CreateContract (Type type)
 		{
 			JsonContract contract = base.CreateContract(type);
+			if (typeof(IChanged).IsAssignableFrom (type)) {
+				contract.OnDeserializedCallbacks.Add (
+					(o, context) => {
+						(o as IChanged).IsChanged = false;
+					});
+			}
 			if (typeof(IStorable).IsAssignableFrom (type)) {
 				contract.OnDeserializedCallbacks.Add (
 					(o, context) => this.context.Stack.Pop ());
