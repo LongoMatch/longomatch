@@ -28,6 +28,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Serialization;
 
 namespace Tests.DB
 {
@@ -127,7 +128,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSerializeImages ()
+		public void TestStoreImages ()
 		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
@@ -150,7 +151,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSerializeImagesList ()
+		public void TestStoreImagesList ()
 		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
@@ -194,6 +195,7 @@ namespace Tests.DB
 			Assert.AreEqual (2, db.DocumentCount);
 		}
 
+		[Test ()]
 		public void TestDeleteOrphanedChildrenOnDelete ()
 		{
 			StorableListTest list = new StorableListTest ();
@@ -208,6 +210,7 @@ namespace Tests.DB
 			Assert.AreEqual (0, db.DocumentCount);
 		}
 
+		[Test ()]
 		public void TestDeleteOrphanedChildrenOnUpdate ()
 		{
 			StorableListTest list = new StorableListTest ();
@@ -223,7 +226,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestDeserializeImages ()
+		public void TestRetrieveImages ()
 		{
 			Image img = Utils.LoadImageFromFile ();
 			StorableImageTest t = new StorableImageTest {
@@ -240,7 +243,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestSerializeStorableByReference ()
+		public void TestStoreStorableByReference ()
 		{
 			StorableImageTest img = new StorableImageTest {
 				ID = Guid.NewGuid (),
@@ -262,7 +265,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestDeserializeStorableByReference ()
+		public void TestRetrieveStorableByReference ()
 		{
 			StorableImageTest img = new StorableImageTest {
 				ID = Guid.NewGuid (),
@@ -280,7 +283,7 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestDeserializeStorableListByReference ()
+		public void TestRetrieveStorableListByReference ()
 		{
 			StorableListTest list = new StorableListTest ();
 			list.Images = new List<StorableImageTest> ();
@@ -294,6 +297,45 @@ namespace Tests.DB
 			Assert.AreEqual (2, list2.Images.Count);
 			Assert.AreEqual (typeof(StorableImageTest), list2.Images [0].GetType ());
 			Assert.AreEqual (typeof(StorableImageTest2), list2.Images [1].GetType ());
+		}
+
+		[Test ()]
+		public void TestRetrieveErrors (){
+			// ID does not exists
+			Assert.IsNull (storage.Retrieve<Project> (Guid.Empty));
+			// ID exists but for a different type;
+			StorableImageTest t = new StorableImageTest {
+				ID = Guid.NewGuid (),
+			};
+			storage.Store (t);
+			Assert.IsNull (storage.Retrieve<Project> (t.ID));
+		}
+
+		[Test ()]
+		public void TestIsChangedResetted () {
+			Team t, t1;
+			ObjectChangedParser parser;
+			List<IStorable> storables = null, changed = null;
+			StorableNode parent = null;
+
+			parser = new ObjectChangedParser ();
+			t = Team.DefaultTemplate (10);
+			storage.Store (t);
+
+			// After loading an object
+			t1 = DocumentsSerializer.LoadObject (typeof(Team), t.ID, db) as Team;
+			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
+			Assert.AreEqual (0, changed.Count);
+
+			// After filling an object
+			t1 = new Team ();
+			t1.ID = t.ID;
+			t1.IsChanged = false;
+			DocumentsSerializer.FillObject (t, db);
+			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
+			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
+			Assert.AreEqual (0, changed.Count);
 		}
 
 		[Test ()]
