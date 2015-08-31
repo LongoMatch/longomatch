@@ -72,22 +72,28 @@ namespace LongoMatch.DB
 		/// <param name="context">Serialization context.</param>
 		public static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
 		{
-			IStorable storable, parent;
+			IStorable storable = null, parent;
+			Document doc;
 
 			if (context == null) {
 				context = new SerializationContext (db, objType);
 			}
-			Document doc = db.GetExistingDocument (id.ToString ());
-			Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
-			if (realType == null) {
-				/* Should never happen */
-				Log.Error ("Error getting type " + doc.Properties [OBJ_TYPE] as string);
-				realType = objType;
-			}
-			storable = DeserializeObject (doc, realType, context) as IStorable;
-			if (context.Stack.Count != 0) {
-				parent = context.Stack.Peek ();
-				parent.SavedChildren.Add (storable);
+			doc = db.GetExistingDocument (id.ToString ());
+			if (doc != null) {
+				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
+				if (realType == null) {
+					/* Should never happen */
+					Log.Error ("Error getting type " + doc.Properties [OBJ_TYPE] as string);
+					realType = objType;
+				} else if (!objType.IsAssignableFrom (realType)) {
+					Log.Error ("Types mismatch " + objType.FullName + " vs " + realType.FullName);
+					return null;
+				}
+				storable = DeserializeObject (doc, realType, context) as IStorable;
+				if (context.Stack.Count != 0) {
+					parent = context.Stack.Peek ();
+					parent.SavedChildren.Add (storable);
+				}
 			}
 			return storable;
 		}
