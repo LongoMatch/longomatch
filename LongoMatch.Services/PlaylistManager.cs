@@ -177,7 +177,10 @@ namespace LongoMatch.Services
 					return;
 				}
 			}
-			playlist.Elements.Concat (element);
+
+			foreach (var item in element) {
+				playlist.Elements.Add (item);
+			}
 			Config.EventsBroker.EmitPlaylistsChanged (this);
 		}
 
@@ -186,22 +189,23 @@ namespace LongoMatch.Services
 			string name = Catalog.GetString ("New playlist");
 			Playlist playlist = null;
 			bool done = false;
-
-			while (name != null && !done) {
-				name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
-				if (name != null) {
-					done = true;
-					if (project.Playlists.Any (p => p.Name == name)) {
-						string msg = Catalog.GetString ("A playlist already exists with the same name");
-						Config.GUIToolkit.ErrorMessage (msg);
-						done = false;
+			if (project != null) {
+				while (name != null && !done) {
+					name = this.guiToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
+					if (name != null) {
+						done = true;
+						if (project.Playlists.Any (p => p.Name == name)) {
+							string msg = Catalog.GetString ("A playlist already exists with the same name");
+							this.guiToolkit.ErrorMessage (msg);
+							done = false;
+						}
 					}
 				}
-			}
-			if (name != null) {
-				playlist = new Playlist { Name = name };
-				project.Playlists.Add (playlist);
-				Config.EventsBroker.EmitPlaylistsChanged (this);
+				if (name != null) {
+					playlist = new Playlist { Name = name };
+					project.Playlists.Add (playlist);
+					Config.EventsBroker.EmitPlaylistsChanged (this);
+				}
 			}
 			return playlist;
 		}

@@ -106,6 +106,7 @@
     <Compile Include="Services\TestUpdatesNotifier.cs" />
     <Compile Include="Services\TestProjectsManager.cs" />
     <Compile Include="LocalDatabase.cs" />
+    <Compile Include="Services\TestPlaylistManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

@@ -1,0 +1,205 @@
+﻿//
+//  Copyright (C) 2015 vguzman
+//
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+//
+using NUnit.Framework;
+using System;
+using LongoMatch.Services;
+using LongoMatch;
+using LongoMatch.Core.Common;
+using Moq;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces;
+using System.Threading.Tasks;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Tests.Services
+{
+	[TestFixture ()]
+	public class TestPlaylistManager
+	{
+
+		PlaylistManager plmanager;
+		Mock<IGUIToolkit> mockGuiToolkit;
+		Mock<IRenderingJobsManager> mockVideoRenderer;
+		Mock<IAnalysisWindow> mockAnalysisWindow;
+		Mock<IPlayerController> mockPlayerController ;
+
+		string queryMessage = "queried message";
+
+		[TestFixtureSetUp ()]
+		public void FixtureSetup ()
+		{
+			Config.EventsBroker = new EventsBroker ();
+			mockAnalysisWindow = new Mock<IAnalysisWindow> ();
+			mockPlayerController = new Mock<IPlayerController> ();
+			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
+			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
+
+		}
+
+		[SetUp ()]
+		public void Setup ()
+		{
+			mockGuiToolkit = new Mock<IGUIToolkit> ();
+
+			plmanager = new PlaylistManager (mockGuiToolkit.Object, mockVideoRenderer.Object);
+			plmanager.Start ();
+
+			OpenProject (new Project());
+
+		}
+
+		[TearDown ()]
+		public void TearDown ()
+		{
+			plmanager.Stop ();
+			mockGuiToolkit.ResetCalls ();
+		}
+
+		void OpenProject (Project project = null)
+		{
+			Config.EventsBroker.EmitOpenedProjectChanged (project, ProjectType.FileProject, new EventsFilter (project), mockAnalysisWindow.Object);
+		}
+
+		[Test ()]
+		public void TestNewPlaylist ()
+		{
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+			mockGuiToolkit.Setup (m => m.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())).Returns (Task.Factory.StartNew (() => queryMessage));
+
+			Project project = new Project ();
+			Config.EventsBroker.EmitNewPlaylist (project);
+
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+
+			Assert.IsTrue (changedEvent);
+			Assert.AreEqual (1, project.Playlists.Count);
+			Assert.AreEqual (queryMessage, project.Playlists [0].Name);
+
+		}
+
+		[Test ()]
+		public void TestNewPlaylistNull ()
+		{
+			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+
+			Project project = new Project ();
+			Config.EventsBroker.EmitNewPlaylist (project);
+
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+
+			Assert.IsFalse (changedEvent);
+			Assert.AreEqual (0, project.Playlists.Count);
+
+		}
+
+		[Test ()]
+		public void TestNewPlaylistRepeatName ()
+		{
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+			bool called = false;
+			string name = "name";
+			string differentName = "different name";
+			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()))
+				.Returns (() => Task.Factory.StartNew (() => {
+				if (called) {
+					return differentName;
+				} else {
+					called = true;
+					return name;
+				}
+			}));
+
+			Project project = new Project ();
+			Config.EventsBroker.EmitNewPlaylist (project);
+			called = false;
+			Config.EventsBroker.EmitNewPlaylist (project);
+
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Exactly (3));
+
+			Assert.IsTrue (changedEvent);
+			Assert.AreEqual (2, project.Playlists.Count);
+			Assert.AreEqual (name, project.Playlists [0].Name);
+			Assert.AreEqual (differentName, project.Playlists [1].Name);
+
+		}
+
+		[Test ()]
+		public void TestAddPlaylistElement ()
+		{
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+
+			var playlist = new Playlist { Name = "name" };
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent());
+			var elementList = new List<IPlaylistElement> ();
+			elementList.Add (element);
+
+			Config.EventsBroker.EmitAddPlaylistElement (playlist, elementList);
+
+			Assert.IsTrue (changedEvent);
+			Assert.AreEqual (elementList, playlist.Elements.ToList());
+
+
+		}
+
+		[Test ()]
+		public void TestAddPlaylistElementNewPlaylist ()
+		{
+			mockGuiToolkit.Setup (m => m.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())).Returns (Task.Factory.StartNew (() => "name"));
+
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+			var elementList = new List<IPlaylistElement> ();
+
+			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
+
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+
+			Assert.IsTrue (changedEvent);
+
+
+		}
+
+		[Test ()]
+		public void TestAddPlaylistElementNullPlaylist ()
+		{
+			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
+			bool changedEvent = false;
+			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
+			var elementList = new List<IPlaylistElement> ();
+
+			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
+
+			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>()), Times.Once ());
+
+			Assert.IsFalse (changedEvent);
+
+
+		}
+
+	}
+		
+}
+
