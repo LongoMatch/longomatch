@@ -36,6 +36,17 @@ namespace LongoMatch.Core.Store
 		{
 			ID = Guid.NewGuid ();
 			MatchDate = LastModified = DateTime.Now;
+
+			Category = "";
+			Competition = "";
+			Description = "";
+			Group = "";
+			LocalGoals = 0;
+			LocalName = "";
+			Phase = "";
+			Season = "";
+			VisitorGoals = 0;
+			VisitorName = "";
 		}
 
 		[OnDeserialized]
