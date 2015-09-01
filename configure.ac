@@ -173,6 +173,7 @@ pkgconfig/longomatch-services.pc
 
 .nuget/Makefile
 
+Weavers/Makefile
 AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile

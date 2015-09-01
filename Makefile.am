@@ -21,6 +21,7 @@ SUBDIRS = \
 	libcesarplayer \
 	.nuget \
 	oxyplot \
+	Weavers \
 	LongoMatch.Core \
 	LongoMatch.DB \
 	LongoMatch.Multimedia \
