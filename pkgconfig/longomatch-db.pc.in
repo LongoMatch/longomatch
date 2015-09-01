@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+longomatchdir=@libdir@/@PACKAGE@
+
+Name: LongoMatch.DB
+Description: LongoMatch Database framework for .NET
+Version: @VERSION@
+Requires: longomatch-core
+Libs: -r:${longomatchdir}/LongoMatch.DB.dll
