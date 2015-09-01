@@ -19,7 +19,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using LongoMatch.Services.Services;
+using LongoMatch.DB;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 

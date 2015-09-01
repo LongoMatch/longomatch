@@ -345,7 +345,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (13, db.DocumentCount);
+			Assert.AreEqual (14, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -358,7 +358,7 @@ namespace Tests.DB
 			Assert.AreEqual (16, dashboard2.Image.Width); 
 			Assert.AreEqual (16, dashboard2.Image.Height);
 			storage.Delete (dashboard);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]

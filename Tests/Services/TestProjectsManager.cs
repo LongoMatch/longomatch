@@ -240,7 +240,7 @@ namespace Tests.Services
 
 			Config.DatabaseManager.ActiveDB.AddProject (project);
 
-			Config.EventsBroker.EmitOpenProjectID (project.ID);
+			Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 
 			mtkMock.Verify(g => g.DiscoverFile(It.IsAny<string>(), true), Times.Exactly(project.Description.FileSet.Count));
 

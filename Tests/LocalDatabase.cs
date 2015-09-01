@@ -33,9 +33,9 @@ namespace Tests
 			projects = new Dictionary<Guid, Project> ();
 		}
 
-		public  List<ProjectDescription> GetAllProjects ()
+		public  List<Project> GetAllProjects ()
 		{
-			return projects.Values.Select (p => p.Description).ToList ();
+			return projects.Values.ToList ();
 		}
 
 		public Project GetProject (Guid id)
@@ -48,9 +48,9 @@ namespace Tests
 			projects [project.ID] = project;
 		}
 
-		public bool RemoveProject (Guid id)
+		public bool RemoveProject (Project project)
 		{
-			projects.Remove (id);
+			projects.Remove (project.ID);
 			return true;
 		}
 

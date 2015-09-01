@@ -18,7 +18,7 @@
 using NUnit.Framework;
 using System;
 using LongoMatch.Services;
-using LongoMatch.Services.Services;
+using LongoMatch.DB;
 using System.IO;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Common;

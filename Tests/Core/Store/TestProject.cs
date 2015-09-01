@@ -71,18 +71,7 @@ namespace Tests.Core.Store
 			
 			Project newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
-			Assert.AreEqual (newp.Description.CompareTo (p.Description), 0);
 			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
-		}
-
-		[Test ()]
-		public void TestSetDescription ()
-		{
-			ProjectDescription pd = new ProjectDescription ();
-			Project p = new Project ();
-			p.Description = pd;
-			Assert.IsNotNull (pd.ID);
-			Assert.AreEqual (p.ID, pd.ProjectID);
 		}
 
 		[Test ()]
