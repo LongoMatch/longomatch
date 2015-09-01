@@ -18,11 +18,17 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces
 {
 	public interface IStorage
 	{
+		/// <summary>
+		/// Gets the storage information.
+		/// </summary>
+		StorageInfo Info {get;}
+
 		/// <summary>
 		/// Retrieve every object of type T, where T must implement IStorable
 		/// </summary>
@@ -69,6 +75,7 @@ namespace LongoMatch.Core.Interfaces
 		/// Make sure you know what you are doing before using this.
 		/// </summary>
 		void Reset ();
+
 	}
 }
 

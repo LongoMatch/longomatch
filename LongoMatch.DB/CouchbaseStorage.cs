@@ -62,7 +62,13 @@ namespace LongoMatch.DB
 
 		#region IStorage implementation
 
-		public void Fill (IStorable storable) {
+		public StorageInfo Info {
+			get;
+			set;
+		}
+
+		public void Fill (IStorable storable)
+		{
 			DocumentsSerializer.FillObject (storable, db);
 		}
 
