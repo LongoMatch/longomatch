@@ -25,5 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\DashboardsView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseDB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
   </ItemGroup>
 </Project>

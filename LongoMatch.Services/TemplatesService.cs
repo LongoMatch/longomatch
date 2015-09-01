@@ -23,9 +23,8 @@ using System.Reflection;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services.Services;
+using LongoMatch.DB;
 
 namespace LongoMatch.Services
 {

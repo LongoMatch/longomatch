@@ -24,7 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Services.Services
+namespace LongoMatch.DB
 {
 	public class FileStorage : IStorage
 	{

@@ -27,7 +27,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Services.Services;
 using LongoMatch.DB;
 
 #if OSTYPE_WINDOWS
