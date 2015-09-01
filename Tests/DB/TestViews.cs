@@ -180,6 +180,10 @@ namespace Tests.DB
 		{
 			Dashboard d = Dashboard.DefaultTemplate (5);
 			d.Name = "Dashboard1";
+			// Make PenaltyCardEventType and ScoreEventType the same object so that both are serialized
+			// as references and Utils.AreEquals can check the rest correctly
+			(d.List[8] as PenaltyCardButton).EventType = (d.List[7] as PenaltyCardButton).EventType;
+			(d.List[10] as ScoreButton).EventType = (d.List[9] as ScoreButton).EventType;
 			storage.Store (d);
 			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()) [0];
 			d1.IsLoaded = true;
