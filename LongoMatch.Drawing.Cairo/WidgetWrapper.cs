@@ -334,6 +334,10 @@ namespace LongoMatch.Drawing.Cairo
 				ButtonReleasedEvent (new Point (args.Event.X, args.Event.Y), bt, bm);
 			}
 			inButtonPress = false;
+
+			/* Grab the focus if it's required */
+			if (widget.CanFocus && !widget.HasFocus)
+				widget.GrabFocus ();
 		}
 
 		void HandleButtonPressEvent (object o, ButtonPressEventArgs args)
