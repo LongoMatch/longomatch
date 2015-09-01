@@ -287,10 +287,10 @@ namespace LongoMatch.Core.Common
 				ExportProjectEvent (project);
 		}
 
-		public void EmitOpenProjectID (Guid projectID)
+		public void EmitOpenProjectID (Guid projectID, Project project)
 		{
 			if (OpenProjectIDEvent != null) {
-				OpenProjectIDEvent (projectID);
+				OpenProjectIDEvent (projectID, project);
 			}
 		}
 

@@ -41,10 +41,10 @@ namespace LongoMatch.Gui.Component
 		const int COL_PIXBUF1 = 1;
 		const int COL_PIXBUF2 = 2;
 		const int COL_PIXBUF3 = 3;
-		const int COL_PROJECT_DESCRIPTION = 4;
+		const int COL_PROJECT = 4;
 		TreeModelFilter filter;
 		TreeModelSort sort;
-		List<ProjectDescription> projects;
+		List<Project> projects;
 		ListStore store;
 		bool swallowSignals;
 
@@ -91,14 +91,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Fill (List<ProjectDescription> projects)
+		public void Fill (List<Project> projects)
 		{
 			Pixbuf image, homeShield, awayShield;
 
 			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
-			foreach (ProjectDescription pdesc in projects) {
+			foreach (Project p in projects) {
+				ProjectDescription pdesc = p.Description;
 				MediaFile file = pdesc.FileSet.FirstOrDefault ();
 				if (file != null && file.IsFakeCapture) {
 					image = Misc.LoadIcon ("longomatch-video-device-fake", 50);
@@ -118,7 +119,7 @@ namespace LongoMatch.Gui.Component
 					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
 				}
 				
-				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, pdesc);
+				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, p);
 			}
 			swallowSignals = false;
 			iconview.SelectPath (new TreePath ("0"));
@@ -129,9 +130,9 @@ namespace LongoMatch.Gui.Component
 		/// Removes the provided projects from the list. Matching is done using the project description instance, not the project ID.
 		/// </summary>
 		/// <param name="projects">List of project description to remove.</param>
-		public void RemoveProjects (List<ProjectDescription> projects)
+		public void RemoveProjects (List<Project> projects)
 		{
-			foreach (ProjectDescription project in projects) {
+			foreach (Project project in projects) {
 				this.projects.Remove (project);
 			}
 			// Regenerate our list, this will trigger selected event for the first item.
@@ -142,20 +143,21 @@ namespace LongoMatch.Gui.Component
 		/// Updates the project description with a matching ID to the new description.
 		/// </summary>
 		/// <param name="description">Project Description.</param>
-		public void UpdateProject (ProjectDescription description)
+		public void UpdateProject (Project project)
 		{
 			TreeIter first;
 
 			/* Projects are only update in the treeview mode */
 			store.GetIterFirst (out first);
 			while (store.IterIsValid (first)) {
-				ProjectDescription pd = store.GetValue (first, COL_PROJECT_DESCRIPTION) as ProjectDescription;
-				if (description.ID == pd.ID) {
+				Project p = store.GetValue (first, COL_PROJECT) as Project;
+				if (project.ID == p.ID) {
 					// Change value in model
-					store.SetValue (first, COL_DISPLAY_NAME, FormatDesc (description));
-					store.SetValue (first, COL_PROJECT_DESCRIPTION, description);
-					// Also update our internal list
-					projects [projects.IndexOf (pd)] = description;
+					store.SetValue (first, COL_DISPLAY_NAME, FormatDesc (project.Description));
+					store.SetValue (first, COL_PROJECT, project);
+					// Also update our internal list. Although it's a new instance of Project the ID is the same
+					// and IndexOf should return the index of the old project to replace.
+					projects [projects.IndexOf (project)] = project;
 					break;
 				}
 				store.IterNext (ref first);
@@ -181,7 +183,7 @@ namespace LongoMatch.Gui.Component
 		ListStore CreateStore ()
 		{
 			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf),
-				typeof(Gdk.Pixbuf), typeof(ProjectDescription));
+				typeof(Gdk.Pixbuf), typeof(Project));
 			
 			filter = new Gtk.TreeModelFilter (store, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
@@ -195,12 +197,13 @@ namespace LongoMatch.Gui.Component
 
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
-			ProjectDescription p1, p2;
+			Project p1, p2;
 			
-			p1 = (ProjectDescription)model.GetValue (a, COL_PROJECT_DESCRIPTION);
-			p2 = (ProjectDescription)model.GetValue (b, COL_PROJECT_DESCRIPTION);
+			p1 = (Project)model.GetValue (a, COL_PROJECT);
+			p2 = (Project)model.GetValue (b, COL_PROJECT);
 
-			return ProjectDescription.Sort (p1, p2, (ProjectSortType)sortcombobox.Active);
+			return ProjectDescription.Sort (p1.Description, p2.Description,
+				(ProjectSortType)sortcombobox.Active);
 		}
 
 		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
@@ -210,27 +213,27 @@ namespace LongoMatch.Gui.Component
 
 		bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			ProjectDescription project = (ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION);
+			Project project = (Project)model.GetValue (iter, COL_PROJECT);
 
 			if (project == null)
 				return true;
 			
-			return project.Search (filterEntry.Text);
+			return project.Description.Search (filterEntry.Text);
 		}
 
 		void HandleSelectionChanged (TreeModel model, TreePath[] selectedItems)
 		{
 			TreeIter iter;
-			List<ProjectDescription> list;
+			List<Project> list;
 
 			if (swallowSignals)
 				return;
 
 			if (ProjectsSelected != null) {
-				list = new List<ProjectDescription> ();
+				list = new List<Project> ();
 				for (int i = 0; i < selectedItems.Length; i++) {
 					model.GetIterFromString (out iter, selectedItems [i].ToString ());
-					list.Add ((ProjectDescription)model.GetValue (iter, COL_PROJECT_DESCRIPTION));
+					list.Add ((Project)model.GetValue (iter, COL_PROJECT));
 				}
 				ProjectsSelected (list);
 			}
@@ -249,16 +252,16 @@ namespace LongoMatch.Gui.Component
 		void HandleItemActivated (object o, ItemActivatedArgs args)
 		{
 			TreeIter iter;
-			ProjectDescription pdesc;
+			Project project;
 			
 			if (swallowSignals)
 				return;
 				
 			if (ProjectSelected != null) {
 				iconview.Model.GetIter (out iter, args.Path);
-				pdesc = iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION) as ProjectDescription;
-				if (pdesc != null) {
-					ProjectSelected (pdesc);
+				project = iconview.Model.GetValue (iter, COL_PROJECT) as Project;
+				if (project != null) {
+					ProjectSelected (project);
 				}
 			}
 		}

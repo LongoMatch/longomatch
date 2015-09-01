@@ -348,17 +348,18 @@ namespace LongoMatch.Services
 			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ());
 		}
 
-		void OpenProjectID (Guid projectID)
+		void OpenProjectID (Guid projectID, Project project)
 		{
-			Project project = null;
-			
-			try {
-				project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				guiToolkit.ErrorMessage (ex.Message);
-				return;
+			if (project == null) {
+				try {
+					project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (ex.Message);
+					return;
+				}
 			}
+
 			if (project.Description.FileSet.Duration == null) {
 				Log.Warning ("The selected project is empty. Rediscovering files");
 				for (int i = 0; i < project.Description.FileSet.Count; i++) {
@@ -379,18 +380,18 @@ namespace LongoMatch.Services
 
 		void CaptureFinished (bool cancel, bool delete)
 		{
-			Guid id = OpenedProject.ID;
+			Project project = OpenedProject;
 			ProjectType type = OpenedProjectType;
 			if (delete) {
 				try {
-					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject.ID);
+					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
 			}
 			CloseOpenedProject (!cancel);
 			if (!cancel && type != ProjectType.FakeCaptureProject) {
-				OpenProjectID (id);
+				OpenProjectID (project.ID, project);
 			}
 		}
 

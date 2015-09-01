@@ -29,13 +29,12 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class ProjectDescription :  IComparable, IChanged
+	public class ProjectDescription : IChanged
 	{
 		DateTime matchDate, lastModified;
 
 		public ProjectDescription ()
 		{
-			ID = Guid.NewGuid ();
 			MatchDate = LastModified = DateTime.Now;
 
 			Category = "";
@@ -50,31 +49,9 @@ namespace LongoMatch.Core.Store
 			VisitorName = "";
 		}
 
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			// For old projects missing ProjectID
-			if (ProjectID == Guid.Empty) {
-				ProjectID = ID;
-			}
-		}
-
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Unique ID of the parent project
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
-		}
-
-		public Guid ProjectID {
 			get;
 			set;
 		}
@@ -299,15 +276,6 @@ namespace LongoMatch.Core.Store
 				}
 			}
 			return ret;
-		}
-
-		public int CompareTo (object obj)
-		{
-			if (obj is ProjectDescription) {
-				ProjectDescription project = (ProjectDescription)obj;
-				return ID.CompareTo (project.ID);
-			}
-			throw new ArgumentException ("object is not a ProjectDescription and cannot be compared");
 		}
 	}
 }

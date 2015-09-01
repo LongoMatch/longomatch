@@ -301,20 +301,20 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 		}
 
-		public ProjectDescription ChooseProject (List<ProjectDescription> projects)
+		public Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
-			ProjectDescription pd = null;
+			Project project = null;
 			ChooseProjectDialog dialog = new ChooseProjectDialog (mainWindow);
 			dialog.Fill (projects);
 			if (dialog.Run () == (int)ResponseType.Ok) {
-				pd = dialog.Project;
+				project = dialog.Project;
 			}
 			dialog.Destroy ();
-			return pd;
+			return project;
 		}
 
-		public void SelectProject (List<ProjectDescription> projects)
+		public void SelectProject (List<Project> projects)
 		{
 			Log.Information ("Select project");
 			mainWindow.SelectProject (projects);

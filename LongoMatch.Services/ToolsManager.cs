@@ -138,11 +138,11 @@ namespace LongoMatch.Services
 							Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
 							return;
-						DB.UpdateProject (project);
+						DB.AddProject (project);
 					} else {
 						DB.AddProject (project);
 					}
-					Config.EventsBroker.EmitOpenProjectID (project.ID);
+					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +

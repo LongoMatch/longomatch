@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
-		public List<ProjectDescription> Projects {
+		public List<Project> Projects {
 			set {
 				projectlistwidget.Fill (value);
 			}
@@ -55,9 +55,9 @@ namespace LongoMatch.Gui.Panel
 				BackEvent ();
 		}
 
-		void HandleProjectSelected (ProjectDescription project)
+		void HandleProjectSelected (Project project)
 		{
-			Config.EventsBroker.EmitOpenProjectID (project.ProjectID);
+			Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 		}
 	}
 }

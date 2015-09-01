@@ -54,7 +54,6 @@ namespace LongoMatch.Core.Store
 		ObservableCollection<Timer> timers;
 		ObservableCollection<Playlist> playlists;
 		ObservableCollection<EventType> eventTypes;
-		ProjectDescription description;
 		SubstitutionEventType subsType;
 
 		#region Constructors
@@ -93,15 +92,8 @@ namespace LongoMatch.Core.Store
 
 		[LongoMatchPropertyPreload]
 		public ProjectDescription Description {
-			get {
-				return description;
-			}
-			set {
-				if (value != null) {
-					value.ProjectID = ID;
-				}
-				description = value;
-			}
+			get;
+			set;
 		}
 
 		[JsonProperty (Order = -7)]

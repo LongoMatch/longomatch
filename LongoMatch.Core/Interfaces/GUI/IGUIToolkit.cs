@@ -85,9 +85,9 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void CloseProject ();
 
-		void SelectProject (List<ProjectDescription> projects);
+		void SelectProject (List<Project> projects);
 
-		ProjectDescription ChooseProject (List<ProjectDescription> projects);
+		Project ChooseProject (List<Project> projects);
 
 		void Welcome ();
 

@@ -37,12 +37,12 @@ namespace LongoMatch.Gui.Dialog
 			};
 		}
 
-		public void Fill (List<ProjectDescription> projects)
+		public void Fill (List<Project> projects)
 		{
-			projectlistwidget1.Fill (Config.DatabaseManager.ActiveDB.GetAllProjects ());
+			projectlistwidget1.Fill (projects);
 		}
 
-		public ProjectDescription Project {
+		public Project Project {
 			get;
 			set;
 		}
