@@ -20,6 +20,7 @@ using Couchbase.Lite;
 using LongoMatch.Core.Interfaces;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -66,6 +67,11 @@ namespace LongoMatch.DB
 		}
 
 		public Stack<IStorable> Stack {
+			get;
+			set;
+		}
+
+		public IContractResolver ContractResolver {
 			get;
 			set;
 		}

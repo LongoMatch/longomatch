@@ -101,7 +101,10 @@ namespace LongoMatch.DB
 
 		public void Fill (IStorable storable)
 		{
-			DocumentsSerializer.FillObject (storable, db);
+			db.RunInTransaction (() => {
+				DocumentsSerializer.FillObject (storable, db);
+				return true;
+			});
 		}
 
 		public List<T> RetrieveAll<T> () where T : IStorable

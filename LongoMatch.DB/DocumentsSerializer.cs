@@ -77,7 +77,9 @@ namespace LongoMatch.DB
 
 			if (context == null) {
 				context = new SerializationContext (db, objType);
+				context.ContractResolver  = new StorablesStackContractResolver (context, null);
 			}
+
 			doc = db.GetExistingDocument (id.ToString ());
 			if (doc != null) {
 				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
@@ -156,7 +158,7 @@ namespace LongoMatch.DB
 		{
 			if (serializer == null) {
 				serializer = GetSerializer (objType, context, doc.CurrentRevision); 
-				serializer.ContractResolver = new StorablesStackContractResolver (context, null);
+				serializer.ContractResolver = context.ContractResolver;
 			}
 			JObject jo = JObject.FromObject (doc.Properties);
 			return jo.ToObject (objType, serializer);
