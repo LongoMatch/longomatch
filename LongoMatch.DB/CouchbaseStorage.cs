@@ -31,18 +31,50 @@ namespace LongoMatch.DB
 	{
 		Database db;
 		Dictionary<Type, object> views;
+		string storageName;
 
-		public CouchbaseStorage (string databaseDir, string databaseName)
+		public CouchbaseStorage (Database db)
 		{
-			Manager manager = new Manager (new System.IO.DirectoryInfo (databaseDir),
+			this.db = db;
+			FetchInfo ();
+			InitializeViews ();
+		}
+
+		public CouchbaseStorage (Manager manager, string storageName)
+		{
+			this.storageName = storageName;
+			db = manager.GetDatabase (storageName);
+			FetchInfo ();
+			InitializeViews ();
+		}
+
+		// FIXME: make internal
+		public CouchbaseStorage (string dbDir, string storageName)
+		{
+			this.storageName = storageName;
+			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),
 				                  ManagerOptions.Default);
-			db = manager.GetDatabase (databaseName);
+			db = manager.GetDatabase (storageName);
+			FetchInfo ();
 			InitializeViews ();
 		}
 
 		internal Database Database {
 			get {
 				return db;
+			}
+		}
+
+		void FetchInfo ()
+		{
+			Info = Retrieve<StorageInfo> (Guid.Empty);
+			if (Info == null) {
+				Info = new StorageInfo {
+					Name = storageName,
+					LastBackup = DateTime.UtcNow,
+					Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION)
+				};
+				Store (Info);
 			}
 		}
 
@@ -89,15 +121,22 @@ namespace LongoMatch.DB
 			return qview.Query (filter);
 		}
 
-		public void Store<T> (T t) where T : IStorable
+		public void Store<T> (T t, bool forceUpdate=false) where T : IStorable
 		{
-			db.RunInTransaction (() => {
-				StorableNode node;
-				ObjectChangedParser parser = new ObjectChangedParser ();
-				parser.Parse (out node, t, Serializer.JsonSettings);
-				Update (node);
-				return true;
-			});
+			if (!forceUpdate) {
+				db.RunInTransaction (() => {
+					StorableNode node;
+					ObjectChangedParser parser = new ObjectChangedParser ();
+					parser.Parse (out node, t, Serializer.JsonSettings);
+					Update (node);
+					return true;
+				});
+			} else {
+				db.RunInTransaction (() => {
+					DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+					return true;
+				});
+			}
 		}
 
 		public void Delete<T> (T t) where T : IStorable
@@ -128,11 +167,12 @@ namespace LongoMatch.DB
 			}
 		}
 
-		void Update (StorableNode node) {
+		void Update (StorableNode node)
+		{
 			if (node.Deleted) {
 				Delete (node);
 			} else if (node.IsChanged) {
-				DocumentsSerializer.SaveObject (node.Storable, db, saveChildren:false);
+				DocumentsSerializer.SaveObject (node.Storable, db, saveChildren: false);
 			}
 			foreach (StorableNode child in node.Children) {
 				Update (child);

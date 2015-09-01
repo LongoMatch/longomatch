@@ -59,8 +59,9 @@ namespace LongoMatch.Core.Interfaces
 		/// Store the specified object
 		/// </summary>
 		/// <param name="t">The object to store.</param>
+		/// <param name="forceUpdate">Update all children  ignoring the <see cref="IStorable.IsChanged"/> flag.</param>
 		/// <typeparam name="T">The type of the object to store.</typeparam>
-		void Store<T> (T t) where T : IStorable;
+		void Store<T> (T t, bool forceUpdate=false) where T : IStorable;
 
 		/// <summary>
 		/// Delete the specified object.

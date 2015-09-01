@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 using LongoMatch.Core.Common;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
@@ -44,6 +45,8 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
+		[IgnoreDataMember]
+		// Use IgnoreDataMember to prevent the cloner trying to serialize Storage
 		public IStorage Storage {
 			get;
 			set;

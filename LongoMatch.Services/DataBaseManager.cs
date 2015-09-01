@@ -28,17 +28,15 @@ using LongoMatch.DB;
 
 namespace LongoMatch.Services
 {
-	public class DataBaseManager: IDataBaseManager, IService
+	public class DataBaseManager: IService
 	{
-		string DBDir;
 		IGUIToolkit guiToolkit;
-		IDatabase activeDB;
 		const int SUPPORTED_MAJOR_VERSION = Constants.DB_MAYOR_VERSION;
 
 		public DataBaseManager (string DBDir, IGUIToolkit guiToolkit)
 		{
-			this.DBDir = DBDir;
 			this.guiToolkit = guiToolkit;
+			Manager = new CouchbaseManager (DBDir);
 		}
 
 		public Project OpenedProject {
@@ -46,93 +44,9 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public void SetActiveByName (string name)
-		{
-			foreach (IDatabase db in Databases) {
-				if (db.Name == name) {
-					Log.Information ("Selecting active database " + db.Name);
-					ActiveDB = db;
-					return;
-				}
-			}
-			
-			IDatabase newdb = new DataBase (NameToFile (name));
-			Log.Information ("Creating new database " + newdb.Name);
-			Databases.Add (newdb);
-			ActiveDB = newdb;
-		}
-
-		public IDatabase Add (string name)
-		{
-			if (Databases.Where (db => db.Name == name).Count () != 0) {
-				throw new Exception ("A database with the same name already exists");
-			}
-			try {
-				IDatabase newdb = new DataBase (NameToFile (name));
-				Log.Information ("Creating new database " + newdb.Name);
-				Databases.Add (newdb);
-				return newdb;
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				return null;
-			}
-		}
-
-		public bool Delete (IDatabase db)
-		{
-			/* Leave at least one database */
-			if (Databases.Count < 2) {
-				return false;
-			}
-			return db.Delete ();
-		}
-
-		public IDatabase ActiveDB {
-			get {
-				return activeDB;
-			}
-			set {
-				activeDB = value;
-				Config.CurrentDatabase = value.Name;
-				Config.Save ();
-			}
-		}
-
-		public List<IDatabase> Databases {
+		public IDataBaseManager Manager {
 			get;
 			set;
-		}
-
-		public void UpdateDatabases ()
-		{
-			Databases = new List<IDatabase> ();
-			DirectoryInfo dbdir = new DirectoryInfo (DBDir);
-			
-			foreach (DirectoryInfo subdir in dbdir.GetDirectories()) {
-				if (subdir.FullName.EndsWith (".ldb")) {
-					IDatabase db = new DataBase (subdir.FullName);	
-					if (db != null) {
-						Log.Information ("Found database " + db.Name);
-						Databases.Add (db);
-					}
-				}
-			}
-		}
-
-		string NameToFile (string name)
-		{
-			return Path.Combine (DBDir, name + '.' + Extension);
-		}
-
-		string FileToName (string path)
-		{
-			return Path.GetFileName (path).Replace ("." + Extension, "");
-		}
-
-		string Extension {
-			get {
-				return "ldb";
-			}
 		}
 
 		void HandleManageDatabase ()
@@ -143,6 +57,12 @@ namespace LongoMatch.Services
 			} else {
 				guiToolkit.OpenDatabasesManager ();
 			}
+		}
+
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType, EventsFilter filter,
+			IAnalysisWindow analysisWindow)
+		{
+			OpenedProject = project;
 		}
 
 		#region IService
@@ -162,21 +82,16 @@ namespace LongoMatch.Services
 		public bool Start ()
 		{
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged += (p, pt, f, a) => {
-				OpenedProject = p;
-			};
-
-			UpdateDatabases ();
-
-			SetActiveByName (Config.CurrentDatabase);
-
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Manager.UpdateDatabases ();
+			Manager.SetActiveByName (Config.CurrentDatabase);
 			return true;
 		}
 
 		public bool Stop ()
 		{
 			Config.EventsBroker.ManageDatabasesEvent -= HandleManageDatabase;
-
+			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			return true;
 		}
 

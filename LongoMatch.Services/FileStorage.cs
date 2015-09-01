@@ -132,7 +132,8 @@ namespace LongoMatch.Services.Services
 			set;
 		}
 
-		public void Fill (IStorable storable) {
+		public void Fill (IStorable storable)
+		{
 		}
 
 		public T Retrieve<T> (Guid id) where T : IStorable
@@ -277,8 +278,7 @@ namespace LongoMatch.Services.Services
 			return l;
 		}
 
-
-		public void Store<T> (T t) where T : IStorable
+		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			string typePath = ResolvePath<T> ();
 			string extension = GetExtension (typeof(T));

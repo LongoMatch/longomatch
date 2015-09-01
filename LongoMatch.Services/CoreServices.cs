@@ -28,6 +28,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Services.Services;
+using LongoMatch.DB;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -133,7 +134,7 @@ namespace LongoMatch.Services
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			RegisterService (dbManager);
-			Config.DatabaseManager = dbManager;
+			Config.DatabaseManager = dbManager.Manager;
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
@@ -144,7 +145,7 @@ namespace LongoMatch.Services
 			RegisterService (projectsManager);
 
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit, dbManager);
+			toolsManager = new ToolsManager (guiToolkit, dbManager.Manager);
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
