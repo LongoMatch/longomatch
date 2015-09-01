@@ -94,6 +94,14 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
+		/// Name of the dashboard in use for this project.
+		/// </summary>
+		public string DashboardName {
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Season of the game
 		/// </summary>
 		public String Season {

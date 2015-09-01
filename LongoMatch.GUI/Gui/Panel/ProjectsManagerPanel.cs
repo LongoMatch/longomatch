@@ -135,7 +135,7 @@ namespace LongoMatch.Gui.Panel
 			seasonentry.Text = pd.Season;
 			competitionentry.Text = pd.Competition;
 			datepicker.Date = pd.MatchDate;
-			templatelabel.Text = project.Dashboard.Name;
+			templatelabel.Text = pd.DashboardName;
 			desctextview.Buffer.Clear ();
 			desctextview.Buffer.InsertAtCursor (pd.Description ?? "");
 			loadedProject = project;

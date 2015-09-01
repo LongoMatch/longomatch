@@ -566,6 +566,7 @@ namespace LongoMatch.Core.Store
 			Description.VisitorName = VisitorTeamTemplate.Name;
 			Description.VisitorShield = VisitorTeamTemplate.Shield;
 			Description.VisitorGoals = GetScore (TeamType.VISITOR);
+			Description.DashboardName = Dashboard.Name;
 		}
 
 
