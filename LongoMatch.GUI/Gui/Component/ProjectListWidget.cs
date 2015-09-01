@@ -202,6 +202,14 @@ namespace LongoMatch.Gui.Component
 			p1 = (Project)model.GetValue (a, COL_PROJECT);
 			p2 = (Project)model.GetValue (b, COL_PROJECT);
 
+			if (p1 == null && p2 == null) {
+				return 0;
+			} else if (p1 == null) {
+				return -1;
+			} else if (p2 == null) {
+				return 1;
+			}
+
 			return ProjectDescription.Sort (p1.Description, p2.Description,
 				(ProjectSortType)sortcombobox.Active);
 		}
