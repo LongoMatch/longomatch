@@ -208,14 +208,12 @@ namespace LongoMatch.Services
 
 		public void Delete (string templateName)
 		{
-			try {
-				Log.Information ("Deleting template " + templateName);
-				T template = Load (templateName);
-				if (template != null)
-					storage.Delete<T> (template);
-			} catch (Exception ex) {
-				Log.Exception (ex);
+			Log.Information ("Deleting template " + templateName);
+			if (systemTemplates.Any (t => t.Name == templateName)) {
+				throw new TemplateNotFoundException<T> (templateName);
 			}
+			T template = Load (templateName);
+			storage.Delete<T> (template);
 		}
 
 		public void Create (string templateName, params object[] list)
