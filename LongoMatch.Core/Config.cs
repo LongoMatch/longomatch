@@ -90,11 +90,22 @@ namespace LongoMatch
 			}
 
 			Config.homeDirectory = Path.Combine (home, Constants.SOFTWARE_NAME);
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				Config.configDirectory = Config.homeDirectory;
-			else
-				Config.configDirectory = Path.Combine (home, "." +
-				Constants.SOFTWARE_NAME.ToLower ());
+			Config.configDirectory = Config.homeDirectory;
+
+			// Migrate old config directory the home directory so that OS X users can easilly find
+			// log files and config files without having to access hidden folders
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ()); 
+				string configFilename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
+				string configFilepath = Path.Combine (oldHome, configFilename);
+				if (File.Exists (configFilepath)) {
+					try {
+						File.Move (configFilepath, Config.ConfigFile);
+					} catch (Exception ex) {
+						Log.Exception (ex);
+					}
+				}
+			}
 		}
 
 		public static void LoadState (ConfigState newState)
@@ -193,12 +204,6 @@ namespace LongoMatch
 		public static string SnapshotsDir {
 			get {
 				return Path.Combine (homeDirectory, "snapshots");
-			}
-		}
-
-		public static string TemplatesDir {
-			get {
-				return Path.Combine (homeDirectory, "templates");
 			}
 		}
 
