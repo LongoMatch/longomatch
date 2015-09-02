@@ -86,7 +86,7 @@ namespace LongoMatch.DB
 	{
 		public override Guid GetReference (IStorable obj)
 		{
-			return obj.ID;
+			return obj != null ? obj.ID: Guid.Empty;
 		}
 	}
 }
