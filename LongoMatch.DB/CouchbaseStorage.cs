@@ -152,7 +152,7 @@ namespace LongoMatch.DB
 				} else {
 					node = new StorableNode (t);
 				}
-				Delete (node);
+				Delete (node, t.ID);
 				return true;
 			});
 		}
@@ -162,23 +162,28 @@ namespace LongoMatch.DB
 			db.Manager.ForgetDatabase (db);
 		}
 
-		void Delete (StorableNode node = null)
+		void Delete (StorableNode node, Guid rootID)
 		{
-			db.GetDocument (node.Storable.ID.ToString ()).Delete ();
+			Guid id = node.Storable.ID;
+			db.GetDocument (DocumentsSerializer.StringFromID (id, rootID)).Delete ();
 			foreach (StorableNode child in node.Children) {
-				Delete (child);
+				Delete (child, rootID);
 			}
 		}
 
-		void Update (StorableNode node)
+		void Update (StorableNode node, SerializationContext context = null)
 		{
+			if (context == null) {
+				context = new SerializationContext (db, node.Storable.GetType ());
+				context.RootID = node.Storable.ID;
+			}
 			if (node.Deleted) {
-				Delete (node);
+				Delete (node, context.RootID);
 			} else if (node.IsChanged) {
-				DocumentsSerializer.SaveObject (node.Storable, db, saveChildren: false);
+				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
 			foreach (StorableNode child in node.Children) {
-				Update (child);
+				Update (child, context);
 			}
 		}
 

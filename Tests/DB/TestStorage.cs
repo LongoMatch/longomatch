@@ -95,6 +95,8 @@ namespace Tests.DB
 			}
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
+			// Remove the StorageInfo doc to get more understandable document count results
+			db.GetDocument (Guid.Empty.ToString ()).Delete();
 		}
 
 		[TestFixtureTearDown]
@@ -253,11 +255,12 @@ namespace Tests.DB
 				ID = Guid.NewGuid (),
 				Image = img,
 			};
+			Assert.AreEqual (0, db.DocumentCount);
 			Document doc = db.CreateDocument ();
 			UnsavedRevision rev = doc.CreateRevision ();
 			SerializationContext context = new SerializationContext (db, cont.GetType ());
 			JObject jo = DocumentsSerializer.SerializeObject (cont, rev, context);
-			Assert.AreEqual (img.ID, jo ["Image"].Value<Guid> ());
+			Assert.AreEqual (img.ID.ToString (), jo ["Image"].Value<String> ());
 			Assert.AreEqual (1, db.DocumentCount);
 			Assert.IsNotNull (storage.Retrieve<StorableImageTest> (img.ID));
 			rev.Save ();
@@ -298,6 +301,30 @@ namespace Tests.DB
 			Assert.AreEqual (typeof(StorableImageTest), list2.Images [0].GetType ());
 			Assert.AreEqual (typeof(StorableImageTest2), list2.Images [1].GetType ());
 		}
+
+		[Test ()]
+		public void TestStorableIDUsesRootStorableID ()
+		{
+			StorableImageTest img = new StorableImageTest {
+				ID = Guid.NewGuid (),
+				Image1 = Utils.LoadImageFromFile (),
+			};
+			StorableContainerTest cont = new StorableContainerTest {
+				ID = Guid.NewGuid (),
+				Image = img,
+			};
+			Assert.AreEqual (0, db.DocumentCount);
+			string newID = String.Format ("{0}&{1}", cont.ID, img.ID); 
+			storage.Store (cont);
+			Assert.AreEqual (2, db.DocumentCount);
+			Assert.IsNotNull (db.GetExistingDocument (cont.ID.ToString ()));
+			Assert.IsNotNull (db.GetExistingDocument (newID));
+			cont = storage.Retrieve<StorableContainerTest> (cont.ID);
+			Assert.AreEqual (img.ID, cont.Image.ID);
+			storage.Delete (cont);
+			Assert.AreEqual (0, db.DocumentCount);
+		}
+
 
 		[Test ()]
 		public void TestRetrieveErrors (){
@@ -345,7 +372,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (14, db.DocumentCount);
+			Assert.AreEqual (13, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -358,7 +385,7 @@ namespace Tests.DB
 			Assert.AreEqual (16, dashboard2.Image.Width); 
 			Assert.AreEqual (16, dashboard2.Image.Height);
 			storage.Delete (dashboard);
-			Assert.AreEqual (1, db.DocumentCount);
+			Assert.AreEqual (0, db.DocumentCount);
 		}
 
 		[Test ()]
@@ -409,8 +436,8 @@ namespace Tests.DB
 
 			doc.Update ((UnsavedRevision rev) => {
 				JObject jo = DocumentsSerializer.SerializeObject (evt, rev, context);
-				Assert.AreEqual (p.ID, jo ["Players"] [0].Value<Guid> ());
-				Assert.AreEqual (evtType.ID, jo ["EventType"].Value<Guid> ());
+				Assert.AreEqual (p.ID.ToString (), jo ["Players"] [0].Value<String> ());
+				Assert.AreEqual (evtType.ID.ToString (), jo ["EventType"].Value<String> ());
 				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
 				rev.SetProperties (props);
 				return true;

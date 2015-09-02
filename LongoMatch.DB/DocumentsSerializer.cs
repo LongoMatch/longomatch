@@ -32,6 +32,7 @@ namespace LongoMatch.DB
 	{
 		public const string DOC_TYPE = "DocType";
 		public const string OBJ_TYPE = "ObjType";
+		public const char ID_SEP_CHAR = '&';
 
 		/// <summary>
 		/// Saves a storable object in the database.
@@ -39,15 +40,16 @@ namespace LongoMatch.DB
 		/// <param name="obj">Storable object to save.</param>
 		/// <param name="db">Database.</param>
 		/// <param name="context">Serialization context.</param>
-		/// <param name="serializeChildren">If set to <c>false</c>, <see cref="IStorable"/> children are not saved.</param>
+		/// <param name="saveChildren">If set to <c>false</c>, <see cref="IStorable"/> children are not saved.</param>
 		public static void SaveObject (IStorable obj, Database db, SerializationContext context = null,
-			bool saveChildren = true)
+		                               bool saveChildren = true)
 		{
 			if (context == null) {
 				context = new SerializationContext (db, obj.GetType ());
+				context.RootID = obj.ID;
 			}
 			context.SaveChildren = saveChildren;
-			Document doc = db.GetDocument (obj.ID.ToString ());
+			Document doc = db.GetDocument (DocumentsSerializer.StringFromID (obj.ID, context.RootID));
 			doc.Update ((UnsavedRevision rev) => {
 				JObject jo = SerializeObject (obj, rev, context);
 				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
@@ -72,32 +74,7 @@ namespace LongoMatch.DB
 		/// <param name="context">Serialization context.</param>
 		public static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
 		{
-			IStorable storable = null, parent;
-			Document doc;
-
-			if (context == null) {
-				context = new SerializationContext (db, objType);
-				context.ContractResolver  = new StorablesStackContractResolver (context, null);
-			}
-
-			doc = db.GetExistingDocument (id.ToString ());
-			if (doc != null) {
-				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
-				if (realType == null) {
-					/* Should never happen */
-					Log.Error ("Error getting type " + doc.Properties [OBJ_TYPE] as string);
-					realType = objType;
-				} else if (!objType.IsAssignableFrom (realType)) {
-					Log.Error ("Types mismatch " + objType.FullName + " vs " + realType.FullName);
-					return null;
-				}
-				storable = DeserializeObject (doc, realType, context) as IStorable;
-				if (context.Stack.Count != 0) {
-					parent = context.Stack.Peek ();
-					parent.SavedChildren.Add (storable);
-				}
-			}
-			return storable;
+			return LoadObject (objType, id.ToString (), db, context);
 		}
 
 		/// <summary>
@@ -131,6 +108,35 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
+		/// Return the object ID from the document ID string, which can be <ID> or <ParentID>&<ID>.
+		/// </summary>
+		/// <returns>The object id.</returns>
+		/// <param name="id">The document id.</param>
+		public static Guid IDFromString (string id) {
+			string [] ids = id.Split (ID_SEP_CHAR);
+			if (ids.Length == 1) {
+				id = ids[0];
+			} else {
+				id = ids[1];
+			}
+			return Guid.Parse (id);
+		}
+
+		/// <summary>
+		/// Return the document ID for an object, prepending the parent's ID.
+		/// </summary>
+		/// <returns>The document id.</returns>
+		/// <param name="id">The object ID.</param>
+		/// <param name="parentID">The parent ID.</param>
+		public static string StringFromID (Guid id, Guid parentID) {
+			if (parentID != Guid.Empty && parentID != id) {
+				return String.Format ("{0}{1}{2}", parentID, ID_SEP_CHAR, id);
+			} else {
+				return id.ToString ();
+			}
+		}
+
+		/// <summary>
 		/// Serializes an object into a <c>JObject</c>.
 		/// </summary>
 		/// <returns>A new object serialized.</returns>
@@ -154,14 +160,46 @@ namespace LongoMatch.DB
 		/// <param name = "objType"><see cref="Type"/> of the object to deserialize</param>
 		/// <param name="context">The serialization context"/>
 		internal static object DeserializeObject (Document doc, Type objType,
-			SerializationContext context, JsonSerializer serializer = null)
+		                                          SerializationContext context, JsonSerializer serializer = null)
 		{
 			if (serializer == null) {
 				serializer = GetSerializer (objType, context, doc.CurrentRevision); 
 				serializer.ContractResolver = context.ContractResolver;
 			}
 			JObject jo = JObject.FromObject (doc.Properties);
-			return jo.ToObject (objType, serializer);
+			var o = jo.ToObject (objType, serializer);
+			return o;
+		}
+
+		internal static IStorable LoadObject (Type objType, string id, Database db, SerializationContext context = null)
+		{
+			IStorable storable = null, parent;
+			Document doc;
+
+			if (context == null) {
+				context = new SerializationContext (db, objType);
+				context.ContractResolver = new StorablesStackContractResolver (context, null);
+				context.RootID = Guid.Parse (id);
+			}
+
+			doc = db.GetExistingDocument (id);
+			if (doc != null) {
+				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
+				if (realType == null) {
+					/* Should never happen */
+					Log.Error ("Error getting type " + doc.Properties [OBJ_TYPE] as string);
+					realType = objType;
+				} else if (!objType.IsAssignableFrom (realType)) {
+					Log.Error ("Types mismatch " + objType.FullName + " vs " + realType.FullName);
+					return null;
+				}
+				storable = DeserializeObject (doc, realType, context) as IStorable;
+				if (context.Stack.Count != 0) {
+					parent = context.Stack.Peek ();
+					parent.SavedChildren.Add (storable);
+				}
+			}
+			return storable;
 		}
 
 		internal static JsonSerializerSettings GetSerializerSettings (Type objType,
@@ -276,28 +314,32 @@ namespace LongoMatch.DB
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			IStorable storable = value as IStorable;
-
 			if (context.SaveChildren && !context.Cache.IsCached (storable.ID)) {
 				DocumentsSerializer.SaveObject (storable, context.DB, context);
 				context.Cache.AddReference (storable);
 			}
-			writer.WriteValue (storable.ID);
+			writer.WriteValue (DocumentsSerializer.StringFromID (storable.ID, context.RootID));
 		}
 
 		public override object ReadJson (JsonReader reader, Type objectType, object existingValue,
 		                                 JsonSerializer serializer)
 		{
-			Guid id;
 			IStorable storable;
+			Guid id;
+			string idStr;
 
-			id = Guid.Parse (reader.Value as string);
+			idStr = reader.Value as string; 
+			id = DocumentsSerializer.IDFromString (idStr);
 			/* Return the cached object instance instead a new one */
 			storable = context.Cache.ResolveReference (id);
 			if (storable == null) {
-				storable = DocumentsSerializer.LoadObject (objectType, id, context.DB, context) as IStorable;
+				storable = DocumentsSerializer.LoadObject (objectType, idStr, context.DB, context) as IStorable;
+				if (storable == null) {
+					throw new StorageException (
+						String.Format ("Referenced object with id: {0} was not found in the DB", id));
+				}
 				context.Cache.AddReference (storable);
 			}
-
 			return storable;
 		}
 
@@ -344,14 +386,15 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <param name="context">The serialization context.</param>
 		/// <param name="parentStorable">The partially loaded storable that is going to be filled.</param>
-		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable) {
+		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable)
+		{
 			this.context = context;
 			this.parentStorable = parentStorable;
 		}
 
 		protected override JsonContract CreateContract (Type type)
 		{
-			JsonContract contract = base.CreateContract(type);
+			JsonContract contract = base.CreateContract (type);
 			if (typeof(IChanged).IsAssignableFrom (type)) {
 				contract.OnDeserializedCallbacks.Add (
 					(o, context) => {
@@ -362,7 +405,7 @@ namespace LongoMatch.DB
 				contract.OnDeserializedCallbacks.Add (
 					(o, context) => this.context.Stack.Pop ());
 				if (parentStorable != null && type == parentStorable.GetType ()) {
-					contract.DefaultCreator = () =>	{
+					contract.DefaultCreator = () => {
 						context.Stack.Push (parentStorable);
 						parentStorable.SavedChildren = new List<IStorable> ();
 						return parentStorable;

@@ -66,6 +66,11 @@ namespace LongoMatch.DB
 			set;
 		}
 
+		public Guid RootID {
+			get;
+			set;
+		}
+
 		public Stack<IStorable> Stack {
 			get;
 			set;
