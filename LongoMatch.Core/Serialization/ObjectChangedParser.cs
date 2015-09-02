@@ -35,11 +35,10 @@ namespace LongoMatch.Core.Serialization
 	public class ObjectChangedParser
 	{
 
-		StorableNode parentStorable;
 		StorableNode current;
 		internal List<object> parsed;
 		IContractResolver resolver;
-		JsonSerializerSettings settings;
+		Stack<object> stack;
 		bool reset;
 
 		public ObjectChangedParser ()
@@ -70,10 +69,10 @@ namespace LongoMatch.Core.Serialization
 		internal bool ParseInternal(out StorableNode parentNode, IStorable value, JsonSerializerSettings settings,
 			bool reset = true)
 		{
+			stack = new Stack<object> ();
 			parentNode = new StorableNode (value);
 			parsed = new List<object> ();
 			resolver = settings.ContractResolver ?? new DefaultContractResolver ();
-			this.settings = settings;
 			this.reset = reset;
 			try {
 				CheckValue (value, parentNode);
@@ -90,10 +89,13 @@ namespace LongoMatch.Core.Serialization
 
 			if (value == null) {
 				return;
-			} else if (parsed.Any (v => Object.ReferenceEquals (v, value))) {
-				// Value already parsed, return to avoid dependency cycles.
+			}
+
+			if (stack.Any (o => Object.ReferenceEquals (o, value))) {
+				// Value in stack, return to avoid dependency cycles.
 				return;
 			}
+			stack.Push (value);
 
 			storable = value as IStorable;
 
@@ -138,6 +140,7 @@ namespace LongoMatch.Core.Serialization
 				}
 				current = current.Parent;
 			}
+			stack.Pop ();
 		}
 
 		void CheckObject (object value, JsonObjectContract contract) {
