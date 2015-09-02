@@ -109,6 +109,10 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		public void Load () {
+			CheckIsLoaded ();
+		}
+
 		public override bool Equals (object obj)
 		{
 			StorableBase s = obj as StorableBase;

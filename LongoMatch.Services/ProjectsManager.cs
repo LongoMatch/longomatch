@@ -360,6 +360,17 @@ namespace LongoMatch.Services
 				}
 			}
 
+			if (!project.IsLoaded) {
+				try {
+					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Loading project..."), null);
+					busy.ShowSync (project.Load);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
+					return;
+				}
+			}
+
 			if (project.Description.FileSet.Duration == null) {
 				Log.Warning ("The selected project is empty. Rediscovering files");
 				for (int i = 0; i < project.Description.FileSet.Count; i++) {
