@@ -60,13 +60,13 @@ namespace LongoMatch.Services
 			FillVersion ();
 			Config.Init ();
 
+			/* Check default folders */
+			CheckDirs ();
+
 			/* Redirects logs to a file */
 			Log.SetLogFile (Config.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
-
-			/* Check default folders */
-			CheckDirs ();
 
 			/* Load user config */
 			Config.Load ();
@@ -191,8 +191,6 @@ namespace LongoMatch.Services
 		{
 			if (!System.IO.Directory.Exists (Config.HomeDir))
 				System.IO.Directory.CreateDirectory (Config.HomeDir);
-			if (!System.IO.Directory.Exists (Config.TemplatesDir))
-				System.IO.Directory.CreateDirectory (Config.TemplatesDir);
 			if (!System.IO.Directory.Exists (Config.SnapshotsDir))
 				System.IO.Directory.CreateDirectory (Config.SnapshotsDir);
 			if (!System.IO.Directory.Exists (Config.PlayListDir))

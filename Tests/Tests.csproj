@@ -111,6 +111,7 @@
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Core\Store\Playlists\TestPlaylist.cs" />
+    <Compile Include="Integration\TestInitialization.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
@@ -124,6 +125,10 @@
     <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
       <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
       <Name>LongoMatch.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
+      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+      <Name>LongoMatch.Addins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +147,7 @@
     <Folder Include="DB\" />
     <Folder Include="Core\Store\Playlists\" />
     <Folder Include="Core\Serialization\" />
+    <Folder Include="Integration\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
