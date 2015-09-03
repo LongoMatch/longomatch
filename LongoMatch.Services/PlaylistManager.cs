@@ -104,7 +104,8 @@ namespace LongoMatch.Services
 			if (element != null) {
 				playlist.SetActive (element);
 			}
-			player.LoadPlaylistEvent (playlist, element);
+			if (playlist.Elements.Count > 0)
+				player.LoadPlaylistEvent (playlist, element);
 		}
 
 		void HandleLoadPlayEvent (TimelineEvent play)
