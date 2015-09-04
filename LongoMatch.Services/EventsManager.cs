@@ -173,9 +173,17 @@ namespace LongoMatch.Services
 			}
 
 			if (framesCapturer != null && !current) {
-				// FIXME
-				Time offset = openedProject.Description.FileSet.First ().Offset;
-				pixbuf = framesCapturer.GetFrame (pos + offset, true, -1, -1);
+				if (camConfig.Index > 0) {
+					IFramesCapturer auxFramesCapturer;
+					auxFramesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
+					auxFramesCapturer.Open (openedProject.Description.FileSet [camConfig.Index].FilePath);
+					Time offset = openedProject.Description.FileSet [camConfig.Index].Offset;
+					pixbuf = auxFramesCapturer.GetFrame (pos + offset, true, -1, -1);
+					auxFramesCapturer.Dispose ();
+				} else {
+					Time offset = openedProject.Description.FileSet.First ().Offset;
+					pixbuf = framesCapturer.GetFrame (pos + offset, true, -1, -1);
+				}
 			} else {
 				pixbuf = player.CurrentFrame;
 			}
