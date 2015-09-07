@@ -537,6 +537,21 @@ namespace Tests.DB
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
+
+		[Test ()]
+		public void TestPreloadPropertiesArePreserved ()
+		{
+			Project p1 = Utils.CreateProject (true);
+			storage.Store (p1);
+			Project p2 = storage.RetrieveAll<Project> ()[0];
+			Assert.IsFalse (p2.IsLoaded);
+			p2.Description.Competition = "NEW NAME";
+			p2.Load ();
+			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
+			storage.Store (p2);
+			Project p3 = storage.RetrieveAll<Project> ()[0];
+			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
+		}
+
 	}
 }
-

@@ -25,6 +25,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
+using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -88,7 +90,7 @@ namespace LongoMatch.DB
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
 			Document doc = db.GetExistingDocument (storable.ID.ToString ());
 			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
-			serializer.ContractResolver = new StorablesStackContractResolver (context, storable);
+			serializer.ContractResolver = new StorablesStackContractResolver (context, storable, true);
 			DeserializeObject (doc, storable.GetType (), context, serializer);
 		}
 
@@ -378,6 +380,7 @@ namespace LongoMatch.DB
 	{
 		SerializationContext context;
 		IStorable parentStorable;
+		bool preservePreloadProperties;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LongoMatch.DB.StorablesStackContractResolver"/> class.
@@ -386,12 +389,30 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <param name="context">The serialization context.</param>
 		/// <param name="parentStorable">The partially loaded storable that is going to be filled.</param>
-		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable)
+		/// <param name = "preservePreloadProperties">If <c>true</c> reloaded properties are preserved instead of
+		/// re-read from the db</param>
+		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable,
+			bool preservePreloadProperties = false)
 		{
 			this.context = context;
 			this.parentStorable = parentStorable;
+			this.preservePreloadProperties = preservePreloadProperties;
 		}
 
+		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+		{
+			// When filling a partial object, do not overwrite the preloaded properties so changes made in
+			// the preloaded object are not overwritten.
+			JsonProperty property = base.CreateProperty(member, memberSerialization);
+			if (property.DeclaringType == context.ParentType) {
+				if (preservePreloadProperties &&
+					property.AttributeProvider.GetAttributes(typeof (LongoMatchPropertyPreload), true).Any ()) {
+					property.Ignored = true;
+				}
+			}
+			return property;
+		}
+		
 		protected override JsonContract CreateContract (Type type)
 		{
 			JsonContract contract = base.CreateContract (type);
