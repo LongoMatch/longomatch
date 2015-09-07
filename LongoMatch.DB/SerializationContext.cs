@@ -41,41 +41,68 @@ namespace LongoMatch.DB
 			Cache = cache ?? new StorableObjectsCache ();
 		}
 
+		/// <summary>
+		/// The database used in the store/retrieve process.
+		/// </summary>
 		public Database DB {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The type of the parent object being stored/retrieved.
+		/// </summary>
 		public Type ParentType {
 			get;
 			set;
 		}
 
-		public JsonConverter Converter {
-			get;
-			set;
-		}
-
-		public StorableObjectsCache Cache {
-			get;
-			set;
-		}
-
-		public bool SaveChildren {
-			get;
-			set;
-		}
-
+		/// <summary>
+		/// The ID of the parent object.
+		/// </summary>
+		/// <value>The root I.</value>
 		public Guid RootID {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The convert used in case it needs to be reused.
+		/// </summary>
+		public JsonConverter Converter {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// A cache for retrieved objects to improve performace retrieve references of the same object.
+		/// </summary>
+		public StorableObjectsCache Cache {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Defines if <see cref="IStorable"/> children should be also stored in the DB.
+		/// </summary>
+		public bool SaveChildren {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// A stack with the object stored/retrieved.
+		/// </summary>
+		/// <value>The stack.</value>
 		public Stack<IStorable> Stack {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// The contract resolver in case it needs to be reused.
+		/// </summary>
+		/// <value>The contract resolver.</value>
 		public IContractResolver ContractResolver {
 			get;
 			set;
