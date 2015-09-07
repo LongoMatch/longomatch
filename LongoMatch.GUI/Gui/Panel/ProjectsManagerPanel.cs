@@ -119,9 +119,16 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 				if (save) {
-					DB.UpdateProject (loadedProject);
-					projectlistwidget1.UpdateProject (loadedProject);
-					edited = false;
+					try {
+						IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
+						busy.ShowSync (() => DB.UpdateProject (loadedProject));
+						projectlistwidget1.UpdateProject (loadedProject);
+						edited = false;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
+						return;
+					}
 				}
 			}
 		}
@@ -289,7 +296,8 @@ namespace LongoMatch.Gui.Panel
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					DB.RemoveProject (selectedProject);
+					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
+					busy.ShowSync (() => DB.RemoveProject (selectedProject));
 					deletedProjects.Add (selectedProject);
 				}
 			}
