@@ -57,6 +57,8 @@ namespace LongoMatch.DB
 		}
 
 		void Init () {
+			// Only keep one revision for each document until we support replication and can handle conflicts
+			db.MaxRevTreeDepth = 1;
 			mutex = new object ();
 			FetchInfo ();
 			InitializeViews ();
