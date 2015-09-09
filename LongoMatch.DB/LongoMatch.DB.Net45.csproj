@@ -42,6 +42,9 @@
     <Reference Include="Couchbase.Lite">
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.0.4.1\lib\net45\Couchbase.Lite.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>$(SolutionDir)\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="LongoMatch.DB.projitems" Label="Shared" Condition="Exists('LongoMatch.DB.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

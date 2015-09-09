@@ -22,16 +22,21 @@ using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
+using System.IO;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 
 namespace LongoMatch.DB
 {
 	public class CouchbaseDB:IDatabase
 	{
 		readonly CouchbaseStorage storage;
+		string dbName;
 
 		public CouchbaseDB (Manager manager, string name)
 		{
 			storage = new CouchbaseStorage (manager, name);
+			dbName = name;
 		}
 
 		#region IDatabase implementation
@@ -65,13 +70,32 @@ namespace LongoMatch.DB
 		public bool Exists (Project project)
 		{
 			// FIXME: add faster API to storage for that or index ID's
-			return storage.Retrieve<Project> (new QueryFilter()).Any (p => p.ID == project.ID);
+			return storage.Retrieve<Project> (new QueryFilter ()).Any (p => p.ID == project.ID);
 		}
 
 		public bool Backup ()
 		{
+			try {
+				string outputFilename = Path.Combine (Config.DBDir, dbName + "tar.gz"); 
+				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
+					using (Stream gzipStream = new GZipOutputStream (fs)) {
+						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
+							foreach (string n in new string[] {"", "-wal", "-shm"}) {
+								TarEntry tarEntry = TarEntry.CreateEntryFromFile (
+									                    Path.Combine (Config.DBDir, dbName + ".cblite" + n));
+								tarArchive.WriteEntry (tarEntry, true);
+							}
+							AddDirectoryFilesToTar (tarArchive, Path.Combine (Config.DBDir, dbName + " attachments"), true);
+						}
+					}
+				}
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				return false;
+			}
 			return true;
 		}
+
 
 		public bool Delete ()
 		{
@@ -97,7 +121,7 @@ namespace LongoMatch.DB
 
 		public int Count {
 			get {
-				return storage.Retrieve<Project> (new QueryFilter()).Count ();
+				return storage.Retrieve<Project> (new QueryFilter ()).Count ();
 			}
 		}
 
@@ -111,6 +135,23 @@ namespace LongoMatch.DB
 		}
 
 		#endregion
+
+		private void AddDirectoryFilesToTar (TarArchive tarArchive, string sourceDirectory, bool recurse)
+		{
+			// Recursively add sub-folders
+			if (recurse) {
+				string[] directories = Directory.GetDirectories (sourceDirectory);
+				foreach (string directory in directories)
+					AddDirectoryFilesToTar (tarArchive, directory, recurse);
+			}
+
+			// Add files
+			string[] filenames = Directory.GetFiles (sourceDirectory);
+			foreach (string filename in filenames) {
+				TarEntry tarEntry = TarEntry.CreateEntryFromFile (filename);
+				tarArchive.WriteEntry (tarEntry, true);
+			}
+		}
 	}
 }
 
