@@ -22,20 +22,28 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class StorageInfo: StorableBase
 	{
-		public StorageInfo () {
+		public StorageInfo ()
+		{
 			// Force only one StorageInfo object per storage.
 			ID = Guid.Empty;
+			LastBackup = DateTime.UtcNow;
+			LastCleanup = DateTime.UtcNow;
 		}
 
 		/// <summary>
 		/// Name of the storage.
 		/// </summary>
-		public string Name { get; set;}
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Date of the last backup.
 		/// </summary>
 		public DateTime LastBackup { get; set; }
+
+		/// <summary>
+		/// Date of the last Database cleanup
+		/// </summary>
+		public DateTime LastCleanup { get; set; }
 
 		/// <summary>
 		/// Version of the storage.

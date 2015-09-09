@@ -56,11 +56,13 @@ namespace LongoMatch.DB
 			Init ();
 		}
 
-		void Init () {
+		void Init ()
+		{
 			// Only keep one revision for each document until we support replication and can handle conflicts
 			db.MaxRevTreeDepth = 1;
 			mutex = new object ();
 			FetchInfo ();
+			Compact ();
 			InitializeViews ();
 		}
 
@@ -77,8 +79,18 @@ namespace LongoMatch.DB
 				Info = new StorageInfo {
 					Name = storageName,
 					LastBackup = DateTime.UtcNow,
+					LastCleanup = DateTime.UtcNow,
 					Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION)
 				};
+				Store (Info);
+			}
+		}
+
+		void Compact ()
+		{
+			if ((DateTime.UtcNow - Info.LastCleanup).Days > 2) {
+				db.Compact ();
+				Info.LastCleanup = DateTime.UtcNow;
 				Store (Info);
 			}
 		}
@@ -137,7 +149,7 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public void Store<T> (T t, bool forceUpdate=false) where T : IStorable
+		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			lock (mutex) {
 				if (!forceUpdate) {

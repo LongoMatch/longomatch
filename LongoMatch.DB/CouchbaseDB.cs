@@ -89,6 +89,7 @@ namespace LongoMatch.DB
 						}
 					}
 				}
+				LastBackup = DateTime.UtcNow;
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				return false;
@@ -116,6 +117,10 @@ namespace LongoMatch.DB
 		public DateTime LastBackup {
 			get {
 				return storage.Info.LastBackup;
+			}
+			protected set {
+				storage.Info.LastBackup = value;
+				storage.Store (storage.Info);
 			}
 		}
 
