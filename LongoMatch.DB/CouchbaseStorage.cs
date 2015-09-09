@@ -32,29 +32,32 @@ namespace LongoMatch.DB
 		Database db;
 		Dictionary<Type, object> views;
 		string storageName;
+		object mutex;
 
 		public CouchbaseStorage (Database db)
 		{
 			this.db = db;
-			FetchInfo ();
-			InitializeViews ();
+			Init ();
 		}
 
 		public CouchbaseStorage (Manager manager, string storageName)
 		{
 			this.storageName = storageName;
 			db = manager.GetDatabase (storageName);
-			FetchInfo ();
-			InitializeViews ();
+			Init ();
 		}
 
-		// FIXME: make internal
-		public CouchbaseStorage (string dbDir, string storageName)
+		internal CouchbaseStorage (string dbDir, string storageName)
 		{
 			this.storageName = storageName;
 			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),
 				                  ManagerOptions.Default);
 			db = manager.GetDatabase (storageName);
+			Init ();
+		}
+
+		void Init () {
+			mutex = new object ();
 			FetchInfo ();
 			InitializeViews ();
 		}
@@ -101,65 +104,79 @@ namespace LongoMatch.DB
 
 		public void Fill (IStorable storable)
 		{
-			db.RunInTransaction (() => {
-				DocumentsSerializer.FillObject (storable, db);
-				return true;
-			});
-		}
-
-		public List<T> RetrieveAll<T> () where T : IStorable
-		{
-			IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
-			return qview.Query (null);
-		}
-
-		public T Retrieve<T> (Guid id) where T : IStorable
-		{
-			return (T)Retrieve (typeof(T), id);
-		}
-
-		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
-		{
-			IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
-			return qview.Query (filter);
-		}
-
-		public void Store<T> (T t, bool forceUpdate=false) where T : IStorable
-		{
-			if (!forceUpdate) {
+			lock (mutex) {
 				db.RunInTransaction (() => {
-					StorableNode node;
-					ObjectChangedParser parser = new ObjectChangedParser ();
-					parser.Parse (out node, t, Serializer.JsonSettings);
-					Update (node);
-					return true;
-				});
-			} else {
-				db.RunInTransaction (() => {
-					DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+					DocumentsSerializer.FillObject (storable, db);
 					return true;
 				});
 			}
 		}
 
+		public List<T> RetrieveAll<T> () where T : IStorable
+		{
+			lock (mutex) {
+				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+				return qview.Query (null);
+			}
+		}
+
+		public T Retrieve<T> (Guid id) where T : IStorable
+		{
+			lock (mutex) {
+				return (T)Retrieve (typeof(T), id);
+			}
+		}
+
+		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
+		{
+			lock (mutex) {
+				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+				return qview.Query (filter);
+			}
+		}
+
+		public void Store<T> (T t, bool forceUpdate=false) where T : IStorable
+		{
+			lock (mutex) {
+				if (!forceUpdate) {
+					db.RunInTransaction (() => {
+						StorableNode node;
+						ObjectChangedParser parser = new ObjectChangedParser ();
+						parser.Parse (out node, t, Serializer.JsonSettings);
+						Update (node);
+						return true;
+					});
+				} else {
+					db.RunInTransaction (() => {
+						DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+						return true;
+					});
+				}
+			}
+		}
+
 		public void Delete<T> (T t) where T : IStorable
 		{
-			db.RunInTransaction (() => {
-				StorableNode node;
-				if (t.DeleteChildren) {
-					ObjectChangedParser parser = new ObjectChangedParser ();
-					parser.Parse (out node, t, Serializer.JsonSettings);
-				} else {
-					node = new StorableNode (t);
-				}
-				Delete (node, t.ID);
-				return true;
-			});
+			lock (mutex) {
+				db.RunInTransaction (() => {
+					StorableNode node;
+					if (t.DeleteChildren) {
+						ObjectChangedParser parser = new ObjectChangedParser ();
+						parser.Parse (out node, t, Serializer.JsonSettings);
+					} else {
+						node = new StorableNode (t);
+					}
+					Delete (node, t.ID);
+					return true;
+				});
+			}
 		}
 
 		public void Reset ()
 		{
-			db.Manager.ForgetDatabase (db);
+			lock (mutex) {
+				db.Manager.ForgetDatabase (db);
+			}
 		}
 
 		void Delete (StorableNode node, Guid rootID)
