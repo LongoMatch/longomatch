@@ -138,10 +138,8 @@ namespace LongoMatch.Services
 							Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
 							return;
-						DB.AddProject (project);
-					} else {
-						DB.AddProject (project);
 					}
+					DB.AddProject (project);
 					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
