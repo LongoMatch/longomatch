@@ -84,6 +84,9 @@ namespace Tests.Integration
 		{
 			CoreServices.Stop ();
 			try {
+				foreach (var db in Config.DatabaseManager.Databases) {
+					db.Delete ();
+				}
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
