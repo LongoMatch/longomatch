@@ -24,14 +24,11 @@ using LongoMatch.Store;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Interfaces;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Migration
 {
 	public class Converter
 	{
-		static ISerializer serializer = new LongoMatch.Core.Common.Serializer ();
-
 		static LongoMatch.Core.Common.Point ConvertPoint (Point newp)
 		{
 			return new LongoMatch.Core.Common.Point (newp.DX, newp.DY);
@@ -236,7 +233,7 @@ namespace LongoMatch.Migration
 			Dictionary <Category, LongoMatch.Core.Store.EventType > ignore2;
 			var dashboard = ConvertCategories (cats, out ignore1, out ignore2);
 			outputPath = FixPath (outputPath);
-			serializer.Save (dashboard, outputPath);
+			LongoMatch.Core.Common.Serializer.Save (dashboard, outputPath);
 		}
 
 		public static LongoMatch.Core.Store.Templates.Team ConvertTeamTemplate (TeamTemplate team,
@@ -266,7 +263,7 @@ namespace LongoMatch.Migration
 			                                                           SerializationType.Binary);
 			var newteam = ConvertTeamTemplate (team, null);
 			outputPath = FixPath (outputPath);
-			serializer.Save (newteam, outputPath);
+			LongoMatch.Core.Common.Serializer.Save (newteam, outputPath);
 		}
 
 		public static void ConvertProject (Project project, string outputDir)
@@ -285,7 +282,7 @@ namespace LongoMatch.Migration
 			newproject.Description = ConvertProjectDescription (project.Description);
 
 			if (project.Categories.GamePeriods != null) {
-				for (int i = 0; i < project.Categories.GamePeriods.Count; i++) {
+				for (int i=0; i < project.Categories.GamePeriods.Count; i++) {
 					int duration = project.Description.File.Duration.MSeconds;
 					int periodDuration = duration / project.Categories.GamePeriods.Count;
 					string period = project.Categories.GamePeriods [i];
@@ -372,7 +369,7 @@ namespace LongoMatch.Migration
 			field.Dispose ();
 			halffield.Dispose ();
 			goal.Dispose ();
-			serializer.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
+			LongoMatch.Core.Common.Serializer.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
 		}
 
 		public static void ConvertDB (string dbfile, string outputdir)

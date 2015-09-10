@@ -42,11 +42,9 @@ namespace LongoMatch.Gui.Panel
 		IDatabase DB;
 		IGUIToolkit gkit;
 		bool edited;
-		ISerializer serializer;
 
 		public ProjectsManagerPanel (Project openedProject)
 		{
-			serializer = new Serializer ();
 			this.openedProject = openedProject;
 			this.DB = Config.DatabaseManager.ActiveDB;
 			this.gkit = Config.GUIToolkit;
@@ -254,7 +252,7 @@ namespace LongoMatch.Gui.Panel
 					                  new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
-					serializer.Save (loadedProject, filename);
+					Serializer.Save (loadedProject, filename);
 				}
 			}
 		}

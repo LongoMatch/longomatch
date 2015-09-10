@@ -33,12 +33,10 @@ using System.Text;
 
 namespace LongoMatch.Core.Common
 {
-	
-
-	public class Serializer : ISerializer
+	public class Serializer
 	{
-		public void Save<T> (T obj, Stream stream,
-		                     SerializationType type = SerializationType.Json)
+		public static void Save<T> (T obj, Stream stream,
+		                            SerializationType type = SerializationType.Json)
 		{
 			switch (type) {
 			case SerializationType.Binary:
@@ -58,8 +56,8 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void Save<T> (T obj, string filepath,
-		                     SerializationType type = SerializationType.Json)
+		public static void Save<T> (T obj, string filepath,
+		                            SerializationType type = SerializationType.Json)
 		{
 			string tmpPath = filepath + ".tmp";
 			using (Stream stream = new FileStream (tmpPath, FileMode.Create,
@@ -73,8 +71,8 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public T Load<T> (Stream stream,
-		                  SerializationType type = SerializationType.Json)
+		public static T Load<T> (Stream stream,
+		                         SerializationType type = SerializationType.Json)
 		{
 			switch (type) {
 			case SerializationType.Binary:
@@ -91,8 +89,8 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public T Load<T> (string filepath,
-		                  SerializationType type = SerializationType.Json)
+		public static T Load<T> (string filepath,
+		                         SerializationType type = SerializationType.Json)
 		{
 			Stream stream = new FileStream (filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			using (stream) {
@@ -100,7 +98,7 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public T LoadSafe<T> (string filepath)
+		public static T LoadSafe<T> (string filepath)
 		{
 		
 			Stream stream = new FileStream (filepath, FileMode.Open,

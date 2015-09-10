@@ -29,7 +29,7 @@ using Newtonsoft.Json;
 
 namespace LongoMatch
 {
-	public class Config
+	 public class Config
 	{
 		public static string homeDirectory = ".";
 		public static string baseDirectory = ".";
@@ -49,14 +49,11 @@ namespace LongoMatch
 		
 		static StyleConf style;
 		static ConfigState state;
-		static Serializer serializer;
 
 
 		public static void Init ()
 		{
 			string home;
-
-			serializer = new Serializer ();
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				Config.baseDirectory = Path.GetFullPath (".");
@@ -78,7 +75,8 @@ namespace LongoMatch
 			 * and the config goes in the same folder as the binaries */
 			if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE))) {
 				home = Config.baseDirectory;
-			} else {
+			}
+			else {
 				home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
 				if (!Directory.Exists (home)) {
 					Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
@@ -107,7 +105,7 @@ namespace LongoMatch
 			if (File.Exists (Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = serializer.LoadSafe<ConfigState> (Config.ConfigFile);
+					state = Serializer.LoadSafe<ConfigState> (Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -130,7 +128,7 @@ namespace LongoMatch
 		public static void Save ()
 		{
 			try {
-				serializer.Save (state, Config.ConfigFile); 
+				Serializer.Save (state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Error saving config");
 				Log.Exception (ex);

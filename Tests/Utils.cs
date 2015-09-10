@@ -22,15 +22,12 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using System.Reflection;
-using LongoMatch.Core.Interfaces;
 
 namespace Tests
 {
 	public class Utils
 	{
 		static bool debugLine = false;
-
-		static ISerializer serializer = new Serializer ();
 
 		public Utils ()
 		{
@@ -39,7 +36,7 @@ namespace Tests
 		public static T SerializeDeserialize<T> (T obj)
 		{
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			if (debugLine) {
 				var jsonString = new StreamReader (stream).ReadToEnd ();
@@ -47,13 +44,13 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			return serializer.Load<T> (stream, SerializationType.Json);
+			return Serializer.Load<T> (stream, SerializationType.Json);
 		}
 
 		public static void CheckSerialization<T> (T obj)
 		{
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var jsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {
@@ -61,10 +58,10 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			var newobj = serializer.Load<T> (stream, SerializationType.Json);
+			var newobj = Serializer.Load<T> (stream, SerializationType.Json);
 			
 			stream = new MemoryStream ();
-			serializer.Save (newobj, stream, SerializationType.Json);
+			Serializer.Save (newobj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var newJsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {

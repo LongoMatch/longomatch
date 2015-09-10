@@ -32,21 +32,9 @@ namespace LongoMatch.DB
 		string dbPath;
 		string dbName;
 		TimeSpan maxDaysWithoutBackup = new TimeSpan (5, 0, 0, 0);
-		ISerializer serializer;
-
-		public ISerializer SerializerObject {
-			get {
-				return serializer;
-			}
-			set {
-				serializer = value;
-			}
-		}
 
 		public DataBase (string dbDirPath)
 		{
-			serializer = new Serializer ();
-
 			dbName = Path.GetFileNameWithoutExtension (dbDirPath);
 			dbPath = Path.Combine (dbDirPath, Path.GetFileName (dbDirPath));
 			this.dbDirPath = dbDirPath;
@@ -56,7 +44,7 @@ namespace LongoMatch.DB
 			}
 			if (File.Exists (dbPath)) {
 				try {
-					projectsDB = serializer.Load<LiteDB> (dbPath);
+					projectsDB = Serializer.Load<LiteDB> (dbPath);
 					projectsDB.DBPath = dbPath;
 				} catch (Exception e) {
 					Log.Exception (e);
@@ -160,7 +148,7 @@ namespace LongoMatch.DB
 
 			if (File.Exists (projectFile)) {
 				try {
-					return serializer.Load<Project> (projectFile);
+					return Serializer.Load<Project> (projectFile);
 				} catch (Exception ex) {
 					throw new ProjectDeserializationException (ex);
 				}
@@ -175,17 +163,14 @@ namespace LongoMatch.DB
 
 			Log.Debug (string.Format ("Add project {0}", project.ID));
 			projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
-			string tmpProjectFile = projectFile + ".tmp";
 			project.Description.LastModified = DateTime.UtcNow;
 			projectsDB.Add (project.Description);
 			try {
 				if (File.Exists (projectFile))
-					File.Move (projectFile, tmpProjectFile);
-				serializer.Save (project, projectFile);
-				File.Delete (tmpProjectFile);
+					File.Delete (projectFile);
+				Serializer.Save (project, projectFile);
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				File.Move (tmpProjectFile, projectFile);
 				projectsDB.Delete (project.Description.ID);
 			}
 		}
@@ -218,7 +203,7 @@ namespace LongoMatch.DB
 					continue;
 				}
 				try {
-					Project project = serializer.Load<Project> (file.FullName);
+					Project project = Serializer.Load<Project> (file.FullName);
 					projectsDB.Add (project.Description);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -231,8 +216,7 @@ namespace LongoMatch.DB
 	[Serializable]
 	class LiteDB
 	{
-		static ISerializer serializer = new Serializer ();
-
+		
 		public LiteDB (string dbPath)
 		{
 			DBPath = dbPath;
@@ -287,7 +271,7 @@ namespace LongoMatch.DB
 			bool ret = false;
 			
 			try {
-				serializer.Save (this, DBPath);
+				Serializer.Save (this, DBPath);
 				ret = true;
 			} catch (Exception ex) {
 				Log.Exception (ex);

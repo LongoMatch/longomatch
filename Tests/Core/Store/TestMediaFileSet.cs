@@ -21,14 +21,13 @@ using LongoMatch.Core.Store;
 using NUnit.Framework;
 using LongoMatch.Core.Common;
 using System.IO;
-using LongoMatch.Core.Interfaces;
 
 namespace Tests.Core.Store
 {
-	[TestFixture ()]
+	[TestFixture()]
 	public class TestMediaFileSet
 	{
-		[Test ()]
+		[Test()]
 		public void TestSerialization ()
 		{
 			MediaFileSet mf = new MediaFileSet ();
@@ -39,7 +38,7 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (mf);
 		}
 
-		[Test ()]
+		[Test()]
 		public void TestMigration ()
 		{
 			String old_json = @"{ 
@@ -54,15 +53,14 @@ namespace Tests.Core.Store
 							        ""Angle4"": null
 							      }
 								}";
-			MemoryStream stream = new MemoryStream ();
-			StreamWriter writer = new StreamWriter (stream);
-			writer.Write (old_json);
-			writer.Flush ();
+			MemoryStream stream = new MemoryStream();
+			StreamWriter writer = new StreamWriter(stream);
+			writer.Write(old_json);
+			writer.Flush();
 			stream.Position = 0;
 
 			// Deserialize and check the FileSet
-			ISerializer serializer = new Serializer ();
-			var newobj = serializer.Load<MediaFileSet> (stream, SerializationType.Json);
+			var newobj = Serializer.Load<MediaFileSet> (stream, SerializationType.Json);
 
 			Assert.AreEqual (2, newobj.Count);
 
@@ -76,28 +74,28 @@ namespace Tests.Core.Store
 			Assert.AreEqual ("test2.mp4", mf.FilePath);
 			Assert.AreEqual ("Angle 2", mf.Name);
 		}
-
-		[Test ()]
+		
+		[Test()]
 		public void TestPreview ()
 		{
 			MediaFileSet mf = new MediaFileSet ();
 			Assert.IsNull (mf.Preview);
-			mf.Add (new MediaFile { Preview = Utils.LoadImageFromFile (), Name = "Test asset" });
+			mf.Add (new MediaFile {Preview = Utils.LoadImageFromFile (), Name = "Test asset"});
 			Assert.IsNotNull (mf.Preview);
 		}
-
-		[Test ()]
+		
+		[Test()]
 		public void TestDuration ()
 		{
 			MediaFileSet mf = new MediaFileSet ();
 			Assert.AreEqual (mf.Duration.MSeconds, 0);
-			mf.Add (new MediaFile { Duration = new Time (2000), Name = "Test asset" });
+			mf.Add (new MediaFile {Duration = new Time (2000), Name = "Test asset"});
 			Assert.AreEqual (mf.Duration.MSeconds, 2000); 
-			mf.Replace ("Test asset", new MediaFile { Duration = new Time (2001), Name = "Test asset 2" });
+			mf.Replace ("Test asset", new MediaFile {Duration = new Time (2001), Name = "Test asset 2"});
 			Assert.AreEqual (mf.Duration.MSeconds, 2001);
 		}
 
-		[Test ()]
+		[Test()]
 		public void TestOrderReplace ()
 		{
 			MediaFileSet mf = new MediaFileSet ();
@@ -135,13 +133,13 @@ namespace Tests.Core.Store
 			Assert.AreEqual ("path3", mf [2].FilePath);
 		}
 
-		[Test ()]
+		[Test()]
 		public void TestCheckFiles ()
 		{
 			string path = Path.GetTempFileName ();
 			MediaFileSet mf = new MediaFileSet ();
-			Assert.IsFalse (mf.CheckFiles ());
-			mf.Add (new MediaFile { FilePath = path, Name = "Test asset" });
+			Assert.IsFalse (mf.CheckFiles());
+			mf.Add (new MediaFile {FilePath = path, Name = "Test asset"});
 			try {
 				Assert.IsTrue (mf.CheckFiles ());
 			} finally {

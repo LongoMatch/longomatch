@@ -128,6 +128,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISerializer.cs" />
   </ItemGroup>
 </Project>
