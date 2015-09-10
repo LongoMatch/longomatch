@@ -163,12 +163,17 @@ namespace LongoMatch.DB
 
 			Log.Debug (string.Format ("Add project {0}", project.ID));
 			projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
+			string tmpProjectFile = projectFile + ".tmp";
 			project.Description.LastModified = DateTime.UtcNow;
 			projectsDB.Add (project.Description);
 			try {
+				Serializer.Save (project, tmpProjectFile);
+
 				if (File.Exists (projectFile))
-					File.Delete (projectFile);
-				Serializer.Save (project, projectFile);
+					File.Replace (tmpProjectFile, projectFile, null);
+				else {
+					File.Move (tmpProjectFile, projectFile);
+				}
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				projectsDB.Delete (project.Description.ID);
