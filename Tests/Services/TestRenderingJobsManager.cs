@@ -60,9 +60,11 @@ namespace Tests.Services
 				Mock<IVideoEditor> mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
 				// And eventbroker
 				Config.EventsBroker = Mock.Of<EventsBroker> ();
+				Config.GUIToolkit = gtk;
+				Config.MultimediaToolkit = mtk;
 
 				// Create a rendering object with mocked interfaces
-				RenderingJobsManager renderer = new RenderingJobsManager (mtk, gtk);
+				RenderingJobsManager renderer = new RenderingJobsManager ();
 				// Start service
 				renderer.Start ();
 

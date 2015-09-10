@@ -76,6 +76,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
+			Config.TeamTemplatesProvider = TeamTemplateProvider;
+			Config.CategoriesTemplatesProvider = CategoriesTemplateProvider;
 			return true;
 		}
 

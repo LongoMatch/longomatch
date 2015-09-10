@@ -62,8 +62,10 @@ namespace Tests.Services
 		public void Setup ()
 		{
 			mockGuiToolkit = new Mock<IGUIToolkit> ();
+			Config.GUIToolkit = mockGuiToolkit.Object;
+			Config.RenderingJobsManger = mockVideoRenderer.Object; 
 
-			plmanager = new PlaylistManager (mockGuiToolkit.Object, mockVideoRenderer.Object);
+			plmanager = new PlaylistManager ();
 			plmanager.Start ();
 
 			OpenProject (new Project ());

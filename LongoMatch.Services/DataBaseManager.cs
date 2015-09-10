@@ -30,13 +30,10 @@ namespace LongoMatch.Services
 {
 	public class DataBaseManager: IService
 	{
-		IGUIToolkit guiToolkit;
 		const int SUPPORTED_MAJOR_VERSION = Constants.DB_MAYOR_VERSION;
 
-		public DataBaseManager (string DBDir, IGUIToolkit guiToolkit)
+		public DataBaseManager ()
 		{
-			this.guiToolkit = guiToolkit;
-			Manager = new CouchbaseManager (DBDir);
 		}
 
 		public Project OpenedProject {
@@ -53,9 +50,9 @@ namespace LongoMatch.Services
 		{
 			if (OpenedProject != null) {
 				var msg = Catalog.GetString ("Close the current project to open the database manager");
-				guiToolkit.ErrorMessage (msg);
+				Config.GUIToolkit.ErrorMessage (msg);
 			} else {
-				guiToolkit.OpenDatabasesManager ();
+				Config.GUIToolkit.OpenDatabasesManager ();
 			}
 		}
 
@@ -83,6 +80,8 @@ namespace LongoMatch.Services
 		{
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Manager = new CouchbaseManager (Config.DBDir);
+			Config.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
 			Manager.SetActiveByName (Config.CurrentDatabase);
 			return true;
@@ -92,6 +91,7 @@ namespace LongoMatch.Services
 		{
 			Config.EventsBroker.ManageDatabasesEvent -= HandleManageDatabase;
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			Config.DatabaseManager = Manager = null;
 			return true;
 		}
 

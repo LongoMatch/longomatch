@@ -52,6 +52,7 @@ namespace Tests.Integration
 
 		[TearDown]
 		public void Delete () {
+			CoreServices.Stop ();
 			try {
 				Directory.Delete (tmpPath, true);
 			} catch {
@@ -96,7 +97,7 @@ namespace Tests.Integration
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
 
-			CoreServices.StopServices ();
+			CoreServices.Stop ();
 
 			// Simulate an application restart
 			CoreServices.Init ();
@@ -104,6 +105,7 @@ namespace Tests.Integration
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.TemplatesNames.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			CoreServices.Stop ();
 		}
 	}
 }

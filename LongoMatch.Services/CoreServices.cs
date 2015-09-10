@@ -47,8 +47,8 @@ namespace LongoMatch.Services
 		static TemplatesService ts;
 		static UpdatesNotifier updatesNotifier;
 		static List<IService> services = new List<IService> ();
-
 		public static IProjectsImporter ProjectsImporter;
+
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern bool g_setenv (String env, String val, bool overwrite);
@@ -112,9 +112,16 @@ namespace LongoMatch.Services
 		{
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
+			Config.EventsBroker = new EventsBroker ();
 			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
+		}
+
+		public static void Stop ()
+		{
+			StopServices ();
+			services.Clear ();
 		}
 
 		public static void RegisterService (IService service)
@@ -127,29 +134,25 @@ namespace LongoMatch.Services
 		{
 			ts = new TemplatesService (new FileStorage (Config.DBDir));
 			RegisterService (ts);
-			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
-			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
 			/* Start DB services */
-			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
+			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);
-			Config.DatabaseManager = dbManager.Manager;
 
 			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
+			videoRenderer = new RenderingJobsManager ();
 			RegisterService (videoRenderer);
-			Config.RenderingJobsManger = videoRenderer;
 
-			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit);
+			projectsManager = new ProjectsManager ();
 			RegisterService (projectsManager);
 
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit, dbManager.Manager);
+			toolsManager = new ToolsManager ();
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
 			/* Start the events manager */
-			eManager = new EventsManager (guiToolkit, videoRenderer);
+			eManager = new EventsManager ();
 			RegisterService (eManager);
 
 			/* Start the hotkeys manager */
@@ -157,7 +160,7 @@ namespace LongoMatch.Services
 			RegisterService (hkManager);
 
 			/* Start playlists manager */
-			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
+			plManager = new PlaylistManager ();
 			RegisterService (plManager);
 
 			/* Start the Update Notifier */

@@ -101,7 +101,7 @@ namespace Tests.Services
 		{
 			Config.EventsBroker = new EventsBroker ();
 			Config.DatabaseManager = new LocalDatabaseManager ();
-			projectsManager = new ProjectsManager (Config.GUIToolkit, Config.MultimediaToolkit);
+			projectsManager = new ProjectsManager ();
 			projectsManager.Start ();
 			project = Utils.CreateProject ();
 			settings.EncodingSettings.OutputFile = Path.GetTempFileName ();

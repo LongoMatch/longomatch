@@ -35,15 +35,9 @@ namespace LongoMatch.Services
 		IVideoEditor videoEditor;
 		IFramesCapturer capturer;
 		Job currentJob;
-		IRenderingStateBar stateBar;
-		IMultimediaToolkit multimediaToolkit;
-		IGUIToolkit guiToolkit;
 
-		public RenderingJobsManager (IMultimediaToolkit multimediaToolkit, IGUIToolkit guiToolkit)
+		public RenderingJobsManager ()
 		{
-			this.guiToolkit = guiToolkit;
-			this.multimediaToolkit = multimediaToolkit; 
-			this.stateBar = guiToolkit.RenderingStateBar;
 			jobs = new List<Job> ();
 			pendingJobs = new List<Job> ();
 		}
@@ -137,12 +131,12 @@ namespace LongoMatch.Services
 
 		protected void ManageJobs ()
 		{
-			guiToolkit.ManageJobs ();
+			Config.GUIToolkit.ManageJobs ();
 		}
 
 		private void LoadConversionJob (ConversionJob job)
 		{
-			videoEditor = multimediaToolkit.GetVideoEditor ();
+			videoEditor = Config.MultimediaToolkit.GetVideoEditor ();
 			videoEditor.EncodingSettings = job.EncodingSettings;
 			videoEditor.Progress += OnProgress;
 			videoEditor.Error += OnError;
@@ -160,13 +154,13 @@ namespace LongoMatch.Services
 				job.State = JobState.Error;
 				Log.Exception (ex);
 				Log.Error ("Error rendering job: ", job.Name);
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
 
 		private void LoadEditionJob (EditionJob job)
 		{
-			videoEditor = multimediaToolkit.GetVideoEditor ();
+			videoEditor = Config.MultimediaToolkit.GetVideoEditor ();
 			videoEditor.EncodingSettings = job.EncodingSettings;
 			videoEditor.Progress += OnProgress;
 			videoEditor.Error += OnError;
@@ -190,7 +184,7 @@ namespace LongoMatch.Services
 				job.State = JobState.Error;
 				Log.Exception (ex);
 				Log.Error ("Error rendering job: ", job.Name);
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
 
@@ -289,7 +283,7 @@ namespace LongoMatch.Services
 			Image frame, final_image;
 			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			
-			capturer = multimediaToolkit.GetFramesCapturer ();
+			capturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			capturer.Open (filename);
 			frame = capturer.GetFrame (drawing.Render, true);
 			capturer.Dispose ();
@@ -312,8 +306,8 @@ namespace LongoMatch.Services
 
 		private void ResetGui ()
 		{
-			stateBar.ProgressText = "";
-			stateBar.JobRunning = false;
+			Config.GUIToolkit.RenderingStateBar.ProgressText = "";
+			Config.GUIToolkit.RenderingStateBar.JobRunning = false;
 		}
 
 		private void StartNextJob ()
@@ -333,14 +327,15 @@ namespace LongoMatch.Services
 
 		private void UpdateProgress (float progress)
 		{
-			stateBar.Fraction = progress;
-			stateBar.ProgressText = String.Format ("{0}... {1:0.0}%", Catalog.GetString ("Rendering"),
-				progress * 100);
+			Config.GUIToolkit.RenderingStateBar.Fraction = progress;
+			Config.GUIToolkit.RenderingStateBar.ProgressText = String.Format ("{0}... {1:0.0}%",
+				Catalog.GetString ("Rendering"), progress * 100);
 		}
 
 		private void UpdateJobsStatus ()
 		{
-			stateBar.Text = String.Format ("{0} ({1} {2})", Catalog.GetString ("Rendering queue"),
+			Config.GUIToolkit.RenderingStateBar.Text = String.Format ("{0} ({1} {2})",
+				Catalog.GetString ("Rendering queue"),
 				pendingJobs.Count, Catalog.GetString ("Pending"));
 		}
 
@@ -355,7 +350,7 @@ namespace LongoMatch.Services
 		void HandleError ()
 		{
 			Log.Debug ("Job finished with errors");
-			guiToolkit.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
+			Config.GUIToolkit.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
 			+ Catalog.GetString ("Please, try again."));
 			currentJob.State = JobState.Error;
 			CloseAndNext ();
@@ -364,7 +359,7 @@ namespace LongoMatch.Services
 		private void MainLoopOnProgress (float progress)
 		{
 			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
-			    && progress > stateBar.Fraction) {
+				&& progress > Config.GUIToolkit.RenderingStateBar.Fraction) {
 				UpdateProgress (progress);
 			}
 
@@ -377,7 +372,7 @@ namespace LongoMatch.Services
 					Log.Debug ("Job started");
 				}
 				currentJob.State = JobState.Running;
-				stateBar.JobRunning = true;
+				Config.GUIToolkit.RenderingStateBar.JobRunning = true;
 				UpdateProgress (progress);
 			} else if (progress == (float)EditorState.FINISHED) {
 				Log.Debug ("Job finished successfully");
@@ -416,8 +411,9 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			stateBar.Cancel += (sender, e) => CancelCurrentJob ();
-			stateBar.ManageJobs += (sender, e) => ManageJobs ();
+			Config.RenderingJobsManger = this;
+			Config.GUIToolkit.RenderingStateBar.Cancel += (sender, e) => CancelCurrentJob ();
+			Config.GUIToolkit.RenderingStateBar.ManageJobs += (sender, e) => ManageJobs ();
 			Config.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
 				ConversionJob job = new ConversionJob (inputFiles, encSettings);
 				AddJob (job);

@@ -82,6 +82,7 @@ namespace Tests.Integration
 		[TearDown]
 		public void Delete ()
 		{
+			CoreServices.Stop ();
 			try {
 				Directory.Delete (tmpPath, true);
 			} catch {
@@ -182,6 +183,7 @@ namespace Tests.Integration
 			Config.EventsBroker.EmitCloseOpenedProject ();
 			savedP = Config.DatabaseManager.ActiveDB.GetProject (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
+			CoreServices.Stop ();
 		}
 
 		void AddEvent (Project p, int idx, int start, int stop, int eventTime)

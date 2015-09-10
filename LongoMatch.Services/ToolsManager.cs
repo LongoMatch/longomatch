@@ -32,13 +32,9 @@ namespace LongoMatch.Services
 	{
 		
 		Project openedProject;
-		IGUIToolkit guiToolkit;
-		IDataBaseManager dbManager;
 
-		public ToolsManager (IGUIToolkit guiToolkit, IDataBaseManager dbManager)
+		public ToolsManager ()
 		{
-			this.guiToolkit = guiToolkit;
-			this.dbManager = dbManager;
 			ProjectImporters = new List<ProjectImporter> ();
 		}
 
@@ -71,7 +67,7 @@ namespace LongoMatch.Services
 				Log.Warning ("Opened project is null and can't be exported");
 			}
 
-			filename = guiToolkit.SaveFile (Catalog.GetString ("Save project"),
+			filename = Config.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
 				Utils.SanitizePath (project.Description.Title + Constants.PROJECT_EXT),
 				Config.HomeDir, Constants.PROJECT_NAME,
 				new [] { Constants.PROJECT_EXT });
@@ -83,9 +79,9 @@ namespace LongoMatch.Services
 			
 			try {
 				Project.Export (project, filename);
-				guiToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
+				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
 				Log.Exception (ex);
 			}
 		}
@@ -126,14 +122,14 @@ namespace LongoMatch.Services
 					Config.EventsBroker.EmitNewProject (project);
 				} else {
 					if (!project.Description.FileSet.CheckFiles ()) {
-						if (!guiToolkit.SelectMediaFiles (project)) {
-							guiToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
+						if (!Config.GUIToolkit.SelectMediaFiles (project)) {
+							Config.GUIToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
 							return;
 						}
 					}
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
-						var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
+						var res = Config.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
 						          project.ID + "\n" +
 							Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
@@ -143,7 +139,7 @@ namespace LongoMatch.Services
 					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -177,8 +173,8 @@ namespace LongoMatch.Services
 				startInfo.EnvironmentVariables ["MONO_PATH"]));
 			using (Process exeProcess = Process.Start (startInfo)) {
 				exeProcess.WaitForExit ();
-				dbManager.UpdateDatabases ();
-				dbManager.SetActiveByName (dbManager.ActiveDB.Name);
+				Config.DatabaseManager.UpdateDatabases ();
+				Config.DatabaseManager.SetActiveByName (Config.DatabaseManager.ActiveDB.Name);
 			}
 		}
 
@@ -203,24 +199,24 @@ namespace LongoMatch.Services
 			};
 
 			Config.EventsBroker.EditPreferencesEvent += () => {
-				guiToolkit.OpenPreferencesEditor ();
+				Config.GUIToolkit.OpenPreferencesEditor ();
 			};
 
 			Config.EventsBroker.ManageCategoriesEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenCategoriesTemplatesManager ();
+					Config.GUIToolkit.OpenCategoriesTemplatesManager ();
 				}
 			};
 
 			Config.EventsBroker.ManageTeamsEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenTeamsTemplatesManager ();
+					Config.GUIToolkit.OpenTeamsTemplatesManager ();
 				}
 			};
 
 			Config.EventsBroker.ManageProjectsEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenProjectsManager (this.openedProject);
+					Config.GUIToolkit.OpenProjectsManager (this.openedProject);
 				}
 			};
 
