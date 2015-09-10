@@ -144,7 +144,7 @@ namespace LongoMatch.Services
 		public T Load (string name)
 		{
 			T template;
-			
+
 			template = systemTemplates.FirstOrDefault (t => t.Name == name);
 			if (template != null) {
 				// Return a copy to prevent modification of system templates.

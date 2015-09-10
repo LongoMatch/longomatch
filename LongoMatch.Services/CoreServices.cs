@@ -43,7 +43,7 @@ namespace LongoMatch.Services
 		static RenderingJobsManager videoRenderer;
 		static ProjectsManager projectsManager;
 		static PlaylistManager plManager;
-		static ToolsManager toolsManager;
+		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
 		static UpdatesNotifier updatesNotifier;
 		static List<IService> services = new List<IService> ();

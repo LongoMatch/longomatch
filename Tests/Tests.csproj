@@ -112,6 +112,8 @@
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Core\Store\Playlists\TestPlaylist.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
+    <Compile Include="Integration\TestPostGameAnalysis.cs" />
+    <Compile Include="DummyBusyDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
@@ -137,6 +139,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Services\latest-test.json">
       <LogicalName>latest-test.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\basket.lct">
+      <LogicalName>basket.lct</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\france.ltt">
+      <LogicalName>france.ltt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\spain.ltt">
+      <LogicalName>spain.ltt</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\spain_france_test.lgm">
+      <LogicalName>spain_france_test.lgm</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
