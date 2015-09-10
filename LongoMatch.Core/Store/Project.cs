@@ -585,10 +585,11 @@ namespace LongoMatch.Core.Store
 		public static void Export (Project project, string file)
 		{
 			file = Path.ChangeExtension (file, Constants.PROJECT_EXT);
-			Serializer.Save (project, file);
+			new Serializer ().Save (project, file);
 		}
 
-		public static Project Import() {
+		public static Project Import ()
+		{
 			string file = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir, Constants.PROJECT_NAME,
 				              new string[] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
@@ -596,10 +597,10 @@ namespace LongoMatch.Core.Store
 			return Project.Import (file);
 		}
 
-		public static Project Import(string file)
+		public static Project Import (string file)
 		{
 			try {
-				return Serializer.Load<Project> (file);
+				return new Serializer ().Load<Project> (file);
 			} catch (Exception e) {
 				Log.Exception (e);
 				throw new Exception (Catalog.GetString ("The file you are trying to load " +

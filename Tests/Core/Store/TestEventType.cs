@@ -22,13 +22,14 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using LongoMatch.Core.Interfaces;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestEventType
 	{
-		[Test()]
+		[Test ()]
 		public void TestEvntType ()
 		{
 			string jsonString;
@@ -36,7 +37,7 @@ namespace Tests.Core.Store
 			MemoryStream stream;
 			StreamReader reader;
 			
-			evType = new EventType();
+			evType = new EventType ();
 			evType.Color = new Color (255, 0, 0);
 			evType.Name = "test";
 			evType.SortMethod = SortMethodType.SortByDuration;
@@ -49,13 +50,14 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (evType);
 			
 			stream = new MemoryStream ();
-			Serializer.Save (evType, stream, SerializationType.Json);
+			ISerializer serializer = new Serializer ();
+			serializer.Save (evType, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			reader = new StreamReader (stream);
-			jsonString = reader.ReadToEnd();
+			jsonString = reader.ReadToEnd ();
 			Assert.IsFalse (jsonString.Contains ("SortMethodString"));
 			stream.Seek (0, SeekOrigin.Begin);
-			EventType newEventType = Serializer.Load<EventType> (stream, SerializationType.Json);
+			EventType newEventType = serializer.Load<EventType> (stream, SerializationType.Json);
 			
 			Assert.AreEqual (evType.ID, newEventType.ID);
 			Assert.AreEqual (evType.Name, newEventType.Name);
@@ -69,8 +71,8 @@ namespace Tests.Core.Store
 			Assert.AreEqual (0, newEventType.Color.G);
 			Assert.AreEqual (0, newEventType.Color.B);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestAnalysisEventType ()
 		{
 			AnalysisEventType at = new AnalysisEventType ();
@@ -84,11 +86,11 @@ namespace Tests.Core.Store
 			
 			var tbg = at.TagsByGroup;
 			Assert.AreEqual (tbg.Count, 2);
-			Assert.AreEqual (tbg["grp1"].Count, 2);
-			Assert.AreEqual (tbg["grp2"].Count, 1);
+			Assert.AreEqual (tbg ["grp1"].Count, 2);
+			Assert.AreEqual (tbg ["grp2"].Count, 1);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestPenaltyCardEventType ()
 		{
 			PenaltyCardEventType pc = new PenaltyCardEventType ();
@@ -97,8 +99,8 @@ namespace Tests.Core.Store
 			Assert.AreEqual (pc.ID, Constants.PenaltyCardID);
 			Assert.AreEqual (pc, new PenaltyCardEventType ());
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestScoreEventType ()
 		{
 			ScoreEventType score = new ScoreEventType ();
@@ -107,8 +109,8 @@ namespace Tests.Core.Store
 			Assert.AreEqual (score.ID, Constants.ScoreID);
 			Assert.AreEqual (score, new ScoreEventType ());
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestSubstitutionEventType ()
 		{
 			SubstitutionEventType sub = new SubstitutionEventType ();

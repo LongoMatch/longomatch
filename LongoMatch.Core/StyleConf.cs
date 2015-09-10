@@ -184,7 +184,7 @@ namespace LongoMatch.Core.Common
 
 		public static StyleConf Load (string filename)
 		{
-			return Serializer.Load <StyleConf> (filename);
+			return new Serializer ().Load <StyleConf> (filename);
 		}
 		
 	}
