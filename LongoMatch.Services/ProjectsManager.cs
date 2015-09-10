@@ -64,6 +64,21 @@ namespace LongoMatch.Services
 			set;
 		}
 
+		void ErrorSavingProject (Exception ex, string filePath)
+		{
+			Log.Exception (ex);
+			Log.Debug ("Backing up project to file");
+
+			string filePathNoExtension = Path.GetDirectoryName (filePath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (filePath);
+			string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
+			projectFile = projectFile.Replace (":", "_");
+			projectFile = projectFile.Replace (" ", "_");
+			projectFile = projectFile.Replace ("/", "_");
+			projectFile = filePathNoExtension + "_" + projectFile;
+			Project.Export (OpenedProject, projectFile);
+			guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" + Catalog.GetString ("The video file and a backup of the project has been " + "saved. Try to import it later:\n") + filePath + "\n" + projectFile + Constants.PROJECT_EXT);
+		}
+
 		void EmitProjectChanged ()
 		{
 			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
@@ -129,18 +144,7 @@ namespace LongoMatch.Services
 				project.Periods = Capturer.Periods;
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
-				Log.Exception (ex);
-				Log.Debug ("Backing up project to file");
-				string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
-				projectFile = projectFile.Replace (":", "_");
-				projectFile = projectFile.Replace (" ", "_");
-				projectFile = projectFile.Replace ("/", "_");
-				projectFile = filePath + "_" + projectFile;
-				Project.Export (OpenedProject, projectFile);
-				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
-				Catalog.GetString ("The video file and a backup of the project has been " +
-				"saved. Try to import it later:\n") +
-				filePath + "\n" + projectFile);
+				ErrorSavingProject (ex, filePath);
 			}
 		}
 
@@ -294,15 +298,19 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
-				} catch (Exception e) {
-					Log.Exception (e);
+				} catch (Exception ex) {
+					// FIXME (comes from SaveCaptureProject)
+					string filePath = project.Description.FileSet.First ().FilePath;
+					ErrorSavingProject (ex, filePath);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = Capturer.Periods;
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
-				} catch (Exception e) {
-					Log.Exception (e);
+				} catch (Exception ex) {
+					// FIXME (comes from SaveCaptureProject)
+					string filePath = project.Description.FileSet.First ().FilePath;
+					ErrorSavingProject (ex, filePath);
 				}
 			} else if (projectType == ProjectType.CaptureProject ||
 			           projectType == ProjectType.URICaptureProject) {
@@ -325,8 +333,13 @@ namespace LongoMatch.Services
 		                     CaptureSettings captureSettings)
 		{
 			if (project != null) {
-				Config.DatabaseManager.ActiveDB.AddProject (project);
-				SetProject (project, projectType, captureSettings);
+				try {
+					Config.DatabaseManager.ActiveDB.AddProject (project);
+					SetProject (project, projectType, captureSettings);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+				}
 			}
 		}
 
@@ -350,9 +363,9 @@ namespace LongoMatch.Services
 				return;
 			}
 			if (project.Description.FileSet.Duration == null) {
-				Log.Warning("The selected project is empty. Rediscovering files");
-				for(int i = 0; i < project.Description.FileSet.Count; i++){
-					project.Description.FileSet[i] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet[i].FilePath);
+				Log.Warning ("The selected project is empty. Rediscovering files");
+				for (int i = 0; i < project.Description.FileSet.Count; i++) {
+					project.Description.FileSet [i] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet [i].FilePath);
 				}
 			}
 			// FIXME

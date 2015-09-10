@@ -172,15 +172,19 @@ namespace LongoMatch.DB
 		public void AddProject (Project project)
 		{
 			string projectFile;
+			bool update = false;
 
 			Log.Debug (string.Format ("Add project {0}", project.ID));
 			projectFile = Path.Combine (dbDirPath, project.ID.ToString ());
 			string tmpProjectFile = projectFile + ".tmp";
 			project.Description.LastModified = DateTime.UtcNow;
+			if (projectsDB.ProjectsDict.ContainsKey (project.Description.ProjectID)) {
+				update = true;
+			}
+
 			projectsDB.Add (project.Description);
 			try {
 				serializer.Save (project, tmpProjectFile);
-
 				if (File.Exists (projectFile))
 					File.Replace (tmpProjectFile, projectFile, null);
 				else {
@@ -188,7 +192,11 @@ namespace LongoMatch.DB
 				}
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				projectsDB.Delete (project.Description.ID);
+				// FIXME: This is dirty, but I can't find another way right now.
+				if (!update) {
+					projectsDB.Delete (project.Description.ProjectID);
+				}
+				throw;
 			}
 		}
 
