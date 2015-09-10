@@ -92,7 +92,7 @@ namespace Tests.DB
 
 			db.SerializerObject = mockSerializer.Object;
 
-			db.UpdateProject (project);
+			Assert.Throws<Exception> (() => db.UpdateProject (project));
 
 			mockSerializer.Verify (x => x.Save<Project> (It.IsAny<Project> (), It.IsAny<string> (), It.IsAny<SerializationType> ()), Times.Once ());
 		}
