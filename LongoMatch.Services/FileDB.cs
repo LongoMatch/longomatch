@@ -32,9 +32,21 @@ namespace LongoMatch.DB
 		string dbPath;
 		string dbName;
 		TimeSpan maxDaysWithoutBackup = new TimeSpan (5, 0, 0, 0);
+		ISerializer serializer;
+
+		public ISerializer SerializerObject {
+			get {
+				return serializer;
+			}
+			set {
+				serializer = value;
+			}
+		}
 
 		public DataBase (string dbDirPath)
 		{
+			serializer = new Serializer ();
+
 			dbName = Path.GetFileNameWithoutExtension (dbDirPath);
 			dbPath = Path.Combine (dbDirPath, Path.GetFileName (dbDirPath));
 			this.dbDirPath = dbDirPath;
@@ -44,7 +56,7 @@ namespace LongoMatch.DB
 			}
 			if (File.Exists (dbPath)) {
 				try {
-					projectsDB = Serializer.Load<LiteDB> (dbPath);
+					projectsDB = serializer.Load<LiteDB> (dbPath);
 					projectsDB.DBPath = dbPath;
 				} catch (Exception e) {
 					Log.Exception (e);
@@ -148,7 +160,7 @@ namespace LongoMatch.DB
 
 			if (File.Exists (projectFile)) {
 				try {
-					return Serializer.Load<Project> (projectFile);
+					return serializer.Load<Project> (projectFile);
 				} catch (Exception ex) {
 					throw new ProjectDeserializationException (ex);
 				}
@@ -203,7 +215,7 @@ namespace LongoMatch.DB
 					continue;
 				}
 				try {
-					Project project = Serializer.Load<Project> (file.FullName);
+					Project project = serializer.Load<Project> (file.FullName);
 					projectsDB.Add (project.Description);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -216,7 +228,8 @@ namespace LongoMatch.DB
 	[Serializable]
 	class LiteDB
 	{
-		
+		static ISerializer serializer = new Serializer ();
+
 		public LiteDB (string dbPath)
 		{
 			DBPath = dbPath;
@@ -271,7 +284,7 @@ namespace LongoMatch.DB
 			bool ret = false;
 			
 			try {
-				Serializer.Save (this, DBPath);
+				serializer.Save (this, DBPath);
 				ret = true;
 			} catch (Exception ex) {
 				Log.Exception (ex);

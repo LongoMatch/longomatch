@@ -21,6 +21,7 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
+using LongoMatch.Core.Interfaces;
 
 namespace Tests.Core.Store
 {
@@ -81,7 +82,8 @@ namespace Tests.Core.Store
 			stream.Position = 0;
 
 			// Deserialize and check the ProjectID
-			var newobj = Serializer.Load<ProjectDescription> (stream);
+			ISerializer serializer = new Serializer ();
+			var newobj = serializer.Load<ProjectDescription> (stream);
 
 			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ID);
 			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ProjectID);

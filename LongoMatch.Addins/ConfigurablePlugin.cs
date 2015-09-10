@@ -28,8 +28,11 @@ namespace LongoMatch.Addins
 {
 	public class ConfigurablePlugin
 	{
+		Serializer serializer;
+
 		public ConfigurablePlugin ()
 		{
+			serializer = new Serializer ();
 			Properties = new List<AttributeAndProperty> ();
 			foreach (var p in GetType ().GetProperties ()) {
 				var attr = p.GetCustomAttributes (typeof(PreferencesAttribute), true);
@@ -94,7 +97,7 @@ namespace LongoMatch.Addins
 				o [prop.Property.Name] = new JValue (prop.Property.GetValue (this, null));
 			}
 			try {
-				Serializer.Save (o, ConfigFile);
+				serializer.Save (o, ConfigFile);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
