@@ -157,10 +157,15 @@ namespace Tests.Integration
 			Config.DatabaseManager.ActiveDB.RemoveProject (p);
 
 			// Reopen the old project
-			savedP = Config.DatabaseManager.ActiveDB.GetProject (projectID);
-			Assert.AreEqual (3, savedP.Timeline.Count);
+			savedP = Config.DatabaseManager.ActiveDB.GetAllProjects ().FirstOrDefault (pr => pr.ID == projectID);
+			Config.EventsBroker.EmitOpenProjectID (savedP.ID, savedP);
+			Config.EventsBroker.EmitSaveProject (savedP, ProjectType.FileProject);
 
 			// Export this project to a new file
+			savedP = Config.DatabaseManager.ActiveDB.GetProject (projectID);
+			Assert.AreEqual (3, savedP.Timeline.Count);
+			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
+			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
 			guiToolkitMock.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);

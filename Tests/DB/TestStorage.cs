@@ -493,6 +493,12 @@ namespace Tests.DB
 
 			storage.Store<Project> (p);
 			Assert.AreEqual (39, db.DocumentCount);
+
+			p = storage.RetrieveAll<Project>()[0];
+			p.Load ();
+			storage.Store (p);
+			Assert.AreEqual (39, db.DocumentCount);
+
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
