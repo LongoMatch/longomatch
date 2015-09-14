@@ -107,7 +107,6 @@
     <Compile Include="Services\TestProjectsManager.cs" />
     <Compile Include="LocalDatabase.cs" />
     <Compile Include="Services\TestPlaylistManager.cs" />
-    <Compile Include="DB\TestDataBaseFileDB.cs" />
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Core\Store\Playlists\TestPlaylist.cs" />
