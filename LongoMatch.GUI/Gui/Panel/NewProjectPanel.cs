@@ -395,6 +395,7 @@ namespace LongoMatch.Gui.Panel
 			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
 			project.Description.FileSet = mediafilesetselection1.FileSet;
 			project.UpdateEventTypesAndTimers ();
+			project.ConsolidateDescription ();
 		}
 
 		bool CreateProject ()
