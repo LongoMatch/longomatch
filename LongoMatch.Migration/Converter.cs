@@ -25,12 +25,12 @@ using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Interfaces;
 using LongoMatch.Core.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Migration
 {
 	public class Converter
 	{
-		static ISerializer serializer = new LongoMatch.Core.Common.Serializer ();
 
 		static LongoMatch.Core.Common.Point ConvertPoint (Point newp)
 		{
@@ -156,7 +156,7 @@ namespace LongoMatch.Migration
 			if (dashboard.ID == Guid.Empty) {
 				dashboard.ID = Guid.NewGuid ();
 			}
-			dashboard.GamePeriods = new List<string> { "1", "2" };
+			dashboard.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			
 			foreach (Category cat in cats) {
 				var button = new LongoMatch.Core.Store.AnalysisEventButton {
@@ -236,7 +236,7 @@ namespace LongoMatch.Migration
 			Dictionary <Category, LongoMatch.Core.Store.EventType > ignore2;
 			var dashboard = ConvertCategories (cats, out ignore1, out ignore2);
 			outputPath = FixPath (outputPath);
-			serializer.Save (dashboard, outputPath);
+			LongoMatch.Core.Common.Serializer.Instance.Save (dashboard, outputPath);
 		}
 
 		public static LongoMatch.Core.Store.Templates.Team ConvertTeamTemplate (TeamTemplate team,
@@ -266,7 +266,7 @@ namespace LongoMatch.Migration
 			                                                           SerializationType.Binary);
 			var newteam = ConvertTeamTemplate (team, null);
 			outputPath = FixPath (outputPath);
-			serializer.Save (newteam, outputPath);
+			LongoMatch.Core.Common.Serializer.Instance.Save (newteam, outputPath);
 		}
 
 		public static void ConvertProject (Project project, string outputDir)
@@ -372,7 +372,7 @@ namespace LongoMatch.Migration
 			field.Dispose ();
 			halffield.Dispose ();
 			goal.Dispose ();
-			serializer.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
+			LongoMatch.Core.Common.Serializer.Instance.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
 		}
 
 		public static void ConvertDB (string dbfile, string outputdir)

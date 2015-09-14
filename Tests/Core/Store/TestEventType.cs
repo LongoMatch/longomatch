@@ -37,7 +37,9 @@ namespace Tests.Core.Store
 			MemoryStream stream;
 			StreamReader reader;
 			
-			evType = new EventType ();
+			evType = new EventType();
+			Utils.CheckSerialization (evType);
+
 			evType.Color = new Color (255, 0, 0);
 			evType.Name = "test";
 			evType.SortMethod = SortMethodType.SortByDuration;
@@ -50,14 +52,13 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (evType);
 			
 			stream = new MemoryStream ();
-			ISerializer serializer = new Serializer ();
-			serializer.Save (evType, stream, SerializationType.Json);
+			Serializer.Instance.Save (evType, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			reader = new StreamReader (stream);
 			jsonString = reader.ReadToEnd ();
 			Assert.IsFalse (jsonString.Contains ("SortMethodString"));
 			stream.Seek (0, SeekOrigin.Begin);
-			EventType newEventType = serializer.Load<EventType> (stream, SerializationType.Json);
+			EventType newEventType = Serializer.Instance.Load<EventType> (stream, SerializationType.Json);
 			
 			Assert.AreEqual (evType.ID, newEventType.ID);
 			Assert.AreEqual (evType.Name, newEventType.Name);
@@ -118,6 +119,47 @@ namespace Tests.Core.Store
 			
 			Assert.AreEqual (sub.ID, Constants.SubsID);
 			Assert.AreEqual (sub, new SubstitutionEventType ());
+		}
+
+		[Test()]
+		public void TestIsChanged (){
+			EventType et = new EventType ();
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.Color = Color.Green;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.FieldPositionIsDistance = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.HalfFieldPositionIsDistance = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.Name = "name";
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.SortMethod = SortMethodType.SortByStartTime;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagFieldPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagGoalPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+			et.TagHalfFieldPosition = true;
+			Assert.IsTrue (et.IsChanged);
+			et.IsChanged = false;
+
+			AnalysisEventType at = new AnalysisEventType ();
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
+			at.Tags.Add (new Tag (""));
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
+			at.Tags = null;
+			Assert.IsTrue (at.IsChanged);
+			at.IsChanged = false;
 		}
 	}
 }

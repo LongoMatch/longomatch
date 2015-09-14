@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Menus
 		}
 
 		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
-		                       List<EventType> eventTypes, bool editableName)
+		                       IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
 

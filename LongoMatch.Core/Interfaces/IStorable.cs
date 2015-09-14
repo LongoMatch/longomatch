@@ -16,11 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface IStorable : IIDObject
+	public interface IStorable : IIDObject, IChanged
 	{
+		/// <summary>
+		/// The storage associated to this object in cases it's partially
+		/// loaded and needs to storage to be filled.
+		/// </summary>
+		IStorage Storage {get; set;}
+
+		/// <summary>
+		/// Defines if an object is partially or fully loaded.
+		/// Some database queries can return partially loaded objects
+		/// that are filled once the first unintialized property is accessed.
+		/// </summary>
+		bool IsLoaded {get; set;}
+
+		/// <summary>
+		/// A list of the storable children stored in the DB.
+		/// It's used to find orphaned children that have been removed from the <see cref="IStorable"/> and
+		/// should be deleted when it's updated or remove from the DB.
+		/// </summary>
+		List<IStorable> SavedChildren {get;set;}
+
+		/// <summary>
+		/// Defines if <see cref="IStorable"/> children should be deleted when deleting this object.
+		/// </summary>
+		bool DeleteChildren {get;}
 	}
 }
 

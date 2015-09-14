@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
+using System.Collections.ObjectModel;
 
 namespace Tests.Core.Store
 {
@@ -78,6 +79,17 @@ namespace Tests.Core.Store
 			Assert.IsNull (p.CamerasLayout);
 		}
 
+		[Test()]
+		public void TestEquals() {
+			TimelineEvent evt1 = new TimelineEvent ();
+			TimelineEvent evt2 = new TimelineEvent ();
+			Assert.AreNotEqual (evt1, evt2);
+			evt2.ID = evt1.ID;
+			Assert.AreEqual (evt1, evt2);
+			evt2.ID = Guid.Parse (evt1.ID.ToString());
+			Assert.AreEqual (evt1, evt2);
+		}
+
 		[Test ()]
 		public void TestProperties ()
 		{
@@ -95,7 +107,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.TagsDescription (), "test");
 			evt.Tags.Add (new Tag ("test2"));
 			Assert.AreEqual (evt.TagsDescription (), "test-test2");
-			evt.Tags = new List<Tag> ();
+			evt.Tags = new ObservableCollection<Tag> ();
 			Assert.AreEqual (evt.TagsDescription (), "");
 		}
 
@@ -177,17 +189,60 @@ namespace Tests.Core.Store
 		public void TestUpdateCoordinates ()
 		{
 			TimelineEvent evt = CreateTimelineEvent ();
-			evt.UpdateCoordinates (FieldPositionType.Field, new List<Point> { new Point (4, 5) });
+			evt.UpdateCoordinates (FieldPositionType.Field, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.HalfField, new List<Point> { new Point (4, 5) });
+			evt.UpdateCoordinates (FieldPositionType.HalfField,new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.Goal, new List<Point> { new Point (4, 5) });
+			evt.UpdateCoordinates (FieldPositionType.Goal, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.GoalPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
+		}
+
+		[Test()]
+		public void TestIsChanged () {
+			TimelineEvent evt = new TimelineEvent ();
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.EventType = new EventType ();
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Notes = "test";
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Rate = 2f;
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Team = TeamType.BOTH;
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.FieldPosition = new Coordinates ();
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.HalfFieldPosition = new Coordinates ();
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.GoalPosition = new Coordinates ();
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Tags.Add (new Tag ("2"));
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Tags = null;
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.CamerasConfig.Add (new CameraConfig (2));
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.CamerasConfig = null;
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
+			evt.Players.Add (new Player ());
+			Assert.IsTrue (evt.IsChanged);
+			evt.IsChanged = false;
 		}
 	}
 }

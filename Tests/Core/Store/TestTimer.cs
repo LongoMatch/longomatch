@@ -94,6 +94,22 @@ namespace Tests.Core.Store
 			timer.CancelCurrent ();
 			Assert.AreEqual (1, timer.Nodes.Count);
 		}
+
+		[Test ()]
+		public void TestIsChanged () {
+			Timer t = new Timer ();
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Name = "name";
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Nodes.Add (new TimeNode ());
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Nodes = null;
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+		}
 	}
 }
 

@@ -19,12 +19,13 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-
 using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Core.Store.Templates
@@ -35,9 +36,10 @@ namespace LongoMatch.Core.Store.Templates
 	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
-	public class Dashboard: IStorable, ITemplate
+	public class Dashboard: StorableBase, ITemplate
 	{
 
+		ObservableCollection<DashboardButton> list;
 		const int CAT_WIDTH = 120;
 		const int CAT_HEIGHT = 80;
 		const int MIN_WIDTH = 320;
@@ -53,37 +55,8 @@ namespace LongoMatch.Core.Store.Templates
 				/* Ingore for unit tests */
 			}
 			ID = Guid.NewGuid ();
-			List = new List<DashboardButton> ();
-		}
-
-		void InitializeLists ()
-		{
-			// After being deserialized, make sure to create a default GamePeriod
-			if (GamePeriods == null) {
-				GamePeriods = new List<string> ();
-				GamePeriods.Add ("1");
-				GamePeriods.Add ("2");
-			}
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			InitializeLists ();
-		}
-
-		[OnSerializing]
-		internal void OnSerializingMethod (StreamingContext context)
-		{
-			InitializeLists ();
-		}
-
-		/// <summary>
-		/// Unique ID describing the dashboard
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
+			List = new ObservableCollection<DashboardButton> ();
+			GamePeriods = new ObservableCollection<string> {"1", "2"};
 		}
 
 		/// <summary>
@@ -91,6 +64,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// and it can't be modified
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;
 			set;
@@ -99,14 +73,26 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// A list with all the buttons in this dashboard
 		/// </summary>
-		public List<DashboardButton> List {
-			get;
-			set;
+		public ObservableCollection<DashboardButton> List {
+			get {
+				return list;
+			}
+			set {
+				if (list != null) {
+					list.CollectionChanged -= ListChanged;
+				}
+				list = value;
+				if (list != null) {
+					list.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
 		/// The name of the dashboard
 		/// </summary>
+		[LongoMatchPropertyIndex (0)]
+		[LongoMatchPropertyPreload]
 		public string Name {
 			get;
 			set;
@@ -119,7 +105,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// the same names
 		/// </summary>
 		/// <value>The game periods.</value>
-		public List<string> GamePeriods {
+		public ObservableCollection<string> GamePeriods {
 			get;
 			set;
 		}
@@ -127,6 +113,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// The icon used for this dashboard
 		/// </summary>
+		[LongoMatchPropertyPreload]
 		public Image Image {
 			get;
 			set;
@@ -169,6 +156,7 @@ namespace LongoMatch.Core.Store.Templates
 		/// A list with all the timers used in this dashboard
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Timer> Timers {
 			get {
 				return List.OfType<Timer> ().ToList ();
@@ -176,6 +164,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CanvasWidth {
 			get {
 				if (List.Count == 0) {
@@ -186,6 +175,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CanvasHeight {
 			get {
 				if (List.Count == 0) {
@@ -196,6 +186,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Dictionary<string, List<Tag>> CommonTagsByGroup {
 			get {
 				return List.OfType<TagButton> ().Select (t => t.Tag).
@@ -321,14 +312,10 @@ namespace LongoMatch.Core.Store.Templates
 			TimerButton timerButton;
 			PenaltyCardButton cardButton;
 			ScoreButton scoreButton;
-			List<string> periods = new List<string> ();
 			Dashboard template = new Dashboard ();
 			
 			template.FillDefaultTemplate (count);
-
-			periods.Add ("1");
-			periods.Add ("2");
-			template.GamePeriods = periods; 
+			template.GamePeriods = new ObservableCollection<string> {"1", "2"};
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),
@@ -407,6 +394,11 @@ namespace LongoMatch.Core.Store.Templates
 			foreach (ActionLink l in link.DestinationButton.ActionLinks) {
 				CheckLinks (l, traversed.ToList ());
 			}
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

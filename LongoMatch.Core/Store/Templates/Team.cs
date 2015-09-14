@@ -18,29 +18,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-
-using Newtonsoft.Json;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using System.IO;
+using LongoMatch.Core.Serialization;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: ITemplate
+	public class Team: StorableBase, ITemplate
 	{
-		private const int MAX_WIDTH = 100;
-		private const int MAX_HEIGHT = 100;
+		const int MAX_WIDTH = 100;
+		const int MAX_HEIGHT = 100;
+		ObservableCollection<Player> list;
 
 		public Team ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
-			List = new List<Player> ();
+			List = new ObservableCollection<Player> ();
 			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			try {
 				Shield = new Image (path);
@@ -53,33 +54,43 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [1] = Color.Red1;
 		}
 
-
-		public Guid ID {
-			get;
-			set;
-		}
-
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Static {
 			get;
 			set;
 		}
 
-		public List<Player> List {
-			get;
-			set;
+		public ObservableCollection<Player> List {
+			get {
+				return list;
+			}
+			set {
+				if (list != null) {
+					list.CollectionChanged -= PlayersChanged;
+				}
+				list = value;
+				if (list != null) {
+					list.CollectionChanged += PlayersChanged;
+				}
+			}
 		}
 
+		[LongoMatchPropertyIndex (0)]
+		[LongoMatchPropertyPreload]
 		public String Name {
 			get;
 			set;
 		}
 
+		[LongoMatchPropertyIndex (1)]
+		[LongoMatchPropertyPreload]
 		public String TeamName {
 			get;
 			set;
 		}
 
+		[LongoMatchPropertyPreload]
 		public Image Shield {
 			get;
 			set;
@@ -96,6 +107,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color Color {
 			get {
 				if (ActiveColor > 0 && ActiveColor <= Colors.Length) {
@@ -108,6 +120,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int StartingPlayers {
 			get {
 				return Formation.Sum ();
@@ -120,6 +133,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string FormationStr {
 			set {
 				string[] elements = value.Split ('-');
@@ -136,21 +150,27 @@ namespace LongoMatch.Core.Store.Templates
 				Formation = tactics;
 			}
 			get {
-				return String.Join ("-", Formation);
+				if (Formation != null) {
+					return String.Join ("-", Formation);
+				} else {
+					return "";
+				}
 			}
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool TemplateEditorMode {
 			set;
 			get;
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
-					return List;
+					return List.ToList();
 				} else {
 					return List.Where (p => p.Playing).Select (p => p).ToList ();
 				}
@@ -158,6 +178,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> StartingPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;
@@ -167,6 +188,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<Player> BenchPlayersList {
 			get {
 				List<Player> playingPlayers = PlayingPlayersList;
@@ -242,6 +264,11 @@ namespace LongoMatch.Core.Store.Templates
 			List.Clear ();
 			for (int i = 1; i <= playersCount; i++)
 				AddDefaultItem (i - 1);
+		}
+
+		void PlayersChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 

@@ -252,7 +252,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, List<Player> players, bool selected, string desc,
+		public static void RenderPlay (Color color, Image ss, IList<Player> players, bool selected, string desc,
 		                               int count, bool isExpanded, IDrawingToolkit tk,
 		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{

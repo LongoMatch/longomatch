@@ -34,7 +34,7 @@ namespace Tests.Core.Common
 			Assert.AreEqual (c, c1);
 			
 			YCbCrColor yc = new YCbCrColor (2, 3, 4);
-			Utils.CheckSerialization (yc);
+			Utils.CheckSerialization (yc, true);
 		}
 
 		[Test ()]

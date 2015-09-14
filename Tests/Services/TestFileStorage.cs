@@ -19,8 +19,9 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using LongoMatch.Services.Services;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.DB;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace Tests.Services
 {
@@ -30,7 +31,7 @@ namespace Tests.Services
 
 		FileStorage fs;
 
-		private class TestStorable : IStorable
+		private class TestStorable : StorableBase
 		{
 			public string memberString;
 
@@ -38,11 +39,6 @@ namespace Tests.Services
 			{
 				this.memberString = memberString;
 				ID = Guid.NewGuid ();
-			}
-
-			public Guid ID {
-				get;
-				set;
 			}
 		}
 
@@ -78,9 +74,9 @@ namespace Tests.Services
 			Assert.AreEqual (ts2.memberString, ts1.memberString);
 
 			// Get based on memberString
-			Dictionary<string, object> dict = new Dictionary<string, object> ();
-			dict.Add ("memberString", "first");
-			lts = fs.Retrieve<TestStorable> (dict);
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("memberString", "first");
+			lts = fs.Retrieve<TestStorable> (filter);
 
 			// Check that we have stored one object
 			Assert.AreEqual (lts.Count, 1);
@@ -115,14 +111,13 @@ namespace Tests.Services
 			fs.Store<TestStorable> (ts1);
 
 			/* Test with a dictionary combination that exists */
-			Dictionary<string, object> dict = new Dictionary<string, object> ();
-			dict.Add ("memberString", "first");
-			Assert.AreEqual (1, fs.Retrieve<TestStorable> (dict).Count);
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("memberString", "first");
+			Assert.AreEqual (1, fs.Retrieve<TestStorable> (filter).Count);
 
 			/* Test with a dictionary combination that doesn't exist */
-			dict ["memberString"] = "second";
-			Assert.AreEqual (0, fs.Retrieve<TestStorable> (dict).Count);
+			filter ["memberString"] [0] = "second";
+			Assert.AreEqual (0, fs.Retrieve<TestStorable> (filter).Count);
 		}
 	}
 }
-

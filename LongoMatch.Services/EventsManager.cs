@@ -29,6 +29,7 @@ using LongoMatch.Core;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Services
 {
@@ -40,17 +41,13 @@ namespace LongoMatch.Services
 		Project openedProject;
 		ProjectType projectType;
 		EventsFilter filter;
-		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
 		IPlayerController player;
 		ICapturerBin capturer;
 		IFramesCapturer framesCapturer;
-		IRenderingJobsManager renderer;
 
-		public EventsManager (IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
+		public EventsManager ()
 		{
-			this.guiToolkit = guiToolkit;
-			this.renderer = renderer;
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
@@ -108,14 +105,14 @@ namespace LongoMatch.Services
 					analysisWindow.AddPlay (evt);
 					filter.Update ();
 				} catch (SubstitutionException ex) {
-					guiToolkit.ErrorMessage (ex.Message);
+					Config.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
 		}
 
 		void HandleShowFullScreenEvent (bool fullscreen)
 		{
-			guiToolkit.FullScreen = fullscreen;
+			Config.GUIToolkit.FullScreen = fullscreen;
 		}
 
 		void HandlePlayLoaded (TimelineEvent play)
@@ -144,7 +141,7 @@ namespace LongoMatch.Services
 
 		void HandleShowProjectStatsEvent (Project project)
 		{
-			guiToolkit.ShowProjectStats (project);
+			Config.GUIToolkit.ShowProjectStats (project);
 		}
 
 		void HandleDrawFrame (TimelineEvent play, int drawingIndex, CameraConfig camConfig, bool current)
@@ -188,9 +185,9 @@ namespace LongoMatch.Services
 				pixbuf = player.CurrentFrame;
 			}
 			if (pixbuf == null) {
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error capturing video frame"));
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error capturing video frame"));
 			} else {
-				guiToolkit.DrawingTool (pixbuf, play, drawing, camConfig, openedProject);
+				Config.GUIToolkit.DrawingTool (pixbuf, play, drawing, camConfig, openedProject);
 			}
 		}
 
@@ -222,7 +219,7 @@ namespace LongoMatch.Services
 				element = new PlaylistPlayElement (play, project.Description.FileSet);
 				playlist.Elements.Add (element);
 				job = new EditionJob (playlist, settings);
-				renderer.AddJob (job);
+				Config.RenderingJobsManger.AddJob (job);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
@@ -251,10 +248,10 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				play.Stop.MSeconds = Math.Min (player.StreamLength.MSeconds, play.Stop.MSeconds);
 				play.CamerasLayout = player.CamerasLayout;
-				play.CamerasConfig = player.CamerasConfig;
+				play.CamerasConfig = new ObservableCollection<CameraConfig> (player.CamerasConfig);
 			} else {
 				play.CamerasLayout = null;
-				play.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
+				play.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 			}
 
 			filter.Update ();
@@ -282,7 +279,7 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.CaptureProject ||
 			    projectType == ProjectType.URICaptureProject) {
 				if (!capturer.Capturing) {
-					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
+					Config.GUIToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
 				}
 			}
@@ -293,10 +290,10 @@ namespace LongoMatch.Services
 			var play = openedProject.AddEvent (evType, start, stop, eventTime, null, score, card);
 			play.Team = team;
 			if (players != null) {
-				play.Players = players;
+				play.Players = new ObservableCollection<Player> (players);
 			}
 			if (tags != null) {
-				play.Tags = tags;
+				play.Tags = new ObservableCollection<Tag> (tags);
 			}
 			AddNewPlay (play);
 		}
@@ -310,7 +307,7 @@ namespace LongoMatch.Services
 			    projectType == ProjectType.URICaptureProject ||
 			    projectType == ProjectType.FakeCaptureProject) {
 				if (!capturer.Capturing) {
-					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
+					Config.GUIToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
 				}
 			}
@@ -347,7 +344,7 @@ namespace LongoMatch.Services
 				copy.ID = Guid.NewGuid ();
 				/* The category is also serialized and desarialized */
 				copy.EventType = play.EventType;
-				copy.Players = play.Players.ToList ();
+				copy.Players = new ObservableCollection<Player> (play.Players);
 				openedProject.AddEvent (copy);
 				analysisWindow.AddPlay (copy);
 			}
@@ -357,7 +354,7 @@ namespace LongoMatch.Services
 		protected virtual void OnSnapshotSeries (TimelineEvent play)
 		{
 			player.Pause ();
-			guiToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
+			Config.GUIToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
 		}
 
 		protected virtual void OnPlayCategoryChanged (TimelineEvent play, EventType evType)
@@ -436,19 +433,13 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
-
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
-
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-
 			Config.EventsBroker.DrawFrame += HandleDrawFrame;
 			Config.EventsBroker.Detach += HandleDetach;
-
 			Config.EventsBroker.ShowFullScreenEvent += HandleShowFullScreenEvent;
-
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
-
 			return true;
 		}
 
@@ -464,19 +455,13 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelectedEvent;
 			Config.EventsBroker.PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
 			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
-
 			Config.EventsBroker.ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent -= HandleTagSubcategoriesChangedEvent;
-
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
-
 			Config.EventsBroker.DrawFrame -= HandleDrawFrame;
 			Config.EventsBroker.Detach -= HandleDetach;
-
 			Config.EventsBroker.ShowFullScreenEvent -= HandleShowFullScreenEvent;
-
 			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
-
 			return true;
 		}
 

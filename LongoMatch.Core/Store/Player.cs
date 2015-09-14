@@ -18,8 +18,8 @@
 
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: IStorable
+	public class Player: StorableBase
 	{
 
 		#region Constructors
@@ -40,24 +40,25 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 		
-		public Guid ID {
-			get;
-			set;
-		}
-		
 		/// <summary>
 		/// My name
 		/// </summary>
+		[LongoMatchPropertyIndex (0)]
+		[LongoMatchPropertyPreload]
 		public string Name {
 			get;
 			set;
 		}
-		
+
+		[LongoMatchPropertyIndex (1)]
+		[LongoMatchPropertyPreload]
 		public string LastName {
 			get;
 			set;
 		}
-		
+
+		[LongoMatchPropertyIndex (2)]
+		[LongoMatchPropertyPreload]
 		public string NickName {
 			get;
 			set;
@@ -82,6 +83,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// My photo
 		/// </summary>
+		[LongoMatchPropertyPreload]
 		public Image Photo {
 			get;
 			set;
@@ -140,6 +142,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color Color {
 			get;
 			set;

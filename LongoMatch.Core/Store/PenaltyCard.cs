@@ -17,11 +17,14 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class PenaltyCard
+	[PropertyChanged.ImplementPropertyChanged]
+	public class PenaltyCard: IChanged
 	{
 		public PenaltyCard ()
 		{
@@ -32,6 +35,13 @@ namespace LongoMatch.Core.Store
 			Name = name;
 			Color = color;
 			Shape = shape;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string Name {

@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)CoreServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayerController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
@@ -24,7 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)FileDB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
   </ItemGroup>
 </Project>

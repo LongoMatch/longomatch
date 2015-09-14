@@ -22,15 +22,14 @@ using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
 
-namespace LongoMatch.Services.Services
+namespace LongoMatch.DB
 {
 	public class FileStorage : IStorage
 	{
-		private string basePath;
-		private bool deleteOnDestroy;
-
-		static Serializer serializer = new Serializer ();
+		string basePath;
+		bool deleteOnDestroy;
 
 		public FileStorage (string basePath, bool deleteOnDestroy = false)
 		{
@@ -41,6 +40,7 @@ namespace LongoMatch.Services.Services
 				Log.Information ("Creating directory " + basePath);
 				Directory.CreateDirectory (basePath);
 			}
+			Info = new StorageInfo ();
 		}
 
 		~FileStorage ()
@@ -125,13 +125,22 @@ namespace LongoMatch.Services.Services
 
 		#region IStorage implementation
 
+		public StorageInfo Info {
+			get;
+			set;
+		}
+
+		public void Fill (IStorable storable)
+		{
+		}
+
 		public T Retrieve<T> (Guid id) where T : IStorable
 		{
 			string typePath = ResolvePath<T> ();
 			string path = Path.Combine (typePath, id.ToString () + GetExtension (typeof(T)));
 
 			if (File.Exists (path)) {
-				T t = serializer.LoadSafe<T> (path);
+				T t = Serializer.Instance.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 				return t;
 			} else {
@@ -159,7 +168,7 @@ namespace LongoMatch.Services.Services
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
 				try {
 					Log.Information ("Retrieving " + path);
-					T t = (T)serializer.LoadSafe<T> (path);
+					T t = Serializer.Instance.LoadSafe<T> (path);
 
 					string sType = ResolveType (typeof(T));
 
@@ -185,72 +194,76 @@ namespace LongoMatch.Services.Services
 			return l;
 		}
 
-		public List<T> Retrieve<T> (Dictionary<string,object> dict) where T : IStorable
+		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			List<T> l = new List<T> ();
 			string typePath = ResolvePath<T> ();
 			string extension = GetExtension (typeof(T));
 
-			if (dict == null)
+			if (filter == null)
 				return RetrieveAll<T> ();
 
 			// In case the only keyword is name try to find the files by name
-			if (dict.ContainsKey ("Name") && dict.Keys.Count == 1) {
-				string path = Path.Combine (typePath, dict ["Name"] + GetExtension (typeof(T)));
+			if (filter.ContainsKey ("Name") && filter.Keys.Count == 1) {
+				foreach (string name in filter["Name"]) {
+					string path = Path.Combine (typePath, name + GetExtension (typeof(T)));
 
-				if (File.Exists (path)) {
-					T t = serializer.LoadSafe<T> (path);
-					Log.Information ("Retrieving by filename " + path);
-					// To avoid cases where the name of the file does not match the name of the template
-					// overwrite the template name
-					FieldInfo finfo = t.GetType ().GetField ("Name");
-					PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
+					if (File.Exists (path)) {
+						T t = Serializer.Instance.LoadSafe<T> (path);
+						Log.Information ("Retrieving by filename " + path);
+						// To avoid cases where the name of the file does not match the name of the template
+						// overwrite the template name
+						FieldInfo finfo = t.GetType ().GetField ("Name");
+						PropertyInfo pinfo = t.GetType ().GetProperty ("Name");
 
-					if (pinfo != null)
-						pinfo.SetValue (t, dict ["Name"]);
-					else if (finfo != null)
-						finfo.SetValue (t, dict ["Name"]);
+						if (pinfo != null)
+							pinfo.SetValue (t, name);
+						else if (finfo != null)
+							finfo.SetValue (t, name);
 
-					l.Add (t);
-					return l;
+						l.Add (t);
+						return l;
+					}
 				}
 			}
 
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = (T)serializer.LoadSafe<T> (path);
+				T t = Serializer.Instance.LoadSafe<T> (path);
 				bool matches = true;
 
-				foreach (KeyValuePair<string, object> entry in dict) {
-					FieldInfo finfo = t.GetType ().GetField (entry.Key);
-					PropertyInfo pinfo = t.GetType ().GetProperty (entry.Key);
-					object ret = null;
+				foreach (KeyValuePair<string, List<object>> entry in filter) {
+					foreach (object val in entry.Value) {
+						FieldInfo finfo = t.GetType ().GetField (entry.Key);
+						PropertyInfo pinfo = t.GetType ().GetProperty (entry.Key);
+						object ret = null;
 
-					if (pinfo == null && finfo == null) {
-						Log.Warning ("Property/Field does not exist " + entry.Key);
-						matches = false;
-						break;
-					}
-
-					if (pinfo != null)
-						ret = pinfo.GetValue (t, null);
-					else
-						ret = finfo.GetValue (t);
-
-					if (ret == null && entry.Value != null) {
-						matches = false;
-						break;
-					}
-
-					if (ret != null && entry.Value == null) {
-						matches = false;
-						break;
-					}
-
-					if (ret.GetType () == entry.Value.GetType ()) {
-						if (!Object.Equals (ret, entry.Value)) {
+						if (pinfo == null && finfo == null) {
+							Log.Warning ("Property/Field does not exist " + entry.Key);
 							matches = false;
+							break;
+						}
+
+						if (pinfo != null)
+							ret = pinfo.GetValue (t, null);
+						else
+							ret = finfo.GetValue (t);
+
+						if (ret == null && val != null) {
+							matches = false;
+							break;
+						}
+
+						if (ret != null && val == null) {
+							matches = false;
+							break;
+						}
+
+						if (ret.GetType () == val.GetType ()) {
+							if (!Object.Equals (ret, val)) {
+								matches = false;
+							}
 						}
 					}
 				}
@@ -263,8 +276,7 @@ namespace LongoMatch.Services.Services
 			return l;
 		}
 
-
-		public void Store<T> (T t) where T : IStorable
+		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			string typePath = ResolvePath<T> ();
 			string extension = GetExtension (typeof(T));
@@ -272,7 +284,7 @@ namespace LongoMatch.Services.Services
 			// Save the object as a file on disk
 			string path = Path.Combine (typePath, ResolveName (t)) + extension;
 			Log.Information ("Storing " + path);
-			serializer.Save<T> (t, path);
+			Serializer.Instance.Save<T> (t, path);
 		}
 
 		public void Delete<T> (T t) where T : IStorable
@@ -310,7 +322,7 @@ namespace LongoMatch.Services.Services
 			T t;
 
 			Log.Information ("Loading " + from);
-			t = (T)serializer.LoadSafe<T> (from);
+			t = (T)Serializer.Instance.LoadSafe<T> (from);
 			return t;
 		}
 
@@ -333,7 +345,7 @@ namespace LongoMatch.Services.Services
 			}
 
 			/* Don't cach the Exception here to chain it up */
-			serializer.Save<T> ((T)t, at);
+			Serializer.Instance.Save<T> ((T)t, at);
 		}
 	}
 }

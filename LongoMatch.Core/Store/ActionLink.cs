@@ -16,9 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
@@ -27,15 +28,26 @@ namespace LongoMatch.Core.Store
 	/// Defines an action link between 2 buttons in a <see cref="LongoMatch.Core.Store.Templates.Dashboard"/>.
 	/// </summary>
 	[Serializable]
-	public class ActionLink
+	[PropertyChanged.ImplementPropertyChanged]
+	public class ActionLink: IChanged
 	{
+		ObservableCollection<Tag> sourceTags;
+		ObservableCollection<Tag> destinationTags;
+
 		public ActionLink ()
 		{
 			KeepGenericTags = true;
 			KeepPlayerTags = true;
 			TeamAction = TeamLinkAction.Keep;
-			SourceTags = new List<Tag> ();
-			DestinationTags = new List<Tag> ();
+			SourceTags = new ObservableCollection<Tag> ();
+			DestinationTags = new ObservableCollection<Tag> ();
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -49,9 +61,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of tags that needs to match in the source
 		/// </summary>
-		public List<Tag> SourceTags {
-			get;
-			set;
+		public ObservableCollection<Tag> SourceTags {
+			get {
+				return sourceTags;
+			}
+			set {
+				if (sourceTags != null) {
+					sourceTags.CollectionChanged -= ListChanged;
+				}
+				sourceTags = value;
+				if (sourceTags != null) {
+					sourceTags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -65,9 +87,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of tags that needs to be set in the destination
 		/// </summary>
-		public List<Tag> DestinationTags {
-			get;
-			set;
+		public ObservableCollection<Tag> DestinationTags {
+			get {
+				return destinationTags;
+			}
+			set {
+				if (destinationTags != null) {
+					destinationTags.CollectionChanged -= ListChanged;
+				}
+				destinationTags = value;
+				if (destinationTags != null) {
+					destinationTags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -146,6 +178,11 @@ namespace LongoMatch.Core.Store
 		public override string ToString ()
 		{
 			return string.Format ("{0} -> {1}", SourceButton.Name, DestinationButton.Name);
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

@@ -77,7 +77,7 @@ namespace LongoMatch.Video.Utils
 		{
 			Time pos;
 			LongoMatch.Core.Common.Image frame;
-			List<CameraConfig> cameras;
+			IList<CameraConfig> cameras;
 			bool quit = false;
 			int i = 0;
 			int j = 0;

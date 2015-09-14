@@ -19,9 +19,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -31,7 +32,8 @@ namespace LongoMatch.Core.Store
 	/// It has a name that describe it and a start and stop <see cref="LongoMatch.Store.Time"/>
 	/// </summary>
 	[Serializable]
-	public class TimeNode
+	[PropertyChanged.ImplementPropertyChanged]
+	public class TimeNode: IChanged
 	{
 		Time start, stop, eventTime;
 
@@ -46,9 +48,18 @@ namespace LongoMatch.Core.Store
 
 		#region Properties
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// A short description of the time node
 		/// </summary>
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex(0)]
 		public virtual string Name {
 			get;
 			set;
@@ -100,6 +111,7 @@ namespace LongoMatch.Core.Store
 		/// Duration (stop_time - start_time)
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time Duration {
 			get {
 				if (Stop != null && Start != null) {
@@ -119,6 +131,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string RateString {
 			get {
 				return String.Format ("{0}X", Rate);

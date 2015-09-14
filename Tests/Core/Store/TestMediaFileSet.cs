@@ -61,8 +61,7 @@ namespace Tests.Core.Store
 			stream.Position = 0;
 
 			// Deserialize and check the FileSet
-			ISerializer serializer = new Serializer ();
-			var newobj = serializer.Load<MediaFileSet> (stream, SerializationType.Json);
+			var newobj = Serializer.Instance.Load<MediaFileSet> (stream, SerializationType.Json);
 
 			Assert.AreEqual (2, newobj.Count);
 

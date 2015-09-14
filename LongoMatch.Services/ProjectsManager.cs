@@ -16,8 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -33,10 +34,8 @@ namespace LongoMatch.Services
 		IMultimediaToolkit multimediaToolkit;
 		IAnalysisWindow analysisWindow;
 
-		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
+		public ProjectsManager ()
 		{
-			this.multimediaToolkit = multimediaToolkit;
-			this.guiToolkit = guiToolkit;
 		}
 
 		public Project OpenedProject {
@@ -126,7 +125,7 @@ namespace LongoMatch.Services
 			
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
-				project.Periods = Capturer.Periods;
+				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -302,7 +301,7 @@ namespace LongoMatch.Services
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
-				project.Periods = Capturer.Periods;
+				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
 				} catch (Exception ex) {
@@ -348,17 +347,29 @@ namespace LongoMatch.Services
 			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ());
 		}
 
-		void OpenProjectID (Guid projectID)
+		void OpenProjectID (Guid projectID, Project project)
 		{
-			Project project = null;
-			
-			try {
-				project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				guiToolkit.ErrorMessage (ex.Message);
-				return;
+			if (project == null) {
+				try {
+					project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (ex.Message);
+					return;
+				}
 			}
+
+			if (!project.IsLoaded) {
+				try {
+					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Loading project..."), null);
+					busy.ShowSync (project.Load);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
+					return;
+				}
+			}
+
 			if (project.Description.FileSet.Duration == null) {
 				Log.Warning ("The selected project is empty. Rediscovering files");
 				for (int i = 0; i < project.Description.FileSet.Count; i++) {
@@ -379,18 +390,18 @@ namespace LongoMatch.Services
 
 		void CaptureFinished (bool cancel, bool delete)
 		{
-			Guid id = OpenedProject.ID;
+			Project project = OpenedProject;
 			ProjectType type = OpenedProjectType;
 			if (delete) {
 				try {
-					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject.ID);
+					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
 			}
 			CloseOpenedProject (!cancel);
 			if (!cancel && type != ProjectType.FakeCaptureProject) {
-				OpenProjectID (id);
+				OpenProjectID (project.ID, project);
 			}
 		}
 
@@ -429,6 +440,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
+			multimediaToolkit = Config.MultimediaToolkit;
+			guiToolkit = Config.GUIToolkit;
 			Config.EventsBroker.NewProjectEvent += NewProject;
 			Config.EventsBroker.OpenProjectEvent += OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
@@ -443,6 +456,8 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
+			multimediaToolkit = null;
+			guiToolkit = null;
 			Config.EventsBroker.NewProjectEvent -= NewProject;
 			Config.EventsBroker.OpenProjectEvent -= OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;

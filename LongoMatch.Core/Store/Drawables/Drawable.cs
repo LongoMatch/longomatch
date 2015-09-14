@@ -16,20 +16,28 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Drawables
 {
 	[Serializable]
-	public abstract class Drawable: IBlackboardObject
+	[PropertyChanged.ImplementPropertyChanged]
+	public abstract class Drawable: IBlackboardObject, IChanged
 	{
 		public Drawable ()
 		{
 		}
-		
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		public Color StrokeColor {
 			get;
 			set;
@@ -56,6 +64,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual Area Area {
 			get;
 			protected set;

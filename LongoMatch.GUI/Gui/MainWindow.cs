@@ -202,7 +202,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void SelectProject (List<ProjectDescription> projects)
+		public void SelectProject (List<Project> projects)
 		{
 			OpenProjectPanel panel = new OpenProjectPanel ();
 			panel.Projects = projects;

@@ -19,52 +19,64 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
-	public class Playlist: IStorable
+	public class Playlist: StorableBase
 	{
 		int indexSelection = 0;
+		ObservableCollection<IPlaylistElement> elements;
 
 		#region Constructors
 
 		public Playlist ()
 		{
 			ID = System.Guid.NewGuid ();
-			Elements = new ObservableCollection<IPlaylistElement> ();
+			Elements = new ObservableCollection <IPlaylistElement> ();
 		}
 
 		#endregion
 
 		#region Properties
 
-		/// <summary>
-		/// Unique ID for the playlist
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
-		}
-
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex (0)]
 		public string Name {
 			get;
 			set;
 		}
 
 		public ObservableCollection<IPlaylistElement> Elements {
-			get;
-			set;
+			get {
+				return elements;
+			}
+			set {
+				if (elements != null) {
+					elements.CollectionChanged -= ListChanged;
+				}
+				elements = value;
+				if (elements != null) {
+					elements.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int CurrentIndex {
 			get {
 				return indexSelection;
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public IPlaylistElement Selected {
 			get {
 				if (Elements.Count == 0) {
@@ -155,5 +167,10 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		#endregion
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 }

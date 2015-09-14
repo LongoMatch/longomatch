@@ -33,7 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\Log.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Registry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Seeker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\Serializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\VideoStandards.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Drawing.cs" />
@@ -129,5 +128,14 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\QueryFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\StorableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\Serializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\LongoMatchPropertyPreload.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\LongoMatchPropertyIndex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\ObjectChangedParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\StorableNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\StorageInfo.cs" />
   </ItemGroup>
 </Project>

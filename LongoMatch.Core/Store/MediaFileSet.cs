@@ -16,23 +16,33 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-	[JsonObject (MemberSerialization.OptIn)]
 	[Serializable]
-	public class MediaFileSet : List<MediaFile>
+	[PropertyChanged.ImplementPropertyChanged]
+	[JsonObject]
+	public class MediaFileSet : List<MediaFile>, IChanged
 	{
 
 		public MediaFileSet ()
 		{
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		[JsonProperty]
+		[PropertyChanged.DoNotNotify]
 		List<MediaFile> MediaFiles {
 			get {
 				if (Count == 0) {
@@ -83,6 +93,8 @@ namespace LongoMatch.Core.Store
 		/// Gets the preview of the first file in set or null if the set is empty.
 		/// </summary>
 		/// <value>The preview.</value>
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Image Preview {
 			get {
 				MediaFile file = this.FirstOrDefault ();
@@ -99,6 +111,8 @@ namespace LongoMatch.Core.Store
 		/// Gets the maximum duration from all files in set.
 		/// </summary>
 		/// <value>The duration.</value>
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time Duration {
 			get {
 				if (Count != 0) {

@@ -16,21 +16,28 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class Tag
+	[PropertyChanged.ImplementPropertyChanged]
+	public class Tag: IChanged
 	{
 		public Tag (string value, string grp="Default")
 		{
 			Group = grp;
 			Value = value;
 			HotKey = new HotKey ();
+			HotKey.IsChanged = false;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string Group {

@@ -15,11 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
 using System;
-using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Core.Store;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using NUnit.Framework;
 
 namespace Tests.Core.Store.Playlists
 {
@@ -33,7 +34,6 @@ namespace Tests.Core.Store.Playlists
 			evt.Start = new Time (1000);
 			evt.Stop = new Time (2000);
 			evt.CamerasLayout = 1;
-			evt.CamerasConfig.Add (new CameraConfig (0));
 
 			PlaylistPlayElement element = new PlaylistPlayElement (evt);
 			Utils.CheckSerialization (element);
@@ -55,7 +55,7 @@ namespace Tests.Core.Store.Playlists
 			evt.Start = new Time (1000);
 			evt.Stop = new Time (2000);
 			evt.CamerasLayout = 1;
-			evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (2), new CameraConfig (4) };
+			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (2), new CameraConfig (4) };
 
 			PlaylistPlayElement element = new PlaylistPlayElement (evt);
 
@@ -64,6 +64,36 @@ namespace Tests.Core.Store.Playlists
 			Assert.AreEqual (evt.CamerasConfig, element.CamerasConfig);
 			Assert.AreEqual (evt.Rate, element.Rate);
 			Assert.AreEqual (evt.Name, element.Title);
+		}
+
+		[Test ()]
+		public void TestIsChanged () {
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Start = new Time (1000);
+			evt.Stop = new Time (2000);
+			evt.CamerasLayout = 1;
+			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (2), new CameraConfig (4) };
+			PlaylistPlayElement element = new PlaylistPlayElement (evt);
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.Play = new TimelineEvent ();
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.CamerasConfig.Add (new CameraConfig (3));
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.CamerasConfig = null;
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.CamerasLayout = "empty";
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.Title = "desc";
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
+			element.Rate = 2f;
+			Assert.IsTrue (element.IsChanged);
+			element.IsChanged=false;
 		}
 	}
 }

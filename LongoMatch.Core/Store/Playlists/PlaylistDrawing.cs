@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistDrawing: IPlaylistElement
 	{
 		public PlaylistDrawing (FrameDrawing drawing)
@@ -31,6 +32,14 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;

@@ -160,6 +160,7 @@ libcesarplayer/Makefile
 oxyplot/Makefile
 pkgconfig/Makefile
 pkgconfig/longomatch-addins.pc
+pkgconfig/longomatch-db.pc
 pkgconfig/longomatch-core.pc
 pkgconfig/longomatch-drawing.pc
 pkgconfig/longomatch-drawing-cairo.pc
@@ -172,6 +173,7 @@ pkgconfig/longomatch-services.pc
 
 .nuget/Makefile
 
+Weavers/Makefile
 AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile

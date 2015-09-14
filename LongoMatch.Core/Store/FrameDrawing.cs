@@ -17,17 +17,22 @@
 //
 
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Drawables;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 
 	[Serializable]
-	public class FrameDrawing
+	[PropertyChanged.ImplementPropertyChanged]
+	public class FrameDrawing: IChanged
 	{
-		private const int DEFAULT_PAUSE_TIME = 5000;
+		ObservableCollection<Drawable> drawables;
+		const int DEFAULT_PAUSE_TIME = 5000;
 
 		/// <summary>
 		/// Represent a drawing in the database using a {@Gdk.Pixbuf} stored
@@ -38,9 +43,16 @@ namespace LongoMatch.Core.Store
 		public FrameDrawing ()
 		{
 			Pause = new Time (DEFAULT_PAUSE_TIME);
-			Drawables = new List<Drawable> ();
+			Drawables = new ObservableCollection<Drawable> ();
 			CameraConfig = new CameraConfig (0);
 			RegionOfInterest = new Area ();
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public Image Miniature {
@@ -56,9 +68,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of <see cref="Drawable"/> objects in the canvas
 		/// </summary>
-		public List<Drawable> Drawables {
-			get;
-			set;
+		public ObservableCollection<Drawable> Drawables {
+			get {
+				return drawables;
+			}
+			set {
+				if (drawables != null) {
+					drawables.CollectionChanged -= ListChanged;
+				}
+				drawables = value;
+				if (drawables != null) {
+					drawables.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -94,5 +116,9 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 }

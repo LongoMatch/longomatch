@@ -16,21 +16,31 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using LongoMatch.Core.Store;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class Timer
+	[PropertyChanged.ImplementPropertyChanged]
+	public class Timer: IChanged
 	{
 		public Timer ()
 		{
-			Nodes = new List<TimeNode> ();
+			Nodes = new ObservableCollection<TimeNode> ();
 			Team = TeamType.NONE;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string Name {
@@ -38,9 +48,20 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		public List<TimeNode> Nodes {
-			get;
-			set;
+		ObservableCollection<TimeNode> nodes;
+		public ObservableCollection<TimeNode> Nodes {
+			get {
+				return nodes;
+			}
+			set {
+				if (nodes != null) {
+					nodes.CollectionChanged -= ListChanged;
+				}
+				nodes = value;
+				if (nodes != null) {
+					nodes.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		public TeamType Team {
@@ -49,6 +70,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time TotalTime {
 			get {
 				return new Time (Nodes.Where (tn=>tn.Start != null && tn.Stop != null)
@@ -87,6 +109,11 @@ namespace LongoMatch.Core.Store
 					Nodes.Remove (last);
 				}
 			}
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

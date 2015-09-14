@@ -18,8 +18,9 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Newtonsoft.Json;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -29,7 +30,8 @@ namespace LongoMatch.Core.Store
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
-	public class HotKey : IEquatable<HotKey>
+	[PropertyChanged.ImplementPropertyChanged]
+	public class HotKey : IEquatable<HotKey>, IChanged
 	{
 		#region Constructors
 
@@ -45,6 +47,13 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Gdk Key
@@ -66,6 +75,7 @@ namespace LongoMatch.Core.Store
 		/// Get whether the hotkey is defined or not
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Boolean Defined {
 			get {
 				return (Key != -1);

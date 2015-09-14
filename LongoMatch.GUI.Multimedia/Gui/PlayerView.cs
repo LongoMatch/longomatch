@@ -19,7 +19,7 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -30,7 +30,6 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using Mono.Unix;
 using Pango;
@@ -101,7 +100,7 @@ namespace LongoMatch.Gui
 			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 
 			Player = new PlayerController ();
-			Player.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
+			Player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 			Player.Step = new Time { TotalSeconds = jumpspinbutton.ValueAsInt };
 			Mode = PlayerViewOperationMode.Analysis;
 			TogglePlayOnClick = true;

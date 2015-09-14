@@ -30,6 +30,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public TimeNode PeriodNode {
 			get {
 				Time start, stop;

@@ -28,7 +28,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 	public class PositionObject:  CanvasObject, ICanvasSelectableObject
 	{
 
-		public PositionObject (List<Point> points, int width, int height)
+		public PositionObject (IList<Point> points, int width, int height)
 		{
 			Points = points;
 			Width = width;
@@ -64,7 +64,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public List<Point> Points {
+		public IList<Point> Points {
 			get;
 			set;
 		}

@@ -17,6 +17,8 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
@@ -24,12 +26,21 @@ namespace LongoMatch.Core.Store
 	/// Defines a configuration for a camera.
 	/// </summary>
 	[Serializable]
-	public class CameraConfig
+	[PropertyChanged.ImplementPropertyChanged]
+	public class CameraConfig: IChanged
 	{
 		public CameraConfig (int index)
 		{
 			Index = index;
 			RegionOfInterest = new Area (0, 0, 0, 0);
+			RegionOfInterest.IsChanged = false;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>

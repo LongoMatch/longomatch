@@ -16,26 +16,40 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class DashboardButton
+	[PropertyChanged.ImplementPropertyChanged]
+	public class DashboardButton: IChanged
 	{
+		ObservableCollection<ActionLink> actionLinks;
 
 		public DashboardButton ()
 		{
 			Name = "";
 			Position = new Point (0, 0);
+			Position.IsChanged = false;
 			Width = Constants.BUTTON_WIDTH;
 			Height = Constants.BUTTON_HEIGHT;
-			BackgroundColor = Color.Red;
-			TextColor = Config.Style.PaletteBackgroundLight;
-			HotKey = new HotKey ();
-			ActionLinks = new List<ActionLink> ();
+			BackgroundColor = Color.Red.Copy (true);
+			TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
+			HotKey = new HotKey {IsChanged = false};
+			ActionLinks = new ObservableCollection <ActionLink> ();
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public virtual string Name {
@@ -81,12 +95,23 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list with all the outgoing links of this button
 		/// </summary>
-		public List<ActionLink> ActionLinks {
-			get;
-			set;
+		public ObservableCollection<ActionLink> ActionLinks {
+			get {
+				return actionLinks;
+			}
+			set {
+				if (actionLinks != null) {
+					actionLinks.CollectionChanged -= ListChanged;
+				}
+				actionLinks = value;
+				if (actionLinks != null) {
+					actionLinks.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color LightColor {
 			get {
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
@@ -97,6 +122,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Color DarkColor {
 			get {
 				YCbCrColor c = YCbCrColor.YCbCrFromColor (BackgroundColor);
@@ -111,6 +137,11 @@ namespace LongoMatch.Core.Store
 			link.SourceButton = this;
 			ActionLinks.Add (link);
 		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 
 	[Serializable]
@@ -120,7 +151,9 @@ namespace LongoMatch.Core.Store
 		{
 			TagMode = TagMode.Predefined;
 			Start = new Time { TotalSeconds = 10 };
+			Start.IsChanged = false;
 			Stop = new Time { TotalSeconds = 10 };
+			Stop.IsChanged = false;
 		}
 
 		public TagMode TagMode {
@@ -144,7 +177,7 @@ namespace LongoMatch.Core.Store
 	{
 		public TagButton ()
 		{
-			BackgroundColor = StyleConf.ButtonTagColor;
+			BackgroundColor = StyleConf.ButtonTagColor.Copy (true);
 		}
 
 		public Tag Tag {
@@ -182,7 +215,7 @@ namespace LongoMatch.Core.Store
 
 		public TimerButton ()
 		{
-			BackgroundColor = StyleConf.ButtonTimerColor;
+			BackgroundColor = StyleConf.ButtonTimerColor.Copy (true);
 			currentNode = null;
 		}
 
@@ -232,6 +265,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Time StartTime {
 			get {
 				return currentNode == null ? null : currentNode.Start;
@@ -268,6 +303,14 @@ namespace LongoMatch.Core.Store
 				}
 			}
 		}
+
+		[OnDeserialized()]
+		internal void OnDeserializedMethod(StreamingContext context)
+		{
+			if (EventType != null) {
+				EventType.IsChanged = false;
+			}
+		}
 	}
 
 	[Serializable]
@@ -290,6 +333,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public AnalysisEventType AnalysisEventType {
 			get {
 				return EventType as AnalysisEventType;
@@ -333,9 +377,18 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public PenaltyCardEventType PenaltyCardEventType {
 			get {
 				return EventType as PenaltyCardEventType;
+			}
+		}
+
+		[OnDeserialized()]
+		internal void OnDeserialized(StreamingContext context)
+		{
+			if (PenaltyCard != null) {
+				PenaltyCard.IsChanged = false;
 			}
 		}
 	}
@@ -378,9 +431,18 @@ namespace LongoMatch.Core.Store
 
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public ScoreEventType ScoreEventType {
 			get {
 				return EventType as ScoreEventType;
+			}
+		}
+
+		[OnDeserialized()]
+		internal void OnDeserialized(StreamingContext context)
+		{
+			if (Score != null) {
+				Score.IsChanged = false;
 			}
 		}
 	}

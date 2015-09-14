@@ -34,8 +34,6 @@ namespace Tests.Core.Store
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			ProjectDescription pd = new ProjectDescription ();
-			pd.ID = new Guid ();
-			pd.ProjectID = pd.ID;
 			Utils.CheckSerialization (pd);
 			
 			pd.FileSet = new MediaFileSet ();
@@ -53,10 +51,8 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (pd);
 			
 			ProjectDescription newpd = Utils.SerializeDeserialize (pd);
-			Assert.AreEqual (pd.CompareTo (newpd), 0);
 			Assert.AreEqual (pd.FileSet.First ().FilePath,
 				newpd.FileSet.First ().FilePath);
-			Assert.AreEqual (pd.ID, newpd.ID);
 			Assert.AreEqual (pd.Competition, newpd.Competition);
 			Assert.AreEqual (pd.Category, newpd.Category);
 			Assert.AreEqual (pd.Group, newpd.Group);
@@ -65,28 +61,6 @@ namespace Tests.Core.Store
 			Assert.AreEqual (pd.LocalGoals, newpd.LocalGoals);
 			Assert.AreEqual (pd.VisitorGoals, newpd.VisitorGoals);
 			Assert.AreEqual (pd.MatchDate, newpd.MatchDate);
-		}
-
-		[Test ()]
-		public void TestsProjectIDMigration ()
-		{
-			String oldJson = @"{ 
-							      ""$id"": ""88"",
-							      ""$type"": ""LongoMatch.Core.Store.ProjectDescription, LongoMatch.Core"",
-							      ""ID"": ""49bb0f28-506b-452a-8158-f3007d3b4910"",
-                                }";
-			MemoryStream stream = new MemoryStream ();
-			StreamWriter writer = new StreamWriter (stream);
-			writer.Write (oldJson);
-			writer.Flush ();
-			stream.Position = 0;
-
-			// Deserialize and check the ProjectID
-			ISerializer serializer = new Serializer ();
-			var newobj = serializer.Load<ProjectDescription> (stream);
-
-			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ID);
-			Assert.AreEqual (Guid.Parse ("49bb0f28-506b-452a-8158-f3007d3b4910"), newobj.ProjectID);
 		}
 
 		[Test ()]

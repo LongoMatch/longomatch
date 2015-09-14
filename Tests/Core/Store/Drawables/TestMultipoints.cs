@@ -98,6 +98,31 @@ namespace Tests.Core.Store.Drawables
 			s = m.GetSelection (new Point (5, 12), 1);
 			Assert.IsNull (s);
 		}
+
+		[Test()]
+		public void TestIsChanged () {
+			Point p1, p2, p3;
+			List<Point> l;
+			MultiPoints m;
+			
+			p1 = new Point (2, 2);
+			p2 = new Point (3, 5);
+			p3 = new Point (6, 8);
+			l = new List<Point> {p1, p2, p3};
+
+			m = new MultiPoints (l);
+			Assert.IsTrue (m.IsChanged);
+			m.IsChanged = false;
+			m.Points.Remove (p1);
+			Assert.IsTrue (m.IsChanged);
+			m.IsChanged = false;
+			m.Points.Add (p1);
+			Assert.IsTrue (m.IsChanged);
+			m.IsChanged = false;
+			m.Points = null;
+			Assert.IsTrue (m.IsChanged);
+			m.IsChanged = false;
+		}
 	}
 }
 

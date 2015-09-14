@@ -20,12 +20,14 @@
 using System;
 using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class MediaFile
+	[PropertyChanged.ImplementPropertyChanged]
+	public class MediaFile: IChanged
 	{
 		public MediaFile ()
 		{
@@ -60,6 +62,13 @@ namespace LongoMatch.Core.Store
 			Par = par;
 			Offset = new Time (0);
 			Name = name;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public string FilePath {
@@ -133,6 +142,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool IsFakeCapture {
 			get {
 				return FilePath == Constants.FAKE_PROJECT;
@@ -140,6 +150,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string ShortDescription {
 			get {
 				return String.Format ("{0}x{1}@{2}fps", VideoWidth, VideoHeight, Fps);

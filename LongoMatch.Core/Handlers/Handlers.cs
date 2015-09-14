@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void SaveProjectHandler (Project project,ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler (Project project,ProjectType projectType,EventsFilter filter,
 	                                                 IAnalysisWindow analysisWindow);
-	public delegate void OpenProjectIDHandler (Guid project_id);
+	public delegate void OpenProjectIDHandler (Guid project_id, Project project);
 	public delegate void OpenProjectHandler ();
 	public delegate bool CloseOpenendProjectHandler ();
 	public delegate void NewProjectHandler (Project project);
@@ -125,8 +125,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayersSelectionChangedHandler (List<Player> players);
 	public delegate void TeamSelectionChangedHandler (TeamType team);
 	/* A list of projects have been selected */
-	public delegate void ProjectsSelectedHandler (List<ProjectDescription> projects);
-	public delegate void ProjectSelectedHandler (ProjectDescription project);
+	public delegate void ProjectsSelectedHandler (List<Project> projects);
+	public delegate void ProjectSelectedHandler (Project project);
 	public delegate void KeyHandler (object sender,HotKey key);
 	/* The plays filter was updated */
 	public delegate void FilterUpdatedHandler ();

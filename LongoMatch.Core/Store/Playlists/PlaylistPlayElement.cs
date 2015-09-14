@@ -17,24 +17,35 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
+		ObservableCollection<CameraConfig> camerasConfig;
+
 		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset = null)
 		{
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
 			CamerasLayout = play.CamerasLayout;
-			CamerasConfig = play.CamerasConfig.Clone ();
+			CamerasConfig = new ObservableCollection<CameraConfig> (play.CamerasConfig);
 			FileSet = fileset;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -46,6 +57,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;
@@ -104,13 +116,24 @@ namespace LongoMatch.Core.Store.Playlists
 		/// Override the default <see cref="TimelineEvent.CamerasConfig"/>
 		/// defined by the <see cref="TimelineEvent"/>
 		/// </summary>
-		public List<CameraConfig> CamerasConfig {
-			get;
-			set;
+		public ObservableCollection<CameraConfig> CamerasConfig {
+			get {
+				return camerasConfig;
+			}
+			set {
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged -= ListChanged;
+				}
+				camerasConfig = value;
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string Description {
 			get {
 				if (Rate != 1) {
@@ -122,6 +145,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Image Miniature {
 			get {
 				return Play.Miniature;
@@ -140,6 +164,11 @@ namespace LongoMatch.Core.Store.Playlists
 					Play.Drawings.Count);
 			}
 
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 }

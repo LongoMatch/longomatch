@@ -17,11 +17,14 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class Score
+	[PropertyChanged.ImplementPropertyChanged]
+	public class Score: IChanged
 	{
 		public Score ()
 		{
@@ -32,6 +35,13 @@ namespace LongoMatch.Core.Store
 			Name = name;
 			Points = points;
 			Color = Color.Red;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public Color Color {

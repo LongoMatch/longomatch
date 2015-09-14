@@ -458,4 +458,11 @@ namespace LongoMatch.Core.Common
 		Code,
 		Edit,
 	}
+
+	public enum QueryOperator
+	{
+		None,
+		And,
+		Or,
+	}
 }

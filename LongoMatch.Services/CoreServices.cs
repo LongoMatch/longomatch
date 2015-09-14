@@ -27,7 +27,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Services.Services;
+using LongoMatch.DB;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -43,12 +43,12 @@ namespace LongoMatch.Services
 		static RenderingJobsManager videoRenderer;
 		static ProjectsManager projectsManager;
 		static PlaylistManager plManager;
-		static ToolsManager toolsManager;
+		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
 		static UpdatesNotifier updatesNotifier;
 		static List<IService> services = new List<IService> ();
-
 		public static IProjectsImporter ProjectsImporter;
+
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern bool g_setenv (String env, String val, bool overwrite);
@@ -60,13 +60,13 @@ namespace LongoMatch.Services
 			FillVersion ();
 			Config.Init ();
 
+			/* Check default folders */
+			CheckDirs ();
+
 			/* Redirects logs to a file */
 			Log.SetLogFile (Config.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
-
-			/* Check default folders */
-			CheckDirs ();
 
 			/* Load user config */
 			Config.Load ();
@@ -112,9 +112,16 @@ namespace LongoMatch.Services
 		{
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
+			Config.EventsBroker = new EventsBroker ();
 			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
+		}
+
+		public static void Stop ()
+		{
+			StopServices ();
+			services.Clear ();
 		}
 
 		public static void RegisterService (IService service)
@@ -127,29 +134,25 @@ namespace LongoMatch.Services
 		{
 			ts = new TemplatesService (new FileStorage (Config.DBDir));
 			RegisterService (ts);
-			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
-			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
 			/* Start DB services */
-			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
+			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);
-			Config.DatabaseManager = dbManager;
 
 			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
+			videoRenderer = new RenderingJobsManager ();
 			RegisterService (videoRenderer);
-			Config.RenderingJobsManger = videoRenderer;
 
-			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit);
+			projectsManager = new ProjectsManager ();
 			RegisterService (projectsManager);
 
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit, dbManager);
+			toolsManager = new ToolsManager ();
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
 			/* Start the events manager */
-			eManager = new EventsManager (guiToolkit, videoRenderer);
+			eManager = new EventsManager ();
 			RegisterService (eManager);
 
 			/* Start the hotkeys manager */
@@ -157,7 +160,7 @@ namespace LongoMatch.Services
 			RegisterService (hkManager);
 
 			/* Start playlists manager */
-			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
+			plManager = new PlaylistManager ();
 			RegisterService (plManager);
 
 			/* Start the Update Notifier */
@@ -191,8 +194,6 @@ namespace LongoMatch.Services
 		{
 			if (!System.IO.Directory.Exists (Config.HomeDir))
 				System.IO.Directory.CreateDirectory (Config.HomeDir);
-			if (!System.IO.Directory.Exists (Config.TemplatesDir))
-				System.IO.Directory.CreateDirectory (Config.TemplatesDir);
 			if (!System.IO.Directory.Exists (Config.SnapshotsDir))
 				System.IO.Directory.CreateDirectory (Config.SnapshotsDir);
 			if (!System.IO.Directory.Exists (Config.PlayListDir))

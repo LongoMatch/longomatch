@@ -18,28 +18,25 @@
 using System;
 using System.IO;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
 using System.Reflection;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
+using System.Collections.Generic;
 
 namespace Tests
 {
-	public class Utils
+	public static class Utils
 	{
 		static bool debugLine = false;
-
-		static ISerializer serializer = new Serializer ();
-
-		public Utils ()
-		{
-		}
 
 		public static T SerializeDeserialize<T> (T obj)
 		{
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			if (debugLine) {
 				var jsonString = new StreamReader (stream).ReadToEnd ();
@@ -47,13 +44,18 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			return serializer.Load<T> (stream, SerializationType.Json);
+			return Serializer.Instance.Load<T> (stream, SerializationType.Json);
 		}
 
-		public static void CheckSerialization<T> (T obj)
+		public static void CheckSerialization<T> (T obj, bool ignoreIsChanged = false)
 		{
+			List<IStorable> children, changed;
+
+			if (!ignoreIsChanged) {
+				Assert.IsInstanceOf<IChanged> (obj);
+			}
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var jsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {
@@ -61,10 +63,20 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			var newobj = serializer.Load<T> (stream, SerializationType.Json);
-			
+			var newobj = Serializer.Instance.Load<T> (stream, SerializationType.Json);
+			if (!ignoreIsChanged) {
+				ObjectChangedParser parser = new ObjectChangedParser ();
+				if (obj is IStorable) {
+					StorableNode parentNode;
+					Assert.IsTrue (parser.ParseInternal (out parentNode, newobj as IStorable, Serializer.JsonSettings));
+					Assert.IsFalse (parentNode.HasChanges ());
+				} else {
+					Assert.IsFalse ((newobj as IChanged).IsChanged);
+				}
+			}
+
 			stream = new MemoryStream ();
-			serializer.Save (newobj, stream, SerializationType.Json);
+			Serializer.Instance.Save (newobj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var newJsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {
@@ -139,7 +151,25 @@ namespace Tests
 		public static void DeleteProject (Project p)
 		{
 			foreach (MediaFile mf in p.Description.FileSet) {
-				File.Delete (mf.FilePath);
+				if (File.Exists (mf.FilePath)) {
+					File.Delete (mf.FilePath);
+				}
+			}
+		}
+
+		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals=true) {
+			var stream = new MemoryStream ();
+			Serializer.Instance.Save (obj1, stream, SerializationType.Json);
+			stream.Seek (0, SeekOrigin.Begin);
+			var obj1Str = new StreamReader (stream).ReadToEnd ();
+			stream = new MemoryStream ();
+			Serializer.Instance.Save (obj2, stream, SerializationType.Json);
+			stream.Seek (0, SeekOrigin.Begin);
+			var obj2Str = new StreamReader (stream).ReadToEnd ();
+			if (areEquals) {
+				Assert.AreEqual (obj1Str, obj2Str);
+			} else {
+				Assert.AreNotEqual (obj1Str, obj2Str);
 			}
 		}
 	}

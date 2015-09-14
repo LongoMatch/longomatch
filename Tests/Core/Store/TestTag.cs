@@ -28,6 +28,7 @@ namespace Tests.Core.Store
 		public void TestSerialization ()
 		{
 			Tag tag = new Tag ("name", "grp");
+			Utils.CheckSerialization (tag);
 			tag.HotKey = new HotKey { Modifier = 2, Key = 1 };
 			Utils.CheckSerialization (tag);
 

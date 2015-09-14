@@ -16,27 +16,23 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
-using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class EventType: IIDObject
+	public class EventType: StorableBase
 	{
 
 		public EventType ()
 		{
 			ID = Guid.NewGuid ();
-			Color = Color.Red;
-		}
-
-		public Guid ID {
-			get;
-			set;
+			Color = Color.Red.Copy (true);
 		}
 
 		public string Name {
@@ -80,6 +76,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public string SortMethodString {
 			get {
 				switch (SortMethod) {
@@ -111,21 +108,39 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class AnalysisEventType: EventType
 	{
+		ObservableCollection<Tag> tags;
+
 		public AnalysisEventType ()
 		{
-			Tags = new List<Tag> ();
+			Tags = new ObservableCollection<Tag> ();
 		}
 
-		public List<Tag> Tags {
-			get;
-			set;
+		public ObservableCollection<Tag> Tags {
+			get {
+				return tags;
+			}
+			set {
+				if (tags != null) {
+					tags.CollectionChanged -= ListChanged;
+				}
+				tags = value;
+				if (tags != null) {
+					tags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Dictionary<string, List<Tag>> TagsByGroup {
 			get {
 				return Tags.GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());
 			}
+		}
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
 		}
 	}
 

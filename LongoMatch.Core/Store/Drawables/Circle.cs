@@ -39,6 +39,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override double AxisY {
 			get {
 				return Radius;
@@ -49,6 +50,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override double AxisX {
 			get {
 				return Radius;
@@ -59,6 +61,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Area Area {
 			get {
 				return new Area (new Point (Center.X - Radius, Center.Y - Radius),

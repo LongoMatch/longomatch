@@ -28,6 +28,7 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Timer = System.Threading.Timer;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Services
 {
@@ -51,8 +52,8 @@ namespace LongoMatch.Services
 		IPlaylistElement loadedPlaylistElement;
 		Playlist loadedPlaylist;
 		List<IViewPort> viewPorts;
-		List<CameraConfig> camerasConfig;
-		List<CameraConfig> defaultCamerasConfig;
+		ObservableCollection<CameraConfig> camerasConfig;
+		ObservableCollection<CameraConfig> defaultCamerasConfig;
 		object defaultCamerasLayout;
 		MediaFileSet defaultFileSet;
 
@@ -109,7 +110,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public List<CameraConfig> CamerasConfig {
+		public ObservableCollection<CameraConfig> CamerasConfig {
 			set {
 				Log.Debug ("Updating cameras configuration: ", string.Join ("-", value));
 				camerasConfig = value;
@@ -117,9 +118,10 @@ namespace LongoMatch.Services
 					defaultCamerasConfig = value;
 				}
 				if (loadedEvent != null) {
-					loadedEvent.CamerasConfig = value.ToList ();
+					loadedEvent.CamerasConfig = new ObservableCollection<CameraConfig> (value);
 				} else if (loadedPlaylistElement is PlaylistPlayElement) {
-					(loadedPlaylistElement as PlaylistPlayElement).CamerasConfig = value.ToList ();
+					(loadedPlaylistElement as PlaylistPlayElement).CamerasConfig =
+						new ObservableCollection<CameraConfig> (value);
 				}
 				if (multiPlayer != null) {
 					multiPlayer.CamerasConfig = camerasConfig;
@@ -612,10 +614,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void EmitMediaFileSetLoaded (MediaFileSet fileSet, List<CameraConfig> camerasVisible)
+		void EmitMediaFileSetLoaded (MediaFileSet fileSet, ObservableCollection<CameraConfig> camerasVisible)
 		{
 			if (MediaFileSetLoadedEvent != null && !disposed) {
-				MediaFileSetLoadedEvent (fileSet, camerasConfig);
+				MediaFileSetLoadedEvent (fileSet, camerasVisible);
 			}
 		}
 
@@ -653,7 +655,7 @@ namespace LongoMatch.Services
 		/// <summary>
 		/// Gets the list of drawing for the loaded event.
 		/// </summary>
-		List<FrameDrawing> EventDrawings {
+		ObservableCollection<FrameDrawing> EventDrawings {
 			get {
 				if (loadedEvent != null) {
 					return loadedEvent.Drawings;
@@ -675,7 +677,7 @@ namespace LongoMatch.Services
 		/// </summary>
 		/// <param name="camerasConfig">The cameras configuration.</param>
 		/// <param name="layout">The cameras layout.</param>
-		void UpdateCamerasConfig (List<CameraConfig> camerasConfig, object layout)
+		void UpdateCamerasConfig (ObservableCollection<CameraConfig> camerasConfig, object layout)
 		{
 			skipApplyCamerasConfig = true;
 			CamerasConfig = camerasConfig;
@@ -702,7 +704,8 @@ namespace LongoMatch.Services
 		{
 			if (FileSet != null && camerasConfig != null && camerasConfig.Max (c => c.Index) >= FileSet.Count) {
 				Log.Error ("Invalid cameras configuration, fixing list of cameras");
-				UpdateCamerasConfig (camerasConfig.Where (i => i.Index < FileSet.Count).ToList<CameraConfig> (),
+				UpdateCamerasConfig (
+					new ObservableCollection<CameraConfig> (camerasConfig.Where (i => i.Index < FileSet.Count)), 
 					CamerasLayout);
 			}
 		}
@@ -814,7 +817,7 @@ namespace LongoMatch.Services
 		/// <param name="camerasLayout">Cameras layout.</param>
 		/// <param name="playing">If set to <c>true</c> starts playing.</param>
 		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
-		                  float rate, List<CameraConfig> camerasConfig, object camerasLayout,
+			float rate, ObservableCollection<CameraConfig> camerasConfig, object camerasLayout,
 		                  bool playing)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
@@ -875,7 +878,7 @@ namespace LongoMatch.Services
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
-			UpdateCamerasConfig (new List<CameraConfig> { new CameraConfig (0) }, null);
+			UpdateCamerasConfig (new ObservableCollection<CameraConfig> { new CameraConfig (0) }, null);
 			InternalOpen (fileSet, false, true, true);
 		}
 

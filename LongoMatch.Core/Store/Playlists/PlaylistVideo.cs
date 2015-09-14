@@ -24,13 +24,21 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Store.Playlists
 {
 	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
 	public class PlaylistVideo:  IPlaylistElement
 	{
 		public PlaylistVideo (MediaFile file)
 		{
 			File = file;
 		}
-		
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		public MediaFile File {
 			get;
 			set;
@@ -49,6 +57,7 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;

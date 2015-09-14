@@ -49,14 +49,10 @@ namespace LongoMatch
 		
 		static StyleConf style;
 		static ConfigState state;
-		static Serializer serializer;
-
 
 		public static void Init ()
 		{
 			string home;
-
-			serializer = new Serializer ();
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				Config.baseDirectory = Path.GetFullPath (".");
@@ -90,11 +86,22 @@ namespace LongoMatch
 			}
 
 			Config.homeDirectory = Path.Combine (home, Constants.SOFTWARE_NAME);
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				Config.configDirectory = Config.homeDirectory;
-			else
-				Config.configDirectory = Path.Combine (home, "." +
-				Constants.SOFTWARE_NAME.ToLower ());
+			Config.configDirectory = Config.homeDirectory;
+
+			// Migrate old config directory the home directory so that OS X users can easilly find
+			// log files and config files without having to access hidden folders
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ()); 
+				string configFilename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
+				string configFilepath = Path.Combine (oldHome, configFilename);
+				if (File.Exists (configFilepath)) {
+					try {
+						File.Move (configFilepath, Config.ConfigFile);
+					} catch (Exception ex) {
+						Log.Exception (ex);
+					}
+				}
+			}
 		}
 
 		public static void LoadState (ConfigState newState)
@@ -107,7 +114,7 @@ namespace LongoMatch
 			if (File.Exists (Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = serializer.LoadSafe<ConfigState> (Config.ConfigFile);
+					state = Serializer.Instance.LoadSafe<ConfigState> (Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -130,7 +137,7 @@ namespace LongoMatch
 		public static void Save ()
 		{
 			try {
-				serializer.Save (state, Config.ConfigFile); 
+				Serializer.Instance.Save (state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Error saving config");
 				Log.Exception (ex);
@@ -193,12 +200,6 @@ namespace LongoMatch
 		public static string SnapshotsDir {
 			get {
 				return Path.Combine (homeDirectory, "snapshots");
-			}
-		}
-
-		public static string TemplatesDir {
-			get {
-				return Path.Combine (homeDirectory, "templates");
 			}
 		}
 

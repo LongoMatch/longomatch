@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Width {
 			get {
 				return TopRight.X - TopLeft.X;
@@ -42,6 +43,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public double Height {
 			get {
 				return BottomLeft.Y - TopLeft.Y;
@@ -49,6 +51,7 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public Point Center {
 			get {
 				return new Point (TopLeft.X + Width / 2, TopLeft.Y + Height / 2);

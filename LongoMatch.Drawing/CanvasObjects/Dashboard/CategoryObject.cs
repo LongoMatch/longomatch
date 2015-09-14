@@ -313,7 +313,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			return base.GetSelection (p, precision, inMotion);
 		}
 
-		public override LinkAnchorObject GetAnchor (List<Tag> sourceTags)
+		public override LinkAnchorObject GetAnchor (IList<Tag> sourceTags)
 		{
 			/* Only one tag is supported for now */
 			if (sourceTags == null || sourceTags.Count == 0) {

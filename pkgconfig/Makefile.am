@@ -1,5 +1,6 @@
 pcfiles = \
 	longomatch-addins.pc \
+	longomatch-db.pc \
 	longomatch-core.pc \
 	longomatch-drawing.pc \
 	longomatch-drawing-cairo.pc \
@@ -15,6 +16,7 @@ pkgconfig_DATA = $(pcfiles)
 
 EXTRA_DIST = \
 	longomatch-addins.pc.in \
+	longomatch-db.pc.in \
 	longomatch-core.pc.in \
 	longomatch-drawing.pc.in \
 	longomatch-drawing-cairo.pc.in \

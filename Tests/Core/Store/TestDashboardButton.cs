@@ -125,6 +125,102 @@ namespace Tests.Core.Store
 			Assert.AreEqual (sb.BackgroundColor, sb.Score.Color);
 			Assert.AreEqual (sb.ScoreEventType, sb.EventType);
 		}
+
+		[Test ()]
+		public void TestIsChanged () {
+			DashboardButton db = new DashboardButton ();
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.Name = "name";
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.ActionLinks.Add (new ActionLink ());
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.ActionLinks = null;
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.BackgroundColor = Color.Black;
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.BackgroundImage = new Image (5, 5);
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.Height = 100;
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.HotKey = new HotKey {Key = 3};
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.Position = new Point (1, 2);
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.TextColor = Color.Green;
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+			db.Width = 200;
+			Assert.IsTrue (db.IsChanged);
+			db.IsChanged = false;
+
+			var tb = new TimedDashboardButton ();
+			Assert.IsTrue (tb.IsChanged);
+			tb.IsChanged = false;
+			tb.TagMode = TagMode.Free;
+			Assert.IsTrue (tb.IsChanged);
+			tb.IsChanged = false;
+			tb.Start = new Time (29);
+			Assert.IsTrue (tb.IsChanged);
+			tb.IsChanged = false;
+			tb.Stop = new Time (29);
+			Assert.IsTrue (tb.IsChanged);
+			tb.IsChanged = false;
+
+			var tgb = new TagButton ();
+			Assert.IsTrue (tgb.IsChanged);
+			tgb.IsChanged = false;
+			tgb.Tag = new Tag ("test");
+			Assert.IsTrue (tgb.IsChanged);
+			tgb.IsChanged = false;
+
+
+			var tib = new TimerButton ();
+			Assert.IsTrue (tib.IsChanged);
+			tib.IsChanged = false;
+			tib.Timer = new Timer ();
+			Assert.IsTrue (tib.IsChanged);
+			tib.IsChanged = false;
+
+			var eb = new EventButton ();
+			Assert.IsTrue (eb.IsChanged);
+			eb.IsChanged = false;
+			eb.EventType = new EventType ();
+			Assert.IsTrue (eb.IsChanged);
+			eb.IsChanged = false;
+
+			var aeb = new AnalysisEventButton ();
+			Assert.IsTrue (aeb.IsChanged);
+			aeb.IsChanged = false;
+			aeb.ShowSubcategories = false;
+			Assert.IsTrue (aeb.IsChanged);
+			aeb.IsChanged = false;
+			aeb.TagsPerRow = 4;
+			Assert.IsTrue (aeb.IsChanged);
+			aeb.IsChanged = false;
+
+			var pcb = new PenaltyCardButton ();
+			Assert.IsTrue (pcb.IsChanged);
+			pcb.IsChanged = false;
+			pcb.PenaltyCard = new PenaltyCard ();
+			Assert.IsTrue (pcb.IsChanged);
+			pcb.IsChanged = false;
+
+			var sb = new ScoreButton ();
+			Assert.IsTrue (sb.IsChanged);
+			sb.IsChanged = false;
+			sb.Score = new Score ();
+			Assert.IsTrue (sb.IsChanged);
+			sb.IsChanged = false;
+		}
 	}
 }
 

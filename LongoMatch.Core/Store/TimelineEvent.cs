@@ -20,10 +20,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store
 {
@@ -32,43 +35,64 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 
 	[Serializable]
-	public class  TimelineEvent : PixbufTimeNode, IStorable
+	public class TimelineEvent : PixbufTimeNode, IStorable
 	{
-
+		ObservableCollection<FrameDrawing> drawings;
+		ObservableCollection<Player> players;
+		ObservableCollection<Tag> tags;
+		ObservableCollection<CameraConfig> camerasConfig;
 		#region Constructors
 
 		public TimelineEvent ()
 		{
-			Drawings = new List<FrameDrawing> ();
-			Players = new List<Player> ();
-			Tags = new List<Tag> ();
+			IsLoaded = true;
+			Drawings = new ObservableCollection<FrameDrawing> ();
+			Players = new ObservableCollection<Player> ();
+			Tags = new ObservableCollection<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasConfig = new List<CameraConfig> ();
-		}
-
-		internal void InitializeLists ()
-		{
-			if (CamerasConfig.Count == 0) {
-				CamerasConfig.Add (new CameraConfig (0));
-			}
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			InitializeLists ();
-		}
-
-		[OnSerializing]
-		internal void OnSerializingMethod (StreamingContext context)
-		{
-			InitializeLists ();
+			CamerasConfig = new ObservableCollection<CameraConfig> {new CameraConfig (0)};
 		}
 
 		#endregion
 
 		#region Properties
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsLoaded {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		bool IsLoading {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public IStorage Storage {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool DeleteChildren {
+			get {
+				return false;
+			}
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public List<IStorable> SavedChildren {
+			get;
+			set;
+		}
 
 		public Guid ID {
 			get;
@@ -78,6 +102,8 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// The <see cref="EventType"/> in wich this event is tagged
 		/// </summary>
+		[LongoMatchPropertyPreload]
+		[LongoMatchPropertyIndex (1)]
 		public EventType EventType {
 			get;
 			set;
@@ -95,6 +121,7 @@ namespace LongoMatch.Core.Store
 		/// Whether this event is currently selected.
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool Selected {
 			get;
 			set;
@@ -103,15 +130,26 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of drawings for this event
 		/// </summary>
-		public List<FrameDrawing> Drawings {
-			get;
-			set;
+		public ObservableCollection<FrameDrawing> Drawings {
+			get {
+				return drawings;
+			}
+			set {
+				if (drawings != null) {
+					drawings.CollectionChanged -= ListChanged;
+				}
+				drawings = value;
+				if (drawings != null) {
+					drawings.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
 		/// Whether this event has at least one <see cref="FrameDrawing"/>
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public bool HasDrawings {
 			get {
 				return Drawings.Count > 0;
@@ -121,9 +159,19 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of players tagged in this event.
 		/// </summary>
-		public List<Player> Players {
-			get;
-			set;
+		public ObservableCollection<Player> Players {
+			get {
+				return players;
+			}
+			set {
+				if (players != null) {
+					players.CollectionChanged -= ListChanged;
+				}
+				players = value;
+				if (players != null) {
+					players.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -139,9 +187,19 @@ namespace LongoMatch.Core.Store
 		/// List of tags describing this event.
 		/// </summary>
 		/// <value>The tags.</value>
-		public List<Tag> Tags {
-			get;
-			set;
+		public ObservableCollection<Tag> Tags {
+			get {
+				return tags;
+			}
+			set {
+				if (tags != null) {
+					tags.CollectionChanged -= ListChanged;
+				}
+				tags = value;
+				if (tags != null) {
+					tags.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		/// <summary>
@@ -180,12 +238,23 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of visible <see cref="CameraConfig"/> for this event.
 		/// </summary>
-		public List<CameraConfig> CamerasConfig {
-			get;
-			set;
+		public ObservableCollection<CameraConfig> CamerasConfig {
+			get {
+				return camerasConfig;
+			}
+			set {
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged -= ListChanged;
+				}
+				camerasConfig = value;
+				if (camerasConfig != null) {
+					camerasConfig.CollectionChanged += ListChanged;
+				}
+			}
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual string Description {
 			get {
 				return 
@@ -196,6 +265,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public virtual Color Color {
 			get {
 				return EventType.Color;
@@ -205,6 +275,18 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Public methods
+
+		protected void CheckIsLoaded () {
+			if (!IsLoaded && !IsLoading) {
+				IsLoading = true;
+				if (Storage == null) {
+					throw new StorageException ("Storage not set in preloaded object");
+				}
+				Storage.Fill (this);
+				IsLoaded = true;
+				IsLoading = false;
+			}
+		}
 
 		public string TagsDescription ()
 		{
@@ -277,7 +359,7 @@ namespace LongoMatch.Core.Store
 			return null;
 		}
 
-		public void UpdateCoordinates (FieldPositionType pos, List<Point> points)
+		public void UpdateCoordinates (FieldPositionType pos, ObservableCollection<Point> points)
 		{
 			Coordinates co = new Coordinates ();
 			co.Points = points;
@@ -300,7 +382,24 @@ namespace LongoMatch.Core.Store
 			return Description;
 		}
 
+		public override bool Equals (object obj)
+		{
+			TimelineEvent evt = obj as TimelineEvent;
+			if (evt == null)
+				return false;
+			return ID.Equals (evt.ID);
+		}
+
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode();
+		}
 		#endregion
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 
 	/// <summary>
@@ -315,6 +414,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Color Color {
 			get {
 				return PenaltyCard != null ? PenaltyCard.Color : EventType.Color;
@@ -331,6 +431,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override Color Color {
 			get {
 				return Score != null ? Score.Color : EventType.Color;
@@ -338,6 +439,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override string Description {
 			get {
 				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
@@ -396,6 +498,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public override string Description {
 			get {
 				string desc = "";

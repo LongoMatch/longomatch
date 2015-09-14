@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using LongoMatch.Core.Store;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
-using System.Collections.Generic;
+using LongoMatch.Core.Store;
+using NUnit.Framework;
 
 namespace Tests.Core.Store
 {
@@ -31,9 +31,9 @@ namespace Tests.Core.Store
 		{
 			ActionLink link = new ActionLink ();
 			link.SourceButton = new DashboardButton ();
-			link.SourceTags = new List<Tag> { new Tag ("tag1") };
+			link.SourceTags = new ObservableCollection<Tag> { new Tag ("tag1") };
 			link.DestinationButton = new DashboardButton ();
-			link.DestinationTags = new List<Tag> { new Tag ("tag2") };
+			link.DestinationTags = new ObservableCollection<Tag> { new Tag ("tag2") };
 			link.Action = LinkAction.Toggle;
 			link.TeamAction = TeamLinkAction.Invert;
 			link.KeepGenericTags = false;
@@ -70,11 +70,45 @@ namespace Tests.Core.Store
 			Assert.AreNotEqual (link, link2);
 			link2.DestinationButton = link.DestinationButton;
 			Assert.AreNotEqual (link, link2);
-			link2.SourceTags = new List<Tag> { new Tag ("tag1") }; 
+			link2.SourceTags = new ObservableCollection<Tag> { new Tag ("tag1") }; 
 			Assert.AreNotEqual (link, link2);
-			link2.DestinationTags = new List<Tag> { new Tag ("tag2") }; 
+			link2.DestinationTags = new ObservableCollection<Tag> { new Tag ("tag2") }; 
 			Assert.IsTrue (link == link2);
 			Assert.IsTrue (link.Equals (link2));
+		}
+
+		[Test()]
+		public void TestIsChanged () {
+			ActionLink link = CreateLink ();
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.SourceButton = new DashboardButton ();
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.SourceTags.Add (new Tag("test"));
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.SourceTags = null;
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.DestinationButton = new DashboardButton ();
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.DestinationTags.Remove (link.DestinationTags[0]);
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.DestinationTags = null;
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.Action = LinkAction.Replicate;
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.KeepPlayerTags = true;
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
+			link.KeepGenericTags = true;
+			Assert.IsTrue (link.IsChanged);
+			link.IsChanged = false;
 		}
 
 	}

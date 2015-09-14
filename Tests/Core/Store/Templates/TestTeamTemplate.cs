@@ -21,6 +21,7 @@ using System.Linq;
 using NUnit.Framework;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Common;
 
 namespace Tests.Core.Store.Templates
 {
@@ -196,6 +197,38 @@ namespace Tests.Core.Store.Templates
 			}
 			t.ResetPlayers ();
 			Assert.IsEmpty (t.List.Where (p=>!p.Playing));
+		}
+
+		[Test()]
+		public void TestIsChanged ()
+		{
+			Team t = Team.DefaultTemplate (10);
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.List.Remove (t.List[0]);
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.List.Add (new Player ());
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.List = null;
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.FormationStr = "1-2";
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Colors = null;
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Shield = new Image (10, 10);
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.TeamName = "new";
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
+			t.Name = "new";
+			Assert.IsTrue (t.IsChanged);
+			t.IsChanged = false;
 		}
 	}
 }

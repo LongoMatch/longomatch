@@ -123,5 +123,16 @@ namespace LongoMatch.Core.Common
 		{
 		}
 	}
+
+	public class InvalidQueryException: Exception
+	{
+	}
+
+	public class StorageException: Exception
+	{
+		public StorageException (string reason) : base (reason) {
+		}
+	}
+
 }
 

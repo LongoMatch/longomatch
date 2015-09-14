@@ -16,13 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Widgets;
-using System.Collections.Generic;
 using LongoMatch.Drawing.Cairo;
-using Gtk;
+using LongoMatch.Drawing.Widgets;
 using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
@@ -166,7 +167,7 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
 		{
-			play.Players = players.ToList (); 
+			play.Players = new ObservableCollection<Player> (players);
 		}
 
 		void HandleTeamSelectionChangedEvent (TeamType team)

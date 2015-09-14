@@ -16,15 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store.Drawables
 {
+	[Serializable]
 	public class MultiPoints: Rectangle
 	{
-		List<Point> points;
+		ObservableCollection<Point> points;
 		
 		public MultiPoints ()
 		{
@@ -32,15 +35,21 @@ namespace LongoMatch.Core.Store.Drawables
 		
 		public MultiPoints (List<Point> points)
 		{
-			Points = points;
+			Points = new ObservableCollection<Point> (points);
 		}
 		
-		public List<Point> Points {
+		public ObservableCollection<Point> Points {
 			get {
 				return points;
 			}
 			set {
+				if (points != null) {
+					points.CollectionChanged -= ListChanged;
+				}
 				points = value;
+				if (points != null) {
+					points.CollectionChanged += ListChanged;
+				}
 				UpdateArea ();
 			}
 		}
@@ -75,6 +84,15 @@ namespace LongoMatch.Core.Store.Drawables
 		void UpdateArea () {
 			double xmin, xmax, ymin, ymax;
 			List<Point> px, py;
+
+			if (Points == null) {
+				TopLeft = null;
+				TopRight = null;
+				BottomLeft = null;
+				BottomRight = null;
+				return;
+			}
+
 			px = Points.OrderBy (p => p.X).ToList();
 			py = Points.OrderBy (p => p.X).ToList();
 			xmin = px[0].X;
@@ -86,6 +104,11 @@ namespace LongoMatch.Core.Store.Drawables
 			BottomLeft = new Point (xmin, ymax);
 			BottomRight = new Point (xmax, ymax);
 		} 
+
+		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			IsChanged = true;
+		}
 	}
 }
 

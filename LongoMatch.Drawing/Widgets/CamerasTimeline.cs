@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 		}
 
-		public void Load (List<Period> periods, MediaFileSet fileSet, Time duration)
+		public void Load (IList<Period> periods, MediaFileSet fileSet, Time duration)
 		{
 			timelines = new List<TimelineObject> ();
 			// Store periods as a list of timers

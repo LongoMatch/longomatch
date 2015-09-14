@@ -17,20 +17,28 @@
 //
 
 using System;
-using System.Collections.Generic;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Common
 {
 	
 	[Serializable]
-	public class Point
+	[PropertyChanged.ImplementPropertyChanged]
+	public class Point: IChanged
 	{
 
 		public Point (double x, double y)
 		{
 			X = x;
 			Y = y;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
 		}
 
 		public double X {

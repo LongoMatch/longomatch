@@ -25,6 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Tests.Services
 {
@@ -38,7 +39,7 @@ namespace Tests.Services
 
 			try {
 				TimelineEvent evt = p.Timeline [0];
-				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (0) };
+				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 				PlaylistPlayElement element = new PlaylistPlayElement (evt, p.Description.FileSet);
 
 				// Playlist with one event
@@ -59,9 +60,11 @@ namespace Tests.Services
 				Mock<IVideoEditor> mock = Mock.Get<IVideoEditor> (mtk.GetVideoEditor ());
 				// And eventbroker
 				Config.EventsBroker = Mock.Of<EventsBroker> ();
+				Config.GUIToolkit = gtk;
+				Config.MultimediaToolkit = mtk;
 
 				// Create a rendering object with mocked interfaces
-				RenderingJobsManager renderer = new RenderingJobsManager (mtk, gtk);
+				RenderingJobsManager renderer = new RenderingJobsManager ();
 				// Start service
 				renderer.Start ();
 
@@ -75,7 +78,7 @@ namespace Tests.Services
 				renderer.CancelAllJobs ();
 				mock.ResetCalls ();
 				evt = p.Timeline [1];
-				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (1) };
+				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1) };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
 				playlist.Elements [0] = element; 
 				job = new EditionJob (playlist, settings);
@@ -87,7 +90,7 @@ namespace Tests.Services
 				renderer.CancelAllJobs ();
 				mock.ResetCalls ();
 				evt = p.Timeline [1];
-				evt.CamerasConfig = new List<CameraConfig> { new CameraConfig (2) };
+				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (2) };
 				element = new PlaylistPlayElement (evt, p.Description.FileSet);
 				playlist.Elements [0] = element; 
 				job = new EditionJob (playlist, settings);

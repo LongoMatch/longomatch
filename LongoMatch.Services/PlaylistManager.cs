@@ -31,9 +31,7 @@ namespace LongoMatch.Services
 {
 	public class PlaylistManager: IService
 	{
-		IGUIToolkit guiToolkit;
 		IPlayerController player;
-		IRenderingJobsManager videoRenderer;
 		Project openedProject;
 		ProjectType openedProjectType;
 		IPlaylistElement loadedElement;
@@ -41,10 +39,8 @@ namespace LongoMatch.Services
 		TimelineEvent loadedPlay;
 		EventsFilter filter;
 
-		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
+		public PlaylistManager ()
 		{
-			this.videoRenderer = videoRenderer;
-			this.guiToolkit = guiToolkit;
 		}
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
@@ -192,12 +188,12 @@ namespace LongoMatch.Services
 			bool done = false;
 			if (project != null) {
 				while (name != null && !done) {
-					name = this.guiToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
+					name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
 					if (name != null) {
 						done = true;
 						if (project.Playlists.Any (p => p.Name == name)) {
 							string msg = Catalog.GetString ("A playlist already exists with the same name");
-							this.guiToolkit.ErrorMessage (msg);
+							Config.GUIToolkit.ErrorMessage (msg);
 							done = false;
 						}
 					}
@@ -213,11 +209,11 @@ namespace LongoMatch.Services
 
 		void HandleRenderPlaylist (Playlist playlist)
 		{
-			List<EditionJob> jobs = guiToolkit.ConfigureRenderingJob (playlist);
+			List<EditionJob> jobs = Config.GUIToolkit.ConfigureRenderingJob (playlist);
 			if (jobs == null)
 				return;
 			foreach (Job job in jobs)
-				videoRenderer.AddJob (job);
+				Config.RenderingJobsManger.AddJob (job);
 		}
 
 		void HandleSeekEvent (Time pos, bool accurate)

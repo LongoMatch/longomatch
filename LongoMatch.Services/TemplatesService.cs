@@ -23,9 +23,8 @@ using System.Reflection;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services.Services;
+using LongoMatch.DB;
 
 namespace LongoMatch.Services
 {
@@ -77,6 +76,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
+			Config.TeamTemplatesProvider = TeamTemplateProvider;
+			Config.CategoriesTemplatesProvider = CategoriesTemplateProvider;
 			return true;
 		}
 
@@ -104,10 +105,10 @@ namespace LongoMatch.Services
 		public bool Exists (string name)
 		{
 			// FIXME we can add an Exist(Dictionary args) method on the IStorage?
-			Dictionary<string, object> dict = new Dictionary<string, object> ();
-			dict.Add ("Name", name);
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Name", name);
 
-			List<T> list = storage.Retrieve<T> (dict);
+			List<T> list = storage.Retrieve<T> (filter);
 			if (list.Count == 0)
 				return false;
 			else
@@ -145,16 +146,16 @@ namespace LongoMatch.Services
 		public T Load (string name)
 		{
 			T template;
-			
+
 			template = systemTemplates.FirstOrDefault (t => t.Name == name);
 			if (template != null) {
 				// Return a copy to prevent modification of system templates.
 				return Cloner.Clone (template);
 			} else {
-				Dictionary<string, object> dict = new Dictionary<string, object> ();
-				dict.Add ("Name", name);
+				QueryFilter filter = new QueryFilter ();
+				filter.Add ("Name", name);
 
-				List<T> list = storage.Retrieve<T> (dict);
+				List<T> list = storage.Retrieve<T> (filter);
 				if (list.Count == 0)
 					throw new TemplateNotFoundException<T> (name);
 				else
@@ -209,14 +210,12 @@ namespace LongoMatch.Services
 
 		public void Delete (string templateName)
 		{
-			try {
-				Log.Information ("Deleting template " + templateName);
-				T template = Load (templateName);
-				if (template != null)
-					storage.Delete<T> (template);
-			} catch (Exception ex) {
-				Log.Exception (ex);
+			Log.Information ("Deleting template " + templateName);
+			if (systemTemplates.Any (t => t.Name == templateName)) {
+				throw new TemplateNotFoundException<T> (templateName);
 			}
+			T template = Load (templateName);
+			storage.Delete<T> (template);
 		}
 
 		public void Create (string templateName, params object[] list)

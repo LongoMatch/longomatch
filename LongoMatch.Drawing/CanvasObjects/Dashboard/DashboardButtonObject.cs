@@ -160,7 +160,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		public virtual LinkAnchorObject GetAnchor (List<Tag> sourceTags)
+		public virtual LinkAnchorObject GetAnchor (IList<Tag> sourceTags)
 		{
 			return anchor;
 		}

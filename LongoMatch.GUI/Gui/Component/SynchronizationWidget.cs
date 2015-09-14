@@ -27,6 +27,7 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
 using Mono.Unix;
 using Pango;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		Time duration, currentTime, nextCurrentTime;
 		Project project;
 		PeriodsMenu menu;
-		List<Period> periods;
+		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
 
 		enum DidacticMessage
@@ -205,7 +206,7 @@ namespace LongoMatch.Gui.Component
 		public Project Project {
 			set {
 				Time start, pDuration;
-				List<string> gamePeriods;
+				ObservableCollection <string> gamePeriods;
 				MediaFile file;
 
 				this.project = value;
@@ -220,7 +221,7 @@ namespace LongoMatch.Gui.Component
 				if (project.Periods == null || project.Periods.Count == 0) {
 					/* If no periods are provided create the default ones
 					 * defined in the dashboard */
-					periods = new List<Period> ();
+					periods = new ObservableCollection<Period> ();
 					gamePeriods = value.Dashboard.GamePeriods;
 					foreach (string s in gamePeriods) {
 						Period period = new Period { Name = s };

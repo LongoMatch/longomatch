@@ -28,13 +28,13 @@ namespace LongoMatch.Core.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
-	public class ProjectDescription :  IComparable, IStorable
+	[PropertyChanged.ImplementPropertyChanged]
+	public class ProjectDescription : IChanged
 	{
 		DateTime matchDate, lastModified;
 
 		public ProjectDescription ()
 		{
-			ID = Guid.NewGuid ();
 			MatchDate = LastModified = DateTime.Now;
 
 			Category = "";
@@ -49,24 +49,9 @@ namespace LongoMatch.Core.Store
 			VisitorName = "";
 		}
 
-		[OnDeserialized]
-		internal void OnDeserializedMethod (StreamingContext context)
-		{
-			// For old projects missing ProjectID
-			if (ProjectID == Guid.Empty) {
-				ProjectID = ID;
-			}
-		}
-
-		/// <summary>
-		/// Unique ID of the parent project
-		/// </summary>
-		public Guid ID {
-			get;
-			set;
-		}
-
-		public Guid ProjectID {
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
 			get;
 			set;
 		}
@@ -75,6 +60,7 @@ namespace LongoMatch.Core.Store
 		/// Title of the project
 		/// </summary>
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public String Title {
 			get {
 				return String.Format ("{0} - {1} ({2}-{3}) {4} {5}",
@@ -84,6 +70,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public String DateTitle {
 			get {
 				string ret = String.Format ("{0}-{1} {2}", LocalName, VisitorName,
@@ -102,6 +89,14 @@ namespace LongoMatch.Core.Store
 		/// Media file asigned to this project
 		/// </summary>
 		public MediaFileSet FileSet {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Name of the dashboard in use for this project.
+		/// </summary>
+		public string DashboardName {
 			get;
 			set;
 		}
@@ -289,15 +284,6 @@ namespace LongoMatch.Core.Store
 				}
 			}
 			return ret;
-		}
-
-		public int CompareTo (object obj)
-		{
-			if (obj is ProjectDescription) {
-				ProjectDescription project = (ProjectDescription)obj;
-				return ID.CompareTo (project.ID);
-			}
-			throw new ArgumentException ("object is not a ProjectDescription and cannot be compared");
 		}
 	}
 }

@@ -26,6 +26,7 @@ using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using Mono.Unix;
 using LongoMatch.GUI.Helpers;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -338,8 +339,16 @@ namespace LongoMatch.Gui.Component
 		{
 			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
 			play.Team = teamtagger.SelectedTeam;
-			play.Players = selectedPlayers ?? new List<Player> ();
-			play.Tags = tags ?? new List<Tag> ();
+			if (selectedPlayers != null) {
+				play.Players = new ObservableCollection<Player> (selectedPlayers);
+			} else {
+				play.Players = new ObservableCollection<Player> (); 
+			}
+			if (tags != null) {
+				play.Tags = new ObservableCollection <Tag> (tags);
+			} else {
+				play.Tags =new ObservableCollection<Tag> ();
+			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
 			Config.EventsBroker.EmitNewDashboardEvent (play, btn, true, null);

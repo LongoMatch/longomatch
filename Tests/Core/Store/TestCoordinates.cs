@@ -67,6 +67,21 @@ namespace Tests.Core.Store
 			coords2.Points.Add (new Point (3, 4));
 			Assert.AreNotEqual (coords, coords2);
 		}
+
+		[Test()]
+		public void TestIsChanged ()
+		{
+			Coordinates coords = new Coordinates();
+			Assert.IsTrue (coords.IsChanged);
+			coords.IsChanged = false;
+			coords.Points.Add(new Point (1, 2));
+			coords.Points.Add(new Point (3, 4));
+			Assert.IsTrue (coords.IsChanged);
+			coords.IsChanged = false;
+			coords.Points = null;
+			Assert.IsTrue (coords.IsChanged);
+			coords.IsChanged = false;
+		}
 	}
 }
 

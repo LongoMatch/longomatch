@@ -127,7 +127,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Select (team);
 		}
 
-		public void Select (List<Player> players, TeamType team)
+		public void Select (IList<Player> players, TeamType team)
 		{
 			tagger.Select (players, team);
 		}

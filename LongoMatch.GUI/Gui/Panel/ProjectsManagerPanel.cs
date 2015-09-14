@@ -37,16 +37,14 @@ namespace LongoMatch.Gui.Panel
 		public event BackEventHandle BackEvent;
 
 		Project openedProject, loadedProject;
-		List<ProjectDescription> selectedProjects;
+		List<Project> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
 		IDatabase DB;
 		IGUIToolkit gkit;
 		bool edited;
-		ISerializer serializer;
 
 		public ProjectsManagerPanel (Project openedProject)
 		{
-			serializer = new Serializer ();
 			this.openedProject = openedProject;
 			this.DB = Config.DatabaseManager.ActiveDB;
 			this.gkit = Config.GUIToolkit;
@@ -119,9 +117,16 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 				if (save) {
-					DB.UpdateProject (loadedProject);
-					projectlistwidget1.UpdateProject (loadedProject.Description);
-					edited = false;
+					try {
+						IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
+						busy.ShowSync (() => DB.UpdateProject (loadedProject));
+						projectlistwidget1.UpdateProject (loadedProject);
+						edited = false;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
+						return;
+					}
 				}
 			}
 		}
@@ -135,9 +140,9 @@ namespace LongoMatch.Gui.Panel
 			seasonentry.Text = pd.Season;
 			competitionentry.Text = pd.Competition;
 			datepicker.Date = pd.MatchDate;
-			templatelabel.Text = project.Dashboard.Name;
+			templatelabel.Text = pd.DashboardName;
 			desctextview.Buffer.Clear ();
-			desctextview.Buffer.InsertAtCursor (project.Description.Description ?? "");
+			desctextview.Buffer.InsertAtCursor (pd.Description ?? "");
 			loadedProject = project;
 
 			foreach (VideoFileInfo vfi in videoFileInfos) {
@@ -209,7 +214,7 @@ namespace LongoMatch.Gui.Panel
 			edited = true;
 		}
 
-		void HandleProjectsSelected (List<ProjectDescription> projects)
+		void HandleProjectsSelected (List<Project> projects)
 		{
 			SaveLoadedProject (false);
 			rbox.Visible = true;
@@ -223,7 +228,7 @@ namespace LongoMatch.Gui.Panel
 			selectedProjects = projects;
 			if (projects.Count == 1) {
 				try {
-					LoadProject (DB.GetProject (projects [0].ProjectID));
+					LoadProject (projects[0]);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					Config.GUIToolkit.ErrorMessage (ex.Message, this);
@@ -234,7 +239,6 @@ namespace LongoMatch.Gui.Panel
 		void HandleResyncClicked (object sender, EventArgs e)
 		{
 			notebook1.Page = 1;
-
 			// Load data in the project periods widget.
 			projectperiods1.Project = loadedProject;
 		}
@@ -254,7 +258,7 @@ namespace LongoMatch.Gui.Panel
 					                  new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
-					serializer.Save (loadedProject, filename);
+					Serializer.Instance.Save (loadedProject, filename);
 				}
 			}
 		}
@@ -270,33 +274,35 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleDeleteClicked (object sender, EventArgs e)
 		{
-			List<ProjectDescription> deletedProjects;
+			List<Project> deletedProjects;
 
 			if (selectedProjects == null)
 				return;
 				
-			deletedProjects = new List<ProjectDescription> ();
-			foreach (ProjectDescription selectedProject in selectedProjects) {
-				if (openedProject != null && openedProject.ID == selectedProject.ProjectID) {
+			deletedProjects = new List<Project> ();
+			foreach (Project selectedProject in selectedProjects) {
+				if (openedProject != null && openedProject.ID == selectedProject.ID) {
 					MessagesHelpers.WarningMessage (this,
 						Catalog.GetString ("This Project is actually in use.") + "\n" +
 						Catalog.GetString ("Close it first to allow its removal from the database"));
 					continue;
 				}
-				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" + selectedProject.Title;
+				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
+					selectedProject.Description.Title;
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
-					if (loadedProject != null && loadedProject.ID == selectedProject.ProjectID) {
+					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					DB.RemoveProject (selectedProject.ProjectID);
+					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
+					busy.ShowSync (() => DB.RemoveProject (selectedProject));
 					deletedProjects.Add (selectedProject);
 				}
 			}
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.GetAllProjects ().Count == 0) {
+			if (DB.Count == 0) {
 				rbox.Visible = false;
 			}
 		}
@@ -304,7 +310,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				Config.EventsBroker.EmitOpenProjectID (loadedProject.ID);
+				Config.EventsBroker.EmitOpenProjectID (loadedProject.ID, loadedProject);
 			}
 		}
 	}

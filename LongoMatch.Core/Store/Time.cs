@@ -19,8 +19,8 @@
 //
 
 using System;
+using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
-using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
@@ -30,7 +30,8 @@ namespace LongoMatch.Core.Store
 	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
 	/// </summary>
 	[Serializable]
-	public class Time :  IComparable
+	[PropertyChanged.ImplementPropertyChanged]
+	public class Time :  IComparable, IChanged
 	{
 		private const int MS = 1000000;
 		public const int SECONDS_TO_TIME = 1000;
@@ -49,10 +50,17 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
+		#region Properties
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsChanged {
+			get;
+			set;
+		}
+
 		//// <summary>
 		/// Time in miliseconds
 		/// </summary>
-		#region Properties
 		public int MSeconds {
 			get;
 			set;
@@ -62,6 +70,7 @@ namespace LongoMatch.Core.Store
 		/// Time in seconds
 		/// </summary>		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int TotalSeconds {
 			get {
 				return MSeconds / SECONDS_TO_TIME;
@@ -75,6 +84,7 @@ namespace LongoMatch.Core.Store
 		/// Time in nano seconds
 		/// </summary>		
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public long NSeconds {
 			get {
 				return  (long)MSeconds * TIME_TO_NSECONDS;
@@ -85,6 +95,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Seconds {
 			get {
 				return (TotalSeconds % 3600) % 60;
@@ -92,6 +103,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Minutes {
 			get {
 				return (TotalSeconds % 3600) / 60;
@@ -99,6 +111,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public int Hours {
 			get {
 				return (TotalSeconds / 3600);
