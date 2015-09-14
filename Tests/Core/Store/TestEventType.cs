@@ -52,14 +52,13 @@ namespace Tests.Core.Store
 			Utils.CheckSerialization (evType);
 			
 			stream = new MemoryStream ();
-			ISerializer serializer = new Serializer ();
-			serializer.Save (evType, stream, SerializationType.Json);
+			Serializer.Instance.Save (evType, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			reader = new StreamReader (stream);
 			jsonString = reader.ReadToEnd ();
 			Assert.IsFalse (jsonString.Contains ("SortMethodString"));
 			stream.Seek (0, SeekOrigin.Begin);
-			EventType newEventType = serializer.Load<EventType> (stream, SerializationType.Json);
+			EventType newEventType = Serializer.Instance.Load<EventType> (stream, SerializationType.Json);
 			
 			Assert.AreEqual (evType.ID, newEventType.ID);
 			Assert.AreEqual (evType.Name, newEventType.Name);

@@ -28,10 +28,8 @@ namespace LongoMatch.DB
 {
 	public class FileStorage : IStorage
 	{
-		private string basePath;
-		private bool deleteOnDestroy;
-
-		static Serializer serializer = new Serializer ();
+		string basePath;
+		bool deleteOnDestroy;
 
 		public FileStorage (string basePath, bool deleteOnDestroy = false)
 		{
@@ -142,7 +140,7 @@ namespace LongoMatch.DB
 			string path = Path.Combine (typePath, id.ToString () + GetExtension (typeof(T)));
 
 			if (File.Exists (path)) {
-				T t = serializer.LoadSafe<T> (path);
+				T t = Serializer.Instance.LoadSafe<T> (path);
 				Log.Information ("Retrieving " + path);
 				return t;
 			} else {
@@ -170,7 +168,7 @@ namespace LongoMatch.DB
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
 				try {
 					Log.Information ("Retrieving " + path);
-					T t = (T)serializer.LoadSafe<T> (path);
+					T t = Serializer.Instance.LoadSafe<T> (path);
 
 					string sType = ResolveType (typeof(T));
 
@@ -211,7 +209,7 @@ namespace LongoMatch.DB
 					string path = Path.Combine (typePath, name + GetExtension (typeof(T)));
 
 					if (File.Exists (path)) {
-						T t = serializer.LoadSafe<T> (path);
+						T t = Serializer.Instance.LoadSafe<T> (path);
 						Log.Information ("Retrieving by filename " + path);
 						// To avoid cases where the name of the file does not match the name of the template
 						// overwrite the template name
@@ -232,7 +230,7 @@ namespace LongoMatch.DB
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = (T)serializer.LoadSafe<T> (path);
+				T t = Serializer.Instance.LoadSafe<T> (path);
 				bool matches = true;
 
 				foreach (KeyValuePair<string, List<object>> entry in filter) {
@@ -286,7 +284,7 @@ namespace LongoMatch.DB
 			// Save the object as a file on disk
 			string path = Path.Combine (typePath, ResolveName (t)) + extension;
 			Log.Information ("Storing " + path);
-			serializer.Save<T> (t, path);
+			Serializer.Instance.Save<T> (t, path);
 		}
 
 		public void Delete<T> (T t) where T : IStorable
@@ -324,7 +322,7 @@ namespace LongoMatch.DB
 			T t;
 
 			Log.Information ("Loading " + from);
-			t = (T)serializer.LoadSafe<T> (from);
+			t = (T)Serializer.Instance.LoadSafe<T> (from);
 			return t;
 		}
 
@@ -347,7 +345,7 @@ namespace LongoMatch.DB
 			}
 
 			/* Don't cach the Exception here to chain it up */
-			serializer.Save<T> ((T)t, at);
+			Serializer.Instance.Save<T> ((T)t, at);
 		}
 	}
 }

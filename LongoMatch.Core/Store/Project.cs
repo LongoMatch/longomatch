@@ -631,7 +631,7 @@ namespace LongoMatch.Core.Store
 		public static void Export (Project project, string file)
 		{
 			file = Path.ChangeExtension (file, Constants.PROJECT_EXT);
-			new Serializer ().Save (project, file);
+			Serializer.Instance.Save (project, file);
 		}
 
 		public static Project Import ()
@@ -646,7 +646,7 @@ namespace LongoMatch.Core.Store
 		public static Project Import (string file)
 		{
 			try {
-				return new Serializer ().Load<Project> (file);
+				return Serializer.Instance.Load<Project> (file);
 			} catch (Exception e) {
 				Log.Exception (e);
 				throw new Exception (Catalog.GetString ("The file you are trying to load " +

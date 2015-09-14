@@ -49,14 +49,10 @@ namespace LongoMatch
 		
 		static StyleConf style;
 		static ConfigState state;
-		static Serializer serializer;
-
 
 		public static void Init ()
 		{
 			string home;
-
-			serializer = new Serializer ();
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				Config.baseDirectory = Path.GetFullPath (".");
@@ -118,7 +114,7 @@ namespace LongoMatch
 			if (File.Exists (Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = serializer.LoadSafe<ConfigState> (Config.ConfigFile);
+					state = Serializer.Instance.LoadSafe<ConfigState> (Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -141,7 +137,7 @@ namespace LongoMatch
 		public static void Save ()
 		{
 			try {
-				serializer.Save (state, Config.ConfigFile); 
+				Serializer.Instance.Save (state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Error saving config");
 				Log.Exception (ex);

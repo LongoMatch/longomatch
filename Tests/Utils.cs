@@ -33,12 +33,10 @@ namespace Tests
 	{
 		static bool debugLine = false;
 
-		static ISerializer serializer = new Serializer ();
-
 		public static T SerializeDeserialize<T> (T obj)
 		{
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			if (debugLine) {
 				var jsonString = new StreamReader (stream).ReadToEnd ();
@@ -46,7 +44,7 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			return serializer.Load<T> (stream, SerializationType.Json);
+			return Serializer.Instance.Load<T> (stream, SerializationType.Json);
 		}
 
 		public static void CheckSerialization<T> (T obj, bool ignoreIsChanged = false)
@@ -57,7 +55,7 @@ namespace Tests
 				Assert.IsInstanceOf<IChanged> (obj);
 			}
 			var stream = new MemoryStream ();
-			serializer.Save (obj, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var jsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {
@@ -65,7 +63,7 @@ namespace Tests
 			}
 			stream.Seek (0, SeekOrigin.Begin);
 			
-			var newobj = serializer.Load<T> (stream, SerializationType.Json);
+			var newobj = Serializer.Instance.Load<T> (stream, SerializationType.Json);
 			if (!ignoreIsChanged) {
 				ObjectChangedParser parser = new ObjectChangedParser ();
 				if (obj is IStorable) {
@@ -78,7 +76,7 @@ namespace Tests
 			}
 
 			stream = new MemoryStream ();
-			serializer.Save (newobj, stream, SerializationType.Json);
+			Serializer.Instance.Save (newobj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var newJsonString = new StreamReader (stream).ReadToEnd ();
 			if (debugLine) {
@@ -161,11 +159,11 @@ namespace Tests
 
 		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals=true) {
 			var stream = new MemoryStream ();
-			Serializer.Save (obj1, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj1, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var obj1Str = new StreamReader (stream).ReadToEnd ();
 			stream = new MemoryStream ();
-			Serializer.Save (obj2, stream, SerializationType.Json);
+			Serializer.Instance.Save (obj2, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var obj2Str = new StreamReader (stream).ReadToEnd ();
 			if (areEquals) {

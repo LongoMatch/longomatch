@@ -33,6 +33,22 @@ namespace LongoMatch.Core.Common
 
 	public class Serializer : ISerializer
 	{
+		static Serializer instance;
+
+		Serializer() {}
+
+		public static Serializer Instance
+		{
+			get 
+			{
+				if (instance == null)
+				{
+					instance = new Serializer();
+				}
+				return instance;
+			}
+		}
+
 		public void Save<T> (T obj, Stream stream,
 		                     SerializationType type = SerializationType.Json)
 		{

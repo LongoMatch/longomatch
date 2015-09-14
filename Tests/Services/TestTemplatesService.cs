@@ -123,7 +123,7 @@ namespace Tests.Services
 			d.Name = "jamematen";
 			string path = Path.GetTempFileName ();
 			try {
-				Serializer.Save (d, path);
+				Serializer.Instance.Save (d, path);
 				Assert.IsNotNull (provider.LoadFile (path));
 			} finally {
 				File.Delete (path);

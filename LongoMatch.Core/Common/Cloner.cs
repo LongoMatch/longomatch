@@ -24,15 +24,14 @@ namespace LongoMatch.Core.Common
 	{
 		public static T Clone<T> (this T source)
 		{
-			var serializer = new Serializer ();
 			if (Object.ReferenceEquals (source, null))
 				return default(T);
 			
 			Stream s = new MemoryStream ();
 			using (s) {
-				serializer.Save<T> (source, s, SerializationType.Binary);
+				Serializer.Instance.Save<T> (source, s, SerializationType.Binary);
 				s.Seek (0, SeekOrigin.Begin);
-				return serializer.Load<T> (s, SerializationType.Binary);
+				return Serializer.Instance.Load<T> (s, SerializationType.Binary);
 			}
 		}
 	}
