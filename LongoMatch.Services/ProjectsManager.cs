@@ -64,21 +64,6 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void ErrorSavingProject (Exception ex, string filePath)
-		{
-			Log.Exception (ex);
-			Log.Debug ("Backing up project to file");
-
-			string filePathNoExtension = Path.GetDirectoryName (filePath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (filePath);
-			string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
-			projectFile = projectFile.Replace (":", "_");
-			projectFile = projectFile.Replace (" ", "_");
-			projectFile = projectFile.Replace ("/", "_");
-			projectFile = filePathNoExtension + "_" + projectFile;
-			Project.Export (OpenedProject, projectFile);
-			guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" + Catalog.GetString ("The video file and a backup of the project has been " + "saved. Try to import it later:\n") + filePath + "\n" + projectFile + Constants.PROJECT_EXT);
-		}
-
 		void EmitProjectChanged ()
 		{
 			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
@@ -144,7 +129,21 @@ namespace LongoMatch.Services
 				project.Periods = Capturer.Periods;
 				Config.DatabaseManager.ActiveDB.AddProject (project);
 			} catch (Exception ex) {
-				ErrorSavingProject (ex, filePath);
+				Log.Exception (ex);
+				Log.Debug ("Backing up project to file");
+
+				string filePathNoExtension = Path.GetDirectoryName (filePath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (filePath);
+				string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
+				projectFile = projectFile.Replace (":", "_");
+				projectFile = projectFile.Replace (" ", "_");
+				projectFile = projectFile.Replace ("/", "_");
+				projectFile = filePathNoExtension + "_" + projectFile;
+				Project.Export (OpenedProject, projectFile);
+				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
+				Catalog.GetString ("The video file and a backup of the project has been " +
+				"saved. Try to import it later:\n") +
+				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
+
 			}
 		}
 
@@ -299,18 +298,16 @@ namespace LongoMatch.Services
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
 				} catch (Exception ex) {
-					// FIXME (comes from SaveCaptureProject)
-					string filePath = project.Description.FileSet.First ().FilePath;
-					ErrorSavingProject (ex, filePath);
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = Capturer.Periods;
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
 				} catch (Exception ex) {
-					// FIXME (comes from SaveCaptureProject)
-					string filePath = project.Description.FileSet.First ().FilePath;
-					ErrorSavingProject (ex, filePath);
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.CaptureProject ||
 			           projectType == ProjectType.URICaptureProject) {
