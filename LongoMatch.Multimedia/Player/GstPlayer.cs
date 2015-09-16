@@ -52,16 +52,16 @@ namespace LongoMatch.Video.Player
 		static extern bool lgm_video_player_open (IntPtr raw, IntPtr uri, out IntPtr error);
 
 		[DllImport ("libcesarplayer.dll")]
-		static extern bool lgm_video_player_play (IntPtr raw);
+		static extern bool lgm_video_player_play (IntPtr raw, bool synchronous);
 
 		[DllImport ("libcesarplayer.dll")]
 		static extern bool lgm_video_player_is_playing (IntPtr raw);
 
 		[DllImport ("libcesarplayer.dll")]
-		static extern void lgm_video_player_pause (IntPtr raw);
+		static extern void lgm_video_player_pause (IntPtr raw, bool synchronous);
 
 		[DllImport ("libcesarplayer.dll")]
-		static extern void lgm_video_player_stop (IntPtr raw);
+		static extern void lgm_video_player_stop (IntPtr raw, bool synchronous);
 
 		[DllImport ("libcesarplayer.dll")]
 		static extern void lgm_video_player_close (IntPtr raw);
@@ -464,19 +464,19 @@ namespace LongoMatch.Video.Player
 			return lgm_video_player_seek_to_next_frame (Handle);
 		}
 
-		public void Play ()
+		public void Play (bool synchronous = false)
 		{
-			lgm_video_player_play (Handle);
+			lgm_video_player_play (Handle, synchronous);
 		}
 
-		public void Pause ()
+		public void Pause (bool synchronous = false)
 		{
-			lgm_video_player_pause (Handle);
+			lgm_video_player_pause (Handle, synchronous);
 		}
 
-		public void Stop ()
+		public void Stop (bool synchronous = false)
 		{
-			lgm_video_player_stop (Handle);
+			lgm_video_player_stop (Handle, synchronous);
 		}
 
 		public void Close ()

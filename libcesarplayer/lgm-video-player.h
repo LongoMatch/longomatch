@@ -76,11 +76,14 @@ EXPORT void lgm_video_player_set_window_handle           (LgmVideoPlayer *lvp,
 EXPORT gboolean lgm_video_player_open                     (LgmVideoPlayer * lvp,
                                                            const char *mrl, GError ** error);
 
-EXPORT gboolean lgm_video_player_play                     (LgmVideoPlayer * lvp);
+EXPORT gboolean lgm_video_player_play                     (LgmVideoPlayer * lvp,
+                                                           gboolean synchronous);
 
-EXPORT void lgm_video_player_pause                        (LgmVideoPlayer * lvp);
+EXPORT void lgm_video_player_pause                        (LgmVideoPlayer * lvp,
+                                                           gboolean synchronous);
 
-EXPORT void lgm_video_player_stop                         (LgmVideoPlayer * lvp);
+EXPORT void lgm_video_player_stop                         (LgmVideoPlayer * lvp,
+                                                           gboolean synchronous);
 
 EXPORT void lgm_video_player_close                        (LgmVideoPlayer * lvp);
 

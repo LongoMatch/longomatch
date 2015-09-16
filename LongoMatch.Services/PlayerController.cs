@@ -271,13 +271,13 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void Stop ()
+		public void Stop (bool synchronous = false)
 		{
 			Log.Debug ("Stop");
-			Pause ();
+			Pause (synchronous);
 		}
 
-		public void Play ()
+		public void Play (bool synchronous = false)
 		{
 			Log.Debug ("Play");
 			if (StillImageLoaded) {
@@ -285,19 +285,19 @@ namespace LongoMatch.Services
 				EmitPlaybackStateChanged (this, true);
 			} else {
 				EmitLoadDrawings (null);
-				player.Play ();
+				player.Play (synchronous);
 			}
 			Playing = true;
 		}
 
-		public void Pause ()
+		public void Pause (bool synchronous = false)
 		{
 			Log.Debug ("Pause");
 			if (StillImageLoaded) {
 				ReconfigureTimeout (0);
 				EmitPlaybackStateChanged (this, false);
 			} else {
-				player.Pause ();
+				player.Pause (synchronous);
 			}
 			Playing = false;
 		}

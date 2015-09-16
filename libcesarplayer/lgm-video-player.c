@@ -507,7 +507,7 @@ lgm_video_player_open (LgmVideoPlayer * lvp, const gchar * uri, GError ** error)
 }
 
 gboolean
-lgm_video_player_play (LgmVideoPlayer * lvp)
+lgm_video_player_play (LgmVideoPlayer * lvp, gboolean synchronous)
 {
 
   GstState cur_state;
@@ -525,6 +525,9 @@ lgm_video_player_play (LgmVideoPlayer * lvp)
 
   gst_element_get_state (lvp->priv->play, &cur_state, NULL, 0);
   gst_element_set_state (lvp->priv->play, GST_STATE_PLAYING);
+  if (synchronous) {
+    gst_element_get_state (lvp->priv->play, NULL, NULL, 5 * GST_SECOND);
+  }
 
   return TRUE;
 }
@@ -590,7 +593,7 @@ lgm_video_player_seek_to_next_frame (LgmVideoPlayer * lvp)
 
   GST_DEBUG ("Seeking to next frame");
 
-  lgm_video_player_pause (lvp);
+  lgm_video_player_pause (lvp, FALSE);
   pos = lgm_video_player_get_current_time (lvp);
   if (pos == 0)
     return FALSE;
@@ -628,7 +631,7 @@ lgm_video_player_seek_to_previous_frame (LgmVideoPlayer * lvp)
     return FALSE;
 
   if (lgm_video_player_is_playing (lvp))
-    lgm_video_player_pause (lvp);
+    lgm_video_player_pause (lvp, FALSE);
 
   lgm_video_player_seek_time (lvp, final_pos, TRUE, FALSE);
   got_time_tick (GST_ELEMENT (lvp->priv->play), pos, lvp);
@@ -667,7 +670,7 @@ lgm_stop_play_pipeline (LgmVideoPlayer * lvp)
 }
 
 void
-lgm_video_player_stop (LgmVideoPlayer * lvp)
+lgm_video_player_stop (LgmVideoPlayer * lvp, gboolean synchronous)
 {
   g_return_if_fail (lvp != NULL);
   g_return_if_fail (LGM_IS_VIDEO_WIDGET (lvp));
@@ -676,6 +679,9 @@ lgm_video_player_stop (LgmVideoPlayer * lvp)
   gst_element_set_state (lvp->priv->play, GST_STATE_NULL);
   lvp->priv->target_state = GST_STATE_NULL;
 
+  if (synchronous) {
+    gst_element_get_state (lvp->priv->play, NULL, NULL, 5 * GST_SECOND);
+  }
   got_time_tick (GST_ELEMENT (lvp->priv->play), 0, lvp);
 }
 
@@ -703,7 +709,7 @@ lgm_video_player_close (LgmVideoPlayer * lvp)
 }
 
 void
-lgm_video_player_pause (LgmVideoPlayer * lvp)
+lgm_video_player_pause (LgmVideoPlayer * lvp, gboolean synchronous)
 {
   g_return_if_fail (lvp != NULL);
   g_return_if_fail (LGM_IS_VIDEO_WIDGET (lvp));
@@ -712,6 +718,9 @@ lgm_video_player_pause (LgmVideoPlayer * lvp)
 
   gst_element_set_state (lvp->priv->play, GST_STATE_PAUSED);
   lvp->priv->target_state = GST_STATE_PAUSED;
+  if (synchronous) {
+    gst_element_get_state (lvp->priv->play, NULL, NULL, 5 * GST_SECOND);
+  }
 }
 
 void

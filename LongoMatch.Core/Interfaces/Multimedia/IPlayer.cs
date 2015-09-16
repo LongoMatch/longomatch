@@ -59,17 +59,17 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		/// <summary>
 		/// Starts playing.
 		/// </summary>
-		void Play ();
+		void Play (bool synchronous = false);
 
 		/// <summary>
 		/// Pauses the player.
 		/// </summary>
-		void Pause ();
+		void Pause (bool synchronous = false);
 
 		/// <summary>
 		/// Stops the player.
 		/// </summary>
-		void Stop ();
+		void Stop (bool synchronous = false);
 
 		/// <summary>
 		/// Seek the specified time.
