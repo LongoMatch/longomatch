@@ -247,7 +247,7 @@ namespace Tests.Services
 			Config.EventsBroker.EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Once ());
-			mockPlayerController.Verify (player => player.Play (), Times.Once ());
+			mockPlayerController.Verify (player => player.Play (false), Times.Once ());
 
 			Assert.IsTrue (eventLoaded);
 
@@ -264,7 +264,7 @@ namespace Tests.Services
 			Config.EventsBroker.EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
-			mockPlayerController.Verify (player => player.Play (), Times.Never ());
+			mockPlayerController.Verify (player => player.Play (false), Times.Never ());
 
 			Assert.IsFalse (eventLoaded);
 

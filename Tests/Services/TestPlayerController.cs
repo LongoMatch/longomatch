@@ -51,8 +51,8 @@ namespace Tests.Services
 			/* Mock properties without setter */
 			playerMock.Setup (p => p.CurrentTime).Returns (() => currentTime);
 			playerMock.Setup (p => p.StreamLength).Returns (() => streamLength);
-			playerMock.Setup (p => p.Play ()).Raises (p => p.StateChange += null, this, true);
-			playerMock.Setup (p => p.Pause ()).Raises (p => p.StateChange += null, this, false);
+			playerMock.Setup (p => p.Play (It.IsAny<bool>())).Raises (p => p.StateChange += null, this, true);
+			playerMock.Setup (p => p.Pause (It.IsAny<bool>())).Raises (p => p.StateChange += null, this, false);
 
 			mtkMock = new Mock<IMultimediaToolkit> ();
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
@@ -185,7 +185,7 @@ namespace Tests.Services
 			player.Open (mfs);
 			Assert.AreEqual (mfs, player.FileSet);
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Never ());
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 
 			/* Open with an invalid camera configuration */
@@ -203,7 +203,7 @@ namespace Tests.Services
 			currentTime = new Time (0);
 			PreparePlayer ();
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
 			Assert.AreEqual (2, timeCount);
 			Assert.AreEqual ((float)320 / 240, viewPortMock.Object.Ratio);
@@ -232,7 +232,7 @@ namespace Tests.Services
 			player.Play ();
 			Assert.IsTrue (loadSent);
 			Assert.IsNull (drawing);
-			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.Verify (p => p.Play (false), Times.Once ());
 			Assert.IsTrue (player.Playing);
 			Assert.IsTrue (playing);
 
@@ -241,7 +241,7 @@ namespace Tests.Services
 			player.Pause ();
 			Assert.IsFalse (loadSent);
 			Assert.IsNull (drawing);
-			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.Verify (p => p.Pause (false), Times.Once ());
 			Assert.IsFalse (player.Playing);
 			Assert.IsFalse (playing);
 
@@ -250,15 +250,15 @@ namespace Tests.Services
 			player.Ready ();
 			player.LoadPlaylistEvent (playlist, plImage);
 			player.Play ();
-			playerMock.Verify (p => p.Play (), Times.Never ());
-			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
+			playerMock.Verify (p => p.Pause (false), Times.Once ());
 			Assert.IsTrue (player.Playing);
 
 			/* Go to pause */
 			playerMock.ResetCalls ();
 			player.Pause ();
-			playerMock.Verify (p => p.Play (), Times.Never ());
-			playerMock.Verify (p => p.Pause (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
+			playerMock.Verify (p => p.Pause (It.IsAny<bool>()), Times.Never ());
 			Assert.IsFalse (player.Playing);
 		}
 
@@ -540,7 +540,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 			playerMock.Raise (p => p.Eos += null, this);
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
-			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.Verify (p => p.Pause (false), Times.Once ());
 			playerMock.ResetCalls ();
 
 			TimelineEvent evtLocal = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
@@ -550,7 +550,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 			playerMock.Raise (p => p.Eos += null, this);
 			playerMock.Verify (p => p.Seek (evtLocal.Start, true, false), Times.Once ());
-			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.Verify (p => p.Pause (false), Times.Once ());
 		}
 
 		[Test ()]
@@ -674,7 +674,7 @@ namespace Tests.Services
 			Assert.IsTrue (player.Playing);
 			playerMock.Verify (p => p.Open (mfs [0]));
 			playerMock.Verify (p => p.Seek (evt.Start, true, false), Times.Once ());
-			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.Verify (p => p.Play (false), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
 			Assert.AreEqual (2, elementLoaded);
 			elementLoaded = 0;
@@ -687,12 +687,12 @@ namespace Tests.Services
 			elementLoaded = 0;
 			Assert.AreEqual (nfs, player.FileSet);
 			playerMock.Verify (p => p.Open (nfs [0]));
-			playerMock.Verify (p => p.Play (), Times.Never ());
-			playerMock.Verify (p => p.Pause (), Times.Once ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
+			playerMock.Verify (p => p.Pause (false), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
 			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			playerMock.Verify (p => p.Seek (evt.Stop, true, false), Times.Once ());
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			playerMock.ResetCalls ();
 
 			/* Open another event with the same MediaFileSet and already ready to seek
@@ -706,7 +706,7 @@ namespace Tests.Services
 			elementLoaded = 0;
 			playerMock.Verify (p => p.Open (nfs [0]), Times.Never ());
 			playerMock.Verify (p => p.Seek (evt2.Start, true, false), Times.Once ());
-			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.Verify (p => p.Play (false), Times.Once ());
 			playerMock.VerifySet (p => p.Rate = 1);
 			Assert.AreEqual (evt2.CamerasConfig, player.CamerasConfig);
 			Assert.AreEqual (evt2.CamerasLayout, player.CamerasLayout);
@@ -752,21 +752,21 @@ namespace Tests.Services
 			Assert.AreEqual (el1.CamerasLayout, player.CamerasLayout);
 			playerMock.Verify (p => p.Open (nfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Seek (el1.Play.Start, true, false), Times.Never ());
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			playerMock.VerifySet (p => p.Rate = 1);
 			playerMock.Raise (p => p.ReadyToSeek += null, this);
 			playerMock.Verify (p => p.Seek (el1.Play.Start, true, false), Times.Once ());
-			playerMock.Verify (p => p.Play (), Times.Once ());
+			playerMock.Verify (p => p.Play (false), Times.Once ());
 
 			/* Load still image */
 			player.LoadPlaylistEvent (playlist, plImage);
 			playerMock.ResetCalls ();
 			Assert.IsTrue (player.Playing);
 			player.Pause ();
-			playerMock.Verify (p => p.Pause (), Times.Never ());
+			playerMock.Verify (p => p.Pause (It.IsAny<bool>()), Times.Never ());
 			Assert.IsFalse (player.Playing);
 			player.Play ();
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			Assert.IsTrue (player.Playing);
 
 			/* Load drawings */
@@ -776,10 +776,10 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 			Assert.IsTrue (player.Playing);
 			player.Pause ();
-			playerMock.Verify (p => p.Pause (), Times.Never ());
+			playerMock.Verify (p => p.Pause (It.IsAny<bool>()), Times.Never ());
 			Assert.IsFalse (player.Playing);
 			player.Play ();
-			playerMock.Verify (p => p.Play (), Times.Never ());
+			playerMock.Verify (p => p.Play (It.IsAny<bool>()), Times.Never ());
 			Assert.IsTrue (player.Playing);
 
 			/* Load video */
