@@ -116,13 +116,15 @@ namespace LongoMatch.Drawing
 
 			IContext oldContext = tk.Context;
 			ISurface surface = tk.CreateSurface (200, 200, TestImage);
-			tk.Context = surface.Context;
-			tk.StrokeColor = tk.FillColor = Color.Black;
-			tk.FontSize = 16;
-			tk.DrawText (new Point (10, 90), 180, 20, "This is a surface");
-			tk.FillColor = new Color (0, 0, 0, 0);
-			tk.StrokeColor = Color.Blue;
-			tk.DrawRectangle (new Point (0, 0), 198, 198);
+			using (IContext surfaceContext = surface.Context) {
+				tk.Context = surfaceContext;
+				tk.StrokeColor = tk.FillColor = Color.Black;
+				tk.FontSize = 16;
+				tk.DrawText (new Point (10, 90), 180, 20, "This is a surface");
+				tk.FillColor = new Color (0, 0, 0, 0);
+				tk.StrokeColor = Color.Blue;
+				tk.DrawRectangle (new Point (0, 0), 198, 198);
+			}
 			tk.Context = oldContext;
 			tk.End ();
 			tk.DrawSurface (surface, new Point (500, 200));
@@ -131,6 +133,7 @@ namespace LongoMatch.Drawing
 			tk.TranslateAndScale (new Point (400, 200), new Point (0.5, 0.5));
 			tk.DrawSurface (surface);
 			tk.End ();
+			surface.Dispose ();
 		}
 
 		void DrawTexts ()
