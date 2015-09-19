@@ -21,77 +21,21 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Drawing
 {
-	public class TestCanvas: ICanvas
+	public class TestCanvas: Canvas
 	{
+		const int CANVAS_WIDTH = 1000;
+		const int CANVAS_HEIGHT = 1200;
 
 		protected IDrawingToolkit drawingToolkit;
-		protected IWidget widget; 
-		bool disposed;
 		string serializedImage = "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";
-
 
 		/// <summary>
 		/// TestCanvas constructor. Will Draw as a handler of the DrawEvent of the widget.
 		/// </summary>
 		/// <param name="widget">Widget that will send the DrawEvent</param>
-		public TestCanvas (IWidget widget)
+		public TestCanvas (IWidget widget) : base (widget)
 		{
-			Init ();
-			this.widget = widget;
-			widget.DrawEvent += Draw;
-		}
-
-		private void Init(){
-			drawingToolkit = Config.DrawingToolkit;
-			ScaleX = 1;
-			ScaleY = 1;
-			Translation = new Point (0, 0);
-			TestImage = Image.Deserialize (Convert.FromBase64String(serializedImage));
-		}
-
-		~ TestCanvas ()
-		{
-			if (!disposed) {
-				Log.Error (String.Format ("Canvas {0} was not disposed correctly", this));
-				Dispose (true);
-			}
-		}
-
-		public void Dispose ()
-		{
-			Dispose (true);
-			GC.SuppressFinalize (this);
-		}
-
-		protected virtual void Dispose (bool disposing)
-		{
-			if (disposing) {
-				disposed = true;
-			}
-		}
-
-		/// <summary>
-		/// Applied scale on the X axis
-		/// </summary>
-		protected double ScaleX {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Applied scale on the Y axis.
-		/// </summary>
-		protected double ScaleY {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Applied XY translation.
-		/// </summary>
-		protected Point Translation {
-			get;
-			set;
+			TestImage = Image.Deserialize (Convert.FromBase64String (serializedImage));
 		}
 
 		/// <summary>
@@ -102,18 +46,12 @@ namespace LongoMatch.Drawing
 			set;
 		}
 
-		public void Draw (IContext context, Area area)
+		public override void Draw (IContext context, Area area)
 		{
-			if (drawingToolkit != null) {
-				IContext oldContext = drawingToolkit.Context;
-				drawingToolkit.Context = context;
-
-				drawingToolkit.Begin ();
-				drawingToolkit.Begin ();
-				drawingToolkit.End ();
-				drawingToolkit.End ();
-
-				DrawGrid (area);
+			if (tk != null) {
+				Scale ();
+				Begin (context);
+				DrawGrid (new Area (new Point (0, 0), CANVAS_WIDTH, CANVAS_HEIGHT));
 				DrawTexts ();
 				if (TestImage != null) {
 					DrawImages ();
@@ -121,17 +59,24 @@ namespace LongoMatch.Drawing
 				}
 				DrawShapes ();
 				DrawClipped ();
-
-				// Save breaks both because of permissions
-				// Save ();
-				//Copy();
-
-				drawingToolkit.Context = oldContext;
-
+				End ();
 			}
 		}
 
+		void Scale ()
+		{
+			double scaleX, scaleY;
+			Point translation;
 
+			/* Scale the canvas to fit in the widget kepping DAR */
+			Image.ScaleFactor (CANVAS_WIDTH, CANVAS_HEIGHT, (int)widget.Width, (int)widget.Height,
+				out scaleX, out scaleY, out translation);
+			ClipRegion = new Area (new Point (translation.X, translation.Y),
+				CANVAS_WIDTH * scaleX, CANVAS_HEIGHT * scaleY);
+			ScaleX = scaleX;
+			ScaleY = scaleY;
+			Translation = translation;
+		}
 
 		void DrawImages ()
 		{
