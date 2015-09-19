@@ -219,7 +219,7 @@ namespace LongoMatch.Core.Common
 
 		public override string ToString ()
 		{
-			return string.Format ("{0}-{1} {2}x{3}", Start.X, Start.Y, Width, Height);
+			return string.Format ("{0:0.##}-{1:0.##} {2:0.##}x{3:0.##}", Start.X, Start.Y, Width, Height);
 		}
 	}
 }
