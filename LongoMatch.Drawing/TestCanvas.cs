@@ -124,10 +124,11 @@ namespace LongoMatch.Drawing
 				tk.FillColor = new Color (0, 0, 0, 0);
 				tk.StrokeColor = Color.Blue;
 				tk.DrawRectangle (new Point (0, 0), 198, 198);
+				tk.Context = oldContext;
+				tk.End ();
+				tk.DrawSurface (surface, new Point (500, 200));
 			}
-			tk.Context = oldContext;
-			tk.End ();
-			tk.DrawSurface (surface, new Point (500, 200));
+
 
 			tk.Begin ();
 			tk.TranslateAndScale (new Point (400, 200), new Point (0.5, 0.5));
