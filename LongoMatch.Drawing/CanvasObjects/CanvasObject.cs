@@ -97,9 +97,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			DrawArea = null;
 		}
 
-		protected Area DrawArea {
+		public Area DrawArea {
 			get;
-			set;
+			protected set;
 		}
 
 		public virtual void ReDraw ()
