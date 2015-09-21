@@ -4,4 +4,4 @@ LM_DEPS = \
 	$(top_builddir)/packages/SQLitePCL.raw_basic.0.7.1/lib/net45/SQLitePCL.raw.dll \
 	$(top_builddir)/packages/SQLitePCL.ugly.0.7.1/lib/portable-net45+netcore45+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/SQLitePCL.ugly.dll \
 	$(top_builddir)/packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll \
-	$(top_builddir)/packages/PropertyChanged.Fody.1.50.3/PropertyChanged.Fody.dll
+	$(top_builddir)/packages/PropertyChanged.Fody.1.50.3/Lib/dotnet/PropertyChanged.dll
