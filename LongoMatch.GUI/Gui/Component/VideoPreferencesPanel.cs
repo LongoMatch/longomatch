@@ -81,6 +81,11 @@ namespace LongoMatch.Gui.Component
 			};
 			
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
+			foreach (Widget w in generaltable) {
+				if (w is Label) {
+					sgroup.AddWidget (w);
+				}
+			}
 			foreach (Widget w in capturetable) {
 				if (w is Label) {
 					sgroup.AddWidget (w);
@@ -91,7 +96,6 @@ namespace LongoMatch.Gui.Component
 					sgroup.AddWidget (w);
 				}
 			}
-			sgroup.AddWidget (fameratelabel);
 		}
 
 		void HandleFPSChanged (object sender, EventArgs e)
