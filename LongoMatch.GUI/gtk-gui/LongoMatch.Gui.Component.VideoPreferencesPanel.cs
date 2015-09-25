@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment2.Name = "GtkAlignment2";
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
-			this.generaltable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), true);
+			this.generaltable = new global::Gtk.Table (((uint)(1)), ((uint)(2)), false);
 			this.generaltable.Name = "generaltable";
 			this.generaltable.RowSpacing = ((uint)(6));
 			this.generaltable.ColumnSpacing = ((uint)(6));
@@ -120,7 +120,6 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame3]));
 			w5.Position = 0;
 			w5.Expand = false;
-			w5.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.frame1 = new global::Gtk.Frame ();
 			this.frame1.Name = "frame1";
@@ -130,7 +129,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			this.rendertable = new global::Gtk.Table (((uint)(5)), ((uint)(2)), true);
+			this.rendertable = new global::Gtk.Table (((uint)(5)), ((uint)(2)), false);
 			this.rendertable.Name = "rendertable";
 			this.rendertable.RowSpacing = ((uint)(6));
 			this.rendertable.ColumnSpacing = ((uint)(6));
@@ -238,7 +237,7 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment1.Name = "GtkAlignment1";
 			this.GtkAlignment1.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
-			this.capturetable = new global::Gtk.Table (((uint)(3)), ((uint)(2)), true);
+			this.capturetable = new global::Gtk.Table (((uint)(3)), ((uint)(2)), false);
 			this.capturetable.Name = "capturetable";
 			this.capturetable.RowSpacing = ((uint)(6));
 			this.capturetable.ColumnSpacing = ((uint)(6));

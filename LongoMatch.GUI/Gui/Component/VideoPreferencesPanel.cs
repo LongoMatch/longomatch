@@ -81,19 +81,26 @@ namespace LongoMatch.Gui.Component
 			};
 			
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
+			SizeGroup sgroup2 = new SizeGroup (SizeGroupMode.Horizontal);
 			foreach (Widget w in generaltable) {
 				if (w is Label) {
 					sgroup.AddWidget (w);
+				} else {
+					sgroup2.AddWidget (w);
 				}
 			}
 			foreach (Widget w in capturetable) {
 				if (w is Label) {
 					sgroup.AddWidget (w);
+				} else {
+					sgroup2.AddWidget (w);
 				}
 			}
 			foreach (Widget w in rendertable) {
 				if (w is Label) {
 					sgroup.AddWidget (w);
+				} else {
+					sgroup2.AddWidget (w);
 				}
 			}
 		}
