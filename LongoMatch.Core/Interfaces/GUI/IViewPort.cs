@@ -23,7 +23,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 	{
 		float Ratio { set; get; }
 
-		IntPtr WindowHandle { get; }
+		object WindowHandle { get; }
 
 		string Message { set; }
 

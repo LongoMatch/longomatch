@@ -108,7 +108,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		/// <summary>
 		/// Sets the window handle in when the video sink can draw.
 		/// </summary>
-		IntPtr WindowHandle { set; }
+		object WindowHandle { set; }
 
 		/// <summary>
 		/// Closes the opened media file.
@@ -151,7 +151,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		/// <summary>
 		/// A list of window handles set by the view on which the player can draw.
 		/// </summary>
-		List<IntPtr> WindowHandles { set; }
+		List<object> WindowHandles { set; }
 
 		/// <summary>
 		/// A list with the current configurations of visible cameras.

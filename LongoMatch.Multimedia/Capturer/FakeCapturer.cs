@@ -49,7 +49,7 @@ namespace LongoMatch.Video.Capturer
 			}
 		}
 
-		public void Configure (CaptureSettings settings, IntPtr window_handle)
+		public void Configure (CaptureSettings settings, object window_handle)
 		{
 		}
 

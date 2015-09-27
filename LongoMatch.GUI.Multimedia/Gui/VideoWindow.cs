@@ -93,7 +93,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public IntPtr WindowHandle {
+		public object WindowHandle {
 			get;
 			private set;
 		}

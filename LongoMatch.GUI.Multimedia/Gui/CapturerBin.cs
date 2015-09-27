@@ -398,8 +398,7 @@ namespace LongoMatch.Gui
 		void Configure ()
 		{
 			VideoMuxerType muxer;
-			IntPtr windowHandle = IntPtr.Zero;
-			
+
 			if (Capturer == null) {
 				videowindow.Visible = false;
 				return;
@@ -410,8 +409,7 @@ namespace LongoMatch.Gui
 			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
 				settings.EncodingSettings.EncodingProfile.Muxer = VideoMuxerType.Matroska;
 			}
-			windowHandle = videowindow.WindowHandle;
-			Capturer.Configure (settings, windowHandle); 
+			Capturer.Configure (settings, videowindow.WindowHandle); 
 			settings.EncodingSettings.EncodingProfile.Muxer = muxer;
 			delayStart = false;
 			Capturer.Run ();

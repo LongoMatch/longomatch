@@ -366,7 +366,7 @@ namespace LongoMatch.Video.Capturer
 
 		#pragma warning restore 0169
 
-		public void Configure (CaptureSettings settings, IntPtr window_handle)
+		public void Configure (CaptureSettings settings, object window_handle)
 		{
 			IntPtr err = IntPtr.Zero;
 			EncodingQuality qual = settings.EncodingSettings.EncodingQuality;
@@ -390,7 +390,7 @@ namespace LongoMatch.Video.Capturer
 				(int)enc.Muxer, qual.VideoQuality,
 				qual.AudioQuality,
 				settings.EncodingSettings.EnableAudio,
-				std.Width, std.Height, window_handle,
+				std.Width, std.Height, (IntPtr)window_handle,
 				out err);
 			Marshaller.Free (outFile);
 			Marshaller.Free (sourceElement);

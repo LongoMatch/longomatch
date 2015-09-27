@@ -35,7 +35,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		event DeviceChangeHandler DeviceChange;
 		event MediaInfoHandler MediaInfo;
 
-		void Configure (CaptureSettings settings, IntPtr window_handle);
+		void Configure (CaptureSettings settings, object window_handle);
 
 		Time CurrentTime {
 			get ;

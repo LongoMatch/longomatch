@@ -391,13 +391,13 @@ namespace LongoMatch.Video.Player
 		}
 		#pragma warning restore 0169
 
-		public IntPtr WindowHandle {
+		public object WindowHandle {
 			set {
-				lgm_video_player_set_window_handle (Handle, value);
+				lgm_video_player_set_window_handle (Handle, (IntPtr)value);
 			}
 		}
 
-		public List<IntPtr> WindowHandles {
+		public List<object> WindowHandles {
 			set {
 				WindowHandle = value [0];
 			}
