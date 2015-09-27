@@ -114,7 +114,7 @@ namespace LongoMatch.Gui
 			if (parent == null)
 				parent = mainWindow as Widget;
 			bool res = MessagesHelpers.QuestionMessage (parent as Widget, question, title);
-			return Task.Factory.StartNew(() => res);
+			return Task.Factory.StartNew (() => res);
 		}
 
 		public Task<string> QueryMessage (string key, string title = null, string value = "", object parent = null)
@@ -125,13 +125,14 @@ namespace LongoMatch.Gui
 			return Task.Factory.StartNew (() => res);
 		}
 
-		public bool NewVersionAvailable (Version currentVersion, Version latestVersion,
-		                                 string downloadURL, string changeLog, object parent = null)
+		public Task<bool> NewVersionAvailable (Version currentVersion, Version latestVersion,
+		                                       string downloadURL, string changeLog, object parent = null)
 		{
 			if (parent == null)
 				parent = mainWindow;
-			return MessagesHelpers.NewVersionAvailable (currentVersion, latestVersion, downloadURL,
-				changeLog, parent as Widget);
+			bool res = MessagesHelpers.NewVersionAvailable (currentVersion, latestVersion, downloadURL,
+				           changeLog, parent as Widget);
+			return Task.Factory.StartNew (() => res);
 		}
 
 		public string SaveFile (string title, string defaultName, string defaultFolder,

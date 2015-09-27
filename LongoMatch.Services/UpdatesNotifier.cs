@@ -96,8 +96,8 @@ namespace LongoMatch.Services
 				return;
 			}
 
-			Config.GUIToolkit.Invoke (delegate {
-				bool ignore = Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
+			Config.GUIToolkit.Invoke (async delegate {
+				bool ignore = await Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
 					              downloadURL, changeLog, null);
 				if (ignore) {
 					/* User requested to ignore this version */
