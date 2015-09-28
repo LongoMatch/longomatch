@@ -42,9 +42,8 @@ namespace LongoMatch.Core.Store.Templates
 			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
 			List = new ObservableCollection<Player> ();
-			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			try {
-				Shield = new Image (path);
+				Shield = Resources.LoadImage (StyleConf.DefaultShield);
 			} catch {
 				/* Ignore for unit tests */
 			}

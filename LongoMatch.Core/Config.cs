@@ -26,6 +26,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using LongoMatch.Core;
 
 namespace LongoMatch
 {
@@ -126,7 +127,7 @@ namespace LongoMatch
 				state = new ConfigState ();
 				Save ();
 			}
-			Background = new Image (Path.Combine (Config.ImagesDir, Constants.BACKGROUND));
+			Background = Resources.LoadImage (Constants.BACKGROUND);
 			Copyright = Constants.COPYRIGHT;
 			License = Constants.LICENSE;
 			SoftwareName = Constants.SOFTWARE_NAME;
@@ -212,18 +213,6 @@ namespace LongoMatch
 		public static string TempVideosDir {
 			get {
 				return Path.Combine (configDirectory, "temp");
-			}
-		}
-
-		public static string ImagesDir {
-			get {
-				return Path.Combine (dataDir, "images");
-			}
-		}
-
-		public static string IconsDir {
-			get {
-				return Path.Combine (dataDir, "icons");
 			}
 		}
 
@@ -335,25 +324,25 @@ namespace LongoMatch
 
 		static public Image FieldBackground {
 			get {
-				return new Image (Path.Combine (Config.ImagesDir, Constants.FIELD_BACKGROUND));
+				return Resources.LoadImage (Constants.FIELD_BACKGROUND);
 			}
 		}
 
 		static public Image HalfFieldBackground {
 			get {
-				return new Image (Path.Combine (Config.ImagesDir, Constants.HALF_FIELD_BACKGROUND));
+				return Resources.LoadImage (Constants.HALF_FIELD_BACKGROUND);
 			}
 		}
 
 		static public Image HHalfFieldBackground {
 			get {
-				return new Image (Path.Combine (Config.ImagesDir, Constants.HHALF_FIELD_BACKGROUND));
+				return Resources.LoadImage (Constants.HHALF_FIELD_BACKGROUND);
 			}
 		}
 
 		static public Image GoalBackground {
 			get {
-				return new Image (Path.Combine (Config.ImagesDir, Constants.GOAL_BACKGROUND));
+				return Resources.LoadImage (Constants.GOAL_BACKGROUND);
 			}
 		}
 

@@ -17,8 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
@@ -223,7 +223,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		ISurface LoadBorder (string name)
 		{
-			Image img = new Image (Path.Combine (Config.IconsDir, name));
+			Image img = Resources.LoadImage (name);
 			img.Scale (StyleConf.TimelineCategoryHeight, StyleConf.TimelineCategoryHeight);
 			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img);
 		}

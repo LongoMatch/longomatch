@@ -16,7 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
@@ -30,8 +30,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		public NeedleObject ()
 		{
 			if (needle == null) {
-				string path = Path.Combine (Config.IconsDir, StyleConf.TimelineNeedleResource); 
-				Image img = new Image (path);
+				Image img = Resources.LoadImage (StyleConf.TimelineNeedleResource);
 				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 			}
 			Width = needle.Width;

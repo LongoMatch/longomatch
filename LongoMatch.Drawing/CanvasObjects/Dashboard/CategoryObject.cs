@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
@@ -60,24 +61,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			editRect = new Rectangle (new Point (0, 0), 0, 0);
 			applyRect = new Rectangle (new Point (0, 0), 0, 0);
 			if (iconImage == null) {
-				iconImage = new Image (Path.Combine (Config.ImagesDir,
-					StyleConf.ButtonEventIcon));
+				iconImage = Resources.LoadImage (StyleConf.ButtonEventIcon);
 			}
 			if (recImage == null) {
-				recImage = new Image (Path.Combine (Config.IconsDir,
-					StyleConf.RecordButton));
+				recImage = Resources.LoadImage (StyleConf.RecordButton);
 			}
 			if (editImage == null) {
-				editImage = new Image (Path.Combine (Config.IconsDir,
-					StyleConf.EditButton));
+				editImage = Resources.LoadImage (StyleConf.EditButton);
 			}
 			if (cancelImage == null) {
-				cancelImage = new Image (Path.Combine (Config.IconsDir,
-					StyleConf.CancelButton));
+				cancelImage = Resources.LoadImage (StyleConf.CancelButton);
 			}
 			if (applyImage == null) {
-				applyImage = new Image (Path.Combine (Config.IconsDir,
-					StyleConf.ApplyButton));
+				applyImage = Resources.LoadImage (StyleConf.ApplyButton);
 			}
 			MinWidth = 100;
 			MinHeight = HeaderHeight * 2;
@@ -150,11 +146,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					return Width - HeaderTextOffset;
 				}
 			}
-		}
-
-		Image CreateSurface (string name)
-		{
-			return new Image (Path.Combine (Config.IconsDir, name));
 		}
 
 		void UpdateRows ()

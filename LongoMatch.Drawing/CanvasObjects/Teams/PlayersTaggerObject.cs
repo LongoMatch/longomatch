@@ -17,8 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
@@ -317,8 +317,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
 				if (homeTeam.Shield == null) {
-					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
-					homeButton.BackgroundImage = new Image (path);
+					homeButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
 				} else {
 					homeButton.BackgroundImage = homeTeam.Shield;
 				}
@@ -332,8 +331,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
 				if (awayTeam.Shield == null) {
-					string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
-					awayButton.BackgroundImage = new Image (path);
+					awayButton.BackgroundImage = Resources.LoadImage (StyleConf.DefaultShield);
 				} else {
 					awayButton.BackgroundImage = awayTeam.Shield;
 				}
@@ -459,11 +457,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		void LoadSubsButtons ()
 		{
 			subPlayers = new ButtonObject ();
-			string path = Path.Combine (Config.IconsDir, StyleConf.SubsUnlock);
-			subPlayers.BackgroundImageActive = new Image (path);
+			subPlayers.BackgroundImageActive = Resources.LoadImage (StyleConf.SubsUnlock);
 			subPlayers.BackgroundColorActive = Config.Style.PaletteBackground;
-			path = Path.Combine (Config.IconsDir, StyleConf.SubsLock);
-			subPlayers.BackgroundImage = new Image (path);
+			subPlayers.BackgroundImage = Resources.LoadImage (StyleConf.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();

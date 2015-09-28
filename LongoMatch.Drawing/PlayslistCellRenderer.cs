@@ -17,7 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
-using System.IO;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
@@ -76,16 +76,16 @@ namespace LongoMatch.Drawing
 			if (count > 0) {
 				if (!isExpanded) {
 					if (ArrowRight == null) {
-						ArrowRight = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-							StyleConf.ListArrowRightPath));
+						Image img = Resources.LoadImage (StyleConf.ListArrowRightPath);
+						ArrowRight = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowRight;
 					arrowY = new Point (cellArea.Start.X + 1,
 						cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
 				} else {
 					if (ArrowDown == null) {
-						ArrowDown = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir,
-							StyleConf.ListArrowDownPath));
+						Image img = Resources.LoadImage (StyleConf.ListArrowDownPath);
+						ArrowDown = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowDown;
 					arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
@@ -214,7 +214,8 @@ namespace LongoMatch.Drawing
 			}
 			if (selected) {
 				if (EyeSurface == null) {
-					EyeSurface = Config.DrawingToolkit.CreateSurface (Path.Combine (Config.IconsDir, StyleConf.ListEyeIconPath));
+					Image img = Resources.LoadImage (StyleConf.ListEyeIconPath);
+					EyeSurface = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 				}
 				tk.DrawSurface (EyeSurface, new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2));
 			}
@@ -232,7 +233,7 @@ namespace LongoMatch.Drawing
 			double textWidth;
 			
 			if (subsImage == null) {
-				subsImage = new Image (Path.Combine (Config.IconsDir, StyleConf.SubsIcon));
+				subsImage = Resources.LoadImage (StyleConf.SubsIcon);
 			}
 			tk.Context = context;
 			tk.Begin ();

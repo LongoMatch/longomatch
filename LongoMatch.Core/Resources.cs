@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 dolphy
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,33 +17,15 @@
 //
 using System;
 using System.IO;
-using LongoMatch;
-using LongoMatch.Gui;
 using LongoMatch.Core.Common;
 
-using Pango;
-using LongoMatch.Core;
-
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Core
 {
-	public partial class CodecsChoiceDialog : Gtk.Dialog
+	public static class Resources
 	{
-		public CodecsChoiceDialog ()
+		public static Image LoadImage (string name)
 		{
-			this.Build ();
-
-			Image img = Resources.LoadImage ("longomatch-pro-small.png");
-			buttonOKimage.Pixbuf = img.Value;
-
-			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
-
-			// Configure URL handler for the links
-			label1.SetLinkHandler (url => {
-				try {
-					System.Diagnostics.Process.Start (url);
-				} catch {
-				}
-			});
+			return new Image (Path.Combine (Config.dataDir, name));
 		}
 	}
 }

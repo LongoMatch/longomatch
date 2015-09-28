@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Common\Image.cs" />
     <Compile Include="Catalog.cs" />
+    <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
