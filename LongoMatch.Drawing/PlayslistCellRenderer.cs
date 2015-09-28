@@ -62,17 +62,9 @@ namespace LongoMatch.Drawing
 
 		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
-			var teamButton = new LongoMatch.Drawing.CanvasObjects.ButtonObject ();
-			teamButton.Toggle = true;
-			teamButton.Position = imagePoint;
-			teamButton.BackgroundImage = team.Shield;
-			teamButton.Width = StyleConf.ListImageWidth;
-			teamButton.Height = StyleConf.ListImageWidth;
-
 			tk.End ();
-			teamButton.Draw (tk, null);
+			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield, true);
 			tk.Begin ();
-			teamButton.Dispose ();
 		}
 
 		static void RenderCount (bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
