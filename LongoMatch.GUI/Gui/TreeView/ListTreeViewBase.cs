@@ -176,6 +176,7 @@ namespace LongoMatch.Gui.Component
 			PlaysCellRenderer c = cell as PlaysCellRenderer;
 			c.Item = item;
 			c.Count = model.IterNChildren (iter);
+			c.Project = Project;
 		}
 
 		protected abstract bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected);
@@ -192,6 +193,11 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public int Count {
+			get;
+			set;
+		}
+
+		public Project Project {
 			get;
 			set;
 		}
@@ -221,7 +227,7 @@ namespace LongoMatch.Gui.Component
 					           backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
 					            cellArea.Width, cellArea.Height);
-				PlayslistCellRenderer.Render (Item, Count, IsExpanded, Config.DrawingToolkit,
+				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, Config.DrawingToolkit,
 					context, bkg, cell, state);
 			}
 		}
