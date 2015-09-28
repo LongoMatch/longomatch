@@ -214,6 +214,11 @@ namespace LongoMatch.Gui.Component
 					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
 				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * evt.Players.Count;
+				if (evt.Team != TeamType.LOCAL || evt.Team != TeamType.VISITOR) {
+					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator);
+				} else if (evt.Team != TeamType.BOTH) {
+					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * 2;
+				}
 			}
 		}
 
