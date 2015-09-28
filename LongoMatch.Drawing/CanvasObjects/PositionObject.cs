@@ -92,9 +92,9 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Points != null) {
 				if (Points.Count == 1) {
 					return new Area (new Point (Start.X - relSize * 2, Start.Y - relSize * 2),
-					                 relSize * 4, relSize * 4);
+						relSize * 4, relSize * 4);
 				} else {
-					Area a = new Line {Start = Start, Stop = Stop}.Area;
+					Area a = new Line { Start = Start, Stop = Stop }.Area;
 					a.Start.X -= relSize * 3;
 					a.Start.Y -= relSize * 3;
 					a.Width += relSize * 6;
@@ -105,7 +105,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			return new Area (new Point (0, 0), 0, 0);
 		}
 
-		public Selection GetSelection (Point point, double precision, bool inMotion=false)
+		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			if (point.Distance (Start) < precision) {
 				return new Selection (this, SelectionPosition.LineStart);
@@ -162,7 +162,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 				fillColor = Config.Style.PaletteActive;
 			}
 
- 			tk.FillColor = fillColor;
+			tk.FillColor = fillColor;
 			tk.StrokeColor = strokeColor;
 			tk.LineWidth = (int)relSize;
 			tk.DrawCircle (Start, relSize * 1.5);

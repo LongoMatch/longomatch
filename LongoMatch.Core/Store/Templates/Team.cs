@@ -169,7 +169,7 @@ namespace LongoMatch.Core.Store.Templates
 		public List<Player> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
-					return List.ToList();
+					return List.ToList ();
 				} else {
 					return List.Where (p => p.Playing).Select (p => p).ToList ();
 				}
