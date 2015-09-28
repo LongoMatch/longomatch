@@ -79,3 +79,4 @@ oneplay-longomatch
 *covcfg.*
 obj/
 .DS_Store
+packages/
