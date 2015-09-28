@@ -54,17 +54,13 @@ namespace LongoMatch.Drawing
 			PlayerObject po = new PlayerObject (p);
 			po.Position = new Point (imagePoint.X + StyleConf.ListImageWidth / 2, imagePoint.Y + StyleConf.ListImageWidth / 2);
 			po.Size = StyleConf.ListImageWidth - 2;
-			tk.End ();
 			po.Draw (tk, null);
-			tk.Begin ();
 			po.Dispose ();
 		}
 
 		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
-			tk.End ();
 			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield, true);
-			tk.Begin ();
 		}
 
 		static void RenderCount (bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
