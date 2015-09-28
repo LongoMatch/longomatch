@@ -24,6 +24,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.CanvasObjects.Teams;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Drawing
 {
@@ -53,10 +54,13 @@ namespace LongoMatch.Drawing
 			PlayerObject po = new PlayerObject (p);
 			po.Position = new Point (imagePoint.X + StyleConf.ListImageWidth / 2, imagePoint.Y + StyleConf.ListImageWidth / 2);
 			po.Size = StyleConf.ListImageWidth - 2;
-			tk.End ();
 			po.Draw (tk, null);
-			tk.Begin ();
 			po.Dispose ();
+		}
+
+		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
+		{
+			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield, true);
 		}
 
 		static void RenderCount (bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
@@ -252,7 +256,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, IList<Player> players, bool selected, string desc,
+		public static void RenderPlay (Color color, Image ss, IList<Player> players, IList<Team> teams, bool selected, string desc,
 		                               int count, bool isExpanded, IDrawingToolkit tk,
 		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
@@ -272,11 +276,17 @@ namespace LongoMatch.Drawing
 					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
 			}
+			if (teams != null) {
+				foreach (var team in teams) {
+					RenderTeam (tk, team, imagePoint);
+					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
+				}
+			}
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
 
-		public static void Render (object item, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void Render (object item, Project project, int count, bool isExpanded, IDrawingToolkit tk,
 		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			if (item is EventType) {
@@ -288,7 +298,15 @@ namespace LongoMatch.Drawing
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
 				TimelineEvent p = item as TimelineEvent;
-				RenderPlay (p.Color, p.Miniature, p.Players, p.Selected, p.Description, count, isExpanded, tk,
+				// always add local first.
+				var teams = new List<Team> ();
+				if (p.Team == TeamType.LOCAL || p.Team == TeamType.BOTH) {
+					teams.Add (project.LocalTeamTemplate);
+				}
+				if (p.Team == TeamType.VISITOR || p.Team == TeamType.BOTH) {
+					teams.Add (project.VisitorTeamTemplate);
+				}
+				RenderPlay (p.Color, p.Miniature, p.Players, teams, p.Selected, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);
@@ -296,11 +314,11 @@ namespace LongoMatch.Drawing
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {
 				PlaylistPlayElement p = item as PlaylistPlayElement;
-				RenderPlay (p.Play.EventType.Color, p.Miniature, null, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Play.EventType.Color, p.Miniature, null, null, p.Selected, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is IPlaylistElement) {
 				IPlaylistElement p = item as IPlaylistElement;
-				RenderPlay (Config.Style.PaletteActive, p.Miniature, null, p.Selected, p.Description,
+				RenderPlay (Config.Style.PaletteActive, p.Miniature, null, null, p.Selected, p.Description,
 					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType ());

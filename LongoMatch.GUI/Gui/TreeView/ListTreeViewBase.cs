@@ -176,6 +176,7 @@ namespace LongoMatch.Gui.Component
 			PlaysCellRenderer c = cell as PlaysCellRenderer;
 			c.Item = item;
 			c.Count = model.IterNChildren (iter);
+			c.Project = Project;
 		}
 
 		protected abstract bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected);
@@ -196,6 +197,11 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
+		public Project Project {
+			get;
+			set;
+		}
+
 		public override void GetSize (Widget widget, ref Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
 		{
 			x_offset = 0;
@@ -208,6 +214,11 @@ namespace LongoMatch.Gui.Component
 					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
 				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * evt.Players.Count;
+				if (evt.Team != TeamType.LOCAL || evt.Team != TeamType.VISITOR) {
+					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator);
+				} else if (evt.Team != TeamType.BOTH) {
+					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * 2;
+				}
 			}
 		}
 
@@ -221,7 +232,7 @@ namespace LongoMatch.Gui.Component
 					           backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
 					            cellArea.Width, cellArea.Height);
-				PlayslistCellRenderer.Render (Item, Count, IsExpanded, Config.DrawingToolkit,
+				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, Config.DrawingToolkit,
 					context, bkg, cell, state);
 			}
 		}
