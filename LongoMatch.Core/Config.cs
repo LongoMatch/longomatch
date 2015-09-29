@@ -59,6 +59,11 @@ namespace LongoMatch
 				Config.baseDirectory = Path.GetFullPath (".");
 				Config.dataDir = "../data";
 			} else {
+				#if OSTYPE_ANDROID
+				Config.baseDirectory = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+				#elif OSTYPE_IOS
+				Config.baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				#else
 				Config.baseDirectory = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "../");
 				if (!Directory.Exists (Path.Combine (Config.baseDirectory, "share",
 					    Constants.SOFTWARE_NAME))) {
@@ -69,6 +74,7 @@ namespace LongoMatch
 					Log.Warning ("Prefix directory not found");
 				Config.dataDir = Path.Combine (Config.baseDirectory, "share",
 					Constants.SOFTWARE_NAME.ToLower ());
+				#endif
 			}
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
