@@ -389,7 +389,10 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (AnalysisEventButton cat in template.List.OfType<AnalysisEventButton>()) {
 				CategoryObject co = new CategoryObject (cat);
 				co.ClickedEvent += HandleTaggerClickedEvent;
-				co.EditButtonTagsEvent += (t) => EditButtonTagsEvent (t);
+				co.EditButtonTagsEvent += (t) => {
+					if (EditButtonTagsEvent != null)
+						EditButtonTagsEvent (t);
+				};
 				co.Mode = Mode;
 				AddButton (co);
 			}
