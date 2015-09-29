@@ -160,6 +160,9 @@ namespace LongoMatch.Gui.Panel
 			button.HeightRequest = StyleConf.WelcomeIconSize;
 			button.WidthRequest = StyleConf.WelcomeIconSize;
 			button.Add (image);
+			if (buttonWidgets.Count == 0) {
+				button.Realized += (sender, e) => button.GrabFocus ();
+			}
 
 			alignment = new Alignment (0.5f, 0.5f, 0.0f, 0.0f);
 			alignment.Add (button);
