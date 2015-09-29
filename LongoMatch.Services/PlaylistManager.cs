@@ -119,7 +119,7 @@ namespace LongoMatch.Services
 				Switch (play, null, null);
 				if (play != null) {
 					LoadPlay (play, play.Start, true);
-				} else {
+				} else if (player != null) {
 					player.UnloadCurrentEvent ();
 				}
 				Config.EventsBroker.EmitEventLoaded (play);
