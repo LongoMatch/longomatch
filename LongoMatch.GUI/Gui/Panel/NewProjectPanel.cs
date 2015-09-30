@@ -215,6 +215,7 @@ namespace LongoMatch.Gui.Panel
 			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
+			notebook1.SwitchPage += HandleSwitchPage;
 			Config.EventsBroker.QuitApplicationEvent += HandleQuit;
 		}
 
@@ -382,7 +383,8 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void FillProject () {
+		void FillProject ()
+		{
 			project.Dashboard = analysisTemplate;
 			project.LocalTeamTemplate = hometemplate;
 			project.VisitorTeamTemplate = awaytemplate;
@@ -594,8 +596,6 @@ namespace LongoMatch.Gui.Panel
 
 			notebook1.Page++;
 
-			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
-
 			if (notebook1.Page == PROJECT_PERIODS) {
 				projectperiods1.Project = project;
 			}
@@ -693,6 +693,12 @@ namespace LongoMatch.Gui.Panel
 			}
 			deviceformatcombobox.Active = 0;
 		}
+
+		void HandleSwitchPage (object o, SwitchPageArgs args)
+		{
+			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
+		}
+
 	}
 }
 
