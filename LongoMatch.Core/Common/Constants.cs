@@ -102,11 +102,10 @@ Xavier Queralt Mateu (ca)";
 		public const string PROJECT_EXT = ".lgm";
 		#if OSTYPE_ANDROID || OSTYPE_IOS
 		public const string IMAGE_EXT = ".png";
-		#endif
-		#if !OSTYPE_ANDROID && !OSTYPE_IOS
+		#else
 		public const string IMAGE_EXT = ".svg";
 		#endif
-		
+
 		public const string LOGO_ICON = "longomatch";
 		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
 		public const string FIELD_BACKGROUND = "images/fields/field-full" + IMAGE_EXT;
