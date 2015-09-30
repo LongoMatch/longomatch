@@ -187,7 +187,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFocusClicked (object sender, EventArgs e)
 		{
+			// Align the position to 40% of the scrolled width
 			double pos = CurrentTime.TotalSeconds / secondsPerPixel;
+			pos -= 0.4 * scrolledwindow1.Allocation.Width;
 			double maxPos = timelinearea.Allocation.Width - scrolledwindow1.Allocation.Width;
 			
 			pos = Math.Min (pos, maxPos);
