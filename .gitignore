@@ -78,3 +78,4 @@ oneplay-longomatch
 *Result.xml
 *covcfg.*
 obj/
+.DS_Store
