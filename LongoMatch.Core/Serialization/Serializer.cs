@@ -29,21 +29,18 @@ using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Common
 {
-	
-
 	public class Serializer : ISerializer
 	{
 		static Serializer instance;
 
-		Serializer() {}
-
-		public static Serializer Instance
+		Serializer ()
 		{
-			get 
-			{
-				if (instance == null)
-				{
-					instance = new Serializer();
+		}
+
+		public static Serializer Instance {
+			get {
+				if (instance == null) {
+					instance = new Serializer ();
 				}
 				return instance;
 			}
@@ -85,24 +82,30 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public T Load<T> (Stream stream,
-		                  SerializationType type = SerializationType.Json)
+		public object Load (Type type, Stream stream,
+		                    SerializationType serType = SerializationType.Json)
 		{
-			switch (type) {
+			switch (serType) {
 			case SerializationType.Binary:
 				BinaryFormatter formatter = new BinaryFormatter ();
-				return (T)formatter.Deserialize (stream);
+				return formatter.Deserialize (stream);
 			case SerializationType.Xml:
-				XmlSerializer xmlformatter = new XmlSerializer (typeof(T));
-				return (T)xmlformatter.Deserialize (stream);
+				XmlSerializer xmlformatter = new XmlSerializer (type);
+				return xmlformatter.Deserialize (stream);
 			case SerializationType.Json:
 				StreamReader sr = new StreamReader (stream, Encoding.UTF8);
 				JsonSerializerSettings settings = JsonSettings;
 				settings.ContractResolver = new IsChangedContractResolver ();
-				return JsonConvert.DeserializeObject<T> (sr.ReadToEnd (), settings);
+				return JsonConvert.DeserializeObject (sr.ReadToEnd (), type, settings);
 			default:
 				throw new Exception ();
 			}
+		}
+
+		public T Load<T> (Stream stream,
+		                  SerializationType type = SerializationType.Json)
+		{
+			return (T)Load (typeof(T), stream, type);
 		}
 
 		public T Load<T> (string filepath,
@@ -239,7 +242,7 @@ namespace LongoMatch.Core.Common
 
 		protected override JsonContract CreateContract (Type type)
 		{
-			JsonContract contract = base.CreateContract(type);
+			JsonContract contract = base.CreateContract (type);
 			if (typeof(IChanged).IsAssignableFrom (type)) {
 				contract.OnDeserializedCallbacks.Add (
 					(o, context) => {
