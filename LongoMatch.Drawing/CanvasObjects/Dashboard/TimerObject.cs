@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.IO;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
@@ -37,12 +38,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Toggle = true;
 			CurrentTime = new Time (0);
 			if (iconImage == null) {
-				iconImage = new Image (Path.Combine (Config.ImagesDir,
-					StyleConf.ButtonTimerIcon));
+				iconImage = Resources.LoadImage (StyleConf.ButtonTimerIcon);
 			}
 			if (cancelImage == null) {
-				cancelImage = new Image (Path.Combine (Config.IconsDir,
-					StyleConf.CancelButton));
+				cancelImage = Resources.LoadImage (StyleConf.CancelButton);
 			}
 			MinWidth = StyleConf.ButtonMinWidth;
 			MinHeight = iconImage.Height + StyleConf.ButtonTimerFontSize;

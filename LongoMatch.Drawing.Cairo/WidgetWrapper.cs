@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using Gtk;
 using Gdk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Handlers.Drawing;
@@ -213,7 +214,7 @@ namespace LongoMatch.Drawing.Cairo
 			if (cursorStr == null) {
 				widget.GdkWindow.Cursor = cursor;
 			} else {
-				Image img = new Image (Path.Combine (Config.ImagesDir, "cursors", cursorStr));
+				Image img = Resources.LoadImage (Path.Combine ("cursors", cursorStr));
 				Cursor c = new Cursor (widget.Display, img.Value, 0, 0);
 				widget.GdkWindow.Cursor = c;
 			}

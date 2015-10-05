@@ -100,19 +100,24 @@ Xavier Queralt Mateu (ca)";
 		public const string SUBCAT_TEMPLATE_EXT = ".lst";
 		public const string PLAYLIST_EXT = ".lpl";
 		public const string PROJECT_EXT = ".lgm";
-		
+		#if OSTYPE_ANDROID || OSTYPE_IOS
+		public const string IMAGE_EXT = ".png";
+		#else
+		public const string IMAGE_EXT = ".svg";
+		#endif
+
 		public const string LOGO_ICON = "longomatch";
-		public const string BACKGROUND = "longomatch-dark-bg.svg";
-		public const string FIELD_BACKGROUND = "fields/field-full.svg";
-		public const string HALF_FIELD_BACKGROUND = "fields/field-half.svg";
-		public const string HHALF_FIELD_BACKGROUND = "fields/field-full-teameditor.svg";
-		public const string GOAL_BACKGROUND = "fields/field-goal.svg";
-		public const string LINE_NORMAL = "line.svg";
-		public const string LINE_DASHED = "dash-line.svg";
-		public const string LINE_ARROW = "line-arrow.svg";
-		public const string LINE_DOUBLE_ARROW = "line-double-arrow.svg";
-		public const string LINE_DOT = "line-dot.svg";
-		public const string LINE_DOUBLE_DOT = "line-double-dot.svg";
+		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
+		public const string FIELD_BACKGROUND = "images/fields/field-full" + IMAGE_EXT;
+		public const string HALF_FIELD_BACKGROUND = "images/fields/field-half" + IMAGE_EXT;
+		public const string HHALF_FIELD_BACKGROUND = "images/fields/field-full-teameditor" + IMAGE_EXT;
+		public const string GOAL_BACKGROUND = "images/fields/field-goal" + IMAGE_EXT;
+		public const string LINE_NORMAL = "line" + IMAGE_EXT;
+		public const string LINE_DASHED = "dash-line" + IMAGE_EXT;
+		public const string LINE_ARROW = "line-arrow" + IMAGE_EXT;
+		public const string LINE_DOUBLE_ARROW = "line-double-arrow" + IMAGE_EXT;
+		public const string LINE_DOT = "line-dot" + IMAGE_EXT;
+		public const string LINE_DOUBLE_DOT = "line-double-dot" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
 		
 		public const int DB_MAYOR_VERSION = 3;

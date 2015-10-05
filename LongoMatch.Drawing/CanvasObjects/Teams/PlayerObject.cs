@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.IO;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
@@ -218,7 +219,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		ISurface CreateSurface (string name)
 		{
-			return Config.DrawingToolkit.CreateSurface (Path.Combine (Config.ImagesDir, name), false);
+			Image img = Resources.LoadImage (name);
+			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 		}
 	}
 }

@@ -42,9 +42,8 @@ namespace LongoMatch.Core.Store.Templates
 			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
 			List = new ObservableCollection<Player> ();
-			string path = Path.Combine (Config.IconsDir, StyleConf.DefaultShield);
 			try {
-				Shield = new Image (path);
+				Shield = Resources.LoadImage (StyleConf.DefaultShield);
 			} catch {
 				/* Ignore for unit tests */
 			}
@@ -170,7 +169,7 @@ namespace LongoMatch.Core.Store.Templates
 		public List<Player> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
-					return List.ToList();
+					return List.ToList ();
 				} else {
 					return List.Where (p => p.Playing).Select (p => p).ToList ();
 				}

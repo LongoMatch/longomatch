@@ -17,11 +17,11 @@
 //
 using System;
 using System.Collections.Generic;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using System.IO;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -186,8 +186,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		ISurface CreateSurface (string name)
 		{
-			return Config.DrawingToolkit.CreateSurface (
-				Path.Combine (Config.IconsDir, name), false);
+			Image img = Resources.LoadImage (name);
+			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 		}
 
 	}

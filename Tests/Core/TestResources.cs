@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 dolphy
+﻿//
+//  Copyright (C) 2015 andoni
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,35 +16,43 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
 using LongoMatch;
-using LongoMatch.Gui;
 using LongoMatch.Core.Common;
+using NUnit.Framework;
 
-using Pango;
-using LongoMatch.Core;
-
-namespace LongoMatch.Gui.Dialog
+namespace Tests.Core.Common
 {
-	public partial class CodecsChoiceDialog : Gtk.Dialog
+	[TestFixture ()]
+	public class TestResources
 	{
-		public CodecsChoiceDialog ()
+
+		[TestFixtureSetUp ()]
+		public void Setup ()
 		{
-			this.Build ();
-
-			Image img = Resources.LoadImage ("longomatch-pro-small.png");
-			buttonOKimage.Pixbuf = img.Value;
-
-			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
-
-			// Configure URL handler for the links
-			label1.SetLinkHandler (url => {
-				try {
-					System.Diagnostics.Process.Start (url);
-				} catch {
-				}
-			});
+			Config.dataDir = "../data/";
 		}
+
+		[Test ()]
+		public void TestLoadIconResource ()
+		{
+			Image img = LongoMatch.Core.Resources.LoadImage ("images/longomatch-dark-bg.svg");
+			Assert.IsNotNull (img);
+		}
+
+		[Test ()]
+		public void TestLoadImageResource ()
+		{
+			Image img = LongoMatch.Core.Resources.LoadImage ("icons/hicolor/scalable/apps/longomatch.svg");
+			Assert.IsNotNull (img);
+		}
+
+		[Test ()]
+		public void TestLoadInvalidResource ()
+		{
+			Image img = LongoMatch.Core.Resources.LoadImage ("longomatch.svg");
+			Assert.IsNull (img);
+		}
+
 	}
 }
 

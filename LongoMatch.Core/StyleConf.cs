@@ -22,6 +22,8 @@ namespace LongoMatch.Core.Common
 {
 	public class StyleConf
 	{
+		public const string IMAGE_EXT = Constants.IMAGE_EXT;
+
 		public const int WelcomeBorder = 30;
 		public const int WelcomeIconSize = 80;
 		public const int WelcomeIconImageSize = 36;
@@ -63,14 +65,14 @@ namespace LongoMatch.Core.Common
 		public const int ListTextOffset = ListRowSeparator * 2 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
 
 		public const int ListEyeIconOffset = 10;
-		public const string ListEyeIconPath = "hicolor/scalable/actions/longomatch-eye.svg";
-		public const string ListArrowRightPath = "hicolor/scalable/actions/longomatch-arrow-right.svg";
-		public const string ListArrowDownPath = "hicolor/scalable/actions/longomatch-arrow-down.svg";
+		public const string ListEyeIconPath = "icons/hicolor/scalable/actions/longomatch-eye" + IMAGE_EXT;
+		public const string ListArrowRightPath = "icons/hicolor/scalable/actions/longomatch-arrow-right" + IMAGE_EXT;
+		public const string ListArrowDownPath = "icons/hicolor/scalable/actions/longomatch-arrow-down" + IMAGE_EXT;
 
 		public const int TeamsShieldIconSize = 45;
 		
-		public const string TimelineNeedleResource = "hicolor/scalable/actions/longomatch-timeline-needle-big.svg";
-		public const string TimelineNeedleUP = "hicolor/scalable/actions/longomatch-timeline-needle-up.svg";
+		public const string TimelineNeedleResource = "icons/hicolor/scalable/actions/longomatch-timeline-needle-big" + IMAGE_EXT;
+		public const string TimelineNeedleUP = "icons/hicolor/scalable/actions/longomatch-timeline-needle-up" + IMAGE_EXT;
 		public const int TimelineCategoryHeight = 20;
 		public const int TimelineCameraHeight = 30;
 		public const int TimelineCameraMaxLines = 8;
@@ -82,12 +84,12 @@ namespace LongoMatch.Core.Common
 		public const int TimelineFontSize = 16;
 		public const int TimelineRuleFontSize = 12;
 		public const int TimelineBackgroundLineSize = 4;
-		public const string TimelineSelectionLeft = "hicolor/scalable/actions/longomatch-timeline-select-left.svg";
-		public const string TimelineSelectionRight = "hicolor/scalable/actions/longomatch-timeline-select-right.svg";
+		public const string TimelineSelectionLeft = "icons/hicolor/scalable/actions/longomatch-timeline-select-left" + IMAGE_EXT;
+		public const string TimelineSelectionRight = "icons/hicolor/scalable/actions/longomatch-timeline-select-right" + IMAGE_EXT;
 
-		public const string PlayerArrowOut = "player/arrow-out.svg";
-		public const string PlayerArrowIn = "player/arrow-in.svg";
-		public const string PlayerPhoto = "player/photo.svg";
+		public const string PlayerArrowOut = "images/player/arrow-out" + IMAGE_EXT;
+		public const string PlayerArrowIn = "images/player/arrow-in" + IMAGE_EXT;
+		public const string PlayerPhoto = "images/player/photo" + IMAGE_EXT;
 		public const int PlayerLineWidth = 2;
 		public const int PlayerSize = 60;
 		public const int PlayerNumberSize = 20;
@@ -97,15 +99,15 @@ namespace LongoMatch.Core.Common
 		public const int PlayerArrowX = PlayerNumberX;
 		public const int PlayerArrowY = PlayerNumberY - PlayerArrowSize + 1;
 		
-		public const string SubsLock = "hicolor/scalable/actions/longomatch-player-swap-lock.svg";
-		public const string SubsUnlock = "hicolor/scalable/actions/longomatch-player-swap-unlock.svg";
-		public const string SubsIcon = "hicolor/scalable/actions/longomatch-subs-arrow.svg";
-		public const string DefaultShield = "hicolor/scalable/actions/longomatch-default-shield.svg";
+		public const string SubsLock = "icons/hicolor/scalable/actions/longomatch-player-swap-lock" + IMAGE_EXT;
+		public const string SubsUnlock = "icons/hicolor/scalable/actions/longomatch-player-swap-unlock" + IMAGE_EXT;
+		public const string SubsIcon = "icons/hicolor/scalable/actions/longomatch-subs-arrow" + IMAGE_EXT;
+		public const string DefaultShield = "icons/hicolor/scalable/actions/longomatch-default-shield" + IMAGE_EXT;
 
-		public const string EditButton = "hicolor/scalable/actions/longomatch-pencil.svg";
-		public const string ApplyButton = "hicolor/scalable/actions/longomatch-apply-button.svg";
-		public const string CancelButton = "hicolor/scalable/actions/longomatch-mark.svg";
-		public const string RecordButton = "hicolor/scalable/actions/longomatch-control-record.svg";
+		public const string EditButton = "icons/hicolor/scalable/actions/longomatch-pencil" + IMAGE_EXT;
+		public const string ApplyButton = "icons/hicolor/scalable/actions/longomatch-apply-button" + IMAGE_EXT;
+		public const string CancelButton = "icons/hicolor/scalable/actions/longomatch-mark" + IMAGE_EXT;
+		public const string RecordButton = "icons/hicolor/scalable/actions/longomatch-control-record" + IMAGE_EXT;
 
 		public const int NotebookTabIconSize = 18;
 		public const int NotebookTabSize = NotebookTabIconSize + 14;
@@ -119,10 +121,10 @@ namespace LongoMatch.Core.Common
 		public const int ButtonTimerFontSize = 24;
 		public const int ButtonButtonsFontSize = 10;
 		public const int ButtonMinWidth = 100;
-		public const string ButtonTimerIcon = "dashboard/longomatch-timer.svg";
-		public const string ButtonTagIcon = "dashboard/longomatch-tag.svg";
-		public const string ButtonScoreIcon = "dashboard/longomatch-score.svg";
-		public const string ButtonEventIcon = "dashboard/longomatch-event.svg";
+		public const string ButtonTimerIcon = "images/dashboard/longomatch-timer" + IMAGE_EXT;
+		public const string ButtonTagIcon = "images/dashboard/longomatch-tag" + IMAGE_EXT;
+		public const string ButtonScoreIcon = "images/dashboard/longomatch-score" + IMAGE_EXT;
+		public const string ButtonEventIcon = "images/dashboard/longomatch-event" + IMAGE_EXT;
 		public static Color ButtonTagColor = Color.Parse ("#d8ffc7");
 		public static Color ButtonTimerColor = Color.Parse ("#bebbff");
 		public static Color ButtonScoreColor = Color.Parse ("#d8ffc7");
@@ -138,10 +140,10 @@ namespace LongoMatch.Core.Common
 		public static Color ActionLinkNormal = Color.Parse ("#808080");
 		public static Color ActionLinkPrelight = Color.Parse ("#B3B3B3");
 		public static Color ActionLinkSelected = Color.Parse ("#ABD05C");
-		public const string LinkIn = "hicolor/scalable/actions/longomatch-link-in.svg";
-		public const string LinkInPrelight = "hicolor/scalable/actions/longomatch-link-in-prelight.svg";
-		public const string LinkOut = "hicolor/scalable/actions/longomatch-link-out.svg";
-		public const string LinkOutPrelight = "hicolor/scalable/actions/longomatch-link-out-prelight.svg";
+		public const string LinkIn = "icons/hicolor/scalable/actions/longomatch-link-in" + IMAGE_EXT;
+		public const string LinkInPrelight = "icons/hicolor/scalable/actions/longomatch-link-in-prelight" + IMAGE_EXT;
+		public const string LinkOut = "icons/hicolor/scalable/actions/longomatch-link-out" + IMAGE_EXT;
+		public const string LinkOutPrelight = "icons/hicolor/scalable/actions/longomatch-link-out-prelight" + IMAGE_EXT;
 
 		public string Font = "Ubuntu";
 
