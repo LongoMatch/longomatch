@@ -49,10 +49,11 @@ namespace Tests.Core.Common
 		[Test ()]
 		public void TestLoadInvalidResource ()
 		{
-			Image img = LongoMatch.Core.Resources.LoadImage ("longomatch.svg");
-			Assert.IsNull (img);
+			Assert.Throws<GLib.GException> (
+				delegate {
+					var img = LongoMatch.Core.Resources.LoadImage ("longomatch.svg");
+				});
 		}
-
 	}
 }
 
