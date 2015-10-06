@@ -4,5 +4,5 @@ export PATH=$PATH:~/oneplay-build/build-tools-darwin-x86_64/bin/:$CERBERO_PREFIX
 export PKG_CONFIG_PATH=$CERBERO_PREFIX/lib/pkgconfig/
 export MONO_PATH=$CERBERO_PREFIX/lib/mono/5.5/:$CERBERO_PREFIX/lib/mono/4.5/Facades
 export DYLD_FALLBACK_LIBRARY_PATH=$CERBERO_PREFIX/lib
-open /Applications/Xamarin\ Studio.app
+open -n /Applications/Xamarin\ Studio.app
 
