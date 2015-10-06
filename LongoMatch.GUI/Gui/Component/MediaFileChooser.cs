@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			nameentry.Text = name ?? "";
 
 			addbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-browse", Gtk.IconSize.Button, 0);
-			clearbuttonimage.Pixbuf = Helpers.Misc.LoadStockIcon (clearbuttonimage, "gtk-clear", Gtk.IconSize.Button);
+			clearbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", Gtk.IconSize.Button, 0);
 
 			FilterName = "MP4";
 			FilterExtensions = new string[] { "*.mp4" }; 
@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Component
 
 			UpdateFile ();
 
-			addbutton.Clicked += HandleAddClicked;
+			entrybutton_addbutton.Clicked += HandleAddClicked;
 			clearbutton.Clicked += HandleClearClicked;
 			nameentry.Changed += HandleNameChanged;
 

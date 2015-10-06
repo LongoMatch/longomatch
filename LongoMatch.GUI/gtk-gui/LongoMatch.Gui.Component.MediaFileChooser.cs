@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Image clearbuttonimage;
 		
-		private global::Gtk.Button addbutton;
+		private global::Gtk.Button entrybutton_addbutton;
 		
 		private global::Gtk.Image addbuttonimage;
 
@@ -77,15 +77,15 @@ namespace LongoMatch.Gui.Component
 			w5.Expand = false;
 			w5.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.addbutton = new global::Gtk.Button ();
-			this.addbutton.CanFocus = true;
-			this.addbutton.Name = "addbutton";
-			// Container child addbutton.Gtk.Container+ContainerChild
+			this.entrybutton_addbutton = new global::Gtk.Button ();
+			this.entrybutton_addbutton.CanFocus = true;
+			this.entrybutton_addbutton.Name = "entrybutton_addbutton";
+			// Container child entrybutton_addbutton.Gtk.Container+ContainerChild
 			this.addbuttonimage = new global::Gtk.Image ();
 			this.addbuttonimage.Name = "addbuttonimage";
-			this.addbutton.Add (this.addbuttonimage);
-			this.hbox1.Add (this.addbutton);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.addbutton]));
+			this.entrybutton_addbutton.Add (this.addbuttonimage);
+			this.hbox1.Add (this.entrybutton_addbutton);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.entrybutton_addbutton]));
 			w7.Position = 4;
 			w7.Expand = false;
 			w7.Fill = false;

@@ -39,7 +39,7 @@ style "longomatch-custom-entry" = "longomatch-default-entry" {
   }
 }
 
-style "longomatch-custom-entry-children" {
+style "longomatch-custom-entry-button" {
   engine "pixmap"
   {
     image
