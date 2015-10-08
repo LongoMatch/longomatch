@@ -115,12 +115,13 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>The object id.</returns>
 		/// <param name="id">The document id.</param>
-		public static Guid IDFromString (string id) {
-			string [] ids = id.Split (ID_SEP_CHAR);
+		public static Guid IDFromString (string id)
+		{
+			string[] ids = id.Split (ID_SEP_CHAR);
 			if (ids.Length == 1) {
-				id = ids[0];
+				id = ids [0];
 			} else {
-				id = ids[1];
+				id = ids [1];
 			}
 			return Guid.Parse (id);
 		}
@@ -131,7 +132,8 @@ namespace LongoMatch.DB
 		/// <returns>The document id.</returns>
 		/// <param name="id">The object ID.</param>
 		/// <param name="parentID">The parent ID.</param>
-		public static string StringFromID (Guid id, Guid parentID) {
+		public static string StringFromID (Guid id, Guid parentID)
+		{
 			if (parentID != Guid.Empty && parentID != id) {
 				return String.Format ("{0}{1}{2}", parentID, ID_SEP_CHAR, id);
 			} else {
@@ -396,27 +398,27 @@ namespace LongoMatch.DB
 		/// <param name = "preservePreloadProperties">If <c>true</c> reloaded properties are preserved instead of
 		/// re-read from the db</param>
 		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable,
-			bool preservePreloadProperties = false)
+		                                       bool preservePreloadProperties = false)
 		{
 			this.context = context;
 			this.parentStorable = parentStorable;
 			this.preservePreloadProperties = preservePreloadProperties;
 		}
 
-		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+		protected override JsonProperty CreateProperty (MemberInfo member, MemberSerialization memberSerialization)
 		{
 			// When filling a partial object, do not overwrite the preloaded properties so changes made in
 			// the preloaded object are not overwritten.
-			JsonProperty property = base.CreateProperty(member, memberSerialization);
+			JsonProperty property = base.CreateProperty (member, memberSerialization);
 			if (property.DeclaringType == context.ParentType) {
 				if (preservePreloadProperties &&
-					property.AttributeProvider.GetAttributes(typeof (LongoMatchPropertyPreload), true).Any ()) {
+				    property.AttributeProvider.GetAttributes (typeof(LongoMatchPropertyPreload), true).Any ()) {
 					property.Ignored = true;
 				}
 			}
 			return property;
 		}
-		
+
 		protected override JsonContract CreateContract (Type type)
 		{
 			JsonContract contract = base.CreateContract (type);
