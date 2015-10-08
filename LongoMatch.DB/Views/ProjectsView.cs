@@ -39,7 +39,7 @@ namespace LongoMatch.DB.Views
 
 		protected override List<string> FilterProperties {
 			get {
-				return new List<string> { "Title", "Season", "Competition", "LocalTeamName", "VisitorTeamName" };
+				return new List<string> { "Title", "Season", "Competition", "LocalName", "VisitorName" };
 			}
 		}
 
@@ -51,8 +51,8 @@ namespace LongoMatch.DB.Views
 			keys.Add (desc ["Title"]);
 			keys.Add (desc ["Season"]);
 			keys.Add (desc ["Competition"]);
-			keys.Add (desc ["LocalTeamName"]);
-			keys.Add (desc ["VisitorTeamName"]);
+			keys.Add (desc ["LocalName"]);
+			keys.Add (desc ["VisitorName"]);
 			return new PropertyKey (keys);
 		}
 	}
