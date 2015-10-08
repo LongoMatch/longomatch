@@ -114,6 +114,7 @@
     <Compile Include="Integration\TestPostGameAnalysis.cs" />
     <Compile Include="DummyBusyDialog.cs" />
     <Compile Include="Core\TestResources.cs" />
+    <Compile Include="DB\TestQueries.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

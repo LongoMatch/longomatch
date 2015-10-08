@@ -96,7 +96,7 @@ namespace Tests.DB
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
 			// Remove the StorageInfo doc to get more understandable document count results
-			db.GetDocument (Guid.Empty.ToString ()).Delete();
+			db.GetDocument (Guid.Empty.ToString ()).Delete ();
 		}
 
 		[TestFixtureTearDown]
@@ -207,7 +207,7 @@ namespace Tests.DB
 			storage.Store (list);
 			Assert.AreEqual (3, db.DocumentCount);
 			list = storage.Retrieve<StorableListTest> (list.ID);
-			list.Images.Remove (list.Images[0]);
+			list.Images.Remove (list.Images [0]);
 			storage.Delete (list);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
@@ -222,7 +222,7 @@ namespace Tests.DB
 			storage.Store (list);
 			Assert.AreEqual (3, db.DocumentCount);
 			list = storage.Retrieve<StorableListTest> (list.ID);
-			list.Images.Remove (list.Images[0]);
+			list.Images.Remove (list.Images [0]);
 			storage.Store (list);
 			Assert.AreEqual (2, db.DocumentCount);
 		}
@@ -327,7 +327,8 @@ namespace Tests.DB
 
 
 		[Test ()]
-		public void TestRetrieveErrors (){
+		public void TestRetrieveErrors ()
+		{
 			// ID does not exists
 			Assert.IsNull (storage.Retrieve<Project> (Guid.Empty));
 			// ID exists but for a different type;
@@ -339,7 +340,8 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestIsChangedResetted () {
+		public void TestIsChangedResetted ()
+		{
 			Team t, t1;
 			ObjectChangedParser parser;
 			List<IStorable> storables = null, changed = null;
@@ -494,7 +496,7 @@ namespace Tests.DB
 			storage.Store<Project> (p);
 			Assert.AreEqual (40, db.DocumentCount);
 
-			p = storage.RetrieveAll<Project>()[0];
+			p = storage.RetrieveAll<Project> () [0];
 			p.Load ();
 			storage.Store (p);
 			Assert.AreEqual (40, db.DocumentCount);
@@ -550,13 +552,13 @@ namespace Tests.DB
 		{
 			Project p1 = Utils.CreateProject (true);
 			storage.Store (p1);
-			Project p2 = storage.RetrieveAll<Project> ()[0];
+			Project p2 = storage.RetrieveAll<Project> () [0];
 			Assert.IsFalse (p2.IsLoaded);
 			p2.Description.Competition = "NEW NAME";
 			p2.Load ();
 			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
 			storage.Store (p2);
-			Project p3 = storage.RetrieveAll<Project> ()[0];
+			Project p3 = storage.RetrieveAll<Project> () [0];
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
 		}
 
