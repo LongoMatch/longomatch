@@ -332,6 +332,9 @@ namespace LongoMatch.DB
 			string idStr;
 
 			idStr = reader.Value as string; 
+			if (idStr == null) {
+				return null;
+			}
 			id = DocumentsSerializer.IDFromString (idStr);
 			/* Return the cached object instance instead a new one */
 			storable = context.Cache.ResolveReference (id);
