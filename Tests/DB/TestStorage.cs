@@ -492,12 +492,12 @@ namespace Tests.DB
 			p.Description = pd;
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (39, db.DocumentCount);
+			Assert.AreEqual (40, db.DocumentCount);
 
 			p = storage.RetrieveAll<Project>()[0];
 			p.Load ();
 			storage.Store (p);
-			Assert.AreEqual (39, db.DocumentCount);
+			Assert.AreEqual (40, db.DocumentCount);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
@@ -530,9 +530,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (49, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (49, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);

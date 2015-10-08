@@ -27,11 +27,48 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
 	[JsonObject]
-	public class MediaFileSet : List<MediaFile>, IChanged
+	public class MediaFileSet : List<MediaFile>, IStorable
 	{
+		bool isLoading;
 
 		public MediaFileSet ()
 		{
+			ID = Guid.NewGuid ();
+		}
+
+		public Guid ID {
+			get;
+			set;
+		}
+
+		#region IStorable
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public IStorage Storage {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool IsLoaded {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public List<IStorable> SavedChildren {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public bool DeleteChildren {
+			get;
+			set;
 		}
 
 		[JsonIgnore]
@@ -40,6 +77,8 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		#endregion
 
 		[JsonProperty]
 		[PropertyChanged.DoNotNotify]
@@ -179,6 +218,19 @@ namespace LongoMatch.Core.Store
 				}
 			}
 			return true;
+		}
+
+		protected void CheckIsLoaded ()
+		{
+			if (!IsLoaded && !isLoading) {
+				isLoading = true;
+				if (Storage == null) {
+					throw new StorageException ("Storage not set in preloaded object");
+				}
+				Storage.Fill (this);
+				IsLoaded = true;
+				isLoading = false;
+			}
 		}
 	}
 }
