@@ -159,6 +159,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of players tagged in this event.
 		/// </summary>
+		[LongoMatchPropertyIndex (0)]
 		public ObservableCollection<Player> Players {
 			get {
 				return players;

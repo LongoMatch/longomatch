@@ -115,7 +115,7 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>The object id.</returns>
 		/// <param name="id">The document id.</param>
-		public static Guid IDFromString (string id)
+		public static string IDStringFromString (string id)
 		{
 			string[] ids = id.Split (ID_SEP_CHAR);
 			if (ids.Length == 1) {
@@ -123,7 +123,17 @@ namespace LongoMatch.DB
 			} else {
 				id = ids [1];
 			}
-			return Guid.Parse (id);
+			return id;
+		}
+
+		/// <summary>
+		/// Return the object ID from the document ID string, which can be <ID> or <ParentID>&<ID>.
+		/// </summary>
+		/// <returns>The object id.</returns>
+		/// <param name="id">The document id.</param>
+		public static Guid IDFromString (string id)
+		{
+			return Guid.Parse (IDStringFromString (id));
 		}
 
 		/// <summary>

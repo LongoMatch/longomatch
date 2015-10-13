@@ -145,6 +145,15 @@ namespace LongoMatch.DB.Views
 							key += i;
 						}
 
+						/* Transform IStorable objects into ID's for the query since they are not indexed
+						* as objects but with their ID */
+						for (int w = 0; w < values.Count; w++) {
+							IStorable storable = values [w] as IStorable;
+							if (storable != null) {
+								values [w] = storable.ID;
+							}
+						}
+
 						if (values.Count == 1) {
 							sql += String.Format (" {0} {1}='\"{2}\"' ", ope, key, values [0]);
 						} else {

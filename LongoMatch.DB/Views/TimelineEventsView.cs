@@ -16,10 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
+using Newtonsoft.Json.Linq;
 
 namespace LongoMatch.DB.Views
 {
@@ -27,29 +28,39 @@ namespace LongoMatch.DB.Views
 	{
 		public TimelineEventsView (CouchbaseStorage storage) : base (storage)
 		{
+			/* We emit 1 row per player changing the Players property to Player */
+			FilterProperties.Remove ("Players");
+			FilterProperties.Add ("Player");
 		}
 
 		protected override object GenKeys (IDictionary<string, object> document)
 		{
-			PropertyKey propKey = base.GenKeys (document) as PropertyKey;
-			FullTextKey fullKey = new FullTextKey ("");
-			return new MultiKey (propKey, fullKey);
+			var keys = new List<object> ();
+			foreach (string propName in FilterProperties) {
+				if (propName != "Player") {
+					keys.Add (document [propName]);
+				}
+			}
+			return new PropertyKey (keys);
 		}
 
 		protected override MapDelegate GetMap (string docType)
 		{
 			return (document, emitter) => {
 				if (docType.Equals (document [DocumentsSerializer.DOC_TYPE])) {
+					PropertyKey keys = GenKeys (document) as PropertyKey;
+					int playerKeyIndex = keys.Keys.Count;
+
+					/* Initialize the Player key in case there are no players. */
+					keys.Keys.Add (null);
 					/* iterate over players and emit a row for each player */
-					emitter (GenKeys (document), GenValue (document));
+					foreach (object playerObject in document["Players"] as IEnumerable) {
+						string id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string); 
+						keys.Keys [playerKeyIndex] = id;
+						emitter (keys, GenValue (document));
+					}
 				}
 			};
-		}
-
-		protected override List<string> FilterProperties {
-			get {
-				return base.FilterProperties.Concat ( new List<string> {"Player"}).ToList();
-			}
 		}
 
 		protected override string ViewVersion {

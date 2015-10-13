@@ -18,6 +18,7 @@
 using System;
 using NUnit.Framework;
 using System.IO;
+using System.Linq;
 using LongoMatch.DB;
 using Couchbase.Lite;
 using LongoMatch.Core.Store.Templates;
@@ -182,8 +183,40 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestQueryEvents ()
+		public void TestQueryEventsByPlayer ()
 		{
+			Player andoni = new Player { Name = "Andoni" };
+			Player jorge = new Player { Name = "Jorge" };
+			Player victor = new Player { Name = "Victor" };
+			Player josep = new Player { Name = "Josep" };
+			Player davide = new Player { Name = "Davide" };
+			Player messi = new Player { Name = "Messi" };
+			Player ukelele = new Player { Name = "ukelele" };
+
+			var players = new List<Player> { andoni, jorge, victor, josep, davide };
+			foreach (Player player in players) {
+				TimelineEvent evt = new TimelineEvent ();
+				evt.Players.Add (player);
+				evt.Players.Add (messi);
+				storage.Store (evt);
+			}
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Player", messi);
+			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", andoni);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", andoni, jorge, josep);
+			Assert.AreEqual (3, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", victor, ukelele);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", players);
+			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count);
 		}
+
 	}
 }
