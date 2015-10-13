@@ -214,9 +214,14 @@ namespace LongoMatch.DB
 			} else if (node.IsChanged) {
 				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
+
+			/* Since we are saving single objects manually, we need to keep the stack
+			 * updated to avoid problems with circular references */
+			context.Stack.Push (node.Storable);
 			foreach (StorableNode child in node.Children) {
 				Update (child, context);
 			}
+			context.Stack.Pop ();
 		}
 
 		#endregion

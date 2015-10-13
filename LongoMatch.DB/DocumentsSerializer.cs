@@ -51,6 +51,7 @@ namespace LongoMatch.DB
 				context.RootID = obj.ID;
 			}
 			context.SaveChildren = saveChildren;
+			context.Stack.Push (obj);
 			Document doc = db.GetDocument (DocumentsSerializer.StringFromID (obj.ID, context.RootID));
 			doc.Update ((UnsavedRevision rev) => {
 				JObject jo = SerializeObject (obj, rev, context);
@@ -64,6 +65,7 @@ namespace LongoMatch.DB
 				rev.SetProperties (props);
 				return true;
 			});
+			context.Stack.Pop ();
 		}
 
 		/// <summary>
@@ -332,7 +334,7 @@ namespace LongoMatch.DB
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			IStorable storable = value as IStorable;
-			if (context.SaveChildren && !context.Cache.IsCached (storable.ID)) {
+			if (context.SaveChildren && !context.Stack.Contains (value) && !context.Cache.IsCached (storable.ID)) {
 				DocumentsSerializer.SaveObject (storable, context.DB, context);
 				context.Cache.AddReference (storable);
 			}
