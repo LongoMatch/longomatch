@@ -353,8 +353,18 @@ namespace LongoMatch.DB
 				return null;
 			}
 			id = DocumentsSerializer.IDFromString (idStr);
-			/* Return the cached object instance instead a new one */
-			storable = context.Cache.ResolveReference (id);
+
+			/* Check if it's a circular dependency and the object is currently being deserialized. In this scenario
+			 * the oject is not yet in the cache, but we have a reference of the object in the stack.
+			 * eg: TimelineEvent.Project where the TimelineEvent is a childre of Project and Project is in the stack
+			 * as being deserialized */
+			storable = context.Stack.FirstOrDefault (e => e.ID == id);
+			if (storable == null) {
+				/* Now check in the Cache and return the cached object instance instead a new one */
+				storable = context.Cache.ResolveReference (id);
+			}
+
+			/* If the object is being deserialized for the first retrieve from the DB document */
 			if (storable == null) {
 				storable = DocumentsSerializer.LoadObject (objectType, idStr, context.DB, context) as IStorable;
 				if (storable == null) {
