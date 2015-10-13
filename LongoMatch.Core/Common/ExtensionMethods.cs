@@ -71,16 +71,27 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public static int RemoveAll<T>(this ObservableCollection<T> coll, Func<T, bool> condition)
+		public static bool SequenceEqualNoOrder<T> (this IEnumerable<T> first, IEnumerable<T> second)
 		{
-			var itemsToRemove = coll.Where(condition).ToList();
+			if (first == null && second == null) {
+				return true;
+			} else if (first == null || second == null) {
+				return false;
+			} else {
+				return (first.Count () == second.Count ()) && !first.Except (second).Any ();
+			}
+		}
+
+		public static int RemoveAll<T> (this ObservableCollection<T> coll, Func<T, bool> condition)
+		{
+			var itemsToRemove = coll.Where (condition).ToList ();
 			foreach (var itemToRemove in itemsToRemove) {
-				coll.Remove(itemToRemove);
+				coll.Remove (itemToRemove);
 			}
 			return itemsToRemove.Count;
 		}
 
-		public static void AddRange<T>(this ObservableCollection<T> coll, IEnumerable<T> range)
+		public static void AddRange<T> (this ObservableCollection<T> coll, IEnumerable<T> range)
 		{
 			foreach (var item in range) {
 				coll.Add (item);
