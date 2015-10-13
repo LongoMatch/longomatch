@@ -273,11 +273,14 @@ namespace LongoMatch.Services
 		public void OnNewTag (EventType evType, List<Player> players, TeamType team, List<Tag> tags,
 		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
-			if (player == null || openedProject == null)
+			if (openedProject == null) {
 				return;
-
-			if (projectType == ProjectType.CaptureProject ||
-			    projectType == ProjectType.URICaptureProject) {
+			} else if (projectType == ProjectType.FileProject && player == null) {
+				Log.Error ("Player not set, new event will not be created");
+				return;
+			} else if (projectType == ProjectType.CaptureProject ||
+			           projectType == ProjectType.URICaptureProject ||
+			           projectType == ProjectType.FakeCaptureProject) {
 				if (!capturer.Capturing) {
 					Config.GUIToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
