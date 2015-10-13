@@ -117,6 +117,9 @@ namespace LongoMatch.DB
 		/// <param name="id">The document id.</param>
 		public static string IDStringFromString (string id)
 		{
+			if (id == null) {
+				return id;
+			}
 			string[] ids = id.Split (ID_SEP_CHAR);
 			if (ids.Length == 1) {
 				id = ids [0];

@@ -218,5 +218,39 @@ namespace Tests.DB
 			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count);
 		}
 
+		[Test ()]
+		public void TestQueryEventsByEventType ()
+		{
+			AnalysisEventType evtType1 = new AnalysisEventType { Name = "Ball lost" };
+			AnalysisEventType evtType2 = new AnalysisEventType { Name = "Goal" };
+			AnalysisEventType evtType3 = new AnalysisEventType { Name = "PC" };
+			AnalysisEventType evtType4 = new AnalysisEventType { Name = "Recovery" };
+			AnalysisEventType evtType5 = new AnalysisEventType { Name = "Unused" };
+
+			var eventTypes = new List<AnalysisEventType> { evtType1, evtType2, evtType3, evtType4 };
+			foreach (AnalysisEventType evtType in eventTypes) {
+				TimelineEvent evt = new TimelineEvent ();
+				evt.EventType = evtType;
+				storage.Store (evt);
+			}
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("EventType", evtType1);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", evtType4);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", evtType2, evtType3);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", evtType5);
+			Assert.AreEqual (0, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", eventTypes);
+			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+		}
+
+
 	}
 }

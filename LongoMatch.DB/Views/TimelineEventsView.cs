@@ -37,7 +37,12 @@ namespace LongoMatch.DB.Views
 		{
 			var keys = new List<object> ();
 			foreach (string propName in FilterProperties) {
-				if (propName != "Player") {
+				if (propName == "Player") {
+					continue;
+				}
+				if (propName == "EventType") {
+					keys.Add (DocumentsSerializer.IDStringFromString (document [propName] as string));
+				} else {
 					keys.Add (document [propName]);
 				}
 			}
@@ -53,12 +58,19 @@ namespace LongoMatch.DB.Views
 
 					/* Initialize the Player key in case there are no players. */
 					keys.Keys.Add (null);
-					/* iterate over players and emit a row for each player */
-					foreach (object playerObject in document["Players"] as IEnumerable) {
-						string id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string); 
-						keys.Keys [playerKeyIndex] = id;
+
+					IList players = document ["Players"] as IList;
+					if (players.Count == 0) {
 						emitter (keys, GenValue (document));
+					} else {
+						/* iterate over players and emit a row for each player */
+						foreach (object playerObject in players) {
+							string id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string); 
+							keys.Keys [playerKeyIndex] = id;
+							emitter (keys, GenValue (document));
+						}
 					}
+
 				}
 			};
 		}
