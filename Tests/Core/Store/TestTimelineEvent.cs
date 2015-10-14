@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Store.Templates;
 
 namespace Tests.Core.Store
 {
@@ -244,6 +245,47 @@ namespace Tests.Core.Store
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 		}
+
+		[Test ()] 
+		public void TestTaggedTeam ()
+		{
+			Team home = Team.DefaultTemplate (3);
+			Team away = Team.DefaultTemplate (3);
+			Project p = new Project ();
+			p.LocalTeamTemplate = home;
+			p.VisitorTeamTemplate = away;
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Project = p;
+
+			Assert.AreEqual (TeamType.NONE, evt.TaggedTeam);
+
+			evt.Team = TeamType.LOCAL;
+			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
+
+			evt.Team = TeamType.VISITOR;
+			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
+
+			evt.Team = TeamType.BOTH;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { home.List [0] };
+			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
+			evt.Team = TeamType.VISITOR;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { away.List [0] };
+			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
+
+			evt.Team = TeamType.LOCAL;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { home.List [0], away.List [0] };
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+		}
+
 	}
 }
 

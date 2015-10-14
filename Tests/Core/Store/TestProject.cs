@@ -247,12 +247,6 @@ namespace Tests.Core.Store
 
 		[Test ()] 
 		[Ignore ("Not implemented")]
-		public void TestEventTaggedTeam ()
-		{
-		}
-
-		[Test ()] 
-		[Ignore ("Not implemented")]
 		public void TestConsolidateDescription ()
 		{
 		}
@@ -360,8 +354,9 @@ namespace Tests.Core.Store
 			Assert.AreEqual (oldTimeline [8].EventTime + offset3, p.Timeline [8].EventTime);
 		}
 
-		[Test()]
-		public void TestIsChanged () {
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			Project p = new Project ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;

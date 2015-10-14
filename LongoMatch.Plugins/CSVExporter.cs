@@ -137,7 +137,7 @@ namespace LongoMatch.Plugins
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (project.EventTaggedTeam (play)),
+					TeamName (play.TaggedTeam),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

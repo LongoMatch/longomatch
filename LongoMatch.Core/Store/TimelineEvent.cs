@@ -26,6 +26,8 @@ using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Store
 {
@@ -192,6 +194,31 @@ namespace LongoMatch.Core.Store
 		public TeamType Team {
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// The tagged team taking in account <see cref="TimelineEvent.Players"/> and
+		/// <see cref="TimelineEvent.Team"/>
+		/// </summary>
+		/// <value>The tagged team.</value>
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public TeamType TaggedTeam {
+			get {
+				bool home = false, away = false;
+			
+				GetTaggedTeams (ref home, ref away);
+			
+				if (away && home) {
+					return TeamType.BOTH;
+				} else if (home) {
+					return TeamType.LOCAL;
+				} else if (away) {
+					return TeamType.VISITOR;
+				} else {
+					return TeamType.NONE;
+				}
+			}
 		}
 
 		/// <summary>
@@ -413,6 +440,19 @@ namespace LongoMatch.Core.Store
 		{
 			IsChanged = true;
 		}
+
+		void GetTaggedTeams (ref bool home, ref bool away)
+		{
+			if (Team == TeamType.LOCAL || Team == TeamType.BOTH ||
+			    Players.Count (p => Project.LocalTeamTemplate.List.Contains (p)) > 0) {
+				home = true;
+			}
+			if (Team == TeamType.VISITOR || Team == TeamType.BOTH ||
+			    Players.Count (p => Project.VisitorTeamTemplate.List.Contains (p)) > 0) {
+				away = true;
+			}
+		}
+
 	}
 
 	/// <summary>

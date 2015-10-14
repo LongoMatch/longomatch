@@ -519,31 +519,7 @@ namespace LongoMatch.Core.Store
 
 		public int GetScore (TeamType team)
 		{
-			return Timeline.OfType<ScoreEvent> ().Where (s => EventTaggedTeam (s) == team).Sum (s => s.Score.Points); 
-		}
-
-		public TeamType EventTaggedTeam (TimelineEvent play)
-		{
-			bool home = false, away = false;
-			
-			if (play.Team == TeamType.LOCAL || play.Team == TeamType.BOTH ||
-			    play.Players.Count (p => LocalTeamTemplate.List.Contains (p)) > 0) {
-				home = true;
-			}
-			if (play.Team == TeamType.VISITOR || play.Team == TeamType.BOTH ||
-			    play.Players.Count (p => VisitorTeamTemplate.List.Contains (p)) > 0) {
-				away = true;
-			}
-			
-			if (away && home) {
-				return TeamType.BOTH;
-			} else if (home) {
-				return TeamType.LOCAL;
-			} else if (away) {
-				return TeamType.VISITOR;
-			} else {
-				return TeamType.NONE;
-			}
+			return Timeline.OfType<ScoreEvent> ().Where (s => s.TaggedTeam == team).Sum (s => s.Score.Points); 
 		}
 
 		public Image GetBackground (FieldPositionType pos)
