@@ -1,0 +1,28 @@
+style "longomatch-toggletab" = "longomatch-default"
+{
+  engine "pixmap"
+	{
+		image
+		{
+			function        = BOX
+			state			= ACTIVE
+			file            = "Top_Bar/toptab_bg_body_active.png"
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= PRELIGHT
+			file            = "Top_Bar/toptab_bg_body_prelight.png"
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= NORMAL
+			file            = "Top_Bar/toptab_bg_body_idle.png"
+			stretch         = TRUE
+		}
+	}
+
+}
