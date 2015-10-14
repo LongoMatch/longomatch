@@ -1,0 +1,12 @@
+style "longomatch-gradient-topbar" = "longomatch-default"
+{
+	engine "pixmap"
+	{
+		image
+		{
+			function        = FLAT_BOX
+			file            = "Top_Bar/topbar_bg.png"
+			stretch         = TRUE
+		}
+	}
+}
