@@ -302,7 +302,7 @@ namespace LongoMatch.Core.Store
 				} else {
 					return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString ();
 				}
-			} else if (EventType != null) {
+			} else if (EventTime != null) {
 				return EventTime.ToMSecondsString ();
 			} else {
 				return "";
