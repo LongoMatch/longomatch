@@ -19,15 +19,14 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
-using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store.Templates;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {

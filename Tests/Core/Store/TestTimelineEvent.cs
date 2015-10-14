@@ -80,14 +80,15 @@ namespace Tests.Core.Store
 			Assert.IsNull (p.CamerasLayout);
 		}
 
-		[Test()]
-		public void TestEquals() {
+		[Test ()]
+		public void TestEquals ()
+		{
 			TimelineEvent evt1 = new TimelineEvent ();
 			TimelineEvent evt2 = new TimelineEvent ();
 			Assert.AreNotEqual (evt1, evt2);
 			evt2.ID = evt1.ID;
 			Assert.AreEqual (evt1, evt2);
-			evt2.ID = Guid.Parse (evt1.ID.ToString());
+			evt2.ID = Guid.Parse (evt1.ID.ToString ());
 			Assert.AreEqual (evt1, evt2);
 		}
 
@@ -194,7 +195,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.HalfField,new ObservableCollection<Point> { new Point (4, 5) });
+			evt.UpdateCoordinates (FieldPositionType.HalfField, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
 			
@@ -203,8 +204,9 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
 		}
 
-		[Test()]
-		public void TestIsChanged () {
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			TimelineEvent evt = new TimelineEvent ();
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
