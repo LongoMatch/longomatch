@@ -222,6 +222,31 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
+		/// A list of teams tagged in this event. This is only set during serialization
+		/// to make it possible to query events by team.
+		/// </summary>
+		[LongoMatchPropertyIndex (3)]
+		public List<Team> Teams {
+			get {
+				bool home = false, away = false;
+				List<Team> teams = new List<Team> ();
+
+				if (Project == null) {
+					return teams;
+				}
+
+				GetTaggedTeams (ref home, ref away);
+				if (home) {
+					teams.Add (Project.LocalTeamTemplate);
+				}
+				if (away) {
+					teams.Add (Project.VisitorTeamTemplate);
+				}
+				return teams;
+			}
+		}
+
+		/// <summary>
 		/// List of tags describing this event.
 		/// </summary>
 		/// <value>The tags.</value>

@@ -286,6 +286,37 @@ namespace Tests.Core.Store
 			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
 		}
 
+		[Test ()] 
+		public void TestTaggedTeams ()
+		{
+			Team home = Team.DefaultTemplate (3);
+			Team away = Team.DefaultTemplate (3);
+			Project p = new Project ();
+			p.LocalTeamTemplate = home;
+			p.VisitorTeamTemplate = away;
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Project = p;
+
+			List<Team> teams = evt.Teams;
+			Assert.IsEmpty (teams);
+
+			evt.Team = TeamType.LOCAL;
+			teams = evt.Teams;
+			Assert.AreEqual (1, teams.Count);
+			Assert.AreSame (home, teams [0]);
+
+			evt.Team = TeamType.VISITOR;
+			teams = evt.Teams;
+			Assert.AreEqual (1, teams.Count);
+			Assert.AreSame (away, teams [0]);
+
+			evt.Team = TeamType.BOTH;
+			teams = evt.Teams;
+			Assert.AreEqual (2, teams.Count);
+			Assert.AreSame (home, teams [0]);
+			Assert.AreSame (away, teams [1]);
+			
+		}
 	}
 }
 
