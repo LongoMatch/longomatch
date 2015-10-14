@@ -16,53 +16,83 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Templates;
-using System.Reflection;
-using Newtonsoft.Json.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace LongoMatch.DB.Views
 {
+	/// <summary>
+	/// Generic View for the Couchbase database that indexes properties with
+	/// the <see cref="LongoMatchPropertyIndex"/> attribute and make it possible
+	/// to perform queries using a <see cref="QueryFilter"/>.
+	/// The view also stores a preloaded version of the object that is returned in the
+	/// query using the properties with the attribute <see cref="LongoMatchPropertyPreload"/>
+	/// </summary>
 	public abstract class GenericView<T>: IQueryView <T> where T : IStorable, new()
 	{
-		Database db;
-		CouchbaseStorage storage;
+		readonly Database db;
+		readonly CouchbaseStorage storage;
 
-		public GenericView (CouchbaseStorage storage)
+		protected GenericView (CouchbaseStorage storage)
 		{
 			this.storage = storage;
 			db = storage.Database;
 			GetView ();
-			PreviewProperties = typeof(T).GetProperties().
-				Where(prop => Attribute.IsDefined(prop, typeof(LongoMatchPropertyPreload))).
+
+			// List all properties that will are included in the preloaded version of the object
+			// returned in the queries
+			PreviewProperties = typeof(T).GetProperties ().
+				Where (prop => Attribute.IsDefined (prop, typeof(LongoMatchPropertyPreload))).
 				Select (p => p.Name).ToList ();
 
-			FilterProperties = typeof(T).GetProperties().
-				Select (p => new { P = p, A = p.GetCustomAttributes(typeof(LongoMatchPropertyIndex), true)}).
+			// List all properties that are indexed for the queries sorted by Index
+			FilterProperties = new OrderedDictionary ();
+			foreach (var prop in typeof(T).GetProperties ().
+				Select (p => new { P = p, A = p.GetCustomAttributes (typeof(LongoMatchPropertyIndex), true)}).
 				Where (x => x.A.Length == 1).
-				OrderBy (x => (x.A[0] as LongoMatchPropertyIndex).Index).
-				Select (x => x.P.Name).ToList();
+				OrderBy (x => (x.A [0] as LongoMatchPropertyIndex).Index)) {
+				FilterProperties.Add (prop.P.Name, typeof(IStorable).IsAssignableFrom (prop.P.PropertyType));
+			}
 		}
 
-		protected virtual List<string> FilterProperties {
+		/// <summary>
+		/// An ordered dictionary that store as keys the name of the property
+		/// and as value a <c>boolean</c> indicating if the property returns an
+		/// <see cref="IStorable"/>.
+		/// </summary>
+		protected virtual OrderedDictionary FilterProperties {
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// A list with the names of the properties that are included in the preloaded
+		/// version of the object.
+		/// </summary>
 		protected virtual List<string> PreviewProperties {
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// The version of the view. It needs to be changed each time the Map function changes
+		/// to re-index the view when this function changes.
+		/// </summary>
 		abstract protected string ViewVersion {
 			get;
 		}
 
+		/// <summary>
+		/// Creates a list of values to be indexed for the queries as a <see cref="PropertyKey"/>
+		/// </summary>
+		/// <returns>The key to emit in the map function.</returns>
+		/// <param name="document">The database document.</param>
 		virtual protected object GenKeys (IDictionary<string, object> document)
 		{
 			List<object> keys;
@@ -71,12 +101,23 @@ namespace LongoMatch.DB.Views
 				return null;
 
 			keys = new List<object> ();
-			foreach (string propName in FilterProperties) {
-				keys.Add (document [propName]);
+			foreach (string propName in FilterProperties.Keys) {
+				// If the property is an IStorable, store the object ID which will be used in the queries
+				if ((bool)FilterProperties [propName]) {
+					keys.Add ((document [propName] as string).Split (DocumentsSerializer.ID_SEP_CHAR).Last ());
+				} else {
+					keys.Add (document [propName]);
+				}
 			}
 			return new PropertyKey (keys);
 		}
 
+		/// <summary>
+		/// Return a serialized string with the preloaded version of the object using the properties in
+		/// <see cref="PreviewProperties"/>
+		/// </summary>
+		/// <returns>A JSON string representation of  the object.</returns>
+		/// <param name="document">The database document.</param>
 		virtual protected string GenValue (IDictionary<string, object> document)
 		{
 			JObject jo;
@@ -98,6 +139,11 @@ namespace LongoMatch.DB.Views
 			return jo.ToString ();
 		}
 
+		/// <summary>
+		/// Gets the map function to be run in this view.
+		/// </summary>
+		/// <returns>The map function.</returns>
+		/// <param name="docType">Document type.</param>
 		virtual protected MapDelegate GetMap (string docType)
 		{
 			return (document, emitter) => {
@@ -107,6 +153,10 @@ namespace LongoMatch.DB.Views
 			};
 		}
 
+		/// <summary>
+		/// Creates a new view in the database if it does not exists and it sets the map funcion on it.
+		/// </summary>
+		/// <returns>The view.</returns>
 		View GetView ()
 		{
 			string docType = typeof(T).Name; 
@@ -117,6 +167,11 @@ namespace LongoMatch.DB.Views
 			return view;
 		}
 
+		/// <summary>
+		/// Performs a query on the view with a <see cref="QueryFilter"/> whose keys
+		/// must be in the list of <see cref="FilterProperties"/>
+		/// </summary>
+		/// <param name="filter">Filter.</param>
 		public List<T> Query (QueryFilter filter)
 		{
 			List<T> elements = new List<T> ();
@@ -127,8 +182,7 @@ namespace LongoMatch.DB.Views
 				string sql = "";
 				int i = 0, j = 0;
 
-				/* FIXME: add support for the OR operator */
-				foreach (string propName in FilterProperties) {
+				foreach (string propName in FilterProperties.Keys) {
 					List<object> values;
 
 					if (filter.TryGetValue (propName, out values)) {
@@ -173,13 +227,10 @@ namespace LongoMatch.DB.Views
 
 			QueryEnumerator ret = q.Run ();
 			foreach (QueryRow row in ret) {
-				T d = new T ();
-				d.ID = Guid.Parse (row.DocumentId);
 				Revision rev = row.Document.CurrentRevision;
-
-				d = DocumentsSerializer.DeserializeFromJson<T> (
-					row.Value as string, db, rev);
-				d.ID = Guid.Parse (row.DocumentId);
+				T d = DocumentsSerializer.DeserializeFromJson<T> (
+					      row.Value as string, db, rev);
+				d.ID = DocumentsSerializer.IDFromString (row.DocumentId);
 				d.IsLoaded = false;
 				d.Storage = storage;
 				elements.Add (d);

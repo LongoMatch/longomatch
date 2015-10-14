@@ -18,15 +18,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
-using System.Reflection;
-using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -191,18 +191,20 @@ namespace LongoMatch.DB
 			return o;
 		}
 
-		internal static IStorable LoadObject (Type objType, string id, Database db, SerializationContext context = null)
+		internal static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
 		{
 			IStorable storable = null, parent;
 			Document doc;
+			Guid id;
 
+			id = DocumentsSerializer.IDFromString (idStr);
 			if (context == null) {
 				context = new SerializationContext (db, objType);
 				context.ContractResolver = new StorablesStackContractResolver (context, null);
-				context.RootID = Guid.Parse (id);
+				context.RootID = id;
 			}
 
-			doc = db.GetExistingDocument (id);
+			doc = db.GetExistingDocument (idStr);
 			if (doc != null) {
 				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
 				if (realType == null) {
@@ -354,9 +356,9 @@ namespace LongoMatch.DB
 			}
 			id = DocumentsSerializer.IDFromString (idStr);
 
-			/* Check if it's a circular dependency and the object is currently being deserialized. In this scenario
+			/* Check if it's a circular reference and the object is currently being deserialized. In this scenario
 			 * the oject is not yet in the cache, but we have a reference of the object in the stack.
-			 * eg: TimelineEvent.Project where the TimelineEvent is a childre of Project and Project is in the stack
+			 * eg: TimelineEvent.Project where the TimelineEvent is a children of Project and Project is in the stack
 			 * as being deserialized */
 			storable = context.Stack.FirstOrDefault (e => e.ID == id);
 			if (storable == null) {

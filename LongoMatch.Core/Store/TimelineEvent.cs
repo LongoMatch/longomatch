@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
@@ -41,6 +40,7 @@ namespace LongoMatch.Core.Store
 		ObservableCollection<Player> players;
 		ObservableCollection<Tag> tags;
 		ObservableCollection<CameraConfig> camerasConfig;
+
 		#region Constructors
 
 		public TimelineEvent ()
@@ -51,12 +51,14 @@ namespace LongoMatch.Core.Store
 			Tags = new ObservableCollection<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasConfig = new ObservableCollection<CameraConfig> {new CameraConfig (0)};
+			CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 		}
 
 		#endregion
 
 		#region Properties
+
+		#region IStorable
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -99,11 +101,19 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		#endregion
+
+		[LongoMatchPropertyIndex (1)]
+		public Project Project {
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// The <see cref="EventType"/> in wich this event is tagged
 		/// </summary>
 		[LongoMatchPropertyPreload]
-		[LongoMatchPropertyIndex (1)]
+		[LongoMatchPropertyIndex (2)]
 		public EventType EventType {
 			get;
 			set;
@@ -277,7 +287,8 @@ namespace LongoMatch.Core.Store
 
 		#region Public methods
 
-		protected void CheckIsLoaded () {
+		protected void CheckIsLoaded ()
+		{
 			if (!IsLoaded && !IsLoading) {
 				IsLoading = true;
 				if (Storage == null) {
@@ -393,8 +404,9 @@ namespace LongoMatch.Core.Store
 
 		public override int GetHashCode ()
 		{
-			return ID.GetHashCode();
+			return ID.GetHashCode ();
 		}
+
 		#endregion
 
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)

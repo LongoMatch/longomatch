@@ -251,6 +251,55 @@ namespace Tests.DB
 			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
 		}
 
+		[Test ()]
+		public void TestQueryEventsByPlayerEventTypeAndProject ()
+		{
+			Player andoni = new Player { Name = "Andoni" };
+			Player jorge = new Player { Name = "Jorge" };
+			Player victor = new Player { Name = "Victor" };
+			Player josep = new Player { Name = "Josep" };
+			Player davide = new Player { Name = "Davide" };
 
+			Player saray = new Player { Name = "Saray" };
+			Player ivan = new Player { Name = "Ivan" };
+			Player adria = new Player { Name = "Adria" };
+
+			Team devteam = new Team { Name = "DevTeam" };
+			Team qateam = new Team { Name = "QA" };
+
+			devteam.List.AddRange (new List<Player> { andoni, jorge, victor, josep, davide });
+			qateam.List.AddRange (new List<Player> { saray, ivan, adria });
+
+			Dashboard dashbaord = Dashboard.DefaultTemplate (5);
+			var projects = new List<Project> ();
+
+			for (int i = 0; i < 5; i++) {
+				Project p = new Project ();
+				p.Dashboard = dashbaord.Clone ();
+				p.LocalTeamTemplate = Team.DefaultTemplate (5);
+				p.VisitorTeamTemplate = Team.DefaultTemplate (5);
+				p.Description = new ProjectDescription ();
+
+				foreach (var player in devteam.List.Concat (qateam.List)) {
+					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
+						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10),
+							                    new Time (5), null, null, null);
+						evt.Players.Add (player);
+					}
+				}
+				projects.Add (p);
+				storage.Store (p);
+			}
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Project", projects [0], projects [1]);
+			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", andoni, saray);
+			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", (dashbaord.List [0] as AnalysisEventButton).EventType);
+			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+		}
 	}
 }

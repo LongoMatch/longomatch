@@ -166,13 +166,18 @@ namespace Tests.Core.Store
 		public void TestAddEvent ()
 		{
 			Project p = CreateProject (false);
-			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null, false);
+			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null, false);
+			Assert.AreEqual (p, evt.Project);
+
 			Assert.AreEqual (p.Timeline.Count, 0);
 			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
 			Assert.AreEqual (p.Timeline.Count, 1);
 			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
 			Assert.AreEqual (p.Timeline.Count, 2);
-			p.AddEvent (new TimelineEvent ());
+
+			evt = new TimelineEvent ();
+			p.AddEvent (evt);
+			Assert.AreEqual (p, evt.Project);
 			Assert.AreEqual (p.Timeline.Count, 3);
 			p.AddEvent (new TimelineEvent ());
 			Assert.AreEqual (p.Timeline.Count, 4);

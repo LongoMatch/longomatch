@@ -18,14 +18,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Couchbase.Lite;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using NUnit.Framework;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 using LongoMatch.DB.Views;
-using LongoMatch.Core.Serialization;
+using NUnit.Framework;
 
 namespace Tests.DB
 {
@@ -59,7 +60,7 @@ namespace Tests.DB
 
 		public List<string> PreloadProperties { get { return PreviewProperties; } }
 
-		public List<string> IndexedProperties { get { return FilterProperties; } }
+		public List<string> IndexedProperties { get { return FilterProperties.Keys.OfType<string> ().ToList (); } }
 	}
 
 

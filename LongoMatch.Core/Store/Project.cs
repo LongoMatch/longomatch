@@ -24,8 +24,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
@@ -326,6 +326,7 @@ namespace LongoMatch.Core.Store
 			evt.Notes = "";
 			evt.Miniature = miniature;
 			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
+			evt.Project = this;
 
 			if (addToTimeline) {
 				Timeline.Add (evt);
@@ -338,6 +339,7 @@ namespace LongoMatch.Core.Store
 
 		public void AddEvent (TimelineEvent play)
 		{
+			play.Project = this;
 			Timeline.Add (play);
 			if (play is ScoreEvent) {
 				UpdateScore ();
@@ -658,6 +660,7 @@ namespace LongoMatch.Core.Store
 		{
 			IsChanged = true;
 		}
+
 		#endregion
 	}
 }

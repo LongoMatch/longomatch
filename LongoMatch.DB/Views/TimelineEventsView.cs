@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
@@ -30,17 +31,17 @@ namespace LongoMatch.DB.Views
 		{
 			/* We emit 1 row per player changing the Players property to Player */
 			FilterProperties.Remove ("Players");
-			FilterProperties.Add ("Player");
+			FilterProperties.Add ("Player", true);
 		}
 
 		protected override object GenKeys (IDictionary<string, object> document)
 		{
 			var keys = new List<object> ();
-			foreach (string propName in FilterProperties) {
+			foreach (string propName in FilterProperties.Keys) {
 				if (propName == "Player") {
 					continue;
 				}
-				if (propName == "EventType") {
+				if ((bool)FilterProperties [propName]) {
 					keys.Add (DocumentsSerializer.IDStringFromString (document [propName] as string));
 				} else {
 					keys.Add (document [propName]);
@@ -65,7 +66,8 @@ namespace LongoMatch.DB.Views
 					} else {
 						/* iterate over players and emit a row for each player */
 						foreach (object playerObject in players) {
-							string id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string); 
+							string id = DocumentsSerializer.IDStringFromString (
+								            (playerObject as JValue).Value as string); 
 							keys.Keys [playerKeyIndex] = id;
 							emitter (keys, GenValue (document));
 						}
