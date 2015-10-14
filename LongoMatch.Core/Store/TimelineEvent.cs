@@ -380,7 +380,7 @@ namespace LongoMatch.Core.Store
 
 		public override string ToString ()
 		{
-			return Description;
+			return Name;
 		}
 
 		public override bool Equals (object obj)
