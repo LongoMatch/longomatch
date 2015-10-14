@@ -31,14 +31,16 @@ namespace LongoMatch.DB.Views
 		{
 			/* We emit 1 row per player changing the Players property to Player */
 			FilterProperties.Remove ("Players");
+			FilterProperties.Remove ("Teams");
 			FilterProperties.Add ("Player", true);
+			FilterProperties.Add ("Team", true);
 		}
 
 		protected override object GenKeys (IDictionary<string, object> document)
 		{
 			var keys = new List<object> ();
 			foreach (string propName in FilterProperties.Keys) {
-				if (propName == "Player") {
+				if (propName == "Player" || propName == "Team") {
 					continue;
 				}
 				if ((bool)FilterProperties [propName]) {
@@ -56,23 +58,38 @@ namespace LongoMatch.DB.Views
 				if (docType.Equals (document [DocumentsSerializer.DOC_TYPE])) {
 					PropertyKey keys = GenKeys (document) as PropertyKey;
 					int playerKeyIndex = keys.Keys.Count;
+					int teamKeyIndex = keys.Keys.Count + 1;
 
 					/* Initialize the Player key in case there are no players. */
 					keys.Keys.Add (null);
+					/* Initialize the Team key in case there are no players. */
+					keys.Keys.Add (null);
 
+					IList teams = document ["Teams"] as IList;
 					IList players = document ["Players"] as IList;
+
+					if (teams.Count == 0) {
+						teams.Add (null);
+					}
 					if (players.Count == 0) {
-						emitter (keys, GenValue (document));
-					} else {
-						/* iterate over players and emit a row for each player */
+						players.Add (null);
+					}
+
+					/* iterate over players and teams and emit a row for each player and team combination */
+					foreach (object teamObject in teams) {
+						string id;
+						if (teamObject != null) {
+							id = DocumentsSerializer.IDStringFromString ((teamObject as JValue).Value as string);
+							keys.Keys [teamKeyIndex] = id;
+						}
 						foreach (object playerObject in players) {
-							string id = DocumentsSerializer.IDStringFromString (
-								            (playerObject as JValue).Value as string); 
-							keys.Keys [playerKeyIndex] = id;
+							if (playerObject != null) {
+								id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string);
+								keys.Keys [playerKeyIndex] = id;
+							}
 							emitter (keys, GenValue (document));
 						}
 					}
-
 				}
 			};
 		}

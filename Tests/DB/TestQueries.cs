@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using LongoMatch.DB;
 using Couchbase.Lite;
-using LongoMatch.Core.Store.Templates;
-using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.DB;
+using NUnit.Framework;
 
 namespace Tests.DB
 {
@@ -252,54 +252,94 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestQueryEventsByTeam ()
+		{
+			Team devTeam, qaTeam;
+			List<Project> projects;
+
+			projects = CreateProjects ();
+			devTeam = projects [0].LocalTeamTemplate;
+			qaTeam = projects [0].VisitorTeamTemplate;
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Team", devTeam);
+			Assert.AreEqual (125, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter = new QueryFilter ();
+			filter.Add ("Team", qaTeam);
+			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count);
+		}
+
+		[Test ()]
 		public void TestQueryEventsByPlayerEventTypeAndProject ()
+		{
+			Dashboard dashbaord;
+			Team devTeam, qaTeam;
+			List<Project> projects;
+
+			projects = CreateProjects ();
+
+			dashbaord = projects [0].Dashboard;
+			devTeam = projects [0].LocalTeamTemplate;
+			qaTeam = projects [0].VisitorTeamTemplate;
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Project", projects [0], projects [1]);
+			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Player", devTeam.List [0], qaTeam.List [1]);
+			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("EventType", (dashbaord.List [0] as AnalysisEventButton).EventType);
+			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+
+			filter.Add ("Team", devTeam);
+			var res = storage.Retrieve<TimelineEvent> (filter);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count);
+		}
+
+		List<Project> CreateProjects ()
 		{
 			Player andoni = new Player { Name = "Andoni" };
 			Player jorge = new Player { Name = "Jorge" };
 			Player victor = new Player { Name = "Victor" };
 			Player josep = new Player { Name = "Josep" };
 			Player davide = new Player { Name = "Davide" };
-
 			Player saray = new Player { Name = "Saray" };
 			Player ivan = new Player { Name = "Ivan" };
 			Player adria = new Player { Name = "Adria" };
-
 			Team devteam = new Team { Name = "DevTeam" };
 			Team qateam = new Team { Name = "QA" };
-
-			devteam.List.AddRange (new List<Player> { andoni, jorge, victor, josep, davide });
-			qateam.List.AddRange (new List<Player> { saray, ivan, adria });
-
+			devteam.List.AddRange (new List<Player> {
+				andoni,
+				jorge,
+				victor,
+				josep,
+				davide
+			});
+			qateam.List.AddRange (new List<Player> {
+				saray,
+				ivan,
+				adria
+			});
 			Dashboard dashbaord = Dashboard.DefaultTemplate (5);
 			var projects = new List<Project> ();
-
 			for (int i = 0; i < 5; i++) {
 				Project p = new Project ();
 				p.Dashboard = dashbaord.Clone ();
-				p.LocalTeamTemplate = Team.DefaultTemplate (5);
-				p.VisitorTeamTemplate = Team.DefaultTemplate (5);
+				p.LocalTeamTemplate = devteam;
+				p.VisitorTeamTemplate = qateam;
 				p.Description = new ProjectDescription ();
-
 				foreach (var player in devteam.List.Concat (qateam.List)) {
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
-						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10),
-							                    new Time (5), null, null, null);
+						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null, null, null);
 						evt.Players.Add (player);
 					}
 				}
 				projects.Add (p);
 				storage.Store (p);
 			}
-
-			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Project", projects [0], projects [1]);
-			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count);
-
-			filter.Add ("Player", andoni, saray);
-			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count);
-
-			filter.Add ("EventType", (dashbaord.List [0] as AnalysisEventButton).EventType);
-			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+			return projects;
 		}
 	}
 }
