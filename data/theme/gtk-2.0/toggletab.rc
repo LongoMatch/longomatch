@@ -1,4 +1,68 @@
-style "longomatch-toggletab" = "longomatch-default"
+style "longomatch-toggletab-left" = "longomatch-default"
+{
+  engine "pixmap"
+	{
+		image
+		{
+			function        = BOX
+			state			= ACTIVE
+			file            = "Top_Bar/toptab_bg_left_active.png"
+			border			= {6, 0, 0, 0}
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= PRELIGHT
+			file            = "Top_Bar/toptab_bg_left_prelight.png"
+			border			= {6, 0, 0, 0}
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= NORMAL
+			file            = "Top_Bar/toptab_bg_left_idle.png"
+			border			= {6, 0, 0, 0}
+			stretch         = TRUE
+		}
+	}
+
+}
+
+style "longomatch-toggletab-right" = "longomatch-default"
+{
+  engine "pixmap"
+	{
+		image
+		{
+			function        = BOX
+			state			= ACTIVE
+			file            = "Top_Bar/toptab_bg_right_active.png"
+			border			= {0, 6, 0, 0}
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= PRELIGHT
+			file            = "Top_Bar/toptab_bg_right_prelight.png"
+			border			= {0, 6, 0, 0}
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= NORMAL
+			file            = "Top_Bar/toptab_bg_right_idle.png"
+			border			= {0, 6, 0, 0}
+			stretch         = TRUE
+		}
+	}
+
+}
+
+style "longomatch-toggletab-center" = "longomatch-default"
 {
   engine "pixmap"
 	{
