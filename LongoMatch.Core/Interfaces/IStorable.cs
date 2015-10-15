@@ -26,26 +26,26 @@ namespace LongoMatch.Core.Interfaces
 		/// The storage associated to this object in cases it's partially
 		/// loaded and needs to storage to be filled.
 		/// </summary>
-		IStorage Storage {get; set;}
+		IStorage Storage { get; set; }
 
 		/// <summary>
 		/// Defines if an object is partially or fully loaded.
 		/// Some database queries can return partially loaded objects
 		/// that are filled once the first unintialized property is accessed.
 		/// </summary>
-		bool IsLoaded {get; set;}
+		bool IsLoaded { get; set; }
 
 		/// <summary>
 		/// A list of the storable children stored in the DB.
 		/// It's used to find orphaned children that have been removed from the <see cref="IStorable"/> and
 		/// should be deleted when it's updated or remove from the DB.
 		/// </summary>
-		List<IStorable> SavedChildren {get;set;}
+		List<IStorable> SavedChildren { get; set; }
 
 		/// <summary>
 		/// Defines if <see cref="IStorable"/> children should be deleted when deleting this object.
 		/// </summary>
-		bool DeleteChildren {get;}
+		bool DeleteChildren { get; }
 	}
 }
 

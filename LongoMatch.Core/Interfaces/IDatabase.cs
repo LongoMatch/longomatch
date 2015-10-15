@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Interfaces
 {
@@ -48,6 +49,8 @@ namespace LongoMatch.Core.Interfaces
 		int Count { get; }
 
 		Version Version { get; set; }
+
+		IStorage Storage { get; }
 	}
 }
 

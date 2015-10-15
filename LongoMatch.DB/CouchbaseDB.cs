@@ -139,6 +139,12 @@ namespace LongoMatch.DB
 			}
 		}
 
+		public IStorage Storage {
+			get {
+				return storage;
+			}
+		}
+
 		#endregion
 
 		private void AddDirectoryFilesToTar (TarArchive tarArchive, string sourceDirectory, bool recurse)

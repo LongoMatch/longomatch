@@ -98,6 +98,11 @@ namespace Tests
 			set {
 			}
 		}
+
+		public IStorage Storage {
+			get;
+			set;
+		}
 	}
 
 
