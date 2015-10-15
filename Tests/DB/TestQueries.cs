@@ -298,6 +298,18 @@ namespace Tests.DB
 			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count);
 		}
 
+		[Test ()]
+		public void TestListElementsInProjects ()
+		{
+			var projects = CreateProjects ();
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Parent", projects);
+
+			Assert.AreEqual (5, storage.Retrieve<EventType> (filter).Count);
+			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count);
+			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count);
+		}
+
 		List<Project> CreateProjects ()
 		{
 			Player andoni = new Player { Name = "Andoni" };

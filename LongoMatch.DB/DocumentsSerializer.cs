@@ -23,6 +23,7 @@ using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -167,7 +168,7 @@ namespace LongoMatch.DB
 		internal static JObject SerializeObject (IStorable obj, Revision rev, SerializationContext context)
 		{
 			JObject jo = JObject.FromObject (obj, GetSerializer (obj.GetType (), context, rev));
-			jo [DOC_TYPE] = obj.GetType ().Name;
+			jo [DOC_TYPE] = GetDocumentType (obj);
 			jo [OBJ_TYPE] = jo ["$type"];
 			jo.Remove ("$type");
 			if (context != null && context.RootID != Guid.Empty) {
@@ -246,6 +247,18 @@ namespace LongoMatch.DB
 		internal static JsonSerializer GetSerializer (Type objType, SerializationContext context, Revision rev)
 		{
 			return JsonSerializer.Create (GetSerializerSettings (objType, context, rev));
+		}
+
+		static string GetDocumentType (IStorable storable)
+		{
+			Type type;
+
+			if (storable is EventType) {
+				type = typeof(EventType);
+			} else {
+				type = storable.GetType ();
+			}
+			return type.Name;
 		}
 	}
 

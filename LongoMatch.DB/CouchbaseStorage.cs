@@ -104,6 +104,7 @@ namespace LongoMatch.DB
 			views.Add (typeof(Project), new ProjectsView (this));
 			views.Add (typeof(Player), new PlayersView (this));
 			views.Add (typeof(TimelineEvent), new TimelineEventsView (this));
+			views.Add (typeof(EventType), new EventTypeView (this));
 		}
 
 		public object Retrieve (Type type, Guid id)
