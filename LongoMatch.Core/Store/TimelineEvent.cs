@@ -104,7 +104,8 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
-		[LongoMatchPropertyIndex (1)]
+		[PropertyChanged.DoNotNotify]
+		[JsonIgnore]
 		public Project Project {
 			get;
 			set;
@@ -114,7 +115,7 @@ namespace LongoMatch.Core.Store
 		/// The <see cref="EventType"/> in wich this event is tagged
 		/// </summary>
 		[LongoMatchPropertyPreload]
-		[LongoMatchPropertyIndex (2)]
+		[LongoMatchPropertyIndex (1)]
 		public EventType EventType {
 			get;
 			set;

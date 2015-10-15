@@ -53,6 +53,7 @@ namespace LongoMatch.DB.Views
 
 			// List all properties that are indexed for the queries sorted by Index
 			FilterProperties = new OrderedDictionary ();
+			FilterProperties.Add (DocumentsSerializer.PARENT_PROPNAME, true);
 			foreach (var prop in typeof(T).GetProperties ().
 				Select (p => new { P = p, A = p.GetCustomAttributes (typeof(LongoMatchPropertyIndex), true)}).
 				Where (x => x.A.Length == 1).

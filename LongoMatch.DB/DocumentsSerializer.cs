@@ -34,6 +34,7 @@ namespace LongoMatch.DB
 	{
 		public const string DOC_TYPE = "DocType";
 		public const string OBJ_TYPE = "ObjType";
+		public const string PARENT_PROPNAME = "Parent";
 		public const char ID_SEP_CHAR = '&';
 
 		/// <summary>
@@ -169,6 +170,9 @@ namespace LongoMatch.DB
 			jo [DOC_TYPE] = obj.GetType ().Name;
 			jo [OBJ_TYPE] = jo ["$type"];
 			jo.Remove ("$type");
+			if (context != null && context.RootID != Guid.Empty) {
+				jo [PARENT_PROPNAME] = context.RootID;
+			}
 			return jo;
 		}
 

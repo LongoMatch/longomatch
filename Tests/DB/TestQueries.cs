@@ -86,8 +86,8 @@ namespace Tests.DB
 			filter.Add ("Name", "Dashboard1", "Dashboard3");
 			dashboards = storage.Retrieve<Dashboard> (filter);
 			Assert.AreEqual (2, dashboards.Count);
-			Assert.AreEqual ("Dashboard1", dashboards [0].Name);
-			Assert.AreEqual ("Dashboard3", dashboards [1].Name);
+			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard1"));
+			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
@@ -123,8 +123,8 @@ namespace Tests.DB
 			filter.Add ("Name", "Team1", "Team3");
 			teams = storage.Retrieve<Team> (filter);
 			Assert.AreEqual (2, teams.Count);
-			Assert.AreEqual ("Team1", teams [0].Name);
-			Assert.AreEqual ("Team3", teams [1].Name);
+			Assert.IsTrue (teams.Any (d => d.Name == "Team1"));
+			Assert.IsTrue (teams.Any (d => d.Name == "Team3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
@@ -284,7 +284,7 @@ namespace Tests.DB
 			qaTeam = projects [0].VisitorTeamTemplate;
 
 			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Project", projects [0], projects [1]);
+			filter.Add ("Parent", projects [0], projects [1]);
 			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count);
 
 			filter.Add ("Player", devTeam.List [0], qaTeam.List [1]);
