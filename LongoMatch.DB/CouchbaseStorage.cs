@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -146,7 +147,7 @@ namespace LongoMatch.DB
 		{
 			lock (mutex) {
 				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
-				return qview.Query (filter);
+				return qview.Query (filter).GroupBy (x => x.ID).Select (g => g.First ()).ToList ();
 			}
 		}
 
