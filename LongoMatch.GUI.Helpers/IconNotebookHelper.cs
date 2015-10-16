@@ -16,13 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Common;
-using Pixbuf = Gdk.Pixbuf;
 using Misc = LongoMatch.Gui.Helpers.Misc;
-using System.Collections.Generic;
+using Pixbuf = Gdk.Pixbuf;
 
-namespace LongoMatch.GUI.Helpers
+namespace LongoMatch.Gui.Helpers
 {
 	
 	public class IconNotebookHelper

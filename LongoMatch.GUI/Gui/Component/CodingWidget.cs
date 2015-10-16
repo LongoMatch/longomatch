@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -24,9 +25,8 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Gui.Helpers;
 using Mono.Unix;
-using LongoMatch.GUI.Helpers;
-using System.Collections.ObjectModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -305,7 +305,7 @@ namespace LongoMatch.Gui.Component
 			if (tags != null) {
 				play.Tags = new ObservableCollection <Tag> (tags);
 			} else {
-				play.Tags =new ObservableCollection<Tag> ();
+				play.Tags = new ObservableCollection<Tag> ();
 			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;

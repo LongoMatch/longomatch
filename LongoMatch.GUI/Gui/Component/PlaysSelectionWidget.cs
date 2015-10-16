@@ -21,9 +21,9 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Helpers;
 using Mono.Unix;
 using Helpers = LongoMatch.Gui.Helpers;
-using LongoMatch.GUI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {

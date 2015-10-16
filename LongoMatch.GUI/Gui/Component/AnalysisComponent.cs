@@ -19,10 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.GUI.Helpers;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -188,7 +188,7 @@ namespace LongoMatch.Gui.Component
 				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {
 				playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-				Capturer.PeriodsNames = project.Dashboard.GamePeriods.ToList();
+				Capturer.PeriodsNames = project.Dashboard.GamePeriods.ToList ();
 				Capturer.Periods = project.Periods.ToList ();
 			}
 		}
