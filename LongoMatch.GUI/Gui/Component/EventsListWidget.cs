@@ -20,6 +20,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using System.Collections.Generic;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.GUI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -27,6 +28,7 @@ namespace LongoMatch.Gui.Component
 	public partial class EventsListWidget : Gtk.Bin
 	{
 		Project project;
+		IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
 		{
@@ -57,9 +59,7 @@ namespace LongoMatch.Gui.Component
 			playsList.Project = project;
 			visitorPlayersList.Project = project;
 			localPlayersList.Project = project;
-			SetTabProps (playsList, true);
-			SetTabProps (localPlayersList, false);
-			SetTabProps (visitorPlayersList, false);
+			LoadIcons ();
 			UpdateTeamsModels ();
 		}
 
@@ -85,39 +85,27 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, project.Timeline);
 		}
 
-		void SetTabProps (Gtk.Widget widget, bool active)
+		void LoadIcons ()
 		{
-			Gdk.Pixbuf icon;
-			Gtk.Image img;
-
-			img = playsnotebook.GetTabLabel (widget) as Gtk.Image;
-			if (img == null) {
-				img = new Gtk.Image ();
-				img.WidthRequest = StyleConf.NotebookTabSize;
-				img.HeightRequest = StyleConf.NotebookTabSize;
-				playsnotebook.SetTabLabel (widget, img);
-			}
-
-			if (widget == playsList) {
-				icon = Misc.LoadIcon ("longomatch-category", StyleConf.NotebookTabIconSize);
-			} else if (widget == localPlayersList) {
-				if (project.LocalTeamTemplate.Shield != null) {
-					icon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-						StyleConf.NotebookTabIconSize).Value;
-				} else {
-					icon = Misc.LoadIcon ("longomatch-default-shield", StyleConf.NotebookTabIconSize);
-				}
-			} else if (widget == visitorPlayersList) {
-				if (project.VisitorTeamTemplate.Shield != null) {
-					icon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
-						StyleConf.NotebookTabIconSize).Value;
-				} else {
-					icon = Misc.LoadIcon ("longomatch-default-shield", StyleConf.NotebookTabIconSize);
-				}
+			notebookHelper = new IconNotebookHelper (playsnotebook);
+			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category");
+			if (project.LocalTeamTemplate.Shield != null) {
+				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
+					                StyleConf.NotebookTabIconSize).Value;
+				notebookHelper.SetTabIcon (localPlayersList, localIcon, localIcon);
 			} else {
-				return;
+				notebookHelper.SetTabIcon (localPlayersList, "longomatch-default-shield", "longomatch-default-shield");
 			}
-			img.Pixbuf = icon;
+
+			if (project.VisitorTeamTemplate.Shield != null) {
+				var visitorIcon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
+					                  StyleConf.NotebookTabIconSize).Value;
+				notebookHelper.SetTabIcon (visitorPlayersList, visitorIcon, visitorIcon);
+			} else {
+				notebookHelper.SetTabIcon (visitorPlayersList, "longomatch-default-shield", "longomatch-default-shield");
+			}
+
+			notebookHelper.UpdateTabs ();
 		}
 	}
 }

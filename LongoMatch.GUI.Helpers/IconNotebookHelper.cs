@@ -57,6 +57,11 @@ namespace LongoMatch.GUI.Helpers
 		{
 			var pixIcon = Misc.LoadIcon (icon, StyleConf.NotebookTabIconSize, IconLookupFlags.ForceSvg);
 			var pixActiveIcon = Misc.LoadIcon (activeIcon, StyleConf.NotebookTabIconSize, IconLookupFlags.ForceSvg);
+			SetTabIcon (widget, pixIcon, pixActiveIcon);
+		}
+
+		public void SetTabIcon (Widget widget, Pixbuf pixIcon, Pixbuf pixActiveIcon)
+		{
 			TabIcons.Add (widget, new Tuple<Pixbuf, Pixbuf> (pixIcon, pixActiveIcon));
 		}
 
