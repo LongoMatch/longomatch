@@ -102,7 +102,61 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public string DocumentID {
+			get;
+			set;
+		}
+
 		#endregion
+
+		// All properties that are not preload must be overriden so that Fody.Loader can process
+		// this properties and inject the CheckIsLoaded method
+		public override Time Start {
+			get {
+				return base.Start;
+			}
+			set {
+				base.Start = value;
+			}
+		}
+
+		public override Time Stop {
+			get {
+				return base.Stop;
+			}
+			set {
+				base.Stop = value;
+			}
+		}
+
+		public override Time EventTime {
+			get {
+				return base.EventTime;
+			}
+			set {
+				base.EventTime = value;
+			}
+		}
+
+		public override Image Miniature {
+			get {
+				return base.Miniature;
+			}
+			set {
+				base.Miniature = value;
+			}
+		}
+
+		public override string Name {
+			get {
+				return base.Name;
+			}
+			set {
+				base.Name = value;
+			}
+		}
 
 		[PropertyChanged.DoNotNotify]
 		[JsonIgnore]
