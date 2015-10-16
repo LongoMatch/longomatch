@@ -26,6 +26,13 @@ style "longomatch-toggletab-left" = "longomatch-default"
 			border			= {6, 0, 0, 0}
 			stretch         = TRUE
 		}
+		image
+	    {
+			function		= FOCUS
+			file			= "Buttons/null.png"
+			border			= { 4, 4, 4, 4 }
+			stretch			= TRUE
+	    }
 	}
 
 }
@@ -58,6 +65,13 @@ style "longomatch-toggletab-right" = "longomatch-default"
 			border			= {0, 6, 0, 0}
 			stretch         = TRUE
 		}
+		image
+	    {
+			function		= FOCUS
+			file			= "Buttons/null.png"
+			border			= { 4, 4, 4, 4 }
+			stretch			= TRUE
+	    }
 	}
 
 }
@@ -89,6 +103,12 @@ style "longomatch-toggletab-center" = "longomatch-default"
 			overlay_file 	= "Top_Bar/lamp_idle.png"
 			overlay_stretch = FALSE
 		}
-}
-
+		image
+	    {
+			function		= FOCUS
+			file			= "Buttons/null.png"
+			border			= { 4, 4, 4, 4 }
+			stretch			= TRUE
+	    }
+	}
 }
