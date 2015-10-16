@@ -12341,4 +12341,114 @@ Invert</property>
       </widget>
     </child>
   </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ToggleTopBar" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.EventBox" id="gradienttopbar">
+        <property name="MemberName" />
+        <property name="HeightRequest">70</property>
+        <child>
+          <widget class="Gtk.Alignment" id="alignment1">
+            <property name="MemberName" />
+            <property name="HeightRequest">70</property>
+            <property name="Xscale">0</property>
+            <property name="Xalign">0</property>
+            <property name="LeftPadding">15</property>
+            <property name="TopPadding">20</property>
+            <property name="BottomPadding">23</property>
+            <child>
+              <widget class="Gtk.HBox" id="hbox4">
+                <property name="MemberName" />
+                <property name="HeightRequest">28</property>
+                <property name="Homogeneous">True</property>
+                <child>
+                  <widget class="Gtk.RadioButton" id="topbarbutton_left">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Label" translatable="yes">radiobutton1</property>
+                    <property name="DrawIndicator">False</property>
+                    <property name="HasLabel">False</property>
+                    <property name="Group">topbar1</property>
+                    <child>
+                      <widget class="Gtk.HBox" id="buttonbox1">
+                        <property name="MemberName" />
+                        <property name="Spacing">20</property>
+                        <child>
+                          <widget class="Gtk.Image" id="projectsToggleButtonImage">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="projectsToggleButtonLabel">
+                            <property name="MemberName" />
+                            <property name="Xalign">1</property>
+                            <property name="LabelProp" translatable="yes">Projects</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.RadioButton" id="topbarbutton_right">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Label" translatable="yes">radiobutton2</property>
+                    <property name="DrawIndicator">False</property>
+                    <property name="HasLabel">False</property>
+                    <property name="Group">topbar1</property>
+                    <child>
+                      <widget class="Gtk.HBox" id="buttonbox2">
+                        <property name="MemberName" />
+                        <property name="Spacing">20</property>
+                        <child>
+                          <widget class="Gtk.Image" id="athletesToggleButtonImage">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="athletesToggleButtonLabel">
+                            <property name="MemberName" />
+                            <property name="Xalign">1</property>
+                            <property name="LabelProp" translatable="yes">Athletes</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+          </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
 </stetic-interface>
