@@ -86,13 +86,17 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-subs-arrow.svg \
 	hicolor/scalable/actions/longomatch-tab-active-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-active-filter.svg \
+	hicolor/scalable/actions/longomatch-tab-active-player.svg \
 	hicolor/scalable/actions/longomatch-tab-active-playlist.svg \
 	hicolor/scalable/actions/longomatch-tab-active-position.svg \
+	hicolor/scalable/actions/longomatch-tab-active-project.svg \
 	hicolor/scalable/actions/longomatch-tab-active-timeline.svg \
 	hicolor/scalable/actions/longomatch-tab-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-filter.svg \
+	hicolor/scalable/actions/longomatch-tab-player.svg \
 	hicolor/scalable/actions/longomatch-tab-playlist.svg \
 	hicolor/scalable/actions/longomatch-tab-position.svg \
+	hicolor/scalable/actions/longomatch-tab-project.svg \
 	hicolor/scalable/actions/longomatch-tab-timeline.svg \
 	hicolor/scalable/actions/longomatch-tag-card.svg \
 	hicolor/scalable/actions/longomatch-tag-category.svg \
@@ -129,5 +133,5 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-zoom-more.svg \
 	hicolor/scalable/actions/longomatch-zoom-out.svg \
 	hicolor/scalable/actions/vertical-separator.png \
-	hicolor/scalable/apps/longomatch.svg \
-	hicolor/scalable/apps/longomatch-pro.svg
+	hicolor/scalable/apps/longomatch-pro.svg \
+	hicolor/scalable/apps/longomatch.svg

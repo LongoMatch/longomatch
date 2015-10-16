@@ -84,6 +84,19 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Tabs/tab-right.png \
 	gtk-2.0/Tabs/tab-top-active.png \
 	gtk-2.0/Tabs/tab-top.png \
+	gtk-2.0/Top_Bar/lamp_active.png \
+	gtk-2.0/Top_Bar/lamp_idle.png \
+	gtk-2.0/Top_Bar/lamp_prelight.png \
+	gtk-2.0/Top_Bar/topbar_bg.png \
+	gtk-2.0/Top_Bar/toptab_bg_body_active.png \
+	gtk-2.0/Top_Bar/toptab_bg_body_idle.png \
+	gtk-2.0/Top_Bar/toptab_bg_body_prelight.png \
+	gtk-2.0/Top_Bar/toptab_bg_left_active.png \
+	gtk-2.0/Top_Bar/toptab_bg_left_idle.png \
+	gtk-2.0/Top_Bar/toptab_bg_left_prelight.png \
+	gtk-2.0/Top_Bar/toptab_bg_right_active.png \
+	gtk-2.0/Top_Bar/toptab_bg_right_idle.png \
+	gtk-2.0/Top_Bar/toptab_bg_right_prelight.png \
 	gtk-2.0/buttons.rc \
 	gtk-2.0/checkbox.rc \
 	gtk-2.0/combobox.rc \
@@ -95,4 +108,6 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/range.rc \
 	gtk-2.0/scrollbar.rc \
 	gtk-2.0/separator.rc \
+	gtk-2.0/toggletab.rc \
+	gtk-2.0/topbar.rc \
 	longomatch-dark.json
