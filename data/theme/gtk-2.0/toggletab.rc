@@ -86,7 +86,9 @@ style "longomatch-toggletab-center" = "longomatch-default"
 			state			= NORMAL
 			file            = "Top_Bar/toptab_bg_body_idle.png"
 			stretch         = TRUE
+			overlay_file 	= "Top_Bar/lamp_idle.png"
+			overlay_stretch = FALSE
 		}
-	}
+}
 
 }
