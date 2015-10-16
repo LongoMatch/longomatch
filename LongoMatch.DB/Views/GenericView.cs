@@ -103,11 +103,17 @@ namespace LongoMatch.DB.Views
 
 			keys = new List<object> ();
 			foreach (string propName in FilterProperties.Keys) {
+				object value;
+
+				if (!document.TryGetValue (propName, out value)) {
+					keys.Add (null);
+					continue;
+				}
 				// If the property is an IStorable, store the object ID which will be used in the queries
 				if ((bool)FilterProperties [propName]) {
-					keys.Add ((document [propName] as string).Split (DocumentsSerializer.ID_SEP_CHAR).Last ());
+					keys.Add (DocumentsSerializer.IDStringFromString (value as string));
 				} else {
-					keys.Add (document [propName]);
+					keys.Add (value);
 				}
 			}
 			return new PropertyKey (keys);
