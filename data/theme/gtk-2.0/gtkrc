@@ -159,7 +159,6 @@ include "range.rc"
 include "scrollbar.rc"
 include "separator.rc"
 include "topbar.rc"
-include "toggletab.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
