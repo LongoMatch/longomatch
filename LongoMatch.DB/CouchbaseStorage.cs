@@ -129,7 +129,7 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public List<T> RetrieveAll<T> () where T : IStorable
+		public IEnumerable<T> RetrieveAll<T> () where T : IStorable
 		{
 			lock (mutex) {
 				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
@@ -144,11 +144,11 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
+		public IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			lock (mutex) {
 				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
-				return qview.Query (filter).GroupBy (x => x.ID).Select (g => g.First ()).ToList ();
+				return qview.Query (filter);
 			}
 		}
 

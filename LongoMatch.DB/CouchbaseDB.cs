@@ -41,7 +41,7 @@ namespace LongoMatch.DB
 
 		#region IDatabase implementation
 
-		public List<Project> GetAllProjects ()
+		public IEnumerable<Project> GetAllProjects ()
 		{
 			return storage.Retrieve<Project> (null);
 		}

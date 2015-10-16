@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
@@ -69,7 +70,7 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
-			projectlistwidget1.Fill (DB.GetAllProjects ());
+			projectlistwidget1.Fill (DB.GetAllProjects ().ToList ());
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
@@ -228,7 +229,7 @@ namespace LongoMatch.Gui.Panel
 			selectedProjects = projects;
 			if (projects.Count == 1) {
 				try {
-					LoadProject (projects[0]);
+					LoadProject (projects [0]);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					Config.GUIToolkit.ErrorMessage (ex.Message, this);
@@ -288,7 +289,7 @@ namespace LongoMatch.Gui.Panel
 					continue;
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-					selectedProject.Description.Title;
+				             selectedProject.Description.Title;
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {

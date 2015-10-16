@@ -146,7 +146,7 @@ namespace LongoMatch.DB
 			} else {
 				// In case the file is not stored by id
 				// TODO this must go away once the DB port is done
-				List<T> l = RetrieveAll<T> ();
+				IEnumerable<T> l = RetrieveAll<T> ();
 				foreach (T t in l) {
 					if (t.ID == id) {
 						Log.Information ("Found id " + id);
@@ -157,7 +157,7 @@ namespace LongoMatch.DB
 			return default (T);
 		}
 
-		public List<T> RetrieveAll<T> () where T : IStorable
+		public IEnumerable<T> RetrieveAll<T> () where T : IStorable
 		{
 			List<T> l = new List<T> ();
 			string typePath = ResolvePath<T> ();
@@ -194,7 +194,7 @@ namespace LongoMatch.DB
 			return l;
 		}
 
-		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
+		public IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			List<T> l = new List<T> ();
 			string typePath = ResolvePath<T> ();

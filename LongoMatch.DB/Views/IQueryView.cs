@@ -23,7 +23,7 @@ namespace LongoMatch.DB.Views
 {
 	public interface IQueryView<T>
 	{
-		List<T> Query (QueryFilter filter);
+		IEnumerable<T> Query (QueryFilter filter);
 	}
 
 }

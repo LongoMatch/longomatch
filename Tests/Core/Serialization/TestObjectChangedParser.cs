@@ -27,51 +27,71 @@ namespace Tests.Core.Serialization
 {
 	public class TestObjectBase: IStorable
 	{
-		public Guid ID {get; set;}
-		public List<IStorable> storables {get; set;}
-		public IStorage Storage {get; set;}
-		public bool IsLoaded {get; set;}
-		public bool IsChanged {get;set;}
-		public bool DeleteChildren {get {return true;}}
-		public List<IStorable> SavedChildren { get; set;}
+		public Guid ID { get; set; }
+
+		public List<IStorable> storables { get; set; }
+
+		public IStorage Storage { get; set; }
+
+		public bool IsLoaded { get; set; }
+
+		public bool IsChanged { get; set; }
+
+		public bool DeleteChildren { get { return true; } }
+
+		public List<IStorable> SavedChildren { get; set; }
+
+		public string DocumentID { get; set; }
 	}
 
 	public class TestObject1: TestObjectBase
 	{
-		public string Name { get; set;}
-		public int Idx {get;set;}
-		public TestObject2 Storable{get; set;}
+		public string Name { get; set; }
+
+		public int Idx { get; set; }
+
+		public TestObject2 Storable{ get; set; }
+
 		[JsonIgnore]
-		public TestObject2 Ignored{get; set;}
-		public List<TestObject2> StorableList{get; set;}
-		public Dictionary<string,TestObject2> StorableDict {get;set;}
-		public List<TestObject3> NotStorableList {get; set;}
+		public TestObject2 Ignored{ get; set; }
+
+		public List<TestObject2> StorableList{ get; set; }
+
+		public Dictionary<string,TestObject2> StorableDict { get; set; }
+
+		public List<TestObject3> NotStorableList { get; set; }
 	}
 
 	public class TestObject2: TestObjectBase
 	{
-		public TestObject3 NotStorable {get;set;}
-		public TestObject4 Storable {get; set;}
-		public List<TestObject4> StorableList {get; set;}
+		public TestObject3 NotStorable { get; set; }
+
+		public TestObject4 Storable { get; set; }
+
+		public List<TestObject4> StorableList { get; set; }
 	}
 
 	public class TestObject3
 	{
-		public DateTime Date {get;set;}
-		public Color Color {get; set;}
-		public bool IsChanged {get;set;}
+		public DateTime Date { get; set; }
+
+		public Color Color { get; set; }
+
+		public bool IsChanged { get; set; }
 	}
 
 	public class TestObject4: TestObjectBase
 	{
 		public long Idx;
-		public TestObject2 DepCycle {get; set;}
+
+		public TestObject2 DepCycle { get; set; }
 	}
 
 	[TestFixture ()]
-	public class TestObjectChangedParser {
+	public class TestObjectChangedParser
+	{
 
-		[Test()]
+		[Test ()]
 		public void TestParsed ()
 		{
 			StorableNode parent;
@@ -87,7 +107,7 @@ namespace Tests.Core.Serialization
 			Assert.AreEqual (2, storables.Count);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestParsedWithDependencyCycles ()
 		{
 			StorableNode parent;
@@ -103,7 +123,7 @@ namespace Tests.Core.Serialization
 			Assert.AreEqual (2, storables.Count);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestParsedAndReset ()
 		{
 			StorableNode parent;
@@ -130,7 +150,7 @@ namespace Tests.Core.Serialization
 			Assert.IsTrue (obj1.IsChanged);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestParsedAndResetstorables ()
 		{
 			StorableNode parent;
@@ -155,7 +175,7 @@ namespace Tests.Core.Serialization
 			Assert.AreEqual (2, storables.Count);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestAllObjectsParsed ()
 		{
 			StorableNode parent;
@@ -169,15 +189,15 @@ namespace Tests.Core.Serialization
 			Assert.AreEqual (0, changed.Count);
 			Assert.AreEqual (57, storables.Count);
 			obj1.Storable.IsChanged = true;
-			obj1.StorableList[2].IsChanged = true;
-			obj1.StorableDict["1"].IsChanged = true;
+			obj1.StorableList [2].IsChanged = true;
+			obj1.StorableDict ["1"].IsChanged = true;
 			storables = null;
 			changed = null;
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings, false));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (3, changed.Count);
 			Assert.AreEqual (57, storables.Count);
-			obj1.NotStorableList[1].IsChanged = true;
+			obj1.NotStorableList [1].IsChanged = true;
 			storables = null;
 			changed = null;
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
@@ -186,39 +206,42 @@ namespace Tests.Core.Serialization
 			Assert.AreEqual (57, storables.Count);
 		}
 
-		TestObject1 CreateObject1 (List<object> objects) {
+		TestObject1 CreateObject1 (List<object> objects)
+		{
 			TestObject1 obj1 = new TestObject1 ();
 			objects.Add (obj1);
 			obj1.Name = "test";
 			obj1.Idx = 2;
 			obj1.Storable = CreateObject2 (objects);
 			obj1.StorableList = new List<TestObject2> ();
-			for (int i=0; i<5; i++) {
+			for (int i = 0; i < 5; i++) {
 				obj1.StorableList.Add (CreateObject2 (objects));
 			}
 			obj1.StorableDict = new Dictionary<string, TestObject2> ();
-			obj1.StorableDict["1"] = CreateObject2 (objects);
-			obj1.StorableDict["2"] = CreateObject2 (objects);
+			obj1.StorableDict ["1"] = CreateObject2 (objects);
+			obj1.StorableDict ["2"] = CreateObject2 (objects);
 			obj1.NotStorableList = new List<TestObject3> ();
-			for (int i=0; i<5; i++) {
+			for (int i = 0; i < 5; i++) {
 				obj1.NotStorableList.Add (CreateObject3 (objects));
 			}
 			return obj1;
 		}
 
-		TestObject2 CreateObject2 (List<object> objects) {
+		TestObject2 CreateObject2 (List<object> objects)
+		{
 			TestObject2 obj2 = new TestObject2 ();
 			objects.Add (obj2);
 			obj2.NotStorable = CreateObject3 (objects);
 			obj2.Storable = CreateObject4 (objects);
 			obj2.StorableList = new List<TestObject4> ();
-			for (int i=0; i<5; i++) {
+			for (int i = 0; i < 5; i++) {
 				obj2.StorableList.Add (CreateObject4 (objects));
 			}
 			return obj2;
 		}
 
-		TestObject3 CreateObject3 (List<object> objects) {
+		TestObject3 CreateObject3 (List<object> objects)
+		{
 			TestObject3 obj3 = new TestObject3 ();
 			objects.Add (obj3);
 			obj3.Date = DateTime.Now;
@@ -228,7 +251,8 @@ namespace Tests.Core.Serialization
 			return obj3;
 		}
 
-		TestObject4 CreateObject4 (List<object> objects) {
+		TestObject4 CreateObject4 (List<object> objects)
+		{
 			TestObject4 obj4 = new TestObject4 ();
 			objects.Add (obj4);
 			obj4.Idx = 4000;

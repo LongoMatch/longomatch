@@ -22,6 +22,7 @@ using System.IO;
 using LongoMatch.DB;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using System.Linq;
 
 namespace Tests.Services
 {
@@ -63,7 +64,7 @@ namespace Tests.Services
 			TestStorable ts1 = new TestStorable ("first");
 
 			fs.Store<TestStorable> (ts1);
-			List<TestStorable> lts = fs.RetrieveAll<TestStorable> ();
+			List<TestStorable> lts = fs.RetrieveAll<TestStorable> ().ToList ();
 
 			// Check that we have stored one object
 			Assert.AreEqual (lts.Count, 1);
@@ -76,7 +77,7 @@ namespace Tests.Services
 			// Get based on memberString
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("memberString", "first");
-			lts = fs.Retrieve<TestStorable> (filter);
+			lts = fs.Retrieve<TestStorable> (filter).ToList ();
 
 			// Check that we have stored one object
 			Assert.AreEqual (lts.Count, 1);
@@ -87,7 +88,7 @@ namespace Tests.Services
 
 			// Check that the storage is empty
 			fs.Delete<TestStorable> (ts2);
-			lts = fs.RetrieveAll<TestStorable> ();
+			lts = fs.RetrieveAll<TestStorable> ().ToList ();
 			Assert.AreEqual (lts.Count, 0);
 		}
 
@@ -113,11 +114,11 @@ namespace Tests.Services
 			/* Test with a dictionary combination that exists */
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("memberString", "first");
-			Assert.AreEqual (1, fs.Retrieve<TestStorable> (filter).Count);
+			Assert.AreEqual (1, fs.Retrieve<TestStorable> (filter).Count ());
 
 			/* Test with a dictionary combination that doesn't exist */
 			filter ["memberString"] [0] = "second";
-			Assert.AreEqual (0, fs.Retrieve<TestStorable> (filter).Count);
+			Assert.AreEqual (0, fs.Retrieve<TestStorable> (filter).Count ());
 		}
 	}
 }

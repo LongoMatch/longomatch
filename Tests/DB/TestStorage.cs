@@ -29,6 +29,7 @@ using NUnit.Framework;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Serialization;
+using System.Linq;
 
 namespace Tests.DB
 {
@@ -360,8 +361,9 @@ namespace Tests.DB
 			// After filling an object
 			t1 = new Team ();
 			t1.ID = t.ID;
-			t1.IsChanged = false;
-			DocumentsSerializer.FillObject (t, db);
+			t1.DocumentID = t.ID.ToString ();
+			t1.IsChanged = true;
+			DocumentsSerializer.FillObject (t1, db);
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
@@ -481,7 +483,7 @@ namespace Tests.DB
 			storage.Store<Project> (p);
 			Assert.AreEqual (40, db.DocumentCount);
 
-			p = storage.RetrieveAll<Project> () [0];
+			p = storage.RetrieveAll<Project> ().First ();
 			p.Load ();
 			storage.Store (p);
 			Assert.AreEqual (40, db.DocumentCount);
@@ -532,18 +534,17 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		[Ignore ("FIXME: deadlocks when run in with the rest of the tests")]
 		public void TestPreloadPropertiesArePreserved ()
 		{
 			Project p1 = Utils.CreateProject (true);
 			storage.Store (p1);
-			Project p2 = storage.RetrieveAll<Project> () [0];
+			Project p2 = storage.RetrieveAll<Project> ().First ();
 			Assert.IsFalse (p2.IsLoaded);
 			p2.Description.Competition = "NEW NAME";
 			p2.Load ();
 			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
 			storage.Store (p2);
-			Project p3 = storage.RetrieveAll<Project> () [0];
+			Project p3 = storage.RetrieveAll<Project> ().First ();
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
 		}
 

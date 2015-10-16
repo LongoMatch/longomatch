@@ -69,7 +69,7 @@ namespace Tests.DB
 		[Test ()]
 		public void TestQueryDashboards ()
 		{
-			List<Dashboard> dashboards;
+			IEnumerable<Dashboard> dashboards;
 
 			for (int i = 0; i < 5; i++) {
 				var da = Dashboard.DefaultTemplate (5);
@@ -80,33 +80,33 @@ namespace Tests.DB
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Dashboard1");
 			dashboards = storage.Retrieve<Dashboard> (filter);
-			Assert.AreEqual (1, dashboards.Count);
-			Assert.AreEqual ("Dashboard1", dashboards [0].Name);
+			Assert.AreEqual (1, dashboards.Count ());
+			Assert.AreEqual ("Dashboard1", dashboards.First ().Name);
 
 			filter.Add ("Name", "Dashboard1", "Dashboard3");
 			dashboards = storage.Retrieve<Dashboard> (filter);
-			Assert.AreEqual (2, dashboards.Count);
+			Assert.AreEqual (2, dashboards.Count ());
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard1"));
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
 			dashboards = storage.Retrieve<Dashboard> (filter);
-			Assert.AreEqual (0, dashboards.Count);
+			Assert.AreEqual (0, dashboards.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					dashboards = storage.Retrieve<Dashboard> (filter);
+					dashboards = storage.Retrieve<Dashboard> (filter).ToList ();
 				});
-			Assert.AreEqual (0, dashboards.Count);
+			Assert.AreEqual (0, dashboards.Count ());
 		}
 
 		[Test ()]
 		public void TestQueryTeams ()
 		{
-			List<Team> teams;
+			IEnumerable<Team> teams;
 
 			for (int i = 0; i < 5; i++) {
 				var da = Team.DefaultTemplate (5);
@@ -117,27 +117,27 @@ namespace Tests.DB
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Team1");
 			teams = storage.Retrieve<Team> (filter);
-			Assert.AreEqual (1, teams.Count);
-			Assert.AreEqual ("Team1", teams [0].Name);
+			Assert.AreEqual (1, teams.Count ());
+			Assert.AreEqual ("Team1", teams.First ().Name);
 
 			filter.Add ("Name", "Team1", "Team3");
 			teams = storage.Retrieve<Team> (filter);
-			Assert.AreEqual (2, teams.Count);
+			Assert.AreEqual (2, teams.Count ());
 			Assert.IsTrue (teams.Any (d => d.Name == "Team1"));
 			Assert.IsTrue (teams.Any (d => d.Name == "Team3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
 			teams = storage.Retrieve<Team> (filter);
-			Assert.AreEqual (0, teams.Count);
+			Assert.AreEqual (0, teams.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					teams = storage.Retrieve<Team> (filter);
+					teams = storage.Retrieve<Team> (filter).ToList ();
 				});
-			Assert.AreEqual (0, teams.Count);
+			Assert.AreEqual (0, teams.Count ());
 		}
 
 		[Test ()]
@@ -161,25 +161,25 @@ namespace Tests.DB
 
 			filter = new QueryFilter ();
 			filter.Add ("Competition", "Liga");
-			Assert.AreEqual (9, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (9, storage.Retrieve<Project> (filter).Count ());
 
 			filter.Add ("Competition", "Liga", "Champions");
-			Assert.AreEqual (18, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (18, storage.Retrieve<Project> (filter).Count ());
 
 			filter.Add ("Season", "2013");
-			Assert.AreEqual (6, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (6, storage.Retrieve<Project> (filter).Count ());
 
 			filter.Add ("Season", "2013", "2015");
-			Assert.AreEqual (12, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (12, storage.Retrieve<Project> (filter).Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Season", "2013");
 			filter.Add ("Competition", "Liga");
 			filter.Add ("LocalName", "Complu");
-			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
 
 			filter.Add ("VisitorName", "Fluendo");
-			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
 		}
 
 		[Test ()]
@@ -203,19 +203,19 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Player", messi);
-			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Player", andoni);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Player", andoni, jorge, josep);
-			Assert.AreEqual (3, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (3, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Player", victor, ukelele);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Player", players);
-			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count ());
 		}
 
 		[Test ()]
@@ -236,19 +236,19 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("EventType", evtType1);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("EventType", evtType4);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("EventType", evtType2, evtType3);
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("EventType", evtType5);
-			Assert.AreEqual (0, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (0, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("EventType", eventTypes);
-			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count ());
 		}
 
 		[Test ()]
@@ -263,11 +263,11 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Team", devTeam);
-			Assert.AreEqual (125, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (125, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Team", qaTeam);
-			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count ());
 		}
 
 		[Test ()]
@@ -285,17 +285,17 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Parent", projects [0], projects [1]);
-			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Player", devTeam.List [0], qaTeam.List [1]);
-			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("EventType", (dashbaord.List [0] as AnalysisEventButton).EventType);
-			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count ());
 
 			filter.Add ("Team", devTeam);
 			var res = storage.Retrieve<TimelineEvent> (filter);
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
 		}
 
 		[Test ()]
@@ -305,9 +305,9 @@ namespace Tests.DB
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Parent", projects);
 
-			Assert.AreEqual (5, storage.Retrieve<EventType> (filter).Count);
-			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count);
-			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count);
+			Assert.AreEqual (5, storage.Retrieve<EventType> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count ());
+			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count ());
 		}
 
 		List<Project> CreateProjects ()

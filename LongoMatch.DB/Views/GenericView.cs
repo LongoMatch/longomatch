@@ -179,9 +179,8 @@ namespace LongoMatch.DB.Views
 		/// must be in the list of <see cref="FilterProperties"/>
 		/// </summary>
 		/// <param name="filter">Filter.</param>
-		public List<T> Query (QueryFilter filter)
+		public IEnumerable<T> Query (QueryFilter filter)
 		{
-			List<T> elements = new List<T> ();
 			View view = GetView ();
 
 			Query q = view.CreateQuery ();
@@ -241,9 +240,8 @@ namespace LongoMatch.DB.Views
 				d.DocumentID = row.DocumentId;
 				d.IsLoaded = false;
 				d.Storage = storage;
-				elements.Add (d);
+				yield return d;
 			}
-			return elements;
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace LongoMatch.Core.Interfaces
 {
 	public interface IDatabase
 	{
-		List<Project> GetAllProjects ();
+		IEnumerable<Project> GetAllProjects ();
 
 		Project GetProject (Guid id);
 

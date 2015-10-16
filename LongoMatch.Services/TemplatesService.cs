@@ -108,11 +108,7 @@ namespace LongoMatch.Services
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", name);
 
-			List<T> list = storage.Retrieve<T> (filter);
-			if (list.Count == 0)
-				return false;
-			else
-				return true;
+			return storage.Retrieve<T> (filter).Any ();
 		}
 
 		/// <summary>
@@ -121,7 +117,7 @@ namespace LongoMatch.Services
 		/// <value>The templates.</value>
 		public List<T> Templates {
 			get {
-				List<T> templates = storage.RetrieveAll<T> ();
+				List<T> templates = storage.RetrieveAll<T> ().ToList ();
 				// Now add the system templates, use a copy to prevent modification of system templates.
 				foreach (T stemplate in systemTemplates) {
 					templates.Add (Cloner.Clone (stemplate));
@@ -150,16 +146,15 @@ namespace LongoMatch.Services
 			template = systemTemplates.FirstOrDefault (t => t.Name == name);
 			if (template != null) {
 				// Return a copy to prevent modification of system templates.
-				return Cloner.Clone (template);
+				return template.Clone ();
 			} else {
 				QueryFilter filter = new QueryFilter ();
 				filter.Add ("Name", name);
 
-				List<T> list = storage.Retrieve<T> (filter);
-				if (list.Count == 0)
+				template = storage.Retrieve<T> (filter).FirstOrDefault ();
+				if (template == null)
 					throw new TemplateNotFoundException<T> (name);
-				else
-					return list [0];
+				return template;
 			}
 		}
 
@@ -201,7 +196,7 @@ namespace LongoMatch.Services
 			if (template == null) {
 				template = Load (orig);
 			} else {
-				template = Cloner.Clone (template);
+				template = template.Clone ();
 			}
 			template.ID = new Guid ();
 			template.Name = copy;
