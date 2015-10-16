@@ -106,7 +106,7 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
-			if (openedProjectType == ProjectType.FakeCaptureProject) {
+			if (openedProject == null || openedProjectType == ProjectType.FakeCaptureProject) {
 				return;
 			}
 
