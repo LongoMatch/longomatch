@@ -81,6 +81,10 @@ namespace LongoMatch.GUI.Helpers
 
 		void SetTabProps (Widget widget, bool active)
 		{
+			if (widget == null) {
+				return;
+			}
+
 			Gtk.Image img;
 
 			img = Notebook.GetTabLabel (widget) as Gtk.Image;
