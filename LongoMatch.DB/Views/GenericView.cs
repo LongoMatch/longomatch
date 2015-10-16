@@ -232,6 +232,7 @@ namespace LongoMatch.DB.Views
 				T d = DocumentsSerializer.DeserializeFromJson<T> (
 					      row.Value as string, db, rev);
 				d.ID = DocumentsSerializer.IDFromString (row.DocumentId);
+				d.DocumentID = row.DocumentId;
 				d.IsLoaded = false;
 				d.Storage = storage;
 				elements.Add (d);

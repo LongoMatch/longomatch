@@ -78,6 +78,13 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public string DocumentID {
+			get;
+			set;
+		}
+
 		#endregion
 
 		[JsonProperty]

@@ -46,6 +46,8 @@ namespace LongoMatch.Core.Interfaces
 		/// Defines if <see cref="IStorable"/> children should be deleted when deleting this object.
 		/// </summary>
 		bool DeleteChildren { get; }
+
+		string DocumentID { get; set; }
 	}
 }
 

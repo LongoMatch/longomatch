@@ -66,23 +66,35 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public string DocumentID {
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region IChanged implementation
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
 			get;
 			set;
 		}
+
 		#endregion
 
 		#region IIDObject implementation
+
 		[JsonProperty (Order = -100)]
 		public virtual Guid ID {
 			get;
 			set;
 		}
+
 		#endregion
 
 		/// <summary>
@@ -109,7 +121,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Load () {
+		public void Load ()
+		{
 			CheckIsLoaded ();
 		}
 
@@ -123,7 +136,7 @@ namespace LongoMatch.Core.Store
 
 		public override int GetHashCode ()
 		{
-			return ID.GetHashCode();
+			return ID.GetHashCode ();
 		}
 
 	}

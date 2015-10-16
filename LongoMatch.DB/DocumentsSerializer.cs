@@ -92,7 +92,7 @@ namespace LongoMatch.DB
 		{
 			Log.Debug ("Filling object " + storable);
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
-			Document doc = db.GetExistingDocument (storable.ID.ToString ());
+			Document doc = db.GetExistingDocument (storable.DocumentID);
 			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
 			context.ContractResolver = new StorablesStackContractResolver (context, storable, true);
 			serializer.ContractResolver = context.ContractResolver;
