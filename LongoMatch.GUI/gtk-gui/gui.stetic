@@ -12358,7 +12358,7 @@ Invert</property>
             <property name="TopPadding">20</property>
             <property name="BottomPadding">23</property>
             <child>
-              <widget class="Gtk.HBox" id="hbox4">
+              <widget class="Gtk.HBox" id="buttoncontainer">
                 <property name="MemberName" />
                 <property name="HeightRequest">28</property>
                 <property name="Homogeneous">True</property>
@@ -12367,6 +12367,7 @@ Invert</property>
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">radiobutton1</property>
+                    <property name="Active">True</property>
                     <property name="DrawIndicator">False</property>
                     <property name="HasLabel">False</property>
                     <property name="Group">topbar1</property>

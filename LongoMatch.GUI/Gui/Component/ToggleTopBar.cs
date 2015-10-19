@@ -16,8 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
+using Gdk;
 using Gtk;
-using LongoMatch.Core;
+using LongoMatch.Core.Common;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,13 +44,57 @@ namespace LongoMatch.Gui.Component
 
 		public int CurrentPage {
 			get { return currentPage; }
-			set {
+			private set {
 				currentPage = value;
 				if (SwitchPage != null) {
 					SwitchPage (this, new ChangeCurrentPageArgs ());
 				}
 			}
 		}
+
+		/// <summary>
+		/// Adds a button to the end of the button list.
+		/// Each button has an icon and a text, and changes
+		/// 	CurrentPage when clicked.
+		/// </summary>
+		/// <param name="icon">Icon to show at the left of the button</param>
+		/// <param name="text">Text to show at the right of the button</param>
+		public void AddButton (Pixbuf icon, string text)
+		{
+			// If there are other buttons, add the new button to their buttonGroup
+			RadioButton otherbutton = null;
+			string styleName = "topbarbutton_left";
+			if (buttoncontainer.Children.Any ()) {
+				otherbutton = buttoncontainer.Children.First () as RadioButton;
+				styleName = "topbarbutton_right";
+			}
+			var button = new RadioButton (otherbutton);
+
+
+			button.Name = styleName;
+			button.DrawIndicator = false;
+
+			var box = new HBox ();
+			box.Spacing = 20;
+			box.Add (new Gtk.Image (icon));
+			box.Add (new Label (text));
+			button.Add (box);
+
+			// Restyle the widget that was the last (if any)
+			int pos = buttoncontainer.Children.Length - 1;
+			if (pos >= 0) {
+				Widget previousLast = buttoncontainer.Children.Last ();
+				previousLast.Name = pos == 0 ? "topbarbutton_left" : "topbarbutton_center";
+				previousLast.ResetRcStyles ();
+			}
+
+			buttoncontainer.Add (button);
+			pos++;
+
+			button.Toggled += (object sender, EventArgs e) => CurrentPage = pos;
+			button.ShowAll ();
+		}
+
 
 	}
 }

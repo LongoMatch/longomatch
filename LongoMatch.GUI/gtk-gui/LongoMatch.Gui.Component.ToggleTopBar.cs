@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Alignment alignment1;
 		
-		private global::Gtk.HBox hbox4;
+		private global::Gtk.HBox buttoncontainer;
 		
 		private global::Gtk.RadioButton topbarbutton_left;
 		
@@ -44,11 +44,11 @@ namespace LongoMatch.Gui.Component
 			this.alignment1.TopPadding = ((uint)(20));
 			this.alignment1.BottomPadding = ((uint)(23));
 			// Container child alignment1.Gtk.Container+ContainerChild
-			this.hbox4 = new global::Gtk.HBox ();
-			this.hbox4.HeightRequest = 28;
-			this.hbox4.Name = "hbox4";
-			this.hbox4.Homogeneous = true;
-			// Container child hbox4.Gtk.Box+BoxChild
+			this.buttoncontainer = new global::Gtk.HBox ();
+			this.buttoncontainer.HeightRequest = 28;
+			this.buttoncontainer.Name = "buttoncontainer";
+			this.buttoncontainer.Homogeneous = true;
+			// Container child buttoncontainer.Gtk.Box+BoxChild
 			this.topbarbutton_left = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("radiobutton1"));
 			this.topbarbutton_left.CanFocus = true;
 			this.topbarbutton_left.Name = "topbarbutton_left";
@@ -75,10 +75,10 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.buttonbox1 [this.projectsToggleButtonLabel]));
 			w2.Position = 1;
 			this.topbarbutton_left.Add (this.buttonbox1);
-			this.hbox4.Add (this.topbarbutton_left);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.topbarbutton_left]));
+			this.buttoncontainer.Add (this.topbarbutton_left);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.buttoncontainer [this.topbarbutton_left]));
 			w4.Position = 0;
-			// Container child hbox4.Gtk.Box+BoxChild
+			// Container child buttoncontainer.Gtk.Box+BoxChild
 			this.topbarbutton_right = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("radiobutton2"));
 			this.topbarbutton_right.CanFocus = true;
 			this.topbarbutton_right.Name = "topbarbutton_right";
@@ -105,10 +105,10 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.buttonbox2 [this.athletesToggleButtonLabel]));
 			w6.Position = 1;
 			this.topbarbutton_right.Add (this.buttonbox2);
-			this.hbox4.Add (this.topbarbutton_right);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.topbarbutton_right]));
+			this.buttoncontainer.Add (this.topbarbutton_right);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.buttoncontainer [this.topbarbutton_right]));
 			w8.Position = 1;
-			this.alignment1.Add (this.hbox4);
+			this.alignment1.Add (this.buttoncontainer);
 			this.gradienttopbar.Add (this.alignment1);
 			this.Add (this.gradienttopbar);
 			if ((this.Child != null)) {
