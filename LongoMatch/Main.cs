@@ -19,6 +19,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Gtk;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
@@ -41,6 +42,10 @@ namespace LongoMatch
 
 		public static void Main (string[] args)
 		{
+			// Replace the current synchronization context with a GTK synchronization context
+			// that continues tasks in the main UI thread instead of a random thread from the pool.
+			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
+
 			CoreServices.Init ();
 
 			InitGtk ();
