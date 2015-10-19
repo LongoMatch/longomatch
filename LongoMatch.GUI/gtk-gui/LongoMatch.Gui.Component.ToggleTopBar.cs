@@ -9,22 +9,6 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Alignment alignment1;
 		
 		private global::Gtk.HBox buttoncontainer;
-		
-		private global::Gtk.RadioButton topbarbutton_left;
-		
-		private global::Gtk.HBox buttonbox1;
-		
-		private global::Gtk.Image projectsToggleButtonImage;
-		
-		private global::Gtk.Label projectsToggleButtonLabel;
-		
-		private global::Gtk.RadioButton topbarbutton_right;
-		
-		private global::Gtk.HBox buttonbox2;
-		
-		private global::Gtk.Image athletesToggleButtonImage;
-		
-		private global::Gtk.Label athletesToggleButtonLabel;
 
 		protected virtual void Build ()
 		{
@@ -48,66 +32,6 @@ namespace LongoMatch.Gui.Component
 			this.buttoncontainer.HeightRequest = 28;
 			this.buttoncontainer.Name = "buttoncontainer";
 			this.buttoncontainer.Homogeneous = true;
-			// Container child buttoncontainer.Gtk.Box+BoxChild
-			this.topbarbutton_left = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("radiobutton1"));
-			this.topbarbutton_left.CanFocus = true;
-			this.topbarbutton_left.Name = "topbarbutton_left";
-			this.topbarbutton_left.DrawIndicator = false;
-			this.topbarbutton_left.Group = new global::GLib.SList (global::System.IntPtr.Zero);
-			this.topbarbutton_left.Remove (this.topbarbutton_left.Child);
-			// Container child topbarbutton_left.Gtk.Container+ContainerChild
-			this.buttonbox1 = new global::Gtk.HBox ();
-			this.buttonbox1.Name = "buttonbox1";
-			this.buttonbox1.Spacing = 20;
-			// Container child buttonbox1.Gtk.Box+BoxChild
-			this.projectsToggleButtonImage = new global::Gtk.Image ();
-			this.projectsToggleButtonImage.Name = "projectsToggleButtonImage";
-			this.projectsToggleButtonImage.Xalign = 0F;
-			this.buttonbox1.Add (this.projectsToggleButtonImage);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.buttonbox1 [this.projectsToggleButtonImage]));
-			w1.Position = 0;
-			// Container child buttonbox1.Gtk.Box+BoxChild
-			this.projectsToggleButtonLabel = new global::Gtk.Label ();
-			this.projectsToggleButtonLabel.Name = "projectsToggleButtonLabel";
-			this.projectsToggleButtonLabel.Xalign = 1F;
-			this.projectsToggleButtonLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Projects");
-			this.buttonbox1.Add (this.projectsToggleButtonLabel);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.buttonbox1 [this.projectsToggleButtonLabel]));
-			w2.Position = 1;
-			this.topbarbutton_left.Add (this.buttonbox1);
-			this.buttoncontainer.Add (this.topbarbutton_left);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.buttoncontainer [this.topbarbutton_left]));
-			w4.Position = 0;
-			// Container child buttoncontainer.Gtk.Box+BoxChild
-			this.topbarbutton_right = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("radiobutton2"));
-			this.topbarbutton_right.CanFocus = true;
-			this.topbarbutton_right.Name = "topbarbutton_right";
-			this.topbarbutton_right.DrawIndicator = false;
-			this.topbarbutton_right.Group = this.topbarbutton_left.Group;
-			this.topbarbutton_right.Remove (this.topbarbutton_right.Child);
-			// Container child topbarbutton_right.Gtk.Container+ContainerChild
-			this.buttonbox2 = new global::Gtk.HBox ();
-			this.buttonbox2.Name = "buttonbox2";
-			this.buttonbox2.Spacing = 20;
-			// Container child buttonbox2.Gtk.Box+BoxChild
-			this.athletesToggleButtonImage = new global::Gtk.Image ();
-			this.athletesToggleButtonImage.Name = "athletesToggleButtonImage";
-			this.athletesToggleButtonImage.Xalign = 0F;
-			this.buttonbox2.Add (this.athletesToggleButtonImage);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.buttonbox2 [this.athletesToggleButtonImage]));
-			w5.Position = 0;
-			// Container child buttonbox2.Gtk.Box+BoxChild
-			this.athletesToggleButtonLabel = new global::Gtk.Label ();
-			this.athletesToggleButtonLabel.Name = "athletesToggleButtonLabel";
-			this.athletesToggleButtonLabel.Xalign = 1F;
-			this.athletesToggleButtonLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Athletes");
-			this.buttonbox2.Add (this.athletesToggleButtonLabel);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.buttonbox2 [this.athletesToggleButtonLabel]));
-			w6.Position = 1;
-			this.topbarbutton_right.Add (this.buttonbox2);
-			this.buttoncontainer.Add (this.topbarbutton_right);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.buttoncontainer [this.topbarbutton_right]));
-			w8.Position = 1;
 			this.alignment1.Add (this.buttoncontainer);
 			this.gradienttopbar.Add (this.alignment1);
 			this.Add (this.gradienttopbar);

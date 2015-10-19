@@ -34,12 +34,6 @@ namespace LongoMatch.Gui.Component
 		public ToggleTopBar ()
 		{
 			this.Build ();
-
-			topbarbutton_left.Toggled += (object sender, EventArgs e) => CurrentPage = 0;
-			topbarbutton_right.Toggled += (object sender, EventArgs e) => CurrentPage = 1;
-
-			projectsToggleButtonImage.Pixbuf = Resources.LoadImage ("topptab_img_proj_icon.png").Value;
-			athletesToggleButtonImage.Pixbuf = Resources.LoadImage ("topptab_img_athl_icon.png").Value;
 		}
 
 		public int CurrentPage {
