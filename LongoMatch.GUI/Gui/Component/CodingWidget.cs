@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -24,9 +25,8 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Gui.Helpers;
 using Mono.Unix;
-using LongoMatch.GUI.Helpers;
-using System.Collections.ObjectModel;
 
 namespace LongoMatch.Gui.Component
 {
@@ -38,11 +38,7 @@ namespace LongoMatch.Gui.Component
 		Project project;
 		List<Player> selectedPlayers;
 		List<Window> activeWindows;
-		int currentPage;
-		Gdk.Pixbuf timelineIco, timelineActiveIco;
-		Gdk.Pixbuf posIco, posAtiveIco;
-		Gdk.Pixbuf dashboardIco, dashboardActiveIco;
-		Gdk.Pixbuf listIco, listActiveIco;
+		IconNotebookHelper notebookHelper;
 		bool sizeAllocated;
 
 		public CodingWidget ()
@@ -56,11 +52,8 @@ namespace LongoMatch.Gui.Component
 			notebook.SwitchPage += HandleSwitchPage;
 			Notebook.WindowCreationHook = CreateNewWindow;
 			activeWindows = new List<Window> ();
-			SetTabProps (dashboardhpaned, false);
-			SetTabProps (timeline, false);
-			SetTabProps (playspositionviewer1, false);
-			SetTabProps (eventslistwidget, false);
-			notebook.Page = currentPage = 0;
+
+			notebook.Page = 0;
 
 			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
@@ -212,17 +205,13 @@ namespace LongoMatch.Gui.Component
 
 		public void LoadIcons ()
 		{
-			int s = StyleConf.NotebookTabIconSize;
-			IconLookupFlags f = IconLookupFlags.ForceSvg;
- 
-			timelineIco = Helpers.Misc.LoadIcon ("longomatch-tab-timeline", s, f);
-			timelineActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-timeline", s, f);
-			dashboardIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
-			dashboardActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
-			posIco = Helpers.Misc.LoadIcon ("longomatch-tab-position", s, f);
-			posAtiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-position", s, f);
-			listIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
-			listActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
+			notebookHelper = new IconNotebookHelper (notebook);
+			notebookHelper.SetTabIcon (timeline, "longomatch-tab-timeline", "longomatch-tab-active-timeline");
+			notebookHelper.SetTabIcon (dashboardhpaned, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard");
+			notebookHelper.SetTabIcon (playspositionviewer1, "longomatch-tab-position", "longomatch-tab-active-position");
+			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard");
+
+			notebookHelper.UpdateTabs ();
 		}
 
 		void SelectPage (Widget widget)
@@ -233,34 +222,6 @@ namespace LongoMatch.Gui.Component
 					break;
 				}
 			}
-		}
-
-		void SetTabProps (Widget widget, bool active)
-		{
-			Gdk.Pixbuf icon;
-			Gtk.Image img;
-
-			img = notebook.GetTabLabel (widget) as Gtk.Image;
-			if (img == null) {
-				img = new Gtk.Image ();
-				img.WidthRequest = StyleConf.NotebookTabSize;
-				img.HeightRequest = StyleConf.NotebookTabSize;
-				notebook.SetTabLabel (widget, img);
-			}
-
-			if (widget == timeline) {
-				icon = active ? timelineActiveIco : timelineIco;
-			} else if (widget == dashboardhpaned) {
-				icon = active ? dashboardActiveIco : dashboardIco;
-			} else if (widget == playspositionviewer1) {
-				icon = active ? posAtiveIco : posIco;
-			} else if (widget == eventslistwidget) {
-				icon = active ? listActiveIco : listIco;
-			} else {
-				return;
-			}
-			img.Pixbuf = icon;
-			notebook.SetTabDetachable (widget, true);
 		}
 
 		Notebook CreateNewWindow (Notebook source, Widget page, int x, int y)
@@ -293,7 +254,6 @@ namespace LongoMatch.Gui.Component
 				activeWindows.Remove (window);
 				notebook.Remove (pa);
 				source.AppendPage (pa, null);
-				SetTabProps (pa, source.NPages == 0);
 				notebook.Destroy ();
 			};
 			return notebook;
@@ -301,9 +261,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleSwitchPage (object o, SwitchPageArgs args)
 		{
-			SetTabProps (notebook.GetNthPage (currentPage), false);
-			SetTabProps (notebook.GetNthPage ((int)args.PageNum), true);
-			currentPage = (int)args.PageNum;
+			notebook.SetTabDetachable (notebook.GetNthPage ((int)args.PageNum), true);
 		}
 
 		void HandlePlayLoaded (TimelineEvent play)
@@ -347,7 +305,7 @@ namespace LongoMatch.Gui.Component
 			if (tags != null) {
 				play.Tags = new ObservableCollection <Tag> (tags);
 			} else {
-				play.Tags =new ObservableCollection<Tag> ();
+				play.Tags = new ObservableCollection<Tag> ();
 			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;

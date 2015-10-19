@@ -21,6 +21,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Helpers;
 using Mono.Unix;
 using Helpers = LongoMatch.Gui.Helpers;
 
@@ -33,10 +34,7 @@ namespace LongoMatch.Gui.Component
 		Project project;
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
-		Pixbuf listIco, listActiveIco;
-		Pixbuf playlistIco, playlistActiveIco;
-		Pixbuf filtersIco, filtersActiveIco;
-		int currentPage;
+		IconNotebookHelper notebookHelper;
 
 		public PlaysSelectionWidget ()
 		{
@@ -45,12 +43,7 @@ namespace LongoMatch.Gui.Component
 			LoadIcons ();
 
 			AddFilters ();
-			notebook.Page = currentPage = 0;
-			
-			notebook.SwitchPage += HandleSwitchPage;
-			SetTabProps (eventslistwidget, false);
-			SetTabProps (playlistwidget, false);
-			SetTabProps (filtersvbox, false);
+
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
 		}
 
@@ -86,47 +79,12 @@ namespace LongoMatch.Gui.Component
 
 		void LoadIcons ()
 		{
-			int s = StyleConf.NotebookTabIconSize;
-			IconLookupFlags f = IconLookupFlags.ForceSvg;
- 
-			listIco = Helpers.Misc.LoadIcon ("longomatch-tab-dashboard", s, f);
-			listActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-dashboard", s, f);
-			filtersIco = Helpers.Misc.LoadIcon ("longomatch-tab-filter", s, f);
-			filtersActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-filter", s, f);
-			playlistIco = Helpers.Misc.LoadIcon ("longomatch-tab-playlist", s, f);
-			playlistActiveIco = Helpers.Misc.LoadIcon ("longomatch-tab-active-playlist", s, f);
-		}
+			notebookHelper = new IconNotebookHelper (notebook);
+			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard");
+			notebookHelper.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter");
+			notebookHelper.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist");
 
-		void SetTabProps (Widget widget, bool active)
-		{
-			Gdk.Pixbuf icon;
-			Gtk.Image img;
-
-			img = notebook.GetTabLabel (widget) as Gtk.Image;
-			if (img == null) {
-				img = new Gtk.Image ();
-				img.WidthRequest = StyleConf.NotebookTabSize;
-				img.HeightRequest = StyleConf.NotebookTabSize;
-				notebook.SetTabLabel (widget, img);
-			}
-
-			if (widget == eventslistwidget) {
-				icon = active ? listActiveIco : listIco;
-			} else if (widget == filtersvbox) {
-				icon = active ? filtersActiveIco : filtersIco;
-			} else if (widget == playlistwidget) {
-				icon = active ? playlistActiveIco : playlistIco;
-			} else {
-				return;
-			}
-			img.Pixbuf = icon;
-		}
-
-		void HandleSwitchPage (object o, SwitchPageArgs args)
-		{
-			SetTabProps (notebook.GetNthPage (currentPage), false);
-			SetTabProps (notebook.GetNthPage ((int)args.PageNum), true);
-			currentPage = (int)args.PageNum;
+			notebookHelper.UpdateTabs ();
 		}
 
 		void AddFilters ()

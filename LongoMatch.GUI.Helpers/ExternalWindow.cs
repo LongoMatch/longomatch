@@ -18,10 +18,9 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Common;
-
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
-namespace LongoMatch.GUI.Helpers
+namespace LongoMatch.Gui.Helpers
 {
 	public class ExternalWindow: Window
 	{
