@@ -67,6 +67,28 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestQueryPreloaded ()
+		{
+			storage.Store (Dashboard.DefaultTemplate (5));
+			var dashboards = storage.Retrieve<Dashboard> (new QueryFilter ());
+			Assert.IsFalse (dashboards.Any (d => d.IsLoaded));
+		}
+
+		[Test ()]
+		public void TestQueryFull ()
+		{
+			var dashboard = Dashboard.DefaultTemplate (5);
+			storage.Store (dashboard);
+			var dashboards = storage.RetrieveFull<Dashboard> (new QueryFilter (), null);
+			Assert.IsFalse (dashboards.Any (d => !d.IsLoaded));
+
+			StorableObjectsCache cache = new StorableObjectsCache ();
+			cache.AddReference (dashboard);
+			var newdashboard = storage.RetrieveFull<Dashboard> (new QueryFilter (), cache).First ();
+			Assert.IsTrue (Object.ReferenceEquals (dashboard, newdashboard));
+		}
+
+		[Test ()]
 		public void TestQueryDashboards ()
 		{
 			IEnumerable<Dashboard> dashboards;

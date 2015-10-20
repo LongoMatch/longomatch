@@ -209,6 +209,10 @@ namespace LongoMatch.DB
 				context.RootID = id;
 			}
 
+			if (context.Cache.IsCached (id)) {
+				return context.Cache.ResolveReference (id);
+			}
+
 			doc = db.GetExistingDocument (idStr);
 			if (doc != null) {
 				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
