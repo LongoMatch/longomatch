@@ -345,4 +345,16 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.ToggleTopBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ToggleTopBar Properties">
+        <property name="CurrentPage" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ToggleTopBar Signals">
+        <signal name="SwitchPage" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

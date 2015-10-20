@@ -12341,4 +12341,38 @@ Invert</property>
       </widget>
     </child>
   </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ToggleTopBar" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.EventBox" id="gradienttopbar">
+        <property name="MemberName" />
+        <property name="HeightRequest">70</property>
+        <child>
+          <widget class="Gtk.Alignment" id="alignment1">
+            <property name="MemberName" />
+            <property name="HeightRequest">70</property>
+            <property name="Xscale">0</property>
+            <property name="Xalign">0</property>
+            <property name="LeftPadding">15</property>
+            <property name="TopPadding">20</property>
+            <property name="BottomPadding">23</property>
+            <child>
+              <widget class="Gtk.HBox" id="buttoncontainer">
+                <property name="MemberName" />
+                <property name="HeightRequest">28</property>
+                <property name="Homogeneous">True</property>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
+          </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
 </stetic-interface>
