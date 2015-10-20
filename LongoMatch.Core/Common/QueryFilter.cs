@@ -44,14 +44,13 @@ namespace LongoMatch.Core.Common
 		/// <param name="values">A list with the available options.</param>
 		public void Add (string key, params object[] values)
 		{
-			List<object> valuesList, existingList = null;
+			List<object> valuesList;
 
 			if (values.Count () == 1 && values [0] is IEnumerable && !(values [0] is string)) {
 				valuesList = (values [0] as IEnumerable).OfType<object> ().ToList ();
 			} else {
 				valuesList = values.ToList ();
 			}
-			cachedFilter.TryGetValue (key, out existingList);
 			this [key] = valuesList;
 		}
 
