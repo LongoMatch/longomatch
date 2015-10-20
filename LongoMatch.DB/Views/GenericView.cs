@@ -222,15 +222,7 @@ namespace LongoMatch.DB.Views
 							key += i;
 						}
 
-						/* Transform IStorable objects into ID's for the query since they are not indexed
-						* as objects but with their ID */
-						for (int w = 0; w < values.Count; w++) {
-							IStorable storable = values [w] as IStorable;
-							if (storable != null) {
-								values [w] = storable.ID;
-							}
-						}
-
+						values = ConvertValues (values);
 						if (values.Count == 1) {
 							sql += String.Format (" {0} {1}='\"{2}\"' ", ope, key, values [0]);
 						} else {
@@ -277,6 +269,24 @@ namespace LongoMatch.DB.Views
 			}
 		}
 
+		/// <summary>
+		/// Converts IStorables into ID's for the query since they are indexed with their ID.
+		/// </summary>
+		/// <returns>The values from the filter.</returns>
+		/// <param name="values">The values with IStorable objects converted to ID's strings.</param>
+		List<object> ConvertValues (List<object> values)
+		{
+			List<object> ret = new List<object> ();
+			for (int i = 0; i < values.Count; i++) {
+				IStorable storable = values [i] as IStorable;
+				if (storable != null) {
+					ret.Add (storable.ID);
+				} else {
+					ret.Add (values [i]);
+				}
+			}
+			return ret;
+		}
 	}
 }
 
