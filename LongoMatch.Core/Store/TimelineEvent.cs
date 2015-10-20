@@ -523,11 +523,11 @@ namespace LongoMatch.Core.Store
 		void GetTaggedTeams (ref bool home, ref bool away)
 		{
 			if (Team == TeamType.LOCAL || Team == TeamType.BOTH ||
-			    Players.Count (p => Project.LocalTeamTemplate.List.Contains (p)) > 0) {
+			    Players.Any (Project.LocalTeamTemplate.List.Contains)) {
 				home = true;
 			}
 			if (Team == TeamType.VISITOR || Team == TeamType.BOTH ||
-			    Players.Count (p => Project.VisitorTeamTemplate.List.Contains (p)) > 0) {
+			    Players.Any (Project.VisitorTeamTemplate.List.Contains)) {
 				away = true;
 			}
 		}
