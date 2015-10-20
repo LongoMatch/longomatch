@@ -90,7 +90,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			team = Project.EventTaggedTeam (Event);
+			team = Event.TaggedTeam;
 			if (team == TeamType.LOCAL) {
 				color = Project.LocalTeamTemplate.Color;
 			} else if (team == TeamType.VISITOR) {

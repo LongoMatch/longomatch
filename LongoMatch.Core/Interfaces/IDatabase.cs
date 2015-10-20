@@ -18,12 +18,13 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Interfaces
 {
 	public interface IDatabase
 	{
-		List<Project> GetAllProjects ();
+		IEnumerable<Project> GetAllProjects ();
 
 		Project GetProject (Guid id);
 
@@ -48,6 +49,8 @@ namespace LongoMatch.Core.Interfaces
 		int Count { get; }
 
 		Version Version { get; set; }
+
+		IStorage Storage { get; }
 	}
 }
 

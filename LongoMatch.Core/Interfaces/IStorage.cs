@@ -27,13 +27,13 @@ namespace LongoMatch.Core.Interfaces
 		/// <summary>
 		/// Gets the storage information.
 		/// </summary>
-		StorageInfo Info {get;}
+		StorageInfo Info { get; }
 
 		/// <summary>
 		/// Retrieve every object of type T, where T must implement IStorable
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
-		List<T> RetrieveAll<T> () where T : IStorable;
+		IEnumerable<T> RetrieveAll<T> () where T : IStorable;
 
 		/// <summary>
 		/// Retrieve an object with the specified id.
@@ -53,7 +53,15 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
 		/// <param name="filter">The filter used to retrieve the objects</param>
-		List<T> Retrieve<T> (QueryFilter filter) where T : IStorable;
+		IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable;
+
+		/// <summary>
+		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
+		/// </summary>
+		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
+		/// <param name="filter">The filter used to retrieve the objects</param>
+		/// <param name="cache">An objects cache to reuse existing retrieved objects</param>
+		IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable;
 
 		/// <summary>
 		/// Store the specified object
@@ -61,7 +69,7 @@ namespace LongoMatch.Core.Interfaces
 		/// <param name="t">The object to store.</param>
 		/// <param name="forceUpdate">Update all children  ignoring the <see cref="IStorable.IsChanged"/> flag.</param>
 		/// <typeparam name="T">The type of the object to store.</typeparam>
-		void Store<T> (T t, bool forceUpdate=false) where T : IStorable;
+		void Store<T> (T t, bool forceUpdate = false) where T : IStorable;
 
 		/// <summary>
 		/// Delete the specified object.

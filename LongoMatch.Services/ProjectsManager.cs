@@ -344,7 +344,7 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ());
+			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ().ToList ());
 		}
 
 		void OpenProjectID (Guid projectID, Project project)

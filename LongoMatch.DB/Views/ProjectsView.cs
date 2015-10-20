@@ -20,6 +20,7 @@ using Couchbase.Lite;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
+using System.Collections.Specialized;
 
 namespace LongoMatch.DB.Views
 {
@@ -37,9 +38,11 @@ namespace LongoMatch.DB.Views
 			}
 		}
 
-		protected override List<string> FilterProperties {
+		protected override  OrderedDictionary FilterProperties {
 			get {
-				return new List<string> { "Title", "Season", "Competition", "LocalTeamName", "VisitorTeamName" };
+				return new OrderedDictionary { { "Title", false }, { "Season", false },
+					{ "Competition", false }, { "LocalName", false }, { "VisitorName", false }
+				};
 			}
 		}
 
@@ -51,8 +54,8 @@ namespace LongoMatch.DB.Views
 			keys.Add (desc ["Title"]);
 			keys.Add (desc ["Season"]);
 			keys.Add (desc ["Competition"]);
-			keys.Add (desc ["LocalTeamName"]);
-			keys.Add (desc ["VisitorTeamName"]);
+			keys.Add (desc ["LocalName"]);
+			keys.Add (desc ["VisitorName"]);
 			return new PropertyKey (keys);
 		}
 	}

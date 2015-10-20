@@ -16,18 +16,21 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.DB.Views
 {
-	public interface IQueryView<T>
+	public class EventTypeView:  GenericView <EventType>
 	{
-		IEnumerable<T> Query (QueryFilter filter);
+		public EventTypeView (CouchbaseStorage storage) : base (storage)
+		{
+		}
 
-		IEnumerable<T> QueryFull (QueryFilter filter, IStorableObjectsCache cache);
+		protected override string ViewVersion {
+			get {
+				return "1";
+			}
+		}
 	}
-
 }
-

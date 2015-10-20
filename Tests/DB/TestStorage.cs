@@ -29,6 +29,7 @@ using NUnit.Framework;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Serialization;
+using System.Linq;
 
 namespace Tests.DB
 {
@@ -96,7 +97,7 @@ namespace Tests.DB
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
 			// Remove the StorageInfo doc to get more understandable document count results
-			db.GetDocument (Guid.Empty.ToString ()).Delete();
+			db.GetDocument (Guid.Empty.ToString ()).Delete ();
 		}
 
 		[TestFixtureTearDown]
@@ -207,7 +208,7 @@ namespace Tests.DB
 			storage.Store (list);
 			Assert.AreEqual (3, db.DocumentCount);
 			list = storage.Retrieve<StorableListTest> (list.ID);
-			list.Images.Remove (list.Images[0]);
+			list.Images.Remove (list.Images [0]);
 			storage.Delete (list);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
@@ -222,7 +223,7 @@ namespace Tests.DB
 			storage.Store (list);
 			Assert.AreEqual (3, db.DocumentCount);
 			list = storage.Retrieve<StorableListTest> (list.ID);
-			list.Images.Remove (list.Images[0]);
+			list.Images.Remove (list.Images [0]);
 			storage.Store (list);
 			Assert.AreEqual (2, db.DocumentCount);
 		}
@@ -327,7 +328,8 @@ namespace Tests.DB
 
 
 		[Test ()]
-		public void TestRetrieveErrors (){
+		public void TestRetrieveErrors ()
+		{
 			// ID does not exists
 			Assert.IsNull (storage.Retrieve<Project> (Guid.Empty));
 			// ID exists but for a different type;
@@ -339,7 +341,8 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestIsChangedResetted () {
+		public void TestIsChangedResetted ()
+		{
 			Team t, t1;
 			ObjectChangedParser parser;
 			List<IStorable> storables = null, changed = null;
@@ -358,8 +361,9 @@ namespace Tests.DB
 			// After filling an object
 			t1 = new Team ();
 			t1.ID = t.ID;
-			t1.IsChanged = false;
-			DocumentsSerializer.FillObject (t, db);
+			t1.DocumentID = t.ID.ToString ();
+			t1.IsChanged = true;
+			DocumentsSerializer.FillObject (t1, db);
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
@@ -461,21 +465,6 @@ namespace Tests.DB
 			Assert.AreEqual (0, db.DocumentCount);
 		}
 
-		//		[Test ()]
-		//		public void TestSaveLoadProjectDescription ()
-		//		{
-		//			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-		//				               "aac", 320, 240, 1.3, null, "Test asset");
-		//			ProjectDescription pd1 = new ProjectDescription ();
-		//			pd1.FileSet = new MediaFileSet ();
-		//			pd1.FileSet.Add (mf);
-		//			storage.Store (pd1);
-		//			Assert.AreEqual (1, db.DocumentCount);
-		//
-		//			ProjectDescription pd2 = storage.Retrieve<ProjectDescription> (pd1.ID);
-		//			Assert.AreEqual (pd1.ID, pd2.ID);
-		//		}
-
 		[Test ()]
 		public void TestProject ()
 		{
@@ -492,12 +481,12 @@ namespace Tests.DB
 			p.Description = pd;
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (39, db.DocumentCount);
+			Assert.AreEqual (40, db.DocumentCount);
 
-			p = storage.RetrieveAll<Project>()[0];
+			p = storage.RetrieveAll<Project> ().First ();
 			p.Load ();
 			storage.Store (p);
-			Assert.AreEqual (39, db.DocumentCount);
+			Assert.AreEqual (40, db.DocumentCount);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
@@ -530,9 +519,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (49, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (49, db.DocumentCount);
+			Assert.AreEqual (50, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
@@ -545,18 +534,17 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		[Ignore ("FIXME: deadlocks when run in with the rest of the tests")]
 		public void TestPreloadPropertiesArePreserved ()
 		{
 			Project p1 = Utils.CreateProject (true);
 			storage.Store (p1);
-			Project p2 = storage.RetrieveAll<Project> ()[0];
+			Project p2 = storage.RetrieveAll<Project> ().First ();
 			Assert.IsFalse (p2.IsLoaded);
 			p2.Description.Competition = "NEW NAME";
 			p2.Load ();
 			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
 			storage.Store (p2);
-			Project p3 = storage.RetrieveAll<Project> ()[0];
+			Project p3 = storage.RetrieveAll<Project> ().First ();
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
 		}
 

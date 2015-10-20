@@ -16,18 +16,29 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using System.Collections.Concurrent;
+using Gtk;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch
 {
-	public interface IQueryView<T>
+	/// <summary>
+	/// Gtk synchronization context that continues tasks in the main UI thread instead
+	/// of a random thread from the pool.
+	/// http://blogs.msdn.com/b/pfxteam/archive/2012/01/20/10259049.aspx
+	/// </summary>
+	sealed class GtkSynchronizationContext : SynchronizationContext
 	{
-		IEnumerable<T> Query (QueryFilter filter);
+		public override void Post (SendOrPostCallback d, object state)
+		{
+			Application.Invoke ((s, e) => d (state));
+		}
 
-		IEnumerable<T> QueryFull (QueryFilter filter, IStorableObjectsCache cache);
+		public override void Send (SendOrPostCallback d, object state)
+		{
+			Application.Invoke ((s, e) => d (state));
+		}
 	}
-
 }
-

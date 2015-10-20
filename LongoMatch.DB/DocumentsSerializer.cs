@@ -18,15 +18,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
-using System.Reflection;
-using LongoMatch.Core.Serialization;
 
 namespace LongoMatch.DB
 {
@@ -34,6 +35,7 @@ namespace LongoMatch.DB
 	{
 		public const string DOC_TYPE = "DocType";
 		public const string OBJ_TYPE = "ObjType";
+		public const string PARENT_PROPNAME = "Parent";
 		public const char ID_SEP_CHAR = '&';
 
 		/// <summary>
@@ -51,6 +53,7 @@ namespace LongoMatch.DB
 				context.RootID = obj.ID;
 			}
 			context.SaveChildren = saveChildren;
+			context.Stack.Push (obj);
 			Document doc = db.GetDocument (DocumentsSerializer.StringFromID (obj.ID, context.RootID));
 			doc.Update ((UnsavedRevision rev) => {
 				JObject jo = SerializeObject (obj, rev, context);
@@ -64,6 +67,7 @@ namespace LongoMatch.DB
 				rev.SetProperties (props);
 				return true;
 			});
+			context.Stack.Pop ();
 		}
 
 		/// <summary>
@@ -88,7 +92,7 @@ namespace LongoMatch.DB
 		{
 			Log.Debug ("Filling object " + storable);
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
-			Document doc = db.GetExistingDocument (storable.ID.ToString ());
+			Document doc = db.GetExistingDocument (storable.DocumentID);
 			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
 			context.ContractResolver = new StorablesStackContractResolver (context, storable, true);
 			serializer.ContractResolver = context.ContractResolver;
@@ -115,14 +119,28 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>The object id.</returns>
 		/// <param name="id">The document id.</param>
-		public static Guid IDFromString (string id) {
-			string [] ids = id.Split (ID_SEP_CHAR);
-			if (ids.Length == 1) {
-				id = ids[0];
-			} else {
-				id = ids[1];
+		public static string IDStringFromString (string id)
+		{
+			if (id == null) {
+				return id;
 			}
-			return Guid.Parse (id);
+			string[] ids = id.Split (ID_SEP_CHAR);
+			if (ids.Length == 1) {
+				id = ids [0];
+			} else {
+				id = ids [1];
+			}
+			return id;
+		}
+
+		/// <summary>
+		/// Return the object ID from the document ID string, which can be <ID> or <ParentID>&<ID>.
+		/// </summary>
+		/// <returns>The object id.</returns>
+		/// <param name="id">The document id.</param>
+		public static Guid IDFromString (string id)
+		{
+			return Guid.Parse (IDStringFromString (id));
 		}
 
 		/// <summary>
@@ -131,7 +149,8 @@ namespace LongoMatch.DB
 		/// <returns>The document id.</returns>
 		/// <param name="id">The object ID.</param>
 		/// <param name="parentID">The parent ID.</param>
-		public static string StringFromID (Guid id, Guid parentID) {
+		public static string StringFromID (Guid id, Guid parentID)
+		{
 			if (parentID != Guid.Empty && parentID != id) {
 				return String.Format ("{0}{1}{2}", parentID, ID_SEP_CHAR, id);
 			} else {
@@ -149,9 +168,12 @@ namespace LongoMatch.DB
 		internal static JObject SerializeObject (IStorable obj, Revision rev, SerializationContext context)
 		{
 			JObject jo = JObject.FromObject (obj, GetSerializer (obj.GetType (), context, rev));
-			jo [DOC_TYPE] = obj.GetType ().Name;
+			jo [DOC_TYPE] = GetDocumentType (obj);
 			jo [OBJ_TYPE] = jo ["$type"];
 			jo.Remove ("$type");
+			if (context != null && context.RootID != Guid.Empty) {
+				jo [PARENT_PROPNAME] = context.RootID;
+			}
 			return jo;
 		}
 
@@ -174,18 +196,24 @@ namespace LongoMatch.DB
 			return o;
 		}
 
-		internal static IStorable LoadObject (Type objType, string id, Database db, SerializationContext context = null)
+		internal static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
 		{
 			IStorable storable = null, parent;
 			Document doc;
+			Guid id;
 
+			id = DocumentsSerializer.IDFromString (idStr);
 			if (context == null) {
 				context = new SerializationContext (db, objType);
 				context.ContractResolver = new StorablesStackContractResolver (context, null);
-				context.RootID = Guid.Parse (id);
+				context.RootID = id;
 			}
 
-			doc = db.GetExistingDocument (id);
+			if (context.Cache.IsCached (id)) {
+				return context.Cache.ResolveReference (id);
+			}
+
+			doc = db.GetExistingDocument (idStr);
 			if (doc != null) {
 				Type realType = Type.GetType (doc.Properties [OBJ_TYPE] as string);
 				if (realType == null) {
@@ -223,6 +251,18 @@ namespace LongoMatch.DB
 		internal static JsonSerializer GetSerializer (Type objType, SerializationContext context, Revision rev)
 		{
 			return JsonSerializer.Create (GetSerializerSettings (objType, context, rev));
+		}
+
+		static string GetDocumentType (IStorable storable)
+		{
+			Type type;
+
+			if (storable is EventType) {
+				type = typeof(EventType);
+			} else {
+				type = storable.GetType ();
+			}
+			return type.Name;
 		}
 	}
 
@@ -317,7 +357,7 @@ namespace LongoMatch.DB
 		public override void WriteJson (JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			IStorable storable = value as IStorable;
-			if (context.SaveChildren && !context.Cache.IsCached (storable.ID)) {
+			if (context.SaveChildren && !context.Stack.Contains (value) && !context.Cache.IsCached (storable.ID)) {
 				DocumentsSerializer.SaveObject (storable, context.DB, context);
 				context.Cache.AddReference (storable);
 			}
@@ -332,9 +372,22 @@ namespace LongoMatch.DB
 			string idStr;
 
 			idStr = reader.Value as string; 
+			if (idStr == null) {
+				return null;
+			}
 			id = DocumentsSerializer.IDFromString (idStr);
-			/* Return the cached object instance instead a new one */
-			storable = context.Cache.ResolveReference (id);
+
+			/* Check if it's a circular reference and the object is currently being deserialized. In this scenario
+			 * the oject is not yet in the cache, but we have a reference of the object in the stack.
+			 * eg: TimelineEvent.Project where the TimelineEvent is a children of Project and Project is in the stack
+			 * as being deserialized */
+			storable = context.Stack.FirstOrDefault (e => e.ID == id);
+			if (storable == null) {
+				/* Now check in the Cache and return the cached object instance instead a new one */
+				storable = context.Cache.ResolveReference (id);
+			}
+
+			/* If the object is being deserialized for the first retrieve from the DB document */
 			if (storable == null) {
 				storable = DocumentsSerializer.LoadObject (objectType, idStr, context.DB, context) as IStorable;
 				if (storable == null) {
@@ -393,27 +446,27 @@ namespace LongoMatch.DB
 		/// <param name = "preservePreloadProperties">If <c>true</c> reloaded properties are preserved instead of
 		/// re-read from the db</param>
 		public StorablesStackContractResolver (SerializationContext context, IStorable parentStorable,
-			bool preservePreloadProperties = false)
+		                                       bool preservePreloadProperties = false)
 		{
 			this.context = context;
 			this.parentStorable = parentStorable;
 			this.preservePreloadProperties = preservePreloadProperties;
 		}
 
-		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+		protected override JsonProperty CreateProperty (MemberInfo member, MemberSerialization memberSerialization)
 		{
 			// When filling a partial object, do not overwrite the preloaded properties so changes made in
 			// the preloaded object are not overwritten.
-			JsonProperty property = base.CreateProperty(member, memberSerialization);
+			JsonProperty property = base.CreateProperty (member, memberSerialization);
 			if (property.DeclaringType == context.ParentType) {
 				if (preservePreloadProperties &&
-					property.AttributeProvider.GetAttributes(typeof (LongoMatchPropertyPreload), true).Any ()) {
+				    property.AttributeProvider.GetAttributes (typeof(LongoMatchPropertyPreload), true).Any ()) {
 					property.Ignored = true;
 				}
 			}
 			return property;
 		}
-		
+
 		protected override JsonContract CreateContract (Type type)
 		{
 			JsonContract contract = base.CreateContract (type);

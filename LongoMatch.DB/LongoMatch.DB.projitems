@@ -26,5 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseDB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
   </ItemGroup>
 </Project>

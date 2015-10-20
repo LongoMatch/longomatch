@@ -77,7 +77,7 @@ namespace LongoMatch.DB
 		/// <summary>
 		/// A cache for retrieved objects to improve performace retrieve references of the same object.
 		/// </summary>
-		public StorableObjectsCache Cache {
+		public IStorableObjectsCache Cache {
 			get;
 			set;
 		}

@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Store.Templates;
 
 namespace Tests.Core.Store
 {
@@ -79,14 +80,15 @@ namespace Tests.Core.Store
 			Assert.IsNull (p.CamerasLayout);
 		}
 
-		[Test()]
-		public void TestEquals() {
+		[Test ()]
+		public void TestEquals ()
+		{
 			TimelineEvent evt1 = new TimelineEvent ();
 			TimelineEvent evt2 = new TimelineEvent ();
 			Assert.AreNotEqual (evt1, evt2);
 			evt2.ID = evt1.ID;
 			Assert.AreEqual (evt1, evt2);
-			evt2.ID = Guid.Parse (evt1.ID.ToString());
+			evt2.ID = Guid.Parse (evt1.ID.ToString ());
 			Assert.AreEqual (evt1, evt2);
 		}
 
@@ -193,7 +195,7 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.FieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.FieldPosition.Points [0].Y, 5);
 			
-			evt.UpdateCoordinates (FieldPositionType.HalfField,new ObservableCollection<Point> { new Point (4, 5) });
+			evt.UpdateCoordinates (FieldPositionType.HalfField, new ObservableCollection<Point> { new Point (4, 5) });
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].X, 4);
 			Assert.AreEqual (evt.HalfFieldPosition.Points [0].Y, 5);
 			
@@ -202,8 +204,9 @@ namespace Tests.Core.Store
 			Assert.AreEqual (evt.GoalPosition.Points [0].Y, 5);
 		}
 
-		[Test()]
-		public void TestIsChanged () {
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			TimelineEvent evt = new TimelineEvent ();
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
@@ -243,6 +246,78 @@ namespace Tests.Core.Store
 			evt.Players.Add (new Player ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
+		}
+
+		[Test ()] 
+		public void TestTaggedTeam ()
+		{
+			Team home = Team.DefaultTemplate (3);
+			Team away = Team.DefaultTemplate (3);
+			Project p = new Project ();
+			p.LocalTeamTemplate = home;
+			p.VisitorTeamTemplate = away;
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Project = p;
+
+			Assert.AreEqual (TeamType.NONE, evt.TaggedTeam);
+
+			evt.Team = TeamType.LOCAL;
+			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
+
+			evt.Team = TeamType.VISITOR;
+			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
+
+			evt.Team = TeamType.BOTH;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { home.List [0] };
+			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
+			evt.Team = TeamType.VISITOR;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { away.List [0] };
+			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
+
+			evt.Team = TeamType.LOCAL;
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+
+			evt.Team = TeamType.NONE;
+			evt.Players = new ObservableCollection<Player> { home.List [0], away.List [0] };
+			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
+		}
+
+		[Test ()] 
+		public void TestTaggedTeams ()
+		{
+			Team home = Team.DefaultTemplate (3);
+			Team away = Team.DefaultTemplate (3);
+			Project p = new Project ();
+			p.LocalTeamTemplate = home;
+			p.VisitorTeamTemplate = away;
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Project = p;
+
+			List<Team> teams = evt.Teams;
+			Assert.IsEmpty (teams);
+
+			evt.Team = TeamType.LOCAL;
+			teams = evt.Teams;
+			Assert.AreEqual (1, teams.Count);
+			Assert.AreSame (home, teams [0]);
+
+			evt.Team = TeamType.VISITOR;
+			teams = evt.Teams;
+			Assert.AreEqual (1, teams.Count);
+			Assert.AreSame (away, teams [0]);
+
+			evt.Team = TeamType.BOTH;
+			teams = evt.Teams;
+			Assert.AreEqual (2, teams.Count);
+			Assert.AreSame (home, teams [0]);
+			Assert.AreSame (away, teams [1]);
+			
 		}
 	}
 }

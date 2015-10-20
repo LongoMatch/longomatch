@@ -41,7 +41,7 @@ namespace LongoMatch.DB
 
 		#region IDatabase implementation
 
-		public List<Project> GetAllProjects ()
+		public IEnumerable<Project> GetAllProjects ()
 		{
 			return storage.Retrieve<Project> (null);
 		}
@@ -136,6 +136,12 @@ namespace LongoMatch.DB
 			}
 			set {
 				storage.Info.Version = value;
+			}
+		}
+
+		public IStorage Storage {
+			get {
+				return storage;
 			}
 		}
 

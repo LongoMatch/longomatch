@@ -59,7 +59,7 @@ namespace LongoMatch.Core.Store
 		/// A short description of the time node
 		/// </summary>
 		[LongoMatchPropertyPreload]
-		[LongoMatchPropertyIndex(0)]
+		[LongoMatchPropertyIndex (0)]
 		public virtual string Name {
 			get;
 			set;
@@ -98,7 +98,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// The time at which the event takes place
 		/// </summary>
-		public Time EventTime {
+		public virtual Time EventTime {
 			get {
 				return eventTime ?? start;
 			}
@@ -125,7 +125,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Play rate
 		/// </summary>
-		public float Rate {
+		public virtual float Rate {
 			get;
 			set;
 		}

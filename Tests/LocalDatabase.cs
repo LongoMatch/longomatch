@@ -33,7 +33,7 @@ namespace Tests
 			projects = new Dictionary<Guid, Project> ();
 		}
 
-		public  List<Project> GetAllProjects ()
+		public  IEnumerable<Project> GetAllProjects ()
 		{
 			return projects.Values.ToList ();
 		}
@@ -97,6 +97,11 @@ namespace Tests
 			}
 			set {
 			}
+		}
+
+		public IStorage Storage {
+			get;
+			set;
 		}
 	}
 

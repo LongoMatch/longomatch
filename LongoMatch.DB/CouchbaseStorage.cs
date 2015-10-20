@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -102,6 +103,8 @@ namespace LongoMatch.DB
 			views.Add (typeof(Team), new TeamsView (this));
 			views.Add (typeof(Project), new ProjectsView (this));
 			views.Add (typeof(Player), new PlayersView (this));
+			views.Add (typeof(TimelineEvent), new TimelineEventsView (this));
+			views.Add (typeof(EventType), new EventTypeView (this));
 		}
 
 		public object Retrieve (Type type, Guid id)
@@ -126,7 +129,7 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public List<T> RetrieveAll<T> () where T : IStorable
+		public IEnumerable<T> RetrieveAll<T> () where T : IStorable
 		{
 			lock (mutex) {
 				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
@@ -141,11 +144,19 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public List<T> Retrieve<T> (QueryFilter filter) where T : IStorable
+		public IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			lock (mutex) {
 				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
 				return qview.Query (filter);
+			}
+		}
+
+		public IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable
+		{
+			lock (mutex) {
+				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+				return qview.QueryFull (filter, cache);
 			}
 		}
 
@@ -213,9 +224,14 @@ namespace LongoMatch.DB
 			} else if (node.IsChanged) {
 				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
+
+			/* Since we are saving single objects manually, we need to keep the stack
+			 * updated to avoid problems with circular references */
+			context.Stack.Push (node.Storable);
 			foreach (StorableNode child in node.Children) {
 				Update (child, context);
 			}
+			context.Stack.Pop ();
 		}
 
 		#endregion

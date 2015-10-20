@@ -18,18 +18,20 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Couchbase.Lite;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using NUnit.Framework;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 using LongoMatch.DB.Views;
-using LongoMatch.Core.Serialization;
+using NUnit.Framework;
 
 namespace Tests.DB
 {
-	public class PropertiesTest: StorableBase {
+	public class PropertiesTest: StorableBase
+	{
 	
 		[LongoMatchPropertyIndex (1)]
 		[LongoMatchPropertyPreload]
@@ -41,19 +43,24 @@ namespace Tests.DB
 		[LongoMatchPropertyPreload]
 		public string Key3 { get; set; }
 
-		protected override void CheckIsLoaded () {
+		protected override void CheckIsLoaded ()
+		{
 			IsLoaded = true;
 		}
 	}
 
-	public class TestView: GenericView<PropertiesTest> {
+	public class TestView: GenericView<PropertiesTest>
+	{
 
-		public TestView (CouchbaseStorage storage) : base (storage) { }
+		public TestView (CouchbaseStorage storage) : base (storage)
+		{
+		}
 
 		protected override string ViewVersion { get { return "1"; } }
 
-		public List<string> PreloadProperties {get { return PreviewProperties; }}
-		public List<string> IndexedProperties {get { return FilterProperties; }}
+		public List<string> PreloadProperties { get { return PreviewProperties; } }
+
+		public List<string> IndexedProperties { get { return FilterProperties.Keys.OfType<string> ().ToList (); } }
 	}
 
 
@@ -96,11 +103,12 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestIndexing () {
+		public void TestIndexing ()
+		{
 			TestView view = new TestView (storage);
 
-			Assert.AreEqual (new List<string> {"Key2", "Key1"}, view.IndexedProperties);
-			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			Assert.AreEqual (new List<string> { "Parent", "Key2", "Key1" }, view.IndexedProperties);
+			PropertiesTest test = new PropertiesTest { Key1 = "key1", Key2 = "key2", Key3 = "key3" };
 			test.IsChanged = true;
 			storage.Store (test);
 
@@ -108,25 +116,26 @@ namespace Tests.DB
 			filter.Add ("Key3", "key3");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					view.Query (filter);
+					view.Query (filter).Count ();
 				});
 			filter.Add ("Key2", "key2");
-			Assert.AreEqual (1, view.Query (filter).Count);
+			Assert.AreEqual (1, view.Query (filter).Count ());
 		}
 
 		[Test ()]
-		public void TestPreload () {
+		public void TestPreload ()
+		{
 			TestView view = new TestView (storage);
 
-			Assert.AreEqual (new List<string> {"Key1", "Key3"}, view.PreloadProperties);
+			Assert.AreEqual (new List<string> { "Key1", "Key3" }, view.PreloadProperties);
 
-			PropertiesTest test = new PropertiesTest {Key1 = "key1", Key2 = "key2", Key3 = "key3"};
+			PropertiesTest test = new PropertiesTest { Key1 = "key1", Key2 = "key2", Key3 = "key3" };
 			test.IsChanged = true;
 			storage.Store (test);
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Key2", "key2");
-			var test1 = view.Query (filter)[0];
+			var test1 = view.Query (filter).First ();
 			Assert.IsFalse (test1.IsLoaded);
 			Assert.AreEqual (test.Key1, test1.Key1);
 			Assert.AreEqual (test.Key3, test1.Key3);
@@ -140,7 +149,7 @@ namespace Tests.DB
 			d.Name = "Dashboard1";
 			storage.Store (d);
 
-			List<Dashboard> dashboards = storage.RetrieveAll<Dashboard> (); 
+			List<Dashboard> dashboards = storage.RetrieveAll<Dashboard> ().ToList (); 
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
@@ -151,28 +160,8 @@ namespace Tests.DB
 				storage.Store (da);
 			}
 
-			dashboards = storage.RetrieveAll<Dashboard> (); 
+			dashboards = storage.RetrieveAll<Dashboard> ().ToList (); 
 			Assert.AreEqual (6, dashboards.Count);
-
-			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Name", "Dashboard1");
-			dashboards = storage.Retrieve<Dashboard> (filter);
-			Assert.AreEqual (1, dashboards.Count);
-			Assert.AreEqual (d.ID, dashboards [0].ID);
-			Assert.AreEqual (d.Name, dashboards [0].Name);
-
-			filter = new QueryFilter ();
-			filter.Add ("Name", "Pepe");
-			dashboards = storage.Retrieve<Dashboard> (filter);
-			Assert.AreEqual (0, dashboards.Count);
-
-			filter = new QueryFilter ();
-			filter.Add ("Unkown", "Pepe");
-			Assert.Throws<InvalidQueryException> (
-				delegate {
-					dashboards = storage.Retrieve<Dashboard> (filter);
-				});
-			Assert.AreEqual (0, dashboards.Count);
 		}
 
 		[Test ()]
@@ -182,10 +171,10 @@ namespace Tests.DB
 			d.Name = "Dashboard1";
 			// Make PenaltyCardEventType and ScoreEventType the same object so that both are serialized
 			// as references and Utils.AreEquals can check the rest correctly
-			(d.List[8] as PenaltyCardButton).EventType = (d.List[7] as PenaltyCardButton).EventType;
-			(d.List[10] as ScoreButton).EventType = (d.List[9] as ScoreButton).EventType;
+			(d.List [8] as PenaltyCardButton).EventType = (d.List [7] as PenaltyCardButton).EventType;
+			(d.List [10] as ScoreButton).EventType = (d.List [9] as ScoreButton).EventType;
 			storage.Store (d);
-			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()) [0];
+			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()).First ();
 			d1.IsLoaded = true;
 			Utils.AreEquals (d, d1, false);
 			d1.IsLoaded = false;
@@ -201,7 +190,7 @@ namespace Tests.DB
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
 
-			List<Team> teams = storage.RetrieveAll<Team> (); 
+			List<Team> teams = storage.RetrieveAll<Team> ().ToList (); 
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
@@ -213,28 +202,7 @@ namespace Tests.DB
 				storage.Store (te);
 			}
 
-			teams = storage.RetrieveAll<Team> (); 
-			Assert.AreEqual (6, teams.Count);
-
-			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Name", "Team1");
-			teams = storage.Retrieve<Team> (filter);
-			Assert.AreEqual (1, teams.Count);
-			Assert.AreEqual (t.ID, teams [0].ID);
-			Assert.AreEqual (t.Name, teams [0].Name);
-
-			filter = new QueryFilter ();
-			filter.Add ("Name", "Pepe");
-			teams = storage.Retrieve<Team> (filter);
-			Assert.AreEqual (0, teams.Count);
-
-			filter = new QueryFilter ();
-			filter.Add ("Unkown", "Pepe");
-			Assert.Throws<InvalidQueryException> (
-				delegate {
-					teams = storage.Retrieve<Team> (filter);
-				});
-			Assert.AreEqual (0, teams.Count);
+			Assert.AreEqual (6, storage.RetrieveAll<Team> ().Count ());
 		}
 
 		[Test ()]
@@ -244,7 +212,7 @@ namespace Tests.DB
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
-			Team t1 = storage.Retrieve<Team> (new QueryFilter ()) [0];
+			Team t1 = storage.Retrieve<Team> (new QueryFilter ()).First ();
 			t1.IsLoaded = true;
 			Utils.AreEquals (t, t1, false);
 			t1.IsLoaded = false;
@@ -260,19 +228,17 @@ namespace Tests.DB
 				p.Description.Competition = "COMP";
 				storage.Store (p);
 
-				List<Project> projects = storage.RetrieveAll<Project> ();
+				List<Project> projects = storage.RetrieveAll<Project> ().ToList ();
 				Assert.AreEqual (1, projects.Count);
 				Assert.AreEqual (p.Timeline.Count, projects [0].Timeline.Count);
 				Assert.AreEqual ("GRP", p.Description.Group);
 				Assert.AreEqual ("COMP", p.Description.Competition);
 
-				projects = storage.Retrieve<Project> (null);
-				Assert.AreEqual (1, projects.Count);
+				Assert.AreEqual (1, storage.Retrieve<Project> (null).Count ());
 
 				var filter = new QueryFilter ();
 				filter.Add ("Competition", "COMP");
-				projects = storage.Retrieve<Project> (filter);
-				Assert.AreEqual (1, projects.Count);
+				Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
 
 			} finally {
 				Utils.DeleteProject (p);
@@ -291,30 +257,30 @@ namespace Tests.DB
 				}
 			}
 
-			List<Player> players = storage.RetrieveAll<Player> (); 
-			Assert.AreEqual (36, players.Count);
+			IEnumerable<Player> players = storage.RetrieveAll<Player> (); 
+			Assert.AreEqual (36, players.Count ());
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
 			players = storage.Retrieve<Player> (filter);
-			Assert.AreEqual (9, players.Count);
+			Assert.AreEqual (9, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
 			filter.Add ("LastName", "zabala");
 			players = storage.Retrieve<Player> (filter);
-			Assert.AreEqual (3, players.Count);
+			Assert.AreEqual (3, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
 			players = storage.Retrieve<Player> (filter);
-			Assert.AreEqual (18, players.Count);
+			Assert.AreEqual (18, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
 			filter.Add ("LastName", "zabala");
 			players = storage.Retrieve<Player> (filter);
-			Assert.AreEqual (6, players.Count);
+			Assert.AreEqual (6, players.Count ());
 		}
 	}
 }

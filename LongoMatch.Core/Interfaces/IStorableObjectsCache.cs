@@ -16,18 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Core.Interfaces
 {
-	public interface IQueryView<T>
+	public interface IStorableObjectsCache
 	{
-		IEnumerable<T> Query (QueryFilter filter);
+		bool IsCached (Guid id);
 
-		IEnumerable<T> QueryFull (QueryFilter filter, IStorableObjectsCache cache);
+		bool IsCached (IStorable obj);
+
+		IStorable ResolveReference (Guid id);
+
+		void AddReference (IStorable value);
 	}
-
 }
 

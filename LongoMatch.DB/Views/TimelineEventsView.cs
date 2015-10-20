@@ -16,10 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
+using Newtonsoft.Json.Linq;
 
 namespace LongoMatch.DB.Views
 {
@@ -27,29 +29,69 @@ namespace LongoMatch.DB.Views
 	{
 		public TimelineEventsView (CouchbaseStorage storage) : base (storage)
 		{
+			/* We emit 1 row per player changing the Players property to Player */
+			FilterProperties.Remove ("Players");
+			FilterProperties.Remove ("Teams");
+			FilterProperties.Add ("Player", true);
+			FilterProperties.Add ("Team", true);
 		}
 
 		protected override object GenKeys (IDictionary<string, object> document)
 		{
-			PropertyKey propKey = base.GenKeys (document) as PropertyKey;
-			FullTextKey fullKey = new FullTextKey ("");
-			return new MultiKey (propKey, fullKey);
+			var keys = new List<object> ();
+			foreach (string propName in FilterProperties.Keys) {
+				if (propName == "Player" || propName == "Team") {
+					continue;
+				}
+				if ((bool)FilterProperties [propName]) {
+					keys.Add (DocumentsSerializer.IDStringFromString (document [propName] as string));
+				} else {
+					keys.Add (document [propName]);
+				}
+			}
+			return new PropertyKey (keys);
 		}
 
 		protected override MapDelegate GetMap (string docType)
 		{
 			return (document, emitter) => {
 				if (docType.Equals (document [DocumentsSerializer.DOC_TYPE])) {
-					/* iterate over players and emit a row for each player */
-					emitter (GenKeys (document), GenValue (document));
+					PropertyKey keys = GenKeys (document) as PropertyKey;
+					int playerKeyIndex = keys.Keys.Count;
+					int teamKeyIndex = keys.Keys.Count + 1;
+
+					/* Initialize the Player key in case there are no players. */
+					keys.Keys.Add (null);
+					/* Initialize the Team key in case there are no players. */
+					keys.Keys.Add (null);
+
+					IList teams = document ["Teams"] as IList;
+					IList players = document ["Players"] as IList;
+
+					if (teams.Count == 0) {
+						teams.Add (null);
+					}
+					if (players.Count == 0) {
+						players.Add (null);
+					}
+
+					/* iterate over players and teams and emit a row for each player and team combination */
+					foreach (object teamObject in teams) {
+						string id;
+						if (teamObject != null) {
+							id = DocumentsSerializer.IDStringFromString ((teamObject as JValue).Value as string);
+							keys.Keys [teamKeyIndex] = id;
+						}
+						foreach (object playerObject in players) {
+							if (playerObject != null) {
+								id = DocumentsSerializer.IDStringFromString ((playerObject as JValue).Value as string);
+								keys.Keys [playerKeyIndex] = id;
+							}
+							emitter (keys, GenValue (document));
+						}
+					}
 				}
 			};
-		}
-
-		protected override List<string> FilterProperties {
-			get {
-				return base.FilterProperties.Concat ( new List<string> {"Player"}).ToList();
-			}
 		}
 
 		protected override string ViewVersion {

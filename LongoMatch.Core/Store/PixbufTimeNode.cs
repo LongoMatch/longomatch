@@ -33,13 +33,14 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class PixbufTimeNode : TimeNode
 	{
-		public PixbufTimeNode() {
+		public PixbufTimeNode ()
+		{
 		}
 
 		/// <summary>
 		/// Segment thumbnail
 		/// </summary>
-		public Image Miniature {
+		public virtual Image Miniature {
 			get;
 			set;
 		}

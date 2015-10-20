@@ -19,14 +19,14 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store
 {
@@ -41,6 +41,7 @@ namespace LongoMatch.Core.Store
 		ObservableCollection<Player> players;
 		ObservableCollection<Tag> tags;
 		ObservableCollection<CameraConfig> camerasConfig;
+
 		#region Constructors
 
 		public TimelineEvent ()
@@ -51,12 +52,14 @@ namespace LongoMatch.Core.Store
 			Tags = new ObservableCollection<Tag> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
-			CamerasConfig = new ObservableCollection<CameraConfig> {new CameraConfig (0)};
+			CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 		}
 
 		#endregion
 
 		#region Properties
+
+		#region IStorable
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -95,6 +98,69 @@ namespace LongoMatch.Core.Store
 		}
 
 		public Guid ID {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public string DocumentID {
+			get;
+			set;
+		}
+
+		#endregion
+
+		// All properties that are not preload must be overriden so that Fody.Loader can process
+		// this properties and inject the CheckIsLoaded method
+		public override Time Start {
+			get {
+				return base.Start;
+			}
+			set {
+				base.Start = value;
+			}
+		}
+
+		public override Time Stop {
+			get {
+				return base.Stop;
+			}
+			set {
+				base.Stop = value;
+			}
+		}
+
+		public override Time EventTime {
+			get {
+				return base.EventTime;
+			}
+			set {
+				base.EventTime = value;
+			}
+		}
+
+		public override Image Miniature {
+			get {
+				return base.Miniature;
+			}
+			set {
+				base.Miniature = value;
+			}
+		}
+
+		public override string Name {
+			get {
+				return base.Name;
+			}
+			set {
+				base.Name = value;
+			}
+		}
+
+		[PropertyChanged.DoNotNotify]
+		[JsonIgnore]
+		public Project Project {
 			get;
 			set;
 		}
@@ -159,6 +225,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of players tagged in this event.
 		/// </summary>
+		[LongoMatchPropertyIndex (0)]
 		public ObservableCollection<Player> Players {
 			get {
 				return players;
@@ -181,6 +248,56 @@ namespace LongoMatch.Core.Store
 		public TeamType Team {
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// The tagged team taking in account <see cref="TimelineEvent.Players"/> and
+		/// <see cref="TimelineEvent.Team"/>
+		/// </summary>
+		/// <value>The tagged team.</value>
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public TeamType TaggedTeam {
+			get {
+				bool home = false, away = false;
+			
+				GetTaggedTeams (ref home, ref away);
+			
+				if (away && home) {
+					return TeamType.BOTH;
+				} else if (home) {
+					return TeamType.LOCAL;
+				} else if (away) {
+					return TeamType.VISITOR;
+				} else {
+					return TeamType.NONE;
+				}
+			}
+		}
+
+		/// <summary>
+		/// A list of teams tagged in this event. This is only set during serialization
+		/// to make it possible to query events by team.
+		/// </summary>
+		[LongoMatchPropertyIndex (3)]
+		public List<Team> Teams {
+			get {
+				bool home = false, away = false;
+				List<Team> teams = new List<Team> ();
+
+				if (Project == null) {
+					return teams;
+				}
+
+				GetTaggedTeams (ref home, ref away);
+				if (home) {
+					teams.Add (Project.LocalTeamTemplate);
+				}
+				if (away) {
+					teams.Add (Project.VisitorTeamTemplate);
+				}
+				return teams;
+			}
 		}
 
 		/// <summary>
@@ -276,7 +393,8 @@ namespace LongoMatch.Core.Store
 
 		#region Public methods
 
-		protected void CheckIsLoaded () {
+		protected void CheckIsLoaded ()
+		{
 			if (!IsLoaded && !IsLoading) {
 				IsLoading = true;
 				if (Storage == null) {
@@ -301,7 +419,7 @@ namespace LongoMatch.Core.Store
 				} else {
 					return Start.ToMSecondsString () + " - " + Stop.ToMSecondsString ();
 				}
-			} else if (EventType != null) {
+			} else if (EventTime != null) {
 				return EventTime.ToMSecondsString ();
 			} else {
 				return "";
@@ -379,7 +497,7 @@ namespace LongoMatch.Core.Store
 
 		public override string ToString ()
 		{
-			return Description;
+			return Name;
 		}
 
 		public override bool Equals (object obj)
@@ -392,14 +510,28 @@ namespace LongoMatch.Core.Store
 
 		public override int GetHashCode ()
 		{
-			return ID.GetHashCode();
+			return ID.GetHashCode ();
 		}
+
 		#endregion
 
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;
 		}
+
+		void GetTaggedTeams (ref bool home, ref bool away)
+		{
+			if (Team == TeamType.LOCAL || Team == TeamType.BOTH ||
+			    Players.Any (Project.LocalTeamTemplate.List.Contains)) {
+				home = true;
+			}
+			if (Team == TeamType.VISITOR || Team == TeamType.BOTH ||
+			    Players.Any (Project.VisitorTeamTemplate.List.Contains)) {
+				away = true;
+			}
+		}
+
 	}
 
 	/// <summary>
