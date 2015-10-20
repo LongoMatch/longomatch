@@ -50,6 +50,12 @@ namespace LongoMatch.DB
 			return p;
 		}
 
+		public void Clear ()
+		{
+			idToObjects.Clear ();
+			objectsToId.Clear ();
+		}
+
 		public abstract T GetReference (W obj);
 
 		public void AddReference (W value)
