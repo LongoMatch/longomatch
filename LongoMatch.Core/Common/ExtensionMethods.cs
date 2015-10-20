@@ -78,7 +78,7 @@ namespace LongoMatch.Core.Common
 			} else if (first == null || second == null) {
 				return false;
 			} else {
-				return (first.Count () == second.Count ()) && !first.Except (second).Any ();
+				return (!first.Except (second).Any () && !second.Except (first).Any ());
 			}
 		}
 
