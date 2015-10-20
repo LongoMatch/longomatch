@@ -194,6 +194,11 @@ namespace LongoMatch.DB
 			return l;
 		}
 
+		public IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable
+		{
+			return Retrieve<T> (filter);
+		}
+
 		public IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			List<T> l = new List<T> ();

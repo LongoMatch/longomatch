@@ -176,11 +176,28 @@ namespace LongoMatch.DB.Views
 
 		/// <summary>
 		/// Performs a query on the view with a <see cref="QueryFilter"/> whose keys
-		/// must be in the list of <see cref="FilterProperties"/>
+		/// must be in the list of <see cref="FilterProperties"/> returning a pre-loaded object
 		/// </summary>
 		/// <param name="filter">Filter.</param>
 		public IEnumerable<T> Query (QueryFilter filter)
 		{
+			return Query (filter, null, false);
+		}
+
+		/// <summary>
+		/// Performs a query on the view with a <see cref="QueryFilter"/> whose keys
+		/// must be in the list of <see cref="FilterProperties"/> returning the full object.
+		/// </summary>
+		/// <param name="filter">Filter.</param>
+		public IEnumerable<T> QueryFull (QueryFilter filter, IStorableObjectsCache cache)
+		{
+			return Query (filter, cache, true);
+		}
+
+		IEnumerable<T> Query (QueryFilter filter, IStorableObjectsCache cache = null, bool full = false)
+		{
+			SerializationContext context = null;
+			HashSet<Guid> uids = new HashSet<Guid> ();
 			View view = GetView ();
 
 			Query q = view.CreateQuery ();
@@ -232,17 +249,34 @@ namespace LongoMatch.DB.Views
 			}
 
 			QueryEnumerator ret = q.Run ();
+			if (full) {
+				context = new SerializationContext (storage.Database, typeof(T));
+				if (cache != null) {
+					context.Cache = cache;
+				}
+			}
+
 			foreach (QueryRow row in ret) {
 				Revision rev = row.Document.CurrentRevision;
-				T d = DocumentsSerializer.DeserializeFromJson<T> (
-					      row.Value as string, db, rev);
-				d.ID = DocumentsSerializer.IDFromString (row.DocumentId);
-				d.DocumentID = row.DocumentId;
-				d.IsLoaded = false;
-				d.Storage = storage;
-				yield return d;
+				Guid id = DocumentsSerializer.IDFromString (row.DocumentId);
+
+				if (!uids.Contains (id)) {
+					uids.Add (id);
+					if (full) {
+						yield return (T)DocumentsSerializer.LoadObject (typeof(T), row.DocumentId,
+							context.DB, context);
+					} else {
+						T d = DocumentsSerializer.DeserializeFromJson<T> (row.Value as string, db, rev);
+						d.DocumentID = row.DocumentId;
+						d.ID = id;
+						d.IsLoaded = false;
+						d.Storage = storage;
+						yield return d;
+					}
+				}
 			}
 		}
+
 	}
 }
 

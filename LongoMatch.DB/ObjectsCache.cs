@@ -82,7 +82,7 @@ namespace LongoMatch.DB
 		}
 	}
 
-	public class StorableObjectsCache: ObjectsCache<Guid, IStorable>
+	public class StorableObjectsCache: ObjectsCache<Guid, IStorable>, IStorableObjectsCache
 	{
 		public override Guid GetReference (IStorable obj)
 		{

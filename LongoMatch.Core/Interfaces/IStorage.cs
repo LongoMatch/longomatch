@@ -56,6 +56,14 @@ namespace LongoMatch.Core.Interfaces
 		IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable;
 
 		/// <summary>
+		/// Retrieve every object of type T, where T must implement IStorable using on the dictionary as a filter on its properties
+		/// </summary>
+		/// <typeparam name="T">The type of IStorable you want to retrieve.</typeparam>
+		/// <param name="filter">The filter used to retrieve the objects</param>
+		/// <param name="cache">An objects cache to reuse existing retrieved objects</param>
+		IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable;
+
+		/// <summary>
 		/// Store the specified object
 		/// </summary>
 		/// <param name="t">The object to store.</param>

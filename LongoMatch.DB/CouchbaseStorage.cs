@@ -152,6 +152,14 @@ namespace LongoMatch.DB
 			}
 		}
 
+		public IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable
+		{
+			lock (mutex) {
+				IQueryView<T> qview = views [typeof(T)] as IQueryView <T>;
+				return qview.QueryFull (filter, cache);
+			}
+		}
+
 		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			lock (mutex) {
