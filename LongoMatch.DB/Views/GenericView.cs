@@ -277,12 +277,12 @@ namespace LongoMatch.DB.Views
 		List<object> ConvertValues (List<object> values)
 		{
 			List<object> ret = new List<object> ();
-			for (int i = 0; i < values.Count; i++) {
-				IStorable storable = values [i] as IStorable;
+			foreach (object val in values) {
+				IStorable storable = val as IStorable;
 				if (storable != null) {
 					ret.Add (storable.ID);
 				} else {
-					ret.Add (values [i]);
+					ret.Add (val);
 				}
 			}
 			return ret;
