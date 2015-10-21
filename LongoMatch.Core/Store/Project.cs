@@ -507,7 +507,7 @@ namespace LongoMatch.Core.Store
 				AwayBenchPlayers = VisitorTeamTemplate.BenchPlayersList, 
 				EventTime = startTime
 			};
-			Timeline.Add (lineup);
+			AddEvent (lineup);
 
 			return lineup;
 		}
