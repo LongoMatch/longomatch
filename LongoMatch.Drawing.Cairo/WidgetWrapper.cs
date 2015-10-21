@@ -214,7 +214,7 @@ namespace LongoMatch.Drawing.Cairo
 			if (cursorStr == null) {
 				widget.GdkWindow.Cursor = cursor;
 			} else {
-				Image img = Resources.LoadImage (Path.Combine ("cursors", cursorStr));
+				Image img = Resources.LoadImage (Path.Combine ("images/cursors", cursorStr));
 				Cursor c = new Cursor (widget.Display, img.Value, 0, 0);
 				widget.GdkWindow.Cursor = c;
 			}
