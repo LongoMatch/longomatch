@@ -73,6 +73,8 @@ namespace LongoMatch.Gui
 				StyleConf.PlayerCapturerIconSize);
 			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
 				StyleConf.PlayerCapturerIconSize);
+			centerplayheadbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-center-view",
+				StyleConf.PlayerCapturerIconSize);
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
@@ -165,6 +167,12 @@ namespace LongoMatch.Gui
 				case PlayerViewOperationMode.Presentation:
 					ShowControls = true;
 					Compact = true;
+					DrawingsVisible = false;
+					CenterPlayheadVisible = true;
+					blackboarddrawingarea.Visible = false;
+					drawbutton.Visible = false;
+					timescale.Visible = false;
+					detachbutton.Visible = true;
 					break;
 				}
 			}
@@ -224,6 +232,12 @@ namespace LongoMatch.Gui
 			set {
 				videowindow.Visible = !value;
 				blackboarddrawingarea.Visible = value;
+			}
+		}
+
+		bool CenterPlayheadVisible {
+			set {
+				centerplayheadbutton.Visible = value;
 			}
 		}
 
