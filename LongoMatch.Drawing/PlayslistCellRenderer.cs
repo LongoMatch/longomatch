@@ -301,11 +301,13 @@ namespace LongoMatch.Drawing
 				TimelineEvent p = item as TimelineEvent;
 				// always add local first.
 				var teams = new List<Team> ();
-				if (p.Team == TeamType.LOCAL || p.Team == TeamType.BOTH) {
-					teams.Add (project.LocalTeamTemplate);
-				}
-				if (p.Team == TeamType.VISITOR || p.Team == TeamType.BOTH) {
-					teams.Add (project.VisitorTeamTemplate);
+				if (project != null) {
+					if (p.Team == TeamType.LOCAL || p.Team == TeamType.BOTH) {
+						teams.Add (project.LocalTeamTemplate);
+					}
+					if (p.Team == TeamType.VISITOR || p.Team == TeamType.BOTH) {
+						teams.Add (project.VisitorTeamTemplate);
+					}
 				}
 				RenderPlay (p.Color, p.Miniature, p.Players, teams, p.Selected, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
