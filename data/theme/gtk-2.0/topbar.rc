@@ -141,3 +141,39 @@ style "longomatch-toggletab-center" = "longomatch-default"
 	    }
 	}
 }
+
+style "longomatch-topbar-button" = "longomatch-default"
+{
+  engine "pixmap"
+	{
+		image
+		{
+			function        = BOX
+			state			= ACTIVE
+			file            = "Top_Bar/topbar-button-down.svg"
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= PRELIGHT
+			file            = "Top_Bar/topbar-button-prelight.svg"
+			stretch         = TRUE
+		}
+		image
+		{
+			function        = BOX
+			state			= NORMAL
+			file            = "Top_Bar/topbar-button-idle.svg"
+			stretch         = TRUE
+		}
+		image
+	    {
+			function		= FOCUS
+			file			= "Buttons/null.png"
+			border			= { 4, 4, 4, 4 }
+			stretch			= TRUE
+	    }
+	}
+}
+
