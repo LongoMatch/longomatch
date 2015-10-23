@@ -75,10 +75,10 @@ namespace LongoMatch.Gui.Component
 		{
 			// If there are other buttons, add the new button to their buttonGroup
 			RadioButton otherbutton = null;
-			string styleName = "topbarbutton_left";
+			string styleName = "toggletabbutton_left";
 			if (buttoncontainer.Children.Any ()) {
 				otherbutton = buttoncontainer.Children.First () as RadioButton;
-				styleName = "topbarbutton_right";
+				styleName = "toggletabbutton_right";
 			}
 			var button = new RadioButton (otherbutton);
 
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Component
 			int pos = buttoncontainer.Children.Length - 1;
 			if (pos >= 0) {
 				Widget previousLast = buttoncontainer.Children.Last ();
-				previousLast.Name = pos == 0 ? "topbarbutton_left" : "topbarbutton_center";
+				previousLast.Name = pos == 0 ? "toggletabbutton_left" : "toggletabbutton_center";
 				previousLast.ResetRcStyles ();
 			}
 
