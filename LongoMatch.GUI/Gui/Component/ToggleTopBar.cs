@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ToggleTopBar : Gtk.Bin
 	{
-		public event ChangeCurrentPageHandler SwitchPage;
+		public event ChangeCurrentPageHandler SwitchPageEvent;
 
 		int currentPage = 0;
 
@@ -38,10 +38,26 @@ namespace LongoMatch.Gui.Component
 
 		public int CurrentPage {
 			get { return currentPage; }
+
 			private set {
 				currentPage = value;
-				if (SwitchPage != null) {
-					SwitchPage (this, new ChangeCurrentPageArgs ());
+				if (SwitchPageEvent != null) {
+					SwitchPageEvent (this, new ChangeCurrentPageArgs ());
+				}
+			}
+		}
+
+		/// <summary>
+		/// Switches the topbar togglebuttons to the page sent
+		/// If page is not in range nothing happens
+		/// </summary>
+		/// <param name="page">Index of the page to switch</param>
+		public void SwitchPage (int page)
+		{
+			if (page >= 0 && page < buttoncontainer.Children.Length) {
+				var button = buttoncontainer.Children [page] as RadioButton;
+				if (button != null) {
+					button.Toggle ();
 				}
 			}
 		}
