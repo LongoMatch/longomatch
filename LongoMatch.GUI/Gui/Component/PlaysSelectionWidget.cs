@@ -45,6 +45,8 @@ namespace LongoMatch.Gui.Component
 			AddFilters ();
 
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
+
+			notebook.Page = 0;
 		}
 
 		protected override void OnDestroyed ()
