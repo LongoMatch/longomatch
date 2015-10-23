@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event ChangeCurrentPageHandler SwitchPageEvent;
 
-		int currentPage = 0;
+		int currentPage = -1;
 
 		public ToggleTopBar ()
 		{
@@ -40,9 +40,11 @@ namespace LongoMatch.Gui.Component
 			get { return currentPage; }
 
 			private set {
-				currentPage = value;
-				if (SwitchPageEvent != null) {
-					SwitchPageEvent (this, new ChangeCurrentPageArgs ());
+				if (value != currentPage) {
+					currentPage = value;
+					if (SwitchPageEvent != null) {
+						SwitchPageEvent (this, new ChangeCurrentPageArgs ());
+					}
 				}
 			}
 		}
