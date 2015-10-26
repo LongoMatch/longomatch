@@ -37,6 +37,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-dash-edit_active.svg \
 	hicolor/scalable/actions/longomatch-dash-fill.svg \
 	hicolor/scalable/actions/longomatch-dash-fit.svg \
+	hicolor/scalable/actions/longomatch-data.svg \
 	hicolor/scalable/actions/longomatch-default-shield.svg \
 	hicolor/scalable/actions/longomatch-delete.svg \
 	hicolor/scalable/actions/longomatch-down-arrow.svg \
@@ -66,6 +67,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-plugin.svg \
 	hicolor/scalable/actions/longomatch-popup.svg \
 	hicolor/scalable/actions/longomatch-preferences.svg \
+	hicolor/scalable/actions/longomatch-presentations-next.svg \
 	hicolor/scalable/actions/longomatch-project-delete.svg \
 	hicolor/scalable/actions/longomatch-project-export.svg \
 	hicolor/scalable/actions/longomatch-project-import.svg \
@@ -85,19 +87,23 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-square.svg \
 	hicolor/scalable/actions/longomatch-stop.svg \
 	hicolor/scalable/actions/longomatch-subs-arrow.svg \
+	hicolor/scalable/actions/longomatch-tab-active-competition.svg \
 	hicolor/scalable/actions/longomatch-tab-active-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-active-filter.svg \
 	hicolor/scalable/actions/longomatch-tab-active-player.svg \
 	hicolor/scalable/actions/longomatch-tab-active-playlist.svg \
 	hicolor/scalable/actions/longomatch-tab-active-position.svg \
 	hicolor/scalable/actions/longomatch-tab-active-project.svg \
+	hicolor/scalable/actions/longomatch-tab-active-season.svg \
 	hicolor/scalable/actions/longomatch-tab-active-timeline.svg \
+	hicolor/scalable/actions/longomatch-tab-competition.svg \
 	hicolor/scalable/actions/longomatch-tab-dashboard.svg \
 	hicolor/scalable/actions/longomatch-tab-filter.svg \
 	hicolor/scalable/actions/longomatch-tab-player.svg \
 	hicolor/scalable/actions/longomatch-tab-playlist.svg \
 	hicolor/scalable/actions/longomatch-tab-position.svg \
 	hicolor/scalable/actions/longomatch-tab-project.svg \
+	hicolor/scalable/actions/longomatch-tab-season.svg \
 	hicolor/scalable/actions/longomatch-tab-timeline.svg \
 	hicolor/scalable/actions/longomatch-tag-card.svg \
 	hicolor/scalable/actions/longomatch-tag-category.svg \

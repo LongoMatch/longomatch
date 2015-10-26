@@ -25,6 +25,11 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Check-Radio/option-checked.png \
 	gtk-2.0/Check-Radio/option-unchecked-insensitive.png \
 	gtk-2.0/Check-Radio/option-unchecked.png \
+	gtk-2.0/Check-Radio/treeview-checkbox-checked-insensitive.svg \
+	gtk-2.0/Check-Radio/treeview-checkbox-checked.svg \
+	gtk-2.0/Check-Radio/treeview-checkbox-unchecked-insensitive.svg \
+	gtk-2.0/Check-Radio/treeview-checkbox-unchecked-prelight.svg \
+	gtk-2.0/Check-Radio/treeview-checkbox-unchecked.svg \
 	gtk-2.0/Entry/combo-entry-border-bg-insensitive.png \
 	gtk-2.0/Entry/combo-entry-border-bg.png \
 	gtk-2.0/Entry/team-combo-entry-blue.png \
@@ -110,4 +115,5 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/separator.rc \
 	gtk-2.0/toggletab.rc \
 	gtk-2.0/topbar.rc \
+	gtk-2.0/treeview.rc \
 	longomatch-dark.json
