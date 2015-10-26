@@ -17,12 +17,10 @@
 // 
 using System;
 using Gtk;
-using Gdk;
-using Mono.Unix;
-
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {

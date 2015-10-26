@@ -21,6 +21,7 @@ using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;

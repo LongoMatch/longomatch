@@ -15,11 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
 using System;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Common;
+using NUnit.Framework;
 
 namespace Tests.Core.Store
 {

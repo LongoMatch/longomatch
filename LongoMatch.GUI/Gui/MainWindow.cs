@@ -22,10 +22,11 @@ using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Dialog;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
 
 using Misc = LongoMatch.Gui.Helpers.Misc;

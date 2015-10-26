@@ -17,14 +17,15 @@
 //
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using System.IO;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.DB
 {

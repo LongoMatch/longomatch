@@ -19,8 +19,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Common
+namespace LongoMatch.Core.Filters
 {
 	/// <summary>
 	/// A filter used to retrieve objects from the database using <see cref="IStorage.Retrieve</see>"/>.

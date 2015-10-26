@@ -165,6 +165,7 @@
     <Folder Include="Core\Store\Playlists\" />
     <Folder Include="Core\Serialization\" />
     <Folder Include="Integration\" />
+    <Folder Include="Core\Filters\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

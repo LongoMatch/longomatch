@@ -22,6 +22,7 @@ using System.Linq;
 using System.Reflection;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;

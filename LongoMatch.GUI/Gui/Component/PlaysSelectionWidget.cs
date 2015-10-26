@@ -17,9 +17,9 @@
 // 
 using System;
 using System.Collections.Generic;
-using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
 using Mono.Unix;

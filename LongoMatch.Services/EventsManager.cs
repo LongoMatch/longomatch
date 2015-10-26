@@ -18,18 +18,19 @@
 //
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
-using System.IO;
-using LongoMatch.Core;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
-using System.Collections.ObjectModel;
 
 namespace LongoMatch.Services
 {

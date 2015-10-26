@@ -17,15 +17,12 @@
 // 
 using System;
 using System.Collections.Generic;
-
-using LongoMatch.Core.Interfaces;
+using System.Threading.Tasks;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Image = LongoMatch.Core.Common.Image;
-using LongoMatch.Core.Stats;
-using LongoMatch.Core.Interfaces.Multimedia;
-using System.Threading.Tasks;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {

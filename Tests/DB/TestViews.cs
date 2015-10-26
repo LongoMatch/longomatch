@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;

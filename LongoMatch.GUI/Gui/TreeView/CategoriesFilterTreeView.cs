@@ -18,9 +18,9 @@
 using System;
 using System.Linq;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {

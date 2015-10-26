@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using LongoMatch;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;

@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Dialog;

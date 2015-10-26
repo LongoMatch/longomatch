@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
