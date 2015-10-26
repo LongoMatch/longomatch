@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditProperties (EventType eventType)
 		{
 			EditCategoryDialog dialog = new EditCategoryDialog (project, eventType,
-				this.Toplevel as Window);
+				                            this.Toplevel as Window);
 			dialog.Run ();
 			dialog.Destroy ();
 		}

@@ -234,7 +234,7 @@ namespace Tests.Services
 		public void TestOpenBadProject ()
 		{
 			// Test to try opening a project with duration = null
-			Assert.Greater(project.Description.FileSet.Count, 0);
+			Assert.Greater (project.Description.FileSet.Count, 0);
 			foreach (var file in project.Description.FileSet) {
 				file.Duration = null;
 			}
@@ -243,7 +243,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 
-			mtkMock.Verify(g => g.DiscoverFile(It.IsAny<string>(), true), Times.Exactly(project.Description.FileSet.Count));
+			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
 
 			IAnalysisWindow win = winMock.Object;
 			gtkMock.Verify (g => g.OpenProject (project, It.IsAny<ProjectType> (),

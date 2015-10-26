@@ -55,7 +55,7 @@ namespace LongoMatch.Services
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType, EventsFilter filter,
-			IAnalysisWindow analysisWindow)
+		                                 IAnalysisWindow analysisWindow)
 		{
 			OpenedProject = project;
 		}
