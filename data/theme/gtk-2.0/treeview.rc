@@ -1,0 +1,111 @@
+style "longomatch-treeview" {
+  # Background color
+  base[NORMAL]       = @bg_dark_color
+  # Line color when active (default)
+  base[ACTIVE]       = @active_color
+  # Line color when selected
+  base[SELECTED]     = @active_color
+  text[NORMAL]       = @text_color
+  text[SELECTED]     = @text_color
+  text[ACTIVE]       = @text_color
+  # background color prelight
+  bg[PRELIGHT]   =  @active_color
+
+  # We can also customize odd/even row colors
+  #GtkTreeView::odd_row_color      = "#5f5f5f"
+  #GtkTreeView::even_row_color     = "#828282"
+
+  engine "pixmap"
+  {
+    image
+    {
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 			= NORMAL
+            shadow          		= OUT
+            overlay_file    		= "Check-Radio/treeview-checkbox-unchecked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 			= PRELIGHT
+            shadow          		= OUT
+            overlay_file    		= "Check-Radio/treeview-checkbox-unchecked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 			= ACTIVE
+            shadow          		= OUT
+            overlay_file    		= "Check-Radio/treeview-checkbox-unchecked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 			= SELECTED
+            shadow          		= OUT
+            overlay_file    		= "Check-Radio/treeview-checkbox-unchecked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 			= INSENSITIVE
+            shadow          		= OUT
+            overlay_file    		= "Check-Radio/treeview-checkbox-unchecked-insensitive.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+	    state	 		= NORMAL
+            shadow          		= IN
+            overlay_file    		= "Check-Radio/treeview-checkbox-checked.svg"
+            overlay_stretch	 	= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+	    	  state 		= PRELIGHT
+            shadow          		= IN
+            overlay_file    		= "Check-Radio/treeview-checkbox-checked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+	    state 		        = ACTIVE
+            shadow          		= IN
+            overlay_file    		= "Check-Radio/treeview-checkbox-checked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image
+	{
+            function        		= CHECK
+            recolorable     		= TRUE
+	    state 		        = SELECTED
+            shadow          		= IN
+            overlay_file    		= "Check-Radio/treeview-checkbox-checked.svg"
+            overlay_stretch 		= FALSE
+        }
+	image 
+  	{
+            function        		= CHECK
+            recolorable     		= TRUE
+            state 		        = INSENSITIVE
+            shadow          		= IN
+            overlay_file		= "Check-Radio/treeview-checkbox-checked-insensitive.svg"
+            overlay_stretch 		= FALSE
+	}
+  }
+}
