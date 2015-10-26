@@ -115,8 +115,9 @@
     <Compile Include="DummyBusyDialog.cs" />
     <Compile Include="Core\TestResources.cs" />
     <Compile Include="DB\TestQueries.cs" />
-    <Compile Include="Core\Common\TestQueryFilter.cs" />
     <Compile Include="Core\Common\TestExtensions.cs" />
+    <Compile Include="Core\Filters\TestQueryFilter.cs" />
+    <Compile Include="Core\Filters\TestProjectsFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

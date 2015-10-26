@@ -137,6 +137,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorableObjectsCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\EventsFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\QueryFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\ProjectsFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
