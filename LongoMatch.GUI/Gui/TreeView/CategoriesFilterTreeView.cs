@@ -168,18 +168,7 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		class StringObject
-		{
-			public StringObject (string text)
-			{
-				Text = text;
-			}
-
-			public string Text {
-				get;
-				set;
-			}
-		}
+	
 	}
 }
 
