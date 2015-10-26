@@ -67,6 +67,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-plugin.svg \
 	hicolor/scalable/actions/longomatch-popup.svg \
 	hicolor/scalable/actions/longomatch-preferences.svg \
+	hicolor/scalable/actions/longomatch-presentations-apply.svg \
 	hicolor/scalable/actions/longomatch-presentations-next.svg \
 	hicolor/scalable/actions/longomatch-project-delete.svg \
 	hicolor/scalable/actions/longomatch-project-export.svg \
@@ -95,6 +96,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-tab-active-position.svg \
 	hicolor/scalable/actions/longomatch-tab-active-project.svg \
 	hicolor/scalable/actions/longomatch-tab-active-season.svg \
+	hicolor/scalable/actions/longomatch-tab-active-team.svg \
 	hicolor/scalable/actions/longomatch-tab-active-timeline.svg \
 	hicolor/scalable/actions/longomatch-tab-competition.svg \
 	hicolor/scalable/actions/longomatch-tab-dashboard.svg \
@@ -104,6 +106,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-tab-position.svg \
 	hicolor/scalable/actions/longomatch-tab-project.svg \
 	hicolor/scalable/actions/longomatch-tab-season.svg \
+	hicolor/scalable/actions/longomatch-tab-team.svg \
 	hicolor/scalable/actions/longomatch-tab-timeline.svg \
 	hicolor/scalable/actions/longomatch-tag-card.svg \
 	hicolor/scalable/actions/longomatch-tag-category.svg \
