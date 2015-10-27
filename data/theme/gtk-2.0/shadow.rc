@@ -1,0 +1,12 @@
+style "longomatch-box-shadow" = "longomatch-default"
+{
+	engine "pixmap"
+	{
+		image
+		{
+			function        = FLAT_BOX
+			file            = "Shadows/boxshadow.svg"
+			stretch         = TRUE
+		}
+	}
+}
