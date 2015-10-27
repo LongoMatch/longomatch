@@ -255,7 +255,6 @@ namespace LongoMatch.Drawing
 	public class SelectionCanvas: Canvas
 	{
 
-		uint lastTime;
 		Selection clickedSel;
 
 		public SelectionCanvas (IWidget widget) : base (widget)
@@ -568,6 +567,10 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		protected virtual void HandleDoubleClick (Point coords, ButtonModifier modif)
+		{
+		}
+
 		protected virtual void HandleRightButton (Point coords, ButtonModifier modif)
 		{
 			if (Selections.Count <= 1) {
@@ -606,22 +609,22 @@ namespace LongoMatch.Drawing
 			Moved = false;
 		}
 
-		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)
+		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier, ButtonRepetition repetition)
 		{
-			if (time - lastTime < ClickRepeatMS) {
-				return;
-			}
 			coords = ToUserCoords (coords); 
-			if (type == ButtonType.Left) {
-				/* For OS X CTRL+Left emulating right click */
-				if (modifier == ButtonModifier.Meta) {
+			if (repetition == ButtonRepetition.Single) {
+				if (type == ButtonType.Left) {
+					/* For OS X CTRL+Left emulating right click */
+					if (modifier == ButtonModifier.Meta) {
+						HandleRightButton (coords, modifier);
+					}
+					HandleLeftButton (coords, modifier);
+				} else if (type == ButtonType.Right) {
 					HandleRightButton (coords, modifier);
 				}
-				HandleLeftButton (coords, modifier);
-			} else if (type == ButtonType.Right) {
-				HandleRightButton (coords, modifier);
+			} else {
+				HandleDoubleClick (coords, modifier);
 			}
-			lastTime = time;
 		}
 	}
 

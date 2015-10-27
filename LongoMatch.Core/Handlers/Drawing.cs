@@ -22,7 +22,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 namespace LongoMatch.Core.Handlers.Drawing
 {
 	public delegate void DrawingHandler (IContext context,Area area);
-	public delegate void ButtonPressedHandler (Point coords,uint time,ButtonType type,ButtonModifier modifier);
+	public delegate void ButtonPressedHandler (Point coords,uint time,ButtonType type,ButtonModifier modifier,ButtonRepetition repetition);
 	public delegate void ButtonReleasedHandler (Point coords,ButtonType type,ButtonModifier modifier);
 	public delegate void MotionHandler (Point coords);
 	public delegate void ShowTooltipHandler (Point coords);
