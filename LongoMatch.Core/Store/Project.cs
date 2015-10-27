@@ -71,6 +71,14 @@ namespace LongoMatch.Core.Store
 			EventTypes = new ObservableCollection<EventType> ();
 		}
 
+		[OnDeserialized ()]
+		internal void OnDeserializedMethod (StreamingContext context)
+		{
+			foreach (TimelineEvent evt in Timeline) {
+				evt.Project = this;
+			}
+		}
+
 		#endregion
 
 		#region Properties
