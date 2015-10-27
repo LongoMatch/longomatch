@@ -78,6 +78,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void SaveProjectHandler (Project project,ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler (Project project,ProjectType projectType,EventsFilter filter,
 	                                                 IAnalysisWindow analysisWindow);
+	public delegate void OpenedPresentationChangedHandler (Playlist presentation,IPlayerController player);
 	public delegate void OpenProjectIDHandler (Guid project_id,Project project);
 	public delegate void OpenProjectHandler ();
 	public delegate bool CloseOpenendProjectHandler ();

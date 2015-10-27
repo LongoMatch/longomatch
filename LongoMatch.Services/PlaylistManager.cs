@@ -83,7 +83,7 @@ namespace LongoMatch.Services
 		{
 			if (tNode is TimelineEvent) {
 				LoadPlay (tNode as TimelineEvent, time, false);
-				filter.Update ();
+				filter?.Update ();
 			}
 		}
 
@@ -98,13 +98,21 @@ namespace LongoMatch.Services
 			}
 		}
 
+		void HandleOpenedPresentationChanged (Playlist presentation, IPlayerController player)
+		{
+			openedProject = null;
+			openedProjectType = ProjectType.None;
+			filter = null;
+			Player = player;
+		}
+
 		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element)
 		{
 			Switch (null, playlist, element);
 			if (element != null) {
 				playlist.SetActive (element);
 			}
-			if (playlist.Elements.Count > 0)
+			if (playlist.Elements.Count > 0 && Player != null)
 				Player.LoadPlaylistEvent (playlist, element);
 		}
 
@@ -333,6 +341,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.AddPlaylistElementEvent += HandleAddPlaylistElement;
 			Config.EventsBroker.RenderPlaylist += HandleRenderPlaylist;
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.OpenedPresentationChanged += HandleOpenedPresentationChanged;
 			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
 			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
 			Config.EventsBroker.LoadEventEvent += HandleLoadPlayEvent;
@@ -352,6 +361,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.AddPlaylistElementEvent -= HandleAddPlaylistElement;
 			Config.EventsBroker.RenderPlaylist -= HandleRenderPlaylist;
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			Config.EventsBroker.OpenedPresentationChanged -= HandleOpenedPresentationChanged;
 			Config.EventsBroker.PreviousPlaylistElementEvent -= HandlePrev;
 			Config.EventsBroker.NextPlaylistElementEvent -= HandleNext;
 			Config.EventsBroker.LoadEventEvent -= HandleLoadPlayEvent;

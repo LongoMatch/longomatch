@@ -83,6 +83,7 @@ namespace LongoMatch.Core.Common
 		public event MigrateDBHandler MigrateDB;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
+		public event OpenedPresentationChangedHandler OpenedPresentationChanged;
 		
 		/* Player and Capturer */
 		public event TickHandler PlayerTick;
@@ -320,6 +321,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (OpenedProjectChanged != null) {
 				OpenedProjectChanged (project, projectType, filter, analysisWindow);
+			}
+		}
+
+		public  void EmitOpenedPresentationChanged (Playlist presentation, IPlayerController player)
+		{
+			if (OpenedPresentationChanged != null) {
+				OpenedPresentationChanged (presentation, player);
 			}
 		}
 

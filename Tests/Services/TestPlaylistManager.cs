@@ -352,7 +352,82 @@ namespace Tests.Services
 			Assert.IsFalse (playlistElementSelected);
 			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 		}
-	}
-		
-}
 
+		[Test ()]
+		public void TestOpenPresentation ()
+		{
+			Playlist presentation = new Playlist ();
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			presentation.Elements.Add (element);
+			presentation.Elements.Add (element2);
+
+			IPlayerController playercontroller = mockPlayerController.Object;
+			mockPlayerController.ResetCalls ();
+
+			Config.EventsBroker.EmitOpenedPresentationChanged (presentation, playercontroller);
+
+			Assert.AreSame (playercontroller, plmanager.Player);
+
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestOpenNullPresentation ()
+		{
+			Playlist presentation = new Playlist ();
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			presentation.Elements.Add (element);
+			presentation.Elements.Add (element2);
+
+			IPlayerController playercontroller = mockPlayerController.Object;
+			mockPlayerController.ResetCalls ();
+
+			Config.EventsBroker.EmitOpenedPresentationChanged (null, playercontroller);
+
+			Assert.AreSame (playercontroller, plmanager.Player);
+
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestOpenPresentationNullPlayer ()
+		{
+			Playlist presentation = new Playlist ();
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			presentation.Elements.Add (element);
+			presentation.Elements.Add (element2);
+
+			IPlayerController playercontroller = mockPlayerController.Object;
+			mockPlayerController.ResetCalls ();
+
+			Config.EventsBroker.EmitOpenedPresentationChanged (presentation, null);
+
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
+
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Never ());
+		}
+
+		[Test ()]
+		public void TestOpenNullPresentationNullPlayer ()
+		{
+			Playlist presentation = new Playlist ();
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			presentation.Elements.Add (element);
+			presentation.Elements.Add (element2);
+
+			mockPlayerController.ResetCalls ();
+
+			Config.EventsBroker.EmitOpenedPresentationChanged (null, null);
+
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
+
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Never ());
+		}
+	}
+}
