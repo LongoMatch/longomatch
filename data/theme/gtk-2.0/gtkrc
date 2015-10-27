@@ -42,8 +42,8 @@ style "longomatch-default"
   #ythickness = 0
 
   fg[NORMAL]        = @text_color
-  fg[ACTIVE]        = @base_color
-  fg[PRELIGHT]      = @base_color
+  fg[ACTIVE]        = @text_color
+  fg[PRELIGHT]      = @text_color
   fg[INSENSITIVE]   = darker (@base_color)
 
   base[NORMAL]      = @bg_dark_color
