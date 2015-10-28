@@ -31,7 +31,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace LongoMatch.DB
 {
-	public static class DocumentsSerializer
+	static class DocumentsSerializer
 	{
 		public const string DOC_TYPE = "DocType";
 		public const string OBJ_TYPE = "ObjType";
@@ -45,8 +45,8 @@ namespace LongoMatch.DB
 		/// <param name="db">Database.</param>
 		/// <param name="context">Serialization context.</param>
 		/// <param name="saveChildren">If set to <c>false</c>, <see cref="IStorable"/> children are not saved.</param>
-		public static void SaveObject (IStorable obj, Database db, SerializationContext context = null,
-		                               bool saveChildren = true)
+		internal static void SaveObject (IStorable obj, Database db, SerializationContext context = null,
+		                                 bool saveChildren = true)
 		{
 			if (context == null) {
 				context = new SerializationContext (db, obj.GetType ());
@@ -78,7 +78,7 @@ namespace LongoMatch.DB
 		/// <param name="id">Object ID.</param>
 		/// <param name="db">Database.</param>
 		/// <param name="context">Serialization context.</param>
-		public static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
+		internal static IStorable LoadObject (Type objType, Guid id, Database db, SerializationContext context = null)
 		{
 			return LoadObject (objType, id.ToString (), db, context);
 		}
@@ -88,7 +88,7 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <param name="storable">Storable to fill.</param>
 		/// <param name="db">Database to use.</param>
-		public static void FillObject (IStorable storable, Database db)
+		internal static void FillObject (IStorable storable, Database db)
 		{
 			Log.Debug ("Filling object " + storable);
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
@@ -107,7 +107,7 @@ namespace LongoMatch.DB
 		/// <param name="db">Database.</param>
 		/// <param name="rev">Document revision.</param>
 		/// <typeparam name="T">Object type.</typeparam>
-		public static T DeserializeFromJson<T> (string json, Database db, Revision rev)
+		internal static T DeserializeFromJson<T> (string json, Database db, Revision rev)
 		{
 			JsonSerializerSettings settings = GetSerializerSettings (typeof(T),
 				                                  new SerializationContext (db, typeof(T)), rev);
@@ -119,7 +119,7 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>The object id.</returns>
 		/// <param name="id">The document id.</param>
-		public static string IDStringFromString (string id)
+		internal static string IDStringFromString (string id)
 		{
 			if (id == null) {
 				return id;
@@ -138,7 +138,7 @@ namespace LongoMatch.DB
 		/// </summary>
 		/// <returns>The object id.</returns>
 		/// <param name="id">The document id.</param>
-		public static Guid IDFromString (string id)
+		internal static Guid IDFromString (string id)
 		{
 			return Guid.Parse (IDStringFromString (id));
 		}
@@ -149,7 +149,7 @@ namespace LongoMatch.DB
 		/// <returns>The document id.</returns>
 		/// <param name="id">The object ID.</param>
 		/// <param name="parentID">The parent ID.</param>
-		public static string StringFromID (Guid id, Guid parentID)
+		internal static string StringFromID (Guid id, Guid parentID)
 		{
 			if (parentID != Guid.Empty && parentID != id) {
 				return String.Format ("{0}{1}{2}", parentID, ID_SEP_CHAR, id);
@@ -196,7 +196,7 @@ namespace LongoMatch.DB
 			return o;
 		}
 
-		internal static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
+		public static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
 		{
 			IStorable storable = null, parent;
 			Document doc;
