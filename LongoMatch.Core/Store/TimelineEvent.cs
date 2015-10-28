@@ -109,6 +109,14 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public Guid ParentID {
+			get;
+			set;
+		}
+
+
 		#endregion
 
 		// All properties that are not preload must be overriden so that Fody.Loader can process

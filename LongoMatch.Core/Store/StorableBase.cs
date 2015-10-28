@@ -74,6 +74,13 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public Guid ParentID {
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region IChanged implementation
