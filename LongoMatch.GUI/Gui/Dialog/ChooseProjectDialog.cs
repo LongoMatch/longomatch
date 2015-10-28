@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Component;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -28,7 +29,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TransientFor = parent;
 			this.Build ();
-			projectlistwidget1.ShowList = false;
+			projectlistwidget1.ViewMode = ProjectListViewMode.Icons;
 			projectlistwidget1.SelectionMode = Gtk.SelectionMode.Single;
 			projectlistwidget1.ProjectsSelected += (projects) => {
 				if (projects != null && projects.Count == 1) {

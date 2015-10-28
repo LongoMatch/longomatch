@@ -30,6 +30,13 @@ using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
+	public enum ProjectListViewMode
+	{
+		List,
+		ListWithCheck,
+		Icons,
+	}
+
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ProjectListWidget : Gtk.Bin
@@ -42,31 +49,24 @@ namespace LongoMatch.Gui.Component
 		const int COL_PIXBUF2 = 2;
 		const int COL_PIXBUF3 = 3;
 		const int COL_PROJECT = 4;
+		const int COL_ACTIVE = 5;
 		TreeModelFilter filter;
 		TreeModelSort sort;
 		List<Project> projects;
+		List<Project> selectedProjects;
 		ListStore store;
 		bool swallowSignals;
+		CellRendererToggle checkCell;
+		ProjectListViewMode viewMode;
 
 		public ProjectListWidget ()
 		{
 			this.Build ();
+			selectedProjects = new List<Project> ();
 			
-			store = CreateStore ();
-			iconview.TextColumn = COL_DISPLAY_NAME;
-			iconview.PixbufColumn = COL_PIXBUF1;
-			iconview.SelectionChanged += HandleIconViewSelectionChanged;
-			iconview.ItemActivated += HandleItemActivated;
-			iconview.ItemWidth = 200;
+			CreateStore ();
+			CreateViews ();
 
-			treeview.HeadersVisible = false;
-			treeview.AppendColumn ("Home", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF2); 
-			treeview.AppendColumn ("Away", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF3); 
-			treeview.AppendColumn ("Desc", new CellRendererText (), "text", COL_DISPLAY_NAME); 
-			treeview.Selection.Mode = SelectionMode.Multiple;
-			treeview.EnableGridLines = TreeViewGridLines.None;
-			treeview.Selection.Changed += HandleTreeviewSelectionChanged;
-	
 			sortcombobox.Active = (int)Config.ProjectSortMethod;
 			sortcombobox.Changed += (sender, e) => {
 				/* Hack to make it actually resort */
@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 				Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
 			};
 			focusimage.Pixbuf = Misc.LoadIcon ("longomatch-search", 27);
-			ShowList = false;
+			ViewMode = ProjectListViewMode.List;
 		}
 
 		public SelectionMode SelectionMode {
@@ -84,10 +84,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public bool ShowList {
+		public ProjectListViewMode ViewMode {
 			set {
-				icoscrolledwindow.Visible = !value;
-				treeviewscrolledwindow.Visible = value;
+				viewMode = value;
+				treeviewscrolledwindow.Visible = value != ProjectListViewMode.Icons;
+				icoscrolledwindow.Visible = value == ProjectListViewMode.Icons;
+				checkCell.Visible = value == ProjectListViewMode.ListWithCheck; 
+			}
+			get {
+				return viewMode;
 			}
 		}
 
@@ -119,7 +124,7 @@ namespace LongoMatch.Gui.Component
 					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
 				}
 				
-				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, p);
+				store.AppendValues (FormatDesc (pdesc), image, homeShield, awayShield, p, false);
 			}
 			swallowSignals = false;
 			iconview.SelectPath (new TreePath ("0"));
@@ -170,6 +175,29 @@ namespace LongoMatch.Gui.Component
 			filterEntry.Text = "";
 		}
 
+		/// <summary>
+		/// Toggles the states of all cells.
+		/// </summary>
+		/// <param name="active">The new state of toggle cell.</param>
+		public void ToggleAll (bool active)
+		{
+			TreeIter current;
+
+			if (ViewMode != ProjectListViewMode.ListWithCheck) {
+				throw new InvalidOperationException ();
+			}
+			swallowSignals = true;
+			store.GetIterFirst (out current);
+			while (store.IterIsValid (current)) {
+				UpdateSelection (current, active);
+				store.IterNext (ref current);
+			}
+			swallowSignals = false;
+			if (ProjectsSelected != null) {
+				ProjectsSelected (selectedProjects);
+			}
+		}
+
 		static string FormatDesc (ProjectDescription pdesc)
 		{
 			string desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
@@ -180,19 +208,66 @@ namespace LongoMatch.Gui.Component
 			return desc;
 		}
 
+		void CreateViews ()
+		{
+			iconview.TextColumn = COL_DISPLAY_NAME;
+			iconview.PixbufColumn = COL_PIXBUF1;
+			iconview.SelectionChanged += HandleIconViewSelectionChanged;
+			iconview.ItemActivated += HandleItemActivated;
+			iconview.ItemWidth = 200;
+
+			treeview.HeadersVisible = false;
+			treeview.Selection.Mode = SelectionMode.Multiple;
+			treeview.EnableGridLines = TreeViewGridLines.None;
+			treeview.Selection.Changed += HandleTreeviewSelectionChanged;
+
+			TreeViewColumn filterColumn = new TreeViewColumn ();
+			checkCell = new CellRendererToggle ();
+			filterColumn.PackStart (checkCell, false);
+			filterColumn.AddAttribute (checkCell, "active", COL_ACTIVE);
+			checkCell.Toggled += HandleCellToggled;
+
+			CellRenderer homeCell = new CellRendererPixbuf ();
+			filterColumn.PackStart (homeCell, false);
+			filterColumn.AddAttribute (homeCell, "pixbuf", COL_PIXBUF2);
+
+			CellRenderer awayCell = new CellRendererPixbuf ();
+			filterColumn.PackStart (awayCell, false);
+			filterColumn.AddAttribute (awayCell, "pixbuf", COL_PIXBUF3);
+
+			CellRenderer titleCell = new CellRendererText ();
+			filterColumn.PackStart (titleCell, false);
+			filterColumn.AddAttribute (titleCell, "text", COL_DISPLAY_NAME);
+			treeview.AppendColumn (filterColumn);
+		}
+
 		ListStore CreateStore ()
 		{
-			store = new ListStore (typeof(string), typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf),
-				typeof(Gdk.Pixbuf), typeof(Project));
+			store = new ListStore (typeof(string), typeof(Pixbuf), typeof(Pixbuf),
+				typeof(Pixbuf), typeof(Project), typeof(bool));
 			
-			filter = new Gtk.TreeModelFilter (store, null);
-			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
+			filter = new TreeModelFilter (store, null);
+			filter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterTree);
 			sort = new TreeModelSort (filter);
 			sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
 			sort.SetSortColumnId (COL_DISPLAY_NAME, SortType.Ascending);
 			iconview.Model = sort;
 			treeview.Model = sort;
 			return store;
+		}
+
+		void UpdateSelection (TreeIter iter, bool active)
+		{
+			Project project = store.GetValue (iter, COL_PROJECT) as Project;
+			store.SetValue (iter, COL_ACTIVE, active);
+			if (active) {
+				selectedProjects.Add (project);
+			} else {
+				selectedProjects.Remove (project);
+			}
+			if (!swallowSignals && ProjectsSelected != null) {
+				ProjectsSelected (selectedProjects);
+			}
 		}
 
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
@@ -232,18 +307,17 @@ namespace LongoMatch.Gui.Component
 		void HandleSelectionChanged (TreeModel model, TreePath[] selectedItems)
 		{
 			TreeIter iter;
-			List<Project> list;
 
 			if (swallowSignals)
 				return;
 
 			if (ProjectsSelected != null) {
-				list = new List<Project> ();
+				selectedProjects = new List<Project> ();
 				for (int i = 0; i < selectedItems.Length; i++) {
 					model.GetIterFromString (out iter, selectedItems [i].ToString ());
-					list.Add ((Project)model.GetValue (iter, COL_PROJECT));
+					selectedProjects.Add ((Project)model.GetValue (iter, COL_PROJECT));
 				}
-				ProjectsSelected (list);
+				ProjectsSelected (selectedProjects);
 			}
 		}
 
@@ -274,5 +348,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void HandleCellToggled (object o, ToggledArgs args)
+		{
+			TreeIter iter;
+
+			if (sort.GetIterFromString (out iter, args.Path)) {
+				bool active = !((bool)sort.GetValue (iter, COL_ACTIVE));
+				iter = sort.ConvertIterToChildIter (iter);
+				iter = filter.ConvertIterToChildIter (iter);
+				UpdateSelection (iter, active);
+			}
+		}
 	}
 }
