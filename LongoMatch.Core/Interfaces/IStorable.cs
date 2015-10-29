@@ -48,7 +48,7 @@ namespace LongoMatch.Core.Interfaces
 		bool DeleteChildren { get; }
 
 		/// <summary>
-		/// The document strind ID used by the storage to fill the document
+		/// The document string ID used by the storage to fill the document
 		/// </summary>
 		string DocumentID { get; set; }
 
