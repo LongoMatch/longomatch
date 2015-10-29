@@ -187,6 +187,8 @@
     <Compile Include="Gui\Component\ToggleTopBar.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
     <Compile Include="Gui\TreeView\StringObject.cs" />
+    <Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
+    <Compile Include="Gui\TreeView\CellRendererButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
