@@ -42,8 +42,8 @@ style "longomatch-default"
   #ythickness = 0
 
   fg[NORMAL]        = @text_color
-  fg[ACTIVE]        = @base_color
-  fg[PRELIGHT]      = @base_color
+  fg[ACTIVE]        = @text_color
+  fg[PRELIGHT]      = @text_color
   fg[INSENSITIVE]   = darker (@base_color)
 
   base[NORMAL]      = @bg_dark_color
@@ -107,22 +107,6 @@ style "longomatch-drawingarea" {
   bg[NORMAL]        = @bg_dark_color
 }
 
-style "longomatch-treeview" {
-  # Background color
-  base[NORMAL]       = @bg_dark_color
-  # Line color when active (default)
-  base[ACTIVE]       = @active_color
-  # Line color when selected
-  base[SELECTED]     = @active_color
-  text[NORMAL]       = @text_color
-  text[SELECTED]     = @text_color
-  text[ACTIVE]       = @text_color
-
-  # We can also customize odd/even row colors
-  #GtkTreeView::odd_row_color      = "#5f5f5f"
-  #GtkTreeView::even_row_color     = "#828282"
-}
-
 style "longomatch-light-background" {
   bg[NORMAL]           = @bg_light_color
 }
@@ -159,6 +143,8 @@ include "range.rc"
 include "scrollbar.rc"
 include "separator.rc"
 include "topbar.rc"
+include "treeview.rc"
+include "shadow.rc"
 
 class "GtkWidget"                                style "longomatch-default"
 class "GtkEntry"                                 style "longomatch-entry"
@@ -206,7 +192,9 @@ widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
 widget "*lightbackgroundeventbox*" style "longomatch-light-background"
+widget "*lightbackgroundeventbox*.*separator*" style "longomatch-separator-dark"
 widget "*videoeventbox*" style "longomatch-default"
+widget "*shadoweventbox*"                        style "longomatch-box-shadow"
 widget "*gradienttopbar" style "longomatch-gradient-topbar"
 widget "*topbarbutton_left" style "longomatch-toggletab-left"
 widget "*topbarbutton_left.*" style "longomatch-toggletab-left"

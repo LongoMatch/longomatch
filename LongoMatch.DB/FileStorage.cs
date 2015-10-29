@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Store;
 

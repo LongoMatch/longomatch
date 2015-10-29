@@ -20,11 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui.Menus;
 using Color = Gdk.Color;
 using Image = LongoMatch.Core.Common.Image;
@@ -182,59 +179,5 @@ namespace LongoMatch.Gui.Component
 		protected abstract bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected);
 
 		protected abstract int SortFunction (TreeModel model, TreeIter a, TreeIter b);
-	}
-
-	public class PlaysCellRenderer: CellRenderer
-	{
-
-		public object Item {
-			get;
-			set;
-		}
-
-		public int Count {
-			get;
-			set;
-		}
-
-		public Project Project {
-			get;
-			set;
-		}
-
-		public override void GetSize (Widget widget, ref Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
-		{
-			x_offset = 0;
-			y_offset = 0;
-			width = StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator + StyleConf.ListTextWidth;
-			height = StyleConf.ListCategoryHeight;
-			if (Item is TimelineEvent) {
-				TimelineEvent evt = Item as TimelineEvent;
-				if (evt.Miniature != null) {
-					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
-				}
-				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * evt.Players.Count;
-				if (evt.Team != TeamType.LOCAL || evt.Team != TeamType.VISITOR) {
-					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator);
-				} else if (evt.Team != TeamType.BOTH) {
-					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * 2;
-				}
-			}
-		}
-
-		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
-		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
-		{
-			CellState state = (CellState)flags;
-			
-			using (IContext context = new CairoContext (window)) {
-				Area bkg = new Area (new Point (backgroundArea.X, backgroundArea.Y),
-					           backgroundArea.Width, backgroundArea.Height);
-				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
-					            cellArea.Width, cellArea.Height);
-				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, Config.DrawingToolkit,
-					context, bkg, cell, state);
-			}
-		}
 	}
 }

@@ -23,7 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\EncodingSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EventsBroker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EventsFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Gettext.cs" />
@@ -127,7 +126,6 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISerializer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\QueryFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\StorableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\Serializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\LongoMatchPropertyPreload.cs" />
@@ -137,5 +135,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\StorableNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\StorageInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorableObjectsCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\EventsFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\QueryFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\ProjectsFilter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
   </ItemGroup>
 </Project>

@@ -15,19 +15,20 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
 using System;
-using LongoMatch.Services;
-using LongoMatch;
-using LongoMatch.Core.Common;
-using Moq;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces;
-using System.Threading.Tasks;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using LongoMatch;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Services;
+using Moq;
+using NUnit.Framework;
 
 namespace Tests.Services
 {

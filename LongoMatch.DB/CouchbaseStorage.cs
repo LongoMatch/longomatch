@@ -17,14 +17,14 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB.Views;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.DB
 {

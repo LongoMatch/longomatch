@@ -15,14 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using LongoMatch.DB;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using System.Linq;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Store;
+using LongoMatch.DB;
+using NUnit.Framework;
 
 namespace Tests.Services
 {

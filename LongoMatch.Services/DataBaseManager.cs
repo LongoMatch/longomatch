@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using LongoMatch.Core;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 using LongoMatch.DB;
 
 namespace LongoMatch.Services
@@ -57,7 +55,7 @@ namespace LongoMatch.Services
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType, EventsFilter filter,
-			IAnalysisWindow analysisWindow)
+		                                 IAnalysisWindow analysisWindow)
 		{
 			OpenedProject = project;
 		}

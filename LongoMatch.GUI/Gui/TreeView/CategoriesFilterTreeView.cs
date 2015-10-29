@@ -18,9 +18,9 @@
 using System;
 using System.Linq;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -168,18 +168,7 @@ namespace LongoMatch.Gui.Component
 			return false;
 		}
 
-		class StringObject
-		{
-			public StringObject (string text)
-			{
-				Text = text;
-			}
-
-			public string Text {
-				get;
-				set;
-			}
-		}
+	
 	}
 }
 

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
@@ -69,7 +70,7 @@ namespace Tests.Integration
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<Project> ())).Returns (true);
-			guiToolkitMock.Setup (g => g.BusyDialog(It.IsAny<string>(), It.IsAny<object> ())).Returns(
+			guiToolkitMock.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
 
 			analysisWindowMock = new Mock<IAnalysisWindow> ();
@@ -182,7 +183,9 @@ namespace Tests.Integration
 				Task.Factory.StartNew (() => (object)importer));
 			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
-			Config.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {p = project;};
+			Config.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {
+				p = project;
+			};
 			Config.EventsBroker.EmitImportProject ();
 			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count);
 			int eventsCount = p.Timeline.Count;

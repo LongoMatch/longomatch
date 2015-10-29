@@ -16,12 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Handlers;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Common

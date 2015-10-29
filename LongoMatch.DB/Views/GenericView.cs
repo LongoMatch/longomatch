@@ -21,6 +21,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json.Linq;

@@ -47,7 +47,15 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		bool DeleteChildren { get; }
 
+		/// <summary>
+		/// The document string ID used by the storage to fill the document
+		/// </summary>
 		string DocumentID { get; set; }
+
+		/// <summary>
+		/// The ID of the <see cref="IStorable"/> parent or null if it has no parent.
+		/// </summary>
+		Guid ParentID { get; set; }
 	}
 }
 

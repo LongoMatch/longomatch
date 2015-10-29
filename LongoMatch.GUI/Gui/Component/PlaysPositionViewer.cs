@@ -17,6 +17,7 @@
 //
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using System.Collections.Generic;

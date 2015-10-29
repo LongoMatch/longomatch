@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Dialog;
@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditProperties (EventType eventType)
 		{
 			EditCategoryDialog dialog = new EditCategoryDialog (project, eventType,
-				this.Toplevel as Window);
+				                            this.Toplevel as Window);
 			dialog.Run ();
 			dialog.Destroy ();
 		}

@@ -23,6 +23,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Gui;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Gui.Component;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -37,7 +38,7 @@ namespace LongoMatch.Gui.Panel
 			
 			projectlistwidget.ProjectSelected += HandleProjectSelected;
 			projectlistwidget.SelectionMode = SelectionMode.Single;
-			projectlistwidget.ShowList = false;
+			projectlistwidget.ViewMode = ProjectListViewMode.Icons;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleClicked;
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");

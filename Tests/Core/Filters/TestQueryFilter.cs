@@ -17,10 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using NUnit.Framework;
 
-namespace Tests.Core.Common
+namespace Tests.Core.Filters
 {
 	[TestFixture ()]
 	public class TestQueryFilter

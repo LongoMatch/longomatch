@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;

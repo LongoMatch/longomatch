@@ -269,7 +269,7 @@ namespace LongoMatch.Core.Store
 					{
 						ret = String.Compare (p1.Season, p2.Season);
 						if (ret == 0) {
-							ret = String.Compare (p1.Title, p2.Title);
+							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 						}
 						break;
 					}
@@ -277,7 +277,7 @@ namespace LongoMatch.Core.Store
 					{
 						ret = String.Compare (p1.Competition, p2.Competition);
 						if (ret == 0) {
-							ret = String.Compare (p1.Title, p2.Title);
+							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 						}
 						break;
 					}

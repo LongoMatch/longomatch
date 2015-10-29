@@ -17,7 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces

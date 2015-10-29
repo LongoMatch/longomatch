@@ -42,6 +42,8 @@ namespace Tests.Core.Serialization
 		public List<IStorable> SavedChildren { get; set; }
 
 		public string DocumentID { get; set; }
+
+		public Guid ParentID { get; set; }
 	}
 
 	public class TestObject1: TestObjectBase

@@ -21,7 +21,7 @@ using System.Linq;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 
-namespace LongoMatch.Core.Common
+namespace LongoMatch.Core.Filters
 {
 	public class EventsFilter
 	{

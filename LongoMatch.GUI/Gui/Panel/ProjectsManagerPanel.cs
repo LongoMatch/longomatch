@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
 			
-			projectlistwidget1.ShowList = true;
+			projectlistwidget1.ViewMode = ProjectListViewMode.List;
 
 			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
 			resyncbutton.Visible = Config.SupportsMultiCamera;
