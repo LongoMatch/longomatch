@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ToggleTopBar : Gtk.Bin
 	{
-		public event ChangeCurrentPageHandler SwitchPageEvent;
+		public event SwitchPageHandler PageSwitchedEvent;
 
 		int currentPage = -1;
 
@@ -42,8 +42,8 @@ namespace LongoMatch.Gui.Component
 			private set {
 				if (value != currentPage) {
 					currentPage = value;
-					if (SwitchPageEvent != null) {
-						SwitchPageEvent (this, new ChangeCurrentPageArgs ());
+					if (PageSwitchedEvent != null) {
+						PageSwitchedEvent (this, new SwitchPageArgs ());
 					}
 				}
 			}
