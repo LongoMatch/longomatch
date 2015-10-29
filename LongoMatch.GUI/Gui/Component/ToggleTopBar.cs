@@ -39,27 +39,12 @@ namespace LongoMatch.Gui.Component
 		public int CurrentPage {
 			get { return currentPage; }
 
-			private set {
-				if (value != currentPage) {
-					currentPage = value;
-					if (PageSwitchedEvent != null) {
-						PageSwitchedEvent (this, new SwitchPageArgs ());
+			set {
+				if (value != currentPage && value >= 0 && value < buttoncontainer.Children.Length) {
+					var button = buttoncontainer.Children [value] as RadioButton;
+					if (button != null) {
+						button.Toggle ();
 					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Switches the topbar togglebuttons to the page sent
-		/// If page is not in range nothing happens
-		/// </summary>
-		/// <param name="page">Index of the page to switch</param>
-		public void SwitchPage (int page)
-		{
-			if (page >= 0 && page < buttoncontainer.Children.Length) {
-				var button = buttoncontainer.Children [page] as RadioButton;
-				if (button != null) {
-					button.Toggle ();
 				}
 			}
 		}
@@ -103,8 +88,17 @@ namespace LongoMatch.Gui.Component
 			buttoncontainer.Add (button);
 			pos++;
 
-			button.Toggled += (object sender, EventArgs e) => CurrentPage = pos;
+			button.Toggled += (object sender, EventArgs e) => SwitchPage (pos);
 			button.ShowAll ();
+		}
+
+		void SwitchPage (int page)
+		{
+			currentPage = page;
+
+			if (PageSwitchedEvent != null) {
+				PageSwitchedEvent (this, new SwitchPageArgs ());
+			}
 		}
 
 
