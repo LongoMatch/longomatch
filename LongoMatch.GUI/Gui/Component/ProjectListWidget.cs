@@ -223,9 +223,10 @@ namespace LongoMatch.Gui.Component
 
 			TreeViewColumn filterColumn = new TreeViewColumn ();
 			checkCell = new CellRendererToggle ();
+			checkCell.Width = StyleConf.FilterTreeViewToogleWidth;
+			checkCell.Toggled += HandleCellToggled;
 			filterColumn.PackStart (checkCell, false);
 			filterColumn.AddAttribute (checkCell, "active", COL_ACTIVE);
-			checkCell.Toggled += HandleCellToggled;
 
 			CellRenderer homeCell = new CellRendererPixbuf ();
 			filterColumn.PackStart (homeCell, false);
