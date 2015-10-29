@@ -32,6 +32,7 @@ namespace LongoMatch.Services
 	public class PlaylistManager: IService
 	{
 		Project openedProject;
+		Playlist openedPresentation;
 		ProjectType openedProjectType;
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
@@ -101,6 +102,7 @@ namespace LongoMatch.Services
 		void HandleOpenedPresentationChanged (Playlist presentation, IPlayerController player)
 		{
 			openedProject = null;
+			openedPresentation = presentation;
 			openedProjectType = ProjectType.None;
 			filter = null;
 			Player = player;
@@ -248,7 +250,7 @@ namespace LongoMatch.Services
 
 		void HandleKeyPressed (object sender, HotKey key)
 		{
-			if (openedProject == null)
+			if (openedProject == null && openedPresentation == null)
 				return;
 
 			if (openedProjectType != ProjectType.CaptureProject &&
