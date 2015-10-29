@@ -259,6 +259,8 @@ namespace LongoMatch.DB
 
 			if (storable is EventType) {
 				type = typeof(EventType);
+			} else if (storable is TimelineEvent) {
+				type = typeof(TimelineEvent);
 			} else {
 				type = storable.GetType ();
 			}
