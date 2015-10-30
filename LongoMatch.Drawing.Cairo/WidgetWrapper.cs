@@ -368,26 +368,32 @@ namespace LongoMatch.Drawing.Cairo
 			inButtonPress = true;
 			moveTimerID = GLib.Timeout.Add (MoveWaitMS, ReadyToMove);
 
-			uint time = args.Event.Time;
-
 			if (ButtonPressEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;
 				ButtonRepetition br;
+				uint time = args.Event.Time;
 				
 				bt = ParseButtonType (args.Event.Button);
 				bm = ParseButtonModifier (args.Event.State);
 				br = ParseButtonRepetition (args.Event.Type);
 
 				// Ignore the second single click event when there's a double click
-				if (br == ButtonRepetition.Single && args.Event.Time - lastButtonTime < Settings.Default.DoubleClickTime) {
-					return;
+				var nextEvent = EventHelper.Peek ();
+				if (nextEvent != null) {
+					try {
+						var nextEventButton = nextEvent as EventButton;
+						if (nextEventButton?.Time == time &&
+						    ParseButtonRepetition (nextEventButton.Type) != ButtonRepetition.Single) {
+							return;
+						}
+					} finally {
+						EventHelper.Free (nextEvent);
+					}
 				}
 
 				ButtonPressEvent (new Point (args.Event.X, args.Event.Y),
 					time, bt, bm, br);
-
-				lastButtonTime = time;
 			}
 		}
 
