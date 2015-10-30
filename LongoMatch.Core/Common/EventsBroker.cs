@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
@@ -100,12 +101,12 @@ namespace LongoMatch.Core.Common
 		/* Query handlers */
 		public event QueryToolsHandler QueryTools;
 
-		public void EmitNewEvent (EventType eventType, List<Player> players = null, TeamType team = TeamType.NONE,
+		public void EmitNewEvent (EventType eventType, List<Player> players = null, ObservableCollection<Team> teams = null,
 		                          List<Tag> tags = null, Time start = null, Time stop = null,
 		                          Time eventTime = null, Score score = null, PenaltyCard card = null)
 		{
 			if (NewEventEvent != null)
-				NewEventEvent (eventType, players, team, tags, start, stop, eventTime, score, card, null);
+				NewEventEvent (eventType, players, teams, tags, start, stop, eventTime, score, card, null);
 		}
 
 		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit, List<DashboardButton> from)

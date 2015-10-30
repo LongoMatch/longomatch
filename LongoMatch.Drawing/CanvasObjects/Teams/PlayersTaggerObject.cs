@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
@@ -182,17 +183,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public TeamType SelectedTeam {
+		public ObservableCollection<Team> SelectedTeams {
 			get {
-				if (homeButton.Active && awayButton.Active) {
-					return TeamType.BOTH;
-				} else if (homeButton.Active) {
-					return TeamType.LOCAL;
-				} else if (awayButton.Active) {
-					return TeamType.VISITOR;
-				} else {
-					return TeamType.NONE;
+				ObservableCollection<Team> teams = new ObservableCollection<Team> ();
+				if (homeButton.Active) {
+					teams.Add (homeTeam);
 				}
+				if (awayButton.Active) {
+					teams.Add (awayTeam);
+				}
+				return teams;
 			}
 		}
 
@@ -209,14 +209,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			field.Update ();
 		}
 
-		public void Select (IList<Player> players, TeamType team)
+		public void Select (IList<Player> players, ObservableCollection<Team> teams)
 		{
 			ResetSelection ();
 			foreach (Player p in players) {
 				Select (p, true, false);
 			}
-			homeButton.Active = team == TeamType.BOTH || team == TeamType.LOCAL;
-			awayButton.Active = team == TeamType.BOTH || team == TeamType.VISITOR;
+			homeButton.Active = teams.Contains (homeTeam);
+			awayButton.Active = teams.Contains (awayTeam);
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (SelectedPlayers);
 			}
@@ -663,7 +663,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		void HandleTeamClickedEvent (ICanvasObject co)
 		{
 			if (TeamSelectionChangedEvent != null)
-				TeamSelectionChangedEvent (SelectedTeam);
+				TeamSelectionChangedEvent (SelectedTeams);
 		}
 
 		public override void ClickPressed (Point point, ButtonModifier modif)

@@ -373,6 +373,11 @@ namespace Tests.DB
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
 						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null, null, null);
 						evt.Players.Add (player);
+						if (qateam.List.Contains (player)) {
+							evt.Teams.Add (qateam);
+						} else {
+							evt.Teams.Add (devteam);
+						}
 					}
 				}
 				projects.Add (p);

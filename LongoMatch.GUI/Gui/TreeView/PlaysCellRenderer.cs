@@ -56,12 +56,7 @@ namespace LongoMatch.Gui.Component
 				if (evt.Miniature != null) {
 					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
-				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * evt.Players.Count;
-				if (evt.Team != TeamType.LOCAL || evt.Team != TeamType.VISITOR) {
-					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator);
-				} else if (evt.Team != TeamType.BOTH) {
-					width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * 2;
-				}
+				width += (StyleConf.ListImageWidth + StyleConf.ListRowSeparator) * (evt.Players.Count + evt.Teams.Count);
 			}
 		}
 

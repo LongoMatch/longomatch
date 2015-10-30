@@ -257,7 +257,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, IList<Player> players, IList<Team> teams, bool selected, string desc,
+		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<Team> teams, bool selected, string desc,
 		                               int count, bool isExpanded, IDrawingToolkit tk,
 		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
@@ -300,16 +300,7 @@ namespace LongoMatch.Drawing
 			} else if (item is TimelineEvent) {
 				TimelineEvent p = item as TimelineEvent;
 				// always add local first.
-				var teams = new List<Team> ();
-				if (project != null) {
-					if (p.Team == TeamType.LOCAL || p.Team == TeamType.BOTH) {
-						teams.Add (project.LocalTeamTemplate);
-					}
-					if (p.Team == TeamType.VISITOR || p.Team == TeamType.BOTH) {
-						teams.Add (project.VisitorTeamTemplate);
-					}
-				}
-				RenderPlay (p.Color, p.Miniature, p.Players, teams, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Selected, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);

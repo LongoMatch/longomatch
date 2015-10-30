@@ -31,6 +31,7 @@ using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
@@ -199,7 +200,9 @@ namespace Tests.Integration
 
 		void AddEvent (Project p, int idx, int start, int stop, int eventTime)
 		{
-			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null, TeamType.LOCAL, null,
+
+			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
+				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
 				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime }, null, null);
 		}
 

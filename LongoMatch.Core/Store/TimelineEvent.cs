@@ -41,6 +41,7 @@ namespace LongoMatch.Core.Store
 		ObservableCollection<Player> players;
 		ObservableCollection<Tag> tags;
 		ObservableCollection<CameraConfig> camerasConfig;
+		ObservableCollection<Team> teams;
 
 		#region Constructors
 
@@ -50,6 +51,7 @@ namespace LongoMatch.Core.Store
 			Drawings = new ObservableCollection<FrameDrawing> ();
 			Players = new ObservableCollection<Player> ();
 			Tags = new ObservableCollection<Tag> ();
+			Teams = new ObservableCollection<Team> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
 			CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
@@ -249,64 +251,52 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		/// <summary>
-		/// The team tagged in this event.
-		/// </summary>
-		/// <value>The team.</value>
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		[Obsolete ("Use Teams instead of Team to tag a team in a TimelineEvent")]
 		public TeamType Team {
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// The tagged team taking in account <see cref="TimelineEvent.Players"/> and
-		/// <see cref="TimelineEvent.Team"/>
+		/// A list of teams tagged in this event.
 		/// </summary>
-		/// <value>The tagged team.</value>
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public TeamType TaggedTeam {
+		[LongoMatchPropertyIndex (3)]
+		public ObservableCollection<Team> Teams {
 			get {
-				bool home = false, away = false;
-			
-				GetTaggedTeams (ref home, ref away);
-			
-				if (away && home) {
-					return TeamType.BOTH;
-				} else if (home) {
-					return TeamType.LOCAL;
-				} else if (away) {
-					return TeamType.VISITOR;
-				} else {
-					return TeamType.NONE;
+				return teams;
+			}
+			set {
+				if (teams != null) {
+					teams.CollectionChanged -= ListChanged;
+				}
+				teams = value;
+				if (teams != null) {
+					teams.CollectionChanged += ListChanged;
 				}
 			}
 		}
 
-		/// <summary>
-		/// A list of teams tagged in this event. This is only set during serialization
-		/// to make it possible to query events by team.
-		/// </summary>
-		[LongoMatchPropertyIndex (3)]
-		public List<Team> Teams {
+		[JsonIgnore]
+		public List<Team> TaggedTeams {
 			get {
-				bool home = false, away = false;
-				List<Team> teams = new List<Team> ();
-
 				if (Project == null) {
-					return teams;
+					return Teams.ToList ();
 				}
-
-				GetTaggedTeams (ref home, ref away);
-				if (home) {
+				List<Team> teams = new List<Team> ();
+				if (Teams.Contains (Project.LocalTeamTemplate) ||
+				    Players.Intersect (Project.LocalTeamTemplate.List).Any ()) {
 					teams.Add (Project.LocalTeamTemplate);
 				}
-				if (away) {
+				if (Teams.Contains (Project.VisitorTeamTemplate) ||
+				    Players.Intersect (Project.VisitorTeamTemplate.List).Any ()) {
 					teams.Add (Project.VisitorTeamTemplate);
 				}
 				return teams;
 			}
 		}
+
 
 		/// <summary>
 		/// List of tags describing this event.
@@ -527,19 +517,6 @@ namespace LongoMatch.Core.Store
 		{
 			IsChanged = true;
 		}
-
-		void GetTaggedTeams (ref bool home, ref bool away)
-		{
-			if (Team == TeamType.LOCAL || Team == TeamType.BOTH ||
-			    (Project != null && Players.Any (Project.LocalTeamTemplate.List.Contains))) {
-				home = true;
-			}
-			if (Team == TeamType.VISITOR || Team == TeamType.BOTH ||
-			    (Project != null && Players.Any (Project.VisitorTeamTemplate.List.Contains))) {
-				away = true;
-			}
-		}
-
 	}
 
 	/// <summary>

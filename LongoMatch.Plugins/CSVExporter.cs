@@ -17,14 +17,16 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using Mono.Addins;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using System.IO;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Templates;
+using Mono.Addins;
 
 namespace LongoMatch.Plugins
 {
@@ -97,16 +99,14 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName (TeamType team)
+		string TeamName (ObservableCollection<Team> teams)
 		{
-			if (team == TeamType.LOCAL) {
-				return project.LocalTeamTemplate.TeamName;
-			} else if (team == TeamType.VISITOR) {
-				return project.VisitorTeamTemplate.TeamName;
-			} else if (team == TeamType.BOTH) {
-				return "ALL";
-			} else {
+			if (teams.Count == 0) {
 				return "";
+			} else if (teams.Count == 1) {
+				return teams.First ().TeamName;
+			} else {
+				return "ALL";
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace LongoMatch.Plugins
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (play.TaggedTeam),
+					TeamName (play.Teams),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

@@ -16,9 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -85,19 +88,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
 		{
-			TeamType team;
 			Color color;
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			team = Event.TaggedTeam;
-			if (team == TeamType.LOCAL) {
-				color = Project.LocalTeamTemplate.Color;
-			} else if (team == TeamType.VISITOR) {
-				color = Project.VisitorTeamTemplate.Color;
+			List<Team> teams = Event.TaggedTeams;
+			if (teams.Count == 1) {
+				color = teams [0].Color;
 			} else {
 				color = Config.Style.PaletteWidgets;
 			}
+
 			tk.FillColor = color;
 			tk.StrokeColor = color;
 			y1 = OffsetY + 6;
@@ -114,7 +115,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
-			;
 
 			tk.Begin ();
 			

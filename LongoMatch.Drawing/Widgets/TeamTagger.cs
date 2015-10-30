@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
@@ -111,9 +112,9 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public TeamType SelectedTeam {
+		public ObservableCollection<Team> SelectedTeams {
 			get {
-				return tagger.SelectedTeam;
+				return tagger.SelectedTeams;
 			}
 		}
 
@@ -127,9 +128,9 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Select (team);
 		}
 
-		public void Select (IList<Player> players, TeamType team)
+		public void Select (IList<Player> players, ObservableCollection<Team> teams)
 		{
-			tagger.Select (players, team);
+			tagger.Select (players, teams);
 		}
 
 		public void Select (Player p)
@@ -181,10 +182,10 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandleTeamSelectionChangedEvent (TeamType team)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<Team> teams)
 		{
 			if (TeamSelectionChangedEvent != null) {
-				TeamSelectionChangedEvent (team);
+				TeamSelectionChangedEvent (teams);
 			}
 		}
 	}

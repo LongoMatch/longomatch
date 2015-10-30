@@ -16,11 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces;
 using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects
@@ -144,13 +144,8 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Play != null) {
 				fillColor = Play.Color;
 				strokeColor = fillColor;
-				if (Project != null) {
-					TeamType team = Play.TaggedTeam;
-					if (team == TeamType.LOCAL) {
-						strokeColor = Project.LocalTeamTemplate.Color;
-					} else if (team == TeamType.VISITOR) {
-						strokeColor = Project.VisitorTeamTemplate.Color;
-					}
+				if (Play.Teams.Count == 1) {
+					strokeColor = Play.Teams.First ().Color;
 				}
 			} else {
 				fillColor = strokeColor = Constants.TAGGER_POINT_COLOR;

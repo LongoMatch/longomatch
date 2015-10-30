@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using Mono.Unix;
@@ -83,7 +83,7 @@ namespace LongoMatch.Gui.Dialog
 					project.Dashboard.FieldBackground);
 				/* Force lineup update */
 				teamtagger.CurrentTime = play.EventTime;
-				teamtagger.Select (play.Players, play.Team);
+				teamtagger.Select (play.Players, play.Teams);
 			}
 		
 			if (editTags) {
@@ -170,9 +170,9 @@ namespace LongoMatch.Gui.Dialog
 			play.Players = new ObservableCollection<Player> (players);
 		}
 
-		void HandleTeamSelectionChangedEvent (TeamType team)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<Team> teams)
 		{
-			play.Team = team;
+			play.Teams = teams;
 		}
 	}
 }
