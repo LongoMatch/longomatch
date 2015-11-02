@@ -50,12 +50,14 @@ namespace LongoMatch.Services
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
-			play.Selected = true;
-			Player.LoadEvent (openedProject.Description.FileSet, play,
-				seekTime, playing);
-			loadedPlay = play;
-			if (playing) {
-				Player.Play ();
+			if (play != null && openedProject != null && Player != null) {
+				play.Selected = true;
+				Player.LoadEvent (openedProject?.Description.FileSet,
+					play, seekTime, playing);
+				loadedPlay = play;
+				if (playing) {
+					Player.Play ();
+				}
 			}
 		}
 
@@ -120,6 +122,10 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
+			if (Player == null) {
+				return;
+			}
+
 			if (openedProject == null || openedProjectType == ProjectType.FakeCaptureProject) {
 				return;
 			}
