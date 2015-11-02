@@ -276,6 +276,7 @@
     <signals>
       <itemgroup label="MediaFileChooser Signals">
         <signal name="ChangedEvent" />
+        <signal name="NameChangedEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -333,7 +334,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="SynchronizationWidget Properties">
+        <property name="FixedPeriods" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -343,5 +348,17 @@
       </itemgroup>
     </itemgroups>
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ToggleTopBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ToggleTopBar Properties">
+        <property name="CurrentPage" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ToggleTopBar Signals">
+        <signal name="PageSwitchedEvent" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>
