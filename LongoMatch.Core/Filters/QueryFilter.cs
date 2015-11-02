@@ -29,13 +29,26 @@ namespace LongoMatch.Core.Filters
 	public class QueryFilter: Dictionary<string, List<object>>
 	{
 
-		Dictionary<string, List<object>> cachedFilter;
-
 		public QueryFilter ()
 		{
-			cachedFilter = new Dictionary<string, List<object>> ();
 			Operator = QueryOperator.And;
+			Children = new List<QueryFilter> ();
+		}
 
+		/// <summary>
+		/// A list of children filtren to nest query filters.
+		/// </summary>
+		public List<QueryFilter> Children {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the query operator type.
+		/// </summary>
+		public QueryOperator Operator {
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -53,43 +66,6 @@ namespace LongoMatch.Core.Filters
 				valuesList = values.ToList ();
 			}
 			this [key] = valuesList;
-		}
-
-		/// <summary>
-		/// Saves the last changes to the filter.
-		/// </summary>
-		public void SaveChanges ()
-		{
-			cachedFilter.Clear ();
-			foreach (string key in Keys) {
-				cachedFilter [key] = this [key];
-			}
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="LongoMatch.Core.Common.QueryFilter"/> has changed
-		/// with respect of the last call to <see cref="SaveChanges"/>
-		/// </summary>
-		public bool Changed {
-			get {
-				if (!cachedFilter.Keys.SequenceEqualNoOrder (Keys)) {
-					return true;
-				}
-				foreach (string key in cachedFilter.Keys) {
-					if (!cachedFilter [key].SequenceEqualNoOrder (this [key])) {
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the query operator type.
-		/// </summary>
-		public QueryOperator Operator {
-			get;
-			set;
 		}
 	}
 }

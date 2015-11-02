@@ -118,19 +118,22 @@ namespace LongoMatch.Core.Common
 
 	public class ImportException: Exception
 	{
-		public ImportException (string reason) :
-		base (reason)
+		public ImportException (string reason) : base (reason)
 		{
 		}
 	}
 
 	public class InvalidQueryException: Exception
 	{
+		public InvalidQueryException (string reason) : base (reason)
+		{
+		}
 	}
 
 	public class StorageException: Exception
 	{
-		public StorageException (string reason) : base (reason) {
+		public StorageException (string reason) : base (reason)
+		{
 		}
 	}
 

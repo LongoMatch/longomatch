@@ -119,6 +119,7 @@ namespace Tests.DB
 				delegate {
 					view.Query (filter).Count ();
 				});
+			filter.Remove ("Key3");
 			filter.Add ("Key2", "key2");
 			Assert.AreEqual (1, view.Query (filter).Count ());
 		}
