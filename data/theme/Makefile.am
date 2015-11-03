@@ -93,6 +93,9 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Top_Bar/lamp_active.png \
 	gtk-2.0/Top_Bar/lamp_idle.png \
 	gtk-2.0/Top_Bar/lamp_prelight.png \
+	gtk-2.0/Top_Bar/topbar-button-down.svg \
+	gtk-2.0/Top_Bar/topbar-button-idle.svg \
+	gtk-2.0/Top_Bar/topbar-button-prelight.svg \
 	gtk-2.0/Top_Bar/topbar_bg.png \
 	gtk-2.0/Top_Bar/toptab_bg_body_active.png \
 	gtk-2.0/Top_Bar/toptab_bg_body_idle.png \

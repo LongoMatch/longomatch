@@ -144,6 +144,40 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
+		/// Return the parent object ID from the document ID string, which can be <ID> or <ParentID>&<ID>.
+		/// </summary>
+		/// <returns>The parent object id.</returns>
+		/// <param name="id">The document id.</param>
+		internal static string ParentIDStringFromString (string id)
+		{
+			if (id == null) {
+				return id;
+			}
+			string[] ids = id.Split (ID_SEP_CHAR);
+			if (ids.Length > 1) {
+				id = ids [0];
+				return id;
+			} else {
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Return the object ID from the document ID string, which can be <ID> or <ParentID>&<ID>.
+		/// </summary>
+		/// <returns>The object id.</returns>
+		/// <param name="id">The document id.</param>
+		internal static Guid ParentIDFromString (string id)
+		{
+			string parentID = ParentIDStringFromString (id);
+			if (parentID != null) {
+				return Guid.Parse (parentID);
+			} else {
+				return Guid.Empty;
+			}
+		}
+
+		/// <summary>
 		/// Return the document ID for an object, prepending the parent's ID.
 		/// </summary>
 		/// <returns>The document id.</returns>
@@ -196,7 +230,7 @@ namespace LongoMatch.DB
 			return o;
 		}
 
-		public static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
+		internal static IStorable LoadObject (Type objType, string idStr, Database db, SerializationContext context = null)
 		{
 			IStorable storable = null, parent;
 			Document doc;
@@ -225,9 +259,15 @@ namespace LongoMatch.DB
 					return null;
 				}
 				storable = DeserializeObject (doc, realType, context) as IStorable;
-				if (context.Stack.Count != 0) {
-					parent = context.Stack.Peek ();
-					parent.SavedChildren.Add (storable);
+				if (storable != null) {
+					storable.DocumentID = idStr;
+					if (context.Stack.Count != 0) {
+						parent = context.Stack.Peek ();
+						parent.SavedChildren.Add (storable);
+						storable.ParentID = parent.ID;
+					} else {
+						storable.ParentID = ParentIDFromString (idStr);
+					}
 				}
 			}
 			return storable;

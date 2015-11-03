@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="80px" height="80px" viewBox="0 0 80 80" enable-background="new 0 0 80 80" xml:space="preserve">
+<g>
+	<g>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="40.0005" y1="80" x2="40.0005" y2="4.882813e-004">
+			<stop  offset="0" style="stop-color:#202122"/>
+			<stop  offset="0.6354" style="stop-color:#252627"/>
+			<stop  offset="0.9479" style="stop-color:#191A1B"/>
+			<stop  offset="1" style="stop-color:#18191A"/>
+		</linearGradient>
+		<path fill="url(#SVGID_1_)" d="M80,71.111C80,76.021,76.372,80,71.908,80H8.091C3.625,80,0,76.021,0,71.111V8.889
+			C0,3.979,3.625,0,8.091,0h63.817C76.372,0,80,3.979,80,8.889V71.111z"/>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="40.0005" y1="80" x2="40.0005" y2="4.882813e-004">
+			<stop  offset="0" style="stop-color:#202122"/>
+			<stop  offset="0.6354" style="stop-color:#252627"/>
+			<stop  offset="0.9479" style="stop-color:#191A1B"/>
+			<stop  offset="1" style="stop-color:#18191A"/>
+		</linearGradient>
+		<path fill="url(#SVGID_2_)" d="M80,71.111C80,76.021,76.372,80,71.908,80H8.091C3.625,80,0,76.021,0,71.111V8.889
+			C0,3.979,3.625,0,8.091,0h63.817C76.372,0,80,3.979,80,8.889V71.111z"/>
+	</g>
+	<defs>
+		<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="80" height="80">
+			
+				<feColorMatrix  type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+		</filter>
+	</defs>
+	<mask maskUnits="userSpaceOnUse" x="0" y="0" width="80" height="80" id="SVGID_3_">
+		<g filter="url(#Adobe_OpacityMaskFilter)">
+			<image overflow="visible" width="84" height="84" xlink:href="FCACE2C3.jpg"  transform="matrix(1 0 0 1 -2 -2)">
+			</image>
+		</g>
+	</mask>
+	<g opacity="0.5" mask="url(#SVGID_3_)">
+		<path d="M80,71.111C80,76.021,76.372,80,71.908,80H8.091C3.625,80,0,76.021,0,71.111V8.889C0,3.979,3.625,0,8.091,0h63.817
+			C76.372,0,80,3.979,80,8.889V71.111z"/>
+		<path d="M80,71.111C80,76.021,76.372,80,71.908,80H8.091C3.625,80,0,76.021,0,71.111V8.889C0,3.979,3.625,0,8.091,0h63.817
+			C76.372,0,80,3.979,80,8.889V71.111z"/>
+	</g>
+</g>
+</svg>

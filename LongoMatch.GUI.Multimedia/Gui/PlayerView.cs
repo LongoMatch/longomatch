@@ -73,6 +73,8 @@ namespace LongoMatch.Gui
 				StyleConf.PlayerCapturerIconSize);
 			detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
 				StyleConf.PlayerCapturerIconSize);
+			centerplayheadbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-dash-center-view",
+				StyleConf.PlayerCapturerIconSize);
 
 			// Force tooltips to be translatable as there seems to be a bug in stetic 
 			// code generation for translatable tooltips.
@@ -149,24 +151,41 @@ namespace LongoMatch.Gui
 		public PlayerViewOperationMode Mode {
 			set {
 				mode = value;
-				switch (mode) {
-				case PlayerViewOperationMode.Analysis:
-					ShowControls = true;
-					Compact = false;
-					break;
-				case PlayerViewOperationMode.LiveAnalysisReview:
-					ShowControls = true;
-					Compact = true;
-					break;
-				case PlayerViewOperationMode.Synchronization:
-					ShowControls = false;
-					Compact = false;
-					break;
-				case PlayerViewOperationMode.Presentation:
-					ShowControls = true;
-					Compact = true;
-					break;
-				}
+				ShowControls =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Presentation;
+
+				Compact =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Presentation;
+
+				DrawingsVisible =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Synchronization;
+
+				CenterPlayheadVisible =
+					mode == PlayerViewOperationMode.Presentation;
+
+				blackboarddrawingarea.Visible =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Synchronization;
+
+				drawbutton.Visible =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Synchronization;
+
+				timescale.Visible =
+					mode == PlayerViewOperationMode.Analysis ||
+				mode == PlayerViewOperationMode.LiveAnalysisReview ||
+				mode == PlayerViewOperationMode.Synchronization;
+
+				detachbutton.Visible =
+					mode == PlayerViewOperationMode.Presentation;
 			}
 			get {
 				return mode;
@@ -224,6 +243,12 @@ namespace LongoMatch.Gui
 			set {
 				videowindow.Visible = !value;
 				blackboarddrawingarea.Visible = value;
+			}
+		}
+
+		bool CenterPlayheadVisible {
+			set {
+				centerplayheadbutton.Visible = value;
 			}
 		}
 

@@ -353,7 +353,7 @@
     </itemgroups>
     <signals>
       <itemgroup label="ToggleTopBar Signals">
-        <signal name="SwitchPage" />
+        <signal name="PageSwitchedEvent" />
       </itemgroup>
     </signals>
   </object>

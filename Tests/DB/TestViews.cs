@@ -141,6 +141,7 @@ namespace Tests.DB
 			Assert.AreEqual (test.Key1, test1.Key1);
 			Assert.AreEqual (test.Key3, test1.Key3);
 			Assert.IsNull (test1.Key2);
+			Assert.NotNull (test1.DocumentID);
 		}
 
 		[Test ()]
@@ -154,6 +155,7 @@ namespace Tests.DB
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
+			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
 				var da = Dashboard.DefaultTemplate (5);
@@ -162,6 +164,7 @@ namespace Tests.DB
 			}
 
 			dashboards = storage.RetrieveAll<Dashboard> ().ToList (); 
+			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 			Assert.AreEqual (6, dashboards.Count);
 		}
 
@@ -196,6 +199,7 @@ namespace Tests.DB
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
 			Assert.IsNotNull (teams [0].Shield);
+			Assert.IsTrue (teams.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
 				var te = Team.DefaultTemplate (5);
@@ -218,6 +222,7 @@ namespace Tests.DB
 			Utils.AreEquals (t, t1, false);
 			t1.IsLoaded = false;
 			Utils.AreEquals (t, t1);
+			Assert.IsNotNull (t1.DocumentID);
 		}
 
 		[Test ()]
@@ -234,6 +239,7 @@ namespace Tests.DB
 				Assert.AreEqual (p.Timeline.Count, projects [0].Timeline.Count);
 				Assert.AreEqual ("GRP", p.Description.Group);
 				Assert.AreEqual ("COMP", p.Description.Competition);
+				Assert.IsTrue (projects.All (i => i.DocumentID != null));
 
 				Assert.AreEqual (1, storage.Retrieve<Project> (null).Count ());
 

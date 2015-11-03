@@ -357,6 +357,7 @@ namespace Tests.DB
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
+			Assert.NotNull (t1.DocumentID);
 
 			// After filling an object
 			t1 = new Team ();
@@ -386,6 +387,7 @@ namespace Tests.DB
 			Assert.IsNotNull (dashboard2.FieldBackground);
 			Assert.IsNotNull (dashboard2.HalfFieldBackground);
 			Assert.IsNotNull (dashboard2.GoalBackground);
+			Assert.IsNotNull (dashboard2.DocumentID);
 			Assert.AreEqual (16, dashboard2.Image.Width); 
 			Assert.AreEqual (16, dashboard2.Image.Height);
 			storage.Delete (dashboard);
@@ -408,6 +410,7 @@ namespace Tests.DB
 			Assert.AreEqual (player1.ID, player2.ID);
 			Assert.AreEqual (player1.ToString (), player2.ToString ());
 			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
+			Assert.IsNotNull (player2.DocumentID);
 			storage.Delete (player1);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
@@ -421,6 +424,7 @@ namespace Tests.DB
 			Team team2 = storage.Retrieve<Team> (team1.ID);
 			Assert.AreEqual (team1.ID, team2.ID);
 			Assert.AreEqual (team1.List.Count, team2.List.Count);
+			Assert.IsNotNull (team2.DocumentID);
 			storage.Delete (team1);
 			Assert.AreEqual (0, db.DocumentCount);
 		}
@@ -456,6 +460,7 @@ namespace Tests.DB
 
 			TimelineEvent evt2 = storage.Retrieve <TimelineEvent> (evt.ID);
 			Assert.IsNotNull (evt2.EventType);
+			Assert.IsNotNull (evt2.DocumentID);
 
 			storage.Delete (evt);
 			Assert.AreEqual (2, db.DocumentCount);
@@ -484,6 +489,7 @@ namespace Tests.DB
 			Assert.AreEqual (40, db.DocumentCount);
 
 			p = storage.RetrieveAll<Project> ().First ();
+			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
 			storage.Store (p);
 			Assert.AreEqual (40, db.DocumentCount);
@@ -528,6 +534,7 @@ namespace Tests.DB
 			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
 			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
 				p2.Timeline [0].EventType);
+			Assert.IsNotNull (p2.DocumentID);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
@@ -540,11 +547,13 @@ namespace Tests.DB
 			storage.Store (p1);
 			Project p2 = storage.RetrieveAll<Project> ().First ();
 			Assert.IsFalse (p2.IsLoaded);
+			Assert.IsNotNull (p2.DocumentID);
 			p2.Description.Competition = "NEW NAME";
 			p2.Load ();
 			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
 			storage.Store (p2);
 			Project p3 = storage.RetrieveAll<Project> ().First ();
+			Assert.IsNotNull (p3.DocumentID);
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
 		}
 

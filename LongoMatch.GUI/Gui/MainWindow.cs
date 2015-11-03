@@ -236,8 +236,9 @@ namespace LongoMatch.Gui
 
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
-			if (!base.OnKeyPressEvent (evnt))
+			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
 				Config.EventsBroker.EmitKeyPressed (this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
+			}
 			return true;
 		}
 

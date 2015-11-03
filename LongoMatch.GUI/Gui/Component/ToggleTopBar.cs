@@ -27,9 +27,9 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class ToggleTopBar : Gtk.Bin
 	{
-		public event ChangeCurrentPageHandler SwitchPage;
+		public event SwitchPageHandler PageSwitchedEvent;
 
-		int currentPage = 0;
+		int currentPage = -1;
 
 		public ToggleTopBar ()
 		{
@@ -38,10 +38,13 @@ namespace LongoMatch.Gui.Component
 
 		public int CurrentPage {
 			get { return currentPage; }
-			private set {
-				currentPage = value;
-				if (SwitchPage != null) {
-					SwitchPage (this, new ChangeCurrentPageArgs ());
+
+			set {
+				if (value != currentPage && value >= 0 && value < buttoncontainer.Children.Length) {
+					var button = buttoncontainer.Children [value] as RadioButton;
+					if (button != null) {
+						button.Toggle ();
+					}
 				}
 			}
 		}
@@ -57,10 +60,10 @@ namespace LongoMatch.Gui.Component
 		{
 			// If there are other buttons, add the new button to their buttonGroup
 			RadioButton otherbutton = null;
-			string styleName = "topbarbutton_left";
+			string styleName = "toggletabbutton_left";
 			if (buttoncontainer.Children.Any ()) {
 				otherbutton = buttoncontainer.Children.First () as RadioButton;
-				styleName = "topbarbutton_right";
+				styleName = "toggletabbutton_right";
 			}
 			var button = new RadioButton (otherbutton);
 
@@ -78,15 +81,24 @@ namespace LongoMatch.Gui.Component
 			int pos = buttoncontainer.Children.Length - 1;
 			if (pos >= 0) {
 				Widget previousLast = buttoncontainer.Children.Last ();
-				previousLast.Name = pos == 0 ? "topbarbutton_left" : "topbarbutton_center";
+				previousLast.Name = pos == 0 ? "toggletabbutton_left" : "toggletabbutton_center";
 				previousLast.ResetRcStyles ();
 			}
 
 			buttoncontainer.Add (button);
 			pos++;
 
-			button.Toggled += (object sender, EventArgs e) => CurrentPage = pos;
+			button.Toggled += (object sender, EventArgs e) => SwitchPage (pos);
 			button.ShowAll ();
+		}
+
+		void SwitchPage (int page)
+		{
+			currentPage = page;
+
+			if (PageSwitchedEvent != null) {
+				PageSwitchedEvent (this, new SwitchPageArgs ());
+			}
 		}
 
 

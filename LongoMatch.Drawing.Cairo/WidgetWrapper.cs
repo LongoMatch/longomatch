@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Cairo
 		int currentWidth, currentHeight;
 		double lastX, lastY;
 		bool canMove, inButtonPress;
-		uint moveTimerID, hoverTimerID;
+		uint moveTimerID, hoverTimerID, lastButtonTime;
 
 		public WidgetWrapper (DrawingArea widget)
 		{
@@ -284,6 +284,24 @@ namespace LongoMatch.Drawing.Cairo
 			return bm;
 		}
 
+		ButtonRepetition ParseButtonRepetition (EventType type)
+		{
+			ButtonRepetition br;
+
+			switch (type) {
+			case EventType.TwoButtonPress:
+				br = ButtonRepetition.Double;
+				break;
+			case EventType.ThreeButtonPress:
+				br = ButtonRepetition.Triple;
+				break;
+			default:
+				br = ButtonRepetition.Single;
+				break;
+			}
+			return br;
+		}
+
 		bool ReadyToMove ()
 		{
 			canMove = true;
@@ -349,14 +367,33 @@ namespace LongoMatch.Drawing.Cairo
 			canMove = false;
 			inButtonPress = true;
 			moveTimerID = GLib.Timeout.Add (MoveWaitMS, ReadyToMove);
+
 			if (ButtonPressEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;
+				ButtonRepetition br;
+				uint time = args.Event.Time;
 				
 				bt = ParseButtonType (args.Event.Button);
 				bm = ParseButtonModifier (args.Event.State);
+				br = ParseButtonRepetition (args.Event.Type);
+
+				// Ignore the second single click event when there's a double click
+				var nextEvent = EventHelper.Peek ();
+				if (nextEvent != null) {
+					try {
+						var nextEventButton = nextEvent as EventButton;
+						if (nextEventButton?.Time == time &&
+						    ParseButtonRepetition (nextEventButton.Type) != ButtonRepetition.Single) {
+							return;
+						}
+					} finally {
+						EventHelper.Free (nextEvent);
+					}
+				}
+
 				ButtonPressEvent (new Point (args.Event.X, args.Event.Y),
-					args.Event.Time, bt, bm);
+					time, bt, bm, br);
 			}
 		}
 

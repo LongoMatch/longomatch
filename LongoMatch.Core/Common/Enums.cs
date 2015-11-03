@@ -296,6 +296,13 @@ namespace LongoMatch.Core.Common
 		Meta
 	}
 
+	public enum ButtonRepetition
+	{
+		Single,
+		Double,
+		Triple
+	}
+
 	public enum CursorType
 	{
 		Arrow,
