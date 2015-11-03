@@ -43,8 +43,10 @@ namespace LongoMatch.Core.Stats
 		public void Update ()
 		{
 			events = project.EventsByType (eventType).Where (filter.IsVisible).ToList ();
-			homeEvents = events.Where (e => e.TaggedTeam == TeamType.LOCAL).ToList ();
-			awayEvents = events.Where (e => e.TaggedTeam == TeamType.VISITOR).ToList ();
+			homeEvents = events.Where (e => e.Teams.Contains (project.LocalTeamTemplate) ||
+			e.Players.Intersect (project.LocalTeamTemplate.List).Any ()).ToList ();
+			awayEvents = events.Where (e => e.Teams.Contains (project.VisitorTeamTemplate) ||
+			e.Players.Intersect (project.VisitorTeamTemplate.List).Any ()).ToList ();
 			TotalCount = events.Count;
 			LocalTeamCount = homeEvents.Count;
 			VisitorTeamCount = awayEvents.Count;
@@ -59,7 +61,7 @@ namespace LongoMatch.Core.Stats
 						localTeamCount = homeEvents.Count (e => e.Tags.Contains (t));
 						visitorTeamCount = awayEvents.Count (e => e.Tags.Contains (t));
 						PercentualStat pStat = new PercentualStat (t.Value, count, localTeamCount,
-							                       visitorTeamCount, events.Count);
+							                       visitorTeamCount, TotalCount);
 						substat.OptionStats.Add (pStat);
 					}
 					SubcategoriesStats.Add (substat);

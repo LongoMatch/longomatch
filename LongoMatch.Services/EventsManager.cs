@@ -271,7 +271,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void OnNewTag (EventType evType, List<Player> players, TeamType team, List<Tag> tags,
+		public void OnNewTag (EventType evType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                      Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
 			if (openedProject == null) {
@@ -292,7 +292,7 @@ namespace LongoMatch.Services
 				evType.Name));
 			/* Add the new created play to the project and update the GUI*/
 			var play = openedProject.AddEvent (evType, start, stop, eventTime, null, score, card);
-			play.Team = team;
+			play.Teams = teams;
 			if (players != null) {
 				play.Players = new ObservableCollection<Player> (players);
 			}

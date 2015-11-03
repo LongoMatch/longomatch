@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			tagger.SubstitutionMode = false;
 			tagger.ShowSubstitutionButtons = false;
 			tagger.SelectionMode = MultiSelectionMode.Single;
-			if (substitution.Team == TeamType.LOCAL) {
+			if (substitution.Teams.Contains (project.LocalTeamTemplate)) {
 				LoadTeams (project, hfp, hbp, null, null);
 			} else {
 				LoadTeams (project, null, null, afp, abp);

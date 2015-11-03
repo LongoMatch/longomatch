@@ -195,6 +195,59 @@ namespace LongoMatch.DB.Views
 			return Query (filter, cache, true);
 		}
 
+		string KeyToKeyIndex (string key)
+		{
+			int index = 0;
+			foreach (string dictKey in FilterProperties.Keys) {
+				if (dictKey == key) {
+					if (index == 0) {
+						return "key";
+					} else {
+						return "key" + index;
+					}
+				}
+				index++;
+			}
+			return null;
+		}
+
+		internal string QueryFilterToSql (QueryFilter filter)
+		{
+			List<string> filters = new List<string> ();
+
+			if (filter == null || filter.Count == 0 || FilterProperties.Count == 0) {
+				return null;
+			}
+
+			foreach (var kv in filter) {
+				string key = kv.Key;
+				List<object> values = kv.Value;
+
+				string keyIndex = KeyToKeyIndex (key);
+				if (keyIndex == null) {
+					throw new InvalidQueryException (String.Format ("Key {0} not found", key));
+				}
+
+				values = ConvertValues (values);
+				if (values.Count == 1) {
+					filters.Add (String.Format ("{0}='\"{1}\"'", keyIndex, values [0]));
+				} else {
+					string vals = String.Join (" , ", values.Select (x => "'\"" + x + "\"'"));
+					filters.Add (String.Format ("{0} IN ({1})", keyIndex, vals));
+				}
+			}
+
+			foreach (QueryFilter childFilter in filter.Children) {
+				string sql = QueryFilterToSql (childFilter);
+				if (sql != null) {
+					filters.Add (String.Format ("( {0} )", sql));
+				}
+			}
+
+			string oper = filter.Operator == QueryOperator.And ? " AND " : " OR ";
+			return String.Join (oper, filters);
+		}
+
 		IEnumerable<T> Query (QueryFilter filter, IStorableObjectsCache cache = null, bool full = false)
 		{
 			SerializationContext context = null;
@@ -202,44 +255,7 @@ namespace LongoMatch.DB.Views
 			View view = GetView ();
 
 			Query q = view.CreateQuery ();
-			if (filter != null && filter.Count > 0 && FilterProperties.Count > 0) {
-				string sql = "";
-				int i = 0, j = 0;
-
-				foreach (string propName in FilterProperties.Keys) {
-					List<object> values;
-
-					if (filter.TryGetValue (propName, out values)) {
-						string ope = "";
-						string key = "key";
-
-						/* Set the operator between keys */
-						if (j != 0) {
-							ope = filter.Operator == QueryOperator.And ? "AND" : "OR";
-						}
-
-						/* Set the key name */
-						if (i != 0) {
-							key += i;
-						}
-
-						values = ConvertValues (values);
-						if (values.Count == 1) {
-							sql += String.Format (" {0} {1}='\"{2}\"' ", ope, key, values [0]);
-						} else {
-							string vals = String.Join (" , ", values.Select (x => "'\"" + x + "\"'"));
-							sql += String.Format (" {0} {1} IN ({2}) ", ope, key, vals);
-						}
-						j++;
-					}
-					i++;
-				}
-				if (j == 0) {
-					throw new InvalidQueryException ();
-				} else {
-					q.SQLSearch = sql;
-				}
-			}
+			q.SQLSearch = QueryFilterToSql (filter);
 
 			QueryEnumerator ret = q.Run ();
 			if (full) {

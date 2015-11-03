@@ -303,8 +303,8 @@ namespace LongoMatch.Core.Store
 
 		public void UpdateScore ()
 		{
-			Description.LocalGoals = GetScore (TeamType.LOCAL);
-			Description.VisitorGoals = GetScore (TeamType.VISITOR);
+			Description.LocalGoals = GetScore (LocalTeamTemplate);
+			Description.VisitorGoals = GetScore (VisitorTeamTemplate);
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
@@ -421,18 +421,12 @@ namespace LongoMatch.Core.Store
 			EventTypes = new ObservableCollection<EventType> (EventTypes.Where (e => e != null));
 		}
 
-		public SubstitutionEvent SubsitutePlayer (Team template, Player playerIn, Player playerOut,
+		public SubstitutionEvent SubsitutePlayer (Team team, Player playerIn, Player playerOut,
 		                                          SubstitutionReason reason, Time subsTime)
 		{
-			TeamType team;
 			LineupEvent lineup;
 			SubstitutionEvent se;
 			
-			if (template == LocalTeamTemplate) {
-				team = TeamType.LOCAL;
-			} else {
-				team = TeamType.VISITOR;
-			}
 			lineup = Timeline.OfType<LineupEvent> ().FirstOrDefault ();
 			if (lineup == null) {
 				throw new SubstitutionException (Catalog.GetString ("No lineup events found"));
@@ -446,7 +440,7 @@ namespace LongoMatch.Core.Store
 			se.Out = playerOut;
 			se.Reason = reason;
 			se.EventTime = subsTime;
-			se.Team = team;
+			se.Teams.Add (team);
 			Timeline.Add (se);
 			return se;
 		}
@@ -466,7 +460,7 @@ namespace LongoMatch.Core.Store
 			foreach (SubstitutionEvent ev in Timeline.OfType<SubstitutionEvent> ().
 			         Where (e => e.EventTime <= currentTime)) {
 				if (ev.In != null && ev.Out != null) {
-					if (ev.Team == TeamType.LOCAL) {
+					if (ev.Teams.Contains (LocalTeamTemplate)) {
 						homeTeamPlayers.Swap (ev.In, ev.Out);
 					} else {
 						awayTeamPlayers.Swap (ev.In, ev.Out);
@@ -525,9 +519,14 @@ namespace LongoMatch.Core.Store
 			return Timeline.Where (p => p.EventType.ID == evType.ID).ToList ();
 		}
 
-		public int GetScore (TeamType team)
+		public IEnumerable<TimelineEvent> EventsByTeam (Team team)
 		{
-			return Timeline.OfType<ScoreEvent> ().Where (s => s.TaggedTeam == team).Sum (s => s.Score.Points); 
+			return Timeline.Where (e => e.Teams.Contains (team) || e.Players.Intersect (team.List).Any ());
+		}
+
+		public int GetScore (Team team)
+		{
+			return EventsByTeam (team).OfType<ScoreEvent> ().Sum (s => s.Score.Points);
 		}
 
 		public Image GetBackground (FieldPositionType pos)
@@ -548,10 +547,10 @@ namespace LongoMatch.Core.Store
 			Description.LastModified = DateTime.UtcNow;
 			Description.LocalName = LocalTeamTemplate.Name;
 			Description.LocalShield = LocalTeamTemplate.Shield;
-			Description.LocalGoals = GetScore (TeamType.LOCAL);
+			Description.LocalGoals = GetScore (LocalTeamTemplate);
 			Description.VisitorName = VisitorTeamTemplate.Name;
 			Description.VisitorShield = VisitorTeamTemplate.Shield;
-			Description.VisitorGoals = GetScore (TeamType.VISITOR);
+			Description.VisitorGoals = GetScore (VisitorTeamTemplate);
 			Description.DashboardName = Dashboard.Name;
 		}
 
@@ -631,14 +630,33 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import (string file)
 		{
+			Project project = null;
 			try {
-				return Serializer.Instance.Load<Project> (file);
+				project = Serializer.Instance.Load<Project> (file);
 			} catch (Exception e) {
 				Log.Exception (e);
 				throw new Exception (Catalog.GetString ("The file you are trying to load " +
 				"is not a valid project"));
 			}
+			ConvertTeams (project);
+			return project;
 		}
+
+		#pragma warning disable 0618
+		internal static void ConvertTeams (Project project)
+		{
+			// Convert old Team tags to Teams
+			foreach (TimelineEvent evt in project.Timeline.Where (e => e.Team != TeamType.NONE)) {
+				if (evt.Team == TeamType.LOCAL || evt.Team == TeamType.BOTH) {
+					evt.Teams.Add (project.LocalTeamTemplate);
+				}
+				if (evt.Team == TeamType.VISITOR || evt.Team == TeamType.BOTH) {
+					evt.Teams.Add (project.VisitorTeamTemplate);
+				}
+			}
+		}
+
+		#pragma warning restore 0618
 
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{

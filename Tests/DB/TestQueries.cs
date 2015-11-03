@@ -337,6 +337,31 @@ namespace Tests.DB
 			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count ());
 		}
 
+		[Test ()]
+		public void TestNestedQueries ()
+		{
+			Team devTeam, qaTeam;
+			List<Project> projects;
+
+			projects = CreateProjects ();
+			devTeam = projects [0].LocalTeamTemplate;
+			qaTeam = projects [0].VisitorTeamTemplate;
+
+			QueryFilter filter = new QueryFilter ();
+			filter.Add ("Parent", projects);
+
+			Assert.AreEqual (200, storage.Retrieve<TimelineEvent> (filter).Count ());
+
+			QueryFilter teamsPlayersFilter = new QueryFilter { Operator = QueryOperator.Or };
+			teamsPlayersFilter.Add ("Team", qaTeam);
+			filter.Children.Add (teamsPlayersFilter);
+
+			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count ());
+
+			teamsPlayersFilter.Add ("Player", devTeam.List [0]);
+			Assert.AreEqual (100, storage.Retrieve<TimelineEvent> (filter).Count ());
+		}
+
 		List<Project> CreateProjects ()
 		{
 			Player andoni = new Player { Name = "Andoni" };
@@ -373,6 +398,11 @@ namespace Tests.DB
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
 						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null, null, null);
 						evt.Players.Add (player);
+						if (qateam.List.Contains (player)) {
+							evt.Teams.Add (qateam);
+						} else {
+							evt.Teams.Add (devteam);
+						}
 					}
 				}
 				projects.Add (p);

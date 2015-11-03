@@ -293,11 +293,11 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList ();
 		}
 
-		void HandleNewTagEvent (EventType eventType, List<Player> players, TeamType team, List<Tag> tags,
+		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
 			TimelineEvent play = project.AddEvent (eventType, start, stop, eventTime, null, score, card, false);
-			play.Team = teamtagger.SelectedTeam;
+			play.Teams = teamtagger.SelectedTeams;
 			if (selectedPlayers != null) {
 				play.Players = new ObservableCollection<Player> (selectedPlayers);
 			} else {

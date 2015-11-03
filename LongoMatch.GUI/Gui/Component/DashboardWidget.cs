@@ -493,12 +493,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleNewTagEvent (EventType evntType, List<Player> players, TeamType team, List<Tag> tags,
+		void HandleNewTagEvent (EventType evntType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, Score score, PenaltyCard card, DashboardButton btn)
 		{
 			/* Forward event until we have players integrted in the dashboard layout */
 			if (NewTagEvent != null) {
-				NewTagEvent (evntType, players, team, tags, start, stop, eventTime, score, card, btn);
+				NewTagEvent (evntType, players, teams, tags, start, stop, eventTime, score, card, btn);
 			}
 			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}

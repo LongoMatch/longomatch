@@ -57,35 +57,5 @@ namespace Tests.Core.Filters
 			Assert.AreEqual (1, filter.Count);
 			Assert.AreEqual (list, filter ["Test"]);
 		}
-
-		[Test ()]
-		public void TestChanged ()
-		{
-			Assert.IsFalse (filter.Changed);
-
-			// Add a new key
-			var list = new List<string> { "hola", "test", "adios" };
-			filter.Add ("Test", list);
-			Assert.IsTrue (filter.Changed);
-			filter.SaveChanges ();
-			Assert.IsFalse (filter.Changed);
-
-			// Remove a key
-			filter.Remove ("Test");
-			Assert.IsTrue (filter.Changed);
-			filter.SaveChanges ();
-			Assert.IsFalse (filter.Changed);
-
-			// Add and remove without saving
-			filter.Add ("Test", list);
-			Assert.IsTrue (filter.Changed);
-			filter.Remove ("Test");
-			Assert.IsFalse (filter.Changed);
-
-			// Modify list
-			filter.Add ("Test", list);
-			filter ["Test"].RemoveAt (0);
-			Assert.IsTrue (filter.Changed);
-		}
 	}
 }

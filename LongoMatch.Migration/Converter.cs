@@ -128,8 +128,8 @@ namespace LongoMatch.Migration
 		}
 
 		public static LongoMatch.Core.Store.Templates.Dashboard ConvertCategories (Categories cats,
-		                                                                         out Dictionary <TagSubCategory, List<LongoMatch.Core.Store.Tag>> dict,
-		                                                                         out Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict)
+		                                                                           out Dictionary <TagSubCategory, List<LongoMatch.Core.Store.Tag>> dict,
+		                                                                           out Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict)
 		{
 			dict = new Dictionary<TagSubCategory, List<LongoMatch.Core.Store.Tag>> ();
 			eventTypesDict = new Dictionary<Category, LongoMatch.Core.Store.EventType> ();
@@ -329,7 +329,13 @@ namespace LongoMatch.Migration
 				newplay.Rate = play.Rate;
 				newplay.Start = ConvertTime (play.Start);
 				newplay.Stop = ConvertTime (play.Stop);
-				newplay.Team = (LongoMatch.Core.Common.TeamType)play.Team;
+				newplay.Teams = new ObservableCollection<LongoMatch.Core.Store.Templates.Team> ();
+				if (play.Team == Team.LOCAL || play.Team == Team.BOTH) {
+					newplay.Teams.Add (newproject.LocalTeamTemplate);
+				}
+				if (play.Team == Team.VISITOR || play.Team == Team.BOTH) {
+					newplay.Teams.Add (newproject.VisitorTeamTemplate);
+				}
 
 				newplay.EventType = eventTypesDict [play.Category];
 				foreach (Player player in play.Players.GetTagsValues()) {

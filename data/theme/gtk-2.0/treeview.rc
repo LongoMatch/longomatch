@@ -19,6 +19,117 @@ style "longomatch-treeview" {
   {
     image
     {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= NORMAL
+            expander_style	= COLLAPSED
+            file		= "Expander/expander-collapsed-normal.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= NORMAL
+            expander_style	= SEMI_COLLAPSED
+            file		= "Expander/expander-collapsed-normal.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= NORMAL
+            expander_style	= EXPANDED
+            file		= "Expander/expander-expanded-normal.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= NORMAL
+            expander_style	= SEMI_EXPANDED
+            file		= "Expander/expander-expanded-normal.svg"
+            stretch		= TRUE
+    }
+
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= ACTIVE
+            expander_style	= COLLAPSED
+            file		= "Expander/expander-collapsed-active.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= ACTIVE
+            expander_style	= SEMI_COLLAPSED
+            file		= "Expander/expander-collapsed-active.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= ACTIVE
+            expander_style	= EXPANDED
+            file		= "Expander/expander-expanded-active.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= ACTIVE
+            expander_style	= SEMI_EXPANDED
+            file		= "Expander/expander-expanded-active.svg"
+            stretch		= TRUE
+    }
+
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= PRELIGHT
+            expander_style	= COLLAPSED
+            file		= "Expander/expander-collapsed-prelight.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= PRELIGHT
+            expander_style	= SEMI_COLLAPSED
+            file		= "Expander/expander-collapsed-prelight.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= PRELIGHT
+            expander_style	= EXPANDED
+            file		= "Expander/expander-expanded-prelight.svg"
+            stretch		= TRUE
+    }
+    image
+    {
+            function		= EXPANDER
+            recolorable		= TRUE
+            state		= PRELIGHT
+            expander_style	= SEMI_EXPANDED
+            file		= "Expander/expander-expanded-prelight.svg"
+            stretch		= TRUE
+    }
+
+    image
+    {
             function        		= CHECK
             recolorable     		= TRUE
             state 			= NORMAL

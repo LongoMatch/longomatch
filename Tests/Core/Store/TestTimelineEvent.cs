@@ -38,7 +38,7 @@ namespace Tests.Core.Store
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Selected = true;
-			evt.Team = TeamType.LOCAL;
+			evt.Teams.Add (new Team ());
 			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
 			evt.HalfFieldPosition = new Coordinates ();
@@ -67,7 +67,7 @@ namespace Tests.Core.Store
 			
 			Assert.AreEqual (p.EventType.ID, newp.EventType.ID);
 			Assert.AreEqual (p.Notes, newp.Notes);
-			Assert.AreEqual (p.Team, newp.Team);
+			Assert.AreEqual (p.Teams, newp.Teams);
 			Assert.AreEqual (p.FieldPosition, newp.FieldPosition);
 			Assert.AreEqual (p.HalfFieldPosition, newp.HalfFieldPosition);
 			Assert.AreEqual (p.GoalPosition, newp.GoalPosition);
@@ -219,7 +219,7 @@ namespace Tests.Core.Store
 			evt.Rate = 2f;
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-			evt.Team = TeamType.BOTH;
+			evt.Teams.Add (new Team ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.FieldPosition = new Coordinates ();
@@ -246,78 +246,6 @@ namespace Tests.Core.Store
 			evt.Players.Add (new Player ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-		}
-
-		[Test ()] 
-		public void TestTaggedTeam ()
-		{
-			Team home = Team.DefaultTemplate (3);
-			Team away = Team.DefaultTemplate (3);
-			Project p = new Project ();
-			p.LocalTeamTemplate = home;
-			p.VisitorTeamTemplate = away;
-			TimelineEvent evt = new TimelineEvent ();
-			evt.Project = p;
-
-			Assert.AreEqual (TeamType.NONE, evt.TaggedTeam);
-
-			evt.Team = TeamType.LOCAL;
-			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
-
-			evt.Team = TeamType.VISITOR;
-			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
-
-			evt.Team = TeamType.BOTH;
-			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
-
-			evt.Team = TeamType.NONE;
-			evt.Players = new ObservableCollection<Player> { home.List [0] };
-			Assert.AreEqual (TeamType.LOCAL, evt.TaggedTeam);
-			evt.Team = TeamType.VISITOR;
-			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
-
-			evt.Team = TeamType.NONE;
-			evt.Players = new ObservableCollection<Player> { away.List [0] };
-			Assert.AreEqual (TeamType.VISITOR, evt.TaggedTeam);
-
-			evt.Team = TeamType.LOCAL;
-			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
-
-			evt.Team = TeamType.NONE;
-			evt.Players = new ObservableCollection<Player> { home.List [0], away.List [0] };
-			Assert.AreEqual (TeamType.BOTH, evt.TaggedTeam);
-		}
-
-		[Test ()] 
-		public void TestTaggedTeams ()
-		{
-			Team home = Team.DefaultTemplate (3);
-			Team away = Team.DefaultTemplate (3);
-			Project p = new Project ();
-			p.LocalTeamTemplate = home;
-			p.VisitorTeamTemplate = away;
-			TimelineEvent evt = new TimelineEvent ();
-			evt.Project = p;
-
-			List<Team> teams = evt.Teams;
-			Assert.IsEmpty (teams);
-
-			evt.Team = TeamType.LOCAL;
-			teams = evt.Teams;
-			Assert.AreEqual (1, teams.Count);
-			Assert.AreSame (home, teams [0]);
-
-			evt.Team = TeamType.VISITOR;
-			teams = evt.Teams;
-			Assert.AreEqual (1, teams.Count);
-			Assert.AreSame (away, teams [0]);
-
-			evt.Team = TeamType.BOTH;
-			teams = evt.Teams;
-			Assert.AreEqual (2, teams.Count);
-			Assert.AreSame (home, teams [0]);
-			Assert.AreSame (away, teams [1]);
-			
 		}
 	}
 }
