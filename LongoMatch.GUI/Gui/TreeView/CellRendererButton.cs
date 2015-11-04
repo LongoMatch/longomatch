@@ -65,7 +65,6 @@ namespace LongoMatch.Gui.Component
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
 		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
-			CellState state = (CellState)flags;
 			IDrawingToolkit tk = Config.DrawingToolkit;
 
 			using (IContext context = new CairoContext (window)) {
@@ -73,17 +72,17 @@ namespace LongoMatch.Gui.Component
 				int width = cellArea.Width;
 				int height = cellArea.Height - 4;
 				tk.Context = context;
+				tk.Begin ();
 				tk.FontSize = 12;
-				if (state.HasFlag (CellState.Prelit)) {
-					tk.FillColor = Config.Style.PaletteActive;
-				} else {
-					tk.FillColor = null;
-				}
+				tk.FillColor = null;
+				tk.LineWidth = 1;
 				tk.StrokeColor = Config.Style.PaletteBackgroundLight;
 				tk.DrawRoundedRectangle (pos, width, height, 3);
 				tk.StrokeColor = Config.Style.PaletteText;
 				tk.FontAlignment = FontAlignment.Center;
 				tk.DrawText (pos, width, height, Text);
+				tk.End ();
+				tk.Context = null;
 			}
 		}
 	}
