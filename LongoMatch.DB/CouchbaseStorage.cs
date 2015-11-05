@@ -163,35 +163,52 @@ namespace LongoMatch.DB
 		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			lock (mutex) {
-				if (!forceUpdate) {
-					db.RunInTransaction (() => {
-						StorableNode node;
-						ObjectChangedParser parser = new ObjectChangedParser ();
-						parser.Parse (out node, t, Serializer.JsonSettings);
+				db.RunInTransaction (() => {
+					StorableNode node;
+					ObjectChangedParser parser = new ObjectChangedParser ();
+					parser.Parse (out node, t, Serializer.JsonSettings);
+
+					if (!forceUpdate) {
 						Update (node);
-						return true;
-					});
-				} else {
-					db.RunInTransaction (() => {
+					} else {
 						DocumentsSerializer.SaveObject (t, db, saveChildren: true);
-						return true;
-					});
-				}
+					}
+					foreach (IStorable storable in node.OrphanChildren) {
+						db.GetDocument (DocumentsSerializer.StringFromID (storable.ID, t.ID)).Delete ();
+					}
+					return true;
+				});
 			}
 		}
 
-		public void Delete<T> (T t) where T : IStorable
+		/// <summary>
+		/// Delete the specified storable object from the database. If the object is configured to delete its children,
+		/// we perform a bulk deletion of all the documents with the the storable.ID prefix, which is faster than
+		/// parsing the object and it ensures that we don't leave orphaned documents in the DB
+		/// </summary>
+		/// <param name="storable">The object to delete.</param>
+		/// <typeparam name="T">The type of the object to delete.</typeparam>
+		public void Delete<T> (T storable) where T : IStorable
 		{
 			lock (mutex) {
 				db.RunInTransaction (() => {
-					StorableNode node;
-					if (t.DeleteChildren) {
-						ObjectChangedParser parser = new ObjectChangedParser ();
-						parser.Parse (out node, t, Serializer.JsonSettings);
-					} else {
-						node = new StorableNode (t);
+					if (storable.DeleteChildren) {
+						Query query = db.CreateAllDocumentsQuery ();
+						// This should work, but raises an Exception in Couchbase.Lite
+						//query.StartKey = t.ID;
+						//query.EndKey = t.ID + "\uefff";
+
+						// In UTF-8, from all the possible values in a GUID string, '0' is the first char in the
+						// list and 'f' would be the last one
+						string sepchar = DocumentsSerializer.ID_SEP_CHAR.ToString ();
+						query.StartKey = storable.ID + sepchar + "00000000-0000-0000-0000-000000000000";
+						query.EndKey = storable.ID + sepchar + "ffffffff-ffff-ffff-ffff-ffffffffffff";
+						query.InclusiveEnd = true;
+						foreach (var row in query.Run ()) {
+							row.Document.Delete ();
+						}
 					}
-					Delete (node, t.ID);
+					db.GetDocument (storable.ID.ToString ()).Delete ();
 					return true;
 				});
 			}
