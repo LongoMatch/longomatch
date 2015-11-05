@@ -50,7 +50,6 @@ namespace LongoMatch.Services
 		IMultiPlayer multiPlayer;
 		TimelineEvent loadedEvent;
 		IPlaylistElement loadedPlaylistElement;
-		Playlist loadedPlaylist;
 		List<IViewPort> viewPorts;
 		ObservableCollection<CameraConfig> camerasConfig;
 		ObservableCollection<CameraConfig> defaultCamerasConfig;
@@ -233,6 +232,22 @@ namespace LongoMatch.Services
 			get;
 			set;
 		}
+
+		public Project OpenedProject {
+			get;
+			set;
+		}
+
+		public ProjectType OpenedProjectType {
+			get;
+			set;
+		}
+
+		public Playlist LoadedPlaylist {
+			get;
+			set;
+		}
+
 
 		public void Dispose ()
 		{
@@ -461,9 +476,34 @@ namespace LongoMatch.Services
 			player.Expose ();
 		}
 
+		public void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element)
+		{
+			if (loadedPlaylistElement != null) {
+				loadedPlaylistElement.Selected = false;
+			}
+			if (loadedEvent != null) {
+				loadedEvent.Selected = false;
+			}
+
+			loadedEvent = play;
+			LoadedPlaylist = playlist;
+			loadedPlaylistElement = element;
+
+			if (element != null) {
+				element.Selected = true;
+			}
+			if (play != null) {
+				play.Selected = true;
+			}
+		}
+
 		public void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element)
 		{
 			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element?.Description));
+
+			if (LoadedPlaylist != null && LoadedPlaylist != playlist) {
+				return;
+			}
 
 			if (!ready) {
 				EmitPrepareViewEvent ();
@@ -471,9 +511,7 @@ namespace LongoMatch.Services
 				return;
 			}
 
-			loadedEvent = null;
-			loadedPlaylist = playlist;
-			loadedPlaylistElement = element;
+			Switch (null, playlist, element);
 
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
@@ -490,19 +528,19 @@ namespace LongoMatch.Services
 			EmitElementLoaded (element, playlist.HasNext ());
 		}
 
-		public void LoadEvent (MediaFileSet fileSet, TimelineEvent evt, Time seekTime, bool playing)
+		public void LoadEvent (TimelineEvent evt, Time seekTime, bool playing)
 		{
+			MediaFileSet fileSet = OpenedProject.Description.FileSet;
 			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
 
 			if (!ready) {
 				EmitPrepareViewEvent ();
-				delayedOpen = () => LoadEvent (fileSet, evt, seekTime, playing);
+				delayedOpen = () => LoadEvent (evt, seekTime, playing);
 				return;
 			}
 
-			loadedPlaylist = null;
-			loadedPlaylistElement = null;
-			loadedEvent = evt;
+			Switch (evt, null, null);
+
 			if (evt.Start != null && evt.Stop != null) {
 				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, evt.Rate,
 					evt.CamerasConfig, evt.CamerasLayout, playing);
@@ -534,20 +572,30 @@ namespace LongoMatch.Services
 		public void Next ()
 		{
 			Log.Debug ("Next");
-			if (loadedPlaylistElement != null && loadedPlaylist.HasNext ()) {
-				Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+			if (loadedPlaylistElement != null && LoadedPlaylist.HasNext ()) {
+				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next ());
 			}
 		}
 
 		public void Previous ()
 		{
 			Log.Debug ("Previous");
-			if (loadedPlaylistElement != null) {
-				if (loadedPlaylist.HasPrev ()) {
-					Config.EventsBroker.EmitPreviousPlaylistElement (loadedPlaylist);
-				}
-			} else if (loadedEvent != null) {
+
+			/* Select the start of the element if it's a regular play */
+			if (loadedEvent != null) {
 				Seek (loadedEvent.Start, true);
+			} else if (loadedPlaylistElement != null) {
+				/* Select the start of the element if we haven't played 500ms */
+				if (loadedPlaylistElement is PlaylistPlayElement) {
+					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
+					if ((CurrentTime - play.Start).MSeconds > 500) {
+						Seek (play.Start, true);
+						return;
+					}
+				}
+				if (LoadedPlaylist.HasPrev ()) {
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev ());
+				}
 			} else {
 				Seek (new Time (0), true);
 			}
@@ -558,6 +606,19 @@ namespace LongoMatch.Services
 			camerasConfig [camConfig.Index] = camConfig;
 			if (multiPlayer != null) {
 				multiPlayer.ApplyROI (camConfig);
+			}
+		}
+
+		public void DrawFrame ()
+		{
+			TimelineEvent evt = loadedEvent;
+			if (evt == null && loadedPlaylistElement is PlaylistPlayElement) {
+				evt = (loadedPlaylistElement as PlaylistPlayElement).Play;
+			}
+			if (evt != null) {
+				Config.EventsBroker.EmitDrawFrame (evt, -1, CamerasConfig [0], true);
+			} else {
+				Config.EventsBroker.EmitDrawFrame (null, -1, null, true);
 			}
 		}
 
@@ -808,7 +869,22 @@ namespace LongoMatch.Services
 			if (rate == 0)
 				rate = 1;
 			Rate = rate;
+
+			SetEventRate (rate);
 			EmitRateChanged (rate);
+		}
+
+		/// <summary>
+		/// Sets the event rate.
+		/// </summary>
+		/// <param name="rate">Rate.</param>
+		void SetEventRate (float rate)
+		{
+			if (loadedPlaylistElement is PlaylistPlayElement) {
+				(loadedPlaylistElement as PlaylistPlayElement).Rate = rate;
+			} else if (loadedEvent != null) {
+				loadedEvent.Rate = rate;
+			}
 		}
 
 		/// <summary>
@@ -823,7 +899,7 @@ namespace LongoMatch.Services
 		/// <param name="camerasLayout">Cameras layout.</param>
 		/// <param name="playing">If set to <c>true</c> starts playing.</param>
 		void LoadSegment (MediaFileSet fileSet, Time start, Time stop, Time seekTime,
-			float rate, ObservableCollection<CameraConfig> camerasConfig, object camerasLayout,
+		                  float rate, ObservableCollection<CameraConfig> camerasConfig, object camerasLayout,
 		                  bool playing)
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
@@ -869,7 +945,7 @@ namespace LongoMatch.Services
 		{
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
-			Play();
+			Play ();
 		}
 
 		void LoadFrameDrawing (PlaylistDrawing drawing)
@@ -961,7 +1037,7 @@ namespace LongoMatch.Services
 				EmitTimeChanged (imageLoadedTS, loadedPlaylistElement.Duration);
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
 					Pause ();
-					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
 				} else {
 					imageLoadedTS.MSeconds += TIMEOUT_MS;
 				}
@@ -975,7 +1051,7 @@ namespace LongoMatch.Services
 					if (currentTime > loadedSegment.Stop) {
 						/* Check if the segment is now finished and jump to next one */
 						Pause ();
-						Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
 					} else {
 						var drawings = EventDrawings;
 						if (drawings != null) {
@@ -1042,14 +1118,14 @@ namespace LongoMatch.Services
 		{
 			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
-					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
+					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
 				} else {
 					Time position = null;
-					if(loadedEvent != null) {
-						Log.Debug("Seeking back to event start");
+					if (loadedEvent != null) {
+						Log.Debug ("Seeking back to event start");
 						position = loadedEvent.Start;
 					} else {
-						Log.Debug("Seeking back to 0");
+						Log.Debug ("Seeking back to 0");
 						position = new Time (0);
 					}
 					Seek (position, true);

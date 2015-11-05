@@ -31,12 +31,6 @@ namespace LongoMatch.Services
 {
 	public class PlaylistManager: IService
 	{
-		Project openedProject;
-		Playlist openedPresentation;
-		ProjectType openedProjectType;
-		IPlaylistElement loadedElement;
-		Playlist loadedPlaylist;
-		TimelineEvent loadedPlay;
 		EventsFilter filter;
 
 		public PlaylistManager ()
@@ -50,35 +44,13 @@ namespace LongoMatch.Services
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
-			if (play != null && openedProject != null && Player != null) {
+			if (play != null && Player != null) {
 				play.Selected = true;
-				Player.LoadEvent (openedProject?.Description.FileSet,
+				Player.LoadEvent (
 					play, seekTime, playing);
-				loadedPlay = play;
 				if (playing) {
 					Player.Play ();
 				}
-			}
-		}
-
-		void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element)
-		{
-			if (loadedElement != null) {
-				loadedElement.Selected = false;
-			}
-			if (loadedPlay != null) {
-				loadedPlay.Selected = false;
-			}
-
-			loadedPlay = play;
-			loadedPlaylist = playlist;
-			loadedElement = element;
-
-			if (element != null) {
-				element.Selected = true;
-			}
-			if (play != null) {
-				play.Selected = true;
 			}
 		}
 
@@ -86,33 +58,46 @@ namespace LongoMatch.Services
 		{
 			if (tNode is TimelineEvent) {
 				LoadPlay (tNode as TimelineEvent, time, false);
-				filter?.Update ();
+				if (filter != null) {
+					filter.Update ();
+				}
 			}
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
-			openedProject = project;
-			openedProjectType = projectType;
 			if (project != null) {
 				Player = analysisWindow.Player;
+				Player.OpenedProject = project;
+				Player.OpenedProjectType = projectType;
 				this.filter = filter;
 			}
 		}
 
+		/// <summary>
+		/// Set the playlistManager with a presentation (<see cref="Playlist"/> not attached to a <see cref="Project"/>)
+		/// If player is null, the last one will be used (if there is one).
+		/// </summary>
+		/// <param name="presentation">Presentation.</param>
+		/// <param name="player">Player.</param>
 		void HandleOpenedPresentationChanged (Playlist presentation, IPlayerController player)
 		{
-			openedProject = null;
-			openedPresentation = presentation;
-			openedProjectType = ProjectType.None;
+			if (player == null && Player == null) {
+				return;
+			} else if (player != null) {
+				Player = player;
+			}
+
+			Player.OpenedProject = null;
+			Player.Switch (null, presentation, null);
+
+			Player.OpenedProjectType = ProjectType.None;
 			filter = null;
-			Player = player;
 		}
 
 		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element)
 		{
-			Switch (null, playlist, element);
 			if (element != null) {
 				playlist.SetActive (element);
 			}
@@ -122,21 +107,17 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
-			if (Player == null) {
-				return;
-			}
-
-			if (openedProject == null || openedProjectType == ProjectType.FakeCaptureProject) {
+			if (Player?.OpenedProject == null || Player.OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
 			}
 
 			if (play is SubstitutionEvent || play is LineupEvent) {
-				Switch (null, null, null);
+				//FIXME: This switch bugs me, it's the only one here...
+				Player.Switch (null, null, null);
 				Config.EventsBroker.EmitEventLoaded (null);
 				Player.Seek (play.EventTime, true);
 				Player.Play ();
 			} else {
-				Switch (play, null, null);
 				if (play != null) {
 					LoadPlay (play, play.Start, true);
 				} else if (Player != null) {
@@ -148,48 +129,22 @@ namespace LongoMatch.Services
 
 		void HandleNext (Playlist playlist)
 		{
-			if (playlist != null && playlist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Next ());
-			}
+			Player.Next ();
 		}
 
 		void HandlePrev (Playlist playlist)
 		{
-			/* Select the previous element if it's a regular play */
-			if (playlist == null && loadedPlay != null) {
-				Player.Seek (loadedPlay.Start, true);
-				return;
-			}
-			
-			if (loadedElement != null) {
-				/* Select the previous element if we haven't played 500ms */
-				if (loadedElement is PlaylistPlayElement) {
-					TimelineEvent play = (loadedElement as PlaylistPlayElement).Play;
-					if ((Player.CurrentTime - play.Start).MSeconds > 500) {
-						Player.Seek (play.Start, true);
-						return;
-					}
-				}
-				/* Load the next playlist element */
-				if (playlist.HasPrev ()) {
-					Config.EventsBroker.EmitPlaylistElementSelected (playlist, playlist.Prev ());
-				}
-			}
+			Player.Previous ();
 		}
 
 		void HandlePlaybackRateChanged (float rate)
 		{
-			if (loadedElement != null && loadedElement is PlaylistPlayElement) {
-				(loadedElement as PlaylistPlayElement).Rate = rate;
-			} else if (loadedPlay != null) {
-				loadedPlay.Rate = rate;
-			}
 		}
 
 		void HandleAddPlaylistElement (Playlist playlist, List<IPlaylistElement> element)
 		{
 			if (playlist == null) {
-				playlist = HandleNewPlaylist (openedProject);
+				playlist = HandleNewPlaylist (Player?.OpenedProject);
 				if (playlist == null) {
 					return;
 				}
@@ -256,12 +211,12 @@ namespace LongoMatch.Services
 
 		void HandleKeyPressed (object sender, HotKey key)
 		{
-			if (openedProject == null && openedPresentation == null)
+			if (Player?.OpenedProject == null && Player.LoadedPlaylist == null)
 				return;
 
-			if (openedProjectType != ProjectType.CaptureProject &&
-			    openedProjectType != ProjectType.URICaptureProject &&
-			    openedProjectType != ProjectType.FakeCaptureProject) {
+			if (Player.OpenedProjectType != ProjectType.CaptureProject &&
+			    Player.OpenedProjectType != ProjectType.URICaptureProject &&
+			    Player.OpenedProjectType != ProjectType.FakeCaptureProject) {
 				KeyAction action;
 				if (Player == null)
 					return;
@@ -292,15 +247,7 @@ namespace LongoMatch.Services
 					Player.StepBackward ();
 					return;
 				case KeyAction.DrawFrame:
-					TimelineEvent evt = loadedPlay;
-					if (evt == null && loadedElement is PlaylistPlayElement) {
-						evt = (loadedElement as PlaylistPlayElement).Play;
-					}
-					if (evt != null) {
-						Config.EventsBroker.EmitDrawFrame (evt, -1, Player.CamerasConfig [0], true);
-					} else {
-						Config.EventsBroker.EmitDrawFrame (null, -1, null, true);
-					}
+					Player.DrawFrame ();
 					return;
 				case KeyAction.TogglePlay:
 					Player.TogglePlay ();
@@ -317,10 +264,10 @@ namespace LongoMatch.Services
 					Config.EventsBroker.EmitLoadEvent (null);
 					return;
 				case KeyAction.Prev:
-					HandlePrev (loadedPlaylist);
+					HandlePrev (null);
 					return;
 				case KeyAction.Next:
-					HandleNext (loadedPlaylist);
+					HandleNext (null);
 					return;
 				}
 			} else {

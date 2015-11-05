@@ -93,6 +93,32 @@ namespace LongoMatch.Core.Interfaces
 		bool Active { get; set; }
 
 		/// <summary>
+		/// Gets or sets the opened project.
+		/// </summary>
+		/// <value>The opened project.</value>
+		Project OpenedProject { get; set; }
+
+		/// <summary>
+		/// Gets or sets the type of the opened project.
+		/// </summary>
+		/// <value>The type of the opened project.</value>
+		ProjectType OpenedProjectType { get; set; }
+
+		/// <summary>
+		/// Gets or sets the loaded playlist.
+		/// </summary>
+		/// <value>The loaded playlist.</value>
+		Playlist LoadedPlaylist{ get; set; }
+
+		/// <summary>
+		/// Switch the specified play, playlist and element.
+		/// </summary>
+		/// <param name="play">Play.</param>
+		/// <param name="playlist">Playlist.</param>
+		/// <param name="element">Element.</param>
+		void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element);
+
+		/// <summary>
 		/// Open the specified fileSet.
 		/// </summary>
 		void Open (MediaFileSet fileSet);
@@ -124,12 +150,12 @@ namespace LongoMatch.Core.Interfaces
 
 		/// <summary>
 		/// Loads a timeline event.
+		/// The file set for this event comes from <see cref="Fileset"/> or <see cref="OpenedProject"/>
 		/// </summary>
-		/// <param name="file">The file set for this event.</param>
 		/// <param name="evt">The timeline event.</param>
 		/// <param name="seekTime">Seek time.</param>
 		/// <param name="playing">If set to <c>true</c> playing.</param>
-		void LoadEvent (MediaFileSet file, TimelineEvent evt, Time seekTime, bool playing);
+		void LoadEvent (TimelineEvent evt, Time seekTime, bool playing);
 
 		/// <summary>
 		/// Loads a playlist event.
@@ -182,5 +208,10 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		/// <param name="camConfig">The camera to update.</param>
 		void ApplyROI (CameraConfig camConfig);
+
+		/// <summary>
+		/// Emits a DrawFrame event with the currently loaded frame.
+		/// </summary>
+		void DrawFrame ();
 	}
 }
