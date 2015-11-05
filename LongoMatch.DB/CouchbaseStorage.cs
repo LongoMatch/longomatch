@@ -236,9 +236,7 @@ namespace LongoMatch.DB
 				context = new SerializationContext (db, node.Storable.GetType ());
 				context.RootID = node.Storable.ID;
 			}
-			if (node.Deleted) {
-				Delete (node, context.RootID);
-			} else if (node.IsChanged) {
+			if (node.IsChanged) {
 				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
 

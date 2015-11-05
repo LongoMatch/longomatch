@@ -37,7 +37,8 @@ namespace LongoMatch.Core.Serialization
 
 		internal int parsedCount;
 		StorableNode current;
-		internal List<object> parsed;
+		HashSet<IStorable> aliveStorables;
+		HashSet<IStorable> deletedStorables;
 		IContractResolver resolver;
 		Stack<object> stack;
 		bool reset;
@@ -55,23 +56,28 @@ namespace LongoMatch.Core.Serialization
 		/// <param name="storable">The storable object to parse.</param>
 		/// <param name="settings">The serialization settings.</param>
 		/// <param name="reset">If set to <c>true</c> reset the IsChanged flag.</param>
-		public bool Parse(out StorableNode parentNode, IStorable storable, JsonSerializerSettings settings,
-			bool reset = true)
+		public bool Parse (out StorableNode parentNode, IStorable storable, JsonSerializerSettings settings,
+		                   bool reset = true)
 		{
 			bool ret = ParseInternal (out parentNode, storable, settings, reset);
 			if (ret && current != null) {
 				Log.Error ("Stack should be empty");
 				return false;
 			}
+			parentNode.OrphanChildren = deletedStorables.Except (aliveStorables).ToList ();
+			deletedStorables.Clear ();
+			aliveStorables.Clear ();
 			return ret;
 		}
 
-		internal bool ParseInternal(out StorableNode parentNode, IStorable value, JsonSerializerSettings settings,
-			bool reset = true)
+		internal bool ParseInternal (out StorableNode parentNode, IStorable value, JsonSerializerSettings settings,
+		                             bool reset = true)
 		{
 			stack = new Stack<object> ();
 			parentNode = new StorableNode (value);
+			deletedStorables = new HashSet<IStorable> ();
 			parsedCount = 0;
+			aliveStorables = new HashSet<IStorable> ();
 			resolver = settings.ContractResolver ?? new DefaultContractResolver ();
 			this.reset = reset;
 			try {
@@ -105,7 +111,14 @@ namespace LongoMatch.Core.Serialization
 				}
 				// Update parent and children relations
 				if (current != null) {
-					current.Children.Add (node);
+					if (current.Deleted) {
+						node.Deleted = true;
+					} else {
+						current.Children.Add (node);
+					}
+				}
+				if (!node.Deleted) {
+					aliveStorables.Add (storable);
 				}
 				node.Parent = current;
 				current = node;
@@ -114,7 +127,7 @@ namespace LongoMatch.Core.Serialization
 			// Figure out the type of object we are dealing with and parse it accordingly.
 			// Primitives are ignored (not being objects containers) and lists and dictionaries
 			// are traversed through all their children.
-			JsonContract valueContract = resolver.ResolveContract(value.GetType());
+			JsonContract valueContract = resolver.ResolveContract (value.GetType ());
 			if (valueContract is JsonObjectContract) {
 				CheckObject (value, valueContract as JsonObjectContract);
 			} else if (valueContract is JsonArrayContract) {
@@ -133,6 +146,7 @@ namespace LongoMatch.Core.Serialization
 				if (storable.DeleteChildren && storable.SavedChildren != null) {
 					var orphaned = storable.SavedChildren.Except (node.Children.Select (n => n.Storable));
 					foreach (IStorable st in orphaned) {
+						deletedStorables.Add (st);
 						StorableNode onode = new StorableNode (st);
 						onode.Deleted = true;
 						CheckValue (st, onode);
@@ -148,18 +162,16 @@ namespace LongoMatch.Core.Serialization
 			parsedCount++;
 			// Traverse all properties in the same way the Json.NET serialized does,
 			// by taking in account only the serializable properties and skipping JsonIgnore ones.
-			for (int index = 0; index < contract.Properties.Count; index++)
-			{
-				JsonProperty property = contract.Properties[index];
-				try
-				{
+			for (int index = 0; index < contract.Properties.Count; index++) {
+				JsonProperty property = contract.Properties [index];
+				try {
 					object memberValue;
 
 					// Check if the object has the IsChanged flag and update the StorableNode
 					// Also reset the flag if it's required.
 					if (property.PropertyName == "IsChanged") {
 						IValueProvider provider = property.ValueProvider;
-						bool changed = (bool) provider.GetValue(value);
+						bool changed = (bool)provider.GetValue (value);
 						if (changed) {
 							if (!current.IsChanged) {
 								current.IsChanged = true;
@@ -169,29 +181,26 @@ namespace LongoMatch.Core.Serialization
 							}
 						}
 					} else {
-						if (!CalculatePropertyValues(value, property, out memberValue))
+						if (!CalculatePropertyValues (value, property, out memberValue))
 							continue;
-						CheckValue(memberValue);
+						CheckValue (memberValue);
 					}
-				}
-				catch (Exception ex)
-				{
+				} catch (Exception ex) {
 				}
 			}
 		}
 
-		void CheckEnumerable (IEnumerable values, JsonArrayContract contract) {
-			foreach (object value in values)
-			{
+		void CheckEnumerable (IEnumerable values, JsonArrayContract contract)
+		{
+			foreach (object value in values) {
 				CheckValue (value);
 			}
 		}
 
-		bool CalculatePropertyValues(object value, JsonProperty property, out object memberValue)
+		bool CalculatePropertyValues (object value, JsonProperty property, out object memberValue)
 		{
-			if (!property.Ignored && property.Readable)
-			{
-				memberValue = property.ValueProvider.GetValue(value);
+			if (!property.Ignored && property.Readable) {
+				memberValue = property.ValueProvider.GetValue (value);
 				return true;
 			} else {
 				memberValue = null;

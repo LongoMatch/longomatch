@@ -541,6 +541,40 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestDeleteProjectItems ()
+		{
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (10);
+			p.UpdateEventTypesAndTimers ();
+			p.LocalTeamTemplate = Team.DefaultTemplate (10);
+
+			for (int i = 0; i < 10; i++) {
+				TimelineEvent evt = new TimelineEvent {
+					EventType = p.EventTypes [i],
+					Start = new Time (1000),
+					Stop = new Time (2000),
+				};
+				p.Timeline.Add (evt);
+			}
+
+			storage.Store (p);
+			p = storage.Retrieve<Project> (p.ID);
+
+			// Removing this object should not remove the EvenType from the database, which might be referenced by
+			// TimelineEvent's in the timeline
+			EventType evtType = (p.Dashboard.List [0] as AnalysisEventButton).EventType;
+			p.Dashboard.List.Remove (p.Dashboard.List [0]);
+			storage.Store (p);
+			Assert.DoesNotThrow (() => storage.Retrieve<Project> (p.ID));
+
+			// Delete an event with a Player, a Team and an EventType, it should delete only the timeline event
+			p.Timeline [0].Teams.Add (p.LocalTeamTemplate);
+			p.Timeline [0].Players.Add (p.LocalTeamTemplate.List [0]);
+			p.Timeline.Remove (p.Timeline [0]);
+			Assert.DoesNotThrow (() => storage.Retrieve<Project> (p.ID));
+		}
+
+		[Test ()]
 		public void TestPreloadPropertiesArePreserved ()
 		{
 			Project p1 = Utils.CreateProject (true);
