@@ -35,6 +35,7 @@ namespace LongoMatch.Core.Serialization
 	public class ObjectChangedParser
 	{
 
+		internal int parsedCount;
 		StorableNode current;
 		internal List<object> parsed;
 		IContractResolver resolver;
@@ -62,7 +63,6 @@ namespace LongoMatch.Core.Serialization
 				Log.Error ("Stack should be empty");
 				return false;
 			}
-			parsed.Clear ();
 			return ret;
 		}
 
@@ -71,7 +71,7 @@ namespace LongoMatch.Core.Serialization
 		{
 			stack = new Stack<object> ();
 			parentNode = new StorableNode (value);
-			parsed = new List<object> ();
+			parsedCount = 0;
 			resolver = settings.ContractResolver ?? new DefaultContractResolver ();
 			this.reset = reset;
 			try {
@@ -143,9 +143,9 @@ namespace LongoMatch.Core.Serialization
 			stack.Pop ();
 		}
 
-		void CheckObject (object value, JsonObjectContract contract) {
-			parsed.Add (value);
-
+		void CheckObject (object value, JsonObjectContract contract)
+		{
+			parsedCount++;
 			// Traverse all properties in the same way the Json.NET serialized does,
 			// by taking in account only the serializable properties and skipping JsonIgnore ones.
 			for (int index = 0; index < contract.Properties.Count; index++)
