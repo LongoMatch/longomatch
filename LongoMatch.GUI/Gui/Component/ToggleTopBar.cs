@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Component
 				if (value != currentPage && value >= 0 && value < buttoncontainer.Children.Length) {
 					var button = buttoncontainer.Children [value] as RadioButton;
 					if (button != null) {
-						button.Toggle ();
+						button.Click ();
 					}
 				}
 			}
