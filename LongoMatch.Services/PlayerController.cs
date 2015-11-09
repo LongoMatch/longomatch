@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using LongoMatch.Core;
@@ -28,7 +29,6 @@ using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Timer = System.Threading.Timer;
-using System.Collections.ObjectModel;
 
 namespace LongoMatch.Services
 {

@@ -211,12 +211,12 @@ namespace LongoMatch.Services
 
 		void HandleKeyPressed (object sender, HotKey key)
 		{
-			if (Player?.OpenedProject == null && Player.LoadedPlaylist == null)
+			if (Player?.OpenedProject == null && Player?.LoadedPlaylist == null)
 				return;
 
-			if (Player.OpenedProjectType != ProjectType.CaptureProject &&
+			if ((Player.OpenedProjectType != ProjectType.CaptureProject &&
 			    Player.OpenedProjectType != ProjectType.URICaptureProject &&
-			    Player.OpenedProjectType != ProjectType.FakeCaptureProject) {
+			    Player.OpenedProjectType != ProjectType.FakeCaptureProject) || Player.LoadedPlaylist != null) {
 				KeyAction action;
 				if (Player == null)
 					return;
