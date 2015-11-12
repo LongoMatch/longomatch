@@ -88,6 +88,11 @@ namespace LongoMatch.Core.Interfaces
 		List<IViewPort> ViewPorts { set; }
 
 		/// <summary>
+		/// Flag indicating whether the object is active
+		/// </summary>
+		bool Active { get; set; }
+
+		/// <summary>
 		/// Open the specified fileSet.
 		/// </summary>
 		void Open (MediaFileSet fileSet);

@@ -99,6 +99,7 @@ namespace LongoMatch.Services
 			TimerDisposed = new ManualResetEvent (false);
 			ready = false;
 			CreatePlayer (supportMultipleCameras);
+			Active = true;
 		}
 
 		#endregion
@@ -224,6 +225,11 @@ namespace LongoMatch.Services
 		}
 
 		public Time Step {
+			get;
+			set;
+		}
+
+		public bool Active {
 			get;
 			set;
 		}
