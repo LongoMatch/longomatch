@@ -540,7 +540,7 @@ namespace LongoMatch.Services
 
 		public void LoadEvent (TimelineEvent evt, Time seekTime, bool playing)
 		{
-			MediaFileSet fileSet = OpenedProject.Description.FileSet;
+			MediaFileSet fileSet = FileSet ?? OpenedProject?.Description.FileSet;
 			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
 
 			if (!ready) {

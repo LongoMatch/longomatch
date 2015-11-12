@@ -788,7 +788,7 @@ namespace Tests.Services
 
 			/* Open with a new MediaFileSet and also check seekTime and playing values*/
 			MediaFileSet nfs = Cloner.Clone (mfs);
-			player.OpenedProject.Description.FileSet = nfs;
+			player.Open (nfs);
 			player.LoadEvent (evt, evt.Stop, false);
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
