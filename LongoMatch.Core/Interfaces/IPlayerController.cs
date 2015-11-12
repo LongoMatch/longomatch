@@ -162,7 +162,8 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		/// <param name="playlist">The playlist for this event.</param>
 		/// <param name="element">The event to load.</param>
-		void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element);
+		/// <param name = "playing">Flag to start playing the event being loaded</param>
+		void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element, bool playing);
 
 		/// <summary>
 		/// Unloads the current event.

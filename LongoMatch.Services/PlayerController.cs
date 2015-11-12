@@ -497,7 +497,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element)
+		public void LoadPlaylistEvent (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element?.Description));
 
@@ -507,7 +507,7 @@ namespace LongoMatch.Services
 
 			if (!ready) {
 				EmitPrepareViewEvent ();
-				delayedOpen = () => LoadPlaylistEvent (playlist, element);
+				delayedOpen = () => LoadPlaylistEvent (playlist, element, playing);
 				return;
 			}
 
@@ -517,7 +517,7 @@ namespace LongoMatch.Services
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
 				LoadSegment (ple.FileSet, ple.Play.Start, ple.Play.Stop,
 					ple.Play.Start, ple.Rate, ple.CamerasConfig,
-					ple.CamerasLayout, true);
+					ple.CamerasLayout, playing);
 			} else if (element is PlaylistVideo) {
 				LoadVideo (element as PlaylistVideo);
 			} else if (element is PlaylistImage) {
@@ -573,7 +573,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Next");
 			if (loadedPlaylistElement != null && LoadedPlaylist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next ());
+				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), true);
 			}
 		}
 
@@ -594,7 +594,7 @@ namespace LongoMatch.Services
 					}
 				}
 				if (LoadedPlaylist.HasPrev ()) {
-					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev ());
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev (), true);
 				}
 			} else {
 				Seek (new Time (0), true);

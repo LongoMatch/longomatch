@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 				playlisttreeview1.Reload ();
 		}
 
-		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
+		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			playlisttreeview1.QueueDraw ();
 		}
@@ -90,7 +90,7 @@ namespace LongoMatch.Gui.Component
 				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
 				element = el as IPlaylistElement;
 			}
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
+			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element, true);
 		}
 
 		public Project Project {

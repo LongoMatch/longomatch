@@ -103,7 +103,7 @@ namespace LongoMatch.Core.Handlers
 	/* Add a new rendering job */
 	public delegate void RenderPlaylistHandler (Playlist playlist);
 	/* A play list element is selected */
-	public delegate void PlaylistElementSelectedHandler (Playlist playlist,IPlaylistElement element);
+	public delegate void PlaylistElementSelectedHandler (Playlist playlist,IPlaylistElement element,bool playing);
 	/* Add a play to a playlist */
 	public delegate void AddPlaylistElementHandler (Playlist playlist,List<IPlaylistElement> element);
 	/* Play next playlist element */

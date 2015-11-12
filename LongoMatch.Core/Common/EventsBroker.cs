@@ -168,10 +168,10 @@ namespace LongoMatch.Core.Common
 				AddPlaylistElementEvent (playlist, plays);
 		}
 
-		public void EmitPlaylistElementSelected (Playlist playlist, IPlaylistElement element)
+		public void EmitPlaylistElementSelected (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			if (PlaylistElementSelectedEvent != null)
-				PlaylistElementSelectedEvent (playlist, element);
+				PlaylistElementSelectedEvent (playlist, element, playing);
 		}
 
 		public void EmitTimeNodeChanged (TimeNode tn, Time time)

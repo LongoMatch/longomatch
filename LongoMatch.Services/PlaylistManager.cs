@@ -96,13 +96,13 @@ namespace LongoMatch.Services
 			filter = null;
 		}
 
-		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element)
+		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element, bool playing = false)
 		{
 			if (element != null) {
 				playlist.SetActive (element);
 			}
 			if (playlist.Elements.Count > 0 && Player != null)
-				Player.LoadPlaylistEvent (playlist, element);
+				Player.LoadPlaylistEvent (playlist, element, playing);
 		}
 
 		void HandleLoadPlayEvent (TimelineEvent play)

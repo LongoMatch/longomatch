@@ -121,7 +121,7 @@ namespace LongoMatch.Services
 			loadedPlay = play;
 		}
 
-		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
+		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			if (element is PlaylistPlayElement) {
 				loadedPlay = (element as PlaylistPlayElement).Play;
