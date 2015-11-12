@@ -300,15 +300,17 @@ namespace LongoMatch.Services
 
 		public void Play (bool synchronous = false)
 		{
-			Log.Debug ("Play");
-			if (StillImageLoaded) {
-				ReconfigureTimeout (TIMEOUT_MS);
-				EmitPlaybackStateChanged (this, true);
-			} else {
-				EmitLoadDrawings (null);
-				player.Play (synchronous);
+			if (Active) {
+				Log.Debug ("Play");
+				if (StillImageLoaded) {
+					ReconfigureTimeout (TIMEOUT_MS);
+					EmitPlaybackStateChanged (this, true);
+				} else {
+					EmitLoadDrawings (null);
+					player.Play (synchronous);
+				}
+				Playing = true;
 			}
-			Playing = true;
 		}
 
 		public void Pause (bool synchronous = false)
