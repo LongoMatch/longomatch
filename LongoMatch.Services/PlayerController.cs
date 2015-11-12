@@ -480,6 +480,10 @@ namespace LongoMatch.Services
 		{
 			if (loadedPlaylistElement != null) {
 				loadedPlaylistElement.Selected = false;
+				var playElement = (loadedPlaylistElement as PlaylistPlayElement);
+				if (playElement != null) {
+					playElement.Play.Selected = false;
+				}
 			}
 			if (loadedEvent != null) {
 				loadedEvent.Selected = false;
@@ -491,6 +495,10 @@ namespace LongoMatch.Services
 
 			if (element != null) {
 				element.Selected = true;
+				var playElement = (element as PlaylistPlayElement);
+				if (playElement != null) {
+					playElement.Play.Selected = true;
+				}
 			}
 			if (play != null) {
 				play.Selected = true;
