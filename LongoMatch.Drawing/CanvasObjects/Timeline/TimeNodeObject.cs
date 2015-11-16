@@ -98,19 +98,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			protected get;
 		}
 
-		protected double StartX {
+		public double StartX {
 			get {
 				return Utils.TimeToPos (TimeNode.Start, SecondsPerPixel);
 			}
 		}
 
-		protected double StopX {
+		public double StopX {
 			get {
 				return Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			}
 		}
 
-		protected double CenterX {
+		public double CenterX {
 			get {
 				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
 					SecondsPerPixel);

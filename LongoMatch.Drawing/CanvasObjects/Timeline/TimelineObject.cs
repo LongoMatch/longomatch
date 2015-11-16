@@ -117,6 +117,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
+		public TimeNodeObject GetNodeAtPosition (double position)
+		{
+			TimeNodeObject node = nodes.FirstOrDefault (n => position >= n.StartX && position <= n.StopX);
+			if (node == null) {
+				node = nodes.LastOrDefault ();
+			}
+			return node;
+		}
+
 		protected void ClearObjects ()
 		{
 			foreach (TimeNodeObject tn in nodes) {
