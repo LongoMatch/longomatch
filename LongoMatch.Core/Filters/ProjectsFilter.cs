@@ -64,7 +64,8 @@ namespace LongoMatch.Core.Filters
 		/// </summary>
 		public List<string> Seasons {
 			get {
-				return Projects.Select (p => p.Description.Season).Where (s => !String.IsNullOrEmpty (s)).ToList ();
+				return Projects.Select (p => p.Description.Season).Where (s => !String.IsNullOrEmpty (s)).
+					Distinct ().OrderBy (s => s).ToList ();
 			}
 		}
 
@@ -73,7 +74,8 @@ namespace LongoMatch.Core.Filters
 		/// </summary>
 		public List<string> Competitions {
 			get {
-				return Projects.Select (p => p.Description.Competition).Where (s => !String.IsNullOrEmpty (s)).ToList ();
+				return Projects.Select (p => p.Description.Competition).Where (s => !String.IsNullOrEmpty (s)).
+					Distinct ().OrderBy (s => s).ToList ();
 			}
 		}
 
@@ -83,7 +85,8 @@ namespace LongoMatch.Core.Filters
 		public List<string> Teams {
 			get {
 				return Projects.SelectMany (p =>
-					new [] { p.Description.LocalName, p.Description.VisitorName }).Distinct ().ToList ();
+					new [] { p.Description.LocalName, p.Description.VisitorName }).
+					Distinct ().OrderBy (s => s).ToList ();
 			}
 		}
 
