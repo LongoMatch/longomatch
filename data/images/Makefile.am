@@ -28,4 +28,5 @@ nobase_dist_images_DATA = Makefile.am \
 	longomatch-pro-small.png \
 	player/arrow-in.svg \
 	player/arrow-out.svg \
-	player/photo.svg
+	player/photo.svg \
+	timeline-snap-land-cue.svg
