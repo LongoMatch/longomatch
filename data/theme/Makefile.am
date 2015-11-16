@@ -34,6 +34,12 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Entry/combo-entry-border-bg.png \
 	gtk-2.0/Entry/team-combo-entry-blue.png \
 	gtk-2.0/Entry/team-combo-entry-red.png \
+	gtk-2.0/Expander/expander-collapsed-active.svg \
+	gtk-2.0/Expander/expander-collapsed-normal.svg \
+	gtk-2.0/Expander/expander-collapsed-prelight.svg \
+	gtk-2.0/Expander/expander-expanded-active.svg \
+	gtk-2.0/Expander/expander-expanded-normal.svg \
+	gtk-2.0/Expander/expander-expanded-prelight.svg \
 	gtk-2.0/Handles/handle-h.png \
 	gtk-2.0/Handles/handle-v.png \
 	gtk-2.0/Range/null.png \
