@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +40,7 @@ namespace Tests.Services
 		Mock<IRenderingJobsManager> mockVideoRenderer;
 		Mock<IAnalysisWindow> mockAnalysisWindow;
 		Mock<IPlayerController> mockPlayerController;
+		MediaFileSet mfs;
 
 		bool eventLoaded;
 		bool playlistElementSelected;
@@ -49,14 +49,23 @@ namespace Tests.Services
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
 		{
+			mfs = new MediaFileSet ();
+			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
+			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
+
+			Project project = new Project ();
+			project.Description = new ProjectDescription ();
+			project.Description.FileSet = mfs;
+
 			Config.EventsBroker = new EventsBroker ();
 			mockAnalysisWindow = new Mock<IAnalysisWindow> ();
 			mockPlayerController = new Mock<IPlayerController> ();
+			mockPlayerController.SetupAllProperties ();
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 
 			Config.EventsBroker.EventLoadedEvent += (TimelineEvent evt) => eventLoaded = true;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (Playlist playlist, IPlaylistElement element) => playlistElementSelected = true;
+			Config.EventsBroker.PlaylistElementSelectedEvent += (Playlist playlist, IPlaylistElement element, bool playing) => playlistElementSelected = true;
 		}
 
 		[SetUp ()]
@@ -68,6 +77,7 @@ namespace Tests.Services
 
 			plmanager = new PlaylistManager ();
 			plmanager.Start ();
+			plmanager.Player = mockPlayerController.Object;
 
 			OpenProject (new Project ());
 			eventLoaded = false;
@@ -219,7 +229,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
-			mockPlayerController.Verify (player => player.LoadEvent (It.IsAny<MediaFileSet> (), element, element.Start, true), Times.Once ());
+			mockPlayerController.Verify (player => player.LoadEvent (element, element.Start, true), Times.Once ());
 
 			Assert.IsTrue (eventLoaded);
 
@@ -281,76 +291,20 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitPreviousPlaylistElement (null);
 
-			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Once ());
-			Assert.IsFalse (playlistElementSelected);
+			mockPlayerController.Verify (player => player.Previous (), Times.Once ());
 		}
 
 		[Test ()]
-		public void TestPrev2 ()
+		public void TestNext ()
 		{
-			// loadedPlay == null
-
-			Config.EventsBroker.EmitPreviousPlaylistElement (null);
-
-			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
-			Assert.IsFalse (playlistElementSelected);
-		}
-
-
-		[Test ()]
-		public void TestPrev3 ()
-		{
-			mockPlayerController.SetupGet (player => player.CurrentTime).Returns (new Time (1000));
-
-			Playlist playlist = new Playlist ();
-			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
-			element.Play.Start = new Time (0);
-			playlist.Elements.Add (element);
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
+			TimelineEvent element = new TimelineEvent ();
+			Config.EventsBroker.EmitLoadEvent (element);
+			// loadedPlay != null
 			mockPlayerController.ResetCalls ();
-			playlistElementSelected = false;
 
-			Config.EventsBroker.EmitPreviousPlaylistElement (playlist);
+			Config.EventsBroker.EmitNextPlaylistElement (null);
 
-			mockPlayerController.Verify (player => player.Seek (element.Play.Start, true, false, false), Times.Once ());
-			Assert.IsFalse (playlistElementSelected);
-		}
-
-		[Test ()]
-		public void TestPrev4 ()
-		{
-			mockPlayerController.SetupGet (player => player.CurrentTime).Returns (new Time (499));
-
-			Playlist playlist = new Playlist ();
-			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEvent ());
-			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
-			element.Play.Start = new Time (0);
-			playlist.Elements.Add (element0);
-			playlist.Elements.Add (element);
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
-			mockPlayerController.ResetCalls ();
-			playlistElementSelected = false;
-
-			Config.EventsBroker.EmitPreviousPlaylistElement (playlist);
-
-			Assert.IsTrue (playlistElementSelected);
-			Assert.AreSame (element0, playlist.Selected);
-		}
-
-		[Test ()]
-		public void TestPrev5 ()
-		{
-			Playlist playlist = new Playlist ();
-			IPlaylistElement element = new PlaylistImage (new Image (1, 1), new Time (10));
-			playlist.Elements.Add (element);
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
-			mockPlayerController.ResetCalls ();
-			playlistElementSelected = false;
-
-			Config.EventsBroker.EmitPreviousPlaylistElement (playlist);
-
-			Assert.IsFalse (playlistElementSelected);
-			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+			mockPlayerController.Verify (player => player.Next (), Times.Once ());
 		}
 
 		[Test ()]
@@ -369,8 +323,8 @@ namespace Tests.Services
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
-			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Once ());
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
 		[Test ()]
@@ -389,13 +343,15 @@ namespace Tests.Services
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
-			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Once ());
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
 		[Test ()]
 		public void TestOpenPresentationNullPlayer ()
 		{
+			plmanager.Player = null;
+
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
 			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
@@ -407,27 +363,23 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitOpenedPresentationChanged (presentation, null);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
-
-			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Never ());
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
 		}
 
 		[Test ()]
 		public void TestOpenNullPresentationNullPlayer ()
 		{
+			plmanager.Player = null;
+
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
 			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
-			mockPlayerController.ResetCalls ();
-
 			Config.EventsBroker.EmitOpenedPresentationChanged (null, null);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element);
-
-			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element), Times.Never ());
+			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
 		}
 	}
 }

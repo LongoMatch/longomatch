@@ -121,7 +121,7 @@ namespace LongoMatch.Services
 			loadedPlay = play;
 		}
 
-		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
+		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			if (element is PlaylistPlayElement) {
 				loadedPlay = (element as PlaylistPlayElement).Play;
@@ -217,7 +217,7 @@ namespace LongoMatch.Services
 				Directory.CreateDirectory (outputProjectDir);
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
 				playlist = new Playlist ();
-				element = new PlaylistPlayElement (play, project.Description.FileSet);
+				element = new PlaylistPlayElement (play);
 				playlist.Elements.Add (element);
 				job = new EditionJob (playlist, settings);
 				Config.RenderingJobsManger.AddJob (job);
