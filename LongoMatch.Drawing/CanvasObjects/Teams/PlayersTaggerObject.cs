@@ -46,7 +46,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
 		Team homeTeam, awayTeam;
 		Image background;
-		Dictionary<Player, PlayerObject> playerToPlayerObject;
+		Dictionary<Player, PlayerObject> homePlayerToPlayerObject;
+		Dictionary<Player, PlayerObject> awayPlayerToPlayerObject;
 		List<PlayerObject> homePlayingPlayers, awayPlayingPlayers;
 		List<PlayerObject> homeBenchPlayers, awayBenchPlayers;
 		List <PlayerObject> homePlayers, awayPlayers;
@@ -67,7 +68,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayBench = new BenchObject ();
 			offset = new Point (0, 0);
 			scaleX = scaleY = 1;
-			playerToPlayerObject = new Dictionary<Player, PlayerObject> ();
+			homePlayerToPlayerObject = new Dictionary<Player, PlayerObject> ();
+			awayPlayerToPlayerObject = new Dictionary<Player, PlayerObject> ();
 			field = new FieldObject ();
 			SelectedPlayers = new List<Player> ();
 			lastTime = null;
@@ -395,10 +397,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			
 			Project.CurrentLineup (currentTime, out homeFieldL, out homeBenchL,
 				out awayFieldL, out awayBenchL);
-			homePlayingPlayers = homeFieldL.Select (p => playerToPlayerObject [p]).ToList ();
-			homeBenchPlayers = homeBenchL.Select (p => playerToPlayerObject [p]).ToList ();
-			awayPlayingPlayers = awayFieldL.Select (p => playerToPlayerObject [p]).ToList ();
-			awayBenchPlayers = awayBenchL.Select (p => playerToPlayerObject [p]).ToList ();
+			homePlayingPlayers = homeFieldL.Select (p => homePlayerToPlayerObject [p]).ToList ();
+			homeBenchPlayers = homeBenchL.Select (p => homePlayerToPlayerObject [p]).ToList ();
+			awayPlayingPlayers = awayFieldL.Select (p => awayPlayerToPlayerObject [p]).ToList ();
+			awayBenchPlayers = awayBenchL.Select (p => awayPlayerToPlayerObject [p]).ToList ();
 			homeBench.BenchPlayers = homeBenchPlayers;
 			awayBench.BenchPlayers = awayBenchPlayers;
 			field.HomePlayingPlayers = homePlayingPlayers;
@@ -451,7 +453,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					awayPlayers = null;
 				}
 			}
-			playerToPlayerObject.Clear ();
+			homePlayerToPlayerObject.Clear ();
+			awayPlayerToPlayerObject.Clear ();
 		}
 
 		void LoadSubsButtons ()
@@ -568,7 +571,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					EmitRedrawEvent (po, area);
 				};
 				playerObjects.Add (po);
-				playerToPlayerObject.Add (p, po);
+				if (team == TeamType.LOCAL) {
+					homePlayerToPlayerObject.Add (p, po);
+				} else {
+					awayPlayerToPlayerObject.Add (p, po);
+				}
 			}
 			return playerObjects;
 		}
