@@ -61,7 +61,6 @@ namespace Tests.Services
 			mockAnalysisWindow = new Mock<IAnalysisWindow> ();
 			mockPlayerController = new Mock<IPlayerController> ();
 			mockPlayerController.SetupAllProperties ();
-			mockPlayerController.SetupGet (p => p.OpenedProject).Returns (project);
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 

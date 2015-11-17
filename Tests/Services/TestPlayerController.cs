@@ -43,7 +43,6 @@ namespace Tests.Services
 		TimelineEvent evt;
 		PlaylistImage plImage;
 		Playlist playlist;
-		Project project;
 
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
@@ -77,7 +76,8 @@ namespace Tests.Services
 		public void Setup ()
 		{
 			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
-				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
+				FileSet = mfs
 			};
 			plImage = new PlaylistImage (Utils.LoadImageFromFile (), new Time (5000));
 			playlist = new Playlist ();
@@ -86,10 +86,7 @@ namespace Tests.Services
 			currentTime = new Time (0);
 			playerMock.ResetCalls ();
 			player = new PlayerController ();
-			project = new Project ();
-			project.Description = new ProjectDescription ();
-			project.Description.FileSet = mfs;
-			player.OpenedProject = project;
+
 			playlist.SetActive (playlist.Elements [0]);
 		}
 
@@ -650,7 +647,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 
 			TimelineEvent evtLocal = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
-				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }, FileSet = mfs
 			};
 			player.LoadEvent (evtLocal, evtLocal.Start, true);
 			playerMock.ResetCalls ();
@@ -716,7 +713,7 @@ namespace Tests.Services
 					new CameraConfig (1),
 					new CameraConfig (4),
 					new CameraConfig (6)
-				}
+				}, FileSet = mfs
 			};
 
 			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
@@ -788,7 +785,7 @@ namespace Tests.Services
 
 			/* Open with a new MediaFileSet and also check seekTime and playing values*/
 			MediaFileSet nfs = Cloner.Clone (mfs);
-			player.Open (nfs);
+			evt.FileSet = nfs;
 			player.LoadEvent (evt, evt.Stop, false);
 			Assert.AreEqual (1, elementLoaded);
 			elementLoaded = 0;
@@ -806,7 +803,7 @@ namespace Tests.Services
 			 * and check the cameras layout and visibility is respected */
 			TimelineEvent evt2 = new TimelineEvent { Start = new Time (400), Stop = new Time (50000),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) },
-				CamerasLayout = "test"
+				CamerasLayout = "test", FileSet = nfs
 			};
 			player.LoadEvent (evt2, evt2.Start, true);
 			Assert.AreEqual (1, elementLoaded);
@@ -846,6 +843,7 @@ namespace Tests.Services
 			/* Load playlist timeline event element */
 			nfs = mfs.Clone ();
 			el1 = playlist.Elements [0] as PlaylistPlayElement;
+			el1.Play.FileSet = nfs;
 			currentTime = el1.Play.Start;
 			player.LoadPlaylistEvent (playlist, el1, true);
 			Assert.AreEqual (0, elementLoaded);
@@ -1045,7 +1043,6 @@ namespace Tests.Services
 
 			mtkMock.Setup (m => m.GetMultiPlayer ()).Returns (multiplayerMock.Object);
 			player = new PlayerController (true);
-			player.OpenedProject = project;
 			PreparePlayer ();
 
 			/* ROI should be empty */

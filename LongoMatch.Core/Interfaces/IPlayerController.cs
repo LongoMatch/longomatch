@@ -93,18 +93,6 @@ namespace LongoMatch.Core.Interfaces
 		bool Active { get; set; }
 
 		/// <summary>
-		/// Gets or sets the opened project.
-		/// </summary>
-		/// <value>The opened project.</value>
-		Project OpenedProject { get; set; }
-
-		/// <summary>
-		/// Gets or sets the type of the opened project.
-		/// </summary>
-		/// <value>The type of the opened project.</value>
-		ProjectType OpenedProjectType { get; set; }
-
-		/// <summary>
 		/// Gets or sets the loaded playlist.
 		/// </summary>
 		/// <value>The loaded playlist.</value>
@@ -150,7 +138,7 @@ namespace LongoMatch.Core.Interfaces
 
 		/// <summary>
 		/// Loads a timeline event.
-		/// The file set for this event comes from <see cref="Fileset"/> or <see cref="OpenedProject"/>
+		/// The file set for this event comes from <see cref="evt.Fileset"/>
 		/// </summary>
 		/// <param name="evt">The timeline event.</param>
 		/// <param name="seekTime">Seek time.</param>

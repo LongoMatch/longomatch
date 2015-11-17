@@ -42,6 +42,16 @@ namespace LongoMatch.Services
 			set;
 		}
 
+		public Project OpenedProject {
+			get;
+			set;
+		}
+
+		public ProjectType OpenedProjectType {
+			get;
+			set;
+		}
+
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			if (play != null && Player != null) {
@@ -67,12 +77,17 @@ namespace LongoMatch.Services
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
-			if (project != null) {
-				Player = analysisWindow.Player;
-				Player.OpenedProject = project;
-				Player.OpenedProjectType = projectType;
-				this.filter = filter;
+			var player = analysisWindow?.Player;
+			if (player == null && Player == null) {
+				return;
+			} else if (player != null) {
+				Player = player;
 			}
+
+			OpenedProject = project;
+			OpenedProjectType = projectType;
+			this.filter = filter;
+			Player.LoadedPlaylist = null;
 		}
 
 		/// <summary>
@@ -89,10 +104,10 @@ namespace LongoMatch.Services
 				Player = player;
 			}
 
-			Player.OpenedProject = null;
+			OpenedProject = null;
 			Player.Switch (null, presentation, null);
 
-			Player.OpenedProjectType = ProjectType.None;
+			OpenedProjectType = ProjectType.None;
 			filter = null;
 		}
 
@@ -107,7 +122,7 @@ namespace LongoMatch.Services
 
 		void HandleLoadPlayEvent (TimelineEvent play)
 		{
-			if (Player?.OpenedProject == null || Player.OpenedProjectType == ProjectType.FakeCaptureProject) {
+			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
 			}
 
@@ -144,7 +159,7 @@ namespace LongoMatch.Services
 		void HandleAddPlaylistElement (Playlist playlist, List<IPlaylistElement> element)
 		{
 			if (playlist == null) {
-				playlist = HandleNewPlaylist (Player?.OpenedProject);
+				playlist = HandleNewPlaylist (OpenedProject);
 				if (playlist == null) {
 					return;
 				}
@@ -211,12 +226,12 @@ namespace LongoMatch.Services
 
 		void HandleKeyPressed (object sender, HotKey key)
 		{
-			if (Player?.OpenedProject == null && Player?.LoadedPlaylist == null)
+			if (OpenedProject == null && Player?.LoadedPlaylist == null)
 				return;
 
-			if ((Player.OpenedProjectType != ProjectType.CaptureProject &&
-			    Player.OpenedProjectType != ProjectType.URICaptureProject &&
-			    Player.OpenedProjectType != ProjectType.FakeCaptureProject) || Player.LoadedPlaylist != null) {
+			if ((OpenedProjectType != ProjectType.CaptureProject &&
+			    OpenedProjectType != ProjectType.URICaptureProject &&
+			    OpenedProjectType != ProjectType.FakeCaptureProject) || Player.LoadedPlaylist != null) {
 				KeyAction action;
 				if (Player == null)
 					return;

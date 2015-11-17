@@ -130,16 +130,31 @@ namespace Tests
 				AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
 
 				/* No tags, no players */
-				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				pl = new TimelineEvent {
+					EventType = b.EventType,
+					Start = new Time (0),
+					Stop = new Time (100),
+					FileSet = pd.FileSet
+				};
 				p.Timeline.Add (pl);
 				/* tags, but no players */
 				b = p.Dashboard.List [1] as AnalysisEventButton;
-				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				pl = new TimelineEvent {
+					EventType = b.EventType,
+					Start = new Time (0),
+					Stop = new Time (100),
+					FileSet = pd.FileSet
+				};
 				pl.Tags.Add (b.AnalysisEventType.Tags [0]);
 				p.Timeline.Add (pl);
 				/* tags and players */
 				b = p.Dashboard.List [2] as AnalysisEventButton;
-				pl = new TimelineEvent { EventType = b.EventType, Start = new Time (0), Stop = new Time (100) };
+				pl = new TimelineEvent {
+					EventType = b.EventType,
+					Start = new Time (0),
+					Stop = new Time (100),
+					FileSet = pd.FileSet
+				};
 				pl.Tags.Add (b.AnalysisEventType.Tags [1]);
 				pl.Players.Add (p.LocalTeamTemplate.List [0]);
 				p.Timeline.Add (pl);
@@ -157,7 +172,8 @@ namespace Tests
 			}
 		}
 
-		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals=true) {
+		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals = true)
+		{
 			var stream = new MemoryStream ();
 			Serializer.Instance.Save (obj1, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);

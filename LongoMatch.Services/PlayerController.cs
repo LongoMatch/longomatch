@@ -233,16 +233,6 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public Project OpenedProject {
-			get;
-			set;
-		}
-
-		public ProjectType OpenedProjectType {
-			get;
-			set;
-		}
-
 		public Playlist LoadedPlaylist {
 			get;
 			set;
@@ -540,7 +530,7 @@ namespace LongoMatch.Services
 
 		public void LoadEvent (TimelineEvent evt, Time seekTime, bool playing)
 		{
-			MediaFileSet fileSet = FileSet ?? OpenedProject?.Description.FileSet;
+			MediaFileSet fileSet = evt.FileSet;
 			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
 
 			if (!ready) {
