@@ -525,7 +525,7 @@ namespace LongoMatch.Services
 
 			if (element is PlaylistPlayElement) {
 				PlaylistPlayElement ple = element as PlaylistPlayElement;
-				LoadSegment (ple.FileSet, ple.Play.Start, ple.Play.Stop,
+				LoadSegment (ple.Play.FileSet, ple.Play.Start, ple.Play.Stop,
 					ple.Play.Start, ple.Rate, ple.CamerasConfig,
 					ple.CamerasLayout, playing);
 			} else if (element is PlaylistVideo) {

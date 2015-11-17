@@ -368,6 +368,15 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the file set for this event.
+		/// </summary>
+		/// <value>The file set.</value>
+		public MediaFileSet FileSet {
+			get;
+			set;
+		}
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public virtual string Description {

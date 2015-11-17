@@ -177,6 +177,7 @@ namespace Tests.Core.Store
 			evt = new TimelineEvent ();
 			p.AddEvent (evt);
 			Assert.AreEqual (p, evt.Project);
+			Assert.AreEqual (p.Description.FileSet, evt.FileSet);
 			Assert.AreEqual (p.Timeline.Count, 3);
 			p.AddEvent (new TimelineEvent ());
 			Assert.AreEqual (p.Timeline.Count, 4);

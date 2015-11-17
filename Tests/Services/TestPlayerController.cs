@@ -846,7 +846,6 @@ namespace Tests.Services
 			/* Load playlist timeline event element */
 			nfs = mfs.Clone ();
 			el1 = playlist.Elements [0] as PlaylistPlayElement;
-			el1.FileSet = nfs;
 			currentTime = el1.Play.Start;
 			player.LoadPlaylistEvent (playlist, el1, true);
 			Assert.AreEqual (0, elementLoaded);
@@ -987,7 +986,7 @@ namespace Tests.Services
 			multiplayerMock.ResetCalls ();
 
 			/* Now load an event */
-			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (1) }
 			};
 			player.LoadEvent (evt1, evt1.Start, true);
@@ -1029,7 +1028,7 @@ namespace Tests.Services
 
 			/* Now load a playlist event and make sure its config is loaded
 			 * and not the event's one */
-			PlaylistPlayElement ple = new PlaylistPlayElement (evt, mfs);
+			PlaylistPlayElement ple = new PlaylistPlayElement (evt);
 			ple.CamerasConfig = cams2;
 			player.LoadPlaylistEvent (playlist, ple, true);
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
@@ -1059,7 +1058,7 @@ namespace Tests.Services
 			player.ApplyROI (cams [0]);
 
 			/* Now create an event with current camera config */
-			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
 				CamerasConfig = player.CamerasConfig
 			};
 			/* Check that ROI was copied in event */

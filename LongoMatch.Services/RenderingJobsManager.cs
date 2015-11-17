@@ -240,12 +240,12 @@ namespace LongoMatch.Services
 				cameraIndex = element.CamerasConfig [0].Index;
 				roi = element.CamerasConfig [0].RegionOfInterest;
 			}
-			if (cameraIndex >= element.FileSet.Count) {
+			if (cameraIndex >= element.Play.FileSet.Count) {
 				Log.Error (string.Format ("Camera index={0} not matching for current fileset count={1}",
-					cameraIndex, element.FileSet.Count));
-				file = element.FileSet [0];
+					cameraIndex, element.Play.FileSet.Count));
+				file = element.Play.FileSet [0];
 			} else {
-				file = element.FileSet [cameraIndex];
+				file = element.Play.FileSet [cameraIndex];
 			}
 			drawings = play.Drawings.Where (d => d.CameraConfig.Index == cameraIndex);
 

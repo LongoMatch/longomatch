@@ -31,14 +31,13 @@ namespace LongoMatch.Core.Store.Playlists
 	{
 		ObservableCollection<CameraConfig> camerasConfig;
 
-		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset = null)
+		public PlaylistPlayElement (TimelineEvent play)
 		{
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
 			CamerasLayout = play.CamerasLayout;
 			CamerasConfig = new ObservableCollection<CameraConfig> (play.CamerasConfig);
-			FileSet = fileset;
 		}
 
 		[JsonIgnore]
@@ -96,11 +95,6 @@ namespace LongoMatch.Core.Store.Playlists
 			get {
 				return String.Format ("{0}X", Rate);
 			}
-		}
-
-		public MediaFileSet FileSet {
-			get;
-			set;
 		}
 
 		/// <summary>

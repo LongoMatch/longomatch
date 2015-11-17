@@ -76,6 +76,8 @@ namespace LongoMatch.Core.Store
 		{
 			foreach (TimelineEvent evt in Timeline) {
 				evt.Project = this;
+				// FIXME: remove this after the migration tool is ready
+				evt.FileSet = Description.FileSet;
 			}
 		}
 
@@ -334,6 +336,7 @@ namespace LongoMatch.Core.Store
 			evt.Notes = "";
 			evt.Miniature = miniature;
 			evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
+			evt.FileSet = Description.FileSet;
 			evt.Project = this;
 
 			if (addToTimeline) {
@@ -347,6 +350,7 @@ namespace LongoMatch.Core.Store
 
 		public void AddEvent (TimelineEvent play)
 		{
+			play.FileSet = Description.FileSet;
 			play.Project = this;
 			Timeline.Add (play);
 			if (play is ScoreEvent) {
