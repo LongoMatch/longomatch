@@ -133,6 +133,10 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>LongoMatch.Drawing.Cairo</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\dibujo.svg">
