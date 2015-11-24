@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Helpers
 	public class MessagesHelpers
 	{
 		public delegate void CustomizeDialog (MessageDialog Dialog);
-	
+
 		static public void InfoMessage (Widget parent, string message)
 		{
 			PopupMessage (parent, MessageType.Info, message);
@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Helpers
 		}
 
 		public static int PopupMessage (Widget sender, MessageType type, String errorMessage,
-			CustomizeDialog customize = null)
+		                                CustomizeDialog customize = null)
 		{
 			Window toplevel;
 			int ret;
@@ -135,33 +135,32 @@ namespace LongoMatch.Gui.Helpers
 		}
 
 		static public bool NewVersionAvailable (Version currentVersion, Version latestVersion,
-			string downloadURL, string changeLog, Widget parent = null)
+		                                        string downloadURL, string changeLog, Widget parent = null)
 		{
 			string message = string.Format (
-				Catalog.GetString("Version {0} is available!\n" +
-					"(You are using version {1})\n" +
-					"<a href=\"{2}\">Click here to get it.</a>"),
-				latestVersion, currentVersion, downloadURL);
+				                 Catalog.GetString ("Version {0} is available!\n" +
+				                 "(You are using version {1})\n" +
+				                 "<a href=\"{2}\">Click here to get it.</a>"),
+				                 latestVersion, currentVersion, downloadURL);
 
 			bool checkState = false;
 
-			PopupMessage (parent, MessageType.Info, message, (dialog) =>
-				{
-					dialog.Title = Catalog.GetString ("New version available");
-					VBox vbox = dialog.MessageDialogGetMessageArea ();
+			PopupMessage (parent, MessageType.Info, message, (dialog) => {
+				dialog.Title = Catalog.GetString ("New version available");
+				VBox vbox = dialog.MessageDialogGetMessageArea ();
 
-					var expander = new Gtk.Expander (Catalog.GetString ("Changes:"));
-					expander.Add (new Label (changeLog));
-					vbox.Add (expander);
+				var expander = new Gtk.Expander (Catalog.GetString ("Changes:"));
+				expander.Add (new Label (changeLog));
+				vbox.Add (expander);
 
-					var check = new CheckButton (Catalog.GetString ("Do not notify me again until next version"));
-					check.Toggled += delegate {
-						checkState = check.Active;
-					};
-					vbox.Add (check);
+				var check = new CheckButton (Catalog.GetString ("Do not notify me again until next version"));
+				check.Toggled += delegate {
+					checkState = check.Active;
+				};
+				vbox.Add (check);
 
-					vbox.ShowAll ();
-				});
+				vbox.ShowAll ();
+			});
 
 			return checkState;
 		}
