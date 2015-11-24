@@ -95,7 +95,9 @@ namespace LongoMatch.Drawing
 					obj.Draw (tk, null);
 					obj.Dispose ();
 				}
-				tk.DrawImage (fd.Freehand);
+				if (fd.Freehand != null) {
+					tk.DrawImage (fd.Freehand);
+				}
 			}
 			img = surface.Copy ();
 			surface.Dispose ();
