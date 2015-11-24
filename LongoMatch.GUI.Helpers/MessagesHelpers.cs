@@ -121,6 +121,7 @@ namespace LongoMatch.Gui.Helpers
 			Entry entry = new Entry (value);
 			Gtk.Dialog dialog = new Gtk.Dialog (title, parent, DialogFlags.DestroyWithParent);
 			dialog.Modal = true;
+			dialog.WidthRequest = 300;
 			dialog.AddButton (Catalog.GetString ("Add"), ResponseType.Ok);
 			dialog.VBox.PackStart (label, false, false, 0);
 			dialog.VBox.PackStart (entry, true, true, 0);
