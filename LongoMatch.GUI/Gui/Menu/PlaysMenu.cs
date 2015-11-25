@@ -205,14 +205,6 @@ namespace LongoMatch.Gui.Menus
 			moveCat = new MenuItem (Catalog.GetString ("Move to"));
 			Add (moveCat);
 
-			del = new MenuItem ("");
-			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
-			Add (del);
-			
-			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
-			Add (duplicate);
-
 			drawings = new MenuItem (Catalog.GetString ("Drawings"));
 			Add (drawings);
 
@@ -226,6 +218,14 @@ namespace LongoMatch.Gui.Menus
 			snapshot = new MenuItem (Catalog.GetString ("Export to PGN images"));
 			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays [0]);
 			Add (snapshot);
+
+			duplicate = new MenuItem ("");
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
+			Add (duplicate);
+
+			del = new MenuItem ("");
+			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
+			Add (del);
 
 			ShowAll ();
 		}
