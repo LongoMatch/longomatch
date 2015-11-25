@@ -26,6 +26,7 @@ nobase_dist_images_DATA = Makefile.am \
 	longomatch-dark-bg.svg \
 	longomatch-light-bg.svg \
 	longomatch-pro-small.png \
+	longomatch-splash.svg \
 	player/arrow-in.svg \
 	player/arrow-out.svg \
 	player/photo.svg \

@@ -23,6 +23,7 @@ using System.Threading;
 using Gtk;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
@@ -45,17 +46,22 @@ namespace LongoMatch
 			// Replace the current synchronization context with a GTK synchronization context
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
 			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
+			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (OnException);
 
 			CoreServices.Init ();
-
 			InitGtk ();
+			var splashScreen = new SplashScreen ();
+			splashScreen.Show ();
+			Application.Invoke ((s, e) => Init (splashScreen));
+			Application.Run ();
+		}
+
+		static void Init (SplashScreen splashScreen)
+		{
+			IProgressReport progress = splashScreen;
 
 			/* Init GStreamer */
 			GStreamer.Init ();
-			//if (!GStreamer.CheckInstallation ())
-			//	return;
-
-			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (OnException);
 
 			try {
 				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
@@ -69,7 +75,6 @@ namespace LongoMatch
 				AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
 				AddinsManager.LoadServicesAddins ();
 				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
-
 				if (!haveCodecs) {
 					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
 					int response = ccd.Run ();
@@ -92,12 +97,9 @@ namespace LongoMatch
 				}
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
-
 				ConfigureOSXApp ();
-
+				splashScreen.Destroy ();
 				Config.GUIToolkit.Welcome ();
-
-				Application.Run ();
 			} catch (AddinRequestShutdownException arse) {
 				// Abort gracefully
 			} catch (Exception ex) {
