@@ -115,6 +115,7 @@ namespace LongoMatch.Core.Common
 		public const int TopBarButtonIconSize = 28;
 		public const int TopBarToggleButtonIconSize = 18;
 
+		public const int PresentationManagerHeaderIconSize = 54;
 		public const int PresentationManagerButtonIconSize = 34;
 
 		public const int ButtonHeaderHeight = 22;

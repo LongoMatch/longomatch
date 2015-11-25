@@ -70,6 +70,7 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-presentation-add.svg \
 	hicolor/scalable/actions/longomatch-presentation-delete.svg \
 	hicolor/scalable/actions/longomatch-presentation-duplicate.svg \
+	hicolor/scalable/actions/longomatch-presentation-header.svg \
 	hicolor/scalable/actions/longomatch-presentation-open.svg \
 	hicolor/scalable/actions/longomatch-presentation-save.svg \
 	hicolor/scalable/actions/longomatch-presentations-apply.svg \
