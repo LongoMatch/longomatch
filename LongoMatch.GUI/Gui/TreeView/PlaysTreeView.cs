@@ -18,11 +18,13 @@
 //
 //
 using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Menus;
 using EventType = LongoMatch.Core.Store.EventType;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
@@ -36,6 +38,7 @@ namespace LongoMatch.Gui.Component
 		public event EditEventTypeHandler EditProperties;
 		//Categories menu
 		Menu categoriesMenu;
+		MenuItem addToPlaylistMenuItem;
 		RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 		TreeIter srcIter;
 		EventType draggedEventType;
@@ -72,9 +75,9 @@ namespace LongoMatch.Gui.Component
 			return path;
 		}
 
-		private void SetCategoriesMenu ()
+		void SetCategoriesMenu ()
 		{
-			Gtk.Action editProp, sortMenu;
+			Gtk.Action editProp, sortMenu, addToPlaylist;
 			UIManager manager;
 			ActionGroup g;
 
@@ -87,6 +90,7 @@ namespace LongoMatch.Gui.Component
 			sortByStart = new Gtk.RadioAction ("SortByStartAction", Mono.Unix.Catalog.GetString ("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction ("SortByStopAction", Mono.Unix.Catalog.GetString ("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction ("SortByDurationAction", Mono.Unix.Catalog.GetString ("Sort by duration"), null, null, 3);
+			addToPlaylist = new Gtk.Action ("AddToPlaylist", "", null, null);
 
 			sortByName.Group = new GLib.SList (System.IntPtr.Zero);
 			sortByStart.Group = sortByName.Group;
@@ -100,6 +104,7 @@ namespace LongoMatch.Gui.Component
 			g.Add (sortByStart, null);
 			g.Add (sortByStop, null);
 			g.Add (sortByDuration, null);
+			g.Add (addToPlaylist, null);
 
 			manager.InsertActionGroup (g, 0);
 
@@ -112,21 +117,21 @@ namespace LongoMatch.Gui.Component
 			"      <menuitem action='SortByStopAction'/>" +
 			"      <menuitem action='SortByDurationAction'/>" +
 			"    </menu>" +
+			"    <menuitem action='AddToPlaylist'/>" +
 			"  </popup>" +
 			"</ui>");
 
 			categoriesMenu = manager.GetWidget ("/CategoryMenu") as Menu;
+			addToPlaylistMenuItem = manager.GetWidget ("/CategoryMenu/AddToPlaylist") as MenuItem;
 
 			sortByName.Activated += OnSortActivated;
 			sortByStart.Activated += OnSortActivated;
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
-			editProp.Activated += delegate(object sender, EventArgs e) {
-				EditProperties (GetValueFromPath (Selection.GetSelectedRows () [0]) as EventType);
-			};
+			editProp.Activated += (s, e) => EditProperties (GetValueFromPath (Selection.GetSelectedRows () [0]) as EventType);
 		}
 
-		private void SetupSortMenu (SortMethodType sortMethod)
+		void SetupSortMenu (SortMethodType sortMethod)
 		{
 			switch (sortMethod) {
 			case SortMethodType.SortByName:
@@ -142,6 +147,13 @@ namespace LongoMatch.Gui.Component
 				sortByDuration.Active = true;
 				break;
 			}
+		}
+
+		void ShowCategoryMenu (TreePath[] paths)
+		{
+			List<TimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenuItem, Project, events);
+			categoriesMenu.Popup ();
 		}
 
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
@@ -289,7 +301,7 @@ namespace LongoMatch.Gui.Component
 					} else {
 						EventType eventType = GetValueFromPath (paths [0]) as EventType;
 						SetupSortMenu (eventType.SortMethod);
-						categoriesMenu.Popup ();
+						ShowCategoryMenu (paths);
 					}
 				} else if (paths.Length > 1) {
 					ShowMenu ();

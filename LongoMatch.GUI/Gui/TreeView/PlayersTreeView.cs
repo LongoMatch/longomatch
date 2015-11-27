@@ -16,31 +16,44 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using Gdk;
+using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Menus;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
 
-
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
-
 		TreePath pathClicked;
+		Menu playerMenu;
+		MenuItem addToPlaylistMenu;
 
 		public PlayersTreeView ()
 		{
-			this.Team = TeamType.LOCAL;
+			Team = TeamType.LOCAL;
+			playerMenu = new Menu ();
+			addToPlaylistMenu = new MenuItem ("");
+			playerMenu.Add (addToPlaylistMenu);
 		}
 
 		public TeamType Team {
 			set;
 			get;
+		}
+
+		void ShowPlayerMenu (TreePath[] paths)
+		{
+			List<TimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			if (events.Count > 0) {
+				PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenu, Project, events);
+				playerMenu.Popup ();
+			}
 		}
 
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
@@ -103,6 +116,8 @@ namespace LongoMatch.Gui.Component
 					TimeNode selectedTimeNode = GetValueFromPath (paths [0]) as TimeNode;
 					if (selectedTimeNode is TimelineEvent) {
 						ShowMenu ();
+					} else {
+						ShowPlayerMenu (paths);
 					}
 				} else if (paths.Length > 1) {
 					ShowMenu ();
@@ -116,16 +131,26 @@ namespace LongoMatch.Gui.Component
 
 		override protected bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected)
 		{
-			// Don't allow multiselection for Players
-			if (!selected && selection.GetSelectedRows ().Length > 0) {
-				if (selection.GetSelectedRows ().Length == 1 &&
-				    GetValueFromPath (selection.GetSelectedRows () [0]) is Player)
+			TreePath[] selectedRows;
+
+			selectedRows = selection.GetSelectedRows ();
+			if (!selected && selectedRows.Length > 0) {
+				object currentSelected;
+				object firstSelected;
+
+				firstSelected = GetValueFromPath (selectedRows [0]);
+				// No multiple selection for players
+				if (selectedRows.Length == 1 && firstSelected is Player) {
 					return false;
-				return !(GetValueFromPath (path) is Player);
+				}
+				currentSelected = GetValueFromPath (path);
+				if (currentSelected is Player) {
+					return false;
+				}
+				return true;
 			}
 			// Always unselect
-			else
-				return true;
+			return true;
 		}
 	}
 }

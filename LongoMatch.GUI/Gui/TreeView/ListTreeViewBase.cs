@@ -126,9 +126,7 @@ namespace LongoMatch.Gui.Component
 
 		protected object GetValueFromPath (TreePath path)
 		{
-			Gtk.TreeIter iter;
-			modelSort.GetIter (out iter, path);
-			return modelSort.GetValue (iter, 0);
+			return modelSort.GetValue (path);
 		}
 
 		protected bool FilterFunction (TreeModel model, TreeIter iter)
