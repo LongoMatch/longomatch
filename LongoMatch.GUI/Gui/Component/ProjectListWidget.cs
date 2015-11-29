@@ -220,6 +220,7 @@ namespace LongoMatch.Gui.Component
 			treeview.Selection.Mode = SelectionMode.Multiple;
 			treeview.EnableGridLines = TreeViewGridLines.None;
 			treeview.Selection.Changed += HandleTreeviewSelectionChanged;
+			treeview.RowActivated += HandleTreeviewRowActivated;
 
 			TreeViewColumn filterColumn = new TreeViewColumn ();
 			checkCell = new CellRendererToggle ();
@@ -330,6 +331,14 @@ namespace LongoMatch.Gui.Component
 		void HandleTreeviewSelectionChanged (object sender, EventArgs e)
 		{
 			HandleSelectionChanged (treeview.Model, treeview.Selection.GetSelectedRows ());
+		}
+
+		void HandleTreeviewRowActivated (object o, RowActivatedArgs args)
+		{
+			Project project = treeview.Model.GetValue (args.Path, COL_PROJECT) as Project;
+			if (project != null && ProjectSelected != null) {
+				ProjectSelected (project);
+			}
 		}
 
 		void HandleItemActivated (object o, ItemActivatedArgs args)

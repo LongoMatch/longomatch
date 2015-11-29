@@ -29,11 +29,11 @@ namespace LongoMatch.Gui.Component
 		/// <returns>The value.</returns>
 		/// <param name="model">Model.</param>
 		/// <param name="path">Path.</param>
-		public static object GetValue (this TreeModel model, TreePath path)
+		public static object GetValue (this TreeModel model, TreePath path, int col = 0)
 		{
 			TreeIter iter;
 			model.GetIter (out iter, path);
-			return model.GetValue (iter, 0);
+			return model.GetValue (iter, col);
 		}
 
 		/// <summary>
