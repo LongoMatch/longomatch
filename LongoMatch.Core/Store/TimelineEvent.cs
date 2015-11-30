@@ -37,6 +37,8 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimelineEvent : PixbufTimeNode, IStorable
 	{
+		[NonSerialized]
+		IStorage storage;
 		ObservableCollection<FrameDrawing> drawings;
 		ObservableCollection<Player> players;
 		ObservableCollection<Tag> tags;
@@ -80,8 +82,12 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public IStorage Storage {
-			get;
-			set;
+			get {
+				return storage;
+			}
+			set {
+				storage = value;
+			}
 		}
 
 		[JsonIgnore]

@@ -28,6 +28,8 @@ namespace LongoMatch.Core.Store
 	[PropertyChanged.ImplementPropertyChanged]
 	public class StorableBase: IStorable
 	{
+		[NonSerialized]
+		IStorage storage;
 
 		public StorableBase ()
 		{
@@ -45,11 +47,14 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		[IgnoreDataMember]
 		// Use IgnoreDataMember to prevent the cloner trying to serialize Storage
 		public IStorage Storage {
-			get;
-			set;
+			get {
+				return storage;
+			}
+			set {
+				storage = value;
+			}
 		}
 
 		[JsonIgnore]
