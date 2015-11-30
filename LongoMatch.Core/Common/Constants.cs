@@ -112,6 +112,7 @@ Xavier Queralt Mateu (ca)";
 		public const string HALF_FIELD_BACKGROUND = "images/fields/field-half" + IMAGE_EXT;
 		public const string HHALF_FIELD_BACKGROUND = "images/fields/field-full-teameditor" + IMAGE_EXT;
 		public const string GOAL_BACKGROUND = "images/fields/field-goal" + IMAGE_EXT;
+		public const string SPLASH = "images/longomatch-splash" + IMAGE_EXT;
 		public const string LINE_NORMAL = "line" + IMAGE_EXT;
 		public const string LINE_DASHED = "dash-line" + IMAGE_EXT;
 		public const string LINE_ARROW = "line-arrow" + IMAGE_EXT;

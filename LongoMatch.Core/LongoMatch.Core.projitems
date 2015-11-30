@@ -138,6 +138,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Filters\EventsFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\QueryFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\ProjectsFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProgressReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
