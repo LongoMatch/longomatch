@@ -196,16 +196,16 @@ namespace Tests.Core.Store.Templates
 				t.List [0].Playing = false;
 			}
 			t.ResetPlayers ();
-			Assert.IsEmpty (t.List.Where (p=>!p.Playing));
+			Assert.IsEmpty (t.List.Where (p => !p.Playing));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestIsChanged ()
 		{
 			Team t = Team.DefaultTemplate (10);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
-			t.List.Remove (t.List[0]);
+			t.List.Remove (t.List [0]);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
 			t.List.Add (new Player ());

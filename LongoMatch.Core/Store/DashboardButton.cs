@@ -41,7 +41,7 @@ namespace LongoMatch.Core.Store
 			Height = Constants.BUTTON_HEIGHT;
 			BackgroundColor = Color.Red.Copy (true);
 			TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
-			HotKey = new HotKey {IsChanged = false};
+			HotKey = new HotKey { IsChanged = false };
 			ActionLinks = new ObservableCollection <ActionLink> ();
 		}
 
@@ -235,7 +235,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Start (Time start, List<DashboardButton> from) {
+		public void Start (Time start, List<DashboardButton> from)
+		{
 			if (currentNode != null)
 				return;
 
@@ -245,7 +246,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Stop (Time stop, List<DashboardButton> from) {
+		public void Stop (Time stop, List<DashboardButton> from)
+		{
 			if (currentNode == null)
 				return;
 
@@ -256,7 +258,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Cancel () {
+		public void Cancel ()
+		{
 			if (currentNode == null)
 				return;
 			if (Timer != null) {
@@ -304,8 +307,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[OnDeserialized()]
-		internal void OnDeserializedMethod(StreamingContext context)
+		[OnDeserialized ()]
+		internal void OnDeserializedMethod (StreamingContext context)
 		{
 			if (EventType != null) {
 				EventType.IsChanged = false;

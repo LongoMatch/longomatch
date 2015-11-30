@@ -37,7 +37,7 @@ namespace Tests.Core.Store
 			MemoryStream stream;
 			StreamReader reader;
 			
-			evType = new EventType();
+			evType = new EventType ();
 			Utils.CheckSerialization (evType);
 
 			evType.Color = new Color (255, 0, 0);
@@ -121,8 +121,9 @@ namespace Tests.Core.Store
 			Assert.AreEqual (sub, new SubstitutionEventType ());
 		}
 
-		[Test()]
-		public void TestIsChanged (){
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			EventType et = new EventType ();
 			Assert.IsTrue (et.IsChanged);
 			et.IsChanged = false;

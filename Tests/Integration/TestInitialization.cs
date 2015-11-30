@@ -38,8 +38,9 @@ namespace Tests.Integration
 		string tmpPath, homePath;
 
 		[SetUp]
-		public void Init () {
-			tmpPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		public void Init ()
+		{
+			tmpPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			homePath = Path.Combine (tmpPath, "LongoMatch");
 			Directory.CreateDirectory (tmpPath);
 			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
@@ -51,7 +52,8 @@ namespace Tests.Integration
 		}
 
 		[TearDown]
-		public void Delete () {
+		public void Delete ()
+		{
 			CoreServices.Stop ();
 			try {
 				foreach (var db in Config.DatabaseManager.Databases) {

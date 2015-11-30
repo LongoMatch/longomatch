@@ -67,7 +67,6 @@ namespace LongoMatch.Gui.Component
 			SetAttributes (texrender, "text", 1);
 			SetAttributes (pixrender, "pixbuf", 0);
 			Model = store;
-		
 		}
 
 		public Team ActiveTeam {

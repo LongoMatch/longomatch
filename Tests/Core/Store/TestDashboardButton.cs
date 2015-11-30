@@ -22,10 +22,10 @@ using LongoMatch.Core.Common;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestDashboardButton
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			DashboardButton db = new DashboardButton ();
@@ -47,16 +47,16 @@ namespace Tests.Core.Store
 			db = new ScoreButton ();
 			Utils.CheckSerialization (db);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestTimedDashboardButton ()
 		{
 			TimedDashboardButton db = new TimedDashboardButton ();
 			Assert.IsNotNull (db.Start);
 			Assert.IsNotNull (db.Stop);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestTagButton ()
 		{
 			TagButton db = new TagButton ();
@@ -67,25 +67,25 @@ namespace Tests.Core.Store
 			db.Name = "test2";
 			Assert.AreEqual (db.Tag.Value, "test2");
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestTimerButton ()
 		{
 			TimerButton tm = new TimerButton ();
 			Assert.IsNull (tm.Name);
-			tm.Timer = new Timer {Name = "test"};
+			tm.Timer = new Timer { Name = "test" };
 			Assert.AreEqual (tm.Name, "test");
 			tm.Name = "test2";
 			Assert.AreEqual (tm.Timer.Name, "test2");
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestEventButton ()
 		{
 			EventButton eb = new EventButton ();
 			Assert.IsNull (eb.Name);
 			Assert.IsNull (eb.BackgroundColor);
-			eb.EventType = new EventType {Name = "test", Color = Color.Red};
+			eb.EventType = new EventType { Name = "test", Color = Color.Red };
 			Assert.AreEqual (eb.Name, "test");
 			Assert.AreEqual (eb.BackgroundColor, Color.Red);
 			eb.Name = "test2";
@@ -93,16 +93,16 @@ namespace Tests.Core.Store
 			Assert.AreEqual (eb.EventType.Name, "test2");
 			Assert.AreEqual (eb.EventType.Color, Color.Blue);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestAnalysisEventButton ()
 		{
 			AnalysisEventButton ab = new AnalysisEventButton ();
 			ab.EventType = new AnalysisEventType ();
 			Assert.AreEqual (ab.EventType, ab.AnalysisEventType);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestPenaltyCardButton ()
 		{
 			PenaltyCardButton pb = new PenaltyCardButton ();
@@ -113,8 +113,8 @@ namespace Tests.Core.Store
 			Assert.AreEqual (pb.BackgroundColor, Color.Red);
 			Assert.AreEqual (pb.PenaltyCardEventType, pb.EventType);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestScoreButton ()
 		{
 			ScoreButton sb = new ScoreButton ();
@@ -126,7 +126,8 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
-		public void TestIsChanged () {
+		public void TestIsChanged ()
+		{
 			DashboardButton db = new DashboardButton ();
 			Assert.IsTrue (db.IsChanged);
 			db.IsChanged = false;
@@ -148,7 +149,7 @@ namespace Tests.Core.Store
 			db.Height = 100;
 			Assert.IsTrue (db.IsChanged);
 			db.IsChanged = false;
-			db.HotKey = new HotKey {Key = 3};
+			db.HotKey = new HotKey { Key = 3 };
 			Assert.IsTrue (db.IsChanged);
 			db.IsChanged = false;
 			db.Position = new Point (1, 2);
