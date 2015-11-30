@@ -77,9 +77,13 @@ namespace LongoMatch
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
+				// Migrate the old databases now that the DB and Templates services have started
+				DatabaseMigration dbMigration = new DatabaseMigration (progress);
+				Task dbInit = Task.Factory.StartNew (dbMigration.Start);
+
 				// Wait for Migration and the GStreamer initialization
 				try {
-					await Task.WhenAll (gstInit);
+					await Task.WhenAll (gstInit, dbInit);
 				} catch (AggregateException ae) {
 					throw ae.Flatten ();
 				}
@@ -103,7 +107,7 @@ namespace LongoMatch
 			}
 		}
 
-		static void InitAddins (IProgress progress)
+		static void InitAddins (IProgressReport progress)
 		{
 			Guid id = Guid.NewGuid ();
 			progress.Report (0.1f, "Initializing addins", id);
@@ -118,7 +122,7 @@ namespace LongoMatch
 		}
 
 
-		static void InitGStreamer (IProgress progress)
+		static void InitGStreamer (IProgressReport progress)
 		{
 			Guid id = Guid.NewGuid ();
 			progress.Report (0.1f, "Initializing GStreamer", id);
