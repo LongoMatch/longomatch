@@ -101,7 +101,7 @@ namespace LongoMatch
 				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ()); 
 				string configFilename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
 				string configFilepath = Path.Combine (oldHome, configFilename);
-				if (File.Exists (configFilepath)) {
+				if (File.Exists (configFilepath) && !File.Exists (Config.ConfigFile)) {
 					try {
 						File.Move (configFilepath, Config.ConfigFile);
 					} catch (Exception ex) {
