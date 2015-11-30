@@ -538,14 +538,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 				to.Active = false;
 			}
-			if (button is PenaltyCardButton) {
-				card = (button as PenaltyCardButton).PenaltyCard;
-			}
-			if (button is ScoreButton) {
-				score = (button as ScoreButton).Score;
-			}
-			
-			NewTagEvent (button.EventType, null, null, tags, start, stop, eventTime, score, card, button);
+			NewTagEvent (button.EventType, null, null, tags, start, stop, eventTime, button);
 		}
 	}
 }

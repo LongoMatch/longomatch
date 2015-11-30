@@ -540,44 +540,34 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class PenaltyCardEvent: TimelineEvent
 	{
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public PenaltyCardEventType PenaltyCardEventType {
+			get {
+				return EventType as PenaltyCardEventType;
+			}
+		}
+
 		public PenaltyCard PenaltyCard {
 			get;
 			set;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override Color Color {
-			get {
-				return PenaltyCard != null ? PenaltyCard.Color : EventType.Color;
-			}
 		}
 	}
 
 	[Serializable]
 	public class ScoreEvent: TimelineEvent
 	{
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public ScoreEventType ScoreEventType {
+			get {
+				return EventType as ScoreEventType;
+			}
+		}
+
 		public Score Score {
 			get;
 			set;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override Color Color {
-			get {
-				return Score != null ? Score.Color : EventType.Color;
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override string Description {
-			get {
-				return String.Format ("{0} - {1}\n{2}\n{3}\n", Score.Points, Name,
-					TagsDescription (), Start.ToMSecondsString (),
-					Stop.ToMSecondsString ());
-			}
 		}
 	}
 

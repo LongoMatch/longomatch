@@ -203,7 +203,7 @@ namespace Tests.Integration
 
 			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
-				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime }, null, null);
+				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
 		}
 
 		string SaveResource (string name)

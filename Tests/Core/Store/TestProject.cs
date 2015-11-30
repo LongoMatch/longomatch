@@ -44,13 +44,13 @@ namespace Tests.Core.Store
 			pd.FileSet.Add (mf);
 			p.Description = pd;
 			if (fill) {
-				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [1], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [6], new Time (1000), new Time (2000), null, null, null, null);
+				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [1], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [6], new Time (1000), new Time (2000), null, null);
 			}
 
 			return p;
@@ -165,13 +165,13 @@ namespace Tests.Core.Store
 		public void TestAddEvent ()
 		{
 			Project p = CreateProject (false);
-			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null, false);
+			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, false);
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
-			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
+			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 1);
-			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
+			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 2);
 
 			evt = new TimelineEvent ();

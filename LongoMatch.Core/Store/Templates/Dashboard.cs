@@ -344,22 +344,16 @@ namespace LongoMatch.Core.Store.Templates
 			template.List.Add (cardButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score {
-					Name = Catalog.GetString ("Free play goal"),
-					Points = 1,
-					Color = StyleConf.ButtonScoreColor
-				},
-				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10)
+				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10),
+				BackgroundColor = StyleConf.ButtonScoreColor,
+				Score = new Score (Catalog.GetString ("Free play goal"), 1),
 			};
 			template.List.Add (scoreButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score {
-					Name = Catalog.GetString ("Penalty goal"),
-					Points = 1,
-					Color = StyleConf.ButtonScoreColor
-				},
-				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10)
+				BackgroundColor = StyleConf.ButtonScoreColor,
+				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10),
+				Score = new Score (Catalog.GetString ("Penalty goal"), 1),
 			};
 			template.List.Add (scoreButton);
 			

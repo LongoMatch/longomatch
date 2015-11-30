@@ -118,11 +118,10 @@ namespace Tests.Core.Store
 		public void TestScoreButton ()
 		{
 			ScoreButton sb = new ScoreButton ();
-			Assert.IsNull (sb.BackgroundColor);
-			Assert.IsNull (sb.Name);
+			Assert.IsNull (sb.Score);
 			sb.Score = new Score ("test", 2);
 			Assert.AreEqual (sb.Name, "test");
-			Assert.AreEqual (sb.BackgroundColor, sb.Score.Color);
+			Assert.AreEqual (sb.BackgroundColor, sb.EventType.Color);
 			Assert.AreEqual (sb.ScoreEventType, sb.EventType);
 		}
 
@@ -206,20 +205,6 @@ namespace Tests.Core.Store
 			aeb.TagsPerRow = 4;
 			Assert.IsTrue (aeb.IsChanged);
 			aeb.IsChanged = false;
-
-			var pcb = new PenaltyCardButton ();
-			Assert.IsTrue (pcb.IsChanged);
-			pcb.IsChanged = false;
-			pcb.PenaltyCard = new PenaltyCard ();
-			Assert.IsTrue (pcb.IsChanged);
-			pcb.IsChanged = false;
-
-			var sb = new ScoreButton ();
-			Assert.IsTrue (sb.IsChanged);
-			sb.IsChanged = false;
-			sb.Score = new Score ();
-			Assert.IsTrue (sb.IsChanged);
-			sb.IsChanged = false;
 		}
 	}
 }

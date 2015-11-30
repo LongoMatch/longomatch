@@ -196,35 +196,17 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<Score> Scores {
+		public List<TimelineEvent> ScoreEvents {
 			get {
-				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
-				return ScoreEvents.Select (e => e.Score).Union (scores).OrderByDescending (s => s.Points).ToList ();
+				return Timeline.Where (e => e.EventType is ScoreEventType).ToList ();
 			}
 		}
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PenaltyCard> PenaltyCards {
+		public List<TimelineEvent> PenaltyCardsEvents {
 			get {
-				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
-				return PenaltyCardsEvents.Select (e => e.PenaltyCard).Union (pc).ToList ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public List<ScoreEvent> ScoreEvents {
-			get {
-				return Timeline.OfType<ScoreEvent> ().Select (t => t).ToList ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public List<PenaltyCardEvent> PenaltyCardsEvents {
-			get {
-				return Timeline.OfType<PenaltyCardEvent> ().Select (t => t).ToList ();
+				return Timeline.Where (e => e.EventType is PenaltyCardEventType).ToList ();
 			}
 		}
 
@@ -310,24 +292,16 @@ namespace LongoMatch.Core.Store
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                               Score score, PenaltyCard card, bool addToTimeline = true)
+		                               bool addToTimeline = true)
 		{
 			TimelineEvent evt;
 			string count;
 			string name;
 
 			count = String.Format ("{0:000}", EventsByType (type).Count + 1);
-			if (type is PenaltyCardEventType) {
-				name = String.Format ("{0} {1}", card.Name, count);
-				evt = new PenaltyCardEvent { PenaltyCard = card };
-			} else if (type is ScoreEventType) {
-				name = String.Format ("{0} {1}", score.Name, count);
-				evt = new ScoreEvent { Score = score };
-			} else {
-				name = String.Format ("{0} {1}", type.Name, count);
-				evt = new TimelineEvent ();
-			}
-			
+			name = String.Format ("{0} {1}", type.Name, count);
+			evt = new TimelineEvent ();
+
 			evt.Name = name;
 			evt.Start = start;
 			evt.Stop = stop;

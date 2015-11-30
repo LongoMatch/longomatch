@@ -44,6 +44,7 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		[Obsolete ("Color is now defined in the ScoreEventType")]
 		public Color Color {
 			get;
 			set;

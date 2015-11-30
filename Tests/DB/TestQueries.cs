@@ -332,7 +332,7 @@ namespace Tests.DB
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Parent", projects);
 
-			Assert.AreEqual (5, storage.Retrieve<EventType> (filter).Count ());
+			Assert.AreEqual (9, storage.Retrieve<EventType> (filter).Count ());
 			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count ());
 			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count ());
 		}
@@ -396,7 +396,7 @@ namespace Tests.DB
 				p.Description = new ProjectDescription ();
 				foreach (var player in devteam.List.Concat (qateam.List)) {
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
-						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null, null, null);
+						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null);
 						evt.Players.Add (player);
 						if (qateam.List.Contains (player)) {
 							evt.Teams.Add (qateam);
