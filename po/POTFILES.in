@@ -46,6 +46,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SplashScreen.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs
