@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Migration;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
@@ -49,6 +50,7 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class Project : StorableBase, IComparable
 	{
+		public const int CURRENT_VERSION = 1;
 		ObservableCollection<TimelineEvent> timeline;
 		ObservableCollection<Period> periods;
 		ObservableCollection<Timer> timers;
@@ -76,14 +78,20 @@ namespace LongoMatch.Core.Store
 		{
 			foreach (TimelineEvent evt in Timeline) {
 				evt.Project = this;
-				// FIXME: remove this after the migration tool is ready
-				evt.FileSet = Description.FileSet;
 			}
 		}
 
 		#endregion
 
 		#region Properties
+
+		/// <value>
+		/// Document version
+		/// </value>
+		public int Version {
+			get;
+			set;
+		}
 
 		public ObservableCollection<TimelineEvent> Timeline {
 			get {
@@ -616,26 +624,11 @@ namespace LongoMatch.Core.Store
 				throw new Exception (Catalog.GetString ("The file you are trying to load " +
 				"is not a valid project"));
 			}
-			ConvertTeams (project);
+			ProjectMigration.Migrate (project);
 			return project;
 		}
 
-		#pragma warning disable 0618
-		internal static void ConvertTeams (Project project)
-		{
-			// Convert old Team tags to Teams
-			foreach (TimelineEvent evt in project.Timeline.Where (e => e.Team != TeamType.NONE)) {
-				if (evt.Team == TeamType.LOCAL || evt.Team == TeamType.BOTH) {
-					evt.Teams.Add (project.LocalTeamTemplate);
-				}
-				if (evt.Team == TeamType.VISITOR || evt.Team == TeamType.BOTH) {
-					evt.Teams.Add (project.VisitorTeamTemplate);
-				}
-			}
-		}
-
-		#pragma warning restore 0618
-
+	
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;

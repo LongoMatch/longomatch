@@ -116,6 +116,10 @@
     <Compile Include="Core\Filters\TestQueryFilter.cs" />
     <Compile Include="Core\Filters\TestProjectsFilter.cs" />
     <Compile Include="Services\TestToolsManager.cs" />
+    <Compile Include="DB\TestDatabaseMigration.cs" />
+    <Compile Include="Core\Migration\TestTeamMigration.cs" />
+    <Compile Include="Core\Migration\TestProjectMigration.cs" />
+    <Compile Include="Core\Migration\TestDashboardMigration.cs" />
     <Compile Include="Core\Common\TestCloner.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,16 +151,16 @@
     <EmbeddedResource Include="Services\latest-test.json">
       <LogicalName>latest-test.json</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\basket.lct">
+    <EmbeddedResource Include="data\v0\basket.lct">
       <LogicalName>basket.lct</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\france.ltt">
+    <EmbeddedResource Include="data\v0\france.ltt">
       <LogicalName>france.ltt</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\spain.ltt">
+    <EmbeddedResource Include="data\v0\spain.ltt">
       <LogicalName>spain.ltt</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\spain_france_test.lgm">
+    <EmbeddedResource Include="data\v0\spain_france_test.lgm">
       <LogicalName>spain_france_test.lgm</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
@@ -170,6 +174,8 @@
     <Folder Include="Core\Serialization\" />
     <Folder Include="Integration\" />
     <Folder Include="Core\Filters\" />
+    <Folder Include="Core\Migration\" />
+    <Folder Include="data\v0\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

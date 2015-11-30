@@ -24,6 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;

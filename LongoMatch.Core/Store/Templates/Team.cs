@@ -18,20 +18,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
 	public class Team: StorableBase, ITemplate<Team>
 	{
+		public const int CURRENT_VERSION = 1;
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
 		ObservableCollection<Player> list;
@@ -56,6 +56,11 @@ namespace LongoMatch.Core.Store.Templates
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool Static {
+			get;
+			set;
+		}
+
+		public int Version {
 			get;
 			set;
 		}

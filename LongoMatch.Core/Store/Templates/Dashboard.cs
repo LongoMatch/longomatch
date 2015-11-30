@@ -39,11 +39,13 @@ namespace LongoMatch.Core.Store.Templates
 	public class Dashboard: StorableBase, ITemplate<Dashboard>
 	{
 
-		ObservableCollection<DashboardButton> list;
+		public const int CURRENT_VERSION = 1;
 		const int CAT_WIDTH = 120;
 		const int CAT_HEIGHT = 80;
 		const int MIN_WIDTH = 320;
 		const int MIN_HEIGHT = 240;
+
+		ObservableCollection<DashboardButton> list;
 
 		public Dashboard ()
 		{
@@ -56,7 +58,7 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			ID = Guid.NewGuid ();
 			List = new ObservableCollection<DashboardButton> ();
-			GamePeriods = new ObservableCollection<string> {"1", "2"};
+			GamePeriods = new ObservableCollection<string> { "1", "2" };
 		}
 
 		/// <summary>
@@ -66,6 +68,14 @@ namespace LongoMatch.Core.Store.Templates
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool Static {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the document version.
+		/// </summary>
+		public int Version {
 			get;
 			set;
 		}
@@ -329,7 +339,7 @@ namespace LongoMatch.Core.Store.Templates
 			Dashboard template = new Dashboard ();
 			
 			template.FillDefaultTemplate (count);
-			template.GamePeriods = new ObservableCollection<string> {"1", "2"};
+			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),

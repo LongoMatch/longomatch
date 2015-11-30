@@ -16,14 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
@@ -141,7 +142,7 @@ namespace LongoMatch.DB
 			string path = Path.Combine (typePath, id.ToString () + GetExtension (typeof(T)));
 
 			if (File.Exists (path)) {
-				T t = Serializer.Instance.LoadSafe<T> (path);
+				T t = RetrieveFrom<T> (path);
 				Log.Information ("Retrieving " + path);
 				return t;
 			} else {
@@ -169,7 +170,7 @@ namespace LongoMatch.DB
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
 				try {
 					Log.Information ("Retrieving " + path);
-					T t = Serializer.Instance.LoadSafe<T> (path);
+					T t = RetrieveFrom<T> (path);
 
 					string sType = ResolveType (typeof(T));
 
@@ -215,7 +216,7 @@ namespace LongoMatch.DB
 					string path = Path.Combine (typePath, name + GetExtension (typeof(T)));
 
 					if (File.Exists (path)) {
-						T t = Serializer.Instance.LoadSafe<T> (path);
+						T t = RetrieveFrom<T> (path);
 						Log.Information ("Retrieving by filename " + path);
 						// To avoid cases where the name of the file does not match the name of the template
 						// overwrite the template name
@@ -236,7 +237,7 @@ namespace LongoMatch.DB
 			// Get the name of the class and look for a folder on the
 			// basePath with the same name
 			foreach (string path in Directory.GetFiles (typePath, "*" + extension)) {
-				T t = Serializer.Instance.LoadSafe<T> (path);
+				T t = RetrieveFrom<T> (path);
 				bool matches = true;
 
 				foreach (KeyValuePair<string, List<object>> entry in filter) {
@@ -325,11 +326,16 @@ namespace LongoMatch.DB
 		/// <typeparam name="T">The type of the object.</typeparam>
 		public static T RetrieveFrom<T> (string from) where T : IStorable
 		{
-			T t;
-
 			Log.Information ("Loading " + from);
-			t = (T)Serializer.Instance.LoadSafe<T> (from);
-			return t;
+			T storable = Serializer.Instance.LoadSafe<T> (from);
+			if (storable is Project) {
+				ProjectMigration.Migrate (storable as Project);
+			} else if (storable is Team) {
+				TeamMigration.Migrate (storable as Team);
+			} else if (storable is Dashboard) {
+				DashboardMigration.Migrate (storable as Dashboard);
+			}
+			return storable;
 		}
 
 		/// <summary>

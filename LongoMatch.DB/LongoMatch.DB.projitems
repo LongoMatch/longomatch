@@ -27,5 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseDB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migration\DatabaseMigration.cs" />
   </ItemGroup>
 </Project>
