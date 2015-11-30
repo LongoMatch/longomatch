@@ -12388,11 +12388,11 @@ Invert</property>
         <child>
           <widget class="Gtk.ProgressBar" id="progressbar1">
             <property name="MemberName" />
-            <property name="WidthRequest">240</property>
+            <property name="WidthRequest">384</property>
           </widget>
           <packing>
-            <property name="X">200</property>
-            <property name="Y">400</property>
+            <property name="X">96</property>
+            <property name="Y">430</property>
           </packing>
         </child>
         <child>
