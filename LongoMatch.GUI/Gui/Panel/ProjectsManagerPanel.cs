@@ -70,6 +70,7 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
+			projectlistwidget1.ProjectSelected += HandleProjectSelected;
 			projectlistwidget1.Fill (DB.GetAllProjects ().ToList ());
 
 			seasonentry.Changed += HandleChanged;
@@ -213,6 +214,14 @@ namespace LongoMatch.Gui.Panel
 					desctextview.Buffer.EndIter, true);
 			}
 			edited = true;
+		}
+
+		void HandleProjectSelected (Project project)
+		{
+			SaveLoadedProject (false);
+			if (project != null) {
+				Config.EventsBroker.EmitOpenProjectID (project.ID, project);
+			}
 		}
 
 		void HandleProjectsSelected (List<Project> projects)

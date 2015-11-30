@@ -189,6 +189,7 @@
     <Compile Include="Gui\TreeView\StringObject.cs" />
     <Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
     <Compile Include="Gui\TreeView\CellRendererButton.cs" />
+    <Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

@@ -24,6 +24,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using Mono.Unix;
+using Pango;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -60,8 +61,47 @@ namespace LongoMatch.Gui.Menus
 			ShowMenu (project, plays, eventType, time, null, false);
 		}
 
-		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
-		                       IList<EventType> eventTypes, bool editableName)
+		/// <summary>
+		/// Fills the menu item "Add to playlist" with all the playlist options
+		/// </summary>
+		/// <param name="addToPlaylistMenu">Add to playlist menu.</param>
+		/// <param name="project">Project.</param>
+		/// <param name="events">Timeline events.</param>
+		static public void FillAddToPlaylistMenu (MenuItem addToPlaylistMenu, Project project, IList<TimelineEvent> events)
+		{
+			if (events.Count == 0) {
+				addToPlaylistMenu.Visible = false;
+				return;
+			}
+
+			addToPlaylistMenu.Visible = true;
+			var label = String.Format ("{0} ({1})", Catalog.GetString ("Add to playlist"), events.Count);
+			addToPlaylistMenu.SetLabel (label);
+
+			if (project.Playlists != null) {
+				Menu plMenu = new Menu ();
+				MenuItem item;
+				foreach (Playlist pl in project.Playlists) {
+					item = new MenuItem (pl.Name);
+					plMenu.Append (item);
+					item.Activated += (sender, e) => {
+						IEnumerable<IPlaylistElement> elements = events.Select (p => new PlaylistPlayElement (p));
+						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList ());
+					};
+				}
+				item = new MenuItem (Catalog.GetString ("Create new playlist..."));
+				plMenu.Append (item);
+				item.Activated += (sender, e) => {
+					IEnumerable<IPlaylistElement> elements = events.Select (p => new PlaylistPlayElement (p));
+					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList ());
+				};
+				plMenu.ShowAll ();
+				addToPlaylistMenu.Submenu = plMenu;
+			}
+		}
+
+		void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
+		               IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
 
@@ -108,8 +148,6 @@ namespace LongoMatch.Gui.Menus
 			if (plays.Count > 0) {
 				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count);
 				del.SetLabel (label);
-				label = String.Format ("{0} ({1})", Catalog.GetString ("Add to playlist"), plays.Count);
-				addPLN.SetLabel (label);
 				label = String.Format ("{0} ({1})", Catalog.GetString ("Export to video file"), plays.Count);
 				render.SetLabel (label);
 				label = String.Format ("{0} ({1})", Catalog.GetString ("Duplicate "), plays.Count);
@@ -158,32 +196,7 @@ namespace LongoMatch.Gui.Menus
 				drawings.Submenu = drawingsMenu;
 			}
 			
-			if (project.Playlists != null) {
-				Menu plMenu = new Menu ();
-				MenuItem item;
-
-				foreach (Playlist pl in project.Playlists) {
-					item = new MenuItem (pl.Name);
-					plMenu.Append (item);
-					item.Activated += (sender, e) => {
-						IEnumerable<IPlaylistElement> elements;
-						
-						elements = plays.Select (p => new PlaylistPlayElement (p));
-						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList ());
-					}; 
-				}
-				
-				item = new MenuItem (Catalog.GetString ("Create new playlist..."));
-				plMenu.Append (item);
-				item.Activated += (sender, e) => {
-					IEnumerable<IPlaylistElement> elements;
-					elements = plays.Select (p => new PlaylistPlayElement (p));
-					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList ());
-				}; 
-				
-				plMenu.ShowAll ();
-				addPLN.Submenu = plMenu;
-			}
+			FillAddToPlaylistMenu (addPLN, project, plays);
 
 			Popup ();
 		}
