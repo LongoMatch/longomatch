@@ -261,12 +261,17 @@ namespace LongoMatch.Gui.Component
 		void UpdateSelection (TreeIter iter, bool active)
 		{
 			Project project = store.GetValue (iter, COL_PROJECT) as Project;
-			store.SetValue (iter, COL_ACTIVE, active);
-			if (active) {
-				selectedProjects.Add (project);
-			} else {
-				selectedProjects.Remove (project);
+			bool wasActive = (bool)store.GetValue (iter, COL_ACTIVE);
+
+			if (wasActive != active) {
+				store.SetValue (iter, COL_ACTIVE, active);
+				if (active) {
+					selectedProjects.Add (project);
+				} else {
+					selectedProjects.Remove (project);
+				}
 			}
+
 			if (!swallowSignals && ProjectsSelected != null) {
 				ProjectsSelected (selectedProjects);
 			}
