@@ -294,6 +294,7 @@ namespace LongoMatch.DB
 			return JsonSerializer.Create (GetSerializerSettings (objType, context, rev));
 		}
 
+		#pragma warning disable 0618
 		static string GetDocumentType (IStorable storable)
 		{
 			Type type;
@@ -302,11 +303,14 @@ namespace LongoMatch.DB
 				type = typeof(EventType);
 			} else if (storable is TimelineEvent) {
 				type = typeof(TimelineEvent);
+			} else if (storable is TeamTemplate) {
+				type = typeof(Team);
 			} else {
 				type = storable.GetType ();
 			}
 			return type.Name;
 		}
+		#pragma warning restore 0618
 	}
 
 	/// <summary>
