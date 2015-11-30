@@ -36,7 +36,7 @@ namespace LongoMatch.Core.Store.Templates
 	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
-	public class Dashboard: StorableBase, ITemplate
+	public class Dashboard: StorableBase, ITemplate<Dashboard>
 	{
 
 		ObservableCollection<DashboardButton> list;
@@ -192,6 +192,20 @@ namespace LongoMatch.Core.Store.Templates
 				return List.OfType<TagButton> ().Select (t => t.Tag).
 					GroupBy (t => t.Group).ToDictionary (g => g.Key, g => g.ToList ());
 			}
+		}
+
+		/// <summary>
+		/// Creates a deep copy of this dashboard
+		/// </summary>
+		public Dashboard Copy (string newName)
+		{
+			Dashboard newDashboard = this.Clone ();
+			newDashboard.ID = Guid.NewGuid ();
+			newDashboard.Name = newName;
+			foreach (AnalysisEventButton evtButton in List.OfType<AnalysisEventButton> ()) {
+				evtButton.EventType.ID = Guid.NewGuid ();
+			}
+			return newDashboard;
 		}
 
 		/// <summary>

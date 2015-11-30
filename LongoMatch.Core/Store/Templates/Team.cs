@@ -30,7 +30,7 @@ using System.Collections.Specialized;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: StorableBase, ITemplate
+	public class Team: StorableBase, ITemplate<Team>
 	{
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
@@ -200,6 +200,20 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
+		/// <summary>
+		/// Creates a deep copy of this team with new ID's for each player
+		/// </summary>
+		public Team Copy (string newName)
+		{
+			Team newTeam = this.Clone ();
+			newTeam.ID = Guid.NewGuid ();
+			newTeam.Name = newName;
+			foreach (Player player in List) {
+				player.ID = Guid.NewGuid ();
+			}
+			return newTeam;
+		}
+
 		public void RemovePlayers (List<Player> players, bool delete)
 		{
 			List<Player> bench, starters;
@@ -272,7 +286,7 @@ namespace LongoMatch.Core.Store.Templates
 	}
 
 	/* Keep this for backwards compatibility importing old project files */
-	[Obsolete ("Use Team instead of TeamTeamplate in new code", true)]
+	[Obsolete ("Use Team instead of TeamTeamplate in new code")]
 	[Serializable]
 	public class TeamTemplate: Team
 	{

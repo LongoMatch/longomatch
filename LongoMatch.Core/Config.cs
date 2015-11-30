@@ -198,6 +198,12 @@ namespace LongoMatch
 			}
 		}
 
+		public static string TemplatesDir {
+			get {
+				return Path.Combine (DBDir, "templates");
+			}
+		}
+
 		public static string PlayListDir {
 			get {
 				return Path.Combine (homeDirectory, "playlists");

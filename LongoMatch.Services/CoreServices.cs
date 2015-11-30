@@ -132,12 +132,12 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			ts = new TemplatesService (new FileStorage (Config.DBDir));
-			RegisterService (ts);
-
 			/* Start DB services */
 			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);
+
+			ts = new TemplatesService ();
+			RegisterService (ts);
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager ();

@@ -19,50 +19,81 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-	
+
 namespace LongoMatch.Interfaces
 {
 	public interface ITemplate
 	{
 		void Save (string filename);
-		string Name {get; set;}
+
+		string Name { get; set; }
 	}
-	
-	public interface ITemplate<T>: ITemplate, IList<T> {
+
+	public interface ITemplate<T>: ITemplate, IList<T>
+	{
 		T AddDefaultItem (int index);
 	}
-	
+
 	public interface ITemplateProvider
 	{
-		void CheckDefaultTemplate();
-		List<string> TemplatesNames {get;}
-		bool Exists(string name);
+		void CheckDefaultTemplate ();
+
+		List<string> TemplatesNames { get; }
+
+		bool Exists (string name);
+
 		void Copy (string orig, string copy);
+
 		void Delete (string templateName);
-		void Create (string templateName, params object [] list);
+
+		void Create (string templateName, params object[] list);
 	}
-	
+
 	public interface ITemplateProvider<T, U>: ITemplateProvider where T: ITemplate<U>
 	{
-		List<T> Templates {get;}
+		List<T> Templates { get; }
+
 		T Load (string name);
+
 		void Save (ITemplate<U> template);
+
 		void Update (ITemplate<U> template);
 	}
-	
+
 	public interface ITemplateWidget<T, U> where T: ITemplate<U>
 	{
-		T Template {get; set;}
-		bool Edited {get; set;}
-		bool CanExport {get; set;}
-		Project Project {get; set;}
+		T Template { get; set; }
+
+		bool Edited { get; set; }
+
+		bool CanExport { get; set; }
+
+		Project Project { get; set; }
 	}
-	
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, Category> {}
-	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player> {}
-	public interface ISubcategoriesTemplatesProvider: ITemplateProvider<SubCategoryTemplate, string> {} 
-	
-	public interface ICategoriesTemplatesEditor: ITemplateWidget<Categories, Category> {}
-	public interface ITeamTemplatesEditor: ITemplateWidget<TeamTemplate, Player> {}
+
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, Category>
+	{
+
+	}
+
+	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player>
+	{
+
+	}
+
+	public interface ISubcategoriesTemplatesProvider: ITemplateProvider<SubCategoryTemplate, string>
+	{
+
+	}
+
+	public interface ICategoriesTemplatesEditor: ITemplateWidget<Categories, Category>
+	{
+
+	}
+
+	public interface ITeamTemplatesEditor: ITemplateWidget<TeamTemplate, Player>
+	{
+
+	}
 }
 

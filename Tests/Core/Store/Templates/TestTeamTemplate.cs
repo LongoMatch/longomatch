@@ -230,5 +230,18 @@ namespace Tests.Core.Store.Templates
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
 		}
+
+		[Test ()]
+		public void TestCopy ()
+		{
+			Team team = Team.DefaultTemplate (10);
+			Team copy = team.Copy ("newName");
+			Assert.AreNotEqual (team.ID, copy.ID);
+			for (int i = 0; i < team.List.Count; i++) {
+				Assert.AreNotEqual (team.List [i].ID, copy.List [i].ID);
+			}
+			Assert.AreEqual ("newName", copy.Name);
+			Assert.AreNotEqual (team.Name, copy.Name);
+		}
 	}
 }

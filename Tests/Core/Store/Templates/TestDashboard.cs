@@ -149,6 +149,22 @@ namespace Tests.Core.Store.Templates
 			d.IsChanged = false;
 
 		}
+
+		[Test ()]
+		public void TestCopy ()
+		{
+			Dashboard dashboard = Dashboard.DefaultTemplate (10);
+			Dashboard copy = dashboard.Copy ("newName");
+			Assert.AreNotEqual (dashboard.ID, copy.ID);
+			for (int i = 0; i < dashboard.List.Count; i++) {
+				AnalysisEventButton button = copy.List [i] as AnalysisEventButton;
+				if (button != null) {
+					Assert.AreNotEqual ((dashboard.List [i] as AnalysisEventButton).EventType.ID, button.EventType.ID);
+				}
+			}
+			Assert.AreEqual ("newName", copy.Name);
+			Assert.AreNotEqual (dashboard.Name, copy.Name);
+		}
 	}
 }
 

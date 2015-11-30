@@ -296,7 +296,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (template != null) {
 				try {
-					Config.TeamTemplatesProvider.Update (template);
+					Config.TeamTemplatesProvider.Save (template);
 					Edited = false;
 				} catch (InvalidTemplateFilenameException ex) {
 					Config.GUIToolkit.ErrorMessage (ex.ToString (), this);

@@ -63,7 +63,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplates.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\ICapturer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IDiscoverer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IFramesCapturer.cs" />

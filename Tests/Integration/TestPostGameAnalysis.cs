@@ -116,8 +116,8 @@ namespace Tests.Integration
 				Config.TeamTemplatesProvider.LoadFile (SaveResource ("france.ltt"))); 
 			Config.CategoriesTemplatesProvider.Save (
 				Config.CategoriesTemplatesProvider.LoadFile (SaveResource ("basket.lct"))); 
-			Assert.AreEqual (4, Config.TeamTemplatesProvider.TemplatesNames.Count);
-			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
+			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
 
 			// Create a new project and open it
 			Project p = CreateProject ();
@@ -222,9 +222,9 @@ namespace Tests.Integration
 		Project CreateProject ()
 		{
 			Project project = new Project { Description = new ProjectDescription () };
-			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Load ("spain");
-			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Load ("france");
-			project.Dashboard = Config.CategoriesTemplatesProvider.Load ("basket");
+			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			project.Dashboard = Config.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket");
 			project.Description.Competition = "Liga";
 			project.Description.MatchDate = DateTime.UtcNow;
 			project.Description.Description = "Created by LongoMatch";

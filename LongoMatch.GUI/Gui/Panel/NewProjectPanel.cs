@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Panel
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
 		List<Device> videoDevices;
-		ListStore videoStandardList, encProfileList, qualList;
+		ListStore videoStandardList, encProfileList, qualList, dashboardsList;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Gdk.Color red;
@@ -265,12 +265,18 @@ namespace LongoMatch.Gui.Panel
 			int i = 0;
 			int index = 0;
 
-			foreach (string template in Config.CategoriesTemplatesProvider.TemplatesNames) {
-				tagscombobox.AppendText (template);
-				if (template == Config.DefaultTemplate)
+			dashboardsList = new ListStore (typeof(string), typeof(Dashboard));
+			foreach (var dashboard in Config.CategoriesTemplatesProvider.Templates) {
+				dashboardsList.AppendValues (dashboard.Name, dashboard);
+				if (dashboard.Name == Config.DefaultTemplate)
 					index = i;
 				i++;
 			}
+			tagscombobox.Model = dashboardsList;
+			tagscombobox.Clear ();
+			var cell = new CellRendererText ();
+			tagscombobox.PackStart (cell, true);
+			tagscombobox.AddAttribute (cell, "text", 0);
 			tagscombobox.Active = index;
 		}
 
@@ -319,15 +325,6 @@ namespace LongoMatch.Gui.Panel
 				}
 				devicecombobox.AppendText (deviceName);
 				devicecombobox.Active = 0;
-			}
-		}
-
-		void LoadTemplate (string name, TeamType team)
-		{
-			Team template;
-			if (name != null) {
-				template = Config.TeamTemplatesProvider.Load (name);
-				LoadTemplate (template, team, false);
 			}
 		}
 
@@ -514,7 +511,9 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSportsTemplateChanged (object sender, EventArgs e)
 		{
-			analysisTemplate = Config.CategoriesTemplatesProvider.Load (tagscombobox.ActiveText);
+			TreeIter iter;
+			tagscombobox.GetActiveIter (out iter);
+			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as Dashboard;
 			if (teamtagger != null) {
 				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
 			}

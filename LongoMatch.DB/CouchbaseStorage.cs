@@ -48,7 +48,7 @@ namespace LongoMatch.DB
 			Init ();
 		}
 
-		internal CouchbaseStorage (string dbDir, string storageName)
+		public CouchbaseStorage (string dbDir, string storageName)
 		{
 			this.storageName = storageName;
 			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),

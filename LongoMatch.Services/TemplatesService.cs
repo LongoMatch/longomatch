@@ -29,36 +29,26 @@ using LongoMatch.DB;
 
 namespace LongoMatch.Services
 {
-	public class TemplatesService: ITemplatesService, IService
+	public class TemplatesService: IService
 	{
-		private Dictionary<Type, ITemplateProvider> dict;
 
-		public TemplatesService (IStorage storage)
+		public TemplatesService (IStorage storage = null)
 		{
-			dict = new Dictionary<Type, ITemplateProvider> ();
-			dict.Add (typeof(Team),
-				new TeamTemplatesProvider (storage));
-			dict.Add (typeof(Dashboard),
-				new CategoriesTemplatesProvider (storage));
-		}
-
-		public ITemplateProvider<T> GetTemplateProvider<T> () where T: ITemplate
-		{
-			if (dict.ContainsKey (typeof(T)))
-				return (ITemplateProvider<T>)dict [typeof(T)];
-			return null;
+			if (storage == null) {
+				storage = new CouchbaseStorage (Config.TemplatesDir, "templates");
+			}
+			TeamTemplateProvider = new TeamTemplatesProvider (storage);
+			CategoriesTemplateProvider = new CategoriesTemplatesProvider (storage);
 		}
 
 		public ITeamTemplatesProvider TeamTemplateProvider {
-			get {
-				return (ITeamTemplatesProvider)dict [typeof(Team)]; 
-			}
+			get;
+			protected set;
 		}
 
 		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
-			get {
-				return (ICategoriesTemplatesProvider)dict [typeof(Dashboard)]; 
-			}
+			get;
+			protected set;
 		}
 
 		#region IService
@@ -90,7 +80,7 @@ namespace LongoMatch.Services
 		#endregion
 	}
 
-	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate
+	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate<T>
 	{
 		readonly MethodInfo methodDefaultTemplate;
 		protected List<T> systemTemplates;
@@ -105,10 +95,11 @@ namespace LongoMatch.Services
 
 		public bool Exists (string name)
 		{
-			// FIXME we can add an Exist(Dictionary args) method on the IStorage?
+			if (systemTemplates.Any (t => t.Name == name)) {
+				return true;
+			}
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", name);
-
 			return storage.Retrieve<T> (filter).Any ();
 		}
 
@@ -118,44 +109,12 @@ namespace LongoMatch.Services
 		/// <value>The templates.</value>
 		public List<T> Templates {
 			get {
-				List<T> templates = storage.RetrieveAll<T> ().ToList ();
+				List<T> templates = storage.RetrieveAll<T> ().OrderBy (t => t.Name).ToList ();
 				// Now add the system templates, use a copy to prevent modification of system templates.
 				foreach (T stemplate in systemTemplates) {
-					templates.Add (Cloner.Clone (stemplate));
+					templates.Add (stemplate.Clone ());
 				}
 				return templates;
-			}
-		}
-
-		/// <summary>
-		/// Gets the templates names.
-		/// For that we need to get every ITemplate from the Storage, create a new list
-		/// based on every ITemplate name, and return it.
-		/// </summary>
-		/// <value>The templates names.</value>
-		public List<string> TemplatesNames {
-			// FIXME we really need to avoid this. Too many roundtrips
-			get {
-				return Templates.Select (t => t.Name).ToList ();
-			}
-		}
-
-		public T Load (string name)
-		{
-			T template;
-
-			template = systemTemplates.FirstOrDefault (t => t.Name == name);
-			if (template != null) {
-				// Return a copy to prevent modification of system templates.
-				return template.Clone ();
-			} else {
-				QueryFilter filter = new QueryFilter ();
-				filter.Add ("Name", name);
-
-				template = storage.Retrieve<T> (filter).FirstOrDefault ();
-				if (template == null)
-					throw new TemplateNotFoundException<T> (name);
-				return template;
 			}
 		}
 
@@ -170,14 +129,7 @@ namespace LongoMatch.Services
 		{
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
-			storage.Store<T> (template);
-		}
-
-		public void Update (T template)
-		{
-			CheckInvalidChars (template.Name);
-			Log.Information ("Updating template " + template.Name);
-			Save (template);
+			storage.Store<T> (template, true);
 		}
 
 		public void Register (T template)
@@ -185,32 +137,22 @@ namespace LongoMatch.Services
 			systemTemplates.Add (template);
 		}
 
-		public void Copy (string orig, string copy)
+		public void Copy (T template, string newName)
 		{
-			T template;
+			CheckInvalidChars (newName);
+			Log.Information (String.Format ("Copying template {0} to {1}", template.Name, newName));
 
-			CheckInvalidChars (copy);
-			Log.Information (String.Format ("Copying template {0} to {1}", orig, copy));
-			
-			template = systemTemplates.FirstOrDefault (t => t.Name == orig);
-			
-			if (template == null) {
-				template = Load (orig);
-			} else {
-				template = template.Clone ();
-			}
-			template.ID = new Guid ();
-			template.Name = copy;
+			template = template.Copy (newName);
 			Save (template);
 		}
 
-		public void Delete (string templateName)
+		public void Delete (T template)
 		{
-			Log.Information ("Deleting template " + templateName);
-			if (systemTemplates.Any (t => t.Name == templateName)) {
-				throw new TemplateNotFoundException<T> (templateName);
+			Log.Information ("Deleting template " + template.Name);
+			if (systemTemplates.Contains (template)) {
+				// System templates can't be deleted
+				throw new TemplateNotFoundException<T> (template.Name);
 			}
-			T template = Load (templateName);
 			storage.Delete<T> (template);
 		}
 
