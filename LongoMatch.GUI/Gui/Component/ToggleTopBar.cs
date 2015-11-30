@@ -88,7 +88,11 @@ namespace LongoMatch.Gui.Component
 			buttoncontainer.Add (button);
 			pos++;
 
-			button.Toggled += (object sender, EventArgs e) => SwitchPage (pos);
+			button.Toggled += (sender, e) => {
+				if (button.Active) {
+					SwitchPage (pos);
+				}
+			};
 			button.ShowAll ();
 		}
 

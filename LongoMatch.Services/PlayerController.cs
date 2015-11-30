@@ -66,6 +66,8 @@ namespace LongoMatch.Services
 		readonly Timer timer;
 		readonly ManualResetEvent TimerDisposed;
 
+		bool active;
+
 		struct Segment
 		{
 			public Time Start;
@@ -229,8 +231,13 @@ namespace LongoMatch.Services
 		}
 
 		public bool Active {
-			get;
-			set;
+			get { return active; }
+			set {
+				active = value;
+				if (!value && Playing) {
+					Pause ();
+				}
+			}
 		}
 
 		public Playlist LoadedPlaylist {
@@ -290,17 +297,15 @@ namespace LongoMatch.Services
 
 		public void Play (bool synchronous = false)
 		{
-			if (Active) {
-				Log.Debug ("Play");
-				if (StillImageLoaded) {
-					ReconfigureTimeout (TIMEOUT_MS);
-					EmitPlaybackStateChanged (this, true);
-				} else {
-					EmitLoadDrawings (null);
-					player.Play (synchronous);
-				}
-				Playing = true;
+			Log.Debug ("Play");
+			if (StillImageLoaded) {
+				ReconfigureTimeout (TIMEOUT_MS);
+				EmitPlaybackStateChanged (this, true);
+			} else {
+				EmitLoadDrawings (null);
+				player.Play (synchronous);
 			}
+			Playing = true;
 		}
 
 		public void Pause (bool synchronous = false)
