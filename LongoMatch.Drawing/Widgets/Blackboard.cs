@@ -247,7 +247,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			ClearSelection ();
 			area = RegionOfInterest;
-			if (area == null) {
+			if (area == null || area.Empty) {
 				area = new Area (0, 0, Background.Width, Background.Height); 
 			}
 			tk.Save (this, area, filename);
