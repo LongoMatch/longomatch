@@ -35,7 +35,7 @@ namespace LongoMatch.DB.Views
 	/// The view also stores a preloaded version of the object that is returned in the
 	/// query using the properties with the attribute <see cref="LongoMatchPropertyPreload"/>
 	/// </summary>
-	public abstract class GenericView<T>: IQueryView <T> where T : IStorable, new()
+	public abstract class GenericView<T>: IQueryView <T> where T : IStorable
 	{
 		readonly Database db;
 		readonly CouchbaseStorage storage;

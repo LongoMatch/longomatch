@@ -74,6 +74,16 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
+		public void TestProjectSetInTimelineEvents ()
+		{
+			Project p = CreateProject ();
+			TimelineEvent evt = new TimelineEvent ();
+			p.AddEvent (evt);
+			Project newp = Utils.SerializeDeserialize (p);
+			Assert.AreEqual (newp, newp.Timeline [0].Project);
+		}
+
+		[Test ()]
 		public void TestIsFakeCapture ()
 		{
 			Project p = new Project ();

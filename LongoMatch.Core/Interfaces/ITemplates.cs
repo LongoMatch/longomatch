@@ -28,6 +28,8 @@ namespace LongoMatch.Core.Interfaces
 
 		bool Static  { get; set; }
 
+		int Version { get; set; }
+
 	}
 
 	public interface ITemplate<T>: ITemplate

@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -60,6 +61,7 @@ namespace LongoMatch.Core.Store
 
 		#region Constructors
 
+
 		public Project ()
 		{
 			ID = System.Guid.NewGuid ();
@@ -71,6 +73,7 @@ namespace LongoMatch.Core.Store
 			Periods = new ObservableCollection<Period> ();
 			Playlists = new ObservableCollection<Playlist> ();
 			EventTypes = new ObservableCollection<EventType> ();
+			Version = Constants.DB_VERSION;
 		}
 
 		[OnDeserialized ()]
@@ -88,6 +91,8 @@ namespace LongoMatch.Core.Store
 		/// <value>
 		/// Document version
 		/// </value>
+		[DefaultValue (0)]
+		[JsonProperty (DefaultValueHandling = DefaultValueHandling.Populate)]
 		public int Version {
 			get;
 			set;

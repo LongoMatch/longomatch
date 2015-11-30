@@ -81,7 +81,7 @@ namespace LongoMatch.DB
 					Name = storageName,
 					LastBackup = DateTime.UtcNow,
 					LastCleanup = DateTime.UtcNow,
-					Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION)
+					Version = new Version (Constants.DB_VERSION, 0),
 				};
 				Store (Info);
 			}

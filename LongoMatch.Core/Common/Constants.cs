@@ -121,9 +121,8 @@ Xavier Queralt Mateu (ca)";
 		public const string LINE_DOUBLE_DOT = "line-double-dot" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
 		
-		public const int DB_MAYOR_VERSION = 3;
-		public const int DB_MINOR_VERSION = 1;
-		
+		public const int DB_VERSION = 1;
+
 		public const int MAX_PLAYER_ICON_SIZE = 100;
 		public const int MAX_SHIELD_ICON_SIZE = 100;
 		public const int MAX_THUMBNAIL_SIZE = 100;

@@ -42,6 +42,7 @@ namespace Tests.Core.Migration
 			}
 			dashboard = origDashboard.Clone ();
 			dashboard.ID = Guid.Empty;
+			Assert.AreEqual (0, dashboard.Version);
 			DashboardMigration.Migrate (dashboard);
 			Assert.AreNotEqual (Guid.Empty, dashboard.ID);
 			Assert.AreEqual (1, dashboard.Version);

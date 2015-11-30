@@ -177,6 +177,7 @@ namespace Tests.Integration
 			Assert.IsNotNull (savedP);
 
 			// Import a new project
+			p = null;
 			string projectPath = SaveResource ("spain_france_test.lgm");
 			ProjectImporter importer = CoreServices.toolsManager.ProjectImporters.FirstOrDefault
 				(i => i.Description == "Import LongoMatch project"); 
@@ -188,6 +189,7 @@ namespace Tests.Integration
 				p = project;
 			};
 			Config.EventsBroker.EmitImportProject ();
+			Assert.IsNotNull (p);
 			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count);
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
@@ -223,8 +225,11 @@ namespace Tests.Integration
 		{
 			Project project = new Project { Description = new ProjectDescription () };
 			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			Assert.IsNotNull (project.LocalTeamTemplate);
 			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			Assert.IsNotNull (project.VisitorTeamTemplate);
 			project.Dashboard = Config.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket");
+			Assert.IsNotNull (project.Dashboard);
 			project.Description.Competition = "Liga";
 			project.Description.MatchDate = DateTime.UtcNow;
 			project.Description.Description = "Created by LongoMatch";

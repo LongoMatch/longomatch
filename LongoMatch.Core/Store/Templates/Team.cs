@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -51,6 +52,7 @@ namespace LongoMatch.Core.Store.Templates
 			Colors = new Color [2];
 			Colors [0] = Color.Blue1;
 			Colors [1] = Color.Red1;
+			Version = Constants.DB_VERSION;
 		}
 
 		[JsonIgnore]
@@ -60,6 +62,12 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the document version.
+		/// </summary>
+		/// <value>The version.</value>
+		[DefaultValue (0)]
+		[JsonProperty (DefaultValueHandling = DefaultValueHandling.Populate)]
 		public int Version {
 			get;
 			set;

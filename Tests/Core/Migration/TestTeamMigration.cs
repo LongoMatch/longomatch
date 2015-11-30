@@ -43,6 +43,7 @@ namespace Tests.Core.Migration
 
 			team = origTeam.Clone ();
 			team.ID = Guid.Empty;
+			Assert.AreEqual (0, team.Version);
 			TeamMigration.Migrate (team);
 			Assert.AreNotEqual (Guid.Empty, team.ID);
 			Assert.AreEqual (1, team.Version);
