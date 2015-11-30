@@ -121,12 +121,6 @@ namespace LongoMatch.Services
 				if (importer.NeedsEdition) {
 					Config.EventsBroker.EmitNewProject (project);
 				} else {
-					if (!project.Description.FileSet.CheckFiles ()) {
-						if (!Config.GUIToolkit.SelectMediaFiles (project)) {
-							Config.GUIToolkit.ErrorMessage ("No valid video files associated. The project will not be imported");
-							return;
-						}
-					}
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
 						var res = Config.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +

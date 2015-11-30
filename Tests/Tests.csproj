@@ -115,6 +115,7 @@
     <Compile Include="Core\Common\TestExtensions.cs" />
     <Compile Include="Core\Filters\TestQueryFilter.cs" />
     <Compile Include="Core\Filters\TestProjectsFilter.cs" />
+    <Compile Include="Services\TestToolsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
