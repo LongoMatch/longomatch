@@ -136,16 +136,12 @@ namespace LongoMatch.Gui.Component
 
 			menu = new Menu ();
 
-			if (element is PlaylistPlayElement || element == null) {
-				PlaylistPlayElement pl = element as PlaylistPlayElement;
-
-				edit = new MenuItem (Catalog.GetString ("Edit name"));
+			if (!(element is PlaylistVideo)) {
+				edit = new MenuItem (Catalog.GetString ("Edit properties"));
 				edit.Activated += (sender, e) => {
-					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						              pl.Title).Result;
-					if (!String.IsNullOrEmpty (name)) {
-						pl.Title = name;
-					}
+					EditPlaylistElementProperties dialog = new EditPlaylistElementProperties ((Gtk.Window)Toplevel, element);
+					dialog.Run ();
+					dialog.Destroy ();
 				};
 				menu.Append (edit);
 			}
