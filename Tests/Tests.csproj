@@ -121,6 +121,7 @@
     <Compile Include="Core\Migration\TestProjectMigration.cs" />
     <Compile Include="Core\Migration\TestDashboardMigration.cs" />
     <Compile Include="Core\Common\TestCloner.cs" />
+    <Compile Include="Integration\TestDatabaseMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">

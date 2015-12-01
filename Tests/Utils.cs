@@ -188,6 +188,19 @@ namespace Tests
 				Assert.AreNotEqual (obj1Str, obj2Str);
 			}
 		}
+
+		public static string SaveResource (string name, string path)
+		{
+			string filePath;
+			var assembly = Assembly.GetExecutingAssembly ();
+			using (Stream inS = assembly.GetManifestResourceStream (name)) {
+				filePath = Path.Combine (path, name);
+				using (Stream outS = new FileStream (filePath, FileMode.Create)) {
+					inS.CopyTo (outS);
+				}
+			}
+			return filePath;
+		}
 	}
 }
 

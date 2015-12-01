@@ -111,11 +111,11 @@ namespace Tests.Integration
 
 			// Start importing templates
 			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (SaveResource ("spain.ltt"))); 
+				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
 			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (SaveResource ("france.ltt"))); 
+				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("france.ltt", tmpPath)));
 			Config.CategoriesTemplatesProvider.Save (
-				Config.CategoriesTemplatesProvider.LoadFile (SaveResource ("basket.lct"))); 
+				Config.CategoriesTemplatesProvider.LoadFile (Utils.SaveResource ("basket.lct", tmpPath)));
 			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
 
@@ -178,7 +178,7 @@ namespace Tests.Integration
 
 			// Import a new project
 			p = null;
-			string projectPath = SaveResource ("spain_france_test.lgm");
+			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
 			ProjectImporter importer = CoreServices.toolsManager.ProjectImporters.FirstOrDefault
 				(i => i.Description == "Import LongoMatch project"); 
 			guiToolkitMock.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), null)).Returns (
@@ -206,19 +206,6 @@ namespace Tests.Integration
 			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
 				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
-		}
-
-		string SaveResource (string name)
-		{
-			string filePath;
-			var assembly = Assembly.GetExecutingAssembly ();
-			using (Stream inS = assembly.GetManifestResourceStream (name)) {
-				filePath = Path.Combine (tmpPath, name);
-				using (Stream outS = new FileStream (filePath, FileMode.Create)) {
-					inS.CopyTo (outS);
-				}
-			}
-			return filePath;
 		}
 
 		Project CreateProject ()
