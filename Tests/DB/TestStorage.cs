@@ -484,15 +484,17 @@ namespace Tests.DB
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
 			p.Description = pd;
+			p.AddEvent (new TimelineEvent ());
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (42, db.DocumentCount);
+			Assert.AreEqual (43, db.DocumentCount);
 
 			p = storage.RetrieveAll<Project> ().First ();
 			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
+			Assert.IsTrue (Object.ReferenceEquals (p.Description.FileSet, p.Timeline [0].FileSet));
 			storage.Store (p);
-			Assert.AreEqual (42, db.DocumentCount);
+			Assert.AreEqual (43, db.DocumentCount);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
