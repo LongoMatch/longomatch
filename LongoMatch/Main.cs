@@ -55,6 +55,10 @@ namespace LongoMatch
 			splashScreen.Show ();
 			Application.Invoke (async (s, e) => await Init (splashScreen));
 			Application.Run ();
+			try {
+				AddinsManager.ShutdownMultimediaBackends ();
+			} catch {
+			}
 		}
 
 		static async Task Init (SplashScreen splashScreen)
@@ -97,13 +101,9 @@ namespace LongoMatch
 				Config.GUIToolkit.Welcome ();
 			} catch (AddinRequestShutdownException arse) {
 				// Abort gracefully
+				Application.Quit ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
-			} finally {
-				try {
-					AddinsManager.ShutdownMultimediaBackends ();
-				} catch {
-				}
 			}
 		}
 
