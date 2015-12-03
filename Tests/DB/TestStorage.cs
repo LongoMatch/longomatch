@@ -117,6 +117,18 @@ namespace Tests.DB
 			});
 		}
 
+		[Test]
+		public void TestDeleteError ()
+		{
+			Assert.Throws<StorageException> (() => storage.Delete<Project> (null));
+		}
+
+		[Test]
+		public void TestStoreError ()
+		{
+			Assert.Throws<StorageException> (() => storage.Store<Project> (null));
+		}
+
 		[Test ()]
 		public void TestDocType ()
 		{

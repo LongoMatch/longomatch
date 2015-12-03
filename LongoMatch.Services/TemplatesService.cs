@@ -129,7 +129,11 @@ namespace LongoMatch.Services
 		{
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
-			storage.Store<T> (template, true);
+			try {
+				storage.Store<T> (template, true);
+			} catch (StorageException ex) {
+				Config.GUIToolkit.ErrorMessage (ex.Message);
+			}
 		}
 
 		public void Register (T template)
@@ -153,7 +157,11 @@ namespace LongoMatch.Services
 				// System templates can't be deleted
 				throw new TemplateNotFoundException<T> (template.Name);
 			}
-			storage.Delete<T> (template);
+			try {
+				storage.Delete<T> (template);
+			} catch (StorageException ex) {
+				Config.GUIToolkit.ErrorMessage (ex.Message);
+			}
 		}
 
 		public void Create (string templateName, params object[] list)

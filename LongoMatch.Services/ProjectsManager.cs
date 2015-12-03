@@ -398,8 +398,9 @@ namespace LongoMatch.Services
 			if (delete) {
 				try {
 					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject);
-				} catch (Exception ex) {
+				} catch (StorageException ex) {
 					Log.Exception (ex);
+					Config.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
 			CloseOpenedProject (!cancel);

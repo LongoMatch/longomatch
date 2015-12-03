@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Couchbase.Lite;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
@@ -122,10 +123,18 @@ namespace LongoMatch.DB
 		public void Fill (IStorable storable)
 		{
 			lock (mutex) {
-				db.RunInTransaction (() => {
-					DocumentsSerializer.FillObject (storable, db);
-					return true;
+				bool success = db.RunInTransaction (() => {
+					try {
+						DocumentsSerializer.FillObject (storable, db);
+						return true;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
+					}
 				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
+				}
 			}
 		}
 
@@ -163,21 +172,29 @@ namespace LongoMatch.DB
 		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			lock (mutex) {
-				db.RunInTransaction (() => {
-					StorableNode node;
-					ObjectChangedParser parser = new ObjectChangedParser ();
-					parser.Parse (out node, t, Serializer.JsonSettings);
+				bool success = db.RunInTransaction (() => {
+					try {
+						StorableNode node;
+						ObjectChangedParser parser = new ObjectChangedParser ();
+						parser.Parse (out node, t, Serializer.JsonSettings);
 
-					if (!forceUpdate) {
-						Update (node);
-					} else {
-						DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+						if (!forceUpdate) {
+							Update (node);
+						} else {
+							DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+						}
+						foreach (IStorable storable in node.OrphanChildren) {
+							db.GetDocument (DocumentsSerializer.StringFromID (storable.ID, t.ID)).Delete ();
+						}
+						return true;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
 					}
-					foreach (IStorable storable in node.OrphanChildren) {
-						db.GetDocument (DocumentsSerializer.StringFromID (storable.ID, t.ID)).Delete ();
-					}
-					return true;
 				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
+				}
 			}
 		}
 
@@ -191,26 +208,34 @@ namespace LongoMatch.DB
 		public void Delete<T> (T storable) where T : IStorable
 		{
 			lock (mutex) {
-				db.RunInTransaction (() => {
-					if (storable.DeleteChildren) {
-						Query query = db.CreateAllDocumentsQuery ();
-						// This should work, but raises an Exception in Couchbase.Lite
-						//query.StartKey = t.ID;
-						//query.EndKey = t.ID + "\uefff";
+				bool success = db.RunInTransaction (() => {
+					try {
+						if (storable.DeleteChildren) {
+							Query query = db.CreateAllDocumentsQuery ();
+							// This should work, but raises an Exception in Couchbase.Lite
+							//query.StartKey = t.ID;
+							//query.EndKey = t.ID + "\uefff";
 
-						// In UTF-8, from all the possible values in a GUID string, '0' is the first char in the
-						// list and 'f' would be the last one
-						string sepchar = DocumentsSerializer.ID_SEP_CHAR.ToString ();
-						query.StartKey = storable.ID + sepchar + "00000000-0000-0000-0000-000000000000";
-						query.EndKey = storable.ID + sepchar + "ffffffff-ffff-ffff-ffff-ffffffffffff";
-						query.InclusiveEnd = true;
-						foreach (var row in query.Run ()) {
-							row.Document.Delete ();
+							// In UTF-8, from all the possible values in a GUID string, '0' is the first char in the
+							// list and 'f' would be the last one
+							string sepchar = DocumentsSerializer.ID_SEP_CHAR.ToString ();
+							query.StartKey = storable.ID + sepchar + "00000000-0000-0000-0000-000000000000";
+							query.EndKey = storable.ID + sepchar + "ffffffff-ffff-ffff-ffff-ffffffffffff";
+							query.InclusiveEnd = true;
+							foreach (var row in query.Run ()) {
+								row.Document.Delete ();
+							}
 						}
+						db.GetDocument (storable.ID.ToString ()).Delete ();
+						return true;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
 					}
-					db.GetDocument (storable.ID.ToString ()).Delete ();
-					return true;
 				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
+				}
 			}
 		}
 
