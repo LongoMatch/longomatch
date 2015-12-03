@@ -204,10 +204,10 @@ namespace LongoMatch.Services
 				Config.RenderingJobsManger.AddJob (job);
 		}
 
-		void HandleSeekEvent (Time pos, bool accurate)
+		void HandleSeekEvent (Time pos, bool accurate, bool synchronous = false, bool throtlled = false)
 		{
 			if (Player != null) {
-				Player.Seek (pos, accurate);
+				Player.Seek (pos, accurate, synchronous, throtlled);
 			}
 		}
 

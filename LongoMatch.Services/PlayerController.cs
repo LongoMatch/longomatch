@@ -331,6 +331,7 @@ namespace LongoMatch.Services
 
 		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
 		{
+			Log.Debug (string.Format ("PlayerController::Seek (time: {0}, accurate: {1}, synchronous: {2}, throttled: {3}", time, accurate, synchronous, throtlled));
 			if (StillImageLoaded) {
 				imageLoadedTS = time;
 				Tick ();

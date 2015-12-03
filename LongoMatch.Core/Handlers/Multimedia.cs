@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayListSegmentDoneHandler ();
 	public delegate void SegmentClosedHandler ();
 	public delegate void SegmentDoneHandler ();
-	public delegate void SeekEventHandler (Time pos,bool accurate);
+	public delegate void SeekEventHandler (Time pos,bool accurate,bool synchronous = false,bool throtlled = false);
 	public delegate void TogglePlayEventHandler (bool playing);
 	public delegate void VolumeChangedHandler (double level);
 	public delegate void NextButtonClickedHandler ();
