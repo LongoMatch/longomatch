@@ -58,6 +58,13 @@ namespace Tests.Core.Store.Templates
 			Assert.AreEqual (t.List [2].Name, newt.List [2].Name);
 		}
 
+		[Test]
+		public void TestVersion ()
+		{
+			Assert.AreEqual (Constants.DB_VERSION, new Team ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, Team.DefaultTemplate (1).Version);
+		}
+
 		[Test ()]
 		public void TestColor ()
 		{

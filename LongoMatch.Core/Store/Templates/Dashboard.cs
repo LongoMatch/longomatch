@@ -60,6 +60,7 @@ namespace LongoMatch.Core.Store.Templates
 			ID = Guid.NewGuid ();
 			List = new ObservableCollection<DashboardButton> ();
 			GamePeriods = new ObservableCollection<string> { "1", "2" };
+			Version = Constants.DB_VERSION;
 		}
 
 		/// <summary>

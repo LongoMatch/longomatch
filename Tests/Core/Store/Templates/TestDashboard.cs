@@ -52,6 +52,13 @@ namespace Tests.Core.Store.Templates
 			Assert.AreEqual (cat.List.Count, newcat.List.Count);
 		}
 
+		[Test]
+		public void TestVersion ()
+		{
+			Assert.AreEqual (Constants.DB_VERSION, new Dashboard ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, Dashboard.DefaultTemplate (1).Version);
+		}
+
 		[Test ()]
 		public void TestCircularDepdencies ()
 		{
