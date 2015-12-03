@@ -164,13 +164,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
+		public void Seek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
 			if (main_cam_playerbin.Player.Opened) {
-				main_cam_playerbin.Player.Seek (time, accurate, synchronous, throtlled);
+				main_cam_playerbin.Player.Seek (time, accurate, synchronous, throttled);
 			}
 			if (sec_cam_playerbin.Player.Opened) {
-				sec_cam_playerbin.Player.Seek (time, accurate, synchronous, throtlled);
+				sec_cam_playerbin.Player.Seek (time, accurate, synchronous, throttled);
 			}
 		}
 

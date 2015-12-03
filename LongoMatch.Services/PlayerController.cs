@@ -329,9 +329,9 @@ namespace LongoMatch.Services
 				Play ();
 		}
 
-		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
+		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
-			Log.Debug (string.Format ("PlayerController::Seek (time: {0}, accurate: {1}, synchronous: {2}, throttled: {3}", time, accurate, synchronous, throtlled));
+			Log.Debug (string.Format ("PlayerController::Seek (time: {0}, accurate: {1}, synchronous: {2}, throttled: {3}", time, accurate, synchronous, throttled));
 
 			if (PresentationMode) {
 				return PlaylistSeek (time, accurate, synchronous, throttled);
@@ -348,12 +348,12 @@ namespace LongoMatch.Services
 			} else {
 				EmitLoadDrawings (null);
 				if (readyToSeek) {
-					if (throtlled) {
+					if (throttled) {
 						Log.Debug ("Throttled seek");
 						seeker.Seek (accurate ? SeekType.Accurate : SeekType.Keyframe, time);
 					} else {
 						Log.Debug (string.Format ("Seeking to {0} accurate:{1} synchronous:{2} throttled:{3}",
-							time, accurate, synchronous, throtlled));
+							time, accurate, synchronous, throttled));
 						player.Seek (time, accurate, synchronous);
 						Tick ();
 					}
@@ -364,7 +364,7 @@ namespace LongoMatch.Services
 						rate = 1.0f,
 						accurate = accurate,
 						syncrhonous = synchronous,
-						throttled = throtlled
+						throttled = throttled
 					};
 				}
 			}

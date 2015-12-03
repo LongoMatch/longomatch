@@ -430,10 +430,10 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitSeekEvent (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
+		public void EmitSeekEvent (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
 			if (SeekEvent != null) {
-				SeekEvent (time, accurate, synchronous, throtlled);
+				SeekEvent (time, accurate, synchronous, throttled);
 			}
 		}
 

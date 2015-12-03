@@ -148,7 +148,7 @@ namespace LongoMatch.Core.Store.Playlists
 			
 			newIndex = Elements.IndexOf (play);
 			if (newIndex >= 0) {
-				indexSelection = Elements.IndexOf (play);
+				indexSelection = newIndex;
 			}
 		}
 
