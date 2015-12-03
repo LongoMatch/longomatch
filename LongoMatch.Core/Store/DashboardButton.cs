@@ -362,7 +362,7 @@ namespace LongoMatch.Core.Store
 
 		public override Color BackgroundColor {
 			get {
-				return PenaltyCard != null ? PenaltyCard.Color : null;
+				return PenaltyCard?.Color;
 			}
 			set {
 				if (PenaltyCard != null) {
@@ -373,7 +373,7 @@ namespace LongoMatch.Core.Store
 
 		public override string Name {
 			get {
-				return PenaltyCard != null ? PenaltyCard.Name : null;
+				return PenaltyCard?.Name;
 			}
 			set {
 				if (PenaltyCard != null) {
@@ -386,7 +386,7 @@ namespace LongoMatch.Core.Store
 		[PropertyChanged.DoNotNotify]
 		public PenaltyCard PenaltyCard {
 			get {
-				return PenaltyCardEventType != null ? PenaltyCardEventType.PenaltyCard : null;
+				return PenaltyCardEventType?.PenaltyCard;
 			}
 			set {
 				if (PenaltyCardEventType != null) {
@@ -425,7 +425,7 @@ namespace LongoMatch.Core.Store
 		[PropertyChanged.DoNotNotify]
 		public Score Score {
 			get {
-				return ScoreEventType != null ? ScoreEventType.Score : null;
+				return ScoreEventType?.Score;
 			}
 			set {
 				if (ScoreEventType != null) {
