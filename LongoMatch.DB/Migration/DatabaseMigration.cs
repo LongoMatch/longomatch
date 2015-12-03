@@ -201,7 +201,7 @@ namespace LongoMatch.DB
 			float totalProjects = projectFiles.Count * 2;
 			float percent = 0;
 			List<Task> tasks = new List<Task> ();
-			List<Project> projects = new List<Project> ();
+			ConcurrentQueue<Project> projects = new ConcurrentQueue<Project> ();
 			bool ret = true;
 
 			Log.Information ("Start migrating " + databaseName);
@@ -222,7 +222,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating project " + projectFile);
 						project = Serializer.Instance.Load<Project> (projectFile);
-						projects.Add (project);
+						projects.Enqueue (project);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
