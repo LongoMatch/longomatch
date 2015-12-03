@@ -75,6 +75,11 @@ namespace LongoMatch.Core.Store.Playlists
 			get;
 			set;
 		}
+
+		public Time Start {
+			get;
+			set;
+		}
 	}
 }
 

@@ -146,6 +146,11 @@ namespace LongoMatch.Core.Store.Playlists
 			}
 		}
 
+		public Time Start {
+			get;
+			set;
+		}
+
 		public override string ToString ()
 		{
 			if (CamerasConfig.Count > 0) {
