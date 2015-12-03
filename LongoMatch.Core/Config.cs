@@ -84,8 +84,13 @@ namespace LongoMatch
 			} else {
 				home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
 				if (!Directory.Exists (home)) {
-					Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
-					home = null;
+					try {
+						Directory.CreateDirectory (home);
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
+						home = null;
+					}
 				}
 				if (home == null) {
 					home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
