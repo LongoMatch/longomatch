@@ -68,11 +68,6 @@ namespace LongoMatch.Core.Store.Playlists
 				return File.Duration;
 			}
 		}
-
-		public Time Start {
-			get;
-			set;
-		}
 	}
 }
 

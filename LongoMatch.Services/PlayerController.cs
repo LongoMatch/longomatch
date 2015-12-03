@@ -386,6 +386,39 @@ namespace LongoMatch.Services
 			Seek (seekPos, accurate, false, throthled);
 		}
 
+		public bool PlaylistSeek (Time time, bool accurate = false, bool synchronous = false, bool throttled = false)
+		{
+			if (loadedPlaylistElement == null) {
+				return Seek (time, accurate, synchronous, throttled);
+			}
+
+			// if time is outside the currently loaded event
+			var elementTuple = LoadedPlaylist.GetElementAtTime (time);
+			var elementAtTime = elementTuple.Item1;
+			var elementStart = elementTuple.Item2;
+			if (elementAtTime != loadedPlaylistElement || (elementStart > time || elementStart + elementAtTime.Duration < time)) {
+				if (elementAtTime == null) {
+					Log.Debug (String.Format ("There is no playlist element at {0}.", time));
+					return false;
+				}
+				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, elementAtTime, false);
+			}
+
+			time -= elementStart;
+
+			var play = loadedPlaylistElement as PlaylistPlayElement;
+			if (play != null) {
+				time += play.Play.Start;
+				if (time > play.Play.FileSet.Duration) {
+					Log.Warning (String.Format ("Attempted seek to {0}, which is longer than the fileSet", time));
+					return false;
+				}
+			}
+			Log.Debug (string.Format ("New time: {0}", time));
+
+			return Seek (time, accurate, synchronous, throttled);
+		}
+
 		public bool SeekToNextFrame ()
 		{
 			Log.Debug ("Seek to next frame");
@@ -1052,8 +1085,15 @@ namespace LongoMatch.Services
 				Time currentTime = CurrentTime;
 
 				if (SegmentLoaded) {
-					EmitTimeChanged (currentTime - loadedSegment.Start,
-						loadedSegment.Stop - loadedSegment.Start);
+					Time relativeTime = currentTime - loadedSegment.Start;
+					Time duration = loadedSegment.Stop - loadedSegment.Start;
+					if (PresentationMode) {
+						relativeTime += LoadedPlaylist.GetCurrentStartTime ();
+						duration = LoadedPlaylist.Duration;
+					}
+
+					EmitTimeChanged (relativeTime, duration);
+
 					if (currentTime > loadedSegment.Stop) {
 						/* Check if the segment is now finished and jump to next one */
 						Pause ();

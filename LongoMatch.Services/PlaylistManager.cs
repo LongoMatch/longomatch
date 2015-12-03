@@ -166,7 +166,6 @@ namespace LongoMatch.Services
 			}
 
 			foreach (var item in element) {
-				item.Start = new Time (playlist.Elements.Sum (node => node.Duration.MSeconds));
 				playlist.Elements.Add (item);
 			}
 		}

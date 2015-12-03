@@ -38,14 +38,5 @@ namespace LongoMatch.Core.Interfaces
 		Time Duration {
 			get;
 		}
-
-		/// <summary>
-		/// Gets or sets the start time in the playlist.
-		/// </summary>
-		/// <value>The start time in the playlist.</value>
-		Time Start {
-			get;
-			set;
-		}
 	}
 }
