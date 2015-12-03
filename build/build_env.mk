@@ -1,7 +1,7 @@
 LM_DEPS = \
-	$(top_builddir)/packages/Couchbase.Lite.LM.1.0.4.1/lib/net45/Couchbase.Lite.dll \
-	$(top_builddir)/packages/Newtonsoft.Json.7.0.1/lib/net45/Newtonsoft.Json.dll \
-	$(top_builddir)/packages/SQLitePCL.raw_basic.0.8.2/lib/net45/SQLitePCL.raw.dll \
-	$(top_builddir)/packages/SQLitePCL.ugly.0.8.2/lib/portable-net45+netcore45+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/SQLitePCL.ugly.dll \
-	$(top_builddir)/packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll \
-	$(top_builddir)/packages/PropertyChanged.Fody.1.50.3/Lib/dotnet/PropertyChanged.dll
+	$(top_builddir)/bin/Couchbase.Lite.dll \
+	$(top_builddir)/bin/Newtonsoft.Json.dll \
+	$(top_builddir)/bin/SQLitePCL.raw.dll \
+	$(top_builddir)/bin/SQLitePCL.ugly.dll \
+	$(top_builddir)/bin/ICSharpCode.SharpZipLib.dll \
+	$(top_builddir)/bin/PropertyChanged.dll

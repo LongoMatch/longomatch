@@ -2,8 +2,6 @@ PROJECT_FILE = Tests.csproj
 ASSEMBLY=Tests.dll
 
 include $(top_srcdir)/build/build_env.mk
-EXTRA_BUNDLE = $(LM_DEPS)
-
 include $(top_srcdir)/build/build.mk
 
 if ENABLE_TESTS
