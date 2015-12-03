@@ -583,7 +583,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void Previous ()
+		public void Previous (bool force = false)
 		{
 			Log.Debug ("Previous");
 
@@ -591,8 +591,8 @@ namespace LongoMatch.Services
 			if (loadedEvent != null) {
 				Seek (loadedEvent.Start, true);
 			} else if (loadedPlaylistElement != null) {
-				/* Select the start of the element if we haven't played 500ms */
-				if (loadedPlaylistElement is PlaylistPlayElement) {
+				/* Select the start of the element if we haven't played 500ms, unless forced */
+				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
 					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
 					if ((CurrentTime - play.Start).MSeconds > 500) {
 						Seek (play.Start, true);

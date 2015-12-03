@@ -517,22 +517,22 @@ namespace Tests.Services
 			PreparePlayer ();
 			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => prevSent++;
 
-			player.Previous ();
+			player.Previous (false);
 			playerMock.Verify (p => p.Seek (new Time (0), true, false));
 			Assert.AreEqual (0, prevSent);
 	
 			player.LoadEvent (evt, evt.Start, false);
 			playerMock.ResetCalls ();
-			player.Previous ();
+			player.Previous (false);
 			playerMock.Verify (p => p.Seek (evt.Start, true, false));
 			Assert.AreEqual (0, prevSent);
 
 			player.LoadPlaylistEvent (playlist, plImage, true);
 			playerMock.ResetCalls ();
-			player.Previous ();
+			player.Previous (false);
 			Assert.AreEqual (0, prevSent);
 			playlist.Next ();
-			player.Previous ();
+			player.Previous (false);
 			Assert.AreEqual (1, prevSent);
 		}
 
@@ -549,7 +549,7 @@ namespace Tests.Services
 			Config.EventsBroker.EmitLoadEvent (element);
 			// loadedPlay != null
 
-			player.Previous ();
+			player.Previous (false);
 
 			playerMock.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Once ());
 			Assert.AreEqual (0, playlistElementSelected);
@@ -565,7 +565,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 			// loadedPlay == null
 
-			player.Previous ();
+			player.Previous (false);
 
 			playerMock.Verify (player => player.Seek (new Time (0), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Once ());
 			Assert.AreEqual (0, playlistElementSelected);
@@ -586,7 +586,7 @@ namespace Tests.Services
 			player.Switch (null, localPlaylist, element);
 			playerMock.ResetCalls ();
 
-			player.Previous ();
+			player.Previous (false);
 
 			playerMock.Verify (player => player.Seek (element.Play.Start, true, false), Times.Once ());
 			Assert.AreEqual (0, playlistElementSelected);
@@ -610,7 +610,7 @@ namespace Tests.Services
 			player.Switch (null, localPlaylist, element);
 			playerMock.ResetCalls ();
 
-			player.Previous ();
+			player.Previous (false);
 
 			Assert.AreEqual (0, playlistElementSelected);
 			Assert.AreSame (element0, localPlaylist.Selected);
@@ -630,10 +630,33 @@ namespace Tests.Services
 			player.Switch (null, localPlaylist, element);
 			playerMock.ResetCalls ();
 
-			player.Previous ();
+			player.Previous (false);
 
 			Assert.AreEqual (0, playlistElementSelected);
 			playerMock.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+		}
+
+		[Test ()]
+		public void TestPrev6 ()
+		{
+			int playlistElementSelected = 0;
+			currentTime = new Time (4000);
+			PreparePlayer ();
+			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+
+			Playlist localPlaylist = new Playlist ();
+			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEvent ());
+			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
+			element.Play.Start = new Time (0);
+			localPlaylist.Elements.Add (element0);
+			localPlaylist.Elements.Add (element);
+			player.Switch (null, localPlaylist, element);
+			playerMock.ResetCalls ();
+
+			player.Previous (true);
+
+			Assert.AreEqual (0, playlistElementSelected);
+			Assert.AreSame (element0, localPlaylist.Selected);
 		}
 
 		[Test ()]

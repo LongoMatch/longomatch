@@ -261,7 +261,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitPreviousPlaylistElement (null);
 
-			mockPlayerController.Verify (player => player.Previous (), Times.Once ());
+			mockPlayerController.Verify (player => player.Previous (false), Times.Once ());
 		}
 
 		[Test ()]

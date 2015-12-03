@@ -180,11 +180,12 @@ namespace LongoMatch.Core.Interfaces
 		void Next ();
 
 		/// <summary>
-		/// Jump to the previous element if a <see cref="IPlaylistElement"/> is loaded,
+		/// Jump to the previous element / to the begining if a <see cref="IPlaylistElement"/> is loaded,
 		/// to the beginning of the event if a <see cref="TimelineEvent"/> is loaded or
 		/// to the beginning of the stream of no element is loaded.
 		/// </summary>
-		void Previous ();
+		/// <param name="force">Force it to jump to the previous element, regardless of played time.</param>
+		void Previous (bool force = false);
 
 		/// <summary>
 		/// The view should call it when it's ready to start playback,
