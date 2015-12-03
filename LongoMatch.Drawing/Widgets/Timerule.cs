@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
@@ -34,6 +35,7 @@ namespace LongoMatch.Drawing.Widgets
 		double scroll;
 		double secondsPerPixel;
 		Time currentTime;
+		Time duration;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -41,6 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddObject (needle);
 			SecondsPerPixel = 0.1;
 			currentTime = new Time (0);
+			AdjustSizeToDuration = false;
 		}
 
 		public double Scroll {
@@ -54,8 +57,13 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		public Time Duration {
-			set;
-			protected get;
+			set {
+				duration = value;
+				widget.ReDraw ();
+			}
+			protected get {
+				return duration;
+			}
 		}
 
 		public Time CurrentTime {
@@ -93,6 +101,15 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		/// <summary>
+		/// Flag to set the mode to AdjustSizeToDuration.
+		/// AdjustSizeToDuration mode means that the timerule area will include the whole duration, without scroll.
+		/// </summary>
+		public bool AdjustSizeToDuration {
+			set;
+			get;
+		}
+
 		protected override void StartMove (Selection sel)
 		{
 			Config.EventsBroker.EmitTogglePlayEvent (false);
@@ -120,6 +137,10 @@ namespace LongoMatch.Drawing.Widgets
 			
 			height = widget.Height;
 			width = widget.Width;
+
+			if (AdjustSizeToDuration) {
+				SecondsPerPixel = Duration.TotalSeconds / width;
+			}
 
 			tk.Context = context;
 			tk.Begin ();
