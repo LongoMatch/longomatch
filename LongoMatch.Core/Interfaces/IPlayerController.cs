@@ -173,7 +173,6 @@ namespace LongoMatch.Core.Interfaces
 		/// <param name="pos">Position.</param>
 		void Seek (double pos);
 
-
 		/// <summary>
 		/// Jump the next element in the playlist if a <see cref="IPlaylistElement"/> is loaded.
 		/// </summary>

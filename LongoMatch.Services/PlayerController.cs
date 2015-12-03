@@ -332,6 +332,16 @@ namespace LongoMatch.Services
 		public bool Seek (Time time, bool accurate, bool synchronous = false, bool throtlled = false)
 		{
 			Log.Debug (string.Format ("PlayerController::Seek (time: {0}, accurate: {1}, synchronous: {2}, throttled: {3}", time, accurate, synchronous, throtlled));
+
+			if (PresentationMode) {
+				return PlaylistSeek (time, accurate, synchronous, throttled);
+			} else {
+				return InternalSeek (time, accurate, synchronous, throttled);
+			}
+		}
+
+		bool InternalSeek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
+		{
 			if (StillImageLoaded) {
 				imageLoadedTS = time;
 				Tick ();
@@ -386,10 +396,10 @@ namespace LongoMatch.Services
 			Seek (seekPos, accurate, false, throthled);
 		}
 
-		public bool PlaylistSeek (Time time, bool accurate = false, bool synchronous = false, bool throttled = false)
+		bool PlaylistSeek (Time time, bool accurate = false, bool synchronous = false, bool throttled = false)
 		{
 			if (loadedPlaylistElement == null) {
-				return Seek (time, accurate, synchronous, throttled);
+				return InternalSeek (time, accurate, synchronous, throttled);
 			}
 
 			// if time is outside the currently loaded event
@@ -416,7 +426,7 @@ namespace LongoMatch.Services
 			}
 			Log.Debug (string.Format ("New time: {0}", time));
 
-			return Seek (time, accurate, synchronous, throttled);
+			return InternalSeek (time, accurate, synchronous, throttled);
 		}
 
 		public bool SeekToNextFrame ()
@@ -587,7 +597,7 @@ namespace LongoMatch.Services
 					loadedEvent = evt;
 				}
 			} else if (evt.EventTime != null) {
-				Seek (evt.EventTime, true);
+				InternalSeek (evt.EventTime, true);
 			} else {
 				Log.Error ("Event does not have timing info: " + evt);
 			}
@@ -628,7 +638,7 @@ namespace LongoMatch.Services
 				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
 					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
 					if ((CurrentTime - play.Start).MSeconds > 500) {
-						Seek (play.Start, true);
+						InternalSeek (play.Start, true);
 						return;
 					}
 				}
@@ -881,7 +891,7 @@ namespace LongoMatch.Services
 				}
 			}
 			if (seek) {
-				Seek (new Time (0), true);
+				InternalSeek (new Time (0), true);
 			}
 			if (play) {
 				player.Play ();
@@ -965,7 +975,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Player is ready to seek, seeking to " +
 				seekTime.ToMSecondsString ());
 				SetRate (rate);
-				Seek (seekTime, true);
+				InternalSeek (seekTime, true);
 				if (playing) {
 					Play ();
 				}
@@ -1025,7 +1035,7 @@ namespace LongoMatch.Services
 			}
 			Log.Debug (String.Format ("Stepping {0} seconds from {1} to {2}",
 				step, CurrentTime, pos));
-			Seek (pos, true);
+			InternalSeek (pos, true);
 		}
 
 		/// <summary>
@@ -1174,7 +1184,7 @@ namespace LongoMatch.Services
 						Log.Debug ("Seeking back to 0");
 						position = new Time (0);
 					}
-					Seek (position, true);
+					InternalSeek (position, true);
 					Pause ();
 				}
 			});

@@ -129,7 +129,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void StopMove (bool moved)
 		{
 			if (!ContinuousSeek) {
-				Config.EventsBroker.EmitPlaylistSeekEvent (
+				Config.EventsBroker.EmitSeekEvent (
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 					false);
 			}
@@ -139,7 +139,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionMoved (Selection sel)
 		{
 			if (ContinuousSeek) {
-				Config.EventsBroker.EmitPlaylistSeekEvent (
+				Config.EventsBroker.EmitSeekEvent (
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 					false);
 			}
