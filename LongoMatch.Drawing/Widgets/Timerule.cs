@@ -44,6 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 			SecondsPerPixel = 0.1;
 			currentTime = new Time (0);
 			AdjustSizeToDuration = false;
+			ContinuousSeek = true;
 		}
 
 		public double Scroll {
@@ -110,6 +111,16 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
+		/// <summary>
+		/// Flag to set the mode to presentation.
+		/// Presentation mode means that seeks will be made on StopMove, and not on SelectionMove
+		/// </summary>
+		/// <value><c>true</c> if presentation mode; otherwise, <c>false</c>.</value>
+		public bool ContinuousSeek {
+			set;
+			get;
+		}
+
 		protected override void StartMove (Selection sel)
 		{
 			Config.EventsBroker.EmitTogglePlayEvent (false);
@@ -117,13 +128,21 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void StopMove (bool moved)
 		{
+			if (!ContinuousSeek) {
+				Config.EventsBroker.EmitPlaylistSeekEvent (
+					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					false);
+			}
 			Config.EventsBroker.EmitTogglePlayEvent (true);
 		}
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0),
-				SecondsPerPixel), false);
+			if (ContinuousSeek) {
+				Config.EventsBroker.EmitPlaylistSeekEvent (
+					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					false);
+			}
 		}
 
 		public override void Draw (IContext context, Area area)
