@@ -41,7 +41,7 @@ namespace LongoMatch.Core.Store
 			Height = Constants.BUTTON_HEIGHT;
 			BackgroundColor = Color.Red.Copy (true);
 			TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
-			HotKey = new HotKey {IsChanged = false};
+			HotKey = new HotKey { IsChanged = false };
 			ActionLinks = new ObservableCollection <ActionLink> ();
 		}
 
@@ -235,7 +235,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Start (Time start, List<DashboardButton> from) {
+		public void Start (Time start, List<DashboardButton> from)
+		{
 			if (currentNode != null)
 				return;
 
@@ -245,7 +246,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Stop (Time stop, List<DashboardButton> from) {
+		public void Stop (Time stop, List<DashboardButton> from)
+		{
 			if (currentNode == null)
 				return;
 
@@ -256,7 +258,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public void Cancel () {
+		public void Cancel ()
+		{
 			if (currentNode == null)
 				return;
 			if (Timer != null) {
@@ -304,8 +307,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[OnDeserialized()]
-		internal void OnDeserializedMethod(StreamingContext context)
+		[OnDeserialized ()]
+		internal void OnDeserializedMethod (StreamingContext context)
 		{
 			if (EventType != null) {
 				EventType.IsChanged = false;
@@ -349,14 +352,17 @@ namespace LongoMatch.Core.Store
 			EventType = new PenaltyCardEventType ();
 		}
 
-		public PenaltyCard PenaltyCard {
-			get;
+		// We keep it for backwards compatibility, to be able to retrieve the PenaltyCard from this object
+		[JsonProperty ("PenaltyCard")]
+		[Obsolete ("Do not use, it's only kept here for migrations")]
+		public PenaltyCard OldPenaltyCard {
 			set;
+			get;
 		}
 
 		public override Color BackgroundColor {
 			get {
-				return PenaltyCard != null ? PenaltyCard.Color : null;
+				return PenaltyCard?.Color;
 			}
 			set {
 				if (PenaltyCard != null) {
@@ -367,7 +373,7 @@ namespace LongoMatch.Core.Store
 
 		public override string Name {
 			get {
-				return PenaltyCard != null ? PenaltyCard.Name : null;
+				return PenaltyCard?.Name;
 			}
 			set {
 				if (PenaltyCard != null) {
@@ -378,17 +384,22 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public PenaltyCardEventType PenaltyCardEventType {
+		public PenaltyCard PenaltyCard {
 			get {
-				return EventType as PenaltyCardEventType;
+				return PenaltyCardEventType?.PenaltyCard;
+			}
+			set {
+				if (PenaltyCardEventType != null) {
+					PenaltyCardEventType.PenaltyCard = value;
+				}
 			}
 		}
 
-		[OnDeserialized()]
-		internal void OnDeserialized(StreamingContext context)
-		{
-			if (PenaltyCard != null) {
-				PenaltyCard.IsChanged = false;
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public PenaltyCardEventType PenaltyCardEventType {
+			get {
+				return EventType as PenaltyCardEventType;
 			}
 		}
 	}
@@ -402,29 +413,23 @@ namespace LongoMatch.Core.Store
 			EventType = new ScoreEventType ();
 		}
 
-		public Score Score {
-			get;
+		// We keep it for backwards compatibility, to be able to retrieve the Score from this object
+		[JsonProperty ("Score")]
+		[Obsolete ("Do not use, it's only kept here for migrations")]
+		public Score OldScore {
 			set;
+			get;
 		}
 
-		public override string Name {
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public Score Score {
 			get {
-				return Score != null ? Score.Name : null;
+				return ScoreEventType?.Score;
 			}
 			set {
-				if (Score != null) {
-					Score.Name = value;
-				}
-			}
-		}
-
-		public override Color BackgroundColor {
-			get {
-				return Score != null ? Score.Color : null;
-			}
-			set {
-				if (Score != null) {
-					Score.Color = value;
+				if (ScoreEventType != null) {
+					ScoreEventType.Score = value;
 				}
 			}
 		}
@@ -435,14 +440,6 @@ namespace LongoMatch.Core.Store
 		public ScoreEventType ScoreEventType {
 			get {
 				return EventType as ScoreEventType;
-			}
-		}
-
-		[OnDeserialized()]
-		internal void OnDeserialized(StreamingContext context)
-		{
-			if (Score != null) {
-				Score.IsChanged = false;
 			}
 		}
 	}

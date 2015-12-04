@@ -24,6 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -93,8 +94,18 @@ namespace LongoMatch.DB
 			Log.Debug ("Filling object " + storable);
 			SerializationContext context = new SerializationContext (db, storable.GetType ());
 			Document doc = db.GetExistingDocument (storable.DocumentID);
-			JsonSerializer serializer = GetSerializer (storable.GetType (), context, doc.CurrentRevision);
+			JsonSerializerSettings settings = GetSerializerSettings (storable.GetType (), context, doc.CurrentRevision);
+
+			// FIXME: for projects we add the MediaFileSet object already deserialized to the cache so the TimelineEvent
+			// reuse the same object instance. This should be done in a more generic way, using the objects parser
+			// to read IStorable children and add them to the cache. But to prevent slowing down deserialization
+			// we use this temporal hack for projects.
+			if (storable is Project) {
+				context.Cache.AddReference ((storable as Project).Description.FileSet);
+			}
+
 			context.ContractResolver = new StorablesStackContractResolver (context, storable, true);
+			JsonSerializer serializer = JsonSerializer.Create (settings);
 			serializer.ContractResolver = context.ContractResolver;
 			DeserializeObject (doc, storable.GetType (), context, serializer);
 		}
@@ -293,6 +304,7 @@ namespace LongoMatch.DB
 			return JsonSerializer.Create (GetSerializerSettings (objType, context, rev));
 		}
 
+		#pragma warning disable 0618
 		static string GetDocumentType (IStorable storable)
 		{
 			Type type;
@@ -301,11 +313,14 @@ namespace LongoMatch.DB
 				type = typeof(EventType);
 			} else if (storable is TimelineEvent) {
 				type = typeof(TimelineEvent);
+			} else if (storable is TeamTemplate) {
+				type = typeof(Team);
 			} else {
 				type = storable.GetType ();
 			}
 			return type.Name;
 		}
+		#pragma warning restore 0618
 	}
 
 	/// <summary>

@@ -111,13 +111,13 @@ namespace Tests.Integration
 
 			// Start importing templates
 			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (SaveResource ("spain.ltt"))); 
+				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
 			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (SaveResource ("france.ltt"))); 
+				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("france.ltt", tmpPath)));
 			Config.CategoriesTemplatesProvider.Save (
-				Config.CategoriesTemplatesProvider.LoadFile (SaveResource ("basket.lct"))); 
-			Assert.AreEqual (4, Config.TeamTemplatesProvider.TemplatesNames.Count);
-			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
+				Config.CategoriesTemplatesProvider.LoadFile (Utils.SaveResource ("basket.lct", tmpPath)));
+			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
 
 			// Create a new project and open it
 			Project p = CreateProject ();
@@ -177,7 +177,8 @@ namespace Tests.Integration
 			Assert.IsNotNull (savedP);
 
 			// Import a new project
-			string projectPath = SaveResource ("spain_france_test.lgm");
+			p = null;
+			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
 			ProjectImporter importer = CoreServices.toolsManager.ProjectImporters.FirstOrDefault
 				(i => i.Description == "Import LongoMatch project"); 
 			guiToolkitMock.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), null)).Returns (
@@ -188,6 +189,7 @@ namespace Tests.Integration
 				p = project;
 			};
 			Config.EventsBroker.EmitImportProject ();
+			Assert.IsNotNull (p);
 			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count);
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
@@ -203,28 +205,18 @@ namespace Tests.Integration
 
 			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
-				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime }, null, null);
-		}
-
-		string SaveResource (string name)
-		{
-			string filePath;
-			var assembly = Assembly.GetExecutingAssembly ();
-			using (Stream inS = assembly.GetManifestResourceStream (name)) {
-				filePath = Path.Combine (tmpPath, name);
-				using (Stream outS = new FileStream (filePath, FileMode.Create)) {
-					inS.CopyTo (outS);
-				}
-			}
-			return filePath;
+				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
 		}
 
 		Project CreateProject ()
 		{
 			Project project = new Project { Description = new ProjectDescription () };
-			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Load ("spain");
-			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Load ("france");
-			project.Dashboard = Config.CategoriesTemplatesProvider.Load ("basket");
+			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			Assert.IsNotNull (project.LocalTeamTemplate);
+			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			Assert.IsNotNull (project.VisitorTeamTemplate);
+			project.Dashboard = Config.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket");
+			Assert.IsNotNull (project.Dashboard);
 			project.Description.Competition = "Liga";
 			project.Description.MatchDate = DateTime.UtcNow;
 			project.Description.Description = "Created by LongoMatch";

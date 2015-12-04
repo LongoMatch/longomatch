@@ -102,11 +102,10 @@ namespace LongoMatch.Core.Common
 		public event QueryToolsHandler QueryTools;
 
 		public void EmitNewEvent (EventType eventType, List<Player> players = null, ObservableCollection<Team> teams = null,
-		                          List<Tag> tags = null, Time start = null, Time stop = null,
-		                          Time eventTime = null, Score score = null, PenaltyCard card = null)
+		                          List<Tag> tags = null, Time start = null, Time stop = null, Time eventTime = null)
 		{
 			if (NewEventEvent != null)
-				NewEventEvent (eventType, players, teams, tags, start, stop, eventTime, score, card, null);
+				NewEventEvent (eventType, players, teams, tags, start, stop, eventTime, null);
 		}
 
 		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit, List<DashboardButton> from)

@@ -34,7 +34,7 @@ namespace Tests.Core.Store
 			try {
 				EventsFilter filter = new EventsFilter (p);
 			
-				Assert.AreEqual (13, filter.VisibleEventTypes.Count);
+				Assert.AreEqual (15, filter.VisibleEventTypes.Count);
 				Assert.AreEqual (10, filter.VisiblePlayers.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 			} finally {
@@ -75,7 +75,7 @@ namespace Tests.Core.Store
 				Assert.AreEqual (1, filter.VisiblePlays.Count);
 			
 				filter.FilterEventType (p.EventTypes [2], false);
-				Assert.AreEqual (13, filter.VisibleEventTypes.Count);
+				Assert.AreEqual (15, filter.VisibleEventTypes.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 			} finally {
 				Utils.DeleteProject (p);
@@ -190,14 +190,14 @@ namespace Tests.Core.Store
 				Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 				filter.ClearAll ();
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
-				Assert.AreEqual (13, filter.VisibleEventTypes.Count);
+				Assert.AreEqual (15, filter.VisibleEventTypes.Count);
 			
 				filter.FilterEventTag (p.EventTypes [0], (p.EventTypes [0] as AnalysisEventType).Tags [0], true);
 				Assert.AreEqual (0, filter.VisiblePlays.Count);
 				Assert.AreEqual (1, filter.VisibleEventTypes.Count);
 				filter.ClearAll ();
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
-				Assert.AreEqual (13, filter.VisibleEventTypes.Count);
+				Assert.AreEqual (15, filter.VisibleEventTypes.Count);
 			} finally {
 				Utils.DeleteProject (p);
 			}

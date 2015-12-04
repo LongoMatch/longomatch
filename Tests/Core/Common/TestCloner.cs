@@ -1,45 +1,49 @@
-// 
-//  Copyright (C) 2011 Andoni Morales Alastruey
-// 
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 using System;
-using System.IO;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
+using Moq;
+using NUnit.Framework;
 
-namespace LongoMatch.Core.Common
+namespace Tests.Core.Common
 {
-	public static class Cloner
+	[TestFixture]
+	public class TestCloner
 	{
-		public static T Clone<T> (this T source)
+		static void CheckIStorableClone (IStorable storable1)
 		{
-			T retStorable;
+			IStorable storable2 = storable1.Clone ();
+			Assert.AreEqual (storable1, storable2);
+			Assert.AreNotSame (storable1, storable2);
+			storable1.Storage = Mock.Of<IStorage> ();
+			storable2 = storable1.Clone ();
+			Assert.IsNotNull (storable1.Storage);
+			Assert.AreEqual (storable1.Storage, storable2.Storage);
+		}
 
-			if (Object.ReferenceEquals (source, null))
-				return default(T);
-
-			Stream s = new MemoryStream ();
-			using (s) {
-				Serializer.Instance.Save<T> (source, s, SerializationType.Binary);
-				s.Seek (0, SeekOrigin.Begin);
-				retStorable = Serializer.Instance.Load<T> (s, SerializationType.Binary);
-			}
-			if (source is IStorable) {
-				(retStorable as IStorable).Storage = (source as IStorable).Storage;
-			}
-			return retStorable;
+		[Test]
+		public void TestCloneIStorable ()
+		{
+			CheckIStorableClone (new StorableBase ());
+			CheckIStorableClone (new MediaFileSet ());
+			CheckIStorableClone (new TimelineEvent ());
 		}
 	}
 }

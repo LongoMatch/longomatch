@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -36,14 +37,16 @@ namespace LongoMatch.Core.Store.Templates
 	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
-	public class Dashboard: StorableBase, ITemplate
+	public class Dashboard: StorableBase, ITemplate<Dashboard>
 	{
 
-		ObservableCollection<DashboardButton> list;
+		public const int CURRENT_VERSION = 1;
 		const int CAT_WIDTH = 120;
 		const int CAT_HEIGHT = 80;
 		const int MIN_WIDTH = 320;
 		const int MIN_HEIGHT = 240;
+
+		ObservableCollection<DashboardButton> list;
 
 		public Dashboard ()
 		{
@@ -56,7 +59,8 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			ID = Guid.NewGuid ();
 			List = new ObservableCollection<DashboardButton> ();
-			GamePeriods = new ObservableCollection<string> {"1", "2"};
+			GamePeriods = new ObservableCollection<string> { "1", "2" };
+			Version = Constants.DB_VERSION;
 		}
 
 		/// <summary>
@@ -66,6 +70,17 @@ namespace LongoMatch.Core.Store.Templates
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool Static {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the document version.
+		/// </summary>
+		/// <value>The version.</value>
+		[DefaultValue (0)]
+		[JsonProperty (DefaultValueHandling = DefaultValueHandling.Populate)]
+		public int Version {
 			get;
 			set;
 		}
@@ -195,6 +210,20 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 		/// <summary>
+		/// Creates a deep copy of this dashboard
+		/// </summary>
+		public Dashboard Copy (string newName)
+		{
+			Dashboard newDashboard = this.Clone ();
+			newDashboard.ID = Guid.NewGuid ();
+			newDashboard.Name = newName;
+			foreach (AnalysisEventButton evtButton in List.OfType<AnalysisEventButton> ()) {
+				evtButton.EventType.ID = Guid.NewGuid ();
+			}
+			return newDashboard;
+		}
+
+		/// <summary>
 		/// Changes a hotkey for a button in the dashboard checking
 		/// the hotkey is not already in use.
 		/// </summary>
@@ -315,7 +344,7 @@ namespace LongoMatch.Core.Store.Templates
 			Dashboard template = new Dashboard ();
 			
 			template.FillDefaultTemplate (count);
-			template.GamePeriods = new ObservableCollection<string> {"1", "2"};
+			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
 
 			tagbutton = new TagButton {
 				Tag = new Tag (Catalog.GetString ("Attack"), ""),
@@ -344,22 +373,16 @@ namespace LongoMatch.Core.Store.Templates
 			template.List.Add (cardButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score {
-					Name = Catalog.GetString ("Free play goal"),
-					Points = 1,
-					Color = StyleConf.ButtonScoreColor
-				},
-				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10)
+				Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10),
+				BackgroundColor = StyleConf.ButtonScoreColor,
+				Score = new Score (Catalog.GetString ("Free play goal"), 1),
 			};
 			template.List.Add (scoreButton);
 			
 			scoreButton = new ScoreButton {
-				Score = new Score {
-					Name = Catalog.GetString ("Penalty goal"),
-					Points = 1,
-					Color = StyleConf.ButtonScoreColor
-				},
-				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10)
+				BackgroundColor = StyleConf.ButtonScoreColor,
+				Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10),
+				Score = new Score (Catalog.GetString ("Penalty goal"), 1),
 			};
 			template.List.Add (scoreButton);
 			

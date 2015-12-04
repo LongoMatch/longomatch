@@ -37,7 +37,7 @@ namespace Tests.Core.Store
 			MemoryStream stream;
 			StreamReader reader;
 			
-			evType = new EventType();
+			evType = new EventType ();
 			Utils.CheckSerialization (evType);
 
 			evType.Color = new Color (255, 0, 0);
@@ -97,8 +97,8 @@ namespace Tests.Core.Store
 			PenaltyCardEventType pc = new PenaltyCardEventType ();
 			Utils.CheckSerialization (pc);
 			
-			Assert.AreEqual (pc.ID, Constants.PenaltyCardID);
-			Assert.AreEqual (pc, new PenaltyCardEventType ());
+			Assert.AreNotEqual (pc.ID, Constants.PenaltyCardID);
+			Assert.AreNotEqual (pc, new PenaltyCardEventType ());
 		}
 
 		[Test ()]
@@ -107,8 +107,8 @@ namespace Tests.Core.Store
 			ScoreEventType score = new ScoreEventType ();
 			Utils.CheckSerialization (score);
 			
-			Assert.AreEqual (score.ID, Constants.ScoreID);
-			Assert.AreEqual (score, new ScoreEventType ());
+			Assert.AreNotEqual (score.ID, Constants.ScoreID);
+			Assert.AreNotEqual (score, new ScoreEventType ());
 		}
 
 		[Test ()]
@@ -121,8 +121,9 @@ namespace Tests.Core.Store
 			Assert.AreEqual (sub, new SubstitutionEventType ());
 		}
 
-		[Test()]
-		public void TestIsChanged (){
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			EventType et = new EventType ();
 			Assert.IsTrue (et.IsChanged);
 			et.IsChanged = false;

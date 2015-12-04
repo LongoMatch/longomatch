@@ -58,6 +58,13 @@ namespace Tests.Core.Store.Templates
 			Assert.AreEqual (t.List [2].Name, newt.List [2].Name);
 		}
 
+		[Test]
+		public void TestVersion ()
+		{
+			Assert.AreEqual (Constants.DB_VERSION, new Team ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, Team.DefaultTemplate (1).Version);
+		}
+
 		[Test ()]
 		public void TestColor ()
 		{
@@ -196,16 +203,16 @@ namespace Tests.Core.Store.Templates
 				t.List [0].Playing = false;
 			}
 			t.ResetPlayers ();
-			Assert.IsEmpty (t.List.Where (p=>!p.Playing));
+			Assert.IsEmpty (t.List.Where (p => !p.Playing));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestIsChanged ()
 		{
 			Team t = Team.DefaultTemplate (10);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
-			t.List.Remove (t.List[0]);
+			t.List.Remove (t.List [0]);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
 			t.List.Add (new Player ());
@@ -229,6 +236,19 @@ namespace Tests.Core.Store.Templates
 			t.Name = "new";
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
+		}
+
+		[Test ()]
+		public void TestCopy ()
+		{
+			Team team = Team.DefaultTemplate (10);
+			Team copy = team.Copy ("newName");
+			Assert.AreNotEqual (team.ID, copy.ID);
+			for (int i = 0; i < team.List.Count; i++) {
+				Assert.AreNotEqual (team.List [i].ID, copy.List [i].ID);
+			}
+			Assert.AreEqual ("newName", copy.Name);
+			Assert.AreNotEqual (team.Name, copy.Name);
 		}
 	}
 }

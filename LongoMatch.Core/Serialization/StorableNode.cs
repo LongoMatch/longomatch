@@ -55,7 +55,13 @@ namespace LongoMatch.Core.Serialization
 			set;
 		}
 
-		public bool HasChanges () {
+		public List<IStorable> OrphanChildren {
+			get;
+			set;
+		}
+
+		public bool HasChanges ()
+		{
 			if (IsChanged) {
 				return true;
 			}
@@ -67,7 +73,8 @@ namespace LongoMatch.Core.Serialization
 			return false;
 		}
 
-		public bool ParseTree (ref List<IStorable> storables, ref List<IStorable> changed) {
+		public bool ParseTree (ref List<IStorable> storables, ref List<IStorable> changed)
+		{
 			if (storables == null) {
 				storables = new List<IStorable> ();
 			}

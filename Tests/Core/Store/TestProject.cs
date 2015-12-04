@@ -44,13 +44,13 @@ namespace Tests.Core.Store
 			pd.FileSet.Add (mf);
 			p.Description = pd;
 			if (fill) {
-				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [1], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null, null, null);
-				p.AddEvent (p.EventTypes [6], new Time (1000), new Time (2000), null, null, null, null);
+				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [1], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [2], new Time (1000), new Time (2000), null, null);
+				p.AddEvent (p.EventTypes [6], new Time (1000), new Time (2000), null, null);
 			}
 
 			return p;
@@ -71,6 +71,16 @@ namespace Tests.Core.Store
 			Project newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
 			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
+		}
+
+		[Test ()]
+		public void TestProjectSetInTimelineEvents ()
+		{
+			Project p = CreateProject ();
+			TimelineEvent evt = new TimelineEvent ();
+			p.AddEvent (evt);
+			Project newp = Utils.SerializeDeserialize (p);
+			Assert.AreEqual (newp, newp.Timeline [0].Project);
 		}
 
 		[Test ()]
@@ -165,13 +175,13 @@ namespace Tests.Core.Store
 		public void TestAddEvent ()
 		{
 			Project p = CreateProject (false);
-			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null, false);
+			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, false);
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
-			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
+			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 1);
-			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, null, null);
+			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 2);
 
 			evt = new TimelineEvent ();
@@ -404,33 +414,6 @@ namespace Tests.Core.Store
 			p.IsChanged = false;
 		}
 
-		#pragma warning disable 0618
-		[Test ()]
-		public void ImportOldTeams ()
-		{
-			Project p = new Project ();
-			p.LocalTeamTemplate = new Team ();
-			p.VisitorTeamTemplate = new Team ();
-			TimelineEvent evt = new TimelineEvent ();
-			evt.Team = TeamType.LOCAL;
-			p.Timeline.Add (evt);
-			evt = new TimelineEvent ();
-			evt.Team = TeamType.VISITOR;
-			p.Timeline.Add (evt);
-			evt = new TimelineEvent ();
-			evt.Team = TeamType.BOTH;
-			p.Timeline.Add (evt);
-			evt = new TimelineEvent ();
-			evt.Team = TeamType.NONE;
-			p.Timeline.Add (evt);
 
-			Project.ConvertTeams (p);
-			Assert.AreEqual (p.LocalTeamTemplate, p.Timeline [0].Teams [0]);
-			Assert.AreEqual (p.VisitorTeamTemplate, p.Timeline [1].Teams [0]);
-			Assert.AreEqual (p.LocalTeamTemplate, p.Timeline [2].Teams [0]);
-			Assert.AreEqual (p.VisitorTeamTemplate, p.Timeline [2].Teams [1]);
-			Assert.IsEmpty (p.Timeline [3].Teams);
-		}
-		#pragma warning restore 0618
 	}
 }

@@ -40,10 +40,11 @@ namespace LongoMatch.Gui.Dialog
 			splashimage.WidthRequest = WidthRequest = image.Width;
 			splashimage.HeightRequest = HeightRequest = image.Height;
 			progressbar1.WidthRequest = WidthRequest * 60 / 100;
+			progressbar1.HeightRequest = 20;
 
 			Fixed.FixedChild w1 = (Fixed.FixedChild)(fixed1 [progressbar1]);
 			w1.X = WidthRequest * 20 / 100;
-			w1.Y = HeightRequest - 200;
+			w1.Y = HeightRequest - 50;
 
 			splashimage.Pixbuf = image.Value;
 			Resizable = false;

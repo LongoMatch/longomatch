@@ -36,7 +36,7 @@ namespace Tests.Core.Store.Templates
 			Utils.CheckSerialization (cat);
 			
 			cat.Name = "test";
-			cat.GamePeriods = new ObservableCollection<string> {"1", "2"};
+			cat.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			cat.List.Add (new AnalysisEventButton { Name = "cat1" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat2" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat3" });
@@ -50,6 +50,13 @@ namespace Tests.Core.Store.Templates
 			Assert.AreEqual (cat.GamePeriods [0], newcat.GamePeriods [0]);
 			Assert.AreEqual (cat.GamePeriods [1], newcat.GamePeriods [1]);
 			Assert.AreEqual (cat.List.Count, newcat.List.Count);
+		}
+
+		[Test]
+		public void TestVersion ()
+		{
+			Assert.AreEqual (Constants.DB_VERSION, new Dashboard ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, Dashboard.DefaultTemplate (1).Version);
 		}
 
 		[Test ()]
@@ -115,8 +122,9 @@ namespace Tests.Core.Store.Templates
 			Assert.AreEqual (0, b1.ActionLinks.Count);
 		}
 
-		[Test()]
-		public void TestIsChanged (){
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			Dashboard d = Dashboard.DefaultTemplate (10);
 			Assert.IsTrue (d.IsChanged);
 			d.IsChanged = false;
@@ -135,7 +143,7 @@ namespace Tests.Core.Store.Templates
 			d.DisablePopupWindow = true;
 			Assert.IsTrue (d.IsChanged);
 			d.IsChanged = false;
-			d.List.Remove (d.List[0]);
+			d.List.Remove (d.List [0]);
 			Assert.IsTrue (d.IsChanged);
 			d.IsChanged = false;
 			d.List.Add (new DashboardButton ());
@@ -148,6 +156,22 @@ namespace Tests.Core.Store.Templates
 			Assert.IsTrue (d.IsChanged);
 			d.IsChanged = false;
 
+		}
+
+		[Test ()]
+		public void TestCopy ()
+		{
+			Dashboard dashboard = Dashboard.DefaultTemplate (10);
+			Dashboard copy = dashboard.Copy ("newName");
+			Assert.AreNotEqual (dashboard.ID, copy.ID);
+			for (int i = 0; i < dashboard.List.Count; i++) {
+				AnalysisEventButton button = copy.List [i] as AnalysisEventButton;
+				if (button != null) {
+					Assert.AreNotEqual ((dashboard.List [i] as AnalysisEventButton).EventType.ID, button.EventType.ID);
+				}
+			}
+			Assert.AreEqual ("newName", copy.Name);
+			Assert.AreNotEqual (dashboard.Name, copy.Name);
 		}
 	}
 }

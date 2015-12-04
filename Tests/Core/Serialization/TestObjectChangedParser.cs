@@ -104,7 +104,7 @@ namespace Tests.Core.Serialization
 			ObjectChangedParser parser = new ObjectChangedParser ();
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (2, parser.parsed.Count);
+			Assert.AreEqual (2, parser.parsedCount);
 			Assert.AreEqual (0, changed.Count);
 			Assert.AreEqual (2, storables.Count);
 		}
@@ -120,7 +120,7 @@ namespace Tests.Core.Serialization
 			ObjectChangedParser parser = new ObjectChangedParser ();
 			Assert.IsTrue (parser.ParseInternal (out parent, obj2, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (2, parser.parsed.Count);
+			Assert.AreEqual (2, parser.parsedCount);
 			Assert.AreEqual (0, changed.Count);
 			Assert.AreEqual (2, storables.Count);
 		}
@@ -136,7 +136,7 @@ namespace Tests.Core.Serialization
 
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (1, parser.parsed.Count);
+			Assert.AreEqual (1, parser.parsedCount);
 			Assert.AreEqual (1, changed.Count);
 			Assert.AreEqual (1, storables.Count);
 			Assert.IsFalse (obj1.IsChanged);
@@ -146,7 +146,7 @@ namespace Tests.Core.Serialization
 			changed = null;
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings, false));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (1, parser.parsed.Count);
+			Assert.AreEqual (1, parser.parsedCount);
 			Assert.AreEqual (1, changed.Count);
 			Assert.AreEqual (1, storables.Count);
 			Assert.IsTrue (obj1.IsChanged);
@@ -165,14 +165,14 @@ namespace Tests.Core.Serialization
 			obj1.Storable.IsChanged = true;
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (2, parser.parsed.Count);
+			Assert.AreEqual (2, parser.parsedCount);
 			Assert.AreEqual (2, changed.Count);
 			Assert.AreEqual (2, storables.Count);
 			storables = null;
 			changed = null;
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (2, parser.parsed.Count);
+			Assert.AreEqual (2, parser.parsedCount);
 			Assert.AreEqual (0, changed.Count);
 			Assert.AreEqual (2, storables.Count);
 		}
@@ -187,7 +187,7 @@ namespace Tests.Core.Serialization
 			ObjectChangedParser parser = new ObjectChangedParser ();
 			Assert.IsTrue (parser.ParseInternal (out parent, obj1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
-			Assert.AreEqual (objects.Count, parser.parsed.Count);
+			Assert.AreEqual (objects.Count, parser.parsedCount);
 			Assert.AreEqual (0, changed.Count);
 			Assert.AreEqual (57, storables.Count);
 			obj1.Storable.IsChanged = true;

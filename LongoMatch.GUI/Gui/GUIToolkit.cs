@@ -45,7 +45,7 @@ namespace LongoMatch.Gui
 		public GUIToolkit ()
 		{
 			mainWindow = new MainWindow (this);
-			(mainWindow as MainWindow).Show ();
+			mainWindow.Hide ();
 			instance = this;
 			registry = new Registry ("GUI backend");
 		}
@@ -383,6 +383,7 @@ namespace LongoMatch.Gui
 
 		public void Welcome ()
 		{
+			mainWindow.Show ();
 			mainWindow.Welcome ();
 		}
 

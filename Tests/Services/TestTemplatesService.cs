@@ -33,13 +33,14 @@ namespace Tests.Services
 		string tempPath;
 
 		[SetUp]
-		public void CreateStorage() {
+		public void CreateStorage ()
+		{
 			tempPath = Path.Combine (Path.GetTempPath (), "TestTemplatesService");
 			try {
 				Directory.Delete (tempPath, true);
 			} catch {
 			}
-			storage = new FileStorage (tempPath);
+			storage = new CouchbaseStorage (tempPath, "templates");
 		}
 
 		[TearDown]
@@ -60,13 +61,13 @@ namespace Tests.Services
 			ts.Start ();
 			ICategoriesTemplatesProvider ctp = ts.CategoriesTemplateProvider;
 			// We must have at least one template provider called 'Default'
-			Dashboard dash = ctp.Load (ctp.TemplatesNames[0]);
+			Dashboard dash = ctp.Templates [0];
 			Assert.IsNotNull (dash);
 			// Test we dont have a template
 			Assert.IsFalse (ctp.Exists ("NonExistingTemplate"));
 
 			ITeamTemplatesProvider ttp = ts.TeamTemplateProvider;
-			Assert.AreEqual (2, ttp.TemplatesNames.Count);
+			Assert.AreEqual (2, ttp.Templates.Count);
 			// Test we dont have a template
 			Assert.IsFalse (ctp.Exists ("NonExistingTemplate"));
 		}
@@ -82,40 +83,33 @@ namespace Tests.Services
 			Assert.IsTrue (provider.Exists ("NEW"));
 		}
 
-		[Test()]
-		public void TestListTemplates()
+		[Test ()]
+		public void TestListTemplates ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.AreEqual (1, provider.Templates.Count);
-			Assert.AreEqual (1, provider.TemplatesNames.Count);
 			Dashboard d = Dashboard.DefaultTemplate (10);
 			d.Name = "NEW";
 			provider.Save (d);
 			Assert.AreEqual (2, provider.Templates.Count);
-			Assert.AreEqual (2, provider.TemplatesNames.Count);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestSaveUpdateLoad ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Load ("jamematen"));
 			Dashboard d = Dashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			provider.Save (d);
-			Assert.IsNotNull (provider.Load ("jamematen"));
-			provider.Update (d);
-			Assert.IsNotNull (provider.Load ("jamematen"));
+			Assert.IsTrue (provider.Exists ("jamematen"));
 
 			d = Dashboard.DefaultTemplate (10);
 			d.Name = "system";
 			provider.Register (d);
-			Assert.IsNotNull (provider.Load ("system"));
-			// Check it returns a copy of the template
-			Assert.AreNotSame (d, provider.Load ("system"));
+			Assert.IsNotNull (provider.Exists ("system"));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestLoadFile ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
@@ -130,50 +124,51 @@ namespace Tests.Services
 			}
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestRegister ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Dashboard d = Dashboard.DefaultTemplate (10);
 			d.Name = "system";
 			provider.Register (d);
-			Assert.IsNotNull (provider.Load ("system"));
+			Assert.IsNotNull (provider.Exists ("system"));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestCopy ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			provider.Copy (provider.TemplatesNames[0], "NEW");
-			Assert.AreEqual (2, provider.TemplatesNames.Count);
-			Assert.IsNotNull (provider.Load ("NEW"));
-			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Copy ("jamematen", "NEW"));
+			provider.Copy (provider.Templates [0], "NEW");
+			Assert.AreEqual (2, provider.Templates.Count);
+			Assert.IsNotNull (provider.Exists ("NEW"));
+			Assert.DoesNotThrow (() => provider.Copy (Dashboard.DefaultTemplate (5), "NEW"));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestDelete ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			Assert.AreEqual (1, provider.TemplatesNames.Count);
+			Assert.AreEqual (1, provider.Templates.Count);
 			// Template does not exists
-			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Delete ("jamematen"));
+			Assert.DoesNotThrow (() => provider.Delete (Dashboard.DefaultTemplate (1)));
 			// System template
-			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Delete (provider.TemplatesNames[0]));
+			Assert.Throws<TemplateNotFoundException<Dashboard>> (() => provider.Delete (provider.Templates [0]));
 			Dashboard d = Dashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			provider.Save (d);
 			Assert.AreEqual (2, provider.Templates.Count);
-			provider.Delete (d.Name);
+			provider.Delete (d);
 			Assert.AreEqual (1, provider.Templates.Count);
+			Assert.IsFalse (provider.Exists (d.Name));
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestCreate ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			provider.Create ("jamematen");
-			Assert.AreEqual (2, provider.TemplatesNames.Count);
-			Assert.IsNotNull (provider.Load ("jamematen"));
+			Assert.AreEqual (2, provider.Templates.Count);
+			Assert.IsTrue (provider.Exists ("jamematen"));
 		}
 	}
 }

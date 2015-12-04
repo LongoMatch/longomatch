@@ -56,26 +56,12 @@ namespace LongoMatch.Core.Stats
 			SubcategoriesStats = new List<SubCategoryStat> ();
 
 			if (EventType is ScoreEventType) {
+				ScoreEventType scoreEventType = EventType as ScoreEventType;
 				// Total number of points
-				TotalCount = events.Sum (e => (e as ScoreEvent).Score.Points);
+				TotalCount = events.Count * scoreEventType.Score.Points;
 				int eventsCount = events.Count ();
-				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Score"));
-				// Create percentual stats for each score subtype. The count here is the number of events not points.
-				foreach (Score score in project.Scores) {
-					var scores = events.Where (e => (e as ScoreEvent).Score == score);
-					PercentualStat pStat = new PercentualStat (score.Name, scores.Count (), 0, 0, eventsCount);
-					substat.OptionStats.Add (pStat);
-				}
-				SubcategoriesStats.Add (substat);
 			} else if (EventType is PenaltyCardEventType) {
 				TotalCount = events.Count;
-				SubCategoryStat substat = new SubCategoryStat (Catalog.GetString ("Penalties"));
-				foreach (PenaltyCard penalty in project.PenaltyCards) {
-					var penalties = events.Where (e => (e as PenaltyCardEvent).PenaltyCard == penalty);
-					PercentualStat pStat = new PercentualStat (penalty.Name, penalties.Count (), 0, 0, TotalCount);
-					substat.OptionStats.Add (pStat);
-				}
-				SubcategoriesStats.Add (substat);
 			} else {
 				AnalysisEventType evType = EventType as AnalysisEventType;
 				TotalCount = events.Count;

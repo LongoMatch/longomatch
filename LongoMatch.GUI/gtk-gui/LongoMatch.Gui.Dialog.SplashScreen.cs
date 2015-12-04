@@ -25,12 +25,12 @@ namespace LongoMatch.Gui.Dialog
 			this.fixed1.HasWindow = false;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.progressbar1 = new global::Gtk.ProgressBar ();
-			this.progressbar1.WidthRequest = 240;
+			this.progressbar1.WidthRequest = 384;
 			this.progressbar1.Name = "progressbar1";
 			this.fixed1.Add (this.progressbar1);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1 [this.progressbar1]));
-			w1.X = 200;
-			w1.Y = 400;
+			w1.X = 96;
+			w1.Y = 430;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.splashimage = new global::Gtk.Image ();
 			this.splashimage.WidthRequest = 640;

@@ -38,8 +38,9 @@ namespace Tests.Integration
 		string tmpPath, homePath;
 
 		[SetUp]
-		public void Init () {
-			tmpPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		public void Init ()
+		{
+			tmpPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			homePath = Path.Combine (tmpPath, "LongoMatch");
 			Directory.CreateDirectory (tmpPath);
 			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
@@ -51,7 +52,8 @@ namespace Tests.Integration
 		}
 
 		[TearDown]
-		public void Delete () {
+		public void Delete ()
+		{
 			CoreServices.Stop ();
 			try {
 				foreach (var db in Config.DatabaseManager.Databases) {
@@ -96,8 +98,8 @@ namespace Tests.Integration
 			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 			// Check templates and db are initialized
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.TemplatesNames.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
+			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
 
 			CoreServices.Stop ();
@@ -105,8 +107,8 @@ namespace Tests.Integration
 			// Simulate an application restart
 			CoreServices.Init ();
 			CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.TemplatesNames.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.TemplatesNames.Count);
+			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
 			CoreServices.Stop ();
 		}

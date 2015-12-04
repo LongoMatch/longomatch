@@ -17,8 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces
 {
@@ -27,17 +27,19 @@ namespace LongoMatch.Core.Interfaces
 		string Name { get; set; }
 
 		bool Static  { get; set; }
+
+		int Version { get; set; }
+
+	}
+
+	public interface ITemplate<T>: ITemplate
+	{
+		T Copy (string newName);
 	}
 
 	public interface ITemplateProvider
 	{
-		List<string> TemplatesNames { get; }
-
 		bool Exists (string name);
-
-		void Copy (string orig, string copy);
-
-		void Delete (string templateName);
 
 		void Create (string templateName, params object[] list);
 	}
@@ -46,15 +48,15 @@ namespace LongoMatch.Core.Interfaces
 	{
 		List<T> Templates { get; }
 
-		T Load (string name);
-
 		T LoadFile (string filename);
 
 		void Save (T template);
 
-		void Update (T template);
+		void Delete (T template);
 
 		void Register (T template);
+
+		void Copy (T template, string copy);
 	}
 
 	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard>

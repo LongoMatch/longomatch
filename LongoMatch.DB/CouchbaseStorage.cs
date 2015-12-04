@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Couchbase.Lite;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
@@ -48,7 +49,7 @@ namespace LongoMatch.DB
 			Init ();
 		}
 
-		internal CouchbaseStorage (string dbDir, string storageName)
+		public CouchbaseStorage (string dbDir, string storageName)
 		{
 			this.storageName = storageName;
 			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),
@@ -81,7 +82,7 @@ namespace LongoMatch.DB
 					Name = storageName,
 					LastBackup = DateTime.UtcNow,
 					LastCleanup = DateTime.UtcNow,
-					Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION)
+					Version = new Version (Constants.DB_VERSION, 0),
 				};
 				Store (Info);
 			}
@@ -122,10 +123,18 @@ namespace LongoMatch.DB
 		public void Fill (IStorable storable)
 		{
 			lock (mutex) {
-				db.RunInTransaction (() => {
-					DocumentsSerializer.FillObject (storable, db);
-					return true;
+				bool success = db.RunInTransaction (() => {
+					try {
+						DocumentsSerializer.FillObject (storable, db);
+						return true;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
+					}
 				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
+				}
 			}
 		}
 
@@ -163,37 +172,70 @@ namespace LongoMatch.DB
 		public void Store<T> (T t, bool forceUpdate = false) where T : IStorable
 		{
 			lock (mutex) {
-				if (!forceUpdate) {
-					db.RunInTransaction (() => {
+				bool success = db.RunInTransaction (() => {
+					try {
 						StorableNode node;
 						ObjectChangedParser parser = new ObjectChangedParser ();
 						parser.Parse (out node, t, Serializer.JsonSettings);
-						Update (node);
+
+						if (!forceUpdate) {
+							Update (node);
+						} else {
+							DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+						}
+						foreach (IStorable storable in node.OrphanChildren) {
+							db.GetDocument (DocumentsSerializer.StringFromID (storable.ID, t.ID)).Delete ();
+						}
 						return true;
-					});
-				} else {
-					db.RunInTransaction (() => {
-						DocumentsSerializer.SaveObject (t, db, saveChildren: true);
-						return true;
-					});
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
+					}
+				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
 				}
 			}
 		}
 
-		public void Delete<T> (T t) where T : IStorable
+		/// <summary>
+		/// Delete the specified storable object from the database. If the object is configured to delete its children,
+		/// we perform a bulk deletion of all the documents with the the storable.ID prefix, which is faster than
+		/// parsing the object and it ensures that we don't leave orphaned documents in the DB
+		/// </summary>
+		/// <param name="storable">The object to delete.</param>
+		/// <typeparam name="T">The type of the object to delete.</typeparam>
+		public void Delete<T> (T storable) where T : IStorable
 		{
 			lock (mutex) {
-				db.RunInTransaction (() => {
-					StorableNode node;
-					if (t.DeleteChildren) {
-						ObjectChangedParser parser = new ObjectChangedParser ();
-						parser.Parse (out node, t, Serializer.JsonSettings);
-					} else {
-						node = new StorableNode (t);
+				bool success = db.RunInTransaction (() => {
+					try {
+						if (storable.DeleteChildren) {
+							Query query = db.CreateAllDocumentsQuery ();
+							// This should work, but raises an Exception in Couchbase.Lite
+							//query.StartKey = t.ID;
+							//query.EndKey = t.ID + "\uefff";
+
+							// In UTF-8, from all the possible values in a GUID string, '0' is the first char in the
+							// list and 'f' would be the last one
+							string sepchar = DocumentsSerializer.ID_SEP_CHAR.ToString ();
+							query.StartKey = storable.ID + sepchar + "00000000-0000-0000-0000-000000000000";
+							query.EndKey = storable.ID + sepchar + "ffffffff-ffff-ffff-ffff-ffffffffffff";
+							query.InclusiveEnd = true;
+							foreach (var row in query.Run ()) {
+								row.Document.Delete ();
+							}
+						}
+						db.GetDocument (storable.ID.ToString ()).Delete ();
+						return true;
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						return false;
 					}
-					Delete (node, t.ID);
-					return true;
 				});
+				if (!success) {
+					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
+				}
 			}
 		}
 
@@ -219,9 +261,7 @@ namespace LongoMatch.DB
 				context = new SerializationContext (db, node.Storable.GetType ());
 				context.RootID = node.Storable.ID;
 			}
-			if (node.Deleted) {
-				Delete (node, context.RootID);
-			} else if (node.IsChanged) {
+			if (node.IsChanged) {
 				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
 

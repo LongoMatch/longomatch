@@ -84,8 +84,13 @@ namespace LongoMatch
 			} else {
 				home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
 				if (!Directory.Exists (home)) {
-					Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
-					home = null;
+					try {
+						Directory.CreateDirectory (home);
+					} catch (Exception ex) {
+						Log.Exception (ex);
+						Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
+						home = null;
+					}
 				}
 				if (home == null) {
 					home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
@@ -101,7 +106,7 @@ namespace LongoMatch
 				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ()); 
 				string configFilename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
 				string configFilepath = Path.Combine (oldHome, configFilename);
-				if (File.Exists (configFilepath)) {
+				if (File.Exists (configFilepath) && !File.Exists (Config.ConfigFile)) {
 					try {
 						File.Move (configFilepath, Config.ConfigFile);
 					} catch (Exception ex) {
@@ -195,6 +200,12 @@ namespace LongoMatch
 			}
 			get {
 				return configDirectory;
+			}
+		}
+
+		public static string TemplatesDir {
+			get {
+				return Path.Combine (DBDir, "templates");
 			}
 		}
 

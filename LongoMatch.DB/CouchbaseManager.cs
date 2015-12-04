@@ -19,8 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.DB
 {
@@ -67,7 +67,9 @@ namespace LongoMatch.DB
 		public void UpdateDatabases ()
 		{
 			foreach (string dbName in manager.AllDatabaseNames) {
-				Add (dbName, false);
+				if (dbName != "templates") {
+					Add (dbName, false);
+				}
 			}
 		}
 

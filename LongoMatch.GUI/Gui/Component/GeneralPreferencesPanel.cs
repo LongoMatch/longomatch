@@ -72,11 +72,11 @@ namespace LongoMatch.Gui.Component
 			int i = 0, active = -1;
 			templates = new ListStore (typeof(string));
 
-			foreach (string name in Config.CategoriesTemplatesProvider.TemplatesNames) {
-				if (name == Config.DefaultTemplate) {
+			foreach (var template in Config.CategoriesTemplatesProvider.Templates) {
+				if (template.Name == Config.DefaultTemplate) {
 					active = i;
 				}
-				templates.AppendValues (name);
+				templates.AppendValues (template.Name);
 				i++;
 			}
 			templatescombobox.Model = templates;

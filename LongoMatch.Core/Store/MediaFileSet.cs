@@ -29,6 +29,8 @@ namespace LongoMatch.Core.Store
 	[JsonObject]
 	public class MediaFileSet : List<MediaFile>, IStorable
 	{
+		[NonSerialized]
+		IStorage storage;
 		bool isLoading;
 
 		public MediaFileSet ()
@@ -46,8 +48,12 @@ namespace LongoMatch.Core.Store
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public IStorage Storage {
-			get;
-			set;
+			get {
+				return storage;
+			}
+			set {
+				storage = value;
+			}
 		}
 
 		[JsonIgnore]

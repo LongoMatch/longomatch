@@ -28,7 +28,7 @@ namespace LongoMatch.Services
 {
 	public class DataBaseManager: IService
 	{
-		const int SUPPORTED_MAJOR_VERSION = Constants.DB_MAYOR_VERSION;
+		const int SUPPORTED_MAJOR_VERSION = Constants.DB_VERSION;
 
 		public DataBaseManager ()
 		{

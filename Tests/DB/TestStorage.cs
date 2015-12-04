@@ -117,6 +117,18 @@ namespace Tests.DB
 			});
 		}
 
+		[Test]
+		public void TestDeleteError ()
+		{
+			Assert.Throws<StorageException> (() => storage.Delete<Project> (null));
+		}
+
+		[Test]
+		public void TestStoreError ()
+		{
+			Assert.Throws<StorageException> (() => storage.Store<Project> (null));
+		}
+
 		[Test ()]
 		public void TestDocType ()
 		{
@@ -377,7 +389,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (13, db.DocumentCount);
+			Assert.AreEqual (15, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -484,15 +496,17 @@ namespace Tests.DB
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
 			p.Description = pd;
+			p.AddEvent (new TimelineEvent ());
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (40, db.DocumentCount);
+			Assert.AreEqual (43, db.DocumentCount);
 
 			p = storage.RetrieveAll<Project> ().First ();
 			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
+			Assert.IsTrue (Object.ReferenceEquals (p.Description.FileSet, p.Timeline [0].FileSet));
 			storage.Store (p);
-			Assert.AreEqual (40, db.DocumentCount);
+			Assert.AreEqual (43, db.DocumentCount);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
@@ -525,9 +539,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (50, db.DocumentCount);
+			Assert.AreEqual (52, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (50, db.DocumentCount);
+			Assert.AreEqual (52, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
@@ -538,6 +552,40 @@ namespace Tests.DB
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
+		}
+
+		[Test ()]
+		public void TestDeleteProjectItems ()
+		{
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (10);
+			p.UpdateEventTypesAndTimers ();
+			p.LocalTeamTemplate = Team.DefaultTemplate (10);
+
+			for (int i = 0; i < 10; i++) {
+				TimelineEvent evt = new TimelineEvent {
+					EventType = p.EventTypes [i],
+					Start = new Time (1000),
+					Stop = new Time (2000),
+				};
+				p.Timeline.Add (evt);
+			}
+
+			storage.Store (p);
+			p = storage.Retrieve<Project> (p.ID);
+
+			// Removing this object should not remove the EvenType from the database, which might be referenced by
+			// TimelineEvent's in the timeline
+			EventType evtType = (p.Dashboard.List [0] as AnalysisEventButton).EventType;
+			p.Dashboard.List.Remove (p.Dashboard.List [0]);
+			storage.Store (p);
+			Assert.DoesNotThrow (() => storage.Retrieve<Project> (p.ID));
+
+			// Delete an event with a Player, a Team and an EventType, it should delete only the timeline event
+			p.Timeline [0].Teams.Add (p.LocalTeamTemplate);
+			p.Timeline [0].Players.Add (p.LocalTeamTemplate.List [0]);
+			p.Timeline.Remove (p.Timeline [0]);
+			Assert.DoesNotThrow (() => storage.Retrieve<Project> (p.ID));
 		}
 
 		[Test ()]

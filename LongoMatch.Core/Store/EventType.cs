@@ -35,12 +35,12 @@ namespace LongoMatch.Core.Store
 			Color = Color.Red.Copy (true);
 		}
 
-		public string Name {
+		public virtual string Name {
 			get;
 			set;
 		}
 
-		public Color Color {
+		public virtual Color Color {
 			get;
 			set;
 		}
@@ -147,46 +147,51 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class PenaltyCardEventType: EventType
 	{
-		public PenaltyCardEventType ()
-		{
-			ID = Constants.PenaltyCardID;
-			Name = Catalog.GetString ("Penalties");
+		public override Color Color {
+			get {
+				return PenaltyCard != null ? PenaltyCard.Color : null;
+			}
+			set {
+				if (PenaltyCard != null) {
+					PenaltyCard.Color = value;
+				}
+			}
 		}
 
-		public override bool Equals (object obj)
-		{
-			PenaltyCardEventType pc = obj as PenaltyCardEventType;
-			if (pc == null)
-				return false;
-			return pc.ID == ID;
+		public override string Name {
+			get {
+				return PenaltyCard != null ? PenaltyCard.Name : null;
+			}
+			set {
+				if (PenaltyCard != null) {
+					PenaltyCard.Name = value;
+				}
+			}
 		}
 
-		public override int GetHashCode ()
-		{
-			return ID.GetHashCode ();
+		public PenaltyCard PenaltyCard {
+			get;
+			set;
 		}
 	}
 
 	[Serializable]
 	public class ScoreEventType: EventType
 	{
-		public ScoreEventType ()
-		{
-			ID = Constants.ScoreID;
-			Name = Catalog.GetString ("Score");
+		public override string Name {
+			get {
+				return Score != null ? Score.Name : null;
+			}
+			set {
+				if (Score != null) {
+					Score.Name = value;
+				}
+			}
 		}
 
-		public override bool Equals (object obj)
-		{
-			ScoreEventType sc = obj as ScoreEventType;
-			if (sc == null)
-				return false;
-			return sc.ID == ID;
-		}
-
-		public override int GetHashCode ()
-		{
-			return ID.GetHashCode ();
+		public Score Score {
+			get;
+			set;
 		}
 	}
 

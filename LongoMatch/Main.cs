@@ -20,11 +20,13 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.DB;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
@@ -38,78 +40,95 @@ namespace LongoMatch
 {
 	class MainClass
 	{
-		[DllImport("libX11", CallingConvention=CallingConvention.Cdecl)]
-		private static extern int XInitThreads();
+		[DllImport ("libX11", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int XInitThreads ();
 
 		public static void Main (string[] args)
 		{
 			// Replace the current synchronization context with a GTK synchronization context
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
 			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
-			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (OnException);
-
+			GLib.ExceptionManager.UnhandledException += HandleException;
 			CoreServices.Init ();
 			InitGtk ();
 			var splashScreen = new SplashScreen ();
 			splashScreen.Show ();
-			Application.Invoke ((s, e) => Init (splashScreen));
+			Application.Invoke (async (s, e) => await Init (splashScreen));
 			Application.Run ();
+			try {
+				AddinsManager.ShutdownMultimediaBackends ();
+			} catch (Exception e) {
+				Log.Exception (e.Message);
+			}
 		}
 
-		static void Init (SplashScreen splashScreen)
+		static async Task Init (SplashScreen splashScreen)
 		{
 			IProgressReport progress = splashScreen;
 
-			/* Init GStreamer */
-			GStreamer.Init ();
-
 			try {
-				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
-				AddinsManager.LoadConfigModifierAddins ();
+				bool haveCodecs = false;
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
 				Config.GUIToolkit = new GUIToolkit ();
-				bool haveCodecs = AddinsManager.RegisterGStreamerPlugins ();
-				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
-				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
-				AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
-				AddinsManager.LoadServicesAddins ();
 				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
-				if (!haveCodecs) {
-					CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
-					int response = ccd.Run ();
-					if (response == (int)ResponseType.Accept) {
-						try {
-							System.Diagnostics.Process.Start (Constants.WEBSITE);
-						} catch {
-						}
-					}
-					ccd.Destroy ();
-				}
-				try {
-					CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
-				} catch (DBLockedException locked) {
-					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
-					             "the application will be closed.");
-					Config.GUIToolkit.ErrorMessage (msg);
-					Log.Exception (locked);
-					return;
-				}
+
+				Task addinsTask = Task.Run (() => InitAddins (progress));
+				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
+
+				// Wait until the addins are initialized to start the services
+				await addinsTask;
+				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
-				ConfigureOSXApp ();
+
+				// Migrate the old databases now that the DB and Templates services have started
+				DatabaseMigration dbMigration = new DatabaseMigration (progress);
+				Task dbInit = Task.Factory.StartNew (dbMigration.Start);
+
+				// Wait for Migration and the GStreamer initialization
+				try {
+					await Task.WhenAll (gstInit, dbInit);
+				} catch (AggregateException ae) {
+					throw ae.Flatten ();
+				}
+
+				if (!AddinsManager.RegisterGStreamerPlugins ()) {
+					ShowCodecsDialog ();
+				}
+
 				splashScreen.Destroy ();
+				ConfigureOSXApp ();
 				Config.GUIToolkit.Welcome ();
 			} catch (AddinRequestShutdownException arse) {
 				// Abort gracefully
+				Application.Quit ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
-			} finally {
-				try {
-					AddinsManager.ShutdownMultimediaBackends ();
-				} catch {
-				}
 			}
+		}
+
+		static void InitAddins (IProgressReport progress)
+		{
+			Guid id = Guid.NewGuid ();
+			progress.Report (0.1f, "Initializing addins", id);
+			AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+			progress.Report (0.5f, "Addins parsed", id);
+			AddinsManager.LoadConfigModifierAddins ();
+			AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
+			AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
+			AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
+			AddinsManager.LoadServicesAddins ();
+			progress.Report (1, "Addins initialized", id);
+		}
+
+
+		static void InitGStreamer (IProgressReport progress)
+		{
+			Guid id = Guid.NewGuid ();
+			progress.Report (0.1f, "Initializing GStreamer", id);
+			GStreamer.Init ();
+			progress.Report (1f, "GStreamer initialized", id);
 		}
 
 		static void ConfigureOSXApp ()
@@ -164,12 +183,25 @@ namespace LongoMatch
 			
 		}
 
-		private static void OnException (GLib.UnhandledExceptionArgs args)
+		static void ShowCodecsDialog ()
+		{
+			CodecsChoiceDialog ccd = new CodecsChoiceDialog ();
+			int response = ccd.Run ();
+			if (response == (int)ResponseType.Accept) {
+				try {
+					System.Diagnostics.Process.Start (Constants.WEBSITE);
+				} catch {
+				}
+			}
+			ccd.Destroy ();
+		}
+
+		static void HandleException (GLib.UnhandledExceptionArgs args)
 		{
 			ProcessExecutionError ((Exception)args.ExceptionObject);
 		}
 
-		private static void ProcessExecutionError (Exception ex)
+		static void ProcessExecutionError (Exception ex)
 		{
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
 			logFile = Utils.SanitizePath (logFile, ' ', ':');

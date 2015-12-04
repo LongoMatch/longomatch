@@ -125,7 +125,7 @@ namespace LongoMatch.Services
 					if (!importer.CanOverwrite && DB.Exists (project)) {
 						var res = Config.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
 						          project.ID + "\n" +
-							Catalog.GetString ("Do you want to overwrite it?"), null).Result;
+						          Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
 							return;
 					}

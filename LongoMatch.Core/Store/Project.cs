@@ -22,10 +22,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Migration;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
@@ -49,6 +51,7 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class Project : StorableBase, IComparable
 	{
+		public const int CURRENT_VERSION = 1;
 		ObservableCollection<TimelineEvent> timeline;
 		ObservableCollection<Period> periods;
 		ObservableCollection<Timer> timers;
@@ -57,6 +60,7 @@ namespace LongoMatch.Core.Store
 		SubstitutionEventType subsType;
 
 		#region Constructors
+
 
 		public Project ()
 		{
@@ -69,6 +73,7 @@ namespace LongoMatch.Core.Store
 			Periods = new ObservableCollection<Period> ();
 			Playlists = new ObservableCollection<Playlist> ();
 			EventTypes = new ObservableCollection<EventType> ();
+			Version = Constants.DB_VERSION;
 		}
 
 		[OnDeserialized ()]
@@ -76,14 +81,22 @@ namespace LongoMatch.Core.Store
 		{
 			foreach (TimelineEvent evt in Timeline) {
 				evt.Project = this;
-				// FIXME: remove this after the migration tool is ready
-				evt.FileSet = Description.FileSet;
 			}
 		}
 
 		#endregion
 
 		#region Properties
+
+		/// <value>
+		/// Document version
+		/// </value>
+		[DefaultValue (0)]
+		[JsonProperty (DefaultValueHandling = DefaultValueHandling.Populate)]
+		public int Version {
+			get;
+			set;
+		}
 
 		public ObservableCollection<TimelineEvent> Timeline {
 			get {
@@ -196,35 +209,17 @@ namespace LongoMatch.Core.Store
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<Score> Scores {
+		public List<TimelineEvent> ScoreEvents {
 			get {
-				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
-				return ScoreEvents.Select (e => e.Score).Union (scores).OrderByDescending (s => s.Points).ToList ();
+				return Timeline.Where (e => e.EventType is ScoreEventType).ToList ();
 			}
 		}
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PenaltyCard> PenaltyCards {
+		public List<TimelineEvent> PenaltyCardsEvents {
 			get {
-				var pc = Dashboard.List.OfType<PenaltyCardButton> ().Select (b => b.PenaltyCard);
-				return PenaltyCardsEvents.Select (e => e.PenaltyCard).Union (pc).ToList ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public List<ScoreEvent> ScoreEvents {
-			get {
-				return Timeline.OfType<ScoreEvent> ().Select (t => t).ToList ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public List<PenaltyCardEvent> PenaltyCardsEvents {
-			get {
-				return Timeline.OfType<PenaltyCardEvent> ().Select (t => t).ToList ();
+				return Timeline.Where (e => e.EventType is PenaltyCardEventType).ToList ();
 			}
 		}
 
@@ -310,24 +305,16 @@ namespace LongoMatch.Core.Store
 		}
 
 		public TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                               Score score, PenaltyCard card, bool addToTimeline = true)
+		                               bool addToTimeline = true)
 		{
 			TimelineEvent evt;
 			string count;
 			string name;
 
 			count = String.Format ("{0:000}", EventsByType (type).Count + 1);
-			if (type is PenaltyCardEventType) {
-				name = String.Format ("{0} {1}", card.Name, count);
-				evt = new PenaltyCardEvent { PenaltyCard = card };
-			} else if (type is ScoreEventType) {
-				name = String.Format ("{0} {1}", score.Name, count);
-				evt = new ScoreEvent { Score = score };
-			} else {
-				name = String.Format ("{0} {1}", type.Name, count);
-				evt = new TimelineEvent ();
-			}
-			
+			name = String.Format ("{0} {1}", type.Name, count);
+			evt = new TimelineEvent ();
+
 			evt.Name = name;
 			evt.Start = start;
 			evt.Stop = stop;
@@ -642,26 +629,11 @@ namespace LongoMatch.Core.Store
 				throw new Exception (Catalog.GetString ("The file you are trying to load " +
 				"is not a valid project"));
 			}
-			ConvertTeams (project);
+			ProjectMigration.Migrate (project);
 			return project;
 		}
 
-		#pragma warning disable 0618
-		internal static void ConvertTeams (Project project)
-		{
-			// Convert old Team tags to Teams
-			foreach (TimelineEvent evt in project.Timeline.Where (e => e.Team != TeamType.NONE)) {
-				if (evt.Team == TeamType.LOCAL || evt.Team == TeamType.BOTH) {
-					evt.Teams.Add (project.LocalTeamTemplate);
-				}
-				if (evt.Team == TeamType.VISITOR || evt.Team == TeamType.BOTH) {
-					evt.Teams.Add (project.VisitorTeamTemplate);
-				}
-			}
-		}
-
-		#pragma warning restore 0618
-
+	
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;

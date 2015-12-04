@@ -305,7 +305,13 @@ namespace LongoMatch.Gui.Panel
 						loadedProject = null;
 					}
 					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
-					busy.ShowSync (() => DB.RemoveProject (selectedProject));
+					busy.ShowSync (() => {
+						try {
+							DB.RemoveProject (selectedProject);
+						} catch (StorageException ex) {
+							Config.GUIToolkit.ErrorMessage (ex.Message);
+						}
+					});
 					deletedProjects.Add (selectedProject);
 				}
 			}
