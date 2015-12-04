@@ -58,7 +58,7 @@ namespace LongoMatch
 			try {
 				AddinsManager.ShutdownMultimediaBackends ();
 			} catch (Exception e) {
-				Log.Exception (e.Message);
+				Log.Exception (e);
 			}
 		}
 
