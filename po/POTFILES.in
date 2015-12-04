@@ -38,6 +38,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs
