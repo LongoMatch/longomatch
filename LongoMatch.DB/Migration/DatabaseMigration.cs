@@ -73,17 +73,16 @@ namespace LongoMatch.DB
 
 			progress.Report (0, "Migrating teams and dashboards", id);
 
-			if (!Directory.Exists (Path.Combine (Config.DBDir, "teams"))) {
-				return false;
-			}
-
-			teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
+			try {
+				teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
 				Where (f => f.EndsWith (".ltt")).ToList ();
-			dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
+				dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
 				Where (f => f.EndsWith (".lct")).ToList ();
-
-			if (teamFiles.Count == 0 && dashboardFiles.Count == 0) {
-				progress.Report (1, "Migrating teams and dashboards", id);
+				if (teamFiles.Count == 0 && dashboardFiles.Count == 0) {
+					throw new DirectoryNotFoundException ();
+				}
+			} catch (DirectoryNotFoundException ex) {
+				progress.Report (1, "Migrated teams and dashboards", id);
 				return true;
 			}
 

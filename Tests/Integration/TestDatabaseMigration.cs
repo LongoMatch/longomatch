@@ -79,6 +79,52 @@ namespace Tests.Integration
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "basket.lct")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "old", "longomatch.ldb", "spain_france_test.lgm")));
 		}
+
+		[Test]
+		public void TestNoOldDatabaseToMigrate ()
+		{
+			string tmpPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
+			string homePath = Path.Combine (tmpPath, "LongoMatch");
+			string dbPath = Path.Combine (homePath, "db");
+			string lmdbPath = Path.Combine (dbPath, "longomatch.ldb");
+			string teamsPath = Path.Combine (dbPath, "teams");
+			string dashboardsPath = Path.Combine (dbPath, "analysis");
+
+			Directory.CreateDirectory (tmpPath);
+			Directory.CreateDirectory (homePath);
+
+			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
+			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
+			CoreServices.Init ();
+			var guiToolkitMock = new Mock<IGUIToolkit> ();
+			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
+			Config.EventsBroker = new EventsBroker ();
+			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
+
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+
+			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
+			dbMigration.Start ();
+
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+
+			// Directory exists but it's empty
+			Directory.CreateDirectory (dbPath);
+			Directory.CreateDirectory (lmdbPath);
+			Directory.CreateDirectory (teamsPath);
+			Directory.CreateDirectory (dashboardsPath);
+
+			dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
+			dbMigration.Start ();
+
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+		}
 	}
 }
 
