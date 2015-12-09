@@ -73,6 +73,10 @@ namespace LongoMatch.DB
 
 			progress.Report (0, "Migrating teams and dashboards", id);
 
+			if (!Directory.Exists (Path.Combine (Config.DBDir, "teams"))) {
+				return false;
+			}
+
 			teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
 				Where (f => f.EndsWith (".ltt")).ToList ();
 			dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
