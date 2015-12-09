@@ -145,6 +145,22 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		protected override void HandleLeftButton (Point coords, ButtonModifier modif)
+		{
+			base.HandleLeftButton (coords, modif);
+
+			if (!Selections.Any ()) {
+				needle.X = coords.X;
+				Config.EventsBroker.EmitSeekEvent (
+					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					false);
+				needle.ReDraw ();
+			} else {
+				// center playhead
+			}
+
+		}
+
 		public override void Draw (IContext context, Area area)
 		{
 			int startX, start, stop;
