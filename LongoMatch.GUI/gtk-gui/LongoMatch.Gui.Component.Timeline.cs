@@ -56,7 +56,6 @@ namespace LongoMatch.Gui.Component
 			this.focusbuttonimage = new global::Gtk.Image ();
 			this.focusbuttonimage.Name = "focusbuttonimage";
 			this.focusbutton.Add (this.focusbuttonimage);
-			this.focusbutton.Label = null;
 			this.hbox2.Add (this.focusbutton);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.focusbutton]));
 			w2.Position = 0;

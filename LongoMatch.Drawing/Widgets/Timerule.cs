@@ -27,6 +27,8 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class Timerule: SelectionCanvas
 	{
+		public event EventHandler CenterPlayheadClicked;
+
 		const int BIG_LINE_HEIGHT = 15;
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
@@ -155,10 +157,18 @@ namespace LongoMatch.Drawing.Widgets
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 					false);
 				needle.ReDraw ();
-			} else {
-				// center playhead
 			}
+		}
 
+		protected override void HandleDoubleClick (Point coords, ButtonModifier modif)
+		{
+			base.HandleDoubleClick (coords, modif);
+
+			if (Selections.Any ()) {
+				if (CenterPlayheadClicked != null) {
+					CenterPlayheadClicked (this, new EventArgs ());
+				}
+			}
 		}
 
 		public override void Draw (IContext context, Area area)
