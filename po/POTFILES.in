@@ -2,6 +2,7 @@
 libcesarplayer/lgm-video-player.c
 LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
+LongoMatch.DB/CouchbaseStorage.cs
 LongoMatch.Core/Common/Device.cs
 LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Hotkeys.cs
@@ -63,7 +64,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs
 LongoMatch.GUI/Gui/Component/AnalysisTemplateEditor.cs
-LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/CategoryProperties.cs
 LongoMatch.GUI/Gui/Component/CodingWidget.cs
 LongoMatch.GUI/Gui/Component/DashboardWidget.cs
@@ -89,7 +89,6 @@ LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs
 LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs
 LongoMatch.GUI/Gui/Dialog/HotKeySelectorDialog.cs
 LongoMatch.GUI/Gui/Dialog/PlayEditor.cs
-LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs
 LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
