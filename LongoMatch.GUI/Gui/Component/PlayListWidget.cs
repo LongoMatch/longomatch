@@ -101,9 +101,7 @@ namespace LongoMatch.Gui.Component
 			menu = new Menu ();
 			foreach (Playlist playlist in Project.Playlists) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => {
-					Config.EventsBroker.EmitRenderPlaylist (playlist);
-				};
+				plmenu.Activated += (s, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();

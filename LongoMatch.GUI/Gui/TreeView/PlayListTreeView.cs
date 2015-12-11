@@ -161,9 +161,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append (edit);
 
 			render = new MenuItem (Catalog.GetString ("Render"));
-			render.Activated += (sender, e) => {
-				Config.EventsBroker.EmitRenderPlaylist (playlist);
-			};
+			render.Activated += (sender, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
 			menu.Append (render);
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));
