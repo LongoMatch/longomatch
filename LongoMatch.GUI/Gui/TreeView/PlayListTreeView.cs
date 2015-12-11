@@ -18,13 +18,17 @@
 //
 //
 using System;
-using Gtk;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using Gdk;
-using Mono.Unix;
-using LongoMatch.Core.Store.Playlists;
+using Gtk;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Gui.Dialog;
+using Mono.Unix;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -36,8 +40,11 @@ namespace LongoMatch.Gui.Component
 		Project project;
 		TreeIter selectedIter;
 		TreePath pathClicked;
+		TreeStore store;
 		Playlist dragSourcePlaylist;
 		IPlaylistElement dragSourceElement;
+		Dictionary<ObservableCollection<IPlaylistElement>, TreeIter> elementsListToIter;
+		Dictionary<Playlist, TreeIter> playlistToIter;
 		bool dragStarted;
 
 		public PlayListTreeView ()
@@ -54,30 +61,72 @@ namespace LongoMatch.Gui.Component
 			AppendColumn (custColumn);
 		}
 
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			Cleanup ();
+		}
+
 		public Project Project {
 			set {
+				if (project != null) {
+					Cleanup ();
+				}
+
 				project = value;
-				Reload ();
+				store = new TreeStore (typeof(object));
+				if (project != null) {
+					int i = 0;
+					project.Playlists.CollectionChanged += HandleProjectPlaylistsCollectionChanged;
+					elementsListToIter = new Dictionary<ObservableCollection<IPlaylistElement>, TreeIter> ();
+					playlistToIter = new Dictionary<Playlist, TreeIter> ();
+					foreach (Playlist playlist in project.Playlists) {
+						AddPlaylist (playlist, i);
+						i++;
+					}
+				}
+				Model = store;
 			}
 			get {
 				return project;
 			}
 		}
 
-		public void Reload ()
+		void Cleanup ()
+		{
+			TreeIter current;
+
+			if (project == null) {
+				return;
+			}
+			store.GetIterFirst (out current);
+			while (store.IterIsValid (current)) {
+				RemovePlaylist (store.GetValue (current, 0) as Playlist, 0);
+				store.GetIterFirst (out current);
+			}
+			store.Clear ();
+			project.Playlists.CollectionChanged -= HandleProjectPlaylistsCollectionChanged;
+		}
+
+		void AddPlaylist (Playlist playlist, int index)
+		{
+			TreeIter iter = store.InsertWithValues (index, playlist);
+			foreach (IPlaylistElement el in playlist.Elements) {
+				store.AppendValues (iter, el);
+			}
+			elementsListToIter [playlist.Elements] = iter;
+			playlistToIter [playlist] = iter;
+			playlist.Elements.CollectionChanged += HandlePlaylistElementsCollectionChanged;
+		}
+
+		void RemovePlaylist (Playlist playlist, int index)
 		{
 			TreeIter iter;
-			TreeStore store = new TreeStore (typeof(object));
-			
-			if (project != null) {
-				foreach (Playlist playlist in project.Playlists) {
-					iter = store.AppendValues (playlist);
-					foreach (IPlaylistElement el in playlist.Elements) {
-						store.AppendValues (iter, el);
-					}
-				}
-			}
-			Model = store;
+			store.GetIterFromString (out iter, index.ToString ());
+			store.Remove (ref iter);
+			elementsListToIter.Remove (playlist.Elements);
+			playlistToIter.Remove (playlist);
+			playlist.Elements.CollectionChanged -= HandlePlaylistElementsCollectionChanged;
 		}
 
 		void RenderElement (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
@@ -158,7 +207,6 @@ namespace LongoMatch.Gui.Component
 			delete.Activated += (sender, e) => {
 				playlist.Remove (element);
 				(Model as TreeStore).Remove (ref selectedIter);
-				Config.EventsBroker.EmitPlaylistsChanged (this);
 			};
 			menu.Append (delete);
 			
@@ -190,11 +238,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append (render);
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));
-			delete.Activated += (sender, e) => {
-				project.Playlists.Remove (playlist);
-				(Model as TreeStore).Remove (ref selectedIter);
-				Config.EventsBroker.EmitPlaylistsChanged (this);
-			};
+			delete.Activated += (sender, e) => project.Playlists.Remove (playlist);
 			menu.Append (delete);
 			
 			menu.ShowAll ();
@@ -256,39 +300,37 @@ namespace LongoMatch.Gui.Component
 				if (dragSourceElement == null) {
 					project.Playlists.Remove (dragSourcePlaylist);
 					project.Playlists.Insert (path.Indices [0], dragSourcePlaylist);
-					if (pos == TreeViewDropPosition.Before ||
-					    pos == TreeViewDropPosition.IntoOrBefore) {
-						store.MoveBefore (selectedIter, iter);
-					} else {
-						store.MoveAfter (selectedIter, iter);
-					}
 				} else {
-					/* For elements moves can happen between 2 playlists and Move{Before|After}
-					 * requires iter to have the same parent */
-					TreeIter newIter;
 					IPlaylistElement srcCurrent, dstCurrent;
+					int destIndex;
 
 					if (pos == TreeViewDropPosition.Before ||
 					    pos == TreeViewDropPosition.IntoOrBefore) {
-						newIter = (Model as TreeStore).InsertNodeBefore (iter);
+						destIndex = store.GetPath (iter).Indices [1];
 					} else {
-						newIter = (Model as TreeStore).InsertNodeAfter (iter);
+						destIndex = store.GetPath (iter).Indices [1] + 1;
 					}
-					store.SetValue (newIter, 0, dragSourceElement);
-					store.Remove (ref selectedIter);
-					
+
+					if (dragSourcePlaylist == destPlaylist) {
+						// If the element is dragged to bigger index, when it's removed from the playlist
+						// the new index needs to be decremented by one because there is one element less in the
+						// playlist now
+						if (dragSourcePlaylist.Elements.IndexOf (dragSourceElement) <= destIndex) {
+							destIndex--;
+						}
+					}
+
 					srcCurrent = dragSourcePlaylist.Selected;
 					dstCurrent = destPlaylist.Selected;
-					
+
 					dragSourcePlaylist.Elements.Remove (dragSourceElement);
-					destPlaylist.Elements.Insert (store.GetPath (newIter).Indices [1], dragSourceElement);
-					
+					destPlaylist.Elements.Insert (destIndex, dragSourceElement);
+
 					if (dragSourcePlaylist != destPlaylist) {
 						dragSourcePlaylist.SetActive (srcCurrent);
 					}
 					destPlaylist.SetActive (dstCurrent);
 				}
-				
 			}
 			Gtk.Drag.Finish (context, true, false, time);
 		}
@@ -370,6 +412,40 @@ namespace LongoMatch.Gui.Component
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;
+		}
+
+		void HandlePlaylistElementsCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			TreeIter playlistIter = elementsListToIter [sender as ObservableCollection<IPlaylistElement>];
+
+			if (e.Action == NotifyCollectionChangedAction.Add) {
+				int i = 0;
+				foreach (var newElement in e.NewItems.OfType<IPlaylistElement>()) {
+					store.InsertWithValues (playlistIter, e.NewStartingIndex + i, newElement);
+					i++;
+				}
+			} else if (e.Action == NotifyCollectionChangedAction.Remove) {
+				TreeIter iter;
+				foreach (var oldElement in e.OldItems.OfType<IPlaylistElement>()) {
+					store.IterNthChild (out iter, playlistIter, e.OldStartingIndex);
+					store.Remove (ref iter);
+				}
+			}
+		}
+
+		void HandleProjectPlaylistsCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add) {
+				int i = 0;
+				foreach (var newPlaylist in e.NewItems.OfType<Playlist>()) {
+					AddPlaylist (newPlaylist, e.NewStartingIndex + i);
+					i++;
+				}
+			} else if (e.Action == NotifyCollectionChangedAction.Remove) {
+				foreach (var oldPlaylist in e.OldItems.OfType<Playlist>()) {
+					RemovePlaylist (oldPlaylist, e.OldStartingIndex);
+				}
+			}
 		}
 	}
 }

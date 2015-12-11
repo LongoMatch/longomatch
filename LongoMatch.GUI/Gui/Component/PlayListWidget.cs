@@ -19,11 +19,11 @@
 //
 using System.Linq;
 using Gtk;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -48,24 +48,20 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			Config.EventsBroker.PlaylistsChangedEvent += HandlePlaylistsChangedEvent;
 			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
-		protected override void OnDestroyed ()
-		{
-			Config.EventsBroker.PlaylistsChangedEvent -= HandlePlaylistsChangedEvent;
-			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelectedEvent;
-			base.OnDestroyed ();
-		}
-
-		void HandlePlaylistsChangedEvent (object sender)
-		{
-			if (sender != playlisttreeview1)
-				playlisttreeview1.Reload ();
+		public Project Project {
+			set {
+				project = value;
+				playlisttreeview1.Project = value;
+			}
+			get {
+				return project;
+			}
 		}
 
 		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
@@ -91,16 +87,6 @@ namespace LongoMatch.Gui.Component
 				element = el as IPlaylistElement;
 			}
 			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element, true);
-		}
-
-		public Project Project {
-			set {
-				project = value;
-				playlisttreeview1.Project = value;
-			}
-			get {
-				return project;
-			}
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
