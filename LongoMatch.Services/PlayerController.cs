@@ -101,6 +101,7 @@ namespace LongoMatch.Services
 			ready = false;
 			CreatePlayer (supportMultipleCameras);
 			Active = true;
+			PresentationMode = false;
 		}
 
 		#endregion
@@ -245,6 +246,10 @@ namespace LongoMatch.Services
 			set;
 		}
 
+		public bool PresentationMode {
+			get;
+			set;
+		}
 
 		public void Dispose ()
 		{

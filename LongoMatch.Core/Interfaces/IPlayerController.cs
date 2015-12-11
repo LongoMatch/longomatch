@@ -99,6 +99,14 @@ namespace LongoMatch.Core.Interfaces
 		Playlist LoadedPlaylist{ get; set; }
 
 		/// <summary>
+		/// Flag indicating whether this <see cref="LongoMatch.Core.Interfaces.IPlayerController"/>
+		/// is in presentation mode.
+		/// Presentation mode emits ticks relative to the full duration of the loaded playlist.
+		/// </summary>
+		/// <value><c>true</c> if presentation mode; otherwise, <c>false</c>.</value>
+		bool PresentationMode { get; set; }
+
+		/// <summary>
 		/// Switch the specified play, playlist and element.
 		/// </summary>
 		/// <param name="play">Play.</param>
