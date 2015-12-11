@@ -90,6 +90,16 @@ namespace LongoMatch.Core.Store.Playlists
 			}
 		}
 
+		/// <summary>
+		/// Duration in time for the playlist.
+		/// </summary>
+		[LongoMatchPropertyPreload]
+		public Time Duration {
+			get {
+				return new Time (Elements.Sum (elem => elem.Duration.MSeconds));
+			}
+		}
+
 		#endregion
 
 		#region Public methods
