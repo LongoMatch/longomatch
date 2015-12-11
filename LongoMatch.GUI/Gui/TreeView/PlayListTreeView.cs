@@ -27,7 +27,7 @@ using Gtk;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui.Menus;
 using Mono.Unix;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
@@ -137,80 +137,9 @@ namespace LongoMatch.Gui.Component
 			c.Count = model.IterNChildren (iter);
 		}
 
-		void AddVideo (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent)
+		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element)
 		{
-			MediaFile file = LongoMatch.Gui.Helpers.Misc.OpenFile (this);
-			if (file != null) {
-				PlaylistVideo video = new PlaylistVideo (file);
-				int index = playlist.Elements.IndexOf (element);
-				if (!prepend) {
-					index++;
-				}
-				playlist.Elements.Insert (index, video);
-				(Model as TreeStore).InsertWithValues (parent, index, video);
-			}
-		}
-
-		void AddImage (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent)
-		{
-			Pixbuf pix = LongoMatch.Gui.Helpers.Misc.OpenImage (this);
-			if (pix != null) {
-				var image = new LongoMatch.Core.Common.Image (pix);
-				PlaylistImage plimage = new PlaylistImage (image, new Time (5000));
-				int index = playlist.Elements.IndexOf (element);
-				if (!prepend) {
-					index++;
-				}
-				playlist.Elements.Insert (index, plimage);
-				(Model as TreeStore).InsertWithValues (parent, index, plimage);
-			}
-		}
-
-		Menu CreateExternalsMenu (Playlist playlist, IPlaylistElement element, bool prepend, TreeIter parent)
-		{
-			Menu addMenu = new Menu ();
-			MenuItem video = new MenuItem (Catalog.GetString ("External video"));
-			video.Activated += (sender, e) => AddVideo (playlist, element, prepend, parent);
-			addMenu.Append (video);
-			MenuItem stillImage = new MenuItem (Catalog.GetString ("External image"));
-			stillImage.Activated += (sender, e) => AddImage (playlist, element, prepend, parent);
-			addMenu.Append (stillImage);
-			return addMenu;
-		}
-
-		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element, TreeIter parent)
-		{
-			Menu menu;
-			MenuItem edit, delete, prepend, append;
-
-			menu = new Menu ();
-
-			if (!(element is PlaylistVideo)) {
-				edit = new MenuItem (Catalog.GetString ("Edit properties"));
-				edit.Activated += (sender, e) => {
-					EditPlaylistElementProperties dialog = new EditPlaylistElementProperties ((Gtk.Window)Toplevel, element);
-					dialog.Run ();
-					dialog.Destroy ();
-				};
-				menu.Append (edit);
-			}
-
-			prepend = new MenuItem (Catalog.GetString ("Insert before"));
-			prepend.Submenu = CreateExternalsMenu (playlist, element, true, parent);
-			menu.Append (prepend);
-			
-			append = new MenuItem (Catalog.GetString ("Insert after"));
-			append.Submenu = CreateExternalsMenu (playlist, element, false, parent);
-			menu.Append (append);
-
-			delete = new MenuItem (Catalog.GetString ("Delete"));
-			delete.Activated += (sender, e) => {
-				playlist.Remove (element);
-				(Model as TreeStore).Remove (ref selectedIter);
-			};
-			menu.Append (delete);
-			
-			menu.ShowAll ();
+			PlaylistElementMenu menu = new PlaylistElementMenu (this, playlist, new List<IPlaylistElement> { element });
 			menu.Popup ();
 		}
 
@@ -259,7 +188,7 @@ namespace LongoMatch.Gui.Component
 						TreeIter parent;
 						Model.IterParent (out parent, selectedIter);
 						Playlist playlist = Model.GetValue (parent, 0) as Playlist;
-						ShowPlaylistElementMenu (playlist, el as IPlaylistElement, parent);
+						ShowPlaylistElementMenu (playlist, el as IPlaylistElement);
 					}
 				}
 			} else {

@@ -194,6 +194,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SplashScreen.cs" />
     <Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
+    <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
