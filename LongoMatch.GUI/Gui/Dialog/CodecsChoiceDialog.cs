@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build ();
 
-			Image img = Resources.LoadImage ("longomatch-pro-small.png");
+			Image img = Resources.LoadImage ("images/longomatch-pro-small.png");
 			buttonOKimage.Pixbuf = img.Value;
 
 			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
