@@ -95,6 +95,7 @@ LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
 LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
+LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs
