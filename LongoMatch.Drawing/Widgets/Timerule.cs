@@ -62,6 +62,7 @@ namespace LongoMatch.Drawing.Widgets
 		public Time Duration {
 			set {
 				duration = value;
+				needle.ResetDrawArea ();
 				widget.ReDraw ();
 			}
 			protected get {
