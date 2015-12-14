@@ -168,7 +168,6 @@ namespace LongoMatch.Services
 			foreach (var item in element) {
 				playlist.Elements.Add (item);
 			}
-			Config.EventsBroker.EmitPlaylistsChanged (this);
 		}
 
 		Playlist HandleNewPlaylist (Project project)
@@ -191,7 +190,6 @@ namespace LongoMatch.Services
 				if (name != null) {
 					playlist = new Playlist { Name = name };
 					project.Playlists.Add (playlist);
-					Config.EventsBroker.EmitPlaylistsChanged (this);
 				}
 			}
 			return playlist;

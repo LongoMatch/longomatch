@@ -55,8 +55,7 @@ namespace LongoMatch.Core.Common
 		public event NewPlaylistHandler NewPlaylistEvent;
 		public event NextPlaylistElementHandler NextPlaylistElementEvent;
 		public event PreviousPlaylistElementHandler PreviousPlaylistElementEvent;
-		public event PlaylistsChangedHandler PlaylistsChangedEvent;
-		
+
 		public event KeyHandler KeyPressed;
 		
 		/* Project options */
@@ -410,12 +409,6 @@ namespace LongoMatch.Core.Common
 			if (PlaybackRateChanged != null) {
 				PlaybackRateChanged (val);
 			}
-		}
-
-		public void EmitPlaylistsChanged (object sender)
-		{
-			if (PlaylistsChangedEvent != null)
-				PlaylistsChangedEvent (sender);
 		}
 
 		public void EmitPressButton (DashboardButton button)
