@@ -106,8 +106,6 @@ namespace Tests.Services
 		public void TestNewPlaylist ()
 		{
 			string name = "name";
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
 			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => name));
 
 			Project project = new Project ();
@@ -115,7 +113,6 @@ namespace Tests.Services
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
-			Assert.IsTrue (changedEvent);
 			Assert.AreEqual (1, project.Playlists.Count);
 			Assert.AreEqual (name, project.Playlists [0].Name);
 
@@ -125,24 +122,17 @@ namespace Tests.Services
 		public void TestNewPlaylistNull ()
 		{
 			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
-
 			Project project = new Project ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
-			Assert.IsFalse (changedEvent);
 			Assert.AreEqual (0, project.Playlists.Count);
-
 		}
 
 		[Test ()]
 		public void TestNewPlaylistRepeatName ()
 		{
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
 			bool called = false;
 			string name = "name";
 			string differentName = "different name";
@@ -163,7 +153,6 @@ namespace Tests.Services
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (3));
 
-			Assert.IsTrue (changedEvent);
 			Assert.AreEqual (2, project.Playlists.Count);
 			Assert.AreEqual (name, project.Playlists [0].Name);
 			Assert.AreEqual (differentName, project.Playlists [1].Name);
@@ -173,9 +162,6 @@ namespace Tests.Services
 		[Test ()]
 		public void TestAddPlaylistElement ()
 		{
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
-
 			var playlist = new Playlist { Name = "name" };
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
 			var elementList = new List<IPlaylistElement> ();
@@ -183,10 +169,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitAddPlaylistElement (playlist, elementList);
 
-			Assert.IsTrue (changedEvent);
 			Assert.AreEqual (elementList, playlist.Elements.ToList ());
-
-
 		}
 
 		[Test ()]
@@ -194,32 +177,19 @@ namespace Tests.Services
 		{
 			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => "name"));
 
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
 			var elementList = new List<IPlaylistElement> ();
-
 			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
-
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
-
-			Assert.IsTrue (changedEvent);
-
-
 		}
 
 		[Test ()]
 		public void TestAddPlaylistElementNullPlaylist ()
 		{
 			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
-			bool changedEvent = false;
-			Config.EventsBroker.PlaylistsChangedEvent += (object sender) => changedEvent = true;
 			var elementList = new List<IPlaylistElement> ();
 
 			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
-
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
-
-			Assert.IsFalse (changedEvent);
 		}
 
 		[Test ()]
