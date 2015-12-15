@@ -60,6 +60,9 @@ namespace LongoMatch.DB
 
 		public void AddReference (W value)
 		{
+			if (value == null) {
+				return;
+			}
 			T id = GetReference (value);
 			idToObjects [id] = value;
 			objectsToId [value] = id;
