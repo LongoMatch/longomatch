@@ -209,22 +209,11 @@ namespace LongoMatch.Gui.Panel
 			if (!SaveTemplate (loadedTeam)) {
 				return;
 			}
-			/* The shield might have changed, update it just in case */
-			if (loadedTeam.Shield != null) {
-				TreeIter iter;
-				
-				teamsStore.GetIterFirst (out iter);
-				while (teamsStore.IterIsValid (iter)) {
-					string name = teamsStore.GetValue (iter, 2) as string;
-					if (name == loadedTeam.Name) {
-						Pixbuf shield = loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize,
-							                StyleConf.TeamsShieldIconSize).Value;
-						teamseditortreeview.Model.SetValue (iter, 0, shield);
-						break;
-					}
-					teamsStore.IterNext (ref iter);
-				}
-			}
+			/* Update the shield and the team in our model */
+			Pixbuf shield = loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize,
+				                StyleConf.TeamsShieldIconSize).Value;
+			teamseditortreeview.Model.SetValue (selectedIter, COL_PIXBUF, shield);
+			teamseditortreeview.Model.SetValue (selectedIter, COL_TEAM, loadedTeam);
 			teamtemplateeditor1.Edited = false;
 		}
 
@@ -276,10 +265,11 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadTeam (Team team)
+		void LoadTeam (Team team, TreeIter selectedIter)
 		{
 			PromptSave (true);
-			
+
+			this.selectedIter = selectedIter;
 			loadedTeam = team;
 			team.TemplateEditorMode = true;
 			teamtemplateeditor1.Team = loadedTeam;
@@ -288,10 +278,11 @@ namespace LongoMatch.Gui.Panel
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
 			Team selected;
+			TreeIter iter;
 
-			teamseditortreeview.Selection.GetSelected (out selectedIter);
+			teamseditortreeview.Selection.GetSelected (out iter);
 			try {
-				Team team = teamsStore.GetValue (selectedIter, COL_TEAM) as Team;
+				Team team = teamsStore.GetValue (iter, COL_TEAM) as Team;
 				team.Load ();
 				selected = team.Clone ();
 			} catch (Exception ex) {
@@ -302,7 +293,7 @@ namespace LongoMatch.Gui.Panel
 			deleteteambutton.Visible = selected != null;
 			teamtemplateeditor1.Visible = selected != null;
 			if (selected != null) {
-				LoadTeam (selected);
+				LoadTeam (selected, iter);
 			}
 		}
 

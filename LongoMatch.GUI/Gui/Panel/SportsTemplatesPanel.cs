@@ -145,6 +145,12 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 
+		void Load (Dashboard dashboard, TreeIter iter)
+		{
+			loadedDashboard = dashboard;
+			selectedIter = iter;
+		}
+
 		void Load (string templateName)
 		{
 			TreeIter templateIter = TreeIter.Zero;
@@ -178,6 +184,17 @@ namespace LongoMatch.Gui.Panel
 				dashboardseditortreeview.Selection.SelectIter (templateIter);
 				HandleSelectionChanged (null, null);
 			}
+		}
+
+		void SaveLoadedDashboard ()
+		{
+			if (loadedDashboard == null)
+				return;
+			if (!SaveTemplate (loadedDashboard)) {
+				return;
+			}
+			dashboardseditortreeview.Model.SetValue (selectedIter, COL_DASHBOARD, loadedDashboard);
+			buttonswidget.Edited = false;
 		}
 
 		bool SaveTemplate (Dashboard dashboard)
@@ -231,9 +248,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					string msg = Catalog.GetString ("Do you want to save the current dashboard");
 					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
-						if (SaveTemplate (loadedDashboard)) {
-							buttonswidget.Edited = false;
-						}
+						SaveLoadedDashboard ();
 					}
 				}
 			}
@@ -280,11 +295,12 @@ namespace LongoMatch.Gui.Panel
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
 			Dashboard selected;
+			TreeIter iter;
 			
-			dashboardseditortreeview.Selection.GetSelected (out selectedIter);
+			dashboardseditortreeview.Selection.GetSelected (out iter);
 
 			try {
-				Dashboard dashboard = dashboardsStore.GetValue (selectedIter, COL_DASHBOARD) as Dashboard;
+				Dashboard dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as Dashboard;
 				dashboard.Load ();
 				selected = dashboard.Clone ();
 			} catch (Exception ex) {
@@ -299,7 +315,7 @@ namespace LongoMatch.Gui.Panel
 				deletetemplatebutton.Sensitive = !selected.Static;
 				buttonswidget.Template = selected;
 			}
-			loadedDashboard = selected;
+			Load (selected, iter);
 		}
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)
