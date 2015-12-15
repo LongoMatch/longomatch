@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Menus
 
 		void AddVideo (IPlaylistElement element, bool prepend)
 		{
-			MediaFile file = LongoMatch.Gui.Helpers.Misc.OpenFile (this);
+			MediaFile file = LongoMatch.Gui.Helpers.Misc.OpenFile (widget);
 			if (file != null) {
 				PlaylistVideo video = new PlaylistVideo (file);
 				int index = playlist.Elements.IndexOf (element);
