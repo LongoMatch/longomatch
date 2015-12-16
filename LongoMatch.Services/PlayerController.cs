@@ -613,7 +613,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Unload current event");
 			Reset ();
-			if (defaultFileSet != null && FileSet != defaultFileSet) {
+			if (defaultFileSet != null && !defaultFileSet.Equals (FileSet)) {
 				UpdateCamerasConfig (defaultCamerasConfig, defaultCamerasLayout);
 				EmitEventUnloaded ();
 				Open (defaultFileSet);
@@ -869,7 +869,7 @@ namespace LongoMatch.Services
 				defaultFileSet = fileSet;
 			}
 
-			if (fileSet != FileSet || force) {
+			if ((fileSet != null && !fileSet.Equals (FileSet)) || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
@@ -966,7 +966,7 @@ namespace LongoMatch.Services
 
 			UpdateCamerasConfig (camerasConfig, camerasLayout);
 
-			if (fileSet != this.FileSet) {
+			if (fileSet != null && !fileSet.Equals (FileSet)) {
 				InternalOpen (fileSet, false);
 			} else {
 				ApplyCamerasConfig ();
