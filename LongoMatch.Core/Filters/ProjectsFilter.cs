@@ -25,16 +25,13 @@ namespace LongoMatch.Core.Filters
 	public class ProjectsFilter
 	{
 		public const string EMPTY_OR_NULL = "$%&EMPTY$%&NULL$$%&";
-		readonly HashSet<string> competitions;
-		readonly HashSet<string> seasons;
-		readonly HashSet<string> teams;
 		List<Project> projects;
 
 		public ProjectsFilter ()
 		{
-			competitions = new HashSet<string> ();
-			seasons = new HashSet<string> ();
-			teams = new HashSet<string> ();
+			FilteredCompetitions = new HashSet<string> ();
+			FilteredSeasons = new HashSet<string> ();
+			FilteredTeams = new HashSet<string> ();
 		}
 
 		/// <summary>
@@ -90,6 +87,21 @@ namespace LongoMatch.Core.Filters
 			}
 		}
 
+		public HashSet<string> FilteredCompetitions {
+			protected set;
+			get;
+		}
+
+		public HashSet<string> FilteredSeasons {
+			protected set;
+			get;
+		}
+
+		public HashSet<string> FilteredTeams {
+			protected set;
+			get;
+		}
+
 		bool Changed {
 			get;
 			set;
@@ -102,7 +114,7 @@ namespace LongoMatch.Core.Filters
 		/// <param name="isVisible">If set to <c>true</c>, projects with this season are visible.</param>
 		public void FilterSeason (string season, bool isVisible)
 		{
-			Filter (seasons, season, isVisible);
+			Filter (FilteredSeasons, season, isVisible);
 		}
 
 		/// <summary>
@@ -112,7 +124,7 @@ namespace LongoMatch.Core.Filters
 		/// <param name="isVisible">If set to <c>true</c>, projects with this competition are visible.</param>
 		public void FilterCompetition (string competition, bool isVisible)
 		{
-			Filter (competitions, competition, isVisible);
+			Filter (FilteredCompetitions, competition, isVisible);
 		}
 
 		/// <summary>
@@ -122,7 +134,7 @@ namespace LongoMatch.Core.Filters
 		/// <param name="isVisible">If set to <c>true</c>, projects with this team are visible.</param>
 		public void FilterTeam (string team, bool isVisible)
 		{
-			Filter (teams, team, isVisible);
+			Filter (FilteredTeams, team, isVisible);
 		}
 
 		/// <summary>
@@ -135,31 +147,31 @@ namespace LongoMatch.Core.Filters
 				return;
 			}
 
-			if (seasons.Count == 0 && competitions.Count == 0 && teams.Count == 0) {
+			if (FilteredSeasons.Count == 0 && FilteredCompetitions.Count == 0 && FilteredTeams.Count == 0) {
 				VisibleProjects = new List<Project> ();
 				return;
 			}
 
 			filteredProjects = projects;
-			if (seasons.Count > 0) {
-				if (seasons.Contains (EMPTY_OR_NULL)) {
+			if (FilteredSeasons.Count > 0) {
+				if (FilteredSeasons.Contains (EMPTY_OR_NULL)) {
 					filteredProjects = filteredProjects.Where
-						(p => seasons.Contains (p.Description.Season) || String.IsNullOrEmpty (p.Description.Season));
+						(p => FilteredSeasons.Contains (p.Description.Season) || String.IsNullOrEmpty (p.Description.Season));
 				} else {
-					filteredProjects = filteredProjects.Where (p => seasons.Contains (p.Description.Season));
+					filteredProjects = filteredProjects.Where (p => FilteredSeasons.Contains (p.Description.Season));
 				}
 			}
-			if (competitions.Count > 0) {
-				if (competitions.Contains (EMPTY_OR_NULL)) {
-					filteredProjects = filteredProjects.Where (p => competitions.Contains (p.Description.Competition) ||
+			if (FilteredCompetitions.Count > 0) {
+				if (FilteredCompetitions.Contains (EMPTY_OR_NULL)) {
+					filteredProjects = filteredProjects.Where (p => FilteredCompetitions.Contains (p.Description.Competition) ||
 					String.IsNullOrEmpty (p.Description.Competition));
 				} else {
-					filteredProjects = filteredProjects.Where (p => competitions.Contains (p.Description.Competition));
+					filteredProjects = filteredProjects.Where (p => FilteredCompetitions.Contains (p.Description.Competition));
 				}
 			}
-			if (teams.Count > 0) {
+			if (FilteredTeams.Count > 0) {
 				filteredProjects = filteredProjects.Where (p =>
-				teams.Contains (p.Description.LocalName) || teams.Contains (p.Description.VisitorName));
+				FilteredTeams.Contains (p.Description.LocalName) || FilteredTeams.Contains (p.Description.VisitorName));
 			}
 			VisibleProjects = filteredProjects.ToList ();
 		}
