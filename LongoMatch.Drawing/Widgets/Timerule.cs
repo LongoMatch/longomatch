@@ -134,7 +134,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (!ContinuousSeek) {
 				Config.EventsBroker.EmitSeekEvent (
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-					false);
+					true);
 			}
 			Config.EventsBroker.EmitTogglePlayEvent (true);
 		}
@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing.Widgets
 				needle.X = coords.X;
 				Config.EventsBroker.EmitSeekEvent (
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-					false);
+					true);
 				needle.ReDraw ();
 			}
 		}
