@@ -64,6 +64,8 @@ namespace LongoMatch.Drawing
 		{
 			IgnoreRedraws = true;
 			if (disposing) {
+				widget.DrawEvent -= Draw;
+				widget.SizeChangedEvent -= HandleSizeChangedEvent;
 				ClearObjects ();
 				Objects = null;
 				disposed = true;
