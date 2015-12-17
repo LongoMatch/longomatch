@@ -106,6 +106,7 @@ namespace LongoMatch.Gui.Component
 			main_cam_playerbin.Player.PlaybackStateChangedEvent += HandleStateChanged;
 
 			// Listen for seek events from the timerule
+			timerule.SeekEvent += HandleTimeruleSeek;
 			Config.EventsBroker.SeekEvent += Seek;
 			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
@@ -598,6 +599,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
+		{
+			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
+		}
 	}
 }
 

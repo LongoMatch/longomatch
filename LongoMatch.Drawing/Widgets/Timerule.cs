@@ -18,6 +18,7 @@
 using System;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
@@ -28,6 +29,7 @@ namespace LongoMatch.Drawing.Widgets
 	public class Timerule: SelectionCanvas
 	{
 		public event EventHandler CenterPlayheadClicked;
+		public event SeekEventHandler SeekEvent;
 
 		const int BIG_LINE_HEIGHT = 15;
 		const int SMALL_LINE_HEIGHT = 5;
@@ -132,9 +134,10 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void StopMove (bool moved)
 		{
 			if (moved && !ContinuousSeek) {
-				Config.EventsBroker.EmitSeekEvent (
-					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-					true);
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						true);
+				}
 			}
 			Config.EventsBroker.EmitTogglePlayEvent (true);
 		}
@@ -142,9 +145,10 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionMoved (Selection sel)
 		{
 			if (ContinuousSeek) {
-				Config.EventsBroker.EmitSeekEvent (
-					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-					false);
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						false);
+				}
 			}
 		}
 
@@ -154,9 +158,10 @@ namespace LongoMatch.Drawing.Widgets
 
 			if (!Selections.Any ()) {
 				needle.X = coords.X;
-				Config.EventsBroker.EmitSeekEvent (
-					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-					true);
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						true);
+				}
 				needle.ReDraw ();
 			}
 		}
@@ -168,6 +173,8 @@ namespace LongoMatch.Drawing.Widgets
 			if (Selections.Any ()) {
 				if (CenterPlayheadClicked != null) {
 					CenterPlayheadClicked (this, new EventArgs ());
+				} else {
+					Log.Error ("There is no handler for Timerule CenterPlayhead events");
 				}
 			}
 		}

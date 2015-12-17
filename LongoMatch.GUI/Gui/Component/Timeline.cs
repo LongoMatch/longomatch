@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			this.timerule = new Timerule (new WidgetWrapper (timerulearea));
+			timerule.SeekEvent += HandleTimeruleSeek;
 			this.timeline = new PlaysTimeline (new WidgetWrapper (timelinearea));
 			this.labels = new TimelineLabels (new WidgetWrapper (labelsarea));
 
@@ -259,6 +260,11 @@ namespace LongoMatch.Gui.Component
 		void HandleShowTimerMenuEvent (Timer timer, Time time)
 		{
 			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline, timeline);
+		}
+
+		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
+		{
+			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
 		}
 	}
 }
