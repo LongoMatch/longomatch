@@ -131,7 +131,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void StopMove (bool moved)
 		{
-			if (!ContinuousSeek) {
+			if (moved && !ContinuousSeek) {
 				Config.EventsBroker.EmitSeekEvent (
 					Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 					true);
