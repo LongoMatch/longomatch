@@ -252,10 +252,10 @@ namespace LongoMatch.Services
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
-					CaptureFinished (true, true);
+					CaptureFinished (true, true, false);
 					return true;
 				} else if (res == EndCaptureResponse.Save) {
-					CaptureFinished (false, false);
+					CaptureFinished (false, false, true);
 					return true;
 				} else {
 					/* Continue with the current project */
@@ -391,7 +391,7 @@ namespace LongoMatch.Services
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
-		void CaptureFinished (bool cancel, bool delete)
+		void CaptureFinished (bool cancel, bool delete, bool reopen)
 		{
 			Project project = OpenedProject;
 			ProjectType type = OpenedProjectType;
@@ -411,7 +411,7 @@ namespace LongoMatch.Services
 				}
 			}
 			CloseOpenedProject (!cancel);
-			if (!cancel && type != ProjectType.FakeCaptureProject) {
+			if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				OpenProjectID (project.ID, project);
 			}
 		}
@@ -423,16 +423,16 @@ namespace LongoMatch.Services
 			CloseOpenedProject (true);
 		}
 
-		void HandleCaptureFinished (bool cancel)
+		void HandleCaptureFinished (bool cancel, bool reopen)
 		{
-			CaptureFinished (cancel, cancel);
+			CaptureFinished (cancel, cancel, reopen);
 		}
 
 		void HandleCaptureError (object sender, string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + message);
-			CaptureFinished (true, false);
+			CaptureFinished (true, false, false);
 		}
 
 		#region IService
