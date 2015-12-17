@@ -93,6 +93,7 @@ namespace LongoMatch.Core.Store.Playlists
 		/// <summary>
 		/// Duration in time for the playlist.
 		/// </summary>
+		[JsonIgnore]
 		[LongoMatchPropertyPreload]
 		public Time Duration {
 			get {
@@ -187,17 +188,13 @@ namespace LongoMatch.Core.Store.Playlists
 			Time elementStart = new Time (0);
 			IPlaylistElement element = null;
 			foreach (var elem in Elements) {
-				if (elementStart <= pos && elementStart + elem.Duration >= pos) {
+				if (pos >= elementStart && pos < elementStart + elem.Duration) {
 					element = elem;
 					break;
-				}
-
-				// avoid adding duration if pos > total duration
-				if (elementStart + elem.Duration < pos) {
+				} else if (pos >= elementStart + elem.Duration) {
 					elementStart += elem.Duration;
 				}
 			}
-
 			return new Tuple<IPlaylistElement, Time> (element, elementStart);
 		}
 
