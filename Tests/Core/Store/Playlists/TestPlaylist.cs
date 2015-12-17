@@ -56,6 +56,41 @@ namespace Tests.Core.Store.Playlists
 		}
 
 		[Test ()]
+		public void TestDurationEmpty ()
+		{
+			Playlist pl = new Playlist ();
+			Assert.AreEqual (new Time (0), pl.Duration);
+		}
+
+		[Test ()]
+		public void TestDuration ()
+		{
+			Playlist pl = new Playlist ();
+			var event1 = new TimelineEvent ();
+			event1.Start = new Time (10);
+			event1.Stop = new Time (20);
+			var event2 = new TimelineEvent ();
+			event2.Start = new Time (20);
+			event2.Stop = new Time (40);
+			var event3 = new TimelineEvent ();
+			event3.Start = new Time (0);
+			event3.Stop = new Time (40);
+			var playlistPlayElement = new PlaylistPlayElement (event1);
+			var playlistPlayElement2 = new PlaylistPlayElement (event2);
+			var playlistPlayElement3 = new PlaylistPlayElement (event3);
+
+			pl.Elements.Add (playlistPlayElement);
+			pl.Elements.Add (playlistPlayElement2);
+
+			Assert.AreEqual (new Time (10 + 20), pl.Duration);
+
+			pl.Elements.Add (playlistPlayElement3);
+
+			Assert.AreEqual (new Time (10 + 20 + 40), pl.Duration);
+
+		}
+
+		[Test ()]
 		public void TestGetStartTime ()
 		{
 			Playlist pl = new Playlist ();

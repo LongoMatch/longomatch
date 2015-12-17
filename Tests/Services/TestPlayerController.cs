@@ -67,8 +67,20 @@ namespace Tests.Services
 			Config.EventsBroker = new EventsBroker ();
 
 			mfs = new MediaFileSet ();
-			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
-			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
+			mfs.Add (new MediaFile {
+				FilePath = "test1",
+				VideoWidth = 320,
+				VideoHeight = 240,
+				Par = 1,
+				Duration = new Time (100)
+			});
+			mfs.Add (new MediaFile {
+				FilePath = "test2",
+				VideoWidth = 320,
+				VideoHeight = 240,
+				Par = 1,
+				Duration = new Time (200)
+			});
 
 		}
 
@@ -1100,6 +1112,113 @@ namespace Tests.Services
 			Assert.AreEqual (new Area (20, 20, 40, 40), player.CamerasConfig [0].RegionOfInterest);
 			/* check the event was not impacted */
 			Assert.AreEqual (new Area (10, 10, 20, 20), evt1.CamerasConfig [0].RegionOfInterest);
+		}
+
+		[Test ()]
+		public void TestNonPresentationSeek ()
+		{
+			PreparePlayer ();
+
+			player.PresentationMode = false;
+			player.Seek (new Time (10), true, false, false);
+			playerMock.Verify (p => p.Seek (new Time (10), true, false), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestPresentationSeek ()
+		{
+			PreparePlayer ();
+			Playlist localPlaylist = new Playlist ();
+			PlaylistPlayElement element0 = new PlaylistPlayElement (evt);
+			PlaylistPlayElement element = new PlaylistPlayElement (evt);
+			element0.Play.Start = new Time (10);
+			element0.Play.Stop = new Time (20);
+			element.Play.Start = new Time (0);
+			element.Play.Stop = new Time (10);
+			localPlaylist.Elements.Add (element0);
+			localPlaylist.Elements.Add (element);
+			player.Switch (null, localPlaylist, element0);
+			playerMock.ResetCalls ();
+
+			int playlistElementSelected = 0;
+			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+
+			player.PresentationMode = true;
+			player.Seek (new Time (15), true, false, false);
+			Assert.AreEqual (1, playlistElementSelected);
+			playerMock.Verify (p => p.Seek (new Time (5), true, false), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestPresentationSeekSameElement ()
+		{
+			PreparePlayer ();
+			Playlist localPlaylist = new Playlist ();
+			PlaylistPlayElement element0 = new PlaylistPlayElement (evt);
+			PlaylistPlayElement element = new PlaylistPlayElement (evt);
+			element0.Play.Start = new Time (10);
+			element0.Play.Stop = new Time (20);
+			element.Play.Start = new Time (0);
+			element.Play.Stop = new Time (10);
+			localPlaylist.Elements.Add (element0);
+			localPlaylist.Elements.Add (element);
+			player.Switch (null, localPlaylist, element0);
+			playerMock.ResetCalls ();
+
+			int playlistElementSelected = 0;
+			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+
+			player.PresentationMode = true;
+			player.Seek (new Time (5), true, false, false);
+			Assert.AreEqual (0, playlistElementSelected);
+			playerMock.Verify (p => p.Seek (new Time (5), true, false), Times.Once ());
+		}
+
+		[Test ()]
+		public void TestPresentationSeekNoElement ()
+		{
+			PreparePlayer ();
+			Playlist localPlaylist = new Playlist ();
+			PlaylistPlayElement element0 = new PlaylistPlayElement (evt);
+			PlaylistPlayElement element = new PlaylistPlayElement (evt);
+			element0.Play.Start = new Time (10);
+			element0.Play.Stop = new Time (20);
+			element.Play.Start = new Time (0);
+			element.Play.Stop = new Time (10);
+			localPlaylist.Elements.Add (element0);
+			localPlaylist.Elements.Add (element);
+			player.Switch (null, localPlaylist, element0);
+			playerMock.ResetCalls ();
+
+			int playlistElementSelected = 0;
+			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+
+			player.PresentationMode = true;
+			Assert.IsFalse (player.Seek (new Time (5000), true, false, false));
+			Assert.AreEqual (0, playlistElementSelected);
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+		}
+
+		[Test ()]
+		public void TestPresentationSeekLongerThanFileset ()
+		{
+			Assert.Greater (new Time (4000), mfs.Duration);
+			PreparePlayer ();
+			Playlist localPlaylist = new Playlist ();
+			PlaylistPlayElement element0 = new PlaylistPlayElement (evt);
+			element0.Play.Start = new Time (0);
+			element0.Play.Stop = new Time (5000);
+			localPlaylist.Elements.Add (element0);
+			player.Switch (null, localPlaylist, element0);
+			playerMock.ResetCalls ();
+
+			int playlistElementSelected = 0;
+			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+
+			player.PresentationMode = true;
+			Assert.IsFalse (player.Seek (new Time (4000), true, false, false));
+			Assert.AreEqual (0, playlistElementSelected);
+			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 		}
 	}
 }
