@@ -122,7 +122,9 @@ namespace LongoMatch.Services
 			try {
 				Log.Debug ("Saving capture project: " + project.ID);
 			
+				#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
+				#endif
 			
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
