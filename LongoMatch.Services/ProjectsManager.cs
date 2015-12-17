@@ -396,6 +396,13 @@ namespace LongoMatch.Services
 			Project project = OpenedProject;
 			ProjectType type = OpenedProjectType;
 			if (delete) {
+				if (type != ProjectType.FakeCaptureProject) {
+					try {
+						File.Delete (Capturer.CaptureSettings.EncodingSettings.OutputFile);
+					} catch (Exception ex1) {
+						Log.Exception (ex1);
+					}
+				}
 				try {
 					Config.DatabaseManager.ActiveDB.Delete<Project> (OpenedProject);
 				} catch (StorageException ex) {
