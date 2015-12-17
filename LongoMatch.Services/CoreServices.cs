@@ -210,10 +210,14 @@ namespace LongoMatch.Services
 
 		public static bool Debugging {
 			get {
+				#if DEBUG
+				return true;
+				#else
 				if (debugging == null) {
 					debugging = EnvironmentIsSet ("LGM_DEBUG");
 				}
 				return debugging.Value;
+				#endif
 			}
 			set {
 				debugging = value;
