@@ -58,6 +58,7 @@ namespace LongoMatch.Drawing.Widgets
 			FitMode = FitMode.Fit;
 			CurrentTime = new Time (0);
 			AddTag = new Tag ("", "");
+			BackgroundColor = Config.Style.PaletteBackground;
 			buttonsDict = new Dictionary<DashboardButton, DashboardButtonObject> ();
 		}
 
@@ -146,6 +147,14 @@ namespace LongoMatch.Drawing.Widgets
 			get {
 				return fitMode;
 			}
+		}
+
+		/// <summary>
+		/// Gets or sets the color of the background.
+		/// </summary>
+		public Color BackgroundColor {
+			get;
+			set;
 		}
 
 		public void Click (DashboardButton b, Tag tag = null)
@@ -346,7 +355,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			tk.Context = context;
 			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
+			tk.Clear (BackgroundColor);
 			if (Mode != DashboardMode.Code) {
 				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
