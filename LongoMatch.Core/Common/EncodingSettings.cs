@@ -58,6 +58,18 @@ namespace LongoMatch.Core.Common
 				outputFilepath,
 				Config.EnableAudio, Config.OverlayTitle, 20);
 		}
+
+		/// <summary>
+		/// Return the video bitrate using EncodingQuality.VideoQuality in kbps as a multiplication factor
+		/// to retrieve the bitrate relative to the output video size.
+		/// </summary>
+		public int VideoBitrate {
+			get {
+				int pixels = (int)(VideoStandard.Width * VideoStandard.Height);
+				float xfactor = (float)EncodingQuality.VideoQuality / 1000;
+				return (int)(pixels * xfactor);
+			}
+		}
 	}
 }
 
