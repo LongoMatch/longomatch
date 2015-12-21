@@ -16,7 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
@@ -26,6 +28,9 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class Timerule: SelectionCanvas
 	{
+		public event EventHandler CenterPlayheadClicked;
+		public event SeekEventHandler SeekEvent;
+
 		const int BIG_LINE_HEIGHT = 15;
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
@@ -34,6 +39,7 @@ namespace LongoMatch.Drawing.Widgets
 		double scroll;
 		double secondsPerPixel;
 		Time currentTime;
+		Time duration;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -41,6 +47,8 @@ namespace LongoMatch.Drawing.Widgets
 			AddObject (needle);
 			SecondsPerPixel = 0.1;
 			currentTime = new Time (0);
+			AdjustSizeToDuration = false;
+			ContinuousSeek = true;
 		}
 
 		public double Scroll {
@@ -54,8 +62,14 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		public Time Duration {
-			set;
-			protected get;
+			set {
+				duration = value;
+				needle.ResetDrawArea ();
+				widget.ReDraw ();
+			}
+			protected get {
+				return duration;
+			}
 		}
 
 		public Time CurrentTime {
@@ -93,6 +107,25 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		/// <summary>
+		/// Flag to set the mode to AdjustSizeToDuration.
+		/// AdjustSizeToDuration mode means that the timerule area will include the whole duration, without scroll.
+		/// </summary>
+		public bool AdjustSizeToDuration {
+			set;
+			get;
+		}
+
+		/// <summary>
+		/// Flag to set the mode to presentation.
+		/// Presentation mode means that seeks will be made on StopMove, and not on SelectionMove
+		/// </summary>
+		/// <value><c>true</c> if presentation mode; otherwise, <c>false</c>.</value>
+		public bool ContinuousSeek {
+			set;
+			get;
+		}
+
 		protected override void StartMove (Selection sel)
 		{
 			Config.EventsBroker.EmitTogglePlayEvent (false);
@@ -100,13 +133,50 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void StopMove (bool moved)
 		{
+			if (moved && !ContinuousSeek) {
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						true);
+				}
+			}
 			Config.EventsBroker.EmitTogglePlayEvent (true);
 		}
 
 		protected override void SelectionMoved (Selection sel)
 		{
-			Config.EventsBroker.EmitSeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0),
-				SecondsPerPixel), false);
+			if (ContinuousSeek) {
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						false);
+				}
+			}
+		}
+
+		protected override void HandleLeftButton (Point coords, ButtonModifier modif)
+		{
+			base.HandleLeftButton (coords, modif);
+
+			if (!Selections.Any ()) {
+				needle.X = coords.X;
+				if (SeekEvent != null) {
+					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+						true);
+				}
+				needle.ReDraw ();
+			}
+		}
+
+		protected override void HandleDoubleClick (Point coords, ButtonModifier modif)
+		{
+			base.HandleDoubleClick (coords, modif);
+
+			if (Selections.Any ()) {
+				if (CenterPlayheadClicked != null) {
+					CenterPlayheadClicked (this, new EventArgs ());
+				} else {
+					Log.Error ("There is no handler for Timerule CenterPlayhead events");
+				}
+			}
 		}
 
 		public override void Draw (IContext context, Area area)
@@ -120,6 +190,10 @@ namespace LongoMatch.Drawing.Widgets
 			
 			height = widget.Height;
 			width = widget.Width;
+
+			if (AdjustSizeToDuration) {
+				SecondsPerPixel = Duration.TotalSeconds / width;
+			}
 
 			tk.Context = context;
 			tk.Begin ();

@@ -20,9 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
-using System.Collections.Specialized;
 using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store.Playlists
@@ -89,6 +90,17 @@ namespace LongoMatch.Core.Store.Playlists
 			}
 		}
 
+		/// <summary>
+		/// Duration in time for the playlist.
+		/// </summary>
+		[JsonIgnore]
+		[LongoMatchPropertyPreload]
+		public Time Duration {
+			get {
+				return new Time (Elements.Sum (elem => elem.Duration.MSeconds));
+			}
+		}
+
 		#endregion
 
 		#region Public methods
@@ -147,7 +159,7 @@ namespace LongoMatch.Core.Store.Playlists
 			
 			newIndex = Elements.IndexOf (play);
 			if (newIndex >= 0) {
-				indexSelection = Elements.IndexOf (play);
+				indexSelection = newIndex;
 			}
 		}
 
@@ -164,6 +176,39 @@ namespace LongoMatch.Core.Store.Playlists
 		public Playlist Copy ()
 		{
 			return (Playlist)(MemberwiseClone ());
+		}
+
+		/// <summary>
+		/// Gets the element and its start at the passed time.
+		/// </summary>
+		/// <returns>A tuple with the element at the passed time and its start time in the playlist.</returns>
+		/// <param name="pos">Time to query.</param>
+		public Tuple<IPlaylistElement, Time> GetElementAtTime (Time pos)
+		{
+			Time elementStart = new Time (0);
+			IPlaylistElement element = null;
+			foreach (var elem in Elements) {
+				if (pos >= elementStart && pos < elementStart + elem.Duration) {
+					element = elem;
+					break;
+				} else if (pos >= elementStart + elem.Duration) {
+					elementStart += elem.Duration;
+				}
+			}
+			return new Tuple<IPlaylistElement, Time> (element, elementStart);
+		}
+
+		public Time GetStartTime (IPlaylistElement element)
+		{
+			return new Time (Elements.TakeWhile (elem => elem != element).Sum (elem => elem.Duration.MSeconds));
+		}
+
+		public Time GetCurrentStartTime ()
+		{
+			if (CurrentIndex >= 0 && CurrentIndex < Elements.Count) {
+				return GetStartTime (Elements [CurrentIndex]);
+			}
+			return new Time (0);
 		}
 
 		#endregion

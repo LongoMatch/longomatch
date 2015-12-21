@@ -72,7 +72,6 @@ namespace LongoMatch.Core.Store.Playlists
 				return Duration.ToSecondsString ();
 			}
 		}
-
 	}
 }
 

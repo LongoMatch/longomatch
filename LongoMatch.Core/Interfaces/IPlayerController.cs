@@ -99,6 +99,14 @@ namespace LongoMatch.Core.Interfaces
 		Playlist LoadedPlaylist{ get; set; }
 
 		/// <summary>
+		/// Flag indicating whether this <see cref="LongoMatch.Core.Interfaces.IPlayerController"/>
+		/// is in presentation mode.
+		/// Presentation mode emits ticks relative to the full duration of the loaded playlist.
+		/// </summary>
+		/// <value><c>true</c> if presentation mode; otherwise, <c>false</c>.</value>
+		bool PresentationMode { get; set; }
+
+		/// <summary>
 		/// Switch the specified play, playlist and element.
 		/// </summary>
 		/// <param name="play">Play.</param>
@@ -173,18 +181,18 @@ namespace LongoMatch.Core.Interfaces
 		/// <param name="pos">Position.</param>
 		void Seek (double pos);
 
-
 		/// <summary>
 		/// Jump the next element in the playlist if a <see cref="IPlaylistElement"/> is loaded.
 		/// </summary>
 		void Next ();
 
 		/// <summary>
-		/// Jump to the previous element if a <see cref="IPlaylistElement"/> is loaded,
+		/// Jump to the previous element / to the begining if a <see cref="IPlaylistElement"/> is loaded,
 		/// to the beginning of the event if a <see cref="TimelineEvent"/> is loaded or
 		/// to the beginning of the stream of no element is loaded.
 		/// </summary>
-		void Previous ();
+		/// <param name="force">Force it to jump to the previous element, regardless of played time.</param>
+		void Previous (bool force = false);
 
 		/// <summary>
 		/// The view should call it when it's ready to start playback,
