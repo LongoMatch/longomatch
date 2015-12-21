@@ -277,7 +277,7 @@ namespace LongoMatch.Core.Store
 				if (teams != null) {
 					teams.CollectionChanged -= ListChanged;
 				}
-				teams = value;
+				teams = value ?? new ObservableCollection<Team> ();
 				if (teams != null) {
 					teams.CollectionChanged += ListChanged;
 				}
