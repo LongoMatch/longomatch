@@ -155,8 +155,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void StartMove (Selection sel)
 		{
-			if (sel == null)
+			if (sel == null || sel.Drawable as TimeNodeObject == null)
 				return;
+
+			(sel.Drawable as TimeNodeObject).ClippingMode = NodeClippingMode.LeftStrict;
 
 			if (sel.Position == SelectionPosition.All) {
 				widget.SetCursor (CursorType.Selection);

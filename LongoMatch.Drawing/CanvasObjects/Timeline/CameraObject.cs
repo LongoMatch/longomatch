@@ -35,7 +35,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			// Video boundaries can't be changed, only the segment can move.
 			DraggingMode = NodeDraggingMode.Segment;
 			SelectionMode = NodeSelectionMode.Segment;
-			StrictClipping = false;
+			ClippingMode = NodeClippingMode.LeftStrict;
 		}
 
 		public MediaFile MediaFile {
