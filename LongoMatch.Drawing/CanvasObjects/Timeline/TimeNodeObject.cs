@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			DraggingMode = NodeDraggingMode.All;
 			LineColor = Config.Style.PaletteBackgroundLight;
 			Height = StyleConf.TimelineCategoryHeight;
-			StrictClipping = true;
+			ClippingMode = NodeClippingMode.Strict;
 		}
 
 		protected override void Dispose (bool disposing)
@@ -117,7 +117,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		protected bool StrictClipping {
+		public NodeClippingMode ClippingMode {
 			get;
 			set;
 		}
@@ -205,15 +205,30 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			case SelectionPosition.All:
 				Time tstart, tstop;
 				Time diff = Utils.PosToTime (new Point (diffX, p.Y), SecondsPerPixel);
+				bool ok = false;
 
-				if (StrictClipping) {
-					tstart = TimeNode.Start;
-					tstop = TimeNode.Stop;
-				} else {
-					tstart = TimeNode.Stop;
-					tstop = TimeNode.Start;
+				tstart = TimeNode.Start;
+				tstop = TimeNode.Stop;
+
+				switch (ClippingMode) {
+				case NodeClippingMode.None:
+					ok = true;
+					break;
+				case NodeClippingMode.NoStrict:
+					ok = ((tstop + diff) >= new Time (0) && (tstart + diff) < MaxTime);
+					break;
+				case NodeClippingMode.LeftStrict:
+					ok = ((tstart + diff) >= new Time (0) && (tstart + diff) < MaxTime);
+					break;
+				case NodeClippingMode.RightStrict:
+					ok = (tstop + diff) >= new Time (0) && ((tstop + diff) < MaxTime);
+					break;
+				case NodeClippingMode.Strict:
+					ok = ((tstart + diff) >= new Time (0) && (tstop + diff) < MaxTime);
+					break;
 				}
-				if ((tstart + diff) >= new Time (0) && (tstop + diff) < MaxTime) {
+
+				if (ok) {
 					TimeNode.Start += diff;
 					TimeNode.Stop += diff;
 				}

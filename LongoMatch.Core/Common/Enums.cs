@@ -202,6 +202,33 @@ namespace LongoMatch.Core.Common
 	}
 
 	/// <summary>
+	/// Node border clipping mode.
+	/// </summary>
+	public enum NodeClippingMode
+	{
+		/// <summary>
+		/// The node can expand freely.
+		/// </summary>
+		None,
+		/// <summary>
+		/// The node can expand freely, without disappearing completely.
+		/// </summary>
+		NoStrict,
+		/// <summary>
+		/// The node can expand freely to the right, but not to the left.
+		/// </summary>
+		LeftStrict,
+		/// <summary>
+		/// The node can expand freely to the left, but not to the right.
+		/// </summary>
+		RightStrict,
+		/// <summary>
+		/// The node cannot expand beyond its limits.
+		/// </summary>
+		Strict,
+	}
+
+	/// <summary>
 	/// Node dragging mode.
 	/// </summary>
 	public enum NodeDraggingMode
