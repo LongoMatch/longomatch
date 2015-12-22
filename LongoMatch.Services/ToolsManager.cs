@@ -70,7 +70,7 @@ namespace LongoMatch.Services
 			filename = Config.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
 				Utils.SanitizePath (project.Description.Title + Constants.PROJECT_EXT),
 				Config.HomeDir, Constants.PROJECT_NAME,
-				new [] { Constants.PROJECT_EXT });
+				new [] { "*" + Constants.PROJECT_EXT });
 			
 			if (filename == null)
 				return;
