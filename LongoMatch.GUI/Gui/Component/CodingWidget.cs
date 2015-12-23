@@ -255,6 +255,7 @@ namespace LongoMatch.Gui.Component
 				activeWindows.Remove (window);
 				notebook.Remove (pa);
 				source.AppendPage (pa, null);
+				notebookHelper.UpdateTabs ();
 				notebook.Destroy ();
 			};
 			return notebook;
