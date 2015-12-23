@@ -9,6 +9,7 @@ nobase_dist_images_DATA = Makefile.am \
 	cursors/hand_closed \
 	cursors/hand_opened \
 	cursors/hand_select \
+	cursors/longomatch-drag-select-moving.png \
 	cursors/number \
 	cursors/player \
 	cursors/rect \
