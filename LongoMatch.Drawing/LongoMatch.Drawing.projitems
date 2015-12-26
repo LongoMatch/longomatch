@@ -55,5 +55,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SelectionCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BackgroundCanvas.cs" />
   </ItemGroup>
 </Project>
