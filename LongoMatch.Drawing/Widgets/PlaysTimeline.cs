@@ -56,6 +56,10 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 		}
 
+		public PlaysTimeline () : this (null)
+		{
+		}
+
 		protected override void Dispose (bool disposing)
 		{
 			foreach (CategoryTimeline ct in eventsTimelines.Values) {
@@ -66,8 +70,6 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void LoadProject (Project project, EventsFilter filter)
 		{
-			int height;
-
 			this.project = project;
 			ClearObjects ();
 			eventsTimelines.Clear ();
@@ -75,8 +77,9 @@ namespace LongoMatch.Drawing.Widgets
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
-			height = Objects.Count * StyleConf.TimelineCategoryHeight;
-			widget.Height = height;
+			if (widget != null) {
+				widget.Height = Objects.Count * StyleConf.TimelineCategoryHeight;
+			}
 		}
 
 		public Time CurrentTime {
@@ -94,9 +97,11 @@ namespace LongoMatch.Drawing.Widgets
 					start = Utils.TimeToPos (value, SecondsPerPixel);
 					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
 				}
-				area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
 				currentTime = value;
-				widget.ReDraw (area);
+				if (widget != null) {
+					area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
+					widget.ReDraw (area);
+				}
 			}
 		}
 
@@ -143,7 +148,7 @@ namespace LongoMatch.Drawing.Widgets
 					tl.RemoveNode (node);
 				}
 			}
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		public void AddTimerNode (Timer timer, TimeNode tn)
@@ -151,7 +156,7 @@ namespace LongoMatch.Drawing.Widgets
 			TimerTimeline tl = Objects.OfType<TimerTimeline> ().FirstOrDefault (t => t.HasTimer (timer));
 			if (tl != null) {
 				tl.AddTimeNode (timer, tn);
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 		}
 
@@ -211,6 +216,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			UpdateVisibleCategories ();
 			Update ();
+			HeightRequest = Objects.Count * StyleConf.TimelineCategoryHeight;
 		}
 
 		void UpdateVisibleCategories ()
@@ -347,4 +353,3 @@ namespace LongoMatch.Drawing.Widgets
 		}
 	}
 }
-

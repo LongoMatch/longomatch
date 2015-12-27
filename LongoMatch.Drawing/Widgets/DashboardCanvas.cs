@@ -54,12 +54,15 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			Accuracy = 5;
 			Mode = DashboardMode.Edit;
-			widget.SizeChangedEvent += SizeChanged;
 			FitMode = FitMode.Fit;
 			CurrentTime = new Time (0);
 			AddTag = new Tag ("", "");
 			BackgroundColor = Config.Style.PaletteBackground;
 			buttonsDict = new Dictionary<DashboardButton, DashboardButtonObject> ();
+		}
+
+		public DashboardCanvas () : this (null)
+		{
 		}
 
 		public Project Project {
@@ -131,7 +134,7 @@ namespace LongoMatch.Drawing.Widgets
 					ao.ResetDrawArea ();
 				}
 				ClearSelection ();
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 			get {
 				return showLinks;
@@ -141,7 +144,7 @@ namespace LongoMatch.Drawing.Widgets
 		public FitMode FitMode {
 			set {
 				fitMode = value;
-				SizeChanged ();
+				HandleSizeChangedEvent ();
 				modeChanged = true;
 			}
 			get {
@@ -191,6 +194,12 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public override void SetWidget (IWidget newWidget)
+		{
+			base.SetWidget (newWidget);
+			HandleSizeChangedEvent ();
+		}
+
 		protected override void ShowMenu (Point coords)
 		{
 			List<DashboardButton> buttons;
@@ -234,7 +243,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionMoved (Selection sel)
 		{
 			if (sel.Drawable is DashboardButtonObject) {
-				SizeChanged ();
+				HandleSizeChangedEvent ();
 				Edited = true;
 			} else if (sel.Drawable is ActionLinkObject) {
 				ActionLinkObject link = sel.Drawable as ActionLinkObject;
@@ -451,14 +460,16 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 			Edited = false;
-			SizeChanged ();
+			HandleSizeChangedEvent ();
 		}
 
-		void SizeChanged ()
+		protected override void HandleSizeChangedEvent ()
 		{
-			if (Template == null) {
+			if (Template == null || widget == null) {
 				return;
 			}
+
+			base.HandleSizeChangedEvent ();
 			
 			FitMode prevFitMode = FitMode;
 			templateHeight = template.CanvasHeight + 10;
@@ -486,10 +497,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (modeChanged) {
 				modeChanged = false;
-				foreach (CanvasObject co in Objects) {
-					co.ResetDrawArea ();
-				}
 			}
+
 			widget.ReDraw ();
 		}
 

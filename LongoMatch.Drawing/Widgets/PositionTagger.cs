@@ -54,6 +54,10 @@ namespace LongoMatch.Drawing.Widgets
 			BackgroundColor = Config.Style.PaletteBackground;
 		}
 
+		public PositionTagger () : this (null)
+		{
+		}
+
 		public Color BackgroundColor {
 			set;
 			get;
@@ -101,7 +105,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (tpo != null) {
 				po = tpo as PositionObject;
 				po.Selected = true;
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 		}
 
@@ -162,7 +166,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (PositionObject po in Objects) {
 				po.Visible = Filter.IsVisible (po.Play);
 			}
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)

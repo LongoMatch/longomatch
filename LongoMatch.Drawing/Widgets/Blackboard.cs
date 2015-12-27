@@ -61,6 +61,10 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public Blackboard () : this (null)
+		{
+		}
+
 		protected override void Dispose (bool disposing)
 		{
 			if (disposing) {
@@ -166,7 +170,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			set {
 				tool = value;
-				widget.SetCursorForTool (tool);
+				widget?.SetCursorForTool (tool);
 				UpdateSelection (null);
 			}
 		}
@@ -187,6 +191,12 @@ namespace LongoMatch.Drawing.Widgets
 			set;
 		}
 
+		public override void SetWidget (IWidget newWidget)
+		{
+			base.SetWidget (newWidget);
+			newWidget?.SetCursorForTool (Tool);
+		}
+
 		/// <summary>
 		/// Deletes the current selection from the frame drawing.
 		/// </summary>
@@ -198,7 +208,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			ClearSelection ();
 			UpdateCounters ();
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		/// <summary>
@@ -219,7 +229,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 				;
 			}
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		/// <summary>

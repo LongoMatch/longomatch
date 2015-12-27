@@ -51,6 +51,10 @@ namespace LongoMatch.Drawing.Widgets
 			ContinuousSeek = true;
 		}
 
+		public Timerule () : this (null)
+		{
+		}
+
 		public double Scroll {
 			set {
 				scroll = value;
@@ -65,7 +69,7 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				duration = value;
 				needle.ResetDrawArea ();
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 			protected get {
 				return duration;
@@ -93,7 +97,7 @@ namespace LongoMatch.Drawing.Widgets
 				area = new Area (new Point (start - 1, needle.TopLeft.Y), stop - start + 2, needle.Height);
 				currentTime = value;
 				needle.ResetDrawArea ();
-				widget.ReDraw (area);
+				widget?.ReDraw (area);
 			}
 		}
 

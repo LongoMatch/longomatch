@@ -32,18 +32,10 @@ namespace LongoMatch.Drawing
 			ObjectsCanMove = true;
 			IgnoreClicks = false;
 			SingleSelectionObjects = new List<Type> ();
-			
-			widget.ButtonPressEvent += HandleButtonPressEvent;
-			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
-			widget.MotionEvent += HandleMotionEvent;
-			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
 
-		protected override void Dispose (bool disposing)
+		public SelectionCanvas () : this (null)
 		{
-			if (disposing)
-				widget.Dispose ();
-			base.Dispose (disposing);
 		}
 
 		/// <summary>
@@ -146,6 +138,23 @@ namespace LongoMatch.Drawing
 		public bool Moving {
 			get;
 			set;
+		}
+
+		public override void SetWidget (IWidget newWidget)
+		{
+			if (widget != null) {
+				widget.ButtonPressEvent -= HandleButtonPressEvent;
+				widget.ButtonReleasedEvent -= HandleButtonReleasedEvent;
+				widget.MotionEvent -= HandleMotionEvent;
+				widget.ShowTooltipEvent -= HandleShowTooltipEvent;
+			}
+			base.SetWidget (newWidget);
+			if (widget != null) {
+				widget.ButtonPressEvent += HandleButtonPressEvent;
+				widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
+				widget.MotionEvent += HandleMotionEvent;
+				widget.ShowTooltipEvent += HandleShowTooltipEvent;
+			}
 		}
 
 		/// <summary>

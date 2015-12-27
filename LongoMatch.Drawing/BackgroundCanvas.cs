@@ -25,6 +25,10 @@ namespace LongoMatch.Drawing
 		{
 		}
 
+		public BackgroundCanvas () : this (null)
+		{
+		}
+
 		/// <summary>
 		/// Sets the background image of the canvas.
 		/// This property is not optional
@@ -48,7 +52,7 @@ namespace LongoMatch.Drawing
 			set {
 				regionOfInterest = value;
 				HandleSizeChangedEvent ();
-				widget.ReDraw ();
+				widget?.ReDraw ();
 				if (RegionOfInterestChanged != null) {
 					RegionOfInterestChanged (this, null);
 				}

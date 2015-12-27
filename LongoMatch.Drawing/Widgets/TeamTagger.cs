@@ -41,9 +41,9 @@ namespace LongoMatch.Drawing.Widgets
 		public TeamTagger (IWidget widget) : base (widget)
 		{
 			Accuracy = 0;
-			widget.SizeChangedEvent += HandleSizeChangedEvent;
-			tagger = new PlayersTaggerObject ();
-			tagger.SelectionMode = MultiSelectionMode.Single;
+			tagger = new PlayersTaggerObject {
+				SelectionMode = MultiSelectionMode.Single,
+			};
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
@@ -51,6 +51,10 @@ namespace LongoMatch.Drawing.Widgets
 			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
+		}
+
+		public TeamTagger () : this (null)
+		{
 		}
 
 		protected override void Dispose (bool disposing)
@@ -62,13 +66,13 @@ namespace LongoMatch.Drawing.Widgets
 		public void LoadTeams (Team homeTeam, Team awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		public void Reload ()
 		{
 			tagger.Reload ();
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		public Project Project {
@@ -171,15 +175,16 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandleSizeChangedEvent ()
+		protected override void HandleSizeChangedEvent ()
 		{
 			tagger.Width = widget.Width;
 			tagger.Height = widget.Height;
+			base.HandleSizeChangedEvent ();
 		}
 
 		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
 		{
-			widget.ReDraw ();
+			widget?.ReDraw ();
 			if (PlayersSubstitutionEvent != null) {
 				PlayersSubstitutionEvent (team, p1, p2, reason, time);
 			}

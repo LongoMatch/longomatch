@@ -42,6 +42,11 @@ namespace LongoMatch.Drawing.Widgets
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			HeightRequest = Constants.TIMER_HEIGHT;
+		}
+
+		public TimersTimeline () : this (null)
+		{
 		}
 
 		public void LoadPeriods (List<Period> periods, Time duration)
@@ -55,7 +60,7 @@ namespace LongoMatch.Drawing.Widgets
 			this.timers = new Dictionary<Timer, TimerTimeline> ();
 			this.duration = duration;
 			FillCanvas (timers);
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		public TimerTimeline TimerTimeline {
@@ -88,17 +93,17 @@ namespace LongoMatch.Drawing.Widgets
 
 			if (duration == null)
 				return;
+
 			width = duration.TotalSeconds / SecondsPerPixel;
-			widget.Width = width + 10;
 			foreach (TimelineObject tl in timers.Values) {
 				tl.Width = width + 10;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
+			WidthRequest = (int)width + 10;
 		}
 
 		void FillCanvas (List<Timer> timers)
 		{
-			widget.Height = Constants.TIMER_HEIGHT;
 			timertimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, 0,
 				Config.Style.PaletteBackground,
 				Config.Style.PaletteBackgroundLight);

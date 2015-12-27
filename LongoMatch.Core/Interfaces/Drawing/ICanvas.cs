@@ -26,6 +26,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 	public interface ICanvas: IDisposable
 	{
 		void Draw (IContext context, Area area);
+
+		void SetWidget (IWidget widget);
 	}
 
 	public interface ICanvasObject: IDisposable

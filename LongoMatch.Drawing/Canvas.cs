@@ -33,17 +33,20 @@ namespace LongoMatch.Drawing
 		protected IDrawingToolkit tk;
 		protected IWidget widget;
 		bool disposed;
+		int widthRequest, heightRequest;
 
 		public Canvas (IWidget widget)
 		{
-			this.widget = widget;
 			tk = Config.DrawingToolkit;
 			Objects = new List<ICanvasObject> ();
-			widget.DrawEvent += Draw;
-			widget.SizeChangedEvent += HandleSizeChangedEvent;
 			ScaleX = 1;
 			ScaleY = 1;
 			Translation = new Point (0, 0);
+			SetWidget (widget);
+		}
+
+		public Canvas () : this (null)
+		{
 		}
 
 		~ Canvas ()
@@ -64,11 +67,30 @@ namespace LongoMatch.Drawing
 		{
 			IgnoreRedraws = true;
 			if (disposing) {
-				widget.DrawEvent -= Draw;
-				widget.SizeChangedEvent -= HandleSizeChangedEvent;
+				SetWidget (null);
 				ClearObjects ();
 				Objects = null;
 				disposed = true;
+			}
+		}
+
+		public virtual void SetWidget (IWidget newWidget)
+		{
+			if (widget != null) {
+				widget.DrawEvent -= Draw;
+				widget.SizeChangedEvent -= HandleSizeChangedEvent;
+			}
+			this.widget = newWidget;
+			if (widget != null) {
+				widget.DrawEvent += Draw;
+				widget.SizeChangedEvent += HandleSizeChangedEvent;
+				if (WidthRequest != 0) {
+					widget.Width = WidthRequest;
+				}
+				if (HeightRequest != 0) {
+					widget.Height = HeightRequest;
+				}
+				widget.ReDraw ();
 			}
 		}
 
@@ -169,6 +191,35 @@ namespace LongoMatch.Drawing
 		protected Point Translation {
 			get;
 			set;
+		}
+
+		/// Gets or sets the width required by the canvas.
+		/// </summary>
+		public int WidthRequest {
+			get {
+				return widthRequest;
+			}
+			set {
+				widthRequest = value;
+				if (widget != null) {
+					widget.Width = widthRequest;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the height required by the canvas.
+		/// </summary>
+		public int HeightRequest {
+			get {
+				return heightRequest;
+			}
+			set {
+				heightRequest = value;
+				if (widget != null) {
+					widget.Height = heightRequest;
+				}
+			}
 		}
 
 		void HandleRedrawEvent (ICanvasObject co, Area area)
