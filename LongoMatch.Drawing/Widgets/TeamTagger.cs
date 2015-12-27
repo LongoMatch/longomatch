@@ -47,6 +47,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
+			BackgroundColor = Config.Style.PaletteBackground;
 			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
@@ -115,6 +116,15 @@ namespace LongoMatch.Drawing.Widgets
 		public ObservableCollection<Team> SelectedTeams {
 			get {
 				return tagger.SelectedTeams;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the color of the background.
+		/// </summary>
+		public Color BackgroundColor {
+			set {
+				tagger.BackgroundColor = value;
 			}
 		}
 

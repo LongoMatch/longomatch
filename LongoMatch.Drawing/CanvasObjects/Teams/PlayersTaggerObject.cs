@@ -147,6 +147,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the background.
+		/// </summary>
+		public Color BackgroundColor {
+			get;
+			set;
+		}
+
 		public bool SubstitutionMode {
 			get {
 				return substitutionMode;
@@ -738,7 +746,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				out scaleX, out scaleY, out offset);
 			offset.Y += BUTTONS_HEIGHT;
 			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
+			tk.Clear (BackgroundColor);
 
 			/* Draw substitution buttons */
 			if (subPlayers.Visible) {
