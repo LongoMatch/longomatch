@@ -270,17 +270,28 @@ namespace LongoMatch.DB.Views
 				Guid id = DocumentsSerializer.IDFromString (row.DocumentId);
 
 				if (!uids.Contains (id)) {
+					T doc = default (T);
+					bool noErrors = false;
+
 					uids.Add (id);
-					if (full) {
-						yield return (T)DocumentsSerializer.LoadObject (typeof(T), row.DocumentId,
-							context.DB, context);
-					} else {
-						T d = DocumentsSerializer.DeserializeFromJson<T> (row.Value as string, db, rev);
-						d.DocumentID = row.DocumentId;
-						d.ID = id;
-						d.IsLoaded = false;
-						d.Storage = storage;
-						yield return d;
+					try {
+						if (full) {
+							doc = (T)DocumentsSerializer.LoadObject (typeof(T), row.DocumentId,
+								context.DB, context);
+						} else {
+							doc = DocumentsSerializer.DeserializeFromJson<T> (row.Value as string, db, rev);
+							doc.DocumentID = row.DocumentId;
+							doc.ID = id;
+							doc.IsLoaded = false;
+							doc.Storage = storage;
+						}
+						noErrors = true;
+					} catch (Exception ex) {
+						Log.Error ("Error deserializing document with ID: " + row.DocumentId);
+						Log.Exception (ex);
+					}
+					if (noErrors) {
+						yield return doc;
 					}
 				}
 			}
