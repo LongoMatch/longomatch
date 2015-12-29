@@ -57,5 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SelectionCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BackgroundCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\CircleImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ObjectCanvas.cs" />
   </ItemGroup>
 </Project>

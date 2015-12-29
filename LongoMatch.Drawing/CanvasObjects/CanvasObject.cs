@@ -147,7 +147,42 @@ namespace LongoMatch.Drawing.CanvasObjects
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 
-	public abstract class CanvasButtonObject: CanvasObject
+	/// <summary>
+	/// An object that has a fixed size, which does not depend of any parameter other than the Width and Height set
+	/// in its properties.
+	/// </summary>
+	public abstract class FixedSizeCanvasObject: CanvasObject
+	{
+		/// <summary>
+		/// Gets or sets the position of the object.
+		/// </summary>
+		/// <value>The position.</value>
+		public virtual Point Position {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the width of the object.
+		/// </summary>
+		/// <value>The width.</value>
+		public virtual double Width {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the height of the object.
+		/// </summary>
+		/// <value>The height.</value>
+		public virtual double Height {
+			get;
+			set;
+		}
+
+	}
+
+	public abstract class CanvasButtonObject: FixedSizeCanvasObject
 	{
 		bool active;
 
@@ -167,21 +202,6 @@ namespace LongoMatch.Drawing.CanvasObjects
 					ReDraw ();
 				}
 			}
-		}
-
-		public virtual Point Position {
-			get;
-			set;
-		}
-
-		public virtual double Width {
-			get;
-			set;
-		}
-
-		public virtual double Height {
-			get;
-			set;
 		}
 
 		public void Click ()
