@@ -420,6 +420,17 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Restore ();
 		}
 
+		public void DrawCircleImage (Point center, double radius, Image image)
+		{
+			DrawCircle (center, radius);
+			CContext.Save ();
+			CContext.Arc (center.X, center.Y, radius, 0, 2 * Math.PI);
+			CContext.Clip ();
+			DrawImage (new Point (center.X - radius, center.Y - radius), radius * 2, radius * 2, image,
+				ScaleMode.AspectFill, false);
+			CContext.Restore ();
+		}
+
 		public void DrawEllipse (Point center, double axisX, double axisY)
 		{
 			double max = Math.Max (axisX, axisY);

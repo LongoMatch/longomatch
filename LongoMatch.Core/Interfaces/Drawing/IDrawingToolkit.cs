@@ -103,6 +103,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		void DrawImage (Point start, double width, double height, Image image, ScaleMode mode, bool masked = false);
 
+		void DrawCircleImage (Point center, double radius, Image image);
+
 		void DrawArrow (Point start, Point stop, int lenght, double degrees, bool closed);
 
 		void Save (ICanvas canvas, Area area, string filename);
