@@ -396,18 +396,12 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Paint ();
 		}
 
-		public void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked = false)
+		public void DrawImage (Point start, double width, double height, Image image, ScaleMode mode, bool masked = false)
 		{
 			double scaleX, scaleY;
 			Point offset;
 			
-			if (scale) {
-				image.ScaleFactor ((int)width, (int)height, out scaleX, out scaleY, out offset);
-			} else {
-				offset = new Point (0, 0);
-				scaleX = width / image.Width;
-				scaleY = height / image.Height;
-			}
+			image.ScaleFactor ((int)width, (int)height, mode, out scaleX, out scaleY, out offset);
 			CContext.Save ();
 			CContext.Translate (start.X + offset.X, start.Y + offset.Y);
 			CContext.Scale (scaleX, scaleY);

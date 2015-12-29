@@ -190,7 +190,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				tk.StrokeColor = TextColor;
 				tk.FillColor = TextColor;
 				tk.DrawImage (new Point (cancelRect.TopLeft.X, cancelRect.TopLeft.Y + 5),
-					cancelRect.Width, cancelRect.Height - 10, cancelImage, true, true);
+					cancelRect.Width, cancelRect.Height - 10, cancelImage, ScaleMode.AspectFit, true);
 			} else {
 				Text = Button.Name;
 				DrawText (tk);
@@ -199,7 +199,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			
 			if (TeamImage != null) {
 				tk.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
-					iconImage.Height, TeamImage, true);
+					iconImage.Height, TeamImage, ScaleMode.AspectFit);
 			}
 			tk.End ();
 		}

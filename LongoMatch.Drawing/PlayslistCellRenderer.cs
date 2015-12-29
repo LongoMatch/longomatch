@@ -60,7 +60,8 @@ namespace LongoMatch.Drawing
 
 		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
 		{
-			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield, true);
+			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield,
+				ScaleMode.AspectFit);
 		}
 
 		static void RenderCount (bool isExpanded, Color color, int count, IDrawingToolkit tk, Area backgroundArea, Area cellArea)
@@ -220,7 +221,8 @@ namespace LongoMatch.Drawing
 				tk.DrawSurface (EyeSurface, new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2));
 			}
 			if (ss != null) {
-				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss, true);
+				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss,
+					ScaleMode.AspectFit);
 			}
 		}
 
@@ -244,7 +246,7 @@ namespace LongoMatch.Drawing
 			imgPoint = new Point (textPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y);
 			outPoint = new Point (imgPoint.X + 20 + StyleConf.ListRowSeparator, imgPoint.Y);
 			RenderPlayer (tk, playerIn, inPoint);
-			tk.DrawImage (imgPoint, 20, cellArea.Height, subsImage, true); 
+			tk.DrawImage (imgPoint, 20, cellArea.Height, subsImage, ScaleMode.AspectFit);
 			RenderPlayer (tk, playerOut, outPoint);
 			
 			timePoint = new Point (outPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y); 

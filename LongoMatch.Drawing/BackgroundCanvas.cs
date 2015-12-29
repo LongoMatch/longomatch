@@ -65,8 +65,8 @@ namespace LongoMatch.Drawing
 				Point translation;
 
 				/* Add black borders to the canvas to keep the DAR of the background image */
-				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
-					out scaleY, out translation);
+				background.ScaleFactor ((int)widget.Width, (int)widget.Height, ScaleMode.AspectFit,
+					out scaleX, out scaleY, out translation);
 				ClipRegion = new Area (new Point (translation.X, translation.Y),
 					background.Width * scaleX, background.Height * scaleY);
 				ScaleX = scaleX;

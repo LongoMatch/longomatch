@@ -101,7 +101,7 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		void DrawImage (Image image);
 
-		void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked = false);
+		void DrawImage (Point start, double width, double height, Image image, ScaleMode mode, bool masked = false);
 
 		void DrawArrow (Point start, Point stop, int lenght, double degrees, bool closed);
 

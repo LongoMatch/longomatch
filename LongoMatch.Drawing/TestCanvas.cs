@@ -69,7 +69,7 @@ namespace LongoMatch.Drawing
 
 			/* Scale the canvas to fit in the widget kepping DAR */
 			Image.ScaleFactor (CANVAS_WIDTH, CANVAS_HEIGHT, (int)widget.Width, (int)widget.Height,
-				out scaleX, out scaleY, out translation);
+				ScaleMode.AspectFit, out scaleX, out scaleY, out translation);
 			ClipRegion = new Area (new Point (translation.X, translation.Y),
 				CANVAS_WIDTH * scaleX, CANVAS_HEIGHT * scaleY);
 			ScaleX = scaleX;
@@ -88,18 +88,18 @@ namespace LongoMatch.Drawing
 			tk.FillColor = new Color (255, 0, 0, 255);
 			tk.DrawRectangle (f5c1, 500, 100);
 			tk.FillColor = new Color (0, 0, 255, 255);
-			tk.DrawImage (f5c1, 100, 100, TestImage, false, false);
-			tk.DrawImage (f5c2, 100, 100, TestImage, true, false);
-			tk.DrawImage (f5c3, 100, 100, TestImage, false, true);
-			tk.DrawImage (f5c4, 100, 100, TestImage, true, true);
+			tk.DrawImage (f5c1, 100, 100, TestImage, ScaleMode.Fill, false);
+			tk.DrawImage (f5c2, 100, 100, TestImage, ScaleMode.AspectFit, false);
+			tk.DrawImage (f5c3, 100, 100, TestImage, ScaleMode.Fill, true);
+			tk.DrawImage (f5c4, 100, 100, TestImage, ScaleMode.AspectFit, true);
 			tk.FillColor = new Color (0, 0, 255, 128);
-			tk.DrawImage (f5c5, 100, 100, TestImage, true, true);
+			tk.DrawImage (f5c5, 100, 100, TestImage, ScaleMode.AspectFit, true);
 			tk.FillColor = new Color (0, 0, 255, 255);
 			tk.Begin ();
 
 			double scaleX, scaleY;
 			LongoMatch.Core.Common.Point offset;
-			TestImage.ScaleFactor (100, 100, out scaleX, out scaleY, out offset);
+			TestImage.ScaleFactor (100, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
 			tk.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
 			tk.DrawImage (TestImage);
 
@@ -313,7 +313,7 @@ namespace LongoMatch.Drawing
 			Area toSave = new Area (new Point (0, 0), 200, 200);
 			var otherCanvas = new DummyCanvas (widget);
 			Image copied = tk.Copy (otherCanvas, toSave);
-			tk.DrawImage (new Point (600, 400), 200, 200, copied, false);
+			tk.DrawImage (new Point (600, 400), 200, 200, copied, ScaleMode.AspectFill);
 
 		}
 

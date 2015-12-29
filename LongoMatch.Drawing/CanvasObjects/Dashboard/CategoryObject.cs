@@ -484,7 +484,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			editRect.Update (pos, width, height);
 			buttonsRects [editRect] = editbutton;
 			pos = new Point (pos.X, pos.Y + 5);
-			tk.DrawImage (pos, width, height - 10, editImage, true, true);
+			tk.DrawImage (pos, width, height - 10, editImage, ScaleMode.AspectFit, true);
 		}
 
 		void DrawSelectedTags (IDrawingToolkit tk)
@@ -551,7 +551,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			applyRect.Update (pos, width, height);
 			buttonsRects [applyRect] = applyButton; 
 			pos = new Point (pos.X, pos.Y + 5);
-			tk.DrawImage (pos, width, height - 10, applyImage, true, true);
+			tk.DrawImage (pos, width, height - 10, applyImage, ScaleMode.AspectFit, true);
 		}
 
 		void DrawRecordButton (IDrawingToolkit tk)
@@ -577,13 +577,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				tk.DrawRectangle (pos, width, height);
 				tk.StrokeColor = Color.Red1;
 				tk.FillColor = Color.Red1;
-				tk.DrawImage (bpos, width, height - 10, recImage, true, true);
+				tk.DrawImage (bpos, width, height - 10, recImage, ScaleMode.AspectFit, true);
 			} else {
 				tk.FillColor = tk.StrokeColor = BackgroundColor;
 				tk.DrawRectangle (pos, width, height);
 				tk.StrokeColor = TextColor;
 				tk.FillColor = TextColor;
-				tk.DrawImage (bpos, width, height - 10, cancelImage, true, true);
+				tk.DrawImage (bpos, width, height - 10, cancelImage, ScaleMode.AspectFit, true);
 				cancelRect.Update (pos, width, height);
 				buttonsRects [cancelRect] = cancelButton;
 			}
@@ -621,7 +621,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 						tk.FillColor = TextColor;
 					}
 					tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-						Icon.Width, Icon.Height, Icon, false, true);
+						Icon.Width, Icon.Height, Icon, ScaleMode.AspectFit, true);
 				}
 			}
 		}

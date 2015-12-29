@@ -478,7 +478,7 @@ namespace LongoMatch.Drawing.Widgets
 				double scaleX, scaleY;
 				Point translation;
 				Image.ScaleFactor (templateWidth, templateHeight,
-					(int)widget.Width, (int)widget.Height,
+					(int)widget.Width, (int)widget.Height, ScaleMode.AspectFit,
 					out scaleX, out scaleY, out translation);
 				ScaleX = scaleX;
 				ScaleY = scaleY;

@@ -742,7 +742,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			2 * NTeams * Config.Style.TeamTaggerBenchBorder; 
 			height = field.Height;
 			Image.ScaleFactor ((int)width, (int)height, (int)Width,
-				(int)Height - BUTTONS_HEIGHT,
+				(int)Height - BUTTONS_HEIGHT, ScaleMode.AspectFit,
 				out scaleX, out scaleY, out offset);
 			offset.Y += BUTTONS_HEIGHT;
 			tk.Begin ();

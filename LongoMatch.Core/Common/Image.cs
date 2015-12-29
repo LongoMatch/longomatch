@@ -84,7 +84,7 @@ namespace LongoMatch.Core.Common
 		{
 			int width, height;
 			
-			ComputeScale (pix.Width, pix.Height, maxWidth, maxHeight, out width, out height);
+			ComputeScale (pix.Width, pix.Height, maxWidth, maxHeight, ScaleMode.AspectFit, out width, out height);
 			return pix.ScaleSimple (width, height, Gdk.InterpType.Bilinear);	
 		}
 
