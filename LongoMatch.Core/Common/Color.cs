@@ -150,6 +150,7 @@ namespace LongoMatch.Core.Common
 		static public Color Red1 = new Color (255, 51, 0);
 		static public Color Blue1 = new Color (0, 153, 255);
 		static public Color Yellow = new Color (255, 255, 0);
+		static public Color Transparent = new Color (0, 0, 0, 0);
 
 	}
 
