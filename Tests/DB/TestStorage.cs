@@ -17,19 +17,19 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using LongoMatch.Core.Serialization;
-using System.Linq;
 
 namespace Tests.DB
 {

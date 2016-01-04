@@ -90,7 +90,6 @@ namespace LongoMatch.Gui.Dialog
 			this.addimage = new global::Gtk.Image ();
 			this.addimage.Name = "addimage";
 			this.addbutton1.Add (this.addimage);
-			this.addbutton1.Label = null;
 			this.vbox2.Add (this.addbutton1);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.addbutton1]));
 			w7.Position = 1;

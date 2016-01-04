@@ -24,15 +24,15 @@ namespace LongoMatch.Core.Interfaces
 	{
 		void SetActiveByName (string name);
 
-		IDatabase Add (string name);
+		IStorage Add (string name);
 
-		bool Delete (IDatabase db);
+		bool Delete (IStorage db);
 
-		IDatabase ActiveDB { get; set; }
+		IStorage ActiveDB { get; set; }
 
 		void UpdateDatabases ();
 
-		List<IDatabase> Databases { get; set; }
+		List<IStorage> Databases { get; set; }
 	}
 }
 

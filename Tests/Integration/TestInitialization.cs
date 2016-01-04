@@ -20,9 +20,11 @@ using System.IO;
 using LongoMatch;
 using LongoMatch.Addins;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
@@ -57,7 +59,7 @@ namespace Tests.Integration
 			CoreServices.Stop ();
 			try {
 				foreach (var db in Config.DatabaseManager.Databases) {
-					db.Delete ();
+					db.Reset ();
 				}
 				Directory.Delete (tmpPath, true);
 			} catch {
@@ -100,7 +102,7 @@ namespace Tests.Integration
 			// Check templates and db are initialized
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 
 			CoreServices.Stop ();
 
@@ -109,7 +111,7 @@ namespace Tests.Integration
 			CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			CoreServices.Stop ();
 		}
 	}

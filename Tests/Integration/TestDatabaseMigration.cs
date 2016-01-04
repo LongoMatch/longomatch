@@ -26,6 +26,7 @@ using LongoMatch.DB;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using LongoMatch.Core.Store;
 
 namespace Tests.Integration
 {
@@ -63,14 +64,14 @@ namespace Tests.Integration
 			Config.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
 
@@ -101,14 +102,14 @@ namespace Tests.Integration
 			Config.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 
@@ -121,7 +122,7 @@ namespace Tests.Integration
 			dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
 		}

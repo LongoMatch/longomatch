@@ -78,7 +78,7 @@ namespace LongoMatch.Services
 		void Save (Project project)
 		{
 			if (Config.AutoSave) {
-				Config.DatabaseManager.ActiveDB.UpdateProject (project);
+				Config.DatabaseManager.ActiveDB.Store<Project> (project);
 			}
 		}
 

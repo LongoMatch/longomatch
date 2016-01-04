@@ -316,6 +316,26 @@ namespace LongoMatch.DB
 			}
 		}
 
+		public bool Backup ()
+		{
+			return false;
+		}
+
+		public void Reload ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool Exists<T> (T t) where T : IStorable
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int Count<T> () where T : IStorable
+		{
+			throw new NotImplementedException ();
+		}
+
 		#endregion
 
 		/// <summary>

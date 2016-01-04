@@ -52,7 +52,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IRenderingStateBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\ITool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IViewPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIDObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPlayerController.cs" />

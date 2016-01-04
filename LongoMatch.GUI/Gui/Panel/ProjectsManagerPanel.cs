@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Panel
 		Project openedProject, loadedProject;
 		List<Project> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
-		IDatabase DB;
+		IStorage DB;
 		IGUIToolkit gkit;
 		bool edited;
 
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.ProjectSelected += HandleProjectSelected;
-			projectlistwidget1.Fill (DB.GetAllProjects ().ToList ());
+			projectlistwidget1.Fill (DB.RetrieveAll<Project> ().ToList ());
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
@@ -121,7 +121,7 @@ namespace LongoMatch.Gui.Panel
 				if (save) {
 					try {
 						IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.UpdateProject (loadedProject));
+						busy.ShowSync (() => DB.Store<Project> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
@@ -307,7 +307,7 @@ namespace LongoMatch.Gui.Panel
 					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
-							DB.RemoveProject (selectedProject);
+							DB.Delete<Project> (selectedProject);
 						} catch (StorageException ex) {
 							Config.GUIToolkit.ErrorMessage (ex.Message);
 						}
@@ -318,7 +318,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count == 0) {
+			if (DB.Count<Project> () == 0) {
 				rbox.Visible = false;
 			}
 		}

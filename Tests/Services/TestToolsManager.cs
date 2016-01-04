@@ -34,7 +34,7 @@ namespace Tests.Services
 		ToolsManager toolsManager;
 		ProjectImporter importer;
 		Mock<IDataBaseManager> dbManagerMock;
-		Mock<IDatabase> dbMock;
+		Mock<IStorage> dbMock;
 		Mock<IGUIToolkit> guiToolkitMock;
 
 		[SetUp]
@@ -43,7 +43,7 @@ namespace Tests.Services
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			Config.GUIToolkit = guiToolkitMock.Object;
 
-			dbMock = new Mock<IDatabase> ();
+			dbMock = new Mock<IStorage> ();
 			dbManagerMock = new Mock<IDataBaseManager> ();
 			dbManagerMock.Setup (d => d.ActiveDB).Returns (dbMock.Object);
 			Config.DatabaseManager = dbManagerMock.Object;
@@ -87,7 +87,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => null;
 
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.AddProject (It.IsAny<Project> ()), Times.Never ());
+			dbMock.Verify (db => db.Store<Project> (It.IsAny<Project> (), It.IsAny<bool> ()), Times.Never ());
 
 			// Throws Exception
 			importer.ImportFunction = () => {
@@ -111,7 +111,7 @@ namespace Tests.Services
 			};
 			importer.ImportFunction = () => p;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.AddProject (p), Times.Once ());
+			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
 			Assert.IsTrue (openned);
 		}
 
@@ -130,7 +130,7 @@ namespace Tests.Services
 
 			importer.ImportFunction = () => p;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.AddProject (p), Times.Once ());
+			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
 			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<Project> ()), Times.Never ());
 			Assert.IsTrue (openned);
 		}
@@ -147,7 +147,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => p;
 			importer.NeedsEdition = true;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.AddProject (p), Times.Never ());
+			dbMock.Verify (db => db.Store<Project> (p, true), Times.Never ());
 			Assert.IsTrue (openned);
 		}
 

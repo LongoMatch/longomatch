@@ -199,7 +199,7 @@ namespace LongoMatch.DB
 
 		bool MigrateDB (IDataBaseManager manager, string databaseName, List<string> projectFiles)
 		{
-			IDatabase database;
+			IStorage database;
 			Guid id = Guid.NewGuid ();
 			float totalProjects = projectFiles.Count * 2;
 			float percent = 0;
@@ -211,7 +211,7 @@ namespace LongoMatch.DB
 			try {
 				database = manager.Add (databaseName);
 			} catch {
-				database = manager.Databases.FirstOrDefault (d => d.Name == databaseName);
+				database = manager.Databases.FirstOrDefault (d => d.Info.Name == databaseName);
 			}
 
 			if (database == null) {
@@ -250,7 +250,7 @@ namespace LongoMatch.DB
 				var importTask = Task.Run (() => {
 					try {
 						ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
-						database.AddProject (project);
+						database.Store<Project> (project, true);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;

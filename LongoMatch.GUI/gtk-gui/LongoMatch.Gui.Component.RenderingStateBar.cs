@@ -40,7 +40,6 @@ namespace LongoMatch.Gui.Component
 			this.statebutton.CanFocus = true;
 			this.statebutton.Name = "statebutton";
 			this.statebutton.UseUnderline = true;
-			this.statebutton.Label = "";
 			this.hbox1.Add (this.statebutton);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.statebutton]));
 			w1.Position = 0;
@@ -55,35 +54,24 @@ namespace LongoMatch.Gui.Component
 			this.cancellbutton.CanFocus = true;
 			this.cancellbutton.Name = "cancellbutton";
 			this.cancellbutton.UseUnderline = true;
-			// Container child cancellbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w4 = new global::Gtk.HBox ();
-			w4.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Menu);
-			w4.Add (w5);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w7 = new global::Gtk.Label ();
-			w4.Add (w7);
-			w3.Add (w4);
-			this.cancellbutton.Add (w3);
+			global::Gtk.Image w3 = new global::Gtk.Image ();
+			w3.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Menu);
+			this.cancellbutton.Image = w3;
 			this.hbox1.Add (this.cancellbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.cancellbutton]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.cancellbutton]));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
 			this.statusbar3.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.statusbar3 [this.hbox1]));
-			w12.Position = 2;
-			w12.Expand = false;
-			w12.Fill = false;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.statusbar3 [this.hbox1]));
+			w5.Position = 2;
+			w5.Expand = false;
+			w5.Fill = false;
 			this.vbox2.Add (this.statusbar3);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.statusbar3]));
-			w13.Position = 0;
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.statusbar3]));
+			w6.Position = 0;
+			w6.Expand = false;
+			w6.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

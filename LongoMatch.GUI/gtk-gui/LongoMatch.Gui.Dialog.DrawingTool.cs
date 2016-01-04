@@ -199,6 +199,7 @@ namespace LongoMatch.Gui.Dialog
 			this.anglebutton.TooltipMarkup = "Angle tool";
 			this.anglebutton.CanFocus = true;
 			this.anglebutton.Name = "anglebutton";
+			this.anglebutton.Active = true;
 			this.anglebutton.DrawIndicator = false;
 			this.anglebutton.UseUnderline = true;
 			this.anglebutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);
