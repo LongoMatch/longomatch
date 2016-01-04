@@ -34,6 +34,10 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Image importtemplateimage;
 		
+		private global::Gtk.Button exporttemplatebutton;
+		
+		private global::Gtk.Image exporttemplateimage;
+		
 		private global::Gtk.Button deletetemplatebutton;
 		
 		private global::Gtk.Image deletetemplateimage;
@@ -186,6 +190,21 @@ namespace LongoMatch.Gui.Panel
 			w9.Expand = false;
 			w9.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
+			this.exporttemplatebutton = new global::Gtk.Button ();
+			this.exporttemplatebutton.CanFocus = true;
+			this.exporttemplatebutton.Name = "exporttemplatebutton";
+			// Container child exporttemplatebutton.Gtk.Container+ContainerChild
+			this.exporttemplateimage = new global::Gtk.Image ();
+			this.exporttemplateimage.Name = "exporttemplateimage";
+			this.exporttemplateimage.Xpad = 5;
+			this.exporttemplateimage.Ypad = 5;
+			this.exporttemplatebutton.Add (this.exporttemplateimage);
+			this.hbox3.Add (this.exporttemplatebutton);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.exporttemplatebutton]));
+			w11.Position = 2;
+			w11.Expand = false;
+			w11.Fill = false;
+			// Container child hbox3.Gtk.Box+BoxChild
 			this.deletetemplatebutton = new global::Gtk.Button ();
 			this.deletetemplatebutton.CanFocus = true;
 			this.deletetemplatebutton.Name = "deletetemplatebutton";
@@ -196,10 +215,10 @@ namespace LongoMatch.Gui.Panel
 			this.deletetemplateimage.Ypad = 5;
 			this.deletetemplatebutton.Add (this.deletetemplateimage);
 			this.hbox3.Add (this.deletetemplatebutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.deletetemplatebutton]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.deletetemplatebutton]));
+			w13.Position = 3;
+			w13.Expand = false;
+			w13.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.savetemplatebutton = new global::Gtk.Button ();
 			this.savetemplatebutton.CanFocus = true;
@@ -211,28 +230,28 @@ namespace LongoMatch.Gui.Panel
 			this.savetemplateimage.Ypad = 5;
 			this.savetemplatebutton.Add (this.savetemplateimage);
 			this.hbox3.Add (this.savetemplatebutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savetemplatebutton]));
-			w13.Position = 3;
-			w13.Expand = false;
-			w13.Fill = false;
-			this.vbox3.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox3]));
-			w14.Position = 1;
-			w14.Expand = false;
-			w14.Fill = false;
-			this.dashboardeditorbuttonbar.Add (this.vbox3);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vbox3]));
-			w15.Position = 1;
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savetemplatebutton]));
+			w15.Position = 4;
 			w15.Expand = false;
 			w15.Fill = false;
+			this.vbox3.Add (this.hbox3);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hbox3]));
+			w16.Position = 1;
+			w16.Expand = false;
+			w16.Fill = false;
+			this.dashboardeditorbuttonbar.Add (this.vbox3);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vbox3]));
+			w17.Position = 1;
+			w17.Expand = false;
+			w17.Fill = false;
 			// Container child dashboardeditorbuttonbar.Gtk.Box+BoxChild
 			this.vseparatorimage = new global::Gtk.Image ();
 			this.vseparatorimage.Name = "vseparatorimage";
 			this.dashboardeditorbuttonbar.Add (this.vseparatorimage);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vseparatorimage]));
-			w16.Position = 2;
-			w16.Expand = false;
-			w16.Fill = false;
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vseparatorimage]));
+			w18.Position = 2;
+			w18.Expand = false;
+			w18.Fill = false;
 			// Container child dashboardeditorbuttonbar.Gtk.Box+BoxChild
 			this.vbox17 = new global::Gtk.VBox ();
 			this.vbox17.Name = "vbox17";
@@ -245,9 +264,9 @@ namespace LongoMatch.Gui.Panel
 			this.editbuttonslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Manage dashboard buttons");
 			this.editbuttonslabel.UseMarkup = true;
 			this.vbox17.Add (this.editbuttonslabel);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.editbuttonslabel]));
-			w17.Position = 0;
-			w17.Fill = false;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.editbuttonslabel]));
+			w19.Position = 0;
+			w19.Fill = false;
 			// Container child vbox17.Gtk.Box+BoxChild
 			this.hbox4 = new global::Gtk.HBox ();
 			this.hbox4.Name = "hbox4";
@@ -263,10 +282,10 @@ namespace LongoMatch.Gui.Panel
 			this.addcategoryimage.Ypad = 5;
 			this.addcategorybutton.Add (this.addcategoryimage);
 			this.hbox4.Add (this.addcategorybutton);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addcategorybutton]));
-			w19.Position = 0;
-			w19.Expand = false;
-			w19.Fill = false;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addcategorybutton]));
+			w21.Position = 0;
+			w21.Expand = false;
+			w21.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.addtagbutton1 = new global::Gtk.Button ();
 			this.addtagbutton1.CanFocus = true;
@@ -278,10 +297,10 @@ namespace LongoMatch.Gui.Panel
 			this.addtagimage.Ypad = 5;
 			this.addtagbutton1.Add (this.addtagimage);
 			this.hbox4.Add (this.addtagbutton1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addtagbutton1]));
-			w21.Position = 1;
-			w21.Expand = false;
-			w21.Fill = false;
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.addtagbutton1]));
+			w23.Position = 1;
+			w23.Expand = false;
+			w23.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.scorebutton = new global::Gtk.Button ();
 			this.scorebutton.CanFocus = true;
@@ -293,10 +312,10 @@ namespace LongoMatch.Gui.Panel
 			this.scoreimage.Ypad = 5;
 			this.scorebutton.Add (this.scoreimage);
 			this.hbox4.Add (this.scorebutton);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.scorebutton]));
-			w23.Position = 2;
-			w23.Expand = false;
-			w23.Fill = false;
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.scorebutton]));
+			w25.Position = 2;
+			w25.Expand = false;
+			w25.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.cardbutton = new global::Gtk.Button ();
 			this.cardbutton.CanFocus = true;
@@ -308,10 +327,10 @@ namespace LongoMatch.Gui.Panel
 			this.cardimage.Ypad = 5;
 			this.cardbutton.Add (this.cardimage);
 			this.hbox4.Add (this.cardbutton);
-			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.cardbutton]));
-			w25.Position = 3;
-			w25.Expand = false;
-			w25.Fill = false;
+			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.cardbutton]));
+			w27.Position = 3;
+			w27.Expand = false;
+			w27.Fill = false;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.timerbutton = new global::Gtk.Button ();
 			this.timerbutton.CanFocus = true;
@@ -323,20 +342,20 @@ namespace LongoMatch.Gui.Panel
 			this.timerimage.Ypad = 5;
 			this.timerbutton.Add (this.timerimage);
 			this.hbox4.Add (this.timerbutton);
-			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.timerbutton]));
-			w27.Position = 4;
-			w27.Expand = false;
-			w27.Fill = false;
-			this.vbox17.Add (this.hbox4);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.hbox4]));
-			w28.Position = 1;
-			w28.Expand = false;
-			w28.Fill = false;
-			this.dashboardeditorbuttonbar.Add (this.vbox17);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vbox17]));
-			w29.Position = 3;
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.timerbutton]));
+			w29.Position = 4;
 			w29.Expand = false;
 			w29.Fill = false;
+			this.vbox17.Add (this.hbox4);
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.hbox4]));
+			w30.Position = 1;
+			w30.Expand = false;
+			w30.Fill = false;
+			this.dashboardeditorbuttonbar.Add (this.vbox17);
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.vbox17]));
+			w31.Position = 3;
+			w31.Expand = false;
+			w31.Fill = false;
 			// Container child dashboardeditorbuttonbar.Gtk.Box+BoxChild
 			this.categoryheaderimagealignment = new global::Gtk.Alignment (1F, 1F, 0F, 0F);
 			this.categoryheaderimagealignment.Name = "categoryheaderimagealignment";
@@ -348,13 +367,13 @@ namespace LongoMatch.Gui.Panel
 			this.categoryheaderimage.Yalign = 1F;
 			this.categoryheaderimagealignment.Add (this.categoryheaderimage);
 			this.dashboardeditorbuttonbar.Add (this.categoryheaderimagealignment);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.categoryheaderimagealignment]));
-			w31.Position = 4;
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorbuttonbar [this.categoryheaderimagealignment]));
+			w33.Position = 4;
 			this.contentvbox.Add (this.dashboardeditorbuttonbar);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.dashboardeditorbuttonbar]));
-			w32.Position = 0;
-			w32.Expand = false;
-			w32.Fill = false;
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.dashboardeditorbuttonbar]));
+			w34.Position = 0;
+			w34.Expand = false;
+			w34.Fill = false;
 			// Container child contentvbox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
@@ -374,13 +393,13 @@ namespace LongoMatch.Gui.Panel
 			this.dashboardseditortreeview.Name = "dashboardseditortreeview";
 			this.GtkScrolledWindow1.Add (this.dashboardseditortreeview);
 			this.templatesvbox.Add (this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
-			w34.Position = 0;
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
+			w36.Position = 0;
 			this.hbox1.Add (this.templatesvbox);
-			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
-			w35.Position = 0;
-			w35.Expand = false;
-			w35.Fill = false;
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
+			w37.Position = 0;
+			w37.Expand = false;
+			w37.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox4 = new global::Gtk.VBox ();
 			this.vbox4.Name = "vbox4";
@@ -391,18 +410,18 @@ namespace LongoMatch.Gui.Panel
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;
 			this.vbox4.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
-			w36.Position = 0;
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
+			w38.Position = 0;
 			this.hbox1.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
-			w37.Position = 1;
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
+			w39.Position = 1;
 			this.contentvbox.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
-			w38.Position = 1;
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w40.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
 			this.dashboardeditorvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
-			w40.Position = 1;
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
+			w42.Position = 1;
 			this.Add (this.dashboardeditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
