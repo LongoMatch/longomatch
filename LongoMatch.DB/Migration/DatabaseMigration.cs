@@ -67,8 +67,8 @@ namespace LongoMatch.DB
 			List<string> teamFiles;
 			List<string> dashboardFiles;
 			Guid id = Guid.NewGuid ();
-			List<Team> teams = new List<Team> ();
-			List<Dashboard> dashboards = new List<Dashboard> ();
+			ConcurrentQueue<Team> teams = new ConcurrentQueue<Team> ();
+			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
 			progress.Report (0, "Migrating teams and dashboards", id);
@@ -94,7 +94,7 @@ namespace LongoMatch.DB
 					Team team = Serializer.Instance.Load<Team> (teamFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported team " + team.Name, id);
-					teams.Add (team);
+					teams.Enqueue (team);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
@@ -105,7 +105,7 @@ namespace LongoMatch.DB
 					Dashboard dashboard = Serializer.Instance.Load<Dashboard> (dashboardFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported dashboard " + dashboard.Name, id);
-					dashboards.Add (dashboard);
+					dashboards.Enqueue (dashboard);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
