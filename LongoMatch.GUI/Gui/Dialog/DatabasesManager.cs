@@ -41,7 +41,6 @@ namespace LongoMatch.Gui.Dialog
 			this.manager = Config.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
-			rescanbutton.Clicked += HandleRescanClicked;
 		}
 
 		IStorage ActiveDB {
@@ -196,25 +195,6 @@ namespace LongoMatch.Gui.Dialog
 			delbutton.Sensitive = selected;
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
-			rescanbutton.Sensitive = selected;
-		}
-
-		void HandleRescanClicked (object sender, EventArgs e)
-		{
-			IStorage db = SelectedDB;
-			if (db != null) {
-				IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Scanning database..."), this);
-				System.Action action = () => {
-					try {
-						//FIXME: Do we really need reload!?
-						db.Reload ();
-					} catch (Exception ex) {
-						Log.Exception (ex);
-					}
-				};
-				busy.ShowSync (action);
-				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Database scanned succesfully."));
-			}
 		}
 		
 	}

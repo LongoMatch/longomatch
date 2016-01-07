@@ -87,8 +87,6 @@ namespace LongoMatch.Core.Interfaces
 
 		bool Backup ();
 
-		void Reload ();
-
 		bool Exists<T> (T t) where T : IStorable;
 
 		int Count<T> () where T : IStorable;

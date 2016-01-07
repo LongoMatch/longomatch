@@ -22,8 +22,6 @@ namespace LongoMatch.Gui.Dialog
 		
 		private global::Gtk.Button backupbutton;
 		
-		private global::Gtk.Button rescanbutton;
-		
 		private global::Gtk.Button addbutton;
 		
 		private global::Gtk.Button buttonOk;
@@ -123,51 +121,36 @@ namespace LongoMatch.Gui.Dialog
 			w10.Expand = false;
 			w10.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.rescanbutton = new global::Gtk.Button ();
-			this.rescanbutton.Sensitive = false;
-			this.rescanbutton.CanFocus = true;
-			this.rescanbutton.Name = "rescanbutton";
-			this.rescanbutton.UseUnderline = true;
-			this.rescanbutton.Label = global::Mono.Unix.Catalog.GetString ("Re-scan");
-			global::Gtk.Image w11 = new global::Gtk.Image ();
-			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-refresh", global::Gtk.IconSize.Menu);
-			this.rescanbutton.Image = w11;
-			this.vbox3.Add (this.rescanbutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.rescanbutton]));
-			w12.Position = 3;
-			w12.Expand = false;
-			w12.Fill = false;
-			// Container child vbox3.Gtk.Box+BoxChild
 			this.addbutton = new global::Gtk.Button ();
 			this.addbutton.CanFocus = true;
 			this.addbutton.Name = "addbutton";
 			this.addbutton.UseUnderline = true;
 			this.addbutton.Label = global::Mono.Unix.Catalog.GetString ("_Add");
-			global::Gtk.Image w13 = new global::Gtk.Image ();
-			w13.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
-			this.addbutton.Image = w13;
+			global::Gtk.Image w11 = new global::Gtk.Image ();
+			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+			this.addbutton.Image = w11;
 			this.vbox3.Add (this.addbutton);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.addbutton]));
-			w14.Position = 4;
-			w14.Expand = false;
-			w14.Fill = false;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.addbutton]));
+			w12.Position = 3;
+			w12.Expand = false;
+			w12.Fill = false;
 			this.hbox1.Add (this.vbox3);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox3]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox3]));
+			w13.Position = 1;
+			w13.Expand = false;
+			w13.Fill = false;
 			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
-			w16.Position = 1;
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			w14.Position = 1;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
-			w17.Position = 0;
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			w15.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.DatabasesManager.ActionArea
-			global::Gtk.HButtonBox w18 = this.ActionArea;
-			w18.Name = "dialog1_ActionArea";
-			w18.Spacing = 10;
-			w18.BorderWidth = ((uint)(5));
-			w18.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w16 = this.ActionArea;
+			w16.Name = "dialog1_ActionArea";
+			w16.Spacing = 10;
+			w16.BorderWidth = ((uint)(5));
+			w16.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -177,9 +160,9 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w19 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w18 [this.buttonOk]));
-			w19.Expand = false;
-			w19.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w16 [this.buttonOk]));
+			w17.Expand = false;
+			w17.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

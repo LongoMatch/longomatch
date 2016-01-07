@@ -106,10 +106,6 @@ namespace Tests
 			return true;
 		}
 
-		public void Reload ()
-		{
-		}
-
 		#endregion
 	}
 

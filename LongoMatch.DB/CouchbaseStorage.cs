@@ -125,10 +125,6 @@ namespace LongoMatch.DB
 			return true;
 		}
 
-		public void Reload ()
-		{
-		}
-
 		public bool Exists<T> (T t) where T : IStorable
 		{
 			// FIXME: add faster API to storage for that or index ID's
