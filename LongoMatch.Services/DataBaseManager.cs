@@ -39,7 +39,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public IDataBaseManager Manager {
+		public IStorageManager Manager {
 			get;
 			set;
 		}

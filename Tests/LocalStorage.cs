@@ -110,7 +110,7 @@ namespace Tests
 	}
 
 
-	public class LocalDatabaseManager: IDataBaseManager
+	public class LocalDatabaseManager: IStorageManager
 	{
 		Dictionary<string, IStorage> databases;
 

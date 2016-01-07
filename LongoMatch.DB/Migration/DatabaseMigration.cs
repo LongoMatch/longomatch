@@ -197,7 +197,7 @@ namespace LongoMatch.DB
 			progress.Report (1, "Databases migrated", id);
 		}
 
-		bool MigrateDB (IDataBaseManager manager, string databaseName, List<string> projectFiles)
+		bool MigrateDB (IStorageManager manager, string databaseName, List<string> projectFiles)
 		{
 			IStorage database;
 			Guid id = Guid.NewGuid ();

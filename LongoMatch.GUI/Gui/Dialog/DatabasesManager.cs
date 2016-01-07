@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class DatabasesManager : Gtk.Dialog
 	{
-		IDataBaseManager manager;
+		IStorageManager manager;
 		ListStore store;
 
 		public DatabasesManager (Window parent)

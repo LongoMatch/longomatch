@@ -52,7 +52,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IRenderingStateBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\ITool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IViewPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIDObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPlayerController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPlaylistElement.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Migration\DashboardMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\ProjectMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TeamMigration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

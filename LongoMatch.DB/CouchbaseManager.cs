@@ -24,7 +24,7 @@ using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.DB
 {
-	public class CouchbaseManager: IDataBaseManager
+	public class CouchbaseManager: IStorageManager
 	{
 		readonly Manager manager;
 		IStorage activeDB;

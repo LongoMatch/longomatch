@@ -33,7 +33,7 @@ namespace Tests.Services
 	{
 		ToolsManager toolsManager;
 		ProjectImporter importer;
-		Mock<IDataBaseManager> dbManagerMock;
+		Mock<IStorageManager> dbManagerMock;
 		Mock<IStorage> dbMock;
 		Mock<IGUIToolkit> guiToolkitMock;
 
@@ -44,7 +44,7 @@ namespace Tests.Services
 			Config.GUIToolkit = guiToolkitMock.Object;
 
 			dbMock = new Mock<IStorage> ();
-			dbManagerMock = new Mock<IDataBaseManager> ();
+			dbManagerMock = new Mock<IStorageManager> ();
 			dbManagerMock.Setup (d => d.ActiveDB).Returns (dbMock.Object);
 			Config.DatabaseManager = dbManagerMock.Object;
 
