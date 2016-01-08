@@ -40,7 +40,8 @@ namespace LongoMatch.DB
 
 		public void SetActiveByName (string name)
 		{
-			IStorage db = Databases.FirstOrDefault (d => d.Info.Name == name);
+			// Couchbase doesn't accept uppercase databases.
+			IStorage db = Databases.FirstOrDefault (d => d.Info.Name == name.ToLower ());
 			if (db != null) {
 				ActiveDB = db;
 			} else {
@@ -50,6 +51,8 @@ namespace LongoMatch.DB
 
 		public IStorage Add (string name)
 		{
+			// Couchbase doesn't accept uppercase databases.
+			name = name.ToLower ();
 			var storage = Add (name, false);
 			if (storage != null) {
 				Config.EventsBroker.EmitDatabaseCreated (name);
