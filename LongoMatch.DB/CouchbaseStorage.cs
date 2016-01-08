@@ -262,6 +262,7 @@ namespace LongoMatch.DB
 		public void Reset ()
 		{
 			lock (mutex) {
+				db.Delete ();
 				db.Manager.ForgetDatabase (db);
 			}
 		}
