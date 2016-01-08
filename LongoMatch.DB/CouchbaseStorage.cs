@@ -296,6 +296,13 @@ namespace LongoMatch.DB
 
 		#endregion
 
+		public void AddView (Type t, object obj)
+		{
+			if (!views.ContainsKey (t)) {
+				views.Add (t, obj);
+			}
+		}
+
 		void FetchInfo ()
 		{
 			Info = Retrieve<StorageInfo> (Guid.Empty);
@@ -322,12 +329,12 @@ namespace LongoMatch.DB
 		void InitializeViews ()
 		{
 			views = new Dictionary <Type, object> ();
-			views.Add (typeof(Dashboard), new DashboardsView (this));
-			views.Add (typeof(Team), new TeamsView (this));
-			views.Add (typeof(Project), new ProjectsView (this));
-			views.Add (typeof(Player), new PlayersView (this));
-			views.Add (typeof(TimelineEvent), new TimelineEventsView (this));
-			views.Add (typeof(EventType), new EventTypeView (this));
+			AddView (typeof(Dashboard), new DashboardsView (this));
+			AddView (typeof(Team), new TeamsView (this));
+			AddView (typeof(Project), new ProjectsView (this));
+			AddView (typeof(Player), new PlayersView (this));
+			AddView (typeof(TimelineEvent), new TimelineEventsView (this));
+			AddView (typeof(EventType), new EventTypeView (this));
 		}
 
 		void AddDirectoryFilesToTar (TarArchive tarArchive, string sourceDirectory, bool recurse)
