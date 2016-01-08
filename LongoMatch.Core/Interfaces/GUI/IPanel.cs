@@ -23,7 +23,14 @@ namespace LongoMatch.Core.Interfaces.GUI
 	public interface IPanel
 	{
 		event BackEventHandle BackEvent;
-		
+		/// <summary>
+		/// Called when the IPanel is loaded and going to be presented on screen.
+		/// </summary>
+		void OnLoaded ();
+		/// <summary>
+		/// Called when the IPanel is presented on the screen and is going to be removed.
+		/// </summary>
+		void OnUnloaded ();
 	}
 }
 

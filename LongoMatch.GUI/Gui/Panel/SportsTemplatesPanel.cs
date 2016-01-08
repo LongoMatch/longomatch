@@ -149,6 +149,16 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
+
 		void Load (Dashboard dashboard, TreeIter iter)
 		{
 			loadedDashboard = dashboard;

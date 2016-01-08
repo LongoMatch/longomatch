@@ -119,10 +119,12 @@ namespace LongoMatch.Gui
 					RemovePanel (false);
 				}
 				currentPanel = panel;
-				panel.Show ();
+
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += BackClicked;
+					(panel as IPanel).OnLoaded ();
 				}
+				panel.Show ();
 				centralbox.PackStart (panel, true, true, 0);
 			}
 		}
@@ -307,6 +309,7 @@ namespace LongoMatch.Gui
 		{
 			if (panel is IPanel) {
 				(panel as IPanel).BackEvent -= BackClicked;
+				(panel as IPanel).OnUnloaded ();
 			}
 			panel.Destroy ();
 			panel.Dispose ();

@@ -96,6 +96,16 @@ namespace LongoMatch.Gui.Panel
 			SetStyle ();
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
+
 		void SetStyle ()
 		{
 			FontDescription desc = FontDescription.FromString (Config.Style.Font + " 18");

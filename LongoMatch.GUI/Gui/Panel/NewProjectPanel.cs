@@ -97,6 +97,16 @@ namespace LongoMatch.Gui.Panel
 			ApplyStyle ();
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
+
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.QuitApplicationEvent -= HandleQuit;

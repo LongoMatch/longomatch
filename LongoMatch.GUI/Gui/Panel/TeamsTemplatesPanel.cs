@@ -128,6 +128,16 @@ namespace LongoMatch.Gui.Panel
 			base.Destroy ();
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
+
 		void Load (string templateName)
 		{
 			TreeIter templateIter = TreeIter.Zero;

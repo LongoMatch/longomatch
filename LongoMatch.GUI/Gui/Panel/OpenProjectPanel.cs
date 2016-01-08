@@ -50,6 +50,15 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (BackEvent != null)
