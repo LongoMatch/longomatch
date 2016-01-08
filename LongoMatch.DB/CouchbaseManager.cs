@@ -50,7 +50,11 @@ namespace LongoMatch.DB
 
 		public IStorage Add (string name)
 		{
-			return Add (name, false);
+			var storage = Add (name, false);
+			if (storage != null) {
+				Config.EventsBroker.EmitDatabaseCreated (name);
+			}
+			return storage;
 		}
 
 

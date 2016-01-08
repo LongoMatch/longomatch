@@ -150,4 +150,6 @@ namespace LongoMatch.Core.Handlers
 	public delegate void BackEventHandle ();
 	/* Camera dragging */
 	public delegate void CameraDraggedHandler (MediaFile file,TimeNode timenode);
+	/* A new database has been created */
+	public delegate void DatabaseCreatedHandler (string name);
 }
