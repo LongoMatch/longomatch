@@ -104,6 +104,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public UIManager GetUIManager () {
+			return UIManager;
+		}
+
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
 		/// </summary>
