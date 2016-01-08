@@ -290,7 +290,7 @@ namespace LongoMatch.Gui
 			QuitAction.Activated += (o, e) => {
 				CloseAndQuit ();
 			};
-			openAction.Activated += (sender, e) => {
+			OpenProjectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
 				Config.EventsBroker.EmitOpenProject ();
 			};
