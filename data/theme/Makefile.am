@@ -40,6 +40,7 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/Expander/expander-expanded-active.svg \
 	gtk-2.0/Expander/expander-expanded-normal.svg \
 	gtk-2.0/Expander/expander-expanded-prelight.svg \
+	gtk-2.0/Handles/h-divider.svg \
 	gtk-2.0/Handles/handle-h.png \
 	gtk-2.0/Handles/handle-v.png \
 	gtk-2.0/Range/null.png \

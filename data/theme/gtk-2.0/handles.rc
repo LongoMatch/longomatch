@@ -23,3 +23,15 @@ style "longomatch-handles" = "longomatch-default"
 	}
 }
 
+style "longomatch-gradient-divider" = "longomatch-default"
+{
+	engine "pixmap"
+	{
+		image
+		{
+			function        = FLAT_BOX
+			file            = "Handles/h-divider.svg"
+			stretch         = TRUE
+		}
+	}
+}
