@@ -55,7 +55,7 @@ namespace LongoMatch.DB
 			name = name.ToLower ();
 			var storage = Add (name, false);
 			if (storage != null) {
-				Config.EventsBroker.EmitDatabaseCreated (name);
+				Config.EventsBroker?.EmitDatabaseCreated (name);
 			}
 			return storage;
 		}
