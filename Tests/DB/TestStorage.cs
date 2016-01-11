@@ -30,6 +30,11 @@ using LongoMatch.DB;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using LongoMatch;
+using Moq;
+using LongoMatch.Services;
+using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace Tests.DB
 {
@@ -90,14 +95,25 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
-			string dbPath = Path.Combine (Path.GetTempPath (), "TestDB");
+			string tmpPath = Path.GetTempPath ();
+			string homePath = Path.Combine (tmpPath, "LongoMatch");
+			string dbPath = Path.Combine (homePath, "db");
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);
 			}
+
+			Directory.CreateDirectory (tmpPath);
+			Directory.CreateDirectory (homePath);
+			Directory.CreateDirectory (dbPath);
+
 			storage = new CouchbaseStorage (dbPath, "test-db");
 			db = storage.Database;
 			// Remove the StorageInfo doc to get more understandable document count results
 			db.GetDocument (Guid.Empty.ToString ()).Delete ();
+
+			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
+			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
+			CoreServices.Init ();
 		}
 
 		[TestFixtureTearDown]
@@ -603,6 +619,13 @@ namespace Tests.DB
 			Project p3 = storage.RetrieveAll<Project> ().First ();
 			Assert.IsNotNull (p3.DocumentID);
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
+		}
+
+		[Test ()]
+		public void TestBackup ()
+		{
+			var res = storage.Backup ();
+			Assert.IsTrue (res);
 		}
 
 	}

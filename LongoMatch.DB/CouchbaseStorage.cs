@@ -30,6 +30,7 @@ using System.Linq;
 using System.IO;
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib;
 
 namespace LongoMatch.DB
 {
@@ -70,6 +71,7 @@ namespace LongoMatch.DB
 			FetchInfo ();
 			Compact ();
 			InitializeViews ();
+			VFS.SetCurrent (new FileSystem ());
 		}
 
 		#region IStorage implementation
@@ -104,7 +106,7 @@ namespace LongoMatch.DB
 		public bool Backup ()
 		{
 			try {
-				string outputFilename = Path.Combine (Config.DBDir, storageName + "tar.gz");
+				string outputFilename = Path.Combine (Config.DBDir, storageName + ".tar.gz");
 				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
 					using (Stream gzipStream = new GZipOutputStream (fs)) {
 						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
