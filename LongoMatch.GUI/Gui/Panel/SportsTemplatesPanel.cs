@@ -66,6 +66,7 @@ namespace LongoMatch.Gui.Panel
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", 47);
 			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-add", 36);
 			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-import", 36);
+			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-export", 36);
 			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-delete", 36);
 			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-save", 36);
 			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", 36);
@@ -80,6 +81,8 @@ namespace LongoMatch.Gui.Panel
 			newtemplatebutton.Left += HandleLeftTemplateButton;
 			importtemplatebutton.Entered += HandleEnterTemplateButton;
 			importtemplatebutton.Left += HandleLeftTemplateButton;
+			exporttemplatebutton.Entered += HandleEnterTemplateButton;
+			exporttemplatebutton.Left += HandleLeftTemplateButton;
 			deletetemplatebutton.Entered += HandleEnterTemplateButton;
 			deletetemplatebutton.Left += HandleLeftTemplateButton;
 			savetemplatebutton.Entered += HandleEnterTemplateButton;
@@ -130,6 +133,7 @@ namespace LongoMatch.Gui.Panel
 			
 			newtemplatebutton.Clicked += HandleNewTemplateClicked;
 			importtemplatebutton.Clicked += HandleImportTemplateClicked;
+			exporttemplatebutton.Clicked += HandleExportTemplateClicked;
 			deletetemplatebutton.Clicked += HandleDeleteTemplateClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save (false);
 			
@@ -260,6 +264,8 @@ namespace LongoMatch.Gui.Panel
 				editdashboardslabel.Markup = Catalog.GetString ("New dashboard");
 			} else if (sender == importtemplatebutton) {
 				editdashboardslabel.Markup = Catalog.GetString ("Import dashboard");
+			} else if (sender == exporttemplatebutton) {
+				editdashboardslabel.Markup = Catalog.GetString ("Export dashboard");
 			} else if (sender == deletetemplatebutton) {
 				editdashboardslabel.Markup = Catalog.GetString ("Delete dashboard");
 			} else if (sender == savetemplatebutton) {
@@ -383,6 +389,35 @@ namespace LongoMatch.Gui.Panel
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
+			}
+		}
+
+		void HandleExportTemplateClicked (object sender, EventArgs e)
+		{
+			string fileName, filterName;
+			string[] extensions;
+
+			Log.Debug ("Exporting dashboard");
+			filterName = Catalog.GetString ("Dashboard files");
+			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
+			/* Show a file chooser dialog to select the file to export */
+			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
+				System.IO.Path.ChangeExtension(loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
+				filterName, extensions);
+
+			if (fileName != null) {
+				bool succeeded = true;
+				fileName = System.IO.Path.ChangeExtension (fileName, Constants.CAT_TEMPLATE_EXT);
+				if (System.IO.File.Exists (fileName)) {
+					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
+					succeeded = Config.GUIToolkit.QuestionMessage (msg, null).Result;
+				}
+
+				if (succeeded) {
+					Serializer.Instance.Save (loadedDashboard, fileName);
+					string msg = Catalog.GetString ("Dashboard exported correctly");
+					Config.GUIToolkit.InfoMessage (msg);
+				}
 			}
 		}
 

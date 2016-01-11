@@ -55,6 +55,7 @@ namespace LongoMatch.Gui.Panel
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", 45);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", 45);
 			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-add", 34);
+			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-export", 34);
 			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-delete", 34);
 			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-save", 34);
 			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-add", 34);
@@ -64,6 +65,9 @@ namespace LongoMatch.Gui.Panel
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
 			newteambutton.Clicked += HandleNewTeamClicked;
+			exportteambutton.Entered += HandleEnterTeamButton;
+			exportteambutton.Left += HandleLeftTeamButton;
+			exportteambutton.Clicked += HandleExportTeamClicked;
 			deleteteambutton.Entered += HandleEnterTeamButton;
 			deleteteambutton.Left += HandleLeftTeamButton;
 			deleteteambutton.Clicked += HandleDeleteTeamClicked;
@@ -175,6 +179,8 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (sender == newteambutton) {
 				editteamslabel.Markup = Catalog.GetString ("New team");
+			} else if (sender == exportteambutton) {
+				editteamslabel.Markup = Catalog.GetString ("Export team");
 			} else if (sender == deleteteambutton) {
 				editteamslabel.Markup = Catalog.GetString ("Delete team");
 			} else if (sender == saveteambutton) {
@@ -371,6 +377,36 @@ namespace LongoMatch.Gui.Panel
 				Load (dialog.Text);
 			}
 			dialog.Destroy ();
+		}
+
+		void HandleExportTeamClicked (object sender, EventArgs e)
+		{
+			string fileName, filterName;
+			string[] extensions;
+
+			Log.Debug ("Exporting team");
+			filterName = Catalog.GetString ("Team files");
+			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
+			/* Show a file chooser dialog to select the file to export */
+			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
+				System.IO.Path.ChangeExtension(loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), Config.HomeDir,
+				filterName, extensions);
+
+			if (fileName != null) {
+				bool succeeded = true;
+				fileName = System.IO.Path.ChangeExtension (fileName, Constants.TEAMS_TEMPLATE_EXT);
+				if (System.IO.File.Exists (fileName)) {
+					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
+					succeeded = Config.GUIToolkit.QuestionMessage (msg, null).Result;
+				}
+
+				if (succeeded) {
+					Serializer.Instance.Save (loadedTeam, fileName);
+					string msg = Catalog.GetString ("Team exported correctly");
+					Config.GUIToolkit.InfoMessage (msg);
+				}
+			}
+
 		}
 
 		void HandleEdited (object o, EditedArgs args)
