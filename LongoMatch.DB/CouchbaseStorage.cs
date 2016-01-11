@@ -130,17 +130,13 @@ namespace LongoMatch.DB
 		public bool Exists<T> (T t) where T : IStorable
 		{
 			// FIXME: add faster API to storage for that or index ID's
-			return Retrieve<Project> (new QueryFilter ()).Any (p => p.ID == t.ID);
+			return Retrieve<T> (new QueryFilter ()).Any (p => p.ID == t.ID);
 		}
-
-
 
 		public object Retrieve (Type type, Guid id)
 		{
 			return DocumentsSerializer.LoadObject (type, id, db);
 		}
-
-
 
 		public void Fill (IStorable storable)
 		{

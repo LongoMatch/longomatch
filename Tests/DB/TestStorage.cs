@@ -21,20 +21,18 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Couchbase.Lite;
+using LongoMatch;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using Newtonsoft.Json;
+using LongoMatch.DB.Views;
+using LongoMatch.Services;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using LongoMatch;
-using Moq;
-using LongoMatch.Services;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 
 namespace Tests.DB
 {
@@ -86,11 +84,24 @@ namespace Tests.DB
 	{
 	}
 
+	class StorableView: GenericView <IStorable>
+	{
+		public StorableView (CouchbaseStorage storage) : base (storage)
+		{
+		}
+
+		protected override string ViewVersion {
+			get {
+				return "1";
+			}
+		}
+	}
+
 	[TestFixture ()]
 	public class TestStorage
 	{
 		Database db;
-		CouchbaseStorage storage;
+		IStorage storage;
 
 		[TestFixtureSetUp]
 		public void InitDB ()
@@ -107,7 +118,7 @@ namespace Tests.DB
 			Directory.CreateDirectory (dbPath);
 
 			storage = new CouchbaseStorage (dbPath, "test-db");
-			db = storage.Database;
+			db = ((CouchbaseStorage)storage).Database;
 			// Remove the StorageInfo doc to get more understandable document count results
 			db.GetDocument (Guid.Empty.ToString ()).Delete ();
 
@@ -626,7 +637,54 @@ namespace Tests.DB
 		{
 			var res = storage.Backup ();
 			Assert.IsTrue (res);
+
+			string outputPath = Path.Combine (Config.DBDir, storage.Info.Name + ".tar.gz");
+			Assert.IsTrue (File.Exists (outputPath));
 		}
 
+		[Test ()]
+		public void TestExists ()
+		{
+			Project p1 = Utils.CreateProject (true);
+			Project p2 = Utils.CreateProject (true);
+			storage.Store (p1);
+
+			var exists = storage.Exists<Project> (p1);
+			var notExists = storage.Exists<Project> (p2);
+			Assert.IsTrue (exists);
+			Assert.IsFalse (notExists);
+
+			var existsEvent = storage.Exists<TimelineEvent> (p1.Timeline.ElementAt (0));
+			var notExistsEvent = storage.Exists<TimelineEvent> (p2.Timeline.ElementAt (0));
+			Assert.IsTrue (existsEvent);
+			Assert.IsFalse (notExistsEvent);
+		}
+
+		[Test ()]
+		public void TestCount ()
+		{
+			Project p1 = Utils.CreateProject (true);
+			Project p2 = Utils.CreateProject (false);
+			Assert.AreEqual (0, storage.Count<Project> ());
+			Assert.AreEqual (0, storage.Count<TimelineEvent> ());
+			storage.Store (p1);
+			Assert.AreEqual (1, storage.Count<Project> ());
+			Assert.AreEqual (3, storage.Count<TimelineEvent> ());
+			storage.Store (p2);
+			Assert.AreEqual (2, storage.Count<Project> ());
+			Assert.AreEqual (3, storage.Count<TimelineEvent> ());
+		}
+
+		[Test ()]
+		public void TestAddView ()
+		{
+			// Initially we don't have a view for IStorable
+			Assert.Throws<KeyNotFoundException> (() => storage.Retrieve<IStorable> (new QueryFilter ()));
+
+			((CouchbaseStorage)storage).AddView (typeof(IStorable), new StorableView (((CouchbaseStorage)storage)));
+
+			Assert.DoesNotThrow (() => storage.Retrieve<IStorable> (new QueryFilter ()));
+
+		}
 	}
 }
