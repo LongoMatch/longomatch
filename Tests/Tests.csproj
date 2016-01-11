@@ -100,7 +100,6 @@
     <Compile Include="Core\Store\TestTag.cs" />
     <Compile Include="Core\Store\Drawables\TestCircle.cs" />
     <Compile Include="Core\Store\Drawables\TestCounter.cs" />
-    <Compile Include="Services\TestFileStorage.cs" />
     <Compile Include="Core\Store\TestCoordinates.cs" />
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
