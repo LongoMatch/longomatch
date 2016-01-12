@@ -41,12 +41,16 @@ namespace LongoMatch.Gui.Menus
 			this.widget = widget;
 			this.playlist = playlist;
 			this.elements = elements;
-			CreateMenu ();
+			if (elements.Count > 0) {
+				CreateMenu ();
+			} else {
+				menu = null;
+			}
 		}
 
 		public void Popup ()
 		{
-			menu.Popup ();
+			menu?.Popup ();
 		}
 
 		void AddVideo (IPlaylistElement element, bool prepend)
