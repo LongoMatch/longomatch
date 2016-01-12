@@ -254,9 +254,23 @@ namespace LongoMatch.Gui.Component
 				Widget pa = notebook.CurrentPageWidget;
 				activeWindows.Remove (window);
 				notebook.Remove (pa);
+				Visible = true;
 				source.AppendPage (pa, null);
+				notebookHelper.UpdateTabs ();
 				notebook.Destroy ();
 			};
+
+			/* If we are remove the last visible page, hide the widget to
+			 * free the empty space for the rest of widgets */
+			int visiblePages = 0;
+			for (int i = 0; i < source.NPages; i++) {
+				if (source.GetNthPage (i).Visible) {
+					visiblePages++;
+				}
+			}
+			if (visiblePages == 1) {
+				Visible = false;
+			}
 			return notebook;
 		}
 
