@@ -95,10 +95,13 @@ namespace LongoMatch.Drawing.Cairo
 
 		public Image Copy ()
 		{
-			string tempFile = System.IO.Path.GetTempFileName ();
-			surface.WriteToPng (tempFile);
-			Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (tempFile);
-			return new Image (pixbuf);
+			Gdk.Pixmap pixmap = new Gdk.Pixmap (null, Width, Height, 24);
+			using (Context cr = Gdk.CairoHelper.Create (pixmap)) {
+				cr.Operator = Operator.Source;
+				cr.SetSource (surface);
+				cr.Paint ();
+			}
+			return new Image (Gdk.Pixbuf.FromDrawable (pixmap, Gdk.Colormap.System, 0, 0, 0, 0, Width, Height));
 		}
 	}
 }
