@@ -101,7 +101,14 @@ namespace LongoMatch.Drawing.Cairo
 				cr.SetSource (surface);
 				cr.Paint ();
 			}
-			return new Image (Gdk.Pixbuf.FromDrawable (pixmap, Gdk.Colormap.System, 0, 0, 0, 0, Width, Height));
+
+			Gdk.Colormap colormap = Gdk.Colormap.System;
+			/* In unit tests, Gtk is not initialized and the default Screen is null,
+			 * we use RGB colormap in this scenario, even though it's a deprecated function. */
+			if (colormap == null) {
+				colormap = Gdk.Rgb.Colormap;
+			}
+			return new Image (Gdk.Pixbuf.FromDrawable (pixmap, colormap, 0, 0, 0, 0, Width, Height));
 		}
 	}
 }
