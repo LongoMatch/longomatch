@@ -18,6 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using Couchbase.Lite;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -41,7 +43,7 @@ namespace LongoMatch.DB
 		public void SetActiveByName (string name)
 		{
 			// Couchbase doesn't accept uppercase databases.
-			IStorage db = Databases.FirstOrDefault (d => d.Info.Name == name.ToLower ());
+			IStorage db = Databases.FirstOrDefault (d => d.Info.Name == SanitizeDBName (name));
 			if (db != null) {
 				ActiveDB = db;
 			} else {
@@ -52,7 +54,7 @@ namespace LongoMatch.DB
 		public IStorage Add (string name)
 		{
 			// Couchbase doesn't accept uppercase databases.
-			name = name.ToLower ();
+			name = SanitizeDBName (name);
 			var storage = Add (name, false);
 			if (storage != null) {
 				Config.EventsBroker?.EmitDatabaseCreated (name);
@@ -113,6 +115,26 @@ namespace LongoMatch.DB
 				Log.Exception (ex);
 				return null;
 			}
+		}
+
+		/// <summary>
+		/// Sanitizes the name of the DB.
+		/// The only legal characters are lowercase ASCII letters, digits, and the special characters _$()+-/
+		/// http://developer.couchbase.com/documentation/mobile/1.1.0/develop/guides/couchbase-lite/native-api/database/index.html
+		/// https://github.com/couchbase/couchbase-lite-net/blob/12cf591/src/Couchbase.Lite.Shared/Manager.cs#L95
+		/// </summary>
+		/// <returns>The sanitized DB name.</returns>
+		/// <param name="originalName">name.</param>
+		string SanitizeDBName (string name)
+		{
+			name = name.ToLower ();
+			name = name.Normalize (NormalizationForm.FormD);
+
+			name = Regex.Replace (name, "[^a-z0-9_$)+/(-]", "_");
+			if (Regex.IsMatch (name, "(^[^a-z]+)|[^a-z0-9_\\$\\(\\)/\\+\\-]+")) {
+				name = "db" + name;
+			}
+			return name;
 		}
 	}
 }

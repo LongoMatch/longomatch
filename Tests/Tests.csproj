@@ -131,6 +131,7 @@
     <Compile Include="Core\Common\TestCloner.cs" />
     <Compile Include="Integration\TestDatabaseMigration.cs" />
     <Compile Include="LocalStorage.cs" />
+    <Compile Include="DB\TestDatabaseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
