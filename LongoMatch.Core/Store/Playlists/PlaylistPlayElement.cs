@@ -16,9 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
@@ -130,11 +130,7 @@ namespace LongoMatch.Core.Store.Playlists
 		[PropertyChanged.DoNotNotify]
 		public string Description {
 			get {
-				if (Rate != 1) {
-					return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString () + " (" + RateString + ")";
-				} else {
-					return Title + " " + Play.Start.ToSecondsString () + " " + Play.Stop.ToSecondsString ();
-				}
+				return (Play.Name + "\n" + TagsDescription () + "\n" + TimesDesription ());
 			}
 		}
 
@@ -163,6 +159,20 @@ namespace LongoMatch.Core.Store.Playlists
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;
+		}
+
+		string TagsDescription ()
+		{
+			return String.Join ("-", Play.Tags.Select (t => t.Value));
+		}
+
+		string TimesDesription ()
+		{
+			var desc = Play.Start.ToMSecondsString () + " - " + Play.Stop.ToMSecondsString ();
+			if (Rate != 1) {
+				desc += " (" + RateString + ")";
+			}
+			return desc;
 		}
 	}
 }
