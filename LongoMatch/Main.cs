@@ -70,7 +70,7 @@ namespace LongoMatch
 				bool haveCodecs = false;
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
-				Config.GUIToolkit = new GUIToolkit ();
+				Config.GUIToolkit = GUIToolkit.Instance;
 				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
 
 				Task addinsTask = Task.Run (() => InitAddins (progress));

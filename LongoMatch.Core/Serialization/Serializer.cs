@@ -29,19 +29,16 @@ using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Common
 {
-	public class Serializer : ISerializer
+	public sealed class Serializer : ISerializer
 	{
-		static Serializer instance;
+		static readonly Serializer instance = new Serializer ();
 
-		Serializer ()
+		private Serializer ()
 		{
 		}
 
 		public static Serializer Instance {
 			get {
-				if (instance == null) {
-					instance = new Serializer ();
-				}
 				return instance;
 			}
 		}
