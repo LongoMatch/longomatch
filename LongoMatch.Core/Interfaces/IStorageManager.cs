@@ -1,56 +1,37 @@
-// 
-//  Copyright (C) 2011 Andoni Morales Alastruey
-// 
+//
+//  Copyright (C) 2013 Andoni Morales Alastruey
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface IDatabase
+	public interface IStorageManager
 	{
-		IEnumerable<Project> GetAllProjects ();
+		void SetActiveByName (string name);
 
-		Project GetProject (Guid id);
+		IStorage Add (string name);
 
-		void AddProject (Project project);
+		bool Delete (IStorage db);
 
-		bool RemoveProject (Project project);
+		IStorage ActiveDB { get; set; }
 
-		void UpdateProject (Project project);
+		void UpdateDatabases ();
 
-		bool Exists (Project project);
-
-		bool Backup ();
-
-		bool Delete ();
-
-		void Reload ();
-
-		string Name { get; }
-
-		DateTime LastBackup { get; }
-
-		int Count { get; }
-
-		Version Version { get; set; }
-
-		IStorage Storage { get; }
+		List<IStorage> Databases { get; set; }
 	}
 }
-

@@ -87,7 +87,7 @@ namespace Tests.Integration
 			CoreServices.Stop ();
 			try {
 				foreach (var db in Config.DatabaseManager.Databases) {
-					db.Delete ();
+					db.Reset ();
 				}
 				Directory.Delete (tmpPath, true);
 			} catch {
@@ -122,33 +122,33 @@ namespace Tests.Integration
 			// Create a new project and open it
 			Project p = CreateProject ();
 			projectID = p.ID;
-			Config.DatabaseManager.ActiveDB.AddProject (p);
+			Config.DatabaseManager.ActiveDB.Store<Project> (p, true);
 			Config.EventsBroker.EmitOpenProjectID (p.ID, p);
 
 			// Tag some events
 			Assert.AreEqual (0, p.Timeline.Count);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (1, p.Timeline.Count);
-			Project savedP = Config.DatabaseManager.ActiveDB.GetProject (p.ID);
+			Project savedP = Config.DatabaseManager.ActiveDB.Retrieve<Project> (p.ID);
 			Assert.AreEqual (1, savedP.Timeline.Count);
 			AddEvent (p, 6, 3000, 3050, 3025);
 			AddEvent (p, 7, 3000, 3050, 3025);
 			AddEvent (p, 8, 3000, 3050, 3025);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (5, p.Timeline.Count);
-			savedP = Config.DatabaseManager.ActiveDB.GetProject (p.ID);
+			savedP = Config.DatabaseManager.ActiveDB.Retrieve<Project> (p.ID);
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
 			Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { p.Timeline [0], p.Timeline [1] });
 			Assert.AreEqual (3, p.Timeline.Count);
-			savedP = Config.DatabaseManager.ActiveDB.GetProject (p.ID);
+			savedP = Config.DatabaseManager.ActiveDB.Retrieve<Project> (p.ID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 
 			// Now create a new Project with the same templates
 			p = CreateProject ();
-			Config.DatabaseManager.ActiveDB.AddProject (p);
-			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count);
+			Config.DatabaseManager.ActiveDB.Store<Project> (p);
+			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Config.EventsBroker.EmitOpenProjectID (p.ID, p);
 
 			// Add some events and than remove it from the DB
@@ -156,15 +156,15 @@ namespace Tests.Integration
 			AddEvent (p, 7, 3000, 3050, 3025);
 			AddEvent (p, 8, 3000, 3050, 3025);
 			AddEvent (p, 5, 3000, 3050, 3025);
-			Config.DatabaseManager.ActiveDB.RemoveProject (p);
+			Config.DatabaseManager.ActiveDB.Delete<Project> (p);
 
 			// Reopen the old project
-			savedP = Config.DatabaseManager.ActiveDB.GetAllProjects ().FirstOrDefault (pr => pr.ID == projectID);
+			savedP = Config.DatabaseManager.ActiveDB.RetrieveAll<Project> ().FirstOrDefault (pr => pr.ID == projectID);
 			Config.EventsBroker.EmitOpenProjectID (savedP.ID, savedP);
 			Config.EventsBroker.EmitSaveProject (savedP, ProjectType.FileProject);
 
 			// Export this project to a new file
-			savedP = Config.DatabaseManager.ActiveDB.GetProject (projectID);
+			savedP = Config.DatabaseManager.ActiveDB.Retrieve<Project> (projectID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
 			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
@@ -190,12 +190,12 @@ namespace Tests.Integration
 			};
 			Config.EventsBroker.EmitImportProject ();
 			Assert.IsNotNull (p);
-			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count);
+			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
 			Config.EventsBroker.EmitCloseOpenedProject ();
-			savedP = Config.DatabaseManager.ActiveDB.GetProject (p.ID);
+			savedP = Config.DatabaseManager.ActiveDB.Retrieve<Project> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();
 		}

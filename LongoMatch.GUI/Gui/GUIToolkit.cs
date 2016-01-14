@@ -36,24 +36,24 @@ using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
-	public class GUIToolkit: IGUIToolkit
+	public sealed class GUIToolkit: IGUIToolkit
 	{
-		static GUIToolkit instance;
-		MainWindow mainWindow;
-		Registry registry;
-
-		public GUIToolkit ()
-		{
-			mainWindow = new MainWindow (this);
-			mainWindow.Hide ();
-			instance = this;
-			registry = new Registry ("GUI backend");
-		}
+		static readonly GUIToolkit instance = new GUIToolkit ();
 
 		public static GUIToolkit Instance {
 			get {
 				return instance;
 			}
+		}
+
+		MainWindow mainWindow;
+		Registry registry;
+
+		private GUIToolkit ()
+		{
+			mainWindow = new MainWindow (this);
+			mainWindow.Hide ();
+			registry = new Registry ("GUI backend");
 		}
 
 		public IMainController MainController {

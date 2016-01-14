@@ -99,7 +99,6 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOKimage = new global::Gtk.Image ();
 			this.buttonOKimage.Name = "buttonOKimage";
 			this.buttonOk.Add (this.buttonOKimage);
-			this.buttonOk.Label = null;
 			this.AddActionWidget (this.buttonOk, -3);
 			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8 [this.buttonOk]));
 			w10.Expand = false;

@@ -45,7 +45,6 @@ namespace LongoMatch.Gui.Component
 			this.datebuttonimage = new global::Gtk.Image ();
 			this.datebuttonimage.Name = "datebuttonimage";
 			this.datebutton.Add (this.datebuttonimage);
-			this.datebutton.Label = null;
 			this.hbox2.Add (this.datebutton);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.datebutton]));
 			w3.Position = 1;

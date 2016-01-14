@@ -96,7 +96,7 @@ namespace LongoMatch.Services
 		{
 			Project project;
 			ProjectImporter importer;
-			IDatabase DB = Config.DatabaseManager.ActiveDB;
+			IStorage DB = Config.DatabaseManager.ActiveDB;
 			
 			Log.Debug ("Importing project");
 			/* try to import the project and show a message error is the file
@@ -129,7 +129,7 @@ namespace LongoMatch.Services
 						if (!res)
 							return;
 					}
-					DB.AddProject (project);
+					DB.Store<Project> (project, true);
 					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
@@ -168,7 +168,7 @@ namespace LongoMatch.Services
 			using (Process exeProcess = Process.Start (startInfo)) {
 				exeProcess.WaitForExit ();
 				Config.DatabaseManager.UpdateDatabases ();
-				Config.DatabaseManager.SetActiveByName (Config.DatabaseManager.ActiveDB.Name);
+				Config.DatabaseManager.SetActiveByName (Config.DatabaseManager.ActiveDB.Info.Name);
 			}
 		}
 

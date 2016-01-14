@@ -39,7 +39,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public IDataBaseManager Manager {
+		public IStorageManager Manager {
 			get;
 			set;
 		}
@@ -78,7 +78,7 @@ namespace LongoMatch.Services
 		{
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Manager = new CouchbaseManager (Config.DBDir);
+			Manager = CreateStorageManager (Config.DBDir);
 			Config.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
 			Manager.SetActiveByName (Config.CurrentDatabase);
@@ -94,6 +94,16 @@ namespace LongoMatch.Services
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Creates a new storage manager.
+		/// </summary>
+		/// <returns>The created manager.</returns>
+		/// <param name="storageDir">The directory used for the storages.</param>
+		public static IStorageManager CreateStorageManager (string storageDir)
+		{
+			return new CouchbaseManager (storageDir);
+		}
 	}
 }
 

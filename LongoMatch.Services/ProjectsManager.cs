@@ -127,7 +127,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
-				Config.DatabaseManager.ActiveDB.AddProject (project);
+				Config.DatabaseManager.ActiveDB.Store<Project> (project);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				Log.Debug ("Backing up project to file");
@@ -296,7 +296,7 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
 			if (projectType == ProjectType.FileProject) {
 				try {
-					Config.DatabaseManager.ActiveDB.UpdateProject (project);
+					Config.DatabaseManager.ActiveDB.Store<Project> (project);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
@@ -304,7 +304,7 @@ namespace LongoMatch.Services
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				try {
-					Config.DatabaseManager.ActiveDB.UpdateProject (project);
+					Config.DatabaseManager.ActiveDB.Store<Project> (project);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
@@ -331,7 +331,7 @@ namespace LongoMatch.Services
 		{
 			if (project != null) {
 				try {
-					Config.DatabaseManager.ActiveDB.AddProject (project);
+					Config.DatabaseManager.ActiveDB.Store<Project> (project);
 					SetProject (project, projectType, captureSettings);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -345,14 +345,14 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ().ToList ());
+			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<Project> ().ToList ());
 		}
 
 		void OpenProjectID (Guid projectID, Project project)
 		{
 			if (project == null) {
 				try {
-					project = Config.DatabaseManager.ActiveDB.GetProject (projectID);
+					project = Config.DatabaseManager.ActiveDB.Retrieve<Project> (projectID);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (ex.Message);
@@ -397,7 +397,7 @@ namespace LongoMatch.Services
 			ProjectType type = OpenedProjectType;
 			if (delete) {
 				try {
-					Config.DatabaseManager.ActiveDB.RemoveProject (OpenedProject);
+					Config.DatabaseManager.ActiveDB.Delete<Project> (OpenedProject);
 				} catch (StorageException ex) {
 					Log.Exception (ex);
 					Config.GUIToolkit.ErrorMessage (ex.Message);

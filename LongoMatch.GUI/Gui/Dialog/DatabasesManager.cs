@@ -25,12 +25,13 @@ using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Interfaces.GUI;
 using System.Threading.Tasks;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
 	public partial class DatabasesManager : Gtk.Dialog
 	{
-		IDataBaseManager manager;
+		IStorageManager manager;
 		ListStore store;
 
 		public DatabasesManager (Window parent)
@@ -40,12 +41,11 @@ namespace LongoMatch.Gui.Dialog
 			this.manager = Config.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
-			rescanbutton.Clicked += HandleRescanClicked;
 		}
 
-		IDatabase ActiveDB {
+		IStorage ActiveDB {
 			set {
-				dblabel.Text = Catalog.GetString ("Active database") + ": " + value.Name;
+				dblabel.Text = Catalog.GetString ("Active database") + ": " + value.Info.Name;
 			}
 		}
 
@@ -74,27 +74,27 @@ namespace LongoMatch.Gui.Dialog
 			countCol.PackStart (countCell, true);
 			countCol.SetCellDataFunc (countCell, new TreeCellDataFunc (RenderCount));
 			treeview.AppendColumn (countCol);
-			store = new ListStore (typeof(IDatabase));
-			foreach (IDatabase db in manager.Databases) {
+			store = new ListStore (typeof(IStorage));
+			foreach (IStorage db in manager.Databases) {
 				store.AppendValues (db);
 			}
 			treeview.Model = store;
 		}
 
-		IDatabase SelectedDB {
+		IStorage SelectedDB {
 			get {
 				TreeIter iter;
 				
 				treeview.Selection.GetSelected (out iter);
-				return store.GetValue (iter, 0) as IDatabase;
+				return store.GetValue (iter, 0) as IStorage;
 			}
 		}
 
 		void RenderCount (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			IDatabase db = (IDatabase)store.GetValue (iter, 0);
+			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.Count.ToString (); 
+			(cell as Gtk.CellRendererText).Text = db.Count<Project> ().ToString ();
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
@@ -104,9 +104,9 @@ namespace LongoMatch.Gui.Dialog
 
 		void RenderLastbackup (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			IDatabase db = (IDatabase)store.GetValue (iter, 0);
+			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.LastBackup.ToShortDateString (); 
+			(cell as Gtk.CellRendererText).Text = db.Info.LastBackup.ToShortDateString ();
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
@@ -116,9 +116,9 @@ namespace LongoMatch.Gui.Dialog
 
 		void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			IDatabase db = (IDatabase)store.GetValue (iter, 0);
+			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.Name; 
+			(cell as Gtk.CellRendererText).Text = db.Info.Name;
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnSelectbuttonClicked (object sender, System.EventArgs e)
 		{
-			IDatabase db = SelectedDB;
+			IStorage db = SelectedDB;
 			if (db != null) {
 				manager.ActiveDB = db;
 				ActiveDB = db;
@@ -137,12 +137,12 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
-			IDatabase db;
+			IStorage db;
 			string dbname = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Database name"));
 			if (dbname == null || dbname == "")
 				return;
 			
-			if (manager.Databases.Where (d => d.Name == dbname).Count () != 0) {
+			if (manager.Databases.Where (d => d.Info.Name == dbname).Count () != 0) {
 				var msg = Catalog.GetString ("A database already exists with this name");
 				MessagesHelpers.ErrorMessage (this, msg);
 				return;
@@ -156,10 +156,10 @@ namespace LongoMatch.Gui.Dialog
 		protected void OnDelbuttonClicked (object sender, System.EventArgs e)
 		{
 			TreeIter iter;
-			IDatabase db;
+			IStorage db;
 				
 			treeview.Selection.GetSelected (out iter);
-			db = store.GetValue (iter, 0) as IDatabase;
+			db = store.GetValue (iter, 0) as IStorage;
 			
 			if (db == manager.ActiveDB) {
 				var msg = Catalog.GetString ("This database is the active one and can't be deleted");
@@ -168,7 +168,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 
 			if (db != null) {
-				var msg = Catalog.GetString ("Do you really want to delete the database: " + db.Name);
+				var msg = Catalog.GetString ("Do you really want to delete the database: " + db.Info.Name);
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					db.Backup ();
 					manager.Delete (db);
@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnBackupbuttonClicked (object sender, System.EventArgs e)
 		{
-			IDatabase db = SelectedDB;
+			IStorage db = SelectedDB;
 			if (db != null) {
 				if (db.Backup ())
 					MessagesHelpers.InfoMessage (this, Catalog.GetString ("Backup successful"));
@@ -195,24 +195,6 @@ namespace LongoMatch.Gui.Dialog
 			delbutton.Sensitive = selected;
 			backupbutton.Sensitive = selected;
 			selectbutton.Sensitive = selected;
-			rescanbutton.Sensitive = selected;
-		}
-
-		void HandleRescanClicked (object sender, EventArgs e)
-		{
-			IDatabase db = SelectedDB;
-			if (db != null) {
-				IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Scanning database..."), this);
-				System.Action action = () => {
-					try {
-						db.Reload ();
-					} catch (Exception ex) {
-						Log.Exception (ex);
-					}
-				};
-				busy.ShowSync (action);
-				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Database scanned succesfully."));
-			}
 		}
 		
 	}

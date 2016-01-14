@@ -47,6 +47,7 @@ namespace LongoMatch.Core.Common
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
 		public event DashboardEditedHandler DashboardEditedEvent;
+		public event DatabaseCreatedHandler DatabaseCreatedEvent;
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
@@ -427,6 +428,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (DashboardEditedEvent != null) {
 				DashboardEditedEvent ();
+			}
+		}
+
+		public void EmitDatabaseCreated (string name)
+		{
+			if (DatabaseCreatedEvent != null) {
+				DatabaseCreatedEvent (name);
 			}
 		}
 

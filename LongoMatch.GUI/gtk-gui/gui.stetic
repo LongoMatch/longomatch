@@ -5181,23 +5181,6 @@ You can continue with the current capture, cancel it or save your project.
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Button" id="rescanbutton">
-                        <property name="MemberName" />
-                        <property name="Sensitive">False</property>
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-refresh Menu</property>
-                        <property name="Label" translatable="yes">Re-scan</property>
-                        <property name="UseUnderline">True</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">3</property>
-                        <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="Gtk.Button" id="addbutton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
@@ -5208,7 +5191,7 @@ You can continue with the current capture, cancel it or save your project.
                         <signal name="Clicked" handler="OnAddbuttonClicked" />
                       </widget>
                       <packing>
-                        <property name="Position">4</property>
+                        <property name="Position">3</property>
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>

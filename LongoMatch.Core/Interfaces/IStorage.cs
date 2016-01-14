@@ -85,6 +85,11 @@ namespace LongoMatch.Core.Interfaces
 		/// </summary>
 		void Reset ();
 
+		bool Backup ();
+
+		bool Exists<T> (T t) where T : IStorable;
+
+		int Count<T> () where T : IStorable;
 	}
 }
 

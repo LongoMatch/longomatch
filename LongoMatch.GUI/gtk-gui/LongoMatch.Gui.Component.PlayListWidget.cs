@@ -72,7 +72,6 @@ namespace LongoMatch.Gui.Component
 			this.newimage = new global::Gtk.Image ();
 			this.newimage.Name = "newimage";
 			this.newbutton.Add (this.newimage);
-			this.newbutton.Label = null;
 			this.hbox2.Add (this.newbutton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
 			w7.Position = 0;
@@ -87,7 +86,6 @@ namespace LongoMatch.Gui.Component
 			this.recimage = new global::Gtk.Image ();
 			this.recimage.Name = "recimage";
 			this.newvideobutton.Add (this.recimage);
-			this.newvideobutton.Label = null;
 			this.hbox2.Add (this.newvideobutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
 			w9.Position = 1;

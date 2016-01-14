@@ -959,6 +959,7 @@ namespace LongoMatch.Gui.Panel
 			this.projectperiods1 = new global::LongoMatch.Gui.Component.SynchronizationWidget ();
 			this.projectperiods1.Events = ((global::Gdk.EventMask)(256));
 			this.projectperiods1.Name = "projectperiods1";
+			this.projectperiods1.FixedPeriods = false;
 			this.notebook1.Add (this.projectperiods1);
 			global::Gtk.Notebook.NotebookChild w90 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.projectperiods1]));
 			w90.Position = 2;

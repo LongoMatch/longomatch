@@ -73,91 +73,55 @@ namespace LongoMatch.Gui.Dialog
 			this.returnbutton.CanFocus = true;
 			this.returnbutton.Name = "returnbutton";
 			this.returnbutton.UseUnderline = true;
-			// Container child returnbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w5 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w6 = new global::Gtk.HBox ();
-			w6.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w7 = new global::Gtk.Image ();
-			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-undo", global::Gtk.IconSize.Button);
-			w6.Add (w7);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w9 = new global::Gtk.Label ();
-			w9.LabelProp = global::Mono.Unix.Catalog.GetString ("Return");
-			w9.UseUnderline = true;
-			w6.Add (w9);
-			w5.Add (w6);
-			this.returnbutton.Add (w5);
+			this.returnbutton.Label = global::Mono.Unix.Catalog.GetString ("Return");
+			global::Gtk.Image w5 = new global::Gtk.Image ();
+			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-undo", global::Gtk.IconSize.Button);
+			this.returnbutton.Image = w5;
 			this.hbox3.Add (this.returnbutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.returnbutton]));
-			w13.Position = 0;
-			w13.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.returnbutton]));
+			w6.Position = 0;
+			w6.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.quitbutton = new global::Gtk.Button ();
 			this.quitbutton.CanFocus = true;
 			this.quitbutton.Name = "quitbutton";
 			this.quitbutton.UseUnderline = true;
-			// Container child quitbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w14 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w15 = new global::Gtk.HBox ();
-			w15.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w16 = new global::Gtk.Image ();
-			w16.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Button);
-			w15.Add (w16);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w18 = new global::Gtk.Label ();
-			w18.LabelProp = global::Mono.Unix.Catalog.GetString ("Cancel capture");
-			w18.UseUnderline = true;
-			w15.Add (w18);
-			w14.Add (w15);
-			this.quitbutton.Add (w14);
+			this.quitbutton.Label = global::Mono.Unix.Catalog.GetString ("Cancel capture");
+			global::Gtk.Image w7 = new global::Gtk.Image ();
+			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Button);
+			this.quitbutton.Image = w7;
 			this.hbox3.Add (this.quitbutton);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.quitbutton]));
-			w22.Position = 1;
-			w22.Fill = false;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.quitbutton]));
+			w8.Position = 1;
+			w8.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.savebutton = new global::Gtk.Button ();
 			this.savebutton.CanFocus = true;
 			this.savebutton.Name = "savebutton";
 			this.savebutton.UseUnderline = true;
-			// Container child savebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w23 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w24 = new global::Gtk.HBox ();
-			w24.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w25 = new global::Gtk.Image ();
-			w25.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
-			w24.Add (w25);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w27 = new global::Gtk.Label ();
-			w27.LabelProp = global::Mono.Unix.Catalog.GetString ("Stop capture and save project");
-			w27.UseUnderline = true;
-			w24.Add (w27);
-			w23.Add (w24);
-			this.savebutton.Add (w23);
+			this.savebutton.Label = global::Mono.Unix.Catalog.GetString ("Stop capture and save project");
+			global::Gtk.Image w9 = new global::Gtk.Image ();
+			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
+			this.savebutton.Image = w9;
 			this.hbox3.Add (this.savebutton);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savebutton]));
-			w31.Position = 2;
-			w31.Fill = false;
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savebutton]));
+			w10.Position = 2;
+			w10.Fill = false;
 			this.vbox2.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
-			w32.Position = 1;
-			w32.Expand = false;
-			w32.Fill = false;
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
+			w11.Position = 1;
+			w11.Expand = false;
+			w11.Fill = false;
 			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
-			w33.Position = 0;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			w12.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.EndCaptureDialog.ActionArea
-			global::Gtk.HButtonBox w34 = this.ActionArea;
-			w34.Sensitive = false;
-			w34.Name = "dialog1_ActionArea";
-			w34.Spacing = 6;
-			w34.BorderWidth = ((uint)(5));
-			w34.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w13 = this.ActionArea;
+			w13.Sensitive = false;
+			w13.Name = "dialog1_ActionArea";
+			w13.Spacing = 6;
+			w13.BorderWidth = ((uint)(5));
+			w13.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button ();
 			this.buttonCancel.CanDefault = true;
@@ -167,15 +131,15 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w35 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w34 [this.buttonCancel]));
-			w35.Expand = false;
-			w35.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w13 [this.buttonCancel]));
+			w14.Expand = false;
+			w14.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 566;
 			this.DefaultHeight = 178;
-			w34.Hide ();
+			w13.Hide ();
 			this.Show ();
 			this.returnbutton.Clicked += new global::System.EventHandler (this.OnQuit);
 			this.quitbutton.Clicked += new global::System.EventHandler (this.OnQuit);

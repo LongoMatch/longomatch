@@ -45,7 +45,7 @@ namespace LongoMatch
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 		public static EventsBroker EventsBroker;
 		
-		public static IDataBaseManager DatabaseManager;
+		public static IStorageManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
 		
 		static StyleConf style;

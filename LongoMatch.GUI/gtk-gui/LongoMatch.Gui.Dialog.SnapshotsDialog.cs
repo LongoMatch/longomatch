@@ -114,26 +114,14 @@ namespace LongoMatch.Gui.Dialog
 			this.button22.CanFocus = true;
 			this.button22.Name = "button22";
 			this.button22.UseUnderline = true;
-			// Container child button22.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w10 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w11 = new global::Gtk.HBox ();
-			w11.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w12 = new global::Gtk.Image ();
-			w12.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
-			w11.Add (w12);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w14 = new global::Gtk.Label ();
-			w14.LabelProp = global::Mono.Unix.Catalog.GetString ("Export to PNG images");
-			w14.UseUnderline = true;
-			w11.Add (w14);
-			w10.Add (w11);
-			this.button22.Add (w10);
+			this.button22.Label = global::Mono.Unix.Catalog.GetString ("Export to PNG images");
+			global::Gtk.Image w10 = new global::Gtk.Image ();
+			w10.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
+			this.button22.Image = w10;
 			this.AddActionWidget (this.button22, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w18 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9 [this.button22]));
-			w18.Expand = false;
-			w18.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w11 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9 [this.button22]));
+			w11.Expand = false;
+			w11.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

@@ -67,8 +67,8 @@ namespace LongoMatch.DB
 			List<string> teamFiles;
 			List<string> dashboardFiles;
 			Guid id = Guid.NewGuid ();
-			List<Team> teams = new List<Team> ();
-			List<Dashboard> dashboards = new List<Dashboard> ();
+			ConcurrentQueue<Team> teams = new ConcurrentQueue<Team> ();
+			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
 			progress.Report (0, "Migrating teams and dashboards", id);
@@ -94,7 +94,7 @@ namespace LongoMatch.DB
 					Team team = Serializer.Instance.Load<Team> (teamFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported team " + team.Name, id);
-					teams.Add (team);
+					teams.Enqueue (team);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
@@ -105,7 +105,7 @@ namespace LongoMatch.DB
 					Dashboard dashboard = Serializer.Instance.Load<Dashboard> (dashboardFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported dashboard " + dashboard.Name, id);
-					dashboards.Add (dashboard);
+					dashboards.Enqueue (dashboard);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 				}
@@ -197,9 +197,9 @@ namespace LongoMatch.DB
 			progress.Report (1, "Databases migrated", id);
 		}
 
-		bool MigrateDB (IDataBaseManager manager, string databaseName, List<string> projectFiles)
+		bool MigrateDB (IStorageManager manager, string databaseName, List<string> projectFiles)
 		{
-			IDatabase database;
+			IStorage database;
 			Guid id = Guid.NewGuid ();
 			float totalProjects = projectFiles.Count * 2;
 			float percent = 0;
@@ -211,7 +211,7 @@ namespace LongoMatch.DB
 			try {
 				database = manager.Add (databaseName);
 			} catch {
-				database = manager.Databases.FirstOrDefault (d => d.Name == databaseName);
+				database = manager.Databases.FirstOrDefault (d => d.Info.Name == databaseName);
 			}
 
 			if (database == null) {
@@ -250,7 +250,7 @@ namespace LongoMatch.DB
 				var importTask = Task.Run (() => {
 					try {
 						ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
-						database.AddProject (project);
+						database.Store<Project> (project, true);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;

@@ -55,8 +55,8 @@ namespace LongoMatch.Gui.Panel
 			w2.Expand = false;
 			// Container child headerhbox.Gtk.Box+BoxChild
 			this.applyroundedbutton = new global::Gtk.Button ();
-			this.applyroundedbutton.WidthRequest = 60;
-			this.applyroundedbutton.HeightRequest = 60;
+			this.applyroundedbutton.WidthRequest = 80;
+			this.applyroundedbutton.HeightRequest = 40;
 			this.applyroundedbutton.CanFocus = true;
 			this.applyroundedbutton.Name = "applyroundedbutton";
 			this.applyroundedbutton.FocusOnClick = false;

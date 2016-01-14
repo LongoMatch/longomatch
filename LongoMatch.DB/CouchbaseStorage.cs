@@ -26,6 +26,11 @@ using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB.Views;
+using System.Linq;
+using System.IO;
+using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib;
 
 namespace LongoMatch.DB
 {
@@ -66,7 +71,10 @@ namespace LongoMatch.DB
 			FetchInfo ();
 			Compact ();
 			InitializeViews ();
+			VFS.SetCurrent (new FileSystem ());
 		}
+
+		#region IStorage implementation
 
 		internal Database Database {
 			get {
@@ -74,50 +82,60 @@ namespace LongoMatch.DB
 			}
 		}
 
-		void FetchInfo ()
-		{
-			Info = Retrieve<StorageInfo> (Guid.Empty);
-			if (Info == null) {
-				Info = new StorageInfo {
-					Name = storageName,
-					LastBackup = DateTime.UtcNow,
-					LastCleanup = DateTime.UtcNow,
-					Version = new Version (Constants.DB_VERSION, 0),
-				};
+		public StorageInfo Info {
+			get;
+			set;
+		}
+
+		DateTime LastBackup {
+			get {
+				return Info.LastBackup;
+			}
+			set {
+				Info.LastBackup = value;
 				Store (Info);
 			}
 		}
 
-		void Compact ()
+		public int Count<T> () where T : IStorable
 		{
-			if ((DateTime.UtcNow - Info.LastCleanup).Days > 2) {
-				db.Compact ();
-				Info.LastCleanup = DateTime.UtcNow;
-				Store (Info);
-			}
+			List<T> lista = RetrieveAll<T> ().ToList ();
+			return lista.Count;
 		}
 
-		void InitializeViews ()
+		public bool Backup ()
 		{
-			views = new Dictionary <Type, object> ();
-			views.Add (typeof(Dashboard), new DashboardsView (this));
-			views.Add (typeof(Team), new TeamsView (this));
-			views.Add (typeof(Project), new ProjectsView (this));
-			views.Add (typeof(Player), new PlayersView (this));
-			views.Add (typeof(TimelineEvent), new TimelineEventsView (this));
-			views.Add (typeof(EventType), new EventTypeView (this));
+			try {
+				string outputFilename = Path.Combine (Config.DBDir, storageName + ".tar.gz");
+				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
+					using (Stream gzipStream = new GZipOutputStream (fs)) {
+						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
+							foreach (string n in new string[] {"", "-wal", "-shm"}) {
+								TarEntry tarEntry = TarEntry.CreateEntryFromFile (
+									                    Path.Combine (Config.DBDir, storageName + ".cblite" + n));
+								tarArchive.WriteEntry (tarEntry, true);
+							}
+							AddDirectoryFilesToTar (tarArchive, Path.Combine (Config.DBDir, storageName + " attachments"), true);
+						}
+					}
+				}
+				LastBackup = DateTime.UtcNow;
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				return false;
+			}
+			return true;
+		}
+
+		public bool Exists<T> (T t) where T : IStorable
+		{
+			// FIXME: add faster API to storage for that or index ID's
+			return Retrieve<T> (new QueryFilter ()).Any (p => p.ID == t.ID);
 		}
 
 		public object Retrieve (Type type, Guid id)
 		{
 			return DocumentsSerializer.LoadObject (type, id, db);
-		}
-
-		#region IStorage implementation
-
-		public StorageInfo Info {
-			get;
-			set;
 		}
 
 		public void Fill (IStorable storable)
@@ -242,6 +260,7 @@ namespace LongoMatch.DB
 		public void Reset ()
 		{
 			lock (mutex) {
+				db.Delete ();
 				db.Manager.ForgetDatabase (db);
 			}
 		}
@@ -275,6 +294,64 @@ namespace LongoMatch.DB
 		}
 
 		#endregion
+
+		public void AddView (Type t, object obj)
+		{
+			if (!views.ContainsKey (t)) {
+				views.Add (t, obj);
+			}
+		}
+
+		void FetchInfo ()
+		{
+			Info = Retrieve<StorageInfo> (Guid.Empty);
+			if (Info == null) {
+				Info = new StorageInfo {
+					Name = storageName,
+					LastBackup = DateTime.UtcNow,
+					LastCleanup = DateTime.UtcNow,
+					Version = new Version (Constants.DB_VERSION, 0),
+				};
+				Store (Info);
+			}
+		}
+
+		void Compact ()
+		{
+			if ((DateTime.UtcNow - Info.LastCleanup).Days > 2) {
+				db.Compact ();
+				Info.LastCleanup = DateTime.UtcNow;
+				Store (Info);
+			}
+		}
+
+		void InitializeViews ()
+		{
+			views = new Dictionary <Type, object> ();
+			AddView (typeof(Dashboard), new DashboardsView (this));
+			AddView (typeof(Team), new TeamsView (this));
+			AddView (typeof(Project), new ProjectsView (this));
+			AddView (typeof(Player), new PlayersView (this));
+			AddView (typeof(TimelineEvent), new TimelineEventsView (this));
+			AddView (typeof(EventType), new EventTypeView (this));
+		}
+
+		void AddDirectoryFilesToTar (TarArchive tarArchive, string sourceDirectory, bool recurse)
+		{
+			// Recursively add sub-folders
+			if (recurse) {
+				string[] directories = Directory.GetDirectories (sourceDirectory);
+				foreach (string directory in directories)
+					AddDirectoryFilesToTar (tarArchive, directory, recurse);
+			}
+
+			// Add files
+			string[] filenames = Directory.GetFiles (sourceDirectory);
+			foreach (string filename in filenames) {
+				TarEntry tarEntry = TarEntry.CreateEntryFromFile (filename);
+				tarArchive.WriteEntry (tarEntry, true);
+			}
+		}
 	}
 }
 

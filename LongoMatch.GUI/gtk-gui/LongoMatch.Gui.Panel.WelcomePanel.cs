@@ -41,7 +41,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.preferencesbutton = new global::Gtk.Button ();
 			this.preferencesbutton.Name = "preferencesbutton";
-			this.preferencesbutton.Label = null;
 			this.hbox1.Add (this.preferencesbutton);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.preferencesbutton]));
 			w2.Position = 1;
