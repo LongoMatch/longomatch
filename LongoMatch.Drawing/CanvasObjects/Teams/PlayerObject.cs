@@ -178,9 +178,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.StrokeColor = Color.White;
 			tk.FontWeight = FontWeight.Normal;
 			if (Player.Number >= 100) {
-				tk.FontSize = 14;
+				tk.FontSize = 12;
 			} else {
-				tk.FontSize = 18;
+				tk.FontSize = 16;
 			}
 			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
 				Player.Number.ToString ());
