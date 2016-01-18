@@ -90,6 +90,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
+		static public void LoadSurfaces ()
+		{
+			if (!surfacesCached) {
+				Photo = CreateSurface (StyleConf.PlayerPhoto);
+				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
+				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
+				surfacesCached = true;
+			}
+		}
+
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Point position = new Point (Position.X - Width / 2, Position.Y - Height / 2);
@@ -207,17 +217,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			LoadSurfaces ();
 		}
 
-		void LoadSurfaces ()
-		{
-			if (!surfacesCached) {
-				Photo = CreateSurface (StyleConf.PlayerPhoto);
-				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
-				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
-				surfacesCached = true;
-			}
-		}
-
-		ISurface CreateSurface (string name)
+		static ISurface CreateSurface (string name)
 		{
 			Image img = Resources.LoadImage (name);
 			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);

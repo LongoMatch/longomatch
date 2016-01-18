@@ -22,6 +22,9 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using System.Runtime.Remoting;
 using LongoMatch.Core.Store.Drawables;
+using LongoMatch.Drawing.CanvasObjects.Teams;
+using LongoMatch.Drawing.CanvasObjects.Dashboard;
+using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing
 {
@@ -121,6 +124,17 @@ namespace LongoMatch.Drawing
 		{
 			return new Point ((p.X - offset.X) / scaleX,
 				(p.Y - offset.Y) / scaleY);
+		}
+
+		/// <summary>
+		/// Initializes object with surfaces. This can be called in the application startup to cache surfaces
+		/// instead of  s up.
+		/// </summary>
+		public static void WarmUp ()
+		{
+			PlayerObject.LoadSurfaces ();
+			NeedleObject.LoadSurfaces ();
+			new PlayslistCellRenderer ();
 		}
 	}
 }
