@@ -78,6 +78,7 @@ namespace LongoMatch
 
 				// Wait until the addins are initialized to start the services
 				await addinsTask;
+				CoreServices.RegisterService (new UpdatesNotifier ());
 				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
