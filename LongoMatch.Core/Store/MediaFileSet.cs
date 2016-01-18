@@ -252,6 +252,19 @@ namespace LongoMatch.Core.Store
 				isLoading = false;
 			}
 		}
+
+		public override bool Equals (object obj)
+		{
+			MediaFileSet s = obj as MediaFileSet;
+			if (s == null)
+				return false;
+			return ID.Equals (s.ID);
+		}
+
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode ();
+		}
 	}
 }
 
