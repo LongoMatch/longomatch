@@ -53,7 +53,7 @@ namespace LongoMatch
 
 		public static void Init ()
 		{
-			string home;
+			string home = null;
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				Config.baseDirectory = Path.GetFullPath (".");
@@ -73,24 +73,30 @@ namespace LongoMatch
 					Log.Warning ("Prefix directory not found");
 				Config.dataDir = Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME.ToLower ());
 			}
-			
-			/* Check for the magic file PORTABLE to check if it's a portable version
-			 * and the config goes in the same folder as the binaries */
-			if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE))) {
+
+			if (Utils.OS == OperatingSystemID.Android) {
 				home = Config.baseDirectory;
+			} else if (Utils.OS == OperatingSystemID.iOS) {
+				home = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments), "..", "Library");
 			} else {
-				home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
-				if (!Directory.Exists (home)) {
-					try {
-						Directory.CreateDirectory (home);
-					} catch (Exception ex) {
-						Log.Exception (ex);
-						Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
-						home = null;
+				/* Check for the magic file PORTABLE to check if it's a portable version
+					* and the config goes in the same folder as the binaries */
+				if (File.Exists (Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE))) {
+					home = Config.baseDirectory;
+				} else {
+					home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
+					if (!Directory.Exists (home)) {
+						try {
+							Directory.CreateDirectory (home);
+						} catch (Exception ex) {
+							Log.Exception (ex);
+							Log.Warning (String.Format ("LONGOMATCH_HOME {0} not found", home));
+							home = null;
+						}
 					}
-				}
-				if (home == null) {
-					home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+					if (home == null) {
+						home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+					}
 				}
 			}
 
