@@ -518,4 +518,14 @@ namespace LongoMatch.Core.Common
 		/// </summary>
 		AspectFit,
 	}
+
+	public enum OperatingSystemID
+	{
+		None,
+		Linux,
+		Windows,
+		OSX,
+		iOS,
+		Android,
+	}
 }

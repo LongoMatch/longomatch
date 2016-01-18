@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Dialog
 			SetPosition (Gtk.WindowPosition.CenterAlways);
 
 			// HACK: Center window in OS X
-			if (Utils.RunningPlatform () == PlatformID.MacOSX) {
+			if (Utils.OS == OperatingSystemID.OSX) {
 				Screen screen = Display.Default.DefaultScreen;
 				int monitor = screen.GetMonitorAtWindow (this.GdkWindow);
 				Rectangle monitor_geometry = screen.GetMonitorGeometry (monitor);

@@ -23,7 +23,7 @@ namespace LongoMatch.Services
 			var userAgent = String.Format ("{0}/{1} ({2};{3};{4})",
 				                Config.SoftwareName,
 				                Config.Version,
-				                Utils.RunningPlatform (),
+				                Utils.OS,
 				                Environment.OSVersion.VersionString,
 				                Config.BuildVersion);
 			try {

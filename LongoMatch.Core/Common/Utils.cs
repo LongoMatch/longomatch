@@ -22,7 +22,7 @@ namespace LongoMatch.Core.Common
 {
 	public class Utils
 	{
-		static int currentPlatformID = -1;
+		static OperatingSystemID operatingSystem = OperatingSystemID.None;
 
 		public static string SanitizePath (string path, params char[] replaceChars)
 		{
@@ -42,26 +42,44 @@ namespace LongoMatch.Core.Common
 					"Running LongoMatch {0} build:\"{1}\" OS:\"{2}\" OS Version:\"{3}\"",
 					Config.Version,
 					Config.BuildVersion,
-					Utils.RunningPlatform (),
+					Utils.OS,
 					Environment.OSVersion.VersionString);
 			}
 		}
 
-		public static PlatformID RunningPlatform ()
-		{
-			if (currentPlatformID == -1) {
-				currentPlatformID = (int)Environment.OSVersion.Platform;
-
-				if (currentPlatformID == (int)PlatformID.Unix) {
-					if (Directory.Exists ("/Applications")
-					    & Directory.Exists ("/System")
-					    & Directory.Exists ("/Users")
-					    & Directory.Exists ("/Volumes")) {
-						currentPlatformID = (int)PlatformID.MacOSX;
+		public static OperatingSystemID OS {
+			get {
+				if (operatingSystem == OperatingSystemID.None) {
+					#if OSTYPE_ANDROID
+					operatingSystem = OperatingSystemID.Android;
+					#elif OSTYPE_IOS
+					operatingSystem = OperatingSystemID.iOS;
+					#else
+					switch (Environment.OSVersion.Platform) {
+					case PlatformID.MacOSX:
+						operatingSystem = OperatingSystemID.OSX;
+						break;
+					case PlatformID.Unix:
+						// OS X is detetected as a Unix system and needs an extra check using the filesystem layout
+						if (Directory.Exists ("/Applications")
+						    & Directory.Exists ("/System")
+						    & Directory.Exists ("/Users")
+						    & Directory.Exists ("/Volumes")) {
+							operatingSystem = OperatingSystemID.OSX;
+						} else {
+							operatingSystem = OperatingSystemID.Linux;
+						}
+						break;
+					case PlatformID.Win32NT:
+						operatingSystem = OperatingSystemID.Windows;
+						break;
+					default:
+						throw new NotSupportedException ();
 					}
+					#endif
 				}
+				return operatingSystem;
 			}
-			return (PlatformID)currentPlatformID;
 		}
 	}
 }
