@@ -54,6 +54,7 @@
     <Compile Include="Common\Image.cs" />
     <Compile Include="Catalog.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="DirectoryMonitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

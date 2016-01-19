@@ -140,6 +140,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Migration\ProjectMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TeamMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDirectoryMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Handlers\Misc.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
