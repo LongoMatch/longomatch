@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using Stetic;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 
 

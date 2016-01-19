@@ -18,7 +18,7 @@
 using System;
 using Gtk;
 using System.IO;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Migration
 {

@@ -22,7 +22,7 @@ using Gtk;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Store;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Common;
 
 public partial class MainWindow: Gtk.Window

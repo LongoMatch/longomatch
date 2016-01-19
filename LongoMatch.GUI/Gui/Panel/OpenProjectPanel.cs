@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Gui;
 using LongoMatch.Core.Store;

@@ -18,7 +18,7 @@
 using System;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Handlers;
-using Mono.Unix;
+using LongoMatch.Core;
 using Gtk;
 using LongoMatch.Gui.Component;
 using Gdk;

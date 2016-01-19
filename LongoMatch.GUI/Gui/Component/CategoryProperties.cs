@@ -20,7 +20,7 @@
 using System;
 using Gtk;
 using Pango;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;

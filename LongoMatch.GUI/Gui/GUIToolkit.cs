@@ -31,7 +31,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
 using LongoMatch.Video.Utils;
-using Mono.Unix;
+using LongoMatch.Core;
 using Image = LongoMatch.Core.Common.Image;
 
 namespace LongoMatch.Gui

@@ -24,7 +24,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using Mono.Unix;
+using LongoMatch.Core;
 using Color = LongoMatch.Core.Common.Color;
 using Image = LongoMatch.Core.Common.Image;
 using Misc = LongoMatch.Gui.Helpers.Misc;

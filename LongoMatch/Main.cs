@@ -34,7 +34,7 @@ using LongoMatch.Gui.Helpers;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch
 {

@@ -23,7 +23,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 
 namespace LongoMatch.Gui.Menus

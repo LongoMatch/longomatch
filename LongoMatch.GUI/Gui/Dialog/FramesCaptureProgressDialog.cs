@@ -21,7 +21,7 @@
 using System;
 using Gtk;
 using Gdk;
-using Mono.Unix;
+using LongoMatch.Core;
 
 using LongoMatch.Core.Handlers;
 using LongoMatch.Video.Utils;

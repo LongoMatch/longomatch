@@ -26,7 +26,7 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 

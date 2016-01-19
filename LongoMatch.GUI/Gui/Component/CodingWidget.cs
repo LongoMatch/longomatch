@@ -27,7 +27,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {

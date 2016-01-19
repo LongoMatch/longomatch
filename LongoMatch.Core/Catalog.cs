@@ -84,6 +84,5 @@ namespace LongoMatch.Core
 			Marshal.FreeHGlobal (intp);
 			return t;
 		}
-	
 	}
 }

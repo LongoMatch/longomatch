@@ -20,7 +20,7 @@
 using System;
 using System.IO;
 using Gtk;
-using Mono.Unix;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
 using Misc = LongoMatch.Gui.Helpers.Misc;

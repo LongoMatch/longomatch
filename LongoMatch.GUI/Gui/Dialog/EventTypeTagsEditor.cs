@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
-using Mono.Unix;
+using LongoMatch.Core;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
