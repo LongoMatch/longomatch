@@ -105,6 +105,8 @@ namespace Tests.Services
 			plMan = new PlaylistManager ();
 			plMan.Player = player;
 			plMan.Start ();
+
+			streamLength = new Time { TotalSeconds = 5000 };
 		}
 
 		[TearDown ()]

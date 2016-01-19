@@ -264,6 +264,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
+			Config.EventsBroker.EmitLoadEvent (null);
 			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
 		}
 	}
