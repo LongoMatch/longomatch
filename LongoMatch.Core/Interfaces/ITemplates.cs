@@ -46,16 +46,48 @@ namespace LongoMatch.Core.Interfaces
 
 	public interface ITemplateProvider<T>: ITemplateProvider where T: ITemplate
 	{
+		/// <summary>
+		/// Gets a list of all the templates in this provider.
+		/// </summary>
+		/// <value>The templates.</value>
 		List<T> Templates { get; }
 
+		/// <summary>
+		/// Loads a template from a file.
+		/// </summary>
+		/// <returns>The file.</returns>
+		/// <param name="filename">Filename.</param>
 		T LoadFile (string filename);
 
+		/// <summary>
+		/// Save a template adding it to the database or updating an existing one.
+		/// </summary>
+		/// <param name="template">The template to save.</param>
 		void Save (T template);
 
+		/// <summary>
+		/// Delete an existing template.
+		/// </summary>
+		/// <param name="template">The template to delete.</param>
 		void Delete (T template);
 
+		/// <summary>
+		/// Register a new template that is not part of the user database, like the default templates.
+		/// </summary>
+		/// <param name="template">The template to add.</param>
 		void Register (T template);
 
+		/// <summary>
+		/// Add a new template to the provider.
+		/// </summary>
+		/// <param name="template">Template.</param>
+		void Add (T template);
+
+		/// <summary>
+		/// Create a new template copying an existing one with a different name.
+		/// </summary>
+		/// <param name="template">Template to copy.</param>
+		/// <param name="copy">Name of the copy.</param>
 		void Copy (T template, string copy);
 	}
 

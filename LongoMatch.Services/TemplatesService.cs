@@ -141,6 +141,11 @@ namespace LongoMatch.Services
 			systemTemplates.Add (template);
 		}
 
+		public void Add (T template)
+		{
+			storage.Store (template, true);
+		}
+
 		public void Copy (T template, string newName)
 		{
 			CheckInvalidChars (newName);

@@ -170,6 +170,15 @@ namespace Tests.Services
 			Assert.AreEqual (2, provider.Templates.Count);
 			Assert.IsTrue (provider.Exists ("jamematen"));
 		}
+
+		[Test]
+		public void TestAdd ()
+		{
+			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
+			Assert.AreEqual (1, provider.Templates.Count);
+			provider.Add (Dashboard.DefaultTemplate (5));
+			Assert.AreEqual (2, provider.Templates.Count);
+		}
 	}
 }
 

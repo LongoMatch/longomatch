@@ -133,6 +133,7 @@
     <Compile Include="LocalStorage.cs" />
     <Compile Include="DB\TestDatabaseManager.cs" />
     <Compile Include="Core\Common\TestDirectoryMonitor.cs" />
+    <Compile Include="Services\TestImportMonitorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
