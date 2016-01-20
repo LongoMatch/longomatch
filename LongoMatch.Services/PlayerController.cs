@@ -1099,7 +1099,16 @@ namespace LongoMatch.Services
 		bool Tick ()
 		{
 			if (StillImageLoaded) {
-				EmitTimeChanged (imageLoadedTS, loadedPlaylistElement.Duration);
+				Time relativeTime = imageLoadedTS;
+				Time duration = loadedPlaylistElement.Duration;
+
+				if (PresentationMode) {
+					relativeTime += LoadedPlaylist.GetCurrentStartTime ();
+					duration = LoadedPlaylist.Duration;
+				}
+
+				EmitTimeChanged (relativeTime, duration);
+
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
 					Pause ();
 					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
@@ -1109,13 +1118,17 @@ namespace LongoMatch.Services
 				return true;
 			} else {
 				Time currentTime = CurrentTime;
+				Time relativeTime = currentTime;
+				Time duration = null;
+				if (PresentationMode) {
+					relativeTime += LoadedPlaylist.GetCurrentStartTime ();
+					duration = LoadedPlaylist.Duration;
+				}
 
 				if (SegmentLoaded) {
-					Time relativeTime = currentTime - loadedSegment.Start;
-					Time duration = loadedSegment.Stop - loadedSegment.Start;
-					if (PresentationMode) {
-						relativeTime += LoadedPlaylist.GetCurrentStartTime ();
-						duration = LoadedPlaylist.Duration;
+					relativeTime -= loadedSegment.Start;
+					if (duration == null) {
+						duration = loadedSegment.Stop - loadedSegment.Start;
 					}
 
 					EmitTimeChanged (relativeTime, duration);
@@ -1137,7 +1150,10 @@ namespace LongoMatch.Services
 						}
 					}
 				} else {
-					EmitTimeChanged (currentTime, streamLength);
+					if (duration == null) {
+						duration = streamLength;
+					}
+					EmitTimeChanged (relativeTime, duration);
 				}
 				videoTS = currentTime;
 
