@@ -120,6 +120,9 @@ namespace LongoMatch.Gui
 		{
 			blackboard.Dispose ();
 			player.Dispose ();
+
+			Config.EventsBroker.PlaybackStateChangedEvent -= HandlePlaybackStateChangedEvent;
+
 			base.OnDestroyed ();
 		}
 
@@ -140,7 +143,6 @@ namespace LongoMatch.Gui
 				player.ElementLoadedEvent += HandleElementLoadedEvent;
 				player.LoadDrawingsEvent += HandleLoadDrawingsEvent;
 				player.PlaybackRateChangedEvent += HandlePlaybackRateChangedEvent;
-				player.PlaybackStateChangedEvent += HandlePlaybackStateChangedEvent;
 				player.TimeChangedEvent += HandleTimeChangedEvent;
 				player.VolumeChangedEvent += HandleVolumeChangedEvent;
 			}
@@ -256,6 +258,7 @@ namespace LongoMatch.Gui
 			ratescale.FormatValue += HandleRateFormatValue;
 			ratescale.ValueChanged += HandleRateValueChanged;
 			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
+			Config.EventsBroker.PlaybackStateChangedEvent += HandlePlaybackStateChangedEvent;
 		}
 
 		void LoadImage (Image image, FrameDrawing drawing)
@@ -328,6 +331,10 @@ namespace LongoMatch.Gui
 
 		void HandlePlaybackStateChangedEvent (object sender, bool playing)
 		{
+			if (player == null) {
+				return;
+			}
+
 			if (playing) {
 				playbutton.Hide ();
 				pausebutton.Show ();

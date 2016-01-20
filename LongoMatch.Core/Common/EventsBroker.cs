@@ -97,6 +97,7 @@ namespace LongoMatch.Core.Common
 		public event PlaybackRateChangedHandler PlaybackRateChanged;
 		public event SeekEventHandler SeekEvent;
 		public event TogglePlayEventHandler TogglePlayEvent;
+		public event StateChangeHandler PlaybackStateChangedEvent;
 
 		/* Query handlers */
 		public event QueryToolsHandler QueryTools;
@@ -410,6 +411,13 @@ namespace LongoMatch.Core.Common
 		{
 			if (PlaybackRateChanged != null) {
 				PlaybackRateChanged (val);
+			}
+		}
+
+		public void EmitPlaybackStateChanged (object sender, bool playing)
+		{
+			if (PlaybackStateChangedEvent != null) {
+				PlaybackStateChangedEvent (sender, playing);
 			}
 		}
 

@@ -50,10 +50,19 @@ namespace LongoMatch.Drawing.Widgets
 			AdjustSizeToDuration = false;
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
+			Config.EventsBroker.PlaybackStateChangedEvent += HandlePlaybackStateChanged;
 		}
 
 		public Timerule () : this (null)
 		{
+		}
+
+		protected override void Dispose (bool disposing)
+		{
+			if (disposing) {
+				Config.EventsBroker.PlaybackStateChangedEvent -= HandlePlaybackStateChanged;
+			}
+			base.Dispose (disposing);
 		}
 
 		public double Scroll {
@@ -131,8 +140,19 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
+		bool PlayingState {
+			get;
+			set;
+		}
+
+		bool WasPlaying {
+			get;
+			set;
+		}
+
 		protected override void StartMove (Selection sel)
 		{
+			WasPlaying = PlayingState;
 			Config.EventsBroker.EmitTogglePlayEvent (false);
 		}
 
@@ -144,7 +164,7 @@ namespace LongoMatch.Drawing.Widgets
 						true);
 				}
 			}
-			Config.EventsBroker.EmitTogglePlayEvent (true);
+			Config.EventsBroker.EmitTogglePlayEvent (WasPlaying);
 		}
 
 		protected override void SelectionMoved (Selection sel)
@@ -178,10 +198,13 @@ namespace LongoMatch.Drawing.Widgets
 			if (Selections.Any ()) {
 				if (CenterPlayheadClicked != null) {
 					CenterPlayheadClicked (this, new EventArgs ());
-				} else {
-					Log.Error ("There is no handler for Timerule CenterPlayhead events");
 				}
 			}
+		}
+
+		void HandlePlaybackStateChanged (object sender, bool playing)
+		{
+			PlayingState = playing;
 		}
 
 		public override void Draw (IContext context, Area area)

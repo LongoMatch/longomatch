@@ -32,7 +32,6 @@ namespace LongoMatch.Core.Interfaces
 	public interface IPlayerController: IPlayback
 	{
 		event TimeChangedHandler TimeChangedEvent;
-		event StateChangeHandler PlaybackStateChangedEvent;
 		event LoadDrawingsHandler LoadDrawingsEvent;
 		event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		event VolumeChangedHandler VolumeChangedEvent;

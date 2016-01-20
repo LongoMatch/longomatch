@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Component
 			sec_cam_audio_button.Toggled += HandleAudioToggled;
 
 			main_cam_playerbin.Player.TimeChangedEvent += HandleTick;
-			main_cam_playerbin.Player.PlaybackStateChangedEvent += HandleStateChanged;
+			Config.EventsBroker.PlaybackStateChangedEvent += HandleStateChanged;
 
 			// Listen for seek events from the timerule
 			timerule.SeekEvent += HandleTimeruleSeek;
@@ -141,6 +141,7 @@ namespace LongoMatch.Gui.Component
 				timeoutID = 0;
 			}
 
+			Config.EventsBroker.PlaybackStateChangedEvent -= HandleStateChanged;
 			Config.EventsBroker.SeekEvent -= Seek;
 			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
 			Config.EventsBroker.KeyPressed -= HandleKeyPressed;

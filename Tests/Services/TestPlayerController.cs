@@ -65,8 +65,6 @@ namespace Tests.Services
 			ftk.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
 			Config.GUIToolkit = ftk.Object;
 
-			Config.EventsBroker = new EventsBroker ();
-
 			mfs = new MediaFileSet ();
 			mfs.Add (new MediaFile {
 				FilePath = "test1",
@@ -88,6 +86,7 @@ namespace Tests.Services
 		[SetUp ()]
 		public void Setup ()
 		{
+			Config.EventsBroker = new EventsBroker ();
 			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
 				FileSet = mfs
@@ -242,8 +241,7 @@ namespace Tests.Services
 			bool playing = false;
 			FrameDrawing drawing = null;
 
-
-			player.PlaybackStateChangedEvent += (o, p) => {
+			Config.EventsBroker.PlaybackStateChangedEvent += (o, p) => {
 				playing = p;
 			};
 			player.LoadDrawingsEvent += (f) => {
