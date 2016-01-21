@@ -143,20 +143,25 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Operators
-		public static bool operator < (Time t1,Time t2) {
-			return t1.MSeconds < t2.MSeconds;
+
+		public static bool operator < (Time t1, Time t2)
+		{
+			return t1?.MSeconds < t2?.MSeconds;
 		}
 
-		public static bool operator > (Time t1,Time t2) {
-			return t1.MSeconds > t2.MSeconds;
+		public static bool operator > (Time t1, Time t2)
+		{
+			return t1?.MSeconds > t2?.MSeconds;
 		}
 
-		public static bool operator <= (Time t1,Time t2) {
-			return t1.MSeconds <= t2.MSeconds;
+		public static bool operator <= (Time t1, Time t2)
+		{
+			return t1?.MSeconds <= t2?.MSeconds;
 		}
 
-		public static bool operator >= (Time t1,Time t2) {
-			return t1.MSeconds >= t2.MSeconds;
+		public static bool operator >= (Time t1, Time t2)
+		{
+			return t1?.MSeconds >= t2?.MSeconds;
 		}
 
 		public static Time operator +(Time t1,int t2) {
