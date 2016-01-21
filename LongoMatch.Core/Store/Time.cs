@@ -24,7 +24,6 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
 	/// Represents a time instant. Other objects uses it to keep consistency in the time units consitency.
 	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
@@ -51,6 +50,7 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
