@@ -264,6 +264,7 @@ namespace LongoMatch.Drawing
 			Accuracy = 1;
 			ClickRepeatMS = 100;
 			ObjectsCanMove = true;
+			IgnoreClicks = false;
 			SingleSelectionObjects = new List<Type> ();
 			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
@@ -327,6 +328,14 @@ namespace LongoMatch.Drawing
 		/// If <c>true</c> objects can moved in the canvas
 		/// </summary>
 		public bool ObjectsCanMove {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this canvas is clickable. When set to <c>flase</c> clicks are ignored
+		/// </summary>
+		public bool IgnoreClicks {
 			get;
 			set;
 		}
@@ -600,6 +609,10 @@ namespace LongoMatch.Drawing
 
 		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
 		{
+			if (IgnoreClicks) {
+				return;
+			}
+
 			Moving = false;
 			if (clickedSel != null) {
 				(clickedSel.Drawable as ICanvasSelectableObject).ClickReleased ();
@@ -611,6 +624,10 @@ namespace LongoMatch.Drawing
 
 		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier, ButtonRepetition repetition)
 		{
+			if (IgnoreClicks) {
+				return;
+			}
+
 			coords = ToUserCoords (coords); 
 			if (repetition == ButtonRepetition.Single) {
 				if (type == ButtonType.Left) {
