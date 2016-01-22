@@ -95,20 +95,24 @@ namespace LongoMatch.Drawing.Cairo
 
 		public Image Copy ()
 		{
-			Gdk.Pixmap pixmap = new Gdk.Pixmap (null, Width, Height, 24);
-			using (Context cr = Gdk.CairoHelper.Create (pixmap)) {
-				cr.Operator = Operator.Source;
-				cr.SetSource (surface);
-				cr.Paint ();
-			}
-
 			Gdk.Colormap colormap = Gdk.Colormap.System;
-			/* In unit tests, Gtk is not initialized and the default Screen is null,
-			 * we use RGB colormap in this scenario, even though it's a deprecated function. */
+
+			/* In unit tests running without a display, the default Screen is null and we can't get a valid colormap.
+			 * In this scenario we use a fallback that writes the surface to a temporary file */
 			if (colormap == null) {
-				colormap = Gdk.Rgb.Colormap;
+				string tempFile = System.IO.Path.GetTempFileName ();
+				surface.WriteToPng (tempFile);
+				Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (tempFile);
+				return new Image (pixbuf);
+			} else {
+				Gdk.Pixmap pixmap = new Gdk.Pixmap (null, Width, Height, 24);
+				using (Context cr = Gdk.CairoHelper.Create (pixmap)) {
+					cr.Operator = Operator.Source;
+					cr.SetSource (surface);
+					cr.Paint ();
+				}
+				return new Image (Gdk.Pixbuf.FromDrawable (pixmap, Gdk.Colormap.System, 0, 0, 0, 0, Width, Height));
 			}
-			return new Image (Gdk.Pixbuf.FromDrawable (pixmap, colormap, 0, 0, 0, 0, Width, Height));
 		}
 	}
 }
