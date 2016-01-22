@@ -18,7 +18,7 @@
 using System;
 using System.Linq;
 using Gtk;
-using Mono.Unix;
+using LongoMatch.Core;
 
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Gui.Helpers;

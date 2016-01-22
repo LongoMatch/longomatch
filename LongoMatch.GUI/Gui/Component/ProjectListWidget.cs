@@ -26,7 +26,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using Misc = LongoMatch.Gui.Helpers.Misc;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {

@@ -24,7 +24,7 @@ using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core;
 using Color = LongoMatch.Core.Common.Color;
 using Drawable = LongoMatch.Core.Store.Drawables.Drawable;
 using Image = LongoMatch.Core.Common.Image;

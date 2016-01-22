@@ -24,7 +24,6 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
 	/// Represents a time instant. Other objects uses it to keep consistency in the time units consitency.
 	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
@@ -51,6 +50,7 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public bool IsChanged {
@@ -202,22 +202,22 @@ namespace LongoMatch.Core.Store
 
 		public static bool operator < (Time t1, Time t2)
 		{
-			return t1.MSeconds < t2.MSeconds;
+			return t1?.MSeconds < t2?.MSeconds;
 		}
 
 		public static bool operator > (Time t1, Time t2)
 		{
-			return t1.MSeconds > t2.MSeconds;
+			return t1?.MSeconds > t2?.MSeconds;
 		}
 
 		public static bool operator <= (Time t1, Time t2)
 		{
-			return t1.MSeconds <= t2.MSeconds;
+			return t1?.MSeconds <= t2?.MSeconds;
 		}
 
 		public static bool operator >= (Time t1, Time t2)
 		{
-			return t1.MSeconds >= t2.MSeconds;
+			return t1?.MSeconds >= t2?.MSeconds;
 		}
 
 		public static Time operator + (Time t1, int t2)

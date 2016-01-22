@@ -20,7 +20,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using Mono.Unix;
+using LongoMatch.Core;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component

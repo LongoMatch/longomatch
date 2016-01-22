@@ -27,7 +27,7 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 using Image = LongoMatch.Core.Common.Image;
 

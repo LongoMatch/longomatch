@@ -20,7 +20,7 @@ using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Menus
 {

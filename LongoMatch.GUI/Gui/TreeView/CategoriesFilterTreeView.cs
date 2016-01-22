@@ -20,7 +20,7 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {

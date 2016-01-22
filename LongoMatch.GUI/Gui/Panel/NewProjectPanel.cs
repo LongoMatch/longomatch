@@ -29,7 +29,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Core;
 using Color = LongoMatch.Core.Common.Color;
 using Device = LongoMatch.Core.Common.Device;
 using Misc = LongoMatch.Gui.Helpers.Misc;

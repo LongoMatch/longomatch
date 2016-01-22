@@ -31,7 +31,7 @@ using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 using Image = LongoMatch.Core.Common.Image;
 

@@ -21,7 +21,7 @@ using Gtk;
 using Gdk;
 using LongoMatch.Core.Store;
 using Keyboard = LongoMatch.Core.Common.Keyboard;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Dialog
 {

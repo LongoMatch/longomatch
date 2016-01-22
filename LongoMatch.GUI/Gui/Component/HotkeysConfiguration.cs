@@ -19,7 +19,7 @@ using System;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using Mono.Unix;
+using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {

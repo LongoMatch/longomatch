@@ -30,7 +30,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
-using Mono.Unix;
+using LongoMatch.Core;
 using Helpers = LongoMatch.Gui.Helpers;
 using Image = LongoMatch.Core.Common.Image;
 

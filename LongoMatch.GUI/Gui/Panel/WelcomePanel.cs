@@ -17,7 +17,7 @@
 //
 using System;
 
-using Mono.Unix;
+using LongoMatch.Core;
 using Gtk;
 
 using LongoMatch.Core.Common;
