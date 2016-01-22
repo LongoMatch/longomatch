@@ -331,7 +331,7 @@ namespace LongoMatch.Services
 		{
 			if (project != null) {
 				try {
-					Config.DatabaseManager.ActiveDB.Store<Project> (project);
+					Config.DatabaseManager.ActiveDB.Store<Project> (project, true);
 					SetProject (project, projectType, captureSettings);
 				} catch (Exception ex) {
 					Log.Exception (ex);
