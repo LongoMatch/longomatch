@@ -41,6 +41,7 @@ namespace Tests.Services
 		PlayerController player;
 		Time currentTime, streamLength;
 		TimelineEvent evt;
+		TimelineEvent evt2;
 		PlaylistImage plImage;
 		Playlist playlist;
 		PlaylistManager plMan;
@@ -88,6 +89,10 @@ namespace Tests.Services
 		{
 			Config.EventsBroker = new EventsBroker ();
 			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
+				FileSet = mfs
+			};
+			evt2 = new TimelineEvent { Start = new Time (1000), Stop = new Time (10000),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
 				FileSet = mfs
 			};
@@ -472,6 +477,43 @@ namespace Tests.Services
 			Assert.AreEqual (0, loadDrawingsChanged);
 			Assert.AreEqual (0, timeChanged);
 			playerMock.Verify (p => p.Seek (currentTime - player.Step, true, false), Times.Never ());
+
+			/* Now with an event loaded */
+			currentTime = new Time (6000);
+			player.UnloadCurrentEvent ();
+			player.LoadEvent (evt2, new Time (0), true);
+			timeChanged = 0;
+			playerMock.ResetCalls ();
+			player.SeekToNextFrame ();
+			playerMock.Verify (p => p.SeekToNextFrame (), Times.Once ());
+			Assert.AreEqual (1, timeChanged);
+			Assert.AreEqual (currentTime - evt2.Start, curTime);
+			Assert.AreEqual (evt2.Duration, strLenght);
+
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.SeekToPreviousFrame ();
+			playerMock.Verify (p => p.SeekToPreviousFrame (), Times.Once ());
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
+			Assert.AreEqual (currentTime - evt2.Start, curTime);
+			Assert.AreEqual (evt2.Duration, strLenght);
+
+			playerMock.ResetCalls ();
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.StepForward ();
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime + player.Step, true, false), Times.Once ());
+
+			playerMock.ResetCalls ();
+			loadDrawingsChanged = 0;
+			timeChanged = 0;
+			player.StepBackward ();
+			Assert.AreEqual (1, loadDrawingsChanged);
+			Assert.AreEqual (1, timeChanged);
+			playerMock.Verify (p => p.Seek (currentTime - player.Step, true, false), Times.Once ());
 		}
 
 		[Test ()]
