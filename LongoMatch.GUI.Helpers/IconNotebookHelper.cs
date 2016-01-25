@@ -32,6 +32,7 @@ namespace LongoMatch.Gui.Helpers
 		{
 			Notebook = notebook;
 			TabIcons = new Dictionary<Widget, Tuple<Pixbuf, Pixbuf>> (notebook.NPages);
+			TabToolTips = new Dictionary<Widget, string> (notebook.NPages);
 			CurrentPage = notebook.CurrentPage;
 
 			notebook.ShowBorder = false;
@@ -48,26 +49,32 @@ namespace LongoMatch.Gui.Helpers
 			set;
 		}
 
+		Dictionary<Widget, string> TabToolTips {
+			get;
+			set;
+		}
+
 		int CurrentPage {
 			get;
 			set;
 		}
 
-		public void SetTabIcon (Widget widget, string icon, string activeIcon)
+		public void SetTabIcon (Widget widget, string icon, string activeIcon, string tooltiptext)
 		{
 			var pixIcon = Misc.LoadIcon (icon, StyleConf.NotebookTabIconSize, IconLookupFlags.ForceSvg);
 			var pixActiveIcon = Misc.LoadIcon (activeIcon, StyleConf.NotebookTabIconSize, IconLookupFlags.ForceSvg);
-			SetTabIcon (widget, pixIcon, pixActiveIcon);
+			SetTabIcon (widget, pixIcon, pixActiveIcon, tooltiptext);
 		}
 
-		public void SetTabIcon (Widget widget, Pixbuf pixIcon, Pixbuf pixActiveIcon)
+		public void SetTabIcon (Widget widget, Pixbuf pixIcon, Pixbuf pixActiveIcon, string tooltiptext)
 		{
 			TabIcons.Add (widget, new Tuple<Pixbuf, Pixbuf> (pixIcon, pixActiveIcon));
+			TabToolTips.Add (widget, tooltiptext);
 		}
 
-		public void SetTabIcon (int tabIndex, string icon, string activeIcon)
+		public void SetTabIcon (int tabIndex, string icon, string activeIcon, string tooltiptext)
 		{
-			SetTabIcon (Notebook.GetNthPage (tabIndex), icon, activeIcon);
+			SetTabIcon (Notebook.GetNthPage (tabIndex), icon, activeIcon, tooltiptext);
 		}
 
 		public void UpdateTabs ()
@@ -103,6 +110,7 @@ namespace LongoMatch.Gui.Helpers
 			try {
 				var tuple = TabIcons [widget];
 				img.Pixbuf = active ? tuple.Item2 : tuple.Item1;
+				img.TooltipText = TabToolTips [widget];
 			} catch (KeyNotFoundException ex) {
 				Log.Warning ("No icon set for tab number <" + Notebook.PageNum (widget) + "> with child <" + widget + ">");
 			}
