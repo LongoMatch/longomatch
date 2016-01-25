@@ -125,17 +125,6 @@ namespace LongoMatch.Drawing
 			return new Point ((p.X - offset.X) / scaleX,
 				(p.Y - offset.Y) / scaleY);
 		}
-
-		/// <summary>
-		/// Initializes object with surfaces. This can be called in the application startup to cache surfaces
-		/// instead of  s up.
-		/// </summary>
-		public static void WarmUp ()
-		{
-			PlayerObject.LoadSurfaces ();
-			NeedleObject.LoadSurfaces ();
-			new PlayslistCellRenderer ();
-		}
 	}
 }
 
