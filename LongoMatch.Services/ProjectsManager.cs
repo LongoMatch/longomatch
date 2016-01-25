@@ -290,6 +290,16 @@ namespace LongoMatch.Services
 			EmitProjectChanged ();
 		}
 
+		void UpdateProject (Project project)
+		{
+			try {
+				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+			}
+		}
+
 		protected virtual void SaveProject (Project project, ProjectType projectType)
 		{
 			if (project == null)
@@ -297,20 +307,10 @@ namespace LongoMatch.Services
 			
 			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
 			if (projectType == ProjectType.FileProject) {
-				try {
-					Config.DatabaseManager.ActiveDB.Store<Project> (project);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
-				}
+				UpdateProject (project);
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
-				try {
-					Config.DatabaseManager.ActiveDB.Store<Project> (project);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
-				}
+				UpdateProject (project);
 			} else if (projectType == ProjectType.CaptureProject ||
 			           projectType == ProjectType.URICaptureProject) {
 				SaveCaptureProject (project);
