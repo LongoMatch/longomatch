@@ -82,9 +82,12 @@ namespace LongoMatch.Gui.Component
 		void LoadIcons ()
 		{
 			notebookHelper = new IconNotebookHelper (notebook);
-			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard");
-			notebookHelper.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter");
-			notebookHelper.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist");
+			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
+				Catalog.GetString ("Events List"));
+			notebookHelper.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter",
+				Catalog.GetString ("Filters"));
+			notebookHelper.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist",
+				Catalog.GetString ("Playlists"));
 
 			notebookHelper.UpdateTabs ();
 		}

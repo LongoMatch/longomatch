@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
+			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page1");
 			this.notebook.SetTabLabel (this.dashboardhpaned, this.label2);
 			this.label2.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page2");
 			this.notebook.SetTabLabel (this.timeline, this.label3);
 			this.label3.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
+			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page3");
 			this.notebook.SetTabLabel (this.playspositionviewer1, this.label5);
 			this.label5.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label13 = new global::Gtk.Label ();
 			this.label13.Name = "label13";
-			this.label13.LabelProp = global::Mono.Unix.Catalog.GetString ("page4");
+			this.label13.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page4");
 			this.notebook.SetTabLabel (this.eventslistwidget, this.label13);
 			this.label13.ShowAll ();
 			this.Add (this.notebook);

@@ -59,6 +59,13 @@ namespace LongoMatch.Gui.Helpers
 			set;
 		}
 
+		/// <summary>
+		/// Sets the tab icon.
+		/// </summary>
+		/// <param name="widget">Widget which is being modifyed</param>
+		/// <param name="icon">Icon showed when the tab is not selected</param>
+		/// <param name="activeIcon">Icon showed when the tab is selected</param>
+		/// <param name="tooltiptext">Text to add to the tab of the widget as tooltip</param>
 		public void SetTabIcon (Widget widget, string icon, string activeIcon, string tooltiptext)
 		{
 			var pixIcon = Misc.LoadIcon (icon, StyleConf.NotebookTabIconSize, IconLookupFlags.ForceSvg);
@@ -66,12 +73,26 @@ namespace LongoMatch.Gui.Helpers
 			SetTabIcon (widget, pixIcon, pixActiveIcon, tooltiptext);
 		}
 
+		/// <summary>
+		/// Sets the tab icon.
+		/// </summary>
+		/// <param name="widget">Widget which is being modifyed</param>
+		/// <param name="pixIcon">Icon showed when the tab is not selected</param>
+		/// <param name="pixActiveIcon">Icon showed when the tab is selected</param>
+		/// <param name="tooltiptext">Text to add to the tab of the widget as tooltip</param>
 		public void SetTabIcon (Widget widget, Pixbuf pixIcon, Pixbuf pixActiveIcon, string tooltiptext)
 		{
 			TabIcons.Add (widget, new Tuple<Pixbuf, Pixbuf> (pixIcon, pixActiveIcon));
 			TabToolTips.Add (widget, tooltiptext);
 		}
 
+		/// <summary>
+		/// Sets the tab icon.
+		/// </summary>
+		/// <param name="tabIndex">Index of the tab which is being modifyed</param>
+		/// <param name="icon">Icon showed when the tab is not selected</param>
+		/// <param name="activeIcon">Icon showed when the tab is selected</param>
+		/// <param name="tooltiptext">Text to add to the tab of the widget as tooltip</param>
 		public void SetTabIcon (int tabIndex, string icon, string activeIcon, string tooltiptext)
 		{
 			SetTabIcon (Notebook.GetNthPage (tabIndex), icon, activeIcon, tooltiptext);

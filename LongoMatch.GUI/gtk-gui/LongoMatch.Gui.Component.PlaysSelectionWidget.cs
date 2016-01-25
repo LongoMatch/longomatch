@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("  Events   ");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("  Events   ");
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.label1.Angle = 90;
 			this.notebook.SetTabLabel (this.eventslistwidget, this.label1);
@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Playlists");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Playlists");
 			this.label3.Angle = 90;
 			this.notebook.SetTabLabel (this.playlistwidget, this.label3);
 			this.label3.ShowAll ();
@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("  Filters  ");
+			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("  Filters  ");
 			this.label2.Angle = 90;
 			this.notebook.SetTabLabel (this.filtersvbox, this.label2);
 			this.label2.ShowAll ();
