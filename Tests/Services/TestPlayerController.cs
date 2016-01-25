@@ -46,6 +46,8 @@ namespace Tests.Services
 		Playlist playlist;
 		PlaylistManager plMan;
 
+		int elementLoaded;
+
 		[TestFixtureSetUp ()]
 		public void FixtureSetup ()
 		{
@@ -111,6 +113,7 @@ namespace Tests.Services
 			plMan.Start ();
 
 			streamLength = new Time { TotalSeconds = 5000 };
+			elementLoaded = 0;
 		}
 
 		[TearDown ()]
@@ -1278,6 +1281,45 @@ namespace Tests.Services
 			Assert.IsFalse (player.Seek (new Time (4000), true, false, false));
 			Assert.AreEqual (0, playlistElementSelected);
 			playerMock.Verify (p => p.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
+		}
+
+		[Test ()]
+		public void TestLoadVideoPlaying ()
+		{
+			player.ElementLoadedEvent += HandleElementLoadedEvent;
+
+			PreparePlayer ();
+			playerMock.ResetCalls ();
+			Playlist localPlaylist = new Playlist ();
+			IPlaylistElement element0 = new PlaylistVideo (mfs [0]);
+			localPlaylist.Elements.Add (element0);
+			player.LoadPlaylistEvent (localPlaylist, element0, true);
+
+			Assert.AreEqual (1, elementLoaded);
+			Assert.IsTrue (player.Playing);
+			player.ElementLoadedEvent -= HandleElementLoadedEvent;
+		}
+
+		[Test ()]
+		public void TestLoadVideoNotPlaying ()
+		{
+			player.ElementLoadedEvent += HandleElementLoadedEvent;
+
+			PreparePlayer ();
+			playerMock.ResetCalls ();
+			Playlist localPlaylist = new Playlist ();
+			IPlaylistElement element0 = new PlaylistVideo (mfs [0]);
+			localPlaylist.Elements.Add (element0);
+			player.LoadPlaylistEvent (localPlaylist, element0, false);
+
+			Assert.AreEqual (1, elementLoaded);
+			Assert.IsFalse (player.Playing);
+			player.ElementLoadedEvent -= HandleElementLoadedEvent;
+		}
+
+		void HandleElementLoadedEvent (object element, bool hasNext)
+		{
+			elementLoaded++;
 		}
 	}
 }

@@ -583,11 +583,11 @@ namespace LongoMatch.Services
 					ple.Play.Start, ple.Rate, ple.CamerasConfig,
 					ple.CamerasLayout, playing);
 			} else if (element is PlaylistVideo) {
-				LoadVideo (element as PlaylistVideo);
+				LoadVideo (element as PlaylistVideo, playing);
 			} else if (element is PlaylistImage) {
-				LoadStillImage (element as PlaylistImage);
+				LoadStillImage (element as PlaylistImage, playing);
 			} else if (element is PlaylistDrawing) {
-				LoadFrameDrawing (element as PlaylistDrawing);
+				LoadFrameDrawing (element as PlaylistDrawing, playing);
 			}
 			EmitElementLoaded (element, playlist.HasNext ());
 		}
@@ -909,7 +909,7 @@ namespace LongoMatch.Services
 				AbsoluteSeek (new Time (0), true);
 			}
 			if (play) {
-				player.Play ();
+				Play ();
 			}
 		}
 
@@ -1005,27 +1005,32 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void LoadStillImage (PlaylistImage image)
+		void LoadStillImage (PlaylistImage image, bool playing)
 		{
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
-			Play ();
+			if (playing) {
+				Play ();
+			}
 		}
 
-		void LoadFrameDrawing (PlaylistDrawing drawing)
+		void LoadFrameDrawing (PlaylistDrawing drawing, bool playing)
 		{
 			loadedPlaylistElement = drawing;
 			StillImageLoaded = true;
+			if (playing) {
+				Play ();
+			}
 		}
 
-		void LoadVideo (PlaylistVideo video)
+		void LoadVideo (PlaylistVideo video, bool playing)
 		{
 			loadedPlaylistElement = video;
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
 			UpdateCamerasConfig (new ObservableCollection<CameraConfig> { new CameraConfig (0) }, null);
-			InternalOpen (fileSet, false, true, true);
+			InternalOpen (fileSet, false, true, playing);
 		}
 
 		void LoadPlayDrawing (FrameDrawing drawing)
