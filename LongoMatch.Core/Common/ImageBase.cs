@@ -92,7 +92,7 @@ namespace LongoMatch.Core.Common
 			ComputeScale (imgWidth, imgHeight, destWidth, destHeight, mode, out oWidth, out oHeight);
 			scaleX = (double)oWidth / imgWidth;
 			scaleY = (double)oHeight / imgHeight;
-			offset = new Point ((destWidth - oWidth) / 2, (destHeight - oHeight) / 2);
+			offset = new Point ((double)(destWidth - oWidth) / 2, (double)(destHeight - oHeight) / 2);
 		}
 
 		public static void ComputeScale (int inWidth, int inHeight, int reqOutWidth, int reqOutHeight,
