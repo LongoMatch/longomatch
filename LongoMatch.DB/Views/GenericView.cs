@@ -287,7 +287,7 @@ namespace LongoMatch.DB.Views
 						}
 						noErrors = true;
 					} catch (Exception ex) {
-						Log.Error ("Error deserializing document with ID: " + row.DocumentId);
+						Log.Error ("Error deserializing document of type " + typeof(T) + " with ID: " + row.DocumentId);
 						Log.Exception (ex);
 					}
 					if (noErrors) {
