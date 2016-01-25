@@ -17,13 +17,13 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Core.Store;
+using System.Runtime.Remoting;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using System.Runtime.Remoting;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Drawing.CanvasObjects.Dashboard;
+using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing
