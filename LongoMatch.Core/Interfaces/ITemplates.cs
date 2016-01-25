@@ -17,6 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Store;
 
@@ -44,7 +46,7 @@ namespace LongoMatch.Core.Interfaces
 		void Create (string templateName, params object[] list);
 	}
 
-	public interface ITemplateProvider<T>: ITemplateProvider where T: ITemplate
+	public interface ITemplateProvider<T>: INotifyCollectionChanged, ITemplateProvider where T: ITemplate
 	{
 		/// <summary>
 		/// Gets a list of all the templates in this provider.
