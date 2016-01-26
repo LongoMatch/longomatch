@@ -117,15 +117,5 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			widget?.ReDraw ();
 		}
-
-		public override void Draw (IContext context, Area area)
-		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
-			tk.End ();
-
-			base.Draw (context, area);
-		}
 	}
 }

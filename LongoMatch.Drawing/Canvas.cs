@@ -42,6 +42,7 @@ namespace LongoMatch.Drawing
 			ScaleX = 1;
 			ScaleY = 1;
 			Translation = new Point (0, 0);
+			BackgroundColor = Config.Style.PaletteBackground;
 			SetWidget (widget);
 		}
 
@@ -222,6 +223,23 @@ namespace LongoMatch.Drawing
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the background.
+		/// </summary>
+		public Color BackgroundColor {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this canvas has a translation or zoom applied.
+		/// </summary>
+		protected bool HasTranslationOrZoom {
+			get {
+				return Translation != new Point (0, 0) || ScaleX != 1 || ScaleY != 1;
+			}
+		}
+
 		void HandleRedrawEvent (ICanvasObject co, Area area)
 		{
 			if (!IgnoreRedraws) {
@@ -262,19 +280,14 @@ namespace LongoMatch.Drawing
 			tk.Context = null;
 		}
 
-		/// <summary>
-		/// Draws the canvas objects the specified context and area.
-		/// Object are drawn in the following order:
-		///  1) Regular objects
-		///  2) Selected objects
-		///  3) Highlithed objects
-		/// </summary>
-		/// <param name="context">The context where the canvas is drawn.</param>
-		/// <param name="area">The affected area.</param>
-		public virtual void Draw (IContext context, Area area)
+		protected void DrawBackground ()
+		{
+			tk.Clear (BackgroundColor);
+		}
+
+		protected void DrawObjects (Area area)
 		{
 			List<CanvasObject> highlighted = new List<CanvasObject> ();
-			Begin (context);
 			foreach (ICanvasObject co in Objects) {
 				if (co.Visible) {
 					if (co is ICanvasSelectableObject) {
@@ -297,6 +310,29 @@ namespace LongoMatch.Drawing
 			foreach (CanvasObject co in highlighted) {
 				co.Draw (tk, area);
 			}
+		}
+
+		/// <summary>
+		/// Draws the canvas objects the specified context and area.
+		/// Object are drawn in the following order:
+		///  1) Regular objects
+		///  2) Selected objects
+		///  3) Highlithed objects
+		/// </summary>
+		/// <param name="context">The context where the canvas is drawn.</param>
+		/// <param name="area">The affected area.</param>
+		public virtual void Draw (IContext context, Area area)
+		{
+			// If there is translation or zoom, the background needs be painted before applying it
+			if (HasTranslationOrZoom) {
+				tk.Context = context;
+				DrawBackground ();
+			}
+			Begin (context);
+			if (!HasTranslationOrZoom) {
+				DrawBackground ();
+			}
+			DrawObjects (area);
 			End ();
 		}
 	}

@@ -90,12 +90,16 @@ namespace LongoMatch.Drawing
 
 		public override void Draw (IContext context, Area area)
 		{
+			// Draw the background before any translation or scalling is applied to the canvas.
+			tk.Context = context;
+			DrawBackground ();
+
+			Begin (context);
 			if (Background != null) {
-				Begin (context);
 				tk.DrawImage (Background);
-				End ();
 			}
-			base.Draw (context, area);
+			DrawObjects (area);
+			End ();
 		}
 	}
 }

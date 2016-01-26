@@ -49,6 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 			AdjustSizeToDuration = false;
 			ContinuousSeek = true;
+			BackgroundColor = Config.Style.PaletteBackgroundDark;
 		}
 
 		public Timerule () : this (null)
@@ -199,10 +200,9 @@ namespace LongoMatch.Drawing.Widgets
 				SecondsPerPixel = Duration.TotalSeconds / width;
 			}
 
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackgroundDark);
-			
+			Begin (context);
+			DrawBackground ();
+
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
@@ -245,9 +245,7 @@ namespace LongoMatch.Drawing.Widgets
 				needle.X = tpos;
 			}
 			needle.Draw (tk, area);
-			tk.End ();
-			tk.Context = null;
+			End ();
 		}
 	}
 }
-

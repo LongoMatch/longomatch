@@ -58,11 +58,6 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		public Color BackgroundColor {
-			set;
-			get;
-		}
-
 		public Project Project {
 			get;
 			set;
@@ -187,15 +182,5 @@ namespace LongoMatch.Drawing.Widgets
 				ShowMenuEvent (plays);
 			}
 		}
-
-		public override void Draw (IContext context, Area area)
-		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (BackgroundColor);
-			tk.End ();
-			base.Draw (context, area);
-		}
 	}
 }
-

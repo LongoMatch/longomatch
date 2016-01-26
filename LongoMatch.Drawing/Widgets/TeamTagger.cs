@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing.Widgets
 		/// <summary>
 		/// Gets or sets the color of the background.
 		/// </summary>
-		public Color BackgroundColor {
+		public new Color BackgroundColor {
 			set {
 				tagger.BackgroundColor = value;
 			}

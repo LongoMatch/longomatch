@@ -152,14 +152,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the color of the background.
-		/// </summary>
-		public Color BackgroundColor {
-			get;
-			set;
-		}
-
 		public void Click (DashboardButton b, Tag tag = null)
 		{
 			DashboardButtonObject co = Objects.OfType<DashboardButtonObject> ().FirstOrDefault (o => o.Button == b);
@@ -362,9 +354,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (BackgroundColor);
+			Begin (context);
+			DrawBackground ();
 			if (Mode != DashboardMode.Code) {
 				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
@@ -380,9 +371,8 @@ namespace LongoMatch.Drawing.Widgets
 					tk.DrawLine (new Point (i, 0), new Point (i, templateHeight));
 				}
 			}
-			tk.End ();
-			
-			base.Draw (context, area);
+			DrawObjects (area);
+			End ();
 		}
 
 		public void AddButton (DashboardButtonObject button)
