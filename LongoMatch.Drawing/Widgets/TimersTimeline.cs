@@ -94,12 +94,12 @@ namespace LongoMatch.Drawing.Widgets
 			if (duration == null)
 				return;
 
-			width = duration.TotalSeconds / SecondsPerPixel;
+			width = duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
 			foreach (TimelineObject tl in timers.Values) {
-				tl.Width = width + 10;
+				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
-			WidthRequest = (int)width + 10;
+			WidthRequest = (int)width;
 		}
 
 		void FillCanvas (List<Timer> timers)

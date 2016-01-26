@@ -124,12 +124,12 @@ namespace LongoMatch.Drawing.Widgets
 			if (duration == null)
 				return;
 
-			double width = duration.TotalSeconds / SecondsPerPixel;
+			double width = duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
 			foreach (TimelineObject tl in timelines) {
-				tl.Width = width + 10;
+				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
-			WidthRequest = (int)width + 10;
+			WidthRequest = (int)width;
 		}
 
 		void AddTimeLine (TimelineObject tl)
