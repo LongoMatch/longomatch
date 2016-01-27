@@ -152,6 +152,8 @@ namespace LongoMatch.Core.Common
 		public const string LinkOut = "icons/hicolor/scalable/actions/longomatch-link-out" + IMAGE_EXT;
 		public const string LinkOutPrelight = "icons/hicolor/scalable/actions/longomatch-link-out-prelight" + IMAGE_EXT;
 
+		public const string ButtonAlert = "icons/hicolor/scalable/actions/longomatch-alert" + IMAGE_EXT;
+
 		public const int FilterTreeViewToogleWidth = 30;
 
 		public string Font = "Ubuntu";

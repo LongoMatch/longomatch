@@ -2,6 +2,7 @@ iconsdir = @datadir@/@PACKAGE@/icons
 nobase_dist_icons_DATA = Makefile.am \
 	hicolor/index.theme \
 	hicolor/scalable/actions/longomat-project.svg \
+	hicolor/scalable/actions/longomatch-alert.svg \
 	hicolor/scalable/actions/longomatch-angle.svg \
 	hicolor/scalable/actions/longomatch-apply-button.svg \
 	hicolor/scalable/actions/longomatch-apply.svg \
