@@ -67,6 +67,7 @@ LongoMatch.GUI/Gui/Component/AnalysisTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/CategoryProperties.cs
 LongoMatch.GUI/Gui/Component/CodingWidget.cs
 LongoMatch.GUI/Gui/Component/DashboardWidget.cs
+LongoMatch.GUI/Gui/Component/EventsListWidget.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
 LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
@@ -153,3 +154,4 @@ LongoMatch.Services/RenderingJobsManager.cs
 LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
 LongoMatch.Services/UpdatesNotifier.cs
+
