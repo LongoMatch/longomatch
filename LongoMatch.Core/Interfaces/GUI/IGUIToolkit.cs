@@ -116,7 +116,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		EndCaptureResponse EndCapture (bool isCapturing);
 
-		bool SelectMediaFiles (Project project);
+		bool SelectMediaFiles (MediaFileSet fileSet);
 
 		HotKey SelectHotkey (HotKey hotkey, object parent = null);
 

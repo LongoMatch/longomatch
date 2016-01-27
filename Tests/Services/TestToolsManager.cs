@@ -131,7 +131,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => p;
 			Config.EventsBroker.EmitImportProject ();
 			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
-			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<Project> ()), Times.Never ());
+			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ()), Times.Never ());
 			Assert.IsTrue (openned);
 		}
 
