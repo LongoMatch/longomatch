@@ -78,6 +78,7 @@ namespace LongoMatch
 
 				// Wait until the addins are initialized to start the services
 				await addinsTask;
+				CoreServices.RegisterService (new UpdatesNotifier ());
 				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
@@ -133,7 +134,7 @@ namespace LongoMatch
 
 		static void ConfigureOSXApp ()
 		{
-			if (Utils.RunningPlatform () == PlatformID.MacOSX) {
+			if (Utils.OS == OperatingSystemID.OSX) {
 				MenuItem quit;
 				GtkOSXApplication app;
 
@@ -171,7 +172,7 @@ namespace LongoMatch
 			 * message and thus an abort of the program, we better activate the
 			 * thread sae X11
 			 */
-			if (Utils.RunningPlatform () == PlatformID.Unix)
+			if (Utils.OS == OperatingSystemID.Linux)
 				XInitThreads ();
 
 			Application.Init ();

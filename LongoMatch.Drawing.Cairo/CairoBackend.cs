@@ -396,18 +396,12 @@ namespace LongoMatch.Drawing.Cairo
 			CContext.Paint ();
 		}
 
-		public void DrawImage (Point start, double width, double height, Image image, bool scale, bool masked = false)
+		public void DrawImage (Point start, double width, double height, Image image, ScaleMode mode, bool masked = false)
 		{
 			double scaleX, scaleY;
 			Point offset;
 			
-			if (scale) {
-				image.ScaleFactor ((int)width, (int)height, out scaleX, out scaleY, out offset);
-			} else {
-				offset = new Point (0, 0);
-				scaleX = width / image.Width;
-				scaleY = height / image.Height;
-			}
+			image.ScaleFactor ((int)width, (int)height, mode, out scaleX, out scaleY, out offset);
 			CContext.Save ();
 			CContext.Translate (start.X + offset.X, start.Y + offset.Y);
 			CContext.Scale (scaleX, scaleY);
@@ -423,6 +417,17 @@ namespace LongoMatch.Drawing.Cairo
 				Gdk.CairoHelper.SetSourcePixbuf (CContext, image.Value, 0, 0);
 				CContext.Paint ();
 			}
+			CContext.Restore ();
+		}
+
+		public void DrawCircleImage (Point center, double radius, Image image)
+		{
+			DrawCircle (center, radius);
+			CContext.Save ();
+			CContext.Arc (center.X, center.Y, radius, 0, 2 * Math.PI);
+			CContext.Clip ();
+			DrawImage (new Point (center.X - radius, center.Y - radius), radius * 2, radius * 2, image,
+				ScaleMode.AspectFill, false);
 			CContext.Restore ();
 		}
 

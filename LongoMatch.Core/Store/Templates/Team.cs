@@ -90,6 +90,10 @@ namespace LongoMatch.Core.Store.Templates
 
 		[LongoMatchPropertyIndex (0)]
 		[LongoMatchPropertyPreload]
+		/// <summary>
+		/// The full name used for a team (eg: FC Barcelona junior 2014).
+		/// </summary>
+		/// <value>The name of team.</value>
 		public String Name {
 			get;
 			set;
@@ -97,6 +101,10 @@ namespace LongoMatch.Core.Store.Templates
 
 		[LongoMatchPropertyIndex (1)]
 		[LongoMatchPropertyPreload]
+		/// <summary>
+		/// The display name used for a team (eg: FC Barcelona)
+		/// </summary>
+		/// <value>The display name of the team.</value>
 		public String TeamName {
 			get;
 			set;

@@ -38,6 +38,10 @@ namespace LongoMatch.Drawing.Widgets
 			labelToObject = new Dictionary<LabelObject, object> ();
 		}
 
+		public TimelineLabels () : this (null)
+		{
+		}
+
 		public double Scroll {
 			set {
 				foreach (var o in Objects) {
@@ -69,11 +73,9 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			LabelObject l;
 			int i = 0, w, h;
-			double requiredWidth;
 
 			w = StyleConf.TimelineLabelsWidth;
 			h = StyleConf.TimelineCategoryHeight;
-			widget.Width = w;
 
 			l = new LabelObject (w, h, i * h);
 			l.Name = Catalog.GetString ("Periods");
@@ -93,11 +95,11 @@ namespace LongoMatch.Drawing.Widgets
 				i++;
 			}
 			
-			requiredWidth = labelToObject.Keys.Max (la => la.RequiredWidth);
+			double width = labelToObject.Keys.Max (la => la.RequiredWidth);
 			foreach (LabelObject lo in labelToObject.Keys) {
-				lo.Width = requiredWidth;
+				lo.Width = width;
 			}
-			widget.Width = requiredWidth;
+			WidthRequest = (int)width;
 		}
 
 		void UpdateVisibleCategories ()
@@ -113,18 +115,7 @@ namespace LongoMatch.Drawing.Widgets
 					label.Visible = false;
 				}
 			}
-			widget.ReDraw ();
-		}
-
-		public override void Draw (IContext context, Area area)
-		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
-			tk.End ();
-
-			base.Draw (context, area);
+			widget?.ReDraw ();
 		}
 	}
 }
-

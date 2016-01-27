@@ -77,37 +77,49 @@ namespace LongoMatch.Core.Common
 			ScaleInplace (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 		}
 
-		public void ScaleFactor (int destWidth, int destHeight,
+		public void ScaleFactor (int destWidth, int destHeight, ScaleMode mode,
 		                         out double scaleX, out double scaleY, out Point offset)
 		{
-			ScaleFactor (Width, Height, destWidth, destHeight, out scaleX, out scaleY, out offset);
+			ScaleFactor (Width, Height, destWidth, destHeight, mode, out scaleX, out scaleY, out offset);
 		}
 
 		public static void ScaleFactor (int imgWidth, int imgHeight, int destWidth, int destHeight,
-		                                out double scaleX, out double scaleY, out Point offset)
+		                                ScaleMode mode, out double scaleX, out double scaleY, out Point offset)
 		{
 			int oWidth = 0;
 			int oHeight = 0;
 
-			ComputeScale (imgWidth, imgHeight, destWidth, destHeight, out oWidth, out oHeight);
+			ComputeScale (imgWidth, imgHeight, destWidth, destHeight, mode, out oWidth, out oHeight);
 			scaleX = (double)oWidth / imgWidth;
 			scaleY = (double)oHeight / imgHeight;
-			offset = new Point ((destWidth - oWidth) / 2, (destHeight - oHeight) / 2);
+			offset = new Point ((double)(destWidth - oWidth) / 2, (double)(destHeight - oHeight) / 2);
 		}
 
-		public static void ComputeScale (int inWidth, int inHeight, int maxOutWidth, int maxOutHeight,
-		                                 out int outWidth, out int outHeight)
+		public static void ComputeScale (int inWidth, int inHeight, int reqOutWidth, int reqOutHeight,
+		                                 ScaleMode mode, out int outWidth, out int outHeight)
 		{
-			outWidth = maxOutWidth;
-			outHeight = maxOutHeight;
+			outWidth = reqOutWidth;
+			outHeight = reqOutHeight;
+
+			if (mode == ScaleMode.Fill) {
+				return;
+			}
 
 			double par = (double)inWidth / (double)inHeight;
-			double outPar = (double)maxOutWidth / (double)maxOutHeight;
+			double outPar = (double)reqOutWidth / (double)reqOutHeight;
 
-			if (outPar > par) {
-				outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
-			} else {
-				outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
+			if (mode == ScaleMode.AspectFill) {
+				if (outPar < par) {
+					outWidth = (int)(outHeight * par);
+				} else {
+					outHeight = (int)(outWidth / par);
+				}
+			} else if (mode == ScaleMode.AspectFit) {
+				if (outPar > par) {
+					outWidth = (int)(outHeight * par);
+				} else {
+					outHeight = (int)(outWidth / par);
+				}
 			}
 		}
 

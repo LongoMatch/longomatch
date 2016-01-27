@@ -122,7 +122,9 @@ namespace LongoMatch.Services
 			try {
 				Log.Debug ("Saving capture project: " + project.ID);
 			
+				#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
+				#endif
 			
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
@@ -252,10 +254,10 @@ namespace LongoMatch.Services
 
 				/* Close project wihtout saving */
 				if (res == EndCaptureResponse.Quit) {
-					CaptureFinished (true, true);
+					CaptureFinished (true, true, false);
 					return true;
 				} else if (res == EndCaptureResponse.Save) {
-					CaptureFinished (false, false);
+					CaptureFinished (false, false, true);
 					return true;
 				} else {
 					/* Continue with the current project */
@@ -288,6 +290,16 @@ namespace LongoMatch.Services
 			EmitProjectChanged ();
 		}
 
+		void UpdateProject (Project project)
+		{
+			try {
+				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+			}
+		}
+
 		protected virtual void SaveProject (Project project, ProjectType projectType)
 		{
 			if (project == null)
@@ -295,20 +307,10 @@ namespace LongoMatch.Services
 			
 			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
 			if (projectType == ProjectType.FileProject) {
-				try {
-					Config.DatabaseManager.ActiveDB.Store<Project> (project);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
-				}
+				UpdateProject (project);
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
-				try {
-					Config.DatabaseManager.ActiveDB.Store<Project> (project);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
-				}
+				UpdateProject (project);
 			} else if (projectType == ProjectType.CaptureProject ||
 			           projectType == ProjectType.URICaptureProject) {
 				SaveCaptureProject (project);
@@ -391,11 +393,18 @@ namespace LongoMatch.Services
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
-		void CaptureFinished (bool cancel, bool delete)
+		void CaptureFinished (bool cancel, bool delete, bool reopen)
 		{
 			Project project = OpenedProject;
 			ProjectType type = OpenedProjectType;
 			if (delete) {
+				if (type != ProjectType.FakeCaptureProject) {
+					try {
+						File.Delete (Capturer.CaptureSettings.EncodingSettings.OutputFile);
+					} catch (Exception ex1) {
+						Log.Exception (ex1);
+					}
+				}
 				try {
 					Config.DatabaseManager.ActiveDB.Delete<Project> (OpenedProject);
 				} catch (StorageException ex) {
@@ -404,7 +413,7 @@ namespace LongoMatch.Services
 				}
 			}
 			CloseOpenedProject (!cancel);
-			if (!cancel && type != ProjectType.FakeCaptureProject) {
+			if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				OpenProjectID (project.ID, project);
 			}
 		}
@@ -416,16 +425,16 @@ namespace LongoMatch.Services
 			CloseOpenedProject (true);
 		}
 
-		void HandleCaptureFinished (bool cancel)
+		void HandleCaptureFinished (bool cancel, bool reopen)
 		{
-			CaptureFinished (cancel, cancel);
+			CaptureFinished (cancel, cancel, reopen);
 		}
 
 		void HandleCaptureError (object sender, string message)
 		{
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + message);
-			CaptureFinished (true, false);
+			CaptureFinished (true, false, false);
 		}
 
 		#region IService

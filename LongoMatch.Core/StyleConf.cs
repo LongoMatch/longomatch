@@ -84,6 +84,7 @@ namespace LongoMatch.Core.Common
 		public const int TimelineFontSize = 16;
 		public const int TimelineRuleFontSize = 12;
 		public const int TimelineBackgroundLineSize = 4;
+		public const int TimelinePadding = 30;
 		public const string TimelineSelectionLeft = "icons/hicolor/scalable/actions/longomatch-timeline-select-left" + IMAGE_EXT;
 		public const string TimelineSelectionRight = "icons/hicolor/scalable/actions/longomatch-timeline-select-right" + IMAGE_EXT;
 

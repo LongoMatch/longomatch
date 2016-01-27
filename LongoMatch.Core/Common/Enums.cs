@@ -499,4 +499,33 @@ namespace LongoMatch.Core.Common
 		And,
 		Or,
 	}
+
+	/// <summary>
+	/// Defines how images are scalled.
+	/// </summary>
+	public enum ScaleMode
+	{
+		/// <summary>
+		/// The image is scalled to fill the defined area without keeping DAR.
+		/// </summary>
+		Fill,
+		/// <summary>
+		/// The image is scalled keeping DAR to fit in the defined area, adding black borders if needed.
+		/// </summary>
+		AspectFill,
+		/// <summary>
+		/// The image is scalled keeping DAR to fill the defined area, clipping the image if needed.
+		/// </summary>
+		AspectFit,
+	}
+
+	public enum OperatingSystemID
+	{
+		None,
+		Linux,
+		Windows,
+		OSX,
+		iOS,
+		Android,
+	}
 }

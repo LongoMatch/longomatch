@@ -312,7 +312,7 @@ namespace LongoMatch.Gui
 		{
 			string msg = Catalog.GetString ("Do you want to finish the current capture?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
-				Config.EventsBroker.EmitCaptureFinished (false);
+				Config.EventsBroker.EmitCaptureFinished (false, true);
 			}
 		}
 
@@ -320,7 +320,7 @@ namespace LongoMatch.Gui
 		{
 			string msg = Catalog.GetString ("Do you want to close and cancel the current capture?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
-				Config.EventsBroker.EmitCaptureFinished (true);
+				Config.EventsBroker.EmitCaptureFinished (true, false);
 			}
 		}
 

@@ -54,11 +54,15 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			Accuracy = 5;
 			Mode = DashboardMode.Edit;
-			widget.SizeChangedEvent += SizeChanged;
 			FitMode = FitMode.Fit;
 			CurrentTime = new Time (0);
 			AddTag = new Tag ("", "");
+			BackgroundColor = Config.Style.PaletteBackground;
 			buttonsDict = new Dictionary<DashboardButton, DashboardButtonObject> ();
+		}
+
+		public DashboardCanvas () : this (null)
+		{
 		}
 
 		public Project Project {
@@ -130,7 +134,7 @@ namespace LongoMatch.Drawing.Widgets
 					ao.ResetDrawArea ();
 				}
 				ClearSelection ();
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 			get {
 				return showLinks;
@@ -140,7 +144,7 @@ namespace LongoMatch.Drawing.Widgets
 		public FitMode FitMode {
 			set {
 				fitMode = value;
-				SizeChanged ();
+				HandleSizeChangedEvent ();
 				modeChanged = true;
 			}
 			get {
@@ -180,6 +184,12 @@ namespace LongoMatch.Drawing.Widgets
 			if (to != null) {
 				UpdateSelection (new Selection (to, SelectionPosition.All, 0));
 			}
+		}
+
+		public override void SetWidget (IWidget newWidget)
+		{
+			base.SetWidget (newWidget);
+			HandleSizeChangedEvent ();
 		}
 
 		protected override void ShowMenu (Point coords)
@@ -225,7 +235,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionMoved (Selection sel)
 		{
 			if (sel.Drawable is DashboardButtonObject) {
-				SizeChanged ();
+				HandleSizeChangedEvent ();
 				Edited = true;
 			} else if (sel.Drawable is ActionLinkObject) {
 				ActionLinkObject link = sel.Drawable as ActionLinkObject;
@@ -344,9 +354,8 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
+			Begin (context);
+			DrawBackground ();
 			if (Mode != DashboardMode.Code) {
 				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
@@ -362,9 +371,8 @@ namespace LongoMatch.Drawing.Widgets
 					tk.DrawLine (new Point (i, 0), new Point (i, templateHeight));
 				}
 			}
-			tk.End ();
-			
-			base.Draw (context, area);
+			DrawObjects (area);
+			End ();
 		}
 
 		public void AddButton (DashboardButtonObject button)
@@ -442,14 +450,16 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 			Edited = false;
-			SizeChanged ();
+			HandleSizeChangedEvent ();
 		}
 
-		void SizeChanged ()
+		protected override void HandleSizeChangedEvent ()
 		{
-			if (Template == null) {
+			if (Template == null || widget == null) {
 				return;
 			}
+
+			base.HandleSizeChangedEvent ();
 			
 			FitMode prevFitMode = FitMode;
 			templateHeight = template.CanvasHeight + 10;
@@ -469,7 +479,7 @@ namespace LongoMatch.Drawing.Widgets
 				double scaleX, scaleY;
 				Point translation;
 				Image.ScaleFactor (templateWidth, templateHeight,
-					(int)widget.Width, (int)widget.Height,
+					(int)widget.Width, (int)widget.Height, ScaleMode.AspectFit,
 					out scaleX, out scaleY, out translation);
 				ScaleX = scaleX;
 				ScaleY = scaleY;
@@ -477,10 +487,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (modeChanged) {
 				modeChanged = false;
-				foreach (CanvasObject co in Objects) {
-					co.ResetDrawArea ();
-				}
 			}
+
 			widget.ReDraw ();
 		}
 

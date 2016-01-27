@@ -161,6 +161,10 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			string cursorStr = null;
 			Gdk.Cursor cursor = null;
+
+			if (widget.GdkWindow == null) {
+				return;
+			}
 			
 			switch (tool) {
 			case DrawTool.Line:

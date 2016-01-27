@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,46 +16,35 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Handlers.Drawing;
+using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Interfaces.Drawing
+namespace LongoMatch.Drawing.Widgets
 {
-
-	public interface ICanvas: IDisposable
+	public class CircleImage: ICanvas
 	{
-		void Draw (IContext context, Area area);
-
-		void SetWidget (IWidget widget);
-	}
-
-	public interface ICanvasObject: IDisposable
-	{
-		event CanvasHandler ClickedEvent;
-		event RedrawHandler RedrawEvent;
-
-		void Draw (IDrawingToolkit tk, Area area);
-
-		bool Visible { set; get; }
-
-		string Description { set; get; }
-
-		void ClickPressed (Point p, ButtonModifier modif);
-
-		void ClickReleased ();
-	}
-
-	public interface ICanvasSelectableObject: ICanvasObject, IMovableObject
-	{
-	}
-
-	public interface ICanvasDrawableObject: ICanvasSelectableObject
-	{
-		IBlackboardObject IDrawableObject {
-			get;
-			set;
+		public CircleImage (IWidget widget)
+		{
+			widget.DrawEvent += Draw;
 		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+		}
+
+		#endregion
+
+		#region ICanvas implementation
+
+		public void Draw (IContext context, Area area)
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
+
 	}
 }
 

@@ -223,7 +223,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Icon != null) {
 				tk.FillColor = front;
 				tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-					Icon.Width, Icon.Height, Icon, false, true);
+					Icon.Width, Icon.Height, Icon, ScaleMode.AspectFill, true);
 			}
 		}
 
@@ -232,9 +232,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
 
 			if (Active && BackgroundImageActive != null) {
-				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive, true);
+				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive,
+					ScaleMode.AspectFit);
 			} else if (BackgroundImage != null) {
-				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage, true);
+				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage,
+					ScaleMode.AspectFit);
 			}
 		}
 

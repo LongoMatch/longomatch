@@ -52,6 +52,10 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 		}
 
+		public CamerasTimeline () : this (null)
+		{
+		}
+
 		public void Load (IList<Period> periods, MediaFileSet fileSet, Time duration)
 		{
 			timelines = new List<TimelineObject> ();
@@ -63,7 +67,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			ClearObjects ();
 			FillCanvas ();
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		public TimerTimeline PeriodsTimeline {
@@ -86,9 +90,11 @@ namespace LongoMatch.Drawing.Widgets
 					start = Utils.TimeToPos (value, SecondsPerPixel);
 					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
 				}
-				area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
 				currentTime = value;
-				widget.ReDraw (area);
+				if (widget != null) {
+					area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
+					widget.ReDraw (area);
+				}
 			}
 		}
 
@@ -115,16 +121,15 @@ namespace LongoMatch.Drawing.Widgets
 
 		void Update ()
 		{
-			double width;
-
 			if (duration == null)
 				return;
-			width = duration.TotalSeconds / SecondsPerPixel;
-			widget.Width = width + 10;
+
+			double width = duration.TotalSeconds / SecondsPerPixel + StyleConf.TimelinePadding;
 			foreach (TimelineObject tl in timelines) {
-				tl.Width = width + 10;
+				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
+			WidthRequest = (int)width;
 		}
 
 		void AddTimeLine (TimelineObject tl)
@@ -135,9 +140,6 @@ namespace LongoMatch.Drawing.Widgets
 
 		void FillCanvas ()
 		{
-			// Calculate height depending on number of cameras - 1 (for the main camera) + the line for periods
-			widget.Height = StyleConf.TimelineCameraHeight * fileSet.Count;
-
 			// Add the timeline for periods
 			PeriodsTimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, StyleConf.TimelineCameraHeight, 0,
 				Config.Style.PaletteBackground, Config.Style.PaletteBackgroundLight);
@@ -151,6 +153,8 @@ namespace LongoMatch.Drawing.Widgets
 				AddTimeLine (cameraTimeLine);
 			}
 			Update ();
+			// Calculate height depending on number of cameras - 1 (for the main camera) + the line for periods
+			HeightRequest = StyleConf.TimelineCameraHeight * fileSet.Count;
 		}
 
 		protected override void StartMove (Selection sel)

@@ -40,7 +40,11 @@ namespace LongoMatch.Core.Store
 			Width = Constants.BUTTON_WIDTH;
 			Height = Constants.BUTTON_HEIGHT;
 			BackgroundColor = Color.Red.Copy (true);
-			TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
+			if (Utils.OS == OperatingSystemID.Android || Utils.OS == OperatingSystemID.iOS) {
+				TextColor = Config.Style.PaletteBackground.Copy (true);
+			} else {
+				TextColor = Config.Style.PaletteBackgroundLight.Copy (true);
+			}
 			HotKey = new HotKey { IsChanged = false };
 			ActionLinks = new ObservableCollection <ActionLink> ();
 		}

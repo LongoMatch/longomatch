@@ -104,5 +104,56 @@ namespace Tests.Core.Common
 			Assert.AreEqual (img3.Height, 20);
 			
 		}
+
+		void AssertImageScale (int imgWidth, int imgHeight, int reqWidth, int reqHeight, ScaleMode mode)
+		{
+			int outWidth, outHeight;
+			Image.ComputeScale (imgWidth, imgHeight, reqWidth, reqHeight, mode, out outWidth,
+				out outHeight);
+
+			Assert.IsTrue (((double)imgWidth / imgHeight) - ((double)outWidth / outHeight) < 0.01);
+			if (mode == ScaleMode.AspectFit) {
+				Assert.IsTrue (outWidth <= reqWidth);
+				Assert.IsTrue (outHeight <= reqHeight);
+			} else if (mode == ScaleMode.AspectFill) {
+				Assert.IsTrue (outWidth >= reqWidth);
+				Assert.IsTrue (outHeight >= reqHeight);
+			}
+		}
+
+		[Test]
+		public void TestComputeScale ()
+		{
+			AssertImageScale (320, 240, 200, 100, ScaleMode.AspectFit);
+			AssertImageScale (320, 240, 500, 400, ScaleMode.AspectFit);
+			AssertImageScale (320, 240, 100, 200, ScaleMode.AspectFit);
+			AssertImageScale (320, 240, 500, 300, ScaleMode.AspectFit);
+
+			AssertImageScale (320, 240, 200, 100, ScaleMode.AspectFill);
+			AssertImageScale (320, 240, 500, 400, ScaleMode.AspectFill);
+			AssertImageScale (320, 240, 100, 200, ScaleMode.AspectFill);
+			AssertImageScale (320, 240, 500, 300, ScaleMode.AspectFill);
+		}
+
+		[Test]
+		public void TestScaleFactor ()
+		{
+			Point offset;
+			double scaleX, scaleY;
+
+			// Output is 133x100
+			Image.ScaleFactor (320, 240, 200, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
+			Assert.IsTrue ((scaleX - (double)320 / 133) < 0.1);
+			Assert.IsTrue ((scaleY - (double)240 / 100) < 0.1);
+			Assert.AreEqual (33, offset.X);
+			Assert.AreEqual (0, offset.Y);
+
+			// Output is 200x150
+			Image.ScaleFactor (320, 240, 200, 100, ScaleMode.AspectFill, out scaleX, out scaleY, out offset);
+			Assert.IsTrue ((scaleX - (double)320 / 200) < 0.1);
+			Assert.IsTrue ((scaleY - (double)240 / 150) < 0.1);
+			Assert.AreEqual (0, offset.X);
+			Assert.AreEqual (-25, offset.Y);
+		}
 	}
 }

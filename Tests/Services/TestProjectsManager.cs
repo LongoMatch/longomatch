@@ -169,11 +169,11 @@ namespace Tests.Services
 		[Test ()]
 		public void TestCaptureFinished ()
 		{
-			Config.EventsBroker.CaptureFinished += (c) => {
+			Config.EventsBroker.CaptureFinished += (c, f) => {
 			};
 
 			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
-			Config.EventsBroker.EmitCaptureFinished (true);
+			Config.EventsBroker.EmitCaptureFinished (true, true);
 			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
@@ -184,7 +184,7 @@ namespace Tests.Services
 
 			project = Utils.CreateProject ();
 			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
-			Config.EventsBroker.EmitCaptureFinished (false);
+			Config.EventsBroker.EmitCaptureFinished (false, true);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			/* We are not prompted to quit the capture */
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());

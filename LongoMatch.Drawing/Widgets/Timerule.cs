@@ -49,6 +49,11 @@ namespace LongoMatch.Drawing.Widgets
 			currentTime = new Time (0);
 			AdjustSizeToDuration = false;
 			ContinuousSeek = true;
+			BackgroundColor = Config.Style.PaletteBackgroundDark;
+		}
+
+		public Timerule () : this (null)
+		{
 		}
 
 		public double Scroll {
@@ -65,7 +70,7 @@ namespace LongoMatch.Drawing.Widgets
 			set {
 				duration = value;
 				needle.ResetDrawArea ();
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 			protected get {
 				return duration;
@@ -93,7 +98,7 @@ namespace LongoMatch.Drawing.Widgets
 				area = new Area (new Point (start - 1, needle.TopLeft.Y), stop - start + 2, needle.Height);
 				currentTime = value;
 				needle.ResetDrawArea ();
-				widget.ReDraw (area);
+				widget?.ReDraw (area);
 			}
 		}
 
@@ -195,10 +200,9 @@ namespace LongoMatch.Drawing.Widgets
 				SecondsPerPixel = Duration.TotalSeconds / width;
 			}
 
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackgroundDark);
-			
+			Begin (context);
+			DrawBackground ();
+
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
@@ -241,9 +245,7 @@ namespace LongoMatch.Drawing.Widgets
 				needle.X = tpos;
 			}
 			needle.Draw (tk, area);
-			tk.End ();
-			tk.Context = null;
+			End ();
 		}
 	}
 }
-

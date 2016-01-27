@@ -54,9 +54,8 @@ namespace LongoMatch.Drawing.Widgets
 			BackgroundColor = Config.Style.PaletteBackground;
 		}
 
-		public Color BackgroundColor {
-			set;
-			get;
+		public PositionTagger () : this (null)
+		{
 		}
 
 		public Project Project {
@@ -101,7 +100,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (tpo != null) {
 				po = tpo as PositionObject;
 				po.Selected = true;
-				widget.ReDraw ();
+				widget?.ReDraw ();
 			}
 		}
 
@@ -162,7 +161,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (PositionObject po in Objects) {
 				po.Visible = Filter.IsVisible (po.Play);
 			}
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		protected override void SelectionChanged (List<Selection> selections)
@@ -183,15 +182,5 @@ namespace LongoMatch.Drawing.Widgets
 				ShowMenuEvent (plays);
 			}
 		}
-
-		public override void Draw (IContext context, Area area)
-		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (BackgroundColor);
-			tk.End ();
-			base.Draw (context, area);
-		}
 	}
 }
-

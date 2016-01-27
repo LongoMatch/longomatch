@@ -26,13 +26,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 	public class NeedleObject: CanvasObject, ICanvasSelectableObject
 	{
 		static ISurface needle;
+		static bool surfacesInitialized = false;
 
 		public NeedleObject ()
 		{
-			if (needle == null) {
-				Image img = Resources.LoadImage (StyleConf.TimelineNeedleResource);
-				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
-			}
+			LoadSurfaces ();
 			Width = needle.Width;
 			X = 0;
 			TimelineHeight = 0;
@@ -73,6 +71,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		Area Area {
 			get {
 				return new Area (TopLeft, Width, Width);
+			}
+		}
+
+		static public void LoadSurfaces ()
+		{
+			if (!surfacesInitialized) {
+				Image img = Resources.LoadImage (StyleConf.TimelineNeedleResource);
+				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+				surfacesInitialized = true;
 			}
 		}
 

@@ -90,6 +90,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
+		static public void LoadSurfaces ()
+		{
+			if (!surfacesCached) {
+				Photo = CreateSurface (StyleConf.PlayerPhoto);
+				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
+				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
+				surfacesCached = true;
+			}
+		}
+
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)
 		{
 			Point position = new Point (Position.X - Width / 2, Position.Y - Height / 2);
@@ -144,7 +154,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			
 			/* Image */
 			if (Player.Photo != null) {
-				tk.DrawImage (zero, size, size, Player.Photo, true);
+				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
 				tk.DrawSurface (Photo, zero);
 			}
@@ -178,9 +188,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.StrokeColor = Color.White;
 			tk.FontWeight = FontWeight.Normal;
 			if (Player.Number >= 100) {
-				tk.FontSize = 14;
+				tk.FontSize = 12;
 			} else {
-				tk.FontSize = 18;
+				tk.FontSize = 16;
 			}
 			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
 				Player.Number.ToString ());
@@ -207,17 +217,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			LoadSurfaces ();
 		}
 
-		void LoadSurfaces ()
-		{
-			if (!surfacesCached) {
-				Photo = CreateSurface (StyleConf.PlayerPhoto);
-				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
-				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
-				surfacesCached = true;
-			}
-		}
-
-		ISurface CreateSurface (string name)
+		static ISurface CreateSurface (string name)
 		{
 			Image img = Resources.LoadImage (name);
 			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);

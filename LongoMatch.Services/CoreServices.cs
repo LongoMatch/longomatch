@@ -45,7 +45,6 @@ namespace LongoMatch.Services
 		static PlaylistManager plManager;
 		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
-		static UpdatesNotifier updatesNotifier;
 		static List<IService> services = new List<IService> ();
 		public static IProjectsImporter ProjectsImporter;
 
@@ -163,9 +162,6 @@ namespace LongoMatch.Services
 			plManager = new PlaylistManager ();
 			RegisterService (plManager);
 
-			/* Start the Update Notifier */
-			updatesNotifier = new UpdatesNotifier ();
-			RegisterService (updatesNotifier);
 		}
 
 		public static void StartServices ()
@@ -210,10 +206,14 @@ namespace LongoMatch.Services
 
 		public static bool Debugging {
 			get {
+				#if DEBUG
+				return true;
+				#else
 				if (debugging == null) {
 					debugging = EnvironmentIsSet ("LGM_DEBUG");
 				}
 				return debugging.Value;
+				#endif
 			}
 			set {
 				debugging = value;

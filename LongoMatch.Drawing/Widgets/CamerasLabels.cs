@@ -33,6 +33,10 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
+		public CamerasLabels () : this (null)
+		{
+		}
+
 		public double Scroll {
 			set {
 				foreach (var o in Objects) {
@@ -47,7 +51,7 @@ namespace LongoMatch.Drawing.Widgets
 			ClearObjects ();
 			this.fileSet = fileSet;
 			FillCanvas ();
-			widget.ReDraw ();
+			widget?.ReDraw ();
 		}
 
 		void AddLabel (LabelObject label)
@@ -59,11 +63,9 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			LabelObject l;
 			int i = 0, w, h;
-			double requiredWidth;
 
 			w = StyleConf.TimelineLabelsWidth * 2;
 			h = StyleConf.TimelineCameraHeight;
-			widget.Width = w;
 
 			// Main camera
 			l = new CameraLabelObject (w, h, i * h) {
@@ -91,21 +93,11 @@ namespace LongoMatch.Drawing.Widgets
 				i++;
 			}
 
-			requiredWidth = Objects.Max (la => (la as LabelObject).RequiredWidth);
+			double width = Objects.Max (la => (la as LabelObject).RequiredWidth);
 			foreach (LabelObject label in Objects) {
-				label.Width = requiredWidth;
+				label.Width = width;
 			}
-			widget.Width = requiredWidth;
-		}
-
-		public override void Draw (IContext context, Area area)
-		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
-			tk.End ();
-
-			base.Draw (context, area);
+			WidthRequest = (int)width;
 		}
 	}
 }

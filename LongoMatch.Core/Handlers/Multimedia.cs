@@ -40,7 +40,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void SeekHandler (SeekType type,Time start,float rate);
 
 	public delegate void DeviceChangeHandler (int deviceID);
-	public delegate void CaptureFinishedHandler (bool close);
+	public delegate void CaptureFinishedHandler (bool close,bool reopen);
 	public delegate void PercentCompletedHandler (float percent);
 	public delegate void TickHandler (Time currentTime);
 	public delegate void TimeChangedHandler (Time currentTime,Time duration,bool seekable);
