@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
@@ -88,21 +89,24 @@ namespace LongoMatch.Gui.Component
 		void LoadIcons ()
 		{
 			notebookHelper = new IconNotebookHelper (playsnotebook);
-			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category");
+			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
+				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
 				var localIcon = project.LocalTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
 					                StyleConf.NotebookTabIconSize).Value;
-				notebookHelper.SetTabIcon (localPlayersList, localIcon, localIcon);
+				notebookHelper.SetTabIcon (localPlayersList, localIcon, localIcon, project.LocalTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (localPlayersList, "longomatch-default-shield", "longomatch-default-shield");
+				notebookHelper.SetTabIcon (localPlayersList, "longomatch-default-shield", "longomatch-default-shield",
+					project.LocalTeamTemplate.Name);
 			}
 
 			if (project.VisitorTeamTemplate.Shield != null) {
 				var visitorIcon = project.VisitorTeamTemplate.Shield.Scale (StyleConf.NotebookTabIconSize,
 					                  StyleConf.NotebookTabIconSize).Value;
-				notebookHelper.SetTabIcon (visitorPlayersList, visitorIcon, visitorIcon);
+				notebookHelper.SetTabIcon (visitorPlayersList, visitorIcon, visitorIcon, project.VisitorTeamTemplate.Name);
 			} else {
-				notebookHelper.SetTabIcon (visitorPlayersList, "longomatch-default-shield", "longomatch-default-shield");
+				notebookHelper.SetTabIcon (visitorPlayersList, "longomatch-default-shield", "longomatch-default-shield",
+					project.VisitorTeamTemplate.Name);
 			}
 
 			notebookHelper.UpdateTabs ();

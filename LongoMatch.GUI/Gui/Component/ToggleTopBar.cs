@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using Gdk;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
@@ -56,7 +57,8 @@ namespace LongoMatch.Gui.Component
 		/// </summary>
 		/// <param name="icon">Icon to show at the left of the button</param>
 		/// <param name="text">Text to show at the right of the button</param>
-		public void AddButton (Pixbuf icon, string text)
+		/// <param name = "tooltiptext">Text to add to the button as tooltip</param>
+		public void AddButton (Pixbuf icon, string text, string tooltiptext)
 		{
 			// If there are other buttons, add the new button to their buttonGroup
 			RadioButton otherbutton = null;
@@ -83,6 +85,10 @@ namespace LongoMatch.Gui.Component
 				Widget previousLast = buttoncontainer.Children.Last ();
 				previousLast.Name = pos == 0 ? "toggletabbutton_left" : "toggletabbutton_center";
 				previousLast.ResetRcStyles ();
+			}
+
+			if (tooltiptext != null) {
+				button.TooltipText = tooltiptext;
 			}
 
 			buttoncontainer.Add (button);
