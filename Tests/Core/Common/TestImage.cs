@@ -145,7 +145,7 @@ namespace Tests.Core.Common
 			Image.ScaleFactor (320, 240, 200, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
 			Assert.IsTrue ((scaleX - (double)320 / 133) < 0.1);
 			Assert.IsTrue ((scaleY - (double)240 / 100) < 0.1);
-			Assert.AreEqual (33, offset.X);
+			Assert.AreEqual (33.5, offset.X);
 			Assert.AreEqual (0, offset.Y);
 
 			// Output is 200x150

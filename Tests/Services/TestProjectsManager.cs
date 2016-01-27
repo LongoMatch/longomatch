@@ -183,6 +183,7 @@ namespace Tests.Services
 			Utils.DeleteProject (project);
 
 			project = Utils.CreateProject ();
+			settings.EncodingSettings.OutputFile = project.Description.FileSet.FirstOrDefault ().FilePath;
 			Config.EventsBroker.EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			Config.EventsBroker.EmitCaptureFinished (false, true);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
