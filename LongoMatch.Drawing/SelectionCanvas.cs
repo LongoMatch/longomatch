@@ -265,6 +265,12 @@ namespace LongoMatch.Drawing
 			}
 
 			so = sel.Drawable as ICanvasSelectableObject;
+
+			if (so == null) {
+				return;
+			}
+				
+
 			if (Selections.Count > 0) {
 				if (SingleSelectionObjects.Contains (so.GetType ()) ||
 				    SingleSelectionObjects.Contains (Selections [0].Drawable.GetType ())) {

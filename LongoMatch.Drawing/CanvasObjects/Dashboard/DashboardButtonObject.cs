@@ -121,7 +121,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public override Color BorderColor {
 			get {
-				return Button.BackgroundColor;
+				return Button.TextColor;
 			}
 		}
 

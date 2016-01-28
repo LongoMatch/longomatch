@@ -170,7 +170,7 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if (!project.Description.FileSet.CheckFiles ()) {
-					if (!guiToolkit.SelectMediaFiles (project)) {
+					if (!guiToolkit.SelectMediaFiles (project.Description.FileSet)) {
 						CloseOpenedProject (true);
 						return false;
 					}

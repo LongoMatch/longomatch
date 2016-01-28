@@ -211,10 +211,10 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Active) {
 				tk.LineWidth = StyleConf.ButtonLineWidth;
 				front = BackgroundColor;
-				back = TextColor;
+				back = BorderColor;
 			} else {
 				tk.LineWidth = 0;
-				front = TextColor;
+				front = BorderColor;
 				back = BackgroundColor;
 			}
 			tk.FillColor = back;

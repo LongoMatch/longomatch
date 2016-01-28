@@ -446,7 +446,7 @@ namespace LongoMatch.Gui
 			return (EndCaptureResponse)res;
 		}
 
-		public bool SelectMediaFiles (Project project)
+		public bool SelectMediaFiles (MediaFileSet fileSet)
 		{
 			bool ret = false;
 			MediaFileSetSelection fileselector = new MediaFileSetSelection (false);
@@ -456,7 +456,7 @@ namespace LongoMatch.Gui
 				               Gtk.Stock.Cancel, ResponseType.Cancel,
 				               Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
-			fileselector.FileSet = project.Description.FileSet;
+			fileselector.FileSet = fileSet;
 			d.VBox.Add (fileselector);
 			WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
 			while (d.Run () == (int)ResponseType.Ok) {
@@ -475,7 +475,7 @@ namespace LongoMatch.Gui
 				// We need to update the fileset as it might have changed. Indeed if multi camera is not supported
 				// widget will propose only one media file selector and will return a smaller fileset than the 
 				// one provided originally.
-				project.Description.FileSet = fileselector.FileSet;
+				fileSet = fileselector.FileSet;
 			}
 			d.Destroy ();
 			return ret;
