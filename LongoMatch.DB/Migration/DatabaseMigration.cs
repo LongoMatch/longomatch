@@ -152,7 +152,11 @@ namespace LongoMatch.DB
 
 			foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).Concat(
 				Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")))) {
-				File.Move (templateFile, Path.Combine (backupDir, Path.GetFileName (templateFile)));
+				string outputFile = Path.Combine (backupDir, Path.GetFileName (templateFile));
+				if (File.Exists (outputFile)) {
+					File.Delete (outputFile);
+				}
+				File.Move (templateFile, outputFile);
 			}
 
 			progress.Report (1, "Teams and dashboards migrated", id);
