@@ -104,6 +104,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public UIManager GetUIManager () {
+			return UIManager;
+		}
+
 		/// <summary>
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
 		/// </summary>
@@ -119,10 +123,12 @@ namespace LongoMatch.Gui
 					RemovePanel (false);
 				}
 				currentPanel = panel;
-				panel.Show ();
+
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += BackClicked;
+					(panel as IPanel).OnLoaded ();
 				}
+				panel.Show ();
 				centralbox.PackStart (panel, true, true, 0);
 			}
 		}
@@ -288,7 +294,7 @@ namespace LongoMatch.Gui
 			QuitAction.Activated += (o, e) => {
 				CloseAndQuit ();
 			};
-			openAction.Activated += (sender, e) => {
+			OpenProjectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
 				Config.EventsBroker.EmitOpenProject ();
 			};
@@ -307,6 +313,7 @@ namespace LongoMatch.Gui
 		{
 			if (panel is IPanel) {
 				(panel as IPanel).BackEvent -= BackClicked;
+				(panel as IPanel).OnUnloaded ();
 			}
 			panel.Destroy ();
 			panel.Dispose ();

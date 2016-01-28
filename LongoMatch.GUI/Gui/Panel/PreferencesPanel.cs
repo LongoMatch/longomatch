@@ -56,6 +56,16 @@ namespace LongoMatch.Gui.Panel
 			};
 		}
 
+		public void OnLoaded ()
+		{
+
+		}
+
+		public void OnUnloaded ()
+		{
+
+		}
+
 		void AddPanels ()
 		{
 			AddPane (Catalog.GetString ("General"),
