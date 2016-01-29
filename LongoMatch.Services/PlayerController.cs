@@ -342,6 +342,8 @@ namespace LongoMatch.Services
 			} else {
 				if (SegmentLoaded) {
 					time += loadedSegment.Start;
+					accurate = true;
+					Log.Debug ("Segment loaded - seek accurate");
 				}
 				return AbsoluteSeek (time, accurate, synchronous, throttled);
 			}
@@ -1007,6 +1009,7 @@ namespace LongoMatch.Services
 
 		void LoadStillImage (PlaylistImage image, bool playing)
 		{
+			Reset ();
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
 			if (playing) {
@@ -1030,7 +1033,7 @@ namespace LongoMatch.Services
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
 			UpdateCamerasConfig (new ObservableCollection<CameraConfig> { new CameraConfig (0) }, null);
-			InternalOpen (fileSet, false, true, playing);
+			InternalOpen (fileSet, true, true, playing);
 		}
 
 		void LoadPlayDrawing (FrameDrawing drawing)
