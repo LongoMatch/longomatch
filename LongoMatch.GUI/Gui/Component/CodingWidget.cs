@@ -15,19 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,6 +41,7 @@ namespace LongoMatch.Gui.Component
 		List<Window> activeWindows;
 		IconNotebookHelper notebookHelper;
 		bool sizeAllocated;
+		IPlayerController player;
 
 		public CodingWidget ()
 		{
@@ -154,6 +155,16 @@ namespace LongoMatch.Gui.Component
 		public void TagTeam (TeamType team)
 		{
 			teamtagger.Select (team);
+		}
+
+		public IPlayerController Player {
+			get {
+				return player;
+			}
+			set {
+				player = value;
+				timeline.Player = player;
+			}
 		}
 
 		public void SetProject (Project project, ProjectType projectType, EventsFilter filter)

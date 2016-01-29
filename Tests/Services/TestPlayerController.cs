@@ -249,7 +249,8 @@ namespace Tests.Services
 			bool playing = false;
 			FrameDrawing drawing = null;
 
-			Config.EventsBroker.PlaybackStateChangedEvent += (o, p) => {
+
+			player.PlaybackStateChangedEvent += (o, p) => {
 				playing = p;
 			};
 			player.LoadDrawingsEvent += (f) => {

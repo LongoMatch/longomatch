@@ -35,6 +35,7 @@ namespace LongoMatch.Services
 	public class PlayerController: IPlayerController
 	{
 		public event TimeChangedHandler TimeChangedEvent;
+		public event StateChangeHandler PlaybackStateChangedEvent;
 		public event LoadDrawingsHandler LoadDrawingsEvent;
 		public event PlaybackRateChangedHandler PlaybackRateChangedEvent;
 		public event VolumeChangedHandler VolumeChangedEvent;
@@ -742,7 +743,8 @@ namespace LongoMatch.Services
 
 		void EmitPlaybackStateChanged (object sender, bool playing)
 		{
-			if (!disposed) {
+			if (PlaybackStateChangedEvent != null && !disposed) {
+				PlaybackStateChangedEvent (sender, playing);
 				Config.EventsBroker.EmitPlaybackStateChanged (sender, playing);
 			}
 		}

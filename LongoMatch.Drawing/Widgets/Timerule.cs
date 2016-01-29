@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
@@ -40,6 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time currentTime;
 		Time duration;
+		IPlayerController player;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -51,7 +53,6 @@ namespace LongoMatch.Drawing.Widgets
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
 			Accuracy = 5.0f;
-			Config.EventsBroker.PlaybackStateChangedEvent += HandlePlaybackStateChanged;
 		}
 
 		public Timerule () : this (null)
@@ -61,7 +62,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void Dispose (bool disposing)
 		{
 			if (disposing) {
-				Config.EventsBroker.PlaybackStateChangedEvent -= HandlePlaybackStateChanged;
+				Player = null;
 			}
 			base.Dispose (disposing);
 		}
@@ -119,6 +120,21 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			get {
 				return secondsPerPixel;
+			}
+		}
+
+		public IPlayerController Player {
+			get {
+				return player;
+			}
+			set {
+				if (player != null) {
+					player.PlaybackStateChangedEvent -= HandlePlaybackStateChanged;
+				}
+				player = value;
+				if (player != null) {
+					player.PlaybackStateChangedEvent += HandlePlaybackStateChanged;
+				}
 			}
 		}
 

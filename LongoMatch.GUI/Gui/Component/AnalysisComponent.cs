@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 			detachedPlayer = false;
+			codingwidget.Player = playercapturer.Player;
 		}
 
 		protected override void OnUnmapped ()

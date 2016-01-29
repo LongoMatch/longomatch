@@ -19,13 +19,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -42,6 +43,7 @@ namespace LongoMatch.Gui.Component
 		PlaysMenu menu;
 		Project project;
 		PeriodsMenu periodsmenu;
+		IPlayerController player;
 
 		public Timeline ()
 		{
@@ -102,6 +104,16 @@ namespace LongoMatch.Gui.Component
 			}
 			protected get {
 				return currentTime;
+			}
+		}
+
+		public IPlayerController Player {
+			get {
+				return player;
+			}
+			set {
+				player = value;
+				timerule.Player = player;
 			}
 		}
 
