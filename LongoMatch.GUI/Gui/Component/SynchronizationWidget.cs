@@ -25,7 +25,7 @@ using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 using System.Collections.ObjectModel;
 
