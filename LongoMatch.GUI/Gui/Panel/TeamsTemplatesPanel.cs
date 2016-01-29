@@ -54,12 +54,12 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.TeamTemplatesProvider;
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", 45);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", 45);
-			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-add", 34);
-			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-export", 34);
-			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-delete", 34);
-			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-save", 34);
-			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-add", 34);
-			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-delete", 34);
+			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 34);
+			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", 34);
+			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 34);
+			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", 34);
+			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 34);
+			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 34);
 			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", 34);
 
 			newteambutton.Entered += HandleEnterTeamButton;
@@ -399,7 +399,7 @@ namespace LongoMatch.Gui.Panel
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
 			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
-				System.IO.Path.ChangeExtension(loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), Config.HomeDir,
+				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), Config.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {

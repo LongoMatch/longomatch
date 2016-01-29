@@ -1,53 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="Layer_1"
-   x="0px"
-   y="0px"
-   width="24"
-   height="24"
-   viewBox="13.49 0 24 24"
-   enable-background="new 13.49 0 36 36"
-   xml:space="preserve"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="longomatch-player-delete.svg"><metadata
-     id="metadata10"><rdf:RDF><cc:Work
-         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
-     id="defs8" /><sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="996"
-     inkscape:window-height="523"
-     id="namedview6"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:zoom="9.5516493"
-     inkscape:cx="4.424"
-     inkscape:cy="17.014"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="Layer_1" /><path
-     id="delete_2_"
-     d="M 36.74147,3 H 22.490273 c -0.199457,0 -0.391065,0.079562 -0.532261,0.2185149 l -8.249516,8.2508841 c -0.291328,0.294722 -0.291328,0.768727 0,1.061202 l 8.249516,8.250884 C 22.099208,20.921556 22.290816,21 22.490273,21 H 36.742592 C 37.156074,21 37.49,20.662702 37.49,20.248089 V 3.7485523 C 37.488879,3.3361759 37.156074,3 36.74147,3 z m -2.49323,13.605059 -1.15193,1.149719 c -0.315994,0.319365 -0.829208,0.319365 -1.150807,0 l -3.454661,-3.453652 -3.455788,3.455888 c -0.318237,0.319376 -0.832574,0.319376 -1.153052,0 l -1.150807,-1.151955 c -0.319358,-0.320494 -0.314876,-0.83372 0,-1.14973 l 3.459145,-3.457007 -3.46138,-3.45478 c -0.317123,-0.3193648 -0.317123,-0.8370742 0,-1.1519563 l 1.151921,-1.1508473 c 0.321599,-0.318246 0.833691,-0.318246 1.149693,0 L 28.490842,9.69439 31.945503,6.2407384 c 0.319359,-0.318246 0.834813,-0.318246 1.150807,0 l 1.15193,1.1508473 c 0.319358,0.3148821 0.319358,0.8314736 0,1.1519563 l -3.455784,3.45478 3.455784,3.453652 c 0.320476,0.318247 0.320476,0.832591 0,1.153085 z"
-     inkscape:connector-curvature="0"
-     style="fill:#c42527" /></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="48px" height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#C32628" d="M7.875,34.751v5.375v2.686c0,1.486,1.202,2.688,2.687,2.688h2.689
+		h21.498h2.689c1.485,0,2.688-1.202,2.688-2.688v-2.686v-5.375V15.934H7.875V34.751z M30.699,22.173
+		c0-0.885,0.719-1.599,1.604-1.599c0.884,0,1.6,0.714,1.6,1.599v17.626c0,0.886-0.716,1.604-1.6,1.604
+		c-0.885,0-1.604-0.718-1.604-1.604V22.173z M22.688,22.173c0-0.885,0.717-1.599,1.602-1.599c0.884,0,1.601,0.714,1.601,1.599
+		v17.626c0,0.886-0.717,1.604-1.601,1.604c-0.885,0-1.602-0.718-1.602-1.604V22.173z M14.675,22.173
+		c0-0.885,0.717-1.599,1.604-1.599c0.884,0,1.602,0.714,1.602,1.599v17.626c0,0.886-0.717,1.604-1.602,1.604
+		c-0.887,0-1.604-0.718-1.604-1.604V22.173z"/>
+	<g id="trash_1_">
+		<path fill-rule="evenodd" clip-rule="evenodd" fill="#C32628" d="M40.126,7.874h-8.064V5.188c0-1.489-1.199-2.688-2.686-2.688
+			H18.623c-1.484,0-2.687,1.199-2.687,2.688v2.687H7.875c-1.485,0-2.687,1.205-2.687,2.688l0,0v2.687h37.625v-2.687
+			C42.813,9.079,41.61,7.874,40.126,7.874z"/>
+	</g>
+</g>
+</svg>

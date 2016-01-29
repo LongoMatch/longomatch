@@ -35,15 +35,15 @@ namespace LongoMatch.Gui.Panel
 		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
 				new Action (() => Config.EventsBroker.EmitNewProject (null))),
-			new WelcomeButton ("longomatch-project-open", Catalog.GetString ("Open"),
+			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
 				new Action (() => Config.EventsBroker.EmitOpenProject ())),
-			new WelcomeButton ("longomatch-project-import", Catalog.GetString ("Import"),
+			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
 				new Action (() => Config.EventsBroker.EmitImportProject ())),
-			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
+			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
 				new Action (() => Config.EventsBroker.EmitManageProjects ())),
-			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nDashboards\nmanager"),
+			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nDashboards"),
 				new Action (() => Config.EventsBroker.EmitManageCategories ())),
-			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams\nmanager"),
+			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
 				new Action (() => Config.EventsBroker.EmitManageTeams ())),
 
 		};

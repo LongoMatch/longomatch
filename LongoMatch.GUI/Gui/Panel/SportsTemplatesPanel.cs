@@ -64,11 +64,11 @@ namespace LongoMatch.Gui.Panel
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", 54);
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", 47);
-			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-add", 36);
-			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-import", 36);
-			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-export", 36);
-			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-delete", 36);
-			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-save", 36);
+			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 36);
+			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", 36);
+			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", 36);
+			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 36);
+			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", 36);
 			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", 36);
 			addtagimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", 36);
 			scoreimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", 36);
@@ -412,7 +412,7 @@ namespace LongoMatch.Gui.Panel
 			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
 			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
-				System.IO.Path.ChangeExtension(loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
+				System.IO.Path.ChangeExtension (loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {

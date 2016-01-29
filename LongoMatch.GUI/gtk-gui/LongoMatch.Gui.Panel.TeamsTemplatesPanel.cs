@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Panel
 			this.editteamslabel = new global::Gtk.Label ();
 			this.editteamslabel.Name = "editteamslabel";
 			this.editteamslabel.Xalign = 0F;
-			this.editteamslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Manage teams");
+			this.editteamslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Manage teams");
 			this.editteamslabel.UseMarkup = true;
 			this.editteamsvbox.Add (this.editteamslabel);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.editteamsvbox [this.editteamslabel]));
@@ -229,7 +229,7 @@ namespace LongoMatch.Gui.Panel
 			this.editplayerslabel = new global::Gtk.Label ();
 			this.editplayerslabel.Name = "editplayerslabel";
 			this.editplayerslabel.Xalign = 0F;
-			this.editplayerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Manage players");
+			this.editplayerslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Manage players");
 			this.editplayerslabel.UseMarkup = true;
 			this.editplayersvbox.Add (this.editplayerslabel);
 			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.editplayersvbox [this.editplayerslabel]));

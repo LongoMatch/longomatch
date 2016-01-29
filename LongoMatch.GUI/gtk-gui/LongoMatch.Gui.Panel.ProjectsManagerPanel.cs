@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child infoeventbox.Gtk.Container+ContainerChild
 			this.infolabel = new global::Gtk.Label ();
 			this.infolabel.Name = "infolabel";
-			this.infolabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Information");
+			this.infolabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Information");
 			this.infolabel.UseMarkup = true;
 			this.infoeventbox.Add (this.infolabel);
 			this.projectbox.Add (this.infoeventbox);
@@ -194,7 +194,7 @@ namespace LongoMatch.Gui.Panel
 			this.Competitionlabel = new global::Gtk.Label ();
 			this.Competitionlabel.Name = "Competitionlabel";
 			this.Competitionlabel.Xalign = 1F;
-			this.Competitionlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Competition:");
+			this.Competitionlabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Competition:");
 			this.table1.Add (this.Competitionlabel);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.Competitionlabel]));
 			w8.LeftAttach = ((uint)(2));
@@ -236,7 +236,7 @@ namespace LongoMatch.Gui.Panel
 			this.label14 = new global::Gtk.Label ();
 			this.label14.Name = "label14";
 			this.label14.Xalign = 1F;
-			this.label14.LabelProp = global::Mono.Unix.Catalog.GetString ("Description:");
+			this.label14.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Description:");
 			this.table1.Add (this.label14);
 			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table1 [this.label14]));
 			w12.TopAttach = ((uint)(2));
@@ -247,7 +247,7 @@ namespace LongoMatch.Gui.Panel
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
 			this.label5.Xalign = 1F;
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Date:");
+			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Date:");
 			this.table1.Add (this.label5);
 			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table1 [this.label5]));
 			w13.TopAttach = ((uint)(1));
@@ -260,7 +260,7 @@ namespace LongoMatch.Gui.Panel
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 1F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Analysis dashboard:");
+			this.label9.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Analysis dashboard:");
 			this.table1.Add (this.label9);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1 [this.label9]));
 			w14.TopAttach = ((uint)(1));
@@ -282,7 +282,7 @@ namespace LongoMatch.Gui.Panel
 			this.seasonlabel = new global::Gtk.Label ();
 			this.seasonlabel.Name = "seasonlabel";
 			this.seasonlabel.Xalign = 1F;
-			this.seasonlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Season:");
+			this.seasonlabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Season:");
 			this.table1.Add (this.seasonlabel);
 			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.table1 [this.seasonlabel]));
 			w16.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -309,7 +309,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child videoseventbox.Gtk.Container+ContainerChild
 			this.videoslabel = new global::Gtk.Label ();
 			this.videoslabel.Name = "videoslabel";
-			this.videoslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Videos");
+			this.videoslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Videos");
 			this.videoslabel.UseMarkup = true;
 			this.videoseventbox.Add (this.videoslabel);
 			this.projectbox.Add (this.videoseventbox);
@@ -335,7 +335,6 @@ namespace LongoMatch.Gui.Panel
 			w25.Position = 0;
 			// Container child rbox.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-			this.hbuttonbox1.Name = "hbuttonbox1";
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.savebutton = new global::Gtk.Button ();
 			this.savebutton.TooltipMarkup = "Save";
