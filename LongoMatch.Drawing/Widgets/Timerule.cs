@@ -50,6 +50,7 @@ namespace LongoMatch.Drawing.Widgets
 			AdjustSizeToDuration = false;
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
+			Accuracy = 5.0f;
 			Config.EventsBroker.PlaybackStateChangedEvent += HandlePlaybackStateChanged;
 		}
 
