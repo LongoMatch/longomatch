@@ -256,9 +256,7 @@ namespace LongoMatch.Core.Store
 		public override bool Equals (object obj)
 		{
 			MediaFileSet s = obj as MediaFileSet;
-			if (s == null)
-				return false;
-			return ID.Equals (s.ID);
+			return s != null && ID.Equals (s.ID);
 		}
 
 		public override int GetHashCode ()

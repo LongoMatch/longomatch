@@ -141,9 +141,7 @@ namespace LongoMatch.Core.Store
 		public override bool Equals (object obj)
 		{
 			StorableBase s = obj as StorableBase;
-			if (s == null)
-				return false;
-			return ID.Equals (s.ID);
+			return s != null && ID.Equals (s.ID);
 		}
 
 		public override int GetHashCode ()
