@@ -138,8 +138,8 @@ namespace LongoMatch.Gui.Component
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 			focusscale.Value = 6;
-			// Can throw an exception if there are no files in set
-			timerule.Duration = project.Description.FileSet.First ().Duration;
+			timerule.Duration = project.Description.FileSet.Duration;
+
 			timeline.ShowMenuEvent += HandleShowMenu;
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
 			timeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
