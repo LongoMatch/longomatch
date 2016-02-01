@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Panel
 
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
 			vbox2.Spacing = StyleConf.WelcomeIconsVSpacing;
-
+			label3.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 
 			Create ();
@@ -174,6 +174,7 @@ namespace LongoMatch.Gui.Panel
 			alignment.Add (button);
 
 			label = new Label (b.Text);
+			label.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
 			label.LineWrap = true;
 			label.LineWrapMode = Pango.WrapMode.Word;
 			label.Justify = Justification.Center;
