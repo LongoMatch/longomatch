@@ -189,7 +189,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (ContinuousSeek) {
 				if (SeekEvent != null) {
 					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-						false);
+						false, throttled: true);
 				}
 			}
 		}
