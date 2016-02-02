@@ -6022,30 +6022,9 @@ You can continue with the current capture, cancel it or save your project.
             <property name="Xscale">0</property>
             <property name="Yscale">0</property>
             <child>
-              <widget class="Gtk.Table" id="tablewidget">
+              <widget class="Gtk.VBox" id="vbox2">
                 <property name="MemberName" />
-                <property name="NRows">3</property>
-                <property name="NColumns">3</property>
-                <property name="RowSpacing">6</property>
-                <property name="ColumnSpacing">6</property>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
+                <property name="Spacing">6</property>
                 <child>
                   <placeholder />
                 </child>

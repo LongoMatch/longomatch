@@ -35,18 +35,18 @@ namespace LongoMatch.Gui.Panel
 		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
 				new Action (() => Config.EventsBroker.EmitNewProject (null))),
-			new WelcomeButton ("longomatch-project-open", Catalog.GetString ("Open"),
+			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
 				new Action (() => Config.EventsBroker.EmitOpenProject ())),
-			new WelcomeButton ("longomatch-project-import", Catalog.GetString ("Import"),
+			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
 				new Action (() => Config.EventsBroker.EmitImportProject ())),
-			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects\nmanager"),
+			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
 				new Action (() => Config.EventsBroker.EmitManageProjects ())),
-			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis\nDashboards\nmanager"),
-				new Action (() => Config.EventsBroker.EmitManageCategories ())),
-			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams\nmanager"),
+			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
 				new Action (() => Config.EventsBroker.EmitManageTeams ())),
-
+			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
+				new Action (() => Config.EventsBroker.EmitManageCategories ())),
 		};
+
 		List<WelcomeButton> buttons;
 		List<Widget> buttonWidgets;
 		Gtk.Image logoImage;
@@ -60,7 +60,8 @@ namespace LongoMatch.Gui.Panel
 			buttons = new List<WelcomeButton> (default_buttons);
 
 			hbox1.BorderWidth = StyleConf.WelcomeBorder;
-
+			vbox2.Spacing = StyleConf.WelcomeIconsVSpacing;
+			label3.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 
 			Create ();
@@ -70,7 +71,7 @@ namespace LongoMatch.Gui.Panel
 
 		uint NRows {
 			get {
-				return (uint)(buttons.Count / StyleConf.WelcomeIconsPerRow);
+				return (uint)StyleConf.WelcomeIconsTotalRows;
 			}
 		}
 
@@ -99,9 +100,6 @@ namespace LongoMatch.Gui.Panel
 			// Check if some additional tools are available that should be added to our buttons list
 			Populate ();
 
-			// One extra row for our logo
-			tablewidget.NRows = (uint)NRows + 1;
-			tablewidget.NColumns = StyleConf.WelcomeIconsPerRow;
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 
 			Gtk.Image prefImage = new Gtk.Image (
@@ -117,24 +115,28 @@ namespace LongoMatch.Gui.Panel
 				StyleConf.WelcomeLogoHeight).Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
-			tablewidget.Attach (logoImage, 0, StyleConf.WelcomeIconsPerRow, 0, 1,
-				AttachOptions.Expand | AttachOptions.Fill,
-				AttachOptions.Expand | AttachOptions.Fill,
-				0, StyleConf.WelcomeIconsVSpacing / 2);
 
+			//Adding the title
+			HBox boxTitle = new HBox ();
+			boxTitle.Add (logoImage);
+			vbox2.Add (boxTitle);
+
+			//Create necessary Hboxes for all icons
+			List<HBox> hboxList = new List<HBox> ();
+
+			for (int i = 0; i < NRows; i++) {
+				hboxList.Add (new HBox (true, StyleConf.WelcomeIconsHSpacing));
+				vbox2.Add (hboxList [i]);
+			}
+
+			int hboxRow = 0;
 			for (uint i = 0; i < buttons.Count; i++) {
 				Widget b;
-				uint c, l;
-
-				c = i % StyleConf.WelcomeIconsPerRow;
-				l = i / StyleConf.WelcomeIconsPerRow + 1;
-
+				if (i >= StyleConf.WelcomeIconsFirstRow && hboxRow == 0) {
+					hboxRow++;
+				}
 				b = CreateButton (buttons [(int)i]);
-				tablewidget.Attach (b, c, c + 1, l, l + 1,
-					AttachOptions.Expand | AttachOptions.Fill,
-					AttachOptions.Expand | AttachOptions.Fill,
-					0, StyleConf.WelcomeIconsVSpacing / 2);
-				buttonWidgets.Add (b);
+				hboxList [hboxRow].Add (b);
 			}
 
 			ShowAll ();
@@ -168,6 +170,7 @@ namespace LongoMatch.Gui.Panel
 			alignment.Add (button);
 
 			label = new Label (b.Text);
+			label.ModifyFont (Pango.FontDescription.FromString ("Ubuntu 12"));
 			label.LineWrap = true;
 			label.LineWrapMode = Pango.WrapMode.Word;
 			label.Justify = Justification.Center;
