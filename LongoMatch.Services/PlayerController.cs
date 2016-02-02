@@ -341,11 +341,24 @@ namespace LongoMatch.Services
 			if (PresentationMode) {
 				return PlaylistSeek (time, accurate, synchronous, throttled);
 			} else {
-				return InternalSeek (time, accurate, synchronous, throttled);
+				if (SegmentLoaded) {
+					time += loadedSegment.Start;
+					accurate = true;
+					Log.Debug ("Segment loaded - seek accurate");
+				}
+				return AbsoluteSeek (time, accurate, synchronous, throttled);
 			}
 		}
 
-		bool InternalSeek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
+		/// <summary>
+		/// Seeks absolutely. This seek is the one that will go to the real player, made over the video file.
+		/// </summary>
+		/// <returns><c>true</c>, if seek was made correctly, <c>false</c> otherwise.</returns>
+		/// <param name="time">Time in the video to seek.</param>
+		/// <param name="accurate">If set to <c>true</c>, accurate seek.</param>
+		/// <param name="synchronous">If set to <c>true</c>, synchronous seek.</param>
+		/// <param name="throttled">If set to <c>true</c>, throttled seek.</param>
+		bool AbsoluteSeek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
 			if (StillImageLoaded) {
 				imageLoadedTS = time;
@@ -390,7 +403,7 @@ namespace LongoMatch.Services
 			Log.Debug (string.Format ("Seek relative to {0}", pos));
 			if (SegmentLoaded) {
 				Time duration = loadedSegment.Stop - loadedSegment.Start;
-				seekPos = loadedSegment.Start + duration * pos;
+				seekPos = duration * pos;
 				accurate = true;
 				throthled = true;
 			} else {
@@ -404,7 +417,7 @@ namespace LongoMatch.Services
 		bool PlaylistSeek (Time time, bool accurate = false, bool synchronous = false, bool throttled = false)
 		{
 			if (loadedPlaylistElement == null) {
-				return InternalSeek (time, accurate, synchronous, throttled);
+				return AbsoluteSeek (time, accurate, synchronous, throttled);
 			}
 
 			// if time is outside the currently loaded event
@@ -431,7 +444,7 @@ namespace LongoMatch.Services
 			}
 			Log.Debug (string.Format ("New time: {0}", time));
 
-			return InternalSeek (time, accurate, synchronous, throttled);
+			return AbsoluteSeek (time, accurate, synchronous, throttled);
 		}
 
 		public bool SeekToNextFrame ()
@@ -573,11 +586,11 @@ namespace LongoMatch.Services
 					ple.Play.Start, ple.Rate, ple.CamerasConfig,
 					ple.CamerasLayout, playing);
 			} else if (element is PlaylistVideo) {
-				LoadVideo (element as PlaylistVideo);
+				LoadVideo (element as PlaylistVideo, playing);
 			} else if (element is PlaylistImage) {
-				LoadStillImage (element as PlaylistImage);
+				LoadStillImage (element as PlaylistImage, playing);
 			} else if (element is PlaylistDrawing) {
-				LoadFrameDrawing (element as PlaylistDrawing);
+				LoadFrameDrawing (element as PlaylistDrawing, playing);
 			}
 			EmitElementLoaded (element, playlist.HasNext ());
 		}
@@ -596,13 +609,13 @@ namespace LongoMatch.Services
 			Switch (evt, null, null);
 
 			if (evt.Start != null && evt.Stop != null) {
-				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, evt.Rate,
+				LoadSegment (fileSet, evt.Start, evt.Stop, evt.Start + seekTime, evt.Rate,
 					evt.CamerasConfig, evt.CamerasLayout, playing);
 				if (loadedEvent == null) { // LoadSegment sometimes removes the loadedEvent
 					loadedEvent = evt;
 				}
 			} else if (evt.EventTime != null) {
-				InternalSeek (evt.EventTime, true);
+				AbsoluteSeek (evt.EventTime, true);
 			} else {
 				Log.Error ("Event does not have timing info: " + evt);
 			}
@@ -637,13 +650,13 @@ namespace LongoMatch.Services
 
 			/* Select the start of the element if it's a regular play */
 			if (loadedEvent != null) {
-				Seek (loadedEvent.Start, true);
+				Seek (new Time (0), true);
 			} else if (loadedPlaylistElement != null) {
 				/* Select the start of the element if we haven't played 500ms, unless forced */
 				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
 					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
 					if ((CurrentTime - play.Start).MSeconds > 500) {
-						InternalSeek (play.Start, true);
+						Seek (new Time (0), true);
 						return;
 					}
 				}
@@ -732,6 +745,7 @@ namespace LongoMatch.Services
 		{
 			if (PlaybackStateChangedEvent != null && !disposed) {
 				PlaybackStateChangedEvent (sender, playing);
+				Config.EventsBroker.EmitPlaybackStateChanged (sender, playing);
 			}
 		}
 
@@ -896,10 +910,10 @@ namespace LongoMatch.Services
 				}
 			}
 			if (seek) {
-				InternalSeek (new Time (0), true);
+				AbsoluteSeek (new Time (0), true);
 			}
 			if (play) {
-				player.Play ();
+				Play ();
 			}
 		}
 
@@ -980,7 +994,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Player is ready to seek, seeking to " +
 				seekTime.ToMSecondsString ());
 				SetRate (rate);
-				InternalSeek (seekTime, true);
+				AbsoluteSeek (seekTime, true);
 				if (playing) {
 					Play ();
 				}
@@ -995,27 +1009,33 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void LoadStillImage (PlaylistImage image)
+		void LoadStillImage (PlaylistImage image, bool playing)
 		{
+			Reset ();
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
-			Play ();
+			if (playing) {
+				Play ();
+			}
 		}
 
-		void LoadFrameDrawing (PlaylistDrawing drawing)
+		void LoadFrameDrawing (PlaylistDrawing drawing, bool playing)
 		{
 			loadedPlaylistElement = drawing;
 			StillImageLoaded = true;
+			if (playing) {
+				Play ();
+			}
 		}
 
-		void LoadVideo (PlaylistVideo video)
+		void LoadVideo (PlaylistVideo video, bool playing)
 		{
 			loadedPlaylistElement = video;
 			MediaFileSet fileSet = new MediaFileSet ();
 			fileSet.Add (video.File);
 			EmitLoadDrawings (null);
 			UpdateCamerasConfig (new ObservableCollection<CameraConfig> { new CameraConfig (0) }, null);
-			InternalOpen (fileSet, false, true, true);
+			InternalOpen (fileSet, true, true, playing);
 		}
 
 		void LoadPlayDrawing (FrameDrawing drawing)
@@ -1040,7 +1060,7 @@ namespace LongoMatch.Services
 			}
 			Log.Debug (String.Format ("Stepping {0} seconds from {1} to {2}",
 				step, CurrentTime, pos));
-			InternalSeek (pos, true);
+			AbsoluteSeek (pos, true);
 		}
 
 		/// <summary>
@@ -1088,7 +1108,16 @@ namespace LongoMatch.Services
 		bool Tick ()
 		{
 			if (StillImageLoaded) {
-				EmitTimeChanged (imageLoadedTS, loadedPlaylistElement.Duration);
+				Time relativeTime = imageLoadedTS;
+				Time duration = loadedPlaylistElement.Duration;
+
+				if (PresentationMode) {
+					relativeTime += LoadedPlaylist.GetCurrentStartTime ();
+					duration = LoadedPlaylist.Duration;
+				}
+
+				EmitTimeChanged (relativeTime, duration);
+
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
 					Pause ();
 					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
@@ -1098,13 +1127,17 @@ namespace LongoMatch.Services
 				return true;
 			} else {
 				Time currentTime = CurrentTime;
+				Time relativeTime = currentTime;
+				Time duration = null;
+				if (PresentationMode) {
+					relativeTime += LoadedPlaylist.GetCurrentStartTime ();
+					duration = LoadedPlaylist.Duration;
+				}
 
 				if (SegmentLoaded) {
-					Time relativeTime = currentTime - loadedSegment.Start;
-					Time duration = loadedSegment.Stop - loadedSegment.Start;
-					if (PresentationMode) {
-						relativeTime += LoadedPlaylist.GetCurrentStartTime ();
-						duration = LoadedPlaylist.Duration;
+					relativeTime -= loadedSegment.Start;
+					if (duration == null) {
+						duration = loadedSegment.Stop - loadedSegment.Start;
 					}
 
 					EmitTimeChanged (relativeTime, duration);
@@ -1126,7 +1159,10 @@ namespace LongoMatch.Services
 						}
 					}
 				} else {
-					EmitTimeChanged (currentTime, streamLength);
+					if (duration == null) {
+						duration = streamLength;
+					}
+					EmitTimeChanged (relativeTime, duration);
 				}
 				videoTS = currentTime;
 
@@ -1189,7 +1225,7 @@ namespace LongoMatch.Services
 						Log.Debug ("Seeking back to 0");
 						position = new Time (0);
 					}
-					InternalSeek (position, true);
+					AbsoluteSeek (position, true);
 					Pause ();
 				}
 			});
@@ -1236,7 +1272,7 @@ namespace LongoMatch.Services
 				}
 				if (type == SeekType.Accurate || type == SeekType.Keyframe) {
 					SetRate (rate);
-					Seek (start, type == SeekType.Accurate, false, false);
+					AbsoluteSeek (start, type == SeekType.Accurate, false, false);
 				}
 			});
 		}

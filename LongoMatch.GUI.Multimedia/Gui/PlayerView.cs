@@ -136,13 +136,24 @@ namespace LongoMatch.Gui
 				return player;
 			}
 			set {
+				if (player != null) {
+					player.ElementLoadedEvent -= HandleElementLoadedEvent;
+					player.LoadDrawingsEvent -= HandleLoadDrawingsEvent;
+					player.PlaybackRateChangedEvent -= HandlePlaybackRateChangedEvent;
+					player.PlaybackStateChangedEvent -= HandlePlaybackStateChangedEvent;
+					player.TimeChangedEvent -= HandleTimeChangedEvent;
+					player.VolumeChangedEvent -= HandleVolumeChangedEvent;
+				}
 				player = value;
-				player.ElementLoadedEvent += HandleElementLoadedEvent;
-				player.LoadDrawingsEvent += HandleLoadDrawingsEvent;
-				player.PlaybackRateChangedEvent += HandlePlaybackRateChangedEvent;
-				player.PlaybackStateChangedEvent += HandlePlaybackStateChangedEvent;
-				player.TimeChangedEvent += HandleTimeChangedEvent;
-				player.VolumeChangedEvent += HandleVolumeChangedEvent;
+				if (player != null) {
+					player.ElementLoadedEvent += HandleElementLoadedEvent;
+					player.LoadDrawingsEvent += HandleLoadDrawingsEvent;
+					player.PlaybackRateChangedEvent += HandlePlaybackRateChangedEvent;
+					player.PlaybackStateChangedEvent += HandlePlaybackStateChangedEvent;
+					player.TimeChangedEvent += HandleTimeChangedEvent;
+					player.VolumeChangedEvent += HandleVolumeChangedEvent;
+				}
+
 			}
 		}
 

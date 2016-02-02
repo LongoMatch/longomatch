@@ -19,15 +19,13 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Multimedia.Utils;
-using Mono.Unix;
 using Image = LongoMatch.Core.Common.Image;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 

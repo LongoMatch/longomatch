@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Drawables;
@@ -40,6 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time currentTime;
 		Time duration;
+		IPlayerController player;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -50,10 +52,19 @@ namespace LongoMatch.Drawing.Widgets
 			AdjustSizeToDuration = false;
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
+			Accuracy = 5.0f;
 		}
 
 		public Timerule () : this (null)
 		{
+		}
+
+		protected override void Dispose (bool disposing)
+		{
+			if (disposing) {
+				Player = null;
+			}
+			base.Dispose (disposing);
 		}
 
 		public double Scroll {
@@ -112,6 +123,21 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
+		public IPlayerController Player {
+			get {
+				return player;
+			}
+			set {
+				if (player != null) {
+					player.PlaybackStateChangedEvent -= HandlePlaybackStateChanged;
+				}
+				player = value;
+				if (player != null) {
+					player.PlaybackStateChangedEvent += HandlePlaybackStateChanged;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Flag to set the mode to AdjustSizeToDuration.
 		/// AdjustSizeToDuration mode means that the timerule area will include the whole duration, without scroll.
@@ -131,8 +157,19 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
+		bool PlayingState {
+			get;
+			set;
+		}
+
+		bool WasPlaying {
+			get;
+			set;
+		}
+
 		protected override void StartMove (Selection sel)
 		{
+			WasPlaying = PlayingState;
 			Config.EventsBroker.EmitTogglePlayEvent (false);
 		}
 
@@ -144,7 +181,7 @@ namespace LongoMatch.Drawing.Widgets
 						true);
 				}
 			}
-			Config.EventsBroker.EmitTogglePlayEvent (true);
+			Config.EventsBroker.EmitTogglePlayEvent (WasPlaying);
 		}
 
 		protected override void SelectionMoved (Selection sel)
@@ -152,7 +189,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (ContinuousSeek) {
 				if (SeekEvent != null) {
 					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
-						false);
+						false, throttled: true);
 				}
 			}
 		}
@@ -178,10 +215,13 @@ namespace LongoMatch.Drawing.Widgets
 			if (Selections.Any ()) {
 				if (CenterPlayheadClicked != null) {
 					CenterPlayheadClicked (this, new EventArgs ());
-				} else {
-					Log.Error ("There is no handler for Timerule CenterPlayhead events");
 				}
 			}
+		}
+
+		void HandlePlaybackStateChanged (object sender, bool playing)
+		{
+			PlayingState = playing;
 		}
 
 		public override void Draw (IContext context, Area area)

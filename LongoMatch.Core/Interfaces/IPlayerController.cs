@@ -167,7 +167,15 @@ namespace LongoMatch.Core.Interfaces
 		void UnloadCurrentEvent ();
 
 		/// <summary>
-		/// Seek the specified absolute position.
+		/// Seek the specified position. This position should be relative to whatever is loaded.
+		/// There are 3 options:
+		/// - Playing a video, no events loaded -> A seek needs to be relative
+		/// 	to the video file, no adjustments needed.
+		/// - Playing a loaded event (a presentation event or a single event)
+		///  -> A seek needs to be relative to the current event.
+		/// 	Event start is Time(0)
+		/// - Playing a playlist (with presentationMode on) -> A seek needs to
+		/// 	be relative to the full playlist duration.
 		/// </summary>
 		/// <param name="time">The position to seek to.</param>
 		/// <param name="accurate">If set to <c>true</c> performs an accurate, otherwise a keyframe seek.</param>

@@ -147,6 +147,31 @@ namespace Tests.Core.Store
 				File.Delete (path);
 			}
 		}
+
+		[Test ()]
+		public void TestNotEquals ()
+		{
+			MediaFileSet mf = new MediaFileSet ();
+			MediaFileSet mf2 = new MediaFileSet ();
+
+			#warning Nunit's AreEqual doesn't call the Equals method of MediaFileSet
+			Assert.AreEqual (mf, mf2);
+
+			Assert.IsFalse (mf.Equals (mf2));
+		}
+
+		[Test ()]
+		public void TestEquals ()
+		{
+			MediaFileSet mf = new MediaFileSet ();
+			MediaFileSet mf2 = new MediaFileSet ();
+			mf2.ID = mf.ID;
+
+			#warning Nunit's AreEqual doesn't call the Equals method of MediaFileSet
+			Assert.AreEqual (mf, mf2);
+
+			Assert.IsTrue (mf.Equals (mf2));
+		}
 	}
 }
 

@@ -25,7 +25,7 @@ using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using Mono.Unix;
+using LongoMatch.Core;
 using Pango;
 using System.Collections.ObjectModel;
 
@@ -107,6 +107,7 @@ namespace LongoMatch.Gui.Component
 
 			// Listen for seek events from the timerule
 			timerule.SeekEvent += HandleTimeruleSeek;
+			timerule.Player = main_cam_playerbin.Player;
 			Config.EventsBroker.SeekEvent += Seek;
 			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;

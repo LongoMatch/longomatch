@@ -19,13 +19,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -42,6 +43,7 @@ namespace LongoMatch.Gui.Component
 		PlaysMenu menu;
 		Project project;
 		PeriodsMenu periodsmenu;
+		IPlayerController player;
 
 		public Timeline ()
 		{
@@ -105,6 +107,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public IPlayerController Player {
+			get {
+				return player;
+			}
+			set {
+				player = value;
+				timerule.Player = player;
+			}
+		}
+
 		public void Fit ()
 		{
 			focusbutton.Click ();
@@ -138,8 +150,8 @@ namespace LongoMatch.Gui.Component
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 			focusscale.Value = 6;
-			// Can throw an exception if there are no files in set
-			timerule.Duration = project.Description.FileSet.First ().Duration;
+			timerule.Duration = project.Description.FileSet.Duration;
+
 			timeline.ShowMenuEvent += HandleShowMenu;
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
 			timeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
@@ -264,6 +276,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
+			Config.EventsBroker.EmitLoadEvent (null);
 			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
 		}
 	}

@@ -134,7 +134,7 @@ namespace LongoMatch.Services
 				Player.Play ();
 			} else {
 				if (play != null) {
-					LoadPlay (play, play.Start, true);
+					LoadPlay (play, new Time (0), true);
 				} else if (Player != null) {
 					Player.UnloadCurrentEvent ();
 				}

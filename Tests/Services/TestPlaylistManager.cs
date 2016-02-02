@@ -199,7 +199,7 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
-			mockPlayerController.Verify (player => player.LoadEvent (element, element.Start, true), Times.Once ());
+			mockPlayerController.Verify (player => player.LoadEvent (element, new Time (0), true), Times.Once ());
 
 			Assert.IsTrue (eventLoaded);
 
