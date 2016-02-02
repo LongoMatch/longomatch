@@ -2,6 +2,8 @@ iconsdir = @datadir@/@PACKAGE@/icons
 nobase_dist_icons_DATA = Makefile.am \
 	hicolor/index.theme \
 	hicolor/scalable/actions/longomat-project.svg \
+	hicolor/scalable/actions/longomatch-add-data.svg \
+	hicolor/scalable/actions/longomatch-add.svg \
 	hicolor/scalable/actions/longomatch-alert.svg \
 	hicolor/scalable/actions/longomatch-angle.svg \
 	hicolor/scalable/actions/longomatch-apply-button.svg \
@@ -43,10 +45,12 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-delete.svg \
 	hicolor/scalable/actions/longomatch-down-arrow.svg \
 	hicolor/scalable/actions/longomatch-eraser.svg \
+	hicolor/scalable/actions/longomatch-export.svg \
 	hicolor/scalable/actions/longomatch-eye.svg \
 	hicolor/scalable/actions/longomatch-field-full.svg \
 	hicolor/scalable/actions/longomatch-field-goal.svg \
 	hicolor/scalable/actions/longomatch-field-half.svg \
+	hicolor/scalable/actions/longomatch-import.svg \
 	hicolor/scalable/actions/longomatch-link-active.svg \
 	hicolor/scalable/actions/longomatch-link-disabled.svg \
 	hicolor/scalable/actions/longomatch-link-in-prelight.svg \
@@ -55,11 +59,10 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-link-out.svg \
 	hicolor/scalable/actions/longomatch-live.svg \
 	hicolor/scalable/actions/longomatch-mark.svg \
+	hicolor/scalable/actions/longomatch-open.svg \
 	hicolor/scalable/actions/longomatch-pause-clock.svg \
 	hicolor/scalable/actions/longomatch-pencil.svg \
 	hicolor/scalable/actions/longomatch-person.svg \
-	hicolor/scalable/actions/longomatch-player-add.svg \
-	hicolor/scalable/actions/longomatch-player-delete.svg \
 	hicolor/scalable/actions/longomatch-player-header.svg \
 	hicolor/scalable/actions/longomatch-player-pic.svg \
 	hicolor/scalable/actions/longomatch-player-swap-lock.svg \
@@ -68,21 +71,13 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-plugin.svg \
 	hicolor/scalable/actions/longomatch-popup.svg \
 	hicolor/scalable/actions/longomatch-preferences.svg \
-	hicolor/scalable/actions/longomatch-presentation-add.svg \
-	hicolor/scalable/actions/longomatch-presentation-delete.svg \
 	hicolor/scalable/actions/longomatch-presentation-duplicate.svg \
 	hicolor/scalable/actions/longomatch-presentation-header.svg \
-	hicolor/scalable/actions/longomatch-presentation-open.svg \
 	hicolor/scalable/actions/longomatch-presentation-save.svg \
 	hicolor/scalable/actions/longomatch-presentations-apply.svg \
 	hicolor/scalable/actions/longomatch-presentations-next.svg \
-	hicolor/scalable/actions/longomatch-project-delete.svg \
-	hicolor/scalable/actions/longomatch-project-export.svg \
-	hicolor/scalable/actions/longomatch-project-import.svg \
 	hicolor/scalable/actions/longomatch-project-new.svg \
-	hicolor/scalable/actions/longomatch-project-open.svg \
 	hicolor/scalable/actions/longomatch-project-resync.svg \
-	hicolor/scalable/actions/longomatch-project-save.svg \
 	hicolor/scalable/actions/longomatch-project.svg \
 	hicolor/scalable/actions/longomatch-record.svg \
 	hicolor/scalable/actions/longomatch-render.svg \
@@ -125,20 +120,11 @@ nobase_dist_icons_DATA = Makefile.am \
 	hicolor/scalable/actions/longomatch-tag-tag.svg \
 	hicolor/scalable/actions/longomatch-tag-timer.svg \
 	hicolor/scalable/actions/longomatch-tag.svg \
-	hicolor/scalable/actions/longomatch-team-add.svg \
 	hicolor/scalable/actions/longomatch-team-config.svg \
-	hicolor/scalable/actions/longomatch-team-delete.svg \
-	hicolor/scalable/actions/longomatch-team-export.svg \
 	hicolor/scalable/actions/longomatch-team-header.svg \
-	hicolor/scalable/actions/longomatch-team-save.svg \
 	hicolor/scalable/actions/longomatch-team-shield.svg \
-	hicolor/scalable/actions/longomatch-template-add.svg \
 	hicolor/scalable/actions/longomatch-template-config.svg \
-	hicolor/scalable/actions/longomatch-template-delete.svg \
-	hicolor/scalable/actions/longomatch-template-export.svg \
 	hicolor/scalable/actions/longomatch-template-header.svg \
-	hicolor/scalable/actions/longomatch-template-import.svg \
-	hicolor/scalable/actions/longomatch-template-save.svg \
 	hicolor/scalable/actions/longomatch-text.svg \
 	hicolor/scalable/actions/longomatch-timeline-needle-big.svg \
 	hicolor/scalable/actions/longomatch-timeline-needle-up.svg \

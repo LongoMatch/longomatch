@@ -119,6 +119,7 @@ nobase_dist_theme_DATA = Makefile.am \
 	gtk-2.0/entry.rc \
 	gtk-2.0/gtkrc \
 	gtk-2.0/handles.rc \
+	gtk-2.0/iconview.rc \
 	gtk-2.0/notebook.rc \
 	gtk-2.0/radiobutton.rc \
 	gtk-2.0/range.rc \
