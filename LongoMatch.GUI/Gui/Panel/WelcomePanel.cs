@@ -37,10 +37,10 @@ namespace LongoMatch.Gui.Panel
 				new Action (() => Config.EventsBroker.EmitNewProject (null))),
 			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
 				new Action (() => Config.EventsBroker.EmitOpenProject ())),
-			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
-				new Action (() => Config.EventsBroker.EmitManageProjects ())),
 			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
 				new Action (() => Config.EventsBroker.EmitImportProject ())),
+			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
+				new Action (() => Config.EventsBroker.EmitManageProjects ())),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
 				new Action (() => Config.EventsBroker.EmitManageTeams ())),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Panel
 
 		uint NRows {
 			get {
-				return (uint)Math.Ceiling ((double)buttons.Count / StyleConf.WelcomeIconsPerRow);
+				return (uint)StyleConf.WelcomeIconsTotalRows;
 			}
 		}
 
@@ -130,17 +130,13 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			int hboxRow = 0;
-			int column = 0;
 			for (uint i = 0; i < buttons.Count; i++) {
 				Widget b;
-				if (column >= StyleConf.WelcomeIconsPerRow) {
+				if (i >= StyleConf.WelcomeIconsFirstRow && hboxRow == 0) {
 					hboxRow++;
-					column = 0;
 				}
 				b = CreateButton (buttons [(int)i]);
 				hboxList [hboxRow].Add (b);
-				column++;
-
 			}
 
 			ShowAll ();

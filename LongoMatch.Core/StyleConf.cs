@@ -33,7 +33,8 @@ namespace LongoMatch.Core.Common
 		public const int WelcomeIconsVSpacing = 55;
 		public const int WelcomeIconsTextSpacing = 5;
 		public const int WelcomeIconsTextHeight = 20;
-		public const int WelcomeIconsPerRow = 4;
+		public const int WelcomeIconsTotalRows = 2;
+		public const int WelcomeIconsFirstRow = 3;
 		public const int WelcomeTextHeight = 20;
 		public const int WelcomeMinWidthBorder = 30;
 
