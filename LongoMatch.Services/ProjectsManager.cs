@@ -282,8 +282,6 @@ namespace LongoMatch.Services
 			if (save)
 				SaveProject (OpenedProject, OpenedProjectType);
 
-			if (OpenedProject != null)
-				OpenedProject.Clear ();
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
 			guiToolkit.CloseProject ();

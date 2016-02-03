@@ -195,6 +195,10 @@ namespace Tests.Services
 			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<Project> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
+			// Make sure the project is not cleared.
+			Assert.IsNotEmpty (projectsManager.OpenedProject.Dashboard.List);
+			Assert.IsNotEmpty (projectsManager.OpenedProject.LocalTeamTemplate.List);
+			Assert.IsNotEmpty (projectsManager.OpenedProject.VisitorTeamTemplate.List);
 		}
 
 		[Test ()]
