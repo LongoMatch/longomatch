@@ -315,6 +315,8 @@ namespace LongoMatch.DB
 				type = typeof(TimelineEvent);
 			} else if (storable is TeamTemplate) {
 				type = typeof(Team);
+			} else if (storable is Timer) {
+				type = typeof(Timer);
 			} else {
 				type = storable.GetType ();
 			}

@@ -28,19 +28,13 @@ namespace LongoMatch.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Timer: IChanged
+	public class Timer: StorableBase
 	{
 		public Timer ()
 		{
 			Nodes = new ObservableCollection<TimeNode> ();
 			Team = TeamType.NONE;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public bool IsChanged {
-			get;
-			set;
+			ID = Guid.NewGuid ();
 		}
 
 		public string Name {
