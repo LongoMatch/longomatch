@@ -221,9 +221,38 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()] 
-		[Ignore ("Not implemented")]
 		public void TestUpdateEventTypesAndTimers ()
 		{
+			Project p = new Project ();
+			p.Dashboard = Dashboard.DefaultTemplate (5);
+			Assert.AreEqual (0, p.Timers.Count);
+			Assert.AreEqual (0, p.EventTypes.Count);
+			p.UpdateEventTypesAndTimers ();
+			Assert.AreEqual (1, p.Timers.Count);
+			Assert.AreEqual (10, p.EventTypes.Count);
+
+			// Delete a category button with no events
+			p.Dashboard.List.Remove (p.Dashboard.List.OfType<AnalysisEventButton> ().First ());
+			p.UpdateEventTypesAndTimers ();
+			Assert.AreEqual (1, p.Timers.Count);
+			Assert.AreEqual (9, p.EventTypes.Count);
+
+			// Delete a category button with events in the timeline
+			AnalysisEventButton button = p.Dashboard.List.OfType<AnalysisEventButton> ().First ();
+			p.Timeline.Add (new TimelineEvent { EventType = button.EventType });
+			p.UpdateEventTypesAndTimers ();
+			Assert.AreEqual (1, p.Timers.Count);
+			Assert.AreEqual (9, p.EventTypes.Count);
+			p.Dashboard.List.Remove (button);
+			p.UpdateEventTypesAndTimers ();
+			Assert.AreEqual (1, p.Timers.Count);
+			Assert.AreEqual (9, p.EventTypes.Count);
+
+			// Remove the event from the timeline, the event type is no longuer in the dashboard or the timeline
+			p.Timeline.Clear ();
+			p.UpdateEventTypesAndTimers ();
+			Assert.AreEqual (1, p.Timers.Count);
+			Assert.AreEqual (8, p.EventTypes.Count);
 		}
 
 		[Test ()] 
