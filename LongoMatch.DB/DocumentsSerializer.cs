@@ -449,7 +449,7 @@ namespace LongoMatch.DB
 				storable = DocumentsSerializer.LoadObject (objectType, idStr, context.DB, context) as IStorable;
 				if (storable == null) {
 					throw new StorageException (
-						String.Format ("Referenced object with id: {0} was not found in the DB", id));
+						String.Format ("Referenced object of type {0} with id: {1} was not found in the DB", objectType, id));
 				}
 				context.Cache.AddReference (storable);
 			}
