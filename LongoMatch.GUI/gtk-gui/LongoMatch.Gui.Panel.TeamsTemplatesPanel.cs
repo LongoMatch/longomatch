@@ -30,6 +30,10 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Image newteamimage;
 		
+		private global::Gtk.Button saveteambutton;
+		
+		private global::Gtk.Image saveteamimage;
+		
 		private global::Gtk.Button exportteambutton;
 		
 		private global::Gtk.Image exportteamimage;
@@ -37,10 +41,6 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Button deleteteambutton;
 		
 		private global::Gtk.Image deleteteamimage;
-		
-		private global::Gtk.Button saveteambutton;
-		
-		private global::Gtk.Image saveteamimage;
 		
 		private global::Gtk.Image vseparatorimage;
 		
@@ -158,6 +158,21 @@ namespace LongoMatch.Gui.Panel
 			w7.Expand = false;
 			w7.Fill = false;
 			// Container child hbox8.Gtk.Box+BoxChild
+			this.saveteambutton = new global::Gtk.Button ();
+			this.saveteambutton.CanFocus = true;
+			this.saveteambutton.Name = "saveteambutton";
+			// Container child saveteambutton.Gtk.Container+ContainerChild
+			this.saveteamimage = new global::Gtk.Image ();
+			this.saveteamimage.Name = "saveteamimage";
+			this.saveteamimage.Xpad = 5;
+			this.saveteamimage.Ypad = 5;
+			this.saveteambutton.Add (this.saveteamimage);
+			this.hbox8.Add (this.saveteambutton);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.saveteambutton]));
+			w9.Position = 1;
+			w9.Expand = false;
+			w9.Fill = false;
+			// Container child hbox8.Gtk.Box+BoxChild
 			this.exportteambutton = new global::Gtk.Button ();
 			this.exportteambutton.CanFocus = true;
 			this.exportteambutton.Name = "exportteambutton";
@@ -168,10 +183,10 @@ namespace LongoMatch.Gui.Panel
 			this.exportteamimage.Ypad = 5;
 			this.exportteambutton.Add (this.exportteamimage);
 			this.hbox8.Add (this.exportteambutton);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.exportteambutton]));
-			w9.Position = 1;
-			w9.Expand = false;
-			w9.Fill = false;
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.exportteambutton]));
+			w11.Position = 2;
+			w11.Expand = false;
+			w11.Fill = false;
 			// Container child hbox8.Gtk.Box+BoxChild
 			this.deleteteambutton = new global::Gtk.Button ();
 			this.deleteteambutton.CanFocus = true;
@@ -183,22 +198,7 @@ namespace LongoMatch.Gui.Panel
 			this.deleteteamimage.Ypad = 5;
 			this.deleteteambutton.Add (this.deleteteamimage);
 			this.hbox8.Add (this.deleteteambutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.deleteteambutton]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
-			// Container child hbox8.Gtk.Box+BoxChild
-			this.saveteambutton = new global::Gtk.Button ();
-			this.saveteambutton.CanFocus = true;
-			this.saveteambutton.Name = "saveteambutton";
-			// Container child saveteambutton.Gtk.Container+ContainerChild
-			this.saveteamimage = new global::Gtk.Image ();
-			this.saveteamimage.Name = "saveteamimage";
-			this.saveteamimage.Xpad = 5;
-			this.saveteamimage.Ypad = 5;
-			this.saveteambutton.Add (this.saveteamimage);
-			this.hbox8.Add (this.saveteambutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.saveteambutton]));
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.deleteteambutton]));
 			w13.Position = 3;
 			w13.Expand = false;
 			w13.Fill = false;

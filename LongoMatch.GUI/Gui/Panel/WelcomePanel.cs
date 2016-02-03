@@ -117,16 +117,16 @@ namespace LongoMatch.Gui.Panel
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;
 
 			//Adding the title
-			HBox boxTitle = new HBox ();
-			boxTitle.Add (logoImage);
-			vbox2.Add (boxTitle);
+			vbox2.Add (logoImage);
 
 			//Create necessary Hboxes for all icons
 			List<HBox> hboxList = new List<HBox> ();
 
 			for (int i = 0; i < NRows; i++) {
+				Alignment al = new Alignment (0.5F, 0.5F, 0, 0);
 				hboxList.Add (new HBox (true, StyleConf.WelcomeIconsHSpacing));
-				vbox2.Add (hboxList [i]);
+				al.Add (hboxList [i]);
+				vbox2.Add (al);
 			}
 
 			int hboxRow = 0;
