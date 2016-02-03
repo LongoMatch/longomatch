@@ -24,5 +24,6 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
   </ItemGroup>
 </Project>

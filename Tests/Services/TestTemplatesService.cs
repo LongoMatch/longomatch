@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Specialized;
 using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -137,16 +138,24 @@ namespace Tests.Services
 		[Test ()]
 		public void TestCopy ()
 		{
+			bool eventEmitted = false;
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
+			provider.CollectionChanged += (sender, e) => {
+				if (e.Action == NotifyCollectionChangedAction.Add && ((Dashboard)e.NewItems [0]).Name == "NEW") {
+					eventEmitted = true;
+				}
+			};
 			provider.Copy (provider.Templates [0], "NEW");
 			Assert.AreEqual (2, provider.Templates.Count);
 			Assert.IsNotNull (provider.Exists ("NEW"));
 			Assert.DoesNotThrow (() => provider.Copy (Dashboard.DefaultTemplate (5), "NEW"));
+			Assert.IsTrue (eventEmitted);
 		}
 
 		[Test ()]
 		public void TestDelete ()
 		{
+			bool eventEmitted = false;
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.AreEqual (1, provider.Templates.Count);
 			// Template does not exists
@@ -157,18 +166,48 @@ namespace Tests.Services
 			d.Name = "jamematen";
 			provider.Save (d);
 			Assert.AreEqual (2, provider.Templates.Count);
+			provider.CollectionChanged += (sender, e) => {
+				if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems [0] == d) {
+					eventEmitted = true;
+				}
+			};
 			provider.Delete (d);
 			Assert.AreEqual (1, provider.Templates.Count);
 			Assert.IsFalse (provider.Exists (d.Name));
+			Assert.IsTrue (eventEmitted);
 		}
 
 		[Test ()]
 		public void TestCreate ()
 		{
+			bool eventEmitted = false;
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
+			provider.CollectionChanged += (sender, e) => {
+				if (e.Action == NotifyCollectionChangedAction.Add && ((Dashboard)e.NewItems [0]).Name == "jamematen") {
+					eventEmitted = true;
+				}
+			};
 			provider.Create ("jamematen");
 			Assert.AreEqual (2, provider.Templates.Count);
 			Assert.IsTrue (provider.Exists ("jamematen"));
+			Assert.IsTrue (eventEmitted);
+		}
+
+		[Test]
+		public void TestAdd ()
+		{
+			bool eventEmitted = false;
+			var dashboard = Dashboard.DefaultTemplate (5);
+			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
+			Assert.AreEqual (1, provider.Templates.Count);
+			provider.CollectionChanged += (sender, e) => {
+				if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems [0] == dashboard) {
+					eventEmitted = true;
+				}
+			};
+			provider.Add (dashboard);
+			Assert.AreEqual (2, provider.Templates.Count);
+			Assert.IsTrue (eventEmitted);
 		}
 	}
 }

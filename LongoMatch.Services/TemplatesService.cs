@@ -17,12 +17,14 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
@@ -82,6 +84,8 @@ namespace LongoMatch.Services
 
 	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate<T>
 	{
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+
 		readonly MethodInfo methodDefaultTemplate;
 		protected List<T> systemTemplates;
 		IStorage storage;
@@ -138,7 +142,31 @@ namespace LongoMatch.Services
 
 		public void Register (T template)
 		{
+			Log.Information ("Registering new template " + template.Name);
 			systemTemplates.Add (template);
+			if (CollectionChanged != null) {
+				CollectionChanged (this,
+					new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template));
+			}
+		}
+
+		public void Add (T template)
+		{
+			Log.Information ("Adding new template " + template.Name);
+			try {
+				NotifyCollectionChangedAction action = NotifyCollectionChangedAction.Add;
+
+				if (storage.Retrieve<T> (template.ID) != null) {
+					action = NotifyCollectionChangedAction.Replace;
+				}
+				storage.Store (template, true);
+				if (CollectionChanged != null) {
+					CollectionChanged (this,
+						new NotifyCollectionChangedEventArgs (action, template));
+				}
+			} catch (StorageException ex) {
+				Config.GUIToolkit.ErrorMessage (ex.Message);
+			}
 		}
 
 		public void Copy (T template, string newName)
@@ -147,7 +175,7 @@ namespace LongoMatch.Services
 			Log.Information (String.Format ("Copying template {0} to {1}", template.Name, newName));
 
 			template = template.Copy (newName);
-			Save (template);
+			Add (template);
 		}
 
 		public void Delete (T template)
@@ -159,6 +187,10 @@ namespace LongoMatch.Services
 			}
 			try {
 				storage.Delete<T> (template);
+				if (CollectionChanged != null) {
+					CollectionChanged (this,
+						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Remove, template));
+				}
 			} catch (StorageException ex) {
 				Config.GUIToolkit.ErrorMessage (ex.Message);
 			}

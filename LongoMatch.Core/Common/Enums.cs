@@ -528,4 +528,16 @@ namespace LongoMatch.Core.Common
 		iOS,
 		Android,
 	}
+
+	public enum FileChangeType
+	{
+		/// <summary>
+		/// A new file is added.
+		/// </summary>
+		Created,
+		/// <summary>
+		/// An existing file is deleted.
+		/// </summary>
+		Deleted,
+	}
 }
