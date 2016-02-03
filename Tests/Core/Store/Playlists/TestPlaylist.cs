@@ -16,9 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using LongoMatch.Core.Store.Playlists;
+using System.Collections.ObjectModel;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Playlists;
+using NUnit.Framework;
 
 namespace Tests.Core.Store.Playlists
 {
@@ -66,6 +68,10 @@ namespace Tests.Core.Store.Playlists
 		public void TestDuration ()
 		{
 			Playlist pl = new Playlist ();
+			pl.IsLoaded = false;
+			Assert.AreEqual (new Time (0), pl.Duration);
+			Assert.IsFalse (pl.IsLoaded);
+			pl.IsLoaded = true;
 			var event1 = new TimelineEvent ();
 			event1.Start = new Time (10);
 			event1.Stop = new Time (20);
@@ -88,6 +94,8 @@ namespace Tests.Core.Store.Playlists
 
 			Assert.AreEqual (new Time (10 + 20 + 40), pl.Duration);
 
+			pl.Elements = new ObservableCollection<IPlaylistElement> ();
+			Assert.AreEqual (new Time (0), pl.Duration);
 		}
 
 		[Test ()]

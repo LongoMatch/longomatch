@@ -28,6 +28,7 @@ namespace LongoMatch.Core.Store.Playlists
 	{
 		public PlaylistDrawing (FrameDrawing drawing)
 		{
+			Duration = new Time (0);
 			Drawing = drawing;
 		}
 

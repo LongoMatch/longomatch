@@ -65,6 +65,7 @@ namespace LongoMatch.Core.Store.Playlists
 				if (elements != null) {
 					elements.CollectionChanged += ListChanged;
 				}
+				UpdateDuration ();
 			}
 		}
 
@@ -96,9 +97,8 @@ namespace LongoMatch.Core.Store.Playlists
 		[JsonIgnore]
 		[LongoMatchPropertyPreload]
 		public Time Duration {
-			get {
-				return new Time (Elements.Sum (elem => elem.Duration.MSeconds));
-			}
+			get;
+			set;
 		}
 
 		#endregion
@@ -213,9 +213,19 @@ namespace LongoMatch.Core.Store.Playlists
 
 		#endregion
 
+		void UpdateDuration ()
+		{
+			if (Elements != null && Elements.Count > 0) {
+				Duration = new Time (Elements.Sum (elem => elem.Duration.MSeconds));
+			} else {
+				Duration = new Time (0);
+			}
+		}
+
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;
+			UpdateDuration ();
 		}
 	}
 }
