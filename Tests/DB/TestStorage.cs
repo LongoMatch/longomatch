@@ -416,7 +416,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (15, db.DocumentCount);
+			Assert.AreEqual (16, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -526,14 +526,14 @@ namespace Tests.DB
 			p.AddEvent (new TimelineEvent ());
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (43, db.DocumentCount);
+			Assert.AreEqual (44, db.DocumentCount);
 
 			p = storage.RetrieveAll<Project> ().First ();
 			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
 			Assert.IsTrue (Object.ReferenceEquals (p.Description.FileSet, p.Timeline [0].FileSet));
 			storage.Store (p);
-			Assert.AreEqual (43, db.DocumentCount);
+			Assert.AreEqual (44, db.DocumentCount);
 
 			storage.Delete (p);
 			Assert.AreEqual (0, db.DocumentCount);
@@ -566,9 +566,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (52, db.DocumentCount);
+			Assert.AreEqual (53, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (52, db.DocumentCount);
+			Assert.AreEqual (53, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
