@@ -8,10 +8,8 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-    </itemgroups>
-    <signals>
-    </signals>
+    <itemgroups></itemgroups>
+    <signals></signals>
   </object>
   <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
