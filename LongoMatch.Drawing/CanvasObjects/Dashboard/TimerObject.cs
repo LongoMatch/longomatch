@@ -124,6 +124,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public override void ClickReleased ()
 		{
+			if (Mode == DashboardMode.Edit) {
+				return;
+			}
 			base.ClickReleased ();
 			if (Button.StartTime == null) {
 				Log.Debug ("Start timer at " + CurrentTime.ToMSecondsString ());
