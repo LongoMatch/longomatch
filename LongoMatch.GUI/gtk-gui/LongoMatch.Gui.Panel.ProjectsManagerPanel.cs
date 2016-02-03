@@ -64,21 +64,21 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.HButtonBox hbuttonbox1;
 		
-		private global::Gtk.Button savebutton;
-		
-		private global::Gtk.Image savebuttonimage;
-		
 		private global::Gtk.Button openbutton;
 		
 		private global::Gtk.Image openbuttonimage;
 		
-		private global::Gtk.Button resyncbutton;
+		private global::Gtk.Button savebutton;
 		
-		private global::Gtk.Image resyncbuttonimage;
+		private global::Gtk.Image savebuttonimage;
 		
 		private global::Gtk.Button exportbutton;
 		
 		private global::Gtk.Image exportbuttonimage;
+		
+		private global::Gtk.Button resyncbutton;
+		
+		private global::Gtk.Image resyncbuttonimage;
 		
 		private global::Gtk.Button deletebutton;
 		
@@ -336,20 +336,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child rbox.Gtk.Box+BoxChild
 			this.hbuttonbox1 = new global::Gtk.HButtonBox ();
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
-			this.savebutton = new global::Gtk.Button ();
-			this.savebutton.TooltipMarkup = "Save";
-			this.savebutton.Sensitive = false;
-			this.savebutton.CanFocus = true;
-			this.savebutton.Name = "savebutton";
-			// Container child savebutton.Gtk.Container+ContainerChild
-			this.savebuttonimage = new global::Gtk.Image ();
-			this.savebuttonimage.Name = "savebuttonimage";
-			this.savebutton.Add (this.savebuttonimage);
-			this.hbuttonbox1.Add (this.savebutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.savebutton]));
-			w27.Expand = false;
-			w27.Fill = false;
-			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.openbutton = new global::Gtk.Button ();
 			this.openbutton.TooltipMarkup = "Open";
 			this.openbutton.Sensitive = false;
@@ -360,25 +346,24 @@ namespace LongoMatch.Gui.Panel
 			this.openbuttonimage.Name = "openbuttonimage";
 			this.openbutton.Add (this.openbuttonimage);
 			this.hbuttonbox1.Add (this.openbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w29 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.openbutton]));
+			global::Gtk.ButtonBox.ButtonBoxChild w27 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.openbutton]));
+			w27.Expand = false;
+			w27.Fill = false;
+			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+			this.savebutton = new global::Gtk.Button ();
+			this.savebutton.TooltipMarkup = "Save";
+			this.savebutton.Sensitive = false;
+			this.savebutton.CanFocus = true;
+			this.savebutton.Name = "savebutton";
+			// Container child savebutton.Gtk.Container+ContainerChild
+			this.savebuttonimage = new global::Gtk.Image ();
+			this.savebuttonimage.Name = "savebuttonimage";
+			this.savebutton.Add (this.savebuttonimage);
+			this.hbuttonbox1.Add (this.savebutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w29 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.savebutton]));
 			w29.Position = 1;
 			w29.Expand = false;
 			w29.Fill = false;
-			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
-			this.resyncbutton = new global::Gtk.Button ();
-			this.resyncbutton.TooltipMarkup = "Adjust periods and secondary videos synchronisation";
-			this.resyncbutton.Sensitive = false;
-			this.resyncbutton.CanFocus = true;
-			this.resyncbutton.Name = "resyncbutton";
-			// Container child resyncbutton.Gtk.Container+ContainerChild
-			this.resyncbuttonimage = new global::Gtk.Image ();
-			this.resyncbuttonimage.Name = "resyncbuttonimage";
-			this.resyncbutton.Add (this.resyncbuttonimage);
-			this.hbuttonbox1.Add (this.resyncbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.resyncbutton]));
-			w31.Position = 2;
-			w31.Expand = false;
-			w31.Fill = false;
 			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
 			this.exportbutton = new global::Gtk.Button ();
 			this.exportbutton.TooltipMarkup = "Export";
@@ -390,7 +375,22 @@ namespace LongoMatch.Gui.Panel
 			this.exportbuttonimage.Name = "exportbuttonimage";
 			this.exportbutton.Add (this.exportbuttonimage);
 			this.hbuttonbox1.Add (this.exportbutton);
-			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
+			global::Gtk.ButtonBox.ButtonBoxChild w31 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.exportbutton]));
+			w31.Position = 2;
+			w31.Expand = false;
+			w31.Fill = false;
+			// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+			this.resyncbutton = new global::Gtk.Button ();
+			this.resyncbutton.TooltipMarkup = "Adjust periods and secondary videos synchronisation";
+			this.resyncbutton.Sensitive = false;
+			this.resyncbutton.CanFocus = true;
+			this.resyncbutton.Name = "resyncbutton";
+			// Container child resyncbutton.Gtk.Container+ContainerChild
+			this.resyncbuttonimage = new global::Gtk.Image ();
+			this.resyncbuttonimage.Name = "resyncbuttonimage";
+			this.resyncbutton.Add (this.resyncbuttonimage);
+			this.hbuttonbox1.Add (this.resyncbutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w33 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox1 [this.resyncbutton]));
 			w33.Position = 3;
 			w33.Expand = false;
 			w33.Fill = false;

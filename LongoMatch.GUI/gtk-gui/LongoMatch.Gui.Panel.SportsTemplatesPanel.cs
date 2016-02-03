@@ -34,6 +34,10 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.Image importtemplateimage;
 		
+		private global::Gtk.Button savetemplatebutton;
+		
+		private global::Gtk.Image savetemplateimage;
+		
 		private global::Gtk.Button exporttemplatebutton;
 		
 		private global::Gtk.Image exporttemplateimage;
@@ -41,10 +45,6 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Button deletetemplatebutton;
 		
 		private global::Gtk.Image deletetemplateimage;
-		
-		private global::Gtk.Button savetemplatebutton;
-		
-		private global::Gtk.Image savetemplateimage;
 		
 		private global::Gtk.Image vseparatorimage;
 		
@@ -190,6 +190,21 @@ namespace LongoMatch.Gui.Panel
 			w9.Expand = false;
 			w9.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
+			this.savetemplatebutton = new global::Gtk.Button ();
+			this.savetemplatebutton.CanFocus = true;
+			this.savetemplatebutton.Name = "savetemplatebutton";
+			// Container child savetemplatebutton.Gtk.Container+ContainerChild
+			this.savetemplateimage = new global::Gtk.Image ();
+			this.savetemplateimage.Name = "savetemplateimage";
+			this.savetemplateimage.Xpad = 5;
+			this.savetemplateimage.Ypad = 5;
+			this.savetemplatebutton.Add (this.savetemplateimage);
+			this.hbox3.Add (this.savetemplatebutton);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savetemplatebutton]));
+			w11.Position = 2;
+			w11.Expand = false;
+			w11.Fill = false;
+			// Container child hbox3.Gtk.Box+BoxChild
 			this.exporttemplatebutton = new global::Gtk.Button ();
 			this.exporttemplatebutton.CanFocus = true;
 			this.exporttemplatebutton.Name = "exporttemplatebutton";
@@ -200,10 +215,10 @@ namespace LongoMatch.Gui.Panel
 			this.exporttemplateimage.Ypad = 5;
 			this.exporttemplatebutton.Add (this.exporttemplateimage);
 			this.hbox3.Add (this.exporttemplatebutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.exporttemplatebutton]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.exporttemplatebutton]));
+			w13.Position = 3;
+			w13.Expand = false;
+			w13.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.deletetemplatebutton = new global::Gtk.Button ();
 			this.deletetemplatebutton.CanFocus = true;
@@ -215,22 +230,7 @@ namespace LongoMatch.Gui.Panel
 			this.deletetemplateimage.Ypad = 5;
 			this.deletetemplatebutton.Add (this.deletetemplateimage);
 			this.hbox3.Add (this.deletetemplatebutton);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.deletetemplatebutton]));
-			w13.Position = 3;
-			w13.Expand = false;
-			w13.Fill = false;
-			// Container child hbox3.Gtk.Box+BoxChild
-			this.savetemplatebutton = new global::Gtk.Button ();
-			this.savetemplatebutton.CanFocus = true;
-			this.savetemplatebutton.Name = "savetemplatebutton";
-			// Container child savetemplatebutton.Gtk.Container+ContainerChild
-			this.savetemplateimage = new global::Gtk.Image ();
-			this.savetemplateimage.Name = "savetemplateimage";
-			this.savetemplateimage.Xpad = 5;
-			this.savetemplateimage.Ypad = 5;
-			this.savetemplatebutton.Add (this.savetemplateimage);
-			this.hbox3.Add (this.savetemplatebutton);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.savetemplatebutton]));
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.deletetemplatebutton]));
 			w15.Position = 4;
 			w15.Expand = false;
 			w15.Fill = false;

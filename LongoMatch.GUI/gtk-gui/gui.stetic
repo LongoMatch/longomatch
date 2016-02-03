@@ -7308,7 +7308,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 622">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.TeamsTemplatesPanel" design-size="1325 634">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -7408,13 +7408,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="exportteambutton">
+                              <widget class="Gtk.Button" id="saveteambutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="exportteamimage">
+                                  <widget class="Gtk.Image" id="saveteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7429,13 +7429,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="deleteteambutton">
+                              <widget class="Gtk.Button" id="exportteambutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="deleteteamimage">
+                                  <widget class="Gtk.Image" id="exportteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -7450,13 +7450,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="saveteambutton">
+                              <widget class="Gtk.Button" id="deleteteambutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="saveteamimage">
+                                  <widget class="Gtk.Image" id="deleteteamimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -9013,24 +9013,6 @@ You can continue with the current capture, cancel it or save your project.
                                 <property name="MemberName" />
                                 <property name="Size">5</property>
                                 <child>
-                                  <widget class="Gtk.Button" id="savebutton">
-                                    <property name="MemberName" />
-                                    <property name="Sensitive">False</property>
-                                    <property name="Tooltip" translatable="yes">Save</property>
-                                    <property name="CanFocus">True</property>
-                                    <property name="Type">Custom</property>
-                                    <child>
-                                      <widget class="Gtk.Image" id="savebuttonimage">
-                                        <property name="MemberName" />
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="Expand">False</property>
-                                    <property name="Fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
                                   <widget class="Gtk.Button" id="openbutton">
                                     <property name="MemberName" />
                                     <property name="Sensitive">False</property>
@@ -9044,26 +9026,25 @@ You can continue with the current capture, cancel it or save your project.
                                     </child>
                                   </widget>
                                   <packing>
-                                    <property name="Position">1</property>
                                     <property name="Expand">False</property>
                                     <property name="Fill">False</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="Gtk.Button" id="resyncbutton">
+                                  <widget class="Gtk.Button" id="savebutton">
                                     <property name="MemberName" />
                                     <property name="Sensitive">False</property>
-                                    <property name="Tooltip" translatable="yes">Adjust periods and secondary videos synchronisation</property>
+                                    <property name="Tooltip" translatable="yes">Save</property>
                                     <property name="CanFocus">True</property>
                                     <property name="Type">Custom</property>
                                     <child>
-                                      <widget class="Gtk.Image" id="resyncbuttonimage">
+                                      <widget class="Gtk.Image" id="savebuttonimage">
                                         <property name="MemberName" />
                                       </widget>
                                     </child>
                                   </widget>
                                   <packing>
-                                    <property name="Position">2</property>
+                                    <property name="Position">1</property>
                                     <property name="Expand">False</property>
                                     <property name="Fill">False</property>
                                   </packing>
@@ -9077,6 +9058,25 @@ You can continue with the current capture, cancel it or save your project.
                                     <property name="Type">Custom</property>
                                     <child>
                                       <widget class="Gtk.Image" id="exportbuttonimage">
+                                        <property name="MemberName" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">2</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="resyncbutton">
+                                    <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
+                                    <property name="Tooltip" translatable="yes">Adjust periods and secondary videos synchronisation</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">Custom</property>
+                                    <child>
+                                      <widget class="Gtk.Image" id="resyncbuttonimage">
                                         <property name="MemberName" />
                                       </widget>
                                     </child>
@@ -9282,13 +9282,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="exporttemplatebutton">
+                              <widget class="Gtk.Button" id="savetemplatebutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="exporttemplateimage">
+                                  <widget class="Gtk.Image" id="savetemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -9303,13 +9303,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="deletetemplatebutton">
+                              <widget class="Gtk.Button" id="exporttemplatebutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="deletetemplateimage">
+                                  <widget class="Gtk.Image" id="exporttemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
@@ -9324,13 +9324,13 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Button" id="savetemplatebutton">
+                              <widget class="Gtk.Button" id="deletetemplatebutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
                                 <child>
-                                  <widget class="Gtk.Image" id="savetemplateimage">
+                                  <widget class="Gtk.Image" id="deletetemplateimage">
                                     <property name="MemberName" />
                                     <property name="Xpad">5</property>
                                     <property name="Ypad">5</property>
