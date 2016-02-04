@@ -122,6 +122,8 @@ AC_SUBST(CESARPLAYER_LIBS)
 AC_MSG_CHECKING([for the OS type])
 ostype=""
 
+XBUILD_CONSTANTS=HAVE_GTK
+
 case "$host" in
   *-*-mingw*|*-*-cygwin*)
     ostype=Windows
