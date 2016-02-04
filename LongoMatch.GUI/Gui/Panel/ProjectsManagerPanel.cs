@@ -258,9 +258,19 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleResyncClicked (object sender, EventArgs e)
 		{
-			notebook1.Page = 1;
-			// Load data in the project periods widget.
-			projectperiods1.Project = loadedProject;
+			bool canNavigate = true;
+			if (!loadedProject.Description.FileSet.CheckFiles ()) {
+				// Show message in order to load video.
+				// TODO: No salen los videos cargados
+				canNavigate = gkit.SelectMediaFiles (loadedProject.Description.FileSet);					
+			}
+
+			if (canNavigate) {
+				notebook1.Page = 1;
+
+				// Load data in the project periods widget.
+				projectperiods1.Project = loadedProject;
+			}
 		}
 
 		void HandleSaveClicked (object sender, EventArgs e)
