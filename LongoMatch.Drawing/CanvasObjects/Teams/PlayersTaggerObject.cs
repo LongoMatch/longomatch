@@ -573,16 +573,18 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			playerObjects = new List<PlayerObject> ();
 			foreach (Player p in players) {
-				PlayerObject po = new PlayerObject { Player = p, Team = team };
-				po.ClickedEvent += HandlePlayerClickedEvent;
-				po.RedrawEvent += (co, area) => {
-					EmitRedrawEvent (po, area);
-				};
-				playerObjects.Add (po);
-				if (team == TeamType.LOCAL) {
-					homePlayerToPlayerObject.Add (p, po);
-				} else {
-					awayPlayerToPlayerObject.Add (p, po);
+				if (!homePlayerToPlayerObject.ContainsKey (p) && !awayPlayerToPlayerObject.ContainsKey (p)) {
+					PlayerObject po = new PlayerObject { Player = p, Team = team };
+					po.ClickedEvent += HandlePlayerClickedEvent;
+					po.RedrawEvent += (co, area) => {
+						EmitRedrawEvent (po, area);
+					};
+					playerObjects.Add (po);
+					if (team == TeamType.LOCAL) {
+						homePlayerToPlayerObject.Add (p, po);
+					} else {
+						awayPlayerToPlayerObject.Add (p, po);
+					}
 				}
 			}
 			return playerObjects;
