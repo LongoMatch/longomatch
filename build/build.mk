@@ -3,7 +3,8 @@ ASSEMBLY_FILE ?= $(BUILD_DIR)/$(ASSEMBLY)
 OUTPUT_DIR ?= $(pkglibdir)
 
 
-XBUILD_CMD = $(XBUILD) $(XBUILD_FLAGS) \
+XBUILD_CMD = $(XBUILD) \
+ /property:DefineConstants="$(XBUILD_CONSTANTS)"
  /property:BuildType=makefiles \
  /property:BuildProjectReferences=false \
  /property:OutDir=$(BUILD_DIR)/ \

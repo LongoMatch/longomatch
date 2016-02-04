@@ -126,23 +126,23 @@ case "$host" in
   *-*-mingw*|*-*-cygwin*)
     ostype=Windows
     AC_DEFINE(OSTYPE_WINDOWS)
-    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_WINDOWS"
+    XBUILD_CONSTANTS="$XBUILD_CONSTANTS OSTYPE_WINDOWS"
     ;;
   *-*-darwin*)
     AC_DEFINE(OSTYPE_OS_X)
     ostype=OS_X
-    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_OS_X"
+    XBUILD_CONSTANTS="$XBUILD_CONSTANTS OSTYPE_OS_X"
     ;;
   *-*-linux*)
     AC_DEFINE(OSTYPE_LINUX)
-    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_LINUX"
+    XBUILD_CONSTANTS="$XBUILD_CONSTANTS OSTYPE_LINUX"
     ostype=Linux
     ;;
 esac
 AM_CONDITIONAL(OSTYPE_WINDOWS, test x$ostype = xWindows)
 AM_CONDITIONAL(OSTYPE_OS_X, test x$ostype = xOS_X)
 AM_CONDITIONAL(OSTYPE_LINUX, test x$ostype = xLinux)
-AC_SUBST(GMCS_FLAGS, ["$GMCS_FLAGS"])
+AC_SUBST(XBUILD_CONSTANTS, ["$XBUILD_CONSTANTS"])
 AC_MSG_RESULT($ostype)
 
 dnl package checks, per config
