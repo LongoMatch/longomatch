@@ -357,7 +357,6 @@ namespace LongoMatch.Drawing.Widgets
 			Begin (context);
 			DrawBackground ();
 			if (Mode != DashboardMode.Code) {
-				tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 				/* Draw grid */
 				tk.LineWidth = 1;
 				tk.StrokeColor = Color.Grey1;
