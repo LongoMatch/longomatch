@@ -457,6 +457,7 @@ namespace LongoMatch.Gui
 				               Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
 			fileselector.FileSet = fileSet;
+			MediaFileSet unchangedMediaFile = fileSet.Clone ();
 			d.VBox.Add (fileselector);
 			WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
 			while (d.Run () == (int)ResponseType.Ok) {
@@ -476,6 +477,10 @@ namespace LongoMatch.Gui
 				// widget will propose only one media file selector and will return a smaller fileset than the 
 				// one provided originally.
 				fileSet = fileselector.FileSet;
+			} else {
+				for (int i = 0; i < fileselector.FileSet.Count; i++) {
+					fileselector.FileSet [i] = unchangedMediaFile [i];
+				}
 			}
 			d.Destroy ();
 			return ret;

@@ -261,7 +261,6 @@ namespace LongoMatch.Gui.Panel
 			bool canNavigate = true;
 			if (!loadedProject.Description.FileSet.CheckFiles ()) {
 				// Show message in order to load video.
-				// TODO: No salen los videos cargados
 				canNavigate = gkit.SelectMediaFiles (loadedProject.Description.FileSet);					
 			}
 
