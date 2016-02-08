@@ -257,7 +257,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		[Obsolete ("Use Teams instead of Team to tag a team in a TimelineEvent")]
 		public TeamType Team {
@@ -506,6 +505,13 @@ namespace LongoMatch.Core.Store
 				GoalPosition = co;
 				break;
 			}
+		}
+
+		// Prevents the deprecated Team field to be serialized, but allowing the field to be deserialized
+		// for migrations.
+		public bool ShouldSerializeTeam ()
+		{
+			return false;
 		}
 
 		public override string ToString ()

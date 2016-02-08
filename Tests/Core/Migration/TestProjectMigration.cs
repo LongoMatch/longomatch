@@ -54,6 +54,8 @@ namespace Tests.Core.Migration
 			Assert.AreEqual (1, project.LocalTeamTemplate.Version);
 			Assert.AreEqual (1, project.VisitorTeamTemplate.Version);
 
+			Assert.AreEqual (3, project.Timeline.Count (e => e.Teams.Contains (project.LocalTeamTemplate)));
+			Assert.AreEqual (2, project.Timeline.Count (e => e.Teams.Contains (project.VisitorTeamTemplate)));
 			// Check that team tags have changed from TeamType to List<Team> correctly
 			foreach (TimelineEvent evt in project.Timeline) {
 				if (evt.Team == TeamType.LOCAL) {
