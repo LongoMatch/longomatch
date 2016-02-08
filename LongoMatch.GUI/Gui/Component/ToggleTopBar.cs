@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Component
 		{
 			// If there are other buttons, add the new button to their buttonGroup
 			RadioButton otherbutton = null;
-			string styleName = "toggletabbutton_left";
+			string styleName = "toggletabbutton_only";
 			if (buttoncontainer.Children.Any ()) {
 				otherbutton = buttoncontainer.Children.First () as RadioButton;
 				styleName = "toggletabbutton_right";

@@ -142,6 +142,50 @@ style "longomatch-toggletab-center" = "longomatch-default"
 	}
 }
 
+style "longomatch-toggletab-only" = "longomatch-default"
+{
+  engine "pixmap"
+	{
+		image
+		{
+			function        = BOX
+			state			= ACTIVE
+			file            = "Top_Bar/topbar-button-down.svg"
+			border			= {6, 6, 6, 6}
+			stretch         = TRUE
+			overlay_file 	= "Top_Bar/lamp_active.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = BOX
+			state			= PRELIGHT
+			file            = "Top_Bar/topbar-button-prelight.svg"
+			border			= {6, 6, 6, 6}
+			stretch         = TRUE
+			overlay_file 	= "Top_Bar/lamp_prelight.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = BOX
+			state			= NORMAL
+			file            = "Top_Bar/topbar-button-idle.svg"
+			border			= {6, 6, 6, 6}
+			stretch         = TRUE
+			overlay_file 	= "Top_Bar/lamp_idle.png"
+			overlay_stretch = FALSE
+		}
+		image
+	    {
+			function		= FOCUS
+			file			= "Buttons/null.png"
+			border			= { 4, 4, 4, 4 }
+			stretch			= TRUE
+	    }
+	}
+}
+
 style "longomatch-topbar-button" = "longomatch-default"
 {
   engine "pixmap"
