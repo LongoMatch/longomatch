@@ -16,14 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Gtk;
 using Gdk;
+using GLib;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using Point = LongoMatch.Core.Common.Point;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Drawing.Cairo;
-using GLib;
+using Point = LongoMatch.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
