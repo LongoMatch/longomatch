@@ -456,8 +456,7 @@ namespace LongoMatch.Gui
 				               Gtk.Stock.Cancel, ResponseType.Cancel,
 				               Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
-			fileselector.FileSet = fileSet;
-			MediaFileSet unchangedMediaFile = fileSet.Clone ();
+			fileselector.FileSet = fileSet.Clone ();
 			d.VBox.Add (fileselector);
 			WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
 			while (d.Run () == (int)ResponseType.Ok) {
@@ -476,10 +475,9 @@ namespace LongoMatch.Gui
 				// We need to update the fileset as it might have changed. Indeed if multi camera is not supported
 				// widget will propose only one media file selector and will return a smaller fileset than the 
 				// one provided originally.
-				fileSet = fileselector.FileSet;
-			} else {
+				fileSet.Clear ();
 				for (int i = 0; i < fileselector.FileSet.Count; i++) {
-					fileselector.FileSet [i] = unchangedMediaFile [i];
+					fileSet.Add (fileselector.FileSet [i]);
 				}
 			}
 			d.Destroy ();
