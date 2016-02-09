@@ -73,11 +73,13 @@ namespace LongoMatch.Gui.Component
 			button.Name = styleName;
 			button.DrawIndicator = false;
 
+			var bin = new HBox ();
 			var box = new HBox ();
-			box.Spacing = 20;
+			box.Spacing = 12;
 			box.Add (new Gtk.Image (icon));
 			box.Add (new Label (text));
-			button.Add (box);
+			bin.PackStart (box, false, false, 10);
+			button.Add (bin);
 
 			// Restyle the widget that was the last (if any)
 			int pos = buttoncontainer.Children.Length - 1;
