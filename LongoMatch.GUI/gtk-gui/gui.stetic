@@ -4746,9 +4746,10 @@ You can continue with the current capture, cancel it or save your project.
                     <child>
                       <widget class="Gtk.Alignment" id="alignment1">
                         <property name="MemberName" />
+                        <property name="HeightRequest">40</property>
                         <property name="Xscale">0</property>
                         <property name="Xalign">0</property>
-                        <property name="LeftPadding">15</property>
+                        <property name="LeftPadding">25</property>
                         <property name="TopPadding">10</property>
                         <property name="BottomPadding">5</property>
                         <child>
@@ -4767,8 +4768,6 @@ You can continue with the current capture, cancel it or save your project.
                               <packing>
                                 <property name="Position">0</property>
                                 <property name="AutoSize">False</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
                               </packing>
                             </child>
                             <child>
@@ -4781,9 +4780,7 @@ You can continue with the current capture, cancel it or save your project.
                               </widget>
                               <packing>
                                 <property name="Position">1</property>
-                                <property name="AutoSize">True</property>
-                                <property name="Expand">False</property>
-                                <property name="Fill">False</property>
+                                <property name="AutoSize">False</property>
                               </packing>
                             </child>
                           </widget>

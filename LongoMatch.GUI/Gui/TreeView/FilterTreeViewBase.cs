@@ -20,6 +20,7 @@ using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Gui.Component;
+using Pango;
 using EventType = LongoMatch.Core.Store.EventType;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
@@ -36,6 +37,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Selection.Mode = SelectionMode.None;
 			HeadersVisible = false;
+			EnableGridLines = TreeViewGridLines.Horizontal;
 
 			Model = store = new TreeStore (typeof(string), typeof(bool), typeof(object));
 
@@ -47,6 +49,8 @@ namespace LongoMatch.Gui.Component
 			filterColumn.AddAttribute (filterCell, "active", COL_ACTIVE);
 
 			CellRendererText nameCell = new CellRendererText ();
+			nameCell.FontDesc = FontDescription.FromString (Config.Style.Font + " bold 13");
+			nameCell.Height = 32;
 			filterColumn.PackStart (nameCell, true);
 			filterColumn.AddAttribute (nameCell, "text", COL_DESCRIPTION);
 
@@ -57,6 +61,8 @@ namespace LongoMatch.Gui.Component
 
 			AppendColumn (filterColumn);
 			AppendColumn (onlyColumn);
+
+			ModifyFg (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 		}
 
 		public virtual void ToggleAll (bool active)

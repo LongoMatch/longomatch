@@ -30,7 +30,6 @@ namespace LongoMatch.Gui.Component
 
 	public class CellRendererButton: CellRendererToggle
 	{
-
 		public event ClickedHandler Clicked;
 
 		public CellRendererButton (string text)

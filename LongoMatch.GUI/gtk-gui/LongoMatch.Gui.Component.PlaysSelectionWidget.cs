@@ -86,8 +86,9 @@ namespace LongoMatch.Gui.Component
 			this.eventbox.Name = "eventbox";
 			// Container child eventbox.Gtk.Container+ContainerChild
 			this.alignment1 = new global::Gtk.Alignment (0F, 0.5F, 0F, 1F);
+			this.alignment1.HeightRequest = 40;
 			this.alignment1.Name = "alignment1";
-			this.alignment1.LeftPadding = ((uint)(15));
+			this.alignment1.LeftPadding = ((uint)(25));
 			this.alignment1.TopPadding = ((uint)(10));
 			this.alignment1.BottomPadding = ((uint)(5));
 			// Container child alignment1.Gtk.Container+ContainerChild
@@ -104,8 +105,6 @@ namespace LongoMatch.Gui.Component
 			this.hbox3.Add (this.allButton);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.allButton]));
 			w3.Position = 0;
-			w3.Expand = false;
-			w3.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.noneButton = new global::Gtk.Button ();
 			this.noneButton.CanFocus = true;
@@ -115,8 +114,6 @@ namespace LongoMatch.Gui.Component
 			this.hbox3.Add (this.noneButton);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.noneButton]));
 			w4.Position = 1;
-			w4.Expand = false;
-			w4.Fill = false;
 			this.alignment1.Add (this.hbox3);
 			this.eventbox.Add (this.alignment1);
 			this.vbox3.Add (this.eventbox);

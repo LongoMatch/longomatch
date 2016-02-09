@@ -18,11 +18,11 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
 using Helpers = LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
@@ -42,11 +42,10 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			
 			LoadIcons ();
-
 			AddFilters ();
-
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
-
+			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground));
+			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			allButton.Clicked += HandleButtonClicked;
@@ -102,7 +101,9 @@ namespace LongoMatch.Gui.Component
 			ScrolledWindow s2 = new ScrolledWindow ();
 			
 			playersfilter = new PlayersFilterTreeView ();
+			playersfilter.Name = "backgroundtreeviewplayers";
 			categoriesfilter = new CategoriesFilterTreeView ();
+			categoriesfilter.Name = "backgroundtreeviewcategories";
 			
 			s1.Add (categoriesfilter);
 			s2.Add (playersfilter);
