@@ -156,6 +156,8 @@ namespace LongoMatch.Core.Common
 		public const string ButtonAlert = "icons/hicolor/scalable/actions/longomatch-alert" + IMAGE_EXT;
 
 		public const int FilterTreeViewToogleWidth = 30;
+		public const int FilterTreeViewOnlyRightOffset = 10;
+		public const int FilterTreeViewOnlyTopOffset = 2;
 
 		public string Font = "Ubuntu";
 

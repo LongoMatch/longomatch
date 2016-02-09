@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 			filterColumn.AddAttribute (filterCell, "active", COL_ACTIVE);
 
 			CellRendererText nameCell = new CellRendererText ();
-			filterColumn.PackStart (nameCell, false);
+			filterColumn.PackStart (nameCell, true);
 			filterColumn.AddAttribute (nameCell, "text", COL_DESCRIPTION);
 
 			TreeViewColumn onlyColumn = new TreeViewColumn ();
