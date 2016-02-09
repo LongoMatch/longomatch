@@ -75,6 +75,7 @@ namespace LongoMatch.Gui
 			videoeventbox.ShowAll ();
 
 			MessageVisible = false;
+			messageLabel.Ellipsize = Pango.EllipsizeMode.End;
 		}
 
 		protected override void OnUnmapped ()
