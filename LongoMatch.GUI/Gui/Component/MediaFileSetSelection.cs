@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 				if (fileSet.Count > 0) {
 					// Create all choosers
 					foreach (MediaFile mf in fileSet) {
-						AddMediaFileChooser (mf.Name);
+						AddMediaFileChooser (mf);
 					}
 				} else {
 					// Add the first media file chooser for main camera
@@ -86,7 +86,8 @@ namespace LongoMatch.Gui.Component
 		/// Add a media file chooser with given name. If name is null pick a name automatically avoiding duplicates.
 		/// </summary>
 		/// <param name="name">Name.</param>
-		void AddMediaFileChooser (String name)
+		/// <param name="mediaFile">Media File.</param>
+		void AddMediaFileChooser (String name, MediaFile mediaFile = null)
 		{
 			if (name == null) {
 				int i = fileChoosers.Count;
@@ -104,6 +105,10 @@ namespace LongoMatch.Gui.Component
 			MediaFileChooser chooser = new MediaFileChooser (name);
 
 			chooser.ChangedEvent += HandleFileChangedEvent;
+
+			if (mediaFile != null)
+				chooser.MediaFile = mediaFile;
+
 			// When the chooser is allocated we scroll to the bottom of the window.
 			chooser.SizeAllocated += HandleChooserAllocated;
 
@@ -112,6 +117,15 @@ namespace LongoMatch.Gui.Component
 			mfss_vbox.PackStart (chooser, true, true, 0);
 
 			fileChoosers.Add (chooser);
+		}
+
+		/// <summary>
+		/// Add a media file chooser with given name.
+		/// </summary>
+		/// <param name="mediaFile">Media File.</param>
+		void AddMediaFileChooser (MediaFile mediaFile)
+		{
+			AddMediaFileChooser (mediaFile.Name, mediaFile);
 		}
 
 		/// <summary>
