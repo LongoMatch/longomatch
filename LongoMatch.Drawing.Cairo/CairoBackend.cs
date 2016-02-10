@@ -49,6 +49,7 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			StrokeColor = Color.Black;
 			FillColor = Color.Black;
+			UseAntialias = true;
 			LineWidth = 2;
 			FontSize = 12;
 			FontFamily = Config.Style.Font;
@@ -144,6 +145,11 @@ namespace LongoMatch.Drawing.Cairo
 		public bool ClearOperation {
 			get;
 			set;
+		}
+
+		public bool UseAntialias {
+			set;
+			protected get;
 		}
 
 		public ISurface CreateSurface (string filename, bool warnOnDispose = true)
@@ -523,8 +529,17 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		void SetAntialias ()
+		{
+			if (UseAntialias)
+				CContext.Antialias = Antialias.Default;
+			else
+				CContext.Antialias = Antialias.None;
+		}
+
 		void StrokeAndFill (bool roundCaps = true)
 		{
+			SetAntialias ();
 			SetDash ();
 			if (ClearOperation) {
 				CContext.Operator = Operator.Clear;

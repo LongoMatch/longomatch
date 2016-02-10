@@ -64,6 +64,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		LineStyle LineStyle { set; }
 
+		bool UseAntialias { set; }
+
 		ISurface CreateSurface (string filename, bool warnOnDispose = true);
 
 		ISurface CreateSurface (int width, int height, Image image = null, bool warnOnDispose = true);
