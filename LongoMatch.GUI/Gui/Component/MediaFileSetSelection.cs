@@ -125,7 +125,13 @@ namespace LongoMatch.Gui.Component
 		/// <param name="mediaFile">Media File.</param>
 		void AddMediaFileChooser (MediaFile mediaFile)
 		{
-			AddMediaFileChooser (mediaFile.Name, mediaFile);
+			string name = null;
+
+			if (mediaFile != null) {
+				name = mediaFile.Name;
+			}
+
+			AddMediaFileChooser (name, mediaFile);
 		}
 
 		/// <summary>
