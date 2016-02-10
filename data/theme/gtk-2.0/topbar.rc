@@ -159,7 +159,7 @@ style "longomatch-toggletab-only" = "longomatch-default"
 		{
 			function        = BOX
 			state			= ACTIVE
-			file            = "Top_Bar/topbar-button-down.svg"
+			file            = "Top_Bar/topbar_btn_down.svg"
 			border			= {6, 6, 6, 6}
 			stretch         = TRUE
 			overlay_file 	= "Top_Bar/lamp_active.png"
@@ -170,7 +170,7 @@ style "longomatch-toggletab-only" = "longomatch-default"
 		{
 			function        = BOX
 			state			= PRELIGHT
-			file            = "Top_Bar/topbar-button-prelight.svg"
+			file            = "Top_Bar/topbar_btn_prelight.svg"
 			border			= {6, 6, 6, 6}
 			stretch         = TRUE
 			overlay_file 	= "Top_Bar/lamp_prelight.png"
@@ -181,7 +181,7 @@ style "longomatch-toggletab-only" = "longomatch-default"
 		{
 			function        = BOX
 			state			= NORMAL
-			file            = "Top_Bar/topbar-button-idle.svg"
+			file            = "Top_Bar/topbar_btn_idle.svg"
 			border			= {6, 6, 6, 6}
 			stretch         = TRUE
 			overlay_file 	= "Top_Bar/lamp_idle.png"
