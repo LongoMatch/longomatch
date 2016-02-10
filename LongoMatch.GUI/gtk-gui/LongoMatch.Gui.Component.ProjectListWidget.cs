@@ -56,11 +56,11 @@ namespace LongoMatch.Gui.Component
 			w2.Expand = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.sortcombobox = global::Gtk.ComboBox.NewText ();
-			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by name"));
-			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by date"));
-			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by modification date"));
-			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by season"));
-			this.sortcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by competition"));
+			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by name"));
+			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by date"));
+			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by modification date"));
+			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by season"));
+			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by competition"));
 			this.sortcombobox.Name = "sortcombobox";
 			this.sortcombobox.Active = 0;
 			this.hbox1.Add (this.sortcombobox);

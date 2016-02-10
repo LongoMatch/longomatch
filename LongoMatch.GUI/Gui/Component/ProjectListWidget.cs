@@ -103,6 +103,7 @@ namespace LongoMatch.Gui.Component
 			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
+			selectedProjects.Clear ();
 			foreach (Project p in projects) {
 				ProjectDescription pdesc = p.Description;
 				MediaFile file = pdesc.FileSet.FirstOrDefault ();
@@ -266,7 +267,9 @@ namespace LongoMatch.Gui.Component
 			if (wasActive != active) {
 				store.SetValue (iter, COL_ACTIVE, active);
 				if (active) {
-					selectedProjects.Add (project);
+					if (!selectedProjects.Contains (project)) {
+						selectedProjects.Add (project);
+					}
 				} else {
 					selectedProjects.Remove (project);
 				}
