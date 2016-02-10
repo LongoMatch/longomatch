@@ -117,6 +117,7 @@
             <child>
               <widget class="Gtk.Entry" id="filterEntry">
                 <property name="MemberName" />
+                <property name="WidthRequest">100</property>
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
@@ -125,12 +126,12 @@
               <packing>
                 <property name="Position">1</property>
                 <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
               </packing>
             </child>
             <child>
               <widget class="Gtk.ComboBox" id="sortcombobox">
                 <property name="MemberName" />
+                <property name="WidthRequest">150</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes">Sort by name
 Sort by date

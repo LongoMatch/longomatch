@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Component
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.filterEntry = new global::Gtk.Entry ();
+			this.filterEntry.WidthRequest = 100;
 			this.filterEntry.CanFocus = true;
 			this.filterEntry.Name = "filterEntry";
 			this.filterEntry.IsEditable = true;
@@ -53,7 +54,6 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Add (this.filterEntry);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.filterEntry]));
 			w2.Position = 1;
-			w2.Expand = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.sortcombobox = global::Gtk.ComboBox.NewText ();
 			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by name"));
@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Component
 			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by modification date"));
 			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by season"));
 			this.sortcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by competition"));
+			this.sortcombobox.WidthRequest = 150;
 			this.sortcombobox.Name = "sortcombobox";
 			this.sortcombobox.Active = 0;
 			this.hbox1.Add (this.sortcombobox);
