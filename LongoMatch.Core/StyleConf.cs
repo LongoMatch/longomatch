@@ -167,6 +167,8 @@ namespace LongoMatch.Core.Common
 
 		public Color PaletteBackground { get; set; }
 
+		public Color PaletteBackgroundSemiLight { get; set; }
+
 		public Color PaletteBackgroundLight { get; set; }
 
 		public Color PaletteBackgroundDark { get; set; }
@@ -189,6 +191,7 @@ namespace LongoMatch.Core.Common
 			AwayTeamColor = Color.Blue;
 			PaletteBackground = Color.Black;
 			PaletteBackgroundLight = Color.Black;
+			PaletteBackgroundSemiLight = Color.Black;
 			PaletteBackgroundDark = Color.Black;
 			PaletteBackgroundDarkBright = Color.Black;
 			PaletteWidgets = Color.Black;
