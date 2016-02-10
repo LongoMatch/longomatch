@@ -1240,6 +1240,9 @@ namespace LongoMatch.Services
 
 		void HandleScopeChangedEvent (int index, bool visible)
 		{
+			if (!visible) {
+				ViewPorts [index].Message = Catalog.GetString ("Out of scope");
+			}
 			ViewPorts [index].MessageVisible = !visible;
 		}
 
