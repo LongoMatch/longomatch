@@ -35,10 +35,12 @@ namespace LongoMatch.Drawing.Widgets
 		const int BIG_LINE_HEIGHT = 15;
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
-		const int TIME_SPACING = 100;
+		const int MINIMUM_TIME_SPACING = 80;
+		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 300, 600, 1200 };
 		NeedleObject needle;
 		double scroll;
 		double secondsPerPixel;
+		double timeSpacing = 100.0;
 		Time currentTime;
 		Time duration;
 		IPlayerController player;
@@ -226,18 +228,29 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
-			int startX, start, stop;
-			double tpos, height, width;
-			
+			double start, stop, tpos, height, width;
+			double interval = secondsPerPixel * timeSpacing;
+
 			if (Duration == null) {
 				return;
 			}
-			
+
 			height = widget.Height;
 			width = widget.Width;
 
 			if (AdjustSizeToDuration) {
 				SecondsPerPixel = Duration.TotalSeconds / width;
+				//Calculate the timeSpacing in pixels
+				foreach (int i in MARKER) {
+					int pixels = MINIMUM_TIME_SPACING * (Duration.TotalSeconds / i);
+					if (pixels <= width) {
+						if (Duration.TotalSeconds > 0) {
+							timeSpacing = width / (Duration.TotalSeconds / i);
+							interval = i;
+						}
+						break;
+					}
+				}
 			}
 
 			Begin (context);
@@ -248,35 +261,29 @@ namespace LongoMatch.Drawing.Widgets
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = StyleConf.TimelineRuleFontSize;
-			tk.DrawLine (new Point (area.Start.X, height),
-				new Point (area.Start.X + area.Width, height));
+			tk.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
 
-			startX = (int)(area.Start.X + Scroll);
-			start = (startX - (startX % TIME_SPACING));
-			stop = (int)(startX + area.Width + TIME_SPACING);
+			start = (Scroll * SecondsPerPixel);
+			start = start - (start % interval);
+			stop = ((width + Scroll) * secondsPerPixel);
+			double intervalLot = ((interval / secondsPerPixel) / 10);
 
-			/* Draw big lines each 10 * secondsPerPixel */
-			for (int i = start; i <= stop; i += TIME_SPACING) {
-				double pos = i - Scroll;
-				tk.DrawLine (new Point (pos, height),
-					new Point (pos, height - BIG_LINE_HEIGHT));
+			//Draw a big line each interval start point
+			for (double i = start; i <= stop; i += interval) {
+				int pixel = (int)(i / secondsPerPixel);
+				double pos = pixel - Scroll;
+
+				tk.DrawLine (new Point (pos, height), new Point (pos, height - BIG_LINE_HEIGHT));
 				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 2), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 2,
-					new Time { TotalSeconds = (int)(i * SecondsPerPixel) }.ToSecondsString ());
+					new Time { TotalSeconds = (int)i }.ToSecondsString ());
+
+				//Draw 9 small lines to separate each interval in 10 partitions
+				for (int j = 1; j < 10; j++) {
+					double position = pos + intervalLot * j;
+					tk.DrawLine (new Point (position, height), new Point (position, height - SMALL_LINE_HEIGHT));
+				}
 			}
 
-			start = (startX - (startX % (TIME_SPACING / 10))) + (TIME_SPACING / 10);
-			/* Draw small lines each 1 * secondsPerPixel */
-			for (int i = start; i <= stop; i += TIME_SPACING / 10) {
-				double pos;
-				
-				if (i % TIME_SPACING == 0)
-					continue;
-					
-				pos = i - Scroll;
-				tk.DrawLine (new Point (pos, height),
-					new Point (pos, height - SMALL_LINE_HEIGHT));
-			}
-			
 			/* Draw position triangle */
 			needle.TimelineHeight = height;
 			if (!Moving) {
