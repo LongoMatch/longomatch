@@ -23,6 +23,24 @@ style "longomatch-handles" = "longomatch-default"
 	}
 }
 
+style "longomatch-handles-secondary" = "longomatch-default"
+{
+	GtkPaned::handle-size = 5
+
+	engine "pixmap"
+	{
+		# Handles
+
+		image
+		{
+			function		= HANDLE
+			overlay_file		= "Handles/vert_grab.svg"
+			overlay_stretch		= FALSE
+			orientation		= VERTICAL
+		}
+	}
+}
+
 style "longomatch-gradient-divider" = "longomatch-default"
 {
 	engine "pixmap"
