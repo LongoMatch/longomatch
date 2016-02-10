@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Component
 			Selection.Mode = SelectionMode.None;
 			HeadersVisible = false;
 			EnableGridLines = TreeViewGridLines.Horizontal;
+			SearchColumn = COL_DESCRIPTION;
 
 			Model = store = new TreeStore (typeof(string), typeof(bool), typeof(object));
 
@@ -115,6 +116,10 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
+			// We only want to handle searches, and ignore selection through space bar press
+			if (evnt.Key != Gdk.Key.space) {
+				base.OnKeyPressEvent (evnt);
+			}
 			return false;
 		}
 	}

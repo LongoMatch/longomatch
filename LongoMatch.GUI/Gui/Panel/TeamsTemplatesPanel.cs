@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.HeadersVisible = false;
 			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF);
 			teamseditortreeview.AppendColumn ("Text", cell, "text", COL_NAME);
-			teamseditortreeview.SearchColumn = 1;
+			teamseditortreeview.SearchColumn = COL_NAME;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
 			
