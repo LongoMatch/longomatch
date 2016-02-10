@@ -41,6 +41,12 @@ namespace LongoMatch.Core.Interfaces.GUI
 		string MenubarLabel { get; }
 
 		/// <summary>
+		/// Gets the menubar accelerator. If null, the menubar entry will not have an accelerator.
+		/// </summary>
+		/// <value>The menubar label.</value>
+		string MenubarAccelerator { get; }
+
+		/// <summary>
 		/// Bring up the Tool user interface using provided toolkit.
 		/// </summary>
 		void Load (IGUIToolkit toolkit);
