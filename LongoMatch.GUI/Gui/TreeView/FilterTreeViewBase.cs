@@ -19,6 +19,7 @@ using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using Pango;
 using EventType = LongoMatch.Core.Store.EventType;
@@ -77,6 +78,11 @@ namespace LongoMatch.Gui.Component
 		{
 			store.AppendValues (Catalog.GetString ("None specified"), false,
 				new StringObject (ProjectsFilter.EMPTY_OR_NULL));
+		}
+
+		protected void AddNoPlayerValue (string text)
+		{
+			store.AppendValues (text, false, new NullFilterValue ());
 		}
 
 		protected abstract void UpdateSelection (TreeIter iter, bool active);

@@ -24,6 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
+using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
 
 namespace LongoMatch.DB.Views
@@ -230,9 +231,9 @@ namespace LongoMatch.DB.Views
 
 				values = ConvertValues (values);
 				if (values.Count == 1) {
-					filters.Add (String.Format ("{0}='\"{1}\"'", keyIndex, values [0]));
+					filters.Add (String.Format ("{0}='{1}'", keyIndex, values [0]));
 				} else {
-					string vals = String.Join (" , ", values.Select (x => "'\"" + x + "\"'"));
+					string vals = String.Join (" , ", values.Select (x => "'" + x + "'"));
 					filters.Add (String.Format ("{0} IN ({1})", keyIndex, vals));
 				}
 			}
@@ -306,11 +307,15 @@ namespace LongoMatch.DB.Views
 		{
 			List<object> ret = new List<object> ();
 			foreach (object val in values) {
-				IStorable storable = val as IStorable;
-				if (storable != null) {
-					ret.Add (storable.ID);
+				if (val == null) {
+					ret.Add ("null");
 				} else {
-					ret.Add (val);
+					IStorable storable = val as IStorable;
+					if (storable != null) {
+						ret.Add ("\"" + storable.ID + "\"");
+					} else {
+						ret.Add ("\"" + val + "\"");
+					}
 				}
 			}
 			return ret;

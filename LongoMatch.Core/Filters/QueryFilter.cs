@@ -15,10 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Filters
@@ -61,7 +60,10 @@ namespace LongoMatch.Core.Filters
 			List<object> valuesList;
 
 			if (values.Count () == 1 && values [0] is IEnumerable && !(values [0] is string)) {
-				valuesList = (values [0] as IEnumerable).OfType<object> ().ToList ();
+				valuesList = new List<object> ();
+				foreach (object o in values[0] as IEnumerable) {
+					valuesList.Add (o);
+				}
 			} else {
 				valuesList = values.ToList ();
 			}
