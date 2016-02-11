@@ -32,8 +32,8 @@ namespace LongoMatch.Drawing.Widgets
 		public event EventHandler CenterPlayheadClicked;
 		public event SeekEventHandler SeekEvent;
 
-		const int BIG_LINE_HEIGHT = 15;
-		const int SMALL_LINE_HEIGHT = 5;
+		int BIG_LINE_HEIGHT = 15;
+		int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int MINIMUM_TIME_SPACING = 80;
 		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 120, 300, 600, 1200 };
@@ -55,6 +55,7 @@ namespace LongoMatch.Drawing.Widgets
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
 			Accuracy = 5.0f;
+			PlayerMode = false;
 		}
 
 		public Timerule () : this (null)
@@ -159,6 +160,32 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
+		public bool PlayerMode {
+			set {
+				if (value) {
+					RuleHeight = Constants.TIMERULE_RULE_PLAYER_HEIGHT;
+					FontSize = StyleConf.TimelineRulePlayerFontSize;
+					BIG_LINE_HEIGHT = 8;
+					SMALL_LINE_HEIGHT = 3;
+				} else {
+					RuleHeight = Constants.TIMERULE_HEIGHT;
+					FontSize = StyleConf.TimelineRuleFontSize;
+					BIG_LINE_HEIGHT = 15;
+					SMALL_LINE_HEIGHT = 5;
+				}
+			}
+		}
+
+		int RuleHeight {
+			get;
+			set;
+		}
+
+		int FontSize {
+			get;
+			set;
+		}
+
 		bool PlayingState {
 			get;
 			set;
@@ -254,13 +281,19 @@ namespace LongoMatch.Drawing.Widgets
 			}
 
 			Begin (context);
+			tk.LineWidth = 0;
+			BackgroundColor = Config.Style.PaletteBackground;
 			DrawBackground ();
+
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.DrawRectangle (new Point (area.Start.X, area.Start.Y + area.Height - RuleHeight), area.Width, RuleHeight);
+
 
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = StyleConf.TimelineRuleFontSize;
+			tk.FontSize = FontSize;
 			tk.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
 
 			start = (Scroll * SecondsPerPixel);
