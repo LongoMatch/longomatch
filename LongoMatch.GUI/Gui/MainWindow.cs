@@ -198,15 +198,32 @@ namespace LongoMatch.Gui
 				idx++;
 			}
 
+			// Get the default action group
+			ActionGroup ag = this.UIManager.ActionGroups [0];
+			uint mergeId;
+			mergeId = this.UIManager.NewMergeId ();
+
 			// Insert our tools
 			foreach (ITool tool in tools) {
 				if (tool.MenubarLabel != null) {
-					MenuItem item = new MenuItem (tool.MenubarLabel);
-					item.Activated += (sender, e) => (tool.Load (Config.GUIToolkit));
-					item.Show ();
+					// Use the class name as the action name to avoid collisions
+					string actionName = tool.ToString ().Substring (tool.ToString ().LastIndexOf ('.') + 1) + "Action";
+					Gtk.Action itemAction = new Gtk.Action (actionName, tool.MenubarLabel, null, null);
+					itemAction.Sensitive = true;
+					itemAction.ShortLabel = tool.MenubarLabel;
+					itemAction.Activated += (sender, e) => (tool.Load (Config.GUIToolkit));
+
+					this.UIManager.AddUi (mergeId, "/menubar1/ToolsAction", actionName, actionName, UIManagerItemType.Menuitem, false);
+					ag.Add (itemAction, tool.MenubarAccelerator);
+
+					// Ugly hack, given that we cannot add a menu item at a specific position
+					// we remove it and finally add it back again.
+					MenuItem item = (this.UIManager.GetWidget ("/menubar1/ToolsAction/" + actionName) as MenuItem);
+					menu.Remove (item);
 					menu.Insert (item, idx++);
 				}
 			}
+			this.UIManager.EnsureUpdate ();
 		}
 
 		public void SelectProject (List<Project> projects)
