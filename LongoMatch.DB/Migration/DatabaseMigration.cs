@@ -145,18 +145,23 @@ namespace LongoMatch.DB
 
 			Task.WaitAll (tasks.ToArray ());
 
-			string backupDir = Path.Combine (Config.TemplatesDir, "backup");
-			if (!Directory.Exists (backupDir)) {
-				Directory.CreateDirectory (backupDir);
-			}
-
-			foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).Concat(
-				Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")))) {
-				string outputFile = Path.Combine (backupDir, Path.GetFileName (templateFile));
-				if (File.Exists (outputFile)) {
-					File.Delete (outputFile);
+			try {
+				string backupDir = Path.Combine (Config.TemplatesDir, "backup");
+				if (!Directory.Exists (backupDir)) {
+					Directory.CreateDirectory (backupDir);
 				}
-				File.Move (templateFile, outputFile);
+
+				foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).Concat(
+				Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")))) {
+					string outputFile = Path.Combine (backupDir, Path.GetFileName (templateFile));
+					if (File.Exists (outputFile)) {
+						File.Delete (outputFile);
+					}
+					File.Move (templateFile, outputFile);
+				}
+			} catch (Exception ex) {
+				Log.Error ("Error moving templates to the backup directory.");
+				Log.Exception (ex);
 			}
 
 			progress.Report (1, "Teams and dashboards migrated", id);
@@ -191,12 +196,17 @@ namespace LongoMatch.DB
 			if (!Directory.Exists (backupDir)) {
 				Directory.CreateDirectory (backupDir);
 			}
-			foreach (string dbdir in databasesDirectories) {
-				string destDir = Path.Combine (backupDir, Path.GetFileName (dbdir));
-				if (Directory.Exists (destDir)) {
-					Directory.Delete (destDir, true);
+			try {
+				foreach (string dbdir in databasesDirectories) {
+					string destDir = Path.Combine (backupDir, Path.GetFileName (dbdir));
+					if (Directory.Exists (destDir)) {
+						Directory.Delete (destDir, true);
+					}
+					Directory.Move (dbdir, destDir);
 				}
-				Directory.Move (dbdir, destDir);
+			} catch (Exception ex) {
+				Log.Error ("Error moving database to the backup directory");
+				Log.Exception (ex);
 			}
 			progress.Report (1, "Databases migrated", id);
 		}
