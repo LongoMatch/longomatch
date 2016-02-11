@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		Area Area {
 			get {
-				return new Area (TopLeft, Width, Width);
+				return new Area (TopLeft, Width, Height);
 			}
 		}
 

@@ -286,7 +286,7 @@ namespace LongoMatch.Drawing.Widgets
 			DrawBackground ();
 
 			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.DrawRectangle (new Point (area.Start.X, area.Start.Y + area.Height - RuleHeight), area.Width, RuleHeight);
+			tk.DrawRectangle (new Point (area.Start.X, area.Start.Y + height - RuleHeight), area.Width, RuleHeight);
 
 
 			tk.StrokeColor = Config.Style.PaletteWidgets;
