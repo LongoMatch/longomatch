@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Interface language:");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Interface language:");
 			this.table1.Add (this.label1);
 			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
 			w1.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Autosave projects:");
+			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Autosave projects:");
 			this.table1.Add (this.label2);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.label2]));
 			w2.TopAttach = ((uint)(1));
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Default analysis dashboard:");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Default analysis dashboard:");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w3.TopAttach = ((uint)(2));

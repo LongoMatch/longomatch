@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.PlayEditor
 			this.Name = "LongoMatch.Gui.Dialog.PlayEditor";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Edit event details");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Edit event details");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Dialog
 			this.nameframe.Add (this.GtkAlignment3);
 			this.GtkLabel3 = new global::Gtk.Label ();
 			this.GtkLabel3.Name = "GtkLabel3";
-			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Name</b>");
+			this.GtkLabel3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Name</b>");
 			this.GtkLabel3.UseMarkup = true;
 			this.nameframe.LabelWidget = this.GtkLabel3;
 			this.hbox4.Add (this.nameframe);
@@ -123,7 +123,7 @@ namespace LongoMatch.Gui.Dialog
 			this.notesframe.Add (this.GtkAlignment);
 			this.GtkLabel = new global::Gtk.Label ();
 			this.GtkLabel.Name = "GtkLabel";
-			this.GtkLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Notes</b>");
+			this.GtkLabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Notes</b>");
 			this.GtkLabel.UseMarkup = true;
 			this.notesframe.LabelWidget = this.GtkLabel;
 			this.hbox4.Add (this.notesframe);

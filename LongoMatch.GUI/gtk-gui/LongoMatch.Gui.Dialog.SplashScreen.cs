@@ -15,7 +15,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.SplashScreen
 			this.Name = "LongoMatch.Gui.Dialog.SplashScreen";
-			this.Title = global::Mono.Unix.Catalog.GetString ("SplashScreen");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("SplashScreen");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child LongoMatch.Gui.Dialog.SplashScreen.Gtk.Container+ContainerChild
 			this.fixed1 = new global::Gtk.Fixed ();

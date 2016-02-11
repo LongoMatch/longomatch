@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.HotKeySelectorDialog
 			this.Name = "LongoMatch.Gui.Dialog.HotKeySelectorDialog";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Select a HotKey");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Select a HotKey");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Gravity = ((global::Gdk.Gravity)(5));
@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Press a key combination...");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Press a key combination...");
 			w1.Add (this.label1);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.label1]));
 			w2.Position = 0;

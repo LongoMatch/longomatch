@@ -17,7 +17,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.EventTypeTagsEditor
 			this.Name = "LongoMatch.Gui.Dialog.EventTypeTagsEditor";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Edit event subcategory tags");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Edit event subcategory tags");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));

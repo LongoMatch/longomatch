@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child table1.Gtk.Table+TableChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Event:");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Event:");
 			this.table1.Add (this.label1);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
 			w3.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -63,7 +63,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child table1.Gtk.Table+TableChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Interval (frames/s):");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Interval (frames/s):");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w4.TopAttach = ((uint)(2));
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child table1.Gtk.Table+TableChild
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Series Name:");
+			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Series Name:");
 			this.table1.Add (this.label5);
 			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.label5]));
 			w5.TopAttach = ((uint)(1));
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Dialog
 			this.button22.CanFocus = true;
 			this.button22.Name = "button22";
 			this.button22.UseUnderline = true;
-			this.button22.Label = global::Mono.Unix.Catalog.GetString ("Export to PNG images");
+			this.button22.Label = global::LongoMatch.Core.Catalog.GetString ("Export to PNG images");
 			global::Gtk.Image w10 = new global::Gtk.Image ();
 			w10.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
 			this.button22.Image = w10;

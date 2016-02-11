@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.VideoEditionProperties
 			this.Name = "LongoMatch.Gui.Dialog.VideoEditionProperties";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Video Properties");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Video Properties");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality:");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Quality:");
 			this.hbox2.Add (this.label1);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.label1]));
 			w2.Position = 0;
@@ -101,7 +101,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format: ");
+			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Image format: ");
 			this.hbox4.Add (this.label2);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.label2]));
 			w5.Position = 0;
@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding Format:");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Encoding Format:");
 			this.hbox5.Add (this.label3);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.label3]));
 			w8.Position = 0;
@@ -148,7 +148,7 @@ namespace LongoMatch.Gui.Dialog
 			this.descriptioncheckbutton = new global::Gtk.CheckButton ();
 			this.descriptioncheckbutton.CanFocus = true;
 			this.descriptioncheckbutton.Name = "descriptioncheckbutton";
-			this.descriptioncheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable title overlay");
+			this.descriptioncheckbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Enable title overlay");
 			this.descriptioncheckbutton.DrawIndicator = true;
 			this.descriptioncheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.descriptioncheckbutton);
@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Dialog
 			this.audiocheckbutton = new global::Gtk.CheckButton ();
 			this.audiocheckbutton.CanFocus = true;
 			this.audiocheckbutton.Name = "audiocheckbutton";
-			this.audiocheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable audio");
+			this.audiocheckbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Enable audio");
 			this.audiocheckbutton.DrawIndicator = true;
 			this.audiocheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.audiocheckbutton);
@@ -173,7 +173,7 @@ namespace LongoMatch.Gui.Dialog
 			this.splitfilesbutton = new global::Gtk.CheckButton ();
 			this.splitfilesbutton.CanFocus = true;
 			this.splitfilesbutton.Name = "splitfilesbutton";
-			this.splitfilesbutton.Label = global::Mono.Unix.Catalog.GetString ("Split output in one file per playlist element");
+			this.splitfilesbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Split output in one file per playlist element");
 			this.splitfilesbutton.DrawIndicator = true;
 			this.splitfilesbutton.UseUnderline = true;
 			this.vbox2.Add (this.splitfilesbutton);
@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Dialog
 			this.filenamelabel = new global::Gtk.Label ();
 			this.filenamelabel.Name = "filenamelabel";
 			this.filenamelabel.Xalign = 1F;
-			this.filenamelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("File name: ");
+			this.filenamelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("File name: ");
 			this.filebox.Add (this.filenamelabel);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.filebox [this.filenamelabel]));
 			w15.Position = 0;
@@ -214,7 +214,7 @@ namespace LongoMatch.Gui.Dialog
 			this.directorynamelabel1 = new global::Gtk.Label ();
 			this.directorynamelabel1.Name = "directorynamelabel1";
 			this.directorynamelabel1.Xalign = 1F;
-			this.directorynamelabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("Directory name: ");
+			this.directorynamelabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Directory name: ");
 			this.dirbox.Add (this.directorynamelabel1);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.dirbox [this.directorynamelabel1]));
 			w18.Position = 0;

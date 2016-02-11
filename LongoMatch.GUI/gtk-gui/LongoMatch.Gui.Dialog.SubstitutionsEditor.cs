@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Dialog
 			this.inframe.Add (this.GtkAlignment2);
 			this.GtkLabel2 = new global::Gtk.Label ();
 			this.GtkLabel2.Name = "GtkLabel2";
-			this.GtkLabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Player in</b>");
+			this.GtkLabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Player in</b>");
 			this.GtkLabel2.UseMarkup = true;
 			this.inframe.LabelWidget = this.GtkLabel2;
 			this.playershbox.Add (this.inframe);
@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Dialog
 			this.outframe.Add (this.GtkAlignment3);
 			this.GtkLabel3 = new global::Gtk.Label ();
 			this.GtkLabel3.Name = "GtkLabel3";
-			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Player out</b>");
+			this.GtkLabel3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Player out</b>");
 			this.GtkLabel3.UseMarkup = true;
 			this.outframe.LabelWidget = this.GtkLabel3;
 			this.playershbox.Add (this.outframe);

@@ -30,7 +30,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Review plays in the same window");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Review plays in the same window");
 			this.table1.Add (this.label1);
 			global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
 			w1.TopAttach = ((uint)(2));
@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Output directory");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Output directory");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w2.TopAttach = ((uint)(1));
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Render new events automatically\n(Requires a powerful CPU)");
+			this.label4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Render new events automatically\n(Requires a powerful CPU)");
 			this.label4.UseMarkup = true;
 			this.table1.Add (this.label4);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label4]));

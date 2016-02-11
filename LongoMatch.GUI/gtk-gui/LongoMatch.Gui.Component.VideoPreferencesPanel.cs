@@ -88,10 +88,10 @@ namespace LongoMatch.Gui.Component
 			this.generaltable.ColumnSpacing = ((uint)(6));
 			// Container child generaltable.Gtk.Table+TableChild
 			this.fpscombobox = global::Gtk.ComboBox.NewText ();
-			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("25 fps"));
-			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("30 fps"));
-			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("50 fps"));
-			this.fpscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("60 fps"));
+			this.fpscombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("25 fps"));
+			this.fpscombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("30 fps"));
+			this.fpscombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("50 fps"));
+			this.fpscombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("60 fps"));
 			this.fpscombobox.Name = "fpscombobox";
 			this.fpscombobox.Active = 0;
 			this.generaltable.Add (this.fpscombobox);
@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Component
 			this.frameratelabel = new global::Gtk.Label ();
 			this.frameratelabel.Name = "frameratelabel";
 			this.frameratelabel.Xalign = 0F;
-			this.frameratelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Framerate");
+			this.frameratelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Framerate");
 			this.generaltable.Add (this.frameratelabel);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.generaltable [this.frameratelabel]));
 			w2.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Component
 			this.frame3.Add (this.GtkAlignment2);
 			this.GtkLabel2 = new global::Gtk.Label ();
 			this.GtkLabel2.Name = "GtkLabel2";
-			this.GtkLabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>General</b>");
+			this.GtkLabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>General</b>");
 			this.GtkLabel2.UseMarkup = true;
 			this.frame3.LabelWidget = this.GtkLabel2;
 			this.vbox2.Add (this.frame3);
@@ -137,7 +137,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Image format");
 			this.rendertable.Add (this.label1);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label1]));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -146,7 +146,7 @@ namespace LongoMatch.Gui.Component
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding format");
+			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Encoding format");
 			this.rendertable.Add (this.label2);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label2]));
 			w7.TopAttach = ((uint)(1));
@@ -157,7 +157,7 @@ namespace LongoMatch.Gui.Component
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Quality");
 			this.rendertable.Add (this.label3);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label3]));
 			w8.TopAttach = ((uint)(2));
@@ -168,7 +168,7 @@ namespace LongoMatch.Gui.Component
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 0F;
-			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable audio");
+			this.label8.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Enable audio");
 			this.rendertable.Add (this.label8);
 			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label8]));
 			w9.TopAttach = ((uint)(3));
@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Component
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 0F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable title overlay");
+			this.label9.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Enable title overlay");
 			this.rendertable.Add (this.label9);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label9]));
 			w10.TopAttach = ((uint)(4));
@@ -221,7 +221,7 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Add (this.GtkAlignment);
 			this.GtkLabel = new global::Gtk.Label ();
 			this.GtkLabel.Name = "GtkLabel";
-			this.GtkLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Rendering</b>");
+			this.GtkLabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Rendering</b>");
 			this.GtkLabel.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel;
 			this.vbox2.Add (this.frame1);
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Component
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality");
+			this.label4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Quality");
 			this.capturetable.Add (this.label4);
 			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label4]));
 			w20.TopAttach = ((uint)(2));
@@ -287,7 +287,7 @@ namespace LongoMatch.Gui.Component
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
 			this.label5.Xalign = 0F;
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding format");
+			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Encoding format");
 			this.capturetable.Add (this.label5);
 			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label5]));
 			w21.TopAttach = ((uint)(1));
@@ -298,7 +298,7 @@ namespace LongoMatch.Gui.Component
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
 			this.label6.Xalign = 0F;
-			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format");
+			this.label6.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Image format");
 			this.capturetable.Add (this.label6);
 			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.capturetable [this.label6]));
 			w22.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -307,7 +307,7 @@ namespace LongoMatch.Gui.Component
 			this.frame2.Add (this.GtkAlignment1);
 			this.GtkLabel1 = new global::Gtk.Label ();
 			this.GtkLabel1.Name = "GtkLabel1";
-			this.GtkLabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Capture</b>");
+			this.GtkLabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Capture</b>");
 			this.GtkLabel1.UseMarkup = true;
 			this.frame2.LabelWidget = this.GtkLabel1;
 			this.vbox2.Add (this.frame2);

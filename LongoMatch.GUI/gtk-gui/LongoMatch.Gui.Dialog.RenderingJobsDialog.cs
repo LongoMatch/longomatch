@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Dialog
 			this.clearbutton.CanFocus = true;
 			this.clearbutton.Name = "clearbutton";
 			this.clearbutton.UseUnderline = true;
-			this.clearbutton.Label = global::Mono.Unix.Catalog.GetString ("C_lear finished jobs");
+			this.clearbutton.Label = global::LongoMatch.Core.Catalog.GetString ("C_lear finished jobs");
 			global::Gtk.Image w4 = new global::Gtk.Image ();
 			w4.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Menu);
 			this.clearbutton.Image = w4;
@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Dialog
 			this.cancelbutton.CanFocus = true;
 			this.cancelbutton.Name = "cancelbutton";
 			this.cancelbutton.UseUnderline = true;
-			this.cancelbutton.Label = global::Mono.Unix.Catalog.GetString ("_Cancel job");
+			this.cancelbutton.Label = global::LongoMatch.Core.Catalog.GetString ("_Cancel job");
 			global::Gtk.Image w6 = new global::Gtk.Image ();
 			w6.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Menu);
 			this.cancelbutton.Image = w6;
@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Dialog
 			this.retrybutton.CanFocus = true;
 			this.retrybutton.Name = "retrybutton";
 			this.retrybutton.UseUnderline = true;
-			this.retrybutton.Label = global::Mono.Unix.Catalog.GetString ("Retry job");
+			this.retrybutton.Label = global::LongoMatch.Core.Catalog.GetString ("Retry job");
 			global::Gtk.Image w8 = new global::Gtk.Image ();
 			w8.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-refresh", global::Gtk.IconSize.Menu);
 			this.retrybutton.Image = w8;

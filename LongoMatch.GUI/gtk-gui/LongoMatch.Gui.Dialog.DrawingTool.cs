@@ -153,7 +153,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.DrawingTool
 			this.Name = "LongoMatch.Gui.Dialog.DrawingTool";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Drawing Tool");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Drawing Tool");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
@@ -182,7 +182,7 @@ namespace LongoMatch.Gui.Dialog
 			this.toolslabel = new global::Gtk.Label ();
 			this.toolslabel.Name = "toolslabel";
 			this.toolslabel.Xalign = 0F;
-			this.toolslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Tools</b>");
+			this.toolslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Tools</b>");
 			this.toolslabel.UseMarkup = true;
 			this.leftbox.Add (this.toolslabel);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.leftbox [this.toolslabel]));
@@ -545,7 +545,7 @@ namespace LongoMatch.Gui.Dialog
 			this.colorslabel = new global::Gtk.Label ();
 			this.colorslabel.Name = "colorslabel";
 			this.colorslabel.Xalign = 0F;
-			this.colorslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Color</b>");
+			this.colorslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Color</b>");
 			this.colorslabel.UseMarkup = true;
 			this.table1.Add (this.colorslabel);
 			global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.table1 [this.colorslabel]));
@@ -555,7 +555,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Size</b>");
+			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Size</b>");
 			this.label3.UseMarkup = true;
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
@@ -567,7 +567,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Style</b>");
+			this.label4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Style</b>");
 			this.label4.UseMarkup = true;
 			this.table1.Add (this.label4);
 			global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.table1 [this.label4]));
@@ -579,7 +579,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
 			this.label5.Xalign = 0F;
-			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Type</b>");
+			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Type</b>");
 			this.label5.UseMarkup = true;
 			this.table1.Add (this.label5);
 			global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.table1 [this.label5]));
@@ -628,7 +628,7 @@ namespace LongoMatch.Gui.Dialog
 			this.linesframe.Add (this.GtkAlignment4);
 			this.GtkLabel4 = new global::Gtk.Label ();
 			this.GtkLabel4.Name = "GtkLabel4";
-			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Lines</b>");
+			this.GtkLabel4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Lines</b>");
 			this.GtkLabel4.UseMarkup = true;
 			this.linesframe.LabelWidget = this.GtkLabel4;
 			this.leftbox.Add (this.linesframe);
@@ -664,7 +664,7 @@ namespace LongoMatch.Gui.Dialog
 			this.backgroundcolorslabel2 = new global::Gtk.Label ();
 			this.backgroundcolorslabel2.Name = "backgroundcolorslabel2";
 			this.backgroundcolorslabel2.Xalign = 0F;
-			this.backgroundcolorslabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Background</b>");
+			this.backgroundcolorslabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Background</b>");
 			this.backgroundcolorslabel2.UseMarkup = true;
 			this.table4.Add (this.backgroundcolorslabel2);
 			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.table4 [this.backgroundcolorslabel2]));
@@ -676,7 +676,7 @@ namespace LongoMatch.Gui.Dialog
 			this.backgroundcolorslabel3 = new global::Gtk.Label ();
 			this.backgroundcolorslabel3.Name = "backgroundcolorslabel3";
 			this.backgroundcolorslabel3.Xalign = 0F;
-			this.backgroundcolorslabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Size</b>");
+			this.backgroundcolorslabel3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Size</b>");
 			this.backgroundcolorslabel3.UseMarkup = true;
 			this.table4.Add (this.backgroundcolorslabel3);
 			global::Gtk.Table.TableChild w51 = ((global::Gtk.Table.TableChild)(this.table4 [this.backgroundcolorslabel3]));
@@ -697,7 +697,7 @@ namespace LongoMatch.Gui.Dialog
 			this.textcolorslabel2 = new global::Gtk.Label ();
 			this.textcolorslabel2.Name = "textcolorslabel2";
 			this.textcolorslabel2.Xalign = 0F;
-			this.textcolorslabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Color</b>");
+			this.textcolorslabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Color</b>");
 			this.textcolorslabel2.UseMarkup = true;
 			this.table4.Add (this.textcolorslabel2);
 			global::Gtk.Table.TableChild w53 = ((global::Gtk.Table.TableChild)(this.table4 [this.textcolorslabel2]));
@@ -721,7 +721,7 @@ namespace LongoMatch.Gui.Dialog
 			this.textframe.Add (this.GtkAlignment13);
 			this.GtkLabel5 = new global::Gtk.Label ();
 			this.GtkLabel5.Name = "GtkLabel5";
-			this.GtkLabel5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Text</b>");
+			this.GtkLabel5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Text</b>");
 			this.GtkLabel5.UseMarkup = true;
 			this.textframe.LabelWidget = this.GtkLabel5;
 			this.leftbox.Add (this.textframe);
@@ -752,7 +752,7 @@ namespace LongoMatch.Gui.Dialog
 			this.savetoprojectbutton.CanFocus = true;
 			this.savetoprojectbutton.Name = "savetoprojectbutton";
 			this.savetoprojectbutton.UseUnderline = true;
-			this.savetoprojectbutton.Label = global::Mono.Unix.Catalog.GetString ("Save to Project");
+			this.savetoprojectbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Save to Project");
 			global::Gtk.Image w61 = new global::Gtk.Image ();
 			w61.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Menu);
 			this.savetoprojectbutton.Image = w61;
@@ -767,7 +767,7 @@ namespace LongoMatch.Gui.Dialog
 			this.savebutton.CanFocus = true;
 			this.savebutton.Name = "savebutton";
 			this.savebutton.UseUnderline = true;
-			this.savebutton.Label = global::Mono.Unix.Catalog.GetString ("Save to File");
+			this.savebutton.Label = global::LongoMatch.Core.Catalog.GetString ("Save to File");
 			global::Gtk.Image w63 = new global::Gtk.Image ();
 			w63.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Menu);
 			this.savebutton.Image = w63;
@@ -855,7 +855,7 @@ namespace LongoMatch.Gui.Dialog
 			this.closebutton.CanFocus = true;
 			this.closebutton.Name = "closebutton";
 			this.closebutton.UseUnderline = true;
-			this.closebutton.Label = global::Mono.Unix.Catalog.GetString ("Close");
+			this.closebutton.Label = global::LongoMatch.Core.Catalog.GetString ("Close");
 			global::Gtk.Image w75 = new global::Gtk.Image ();
 			w75.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-close", global::Gtk.IconSize.Menu);
 			this.closebutton.Image = w75;
