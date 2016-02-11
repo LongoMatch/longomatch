@@ -307,8 +307,10 @@ namespace LongoMatch.Drawing.Widgets
 				double pos = pixel - Scroll;
 
 				tk.DrawLine (new Point (pos, height), new Point (pos, height - BIG_LINE_HEIGHT));
-				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 2), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 2,
-					new Time { TotalSeconds = (int)i }.ToSecondsString ());
+				string timeText = new Time { TotalSeconds = (int)i }.ToSecondsString ();
+				int textWidth, textHeight;
+				tk.MeasureText (timeText, out textWidth, out textHeight, "", FontSize, FontWeight.Normal);
+				tk.DrawText (new Point (pos - textWidth / 2, 2), textWidth, height - BIG_LINE_HEIGHT - 2, timeText);
 
 				//Draw 9 small lines to separate each interval in 10 partitions
 				for (int j = 1; j < 10; j++) {
