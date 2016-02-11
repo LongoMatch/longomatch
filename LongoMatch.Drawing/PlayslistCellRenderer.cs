@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing
 			Point arrowY;
 			ISurface arrow;
 			
-			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator + StyleConf.ListCountRadio;
+			countX1 = cellArea.Start.X + StyleConf.ListRowSeparator * 2 + StyleConf.ListCountRadio;
 			countX2 = countX1 + StyleConf.ListCountWidth;
 			countYC = backgroundArea.Start.Y + backgroundArea.Height / 2;
 			countY = countYC - StyleConf.ListCountRadio;
@@ -81,16 +81,14 @@ namespace LongoMatch.Drawing
 						ArrowRight = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowRight;
-					arrowY = new Point (cellArea.Start.X + 1,
-						cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
 				} else {
 					if (ArrowDown == null) {
 						Image img = Resources.LoadImage (StyleConf.ListArrowDownPath);
 						ArrowDown = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowDown;
-					arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2);
 				}
+				arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
 				tk.DrawSurface (arrow, arrowY);
 			}
 

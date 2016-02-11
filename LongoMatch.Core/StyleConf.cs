@@ -63,7 +63,7 @@ namespace LongoMatch.Core.Common
 		public const int ListCategoryHeight = 50;
 		public const int ListCountRadio = 10;
 		public const int ListCountWidth = 20;
-		public const int ListTextOffset = ListRowSeparator * 2 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
+		public const int ListTextOffset = ListRowSeparator * 3 + StyleConf.ListCountRadio * 2 + StyleConf.ListCountWidth;
 
 		public const int ListEyeIconOffset = 10;
 		public const string ListEyeIconPath = "icons/hicolor/scalable/actions/longomatch-eye" + IMAGE_EXT;
@@ -156,6 +156,8 @@ namespace LongoMatch.Core.Common
 		public const string ButtonAlert = "icons/hicolor/scalable/actions/longomatch-alert" + IMAGE_EXT;
 
 		public const int FilterTreeViewToogleWidth = 30;
+		public const int FilterTreeViewOnlyRightOffset = 10;
+		public const int FilterTreeViewOnlyTopOffset = 2;
 
 		public string Font = "Ubuntu";
 
@@ -164,6 +166,8 @@ namespace LongoMatch.Core.Common
 		public Color AwayTeamColor { get; set; }
 
 		public Color PaletteBackground { get; set; }
+
+		public Color PaletteBackgroundSemiLight { get; set; }
 
 		public Color PaletteBackgroundLight { get; set; }
 
@@ -187,6 +191,7 @@ namespace LongoMatch.Core.Common
 			AwayTeamColor = Color.Blue;
 			PaletteBackground = Color.Black;
 			PaletteBackgroundLight = Color.Black;
+			PaletteBackgroundSemiLight = Color.Black;
 			PaletteBackgroundDark = Color.Black;
 			PaletteBackgroundDarkBright = Color.Black;
 			PaletteWidgets = Color.Black;

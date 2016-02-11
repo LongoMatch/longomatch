@@ -16,14 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Gtk;
 using Gdk;
+using GLib;
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using Point = LongoMatch.Core.Common.Point;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Drawing.Cairo;
-using GLib;
+using Point = LongoMatch.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -31,7 +30,6 @@ namespace LongoMatch.Gui.Component
 
 	public class CellRendererButton: CellRendererToggle
 	{
-
 		public event ClickedHandler Clicked;
 
 		public CellRendererButton (string text)
@@ -58,7 +56,7 @@ namespace LongoMatch.Gui.Component
 
 			Config.DrawingToolkit.MeasureText (Text, out width, out height, Config.Style.Font, 12, FontWeight.Normal);
 
-			width += 10;
+			width += StyleConf.FilterTreeViewOnlyRightOffset * 2;
 			height += 10;
 		}
 
@@ -68,15 +66,16 @@ namespace LongoMatch.Gui.Component
 			IDrawingToolkit tk = Config.DrawingToolkit;
 
 			using (IContext context = new CairoContext (window)) {
-				Point pos = new Point (cellArea.X, cellArea.Y + 2);
-				int width = cellArea.Width;
-				int height = cellArea.Height - 4;
+				int width = cellArea.Width - StyleConf.FilterTreeViewOnlyRightOffset;
+				int height = cellArea.Height - StyleConf.FilterTreeViewOnlyTopOffset * 2;
+				Point pos = new Point (cellArea.X + backgroundArea.Width - cellArea.Width,
+					            cellArea.Y + StyleConf.FilterTreeViewOnlyTopOffset);
 				tk.Context = context;
 				tk.Begin ();
 				tk.FontSize = 12;
 				tk.FillColor = null;
 				tk.LineWidth = 1;
-				tk.StrokeColor = Config.Style.PaletteBackgroundLight;
+				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
 				tk.DrawRoundedRectangle (pos, width, height, 3);
 				tk.StrokeColor = Config.Style.PaletteText;
 				tk.FontAlignment = FontAlignment.Center;

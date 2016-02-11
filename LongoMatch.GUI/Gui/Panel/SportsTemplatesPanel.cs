@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Panel
 			cell.Edited += HandleEdited;
 			var col = dashboardseditortreeview.AppendColumn ("Text", cell, "text", COL_NAME);
 			col.AddAttribute (cell, "editable", COL_STATIC);
-			dashboardseditortreeview.SearchColumn = 0;
+			dashboardseditortreeview.SearchColumn = COL_NAME;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 			
