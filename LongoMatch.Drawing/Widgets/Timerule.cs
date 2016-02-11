@@ -36,7 +36,7 @@ namespace LongoMatch.Drawing.Widgets
 		const int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int MINIMUM_TIME_SPACING = 80;
-		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 300, 600, 1200 };
+		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 120, 300, 600, 1200 };
 		NeedleObject needle;
 		double scroll;
 		double secondsPerPixel;
