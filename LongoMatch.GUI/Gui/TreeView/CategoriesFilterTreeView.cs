@@ -18,9 +18,9 @@
 using System;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {
@@ -28,69 +28,88 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
+		Project project;
+		EventsFilter filter;
 
-		public CategoriesFilterTreeView () : base ()
+		public CategoriesFilterTreeView ()
 		{
-			firstColumnName = Catalog.GetString ("Category");
-			HeadersVisible = false;
 		}
 
-		public override void SetFilter (EventsFilter filter, Project project)
+		public void SetFilter (EventsFilter filter, Project project)
 		{
 			this.project = project;
-			base.SetFilter (filter, project);
+			this.filter = filter;
+			FillTree ();
 		}
 
-		protected override void FillTree ()
+		protected override void UpdateSelection (TreeIter iter, bool active)
+		{
+			UpdateSelectionPriv (iter, active, true, true);
+		}
+
+		public override void ToggleAll (bool active)
+		{
+			TreeIter current;
+			store.GetIterFirst (out current);
+			filter.IgnoreUpdates = true;
+			ToggleAll (current, active, false);
+			filter.IgnoreUpdates = false;
+			filter.Update ();
+		}
+
+		void FillTree ()
 		{
 			TreeIter catIter;
-			store = new TreeStore (typeof(object), typeof(bool));
-			
+
+			store = Model as TreeStore;
+			store.Clear ();
 			filter.IgnoreUpdates = true;
+
 			/* Periods */
-			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Periods")), false);
+			catIter = store.AppendValues (Catalog.GetString ("Periods"), false,
+				new StringObject (Catalog.GetString ("Periods")));
 			foreach (Period p in project.Periods) {
-				store.AppendValues (catIter, p, false);
+				store.AppendValues (catIter, p.Name, false, p);
 			}
 			
-			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Timers")), false);
+			catIter = store.AppendValues (Catalog.GetString ("Timers"), false,
+				new StringObject (Catalog.GetString ("Timers")));
 			foreach (Timer t in project.Timers) {
-				store.AppendValues (catIter, t, false);
+				store.AppendValues (catIter, t.Name, false, t);
 			}
 			
 			foreach (EventType evType in project.EventTypes) {
-				catIter = store.AppendValues (evType, true);
+				catIter = store.AppendValues (evType.Name, true, evType);
 				filter.FilterEventType (evType, true);
 
 				if (evType is AnalysisEventType) {
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
-						store.AppendValues (catIter, tag, false);
+						store.AppendValues (catIter, tag.Value, false, tag);
 					}
 				}
 			}
 
 			var tagsByGroup = project.Dashboard.CommonTagsByGroup.ToDictionary (x => x.Key, x => x.Value);
 			foreach (string grp in tagsByGroup.Keys) {
-				TreeIter grpIter = store.AppendValues (new StringObject (grp), false);
+				TreeIter grpIter = store.AppendValues (grp, false, new StringObject (grp));
 				foreach (Tag tag in tagsByGroup[grp]) {
-					store.AppendValues (grpIter, tag, false);
+					store.AppendValues (grpIter, tag.Value, false, tag);
 				}
 			}
 
 			filter.IgnoreUpdates = false;
 			filter.Update ();
-			Model = store;
 		}
 
 		void UpdateSelectionPriv (TreeIter iter, bool active, bool checkParents = true, bool recurse = true)
 		{
 			TreeIter child, parent;
 			
-			object o = store.GetValue (iter, 0);
+			object o = store.GetValue (iter, COL_VALUE);
 			store.IterParent (out parent, iter);
 			
 			if (o is Tag) {
-				EventType evType = store.GetValue (parent, 0) as EventType;
+				EventType evType = store.GetValue (parent, COL_VALUE) as EventType;
 				if (evType != null) {
 					filter.FilterEventTag (evType, o as Tag, active);
 				} else {
@@ -103,7 +122,7 @@ namespace LongoMatch.Gui.Component
 			} else if (o is Timer) {
 				filter.FilterTimer (o as Timer, active);
 			}
-			store.SetValue (iter, 1, active);
+			store.SetValue (iter, COL_ACTIVE, active);
 			
 			/* Check its parents */
 			if (active && checkParents && store.IterIsValid (parent)) {
@@ -112,63 +131,18 @@ namespace LongoMatch.Gui.Component
 			
 			/* Check/Uncheck all children */
 			if (recurse) {
+				bool state = filter.IgnoreUpdates;
 				filter.IgnoreUpdates = true;
 				store.IterChildren (out child, iter);
 				while (store.IterIsValid (child)) {
 					UpdateSelectionPriv (child, active, false, false);
 					store.IterNext (ref child);
 				}
-				filter.IgnoreUpdates = false;
+				filter.IgnoreUpdates = state;
 			}
 			
 			if (recurse && checkParents)
 				filter.Update ();
 		}
-
-		protected override void UpdateSelection (TreeIter iter, bool active)
-		{
-			UpdateSelectionPriv (iter, active, true, true);
-		}
-
-		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
-		{
-			object obj = store.GetValue (iter, 0);
-			string text = "";
-			
-			if (obj is EventType) {
-				EventType evType = obj as EventType;
-				text = evType.Name;
-			} else if (obj is Tag) {
-				text = (obj as Tag).Value;
-			} else if (obj is Timer) {
-				text = (obj as Timer).Name;
-			} else if (obj is StringObject) {
-				text = (obj as StringObject).Text;
-			}
-			
-			(cell as CellRendererText).Text = text;
-		}
-
-		protected override void Select (bool select_all)
-		{
-			TreeIter iter;
-			
-			filter.Silent = true;
-			store.GetIterFirst (out iter);
-			while (store.IterIsValid (iter)) {
-				UpdateSelection (iter, select_all);
-				store.IterNext (ref iter);
-			}
-			filter.Silent = false;
-			filter.Update ();
-		}
-
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
-		{
-			return false;
-		}
-
-	
 	}
 }
-

@@ -99,7 +99,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
     <Compile Include="Gui\Component\PlaysSelectionWidget.cs" />
     <Compile Include="Gui\TreeView\PlayersFilterTreeView.cs" />
-    <Compile Include="Gui\TreeView\FilterBaseView.cs" />
     <Compile Include="Gui\TreeView\CategoriesFilterTreeView.cs" />
     <Compile Include="Gui\Dialog\VideoConversionTool.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
@@ -197,6 +196,7 @@
     <Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
     <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
+    <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

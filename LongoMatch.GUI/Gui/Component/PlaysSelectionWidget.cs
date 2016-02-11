@@ -30,8 +30,9 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysSelectionWidget : Gtk.Bin
 	{
-	
-		Project project;
+		const int PAGE_CATEGORIES = 0;
+		const int PAGE_PLAYERS = 1;
+
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
 		IconNotebookHelper notebookHelper;
@@ -47,6 +48,9 @@ namespace LongoMatch.Gui.Component
 			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
 
 			notebook.Page = 0;
+			filtersnotebook.Page = 0;
+			allButton.Clicked += HandleButtonClicked;
+			noneButton.Clicked += HandleButtonClicked;
 		}
 
 		protected override void OnDestroyed ()
@@ -60,7 +64,6 @@ namespace LongoMatch.Gui.Component
 
 		public void SetProject (Project project, EventsFilter filter)
 		{
-			this.project = project;
 			eventslistwidget.SetProject (project, filter);
 			playersfilter.SetFilter (filter, project);
 			categoriesfilter.SetFilter (filter, project);
@@ -110,6 +113,16 @@ namespace LongoMatch.Gui.Component
 			l.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			filtersnotebook.AppendPage (s2, l);
 			filtersnotebook.ShowAll ();
+		}
+
+		void HandleButtonClicked (object sender, EventArgs e)
+		{
+			bool active = sender == allButton;
+			if (filtersnotebook.Page == PAGE_CATEGORIES) {
+				categoriesfilter.ToggleAll (active);
+			} else {
+				playersfilter.ToggleAll (active);
+			}
 		}
 	}
 }

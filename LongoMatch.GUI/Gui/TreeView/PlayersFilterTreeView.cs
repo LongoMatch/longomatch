@@ -32,6 +32,8 @@ namespace LongoMatch.Gui.Component
 		Team local, visitor;
 		Player localTeam, visitorTeam;
 		TreeIter localIter, visitorIter;
+		Project project;
+		EventsFilter filter;
 
 		public PlayersFilterTreeView () : base ()
 		{
@@ -40,43 +42,28 @@ namespace LongoMatch.Gui.Component
 			HeadersVisible = false;
 		}
 
-		public override void SetFilter (EventsFilter filter, Project project)
+		public void SetFilter (EventsFilter filter, Project project)
 		{
 			this.local = project.LocalTeamTemplate;
 			this.visitor = project.VisitorTeamTemplate;
 			localTeam.Name = local.TeamName;
 			visitorTeam.Name = visitor.TeamName;
-			base.SetFilter (filter, project);
+			this.project = project;
+			this.filter = filter;
+			FillTree ();
 		}
 
-		protected override void FillTree ()
+		public override void ToggleAll (bool active)
 		{
-			TreeStore store = new TreeStore (typeof(Player), typeof(bool));
-			localIter = store.AppendValues (localTeam);
-			visitorIter = store.AppendValues (visitorTeam);
-			store.SetValue (localIter, 1, false);
-			store.SetValue (visitorIter, 1, false);
-			
-			filter.IgnoreUpdates = true;
-			foreach (Player player in local.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (localIter, player, true);
-			}
-			
-			foreach (Player player in visitor.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (visitorIter, player, true);
-			}
-			filter.IgnoreUpdates = false;
-			filter.Update ();
-			Model = store;
+			TreeIter current;
+			store.GetIterFirst (out current);
+			ToggleAll (current, active, false);
 		}
 
-		
 		protected override void UpdateSelection (TreeIter iter, bool active)
 		{
 			TreeStore store = Model as TreeStore;
-			Player player = (Player)store.GetValue (iter, 0);
+			Player player = (Player)store.GetValue (iter, COL_VALUE);
 			
 			/* Check all children */
 			if (player == localTeam || player == visitorTeam) {
@@ -85,9 +72,9 @@ namespace LongoMatch.Gui.Component
 				
 				filter.IgnoreUpdates = true;
 				while (store.IterIsValid (child)) {
-					Player childPlayer = (Player)store.GetValue (child, 0);
+					Player childPlayer = (Player)store.GetValue (child, COL_VALUE);
 					filter.FilterPlayer (childPlayer, active);
-					store.SetValue (child, 1, active);
+					store.SetValue (child, COL_ACTIVE, active);
 					store.IterNext (ref child);
 				}
 				filter.IgnoreUpdates = false;
@@ -100,36 +87,33 @@ namespace LongoMatch.Gui.Component
 						team = localIter;
 					else
 						team = visitorIter;
-					store.SetValue (team, 1, false);
+					store.SetValue (team, COL_ACTIVE, false);
 				}
 			}
 			
-			store.SetValue (iter, 1, active);
+			store.SetValue (iter, COL_ACTIVE, active);
 			filter.Update ();
 		}
 
-		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
+		void FillTree ()
 		{
-			Player player = (Player)model.GetValue (iter, 0);
-			string name = player.ToString ();
-			if (player == localTeam || player == visitorTeam) {
-				name = player.Name;
+			localIter = store.AppendValues (localTeam.Name, false, localTeam);
+			visitorIter = store.AppendValues (visitorTeam.Name, false, visitorTeam);
+
+			filter.IgnoreUpdates = true;
+			foreach (Player player in local.PlayingPlayersList) {
+				filter.FilterPlayer (player, true);
+				store.AppendValues (localIter, player.ToString (), true, player);
 			}
-			(cell as CellRendererText).Text = name;
-		}
-
-		protected override void Select (bool select_all)
-		{
-			UpdateSelection (localIter, select_all);
-			UpdateSelection (visitorIter, select_all);
-		}
-
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
-		{
-			return false;
+			
+			foreach (Player player in visitor.PlayingPlayersList) {
+				filter.FilterPlayer (player, true);
+				store.AppendValues (visitorIter, player.ToString (), true, player);
+			}
+			filter.IgnoreUpdates = false;
+			filter.Update ();
 		}
 
 
 	}
 }
-
