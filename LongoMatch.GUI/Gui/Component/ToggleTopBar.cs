@@ -15,12 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -62,7 +59,7 @@ namespace LongoMatch.Gui.Component
 		{
 			// If there are other buttons, add the new button to their buttonGroup
 			RadioButton otherbutton = null;
-			string styleName = "toggletabbutton_left";
+			string styleName = "toggletabbutton_only";
 			if (buttoncontainer.Children.Any ()) {
 				otherbutton = buttoncontainer.Children.First () as RadioButton;
 				styleName = "toggletabbutton_right";
@@ -73,11 +70,13 @@ namespace LongoMatch.Gui.Component
 			button.Name = styleName;
 			button.DrawIndicator = false;
 
+			var bin = new HBox ();
 			var box = new HBox ();
-			box.Spacing = 20;
+			box.Spacing = 12;
 			box.Add (new Gtk.Image (icon));
 			box.Add (new Label (text));
-			button.Add (box);
+			bin.PackStart (box, false, false, 10);
+			button.Add (bin);
 
 			// Restyle the widget that was the last (if any)
 			int pos = buttoncontainer.Children.Length - 1;

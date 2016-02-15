@@ -219,7 +219,8 @@ namespace LongoMatch.Gui.Helpers
 				IconInfo icon_info = Gtk.IconTheme.Default.LookupIcon (name, size, flags);
 				Gdk.Pixbuf res = new Gdk.Pixbuf (icon_info.Filename, size, size, true);
 				return res;
-			} catch (System.Exception) {
+			} catch (Exception e) {
+				Log.Error (String.Format ("Icon {0} not found. Error: {1}", name, e.Message));
 				return LoadMissingIcon (size);
 			}
 		}
