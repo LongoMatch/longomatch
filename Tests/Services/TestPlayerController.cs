@@ -554,6 +554,19 @@ namespace Tests.Services
 		}
 
 		[Test ()]
+		public void TestSeekMaintainsSpeedRate ()
+		{
+			PreparePlayer (true);
+			player.Rate = 0.16; // 4 / 25
+			double expected = player.Rate;
+			var timeToSeek = new Time (2000);
+
+			player.Seek (timeToSeek, false, false, true);
+
+			Assert.AreEqual (expected, player.Rate);
+		}
+
+		[Test ()]
 		public void TestNext ()
 		{
 			int nextSent = 0;
