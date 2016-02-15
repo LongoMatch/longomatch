@@ -32,10 +32,10 @@ namespace LongoMatch.Drawing.Widgets
 		public event EventHandler CenterPlayheadClicked;
 		public event SeekEventHandler SeekEvent;
 
-		int BIG_LINE_HEIGHT = 15;
-		int SMALL_LINE_HEIGHT = 5;
 		const int TEXT_WIDTH = 20;
 		const int MINIMUM_TIME_SPACING = 80;
+		int bigLineHeight = 15;
+		int smallLineHeight = 5;
 		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 120, 300, 600, 1200 };
 		NeedleObject needle;
 		double scroll;
@@ -165,13 +165,13 @@ namespace LongoMatch.Drawing.Widgets
 				if (value) {
 					RuleHeight = Constants.TIMERULE_RULE_PLAYER_HEIGHT;
 					FontSize = StyleConf.TimelineRulePlayerFontSize;
-					BIG_LINE_HEIGHT = 8;
-					SMALL_LINE_HEIGHT = 3;
+					bigLineHeight = 8;
+					smallLineHeight = 3;
 				} else {
 					RuleHeight = Constants.TIMERULE_HEIGHT;
 					FontSize = StyleConf.TimelineRuleFontSize;
-					BIG_LINE_HEIGHT = 15;
-					SMALL_LINE_HEIGHT = 5;
+					bigLineHeight = 15;
+					smallLineHeight = 5;
 				}
 			}
 		}
@@ -306,16 +306,16 @@ namespace LongoMatch.Drawing.Widgets
 				int pixel = (int)(i / secondsPerPixel);
 				double pos = pixel - Scroll;
 
-				tk.DrawLine (new Point (pos, height), new Point (pos, height - BIG_LINE_HEIGHT));
+				tk.DrawLine (new Point (pos, height), new Point (pos, height - bigLineHeight));
 				string timeText = new Time { TotalSeconds = (int)i }.ToSecondsString ();
 				int textWidth, textHeight;
 				tk.MeasureText (timeText, out textWidth, out textHeight, "", FontSize, FontWeight.Normal);
-				tk.DrawText (new Point (pos - textWidth / 2, 2), textWidth, height - BIG_LINE_HEIGHT - 2, timeText);
+				tk.DrawText (new Point (pos - textWidth / 2, 2), textWidth, height - bigLineHeight - 2, timeText);
 
 				//Draw 9 small lines to separate each interval in 10 partitions
 				for (int j = 1; j < 10; j++) {
 					double position = pos + intervalLot * j;
-					tk.DrawLine (new Point (position, height), new Point (position, height - SMALL_LINE_HEIGHT));
+					tk.DrawLine (new Point (position, height), new Point (position, height - smallLineHeight));
 				}
 			}
 
