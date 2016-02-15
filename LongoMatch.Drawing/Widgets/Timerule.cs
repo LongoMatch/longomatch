@@ -32,7 +32,6 @@ namespace LongoMatch.Drawing.Widgets
 		public event EventHandler CenterPlayheadClicked;
 		public event SeekEventHandler SeekEvent;
 
-		const int TEXT_WIDTH = 20;
 		const int MINIMUM_TIME_SPACING = 80;
 		int bigLineHeight = 15;
 		int smallLineHeight = 5;
@@ -44,6 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		Time currentTime;
 		Time duration;
 		IPlayerController player;
+		int fontSize;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -182,6 +182,19 @@ namespace LongoMatch.Drawing.Widgets
 		}
 
 		int FontSize {
+			get {
+				return fontSize;
+			}
+			set {
+				fontSize = value;
+				int theight;
+				int twidth;
+				tk.MeasureText ("99:99:99", out twidth, out theight, "", fontSize, FontWeight.Normal);
+				TextWidth = twidth;
+			}
+		}
+
+		int TextWidth {
 			get;
 			set;
 		}
@@ -307,10 +320,9 @@ namespace LongoMatch.Drawing.Widgets
 				double pos = pixel - Scroll;
 
 				tk.DrawLine (new Point (pos, height), new Point (pos, height - bigLineHeight));
+				tk.FontAlignment = FontAlignment.Center;
 				string timeText = new Time { TotalSeconds = (int)i }.ToSecondsString ();
-				int textWidth, textHeight;
-				tk.MeasureText (timeText, out textWidth, out textHeight, "", FontSize, FontWeight.Normal);
-				tk.DrawText (new Point (pos - textWidth / 2, 2), textWidth, height - bigLineHeight - 2, timeText);
+				tk.DrawText (new Point (pos - TextWidth / 2, 2), TextWidth, height - bigLineHeight - 2, timeText);
 
 				//Draw 9 small lines to separate each interval in 10 partitions
 				for (int j = 1; j < 10; j++) {
