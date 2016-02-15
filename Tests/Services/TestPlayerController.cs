@@ -157,8 +157,8 @@ namespace Tests.Services
 
 			player.PlaybackRateChangedEvent += (rate) => r = 10;
 			player.Rate = 1;
-			/* Event is not raised */
-			Assert.AreEqual (0, r);
+			/* Event is raised */
+			Assert.AreEqual (10, r);
 			Assert.AreEqual (1, player.Rate);
 		}
 

@@ -176,7 +176,7 @@ namespace LongoMatch.Services
 
 		public double Rate {
 			set {
-				player.Rate = value;
+				SetRate ((float)value);
 				Log.Debug ("Rate set to " + value);
 			}
 			get {
@@ -696,7 +696,6 @@ namespace LongoMatch.Services
 			}
 		}
 
-
 		#endregion
 
 		#region Signals
@@ -943,7 +942,7 @@ namespace LongoMatch.Services
 		{
 			if (rate == 0)
 				rate = 1;
-			Rate = rate;
+			player.Rate = rate;
 
 			SetEventRate (rate);
 			EmitRateChanged (rate);
