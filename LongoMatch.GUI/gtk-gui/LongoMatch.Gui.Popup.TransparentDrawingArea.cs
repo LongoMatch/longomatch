@@ -11,7 +11,7 @@ namespace LongoMatch.Gui.Popup
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Popup.TransparentDrawingArea
 			this.Name = "LongoMatch.Gui.Popup.TransparentDrawingArea";
-			this.Title = global::Mono.Unix.Catalog.GetString ("TransparentDrawingArea");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("TransparentDrawingArea");
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(4));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.AllowShrink = true;

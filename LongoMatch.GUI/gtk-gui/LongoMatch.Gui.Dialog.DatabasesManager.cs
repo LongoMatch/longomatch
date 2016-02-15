@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.DatabasesManager
 			this.Name = "LongoMatch.Gui.Dialog.DatabasesManager";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Databases manager");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Databases manager");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Dialog
 			this.selectbutton.CanFocus = true;
 			this.selectbutton.Name = "selectbutton";
 			this.selectbutton.UseUnderline = true;
-			this.selectbutton.Label = global::Mono.Unix.Catalog.GetString ("_Select DB");
+			this.selectbutton.Label = global::LongoMatch.Core.Catalog.GetString ("_Select DB");
 			global::Gtk.Image w5 = new global::Gtk.Image ();
 			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
 			this.selectbutton.Image = w5;
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Dialog
 			this.delbutton.CanFocus = true;
 			this.delbutton.Name = "delbutton";
 			this.delbutton.UseUnderline = true;
-			this.delbutton.Label = global::Mono.Unix.Catalog.GetString ("_Delete");
+			this.delbutton.Label = global::LongoMatch.Core.Catalog.GetString ("_Delete");
 			global::Gtk.Image w7 = new global::Gtk.Image ();
 			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Menu);
 			this.delbutton.Image = w7;
@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Dialog
 			this.backupbutton.CanFocus = true;
 			this.backupbutton.Name = "backupbutton";
 			this.backupbutton.UseUnderline = true;
-			this.backupbutton.Label = global::Mono.Unix.Catalog.GetString ("_Backup");
+			this.backupbutton.Label = global::LongoMatch.Core.Catalog.GetString ("_Backup");
 			global::Gtk.Image w9 = new global::Gtk.Image ();
 			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save-as", global::Gtk.IconSize.Menu);
 			this.backupbutton.Image = w9;
@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Dialog
 			this.addbutton.CanFocus = true;
 			this.addbutton.Name = "addbutton";
 			this.addbutton.UseUnderline = true;
-			this.addbutton.Label = global::Mono.Unix.Catalog.GetString ("_Add");
+			this.addbutton.Label = global::LongoMatch.Core.Catalog.GetString ("_Add");
 			global::Gtk.Image w11 = new global::Gtk.Image ();
 			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
 			this.addbutton.Image = w11;

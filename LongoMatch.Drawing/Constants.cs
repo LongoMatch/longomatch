@@ -26,6 +26,8 @@ namespace LongoMatch.Drawing
 	{
 		public const int TIMER_HEIGHT = 20;
 		public const int TIMERULE_HEIGHT = 30;
+		public const int TIMERULE_PLAYER_HEIGHT = 20;
+		public const int TIMERULE_RULE_PLAYER_HEIGHT = 17;
 		public const int TAGGER_POINT_SIZE = 5;
 		public const int TAGGER_LINE_WIDTH = 3;
 		public static Color TAGGER_POINT_COLOR = Color.Blue1;

@@ -32,11 +32,10 @@ namespace LongoMatch.Drawing.Widgets
 		public event EventHandler CenterPlayheadClicked;
 		public event SeekEventHandler SeekEvent;
 
-		const int BIG_LINE_HEIGHT = 15;
-		const int SMALL_LINE_HEIGHT = 5;
-		const int TEXT_WIDTH = 20;
 		const int MINIMUM_TIME_SPACING = 80;
-		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 300, 600, 1200 };
+		int bigLineHeight = 15;
+		int smallLineHeight = 5;
+		readonly int[] MARKER = new int[] { 1, 2, 5, 10, 30, 60, 120, 300, 600, 1200 };
 		NeedleObject needle;
 		double scroll;
 		double secondsPerPixel;
@@ -44,6 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		Time currentTime;
 		Time duration;
 		IPlayerController player;
+		int fontSize;
 
 		public Timerule (IWidget widget) : base (widget)
 		{
@@ -55,6 +55,7 @@ namespace LongoMatch.Drawing.Widgets
 			ContinuousSeek = true;
 			BackgroundColor = Config.Style.PaletteBackgroundDark;
 			Accuracy = 5.0f;
+			PlayerMode = false;
 		}
 
 		public Timerule () : this (null)
@@ -159,6 +160,45 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 
+		public bool PlayerMode {
+			set {
+				if (value) {
+					RuleHeight = Constants.TIMERULE_RULE_PLAYER_HEIGHT;
+					FontSize = StyleConf.TimelineRulePlayerFontSize;
+					bigLineHeight = 8;
+					smallLineHeight = 3;
+				} else {
+					RuleHeight = Constants.TIMERULE_HEIGHT;
+					FontSize = StyleConf.TimelineRuleFontSize;
+					bigLineHeight = 15;
+					smallLineHeight = 5;
+				}
+			}
+		}
+
+		int RuleHeight {
+			get;
+			set;
+		}
+
+		int FontSize {
+			get {
+				return fontSize;
+			}
+			set {
+				fontSize = value;
+				int theight;
+				int twidth;
+				tk.MeasureText ("99:99:99", out twidth, out theight, "", fontSize, FontWeight.Normal);
+				TextWidth = twidth;
+			}
+		}
+
+		int TextWidth {
+			get;
+			set;
+		}
+
 		bool PlayingState {
 			get;
 			set;
@@ -254,13 +294,19 @@ namespace LongoMatch.Drawing.Widgets
 			}
 
 			Begin (context);
+			tk.LineWidth = 0;
+			BackgroundColor = Config.Style.PaletteBackground;
 			DrawBackground ();
+
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.DrawRectangle (new Point (area.Start.X, area.Start.Y + area.Height - RuleHeight), area.Width, RuleHeight);
+
 
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.FillColor = Config.Style.PaletteWidgets;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = StyleConf.TimelineRuleFontSize;
+			tk.FontSize = FontSize;
 			tk.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
 
 			start = (Scroll * SecondsPerPixel);
@@ -273,14 +319,15 @@ namespace LongoMatch.Drawing.Widgets
 				int pixel = (int)(i / secondsPerPixel);
 				double pos = pixel - Scroll;
 
-				tk.DrawLine (new Point (pos, height), new Point (pos, height - BIG_LINE_HEIGHT));
-				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 2), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 2,
-					new Time { TotalSeconds = (int)i }.ToSecondsString ());
+				tk.DrawLine (new Point (pos, height), new Point (pos, height - bigLineHeight));
+				tk.FontAlignment = FontAlignment.Center;
+				string timeText = new Time { TotalSeconds = (int)i }.ToSecondsString ();
+				tk.DrawText (new Point (pos - TextWidth / 2, 2), TextWidth, height - bigLineHeight - 2, timeText);
 
 				//Draw 9 small lines to separate each interval in 10 partitions
 				for (int j = 1; j < 10; j++) {
 					double position = pos + intervalLot * j;
-					tk.DrawLine (new Point (position, height), new Point (position, height - SMALL_LINE_HEIGHT));
+					tk.DrawLine (new Point (position, height), new Point (position, height - smallLineHeight));
 				}
 			}
 

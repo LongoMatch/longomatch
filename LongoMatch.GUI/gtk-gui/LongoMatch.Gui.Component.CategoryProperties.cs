@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 1F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Name");
+			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Name");
 			this.label1.UseMarkup = true;
 			this.maintable.Add (this.label1);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.maintable [this.label1]));
@@ -137,7 +137,7 @@ namespace LongoMatch.Gui.Component
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 1F;
-			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Color");
+			this.label4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Color");
 			this.label4.UseMarkup = true;
 			this.maintable.Add (this.label4);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.maintable [this.label4]));
@@ -173,7 +173,7 @@ namespace LongoMatch.Gui.Component
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.hotKeyLabel = new global::Gtk.Label ();
 			this.hotKeyLabel.Name = "hotKeyLabel";
-			this.hotKeyLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("none");
+			this.hotKeyLabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("none");
 			this.hbox5.Add (this.hotKeyLabel);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.hotKeyLabel]));
 			w6.Position = 0;
@@ -184,7 +184,7 @@ namespace LongoMatch.Gui.Component
 			this.changebuton.CanFocus = true;
 			this.changebuton.Name = "changebuton";
 			this.changebuton.UseUnderline = true;
-			this.changebuton.Label = global::Mono.Unix.Catalog.GetString ("Change");
+			this.changebuton.Label = global::LongoMatch.Core.Catalog.GetString ("Change");
 			this.hbox5.Add (this.changebuton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.changebuton]));
 			w7.Position = 1;
@@ -199,7 +199,7 @@ namespace LongoMatch.Gui.Component
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
 			this.label6.Xalign = 1F;
-			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("HotKey");
+			this.label6.LabelProp = global::LongoMatch.Core.Catalog.GetString ("HotKey");
 			this.label6.UseMarkup = true;
 			this.texttable.Add (this.label6);
 			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.texttable [this.label6]));
@@ -221,7 +221,7 @@ namespace LongoMatch.Gui.Component
 			this.textcolorlabel = new global::Gtk.Label ();
 			this.textcolorlabel.Name = "textcolorlabel";
 			this.textcolorlabel.Xalign = 1F;
-			this.textcolorlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Text color");
+			this.textcolorlabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Text color");
 			this.textcolorlabel.UseMarkup = true;
 			this.texttable.Add (this.textcolorlabel);
 			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.texttable [this.textcolorlabel]));
@@ -243,7 +243,7 @@ namespace LongoMatch.Gui.Component
 			this.label7 = new global::Gtk.Label ();
 			this.label7.Name = "label7";
 			this.label7.Xalign = 1F;
-			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("Lead time (s)");
+			this.label7.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Lead time (s)");
 			this.label7.UseMarkup = true;
 			this.timetable.Add (this.label7);
 			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.timetable [this.label7]));
@@ -255,7 +255,7 @@ namespace LongoMatch.Gui.Component
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 1F;
-			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Lag time (s)");
+			this.label8.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Lag time (s)");
 			this.label8.UseMarkup = true;
 			this.timetable.Add (this.label8);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.timetable [this.label8]));
@@ -295,7 +295,7 @@ namespace LongoMatch.Gui.Component
 			this.taglabel = new global::Gtk.Label ();
 			this.taglabel.Name = "taglabel";
 			this.taglabel.Xalign = 1F;
-			this.taglabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Tag mode");
+			this.taglabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Tag mode");
 			this.taglabel.UseMarkup = true;
 			this.timetable.Add (this.taglabel);
 			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.timetable [this.taglabel]));
@@ -303,8 +303,8 @@ namespace LongoMatch.Gui.Component
 			w17.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child timetable.Gtk.Table+TableChild
 			this.tagmodecombobox = global::Gtk.ComboBox.NewText ();
-			this.tagmodecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Automatic"));
-			this.tagmodecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Manual"));
+			this.tagmodecombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Automatic"));
+			this.tagmodecombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Manual"));
 			this.tagmodecombobox.Name = "tagmodecombobox";
 			this.tagmodecombobox.Active = 0;
 			this.timetable.Add (this.tagmodecombobox);
@@ -323,9 +323,9 @@ namespace LongoMatch.Gui.Component
 			this.postable.ColumnSpacing = ((uint)(6));
 			// Container child postable.Gtk.Table+TableChild
 			this.fieldcombobox = global::Gtk.ComboBox.NewText ();
-			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Not tagged"));
-			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
-			this.fieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trajectory"));
+			this.fieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Not tagged"));
+			this.fieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Tag as point"));
+			this.fieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Tag as trajectory"));
 			this.fieldcombobox.Name = "fieldcombobox";
 			this.fieldcombobox.Active = 0;
 			this.postable.Add (this.fieldcombobox);
@@ -335,8 +335,8 @@ namespace LongoMatch.Gui.Component
 			w20.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child postable.Gtk.Table+TableChild
 			this.goalcombobox = global::Gtk.ComboBox.NewText ();
-			this.goalcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Not tagged"));
-			this.goalcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
+			this.goalcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Not tagged"));
+			this.goalcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Tag as point"));
 			this.goalcombobox.Name = "goalcombobox";
 			this.goalcombobox.Active = 0;
 			this.postable.Add (this.goalcombobox);
@@ -348,9 +348,9 @@ namespace LongoMatch.Gui.Component
 			w21.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child postable.Gtk.Table+TableChild
 			this.hfieldcombobox = global::Gtk.ComboBox.NewText ();
-			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Not tagged"));
-			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as point"));
-			this.hfieldcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Tag as trajectory"));
+			this.hfieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Not tagged"));
+			this.hfieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Tag as point"));
+			this.hfieldcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Tag as trajectory"));
 			this.hfieldcombobox.Name = "hfieldcombobox";
 			this.hfieldcombobox.Active = 0;
 			this.postable.Add (this.hfieldcombobox);
@@ -364,7 +364,7 @@ namespace LongoMatch.Gui.Component
 			this.label10 = new global::Gtk.Label ();
 			this.label10.Name = "label10";
 			this.label10.Xalign = 1F;
-			this.label10.LabelProp = global::Mono.Unix.Catalog.GetString ("Field position");
+			this.label10.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Field position");
 			this.label10.UseMarkup = true;
 			this.postable.Add (this.label10);
 			global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.postable [this.label10]));
@@ -374,7 +374,7 @@ namespace LongoMatch.Gui.Component
 			this.label11 = new global::Gtk.Label ();
 			this.label11.Name = "label11";
 			this.label11.Xalign = 1F;
-			this.label11.LabelProp = global::Mono.Unix.Catalog.GetString ("Half field position");
+			this.label11.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Half field position");
 			this.label11.UseMarkup = true;
 			this.postable.Add (this.label11);
 			global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.postable [this.label11]));
@@ -386,7 +386,7 @@ namespace LongoMatch.Gui.Component
 			this.label12 = new global::Gtk.Label ();
 			this.label12.Name = "label12";
 			this.label12.Xalign = 1F;
-			this.label12.LabelProp = global::Mono.Unix.Catalog.GetString ("Goal position");
+			this.label12.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Goal position");
 			this.label12.UseMarkup = true;
 			this.postable.Add (this.label12);
 			global::Gtk.Table.TableChild w25 = ((global::Gtk.Table.TableChild)(this.postable [this.label12]));
@@ -398,7 +398,7 @@ namespace LongoMatch.Gui.Component
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 1F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Sort Method");
+			this.label9.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Sort Method");
 			this.label9.UseMarkup = true;
 			this.postable.Add (this.label9);
 			global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.postable [this.label9]));
@@ -408,10 +408,10 @@ namespace LongoMatch.Gui.Component
 			w26.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child postable.Gtk.Table+TableChild
 			this.sortmethodcombobox = global::Gtk.ComboBox.NewText ();
-			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by name"));
-			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by start time"));
-			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by stop time"));
-			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by duration"));
+			this.sortmethodcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by name"));
+			this.sortmethodcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by start time"));
+			this.sortmethodcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by stop time"));
+			this.sortmethodcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Sort by duration"));
 			this.sortmethodcombobox.Name = "sortmethodcombobox";
 			this.sortmethodcombobox.Active = 0;
 			this.postable.Add (this.sortmethodcombobox);
@@ -434,7 +434,7 @@ namespace LongoMatch.Gui.Component
 			this.label15 = new global::Gtk.Label ();
 			this.label15.Name = "label15";
 			this.label15.Xalign = 1F;
-			this.label15.LabelProp = global::Mono.Unix.Catalog.GetString ("Tags per row");
+			this.label15.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Tags per row");
 			this.label15.UseMarkup = true;
 			this.cattable.Add (this.label15);
 			global::Gtk.Table.TableChild w29 = ((global::Gtk.Table.TableChild)(this.cattable [this.label15]));
@@ -446,7 +446,7 @@ namespace LongoMatch.Gui.Component
 			this.showtagslabel = new global::Gtk.Label ();
 			this.showtagslabel.Name = "showtagslabel";
 			this.showtagslabel.Xalign = 1F;
-			this.showtagslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Show tags");
+			this.showtagslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Show tags");
 			this.showtagslabel.UseMarkup = true;
 			this.cattable.Add (this.showtagslabel);
 			global::Gtk.Table.TableChild w30 = ((global::Gtk.Table.TableChild)(this.cattable [this.showtagslabel]));
@@ -492,7 +492,7 @@ namespace LongoMatch.Gui.Component
 			this.label16 = new global::Gtk.Label ();
 			this.label16.Name = "label16";
 			this.label16.Xalign = 1F;
-			this.label16.LabelProp = global::Mono.Unix.Catalog.GetString ("Shape");
+			this.label16.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Shape");
 			this.label16.UseMarkup = true;
 			this.cardtable.Add (this.label16);
 			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.cardtable [this.label16]));
@@ -500,9 +500,9 @@ namespace LongoMatch.Gui.Component
 			w34.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child cardtable.Gtk.Table+TableChild
 			this.shapecombobox = global::Gtk.ComboBox.NewText ();
-			this.shapecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Rectangle"));
-			this.shapecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Triangle"));
-			this.shapecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Circle"));
+			this.shapecombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Rectangle"));
+			this.shapecombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Triangle"));
+			this.shapecombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Circle"));
 			this.shapecombobox.Name = "shapecombobox";
 			this.shapecombobox.Active = 0;
 			this.cardtable.Add (this.shapecombobox);
@@ -523,7 +523,7 @@ namespace LongoMatch.Gui.Component
 			this.label17 = new global::Gtk.Label ();
 			this.label17.Name = "label17";
 			this.label17.Xalign = 1F;
-			this.label17.LabelProp = global::Mono.Unix.Catalog.GetString ("Points");
+			this.label17.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Points");
 			this.label17.UseMarkup = true;
 			this.scoretable.Add (this.label17);
 			global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.scoretable [this.label17]));
@@ -554,7 +554,7 @@ namespace LongoMatch.Gui.Component
 			this.label18 = new global::Gtk.Label ();
 			this.label18.Name = "label18";
 			this.label18.Xalign = 1F;
-			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("Team");
+			this.label18.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Team");
 			this.label18.UseMarkup = true;
 			this.timertable.Add (this.label18);
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.timertable [this.label18]));
@@ -562,9 +562,9 @@ namespace LongoMatch.Gui.Component
 			w40.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child timertable.Gtk.Table+TableChild
 			this.teamcombobox = global::Gtk.ComboBox.NewText ();
-			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("None"));
-			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Home"));
-			this.teamcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Away"));
+			this.teamcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("None"));
+			this.teamcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Home"));
+			this.teamcombobox.AppendText (global::LongoMatch.Core.Catalog.GetString ("Away"));
 			this.teamcombobox.Name = "teamcombobox";
 			this.teamcombobox.Active = 0;
 			this.timertable.Add (this.teamcombobox);
@@ -597,7 +597,7 @@ namespace LongoMatch.Gui.Component
 			this.label19 = new global::Gtk.Label ();
 			this.label19.Name = "label19";
 			this.label19.Xalign = 1F;
-			this.label19.LabelProp = global::Mono.Unix.Catalog.GetString ("Group");
+			this.label19.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Group");
 			this.label19.UseMarkup = true;
 			this.tagtable.Add (this.label19);
 			global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.tagtable [this.label19]));

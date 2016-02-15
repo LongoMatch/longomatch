@@ -19,7 +19,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.FramesCaptureProgressDialog
 			this.Name = "LongoMatch.Gui.Dialog.FramesCaptureProgressDialog";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Capture Progress");
+			this.Title = global::LongoMatch.Core.Catalog.GetString ("Capture Progress");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Dialog);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
