@@ -74,15 +74,9 @@ namespace LongoMatch.Gui.Component
 			ToggleAll (current, active);
 		}
 
-		protected void AddNullOrEmptyValue ()
+		protected void AddNullOrEmptyValue (string text, bool check)
 		{
-			store.AppendValues (Catalog.GetString ("None specified"), false,
-				new StringObject (ProjectsFilter.EMPTY_OR_NULL));
-		}
-
-		protected void AddNoPlayerValue (string text)
-		{
-			store.AppendValues (text, false, new NullFilterValue ());
+			store.AppendValues (text, check, new StringObject (ProjectsFilter.EMPTY_OR_NULL));
 		}
 
 		protected abstract void UpdateSelection (TreeIter iter, bool active);
