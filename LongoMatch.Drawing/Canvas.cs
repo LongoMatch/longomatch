@@ -243,7 +243,7 @@ namespace LongoMatch.Drawing
 		void HandleRedrawEvent (ICanvasObject co, Area area)
 		{
 			if (!IgnoreRedraws) {
-				widget.ReDraw (area);
+				widget?.ReDraw (area);
 			}
 		}
 
