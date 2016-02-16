@@ -56,6 +56,7 @@ namespace LongoMatch.Services
 		object defaultCamerasLayout;
 		MediaFileSet defaultFileSet;
 		MediaFileSet mediafileSet;
+		MediaFileSet mediaFileSetCopy;
 
 		Time streamLength, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready;
@@ -221,7 +222,8 @@ namespace LongoMatch.Services
 				return mediafileSet;
 			}
 			protected set {
-				mediafileSet = value.Clone ();
+				mediafileSet = value;
+				mediaFileSetCopy = value.Clone ();
 			}
 		}
 
@@ -888,7 +890,7 @@ namespace LongoMatch.Services
 				defaultFileSet = fileSet;
 			}
 
-			if ((fileSet != null && (!fileSet.Equals (FileSet) || fileSet.CheckMediaFilesModified (mediafileSet))) || force) {
+			if ((fileSet != null && (!fileSet.Equals (FileSet) || fileSet.CheckMediaFilesModified (mediaFileSetCopy))) || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
@@ -985,7 +987,7 @@ namespace LongoMatch.Services
 
 			UpdateCamerasConfig (camerasConfig, camerasLayout);
 
-			if (fileSet != null && (!fileSet.Equals (mediafileSet) || fileSet.CheckMediaFilesModified (mediafileSet))) {
+			if (fileSet != null && (!fileSet.Equals (mediafileSet) || fileSet.CheckMediaFilesModified (mediaFileSetCopy))) {
 				InternalOpen (fileSet, false);
 			} else {
 				ApplyCamerasConfig ();

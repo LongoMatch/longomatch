@@ -1328,9 +1328,11 @@ namespace Tests.Services
 			localPlaylist.Elements.Add (element0);
 			player.LoadPlaylistEvent (localPlaylist, element0, false);
 
-			Assert.IsTrue (evt.FileSet.Equals (player.FileSet));
+			Assert.AreEqual (evt.FileSet, player.FileSet);
 
+			evt.FileSet = evt.FileSet.Clone ();
 			evt.FileSet [0].FilePath = "test3";
+
 			Assert.IsTrue (player.FileSet.CheckMediaFilesModified (evt.FileSet));
 
 			player.LoadPlaylistEvent (localPlaylist, element0, false);
