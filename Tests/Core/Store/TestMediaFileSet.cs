@@ -172,6 +172,36 @@ namespace Tests.Core.Store
 
 			Assert.IsTrue (mf.Equals (mf2));
 		}
+
+		[Test ()]
+		public void TestMediaFileSetPathModifiedSameReferenceReturnsFalse ()
+		{
+			MediaFileSet mfs = new MediaFileSet ();
+			mfs.Add (new MediaFile {
+				FilePath = "/videos/test.mp4"
+			});
+			MediaFileSet mfs2 = mfs;
+			mfs2 [0].FilePath = "/videos/test2.mp4";
+
+			Assert.IsFalse (mfs2.CheckMediaFilesModified (mfs));
+			Assert.AreEqual (mfs [0].FilePath, mfs2 [0].FilePath);
+		}
+
+		[Test ()]
+		public void TestMediaFileSetPathModifiedDifferentReferenceReturnsTrue ()
+		{
+			MediaFileSet mfs = new MediaFileSet ();
+			mfs.Add (new MediaFile {
+				FilePath = "/videos/test.mp4"
+			});
+
+			MediaFileSet mfs2 = mfs.Clone ();
+			mfs2 [0].FilePath = "/videos/test2.mp4";
+
+			Assert.IsTrue (mfs2.CheckMediaFilesModified (mfs));
+			Assert.AreNotEqual (mfs [0].FilePath, mfs2 [0].FilePath);
+			Assert.AreEqual (mfs.ID, mfs2.ID);
+		}
 	}
 }
 
