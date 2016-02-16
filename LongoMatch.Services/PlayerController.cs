@@ -55,6 +55,7 @@ namespace LongoMatch.Services
 		ObservableCollection<CameraConfig> defaultCamerasConfig;
 		object defaultCamerasLayout;
 		MediaFileSet defaultFileSet;
+		MediaFileSet mediafileSet;
 
 		Time streamLength, videoTS, imageLoadedTS;
 		bool readyToSeek, stillimageLoaded, ready;
@@ -216,8 +217,12 @@ namespace LongoMatch.Services
 		}
 
 		public MediaFileSet FileSet {
-			get;
-			protected set;
+			get {
+				return mediafileSet;
+			}
+			protected set {
+				mediafileSet = value.Clone ();
+			}
 		}
 
 		public bool Opened {
@@ -883,7 +888,7 @@ namespace LongoMatch.Services
 				defaultFileSet = fileSet;
 			}
 
-			if ((fileSet != null && !fileSet.Equals (FileSet)) || force) {
+			if ((fileSet != null && (!fileSet.Equals (FileSet) || fileSet.CheckMediaFilesModified (mediafileSet))) || force) {
 				readyToSeek = false;
 				FileSet = fileSet;
 				// Check if the view failed to configure a proper cam config
@@ -980,7 +985,7 @@ namespace LongoMatch.Services
 
 			UpdateCamerasConfig (camerasConfig, camerasLayout);
 
-			if (fileSet != null && !fileSet.Equals (FileSet)) {
+			if (fileSet != null && (!fileSet.Equals (mediafileSet) || fileSet.CheckMediaFilesModified (mediafileSet))) {
 				InternalOpen (fileSet, false);
 			} else {
 				ApplyCamerasConfig ();

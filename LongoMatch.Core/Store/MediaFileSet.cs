@@ -240,6 +240,25 @@ namespace LongoMatch.Core.Store
 			return true;
 		}
 
+		/// <summary>
+		/// Checks that the MediaFileSet passed is same reference
+		///  If not checks if the filepaths of boths MediaFileSets
+		/// are the same
+		/// </summary>
+		/// <returns><c>true</c>, if not same reference and mediafiles paths are different, <c>false</c> otherwise.</returns>
+		/// <param name="fileset">MediaFileSet to check if its same reference and the filepaths</param>
+		public bool CheckMediaFilesModified (MediaFileSet fileset)
+		{
+			if (!Object.ReferenceEquals (this, fileset)) {
+				foreach (MediaFile f in fileset) {
+					if (this.Where (fs => fs.FilePath == f.FilePath).Count () <= 0) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		protected void CheckIsLoaded ()
 		{
 			if (!IsLoaded && !isLoading) {

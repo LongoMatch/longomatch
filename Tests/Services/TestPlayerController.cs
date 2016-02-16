@@ -1318,6 +1318,29 @@ namespace Tests.Services
 			player.ElementLoadedEvent -= HandleElementLoadedEvent;
 		}
 
+		[Test ()]
+		public void TestPlayerControllerRefreshMediaFileSetWhenItChanges ()
+		{
+			PreparePlayer ();
+			playerMock.ResetCalls ();
+			Playlist localPlaylist = new Playlist ();
+			IPlaylistElement element0 = new PlaylistPlayElement (evt);
+			localPlaylist.Elements.Add (element0);
+			player.LoadPlaylistEvent (localPlaylist, element0, false);
+
+			Assert.IsTrue (evt.FileSet.Equals (player.FileSet));
+
+			evt.FileSet [0].FilePath = "test3";
+			Assert.IsTrue (player.FileSet.CheckMediaFilesModified (evt.FileSet));
+
+			player.LoadPlaylistEvent (localPlaylist, element0, false);
+
+			playerMock.Verify (prop => prop.Open (evt.FileSet [0]), Times.Once);
+			Assert.AreEqual (player.FileSet [0].FilePath, evt.FileSet [0].FilePath);
+			Assert.IsFalse (player.FileSet.CheckMediaFilesModified (evt.FileSet));
+
+		}
+
 		void HandleElementLoadedEvent (object element, bool hasNext)
 		{
 			elementLoaded++;
