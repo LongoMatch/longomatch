@@ -104,7 +104,8 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public UIManager GetUIManager () {
+		public UIManager GetUIManager ()
+		{
 			return UIManager;
 		}
 
@@ -211,7 +212,15 @@ namespace LongoMatch.Gui
 					Gtk.Action itemAction = new Gtk.Action (actionName, tool.MenubarLabel, null, null);
 					itemAction.Sensitive = true;
 					itemAction.ShortLabel = tool.MenubarLabel;
-					itemAction.Activated += (sender, e) => (tool.Load (Config.GUIToolkit));
+					itemAction.Activated += (sender, e) => {
+						bool loadTool = true;
+						if (openedProject != null) {
+							loadTool = Config.EventsBroker.EmitCloseOpenedProject ();
+						}
+						if (loadTool) {
+							tool.Load (Config.GUIToolkit);
+						}
+					};
 
 					this.UIManager.AddUi (mergeId, "/menubar1/ToolsAction", actionName, actionName, UIManagerItemType.Menuitem, false);
 					ag.Add (itemAction, tool.MenubarAccelerator);
