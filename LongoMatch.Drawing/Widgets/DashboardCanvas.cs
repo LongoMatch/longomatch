@@ -354,8 +354,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		public override void Draw (IContext context, Area area)
 		{
-			Begin (context);
+			tk.Context = context;
 			DrawBackground ();
+			Begin (context);
 			if (Mode != DashboardMode.Code) {
 				/* Draw grid */
 				tk.LineWidth = 1;
