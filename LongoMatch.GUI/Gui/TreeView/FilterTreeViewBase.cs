@@ -19,6 +19,7 @@ using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using Pango;
 using EventType = LongoMatch.Core.Store.EventType;
@@ -73,10 +74,9 @@ namespace LongoMatch.Gui.Component
 			ToggleAll (current, active);
 		}
 
-		protected void AddNullOrEmptyValue ()
+		protected void AddNullOrEmptyValue (string text, bool check)
 		{
-			store.AppendValues (Catalog.GetString ("None specified"), false,
-				new StringObject (ProjectsFilter.EMPTY_OR_NULL));
+			store.AppendValues (text, check, new StringObject (ProjectsFilter.EMPTY_OR_NULL));
 		}
 
 		protected abstract void UpdateSelection (TreeIter iter, bool active);

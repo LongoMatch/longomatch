@@ -279,6 +279,36 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestQueryEventsByNoPlayerOrTeam ()
+		{
+			Player messi = new Player { Name = "Messi" };
+			TimelineEvent evt = new TimelineEvent ();
+			evt.Players.Add (messi);
+			storage.Store (evt);
+			evt = new TimelineEvent ();
+			storage.Store (evt);
+
+			QueryFilter filter = new QueryFilter ();
+			Player nullPlayer = null;
+			Team nullTeam = null;
+
+			filter.Add ("Player", nullPlayer);
+			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+
+			filter = new QueryFilter ();
+			filter.Add ("Team", nullTeam);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+
+			filter = new QueryFilter ();
+			QueryFilter teamsAndPlayersFilter = new QueryFilter { Operator = QueryOperator.Or };
+			filter.Children.Add (teamsAndPlayersFilter);
+			teamsAndPlayersFilter.Add ("Team", nullTeam);
+			teamsAndPlayersFilter.Add ("Player", nullPlayer);
+			filter.Operator = QueryOperator.Or;
+			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+		}
+
+		[Test ()]
 		public void TestQueryEventsByTeam ()
 		{
 			Team devTeam, qaTeam;
