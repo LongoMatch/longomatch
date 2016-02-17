@@ -163,6 +163,23 @@ namespace Tests.Services
 		}
 
 		[Test ()]
+		public void TestSetRateWithLoadedEvent ()
+		{
+			float r = 0;
+			double expected = 2;
+
+			PreparePlayer ();
+			player.LoadEvent (evt, currentTime, true);
+			player.PlaybackRateChangedEvent += (rate) => r = 10;
+
+			player.Rate = expected; // Event is raised
+
+			Assert.AreEqual (10, r, "Fails because PlaybackRateChangedEvent is not called");
+			Assert.AreEqual (expected, player.Rate, "Fails because player has an incorrect rate");
+			Assert.AreEqual (expected, evt.Rate, "Fails because event has an incorrect rate");
+		}
+
+		[Test ()]
 		public void TestCurrentMiniatureFrame ()
 		{
 			var img = player.CurrentMiniatureFrame;
