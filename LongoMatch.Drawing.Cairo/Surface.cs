@@ -97,6 +97,11 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			Gdk.Colormap colormap = Gdk.Colormap.System;
 
+			/* FIXME: copying a surface to a pixbuf through a pixmap does not require writting / reading to a file,
+			 * but it does not handle transparencies correctly and draws transparent pixels in a black color, so
+			 * for now we force the first method */
+			colormap = null;
+
 			/* In unit tests running without a display, the default Screen is null and we can't get a valid colormap.
 			 * In this scenario we use a fallback that writes the surface to a temporary file */
 			if (colormap == null) {
