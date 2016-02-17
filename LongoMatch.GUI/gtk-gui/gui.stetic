@@ -7484,6 +7484,27 @@ You can continue with the current capture, cancel it or save your project.
                               </packing>
                             </child>
                             <child>
+                              <widget class="Gtk.Button" id="importteambutton">
+                                <property name="MemberName" />
+                                <property name="Tooltip" translatable="yes" />
+                                <property name="CanFocus">True</property>
+                                <property name="Type">Custom</property>
+                                <child>
+                                  <widget class="Gtk.Image" id="importteamimage">
+                                    <property name="MemberName" />
+                                    <property name="Xpad">5</property>
+                                    <property name="Ypad">5</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
                               <widget class="Gtk.Button" id="saveteambutton">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes" />
@@ -7498,7 +7519,7 @@ You can continue with the current capture, cancel it or save your project.
                                 </child>
                               </widget>
                               <packing>
-                                <property name="Position">1</property>
+                                <property name="Position">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
@@ -7519,7 +7540,7 @@ You can continue with the current capture, cancel it or save your project.
                                 </child>
                               </widget>
                               <packing>
-                                <property name="Position">2</property>
+                                <property name="Position">3</property>
                                 <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>
@@ -7540,7 +7561,7 @@ You can continue with the current capture, cancel it or save your project.
                                 </child>
                               </widget>
                               <packing>
-                                <property name="Position">3</property>
+                                <property name="Position">4</property>
                                 <property name="AutoSize">True</property>
                                 <property name="Expand">False</property>
                                 <property name="Fill">False</property>

@@ -62,19 +62,19 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 			};
 
-			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", 54);
-			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", 47);
-			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 36);
-			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", 36);
-			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", 36);
-			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 36);
-			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", 36);
-			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", 36);
-			addtagimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", 36);
-			scoreimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", 36);
-			cardimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", 36);
-			timerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", 36);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", 54);
+			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
+			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", StyleConf.TemplatesHeaderIconSize);
+			newtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
+			importtemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
+			exporttemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
+			deletetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
+			savetemplateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
+			addcategoryimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-category", StyleConf.TemplatesIconSize);
+			addtagimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", StyleConf.TemplatesIconSize);
+			scoreimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-score", StyleConf.TemplatesIconSize);
+			cardimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-card", StyleConf.TemplatesIconSize);
+			timerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-timer", StyleConf.TemplatesIconSize);
+			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			// Connect buttons from the bar
 			newtemplatebutton.Entered += HandleEnterTemplateButton;
