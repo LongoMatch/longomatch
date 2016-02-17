@@ -52,16 +52,16 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			provider = Config.TeamTemplatesProvider;
-			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", 45);
-			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", 45);
-			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 34);
-			importteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", 34);
-			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", 34);
-			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 34);
-			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", 34);
-			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 34);
-			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 34);
-			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", 34);
+			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
+			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
+			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
+			importteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", StyleConf.TemplatesIconSize);
+			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", StyleConf.TemplatesIconSize);
+			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
+			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", StyleConf.TemplatesIconSize);
+			newplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
+			deleteplayerimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", StyleConf.TemplatesIconSize);
+			vseparatorimage.Pixbuf = Helpers.Misc.LoadIcon ("vertical-separator", StyleConf.TemplatesIconSize);
 
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
