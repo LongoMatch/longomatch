@@ -55,6 +55,7 @@ namespace LongoMatch.Gui.Panel
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", 45);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", 45);
 			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", 34);
+			importteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-import", 34);
 			exportteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-export", 34);
 			deleteteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-delete", 34);
 			saveteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-save", 34);
@@ -65,6 +66,9 @@ namespace LongoMatch.Gui.Panel
 			newteambutton.Entered += HandleEnterTeamButton;
 			newteambutton.Left += HandleLeftTeamButton;
 			newteambutton.Clicked += HandleNewTeamClicked;
+			importteambutton.Entered += HandleEnterTeamButton;
+			importteambutton.Left += HandleLeftTeamButton;
+			importteambutton.Clicked += HandleImportTeamClicked;
 			exportteambutton.Entered += HandleEnterTeamButton;
 			exportteambutton.Left += HandleLeftTeamButton;
 			exportteambutton.Clicked += HandleExportTeamClicked;
@@ -195,6 +199,8 @@ namespace LongoMatch.Gui.Panel
 				editteamslabel.Markup = Catalog.GetString ("Delete team");
 			} else if (sender == saveteambutton) {
 				editteamslabel.Markup = Catalog.GetString ("Save team");
+			} else if (sender == importteambutton) {
+				editteamslabel.Markup = Catalog.GetString ("Import team");
 			}
 		}
 
@@ -310,6 +316,59 @@ namespace LongoMatch.Gui.Panel
 			teamtemplateeditor1.Visible = selected != null;
 			if (selected != null) {
 				LoadTeam (selected, iter);
+			}
+		}
+
+		void HandleImportTeamClicked (object sender, EventArgs e)
+		{
+			string fileName, filterName;
+			string[] extensions;
+
+			Log.Debug ("Importing team");
+			filterName = Catalog.GetString ("Team files");
+			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
+			/* Show a file chooser dialog to select the file to import */
+			fileName = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, Config.HomeDir,
+				filterName, extensions);
+
+			if (fileName == null)
+				return;
+
+			try {
+				Team newTeam = provider.LoadFile (fileName);
+
+				if (newTeam != null) {
+					bool abort = false;
+
+					while (provider.Exists (newTeam.Name) && !abort) {
+						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
+							              Catalog.GetString ("Name conflict"), newTeam.Name + "#").Result;
+						if (name == null) {
+							abort = true;
+						} else {
+							newTeam.Name = name;
+						}
+					}
+
+					if (!abort) {
+						Pixbuf img;
+
+						provider.Save (newTeam);
+						if (newTeam.Shield != null) {
+							img = newTeam.Shield.Value;
+						} else {
+							img = Helpers.Misc.LoadIcon ("longomatch-default-shield", StyleConf.TeamsShieldIconSize);
+						}
+
+						teamsStore.AppendValues (img, newTeam.Name, newTeam);
+						Load (newTeam.Name);
+					}
+				}
+			} catch (Exception ex) {
+				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
+				"\n" + ex.Message);
+				Log.Exception (ex);
+				return;
 			}
 		}
 
