@@ -148,14 +148,15 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
-			List<Player> players = SelectedPlay.Players.ToList ();
+			TimelineEvent selectedEvent = SelectedPlay;
+			List<Player> players = selectedEvent.Players.ToList ();
 
-			Config.GUIToolkit.EditPlay (SelectedPlay, Project, true, true, true, true);
+			Config.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 
-			if (!Enumerable.SequenceEqual (players, SelectedPlay.Players)) {
+			if (!players.SequenceEqual (selectedEvent.Players)) {
 				Config.EventsBroker.EmitTeamTagsChanged ();
 			}
-			Config.EventsBroker.EmitEventEdited (SelectedPlay);
+			Config.EventsBroker.EmitEventEdited (selectedEvent);
 			modelSort.SetSortFunc (0, SortFunction);
 			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}
