@@ -75,17 +75,22 @@ namespace LongoMatch.DB
 
 			try {
 				teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
-				Where (f => f.EndsWith (".ltt")).ToList ();
-				dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
-				Where (f => f.EndsWith (".lct")).ToList ();
-				if (teamFiles.Count == 0 && dashboardFiles.Count == 0) {
-					throw new DirectoryNotFoundException ();
-				}
+					Where (f => f.EndsWith (".ltt")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
+				percent += 0.5f;
+				progress.Report (percent, "Migrated teams", id);
+			}
+			try {
+				dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
+					Where (f => f.EndsWith (".lct")).ToList ();
+			} catch (DirectoryNotFoundException ex) {
+				percent += 0.5f;
+				progress.Report (percent, "Migrated dashboards", id);
+			}
+			if (teamFiles.Count == 0 && dashboardFiles.Count == 0) {
 				progress.Report (1, "Migrated teams and dashboards", id);
 				return true;
 			}
-
 			count = (teamFiles.Count + dashboardFiles.Count) * 2 + 1;
 
 			// We can't use the FileStorage here, since it will migate the Team or Dashboard
