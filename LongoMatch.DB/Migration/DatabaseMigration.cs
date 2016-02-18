@@ -64,8 +64,8 @@ namespace LongoMatch.DB
 			bool ret = true;
 			float count;
 			float percent = 0;
-			List<string> teamFiles;
-			List<string> dashboardFiles;
+			List<string> teamFiles = new List<string> ();
+			List<string> dashboardFiles = new List<string> ();
 			Guid id = Guid.NewGuid ();
 			ConcurrentQueue<Team> teams = new ConcurrentQueue<Team> ();
 			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
