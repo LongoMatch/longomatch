@@ -647,7 +647,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Next");
 			if (loadedPlaylistElement != null && LoadedPlaylist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), true);
+				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), Playing);
 			}
 		}
 
@@ -663,12 +663,17 @@ namespace LongoMatch.Services
 				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
 					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
 					if ((CurrentTime - play.Start).MSeconds > 500) {
-						Seek (new Time (0), true);
+						AbsoluteSeek (play.Start, true);
+						return;
+					}
+				} else if ((loadedPlaylistElement is PlaylistVideo || loadedPlaylistElement is PlaylistImage) && !force) {
+					if ((CurrentTime - loadedSegment.Start).MSeconds > 500) {
+						Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, loadedPlaylistElement, Playing);
 						return;
 					}
 				}
 				if (LoadedPlaylist.HasPrev ()) {
-					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev (), true);
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev (), Playing);
 				}
 			} else {
 				Seek (new Time (0), true);
@@ -773,7 +778,7 @@ namespace LongoMatch.Services
 			set {
 				stillimageLoaded = value;
 				if (stillimageLoaded) {
-					EmitPlaybackStateChanged (this, true);
+					EmitPlaybackStateChanged (this, Playing);
 					player.Pause ();
 					imageLoadedTS = new Time (0);
 					ReconfigureTimeout (TIMEOUT_MS);
@@ -1125,10 +1130,15 @@ namespace LongoMatch.Services
 				EmitTimeChanged (relativeTime, duration);
 
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
-					Pause ();
-					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
+						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					} else {
+						Pause ();
+					}
 				} else {
-					imageLoadedTS.MSeconds += TIMEOUT_MS;
+					if (Playing) {
+						imageLoadedTS.MSeconds += TIMEOUT_MS;
+					}
 				}
 				return true;
 			} else {
@@ -1150,8 +1160,11 @@ namespace LongoMatch.Services
 
 					if (currentTime > loadedSegment.Stop) {
 						/* Check if the segment is now finished and jump to next one */
-						Pause ();
-						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+						if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
+							Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+						} else {
+							Pause ();
+						}
 					} else {
 						var drawings = EventDrawings;
 						if (drawings != null) {
