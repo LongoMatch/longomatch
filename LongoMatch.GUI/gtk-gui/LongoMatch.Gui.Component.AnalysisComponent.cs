@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 			this.centralpane = new global::Gtk.VPaned ();
 			this.centralpane.CanFocus = true;
 			this.centralpane.Name = "centralpane";
-			this.centralpane.Position = 263;
+			this.centralpane.Position = 422;
 			// Container child centralpane.Gtk.Paned+PanedChild
 			this.uppane = new global::Gtk.HPaned ();
 			this.uppane.CanFocus = true;
@@ -87,6 +87,8 @@ namespace LongoMatch.Gui.Component
 			this.codingwidget.Name = "codingwidget";
 			this.codingwidget.TagPositions = false;
 			this.centralpane.Add (this.codingwidget);
+			global::Gtk.Paned.PanedChild w8 = ((global::Gtk.Paned.PanedChild)(this.centralpane [this.codingwidget]));
+			w8.Resize = false;
 			this.lightbackgroundeventbox.Add (this.centralpane);
 			this.hbox1.Add (this.lightbackgroundeventbox);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.lightbackgroundeventbox]));

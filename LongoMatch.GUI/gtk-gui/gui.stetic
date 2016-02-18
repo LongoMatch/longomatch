@@ -10,7 +10,7 @@
     <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1824 741">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -25,7 +25,7 @@
               <widget class="Gtk.VPaned" id="centralpane">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">263</property>
+                <property name="Position">422</property>
                 <child>
                   <widget class="Gtk.HPaned" id="uppane">
                     <property name="MemberName" />
@@ -81,6 +81,9 @@
                     <property name="Events">ButtonPressMask</property>
                     <property name="TagPositions">False</property>
                   </widget>
+                  <packing>
+                    <property name="Resize">False</property>
+                  </packing>
                 </child>
               </widget>
             </child>
