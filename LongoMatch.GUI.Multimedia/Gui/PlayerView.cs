@@ -351,11 +351,16 @@ namespace LongoMatch.Gui
 		void HandlePlaybackRateChangedEvent (float rate)
 		{
 			ignoreRate = true;
+			double value;
+
 			if (rate > 1) {
-				ratescale.Value = rate - 1 + SCALE_FPS;
+				value = rate - 1 + SCALE_FPS;
 			} else {
-				ratescale.Value = rate * SCALE_FPS;
+				value = rate * SCALE_FPS;
 			}
+
+			ratescale.Value = Math.Round (value);
+
 			ignoreRate = false;
 		}
 

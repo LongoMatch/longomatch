@@ -157,9 +157,26 @@ namespace Tests.Services
 
 			player.PlaybackRateChangedEvent += (rate) => r = 10;
 			player.Rate = 1;
-			/* Event is not raised */
-			Assert.AreEqual (0, r);
+			/* Event is raised */
+			Assert.AreEqual (10, r);
 			Assert.AreEqual (1, player.Rate);
+		}
+
+		[Test ()]
+		public void TestSetRateWithLoadedEvent ()
+		{
+			float r = 0;
+			double expected = 2;
+
+			PreparePlayer ();
+			player.LoadEvent (evt, currentTime, true);
+			player.PlaybackRateChangedEvent += (rate) => r = 10;
+
+			player.Rate = expected; // Event is raised
+
+			Assert.AreEqual (10, r, "Fails because PlaybackRateChangedEvent is not called");
+			Assert.AreEqual (expected, player.Rate, "Fails because player has an incorrect rate");
+			Assert.AreEqual (expected, evt.Rate, "Fails because event has an incorrect rate");
 		}
 
 		[Test ()]
@@ -551,6 +568,19 @@ namespace Tests.Services
 			Assert.AreEqual ((double)1 / 25, player.Rate, 0.01);
 			player.FramerateDown ();
 			Assert.AreEqual ((double)1 / 25, player.Rate, 0.01);
+		}
+
+		[Test ()]
+		public void TestSeekMaintainsSpeedRate ()
+		{
+			PreparePlayer (true);
+			player.Rate = 0.16; // 4 / 25
+			double expected = player.Rate;
+			var timeToSeek = new Time (2000);
+
+			player.Seek (timeToSeek, false, false, true);
+
+			Assert.AreEqual (expected, player.Rate);
 		}
 
 		[Test ()]

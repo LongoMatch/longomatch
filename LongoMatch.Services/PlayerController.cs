@@ -176,7 +176,7 @@ namespace LongoMatch.Services
 
 		public double Rate {
 			set {
-				player.Rate = value;
+				SetRate ((float)value);
 				Log.Debug ("Rate set to " + value);
 			}
 			get {
@@ -375,7 +375,7 @@ namespace LongoMatch.Services
 				if (readyToSeek) {
 					if (throttled) {
 						Log.Debug ("Throttled seek");
-						seeker.Seek (accurate ? SeekType.Accurate : SeekType.Keyframe, time);
+						seeker.Seek (accurate ? SeekType.Accurate : SeekType.Keyframe, time, (float)Rate);
 					} else {
 						Log.Debug (string.Format ("Seeking to {0} accurate:{1} synchronous:{2} throttled:{3}",
 							time, accurate, synchronous, throttled));
@@ -696,7 +696,6 @@ namespace LongoMatch.Services
 			}
 		}
 
-
 		#endregion
 
 		#region Signals
@@ -943,7 +942,7 @@ namespace LongoMatch.Services
 		{
 			if (rate == 0)
 				rate = 1;
-			Rate = rate;
+			player.Rate = rate;
 
 			SetEventRate (rate);
 			EmitRateChanged (rate);
