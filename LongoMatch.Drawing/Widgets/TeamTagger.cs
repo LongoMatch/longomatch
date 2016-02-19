@@ -177,8 +177,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void HandleSizeChangedEvent ()
 		{
-			tagger.Width = widget.Width;
-			tagger.Height = widget.Height;
+			if (tagger != null) {
+				tagger.Width = widget.Width;
+				tagger.Height = widget.Height;
+			}
 			base.HandleSizeChangedEvent ();
 		}
 
