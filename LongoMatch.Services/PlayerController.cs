@@ -660,14 +660,11 @@ namespace LongoMatch.Services
 				Seek (new Time (0), true);
 			} else if (loadedPlaylistElement != null) {
 				/* Select the start of the element if we haven't played 500ms, unless forced */
-				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
-					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
-					if ((CurrentTime - play.Start).MSeconds > 500) {
-						AbsoluteSeek (play.Start, true);
+				if (!force && (CurrentTime - loadedSegment.Start).MSeconds > 500) {
+					if (loadedPlaylistElement is PlaylistPlayElement || loadedPlaylistElement is PlaylistVideo) {
+						AbsoluteSeek (loadedSegment.Start, true);
 						return;
-					}
-				} else if ((loadedPlaylistElement is PlaylistVideo || loadedPlaylistElement is PlaylistImage) && !force) {
-					if ((CurrentTime - loadedSegment.Start).MSeconds > 500) {
+					} else if (loadedPlaylistElement is PlaylistImage) {
 						Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, loadedPlaylistElement, Playing);
 						return;
 					}
