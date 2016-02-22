@@ -80,21 +80,21 @@ namespace LongoMatch.Services
 				string outFile = settings.OutputFile;
 				string tmpFile = settings.OutputFile;
 				
-				while (System.IO.File.Exists (tmpFile)) {
+				while (File.Exists (tmpFile)) {
 					tmpFile = tmpFile + ".tmp";
 				}
 				
 				Log.Debug ("Remuxing file tmp: " + tmpFile + " out: " + outFile);
 				
 				try {
-					System.IO.File.Move (outFile, tmpFile);
+					File.Move (outFile, tmpFile);
 				} catch (Exception ex) {
 					/* Try to fix "Sharing violation on path" in windows
 					 * wait a bit more until the file lock is released */
 					Log.Exception (ex);
 					System.Threading.Thread.Sleep (5 * 1000);
 					try {
-						System.IO.File.Move (outFile, tmpFile);
+						File.Move (outFile, tmpFile);
 					} catch (Exception ex2) {
 						Log.Exception (ex2);
 						/* It failed again, just skip remuxing */
