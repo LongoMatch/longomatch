@@ -647,7 +647,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug ("Next");
 			if (loadedPlaylistElement != null && LoadedPlaylist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), true);
+				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), Playing);
 			}
 		}
 
@@ -660,15 +660,16 @@ namespace LongoMatch.Services
 				Seek (new Time (0), true);
 			} else if (loadedPlaylistElement != null) {
 				/* Select the start of the element if we haven't played 500ms, unless forced */
-				if (loadedPlaylistElement is PlaylistPlayElement && !force) {
-					TimelineEvent play = (loadedPlaylistElement as PlaylistPlayElement).Play;
-					if ((CurrentTime - play.Start).MSeconds > 500) {
-						Seek (new Time (0), true);
-						return;
-					}
+				Time start = new Time (0);
+				if (loadedPlaylistElement is PlaylistPlayElement) {
+					start = (loadedPlaylistElement as PlaylistPlayElement).Play.Start;
+				}
+				if (!force && (CurrentTime - start).MSeconds > 500) {
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, loadedPlaylistElement, Playing);
+					return;
 				}
 				if (LoadedPlaylist.HasPrev ()) {
-					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev (), true);
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Prev (), Playing);
 				}
 			} else {
 				Seek (new Time (0), true);
@@ -773,7 +774,7 @@ namespace LongoMatch.Services
 			set {
 				stillimageLoaded = value;
 				if (stillimageLoaded) {
-					EmitPlaybackStateChanged (this, true);
+					EmitPlaybackStateChanged (this, Playing);
 					player.Pause ();
 					imageLoadedTS = new Time (0);
 					ReconfigureTimeout (TIMEOUT_MS);
@@ -909,7 +910,6 @@ namespace LongoMatch.Services
 					} else {
 						player.Open (fileSet [0]);
 					}
-					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					//We handle this error async
@@ -978,7 +978,6 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				start, stop, rate));
-
 			if (!SegmentLoaded) {
 				defaultCamerasConfig = CamerasConfig;
 				defaultCamerasLayout = CamerasLayout;
@@ -1020,6 +1019,7 @@ namespace LongoMatch.Services
 			Reset ();
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
+			IgnoreTicks = false;
 			if (playing) {
 				Play ();
 			}
@@ -1125,10 +1125,15 @@ namespace LongoMatch.Services
 				EmitTimeChanged (relativeTime, duration);
 
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
-					Pause ();
-					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
+						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					} else {
+						Pause ();
+					}
 				} else {
-					imageLoadedTS.MSeconds += TIMEOUT_MS;
+					if (Playing) {
+						imageLoadedTS.MSeconds += TIMEOUT_MS;
+					}
 				}
 				return true;
 			} else {
@@ -1150,8 +1155,11 @@ namespace LongoMatch.Services
 
 					if (currentTime > loadedSegment.Stop) {
 						/* Check if the segment is now finished and jump to next one */
-						Pause ();
-						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+						if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
+							Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+						} else {
+							Pause ();
+						}
 					} else {
 						var drawings = EventDrawings;
 						if (drawings != null) {
@@ -1188,6 +1196,7 @@ namespace LongoMatch.Services
 			Config.GUIToolkit.Invoke (delegate {
 				if (playing) {
 					ReconfigureTimeout (TIMEOUT_MS);
+					IgnoreTicks = false;
 				} else {
 					if (!StillImageLoaded) {
 						ReconfigureTimeout (0);
@@ -1219,9 +1228,15 @@ namespace LongoMatch.Services
 
 		void HandleEndOfStream (object sender)
 		{
+			IgnoreTicks = true;
+
 			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
-					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					if (LoadedPlaylist.HasNext ()) {
+						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					} else {
+						Pause ();
+					}
 				} else {
 					Time position = null;
 					if (loadedEvent != null) {

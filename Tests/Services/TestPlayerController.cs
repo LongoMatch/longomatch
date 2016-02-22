@@ -252,7 +252,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Play (It.IsAny<bool> ()), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
-			Assert.AreEqual (2, timeCount);
+			Assert.AreEqual (1, timeCount);
 			Assert.AreEqual ((float)320 / 240, viewPortMock.Object.Ratio);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
@@ -604,6 +604,28 @@ namespace Tests.Services
 		}
 
 		[Test ()]
+		public void TestNextMantainsPlayingState ()
+		{
+			bool stateBeforeNext, stateAfterNext;
+			PreparePlayer ();
+			//Testing state playing
+			player.LoadPlaylistEvent (playlist, playlist.Elements [0], true);
+			stateBeforeNext = player.Playing;
+			Assert.IsTrue (stateBeforeNext);
+			player.Next ();
+			stateAfterNext = player.Playing;
+			Assert.AreEqual (stateBeforeNext, stateAfterNext);
+			//Testing State Pause
+			player.LoadPlaylistEvent (playlist, playlist.Elements [0], true);
+			player.Pause ();
+			stateBeforeNext = player.Playing;
+			Assert.IsFalse (stateBeforeNext);
+			player.Next ();
+			stateAfterNext = player.Playing;
+			Assert.AreEqual (stateBeforeNext, stateAfterNext);
+		}
+
+		[Test ()]
 		public void TestPrevious ()
 		{
 			int prevSent = 0;
@@ -628,6 +650,28 @@ namespace Tests.Services
 			playlist.Next ();
 			player.Previous (false);
 			Assert.AreEqual (1, prevSent);
+		}
+
+		[Test ()]
+		public void TestPreviousMantainsPlayingState ()
+		{
+			bool stateBeforePrevious, stateAfterPrevious;
+			PreparePlayer ();
+			//Testing state playing
+			player.LoadPlaylistEvent (playlist, playlist.Elements [1], true);
+			stateBeforePrevious = player.Playing;
+			Assert.IsTrue (stateBeforePrevious);
+			player.Previous ();
+			stateAfterPrevious = player.Playing;
+			Assert.AreEqual (stateBeforePrevious, stateAfterPrevious);
+			//Testing State Pause
+			player.LoadPlaylistEvent (playlist, playlist.Elements [1], true);
+			player.Pause ();
+			stateBeforePrevious = player.Playing;
+			Assert.IsFalse (stateBeforePrevious);
+			player.Previous ();
+			stateAfterPrevious = player.Playing;
+			Assert.AreEqual (stateBeforePrevious, stateAfterPrevious);
 		}
 
 		[Test ()]
@@ -676,8 +720,9 @@ namespace Tests.Services
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
 			element.Play.Start = new Time (0);
+			element.Play.Stop = new Time (10000);
 			localPlaylist.Elements.Add (element);
-			player.Switch (null, localPlaylist, element);
+			player.LoadPlaylistEvent (localPlaylist, element, false);
 			playerMock.ResetCalls ();
 
 			player.Previous (false);
@@ -1018,13 +1063,8 @@ namespace Tests.Services
 		public void TestStopTimes ()
 		{
 			plMan.Stop ();
-			int nextLoaded = 0;
 
 			PreparePlayer ();
-
-			Config.EventsBroker.NextPlaylistElementEvent += (pl) => {
-				nextLoaded++;
-			};
 
 			/* Check the player is stopped when we pass the event stop time */
 			currentTime = new Time (0);
@@ -1033,16 +1073,15 @@ namespace Tests.Services
 			currentTime = evt.Duration + new Time (1000);
 			player.Seek (currentTime, true, false);
 			Assert.IsFalse (player.Playing);
-			Assert.AreEqual (1, nextLoaded);
 
 			/* Check the player is stopped when we pass the image stop time */
 			currentTime = new Time (0);
 			player.LoadPlaylistEvent (playlist, plImage, true);
+			playlist.SetActive (plImage);
 			Assert.IsTrue (player.Playing);
 			currentTime = plImage.Duration + 1000;
 			player.Seek (currentTime, true, false);
 			Assert.IsFalse (player.Playing);
-			Assert.AreEqual (2, nextLoaded);
 		}
 
 		[Test ()]
