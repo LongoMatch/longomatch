@@ -85,7 +85,7 @@ namespace LongoMatch
 					home = Config.baseDirectory;
 				} else {
 					home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
-					if (!Directory.Exists (home)) {
+					if (home != null && !Directory.Exists (home)) {
 						try {
 							Directory.CreateDirectory (home);
 						} catch (Exception ex) {
