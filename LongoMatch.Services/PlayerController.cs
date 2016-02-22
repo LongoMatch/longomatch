@@ -911,7 +911,6 @@ namespace LongoMatch.Services
 					} else {
 						player.Open (fileSet [0]);
 					}
-					EmitTimeChanged (new Time (0), player.StreamLength);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					//We handle this error async
