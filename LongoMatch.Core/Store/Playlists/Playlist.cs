@@ -94,7 +94,6 @@ namespace LongoMatch.Core.Store.Playlists
 		/// <summary>
 		/// Duration in time for the playlist.
 		/// </summary>
-		[JsonIgnore]
 		[LongoMatchPropertyPreload]
 		public Time Duration {
 			get;
