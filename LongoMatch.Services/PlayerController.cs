@@ -980,7 +980,6 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
 				start, stop, rate));
-
 			if (!SegmentLoaded) {
 				defaultCamerasConfig = CamerasConfig;
 				defaultCamerasLayout = CamerasLayout;
@@ -1022,6 +1021,7 @@ namespace LongoMatch.Services
 			Reset ();
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
+			IgnoreTicks = false;
 			if (playing) {
 				Play ();
 			}
@@ -1198,6 +1198,7 @@ namespace LongoMatch.Services
 			Config.GUIToolkit.Invoke (delegate {
 				if (playing) {
 					ReconfigureTimeout (TIMEOUT_MS);
+					IgnoreTicks = false;
 				} else {
 					if (!StillImageLoaded) {
 						ReconfigureTimeout (0);
@@ -1229,9 +1230,15 @@ namespace LongoMatch.Services
 
 		void HandleEndOfStream (object sender)
 		{
+			IgnoreTicks = true;
+
 			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
-					Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					if (LoadedPlaylist.HasNext ()) {
+						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
+					} else {
+						Pause ();
+					}
 				} else {
 					Time position = null;
 					if (loadedEvent != null) {
