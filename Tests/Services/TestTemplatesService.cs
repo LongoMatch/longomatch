@@ -133,6 +133,7 @@ namespace Tests.Services
 			d.Name = "system";
 			provider.Register (d);
 			Assert.IsNotNull (provider.Exists ("system"));
+			Assert.IsTrue (provider.Templates [0].Static);
 		}
 
 		[Test ()]

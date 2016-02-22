@@ -116,7 +116,9 @@ namespace LongoMatch.Services
 				List<T> templates = storage.RetrieveAll<T> ().OrderBy (t => t.Name).ToList ();
 				// Now add the system templates, use a copy to prevent modification of system templates.
 				foreach (T stemplate in systemTemplates) {
-					templates.Add (stemplate.Clone ());
+					T clonedTemplate = stemplate.Clone ();
+					clonedTemplate.Static = true;
+					templates.Add (clonedTemplate);
 				}
 				return templates;
 			}
