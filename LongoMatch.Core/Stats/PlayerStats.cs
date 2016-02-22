@@ -34,14 +34,8 @@ namespace LongoMatch.Core.Stats
 			this.filter = filter;
 			this.Player = player;
 			PlayerEventStats = new List<PlayerEventTypeStats> ();
-			foreach (EventType evtType in project.EventTypes.OfType<ScoreEventType> ()) {
-				PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
-			}
-			foreach (EventType evtType in project.EventTypes.OfType<PenaltyCardEventType> ()) {
-				PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
-			}
 			foreach (EventType evtType in project.EventTypes) {
-				if (evtType is AnalysisEventType) {
+				if (!(evtType is SubstitutionEventType)) {
 					PlayerEventStats.Add (new PlayerEventTypeStats (project, filter, player, evtType));
 				}
 			}
