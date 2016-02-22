@@ -252,7 +252,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Open (mfs [0]), Times.Once ());
 			playerMock.Verify (p => p.Play (It.IsAny<bool> ()), Times.Never ());
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Once ());
-			Assert.AreEqual (2, timeCount);
+			Assert.AreEqual (1, timeCount);
 			Assert.AreEqual ((float)320 / 240, viewPortMock.Object.Ratio);
 			Assert.AreEqual (streamLength, duration);
 			Assert.AreEqual (new Time (0), curTime);
@@ -720,8 +720,9 @@ namespace Tests.Services
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
 			element.Play.Start = new Time (0);
+			element.Play.Stop = new Time (10000);
 			localPlaylist.Elements.Add (element);
-			player.Switch (null, localPlaylist, element);
+			player.LoadPlaylistEvent (localPlaylist, element, false);
 			playerMock.ResetCalls ();
 
 			player.Previous (false);
