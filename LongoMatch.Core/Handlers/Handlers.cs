@@ -75,7 +75,7 @@ namespace LongoMatch.Core.Handlers
 	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
 	/* Project Events */
-	public delegate void SaveProjectHandler (Project project,ProjectType projectType);
+	public delegate bool SaveProjectHandler (Project project,ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler (Project project,ProjectType projectType,EventsFilter filter,
 	                                                 IAnalysisWindow analysisWindow);
 	public delegate void OpenedPresentationChangedHandler (Playlist presentation,IPlayerController player);
