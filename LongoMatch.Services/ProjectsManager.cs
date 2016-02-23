@@ -145,7 +145,7 @@ namespace LongoMatch.Services
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
-
+				throw;
 			}
 		}
 
@@ -279,13 +279,15 @@ namespace LongoMatch.Services
 				Player.Dispose ();
 			}
 
-			if (save)
-				SaveProject (OpenedProject, OpenedProjectType);
-
-			OpenedProject = null;
-			OpenedProjectType = ProjectType.None;
-			guiToolkit.CloseProject ();
-			EmitProjectChanged ();
+			try {
+				if (save)
+					SaveProject (OpenedProject, OpenedProjectType);
+			} finally {
+				OpenedProject = null;
+				OpenedProjectType = ProjectType.None;
+				guiToolkit.CloseProject ();
+				EmitProjectChanged ();
+			}
 		}
 
 		void UpdateProject (Project project)
@@ -410,9 +412,14 @@ namespace LongoMatch.Services
 					Config.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
-			CloseOpenedProject (!cancel);
-			if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
-				OpenProjectID (project.ID, project);
+			try {
+				CloseOpenedProject (!cancel);
+				if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
+					OpenProjectID (project.ID, project);
+				}
+			} catch (Exception e) {
+				// do nothing, don't reopen
+				Log.Exception (e);
 			}
 		}
 
