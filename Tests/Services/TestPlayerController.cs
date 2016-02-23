@@ -728,7 +728,7 @@ namespace Tests.Services
 			player.Previous (false);
 
 			playerMock.Verify (player => player.Seek (element.Play.Start, true, false), Times.Once ());
-			Assert.AreEqual (0, playlistElementSelected);
+			Assert.AreEqual (1, playlistElementSelected);
 		}
 
 
