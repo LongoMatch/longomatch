@@ -47,6 +47,7 @@ enum
   SIGNAL_STATE_CHANGED,
   SIGNAL_DEVICE_CHANGE,
   SIGNAL_MEDIA_INFO,
+  SIGNAL_READY_TO_CAPTURE,
   LAST_SIGNAL
 };
 
@@ -266,6 +267,13 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       G_SIGNAL_RUN_LAST,
       G_STRUCT_OFFSET (GstCameraCapturerClass, device_change),
       NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+
+  gcc_signals[SIGNAL_READY_TO_CAPTURE] =
+      g_signal_new ("ready-to-capture",
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstCameraCapturerClass, ready_to_capture),
+      NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
   gcc_signals[SIGNAL_MEDIA_INFO] =
       g_signal_new ("media-info",
@@ -884,12 +892,15 @@ cb_no_more_pads (GstElement * element, GstCameraCapturer * gcc)
   if (!gcc->priv->has_video) {
     g_signal_emit (gcc, gcc_signals[SIGNAL_ERROR], 0,
         "The stream does not contains a video track");
+    return;
   }
   if (!gcc->priv->has_audio) {
     GST_INFO_OBJECT (gcc,
         "Source does not have audio: disabling audio encoding");
     gcc->priv->audio_enabled = FALSE;
   }
+  g_signal_emit (gcc, gcc_signals[SIGNAL_READY_TO_CAPTURE], 0);
+  g_print("\n\n\nReady to capture\n");
 }
 
 static void
