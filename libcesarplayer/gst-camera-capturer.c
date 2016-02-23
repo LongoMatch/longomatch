@@ -47,6 +47,7 @@ enum
   SIGNAL_STATE_CHANGED,
   SIGNAL_DEVICE_CHANGE,
   SIGNAL_MEDIA_INFO,
+  SIGNAL_READY_TO_CAPTURE,
   LAST_SIGNAL
 };
 
@@ -102,6 +103,7 @@ struct GstCameraCapturerPrivate
   gboolean has_audio;
 
   /* Recording */
+  gboolean ready_to_capture;
   gboolean is_recording;
   gboolean closing_recording;
   gboolean video_needs_keyframe_sync;
@@ -164,6 +166,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->last_video_buf_ts = GST_CLOCK_TIME_NONE;
   priv->last_audio_buf_ts = GST_CLOCK_TIME_NONE;
   priv->is_recording = FALSE;
+  priv->ready_to_capture = FALSE;
   g_mutex_init (&priv->recording_lock);
 
   priv->video_encoder_type = VIDEO_ENCODER_VP8;
@@ -267,6 +270,13 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       G_STRUCT_OFFSET (GstCameraCapturerClass, device_change),
       NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 
+  gcc_signals[SIGNAL_READY_TO_CAPTURE] =
+      g_signal_new ("ready-to-capture",
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstCameraCapturerClass, ready_to_capture),
+      NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
   gcc_signals[SIGNAL_MEDIA_INFO] =
       g_signal_new ("media-info",
       G_TYPE_FROM_CLASS (object_class),
@@ -282,6 +292,15 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
 *           GStreamer
 *
 ************************************/
+
+static void
+gst_camera_capturer_emit_ready_to_capture (GstCameraCapturer * gcc)
+{
+  if(G_UNLIKELY(!gcc->priv->ready_to_capture)){
+    g_signal_emit (gcc, gcc_signals[SIGNAL_READY_TO_CAPTURE], 0);
+    gcc->priv->ready_to_capture = TRUE;
+  }
+}
 
 GQuark
 gst_camera_capturer_error_quark (void)
@@ -463,6 +482,7 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer * gcc,
 
   g_mutex_lock (&gcc->priv->recording_lock);
 
+  gst_camera_capturer_emit_ready_to_capture(gcc);
   if (!gcc->priv->is_recording) {
     /* Drop buffers if we are not recording */
     GST_LOG_OBJECT (gcc, "Dropping buffer on %s pad",
@@ -884,6 +904,7 @@ cb_no_more_pads (GstElement * element, GstCameraCapturer * gcc)
   if (!gcc->priv->has_video) {
     g_signal_emit (gcc, gcc_signals[SIGNAL_ERROR], 0,
         "The stream does not contains a video track");
+    return;
   }
   if (!gcc->priv->has_audio) {
     GST_INFO_OBJECT (gcc,

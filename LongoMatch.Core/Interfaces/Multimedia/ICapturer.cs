@@ -30,6 +30,7 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 
 	public interface ICapturer
 	{
+		event ReadyToCaptureHandler ReadyToCapture;
 		event EllpasedTimeHandler EllapsedTime;
 		event ErrorHandler Error;
 		event DeviceChangeHandler DeviceChange;

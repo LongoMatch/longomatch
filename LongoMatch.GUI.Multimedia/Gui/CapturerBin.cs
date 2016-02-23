@@ -46,6 +46,7 @@ namespace LongoMatch.Gui
 		List<string> gamePeriods;
 		TimelineEvent lastevent;
 		MediaFile outputFile;
+		bool readyToCapture;
 
 		public CapturerBin ()
 		{
@@ -96,6 +97,7 @@ namespace LongoMatch.Gui
 			Mode = CapturerType.Live;
 			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
 			lastlabel.ModifyFont (Pango.FontDescription.FromString (Config.Style.Font + " 8px"));
+			ReadyToCapture = false;
 		}
 
 		protected override void OnDestroyed ()
@@ -180,9 +182,22 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		bool ReadyToCapture {
+			get {
+				return readyToCapture;
+			}
+			set {
+				readyToCapture = value;
+				recbutton.Sensitive = readyToCapture;
+			}
+		}
+
 		public void StartPeriod ()
 		{
 			string periodName;
+			if (!ReadyToCapture) {
+				return;
+			}
 			
 			if (currentPeriod != null) {
 				string msg = Catalog.GetString ("Period recording already started");
@@ -333,6 +348,7 @@ namespace LongoMatch.Gui
 				Capturer.Error += OnError;
 				Capturer.MediaInfo += HandleMediaInfo;
 				Capturer.DeviceChange += OnDeviceChange;
+				Capturer.ReadyToCapture += HandleReadyToCapture;
 				Periods = new List<Period> ();
 				if (videowindow.Ready) {
 					Configure ();
@@ -490,6 +506,11 @@ namespace LongoMatch.Gui
 				outputFile.VideoHeight = (uint)height;
 				outputFile.Par = (float)parN / parD;
 			});
+		}
+
+		void HandleReadyToCapture (object sender)
+		{
+			ReadyToCapture = true;
 		}
 	}
 }
