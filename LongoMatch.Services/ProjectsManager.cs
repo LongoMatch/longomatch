@@ -145,6 +145,7 @@ namespace LongoMatch.Services
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
+				Config.DatabaseManager.ActiveDB.Delete<Project> (project);
 				throw;
 			}
 		}
