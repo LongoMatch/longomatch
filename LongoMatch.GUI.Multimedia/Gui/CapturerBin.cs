@@ -341,6 +341,7 @@ namespace LongoMatch.Gui
 		{
 			Reset ();
 			if (type == CapturerType.Live) {
+				videowindow.Message = Catalog.GetString ("Loading");
 				Capturer = Config.MultimediaToolkit.GetCapturer ();
 				this.outputFile = outputFile;
 				this.settings = settings;
@@ -427,6 +428,7 @@ namespace LongoMatch.Gui
 			settings.EncodingSettings.EncodingProfile.Muxer = muxer;
 			delayStart = false;
 			Capturer.Run ();
+			videowindow.MessageVisible = true;
 		}
 
 		void HandleReady (object sender, EventArgs e)
@@ -510,6 +512,7 @@ namespace LongoMatch.Gui
 
 		void HandleReadyToCapture (object sender)
 		{
+			videowindow.MessageVisible = false;
 			ReadyToCapture = true;
 		}
 	}
