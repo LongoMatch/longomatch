@@ -242,8 +242,7 @@ namespace LongoMatch.Gui.Panel
 				if (newName == null) {
 					return;
 				}
-				Dashboard newtemplate = loadedDashboard.Clone ();
-				newtemplate.Name = newName;
+				Dashboard newtemplate = loadedDashboard.Copy (newName);
 				newtemplate.Static = false;
 				if (SaveTemplate (newtemplate)) {
 					Load (newtemplate.Name);
