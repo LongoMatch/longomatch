@@ -315,7 +315,11 @@ namespace LongoMatch.Services
 				EmitPlaybackStateChanged (this, true);
 			} else {
 				EmitLoadDrawings (null);
-				player.Play (synchronous);
+				if (pendingSeek != null) {
+					pendingSeek.playing = true;
+				} else {
+					player.Play (synchronous);
+				}
 			}
 			Playing = true;
 		}
@@ -327,7 +331,11 @@ namespace LongoMatch.Services
 				ReconfigureTimeout (0);
 				EmitPlaybackStateChanged (this, false);
 			} else {
-				player.Pause (synchronous);
+				if (pendingSeek != null) {
+					pendingSeek.playing = false;
+				} else {
+					player.Pause (synchronous);
+				}
 			}
 			Playing = false;
 		}
@@ -646,8 +654,15 @@ namespace LongoMatch.Services
 		public void Next ()
 		{
 			Log.Debug ("Next");
-			if (loadedPlaylistElement != null && LoadedPlaylist.HasNext ()) {
-				Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), Playing);
+			if (loadedPlaylistElement != null) {
+				if (LoadedPlaylist.HasNext ()) {
+					Config.EventsBroker.EmitPlaylistElementSelected (LoadedPlaylist, LoadedPlaylist.Next (), Playing);
+				} else {
+					Pause ();
+					Seek (new Time (0), true);
+				}
+			} else {
+				Pause ();
 			}
 		}
 
@@ -1019,7 +1034,6 @@ namespace LongoMatch.Services
 			Reset ();
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
-			IgnoreTicks = false;
 			if (playing) {
 				Play ();
 			}
@@ -1125,11 +1139,7 @@ namespace LongoMatch.Services
 				EmitTimeChanged (relativeTime, duration);
 
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
-					if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
-						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
-					} else {
-						Pause ();
-					}
+					Next ();
 				} else {
 					if (Playing) {
 						imageLoadedTS.MSeconds += TIMEOUT_MS;
@@ -1155,11 +1165,7 @@ namespace LongoMatch.Services
 
 					if (currentTime > loadedSegment.Stop) {
 						/* Check if the segment is now finished and jump to next one */
-						if (LoadedPlaylist != null && LoadedPlaylist.HasNext ()) {
-							Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
-						} else {
-							Pause ();
-						}
+						Next ();
 					} else {
 						var drawings = EventDrawings;
 						if (drawings != null) {
@@ -1196,7 +1202,6 @@ namespace LongoMatch.Services
 			Config.GUIToolkit.Invoke (delegate {
 				if (playing) {
 					ReconfigureTimeout (TIMEOUT_MS);
-					IgnoreTicks = false;
 				} else {
 					if (!StillImageLoaded) {
 						ReconfigureTimeout (0);
@@ -1216,10 +1221,11 @@ namespace LongoMatch.Services
 				if (pendingSeek != null) {
 					SetRate (pendingSeek.rate);
 					player.Seek (pendingSeek.time, pendingSeek.accurate, pendingSeek.syncrhonous);
-					if (pendingSeek.playing) {
+					var playing = pendingSeek.playing;
+					pendingSeek = null;
+					if (playing) {
 						Play ();
 					}
-					pendingSeek = null;
 				}
 				Tick ();
 				player.Expose ();
@@ -1228,15 +1234,9 @@ namespace LongoMatch.Services
 
 		void HandleEndOfStream (object sender)
 		{
-			IgnoreTicks = true;
-
 			Config.GUIToolkit.Invoke (delegate {
 				if (loadedPlaylistElement is PlaylistVideo) {
-					if (LoadedPlaylist.HasNext ()) {
-						Config.EventsBroker.EmitNextPlaylistElement (LoadedPlaylist);
-					} else {
-						Pause ();
-					}
+					Next ();
 				} else {
 					Time position = null;
 					if (loadedEvent != null) {
