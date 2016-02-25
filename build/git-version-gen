@@ -203,11 +203,12 @@ v=`echo "$v" |sed "s/^$prefix//"`
 # So if we are in the master branch, build the relase number using
 # the latest released version 1.1.2 and appending the number of
 # commits from the last minor release: 1.1.2.XX
-branch=`git rev-parse --abbrev-ref HEAD`
-if test $branch == "master" || test $branch == "build"; then
-    pv=( ${v//./ } )                   # replace points, split into array
-    last_release=`git tag  |grep -v {| grep ^${pv[0]}.${pv[1]} | sort -r -n -t. -k3 -k4 | head -n1`
-    npv=( ${last_release//./ } )                   # replace points, split into array
+pv=( ${v//./ } )                   # replace points, split into array
+last_release=`git tag  |grep -v {| grep ^${pv[0]}.${pv[1]} | sort -r -n -t. -k3 -k4 | head -n1`
+npv=( ${last_release//./ } )                   # replace points, split into array
+if test "${#npv[@]}" == "3"; then
+    v="${npv[0]}.${npv[1]}.${npv[2]}"
+else
     v="${npv[0]}.${npv[1]}.${npv[2]}.${pv[3]}"
 fi
 
