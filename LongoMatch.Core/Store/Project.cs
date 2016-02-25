@@ -328,7 +328,7 @@ namespace LongoMatch.Core.Store
 
 			if (addToTimeline) {
 				Timeline.Add (evt);
-				if (evt is ScoreEvent) {
+				if (evt.EventType is ScoreEventType) {
 					UpdateScore ();
 				}
 			}
@@ -340,7 +340,7 @@ namespace LongoMatch.Core.Store
 			play.FileSet = Description.FileSet;
 			play.Project = this;
 			Timeline.Add (play);
-			if (play is ScoreEvent) {
+			if (play.EventType is ScoreEventType) {
 				UpdateScore ();
 			}
 		}
@@ -360,7 +360,7 @@ namespace LongoMatch.Core.Store
 
 			foreach (TimelineEvent play in plays) {
 				Timeline.Remove (play);
-				if (play is ScoreEvent) {
+				if (play.EventType is ScoreEventType) {
 					updateScore = true;
 				}
 			}
@@ -517,7 +517,8 @@ namespace LongoMatch.Core.Store
 
 		public int GetScore (Team team)
 		{
-			return EventsByTeam (team).OfType<ScoreEvent> ().Sum (s => s.Score.Points);
+			return EventsByTeam (team).Where (e => e.EventType is ScoreEventType).
+				Sum (e => (e.EventType as ScoreEventType).Score.Points);
 		}
 
 		public Image GetBackground (FieldPositionType pos)

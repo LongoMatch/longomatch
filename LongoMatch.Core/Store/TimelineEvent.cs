@@ -544,6 +544,7 @@ namespace LongoMatch.Core.Store
 	/// An event in the game for a penalty.
 	/// </summary>
 	[Serializable]
+	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
 	public class PenaltyCardEvent: TimelineEvent
 	{
 		[JsonIgnore]
@@ -561,6 +562,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
+	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
 	public class ScoreEvent: TimelineEvent
 	{
 		[JsonIgnore]
