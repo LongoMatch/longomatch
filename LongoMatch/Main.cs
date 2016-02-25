@@ -101,9 +101,6 @@ namespace LongoMatch
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
 				Config.GUIToolkit.Welcome ();
-			} catch (AddinRequestShutdownException arse) {
-				// Abort gracefully
-				Application.Quit ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}
@@ -204,6 +201,11 @@ namespace LongoMatch
 
 		static void ProcessExecutionError (Exception ex)
 		{
+			if (ex is AddinRequestShutdownException) {
+				Application.Quit ();
+				return;
+			}
+
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
 			logFile = Utils.SanitizePath (logFile, ' ', ':');
 			logFile = Path.Combine (Config.HomeDir, logFile);
