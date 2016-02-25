@@ -228,7 +228,7 @@ namespace LongoMatch.Gui.Menus
 			render.Activated += (sender, e) => EmitRenderPlaylist (plays);
 			Add (render);
 			
-			snapshot = new MenuItem (Catalog.GetString ("Export to PGN images"));
+			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
 			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays [0]);
 			Add (snapshot);
 
