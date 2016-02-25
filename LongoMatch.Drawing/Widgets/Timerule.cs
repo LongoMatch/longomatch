@@ -277,15 +277,16 @@ namespace LongoMatch.Drawing.Widgets
 
 			height = widget.Height;
 			width = widget.Width;
+			float totalSeconds = (float)Duration.MSeconds / 1000;
 
 			if (AdjustSizeToDuration) {
-				SecondsPerPixel = Duration.TotalSeconds / width;
+				SecondsPerPixel = totalSeconds / width;
 				//Calculate the timeSpacing in pixels
 				foreach (int i in MARKER) {
-					int pixels = MINIMUM_TIME_SPACING * (Duration.TotalSeconds / i);
+					int pixels = (int)Math.Ceiling (MINIMUM_TIME_SPACING * (totalSeconds / i));
 					if (pixels <= width) {
 						if (Duration.TotalSeconds > 0) {
-							timeSpacing = width / (Duration.TotalSeconds / i);
+							timeSpacing = width / (totalSeconds / i);
 							interval = i;
 						}
 						break;
@@ -333,6 +334,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			/* Draw position triangle */
 			needle.TimelineHeight = height;
+			needle.MaxPointX = widget.Width;
 			if (!Moving) {
 				tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
 				tpos -= Scroll;

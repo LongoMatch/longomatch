@@ -68,6 +68,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
+		public double MaxPointX {
+			get;
+			set;
+		}
+
 		Area Area {
 			get {
 				return new Area (TopLeft, Width, Height);
@@ -107,7 +112,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		public void Move (Selection s, Point p, Point start)
 		{
 			if (s.Position == SelectionPosition.All) {
-				X = Math.Max (p.X, 0);
+				X = p.X.Clamp (0, MaxPointX);
 			}
 		}
 	}
