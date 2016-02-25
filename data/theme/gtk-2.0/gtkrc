@@ -184,6 +184,8 @@ widget_class "*AwayTeamsComboBox*"               style "longomatch-away-teams-co
 widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-children"
 widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
 
+class "*FilterTreeView*"                         style "longomatch-filter-treeview"
+
 widget "*entryeventbox"                          style "longomatch-custom-entry"
 widget "*entryeventbox*.entrybutton_*"           style "longomatch-custom-entry-button"
 

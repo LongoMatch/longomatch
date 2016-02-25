@@ -16,6 +16,9 @@ style "longomatch-treeview" {
   #GtkTreeView::even_row_color     = @bg_color
   GtkTreeView::grid_line_color     = @bg_light_color
   GtkTreeView::grid-line-pattern   = "\000\000"
+}
+
+style "longomatch-filter-treeview" = "longomatch-treeview" {
 
   engine "pixmap"
   {
@@ -223,12 +226,12 @@ style "longomatch-treeview" {
   }
 }
 
-style "longomatch-dark-treeview" {
+style "longomatch-dark-treeview" = "longomatch-treeview" {
   # Background color
   base[NORMAL]       = @bg_dark_color
 }
 
-style "longomatch-normal-treeview" {
+style "longomatch-normal-treeview" = "longomatch-treeview" {
   # Background color
   base[NORMAL]       = @bg_color
 }
