@@ -59,6 +59,7 @@ namespace LongoMatch.Core.Common
 		public const int NewTeamsSpacing = 60;
 		public const int NewTaggerSpacing = 35;
 
+		public const int ListTextFontSize = 14;
 		public const int ListSelectedWidth = 16;
 		public const int ListRowSeparator = 10;
 		public const int ListTextWidth = 180;
