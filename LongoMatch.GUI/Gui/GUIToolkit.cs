@@ -407,9 +407,14 @@ namespace LongoMatch.Gui
 		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer)
 		{
 			Log.Information ("Remux file");
-			Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
-				                  outputFile, muxer);
-			return remuxer.Remux (mainWindow as Gtk.Window);
+			try {
+				Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
+					                  outputFile, muxer);
+				return remuxer.Remux (mainWindow as Gtk.Window);
+			} catch (Exception e) {
+				Log.Exception (e);
+				return null;
+			}
 		}
 
 		public void OpenProject (Project project, ProjectType projectType, 

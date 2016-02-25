@@ -80,21 +80,21 @@ namespace LongoMatch.Services
 				string outFile = settings.OutputFile;
 				string tmpFile = settings.OutputFile;
 				
-				while (System.IO.File.Exists (tmpFile)) {
+				while (File.Exists (tmpFile)) {
 					tmpFile = tmpFile + ".tmp";
 				}
 				
 				Log.Debug ("Remuxing file tmp: " + tmpFile + " out: " + outFile);
 				
 				try {
-					System.IO.File.Move (outFile, tmpFile);
+					File.Move (outFile, tmpFile);
 				} catch (Exception ex) {
 					/* Try to fix "Sharing violation on path" in windows
 					 * wait a bit more until the file lock is released */
 					Log.Exception (ex);
 					System.Threading.Thread.Sleep (5 * 1000);
 					try {
-						System.IO.File.Move (outFile, tmpFile);
+						File.Move (outFile, tmpFile);
 					} catch (Exception ex2) {
 						Log.Exception (ex2);
 						/* It failed again, just skip remuxing */
@@ -145,7 +145,8 @@ namespace LongoMatch.Services
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
-
+				Config.DatabaseManager.ActiveDB.Delete<Project> (project);
+				throw;
 			}
 		}
 
@@ -279,13 +280,15 @@ namespace LongoMatch.Services
 				Player.Dispose ();
 			}
 
-			if (save)
-				SaveProject (OpenedProject, OpenedProjectType);
-
-			OpenedProject = null;
-			OpenedProjectType = ProjectType.None;
-			guiToolkit.CloseProject ();
-			EmitProjectChanged ();
+			try {
+				if (save)
+					SaveProject (OpenedProject, OpenedProjectType);
+			} finally {
+				OpenedProject = null;
+				OpenedProjectType = ProjectType.None;
+				guiToolkit.CloseProject ();
+				EmitProjectChanged ();
+			}
 		}
 
 		void UpdateProject (Project project)
@@ -410,9 +413,14 @@ namespace LongoMatch.Services
 					Config.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
-			CloseOpenedProject (!cancel);
-			if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
-				OpenProjectID (project.ID, project);
+			try {
+				CloseOpenedProject (!cancel);
+				if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
+					OpenProjectID (project.ID, project);
+				}
+			} catch (Exception e) {
+				// do nothing, don't reopen
+				Log.Exception (e);
 			}
 		}
 

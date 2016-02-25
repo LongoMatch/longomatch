@@ -27,6 +27,7 @@ namespace LongoMatch.Video.Capturer
 {
 	public class FakeCapturer : ICapturer
 	{
+		public event ReadyToCaptureHandler ReadyToCapture;
 		public event EllpasedTimeHandler EllapsedTime;
 		public event ErrorHandler Error;
 		public event DeviceChangeHandler DeviceChange;

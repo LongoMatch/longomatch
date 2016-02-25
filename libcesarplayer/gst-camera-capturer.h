@@ -56,6 +56,7 @@ struct _GstCameraCapturerClass
   void (*error) (GstCameraCapturer * gcc, const char *message);
   void (*device_change) (GstCameraCapturer * gcc, gint *device_change);
   void (*media_info) (GstCameraCapturer * gcc, gint width, gint height, gint par_n, gint par_d);
+  void (*ready_to_capture) (GstCameraCapturer * gcc);
 };
 
 struct _GstCameraCapturer
