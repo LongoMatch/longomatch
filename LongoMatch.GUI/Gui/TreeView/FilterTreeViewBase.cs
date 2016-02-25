@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System;
 using Gtk;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
@@ -51,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			filterColumn.AddAttribute (filterCell, "active", COL_ACTIVE);
 
 			CellRendererText nameCell = new CellRendererText ();
-			nameCell.FontDesc = FontDescription.FromString (Config.Style.Font + " bold 13");
+			nameCell.FontDesc = FontDescription.FromString (Config.Style.Font + " bold 13px");
 			nameCell.Height = 32;
 			filterColumn.PackStart (nameCell, true);
 			filterColumn.AddAttribute (nameCell, "text", COL_DESCRIPTION);
