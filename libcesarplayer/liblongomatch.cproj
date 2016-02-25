@@ -34,6 +34,11 @@
     <CodeGeneration>
       <CodeGeneration ctype="CCompilationParameters" />
     </CodeGeneration>
+    <!--<CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp ${ProjectDir}/../bin/libcesarplayer.so ${ProjectDir}/../bin/libcesarplayer.dll" />
+      </CustomCommands>
+    </CustomCommands>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
