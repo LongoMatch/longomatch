@@ -52,7 +52,8 @@ namespace LongoMatch.Gui.Component
 			filterColumn.AddAttribute (filterCell, "active", COL_ACTIVE);
 
 			CellRendererText nameCell = new CellRendererText ();
-			nameCell.FontDesc = FontDescription.FromString (Config.Style.Font + " bold 13px");
+			nameCell.FontDesc = FontDescription.FromString (
+				String.Format ("{0} {1} {2}px", Config.Style.Font, "semibold", StyleConf.ListTextFontSize));
 			nameCell.Height = 32;
 			filterColumn.PackStart (nameCell, true);
 			filterColumn.AddAttribute (nameCell, "text", COL_DESCRIPTION);

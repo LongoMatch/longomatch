@@ -123,7 +123,7 @@ namespace LongoMatch.Drawing
 
 			/* Text */
 			tk.StrokeColor = textColor;
-			tk.FontSize = 14;
+			tk.FontSize = StyleConf.ListTextFontSize;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.DrawText (textP, textW, backgroundArea.Height, text);
