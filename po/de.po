@@ -1508,8 +1508,8 @@ msgstr "In eine Videodatei exportieren"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
-msgid "Export to PGN images"
-msgstr "Als PGN-Bilder exportieren"
+msgid "Export to PNG images"
+msgstr "Als PNG-Bilder exportieren"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:66
 msgid "No video file associated yet for live project"

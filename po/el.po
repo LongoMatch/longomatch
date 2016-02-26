@@ -1512,8 +1512,8 @@ msgstr "Εξαγωγή σε αρχείο βίντεο"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
-msgid "Export to PGN images"
-msgstr "Εξαγωγή σε εικόνες PGN"
+msgid "Export to PNG images"
+msgstr "Εξαγωγή σε εικόνες PNG"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:66
 msgid "No video file associated yet for live project"
