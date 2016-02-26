@@ -1003,10 +1003,6 @@ msgstr "Időköz (képkocka/mp):"
 msgid "Series Name:"
 msgstr "Sorozat neve:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "Exportálás PNG képekbe"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:71
 msgid "<b>Player in</b>"
 msgstr "<b>Bejövő játékos</b>"
@@ -1509,6 +1505,7 @@ msgstr "Exportálás videofájlba"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
 msgid "Export to PNG images"
 msgstr "Exportálás PNG képekbe"
 

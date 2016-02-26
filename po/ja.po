@@ -1002,10 +1002,6 @@ msgstr "インターバル (画像/秒):"
 msgid "Series Name:"
 msgstr "シリーズ名："
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "PNG画像へ書き出す"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:71
 msgid "<b>Player in</b>"
 msgstr "<b>途中出場選手</b>"
@@ -1508,6 +1504,7 @@ msgstr "ビデオファイルへの書き出し"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
 msgid "Export to PNG images"
 msgstr "PNG画像への書き出し"
 

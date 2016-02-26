@@ -1006,10 +1006,6 @@ msgstr "Διάστημα (λήψεις/s):"
 msgid "Series Name:"
 msgstr "Όνομα σειράς:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "Εξαγωγή σε εικόνες PNG"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:71
 msgid "<b>Player in</b>"
 msgstr ""
@@ -1512,6 +1508,7 @@ msgstr "Εξαγωγή σε αρχείο βίντεο"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
 msgid "Export to PNG images"
 msgstr "Εξαγωγή σε εικόνες PNG"
 

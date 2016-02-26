@@ -1005,10 +1005,6 @@ msgstr "Intervalo (imágenes/s):"
 msgid "Series Name:"
 msgstr "Nombre de la serie:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "Exportar a fotogramas PNG"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:71
 msgid "<b>Player in</b>"
 msgstr "<b>Jugador entrante</b>"
@@ -1511,6 +1507,7 @@ msgstr "Exportar a un archivo de vídeo"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
 msgid "Export to PNG images"
 msgstr "Exportar a fotogramas PNG"
 
