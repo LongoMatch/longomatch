@@ -1005,10 +1005,6 @@ msgstr "Interval (snímků/s):"
 msgid "Series Name:"
 msgstr "Název série:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "Export do obrázku PNG"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:72
 msgid "<b>Player in</b>"
 msgstr "<b>Hráč uvnitř</b>"
@@ -1511,6 +1507,7 @@ msgstr "Export do videosouboru"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
 msgid "Export to PNG images"
 msgstr "Export do obrázku PNG"
 
