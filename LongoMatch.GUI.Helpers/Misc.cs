@@ -258,7 +258,7 @@ namespace LongoMatch.Gui.Helpers
 
 		static bool IsSkipedType (Widget w, Type[] skipTypes)
 		{
-			return skipTypes.Count (t => w.GetType ().IsSubclassOf (t)) > 0;
+			return skipTypes.Any (t => w.GetType ().IsAssignableFrom (t));
 		}
 
 		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes)
@@ -273,6 +273,9 @@ namespace LongoMatch.Gui.Helpers
 				} else {
 					if (!IsSkipedType (child, skipTypes)) {
 						child.CanFocus = canFocus;
+						if (!canFocus) {
+							Console.WriteLine (child);
+						}
 					}
 				}
 			}
