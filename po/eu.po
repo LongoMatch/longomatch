@@ -1508,8 +1508,8 @@ msgstr "Bideo fitxategira esportatu"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
-msgid "Export to PGN images"
-msgstr "PGN irudietara esportatu"
+msgid "Export to PNG images"
+msgstr "PNG irudietara esportatu"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:66
 msgid "No video file associated yet for live project"

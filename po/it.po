@@ -1513,7 +1513,7 @@ msgstr "Esporta come file video"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
 #: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
-msgid "Export to PGN images"
+msgid "Export to PNG images"
 msgstr "Esporta come immagini in formato PNG"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:66
