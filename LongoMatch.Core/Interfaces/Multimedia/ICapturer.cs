@@ -46,18 +46,18 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 			get;
 		}
 
-		void TogglePause();
+		void TogglePause ();
 
-		void Start();
+		void Start ();
 
-		void Stop();
+		void Stop ();
 
-		void Run();
+		void Run ();
 
-		void Close();
+		void Close ();
 
-		void Dispose();
-		
+		void Dispose ();
+
 		void Expose ();
 	}
 }

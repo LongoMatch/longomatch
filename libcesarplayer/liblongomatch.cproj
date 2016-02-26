@@ -22,6 +22,8 @@
     </Compiler>
     <Language>C</Language>
     <Target>Bin</Target>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,5 +83,5 @@
   </ItemGroup>
   <Target Name="GetCopyToOutputDirectoryItems" Outputs="" />
   <Target Name="GetTargetPath" />
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" Outputs="$(TargetPath)"/>
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" Outputs="$(TargetPath)" />
 </Project>
