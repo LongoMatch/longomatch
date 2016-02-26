@@ -185,6 +185,7 @@ widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-chil
 widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
 
 class "*FilterTreeView*"                         style "longomatch-filter-treeview"
+widget "*filtertreeview*"                        style "longomatch-filter-treeview"
 
 widget "*entryeventbox"                          style "longomatch-custom-entry"
 widget "*entryeventbox*.entrybutton_*"           style "longomatch-custom-entry-button"
