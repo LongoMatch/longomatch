@@ -273,9 +273,6 @@ namespace LongoMatch.Gui.Helpers
 				} else {
 					if (!IsSkipedType (child, skipTypes)) {
 						child.CanFocus = canFocus;
-						if (!canFocus) {
-							Console.WriteLine (child);
-						}
 					}
 				}
 			}
