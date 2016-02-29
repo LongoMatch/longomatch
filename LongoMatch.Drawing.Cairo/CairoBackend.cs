@@ -485,6 +485,19 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 
+		public void DrawSurface (Point start, double width, double height, ISurface surface, ScaleMode mode)
+		{
+			double scaleX, scaleY;
+			Point offset;
+
+			BaseImage<Pixbuf>.ScaleFactor (surface.Width, surface.Height, (int)width, (int)height, mode, out scaleX, out scaleY, out offset);
+			CContext.Save ();
+			CContext.Translate (offset.X, offset.Y);
+			CContext.Scale (scaleX, scaleY);
+			DrawSurface (surface, start);
+			CContext.Restore ();
+		}
+
 		public Image Copy (ICanvas canvas, Area area)
 		{
 			Image img;

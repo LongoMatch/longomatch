@@ -72,6 +72,8 @@ namespace LongoMatch.Core.Interfaces.Drawing
 
 		void DrawSurface (ISurface surface, Point p = null);
 
+		void DrawSurface (Point start, double width, double height, ISurface surface, ScaleMode mode);
+
 		void Begin ();
 
 		void End ();
