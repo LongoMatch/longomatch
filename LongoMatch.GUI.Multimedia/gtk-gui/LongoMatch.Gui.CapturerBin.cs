@@ -84,6 +84,7 @@ namespace LongoMatch.Gui
 			this.videowindow = new global::LongoMatch.Gui.VideoWindow ();
 			this.videowindow.Events = ((global::Gdk.EventMask)(256));
 			this.videowindow.Name = "videowindow";
+			this.videowindow.Ratio = 0F;
 			this.videowindow.Ready = false;
 			this.vbox1.Add (this.videowindow);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.videowindow]));
@@ -183,7 +184,6 @@ namespace LongoMatch.Gui
 			this.recimage.Xpad = 5;
 			this.recimage.Ypad = 5;
 			this.recbutton.Add (this.recimage);
-			this.recbutton.Label = null;
 			this.controllerbox.Add (this.recbutton);
 			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.recbutton]));
 			w13.Position = 7;
@@ -201,7 +201,6 @@ namespace LongoMatch.Gui
 			this.stopimage.Xpad = 5;
 			this.stopimage.Ypad = 5;
 			this.stopbutton.Add (this.stopimage);
-			this.stopbutton.Label = null;
 			this.controllerbox.Add (this.stopbutton);
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.stopbutton]));
 			w15.Position = 8;
@@ -219,7 +218,6 @@ namespace LongoMatch.Gui
 			this.pauseimage.Xpad = 5;
 			this.pauseimage.Ypad = 5;
 			this.pausebutton.Add (this.pauseimage);
-			this.pausebutton.Label = null;
 			this.controllerbox.Add (this.pausebutton);
 			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.pausebutton]));
 			w17.Position = 9;
@@ -237,7 +235,6 @@ namespace LongoMatch.Gui
 			this.resumeimage.Xpad = 5;
 			this.resumeimage.Ypad = 5;
 			this.resumebutton.Add (this.resumeimage);
-			this.resumebutton.Label = null;
 			this.controllerbox.Add (this.resumebutton);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.resumebutton]));
 			w19.Position = 10;
@@ -255,7 +252,6 @@ namespace LongoMatch.Gui
 			this.saveimage.Xpad = 5;
 			this.saveimage.Ypad = 5;
 			this.savebutton.Add (this.saveimage);
-			this.savebutton.Label = null;
 			this.controllerbox.Add (this.savebutton);
 			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.savebutton]));
 			w21.Position = 11;
@@ -273,7 +269,6 @@ namespace LongoMatch.Gui
 			this.cancelimage.Xpad = 5;
 			this.cancelimage.Ypad = 5;
 			this.cancelbutton.Add (this.cancelimage);
-			this.cancelbutton.Label = null;
 			this.controllerbox.Add (this.cancelbutton);
 			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.controllerbox [this.cancelbutton]));
 			w23.Position = 12;
@@ -310,7 +305,6 @@ namespace LongoMatch.Gui
 			this.deletelastimage.Xpad = 5;
 			this.deletelastimage.Ypad = 5;
 			this.deletelastbutton.Add (this.deletelastimage);
-			this.deletelastbutton.Label = null;
 			this.lasteventbox.Add (this.deletelastbutton);
 			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.lasteventbox [this.deletelastbutton]));
 			w27.Position = 1;
@@ -328,7 +322,6 @@ namespace LongoMatch.Gui
 			this.playlastimage.Xpad = 5;
 			this.playlastimage.Ypad = 5;
 			this.playlastbutton.Add (this.playlastimage);
-			this.playlastbutton.Label = null;
 			this.lasteventbox.Add (this.playlastbutton);
 			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.lasteventbox [this.playlastbutton]));
 			w29.Position = 2;

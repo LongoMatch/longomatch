@@ -80,21 +80,21 @@ namespace LongoMatch.Services
 				string outFile = settings.OutputFile;
 				string tmpFile = settings.OutputFile;
 				
-				while (System.IO.File.Exists (tmpFile)) {
+				while (File.Exists (tmpFile)) {
 					tmpFile = tmpFile + ".tmp";
 				}
 				
 				Log.Debug ("Remuxing file tmp: " + tmpFile + " out: " + outFile);
 				
 				try {
-					System.IO.File.Move (outFile, tmpFile);
+					File.Move (outFile, tmpFile);
 				} catch (Exception ex) {
 					/* Try to fix "Sharing violation on path" in windows
 					 * wait a bit more until the file lock is released */
 					Log.Exception (ex);
 					System.Threading.Thread.Sleep (5 * 1000);
 					try {
-						System.IO.File.Move (outFile, tmpFile);
+						File.Move (outFile, tmpFile);
 					} catch (Exception ex2) {
 						Log.Exception (ex2);
 						/* It failed again, just skip remuxing */
@@ -112,7 +112,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void SaveCaptureProject (Project project)
+		bool SaveCaptureProject (Project project)
 		{
 			Guid projectID = project.ID;
 			// FIXME
@@ -130,6 +130,7 @@ namespace LongoMatch.Services
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				Log.Debug ("Backing up project to file");
@@ -145,7 +146,8 @@ namespace LongoMatch.Services
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
-
+				Config.DatabaseManager.ActiveDB.Delete<Project> (project);
+				return false;
 			}
 		}
 
@@ -266,10 +268,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void CloseOpenedProject (bool save)
+		bool CloseOpenedProject (bool save)
 		{
 			if (OpenedProject == null)
-				return;
+				return false;
 				
 			Log.Debug ("Closing project " + OpenedProject.ID);
 			if (Capturer != null) {
@@ -279,39 +281,27 @@ namespace LongoMatch.Services
 				Player.Dispose ();
 			}
 
-			if (save)
-				SaveProject (OpenedProject, OpenedProjectType);
+			bool saveOk = true;
+			if (save) {
+				saveOk = SaveProject (OpenedProject, OpenedProjectType);
+			}
 
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
 			guiToolkit.CloseProject ();
 			EmitProjectChanged ();
+			return saveOk;
 		}
 
-		void UpdateProject (Project project)
+		bool UpdateProject (Project project)
 		{
 			try {
 				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
-			}
-		}
-
-		protected virtual void SaveProject (Project project, ProjectType projectType)
-		{
-			if (project == null)
-				return;
-			
-			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
-			if (projectType == ProjectType.FileProject) {
-				UpdateProject (project);
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
-				UpdateProject (project);
-			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject) {
-				SaveCaptureProject (project);
+				return false;
 			}
 		}
 
@@ -324,6 +314,30 @@ namespace LongoMatch.Services
 			}
 			
 			guiToolkit.CreateNewProject (project);
+		}
+
+		protected virtual void HandleSaveProject (Project project, ProjectType projectType)
+		{
+			SaveProject (project, projectType);
+		}
+
+		bool SaveProject (Project project, ProjectType projectType)
+		{
+			if (project == null)
+				return false;
+
+			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
+			if (projectType == ProjectType.FileProject) {
+				return UpdateProject (project);
+			} else if (projectType == ProjectType.FakeCaptureProject) {
+				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
+				return UpdateProject (project);
+			} else if (projectType == ProjectType.CaptureProject ||
+			           projectType == ProjectType.URICaptureProject) {
+				return SaveCaptureProject (project);
+			} else {
+				return false;
+			}
 		}
 
 		void OpenNewProject (Project project, ProjectType projectType,
@@ -410,8 +424,8 @@ namespace LongoMatch.Services
 					Config.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
-			CloseOpenedProject (!cancel);
-			if (reopen && !cancel && type != ProjectType.FakeCaptureProject) {
+			bool closeOk = CloseOpenedProject (!cancel);
+			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
 				OpenProjectID (project.ID, project);
 			}
 		}
@@ -458,7 +472,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
 			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent += SaveProject;
+			Config.EventsBroker.SaveProjectEvent += HandleSaveProject;
 			Config.EventsBroker.CaptureError += HandleCaptureError;
 			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
 			Config.EventsBroker.MultimediaError += HandleMultimediaError;
@@ -474,7 +488,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent -= OpenNewProject;
 			Config.EventsBroker.CloseOpenedProjectEvent -= PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent -= SaveProject;
+			Config.EventsBroker.SaveProjectEvent -= HandleSaveProject;
 			Config.EventsBroker.CaptureError -= HandleCaptureError;
 			Config.EventsBroker.CaptureFinished -= HandleCaptureFinished;
 			Config.EventsBroker.MultimediaError -= HandleMultimediaError;

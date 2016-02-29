@@ -55,4 +55,5 @@ namespace LongoMatch.Core.Handlers
 	public delegate void EosHandler (object sender);
 	public delegate void ReadyToSeekHandler (object sender);
 	public delegate void StateChangeHandler (object sender,bool playing);
+	public delegate void ReadyToCaptureHandler (object sender);
 }
