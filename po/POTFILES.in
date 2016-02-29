@@ -81,7 +81,6 @@ LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
 LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs
 LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/Timeline.cs
-LongoMatch.GUI/Gui/Component/TimeScale.cs
 LongoMatch.GUI/Gui/Component/VideoFileInfo.cs
 LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs
 LongoMatch.GUI/Gui/Dialog/DrawingTool.cs

@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-28 01:27+0000\n"
-"PO-Revision-Date: 2016-02-29 10:05+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-29 16:57+0100\n"
+"PO-Revision-Date: 2016-02-29 15:58+0000\n"
 "Last-Translator: ylatuya <ylatuya@gmail.com>\n"
 "Language-Team: Basque (Spain) (http://www.transifex.com/ylatuya/longomatch/language/eu_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -32,20 +32,20 @@ msgstr "Ezin da kokapen hori ireki; dirudienez ez duzu fitxategi hori irekitzeko
 msgid "Media file could not be played."
 msgstr "Ezin da media fitxategia erreproduzitu"
 
-#: ../libcesarplayer/lgm-video-player.c:922
+#: ../libcesarplayer/lgm-video-player.c:932
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "Akatsa GStreamer objektua sortzerakoan. Mesedez zure GStreamer instalazioa konprobatu"
 
-#: ../libcesarplayer/lgm-video-player.c:960
+#: ../libcesarplayer/lgm-video-player.c:974
 #, c-format
 msgid "No valid sink found."
 msgstr "Ez da baliodun \"sink\" aurkitu."
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:170
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:168
 msgid "LongoMatch"
 msgstr "LongoMatch"
 
@@ -57,54 +57,62 @@ msgstr "LongoMatch: Entrenatzaile digitala"
 msgid "Sports video analysis tool for coaches"
 msgstr "Kirol entrenatzaileentzat bideo analisi tresna"
 
-#: ../LongoMatch/Main.cs:83
-msgid ""
-"The database seems to be locked by another instance and the application will"
-" be closed."
-msgstr ""
-
-#: ../LongoMatch/Main.cs:168
+#: ../LongoMatch/Main.cs:223
 msgid "The application has finished with an unexpected error."
 msgstr "Aplikazioa espero ez zen errore batekin itxi egin da."
 
-#: ../LongoMatch/Main.cs:169
+#: ../LongoMatch/Main.cs:224
 msgid "A log has been saved at: "
 msgstr "Log-a ondoko tokian gorde da:"
 
-#: ../LongoMatch/Main.cs:170
+#: ../LongoMatch/Main.cs:226
 msgid "Please, fill a bug report "
 msgstr "Errore txosten bat osatu mesedez"
 
-#: ../LongoMatch.Core/Common/Device.cs:79
+#: ../LongoMatch.DB/CouchbaseStorage.cs:154
+#: ../LongoMatch.DB/CouchbaseStorage.cs:214
+#: ../LongoMatch.DB/CouchbaseStorage.cs:255
+msgid "Error deleting object from the storage"
+msgstr ""
+
+#: ../LongoMatch.Core/Common/Device.cs:78
 #: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:56
 msgid "Default"
 msgstr "Jatorrizkoa"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:28
+#: ../LongoMatch.Core/Common/Exceptions.cs:29
 msgid "Database locked:"
 msgstr "Datubase blokeatua:"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:37
+#: ../LongoMatch.Core/Common/Exceptions.cs:38
 msgid "Unknown database error:"
 msgstr "Datubase errore ezezaguna:"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:53
+#: ../LongoMatch.Core/Common/Exceptions.cs:54
 msgid "Project loading failed:"
 msgstr "Errorea proiektua kargatzean:"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:62
+#: ../LongoMatch.Core/Common/Exceptions.cs:63
 msgid "Project file not found:\n"
 msgstr "Ez da aurkitzen proiektu fitxategia:\n"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:70
+#: ../LongoMatch.Core/Common/Exceptions.cs:71
 msgid "The name contains invalid characters: "
 msgstr "Izeneko karaktere batzuk ezin dira erabili:"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:78
+#: ../LongoMatch.Core/Common/Exceptions.cs:86
+msgid "Team not found:\n"
+msgstr ""
+
+#: ../LongoMatch.Core/Common/Exceptions.cs:88
+msgid "Dashboard not found:\n"
+msgstr ""
+
+#: ../LongoMatch.Core/Common/Exceptions.cs:90
 msgid "Template not found:\n"
 msgstr "Plantila ez da aurkitzen:\n"
 
-#: ../LongoMatch.Core/Common/Exceptions.cs:86
+#: ../LongoMatch.Core/Common/Exceptions.cs:98
 #: ../LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs:73
 msgid "Hotkey already in use: "
 msgstr "Laster-tekla erabiltzen ari da:"
@@ -194,12 +202,12 @@ msgstr "Gelditu/Itxi kaptura erlojua"
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
 #: ../LongoMatch.Core/Common/Hotkeys.cs:78
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:68
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:67
 msgid "Start recording period"
 msgstr "Jokoaldia grabatzen hasi"
 
 #: ../LongoMatch.Core/Common/Hotkeys.cs:79
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:69
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:68
 msgid "Stop recording period"
 msgstr "Jokoaldia grabatzen gelditu"
 
@@ -219,148 +227,144 @@ msgstr "Denbora lerroa handitu"
 msgid "Zoom timeline out"
 msgstr "Denbora lerroa hurrundu"
 
-#: ../LongoMatch.Core/Common/VideoStandards.cs:55
+#: ../LongoMatch.Core/Common/VideoStandards.cs:54
 msgid "Keep original size"
 msgstr "Jatorrizko tamaina mantendu"
 
-#: ../LongoMatch.Core/Stats/PlayerEventTypeStats.cs:62
-#: ../LongoMatch.Core/Store/EventType.cs:162
-msgid "Score"
-msgstr "Emaitza"
-
-#: ../LongoMatch.Core/Stats/PlayerEventTypeStats.cs:72
-#: ../LongoMatch.Core/Store/EventType.cs:139
-msgid "Penalties"
-msgstr "Faltak"
-
-#: ../LongoMatch.Core/Store/EventType.cs:88
-#: ../LongoMatch.Core/Store/EventType.cs:96
+#: ../LongoMatch.Core/Store/EventType.cs:84
+#: ../LongoMatch.Core/Store/EventType.cs:92
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:411
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:59
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:86
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:89
 #: ../LongoMatch.Migration/Core/Category.cs:154
 #: ../LongoMatch.Migration/Core/Category.cs:162
 msgid "Sort by name"
 msgstr "Izenaren arabera sailkatu"
 
-#: ../LongoMatch.Core/Store/EventType.cs:90
-#: ../LongoMatch.Core/Store/EventType.cs:100
+#: ../LongoMatch.Core/Store/EventType.cs:86
+#: ../LongoMatch.Core/Store/EventType.cs:96
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:412
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:87
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:90
 #: ../LongoMatch.Migration/Core/Category.cs:156
 #: ../LongoMatch.Migration/Core/Category.cs:166
 msgid "Sort by start time"
 msgstr "Hasierako denboraren arabera sailkatu"
 
-#: ../LongoMatch.Core/Store/EventType.cs:92
-#: ../LongoMatch.Core/Store/EventType.cs:102
+#: ../LongoMatch.Core/Store/EventType.cs:88
+#: ../LongoMatch.Core/Store/EventType.cs:98
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:413
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:88
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:91
 #: ../LongoMatch.Migration/Core/Category.cs:158
 #: ../LongoMatch.Migration/Core/Category.cs:168
 msgid "Sort by stop time"
 msgstr "Bukaera denboraren arabera sailkatu"
 
-#: ../LongoMatch.Core/Store/EventType.cs:94
-#: ../LongoMatch.Core/Store/EventType.cs:104
+#: ../LongoMatch.Core/Store/EventType.cs:90
+#: ../LongoMatch.Core/Store/EventType.cs:100
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:414
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:89
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:92
 #: ../LongoMatch.Migration/Core/Category.cs:160
 #: ../LongoMatch.Migration/Core/Category.cs:170
 msgid "Sort by duration"
 msgstr "Iraupenaren arabera sailkatu"
 
-#: ../LongoMatch.Core/Store/EventType.cs:185
+#: ../LongoMatch.Core/Store/EventType.cs:204
 msgid "Substitution"
 msgstr "Aldaketa"
 
-#: ../LongoMatch.Core/Store/HotKey.cs:131
+#: ../LongoMatch.Core/Store/HotKey.cs:140
 #: ../LongoMatch.Migration/Core/HotKey.cs:142
 msgid "Not defined"
 msgstr "Definitu gabea"
 
 #. Add the first media file chooser for main camera
-#: ../LongoMatch.Core/Store/MediaFileSet.cs:63
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:131
 #: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:61
-#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:95
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:448
+#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:96
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:471
 msgid "Main camera angle"
 msgstr "Kamera printzipalaren angelua"
 
-#: ../LongoMatch.Core/Store/MediaFileSet.cs:66
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:134
 msgid "Angle 2"
 msgstr "2. angelua"
 
-#: ../LongoMatch.Core/Store/MediaFileSet.cs:69
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:137
 msgid "Angle 3"
 msgstr "3. angelua"
 
-#: ../LongoMatch.Core/Store/MediaFileSet.cs:72
+#: ../LongoMatch.Core/Store/MediaFileSet.cs:140
 msgid "Angle 4"
 msgstr "4. angelua"
 
-#: ../LongoMatch.Core/Store/Project.cs:357
+#: ../LongoMatch.Core/Store/Project.cs:423
 msgid "No lineup events found"
 msgstr "Ez da gertaerarik aurkitu jokalari zerrendan"
 
-#: ../LongoMatch.Core/Store/Project.cs:360
+#: ../LongoMatch.Core/Store/Project.cs:426
 msgid "A substitution can't happen before the lineup event"
 msgstr "Ezin da aldaketarik egin partida hasi aurretik"
 
-#: ../LongoMatch.Core/Store/Project.cs:429
+#: ../LongoMatch.Core/Store/Project.cs:495
 msgid "Lineup"
 msgstr "Hasierako taldea"
 
-#: ../LongoMatch.Core/Store/Project.cs:577
-#: ../LongoMatch.Migration/Core/Project.cs:289
+#: ../LongoMatch.Core/Store/Project.cs:616
+#: ../LongoMatch.Migration/Core/Project.cs:284
+#: ../LongoMatch.Plugins/LongoMatchImporter.cs:60
+msgid "Import project"
+msgstr "Proiektua inportatu"
+
+#: ../LongoMatch.Core/Store/Project.cs:630
+#: ../LongoMatch.Migration/Core/Project.cs:298
 msgid "The file you are trying to load is not a valid project"
 msgstr "Kargatzen saiatzen ari zaren fitxategia ez da baliozko proiektua"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:228
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:247
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:180
 msgid "Success"
 msgstr "Arrakasta"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:229
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:231
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:248
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:250
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:177
 msgid "Outcome"
 msgstr "Emaitza"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:230
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:249
 #: ../LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs:181
 msgid "Failure"
 msgstr "Errorea"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:335
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:350
 msgid "Attack"
 msgstr "Erasoa"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:341
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:356
 msgid "Defense"
 msgstr "Defentsa"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:347
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:362
 msgid "Red card"
 msgstr "Txartela gorria"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:354
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:369
 msgid "Yellow card"
 msgstr "Txartela horia"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:362
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:378
 msgid "Free play goal"
 msgstr "Jokaldi libre gola"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:372
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:385
 msgid "Penalty goal"
 msgstr "Penalti jaurtiketa"
 
-#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:381
+#: ../LongoMatch.Core/Store/Templates/Dashboard.cs:390
 msgid "Ball playing"
 msgstr "Baloia jokatzea"
 
-#: ../LongoMatch.Core/Store/Templates/Team.cs:41
+#: ../LongoMatch.Core/Store/Templates/Team.cs:42
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:557
 #: ../LongoMatch.Migration/Core/SubCategory.cs:167
 #: ../LongoMatch.Migration/Core/Templates/TeamTemplate.cs:173
@@ -368,17 +372,19 @@ msgid "Team"
 msgstr "Taldea"
 
 #. Periods
-#: ../LongoMatch.Drawing/Widgets/CamerasLabels.cs:78
-#: ../LongoMatch.Drawing/Widgets/TimelineLabels.cs:78
+#: ../LongoMatch.Drawing/Widgets/CamerasLabels.cs:80
+#: ../LongoMatch.Drawing/Widgets/TimelineLabels.cs:81
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:493
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:51
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:65
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:66
 msgid "Periods"
 msgstr "Jokoaldiak"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:130
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs:46
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:56
 #: ../LongoMatch.Migration/Core/SubCategory.cs:85
-#: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:35
+#: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:34
 msgid "Name"
 msgstr "Izena"
 
@@ -454,7 +460,7 @@ msgid "Goal position"
 msgstr "Golaren kokapena"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:401
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:85
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:88
 msgid "Sort Method"
 msgstr "Antolaketa metodoa"
 
@@ -487,23 +493,24 @@ msgid "Points"
 msgstr "Puntuak"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:565
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:113
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:100
 msgid "None"
 msgstr "Ezer ez"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:566
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs:57
 #: ../LongoMatch.Plugins.Stats/Stats/Plotter.cs:52
-#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:36
-#: ../LongoMatch.Services/TemplatesService.cs:254
+#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:35
+#: ../LongoMatch.Services/TemplatesService.cs:233
 msgid "Home"
 msgstr "Etxekoa"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:567
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameDescriptionHeader.cs:91
 #: ../LongoMatch.Plugins.Stats/Stats/Plotter.cs:53
-#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:37
-#: ../LongoMatch.Services/TemplatesService.cs:256
+#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:36
+#: ../LongoMatch.Services/TemplatesService.cs:235
 msgid "Away"
 msgstr "Kanpokoa"
 
@@ -525,7 +532,7 @@ msgstr "2. orrialdea"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs:98
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:580
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:968
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:969
 msgid "page3"
 msgstr "3. orrialdea"
 
@@ -541,7 +548,7 @@ msgstr "<span font_desc=\"10\">Zelaia</span>"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:374
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs:449
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:205
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:421
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:410
 msgid "<span font_desc=\"8\">click to change...</span>"
 msgstr "<span font_desc=\"8\">aldatzeko klikatu...</span>"
 
@@ -567,12 +574,12 @@ msgid "Interface language:"
 msgstr "Interfaze hizkuntza:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs:44
-msgid "Autosave projects"
-msgstr "Proiektuen gordeketa automatikoa"
+msgid "Autosave projects:"
+msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs:55
-msgid "Default analysis template"
-msgstr "Jatorrizko analisi plantilla"
+msgid "Default analysis dashboard:"
+msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LinkProperties.cs:79
 msgid "Activate -> Deactivate"
@@ -632,24 +639,29 @@ msgid ""
 "(Requires a powerful CPU)"
 msgstr "Gertaera berriak automatikoki renderizatu\n(Potentzi handiko ordenagailua behar du)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:43
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:57
 msgid "  Events   "
 msgstr "Gertaerak"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:59
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:73
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:92
 msgid "Playlists"
 msgstr "Jokaldi listak"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:82
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:104
+#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:34
+msgid "All"
+msgstr "Denak"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:150
 msgid "  Filters  "
 msgstr "Filtroak"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PluginsPreferences.cs:135
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:86
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:195
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:232
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:144
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:182
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:92
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:231
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:248
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:155
 msgid "Name:"
 msgstr "Izena:"
 
@@ -698,123 +710,127 @@ msgstr "<span font_desc=\"10\">Talde armarria</span>"
 msgid "<span font_desc=\"10\">Team name</span>"
 msgstr "<span font_desc=\"10\">Talde izena</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:312
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:301
 msgid "<span font_desc=\"10\">Tactics</span>"
 msgstr "<span font_desc=\"10\">Taktikak</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:322
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:311
 msgid "<span font_desc=\"10\">Colors</span>"
 msgstr "<span font_desc=\"10\">Koloreak</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:411
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:400
 msgid "<span font_desc=\"10\">Player picture</span>"
 msgstr "<span font_desc=\"10\">Jokalari argazkia</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:476
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:465
 msgid "<span font_desc=\"10\">Position</span>"
 msgstr "<span font_desc=\"10\">Kokapena</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:488
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:477
 msgid "<span font_desc=\"10\">Name</span>"
 msgstr "<span font_desc=\"10\">Izena</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:497
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:486
 msgid "<span font_desc=\"10\">Last name</span>"
 msgstr "<span font_desc=\"10\">Abizena</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:509
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:498
 msgid "<span font_desc=\"10\">Nickname</span>"
 msgstr "<span font_desc=\"10\">Ezizena</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:521
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:510
 msgid "<span font_desc=\"10\">Number</span>"
 msgstr "<span font_desc=\"10\">Zenbakia</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:533
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:522
 msgid "<span font_desc=\"10\">Height</span>"
 msgstr "<span font_desc=\"10\">Altuera</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:545
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:534
 msgid "<span font_desc=\"10\">Weight</span>"
 msgstr "<span font_desc=\"10\">Pisua</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:557
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:546
 msgid "<span font_desc=\"10\">Birth Date</span>"
 msgstr "<span font_desc=\"10\">Jaiotze data</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:569
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:558
 msgid "<span font_desc=\"10\">Nationality</span>"
 msgstr "<span font_desc=\"10\">Naziotasuna</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:609
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:598
 msgid "<span font_desc=\"10\">E-mail</span>"
 msgstr "<span font_desc=\"10\">E-posta</span>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:738
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:716
 msgid "Save template"
 msgstr "Plantilla gorde"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:763
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:188
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:729
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:215
 msgid "New player"
 msgstr "Jokalari berria"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:789
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:190
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTemplateEditor.cs:743
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:217
 msgid "Delete player"
 msgstr "Jokalaria ezabatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:78
-msgid "  <b>Framerate</b>"
-msgstr "<b>Irudi abiadura</b>"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:87
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:91
 msgid "25 fps"
 msgstr "25 fps"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:92
 msgid "30 fps"
 msgstr "30fps"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:89
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:93
 msgid "50 fps"
 msgstr "50 fps"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:90
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:94
 msgid "60 fps"
 msgstr "60 fps"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:120
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:281
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:107
+msgid "Framerate"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:116
+msgid "<b>General</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:140
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:301
 msgid "Image format"
 msgstr "Irudi formatua"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:129
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:270
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:149
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:290
 msgid "Encoding format"
 msgstr "Kodifikatze abiadura"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:140
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:259
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:160
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:279
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:722
 msgid "Quality"
 msgstr "Kalitatea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:151
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:171
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:161
 msgid "Enable audio"
 msgstr "Audioa baimendu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:162
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:182
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:151
 msgid "Enable title overlay"
 msgstr "Tituluak gainean azaltzea baimendu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:204
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:224
 msgid "<b>Rendering</b>"
 msgstr "<b>Renderizatzen</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:290
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:310
 msgid "<b>Capture</b>"
 msgstr "<b>Kaptura</b>"
 
@@ -839,27 +855,23 @@ msgid ""
 "To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. "
 msgstr "<a href=\"http://www.longomatch.com/open-source.html\">OpenSource proiektuan</a> azaldu eta zehaztu bezala, doako eta kode irekiko LongoMatch bertsio honen erabilerak, CODEC deitutako softwarea instalatzea behar du, hau doakoa da ere.\n\nHonen ulermena ziurtatzeko eta honen buruzko informazio gehiago izateko, non lortu eta nola instalatu, <a href=\"http://www.longomatch.com/open-source.html\">OpenSource proiektua</a> webgunea bisitatu.\n\nHau ekiditeko, eta gainontzeko funtzio hobekuntza gehiago gozatu ahal izateko, LongoMatch PRO-ra eguneratzea gomendatzen dugu, hau kuota baten truke erabilgarri izango da."
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:36
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:34
 msgid "Databases manager"
 msgstr "Datubase kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:97
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
 msgid "_Select DB"
 msgstr "_DB Aukeratu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:124
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:99
 msgid "_Delete"
 msgstr "_Ezabatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:151
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:114
 msgid "_Backup"
 msgstr "_Segurtasun kopia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:178
-msgid "Re-scan"
-msgstr ""
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:204
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:128
 msgid "_Add"
 msgstr "_Gehitu"
 
@@ -871,51 +883,56 @@ msgstr "Marrazketa tresna"
 msgid "<b>Tools</b>"
 msgstr "<b>Tresnak</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:547
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:699
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:548
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:700
 msgid "<b>Color</b>"
 msgstr "<b>Kolorea</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:557
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:678
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:558
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:679
 msgid "<b>Size</b>"
 msgstr "<b>Tamaina</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:569
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:570
 msgid "<b>Style</b>"
 msgstr "<b>Estiloa</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:581
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:582
 msgid "<b>Type</b>"
 msgstr "<b>Mota</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:630
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:631
 msgid "<b>Lines</b>"
 msgstr "<b>Lerroak</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:666
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:667
 msgid "<b>Background</b>"
 msgstr "<b>Fondoa</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:723
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:724
 msgid "<b>Text</b>"
 msgstr "<b>Testua</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:754
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:755
 msgid "Save to Project"
 msgstr "Proiektura gorde"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:769
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:770
 msgid "Save to File"
 msgstr "Fitxategira gorde"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:857
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:858
 msgid "Close"
 msgstr "Itxi"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs:16
 msgid "Properties"
 msgstr "Propietateak"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs:91
+#: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:80
+msgid "Duration"
+msgstr "Iraupena"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:58
 msgid ""
@@ -925,28 +942,24 @@ msgid ""
 "<b>Warning: If you cancel the current project all your changes will be lost.</b>"
 msgstr "Proiektu kaptura bat lanean ari da.\nProiektu honekin jarraitu, ezeztatu edo gorde dezakezu\n\n<b>Adi: Proiektua ezeztatzen baduzu aldeketa guztiak galduko dira</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:87
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:76
 msgid "Return"
 msgstr "Atzera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:112
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:73
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:89
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:72
 msgid "Cancel capture"
 msgstr "Kaptura ezeztatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:137
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:102
 msgid "Stop capture and save project"
 msgstr "Kaptura gelditu eta proiektua gorde"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:32
-msgid "Select template name"
-msgstr "Plantilla izena aukeratu"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:76
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:82
 msgid "Copy existent template:"
 msgstr "Existitzen den plantilla bat aukeratu:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:94
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:100
 msgid "Players:"
 msgstr "Jokalariak:"
 
@@ -978,15 +991,15 @@ msgstr "<b>Izena</b>"
 msgid "<b>Notes</b>"
 msgstr "<b>Notak</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:74
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:63
 msgid "C_lear finished jobs"
 msgstr "_Bukatutako lanak garbitu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:100
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:77
 msgid "_Cancel job"
 msgstr "_Lana ezeztatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:91
 msgid "Retry job"
 msgstr "Lana berriz egin"
 
@@ -1002,7 +1015,16 @@ msgstr "Tartea (irudia/k):"
 msgid "Series Name:"
 msgstr "Seriaren Izena:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:71
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:117
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:231
+msgid "Export to PNG images"
+msgstr "PNG irudietara esportatu"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SplashScreen.cs:18
+msgid "SplashScreen"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs:72
 msgid "<b>Player in</b>"
 msgstr "<b>Jokalaria sartu</b>"
 
@@ -1030,16 +1052,16 @@ msgstr "\nHau ondoko esteka zuzenarekin deskargatu dezakezu:"
 msgid "Video converter tool"
 msgstr "Bideo eraldaketa tresna"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:140
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:139
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:192
 msgid "File name: "
 msgstr "Fitxateki izena:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:151
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:150
 msgid "Size: "
 msgstr "Tamaina:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:159
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:158
 msgid "Bitrate: "
 msgstr "Bit Frekuentzia"
 
@@ -1067,134 +1089,134 @@ msgstr "Fitxategi batean elkartu irteera jokaldi listako elementu bakoitzeko"
 msgid "Directory name: "
 msgstr "Fitxategi izena:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:81
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:79
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:80
 msgid "_File"
 msgstr "_Fitxategia"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:84
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:85
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:83
 msgid "_New Project"
 msgstr "_Proiektu berria"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:85
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
 msgid "_Open Project"
 msgstr "_Proiektua ireki"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:90
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:89
 msgid "_Quit"
 msgstr "_Itxi"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:93
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
 msgid "_Close Project"
 msgstr "_Proiektua itxi"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:97
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:96
 msgid "_Tools"
 msgstr "_Tresnak"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:100
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
 msgid "Projects Manager"
 msgstr "Proiektu kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:99
 msgid "Database Manager"
 msgstr "Datubase kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:103
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
 msgid "Analysis Dashboards Manager"
 msgstr "Analisirako panelaren kudeaketa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:102
 msgid "Dashboards Manager"
 msgstr "Panelaren kudeaketa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:106
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:107
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:105
 msgid "_View"
 msgstr "_Bista"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:109
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:110
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:107
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:108
 msgid "Full Screen"
 msgstr "Pantaila osoa"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:110
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:112
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
 msgid "_Save Project"
 msgstr "_Proiektua gorde"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:116
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:117
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:130
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:115
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:129
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:119
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:120
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:117
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
 msgid "_About"
 msgstr "_Honi buruz"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:120
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:124
 msgid "Export Project To CSV File"
 msgstr "Proiektua CSV fitxategira esportatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:127
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
 msgid "Teams Manager"
 msgstr "Taldeen kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
 msgid "_Import Project"
 msgstr "_Proiektua inportatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:137
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:139
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:141
 msgid "Export Project"
 msgstr "Proiektua esportatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:145
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:146
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:143
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:144
 msgid "Export to project file"
 msgstr "Proiektua fitxategira esportatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:148
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:146
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:147
 msgid "Import from file"
 msgstr "Fitxategitik inportatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:151
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
 msgid "Video Converter Tool"
 msgstr "Bideo eraldaketa tresna"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:154
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:153
 msgid "Databases Manager"
 msgstr "Datubase kudeatzailea"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:157
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs:37
 msgid "Preferences"
 msgstr "Ezarpenak"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
 msgid "Show project stats"
 msgstr "Proiektuaren estatistikak erakutsi"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:165
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:163
 msgid "Migration Tool"
 msgstr "Migratze tresna"
 
@@ -1215,12 +1237,12 @@ msgid "Ip camera"
 msgstr "IP Kamera"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:436
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:176
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:207
 msgid "Competition"
 msgstr "Lehiaketa"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:447
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:175
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:206
 msgid "Date"
 msgstr "Data"
 
@@ -1229,14 +1251,14 @@ msgid "Description"
 msgstr "Azalpena"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:512
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:177
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:208
 msgid "Season"
 msgstr "Denboraldia"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs:585
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:175
-#: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:34
-#: ../LongoMatch.Plugins/CSVExporter.cs:70
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:176
+#: ../LongoMatch.GUI.Multimedia/MultimediaToolkit.cs:45
+#: ../LongoMatch.Plugins/CSVExporter.cs:61
 msgid "Output file"
 msgstr "Irteerako fitxategia"
 
@@ -1283,8 +1305,8 @@ msgid "Date:"
 msgstr "Data:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:263
-msgid "Analysis Template:"
-msgstr "Analisi plantila"
+msgid "Analysis dashboard:"
+msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs:285
 msgid "Season:"
@@ -1294,23 +1316,23 @@ msgstr "Denboraldia:"
 msgid "Videos"
 msgstr "Bideoak"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs:148
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:252
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs:152
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:287
 msgid "Manage dashboards"
 msgstr "Panelak kudeatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs:249
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:272
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs:264
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:307
 msgid "Manage dashboard buttons"
 msgstr "Panelen botoiak kudeatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:130
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:182
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:138
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:209
 msgid "Manage teams"
 msgstr "Taldeak kudeatu"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:216
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:196
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs:251
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:223
 msgid "Manage players"
 msgstr "Jokalariak kudeatu"
 
@@ -1318,127 +1340,105 @@ msgstr "Jokalariak kudeatu"
 msgid "TransparentDrawingArea"
 msgstr "MarrazkeaEremuIkustezina"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:56
-msgid "Categories"
-msgstr "Kategoriak"
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:222
+msgid "Timeline view"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
-msgid ""
-"You are about to delete a category and all the plays added to this category."
-" Do you want to proceed?"
-msgstr "Kategori bat eta honi atxikituta dauden jokaldi guztiak ezabatuko dituzu. Jarraitu nahi duzu?"
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:224
+msgid "Coding View"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
-msgid "A template needs at least one category"
-msgstr "Plantila batek kategori bat behar du gutxienez"
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:226
+msgid "Zonal tags"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:152
-msgid "Field background"
-msgstr "Zelai osoko fondoa"
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:228
+msgid "Events list"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:155
-msgid "Half field background"
-msgstr "Zelai erdiko fondoa"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:158
-msgid "Goal background"
-msgstr "Gol fondoa"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:161
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:236
-msgid "Game periods"
-msgstr "Partiduko jokoaldiak"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:167
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:178
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:189
-msgid "Reset"
-msgstr "Berriz hasi"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:243
-msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
-msgstr "Eduki baliogabea. Jokoaldiak zuriuneengatik banatuta egon behar dute (\"1 2 ex1 ex2\")"
-
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:273
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:251
 msgid "Timeline"
 msgstr "Denbora lerroa"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:275
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:253
 msgid "Analysis dashboard"
 msgstr "Analisi panela"
 
-#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:277
+#: ../LongoMatch.GUI/Gui/Component/CodingWidget.cs:255
 msgid "Zonal tags viewer"
 msgstr "Zonakako etiketatze bisorea"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:270
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:282
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:271
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:283
 msgid "Do you want to delete: "
 msgstr "Ezabatu nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:300
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:301
 msgid "Edit dashboard"
 msgstr "Panela editatu"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:308
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:309
 msgid "Edit action links"
 msgstr "Gertaeren linkak editatu"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:316
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:317
 msgid "Disable popup window"
 msgstr "Popup leihoa desaktibatu"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:323
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:324
 msgid "Fit dashboard"
 msgstr "Panela doitu"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:328
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:329
 msgid "Fill dashboard"
 msgstr "Panela bete"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:333
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:334
 msgid "1:1 dashboard"
 msgstr "1:1 panela"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:464
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:470
-#: ../LongoMatch.GUI/Gui/Component/Timeline.cs:222
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:525
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:104
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:135
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:66
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:161
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:196
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:465
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:471
+#: ../LongoMatch.GUI/Gui/Component/Timeline.cs:260
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:527
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:122
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:149
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:178
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:67
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:167
 msgid "Delete"
 msgstr "Ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:558
+#: ../LongoMatch.GUI/Gui/Component/DashboardWidget.cs:559
 msgid "Could not parse game periods."
 msgstr "Ezin dira jokoaldiak aztertu."
+
+#: ../LongoMatch.GUI/Gui/Component/EventsListWidget.cs:93
+msgid "Both Teams"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
 msgid "Time: "
 msgstr "Denbora:"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:59
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:60
 msgid "Edit to change camera name"
 msgstr "Editatu kamera izena aldatzeko"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:144
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:145
 msgid "Select folder..."
 msgstr "Direktorioa aukeratu..."
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:146
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:147
 msgid "Select file..."
 msgstr "Fitxategia aukeratu..."
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:182
+#: ../LongoMatch.GUI/Gui/Component/MediaFileChooser.cs:183
 msgid "Output folder"
 msgstr "Irteera-karpeta"
 
-#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:97
-#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:99
+#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:98
+#: ../LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs:100
 msgid "Angle"
 msgstr "Angelua"
 
@@ -1452,25 +1452,33 @@ msgstr "Jokaldi lista berria sortu"
 msgid "Export the playlist to new video file"
 msgstr "Jokaldi lista bideo fitxategi berri batera esportatu"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:143
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:88
+msgid "Events List"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:90
+msgid "Filters"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:110
 msgid "Categories filter"
 msgstr "Kategorien filtroa"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:146
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:113
 msgid "Players filter"
 msgstr "Jokalarien filtroa"
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:429
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:464
 msgid ""
 "Drag the bars in the timeline to synchronize secondary video files with the "
 "main video"
 msgstr "Denbora-lerroko barrak mugitu bigarren mailako bideoak, oinarrizko bideoarekin sinkronizatzeko"
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:433
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:468
 msgid "Camera out of scope"
 msgstr "Kamera ez dago eskuragarri"
 
-#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:465
+#: ../LongoMatch.GUI/Gui/Component/SynchronizationWidget.cs:500
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:94
 msgid "Offset"
 msgstr "Offset"
@@ -1480,41 +1488,13 @@ msgid "Do you want to delete player: "
 msgstr "Jokalaria ezabatu nahi al duzu?"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:258
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:641
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:664
 msgid "Could not parse tactics string"
 msgstr "Ezin izan dira taktikak aztertu"
-
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:59
-msgid "play"
-msgstr "play"
-
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:71
-msgid "Edit tags"
-msgstr "Etiketak editatu"
-
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:72
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:106
-msgid "Add to playlist"
-msgstr "Jokaldi listara gehitu"
-
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:73
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:108
-msgid "Export to video file"
-msgstr "Bideo fitxategira esportatu"
-
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:128
-msgid "Export to PNG images"
-msgstr "PNG irudietara esportatu"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:66
 msgid "No video file associated yet for live project"
 msgstr "Ez da bideo fitxategirik elkartu oraindik zuzeneko proiekturako"
-
-#: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:80
-msgid "Duration"
-msgstr "Iraupena"
 
 #: ../LongoMatch.GUI/Gui/Component/VideoFileInfo.cs:83
 msgid "Missing duration info, reload this file."
@@ -1567,14 +1547,6 @@ msgstr "Segurtasun kopia egoki egin da"
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:187
 msgid "Could not create backup"
 msgstr "Ezin izan da segurtasun kopia sortu"
-
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:205
-msgid "Scanning database..."
-msgstr ""
-
-#: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:218
-msgid "Database scanned succesfully."
-msgstr ""
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
@@ -1643,28 +1615,28 @@ msgstr "Marrazki guztiak garbitu"
 msgid "Zoom tool. Click to zoom in, Alt+Shift to zoom out"
 msgstr "Zoom tresna. Click hurbiltzeko, Alt+Shift urruntzeko"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:263
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:265
 msgid "Text"
 msgstr "Testua"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:272
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:274
 msgid "Select player"
 msgstr "Jokalari hartu"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:339
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:341
 msgid "Do you want to clear the drawing?"
 msgstr "Marrazketa ezabatu nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:445
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:447
 msgid "Save File as..."
 msgstr "Fitxategi gorde horrela..."
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:529
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:134
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:531
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:177
 msgid "Edit"
 msgstr "Editatu"
 
-#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:539
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:541
 msgid "Do you want to close the current drawing?"
 msgstr "Irekita dagoen marrazkia itxi nahi al duzu?"
 
@@ -1708,40 +1680,9 @@ msgstr "Egina"
 msgid "is not a valid key modifier: Alt, Shift or Ctrl"
 msgstr "Tekla eraldatzailea ez du balio: Alt, Shift edo Ctrl"
 
-#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:110
+#: ../LongoMatch.GUI/Gui/Dialog/PlayEditor.cs:97
 msgid "Common tags"
 msgstr "Ohiko etiketak"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:69
-msgid "The Project has been edited, do you want to save the changes?"
-msgstr "Proiektua editatu da, aldaketak gorde nahi dituzu?"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:99
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:280
-msgid "This Project is actually in use."
-msgstr "Proiektua erabiltzen ari da"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:100
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:281
-msgid "Close it first to allow its removal from the database"
-msgstr "Itxi ezazu datubasetik ezabatu ahal izateko"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:103
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:284
-msgid "Do you really want to delete:"
-msgstr "Ziur zaude ezabatu nahi duzula?"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:159
-msgid "The Project you are trying to load is actually in use."
-msgstr "Kargatzen saiatzen ari zaren proiektua erabiltzen ari zara orain."
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:159
-msgid "Close it first to edit it"
-msgstr "Editatzeko, lehenengo itxi"
-
-#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:178
-msgid "Save Project"
-msgstr "Proiektua gorde"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:27
 msgid "Pause or play"
@@ -1788,11 +1729,11 @@ msgid "You can't delete the 'default' template"
 msgstr "Ezin duzu \"jatorrizko\" plantila ezabatu"
 
 #: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:232
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:310
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:383
 msgid "Do you really want to delete the template: "
 msgstr "Ziur zaude plantila ezabatu nahi duzula?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:149
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:148
 msgid "Add file"
 msgstr "Fitxategia gehitu"
 
@@ -1810,93 +1751,118 @@ msgstr "Irteera direktorio bat aukeratu mesedez"
 msgid "The playlist you want to render is empty."
 msgstr "Errenderizatu nahi duzun jokaldi lista hutsik dago."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:441
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:458
 msgid "Select video files"
 msgstr "Bideo fitxategiak aukeratu"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:449
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:466
 msgid "Some video files are missing for this project"
 msgstr "Proiektu honetako bideo fitxategi batzuk galdu dira"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:452
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:469
 msgid "Some video files are still missing for this project."
 msgstr "Proiektu honetako bideo fitxategi batzuk galduta jarraitzen dute."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:456
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:384
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:473
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:418
 msgid "You need at least 1 video file for the main angle"
 msgstr "Bideo fitxategi 1 behar da gutxienez angelu nagusirako"
 
-#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:52
+#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:55
 msgid "Add period"
 msgstr "Jokoaldia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:54
+#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:57
 msgid "Period name"
 msgstr "Jokoaldia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:72
+#: ../LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs:75
 msgid "Delete period"
 msgstr "Jokoaldia ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:73
-msgid "Add new event"
-msgstr "Gertaera berri bat gehitu"
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:86
+msgid "External video"
+msgstr "Kanpoko bideoa"
 
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:110
-msgid "Duplicate "
-msgstr "Bikoiztu"
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:89
+msgid "External image"
+msgstr "Kanpoko irudia"
 
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:133
-msgid "Drawing "
-msgstr "Marrazketa"
-
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:171
-msgid "Create new playlist..."
-msgstr "Jokaldi lista berria sortu"
-
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:192
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:84
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:105
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:210
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:87
 msgid "Edit properties"
 msgstr "Ezaugarriak editatu"
 
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:200
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:114
+msgid "Insert before"
+msgstr "Aurretik insertatu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs:118
+msgid "Insert after"
+msgstr "Ondoren insertatu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:78
+msgid "Add to playlist"
+msgstr "Jokaldi listara gehitu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:92
+msgid "Create new playlist..."
+msgstr "Jokaldi lista berria sortu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:114
+msgid "Add new event"
+msgstr "Gertaera berri bat gehitu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:151
+msgid "Export to video file"
+msgstr "Bideo fitxategira esportatu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:153
+msgid "Duplicate "
+msgstr "Bikoiztu"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:176
+msgid "Drawing "
+msgstr "Marrazketa"
+
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:218
 msgid "Move to"
 msgstr "Mugitu"
 
-#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:211
+#: ../LongoMatch.GUI/Gui/Menu/PlaysMenu.cs:221
 msgid "Drawings"
 msgstr "Marrazkiak"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:306
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:332
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:368
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:385
 msgid "PROJECT TYPE"
 msgstr "PROIEKTU MOTA"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:370
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:387
 msgid "PROJECT PROPERTIES"
 msgstr "PROIEKTU KATEGORIAK"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:372
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:389
 msgid "PERIODS SYNCHRONIZATION"
 msgstr "JOKOALDIEN SINKRONIZAZIOA"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:399
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:431
 msgid "No output video file"
 msgstr "Ez dago bideo irteerarik"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:405
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:437
 msgid "No input URI"
 msgstr "Ez da URLrik sartu"
 
-#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:516
+#: ../LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs:542
 msgid "No capture devices found in the system"
 msgstr "Sisteman ez da kaptura gailurik aurkitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:43
+#: ../LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs:44
 msgid "OPEN PROJECT"
 msgstr "PROIEKTUA IREKI"
 
@@ -1904,272 +1870,308 @@ msgstr "PROIEKTUA IREKI"
 msgid "PREFERENCES"
 msgstr "EZARPENAK"
 
-#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:61
+#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:71
 msgid "General"
 msgstr "Orokorra"
 
-#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:64
+#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:74
 msgid "Keyboard shortcuts"
 msgstr "Teklatuko laster-teklak"
 
-#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:67
+#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:77
 msgid "Video"
 msgstr "Bideoa"
 
-#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:70
+#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:80
 msgid "Live analysis"
 msgstr "Zuzeneko analisia"
 
-#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:73
+#: ../LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs:83
 msgid "Plugins"
 msgstr "Pluginak"
 
 #. Force tooltips to be translatable as there seems to be a bug in stetic
 #. code generation for translatable tooltips.
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:63
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:64
 msgid "Save"
 msgstr "Gorde"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:64
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:65
 msgid "Export"
 msgstr "Esportatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:65
-#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:66
+#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:38
 msgid "Open"
 msgstr "Ireki"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:85
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:87
 msgid "PROJECTS MANAGER"
 msgstr "PROIEKTU KUDEATZAILEA"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:114
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:126
 msgid "Do you want to save the current project?"
 msgstr "Proiektu hau gorde nahi duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:249
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:133
+msgid "Saving project..."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:139
+msgid "Error saving project:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:284
 msgid "Export project"
 msgstr "Proiektua esportatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:53
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:315
+msgid "This Project is actually in use."
+msgstr "Proiektua erabiltzen ari da"
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:316
+msgid "Close it first to allow its removal from the database"
+msgstr "Itxi ezazu datubasetik ezabatu ahal izateko"
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:319
+msgid "Do you really want to delete:"
+msgstr "Ziur zaude ezabatu nahi duzula?"
+
+#: ../LongoMatch.GUI/Gui/Panel/ProjectsManagerPanel.cs:326
+msgid "Deleting project..."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:58
 msgid "ANALYSIS DASHBOARDS MANAGER"
 msgstr "ANALISI PANELEN KUDEATZAILEA"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:162
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:142
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:187
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:165
 msgid "System"
 msgstr "Sistema"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:191
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:227
 msgid "System dashboards can't be edited, do you want to create a copy?"
 msgstr "Jatorrizko panelak ezin dira editatu, kopia bat egin nahi duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:200
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:432
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:236
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:498
 msgid "A dashboard with the same name already exists"
 msgstr "Izen bereko panel bat existitzen da"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:227
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:262
 msgid "Do you want to save the current dashboard"
 msgstr "Erabiltzen ari zaren panela gorde nahi duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:240
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:273
 msgid "New dashboard"
 msgstr "Panel berria"
 
 #. Show a file chooser dialog to select the file to import
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:242
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:322
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:275
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:360
 msgid "Import dashboard"
 msgstr "Panela inportatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:244
+#. Show a file chooser dialog to select the file to export
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:277
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:413
+msgid "Export dashboard"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:279
 msgid "Delete dashboard"
 msgstr "Panela ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:246
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:281
 msgid "Save dashboard"
 msgstr "Panela gorde"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:258
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:293
 msgid "Add category button"
 msgstr "Kategori botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:260
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:295
 msgid "Add tag button"
 msgstr "Etiketa botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:262
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:297
 msgid "Add score button"
 msgstr "Emaitza botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:264
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:299
 msgid "Add timer button"
 msgstr "Denbora botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:266
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:301
 msgid "Add card button"
 msgstr "Txartela botoia gehitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:285
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:323
 msgid "Could not load dashboard"
 msgstr "Ezin da panela kargatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:301
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:339
 msgid "Do you really want to delete the dashboard: "
 msgstr "Ziur zaude panela ezabatu nahi duzula?"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:319
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:357
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:410
 msgid "Dashboard files"
 msgstr "Panelen fitxategiak"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:335
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
 msgid "Dashboard name:"
 msgstr "Panelaren izena:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:336
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:374
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:345
 msgid "Name conflict"
 msgstr "Izen arazoa"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:359
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:397
 msgid "Error importing template:"
 msgstr "Plantila importatzen errorea:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:373
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:421
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:468
+msgid "A file with the same name already exists, do you want to overwrite it?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:427
+msgid "Dashboard exported correctly"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:439
 msgid "New dasboard"
 msgstr "Panel berria"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:374
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:441
 msgid "Event types:"
 msgstr "Gertaera motak:"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:379
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:446
 msgid "The dashboard name is empty."
 msgstr "Panelaren izena hutsik dago"
 
-#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:382
+#: ../LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs:454
 msgid "The dashboard already exists. Do you want to overwrite it?"
 msgstr "Panela existitzen da. Berridatzi nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:103
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:116
 msgid "TEAMS MANAGER"
 msgstr "TALDEEN KUDEATZAILEA"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:172
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:330
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:195
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:403
 msgid "New team"
 msgstr "Talde berria"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:174
+#. Show a file chooser dialog to select the file to export
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:197
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:460
+msgid "Export team"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:199
 msgid "Delete team"
 msgstr "Taldea ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:176
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:201
 msgid "Save team"
 msgstr "Taldea gorde"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:228
+#. Show a file chooser dialog to select the file to import
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:203
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:331
+msgid "Import team"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:244
 msgid "System teams can't be edited, do you want to create a copy?"
 msgstr "Jatorrizko taldeak ezin dira editatu, kopia bat sortu nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:237
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:388
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:253
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:490
 msgid "A team with the same name already exists"
 msgstr "Izen berdina duen talde bat existitzen da"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:264
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:280
 msgid "Do you want to save the current template"
 msgstr "Erabiltzen ari zaren plantila gorde nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:292
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:312
 msgid "Could not load team"
 msgstr "Ezin izan da taldea kargatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:306
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:328
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:457
+msgid "Team files"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:344
+msgid "Team name:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:368
+msgid "Error importing team:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:379
 msgid "System teams can't be deleted"
 msgstr "Jatorrizko taldeak ezin dira ezabatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:335
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:409
 msgid "The template name is empty."
 msgstr "Plantila izena hutsik dago"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:338
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:412
 msgid "The template can't be named 'default'."
 msgstr "Plantila ezin da 'default' deitu"
 
-#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:341
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:420
 msgid "The template already exists. Do you want to overwrite it?"
 msgstr "Plantila existitzen da. Berridatzi nahi al duzu?"
 
-#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:34
+#: ../LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs:474
+msgid "Team exported correctly"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:36
 msgid "New"
 msgstr "Berria"
 
-#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:38
+#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:40
 msgid "Import"
 msgstr "Inportatu"
 
-#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:40
-msgid ""
-"Projects\n"
-"manager"
-msgstr "Proiektu\nkudeatzailea"
-
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:42
-msgid ""
-"Analysis\n"
-"Dashboards\n"
-"manager"
-msgstr "Analisi\nPanelen\nkudeaketa"
+msgid "Projects"
+msgstr ""
 
 #: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:44
-msgid ""
-"Teams\n"
-"manager"
-msgstr "Taldeen\nkudeatzailea"
+#: ../LongoMatch.Migration/MainWindow.cs:94
+msgid "Teams"
+msgstr "Taldeak"
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:34
-msgid "Category"
-msgstr "Kategoria"
+#: ../LongoMatch.GUI/Gui/Panel/WelcomePanel.cs:46
+msgid "Analysis Dashboards"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:56
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:71
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:72
 msgid "Timers"
 msgstr "Denbora"
 
-#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:71
-msgid "Visible"
-msgstr "Ikusgai"
+#: ../LongoMatch.GUI/Gui/TreeView/FilterTreeViewBase.cs:62
+msgid "Only"
+msgstr ""
 
-#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:90
-msgid "Select all"
-msgstr "Dena aukeratu"
-
-#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:91
-msgid "Unselect all"
-msgstr "Ezer ez aukeratu"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:123
-msgid "External video"
-msgstr "Kanpoko bideoa"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:126
-msgid "External image"
-msgstr "Kanpoko irudia"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:180
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:153
 msgid "Edit name"
 msgstr "Izena editatu"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:153
-msgid "Insert before"
-msgstr "Aurretik insertatu"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:157
-msgid "Insert after"
-msgstr "Ondoren insertatu"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:190
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:163
 msgid "Render"
 msgstr "Render"
 
@@ -2181,11 +2183,11 @@ msgstr "Lanaren izena"
 msgid "State"
 msgstr "Estatua"
 
-#: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:124
+#: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:125
 msgid "Add"
 msgstr "Gehitu"
 
-#: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:140
+#: ../LongoMatch.GUI.Helpers/MessagesHelpers.cs:141
 #, csharp-format
 msgid ""
 "Version {0} is available!\n"
@@ -2205,31 +2207,31 @@ msgstr "Aldaketak:"
 msgid "Do not notify me again until next version"
 msgstr "Hurrengo bertsiora arte ez eman abisurik"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:58
+#: ../LongoMatch.GUI.Helpers/Misc.cs:57
 msgid "Choose an image"
 msgstr "Irudi bat aukeratu"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:70
+#: ../LongoMatch.GUI.Helpers/Misc.cs:69
 msgid "Image file format not supported"
 msgstr "Irudiaren formatoa ezin da irakurri"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:288
+#: ../LongoMatch.GUI.Helpers/Misc.cs:291
 msgid "Analyzing video file:"
 msgstr "Bideoa aztertzen:"
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:306
+#: ../LongoMatch.GUI.Helpers/Misc.cs:305
 msgid "Timeout parsing file."
 msgstr "Fitxategia analizatzeko denbora."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:308
+#: ../LongoMatch.GUI.Helpers/Misc.cs:307
 msgid "This file doesn't contain a video stream."
 msgstr "Fitxategiak ez dauka bideo stream bat."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:310
+#: ../LongoMatch.GUI.Helpers/Misc.cs:309
 msgid "This file contains a video stream but its length is 0."
 msgstr "Fitxategiak bideo stream bat dauka baina bere luzera 0 da."
 
-#: ../LongoMatch.GUI.Helpers/Misc.cs:327
+#: ../LongoMatch.GUI.Helpers/Misc.cs:326
 msgid "Open file"
 msgstr "Fitxategia ireki"
 
@@ -2245,22 +2247,22 @@ msgid ""
 "only take a few minutes)"
 msgstr "Fitxategi hobeto kudeatuko den formatu batera eraldatu behar da. (Urrats honek minutu batzuk iraugo ditu bakarrik)"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:104
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:127
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:151
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:105
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:128
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:152
 msgid "<b>00</b>"
 msgstr "<b>00</b>"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:114
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:138
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:115
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs:139
 msgid "<b>:</b>"
 msgstr "<b>:</b>"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs:246
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs:255
 msgid "Jump (s):"
 msgstr "Saltoa (k):"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs:273
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs:286
 msgid "Time:"
 msgstr "Denbora:"
 
@@ -2273,53 +2275,58 @@ msgid "Live"
 msgstr "Zuzenean"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VideoWindow.cs:31
+#: ../LongoMatch.Services/PlayerController.cs:1265
 msgid "Out of scope"
 msgstr "Ez eskuragarri"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:70
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:69
 msgid "Pause clock"
 msgstr "Erlojua gelditu"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:71
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:70
 msgid "Resume clock"
 msgstr "Erlojua itxi"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:72
-#: ../LongoMatch.Services/ToolsManager.cs:72
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:71
+#: ../LongoMatch.Services/ToolsManager.cs:70
 msgid "Save project"
 msgstr "Proiektua gorde"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:74
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:73
 msgid "Delete event"
 msgstr "Gertaera ezabatu"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:75
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:74
 msgid "Replay event"
 msgstr "Gertaera errepikatu"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:190
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:203
 msgid "Period recording already started"
 msgstr "Jokoaldia grabatzen dagoeneko"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:224
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:246
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:261
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:237
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:259
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:274
 msgid "Period recording not started"
 msgstr "Ez da hasi jokoaldia grabatzen"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:313
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:326
 msgid "Do you want to finish the current capture?"
 msgstr "Kaptura hau bukatu nahi duzu?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:321
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:334
 msgid "Do you want to close and cancel the current capture?"
 msgstr "Kaptura hay itxi eta kanzelatu nahi duzu?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:433
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:344
+msgid "Loading"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:447
 msgid "Device disconnected. The capture will be paused"
 msgstr "Gailu deskonektatua. Kaptura geldituko da"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:436
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:450
 msgid "Device reconnected. Do you want to restart the capture?"
 msgstr "Gailu konektatua. Kaptura berriz hasi nahi al duzu?"
 
@@ -2433,11 +2440,7 @@ msgstr "Datubaseak"
 msgid "Dashboards"
 msgstr "Panelak"
 
-#: ../LongoMatch.Migration/MainWindow.cs:94
-msgid "Teams"
-msgstr "Taldeak"
-
-#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:100
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:101
 msgid "Fake live source"
 msgstr "Itxurazko zuzeneko jatorria"
 
@@ -2445,27 +2448,39 @@ msgstr "Itxurazko zuzeneko jatorria"
 msgid "Could not parse file:"
 msgstr "Ezin da fitxategia aztertu:"
 
-#: ../LongoMatch.Plugins/CSVExporter.cs:40
+#: ../LongoMatch.Plugins/CSVExporter.cs:38
 msgid "CSV export plugin"
 msgstr "CSV esportatzeko plugina"
 
-#: ../LongoMatch.Plugins/CSVExporter.cs:46
+#: ../LongoMatch.Plugins/CSVExporter.cs:44
 msgid "Export project into CSV format"
 msgstr "Proiektua CSV formatuan esportatu"
 
-#: ../LongoMatch.Plugins/CSVExporter.cs:53
+#: ../LongoMatch.Plugins/CSVExporter.cs:51
 msgid "Export project to CSV file"
 msgstr "Proiektua CSV fitxategira esportatu"
 
-#: ../LongoMatch.Plugins/CSVExporter.cs:82
+#: ../LongoMatch.Plugins/CSVExporter.cs:73
 #: ../LongoMatch.Services/ToolsManager.cs:82
 msgid "Project exported successfully"
 msgstr "Proiektua ondo esportatu da"
 
-#: ../LongoMatch.Plugins/CSVExporter.cs:84
+#: ../LongoMatch.Plugins/CSVExporter.cs:75
 #: ../LongoMatch.Services/ToolsManager.cs:84
 msgid "Error exporting project"
 msgstr "Errorea proiektua esportatzen"
+
+#: ../LongoMatch.Plugins/LongoMatchImporter.cs:42
+msgid "LongoMatch Importer"
+msgstr ""
+
+#: ../LongoMatch.Plugins/LongoMatchImporter.cs:48
+msgid "Import LongoMatch project"
+msgstr ""
+
+#: ../LongoMatch.Plugins/LongoMatchImporter.cs:65
+msgid "Importing project..."
+msgstr ""
 
 #: ../LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs:39
 msgid "GStreamer open source plugins"
@@ -2530,18 +2545,14 @@ msgstr "Kategoria estatistikak"
 msgid "Players stats"
 msgstr "Jokalari estatistikak"
 
-#: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:36
-#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:34
+#: ../LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs:35
+#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:33
 msgid "Count"
 msgstr "Zenbatu"
 
 #: ../LongoMatch.Plugins.Stats/Stats/Plotter.cs:108
 msgid "Total"
 msgstr "Totala"
-
-#: ../LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs:35
-msgid "All"
-msgstr "Denak"
 
 #: ../LongoMatch.Plugins.Stats/StatsUIPlugin.cs:49
 msgid "Game statistics"
@@ -2551,120 +2562,128 @@ msgstr "Partidu estatistikak"
 msgid "Show the game statistics"
 msgstr "Partidu estatistikak erakutsi"
 
-#: ../LongoMatch.Services/CoreServices.cs:220
+#: ../LongoMatch.Services/CoreServices.cs:232
 msgid ""
 "A rendering job is running in the background. Do you really want to quit?"
 msgstr "Renderizatze lan bat martxan dago bigarren planoan. Itxi egin nahi duzu?"
 
-#: ../LongoMatch.Services/DataBaseManager.cs:141
+#: ../LongoMatch.Services/DataBaseManager.cs:50
 msgid "Close the current project to open the database manager"
 msgstr "Proiektu hau itxi datubase kudeatzailea irekitzeko"
 
-#: ../LongoMatch.Services/EventsManager.cs:183
+#: ../LongoMatch.Services/EventsManager.cs:189
 msgid "Error capturing video frame"
 msgstr "Errorea bideo markoa kapturatzen"
 
-#: ../LongoMatch.Services/EventsManager.cs:277
-#: ../LongoMatch.Services/EventsManager.cs:305
+#: ../LongoMatch.Services/EventsManager.cs:286
+#: ../LongoMatch.Services/EventsManager.cs:314
 msgid "Video capture is stopped"
 msgstr "Bideo kaptura geldituta dago"
 
-#: ../LongoMatch.Services/PlayerController.cs:717
+#: ../LongoMatch.Services/PlayerController.cs:914
 msgid "Invalid camera configuration"
 msgstr "Kamera konfigurazioa ez da egokia"
 
-#: ../LongoMatch.Services/PlaylistManager.cs:185
-msgid "Playlist name:"
-msgstr "Jokaldi lista izena:"
-
-#: ../LongoMatch.Services/PlaylistManager.cs:186
+#: ../LongoMatch.Services/PlaylistManager.cs:175
 msgid "New playlist"
 msgstr "Jokaldi lista berria"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:141
+#: ../LongoMatch.Services/PlaylistManager.cs:180
+msgid "Playlist name:"
+msgstr "Jokaldi lista izena:"
+
+#: ../LongoMatch.Services/PlaylistManager.cs:184
+msgid "A playlist already exists with the same name"
+msgstr ""
+
+#: ../LongoMatch.Services/ProjectsManager.cs:145
+#: ../LongoMatch.Services/ProjectsManager.cs:303
+#: ../LongoMatch.Services/ProjectsManager.cs:352
 msgid "An error occured saving the project:\n"
 msgstr "Errore bat egon da proiektua gordetzen:\n"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:142
+#: ../LongoMatch.Services/ProjectsManager.cs:146
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
 msgstr "Bideo fitxategia eta proiektuaren segurtasun kopiak gorde dira. Beranduago saiatu inportatzen:\n"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:177
+#: ../LongoMatch.Services/ProjectsManager.cs:184
 msgid "An error occurred opening this project:"
 msgstr "Errore bat gertatu da proiektu hau irekitzen:"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:232
+#: ../LongoMatch.Services/ProjectsManager.cs:239
 msgid "Do you want to close the current project?"
 msgstr "Proiektu hau itxi nahi duzu?"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:361
+#: ../LongoMatch.Services/ProjectsManager.cs:379
+msgid "Loading project..."
+msgstr ""
+
+#: ../LongoMatch.Services/ProjectsManager.cs:383
+msgid "Could not load project:"
+msgstr ""
+
+#: ../LongoMatch.Services/ProjectsManager.cs:435
 msgid "The following error happened and the current project will be closed:"
 msgstr "Ondorengo errorea gertatu da eta proiektu hau itxiko da:"
 
-#: ../LongoMatch.Services/ProjectsManager.cs:385
+#: ../LongoMatch.Services/ProjectsManager.cs:447
 msgid "The following error happened and the current capture will be closed:"
 msgstr "Ondorengo errorea gertatu da eta kaptura hau itxiko da:"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:169
-#: ../LongoMatch.Services/RenderingJobsManager.cs:199
+#: ../LongoMatch.Services/RenderingJobsManager.cs:157
+#: ../LongoMatch.Services/RenderingJobsManager.cs:187
 msgid "Error rendering job: "
 msgstr "Lana renderizatzen errorea:"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:343
+#: ../LongoMatch.Services/RenderingJobsManager.cs:332
 msgid "Rendering"
 msgstr "Renderizatzen"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:349
+#: ../LongoMatch.Services/RenderingJobsManager.cs:338
 msgid "Rendering queue"
 msgstr "Renderizatze zerrenda"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:350
+#: ../LongoMatch.Services/RenderingJobsManager.cs:339
 msgid "Pending"
 msgstr "Itxoiten"
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:364
+#: ../LongoMatch.Services/RenderingJobsManager.cs:353
 msgid "An error has occurred in the video editor."
 msgstr "Errore bat gertatu da bideo editorean."
 
-#: ../LongoMatch.Services/RenderingJobsManager.cs:365
+#: ../LongoMatch.Services/RenderingJobsManager.cs:354
 msgid "Please, try again."
 msgstr "Berriz saiatu mesedez"
 
-#: ../LongoMatch.Services/TemplatesService.cs:253
+#: ../LongoMatch.Services/TemplatesService.cs:232
 msgid "Home team"
 msgstr "Etxeko taldea"
 
-#: ../LongoMatch.Services/TemplatesService.cs:255
+#: ../LongoMatch.Services/TemplatesService.cs:234
 msgid "Away team"
 msgstr "Kanpoko taldea"
 
 #. Create the default template, it will be added to the list
 #. of system templates to make it always available on the app
 #. and also read-only
-#: ../LongoMatch.Services/TemplatesService.cs:267
+#: ../LongoMatch.Services/TemplatesService.cs:246
 msgid "Default dashboard"
 msgstr "Jatorrizko panela"
 
-#. Show a file chooser dialog to select the file to import
-#: ../LongoMatch.Services/ToolsManager.cs:108
-#: ../LongoMatch.Services/ToolsManager.cs:209
-msgid "Import project"
-msgstr "Proiektua inportatu"
-
-#: ../LongoMatch.Services/ToolsManager.cs:121
+#: ../LongoMatch.Services/ToolsManager.cs:106
 msgid "Plugin not found"
 msgstr "Ez da Plugin-a aurkitu"
 
-#: ../LongoMatch.Services/ToolsManager.cs:142
+#: ../LongoMatch.Services/ToolsManager.cs:126
 msgid "A project already exists for this ID:"
 msgstr "ID horrekin proiektu bat existitzen da dagoeneko:"
 
-#: ../LongoMatch.Services/ToolsManager.cs:144
+#: ../LongoMatch.Services/ToolsManager.cs:128
 msgid "Do you want to overwrite it?"
 msgstr "Berridatzi nahi al duzu?"
 
-#: ../LongoMatch.Services/ToolsManager.cs:154
+#: ../LongoMatch.Services/ToolsManager.cs:136
 msgid "Error importing project:"
 msgstr "Errorea proiektua inportatzen"
