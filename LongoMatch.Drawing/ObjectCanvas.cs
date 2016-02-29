@@ -29,6 +29,7 @@ namespace LongoMatch.Drawing
 		public override void Draw (IContext context, Area area)
 		{
 			Begin (context);
+			DrawBackground ();
 			canvasObject.Position = new Point (0, 0);
 			canvasObject.Width = widget.Width;
 			canvasObject.Height = widget.Height;
