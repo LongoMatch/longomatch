@@ -305,11 +305,27 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual bool SaveProject (Project project, ProjectType projectType)
+		protected virtual void NewProject (Project project)
+		{
+			Log.Debug ("Creating new project");
+			
+			if (!PromptCloseProject ()) {
+				return;
+			}
+			
+			guiToolkit.CreateNewProject (project);
+		}
+
+		protected virtual void HandleSaveProject (Project project, ProjectType projectType)
+		{
+			SaveProject (project, projectType);
+		}
+
+		bool SaveProject (Project project, ProjectType projectType)
 		{
 			if (project == null)
 				return false;
-			
+
 			Log.Debug (String.Format ("Saving project {0} type: {1}", project.ID, projectType));
 			if (projectType == ProjectType.FileProject) {
 				return UpdateProject (project);
@@ -322,17 +338,6 @@ namespace LongoMatch.Services
 			} else {
 				return false;
 			}
-		}
-
-		protected virtual void NewProject (Project project)
-		{
-			Log.Debug ("Creating new project");
-			
-			if (!PromptCloseProject ()) {
-				return;
-			}
-			
-			guiToolkit.CreateNewProject (project);
 		}
 
 		void OpenNewProject (Project project, ProjectType projectType,
@@ -467,7 +472,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
 			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent += SaveProject;
+			Config.EventsBroker.SaveProjectEvent += HandleSaveProject;
 			Config.EventsBroker.CaptureError += HandleCaptureError;
 			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
 			Config.EventsBroker.MultimediaError += HandleMultimediaError;
@@ -483,7 +488,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent -= OpenNewProject;
 			Config.EventsBroker.CloseOpenedProjectEvent -= PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent -= SaveProject;
+			Config.EventsBroker.SaveProjectEvent -= HandleSaveProject;
 			Config.EventsBroker.CaptureError -= HandleCaptureError;
 			Config.EventsBroker.CaptureFinished -= HandleCaptureFinished;
 			Config.EventsBroker.MultimediaError -= HandleMultimediaError;
