@@ -82,7 +82,7 @@ namespace LongoMatch.Services
 
 		public int Level {
 			get {
-				return 1;
+				return 11;
 			}
 		}
 
