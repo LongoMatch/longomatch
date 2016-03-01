@@ -57,6 +57,10 @@ namespace LongoMatch.Gui.Component
 
 		protected override void OnDestroyed ()
 		{
+			if (detachedPlayer) {
+				playerWindow.Destroy ();
+				detachedPlayer = false;
+			}
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
