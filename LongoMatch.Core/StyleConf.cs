@@ -199,7 +199,6 @@ namespace LongoMatch.Core.Common
 			PaletteBackgroundSemiLight = Color.Black;
 			PaletteBackgroundDark = Color.Black;
 			PaletteBackgroundDarkBright = Color.Black;
-			PaletteWidgets = Color.Black;
 			PaletteSelected = Color.Black;
 			PaletteActive = Color.Black;
 			PaletteTool = Color.Black;
