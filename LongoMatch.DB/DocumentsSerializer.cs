@@ -91,23 +91,27 @@ namespace LongoMatch.DB
 		/// <param name="db">Database to use.</param>
 		internal static void FillObject (IStorable storable, Database db)
 		{
-			Log.Debug ("Filling object " + storable);
-			SerializationContext context = new SerializationContext (db, storable.GetType ());
-			Document doc = db.GetExistingDocument (storable.DocumentID);
-			JsonSerializerSettings settings = GetSerializerSettings (storable.GetType (), context, doc.CurrentRevision);
+			try {
+				Log.Debug ("Filling object " + storable);
+				SerializationContext context = new SerializationContext (db, storable.GetType ());
+				Document doc = db.GetExistingDocument (storable.DocumentID);
+				JsonSerializerSettings settings = GetSerializerSettings (storable.GetType (), context, doc.CurrentRevision);
 
-			// FIXME: for projects we add the MediaFileSet object already deserialized to the cache so the TimelineEvent
-			// reuse the same object instance. This should be done in a more generic way, using the objects parser
-			// to read IStorable children and add them to the cache. But to prevent slowing down deserialization
-			// we use this temporal hack for projects.
-			if (storable is Project) {
-				context.Cache.AddReference ((storable as Project).Description.FileSet);
+				// FIXME: for projects we add the MediaFileSet object already deserialized to the cache so the TimelineEvent
+				// reuse the same object instance. This should be done in a more generic way, using the objects parser
+				// to read IStorable children and add them to the cache. But to prevent slowing down deserialization
+				// we use this temporal hack for projects.
+				if (storable is Project) {
+					context.Cache.AddReference ((storable as Project).Description.FileSet);
+				}
+
+				context.ContractResolver = new StorablesStackContractResolver (context, storable, true);
+				JsonSerializer serializer = JsonSerializer.Create (settings);
+				serializer.ContractResolver = context.ContractResolver;
+				DeserializeObject (doc, storable.GetType (), context, serializer);
+			} catch (StorageException ex) {
+				Log.Exception (ex);
 			}
-
-			context.ContractResolver = new StorablesStackContractResolver (context, storable, true);
-			JsonSerializer serializer = JsonSerializer.Create (settings);
-			serializer.ContractResolver = context.ContractResolver;
-			DeserializeObject (doc, storable.GetType (), context, serializer);
 		}
 
 		/// <summary>
