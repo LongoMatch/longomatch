@@ -76,7 +76,7 @@ Xavier Queralt Mateu (ca)";
 
 		public const string WEBSITE = "http://www.longomatch.com";
 
-		public const string LATEST_VERSION_URL = "http://cdn.longomatch.com/latest-longomatch.json";
+		public const string LATEST_VERSION_URL = "http://www.longomatch.com/latest-longomatch/?lmp=open";
 
 		public const string MANUAL = "http://www.longomatch.com/documentation/";
 
