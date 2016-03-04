@@ -73,11 +73,9 @@ namespace LongoMatch
 				Config.GUIToolkit = GUIToolkit.Instance;
 				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
 
-				Task addinsTask = Task.Run (() => InitAddins (progress));
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
-				// Wait until the addins are initialized to start the services
-				await addinsTask;
+				InitAddins (progress);
 				CoreServices.RegisterService (new UpdatesNotifier ());
 				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
 				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
