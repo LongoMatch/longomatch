@@ -218,8 +218,8 @@ namespace LongoMatch.Addins
 							list.Add ((ConfigurablePlugin)instance);
 						}
 					} catch (Exception ex) {
-						if (ex.InnerException is AddinRequestShutdownException) {
-							throw ex.InnerException;
+						if (ex.GetBaseException () is AddinRequestShutdownException) {
+							throw ex.GetBaseException ();
 						} else {
 							Log.Exception (ex);
 						}
