@@ -244,7 +244,9 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating project " + projectFile);
 						project = Serializer.Instance.Load<Project> (projectFile);
-						projects.Enqueue (project);
+						if (project != null) {
+							projects.Enqueue (project);
+						}
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
