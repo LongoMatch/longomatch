@@ -118,7 +118,6 @@ namespace LongoMatch.Gui
 					playlastbutton.Visible = false;
 					controllerbox.SetChildPacking (vseparator1, false, false, 20, PackType.Start);
 					controllerbox.SetChildPacking (vseparator2, false, false, 20, PackType.Start);
-					ReadyToCapture = true;
 				} else {
 					playlastbutton.Visible = true;
 					SetStyle (StyleConf.PlayerCapturerControlsHeight, 24, 40);
@@ -342,6 +341,7 @@ namespace LongoMatch.Gui
 		{
 			Reset ();
 			if (type == CapturerType.Live) {
+				ReadyToCapture = false;
 				videowindow.Message = Catalog.GetString ("Loading");
 				Capturer = Config.MultimediaToolkit.GetCapturer ();
 				this.outputFile = outputFile;
@@ -357,6 +357,8 @@ namespace LongoMatch.Gui
 				} else {
 					delayStart = true;
 				}
+			} else {
+				ReadyToCapture = true;
 			}
 		}
 
