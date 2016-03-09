@@ -118,6 +118,7 @@ namespace LongoMatch.Gui
 					playlastbutton.Visible = false;
 					controllerbox.SetChildPacking (vseparator1, false, false, 20, PackType.Start);
 					controllerbox.SetChildPacking (vseparator2, false, false, 20, PackType.Start);
+					ReadyToCapture = true;
 				} else {
 					playlastbutton.Visible = true;
 					SetStyle (StyleConf.PlayerCapturerControlsHeight, 24, 40);
