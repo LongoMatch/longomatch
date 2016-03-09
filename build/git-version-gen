@@ -206,7 +206,7 @@ v=`echo "$v" |sed "s/^$prefix//"`
 pv=( ${v//./ } )                   # replace points, split into array
 last_release=`git tag  |grep -v {| grep ^${pv[0]}.${pv[1]} | sort -r -n -t. -k3 -k4 | head -n1`
 npv=( ${last_release//./ } )                   # replace points, split into array
-if test "${#npv[@]}" == "3"; then
+if test "${#pv[@]}" == "3"; then
     v="${npv[0]}.${npv[1]}.${npv[2]}"
 else
     v="${npv[0]}.${npv[1]}.${npv[2]}.${pv[3]}"

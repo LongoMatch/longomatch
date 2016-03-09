@@ -55,6 +55,9 @@ namespace Tests.Integration
 			Utils.SaveResource ("basket.lct", dashboardsPath);
 			Utils.SaveResource ("spain_france_test.lgm", lmdbPath);
 
+			// Create an empty project file that shouldn't be converter
+			File.Open (Path.Combine (lmdbPath, "empty.lgm"), FileMode.Create);
+
 			Directory.CreateDirectory (tmpPath);
 			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
