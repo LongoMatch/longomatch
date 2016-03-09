@@ -258,7 +258,7 @@ namespace LongoMatch.Gui.Helpers
 
 		static bool IsSkipedType (Widget w, Type[] skipTypes)
 		{
-			return skipTypes.Any (t => w.GetType ().IsAssignableFrom (t));
+			return skipTypes.Any (t => t.IsInstanceOfType (w));
 		}
 
 		public static void SetFocus (Container w, bool canFocus, params Type[] skipTypes)
