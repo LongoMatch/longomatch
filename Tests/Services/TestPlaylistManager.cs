@@ -351,5 +351,16 @@ namespace Tests.Services
 
 			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
 		}
+
+		[Test ()]
+		public void TestTimeNodeChanged ()
+		{
+			TimelineEvent timelineEvent = new TimelineEvent ();
+			timelineEvent.Start = new Time (10);
+			timelineEvent.Stop = new Time (20);
+			Config.EventsBroker.EmitTimeNodeChanged (timelineEvent, new Time (5));
+
+			mockPlayerController.Verify (p => p.LoadEvent (timelineEvent, new Time (5), false), Times.Once);
+		}
 	}
 }

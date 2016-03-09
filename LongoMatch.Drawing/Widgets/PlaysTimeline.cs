@@ -326,9 +326,9 @@ namespace LongoMatch.Drawing.Widgets
 				play = (co as TimelineEventObject).Event;
 				
 				if (sel.Position == SelectionPosition.Right) {
-					moveTime = play.Stop;
+					moveTime = play.Duration;
 				} else {
-					moveTime = play.Start;
+					moveTime = new Time (0);
 				}
 				Config.EventsBroker.EmitTimeNodeChanged (play, moveTime);
 			} else if (co is TimeNodeObject) {
