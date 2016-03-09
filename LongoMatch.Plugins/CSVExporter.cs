@@ -141,7 +141,7 @@ namespace LongoMatch.Plugins
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {
-					line += ";" + (play as ScoreEvent).Score.Points;
+					line += ";" + (evt as ScoreEventType).Score.Points;
 				}
 
 				/* Strings Tags */
