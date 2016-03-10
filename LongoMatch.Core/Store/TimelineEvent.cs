@@ -35,7 +35,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 
 	[Serializable]
-	public class TimelineEvent : PixbufTimeNode, IStorable
+	public class TimelineEvent : PixbufTimeNode, IStorable, IDisposable
 	{
 		[NonSerialized]
 		IStorage storage;
@@ -57,6 +57,14 @@ namespace LongoMatch.Core.Store
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
 			CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
+		}
+
+		public void Dispose ()
+		{
+			Miniature?.Dispose ();
+			foreach (var drawing in Drawings) {
+				drawing.Miniature?.Dispose ();
+			}
 		}
 
 		#endregion
