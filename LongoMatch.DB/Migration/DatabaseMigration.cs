@@ -220,7 +220,8 @@ namespace LongoMatch.DB
 		{
 			IStorage database;
 			Guid id = Guid.NewGuid ();
-			float totalProjects = projectFiles.Count * 2;
+			int indexSteps = 4;
+			float step = (float)1 / (projectFiles.Count * 2 + indexSteps);
 			float percent = 0;
 			List<Task> tasks = new List<Task> ();
 			bool ret = true;
@@ -247,7 +248,7 @@ namespace LongoMatch.DB
 						Log.Exception (ex);
 						ret = false;
 					}
-					percent += 1 / totalProjects;
+					percent += step;
 					progress.Report (percent, "Imported project " + project?.Description.Title, id);
 
 					if (project != null) {
@@ -264,7 +265,7 @@ namespace LongoMatch.DB
 							Log.Exception (ex);
 							ret = false;
 						}
-						percent += 1 / totalProjects;
+						percent += step;
 						progress.Report (percent, "Migrated project " + project?.Description.Title, id);
 						project.Dispose ();
 						project = null;
@@ -274,6 +275,24 @@ namespace LongoMatch.DB
 				tasks.Add (importTask);
 			}
 			Task.WaitAll (tasks.ToArray ());
+
+			// Create a query and print the result to traverse the iterator
+			Log.Information ("Projects index created:" + database.RetrieveAll<Project> ().Count ());
+			percent += step;
+			progress.Report (percent, "Projects index created", id);
+
+			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEvent> ().Count ());
+			percent += step;
+			progress.Report (percent, "Events index created", id);
+
+			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
+			percent += step;
+			progress.Report (percent, "Teams index created", id);
+
+			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
+			percent += step;
+			progress.Report (percent, "Dashboards index created", id);
+
 			Log.Information ("Database " + databaseName + " migrated correctly");
 			return ret;
 		}
