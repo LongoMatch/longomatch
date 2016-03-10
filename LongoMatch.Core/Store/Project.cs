@@ -49,7 +49,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class Project : StorableBase, IComparable
+	public class Project : StorableBase, IComparable, IDisposable
 	{
 		public const int CURRENT_VERSION = 1;
 		ObservableCollection<TimelineEvent> timeline;
@@ -81,6 +81,16 @@ namespace LongoMatch.Core.Store
 		{
 			foreach (TimelineEvent evt in Timeline) {
 				evt.Project = this;
+			}
+		}
+
+		public void Dispose ()
+		{
+			LocalTeamTemplate?.Dispose ();
+			VisitorTeamTemplate?.Dispose ();
+			Dashboard?.Dispose ();
+			foreach (TimelineEvent evt in Timeline) {
+				evt.Dispose ();
 			}
 		}
 
@@ -284,19 +294,6 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Public Methods
-
-		/// <summary>
-		/// Frees all the project's resources helping the GC
-		/// </summary>
-		public void Clear ()
-		{
-			Timeline.Clear ();
-			Dashboard.List.Clear ();
-			VisitorTeamTemplate.List.Clear ();
-			LocalTeamTemplate.List.Clear ();
-			Periods.Clear ();
-			Timers.Clear ();
-		}
 
 		public void UpdateScore ()
 		{

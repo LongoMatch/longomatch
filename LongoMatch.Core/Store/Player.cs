@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: StorableBase
+	public class Player: StorableBase, IDisposable
 	{
 
 		#region Constructors
@@ -35,7 +35,12 @@ namespace LongoMatch.Core.Store
 		{
 			ID = Guid.NewGuid ();
 		}
-		
+
+		public void Dispose ()
+		{
+			Photo?.Dispose ();
+		}
+
 		#endregion
 
 		#region Properties

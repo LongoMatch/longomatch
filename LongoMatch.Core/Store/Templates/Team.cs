@@ -30,7 +30,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: StorableBase, ITemplate<Team>
+	public class Team: StorableBase, IDisposable, ITemplate<Team>
 	{
 		public const int CURRENT_VERSION = 1;
 		const int MAX_WIDTH = 100;
@@ -53,6 +53,14 @@ namespace LongoMatch.Core.Store.Templates
 			Colors [0] = Color.Blue1;
 			Colors [1] = Color.Red1;
 			Version = Constants.DB_VERSION;
+		}
+
+		public void Dispose ()
+		{
+			Shield?.Dispose ();
+			foreach (Player p in List) {
+				p.Dispose ();
+			}
 		}
 
 		[JsonIgnore]

@@ -37,7 +37,7 @@ namespace LongoMatch.Core.Store.Templates
 	/// in a grid to code events in a the game's timeline.
 	/// </summary>
 	[Serializable]
-	public class Dashboard: StorableBase, ITemplate<Dashboard>
+	public class Dashboard: StorableBase, ITemplate<Dashboard>, IDisposable
 	{
 
 		public const int CURRENT_VERSION = 1;
@@ -61,6 +61,16 @@ namespace LongoMatch.Core.Store.Templates
 			List = new ObservableCollection<DashboardButton> ();
 			GamePeriods = new ObservableCollection<string> { "1", "2" };
 			Version = Constants.DB_VERSION;
+		}
+
+		public void Dispose ()
+		{
+			FieldBackground?.Dispose ();
+			HalfFieldBackground?.Dispose ();
+			GoalBackground?.Dispose ();
+			foreach (var button in List) {
+				button.BackgroundImage?.Dispose ();
+			}
 		}
 
 		/// <summary>
