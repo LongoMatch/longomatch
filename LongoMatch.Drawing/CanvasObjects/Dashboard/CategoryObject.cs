@@ -128,13 +128,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		int HeaderHeight {
 			get {
-				return iconImage.Height + 5;
+				return StyleConf.ButtonHeaderHeight + 5;
 			}
 		}
 
 		int HeaderTextOffset {
 			get {
-				return iconImage.Width + 5;
+				return StyleConf.ButtonHeaderWidth + 5;
 			}
 		}
 
@@ -621,7 +621,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 						tk.FillColor = TextColor;
 					}
 					tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-						Icon.Width, Icon.Height, Icon, ScaleMode.AspectFit, true);
+						StyleConf.ButtonHeaderWidth, StyleConf.ButtonHeaderHeight, Icon, ScaleMode.AspectFit, true);
 				}
 			}
 		}

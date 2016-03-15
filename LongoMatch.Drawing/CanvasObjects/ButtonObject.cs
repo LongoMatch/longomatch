@@ -223,7 +223,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Icon != null) {
 				tk.FillColor = front;
 				tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
-					Icon.Width, Icon.Height, Icon, ScaleMode.AspectFill, true);
+					StyleConf.ButtonHeaderWidth, StyleConf.ButtonHeaderHeight, Icon, ScaleMode.AspectFit, true);
 			}
 		}
 

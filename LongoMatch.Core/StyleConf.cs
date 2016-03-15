@@ -125,8 +125,8 @@ namespace LongoMatch.Core.Common
 		public const int PresentationManagerHeaderIconSize = 54;
 		public const int PresentationManagerButtonIconSize = 34;
 
-		public const int ButtonHeaderHeight = 22;
-		public const int ButtonHeaderWidth = 5 + 34 + 5;
+		public const int ButtonHeaderHeight = 18;
+		public const int ButtonHeaderWidth = 18;
 		public const int ButtonRecWidth = 40;
 		public const int ButtonLineWidth = 2;
 		public const int ButtonHeaderFontSize = 14;
