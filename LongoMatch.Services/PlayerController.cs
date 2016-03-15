@@ -583,13 +583,13 @@ namespace LongoMatch.Services
 		{
 			Log.Debug (string.Format ("Loading playlist element \"{0}\"", element?.Description));
 
-			if (LoadedPlaylist != null && LoadedPlaylist != playlist) {
-				return;
-			}
-
 			if (!ready) {
 				EmitPrepareViewEvent ();
 				delayedOpen = () => LoadPlaylistEvent (playlist, element, playing);
+				return;
+			}
+
+			if (playlist == null) {
 				return;
 			}
 

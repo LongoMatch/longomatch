@@ -1057,6 +1057,27 @@ namespace Tests.Services
 			Assert.AreNotEqual (mfs, player.FileSet);
 			Assert.IsTrue (player.Playing);
 			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0) }, player.CamerasConfig);
+
+			/* Load video from another playlist  (playlist is different than LoadedPlayList)*/
+			Playlist localPlaylist = new Playlist ();
+			player.Stop ();
+			Assert.IsFalse (player.Playing);
+			player.LoadPlaylistEvent (localPlaylist, vid, true);
+			Assert.AreNotEqual (mfs, player.FileSet);
+			Assert.IsTrue (player.Playing);
+			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0) }, player.CamerasConfig);
+		}
+
+		[Test ()]
+		public void TestLoadPlaylistEventNullPlayList ()
+		{
+			/* Load video */
+			player.Ready ();
+			PlaylistVideo vid = new PlaylistVideo (mfs [0]);
+			player.LoadPlaylistEvent (null, vid, true);
+			Assert.IsFalse (player.Playing);
+			Assert.IsNull (player.LoadedPlaylist);
+			Assert.IsNull (player.FileSet);
 		}
 
 		[Test ()]
@@ -1252,9 +1273,6 @@ namespace Tests.Services
 		[Test ()]
 		public void TestPresentationSeek ()
 		{
-
-
-
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element0 = new PlaylistPlayElement (evt.Clone ());
 			PlaylistPlayElement element = new PlaylistPlayElement (evt.Clone ());
