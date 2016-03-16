@@ -89,7 +89,7 @@ namespace LongoMatch.Drawing
 					arrow = ArrowDown;
 				}
 				arrowY = new Point (cellArea.Start.X + 1, cellArea.Start.Y + cellArea.Height / 2 - arrow.Height / 2);
-				tk.DrawSurface (arrow, arrowY);
+				tk.DrawSurface (arrowY, StyleConf.ListArrowRightWidth, StyleConf.ListArrowRightHeight, arrow, ScaleMode.AspectFit);
 			}
 
 			tk.LineWidth = 0;
@@ -216,7 +216,7 @@ namespace LongoMatch.Drawing
 					Image img = Resources.LoadImage (StyleConf.ListEyeIconPath);
 					EyeSurface = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 				}
-				tk.DrawSurface (EyeSurface, new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2));
+				tk.DrawSurface (new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2), StyleConf.ListEyeIconWidth, StyleConf.ListEyeIconHeight, EyeSurface, ScaleMode.AspectFit);
 			}
 			if (ss != null) {
 				tk.DrawImage (imagePoint, StyleConf.ListImageWidth, cellArea.Height, ss,

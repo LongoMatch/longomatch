@@ -155,7 +155,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (Player.Photo != null) {
 				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, Photo, ScaleMode.AspectFill);
+				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, Photo, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */

@@ -264,12 +264,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			
 			if (StopX - StartX <= needle.Width / 2) {
 				double c = movingPos == SelectionPosition.Left ? StopX : StartX;
-				tk.DrawSurface (needle, new Point (c - needle.Width / 2, linepos - 9)); 
+				tk.DrawSurface (new Point (c - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
 			} else {
 				tk.DrawLine (new Point (StartX, linepos),
 					new Point (StopX, linepos));
-				tk.DrawSurface (needle, new Point (StartX - needle.Width / 2, linepos - 9)); 
-				tk.DrawSurface (needle, new Point (StopX - needle.Width / 2, linepos - 9)); 
+				tk.DrawSurface (new Point (StartX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
+				tk.DrawSurface (new Point (StopX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
 			}
 			
 

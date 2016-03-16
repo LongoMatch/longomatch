@@ -164,12 +164,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				linkIn = InIcon;
 				linkOut = OutIcon;
 			}
+			Point inPoint = new Point (In.X - iconWidth / 2, In.Y - iconHeight / 2);
+			Point outPoint = new Point (Out.X - iconWidth / 2, In.Y - iconHeight / 2);
 
 			tk.Begin ();
-			tk.DrawSurface (linkIn, new Point (In.X - iconWidth / 2,
-				In.Y - iconHeight / 2));
-			tk.DrawSurface (linkOut, new Point (Out.X - iconWidth / 2,
-				In.Y - iconHeight / 2));
+			tk.DrawSurface (inPoint, StyleConf.LinkInWidth, StyleConf.LinkInHeight, linkIn, ScaleMode.AspectFit);
+			tk.DrawSurface (outPoint, StyleConf.LinkOutWidth, StyleConf.LinkOutHeight, linkOut, ScaleMode.AspectFit);
 			tk.End ();
 		}
 

@@ -71,13 +71,21 @@ namespace LongoMatch.Core.Common
 
 		public const int ListEyeIconOffset = 10;
 		public const string ListEyeIconPath = "icons/hicolor/scalable/actions/longomatch-eye" + IMAGE_EXT;
+		public const int ListEyeIconWidth = 36;
+		public const int ListEyeIconHeight = 36;
 		public const string ListArrowRightPath = "icons/hicolor/scalable/actions/longomatch-arrow-right" + IMAGE_EXT;
 		public const string ListArrowDownPath = "icons/hicolor/scalable/actions/longomatch-arrow-down" + IMAGE_EXT;
+		public const int ListArrowRightWidth = 12;
+		public const int ListArrowRightHeight = 12;
 
 		public const int TeamsShieldIconSize = 45;
 		
 		public const string TimelineNeedleResource = "icons/hicolor/scalable/actions/longomatch-timeline-needle-big" + IMAGE_EXT;
 		public const string TimelineNeedleUP = "icons/hicolor/scalable/actions/longomatch-timeline-needle-up" + IMAGE_EXT;
+		public const int TimelineNeedleBigWidth = 11;
+		public const int TimelineNeedleBigHeight = 20;
+		public const int TimelineNeedleUpWidth = 11;
+		public const int TimelineNeedleUpHeight = 14;
 		public const int TimelineCategoryHeight = 20;
 		public const int TimelineCameraHeight = 30;
 		public const int TimelineCameraMaxLines = 8;
@@ -92,7 +100,11 @@ namespace LongoMatch.Core.Common
 		public const int TimelineBackgroundLineSize = 4;
 		public const int TimelinePadding = 30;
 		public const string TimelineSelectionLeft = "icons/hicolor/scalable/actions/longomatch-timeline-select-left" + IMAGE_EXT;
+		public const int TimelineSelectionLeftWidth = 10;
+		public const int TimelineSelectionLeftHeight = 20;
 		public const string TimelineSelectionRight = "icons/hicolor/scalable/actions/longomatch-timeline-select-right" + IMAGE_EXT;
+		public const int TimelineSelectionRightWidth = 10;
+		public const int TimelineSelectionRightHeight = 20;
 
 		public const string PlayerArrowOut = "images/player/arrow-out" + IMAGE_EXT;
 		public const string PlayerArrowIn = "images/player/arrow-in" + IMAGE_EXT;
@@ -154,8 +166,12 @@ namespace LongoMatch.Core.Common
 		public static Color ActionLinkPrelight = Color.Parse ("#B3B3B3");
 		public static Color ActionLinkSelected = Color.Parse ("#ABD05C");
 		public const string LinkIn = "icons/hicolor/scalable/actions/longomatch-link-in" + IMAGE_EXT;
+		public const int LinkInHeight = 14;
+		public const int LinkInWidth = 14;
 		public const string LinkInPrelight = "icons/hicolor/scalable/actions/longomatch-link-in-prelight" + IMAGE_EXT;
 		public const string LinkOut = "icons/hicolor/scalable/actions/longomatch-link-out" + IMAGE_EXT;
+		public const int LinkOutHeight = 14;
+		public const int LinkOutWidth = 14;
 		public const string LinkOutPrelight = "icons/hicolor/scalable/actions/longomatch-link-out-prelight" + IMAGE_EXT;
 
 		public const string ButtonAlert = "icons/hicolor/scalable/actions/longomatch-alert" + IMAGE_EXT;

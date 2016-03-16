@@ -93,10 +93,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;
 			}
-			;
 			
 			tk.Begin ();
-			tk.DrawSurface (needle, TopLeft);
+			tk.DrawSurface (TopLeft, StyleConf.TimelineNeedleBigWidth, StyleConf.TimelineNeedleBigHeight, needle, ScaleMode.AspectFit);
 			tk.End ();
 		}
 
