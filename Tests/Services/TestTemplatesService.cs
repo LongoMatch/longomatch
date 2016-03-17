@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Specialized;
 using System.IO;
 using LongoMatch.Core.Common;
@@ -151,6 +150,37 @@ namespace Tests.Services
 			Assert.IsNotNull (provider.Exists ("NEW"));
 			Assert.DoesNotThrow (() => provider.Copy (Dashboard.DefaultTemplate (5), "NEW"));
 			Assert.IsTrue (eventEmitted);
+		}
+
+		[Test ()]
+		public void TestCopyOverwrite ()
+		{
+			TemplatesService ts = new TemplatesService (storage);
+			ts.Start ();
+			ITeamTemplatesProvider teamtemplateprovider = ts.TeamTemplateProvider;
+			Team teamB = Team.DefaultTemplate (5);
+			teamB.Name = "B";
+			teamB.TeamName = "Template B";
+			teamB.FormationStr = "1-4";
+			teamB.List [0].Name = "Paco";
+			teamtemplateprovider.Save (teamB);
+			Team teamA = new Team ();
+			teamA.Name = "A";
+			teamA.TeamName = "Template A";
+			teamA.FormationStr = "1-4-3-3";
+			teamtemplateprovider.Save (teamA);
+
+			Team auxdelete = teamA;
+			teamtemplateprovider.Copy (teamB, "A");
+			teamtemplateprovider.Delete (auxdelete);
+			teamA = teamtemplateprovider.Templates [0];
+
+			Assert.AreEqual (4, teamtemplateprovider.Templates.Count);
+			Assert.AreEqual ("A", teamA.Name);
+			Assert.AreEqual ("Template B", teamA.TeamName);
+			Assert.AreEqual (teamB.List.Count, teamA.List.Count);
+			Assert.AreEqual ("1-4", teamA.FormationStr);
+			Assert.AreEqual ("Paco", teamA.List [0].Name);
 		}
 
 		[Test ()]

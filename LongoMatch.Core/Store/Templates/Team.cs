@@ -234,10 +234,12 @@ namespace LongoMatch.Core.Store.Templates
 		/// </summary>
 		public Team Copy (string newName)
 		{
+			Load ();
 			Team newTeam = this.Clone ();
 			newTeam.ID = Guid.NewGuid ();
+			newTeam.DocumentID = null;
 			newTeam.Name = newName;
-			foreach (Player player in List) {
+			foreach (Player player in newTeam.List) {
 				player.ID = Guid.NewGuid ();
 			}
 			return newTeam;

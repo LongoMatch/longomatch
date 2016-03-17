@@ -224,10 +224,12 @@ namespace LongoMatch.Core.Store.Templates
 		/// </summary>
 		public Dashboard Copy (string newName)
 		{
+			Load ();
 			Dashboard newDashboard = this.Clone ();
 			newDashboard.ID = Guid.NewGuid ();
+			newDashboard.DocumentID = null;
 			newDashboard.Name = newName;
-			foreach (AnalysisEventButton evtButton in List.OfType<AnalysisEventButton> ()) {
+			foreach (AnalysisEventButton evtButton in newDashboard.List.OfType<AnalysisEventButton> ()) {
 				evtButton.EventType.ID = Guid.NewGuid ();
 			}
 			return newDashboard;
