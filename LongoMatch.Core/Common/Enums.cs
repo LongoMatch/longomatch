@@ -510,11 +510,11 @@ namespace LongoMatch.Core.Common
 		/// </summary>
 		Fill,
 		/// <summary>
-		/// The image is scalled keeping DAR to fit in the defined area, adding black borders if needed.
+		/// The image is scalled keeping DAR to fill the defined area, clipping the image if needed.
 		/// </summary>
 		AspectFill,
 		/// <summary>
-		/// The image is scalled keeping DAR to fill the defined area, clipping the image if needed.
+		/// The image is scalled keeping DAR to fit in the defined area, adding black borders if needed.
 		/// </summary>
 		AspectFit,
 	}

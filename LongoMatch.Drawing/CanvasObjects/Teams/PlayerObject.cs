@@ -127,7 +127,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			zero = new Point (0, 0);
 			size = StyleConf.PlayerSize;
-			scale = (double)Width / size; 
+			scale = (double)Width / size;
 			
 			if (Team == TeamType.LOCAL) {
 				arrowin = ArrowIn;
@@ -145,7 +145,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				tk.End ();
 				return;
 			}
-			;
 
 			/* Background */
 			tk.FillColor = Config.Style.PaletteBackgroundDark;
@@ -156,7 +155,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (Player.Photo != null) {
 				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (Photo, zero);
+				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, Photo, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */
@@ -178,7 +177,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				tk.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
 				tk.DrawSurface (arrow, ap);
 			}
-			
+
 			/* Draw number */
 			p = new Point (StyleConf.PlayerNumberX, StyleConf.PlayerNumberY);
 			tk.FillColor = Color;

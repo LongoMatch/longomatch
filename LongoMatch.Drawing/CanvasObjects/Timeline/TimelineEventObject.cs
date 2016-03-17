@@ -129,8 +129,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				DrawBorders (tk, start, stop, lineWidth);
 			}
 			if (Selected) {
-				tk.DrawSurface (SelectionLeft, new Point (start - SelectionLeft.Width / 2, OffsetY));
-				tk.DrawSurface (SelectionRight, new Point (stop - SelectionRight.Width / 2, OffsetY));
+				tk.DrawSurface (new Point (start - SelectionLeft.Width / 2, OffsetY), StyleConf.TimelineSelectionLeftWidth, StyleConf.TimelineSelectionLeftHeight, SelectionLeft, ScaleMode.AspectFit);
+				tk.DrawSurface (new Point (stop - SelectionRight.Width / 2, OffsetY), StyleConf.TimelineSelectionRightWidth, StyleConf.TimelineSelectionRightHeight, SelectionRight, ScaleMode.AspectFit);
 			}
 			tk.End ();
 		}
