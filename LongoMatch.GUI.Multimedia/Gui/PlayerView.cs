@@ -131,6 +131,20 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public bool PlayerAttached {
+			set {
+				if (value) {
+					detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-attach",
+						StyleConf.PlayerCapturerIconSize);
+					detachbutton.TooltipMarkup = Catalog.GetString ("Attach window");
+				} else {
+					detachbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-control-detach",
+						StyleConf.PlayerCapturerIconSize);
+					detachbutton.TooltipMarkup = Catalog.GetString ("Detach window");
+				}
+			}
+		}
+
 		public IPlayerController Player {
 			get {
 				return player;
