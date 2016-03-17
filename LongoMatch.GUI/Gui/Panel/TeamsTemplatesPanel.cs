@@ -237,6 +237,9 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.Model.SetValue (selectedIter, COL_PIXBUF, shield);
 			teamseditortreeview.Model.SetValue (selectedIter, COL_TEAM, loadedTeam);
 			teamtemplateeditor1.Edited = false;
+			//Replace the old team with the new one with the new attributes
+			teams.RemoveAll (t => t.ID == loadedTeam.ID);
+			teams.Add (loadedTeam);
 		}
 
 		void SaveStatic ()
@@ -396,7 +399,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTeamClicked (object sender, EventArgs e)
 		{
 			bool create = false;
-			bool force = false;
+			Team auxdelete = null;
 			
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
@@ -411,17 +414,11 @@ namespace LongoMatch.Gui.Panel
 				} else if (dialog.Text == "default") {
 					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
-				} else if (dialog.Text == dialog.SelectedTemplate) {
-					/* The new template has the same name as the orignal one,
-					 * just reload it as if we where copying it */
-					Load (dialog.Text);
-					break;
 				} else if (provider.Exists (dialog.Text)) {
-					var msg = Catalog.GetString ("The template already exists. " +
-					          "Do you want to overwrite it?");
+					var msg = Catalog.GetString ("The template already exists. Do you want to overwrite it?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
-						force = true;
+						auxdelete = teams.FirstOrDefault (t => t.Name == dialog.Text);
 						break;
 					}
 				} else {
@@ -442,6 +439,9 @@ namespace LongoMatch.Gui.Panel
 						dialog.Destroy ();
 						return;
 					}
+				}
+				if (auxdelete != null) {
+					provider.Delete (auxdelete);
 				}
 				Load (dialog.Text);
 			}
