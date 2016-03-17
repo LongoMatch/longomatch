@@ -132,7 +132,9 @@ namespace LongoMatch.Services
 
 		void HandleDetach ()
 		{
-			analysisWindow.DetachPlayer ();
+			if (analysisWindow != null) {
+				analysisWindow.DetachPlayer ();
+			}
 		}
 
 		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)
