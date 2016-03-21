@@ -171,6 +171,7 @@ namespace LongoMatch.Gui.Component
 				Player.Play ();
 			}
 			detachedPlayer = !detachedPlayer;
+			playercapturer.AttachPlayer (detachedPlayer);
 		}
 
 		public void CloseOpenedProject ()

@@ -27,6 +27,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 		PlayerViewOperationMode Mode  { get; set; }
 
 		bool SupportsMultipleCameras { get; }
+
+		bool PlayerAttached { set; }
 	}
 }
 

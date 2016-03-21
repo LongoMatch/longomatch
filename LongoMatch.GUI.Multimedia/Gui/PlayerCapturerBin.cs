@@ -102,6 +102,11 @@ namespace LongoMatch.Gui
 			capturerbox.Visible = true;
 		}
 
+		public void AttachPlayer (bool attached)
+		{
+			playerview.PlayerAttached = attached;
+		}
+
 		void HandlePrepareViewEvent ()
 		{
 			ShowPlayer ();
