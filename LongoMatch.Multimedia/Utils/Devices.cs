@@ -63,18 +63,19 @@ namespace LongoMatch.Multimedia.Utils
 					                        typeof(IntPtr), true, false);
 
 				foreach (IntPtr device_raw in devices_raw) {
+					string deviceName = GLib.Marshaller.PtrToStringGFree (lgm_device_get_device_name (device_raw));
 					/* The Direct Show GStreamer element seems to have problems with the
 					 * BlackMagic DeckLink cards, so filter them out. They are also
 					 * available through the ksvideosrc element. */
 					if (source == "dshowvideosrc" &&
-					    Regex.Match (source, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
+					    Regex.Match (deviceName, ".*blackmagic.*|.*decklink.*", RegexOptions.IgnoreCase).Success) {
 						continue;
 					}
 
 					Device device = new Device ();
 					device.DeviceType = CaptureSourceType.System;
 					device.SourceElement = source;
-					device.ID = GLib.Marshaller.PtrToStringGFree (lgm_device_get_device_name (device_raw));
+					device.ID = deviceName;
 
 					GLib.List formats_raw = new GLib.List (lgm_device_get_formats (device_raw),
 						                        typeof(IntPtr), false, false);
@@ -84,7 +85,11 @@ namespace LongoMatch.Multimedia.Utils
 							out format.fps_n, out format.fps_d);
 						device.Formats.Add (format);
 					}
-					devicesList.Add (device);
+					/* Make sure the device has formats
+					 * before adding it to the device list */
+					if (device.Formats.Count > 0) {
+						devicesList.Add (device);
+					}
 					lgm_device_free (device_raw);
 				}
 			}
