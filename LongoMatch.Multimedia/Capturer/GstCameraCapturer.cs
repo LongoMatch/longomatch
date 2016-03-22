@@ -36,7 +36,7 @@ namespace LongoMatch.Video.Capturer
 	public  class GstCameraCapturer : GLib.Object, ICapturer
 	{
 		public event ReadyToCaptureHandler ReadyToCapture;
-		public event EllpasedTimeHandler EllapsedTime;
+		public event ElapsedTimeHandler ElapsedTime;
 		public event ErrorHandler Error;
 		public event DeviceChangeHandler DeviceChange;
 		public event MediaInfoHandler MediaInfo;
@@ -99,9 +99,9 @@ namespace LongoMatch.Video.Capturer
 				throw new GLib.GException (error);
 
 			timer = new LiveSourceTimer ();
-			timer.EllapsedTime += delegate(Time ellapsedTime) {
-				if (EllapsedTime != null)
-					EllapsedTime (ellapsedTime);
+			timer.ElapsedTime += delegate(Time ellapsedTime) {
+				if (ElapsedTime != null)
+					ElapsedTime (ellapsedTime);
 			};
 			
 			this.GlibError += (o, args) => {

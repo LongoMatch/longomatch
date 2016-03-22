@@ -23,7 +23,7 @@ namespace LongoMatch.Video.Capturer
 {
 	public class LiveSourceTimer
 	{
-		public event EllpasedTimeHandler EllapsedTime;
+		public event ElapsedTimeHandler ElapsedTime;
 
 		DateTime lastStart;
 		TimeSpan ellapsed;
@@ -79,8 +79,8 @@ namespace LongoMatch.Video.Capturer
 
 		protected virtual bool OnTick ()
 		{
-			if (EllapsedTime != null)
-				EllapsedTime (new Time (CurrentTime));
+			if (ElapsedTime != null)
+				ElapsedTime (new Time (CurrentTime));
 			return true;
 		}
 	}
