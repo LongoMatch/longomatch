@@ -171,7 +171,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		Time EllapsedTime {
+		Time ElapsedTime {
 			get {
 				if (currentPeriod != null) {
 					return currentPeriod.TotalTime;
@@ -314,9 +314,9 @@ namespace LongoMatch.Gui
 			if (currentTimeNode != null) {
 				currentTimeNode.Stop = CurrentCaptureTime;
 			}
-			hourlabel.Markup = EllapsedTime.Hours.ToString ("d2");
-			minuteslabel.Markup = EllapsedTime.Minutes.ToString ("d2");
-			secondslabel.Markup = EllapsedTime.Seconds.ToString ("d2");
+			hourlabel.Markup = ElapsedTime.Hours.ToString ("d2");
+			minuteslabel.Markup = ElapsedTime.Minutes.ToString ("d2");
+			secondslabel.Markup = ElapsedTime.Seconds.ToString ("d2");
 			Config.EventsBroker.EmitCapturerTick (CurrentCaptureTime);
 			return true;
 		}
