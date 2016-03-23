@@ -209,6 +209,9 @@ namespace LongoMatch.Gui.Panel
 			}
 			dashboardseditortreeview.Model.SetValue (selectedIter, COL_DASHBOARD, loadedDashboard);
 			buttonswidget.Edited = false;
+			//Replace the old dashboard with the new one with the new attributes
+			dashboards.RemoveAll (d => d.ID == loadedDashboard.ID);
+			dashboards.Add (loadedDashboard);
 		}
 
 		bool SaveTemplate (Dashboard dashboard)
@@ -433,6 +436,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTemplateClicked (object sender, EventArgs e)
 		{
 			bool create = false;
+			Dashboard auxdelete = null;
 
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
@@ -445,16 +449,11 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.Text == "") {
 					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
 					continue;
-				} else if (dialog.Text == dialog.SelectedTemplate) {
-					/* The new template has the same name as the orignal one,
-					 * just reload it as if we where copying it */
-					Load (dialog.Text);
-					break;
 				} else if (provider.Exists (dialog.Text)) {
-					var msg = Catalog.GetString ("The dashboard already exists. " +
-					          "Do you want to overwrite it?");
+					var msg = Catalog.GetString ("The dashboard already exists. Do you want to overwrite it?");
 					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
+						auxdelete = dashboards.FirstOrDefault (d => d.Name == dialog.Text);
 						break;
 					}
 				} else {
@@ -480,6 +479,9 @@ namespace LongoMatch.Gui.Panel
 						dialog.Destroy ();
 						return;
 					}
+				}
+				if (auxdelete != null) {
+					provider.Delete (auxdelete);
 				}
 				Load (dialog.Text);
 			}
