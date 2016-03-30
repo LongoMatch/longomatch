@@ -104,6 +104,7 @@ Xavier Queralt Mateu (ca)";
 		public const string SUBCAT_TEMPLATE_EXT = ".lst";
 		public const string PLAYLIST_EXT = ".lpl";
 		public const string PROJECT_EXT = ".lgm";
+		public const string PROJECT_ENCRYPTED_EXT = ".lgmx";
 		#if OSTYPE_ANDROID || OSTYPE_IOS
 		public const string IMAGE_EXT = ".png";
 		#else
