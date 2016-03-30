@@ -9,27 +9,10 @@ AC_DEFUN([SHAMROCK_CHECK_NUNIT],
 		do_tests=no
 		AM_CONDITIONAL(ENABLE_TESTS, false)
 	else
-		PKG_CHECK_MODULES(NUNIT, nunit >= $NUNIT_REQUIRED,
-			do_tests="yes", do_tests="no")
-
-		AC_SUBST(NUNIT_LIBS)
-		AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
-
-		if test "x$do_tests" = "xno"; then
-			PKG_CHECK_MODULES(NUNIT, mono-nunit >= 2.4,
-				do_tests="yes", do_tests="no")
-
-			AC_SUBST(NUNIT_LIBS)
-			AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
-
-			if test "x$do_tests" = "xno"; then
-				AC_MSG_WARN([Could not find nunit: tests will not be available])			fi
-		fi
-
-		NUNIT_CONSOLE_EXE=`echo $NUNIT_LIBS | tr ' ' '\n' | grep nunit-console.exe | cut -c4-`
-		AC_SUBST(NUNIT_CONSOLE_EXE)
-
-		NUNIT_FRAMEWORK_DLL=`echo $NUNIT_LIBS | tr ' ' '\n' | grep nunit.framework.dll | cut -c4-`
-		AC_SUBST(NUNIT_FRAMEWORK_DLL)
+		# Escape [ -> @<:@  and ] -> @:>@
+		NUNIT_VERSION=`sed -n 's/.*NUnit\.Runners.*version="\(@<:@^"@:>@*\).*/\1/p' Tests/packages.config`
+		NUNIT_CONSOLE_EXE='$(top_builddir)/packages/NUnit.Runners.${NUNIT_VERSION}/tools/nunit-console.exe'
 	fi
+	AC_SUBST(NUNIT_CONSOLE_EXE)
+	AC_SUBST(NUNIT_VERSION)
 ])

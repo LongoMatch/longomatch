@@ -6,13 +6,11 @@ include $(top_srcdir)/build/build.mk
 
 if ENABLE_TESTS
 check:
-	cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
 	$(MONO) --debug $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE)
 
 if HAVE_COVEM
 do-coverage:
 	@rm -rf $(ASSEMBLY).covcfg.*
-	@cp $(NUNIT_FRAMEWORK_DLL) `dirname $(ASSEMBLY_FILE)`
 	BABOON_CFG=$(ASSEMBLY).covcfg $(COVEM) $(NUNIT_CONSOLE_EXE) $(ASSEMBLY_FILE) || true
 
 print-coverage:
