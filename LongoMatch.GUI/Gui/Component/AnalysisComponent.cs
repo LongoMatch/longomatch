@@ -43,6 +43,18 @@ namespace LongoMatch.Gui.Component
 			codingwidget.Player = playercapturer.Player;
 		}
 
+		protected override void OnUnmapped ()
+		{
+			base.OnUnmapped ();
+			// When a container widget is unmapped there are 2 options, either it has a window and it hides it,
+			// or it just unmaps all children. In our case we are use an event box with its own window for theming.
+			// Unmapping this child will just hide its window and won't unmap the children below such as as the 
+			// player view and the video window. This can be a problem as this widget will never detect that it has been 
+			// hidden and on windows the actual gdkwindow will be hidden and won't be shown again. So we make sure to
+			// proxy the unmap to the children below the eventbox.
+			centralpane.Unmap ();
+		}
+
 		protected override void OnDestroyed ()
 		{
 			if (detachedPlayer) {
