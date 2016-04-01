@@ -104,9 +104,23 @@ namespace LongoMatch.Core.Common
 	{
 	}
 
+	/// <summary>
+	/// An exception thrown by an addin to request a shutdown of the application
+	/// </summary>
 	public class AddinRequestShutdownException: Exception
 	{
 		public AddinRequestShutdownException (string reason) :
+			base (reason)
+		{
+		}
+	}
+
+	/// <summary>
+	/// An exception thrown by an addin in its initialization if it can't be used for some reason
+	/// </summary>
+	public class AddinUnusableException: Exception
+	{
+		public AddinUnusableException (string reason) :
 			base (reason)
 		{
 		}
