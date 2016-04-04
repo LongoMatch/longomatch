@@ -142,6 +142,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IStorageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDirectoryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Misc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EncryptedObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

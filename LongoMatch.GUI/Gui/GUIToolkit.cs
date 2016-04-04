@@ -91,48 +91,36 @@ namespace LongoMatch.Gui
 
 		public void InfoMessage (string message, object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow as Widget;
-			MessagesHelpers.InfoMessage (parent as Widget, message);
+			MessagesHelpers.InfoMessage (GetParentWidget (parent), message);
 		}
 
 		public void ErrorMessage (string message, object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow as Widget;
-			MessagesHelpers.ErrorMessage (parent as Widget, message);
+			MessagesHelpers.ErrorMessage (GetParentWidget (parent), message);
 		}
 
 		public void WarningMessage (string message, object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow as Widget;
-			MessagesHelpers.WarningMessage (parent as Widget, message);
+			MessagesHelpers.WarningMessage (GetParentWidget (parent), message);
 		}
 
 		public Task<bool> QuestionMessage (string question, string title, object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow as Widget;
-			bool res = MessagesHelpers.QuestionMessage (parent as Widget, question, title);
+			bool res = MessagesHelpers.QuestionMessage (GetParentWidget (parent), question, title);
 			return Task.Factory.StartNew (() => res);
 		}
 
 		public Task<string> QueryMessage (string key, string title = null, string value = "", object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow;
-			string res = MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
+			string res = MessagesHelpers.QueryMessage (GetParentWidget (parent), key, title, value);
 			return Task.Factory.StartNew (() => res);
 		}
 
 		public Task<bool> NewVersionAvailable (Version currentVersion, Version latestVersion,
 		                                       string downloadURL, string changeLog, object parent = null)
 		{
-			if (parent == null)
-				parent = mainWindow;
 			bool res = MessagesHelpers.NewVersionAvailable (currentVersion, latestVersion, downloadURL,
-				           changeLog, parent as Widget);
+				           changeLog, GetParentWidget (parent));
 			return Task.Factory.StartNew (() => res);
 		}
 
@@ -514,6 +502,17 @@ namespace LongoMatch.Gui
 		public void Invoke (EventHandler handler)
 		{
 			Gtk.Application.Invoke (handler);
+		}
+
+		Widget GetParentWidget (object parent)
+		{
+			if (parent is Widget) {
+				return parent as Widget;
+			}
+			if (mainWindow != null && mainWindow.Visible) {
+				return mainWindow;
+			}
+			return null;
 		}
 	}
 }
