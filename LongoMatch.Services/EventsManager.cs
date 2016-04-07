@@ -304,7 +304,7 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit, List<DashboardButton> from)
+		async public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit, List<DashboardButton> from)
 		{
 			if (openedProject == null)
 				return;
@@ -322,12 +322,12 @@ namespace LongoMatch.Services
 				if (projectType == ProjectType.FileProject) {
 					bool playing = player.Playing;
 					player.Pause ();
-					Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
+					await Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
 					if (playing) {
 						player.Play ();
 					}
 				} else {
-					Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
+					await Config.GUIToolkit.EditPlay (play, openedProject, true, true, true, true);
 				}
 			}
 
