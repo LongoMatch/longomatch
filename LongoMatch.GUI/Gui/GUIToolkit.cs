@@ -257,7 +257,7 @@ namespace LongoMatch.Gui
 				sd.Destroy ();
 		}
 
-		public void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
@@ -272,6 +272,8 @@ namespace LongoMatch.Gui
 				dialog.Run ();
 				dialog.Destroy ();
 			}
+			return Task.Factory.StartNew (() => {
+			});
 		}
 
 		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,

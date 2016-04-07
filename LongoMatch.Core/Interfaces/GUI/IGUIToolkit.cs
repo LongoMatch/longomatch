@@ -106,7 +106,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void ManageJobs ();
 
-		void EditPlay (TimelineEvent play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
+		Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPositions, bool editPlayers, bool editNotes);
 
 		void DrawingTool (Image pixbuf, TimelineEvent play, FrameDrawing drawing, CameraConfig config, Project project);
 
