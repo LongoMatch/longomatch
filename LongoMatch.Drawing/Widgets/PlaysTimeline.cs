@@ -15,17 +15,18 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -36,11 +37,11 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTimersMenuHandler ShowTimersMenuEvent;
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
-		Project project;
+		ProjectLongoMatch project;
 		EventsFilter playsFilter;
 		double secondsPerPixel;
 		Time duration, currentTime;
-		TimelineEvent loadedEvent;
+		TimelineEventLongoMatch loadedEvent;
 		bool movingTimeNode;
 		Dictionary<TimelineObject, object> timelineToFilter;
 		Dictionary<EventType, CategoryTimeline> eventsTimelines;
@@ -68,7 +69,7 @@ namespace LongoMatch.Drawing.Widgets
 			base.Dispose (disposing);
 		}
 
-		public void LoadProject (Project project, EventsFilter filter)
+		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			this.project = project;
 			ClearObjects ();
@@ -136,7 +137,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			eventsTimelines [play.EventType].AddPlay (play);
 		}
@@ -160,7 +161,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			foreach (TimelineEvent p in plays) {
 				eventsTimelines [p.EventType].RemoveNode (p);
@@ -208,7 +209,10 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			                        
 			foreach (EventType type in project.EventTypes) {
-				tl = new CategoryTimeline (project, project.EventsByType (type), duration,
+				List<TimelineEvent> timelineEventList = project.EventsByType (type);
+				var timelineEventLongoMatchList = new List<TimelineEventLongoMatch> ();
+				timelineEventList.ForEach (x => timelineEventLongoMatchList.Add (x as TimelineEventLongoMatch));
+				tl = new CategoryTimeline (project, timelineEventLongoMatchList, duration,
 					i * StyleConf.TimelineCategoryHeight,
 					Utils.ColorForRow (i), playsFilter);
 				AddTimeline (tl, type);
@@ -254,7 +258,7 @@ namespace LongoMatch.Drawing.Widgets
 		void ShowPlaysMenu (Point coords, CategoryTimeline catTimeline)
 		{
 			EventType ev = null;
-			List<TimelineEvent> plays;
+			List<TimelineEventLongoMatch> plays;
 			
 			plays = Selections.Select (p => (p.Drawable as TimelineEventObject).Event).ToList ();
 
@@ -266,7 +270,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		protected override void SelectionChanged (List<Selection> selections)
 		{
-			TimelineEvent ev = null;
+			TimelineEventLongoMatch ev = null;
 			if (selections.Count > 0) {
 				CanvasObject d = selections.Last ().Drawable as CanvasObject;
 				if (d is TimelineEventObject) {

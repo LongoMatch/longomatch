@@ -17,38 +17,38 @@
 //
 using System;
 using System.Collections.Generic;
-using Gtk;
 using Gdk;
-using Cairo;
-using Pango;
-using Color = Cairo.Color;
-
+using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
+using Color = Cairo.Color;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class GameViewer : Gtk.Bin
 	{
 		ProjectStats stats;
-		Project project;
+		ProjectLongoMatch project;
 		int catsMaxSize, subcatsMaxSize;
 		List<Widget> subcats, cats;
-		
+
 		public GameViewer ()
 		{
 			this.Build ();
 		}
-		
-		public void LoadProject (Project project, ProjectStats stats) {
+
+		public void LoadProject (Project project, ProjectStats stats)
+		{
 			this.stats = stats;
-			this.project = project;
-			UpdateGui();				
+			this.project = project as ProjectLongoMatch;
+			UpdateGui ();				
 		}
-		
-		void UpdateSubcatsVisibility () {
+
+		void UpdateSubcatsVisibility ()
+		{
 			bool visible = subcatscheckbutton.Active;
 			
 			if (subcats == null)
@@ -59,14 +59,15 @@ namespace LongoMatch.Plugins.Stats
 			foreach (StatsWidget w in cats) {
 				if (visible) {
 					w.MaxTextSize = subcatsMaxSize;
-				} else  {
+				} else {
 					w.MaxTextSize = catsMaxSize;
 				}
 				w.QueueDraw ();
 			}
 		}
-		
-		void UpdateGui () {
+
+		void UpdateGui ()
+		{
 			homelabel.Markup = String.Format ("{0} <span font_desc=\"40\">{1}</span>",
 				project.LocalTeamTemplate.TeamName,
 				project.GetScore (project.LocalTeamTemplate));
@@ -79,42 +80,45 @@ namespace LongoMatch.Plugins.Stats
 			if (project.VisitorTeamTemplate.Shield != null)
 				awayimage.Pixbuf = project.VisitorTeamTemplate.Shield.Value;
 			
-			subcats = new List<Widget>();
-			cats = new List<Widget>();
+			subcats = new List<Widget> ();
+			cats = new List<Widget> ();
 			foreach (EventTypeStats cstats in stats.EventTypeStats) {
 				AddCategory (cstats);
 			}			
-			mainbox.ShowAll();
+			mainbox.ShowAll ();
 			UpdateSubcatsVisibility ();
 		}
-		
-		void AddCategory (EventTypeStats cstats) {
+
+		void AddCategory (EventTypeStats cstats)
+		{
 			Widget w = new StatsWidget (cstats, null, null, catsMaxSize);
 			cats.Add (w);
-			cstatsbox.PackStart(w, false, true, 0);
+			cstatsbox.PackStart (w, false, true, 0);
 			              
 			foreach (SubCategoryStat stats in cstats.SubcategoriesStats) {
 				AddSubcategory (stats, cstats);
 			}
 			cstatsbox.PackStart (new HSeparator (), false, false, 0);
 		}
-		
-		void AddSubcategory (SubCategoryStat sstats, EventTypeStats parent) {
+
+		void AddSubcategory (SubCategoryStat sstats, EventTypeStats parent)
+		{
 			foreach (PercentualStat ostats in sstats.OptionStats) {
 				StatsWidget w = new StatsWidget (ostats, parent, sstats, subcatsMaxSize);
 				subcats.Add (w);
-				cstatsbox.PackStart(w, false, true, 0);
+				cstatsbox.PackStart (w, false, true, 0);
 			}
 		}
-		
-		void GetMaxSize (out int normal, out int full) {
-			Pango.Layout layout = new Pango.Layout (Gdk.PangoHelper.ContextGet());
+
+		void GetMaxSize (out int normal, out int full)
+		{
+			Pango.Layout layout = new Pango.Layout (Gdk.PangoHelper.ContextGet ());
 			
 			normal = full = 0;
 			
 			foreach (EventTypeStats cstat in stats.EventTypeStats) {
 				int width, height;
-				layout.SetMarkup (String.Format("<b>{0}</b>", GLib.Markup.EscapeText (cstat.Name)));
+				layout.SetMarkup (String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (cstat.Name)));
 				layout.GetPixelSize (out width, out height);
 				if (width > normal) {
 					normal = width;
@@ -133,17 +137,17 @@ namespace LongoMatch.Plugins.Stats
 				full = normal;
 			}
 #if !OSTYPE_LINUX
-			normal = (int) (normal * 1.3);
-			full = (int) (full * 1.3);
+			normal = (int)(normal * 1.3);
+			full = (int)(full * 1.3);
 #endif
 		}
-		
+
 		protected void OnSubcatscheckbuttonClicked (object sender, EventArgs e)
 		{
 			UpdateSubcatsVisibility ();
 		}
 	}
-	
+
 	class StatsWidget: DrawingArea
 	{
 		Stat stat, category;
@@ -152,14 +156,15 @@ namespace LongoMatch.Plugins.Stats
 		const int COUNT_WIDTH = 120;
 		int textSize;
 		string name_tpl, count_tpl;
-		
-		public StatsWidget (Stat stat, Stat category, SubCategoryStat subcat, int textSize) {
+
+		public StatsWidget (Stat stat, Stat category, SubCategoryStat subcat, int textSize)
+		{
 			/* For subcategories, parent is the parent Category */
 			this.stat = stat;
 			this.category = category;
 			HomeColor = CairoUtils.ColorFromRGB (0xFF, 0x33, 0);
 			AwayColor = CairoUtils.ColorFromRGB (0, 0x99, 0xFF);
-			layout =  new Pango.Layout(PangoContext);
+			layout = new Pango.Layout (PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Center;
 			ModifyText (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
@@ -178,29 +183,29 @@ namespace LongoMatch.Plugins.Stats
 				HeightRequest = 18;
 			}
 		}
-		
+
 		Cairo.Color HomeColor {
 			get;
 			set;
 		}
-		
+
 		Cairo.Color AwayColor {
 			get;
 			set;
 		}
-		
+
 		public int MaxTextSize {
 			set {
 				textSize = value;
 			}
 		}
-		
+
 		protected override bool OnExposeEvent (EventExpose evnt)
 		{
 			int width, height, center, lCenter, vCenter, totalCount;
 			double localPercent, visitorPercent;
 			
-			this.GdkWindow.Clear();
+			this.GdkWindow.Clear ();
 			
 			width = Allocation.Width;
 			center = width / 2;
@@ -216,43 +221,43 @@ namespace LongoMatch.Plugins.Stats
 				totalCount = stat.TotalCount;
 			}
 			if (totalCount != 0) {
-				localPercent = (double) stat.LocalTeamCount / totalCount;
-				visitorPercent = (double) stat.VisitorTeamCount / totalCount;
+				localPercent = (double)stat.LocalTeamCount / totalCount;
+				visitorPercent = (double)stat.VisitorTeamCount / totalCount;
 			} else {
 				localPercent = 0;
 				visitorPercent = 0;
 			}
 			
-			using(Cairo.Context g = Gdk.CairoHelper.Create(this.GdkWindow)) {
+			using (Cairo.Context g = Gdk.CairoHelper.Create (this.GdkWindow)) {
 				int localW, visitorW;
 				
-				localW = (int) (width / 2 * localPercent);
-				visitorW = (int) (width / 2 * visitorPercent); 
+				localW = (int)(width / 2 * localPercent);
+				visitorW = (int)(width / 2 * visitorPercent); 
 				
 				/* Home bar */
 				CairoUtils.DrawRoundedRectangle (g, lCenter - localW, 0, localW, height, 0,
-				                                 HomeColor, HomeColor);
+					HomeColor, HomeColor);
 				/* Away bar  */
 				CairoUtils.DrawRoundedRectangle (g, vCenter, 0, visitorW, height, 0,
-				                                 AwayColor, AwayColor);
+					AwayColor, AwayColor);
 				                                 
 				/* Category name */
-				layout.Width = Pango.Units.FromPixels(textSize);
+				layout.Width = Pango.Units.FromPixels (textSize);
 				layout.Alignment = Pango.Alignment.Center;
-				layout.SetMarkup(String.Format(name_tpl, GLib.Markup.EscapeText (stat.Name)));
-				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), center - textSize / 2, 0, layout);
+				layout.SetMarkup (String.Format (name_tpl, GLib.Markup.EscapeText (stat.Name)));
+				GdkWindow.DrawLayout (Style.TextGC (StateType.Normal), center - textSize / 2, 0, layout);
 				
 				/* Home count */	
-				layout.Width = Pango.Units.FromPixels(COUNT_WIDTH);
+				layout.Width = Pango.Units.FromPixels (COUNT_WIDTH);
 				layout.Alignment = Pango.Alignment.Right;
-				layout.SetMarkup(String.Format(count_tpl, stat.LocalTeamCount, (localPercent * 100).ToString("f2")));
-				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), lCenter - (COUNT_WIDTH + 3), 0, layout);
+				layout.SetMarkup (String.Format (count_tpl, stat.LocalTeamCount, (localPercent * 100).ToString ("f2")));
+				GdkWindow.DrawLayout (Style.TextGC (StateType.Normal), lCenter - (COUNT_WIDTH + 3), 0, layout);
 				
 				/* Away count */	
-				layout.Width = Pango.Units.FromPixels(COUNT_WIDTH);
+				layout.Width = Pango.Units.FromPixels (COUNT_WIDTH);
 				layout.Alignment = Pango.Alignment.Left;
-				layout.SetMarkup(String.Format(count_tpl, stat.VisitorTeamCount, (visitorPercent * 100).ToString("f2")));
-				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), vCenter + 3, 0, layout);
+				layout.SetMarkup (String.Format (count_tpl, stat.VisitorTeamCount, (visitorPercent * 100).ToString ("f2")));
+				GdkWindow.DrawLayout (Style.TextGC (StateType.Normal), vCenter + 3, 0, layout);
 			}
 			
 			return true;

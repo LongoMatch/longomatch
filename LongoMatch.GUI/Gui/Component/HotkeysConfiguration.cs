@@ -18,12 +18,12 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class HotkeysConfiguration : Gtk.Bin
 	{
 		SizeGroup sgroup;
@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 			sgroup = new SizeGroup (SizeGroupMode.Horizontal);
 			foreach (KeyAction action in Config.Hotkeys.ActionsDescriptions.Keys) {
 				AddWidget (action, Config.Hotkeys.ActionsDescriptions [action],
-				           Config.Hotkeys.ActionsHotkeys [action], i);
+					Config.Hotkeys.ActionsHotkeys [action], i);
 				i++;
 			}
 		}
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			descLabel = new Label ();
 			descLabel.Markup = String.Format ("<b>{0}</b>", desc); 
 			keyLabel = new Label (); 
-			keyLabel.Markup = GLib.Markup.EscapeText (key.ToString());
+			keyLabel.Markup = GLib.Markup.EscapeText (key.ToString ());
 			edit = new Button ();
 			editImage = new Gtk.Image (LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-pencil", 24));
 			edit.Add (editImage);
@@ -71,11 +71,11 @@ namespace LongoMatch.Gui.Component
 				if (hotkey != null) {
 					if (Config.Hotkeys.ActionsHotkeys.ContainsValue (hotkey)) {
 						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Hotkey already in use: ") +
-						                                GLib.Markup.EscapeText (hotkey.ToString()), this);
+						GLib.Markup.EscapeText (hotkey.ToString ()), this);
 					} else {
-						Config.Hotkeys.ActionsHotkeys[action] = hotkey;
+						Config.Hotkeys.ActionsHotkeys [action] = hotkey;
 						Config.Save ();
-						keyLabel.Markup = GLib.Markup.EscapeText (hotkey.ToString());
+						keyLabel.Markup = GLib.Markup.EscapeText (hotkey.ToString ());
 					}
 				}
 			};
@@ -88,4 +88,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

@@ -20,25 +20,27 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
 	public class ToolsManager: IProjectsImporter, IService
 	{
-		
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 
 		public ToolsManager ()
 		{
 			ProjectImporters = new List<ProjectImporter> ();
 		}
 
-		public void RegisterImporter (Func<Project> importFunction,
+		public void RegisterImporter (Func<ProjectLongoMatch> importFunction,
 		                              string description, string filterName,
 		                              string[] extensions, bool needsEdition,
 		                              bool canOverwrite)
@@ -59,7 +61,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void ExportProject (Project project)
+		void ExportProject (ProjectLongoMatch project)
 		{
 			string filename;
 
@@ -94,7 +96,7 @@ namespace LongoMatch.Services
 
 		void ImportProject ()
 		{
-			Project project;
+			ProjectLongoMatch project;
 			ProjectImporter importer;
 			IStorage DB = Config.DatabaseManager.ActiveDB;
 			
@@ -129,7 +131,7 @@ namespace LongoMatch.Services
 						if (!res)
 							return;
 					}
-					DB.Store<Project> (project, true);
+					DB.Store<ProjectLongoMatch> (project, true);
 					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {

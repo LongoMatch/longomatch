@@ -21,11 +21,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
@@ -137,7 +141,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating dashboard " + dashboard.Name);
 						DashboardMigration.Migrate0 (dashboard, scoreNameToID, penaltyNameToID);
-						Config.CategoriesTemplatesProvider.Save (dashboard);
+						Config.CategoriesTemplatesProvider.Save (dashboard as DashboardLongoMatch);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + dashboard.Name, id);
 					} catch (Exception ex) {
@@ -240,10 +244,10 @@ namespace LongoMatch.DB
 
 			foreach (string projectFile in projectFiles) {
 				var importTask = Task.Run (() => {
-					Project project = null;
+					ProjectLongoMatch project = null;
 					try {
 						Log.Information ("Migrating project " + projectFile);
-						project = Serializer.Instance.Load<Project> (projectFile);
+						project = Serializer.Instance.Load<ProjectLongoMatch> (projectFile);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
@@ -259,7 +263,7 @@ namespace LongoMatch.DB
 							teamNameToID [project.VisitorTeamTemplate.Name] = project.VisitorTeamTemplate.ID;
 						}
 						try {
-							ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
+							ProjectMigration.Migrate0 (project as ProjectLongoMatch, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
 							database.Store<Project> (project, true);
 						} catch (Exception ex) {
 							Log.Exception (ex);

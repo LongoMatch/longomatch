@@ -20,26 +20,26 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Filters
 {
 	public class EventsFilter
 	{
-		
 		public event FilterUpdatedHandler FilterUpdated;
 
 		Dictionary<EventType, List<Tag>> eventsFilter;
 		List<Tag> tagsFilter;
-		List<Player> playersFilter;
+		List<PlayerLongoMatch> playersFilter;
 		List<Period> periodsFilter;
 		List<Timer> timersFilter;
-		Project project;
+		ProjectLongoMatch project;
 
-		public EventsFilter (Project project)
+		public EventsFilter (ProjectLongoMatch project)
 		{
 			this.project = project;
 			eventsFilter = new Dictionary<EventType, List<Tag>> ();
-			playersFilter = new List<Player> (); 
+			playersFilter = new List<PlayerLongoMatch> (); 
 			periodsFilter = new List<Period> ();
 			tagsFilter = new List<Tag> ();
 			timersFilter = new List<Timer> ();
@@ -62,12 +62,12 @@ namespace LongoMatch.Core.Filters
 			protected set;
 		}
 
-		public List<Player> VisiblePlayers {
+		public List<PlayerLongoMatch> VisiblePlayers {
 			get;
 			protected set;
 		}
 
-		public List<TimelineEvent> VisiblePlays {
+		public List<TimelineEventLongoMatch> VisiblePlays {
 			get;
 			protected set;
 		}
@@ -83,7 +83,7 @@ namespace LongoMatch.Core.Filters
 				Update ();
 		}
 
-		public void FilterPlayer (Player player, bool visible)
+		public void FilterPlayer (PlayerLongoMatch player, bool visible)
 		{
 			if (visible) {
 				if (!playersFilter.Contains (player))
@@ -210,9 +210,9 @@ namespace LongoMatch.Core.Filters
 			bool cat_match = true, tag_match = true, player_match = true;
 			bool period_match = true, timer_match = true;
 
-			VisiblePlays = new List<TimelineEvent> ();
+			VisiblePlays = new List<TimelineEventLongoMatch> ();
 				
-			foreach (TimelineEvent play in project.Timeline) {
+			foreach (TimelineEventLongoMatch play in project.Timeline) {
 				cat_match = false;
 				if (VisibleEventTypes.Contains (play.EventType)) {
 					cat_match = true;

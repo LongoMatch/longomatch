@@ -20,9 +20,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using VAS.Core.Common;
+using VAS.Core.Serialization;
 
 namespace LongoMatch.Addins
 {

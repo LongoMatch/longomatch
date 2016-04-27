@@ -28,7 +28,8 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui
@@ -39,7 +40,7 @@ namespace LongoMatch.Gui
 	{
 		IGUIToolkit guiToolKit;
 		IAnalysisWindow analysisWindow;
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
 		Widget stackPanel;
@@ -134,7 +135,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction)
+		public void AddExportEntry (string name, string shortName, Action<ProjectLongoMatch, IGUIToolkit> exportAction)
 		{
 			MenuItem parent = (MenuItem)this.UIManager.GetWidget ("/menubar1/ToolsAction/ExportProjectAction1");
 			
@@ -144,7 +145,7 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append (item);
 		}
 
-		public IAnalysisWindow SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public IAnalysisWindow SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
 			
@@ -235,14 +236,14 @@ namespace LongoMatch.Gui
 			this.UIManager.EnsureUpdate ();
 		}
 
-		public void SelectProject (List<Project> projects)
+		public void SelectProject (List<ProjectLongoMatch> projects)
 		{
 			OpenProjectPanel panel = new OpenProjectPanel ();
 			panel.Projects = projects;
 			SetPanel (panel);
 		}
 
-		public void CreateNewProject (Project project)
+		public void CreateNewProject (ProjectLongoMatch project)
 		{
 			NewProjectPanel panel = new NewProjectPanel (project);
 			panel.Name = "newprojectpanel";
@@ -269,7 +270,7 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				Config.EventsBroker.EmitKeyPressed (this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
+				Config.EventsBroker.EmitKeyPressed (this, VAS.Core.Common.Keyboard.ParseEvent (evnt));
 			}
 			return true;
 		}

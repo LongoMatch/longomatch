@@ -19,13 +19,14 @@ using System;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
+using VAS.Core.Common;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestPenaltyCard
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			PenaltyCard pc = new PenaltyCard ();

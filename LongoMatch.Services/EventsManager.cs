@@ -22,24 +22,28 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Store.Playlists;
+using VAS.Core.Store;
+using VAS.Core;
+using VAS.Core.Interfaces;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
 	public class EventsManager: IService
 	{
 		/* Current play loaded. null if no play is loaded */
-		TimelineEvent loadedPlay;
+		TimelineEventLongoMatch loadedPlay;
 		/* current project in use */
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 		ProjectType projectType;
 		EventsFilter filter;
 		IAnalysisWindow analysisWindow;
@@ -51,7 +55,7 @@ namespace LongoMatch.Services
 		{
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.openedProject = project;
@@ -75,14 +79,14 @@ namespace LongoMatch.Services
 			capturer = analysisWindow.Capturer;
 		}
 
-		void Save (Project project)
+		void Save (ProjectLongoMatch project)
 		{
 			if (Config.AutoSave) {
-				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+				Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
 			}
 		}
 
-		void DeletePlays (List<TimelineEvent> plays, bool update = true)
+		void DeletePlays (List<TimelineEventLongoMatch> plays, bool update = true)
 		{
 			Log.Debug (plays.Count + " plays deleted");
 			analysisWindow.DeletePlays (plays);
@@ -96,10 +100,10 @@ namespace LongoMatch.Services
 			filter.Update ();
 		}
 
-		void HandlePlayerSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		void HandlePlayerSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
 		{
 			if (openedProject != null) {
-				TimelineEvent evt;
+				TimelineEventLongoMatch evt;
 
 				try {
 					evt = openedProject.SubsitutePlayer (team, p1, p2, reason, time);
@@ -116,7 +120,7 @@ namespace LongoMatch.Services
 			Config.GUIToolkit.FullScreen = fullscreen;
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (TimelineEventLongoMatch play)
 		{
 			loadedPlay = play;
 		}
@@ -124,7 +128,7 @@ namespace LongoMatch.Services
 		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
 		{
 			if (element is PlaylistPlayElement) {
-				loadedPlay = (element as PlaylistPlayElement).Play;
+				loadedPlay = (element as PlaylistPlayElement).Play as TimelineEventLongoMatch;
 			} else {
 				loadedPlay = null;
 			}
@@ -142,12 +146,12 @@ namespace LongoMatch.Services
 			Config.FastTagging = !tagsubcategories;
 		}
 
-		void HandleShowProjectStatsEvent (Project project)
+		void HandleShowProjectStatsEvent (ProjectLongoMatch project)
 		{
 			Config.GUIToolkit.ShowProjectStats (project);
 		}
 
-		void HandleDrawFrame (TimelineEvent play, int drawingIndex, CameraConfig camConfig, bool current)
+		void HandleDrawFrame (TimelineEventLongoMatch play, int drawingIndex, CameraConfig camConfig, bool current)
 		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
@@ -194,7 +198,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void RenderPlay (Project project, TimelineEvent play)
+		void RenderPlay (ProjectLongoMatch project, TimelineEvent play)
 		{
 			Playlist playlist;
 			EncodingSettings settings;
@@ -244,7 +248,7 @@ namespace LongoMatch.Services
 			return frame;
 		}
 
-		private void AddNewPlay (TimelineEvent play)
+		private void AddNewPlay (TimelineEventLongoMatch play)
 		{
 			/* Clip play boundaries */
 			play.Start.MSeconds = Math.Max (0, play.Start.MSeconds);
@@ -273,7 +277,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void OnNewTag (EventType evType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
+		public void OnNewTag (EventType evType, List<PlayerLongoMatch> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                      Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
 			if (openedProject == null) {
@@ -292,11 +296,11 @@ namespace LongoMatch.Services
 			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
 				start.ToMSecondsString (), stop.ToMSecondsString (),
 				evType.Name));
-			/* Add the new created play to the project and update the GUI*/
-			var play = openedProject.AddEvent (evType, start, stop, eventTime, null);
+			/* Add the new created play to the project and update the GUI */
+			var play = openedProject.AddEvent (evType, start, stop, eventTime, null) as TimelineEventLongoMatch;
 			play.Teams = teams;
 			if (players != null) {
-				play.Players = new ObservableCollection<Player> (players);
+				play.Players = new ObservableCollection<PlayerLongoMatch> (players);
 			}
 			if (tags != null) {
 				play.Tags = new ObservableCollection<Tag> (tags);
@@ -304,7 +308,7 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		async public void HandleNewDashboardEvent (TimelineEvent play, DashboardButton btn, bool edit, List<DashboardButton> from)
+		async public void HandleNewDashboardEvent (TimelineEventLongoMatch play, DashboardButton btn, bool edit, List<DashboardButton> from)
 		{
 			if (openedProject == null)
 				return;
@@ -338,38 +342,38 @@ namespace LongoMatch.Services
 			AddNewPlay (play);
 		}
 
-		protected virtual void OnPlaysDeleted (List<TimelineEvent> plays)
+		protected virtual void OnPlaysDeleted (List<TimelineEventLongoMatch> plays)
 		{
 			DeletePlays (plays);
 		}
 
-		void OnDuplicatePlays (List<TimelineEvent> plays)
+		void OnDuplicatePlays (List<TimelineEventLongoMatch> plays)
 		{
-			foreach (TimelineEvent play in plays) {
-				TimelineEvent copy = Cloner.Clone (play);
+			foreach (var play in plays) {
+				TimelineEventLongoMatch copy = Cloner.Clone (play);
 				copy.ID = Guid.NewGuid ();
 				/* The category is also serialized and desarialized */
 				copy.EventType = play.EventType;
-				copy.Players = new ObservableCollection<Player> (play.Players);
+				copy.Players = new ObservableCollection<PlayerLongoMatch> (play.Players);
 				openedProject.AddEvent (copy);
 				analysisWindow.AddPlay (copy);
 			}
 			filter.Update ();
 		}
 
-		protected virtual void OnSnapshotSeries (TimelineEvent play)
+		protected virtual void OnSnapshotSeries (TimelineEventLongoMatch play)
 		{
 			player.Pause ();
 			Config.GUIToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
 		}
 
-		protected virtual void OnPlayCategoryChanged (TimelineEvent play, EventType evType)
+		protected virtual void OnPlayCategoryChanged (TimelineEventLongoMatch play, EventType evType)
 		{
 			var newplay = Cloner.Clone (play);
 			newplay.ID = Guid.NewGuid ();
 			newplay.EventType = evType;
 			newplay.Players = play.Players;
-			DeletePlays (new List<TimelineEvent> { play }, false);
+			DeletePlays (new List<TimelineEventLongoMatch> { play }, false);
 			openedProject.AddEvent (newplay);
 			analysisWindow.AddPlay (newplay);
 			Save (openedProject);
@@ -408,7 +412,7 @@ namespace LongoMatch.Services
 				}
 				break;
 			case KeyAction.DeleteEvent:
-				DeletePlays (new List<TimelineEvent> { loadedPlay });
+				DeletePlays (new List<TimelineEventLongoMatch> { loadedPlay });
 				break;
 			}
 		}

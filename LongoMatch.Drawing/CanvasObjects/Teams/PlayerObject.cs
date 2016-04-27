@@ -15,12 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.IO;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -36,7 +36,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			Init ();
 		}
 
-		public PlayerObject (Player player, Point position = null)
+		public PlayerObject (PlayerLongoMatch player, Point position = null)
 		{
 			Player = player;
 			Init (position);
@@ -52,7 +52,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public Player Player {
+		public PlayerLongoMatch Player {
 			get;
 			set;
 		}

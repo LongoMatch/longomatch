@@ -27,9 +27,12 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
 using Pango;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Serialization;
+using Constants = LongoMatch.Core.Common.Constants;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {

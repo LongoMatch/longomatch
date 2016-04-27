@@ -16,10 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core;
-using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Core.Common;
+using LongoMatch.Gui.Helpers;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Gui.Component
 {
@@ -201,4 +203,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

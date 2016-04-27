@@ -5,11 +5,17 @@ namespace LongoMatch.Plugins.Stats
 	public partial class SubCategoryViewer
 	{
 		private global::Gtk.Frame frame2;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::Gtk.TreeView treeview;
+		
 		private global::LongoMatch.Plugins.Stats.Plotter plotter;
+		
 		private global::Gtk.Label gtkframe;
 
 		protected virtual void Build ()
@@ -43,9 +49,7 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.GtkScrolledWindow]));
 			w2.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.plotter = new global::LongoMatch.Plugins.Stats.Plotter ();
-			this.plotter.Events = ((global::Gdk.EventMask)(256));
-			this.plotter.Name = "plotter";
+			this.plotter = null;
 			this.hbox1.Add (this.plotter);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.plotter]));
 			w3.Position = 1;

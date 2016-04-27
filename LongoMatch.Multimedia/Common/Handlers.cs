@@ -15,8 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Video.Common
 {
@@ -27,7 +29,7 @@ namespace LongoMatch.Video.Common
 	public delegate void GlibPercentCompletedHandler (object o,PercentCompletedArgs args);
 	public delegate void GlibStateChangeHandler (object o,StateChangeArgs args);
 	public delegate void GlibTickHandler (object o,TickArgs args);
-	public delegate void GlibMediaInfoHandler (object o, MediaInfoArgs args);
+	public delegate void GlibMediaInfoHandler (object o,MediaInfoArgs args);
 	public delegate void GlibDeviceChangeHandler (object o,DeviceChangeArgs args);
 	public class ErrorArgs : GLib.SignalArgs
 	{
@@ -60,13 +62,13 @@ namespace LongoMatch.Video.Common
 	{
 		public Time CurrentTime {
 			get {
-				return new Time { NSeconds = (long) Args[0] };
+				return new Time { NSeconds = (long)Args [0] };
 			}
 		}
 
 		public Time StreamLength {
 			get {
-				return new Time { NSeconds = (long) Args[1] };
+				return new Time { NSeconds = (long)Args [1] };
 			}
 		}
 
@@ -85,30 +87,30 @@ namespace LongoMatch.Video.Common
 			}
 		}
 	}
-	
+
 	public class MediaInfoArgs : GLib.SignalArgs
 	{
 		public int Width {
 			get {
-				return (int) Args[0];
+				return (int)Args [0];
 			}
 		}
 
 		public int Height {
 			get {
-				return (int) Args[1];
+				return (int)Args [1];
 			}
 		}
 
 		public int ParN {
 			get {
-				return (int) Args[2];
+				return (int)Args [2];
 			}
 		}
-		
+
 		public int ParD {
 			get {
-				return (int) Args[3];
+				return (int)Args [3];
 			}
 		}
 	}

@@ -16,13 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
+using VAS.DB;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
@@ -34,7 +38,7 @@ namespace LongoMatch.Services
 		{
 		}
 
-		public Project OpenedProject {
+		public ProjectLongoMatch OpenedProject {
 			get;
 			set;
 		}
@@ -54,7 +58,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType, EventsFilter filter,
+		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType, EventsFilter filter,
 		                                 IAnalysisWindow analysisWindow)
 		{
 			OpenedProject = project;
@@ -102,8 +106,7 @@ namespace LongoMatch.Services
 		/// <param name="storageDir">The directory used for the storages.</param>
 		public static IStorageManager CreateStorageManager (string storageDir)
 		{
-			return new CouchbaseManager (storageDir);
+			return new CouchbaseManagerLongoMatch (storageDir);
 		}
 	}
 }
-

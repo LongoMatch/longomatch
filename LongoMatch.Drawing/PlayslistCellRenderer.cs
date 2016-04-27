@@ -15,16 +15,16 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Drawing.CanvasObjects.Teams;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Drawing
 {
@@ -49,7 +49,7 @@ namespace LongoMatch.Drawing
 			tk.DrawLine (new Point (x1, y), new Point (x2, y));
 		}
 
-		static void RenderPlayer (IDrawingToolkit tk, Player p, Point imagePoint)
+		static void RenderPlayer (IDrawingToolkit tk, PlayerLongoMatch p, Point imagePoint)
 		{
 			PlayerObject po = new PlayerObject (p);
 			po.Position = new Point (imagePoint.X + StyleConf.ListImageWidth / 2, imagePoint.Y + StyleConf.ListImageWidth / 2);
@@ -129,7 +129,7 @@ namespace LongoMatch.Drawing
 			tk.DrawText (textP, textW, backgroundArea.Height, text);
 		}
 
-		public static void RenderPlayer (Player player, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void RenderPlayer (PlayerLongoMatch player, int count, bool isExpanded, IDrawingToolkit tk,
 		                                 IContext context, Area backgroundArea, Area cellArea)
 		{
 			Point image, text;
@@ -224,7 +224,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		public static void RenderSubstitution (Color color, Time evt, Player playerIn, Player playerOut, bool selected,
+		public static void RenderSubstitution (Color color, Time evt, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut, bool selected,
 		                                       bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
 		                                       Area cellArea, CellState state)
 		{
@@ -257,8 +257,8 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<Team> teams, bool selected, string desc,
-		                               int count, bool isExpanded, IDrawingToolkit tk,
+		public static void RenderPlay (Color color, Image ss, IList<PlayerLongoMatch> players, IEnumerable<Team> teams,
+		                               bool selected, string desc, int count, bool isExpanded, IDrawingToolkit tk,
 		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			Point selectPoint, textPoint, imagePoint, circlePoint;
@@ -272,7 +272,7 @@ namespace LongoMatch.Drawing
 
 			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 			if (players != null && players.Count > 0) {
-				foreach (Player p in players) {
+				foreach (PlayerLongoMatch p in players) {
 					RenderPlayer (tk, p, imagePoint);
 					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
@@ -287,7 +287,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void Render (object item, Project project, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void Render (object item, ProjectLongoMatch project, int count, bool isExpanded, IDrawingToolkit tk,
 		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			if (item is EventType) {
@@ -298,12 +298,12 @@ namespace LongoMatch.Drawing
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Selected, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
-				TimelineEvent p = item as TimelineEvent;
+				TimelineEventLongoMatch p = item as TimelineEventLongoMatch;
 				// always add local first.
 				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Selected, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
-				RenderPlayer (item as Player, count, isExpanded, tk, context, backgroundArea, cellArea);
+				RenderPlayer (item as PlayerLongoMatch, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is Playlist) {
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {

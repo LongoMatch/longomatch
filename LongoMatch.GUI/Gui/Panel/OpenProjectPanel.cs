@@ -18,12 +18,11 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Gui;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Gui.Component;
+using VAS.Core;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -44,7 +43,7 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
-		public List<Project> Projects {
+		public List<ProjectLongoMatch> Projects {
 			set {
 				projectlistwidget.Fill (value);
 			}
@@ -59,16 +58,16 @@ namespace LongoMatch.Gui.Panel
 		{
 
 		}
+
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (BackEvent != null)
 				BackEvent ();
 		}
 
-		void HandleProjectSelected (Project project)
+		void HandleProjectSelected (ProjectLongoMatch project)
 		{
 			Config.EventsBroker.EmitOpenProjectID (project.ID, project);
 		}
 	}
 }
-

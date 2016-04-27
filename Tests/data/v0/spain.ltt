@@ -5,7 +5,7 @@
   "List": [
     {
       "$id": "2",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "ac7c0999-5bcd-4698-b645-069fbc657a2b",
       "Name": "Pau",
       "LastName": "Gasol",
@@ -22,7 +22,7 @@
     },
     {
       "$id": "3",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "f84c699a-a640-4b81-bf09-6b1a798981a2",
       "Name": "Victor",
       "LastName": "Claver",
@@ -39,7 +39,7 @@
     },
     {
       "$id": "4",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "197011fa-593d-42a3-aa65-fbd881f09548",
       "Name": "Juan C.",
       "LastName": "Navarro",
@@ -56,7 +56,7 @@
     },
     {
       "$id": "5",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "00626404-72f8-429e-9248-3f224686ddb1",
       "Name": "José",
       "LastName": "Carderón",
@@ -73,7 +73,7 @@
     },
     {
       "$id": "6",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "79d4b1d5-70dd-4f19-998b-abf289c42ba8",
       "Name": "Marc",
       "LastName": "Gasol",
@@ -90,7 +90,7 @@
     },
     {
       "$id": "7",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "7e027d93-dfb5-4165-952f-c69923c1ef38",
       "Name": "Felipe",
       "LastName": "Reyes",
@@ -107,7 +107,7 @@
     },
     {
       "$id": "8",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "6f9267c6-0b57-43c1-b72b-1d282f110e5a",
       "Name": "Sergio",
       "LastName": "Rodriguez",
@@ -124,7 +124,7 @@
     },
     {
       "$id": "9",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "29b3f1ca-498e-4d08-987a-ea6916494aa4",
       "Name": "Sergio",
       "LastName": "Llull",
@@ -141,7 +141,7 @@
     },
     {
       "$id": "10",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "47968569-573e-4293-94c4-3cdfb4de72e8",
       "Name": "Serge",
       "LastName": "Ibaka",
@@ -158,7 +158,7 @@
     },
     {
       "$id": "11",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "9fe9b832-01e6-4c32-a251-162acea9cbd6",
       "Name": "Alex",
       "LastName": "Abrines",
@@ -175,7 +175,7 @@
     },
     {
       "$id": "12",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "399a3dd2-7414-4a98-bc66-24b22d320844",
       "Name": "Ricky",
       "LastName": "Rubio",
@@ -192,7 +192,7 @@
     },
     {
       "$id": "13",
-      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
       "ID": "6d8e02aa-b0e9-4b77-9d72-40e08f737f2b",
       "Name": "Rudy",
       "LastName": "Fernandez",

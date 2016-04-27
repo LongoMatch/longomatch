@@ -18,14 +18,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gdk;
 using Gtk;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using Color = Gdk.Color;
-using Image = LongoMatch.Core.Common.Image;
-using Point = LongoMatch.Core.Common.Point;
+using Image = VAS.Core.Common.Image;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -81,7 +80,7 @@ namespace LongoMatch.Gui.Component
 				modelFilter.Refilter ();
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set;
 			protected get;
 		}
@@ -106,16 +105,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected TimelineEvent SelectedPlay {
+		protected TimelineEventLongoMatch SelectedPlay {
 			get {
-				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEvent;
+				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEventLongoMatch;
 			}
 		}
 
-		protected List<TimelineEvent> SelectedPlays {
+		protected List<TimelineEventLongoMatch> SelectedPlays {
 			get {
 				return Selection.GetSelectedRows ().Select (
-					p => GetValueFromPath (p) as TimelineEvent).ToList ();
+					p => GetValueFromPath (p) as TimelineEventLongoMatch).ToList ();
 			}
 		}
 
@@ -140,16 +139,16 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
 		{
 			object item = GetValueFromPath (args.Path);
-			if (!(item is TimelineEvent))
+			if (!(item is TimelineEventLongoMatch))
 				return;
 
-			Config.EventsBroker.EmitLoadEvent (item as TimelineEvent);
+			Config.EventsBroker.EmitLoadEvent (item as TimelineEventLongoMatch);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
-			TimelineEvent selectedEvent = SelectedPlay;
-			List<Player> players = selectedEvent.Players.ToList ();
+			TimelineEventLongoMatch selectedEvent = SelectedPlay;
+			List<PlayerLongoMatch> players = selectedEvent.Players.ToList ();
 
 			Config.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 

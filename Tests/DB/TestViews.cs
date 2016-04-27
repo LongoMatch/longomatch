@@ -20,20 +20,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Serialization;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
-using LongoMatch.DB.Views;
 using NUnit.Framework;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
+using LongoMatch.DB;
+using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.DB;
+using VAS.DB.Views;
 
 namespace Tests.DB
 {
 	public class PropertiesTest: StorableBase
 	{
-	
 		[LongoMatchPropertyIndex (1)]
 		[LongoMatchPropertyPreload]
 		public string Key1 { get; set; }
@@ -68,7 +70,7 @@ namespace Tests.DB
 	[TestFixture ()]
 	public class TestViews
 	{
-		CouchbaseStorage storage;
+		CouchbaseStorageLongoMatch storage;
 		Database db;
 
 		[TestFixtureSetUp]
@@ -79,7 +81,7 @@ namespace Tests.DB
 				Directory.Delete (dbPath, true);
 			}
 			try {
-				storage = new CouchbaseStorage (dbPath, "test-db");
+				storage = new CouchbaseStorageLongoMatch (dbPath, "test-db");
 			} catch (Exception ex) {
 				throw ex;
 			}
@@ -104,67 +106,25 @@ namespace Tests.DB
 		}
 
 		[Test ()]
-		public void TestIndexing ()
-		{
-			TestView view = new TestView (storage);
-
-			Assert.AreEqual (new List<string> { "Parent", "Key2", "Key1" }, view.IndexedProperties);
-			PropertiesTest test = new PropertiesTest { Key1 = "key1", Key2 = "key2", Key3 = "key3" };
-			test.IsChanged = true;
-			storage.Store (test);
-
-			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Key3", "key3");
-			Assert.Throws<InvalidQueryException> (
-				delegate {
-					view.Query (filter).Count ();
-				});
-			filter.Remove ("Key3");
-			filter.Add ("Key2", "key2");
-			Assert.AreEqual (1, view.Query (filter).Count ());
-		}
-
-		[Test ()]
-		public void TestPreload ()
-		{
-			TestView view = new TestView (storage);
-
-			Assert.AreEqual (new List<string> { "Key1", "Key3" }, view.PreloadProperties);
-
-			PropertiesTest test = new PropertiesTest { Key1 = "key1", Key2 = "key2", Key3 = "key3" };
-			test.IsChanged = true;
-			storage.Store (test);
-
-			QueryFilter filter = new QueryFilter ();
-			filter.Add ("Key2", "key2");
-			var test1 = view.Query (filter).First ();
-			Assert.IsFalse (test1.IsLoaded);
-			Assert.AreEqual (test.Key1, test1.Key1);
-			Assert.AreEqual (test.Key3, test1.Key3);
-			Assert.IsNull (test1.Key2);
-			Assert.NotNull (test1.DocumentID);
-		}
-
-		[Test ()]
 		public void TestListDashboards ()
 		{
-			Dashboard d = Dashboard.DefaultTemplate (5);
+			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (5);
 			d.Name = "Dashboard1";
 			storage.Store (d);
 
-			List<Dashboard> dashboards = storage.RetrieveAll<Dashboard> ().ToList (); 
+			List<DashboardLongoMatch> dashboards = storage.RetrieveAll<DashboardLongoMatch> ().ToList ();
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
 			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
-				var da = Dashboard.DefaultTemplate (5);
+				var da = DashboardLongoMatch.DefaultTemplate (5);
 				da.Name = "Dashboard" + (i + 2);
 				storage.Store (da);
 			}
 
-			dashboards = storage.RetrieveAll<Dashboard> ().ToList (); 
+			dashboards = storage.RetrieveAll<DashboardLongoMatch> ().ToList ();
 			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 			Assert.AreEqual (6, dashboards.Count);
 		}
@@ -172,20 +132,19 @@ namespace Tests.DB
 		[Test ()]
 		public void TestLoadDashboards ()
 		{
-			Dashboard d = Dashboard.DefaultTemplate (5);
+			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (5);
 			d.Name = "Dashboard1";
 			// Make PenaltyCardEventType and ScoreEventType the same object so that both are serialized
 			// as references and Utils.AreEquals can check the rest correctly
 			(d.List [8] as PenaltyCardButton).EventType = (d.List [7] as PenaltyCardButton).EventType;
 			(d.List [10] as ScoreButton).EventType = (d.List [9] as ScoreButton).EventType;
 			storage.Store (d);
-			Dashboard d1 = storage.Retrieve<Dashboard> (new QueryFilter ()).First ();
+			DashboardLongoMatch d1 = storage.Retrieve<DashboardLongoMatch> (new QueryFilter ()).First ();
 			d1.IsLoaded = true;
 			Utils.AreEquals (d, d1, false);
 			d1.IsLoaded = false;
 			Utils.AreEquals (d, d1);
 		}
-
 
 		[Test ()]
 		public void TestListTeams ()
@@ -229,24 +188,24 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListProjects ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 			try {
 				p.Description.Group = "GRP";
 				p.Description.Competition = "COMP";
 				storage.Store (p);
 
-				List<Project> projects = storage.RetrieveAll<Project> ().ToList ();
+				List<ProjectLongoMatch> projects = storage.RetrieveAll<ProjectLongoMatch> ().ToList ();
 				Assert.AreEqual (1, projects.Count);
 				Assert.AreEqual (p.Timeline.Count, projects [0].Timeline.Count);
 				Assert.AreEqual ("GRP", p.Description.Group);
 				Assert.AreEqual ("COMP", p.Description.Competition);
 				Assert.IsTrue (projects.All (i => i.DocumentID != null));
 
-				Assert.AreEqual (1, storage.Retrieve<Project> (null).Count ());
+				Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (null).Count ());
 
 				var filter = new QueryFilter ();
 				filter.Add ("Competition", "COMP");
-				Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
+				Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			} finally {
 				Utils.DeleteProject (p);
@@ -259,37 +218,36 @@ namespace Tests.DB
 			foreach (string n in new []{"andoni", "aitor", "xabi", "iñaki"}) {
 				foreach (string f in new []{"gorriti", "zabala", "otegui"}) {
 					foreach (string r in new []{"cholo", "bobi", "tolai"}) {
-						Player p = new Player { Name = n, LastName = f, NickName = r };
+						PlayerLongoMatch p = new PlayerLongoMatch { Name = n, LastName = f, NickName = r };
 						storage.Store (p);
 					}
 				}
 			}
 
-			IEnumerable<Player> players = storage.RetrieveAll<Player> (); 
+			IEnumerable<PlayerLongoMatch> players = storage.RetrieveAll<PlayerLongoMatch> ();
 			Assert.AreEqual (36, players.Count ());
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
-			players = storage.Retrieve<Player> (filter);
+			players = storage.Retrieve<PlayerLongoMatch> (filter);
 			Assert.AreEqual (9, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
 			filter.Add ("LastName", "zabala");
-			players = storage.Retrieve<Player> (filter);
+			players = storage.Retrieve<PlayerLongoMatch> (filter);
 			Assert.AreEqual (3, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
-			players = storage.Retrieve<Player> (filter);
+			players = storage.Retrieve<PlayerLongoMatch> (filter);
 			Assert.AreEqual (18, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
 			filter.Add ("LastName", "zabala");
-			players = storage.Retrieve<Player> (filter);
+			players = storage.Retrieve<PlayerLongoMatch> (filter);
 			Assert.AreEqual (6, players.Count ());
 		}
 	}
 }
-

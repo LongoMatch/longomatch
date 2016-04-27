@@ -11,6 +11,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using VAS.Core.Common;
 
 namespace LongoMatch.Services
 {

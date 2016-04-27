@@ -15,21 +15,22 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core;
+using VAS.Core.Store;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing.Widgets
 {
 	public class TimelineLabels: Canvas
 	{
-		Project project;
+		ProjectLongoMatch project;
 		EventsFilter filter;
 		Dictionary<LabelObject, object> labelToObject;
 
@@ -51,7 +52,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void LoadProject (Project project, EventsFilter filter)
+		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			ClearObjects ();
 			this.project = project;

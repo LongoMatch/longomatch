@@ -17,8 +17,8 @@
 //
 using System;
 using Cairo;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing.Cairo
 {

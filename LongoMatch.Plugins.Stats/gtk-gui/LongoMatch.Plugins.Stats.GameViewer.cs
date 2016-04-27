@@ -5,13 +5,21 @@ namespace LongoMatch.Plugins.Stats
 	public partial class GameViewer
 	{
 		private global::Gtk.VBox mainbox;
+		
 		private global::Gtk.HBox topbox;
+		
 		private global::Gtk.Image homeimage;
+		
 		private global::Gtk.Label homelabel;
+		
 		private global::Gtk.CheckButton subcatscheckbutton;
+		
 		private global::Gtk.Label awaylabel;
+		
 		private global::Gtk.Image awayimage;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.VBox cstatsbox;
 
 		protected virtual void Build ()

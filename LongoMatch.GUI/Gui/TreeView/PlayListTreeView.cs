@@ -24,11 +24,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Menus;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Playlists;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
-		Project project;
+		ProjectLongoMatch project;
 		TreeIter selectedIter;
 		TreePath pathClicked;
 		TreeStore store;
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			Cleanup ();
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				if (project != null) {
 					Cleanup ();

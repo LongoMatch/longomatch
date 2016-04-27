@@ -1,6 +1,6 @@
 ﻿{
   "$id": "1",
-  "$type": "LongoMatch.Core.Store.Project, LongoMatch.Core",
+  "$type": "LongoMatch.Core.Store.ProjectLongoMatch, LongoMatch.Core",
   "Dashboard": {
     "$id": "2",
     "$type": "LongoMatch.Core.Store.Templates.Dashboard, LongoMatch.Core",
@@ -700,7 +700,7 @@
     "List": [
       {
         "$id": "63",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "ac7c0999-5bcd-4698-b645-069fbc657a2b",
         "Name": "Pau",
         "LastName": "Gasol",
@@ -717,7 +717,7 @@
       },
       {
         "$id": "64",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "f84c699a-a640-4b81-bf09-6b1a798981a2",
         "Name": "Victor",
         "LastName": "Claver",
@@ -734,7 +734,7 @@
       },
       {
         "$id": "65",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "197011fa-593d-42a3-aa65-fbd881f09548",
         "Name": "Juan C.",
         "LastName": "Navarro",
@@ -751,7 +751,7 @@
       },
       {
         "$id": "66",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "00626404-72f8-429e-9248-3f224686ddb1",
         "Name": "José",
         "LastName": "Carderón",
@@ -768,7 +768,7 @@
       },
       {
         "$id": "67",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "79d4b1d5-70dd-4f19-998b-abf289c42ba8",
         "Name": "Marc",
         "LastName": "Gasol",
@@ -785,7 +785,7 @@
       },
       {
         "$id": "68",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "7e027d93-dfb5-4165-952f-c69923c1ef38",
         "Name": "Felipe",
         "LastName": "Reyes",
@@ -802,7 +802,7 @@
       },
       {
         "$id": "69",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "6f9267c6-0b57-43c1-b72b-1d282f110e5a",
         "Name": "Sergio",
         "LastName": "Rodriguez",
@@ -819,7 +819,7 @@
       },
       {
         "$id": "70",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "29b3f1ca-498e-4d08-987a-ea6916494aa4",
         "Name": "Sergio",
         "LastName": "Llull",
@@ -836,7 +836,7 @@
       },
       {
         "$id": "71",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "47968569-573e-4293-94c4-3cdfb4de72e8",
         "Name": "Serge",
         "LastName": "Ibaka",
@@ -853,7 +853,7 @@
       },
       {
         "$id": "72",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "9fe9b832-01e6-4c32-a251-162acea9cbd6",
         "Name": "Alex",
         "LastName": "Abrines",
@@ -870,7 +870,7 @@
       },
       {
         "$id": "73",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "399a3dd2-7414-4a98-bc66-24b22d320844",
         "Name": "Ricky",
         "LastName": "Rubio",
@@ -887,7 +887,7 @@
       },
       {
         "$id": "74",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "6d8e02aa-b0e9-4b77-9d72-40e08f737f2b",
         "Name": "Rudy",
         "LastName": "Fernandez",
@@ -924,7 +924,7 @@
     "List": [
       {
         "$id": "76",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "7429b30e-fcdd-4c45-88fb-214763c88cf3",
         "Name": "Florent",
         "LastName": "Pietrus",
@@ -941,7 +941,7 @@
       },
       {
         "$id": "77",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "07b9ef96-9134-4c18-874e-fc17b206e0ff",
         "Name": "Evan",
         "LastName": "Fournier",
@@ -958,7 +958,7 @@
       },
       {
         "$id": "78",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "6f9ccf94-fe93-486e-8733-e56d973169af",
         "Name": "Thomas",
         "LastName": "Heurtel",
@@ -975,7 +975,7 @@
       },
       {
         "$id": "79",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "193e31eb-a52a-4d71-bc55-7e80e7c311d1",
         "Name": "Charles",
         "LastName": "Kahudi",
@@ -992,7 +992,7 @@
       },
       {
         "$id": "80",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "30441575-2885-4ebc-85f4-49d6a3941708",
         "Name": "Mickael",
         "LastName": "Gelabale",
@@ -1009,7 +1009,7 @@
       },
       {
         "$id": "81",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "c7f340f3-e4d9-49f8-b74e-d365db8615c1",
         "Name": "Antoine",
         "LastName": "Diot",
@@ -1026,7 +1026,7 @@
       },
       {
         "$id": "82",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "ed5cd5a8-5c3a-49cd-a01a-3d9e46a56077",
         "Name": "Kim",
         "LastName": "Tillie",
@@ -1043,7 +1043,7 @@
       },
       {
         "$id": "83",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "68df7163-92cc-47ac-8172-9c76fbb5b542",
         "Name": "Joffrey",
         "LastName": "Lauvergne",
@@ -1060,7 +1060,7 @@
       },
       {
         "$id": "84",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "ace81ec9-8e99-4ca1-8ecf-c1aa01e6bf7f",
         "Name": "Boris",
         "LastName": "Diaw",
@@ -1077,7 +1077,7 @@
       },
       {
         "$id": "85",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "f1e9bbc4-52d9-4e9e-afa5-fbf55c73456c",
         "Name": "Rudy",
         "LastName": "Gobert",
@@ -1094,7 +1094,7 @@
       },
       {
         "$id": "86",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "a40d1d96-c909-458c-919b-a053e838b3cc",
         "Name": "Edwin",
         "LastName": "Jackson",
@@ -1111,7 +1111,7 @@
       },
       {
         "$id": "87",
-        "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
+        "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
         "ID": "0368e3ab-8274-4fff-a264-85c9182792e2",
         "Name": "Nicolas",
         "LastName": "Batum",
@@ -1289,7 +1289,7 @@
     },
     {
       "$id": "99",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "418e4a13-55ec-47ae-bdb2-90605647692d",
       "EventType": {
         "$ref": "10"
@@ -1351,7 +1351,7 @@
     },
     {
       "$id": "105",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "31d49af1-5206-458f-8e24-c1183abcd83c",
       "EventType": {
         "$ref": "16"
@@ -1398,7 +1398,7 @@
     },
     {
       "$id": "109",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "7e454663-4dd0-446d-bb78-2547dd4e6175",
       "EventType": {
         "$ref": "10"
@@ -1507,7 +1507,7 @@
     },
     {
       "$id": "119",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "8b289da8-cbf5-4007-8755-d21b1586d3f4",
       "EventType": {
         "$ref": "8"
@@ -1608,7 +1608,7 @@
     },
     {
       "$id": "128",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e9500b3b-4b9d-475c-9efb-9098884b062e",
       "EventType": {
         "$ref": "8"
@@ -1717,7 +1717,7 @@
     },
     {
       "$id": "138",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "f8ddc6f0-67ab-4021-81e8-04f58bcf8f67",
       "EventType": {
         "$ref": "4"
@@ -1829,7 +1829,7 @@
     },
     {
       "$id": "148",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "ed6e2021-957c-46d2-807e-7f3a7265a347",
       "EventType": {
         "$ref": "8"
@@ -1999,7 +1999,7 @@
     },
     {
       "$id": "164",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "7b5dabcf-59b3-482d-9039-299543e581db",
       "EventType": {
         "$ref": "8"
@@ -2100,7 +2100,7 @@
     },
     {
       "$id": "173",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3be50ba1-404b-4303-8569-c76b2221f950",
       "EventType": {
         "$ref": "4"
@@ -2209,7 +2209,7 @@
     },
     {
       "$id": "183",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "8c868a8d-f44c-404b-9fdf-4cc9f50f2b50",
       "EventType": {
         "$ref": "8"
@@ -2310,7 +2310,7 @@
     },
     {
       "$id": "192",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3da920d6-8d2f-41b8-94ce-359483cdb7d3",
       "EventType": {
         "$ref": "4"
@@ -2527,7 +2527,7 @@
     },
     {
       "$id": "212",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "83284c4d-f81e-49e0-9dd2-07a9fe63b655",
       "EventType": {
         "$ref": "10"
@@ -2643,7 +2643,7 @@
     },
     {
       "$id": "223",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "bb3504f6-9dbb-4001-a6da-c25da7e9ab0a",
       "EventType": {
         "$ref": "18"
@@ -2690,7 +2690,7 @@
     },
     {
       "$id": "227",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "af867481-5948-46a7-abd7-4bf0d284b138",
       "EventType": {
         "$ref": "4"
@@ -2799,7 +2799,7 @@
     },
     {
       "$id": "237",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "c514288a-e7b5-495d-82db-82f43bf40096",
       "EventType": {
         "$ref": "4"
@@ -2854,7 +2854,7 @@
     },
     {
       "$id": "242",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "0eab05c8-171f-4bc2-8a25-ed145cf2a6a2",
       "EventType": {
         "$ref": "10"
@@ -2909,7 +2909,7 @@
     },
     {
       "$id": "247",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "ef7bf6a4-d6c6-4c27-b20b-befd8ef1e45f",
       "EventType": {
         "$ref": "16"
@@ -3010,7 +3010,7 @@
     },
     {
       "$id": "256",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e0ae37ea-9b60-4655-a73f-e259b94e3c57",
       "EventType": {
         "$ref": "8"
@@ -3165,7 +3165,7 @@
     },
     {
       "$id": "270",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "f19a6d8c-884e-49cb-9bd1-9a99582b4a8e",
       "EventType": {
         "$ref": "4"
@@ -3220,7 +3220,7 @@
     },
     {
       "$id": "275",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "ca71705c-0c16-4c33-89c5-f0d211e39ca9",
       "EventType": {
         "$ref": "10"
@@ -3275,7 +3275,7 @@
     },
     {
       "$id": "280",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3206a34c-4823-4bb7-bc4f-288cf661fcbf",
       "EventType": {
         "$ref": "16"
@@ -3430,7 +3430,7 @@
     },
     {
       "$id": "294",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e329aea5-a383-42f1-9875-eba48704ccbc",
       "EventType": {
         "$ref": "4"
@@ -3647,7 +3647,7 @@
     },
     {
       "$id": "314",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "8595edf3-d3d2-41f5-a1ee-2b88223f5a27",
       "EventType": {
         "$ref": "4"
@@ -3763,7 +3763,7 @@
     },
     {
       "$id": "325",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "1114e483-f127-4fd9-bcac-cb63f622ce53",
       "EventType": {
         "$ref": "4"
@@ -3879,7 +3879,7 @@
     },
     {
       "$id": "336",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "78b76747-1274-44ee-b59c-df219269dde3",
       "EventType": {
         "$ref": "18"
@@ -4042,7 +4042,7 @@
     },
     {
       "$id": "351",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "6d9b36a3-d43c-4605-9d00-6a07a1bf4f63",
       "EventType": {
         "$ref": "4"
@@ -4205,7 +4205,7 @@
     },
     {
       "$id": "366",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "530c8f85-2cc4-4e8c-8c68-699867a68a81",
       "EventType": {
         "$ref": "4"
@@ -4321,7 +4321,7 @@
     },
     {
       "$id": "377",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "f2cc1189-684c-40f7-b09f-c6e619cc480a",
       "EventType": {
         "$ref": "8"
@@ -4430,7 +4430,7 @@
     },
     {
       "$id": "387",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "5d3236ae-1f0d-4037-88cb-b635c831c35b",
       "EventType": {
         "$ref": "10"
@@ -4485,7 +4485,7 @@
     },
     {
       "$id": "392",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "c7e97a6a-9fe5-4278-92f7-7063935d3cb0",
       "EventType": {
         "$ref": "18"
@@ -4532,7 +4532,7 @@
     },
     {
       "$id": "396",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "9e1fdb3d-547c-4bf0-9a82-9481c46550cb",
       "EventType": {
         "$ref": "8"
@@ -4687,7 +4687,7 @@
     },
     {
       "$id": "410",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "aa2aed13-5e5a-4f46-bdd4-54d722fa2bf2",
       "EventType": {
         "$ref": "8"
@@ -4749,7 +4749,7 @@
     },
     {
       "$id": "416",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "dabd33a8-7089-400d-80a8-4b51eb31f605",
       "EventType": {
         "$ref": "8"
@@ -4904,7 +4904,7 @@
     },
     {
       "$id": "430",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "ae4b8f11-d8c8-4aac-a1cd-deecd882baef",
       "EventType": {
         "$ref": "4"
@@ -5013,7 +5013,7 @@
     },
     {
       "$id": "440",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "71cef942-e29a-424c-83c1-c09970fa0da0",
       "EventType": {
         "$ref": "4"
@@ -5230,7 +5230,7 @@
     },
     {
       "$id": "460",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "42adb405-8e70-4181-ad8b-eacdd4fda2a8",
       "EventType": {
         "$ref": "8"
@@ -5475,7 +5475,7 @@
     },
     {
       "$id": "483",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "a10559d6-77fe-4e57-be74-ebd12a66bca5",
       "EventType": {
         "$ref": "4"
@@ -5638,7 +5638,7 @@
     },
     {
       "$id": "498",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "a255a61e-d40f-4d54-965b-42cfe0266934",
       "EventType": {
         "$ref": "8"
@@ -5739,7 +5739,7 @@
     },
     {
       "$id": "507",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3031e9ea-2f7e-4b62-a724-9b8a998f36ef",
       "EventType": {
         "$ref": "8"
@@ -5840,7 +5840,7 @@
     },
     {
       "$id": "516",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "5bc8fe36-cc67-4815-a83d-37456262cc06",
       "EventType": {
         "$ref": "4"
@@ -5895,7 +5895,7 @@
     },
     {
       "$id": "521",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e6de443d-847a-41ab-a309-7aca924aae49",
       "EventType": {
         "$ref": "10"
@@ -5950,7 +5950,7 @@
     },
     {
       "$id": "526",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "d435531a-b376-43c7-950e-a7b016c8a04e",
       "EventType": {
         "$ref": "16"
@@ -6105,7 +6105,7 @@
     },
     {
       "$id": "540",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "947f4585-bbf6-486d-be1b-a091a634c7e6",
       "EventType": {
         "$ref": "4"
@@ -6167,7 +6167,7 @@
     },
     {
       "$id": "546",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "40dff116-d898-4907-b1c4-ea4247410a51",
       "EventType": {
         "$ref": "10"
@@ -6276,7 +6276,7 @@
     },
     {
       "$id": "556",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "b7015aad-680f-42d6-9869-dd75132d3a0c",
       "EventType": {
         "$ref": "4"
@@ -6331,7 +6331,7 @@
     },
     {
       "$id": "561",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "be787e65-9221-4c9d-b86f-372d9b322ac6",
       "EventType": {
         "$ref": "10"
@@ -6386,7 +6386,7 @@
     },
     {
       "$id": "566",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "99ab4b8c-b054-4efc-84cf-5c22fdae8e8f",
       "EventType": {
         "$ref": "16"
@@ -6703,7 +6703,7 @@
     },
     {
       "$id": "595",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "260b1af2-155c-4516-80d1-27395523eeea",
       "EventType": {
         "$ref": "4"
@@ -6826,7 +6826,7 @@
     },
     {
       "$id": "607",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3e18d533-fdc5-4a55-8afc-3131354a9b97",
       "EventType": {
         "$ref": "4"
@@ -6935,7 +6935,7 @@
     },
     {
       "$id": "617",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "2b181ac5-35c1-44e8-81c3-de83d3e440d2",
       "EventType": {
         "$ref": "4"
@@ -7051,7 +7051,7 @@
     },
     {
       "$id": "628",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "ed5d5bbc-f957-4df1-a535-cff8f2ced546",
       "EventType": {
         "$ref": "8"
@@ -7268,7 +7268,7 @@
     },
     {
       "$id": "648",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "4159c495-1242-42fb-ac72-3a2abeecff47",
       "EventType": {
         "$ref": "4"
@@ -7377,7 +7377,7 @@
     },
     {
       "$id": "658",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "74a3bd24-c3d1-4063-a816-942b692416a3",
       "EventType": {
         "$ref": "18"
@@ -7424,7 +7424,7 @@
     },
     {
       "$id": "662",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "987458d1-a014-4ba5-90da-ab408f1d9cdb",
       "EventType": {
         "$ref": "4"
@@ -7533,7 +7533,7 @@
     },
     {
       "$id": "672",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "17aeaec3-9fa5-41b0-a6db-b1eae8c7fcbf",
       "EventType": {
         "$ref": "4"
@@ -7642,7 +7642,7 @@
     },
     {
       "$id": "682",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "b4fc4543-7ddb-46d4-bd9e-b5e56acdbba2",
       "EventType": {
         "$ref": "8"
@@ -7913,7 +7913,7 @@
     },
     {
       "$id": "707",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "716a2aca-561b-4391-a961-30e6a3042aee",
       "EventType": {
         "$ref": "18"
@@ -8036,7 +8036,7 @@
     },
     {
       "$id": "719",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "7c692eeb-2b5c-4b97-9982-5b5300b3ae81",
       "EventType": {
         "$ref": "4"
@@ -8253,7 +8253,7 @@
     },
     {
       "$id": "739",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "1ea54562-7ec8-45ce-b46f-a5b278bb0f38",
       "EventType": {
         "$ref": "4"
@@ -8315,7 +8315,7 @@
     },
     {
       "$id": "745",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "82d25d71-2e0c-4079-979f-1cc1886b8a79",
       "EventType": {
         "$ref": "10"
@@ -8424,7 +8424,7 @@
     },
     {
       "$id": "755",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "97f7da74-9703-4fa6-b5cf-ba2d2aba620e",
       "EventType": {
         "$ref": "10"
@@ -8641,7 +8641,7 @@
     },
     {
       "$id": "775",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "4af95f63-2e5f-45f6-9f33-ebe0f88a7e55",
       "EventType": {
         "$ref": "4"
@@ -8804,7 +8804,7 @@
     },
     {
       "$id": "790",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "2511b043-2e7d-4848-8f70-e695cc3ac6af",
       "EventType": {
         "$ref": "8"
@@ -8959,7 +8959,7 @@
     },
     {
       "$id": "804",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "a817b7e9-c8b0-4f36-8054-5f572cf6fd10",
       "EventType": {
         "$ref": "4"
@@ -9392,7 +9392,7 @@
     },
     {
       "$id": "844",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "cda9daac-0793-4659-85e6-968c19e998a7",
       "EventType": {
         "$ref": "4"
@@ -9609,7 +9609,7 @@
     },
     {
       "$id": "864",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "03f097f6-3c82-4b61-b48d-c0292bc37bae",
       "EventType": {
         "$ref": "4"
@@ -9664,7 +9664,7 @@
     },
     {
       "$id": "869",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "807017a8-8b73-46ce-94f6-f862b93f3c20",
       "EventType": {
         "$ref": "10"
@@ -9781,7 +9781,7 @@
     },
     {
       "$id": "880",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3d7fa41a-564c-4d09-a3d8-2b1f28cb8a18",
       "EventType": {
         "$ref": "8"
@@ -9828,7 +9828,7 @@
     },
     {
       "$id": "884",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "2e81ed45-db38-4f0f-8f2f-3c9074d19208",
       "EventType": {
         "$ref": "10"
@@ -9883,7 +9883,7 @@
     },
     {
       "$id": "889",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "9c6ebcb6-a69f-4b3a-987a-3138adea66b3",
       "EventType": {
         "$ref": "16"
@@ -10170,7 +10170,7 @@
     },
     {
       "$id": "916",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "1930b35c-b72e-42b3-9e80-fe8ec8789edf",
       "EventType": {
         "$ref": "10"
@@ -10225,7 +10225,7 @@
     },
     {
       "$id": "921",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3118f8c2-512b-4b7d-9464-e7f0ba3f3e46",
       "EventType": {
         "$ref": "16"
@@ -10334,7 +10334,7 @@
     },
     {
       "$id": "931",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "5af02cbf-ad3f-4f69-a375-202b2ac95381",
       "EventType": {
         "$ref": "8"
@@ -10435,7 +10435,7 @@
     },
     {
       "$id": "940",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "078b72ec-fbdd-4835-bcc3-a072e73cd46c",
       "EventType": {
         "$ref": "4"
@@ -10722,7 +10722,7 @@
     },
     {
       "$id": "967",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "54a49258-9f7c-49ff-97b3-b12c914e510f",
       "EventType": {
         "$ref": "4"
@@ -10885,7 +10885,7 @@
     },
     {
       "$id": "982",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "fbc450b7-8fa9-402a-8026-4434d937bb78",
       "EventType": {
         "$ref": "4"
@@ -10940,7 +10940,7 @@
     },
     {
       "$id": "987",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "cbe2843d-efcd-48d1-ac36-03b126937e6c",
       "EventType": {
         "$ref": "8"
@@ -11103,7 +11103,7 @@
     },
     {
       "$id": "1002",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3b9af959-301d-4bc2-99b2-9fa57d7c8d5e",
       "EventType": {
         "$ref": "10"
@@ -11158,7 +11158,7 @@
     },
     {
       "$id": "1007",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "5e64a9cb-8ec9-4b32-bab5-9752514b7da1",
       "EventType": {
         "$ref": "16"
@@ -11313,7 +11313,7 @@
     },
     {
       "$id": "1021",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "3f48195a-2a92-4115-9451-46c84c821386",
       "EventType": {
         "$ref": "8"
@@ -11414,7 +11414,7 @@
     },
     {
       "$id": "1030",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "65334c37-f223-4674-8acb-63f57cb957d9",
       "EventType": {
         "$ref": "10"
@@ -11469,7 +11469,7 @@
     },
     {
       "$id": "1035",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "1098d32b-b440-4e62-95c3-4f9f0eb80b65",
       "EventType": {
         "$ref": "16"
@@ -11516,7 +11516,7 @@
     },
     {
       "$id": "1039",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "cbca0864-9c64-43e7-9ad4-cff60e7edfec",
       "EventType": {
         "$ref": "10"
@@ -11679,7 +11679,7 @@
     },
     {
       "$id": "1054",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "4c335141-1fc3-450d-b8bd-797508421329",
       "EventType": {
         "$ref": "4"
@@ -11796,7 +11796,7 @@
     },
     {
       "$id": "1065",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "55668d05-5d06-4a52-b475-758691980a45",
       "EventType": {
         "$ref": "4"
@@ -11851,7 +11851,7 @@
     },
     {
       "$id": "1070",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "c37bd76a-2589-4c58-a594-3c32541ad458",
       "EventType": {
         "$ref": "10"
@@ -11906,7 +11906,7 @@
     },
     {
       "$id": "1075",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "45a214be-f325-4c10-a00e-83aea28aeb96",
       "EventType": {
         "$ref": "16"
@@ -12015,7 +12015,7 @@
     },
     {
       "$id": "1085",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e0d35b3b-1595-40a7-906c-a7448f19d8f6",
       "EventType": {
         "$ref": "8"
@@ -12116,7 +12116,7 @@
     },
     {
       "$id": "1094",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "cd555c9a-0462-436e-94ae-7d90af37ba45",
       "EventType": {
         "$ref": "4"
@@ -12171,7 +12171,7 @@
     },
     {
       "$id": "1099",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "b9a65a94-2a7e-4dba-958b-09b63d92c217",
       "EventType": {
         "$ref": "10"
@@ -12226,7 +12226,7 @@
     },
     {
       "$id": "1104",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e865c65d-dfe2-4614-a8ec-3d5e9dbb80de",
       "EventType": {
         "$ref": "16"
@@ -12567,7 +12567,7 @@
     },
     {
       "$id": "1136",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "0d6f2e6b-7ddf-4046-acdd-2d9b7cd13d72",
       "EventType": {
         "$ref": "4"
@@ -12676,7 +12676,7 @@
     },
     {
       "$id": "1146",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "538e6f12-6a38-4ba0-a52b-9865a66c3c5d",
       "EventType": {
         "$ref": "4"
@@ -12909,7 +12909,7 @@
     },
     {
       "$id": "1168",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e001e6fa-32bc-41bb-ae5e-2aa0e33ffc9c",
       "EventType": {
         "$ref": "4"
@@ -13134,7 +13134,7 @@
     },
     {
       "$id": "1189",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "2fc47e08-b2ae-45f4-8b54-ad10699fc9aa",
       "EventType": {
         "$ref": "4"
@@ -13429,7 +13429,7 @@
     },
     {
       "$id": "1217",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "f057d85f-2156-4ac0-88cb-3d9db396b330",
       "EventType": {
         "$ref": "4"
@@ -13592,7 +13592,7 @@
     },
     {
       "$id": "1232",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "f6ca7cc9-1603-4769-9cef-487f6fdf3ad8",
       "EventType": {
         "$ref": "4"
@@ -13701,7 +13701,7 @@
     },
     {
       "$id": "1242",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "d2804518-6d4e-49c6-8aa5-6c7c18ad1f81",
       "EventType": {
         "$ref": "4"
@@ -14112,7 +14112,7 @@
     },
     {
       "$id": "1281",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "2205388e-8fc9-4fe1-b020-7b48af33b8d3",
       "EventType": {
         "$ref": "4"
@@ -14283,7 +14283,7 @@
     },
     {
       "$id": "1297",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "edb544bf-b1cc-4d13-8b40-ae9d71311c97",
       "EventType": {
         "$ref": "4"
@@ -14400,7 +14400,7 @@
     },
     {
       "$id": "1308",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "e53e1eb0-ec64-4ad6-aaac-bd36742f04e4",
       "EventType": {
         "$ref": "8"
@@ -14501,7 +14501,7 @@
     },
     {
       "$id": "1317",
-      "$type": "LongoMatch.Core.Store.TimelineEvent, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.TimelineEventLongoMatch, LongoMatch.Core",
       "ID": "9efa412b-65f0-4f29-891e-0cc6cc2379c7",
       "EventType": {
         "$ref": "4"

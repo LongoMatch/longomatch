@@ -20,14 +20,16 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
@@ -44,7 +46,7 @@ namespace LongoMatch.Gui
 		Time accumTime;
 		DateTime currentPeriodStart;
 		List<string> gamePeriods;
-		TimelineEvent lastevent;
+		TimelineEventLongoMatch lastevent;
 		MediaFile outputFile;
 		bool readyToCapture;
 
@@ -478,7 +480,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void HandleEventCreated (TimelineEvent evt)
+		void HandleEventCreated (TimelineEventLongoMatch evt)
 		{
 			lasteventbox.Visible = true;
 			lastlabel.Text = evt.Name;
@@ -496,7 +498,7 @@ namespace LongoMatch.Gui
 		void HandleDeleteLast (object sender, EventArgs e)
 		{
 			if (lastevent != null) {
-				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { lastevent });
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEventLongoMatch> { lastevent });
 				lastevent = null;
 				lasteventbox.Visible = false;
 			}

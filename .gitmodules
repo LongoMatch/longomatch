@@ -1,0 +1,3 @@
+[submodule "VAS"]
+	path = VAS
+	url = git@github.com:fluendo/VAS.git

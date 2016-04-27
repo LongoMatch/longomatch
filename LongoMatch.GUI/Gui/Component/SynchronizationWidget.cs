@@ -16,7 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -25,9 +25,10 @@ using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using LongoMatch.Core;
 using Pango;
-using System.Collections.ObjectModel;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -40,7 +41,7 @@ namespace LongoMatch.Gui.Component
 		CamerasTimeline camerasTimeline;
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
-		Project project;
+		ProjectLongoMatch project;
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
@@ -180,7 +181,7 @@ namespace LongoMatch.Gui.Component
 		{
 			/* If a new camera has been added or a camera has been removed,
 			 * make sure events have a correct camera configuration */
-			foreach (TimelineEvent evt in project.Timeline) {
+			foreach (TimelineEventLongoMatch evt in project.Timeline) {
 				int cc = evt.CamerasConfig.Count;
 				int fc = project.Description.FileSet.Count;
 
@@ -205,7 +206,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				Time start, pDuration;
 				ObservableCollection <string> gamePeriods;
@@ -606,4 +607,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

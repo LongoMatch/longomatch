@@ -17,14 +17,14 @@
 // 
 using System;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using Pango;
-using EventType = LongoMatch.Core.Store.EventType;
+using VAS.Core;
+using EventType = VAS.Core.Store.EventType;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			AppendColumn (filterColumn);
 			AppendColumn (onlyColumn);
 
-			ModifyFg (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
+			ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 		}
 
 		public virtual void ToggleAll (bool active)
@@ -126,4 +126,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

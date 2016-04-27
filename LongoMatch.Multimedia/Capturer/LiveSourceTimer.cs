@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Video.Capturer
 {

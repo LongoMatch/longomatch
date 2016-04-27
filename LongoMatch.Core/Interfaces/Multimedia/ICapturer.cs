@@ -17,17 +17,13 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
-using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
-using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Handlers;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
-
-
 	public interface ICapturer
 	{
 		event ReadyToCaptureHandler ReadyToCapture;

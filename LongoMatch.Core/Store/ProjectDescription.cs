@@ -17,10 +17,9 @@
 //
 using System;
 using Newtonsoft.Json;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Common;
-using System.Runtime.Serialization;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
 {
@@ -41,10 +40,10 @@ namespace LongoMatch.Core.Store
 			Competition = "";
 			Description = "";
 			Group = "";
-			LocalGoals = 0;
-			LocalName = "";
 			Phase = "";
 			Season = "";
+			LocalGoals = 0;
+			LocalName = "";
 			VisitorGoals = 0;
 			VisitorName = "";
 		}

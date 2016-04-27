@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Panel
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 1F;
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Preferences");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Preferences");
 			this.hbox1.Add (this.label3);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.label3]));
 			w1.Position = 0;

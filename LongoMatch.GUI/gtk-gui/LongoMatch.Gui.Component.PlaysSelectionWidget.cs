@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("  Events   ");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("  Events   ");
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.label1.Angle = 90;
 			this.notebook.SetTabLabel (this.eventslistwidget, this.label1);
@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Playlists");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Playlists");
 			this.label3.Angle = 90;
 			this.notebook.SetTabLabel (this.playlistwidget, this.label3);
 			this.label3.ShowAll ();
@@ -101,7 +101,7 @@ namespace LongoMatch.Gui.Component
 			this.allButton.CanFocus = true;
 			this.allButton.Name = "allButton";
 			this.allButton.UseUnderline = true;
-			this.allButton.Label = global::LongoMatch.Core.Catalog.GetString ("All");
+			this.allButton.Label = global::VAS.Core.Catalog.GetString ("All");
 			this.hbox3.Add (this.allButton);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.allButton]));
 			w3.Position = 0;
@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Component
 			this.noneButton.CanFocus = true;
 			this.noneButton.Name = "noneButton";
 			this.noneButton.UseUnderline = true;
-			this.noneButton.Label = global::LongoMatch.Core.Catalog.GetString ("None");
+			this.noneButton.Label = global::VAS.Core.Catalog.GetString ("None");
 			this.hbox3.Add (this.noneButton);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.noneButton]));
 			w4.Position = 1;
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("  Filters  ");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("  Filters  ");
 			this.label2.Angle = 90;
 			this.notebook.SetTabLabel (this.filtersvbox, this.label2);
 			this.label2.ShowAll ();

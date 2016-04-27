@@ -15,11 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {

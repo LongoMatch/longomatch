@@ -20,14 +20,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Services
 {
@@ -40,8 +43,8 @@ namespace Tests.Services
 		MediaFileSet mfs;
 		PlayerController player;
 		Time currentTime, streamLength;
-		TimelineEvent evt;
-		TimelineEvent evt2;
+		TimelineEventLongoMatch evt;
+		TimelineEventLongoMatch evt2;
 		PlaylistImage plImage;
 		Playlist playlist;
 		PlaylistManager plMan;
@@ -89,12 +92,12 @@ namespace Tests.Services
 		[SetUp ()]
 		public void Setup ()
 		{
-			Config.EventsBroker = new EventsBroker ();
-			evt = new TimelineEvent { Start = new Time (100), Stop = new Time (200),
+			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
+			evt = new TimelineEventLongoMatch { Start = new Time (100), Stop = new Time (200),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
 				FileSet = mfs
 			};
-			evt2 = new TimelineEvent { Start = new Time (1000), Stop = new Time (10000),
+			evt2 = new TimelineEventLongoMatch { Start = new Time (1000), Stop = new Time (10000),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) },
 				FileSet = mfs
 			};
@@ -126,7 +129,10 @@ namespace Tests.Services
 
 		void PreparePlayer (bool readyToSeek = true)
 		{
-			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> {
+				new CameraConfig (0),
+				new CameraConfig (1)
+			};
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -680,7 +686,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (4000);
 			PreparePlayer ();
-			Config.EventsBroker.EmitOpenedProjectChanged (new Project (), ProjectType.FileProject, null, null);
+			Config.EventsBroker.EmitOpenedProjectChanged (new ProjectLongoMatch (), ProjectType.FileProject, null, null);
 			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Config.EventsBroker.EmitLoadEvent (evt);
@@ -718,7 +724,7 @@ namespace Tests.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
-			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
+			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			element.Play.Start = new Time (0);
 			element.Play.Stop = new Time (10000);
 			localPlaylist.Elements.Add (element);
@@ -741,8 +747,8 @@ namespace Tests.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
-			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEvent ());
-			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
+			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			element.Play.Start = new Time (0);
 			localPlaylist.Elements.Add (element0);
 			localPlaylist.Elements.Add (element);
@@ -784,8 +790,8 @@ namespace Tests.Services
 			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
-			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEvent ());
-			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEvent ());
+			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			element.Play.Start = new Time (0);
 			localPlaylist.Elements.Add (element0);
 			localPlaylist.Elements.Add (element);
@@ -808,7 +814,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Pause (false), Times.Once ());
 			playerMock.ResetCalls ();
 
-			TimelineEvent evtLocal = new TimelineEvent { Start = new Time (100), Stop = new Time (20000),
+			TimelineEventLongoMatch evtLocal = new TimelineEventLongoMatch { Start = new Time (100), Stop = new Time (20000),
 				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) }, FileSet = mfs
 			};
 			player.LoadEvent (evtLocal, new Time (0), true);
@@ -853,7 +859,10 @@ namespace Tests.Services
 			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0), new CameraConfig (1) }, player.CamerasConfig);
 
 			/* Change again the cameras visible */
-			player.CamerasConfig = new ObservableCollection<CameraConfig>  { new CameraConfig (2), new CameraConfig (3) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> {
+				new CameraConfig (2),
+				new CameraConfig (3)
+			};
 			Assert.AreEqual (evt.CamerasConfig, new List <CameraConfig> { new CameraConfig (0) });
 			player.LoadEvent (evt, new Time (0), true);
 			Assert.AreEqual (1, elementLoaded);
@@ -869,7 +878,7 @@ namespace Tests.Services
 		public void TestCamerasVisibleValidation ()
 		{
 			// Create an event referencing unknown MediaFiles in the set.
-			TimelineEvent evt2 = new TimelineEvent { Start = new Time (150), Stop = new Time (200),
+			TimelineEventLongoMatch evt2 = new TimelineEventLongoMatch { Start = new Time (150), Stop = new Time (200),
 				CamerasConfig = new ObservableCollection<CameraConfig> {
 					new CameraConfig (0),
 					new CameraConfig (1),
@@ -878,7 +887,10 @@ namespace Tests.Services
 				}, FileSet = mfs
 			};
 
-			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> {
+				new CameraConfig (1),
+				new CameraConfig (0)
+			};
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -910,7 +922,10 @@ namespace Tests.Services
 			player.PrepareViewEvent += () => prepareView++;
 
 			/* Not ready to seek */
-			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> {
+				new CameraConfig (0),
+				new CameraConfig (1)
+			};
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -965,8 +980,11 @@ namespace Tests.Services
 
 			/* Open another event with the same MediaFileSet and already ready to seek
 			 * and check the cameras layout and visibility is respected */
-			TimelineEvent evt2 = new TimelineEvent { Start = new Time (400), Stop = new Time (50000),
-				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (0) },
+			TimelineEventLongoMatch evt2 = new TimelineEventLongoMatch { Start = new Time (400), Stop = new Time (50000),
+				CamerasConfig = new ObservableCollection<CameraConfig> {
+					new CameraConfig (1),
+					new CameraConfig (0)
+				},
 				CamerasLayout = "test", FileSet = nfs
 			};
 			player.LoadEvent (evt2, new Time (0), true);
@@ -998,7 +1016,10 @@ namespace Tests.Services
 			player.PrepareViewEvent += () => prepareView++;
 
 			/* Not ready to seek */
-			player.CamerasConfig = new  ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (1) };
+			player.CamerasConfig = new  ObservableCollection<CameraConfig> {
+				new CameraConfig (0),
+				new CameraConfig (1)
+			};
 			viewPortMock = new Mock <IViewPort> ();
 			viewPortMock.SetupAllProperties ();
 			player.ViewPorts = new List<IViewPort> { viewPortMock.Object, viewPortMock.Object };
@@ -1145,7 +1166,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestMultiplayerCamerasConfig ()
 		{
-			TimelineEvent evt1;
+			TimelineEventLongoMatch evt1;
 			ObservableCollection<CameraConfig> cams1, cams2;
 			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
 
@@ -1165,8 +1186,11 @@ namespace Tests.Services
 			multiplayerMock.ResetCalls ();
 
 			/* Now load an event */
-			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
-				CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1), new CameraConfig (1) }
+			evt1 = new TimelineEventLongoMatch { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
+				CamerasConfig = new ObservableCollection<CameraConfig> {
+					new CameraConfig (1),
+					new CameraConfig (1)
+				}
 			};
 			player.LoadEvent (evt1, new Time (0), true);
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
@@ -1174,7 +1198,10 @@ namespace Tests.Services
 			multiplayerMock.ResetCalls ();
 
 			/* Change event cams config */
-			player.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0), new CameraConfig (0) };
+			player.CamerasConfig = new ObservableCollection<CameraConfig> {
+				new CameraConfig (0),
+				new CameraConfig (0)
+			};
 			multiplayerMock.Verify (p => p.ApplyCamerasConfig (), Times.Once ());
 			Assert.AreEqual (new List<CameraConfig> { new CameraConfig (0), new CameraConfig (0) }, evt1.CamerasConfig);
 			Assert.AreEqual (player.CamerasConfig, evt1.CamerasConfig);
@@ -1218,7 +1245,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestROICamerasConfig ()
 		{
-			TimelineEvent evt1;
+			TimelineEventLongoMatch evt1;
 			ObservableCollection<CameraConfig> cams;
 			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
 
@@ -1236,7 +1263,7 @@ namespace Tests.Services
 			player.ApplyROI (cams [0]);
 
 			/* Now create an event with current camera config */
-			evt1 = new TimelineEvent { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
+			evt1 = new TimelineEventLongoMatch { Start = new Time (100), Stop = new Time (200), FileSet = mfs,
 				CamerasConfig = player.CamerasConfig
 			};
 			/* Check that ROI was copied in event */

@@ -15,10 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
+using VAS.Core.Store;
 
 namespace Tests.Core.Store
 {
@@ -29,7 +29,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestEmptyFilter ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -45,7 +45,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterCategory ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -85,7 +85,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterCategoryTags ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -143,7 +143,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterPlayers ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);
@@ -173,7 +173,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestClearAll ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EventsFilter filter = new EventsFilter (p);

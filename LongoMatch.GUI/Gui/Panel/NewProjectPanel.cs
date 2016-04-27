@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
@@ -28,10 +27,13 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
-using Color = LongoMatch.Core.Common.Color;
-using Device = LongoMatch.Core.Common.Device;
+using VAS.Core.Common;
+using VAS.Core.Store.Templates;
+using VAS.Core;
+using VAS.Core.Store;
+using Color = VAS.Core.Common.Color;
+using Constants = LongoMatch.Core.Common.Constants;
+using Device = VAS.Core.Common.Device;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
@@ -45,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
 		int firstPage;
-		Project project;
+		ProjectLongoMatch project;
 		ProjectType projectType;
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
@@ -55,12 +57,12 @@ namespace LongoMatch.Gui.Panel
 		IGUIToolkit gtoolkit;
 		Gdk.Color red;
 		Team hometemplate, awaytemplate;
-		Dashboard analysisTemplate;
+		DashboardLongoMatch analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
 		bool resyncEvents;
 
-		public NewProjectPanel (Project project)
+		public NewProjectPanel (ProjectLongoMatch project)
 		{
 			this.Build ();
 			this.mtoolkit = Config.MultimediaToolkit;
@@ -165,7 +167,7 @@ namespace LongoMatch.Gui.Panel
 			sg.AddWidget (outputsizelabel);
 		}
 
-		void LoadTeams (Project project)
+		void LoadTeams (ProjectLongoMatch project)
 		{
 			List<Team> teams;
 			bool hasLocalTeam = false;
@@ -241,7 +243,7 @@ namespace LongoMatch.Gui.Panel
 			if (project.Dashboard != null) {
 				tagscombobox.Visible = false;
 				analysislabel.Visible = false;
-				analysisTemplate = project.Dashboard;
+				analysisTemplate = project.Dashboard as DashboardLongoMatch;
 			} else {
 				project.Dashboard = analysisTemplate;
 			}
@@ -439,7 +441,7 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 
-			project = new Project ();
+			project = new ProjectLongoMatch ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
 
@@ -523,7 +525,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			tagscombobox.GetActiveIter (out iter);
-			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as Dashboard;
+			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as DashboardLongoMatch;
 			if (teamtagger != null) {
 				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
 			}
@@ -611,7 +613,7 @@ namespace LongoMatch.Gui.Panel
 			UpdateTitle ();
 		}
 
-		void HandleShowMenuEvent (List<Player> players)
+		void HandleShowMenuEvent (List<PlayerLongoMatch> players)
 		{
 			Menu menu = new Menu ();
 			MenuItem item;
@@ -636,7 +638,7 @@ namespace LongoMatch.Gui.Panel
 			menu.Popup ();
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,
+		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);

@@ -18,13 +18,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 using Timer = System.Threading.Timer;
 
 namespace LongoMatch.Services
@@ -42,7 +45,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		public Project OpenedProject {
+		public ProjectLongoMatch OpenedProject {
 			get;
 			set;
 		}
@@ -52,7 +55,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
+		void LoadPlay (TimelineEventLongoMatch play, Time seekTime, bool playing)
 		{
 			if (play != null && Player != null) {
 				play.Selected = true;
@@ -66,15 +69,15 @@ namespace LongoMatch.Services
 
 		void HandlePlayChanged (TimeNode tNode, Time time)
 		{
-			if (tNode is TimelineEvent) {
-				LoadPlay (tNode as TimelineEvent, time, false);
+			if (tNode is TimelineEventLongoMatch) {
+				LoadPlay (tNode as TimelineEventLongoMatch, time, false);
 				if (filter != null) {
 					filter.Update ();
 				}
 			}
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			var player = analysisWindow?.Player;
@@ -120,7 +123,7 @@ namespace LongoMatch.Services
 				Player.LoadPlaylistEvent (playlist, element, playing);
 		}
 
-		void HandleLoadPlayEvent (TimelineEvent play)
+		void HandleLoadPlayEvent (TimelineEventLongoMatch play)
 		{
 			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
@@ -170,7 +173,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		Playlist HandleNewPlaylist (Project project)
+		Playlist HandleNewPlaylist (ProjectLongoMatch project)
 		{
 			string name = Catalog.GetString ("New playlist");
 			Playlist playlist = null;

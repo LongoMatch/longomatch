@@ -16,9 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using NUnit.Framework;
+using VAS.Core.Common;
 
 
 namespace Tests.Core.Store
@@ -29,7 +29,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			Player player = new Player {Name = "andoni", Position = "runner",
+			PlayerLongoMatch player = new PlayerLongoMatch {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true, Mail = "test@test", Color = Color.Red
@@ -37,7 +37,7 @@ namespace Tests.Core.Store
 				
 			Utils.CheckSerialization (player);
 			
-			Player newPlayer = Utils.SerializeDeserialize (player);
+			PlayerLongoMatch newPlayer = Utils.SerializeDeserialize (player);
 			Assert.AreEqual (player.Name, newPlayer.Name);
 			Assert.AreEqual (player.Position, newPlayer.Position);
 			Assert.AreEqual (player.Number, newPlayer.Number);
@@ -53,7 +53,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestToString ()
 		{
-			Player player = new Player { Name = "andoni", LastName = "morales", Number=1 };
+			PlayerLongoMatch player = new PlayerLongoMatch { Name = "andoni", LastName = "morales", Number = 1 };
 			Assert.AreEqual ("1-andoni morales", player.ToString ());
 			player.NickName = "ylatuya";
 			Assert.AreEqual ("1-ylatuya", player.ToString ());
@@ -62,7 +62,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestPhoto ()
 		{
-			Player player = new Player {Name = "andoni", Position = "runner",
+			PlayerLongoMatch player = new PlayerLongoMatch {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true

@@ -19,12 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Core;
-using Pango;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -35,10 +35,10 @@ namespace LongoMatch.Gui.Menus
 
 		MenuItem edit, newPlay, del, addPLN, snapshot, render;
 		MenuItem duplicate, moveCat, drawings;
-		List<TimelineEvent> plays;
+		List<TimelineEventLongoMatch> plays;
 		EventType eventType;
 		Time time;
-		Project project;
+		ProjectLongoMatch project;
 
 		
 		public PlaysMenu ()
@@ -46,17 +46,17 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 
-		public void ShowListMenu (Project project, List<TimelineEvent> plays)
+		public void ShowListMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays)
 		{
 			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		public void ShowMenu (Project project, List<TimelineEvent> plays)
+		public void ShowMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays)
 		{
 			ShowMenu (project, plays, null, null, null, false);
 		}
 
-		public void ShowTimelineMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time)
+		public void ShowTimelineMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, EventType eventType, Time time)
 		{
 			ShowMenu (project, plays, eventType, time, null, false);
 		}
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Menus
 		/// <param name="addToPlaylistMenu">Add to playlist menu.</param>
 		/// <param name="project">Project.</param>
 		/// <param name="events">Timeline events.</param>
-		static public void FillAddToPlaylistMenu (MenuItem addToPlaylistMenu, Project project, IList<TimelineEvent> events)
+		static public void FillAddToPlaylistMenu (MenuItem addToPlaylistMenu, ProjectLongoMatch project, IList<TimelineEventLongoMatch> events)
 		{
 			if (events.Count == 0) {
 				addToPlaylistMenu.Visible = false;
@@ -100,7 +100,7 @@ namespace LongoMatch.Gui.Menus
 			}
 		}
 
-		void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
+		void ShowMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, EventType eventType, Time time,
 		               IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Menus
 			}
 			
 			if (plays == null) {
-				plays = new List<TimelineEvent> ();
+				plays = new List<TimelineEventLongoMatch> ();
 			} else if (plays.Count == 1) {
 				isLineup = plays [0] is LineupEvent;
 				isSubstitution = plays [0] is SubstitutionEvent;
@@ -251,7 +251,7 @@ namespace LongoMatch.Gui.Menus
 				stop: time + new Time { TotalSeconds = 10 });
 		}
 
-		void EmitRenderPlaylist (List<TimelineEvent> plays)
+		void EmitRenderPlaylist (List<TimelineEventLongoMatch> plays)
 		{
 			Playlist pl = new Playlist ();
 			foreach (TimelineEvent p in plays) {

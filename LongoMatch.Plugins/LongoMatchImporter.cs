@@ -23,6 +23,8 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using Mono.Addins;
+using VAS.Core;
+using VAS.Core.Store;
 
 
 namespace LongoMatch.Plugins
@@ -30,7 +32,6 @@ namespace LongoMatch.Plugins
 	[Extension]
 	public class LongoMatchImporter: ILongoMatchPlugin, IImportProject
 	{
-
 		public LongoMatchImporter ()
 		{
 		}
@@ -53,17 +54,19 @@ namespace LongoMatch.Plugins
 
 		#region IImportProject implementation
 
-		public Project ImportProject ()
+		public ProjectLongoMatch ImportProject ()
 		{
-			Project project = null;
+			ProjectLongoMatch project = null;
 
 			string filename = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
-				FilterName, FilterExtensions);
+				                  FilterName, FilterExtensions);
 			if (filename == null)
 				return null;
 
 			IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
-			busy.ShowSync (() => { project = Project.Import (filename); });
+			busy.ShowSync (() => {
+				project = Project.Import (filename) as ProjectLongoMatch;
+			});
 			return project;
 		}
 
@@ -75,7 +78,7 @@ namespace LongoMatch.Plugins
 
 		public string[] FilterExtensions { 
 			get {
-				return new string[] {"*" + Constants.PROJECT_EXT};
+				return new string[] { "*" + Constants.PROJECT_EXT };
 			}
 		}
 
@@ -90,6 +93,7 @@ namespace LongoMatch.Plugins
 				return false;
 			}
 		}
+
 		#endregion
 	}
 }

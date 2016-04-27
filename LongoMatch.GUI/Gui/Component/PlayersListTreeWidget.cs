@@ -15,25 +15,21 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
-
+using VAS.Core.Common;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Gui.Component
 {
-
-
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayersListTreeWidget : Gtk.Bin
 	{
-
 		TreeStore team;
 
 		public PlayersListTreeWidget ()
@@ -42,7 +38,7 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.NewRenderingJob += OnNewRenderingJob;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set;
 			get;
 		}
@@ -59,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddEvent (TimelineEvent evt)
+		public void AddEvent (TimelineEventLongoMatch evt)
 		{
 			TreeIter piter;
 
@@ -68,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			}
 			team.GetIterFirst (out piter);
 			while (team.IterIsValid (piter)) {
-				Player player = team.GetValue (piter, 0) as Player;
+				PlayerLongoMatch player = team.GetValue (piter, 0) as PlayerLongoMatch;
 				if (evt.Players.Contains (player)) {
 					team.AppendValues (piter, evt);
 				}
@@ -76,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void RemoveEvents (List<TimelineEvent> events)
+		public void RemoveEvents (List<TimelineEventLongoMatch> events)
 		{
 			TreeIter piter;
 
@@ -86,7 +82,7 @@ namespace LongoMatch.Gui.Component
 
 				team.IterChildren (out evtIter, piter);
 				while (team.IterIsValid (evtIter)) {
-					TimelineEvent evt = team.GetValue (evtIter, 0) as TimelineEvent;
+					TimelineEventLongoMatch evt = team.GetValue (evtIter, 0) as TimelineEventLongoMatch;
 					if (events.Contains (evt)) {
 						team.Remove (ref evtIter);
 					}
@@ -96,9 +92,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam (Team template, IList<TimelineEvent> plays)
+		public void SetTeam (Team template, IList<TimelineEventLongoMatch> plays)
 		{
-			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter> ();
+			Dictionary<PlayerLongoMatch, TreeIter> playersDict = new Dictionary<PlayerLongoMatch, TreeIter> ();
 			
 			Log.Debug ("Updating teams models with template:" + template);
 			team = new TreeStore (typeof(object));
@@ -138,7 +134,7 @@ namespace LongoMatch.Gui.Component
 				PlaylistPlayElement element;
 				
 				playerstreeview.Model.GetIter (out iter, path);
-				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as TimelineEvent);
+				element = new PlaylistPlayElement (playerstreeview.Model.GetValue (iter, 0) as TimelineEventLongoMatch);
 				playlist.Elements.Add (element);
 			}
 			

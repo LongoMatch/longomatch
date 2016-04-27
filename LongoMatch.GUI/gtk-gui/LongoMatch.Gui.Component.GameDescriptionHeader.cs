@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			// Container child descbox.Gtk.Box+BoxChild
 			this.homenamelabel = new global::Gtk.Label ();
 			this.homenamelabel.Name = "homenamelabel";
-			this.homenamelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Home");
+			this.homenamelabel.LabelProp = global::VAS.Core.Catalog.GetString ("Home");
 			this.descbox.Add (this.homenamelabel);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.descbox [this.homenamelabel]));
 			w3.Position = 2;
@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			// Container child homescoreeventbox.Gtk.Container+ContainerChild
 			this.homescorelabel = new global::Gtk.Label ();
 			this.homescorelabel.Name = "homescorelabel";
-			this.homescorelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("0");
+			this.homescorelabel.LabelProp = global::VAS.Core.Catalog.GetString ("0");
 			this.homescoreeventbox.Add (this.homescorelabel);
 			this.descbox.Add (this.homescoreeventbox);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.descbox [this.homescoreeventbox]));
@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			// Container child awayscoreeventbox.Gtk.Container+ContainerChild
 			this.awayscorelabel = new global::Gtk.Label ();
 			this.awayscorelabel.Name = "awayscorelabel";
-			this.awayscorelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("0");
+			this.awayscorelabel.LabelProp = global::VAS.Core.Catalog.GetString ("0");
 			this.awayscoreeventbox.Add (this.awayscorelabel);
 			this.descbox.Add (this.awayscoreeventbox);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.descbox [this.awayscoreeventbox]));
@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Component
 			// Container child descbox.Gtk.Box+BoxChild
 			this.awaynamelabel = new global::Gtk.Label ();
 			this.awaynamelabel.Name = "awaynamelabel";
-			this.awaynamelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Away");
+			this.awaynamelabel.LabelProp = global::VAS.Core.Catalog.GetString ("Away");
 			this.descbox.Add (this.awaynamelabel);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.descbox [this.awaynamelabel]));
 			w8.Position = 5;

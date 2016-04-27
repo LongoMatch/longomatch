@@ -18,16 +18,16 @@
 using System;
 using Cairo;
 using Gdk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using Pango;
-using Color = LongoMatch.Core.Common.Color;
-using FontAlignment = LongoMatch.Core.Common.FontAlignment;
-using FontSlant = LongoMatch.Core.Common.FontSlant;
-using FontWeight = LongoMatch.Core.Common.FontWeight;
-using Image = LongoMatch.Core.Common.Image;
-using LineStyle = LongoMatch.Core.Common.LineStyle;
-using Point = LongoMatch.Core.Common.Point;
+using VAS.Core.Common;
+using Color = VAS.Core.Common.Color;
+using FontAlignment = VAS.Core.Common.FontAlignment;
+using FontSlant = VAS.Core.Common.FontSlant;
+using FontWeight = VAS.Core.Common.FontWeight;
+using Image = VAS.Core.Common.Image;
+using LineStyle = VAS.Core.Common.LineStyle;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Drawing.Cairo
 {

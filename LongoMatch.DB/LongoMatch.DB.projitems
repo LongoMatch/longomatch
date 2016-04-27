@@ -3,30 +3,29 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>{D6E928F2-1BAA-4D67-BD81-B549E9B89E83}</SharedGUID>
+    <SharedGUID>{D6E928F3-1BAA-4D67-BD81-B549E9B89E83}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>LongoMatch.DB</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)CouchbaseStorage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DocumentsSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DashboardsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PlayersView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TimelineEventsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CouchbaseStorageLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TeamsView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migration\DatabaseMigration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SerializationContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ObjectsCache.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\TimelineEventsView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\TeamsView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectsView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\PlayersView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\IQueryView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\GenericView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DashboardsView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Migration\DatabaseMigration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManagerLongoMatch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Migration\" />
   </ItemGroup>
 </Project>

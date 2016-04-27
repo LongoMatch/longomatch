@@ -18,13 +18,12 @@
 //
 //
 using System;
-using System.IO;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
 using Misc = LongoMatch.Gui.Helpers.Misc;
-using LongoMatch.Core.Store.Playlists;
+using VAS.Core.Store.Playlists;
+using VAS.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Gui.Dialog
 {

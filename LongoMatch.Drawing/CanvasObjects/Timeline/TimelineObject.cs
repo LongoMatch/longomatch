@@ -15,15 +15,16 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store;
+using VAS.Core;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -242,15 +243,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 	public class CategoryTimeline: TimelineObject
 	{
 		EventsFilter filter;
-		Project project;
+		ProjectLongoMatch project;
 
-		public CategoryTimeline (Project project, List<TimelineEvent> plays, Time maxTime,
+		public CategoryTimeline (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, Time maxTime,
 		                         double offsetY, Color background, EventsFilter filter) :
 			base (maxTime, StyleConf.TimelineCategoryHeight, offsetY, background)
 		{
 			this.filter = filter;
 			this.project = project;
-			foreach (TimelineEvent p in plays) {
+			foreach (TimelineEventLongoMatch p in plays) {
 				AddPlay (p);
 			}
 		}
@@ -265,7 +266,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			return filter.IsVisible ((tn as TimelineEventObject).Event);
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			TimelineEventObject po = new TimelineEventObject (play, project);
 			po.SelectionLeft = selectionBorderL; 

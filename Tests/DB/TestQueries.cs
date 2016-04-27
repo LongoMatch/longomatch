@@ -20,12 +20,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Couchbase.Lite;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.DB;
+using LongoMatch.DB;
 
 namespace Tests.DB
 {
@@ -38,12 +41,13 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
+			DocumentsSerializerHelper.AddTypeTranslation (typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
 			string dbPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);
 			}
 			try {
-				storage = new CouchbaseStorage (dbPath, "test-db");
+				storage = new CouchbaseStorageLongoMatch (dbPath, "test-db");
 			} catch (Exception ex) {
 				throw ex;
 			}
@@ -70,58 +74,58 @@ namespace Tests.DB
 		[Test ()]
 		public void TestQueryPreloaded ()
 		{
-			storage.Store (Dashboard.DefaultTemplate (5));
-			var dashboards = storage.Retrieve<Dashboard> (new QueryFilter ());
+			storage.Store (DashboardLongoMatch.DefaultTemplate (5));
+			var dashboards = storage.Retrieve<DashboardLongoMatch> (new QueryFilter ());
 			Assert.IsFalse (dashboards.Any (d => d.IsLoaded));
 		}
 
 		[Test ()]
 		public void TestQueryFull ()
 		{
-			var dashboard = Dashboard.DefaultTemplate (5);
+			var dashboard = DashboardLongoMatch.DefaultTemplate (5);
 			storage.Store (dashboard);
-			var dashboards = storage.RetrieveFull<Dashboard> (new QueryFilter (), null);
+			var dashboards = storage.RetrieveFull<DashboardLongoMatch> (new QueryFilter (), null);
 			Assert.IsFalse (dashboards.Any (d => !d.IsLoaded));
 
 			StorableObjectsCache cache = new StorableObjectsCache ();
 			cache.AddReference (dashboard);
-			var newdashboard = storage.RetrieveFull<Dashboard> (new QueryFilter (), cache).First ();
+			var newdashboard = storage.RetrieveFull<DashboardLongoMatch> (new QueryFilter (), cache).First ();
 			Assert.IsTrue (Object.ReferenceEquals (dashboard, newdashboard));
 		}
 
 		[Test ()]
 		public void TestQueryDashboards ()
 		{
-			IEnumerable<Dashboard> dashboards;
+			IEnumerable<DashboardLongoMatch> dashboards;
 
 			for (int i = 0; i < 5; i++) {
-				var da = Dashboard.DefaultTemplate (5);
+				var da = DashboardLongoMatch.DefaultTemplate (5);
 				da.Name = "Dashboard" + (i + 1);
 				storage.Store (da);
 			}
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Dashboard1");
-			dashboards = storage.Retrieve<Dashboard> (filter);
+			dashboards = storage.Retrieve<DashboardLongoMatch> (filter);
 			Assert.AreEqual (1, dashboards.Count ());
 			Assert.AreEqual ("Dashboard1", dashboards.First ().Name);
 
 			filter.Add ("Name", "Dashboard1", "Dashboard3");
-			dashboards = storage.Retrieve<Dashboard> (filter);
+			dashboards = storage.Retrieve<DashboardLongoMatch> (filter);
 			Assert.AreEqual (2, dashboards.Count ());
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard1"));
 			Assert.IsTrue (dashboards.Any (d => d.Name == "Dashboard3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
-			dashboards = storage.Retrieve<Dashboard> (filter);
+			dashboards = storage.Retrieve<DashboardLongoMatch> (filter);
 			Assert.AreEqual (0, dashboards.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					dashboards = storage.Retrieve<Dashboard> (filter).ToList ();
+					dashboards = storage.Retrieve<DashboardLongoMatch> (filter).ToList ();
 				});
 			Assert.AreEqual (0, dashboards.Count ());
 		}
@@ -171,7 +175,7 @@ namespace Tests.DB
 			foreach (string comp in new []{"Liga", "Champions", "Copa"}) {
 				foreach (string season in new []{"2013", "2014", "2015"}) {
 					foreach (string team in new []{"Barça", "Complu", "Santomera"}) {
-						Project p = new Project ();
+						ProjectLongoMatch p = new ProjectLongoMatch ();
 						p.Description = new ProjectDescription ();
 						p.Description.Season = season;
 						p.Description.Competition = comp;
@@ -184,41 +188,41 @@ namespace Tests.DB
 
 			filter = new QueryFilter ();
 			filter.Add ("Competition", "Liga");
-			Assert.AreEqual (9, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (9, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			filter.Add ("Competition", "Liga", "Champions");
-			Assert.AreEqual (18, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (18, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			filter.Add ("Season", "2013");
-			Assert.AreEqual (6, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (6, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			filter.Add ("Season", "2013", "2015");
-			Assert.AreEqual (12, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (12, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Season", "2013");
 			filter.Add ("Competition", "Liga");
 			filter.Add ("LocalName", "Complu");
-			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 
 			filter.Add ("VisitorName", "Fluendo");
-			Assert.AreEqual (1, storage.Retrieve<Project> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
 		public void TestQueryEventsByPlayer ()
 		{
-			Player andoni = new Player { Name = "Andoni" };
-			Player jorge = new Player { Name = "Jorge" };
-			Player victor = new Player { Name = "Victor" };
-			Player josep = new Player { Name = "Josep" };
-			Player davide = new Player { Name = "Davide" };
-			Player messi = new Player { Name = "Messi" };
-			Player ukelele = new Player { Name = "ukelele" };
+			PlayerLongoMatch andoni = new PlayerLongoMatch { Name = "Andoni" };
+			PlayerLongoMatch jorge = new PlayerLongoMatch { Name = "Jorge" };
+			PlayerLongoMatch victor = new PlayerLongoMatch { Name = "Victor" };
+			PlayerLongoMatch josep = new PlayerLongoMatch { Name = "Josep" };
+			PlayerLongoMatch davide = new PlayerLongoMatch { Name = "Davide" };
+			PlayerLongoMatch messi = new PlayerLongoMatch { Name = "Messi" };
+			PlayerLongoMatch ukelele = new PlayerLongoMatch { Name = "ukelele" };
 
-			var players = new List<Player> { andoni, jorge, victor, josep, davide };
-			foreach (Player player in players) {
-				TimelineEvent evt = new TimelineEvent ();
+			var players = new List<PlayerLongoMatch> { andoni, jorge, victor, josep, davide };
+			foreach (PlayerLongoMatch player in players) {
+				TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
 				evt.Players.Add (player);
 				evt.Players.Add (messi);
 				storage.Store (evt);
@@ -226,19 +230,19 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Player", messi);
-			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (5, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Player", andoni);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Player", andoni, jorge, josep);
-			Assert.AreEqual (3, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (3, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Player", victor, ukelele);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Player", players);
-			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (5, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
@@ -253,51 +257,51 @@ namespace Tests.DB
 
 			var eventTypes = new List<EventType> { evtType1, evtType2, evtType3, evtType4, score };
 			foreach (EventType evtType in eventTypes) {
-				TimelineEvent evt = new TimelineEvent ();
+				TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
 				evt.EventType = evtType;
 				storage.Store (evt);
 			}
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("EventType", evtType1);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", evtType4);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", evtType2, evtType3);
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", eventTypes);
-			Assert.AreEqual (5, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (5, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", evtType5);
-			Assert.AreEqual (0, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (0, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", score);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
 		public void TestQueryEventsByNoPlayerOrTeam ()
 		{
-			Player messi = new Player { Name = "Messi" };
-			TimelineEvent evt = new TimelineEvent ();
+			PlayerLongoMatch messi = new PlayerLongoMatch { Name = "Messi" };
+			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
 			evt.Players.Add (messi);
 			storage.Store (evt);
-			evt = new TimelineEvent ();
+			evt = new TimelineEventLongoMatch ();
 			storage.Store (evt);
 
 			QueryFilter filter = new QueryFilter ();
-			Player nullPlayer = null;
+			PlayerLongoMatch nullPlayer = null;
 			Team nullTeam = null;
 
 			filter.Add ("Player", nullPlayer);
-			Assert.AreEqual (1, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Team", nullTeam);
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter = new QueryFilter ();
 			QueryFilter teamsAndPlayersFilter = new QueryFilter { Operator = QueryOperator.Or };
@@ -305,14 +309,14 @@ namespace Tests.DB
 			teamsAndPlayersFilter.Add ("Team", nullTeam);
 			teamsAndPlayersFilter.Add ("Player", nullPlayer);
 			filter.Operator = QueryOperator.Or;
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
 		public void TestQueryEventsByTeam ()
 		{
 			Team devTeam, qaTeam;
-			List<Project> projects;
+			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
 			devTeam = projects [0].LocalTeamTemplate;
@@ -320,11 +324,11 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Team", devTeam);
-			Assert.AreEqual (125, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (125, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Team", qaTeam);
-			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (75, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
@@ -332,7 +336,7 @@ namespace Tests.DB
 		{
 			Dashboard dashbaord;
 			Team devTeam, qaTeam;
-			List<Project> projects;
+			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
 
@@ -342,17 +346,17 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Parent", projects [0], projects [1]);
-			Assert.AreEqual (80, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (80, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Player", devTeam.List [0], qaTeam.List [1]);
-			Assert.AreEqual (20, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (20, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("EventType", (dashbaord.List [0] as AnalysisEventButton).EventType);
-			Assert.AreEqual (4, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (4, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			filter.Add ("Team", devTeam);
-			var res = storage.Retrieve<TimelineEvent> (filter);
-			Assert.AreEqual (2, storage.Retrieve<TimelineEvent> (filter).Count ());
+			var res = storage.Retrieve<TimelineEventLongoMatch> (filter);
+			Assert.AreEqual (2, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
@@ -364,14 +368,14 @@ namespace Tests.DB
 
 			Assert.AreEqual (9, storage.Retrieve<EventType> (filter).Count ());
 			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count ());
-			Assert.AreEqual (8, storage.Retrieve<Player> (filter).Count ());
+			Assert.AreEqual (8, storage.Retrieve<PlayerLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
 		public void TestNestedQueries ()
 		{
 			Team devTeam, qaTeam;
-			List<Project> projects;
+			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
 			devTeam = projects [0].LocalTeamTemplate;
@@ -380,53 +384,54 @@ namespace Tests.DB
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Parent", projects);
 
-			Assert.AreEqual (200, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (200, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			QueryFilter teamsPlayersFilter = new QueryFilter { Operator = QueryOperator.Or };
 			teamsPlayersFilter.Add ("Team", qaTeam);
 			filter.Children.Add (teamsPlayersFilter);
 
-			Assert.AreEqual (75, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (75, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 
 			teamsPlayersFilter.Add ("Player", devTeam.List [0]);
-			Assert.AreEqual (100, storage.Retrieve<TimelineEvent> (filter).Count ());
+			Assert.AreEqual (100, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
 		}
 
-		List<Project> CreateProjects ()
+		List<ProjectLongoMatch> CreateProjects ()
 		{
-			Player andoni = new Player { Name = "Andoni" };
-			Player jorge = new Player { Name = "Jorge" };
-			Player victor = new Player { Name = "Victor" };
-			Player josep = new Player { Name = "Josep" };
-			Player davide = new Player { Name = "Davide" };
-			Player saray = new Player { Name = "Saray" };
-			Player ivan = new Player { Name = "Ivan" };
-			Player adria = new Player { Name = "Adria" };
+			PlayerLongoMatch andoni = new PlayerLongoMatch { Name = "Andoni" };
+			PlayerLongoMatch jorge = new PlayerLongoMatch { Name = "Jorge" };
+			PlayerLongoMatch victor = new PlayerLongoMatch { Name = "Victor" };
+			PlayerLongoMatch josep = new PlayerLongoMatch { Name = "Josep" };
+			PlayerLongoMatch davide = new PlayerLongoMatch { Name = "Davide" };
+			PlayerLongoMatch saray = new PlayerLongoMatch { Name = "Saray" };
+			PlayerLongoMatch ivan = new PlayerLongoMatch { Name = "Ivan" };
+			PlayerLongoMatch adria = new PlayerLongoMatch { Name = "Adria" };
 			Team devteam = new Team { Name = "DevTeam" };
 			Team qateam = new Team { Name = "QA" };
-			devteam.List.AddRange (new List<Player> {
+			devteam.List.AddRange (new List<PlayerLongoMatch> {
 				andoni,
 				jorge,
 				victor,
 				josep,
 				davide
 			});
-			qateam.List.AddRange (new List<Player> {
+			qateam.List.AddRange (new List<PlayerLongoMatch> {
 				saray,
 				ivan,
 				adria
 			});
-			Dashboard dashbaord = Dashboard.DefaultTemplate (5);
-			var projects = new List<Project> ();
+			DashboardLongoMatch dashbaord = DashboardLongoMatch.DefaultTemplate (5);
+			var projects = new List<ProjectLongoMatch> ();
 			for (int i = 0; i < 5; i++) {
-				Project p = new Project ();
+				ProjectLongoMatch p = new ProjectLongoMatch ();
 				p.Dashboard = dashbaord.Clone ();
 				p.LocalTeamTemplate = devteam;
 				p.VisitorTeamTemplate = qateam;
 				p.Description = new ProjectDescription ();
 				foreach (var player in devteam.List.Concat (qateam.List)) {
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
-						TimelineEvent evt = p.AddEvent (button.EventType, new Time (0), new Time (10), new Time (5), null);
+						TimelineEventLongoMatch evt = p.AddEvent (button.EventType, new Time (0), new Time (10),
+							                              new Time (5), null) as TimelineEventLongoMatch;
 						evt.Players.Add (player);
 						if (qateam.List.Contains (player)) {
 							evt.Teams.Add (qateam);

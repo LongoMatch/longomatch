@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
@@ -29,6 +28,9 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -111,7 +113,7 @@ namespace LongoMatch.Addins
 				try {
 					Log.Information ("Adding export entry from plugin: " + exportProject.Name);
 					mainWindow.AddExportEntry (exportProject.GetMenuEntryName (), exportProject.GetMenuEntryShortName (),
-						new Action<Project, IGUIToolkit> (exportProject.ExportProject));
+						new Action<ProjectLongoMatch, IGUIToolkit> (exportProject.ExportProject));
 				} catch (Exception ex) {
 					Log.Error ("Error adding export entry");
 					Log.Exception (ex);
@@ -123,7 +125,7 @@ namespace LongoMatch.Addins
 		{
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
-				importer.RegisterImporter (new Func<Project> (importProject.ImportProject),
+				importer.RegisterImporter (new Func<ProjectLongoMatch> (importProject.ImportProject),
 					importProject.Description,
 					importProject.FilterName,
 					importProject.FilterExtensions,
@@ -170,7 +172,7 @@ namespace LongoMatch.Addins
 			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
 				foreach (Dashboard dashboard in plugin.Dashboards) {
 					dashboard.Static = true;
-					provider.Register (dashboard);
+					provider.Register (dashboard as DashboardLongoMatch);
 				}
 			}
 		}
@@ -229,7 +231,7 @@ namespace LongoMatch.Addins
 			return plugins;
 		}
 
-		public static bool ShowStats (Project project)
+		public static bool ShowStats (ProjectLongoMatch project)
 		{
 			IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
 			if (statsUI != null) {

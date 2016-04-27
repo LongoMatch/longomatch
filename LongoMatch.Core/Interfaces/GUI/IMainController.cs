@@ -16,13 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
 	public interface IMainController
 	{
-		void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction);
+		void AddExportEntry (string name, string shortName, Action<ProjectLongoMatch, IGUIToolkit> exportAction);
 	}
 }

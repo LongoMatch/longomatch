@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
+using VAS.Core.Common;
 
 namespace Tests.Core.Common
 {

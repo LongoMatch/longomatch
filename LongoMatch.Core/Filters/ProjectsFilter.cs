@@ -25,7 +25,7 @@ namespace LongoMatch.Core.Filters
 	public class ProjectsFilter
 	{
 		public const string EMPTY_OR_NULL = "$%&EMPTY$%&NULL$$%&";
-		List<Project> projects;
+		List<ProjectLongoMatch> projects;
 
 		public ProjectsFilter ()
 		{
@@ -37,13 +37,13 @@ namespace LongoMatch.Core.Filters
 		/// <summary>
 		/// List of projects to filter
 		/// </summary>
-		public List<Project> Projects {
+		public List<ProjectLongoMatch> Projects {
 			get {
 				return projects;
 			}
 			set {
 				projects = value;
-				VisibleProjects = new List<Project> ();
+				VisibleProjects = new List<ProjectLongoMatch> ();
 				Changed = true;
 			}
 		}
@@ -51,7 +51,7 @@ namespace LongoMatch.Core.Filters
 		/// <summary>
 		/// List of visible projects after aplying the filters
 		/// </summary>
-		public List<Project> VisibleProjects {
+		public List<ProjectLongoMatch> VisibleProjects {
 			protected set;
 			get;
 		}
@@ -142,13 +142,13 @@ namespace LongoMatch.Core.Filters
 		/// </summary>
 		public void ApplyChanges ()
 		{
-			IEnumerable<Project> filteredProjects;
+			IEnumerable<ProjectLongoMatch> filteredProjects;
 			if (!Changed) {
 				return;
 			}
 
 			if (FilteredSeasons.Count == 0 && FilteredCompetitions.Count == 0 && FilteredTeams.Count == 0) {
-				VisibleProjects = new List<Project> ();
+				VisibleProjects = new List<ProjectLongoMatch> ();
 				return;
 			}
 
@@ -171,7 +171,7 @@ namespace LongoMatch.Core.Filters
 			}
 			if (FilteredTeams.Count > 0) {
 				filteredProjects = filteredProjects.Where (p =>
-				FilteredTeams.Contains (p.Description.LocalName) || FilteredTeams.Contains (p.Description.VisitorName));
+					FilteredTeams.Contains (p.Description.LocalName) || FilteredTeams.Contains (p.Description.VisitorName));
 			}
 			VisibleProjects = filteredProjects.ToList ();
 		}

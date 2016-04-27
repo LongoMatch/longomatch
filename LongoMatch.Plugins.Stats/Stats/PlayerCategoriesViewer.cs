@@ -19,19 +19,20 @@ using System;
 using Gtk;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayerCategoriesViewer : Gtk.Bin
 	{
 		ListStore store;
 		ProjectStats pstats;
-		
+
 		public PlayerCategoriesViewer ()
 		{
 			this.Build ();
-			store = new ListStore(typeof(EventType), typeof(string));
+			store = new ListStore (typeof(EventType), typeof(string));
 			treeview.AppendColumn ("Desc", new Gtk.CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
 			treeview.Model = store;
@@ -39,14 +40,16 @@ namespace LongoMatch.Plugins.Stats
 			treeview.EnableGridLines = TreeViewGridLines.None;
 			treeview.EnableTreeLines = false;
 		}
-		
-		public void LoadStats (ProjectStats pstats, Project project) {
+
+		public void LoadStats (ProjectStats pstats, ProjectLongoMatch project)
+		{
 			categoryviewer.LoadBackgrounds (project);
 			this.pstats = pstats;
-			ReloadStats (project.LocalTeamTemplate.List[0]);
+			ReloadStats (project.LocalTeamTemplate.List [0]);
 		}
-		
-		public void ReloadStats (Player player) {
+
+		public void ReloadStats (PlayerLongoMatch player)
+		{
 			PlayerStats playerStats;
 			TreeIter iter;
 			TreePath selected = null;
@@ -57,7 +60,7 @@ namespace LongoMatch.Plugins.Stats
 			if (store.IterIsValid (iter))
 				selected = store.GetPath (iter);
 			
-			store.Clear();
+			store.Clear ();
 			foreach (PlayerEventTypeStats petats in playerStats.PlayerEventStats) {
 				store.AppendValues (petats, petats.EventType.Name);
 			}
@@ -66,21 +69,21 @@ namespace LongoMatch.Plugins.Stats
 			if (selected != null) {
 				store.GetIter (out iter, selected);
 			} else {
-				store.GetIterFirst(out iter);
+				store.GetIterFirst (out iter);
 			}
-			treeview.Selection.SelectIter(iter);
+			treeview.Selection.SelectIter (iter);
 			categoryviewer.LoadStats (store.GetValue (iter, 0) as PlayerEventTypeStats);
 		}
-		
+
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
 			PlayerEventTypeStats stats;
 			TreeIter iter;
 			
-			treeview.Selection.GetSelected(out iter);
-			stats = store.GetValue(iter, 0) as PlayerEventTypeStats;
+			treeview.Selection.GetSelected (out iter);
+			stats = store.GetValue (iter, 0) as PlayerEventTypeStats;
 			categoryviewer.LoadStats (stats);
-		}	
+		}
 	}
 }
 
