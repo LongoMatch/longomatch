@@ -4762,28 +4762,15 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="Homogeneous">True</property>
                             <property name="Spacing">6</property>
                             <child>
-                              <widget class="Gtk.Button" id="allButton">
+                              <widget class="Gtk.Button" id="clearButton">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="Type">TextOnly</property>
-                                <property name="Label" translatable="yes">All</property>
+                                <property name="Label" translatable="yes">Clear</property>
                                 <property name="UseUnderline">True</property>
                               </widget>
                               <packing>
                                 <property name="Position">0</property>
-                                <property name="AutoSize">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Button" id="noneButton">
-                                <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="Type">TextOnly</property>
-                                <property name="Label" translatable="yes">None</property>
-                                <property name="UseUnderline">True</property>
-                              </widget>
-                              <packing>
-                                <property name="Position">1</property>
                                 <property name="AutoSize">False</property>
                               </packing>
                             </child>

@@ -24,9 +24,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.HBox hbox3;
 		
-		private global::Gtk.Button allButton;
-		
-		private global::Gtk.Button noneButton;
+		private global::Gtk.Button clearButton;
 		
 		private global::Gtk.HSeparator hseparator1;
 		
@@ -97,38 +95,29 @@ namespace LongoMatch.Gui.Component
 			this.hbox3.Homogeneous = true;
 			this.hbox3.Spacing = 6;
 			// Container child hbox3.Gtk.Box+BoxChild
-			this.allButton = new global::Gtk.Button ();
-			this.allButton.CanFocus = true;
-			this.allButton.Name = "allButton";
-			this.allButton.UseUnderline = true;
-			this.allButton.Label = global::LongoMatch.Core.Catalog.GetString ("All");
-			this.hbox3.Add (this.allButton);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.allButton]));
+			this.clearButton = new global::Gtk.Button ();
+			this.clearButton.CanFocus = true;
+			this.clearButton.Name = "clearButton";
+			this.clearButton.UseUnderline = true;
+			this.clearButton.Label = global::LongoMatch.Core.Catalog.GetString ("Clear");
+			this.hbox3.Add (this.clearButton);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.clearButton]));
 			w3.Position = 0;
-			// Container child hbox3.Gtk.Box+BoxChild
-			this.noneButton = new global::Gtk.Button ();
-			this.noneButton.CanFocus = true;
-			this.noneButton.Name = "noneButton";
-			this.noneButton.UseUnderline = true;
-			this.noneButton.Label = global::LongoMatch.Core.Catalog.GetString ("None");
-			this.hbox3.Add (this.noneButton);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.noneButton]));
-			w4.Position = 1;
 			this.alignment1.Add (this.hbox3);
 			this.eventbox.Add (this.alignment1);
 			this.vbox3.Add (this.eventbox);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.eventbox]));
-			w7.Position = 0;
-			w7.Expand = false;
-			w7.Fill = false;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.eventbox]));
+			w6.Position = 0;
+			w6.Expand = false;
+			w6.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.hseparator1 = new global::Gtk.HSeparator ();
 			this.hseparator1.Name = "hseparator1";
 			this.vbox3.Add (this.hseparator1);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hseparator1]));
-			w8.Position = 1;
-			w8.Expand = false;
-			w8.Fill = false;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.hseparator1]));
+			w7.Position = 1;
+			w7.Expand = false;
+			w7.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.filtersnotebook = new global::Gtk.Notebook ();
 			this.filtersnotebook.CanFocus = true;
@@ -136,14 +125,14 @@ namespace LongoMatch.Gui.Component
 			this.filtersnotebook.CurrentPage = 0;
 			this.filtersnotebook.TabPos = ((global::Gtk.PositionType)(3));
 			this.vbox3.Add (this.filtersnotebook);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.filtersnotebook]));
-			w9.Position = 2;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.filtersnotebook]));
+			w8.Position = 2;
 			this.filtersvbox.Add (this.vbox3);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.vbox3]));
-			w10.Position = 0;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.vbox3]));
+			w9.Position = 0;
 			this.notebook.Add (this.filtersvbox);
-			global::Gtk.Notebook.NotebookChild w11 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
-			w11.Position = 2;
+			global::Gtk.Notebook.NotebookChild w10 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.filtersvbox]));
+			w10.Position = 2;
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
