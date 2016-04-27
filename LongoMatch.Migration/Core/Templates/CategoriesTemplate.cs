@@ -27,6 +27,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
 using Image = LongoMatch.Common.Image;
+using VAS.Core;
 
 namespace LongoMatch.Store.Templates
 {
@@ -46,30 +47,31 @@ namespace LongoMatch.Store.Templates
 		/* Database additions */
 		GameUnitsList gameUnits;
 		Version version;
-		byte[] fieldImage, halfFieldImage, goalImage ;
+		byte[] fieldImage, halfFieldImage, goalImage;
 
 		/// <summary>
 		/// Creates a new template
 		/// </summary>
-		public Categories() {
+		public Categories ()
+		{
 		}
 
 		public Guid ID {
 			get;
 			set;
 		}
-		
+
 		public string Name {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public Version Version {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public GameUnitsList GameUnits {
 			set {
@@ -77,25 +79,25 @@ namespace LongoMatch.Store.Templates
 			}
 			get {
 				if (gameUnits == null) {
-					gameUnits = new GameUnitsList();
+					gameUnits = new GameUnitsList ();
 				}
 				return gameUnits;
 			}
 		}
-		
+
 		public List<string> GamePeriods {
 			get;
 			set;
 		}
-		
+
 		public Image Image {
 			get;
 			set;
 		}
-		
+
 		public List<Category> List {
 			get {
-				return this.ToList();
+				return this.ToList ();
 			}
 		}
 		
@@ -104,73 +106,77 @@ namespace LongoMatch.Store.Templates
 		/* Keep this for backwards compatiblity with 0.18.11 */
 		[JsonIgnore]
 		[Obsolete]
-		public Image FieldBackgroundImage {get;	set;}
+		public Image FieldBackgroundImage { get;	set; }
+
 		[JsonIgnore]
 		[Obsolete]
-		public Image HalfFieldBackgroundImage {get; set;}
+		public Image HalfFieldBackgroundImage { get; set; }
+
 		[JsonIgnore]
 		[Obsolete]
-		public Image GoalBackgroundImage {get; set;}
+		public Image GoalBackgroundImage { get; set; }
 
 		public Image FieldBackground {
 			get {
-				if(fieldImage != null)
-					return Image.Deserialize(fieldImage);
-				else return null;
+				if (fieldImage != null)
+					return Image.Deserialize (fieldImage);
+				else
+					return null;
 			}
 			set {
 				if (value != null) {
 					if (value.Width > 500) {
 						value.Scale (500, 500);
 					}
-					fieldImage = value.Serialize();
-				}
-				else
+					fieldImage = value.Serialize ();
+				} else
 					fieldImage = null;
 			}
 		}
-		
+
 		public Image HalfFieldBackground {
 			get {
-				if(halfFieldImage != null)
-					return Image.Deserialize(halfFieldImage);
-				else return null;
+				if (halfFieldImage != null)
+					return Image.Deserialize (halfFieldImage);
+				else
+					return null;
 			}
 			set {
 				if (value != null) {
 					if (value.Width > 500) {
 						value.Scale (500, 500);
 					}
-					halfFieldImage = value.Serialize();
-				}
-				else
+					halfFieldImage = value.Serialize ();
+				} else
 					halfFieldImage = null;
 			}
 		}
-		
+
 		public Image GoalBackground {
 			get {
-				if(goalImage != null)
-					return Image.Deserialize(goalImage);
-				else return null;
+				if (goalImage != null)
+					return Image.Deserialize (goalImage);
+				else
+					return null;
 			}
 			set {
 				if (value != null) {
 					if (value.Width > 500) {
 						value.Scale (500, 500);
 					}
-					goalImage = value.Serialize();
-				}
-				else
+					goalImage = value.Serialize ();
+				} else
 					goalImage = null;
 			}
 		}
-		
-		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+
+		public void Save (string filePath)
+		{
+			SerializableObject.Save (this, filePath);
 		}
-	
-		public void AddDefaultSubcategories (Category cat) {
+
+		public void AddDefaultSubcategories (Category cat)
+		{
 			TagSubCategory resultsubcat;
 			
 			resultsubcat = new TagSubCategory {
@@ -179,43 +185,46 @@ namespace LongoMatch.Store.Templates
 			};
 			resultsubcat.Add (Catalog.GetString ("Success"));
 			resultsubcat.Add (Catalog.GetString ("Failure"));
-			cat.SubCategories.Add(resultsubcat);
-		}	
-		
-		public Category AddDefaultItem (int index) {
+			cat.SubCategories.Add (resultsubcat);
+		}
+
+		public Category AddDefaultItem (int index)
+		{
 			Color c = Color.Red;
-			HotKey h = new HotKey();
+			HotKey h = new HotKey ();
 			
 			
-			Category cat =  new Category {
+			Category cat = new Category {
 				Name = "Category " + index,
 				LColor = c,
-				Start = new Time{Seconds = 10},
-				Stop = new Time {Seconds = 10},
+				Start = new Time{ Seconds = 10 },
+				Stop = new Time { Seconds = 10 },
 				SortMethod = SortMethodType.SortByStartTime,
 				HotKey = h,
-				Position = index-1,
+				Position = index - 1,
 			};
-			AddDefaultSubcategories(cat);
-			Insert(index, cat);
+			AddDefaultSubcategories (cat);
+			Insert (index, cat);
 			return cat;
 		}
 
-		public static Categories Load(string filePath) {
-			Categories cat = SerializableObject.LoadSafe<Categories>(filePath);
+		public static Categories Load (string filePath)
+		{
+			Categories cat = SerializableObject.LoadSafe<Categories> (filePath);
 			if (cat.GamePeriods == null) {
-				cat.GamePeriods = new List<string>();
+				cat.GamePeriods = new List<string> ();
 				cat.GamePeriods.Add ("1");
 				cat.GamePeriods.Add ("2");
 			}
 			return cat;
 		}
 
-		public static Categories DefaultTemplate(int count) {
-			List<string> periods = new List<string>();
-			Categories defaultTemplate = new Categories();
+		public static Categories DefaultTemplate (int count)
+		{
+			List<string> periods = new List<string> ();
+			Categories defaultTemplate = new Categories ();
 			
-			defaultTemplate.FillDefaultTemplate(count);
+			defaultTemplate.FillDefaultTemplate (count);
 			periods.Add ("1");
 			periods.Add ("2");
 			defaultTemplate.GamePeriods = periods; 
@@ -223,9 +232,10 @@ namespace LongoMatch.Store.Templates
 			return defaultTemplate;
 		}
 
-		private void FillDefaultTemplate(int count) {
-			for(int i=1; i<=count; i++)
-				AddDefaultItem(i-1);
+		private void FillDefaultTemplate (int count)
+		{
+			for (int i = 1; i <= count; i++)
+				AddDefaultItem (i - 1);
 		}
 	}
 }

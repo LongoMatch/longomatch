@@ -23,9 +23,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store.Templates
 {
@@ -35,14 +39,14 @@ namespace LongoMatch.Core.Store.Templates
 		public const int CURRENT_VERSION = 1;
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
-		ObservableCollection<Player> list;
+		ObservableCollection<PlayerLongoMatch> list;
 
 		public Team ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
 			ID = Guid.NewGuid ();
-			List = new ObservableCollection<Player> ();
+			List = new ObservableCollection<PlayerLongoMatch> ();
 			try {
 				Shield = Resources.LoadImage (StyleConf.DefaultShield);
 			} catch {
@@ -81,7 +85,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		public ObservableCollection<Player> List {
+		public ObservableCollection<PlayerLongoMatch> List {
 			get {
 				return list;
 			}
@@ -195,7 +199,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<Player> PlayingPlayersList {
+		public List<PlayerLongoMatch> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
 					return List.ToList ();
@@ -207,9 +211,9 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<Player> StartingPlayersList {
+		public List<PlayerLongoMatch> StartingPlayersList {
 			get {
-				List<Player> playingPlayers = PlayingPlayersList;
+				List<PlayerLongoMatch> playingPlayers = PlayingPlayersList;
 				int count = Math.Min (StartingPlayers, playingPlayers.Count);
 				return playingPlayers.GetRange (0, count);
 			}
@@ -217,14 +221,14 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<Player> BenchPlayersList {
+		public List<PlayerLongoMatch> BenchPlayersList {
 			get {
-				List<Player> playingPlayers = PlayingPlayersList;
+				List<PlayerLongoMatch> playingPlayers = PlayingPlayersList;
 				int starting = StartingPlayers;
 				if (playingPlayers.Count > starting) {
 					return playingPlayers.GetRange (starting, playingPlayers.Count - starting);
 				} else {
-					return new List<Player> ();
+					return new List<PlayerLongoMatch> ();
 				}
 			}
 		}
@@ -245,14 +249,14 @@ namespace LongoMatch.Core.Store.Templates
 			return newTeam;
 		}
 
-		public void RemovePlayers (List<Player> players, bool delete)
+		public void RemovePlayers (List<PlayerLongoMatch> players, bool delete)
 		{
-			List<Player> bench, starters;
+			List<PlayerLongoMatch> bench, starters;
 			
 			bench = BenchPlayersList;
 			starters = StartingPlayersList;
 
-			foreach (Player p in players) {
+			foreach (PlayerLongoMatch p in players) {
 				if (List.Contains (p)) {
 					if (starters.Contains (p) && bench.Count > 0) {
 						List.Swap (p, bench [0]);
@@ -268,7 +272,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		public void ResetPlayers ()
 		{
-			foreach (Player p in List) {
+			foreach (PlayerLongoMatch p in List) {
 				p.Playing = true;
 			}
 		}
@@ -282,7 +286,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		public Player AddDefaultItem (int i)
 		{
-			Player p = new Player {
+			var p = new PlayerLongoMatch {
 				Name = "Player " + (i + 1).ToString (),
 				Birthday = new DateTime (DateTime.Now.Year - 25, 6, 1),
 				Height = 1.80f,

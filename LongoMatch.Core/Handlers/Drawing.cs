@@ -15,9 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Common;
 
 namespace LongoMatch.Core.Handlers.Drawing
 {
@@ -29,6 +28,4 @@ namespace LongoMatch.Core.Handlers.Drawing
 	public delegate void SizeChangedHandler ();
 	public delegate void CanvasHandler (ICanvasObject co);
 	public delegate void RedrawHandler (ICanvasObject co,Area area);
-
 }
-

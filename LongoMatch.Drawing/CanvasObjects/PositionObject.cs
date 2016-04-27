@@ -18,10 +18,10 @@
 using System;
 using System.Linq;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using VAS.Core.Store.Drawables;
 using System.Collections.Generic;
+using VAS.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -54,12 +54,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}
 
-		public TimelineEvent Play {
+		public TimelineEventLongoMatch Play {
 			get;
 			set;
 		}

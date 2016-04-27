@@ -18,14 +18,10 @@
 using System;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core;
-
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Interfaces.GUI;
-using System.Threading.Tasks;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using LongoMatch.Gui.Helpers;
+using VAS.Core;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -94,7 +90,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.Count<Project> ().ToString ();
+			(cell as Gtk.CellRendererText).Text = db.Count<ProjectLongoMatch> ().ToString ();
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {

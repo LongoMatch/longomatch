@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("\nA new version of LongoMatch has been released at www.ylatuya.es!\n");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("\nA new version of LongoMatch has been released at www.ylatuya.es!\n");
 			this.label3.Justify = ((global::Gtk.Justification)(2));
 			this.vbox2.Add (this.label3);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label3]));
@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("The new version is ");
+			this.label5.LabelProp = global::VAS.Core.Catalog.GetString ("The new version is ");
 			this.label5.Justify = ((global::Gtk.Justification)(2));
 			this.vbox2.Add (this.label5);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label5]));
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
-			this.label6.LabelProp = global::LongoMatch.Core.Catalog.GetString ("\nYou can download it using this direct link:");
+			this.label6.LabelProp = global::VAS.Core.Catalog.GetString ("\nYou can download it using this direct link:");
 			this.label6.Justify = ((global::Gtk.Justification)(2));
 			this.vbox2.Add (this.label6);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label6]));

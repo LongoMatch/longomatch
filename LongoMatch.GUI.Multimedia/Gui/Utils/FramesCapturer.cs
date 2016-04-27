@@ -21,11 +21,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
 using Gtk;
+using LongoMatch.Core.Interfaces.Multimedia;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Video.Utils
 {
@@ -76,7 +75,7 @@ namespace LongoMatch.Video.Utils
 		public void CaptureFrames ()
 		{
 			Time pos;
-			LongoMatch.Core.Common.Image frame;
+			VAS.Core.Common.Image frame;
 			IList<CameraConfig> cameras;
 			bool quit = false;
 			int i = 0;

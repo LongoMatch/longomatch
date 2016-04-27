@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using LongoMatch.Services;
-using LongoMatch.Core.Store;
 using LongoMatch;
 using LongoMatch.Core.Common;
-using Moq;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
-using System.Security.Cryptography.X509Certificates;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
+using Moq;
+using NUnit.Framework;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
 
 namespace Tests.Services
 {
@@ -67,7 +67,7 @@ namespace Tests.Services
 		public void TestRegister ()
 		{
 			var toolsManager = new ToolsManager ();
-			toolsManager.RegisterImporter (() => new Project (), "", "", null, false, false);
+			toolsManager.RegisterImporter (() => new ProjectLongoMatch (), "", "", null, false, false);
 			Assert.AreEqual (1, toolsManager.ProjectImporters.Count);
 		}
 
@@ -87,7 +87,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => null;
 
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (It.IsAny<Project> (), It.IsAny<bool> ()), Times.Never ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (It.IsAny<ProjectLongoMatch> (), It.IsAny<bool> ()), Times.Never ());
 
 			// Throws Exception
 			importer.ImportFunction = () => {
@@ -102,7 +102,7 @@ namespace Tests.Services
 		public void TestImportProject ()
 		{
 			bool openned = false;
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 
 			Config.EventsBroker.OpenProjectIDEvent += (project_id, project) => {
 				if (project == p) {
@@ -111,7 +111,7 @@ namespace Tests.Services
 			};
 			importer.ImportFunction = () => p;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			Assert.IsTrue (openned);
 		}
 
@@ -119,7 +119,7 @@ namespace Tests.Services
 		public void TestImportFakeLiveProject ()
 		{
 			bool openned = false;
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Description = new ProjectDescription ();
 			p.Description.FileSet = new MediaFileSet ();
 			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });
@@ -130,7 +130,7 @@ namespace Tests.Services
 
 			importer.ImportFunction = () => p;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ()), Times.Never ());
 			Assert.IsTrue (openned);
 		}
@@ -139,7 +139,7 @@ namespace Tests.Services
 		public void TestImportProjectThatNeedsEdition ()
 		{
 			bool openned = false;
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 
 			Config.EventsBroker.NewProjectEvent += project => {
 				openned |= project == p;
@@ -147,7 +147,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => p;
 			importer.NeedsEdition = true;
 			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Never ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Never ());
 			Assert.IsTrue (openned);
 		}
 

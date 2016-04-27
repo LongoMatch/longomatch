@@ -15,10 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gdk;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Stats;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Plugins.Stats
 {
@@ -46,7 +45,7 @@ namespace LongoMatch.Plugins.Stats
 				stats.Dispose ();
 		}
 
-		public void LoadStats (Project project)
+		public void LoadStats (ProjectLongoMatch project)
 		{
 			if (stats != null)
 				stats.Dispose ();

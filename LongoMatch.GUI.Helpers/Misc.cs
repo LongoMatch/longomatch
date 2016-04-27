@@ -22,13 +22,13 @@ using System.IO;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 using Color = Gdk.Color;
-using LColor = LongoMatch.Core.Common.Color;
+using LColor = VAS.Core.Common.Color;
+using VAS.Core;
 
 namespace LongoMatch.Gui.Helpers
 {

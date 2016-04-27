@@ -21,11 +21,12 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
-using EventType = LongoMatch.Core.Store.EventType;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using EventType = VAS.Core.Store.EventType;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -34,7 +35,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class PlaysTreeView : ListTreeViewBase
 	{
-		
 		public event EditEventTypeHandler EditProperties;
 		//Categories menu
 		Menu categoriesMenu;
@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public TreePath AddEvent (TimelineEvent evt, TreeIter evtTter)
+		public TreePath AddEvent (TimelineEventLongoMatch evt, TreeIter evtTter)
 		{
 			TreeIter childIter = childModel.AppendValues (evtTter, evt);
 			TreePath childPath = childModel.GetPath (childIter);
@@ -151,7 +151,7 @@ namespace LongoMatch.Gui.Component
 
 		void ShowCategoryMenu (TreePath[] paths)
 		{
-			List<TimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
 			PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenuItem, Project, events);
 			categoriesMenu.Popup ();
 		}
@@ -159,7 +159,7 @@ namespace LongoMatch.Gui.Component
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
 		{
 			object objecta, objectb;
-			TimelineEvent tna, tnb;
+			TimelineEventLongoMatch tna, tnb;
 
 			if (model == null)
 				return 0;
@@ -179,9 +179,9 @@ namespace LongoMatch.Gui.Component
 			if (objecta is EventType && objectb is EventType) {
 				return int.Parse (model.GetPath (a).ToString ())
 				- int.Parse (model.GetPath (b).ToString ());
-			} else if (objecta is TimelineEvent && objectb is TimelineEvent) {
-				tna = objecta as TimelineEvent;
-				tnb = objectb as TimelineEvent;
+			} else if (objecta is TimelineEventLongoMatch && objectb is TimelineEventLongoMatch) {
+				tna = objecta as TimelineEventLongoMatch;
+				tnb = objectb as TimelineEventLongoMatch;
 				switch (tna.EventType.SortMethod) {
 				case(SortMethodType.SortByName):
 					return String.Compare (tna.Name, tnb.Name);

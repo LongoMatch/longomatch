@@ -19,12 +19,13 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui;
 using LongoMatch.Gui.Component;
-using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
@@ -204,4 +205,3 @@ namespace LongoMatch.Gui.Dialog
 		}
 	}
 }
-

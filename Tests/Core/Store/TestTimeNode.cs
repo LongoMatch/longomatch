@@ -15,19 +15,18 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Store;
 using NUnit.Framework;
+using VAS.Core.Store;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestTimeNode
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
-			TimeNode tn = new TimeNode();
+			TimeNode tn = new TimeNode ();
 			
 			Utils.CheckSerialization (tn);
 			
@@ -44,20 +43,20 @@ namespace Tests.Core.Store
 			Assert.AreEqual (tn.Name, newtn.Name);
 			Assert.AreEqual (tn.Rate, newtn.Rate);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestDuration ()
 		{
-			TimeNode tn = new TimeNode();
+			TimeNode tn = new TimeNode ();
 			tn.Start = new Time (1000);
 			tn.Stop = new Time (2000);
 			Assert.AreEqual (tn.Duration, tn.Stop - tn.Start);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestUpdateEventTime ()
 		{
-			TimeNode tn = new TimeNode();
+			TimeNode tn = new TimeNode ();
 			tn.Start = new Time (1000);
 			tn.Stop = new Time (2000);
 			Assert.AreEqual (tn.EventTime, tn.Start);
@@ -69,11 +68,11 @@ namespace Tests.Core.Store
 			tn.Start = new Time (1405);
 			Assert.AreEqual (tn.EventTime, tn.Start);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestMove ()
 		{
-			TimeNode tn = new TimeNode();
+			TimeNode tn = new TimeNode ();
 			tn.Start = new Time (1000);
 			tn.EventTime = new Time (1500);
 			tn.Stop = new Time (2000);
@@ -82,13 +81,13 @@ namespace Tests.Core.Store
 			Assert.AreEqual (tn.EventTime.MSeconds, 1600);
 			Assert.AreEqual (tn.Stop.MSeconds, 2100);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestJoin ()
 		{
 			TimeNode tn;
-			TimeNode tn1 = new TimeNode();
-			TimeNode tn2 = new TimeNode();
+			TimeNode tn1 = new TimeNode ();
+			TimeNode tn2 = new TimeNode ();
 			tn1.Start = new Time (1000);
 			tn1.Stop = new Time (2000);
 
@@ -136,13 +135,13 @@ namespace Tests.Core.Store
 			Assert.AreEqual (tn.Start, tn2.Start);
 			Assert.AreEqual (tn.Stop, tn2.Stop);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestIntersect ()
 		{
 			TimeNode tn;
-			TimeNode tn1 = new TimeNode();
-			TimeNode tn2 = new TimeNode();
+			TimeNode tn1 = new TimeNode ();
+			TimeNode tn2 = new TimeNode ();
 			tn1.Start = new Time (1000);
 			tn1.Stop = new Time (2000);
 			

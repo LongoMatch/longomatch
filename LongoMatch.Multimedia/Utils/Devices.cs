@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Video.Capturer;
 using System;
 using System.Runtime.InteropServices;
+using VAS.Core.Common;
 
 namespace LongoMatch.Multimedia.Utils
 {
@@ -49,9 +50,9 @@ namespace LongoMatch.Multimedia.Utils
 		static public List<Device> ListVideoDevices ()
 		{
 			string[] devices;
-			if (LongoMatch.Core.Common.Utils.OS == OperatingSystemID.OSX)
+			if (VAS.Core.Common.Utils.OS == OperatingSystemID.OSX)
 				devices = devices_osx;
-			else if (LongoMatch.Core.Common.Utils.OS == OperatingSystemID.Windows)
+			else if (VAS.Core.Common.Utils.OS == OperatingSystemID.Windows)
 				devices = devices_win;
 			else
 				devices = devices_lin;

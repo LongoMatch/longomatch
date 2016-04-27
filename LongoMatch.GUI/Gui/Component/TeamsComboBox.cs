@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using System.Collections.Generic;
 using LongoMatch.Core.Store.Templates;
 using Gdk;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {

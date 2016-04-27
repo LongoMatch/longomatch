@@ -16,7 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
 {
@@ -25,4 +25,3 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 		MediaFile DiscoverFile (string filePath, bool takeScreenshot = true);
 	}
 }
-

@@ -17,17 +17,18 @@
 //
 using System;
 using System.IO;
-using Gtk;
 using Gdk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
+using Gtk;
 using LongoMatch.Core.Handlers.Drawing;
-using Rectangle = Gdk.Rectangle;
-using Point = LongoMatch.Core.Common.Point;
-using CursorType = LongoMatch.Core.Common.CursorType;
+using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using CursorType = VAS.Core.Common.CursorType;
 using GCursorType = Gdk.CursorType;
-using Image = LongoMatch.Core.Common.Image;
+using Image = VAS.Core.Common.Image;
+using Point = VAS.Core.Common.Point;
+using Rectangle = Gdk.Rectangle;
 
 namespace LongoMatch.Drawing.Cairo
 {

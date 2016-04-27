@@ -18,15 +18,16 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using LongoMatch.Core.Store;
 using LongoMatch.Video;
 using LongoMatch.Core.Common;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Constants = VAS.Core.Common.Constants;
 
 namespace LongoMatch.Multimedia.Utils
 {
 	public class GStreamer
 	{
-		
 		[DllImport ("libgstreamer-0.10.dll") /* willfully unmapped */]
 		static extern IntPtr gst_registry_get_default ();
 

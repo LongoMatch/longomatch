@@ -15,19 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
+using VAS.DB.Views;
+using VAS.DB;
 
 namespace LongoMatch.DB.Views
 {
-	public class TimelineEventsView: GenericView <TimelineEvent>
+	public class TimelineEventsView: GenericView <TimelineEventLongoMatch>
 	{
-		public TimelineEventsView (CouchbaseStorage storage) : base (storage)
+		public TimelineEventsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
 			/* We emit 1 row per player changing the Players property to Player */
 			FilterProperties.Remove ("Players");

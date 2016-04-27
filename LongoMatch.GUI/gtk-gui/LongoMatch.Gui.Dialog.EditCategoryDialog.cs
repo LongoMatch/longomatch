@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.EditCategoryDialog
 			this.Name = "LongoMatch.Gui.Dialog.EditCategoryDialog";
-			this.Title = global::LongoMatch.Core.Catalog.GetString ("Properties");
+			this.Title = global::VAS.Core.Catalog.GetString ("Properties");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));

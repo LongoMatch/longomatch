@@ -18,11 +18,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
@@ -74,7 +75,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		List<EditionJob> ConfigureRenderingJob (Playlist playlist);
 
-		void ExportFrameSeries (Project openenedProject, TimelineEvent play, string snapshotDir);
+		void ExportFrameSeries (ProjectLongoMatch openenedProject, TimelineEvent play, string snapshotDir);
 
 		void OpenProject (Project project, ProjectType projectType, 
 		                  CaptureSettings props, EventsFilter filter,
@@ -82,7 +83,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void CloseProject ();
 
-		void SelectProject (List<Project> projects);
+		void SelectProject (List<ProjectLongoMatch> projects);
 
 		Project ChooseProject (List<Project> projects);
 

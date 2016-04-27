@@ -29,6 +29,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using VAS.Core;
 
 namespace LongoMatch.Store
 {
@@ -55,15 +56,18 @@ namespace LongoMatch.Store
 		List<Play> timeline;
 
 		#region Constructors
-		public Project() {
-			_UUID = System.Guid.NewGuid();
-			timeline = new List<Play>();
-			Categories = new Categories();
-			LocalTeamTemplate = new TeamTemplate();
-			VisitorTeamTemplate = new TeamTemplate();
+
+		public Project ()
+		{
+			_UUID = System.Guid.NewGuid ();
+			timeline = new List<Play> ();
+			Categories = new Categories ();
+			LocalTeamTemplate = new TeamTemplate ();
+			VisitorTeamTemplate = new TeamTemplate ();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
 		}
+
 		#endregion
 
 		#region Properties
@@ -77,9 +81,9 @@ namespace LongoMatch.Store
 				return _UUID;
 			}
 		}
-		
+
 		public ProjectDescription Description {
-			get{
+			get {
 				return description;
 			}
 			set {
@@ -93,7 +97,7 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Categories template
 		/// </value>
-		[JsonProperty(Order = -10)]
+		[JsonProperty (Order = -10)]
 		public Categories Categories {
 			get;
 			set;
@@ -102,7 +106,7 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Local team template
 		/// </value>
-		[JsonProperty(Order = -9)]
+		[JsonProperty (Order = -9)]
 		public TeamTemplate LocalTeamTemplate {
 			get;
 			set;
@@ -111,24 +115,24 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Visitor team template
 		/// </value>
-		[JsonProperty(Order = -8)]
+		[JsonProperty (Order = -8)]
 		public TeamTemplate VisitorTeamTemplate {
 			get;
 			set;
 		}
-		
+
 		public List<Period> Periods {
 			get;
 			set;
 		}
-		
+
 		public List<Timer> Timers {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
-		[Obsolete("Game units have been replaced with timers")]
+		[Obsolete ("Game units have been replaced with timers")]
 		public GameUnitsList  GameUnits {
 			set {
 				Categories.GameUnits = value;
@@ -137,26 +141,29 @@ namespace LongoMatch.Store
 				return Categories.GameUnits;
 			}
 		}
-		
+
 		[JsonIgnore]
 		public IEnumerable<IGrouping<Category, Play>> PlaysGroupedByCategory {
 			get {
-				return timeline.GroupBy(play => play.Category);
+				return timeline.GroupBy (play => play.Category);
 			}
 		}
+
 		#endregion
 
 		#region Public Methods
+
 		/// <summary>
 		/// Frees all the project's resources helping the GC
 		/// </summary>
-		public void Clear() {
-			timeline.Clear();
-			Categories.Clear();
-			VisitorTeamTemplate.Clear();
-			LocalTeamTemplate.Clear();
-			Periods.Clear();
-			Timers.Clear();
+		public void Clear ()
+		{
+			timeline.Clear ();
+			Categories.Clear ();
+			VisitorTeamTemplate.Clear ();
+			LocalTeamTemplate.Clear ();
+			Periods.Clear ();
+			Timers.Clear ();
 		}
 
 
@@ -178,9 +185,10 @@ namespace LongoMatch.Store
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
-		public Play AddPlay(Category category, Time start, Time stop, Image miniature) {
-			string count= String.Format("{0:000}", PlaysInCategory (category).Count + 1);
-			string name = String.Format("{0} {1}",category.Name, count);
+		public Play AddPlay (Category category, Time start, Time stop, Image miniature)
+		{
+			string count = String.Format ("{0:000}", PlaysInCategory (category).Count + 1);
+			string name = String.Format ("{0} {1}", category.Name, count);
 
 			var play = new Play {
 				Name = name,
@@ -191,14 +199,15 @@ namespace LongoMatch.Store
 				Miniature = miniature,
 				Fps = Description.File.Fps,
 			};
-			timeline.Add(play);
+			timeline.Add (play);
 			return play;
 		}
-		
-		public void AddPlay (Play play) {
-			timeline.Add(play);
+
+		public void AddPlay (Play play)
+		{
+			timeline.Add (play);
 		}
-		
+
 		/// <summary>
 		/// Delete a play from the project
 		/// </summary>
@@ -208,9 +217,10 @@ namespace LongoMatch.Store
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemovePlays(List<Play> plays) {
-			foreach(Play play in plays)
-				timeline.Remove(play);
+		public void RemovePlays (List<Play> plays)
+		{
+			foreach (Play play in plays)
+				timeline.Remove (play);
 		}
 
 		/// <summary>
@@ -219,86 +229,94 @@ namespace LongoMatch.Store
 		/// <param name="sectionIndex">
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
-		public void RemoveCategory(Category category) {
-			if(Categories.Count == 1)
-				throw new Exception("You can't remove the last Category");
-			Categories.Remove(category);
+		public void RemoveCategory (Category category)
+		{
+			if (Categories.Count == 1)
+				throw new Exception ("You can't remove the last Category");
+			Categories.Remove (category);
 
-			timeline.RemoveAll(p => p.Category.UUID == category.UUID);
+			timeline.RemoveAll (p => p.Category.UUID == category.UUID);
 		}
-		
-		public void RemovePlayer(TeamTemplate template, Player player) {
-			if(template.Count == 1)
-				throw new Exception("You can't remove the last Player");
-			template.Remove(player);
+
+		public void RemovePlayer (TeamTemplate template, Player player)
+		{
+			if (template.Count == 1)
+				throw new Exception ("You can't remove the last Player");
+			template.Remove (player);
 			foreach (var play in timeline) {
-				play.Players.RemoveByPlayer(player);
+				play.Players.RemoveByPlayer (player);
 			}
 		}
-		
-		public void DeleteSubcategoryTags(Category cat, List<ISubCategory> subcategories) {
+
+		public void DeleteSubcategoryTags (Category cat, List<ISubCategory> subcategories)
+		{
 			foreach (var play in timeline.Where(p => p.Category == cat)) {
 				foreach (var subcat in subcategories) {
-					Log.Error(play.Name);
+					Log.Error (play.Name);
 					if (subcat is TagSubCategory)
-						play.Tags.RemoveBySubcategory(subcat);
+						play.Tags.RemoveBySubcategory (subcat);
 					else if (subcat is TeamSubCategory)
-						play.Teams.RemoveBySubcategory(subcat);
+						play.Teams.RemoveBySubcategory (subcat);
 					else if (subcat is PlayerSubCategory)
-						play.Players.RemoveBySubcategory(subcat);
+						play.Players.RemoveBySubcategory (subcat);
 				}
 			}
 		}
 
-		public List<Play> PlaysInCategory(Category category) {
-			return timeline.Where(p => p.Category.UUID == category.UUID).ToList();
+		public List<Play> PlaysInCategory (Category category)
+		{
+			return timeline.Where (p => p.Category.UUID == category.UUID).ToList ();
 		}
 
-		public List<Play> AllPlays() {
+		public List<Play> AllPlays ()
+		{
 			return timeline;
 		}
 
 
-		public bool Equals(Project project) {
-			if(project == null)
+		public bool Equals (Project project)
+		{
+			if (project == null)
 				return false;
 			else
 				return UUID == project.UUID;
 		}
 
-		public int CompareTo(object obj) {
-			if(obj is Project) {
-				Project project = (Project) obj;
-				return UUID.CompareTo(project.UUID);
-			}
-			else
-				throw new ArgumentException("object is not a Project and cannot be compared");
+		public int CompareTo (object obj)
+		{
+			if (obj is Project) {
+				Project project = (Project)obj;
+				return UUID.CompareTo (project.UUID);
+			} else
+				throw new ArgumentException ("object is not a Project and cannot be compared");
 		}
 
-		public static void Export(Project project, string file) {
-			file = Path.ChangeExtension(file, Constants.PROJECT_EXT);
-			SerializableObject.Save(project, file);
+		public static void Export (Project project, string file)
+		{
+			file = Path.ChangeExtension (file, Constants.PROJECT_EXT);
+			SerializableObject.Save (project, file);
 		}
 
-		public static Project Import() {
+		public static Project Import ()
+		{
 			string file = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir, Constants.PROJECT_NAME,
 				              new string[] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;
 			return Project.Import (file);
 		}
-		
-		public static Project Import(string file)
+
+		public static Project Import (string file)
 		{
 			try {
-				return SerializableObject.Load<Project>(file);
-			}
-			catch  (Exception e){
+				return SerializableObject.Load<Project> (file);
+			} catch (Exception e) {
 				Log.Exception (e);
-				throw new Exception(Catalog.GetString("The file you are trying to load " +
-				                                      "is not a valid project"));
+				throw new Exception (Catalog.GetString ("The file you are trying to load " +
+				"is not a valid project"));
 			}
 		}
+
 		#endregion
 	}
 }

@@ -154,3 +154,16 @@ LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
 LongoMatch.Services/UpdatesNotifier.cs
 
+LongoMatch.Core/Common/ConstantsLongoMatch.cs
+LongoMatch.Core/Common/EnumsLongomatch.cs
+LongoMatch.Core/Common/EventsBrokerLongomatch.cs
+LongoMatch.Core/Common/ExceptionsLongoMatch.cs
+LongoMatch.DB/CouchbaseStorageLongoMatch.cs
+LongoMatch.DB/Migration/DatabaseMigration.cs
+LongoMatch.DB/Properties/AssemblyInfo.cs
+LongoMatch.DB/Views/DashboardsView.cs
+LongoMatch.DB/Views/PlayersView.cs
+LongoMatch.DB/Views/ProjectsView.cs
+LongoMatch.DB/Views/TeamsView.cs
+LongoMatch.DB/Views/TimelineEventsView.cs
+LongoMatch.DB/FileStorage.cs

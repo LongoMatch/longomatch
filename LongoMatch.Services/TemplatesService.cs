@@ -21,23 +21,25 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
+using VAS.DB;
 
 namespace LongoMatch.Services
 {
 	public class TemplatesService: IService
 	{
-
 		public TemplatesService (IStorage storage = null)
 		{
 			if (storage == null) {
-				storage = new CouchbaseStorage (Config.TemplatesDir, "templates");
+				storage = new CouchbaseStorageLongoMatch (Config.TemplatesDir, "templates");
 			}
 			TeamTemplateProvider = new TeamTemplatesProvider (storage);
 			CategoriesTemplateProvider = new CategoriesTemplatesProvider (storage);
@@ -236,7 +238,8 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
+	//public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<DashboardLongoMatch>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{

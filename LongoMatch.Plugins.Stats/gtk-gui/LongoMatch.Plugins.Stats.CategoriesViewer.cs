@@ -5,9 +5,13 @@ namespace LongoMatch.Plugins.Stats
 	public partial class CategoriesViewer
 	{
 		private global::Gtk.HPaned hpaned1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::Gtk.TreeView treeview;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow3;
+		
 		private global::LongoMatch.Plugins.Stats.CategoryViewer categoryviewer1;
 
 		protected virtual void Build ()
@@ -42,9 +46,7 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Viewport w3 = new global::Gtk.Viewport ();
 			w3.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
-			this.categoryviewer1 = new global::LongoMatch.Plugins.Stats.CategoryViewer ();
-			this.categoryviewer1.Events = ((global::Gdk.EventMask)(256));
-			this.categoryviewer1.Name = "categoryviewer1";
+			this.categoryviewer1 = null;
 			w3.Add (this.categoryviewer1);
 			this.scrolledwindow3.Add (w3);
 			this.hpaned1.Add (this.scrolledwindow3);

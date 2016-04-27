@@ -20,9 +20,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using VAS.Core;
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -36,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Build ();
 
-			LongoMatch.Core.Common.Image image = Resources.LoadImage (Constants.SPLASH);
+			VAS.Core.Common.Image image = Resources.LoadImage (Constants.SPLASH);
 			splashimage.WidthRequest = WidthRequest = image.Width;
 			splashimage.HeightRequest = HeightRequest = image.Height;
 			progressbar1.WidthRequest = WidthRequest * 60 / 100;

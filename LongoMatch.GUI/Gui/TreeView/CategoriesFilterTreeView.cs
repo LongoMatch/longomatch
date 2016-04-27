@@ -15,12 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using VAS.Core;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -28,10 +28,10 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
-		Project project;
+		ProjectLongoMatch project;
 		EventsFilter filter;
 
-		public void SetFilter (EventsFilter filter, Project project)
+		public void SetFilter (EventsFilter filter, ProjectLongoMatch project)
 		{
 			this.project = project;
 			this.filter = filter;

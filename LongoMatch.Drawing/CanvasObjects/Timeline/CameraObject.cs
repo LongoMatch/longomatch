@@ -19,6 +19,8 @@ using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {

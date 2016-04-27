@@ -69,7 +69,7 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			db.AddProject (new Project {Description = new ProjectDescription()});
+			db.AddProject (new ProjectLongoMatch {Description = new ProjectDescriptionLongoMatch()});
 			File.Delete (Path.Combine (dbdir, "test.ldb"));
 			db = new DataBase (dbdir);
 			Assert.IsTrue (File.Exists (Path.Combine (dbdir, "test.ldb")));
@@ -81,7 +81,7 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			db.AddProject (new Project {Description = new ProjectDescription()});
+			db.AddProject (new ProjectLongoMatch {Description = new ProjectDescriptionLongoMatch()});
 			var writer = File.CreateText (Path.Combine (dbdir, "wrongfile"));
 			writer.WriteLine("TEST&%&$&%");
 			writer.WriteLine("}~4");
@@ -97,14 +97,14 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			ProjectDescription pd2 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
-			Project p2 = new Project {Description = pd2};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectDescriptionLongoMatch pd2 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
+			ProjectLongoMatch p2 = new ProjectLongoMatch {Description = pd2};
 			db.AddProject (p1);
 			db.AddProject (p2);
 			Assert.AreEqual (db.Count, 2);
-			List<ProjectDescription> projects = db.GetAllProjects ();
+			List<ProjectDescriptionLongoMatch> projects = db.GetAllProjects ();
 			Assert.AreEqual (db.Count, 2);
 			Assert.AreEqual (projects.Count, 2);
 			Assert.AreEqual (projects[0], pd1);
@@ -116,10 +116,10 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
 			db.AddProject (p1);
-			Project p2 = db.GetProject (p1.ID);
+			ProjectLongoMatch p2 = db.GetProject (p1.ID);
 			Assert.AreEqual (p1.ID, p2.ID);
 			Assert.IsNull (db.GetProject (new Guid()));
 		}
@@ -129,8 +129,8 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
 			Assert.IsTrue (db.AddProject (p1));
 			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.ID.ToString())));
 			Assert.IsTrue (db.AddProject (p1));
@@ -144,8 +144,8 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
 			Assert.IsTrue (db.AddProject (p1));
 			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.ID.ToString())));
 			Assert.AreEqual (db.Count, 1);
@@ -162,8 +162,8 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
 			DateTime lastModified = p1.Description.LastModified;
 			Assert.IsTrue (db.AddProject (p1));
 			Assert.IsTrue (db.UpdateProject (p1));
@@ -175,8 +175,8 @@ namespace Tests.Services
 		{
 			string dbdir = Path.Combine (tmpdir, "test.ldb");
 			DataBase db = new DataBase (dbdir);
-			ProjectDescription pd1 = new ProjectDescription ();
-			Project p1 = new Project {Description = pd1};
+			ProjectDescriptionLongoMatch pd1 = new ProjectDescriptionLongoMatch ();
+			ProjectLongoMatch p1 = new ProjectLongoMatch {Description = pd1};
 			Assert.IsFalse (db.Exists (p1));
 			db.AddProject (p1);
 			Assert.IsTrue (db.Exists (p1));

@@ -26,14 +26,14 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Services;
-using LongoMatch.Core;
 using Pango;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Gui
 {
@@ -283,7 +283,7 @@ namespace LongoMatch.Gui
 			jumpspinbutton.ValueChanged += HandleJumpValueChanged;
 		}
 
-		void LoadImage (Image image, FrameDrawing drawing)
+		void LoadImage (VAS.Core.Common.Image image, FrameDrawing drawing)
 		{
 			if (image == null) {
 				DrawingsVisible = false;

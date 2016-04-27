@@ -25,8 +25,10 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core;
 using Misc = LongoMatch.Gui.Helpers.Misc;
-using LongoMatch.Core;
 
 namespace LongoMatch.Gui.Component
 {
@@ -52,8 +54,8 @@ namespace LongoMatch.Gui.Component
 		const int COL_ACTIVE = 5;
 		TreeModelFilter filter;
 		TreeModelSort sort;
-		List<Project> projects;
-		List<Project> selectedProjects;
+		List<ProjectLongoMatch> projects;
+		List<ProjectLongoMatch> selectedProjects;
 		ListStore store;
 		bool swallowSignals;
 		CellRendererToggle checkCell;
@@ -62,7 +64,7 @@ namespace LongoMatch.Gui.Component
 		public ProjectListWidget ()
 		{
 			this.Build ();
-			selectedProjects = new List<Project> ();
+			selectedProjects = new List<ProjectLongoMatch> ();
 			
 			CreateStore ();
 			CreateViews ();
@@ -96,7 +98,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Fill (List<Project> projects)
+		public void Fill (List<ProjectLongoMatch> projects)
 		{
 			Pixbuf image, homeShield, awayShield;
 
@@ -104,7 +106,7 @@ namespace LongoMatch.Gui.Component
 			this.projects = projects;
 			store.Clear ();
 			selectedProjects.Clear ();
-			foreach (Project p in projects) {
+			foreach (ProjectLongoMatch p in projects) {
 				ProjectDescription pdesc = p.Description;
 				MediaFile file = pdesc.FileSet.FirstOrDefault ();
 				if (file != null && file.IsFakeCapture) {
@@ -136,9 +138,9 @@ namespace LongoMatch.Gui.Component
 		/// Removes the provided projects from the list. Matching is done using the project description instance, not the project ID.
 		/// </summary>
 		/// <param name="projects">List of project description to remove.</param>
-		public void RemoveProjects (List<Project> projects)
+		public void RemoveProjects (List<ProjectLongoMatch> projects)
 		{
-			foreach (Project project in projects) {
+			foreach (var project in projects) {
 				this.projects.Remove (project);
 			}
 			// Regenerate our list, this will trigger selected event for the first item.
@@ -149,7 +151,7 @@ namespace LongoMatch.Gui.Component
 		/// Updates the project description with a matching ID to the new description.
 		/// </summary>
 		/// <param name="description">Project Description.</param>
-		public void UpdateProject (Project project)
+		public void UpdateProject (ProjectLongoMatch project)
 		{
 			TreeIter first;
 
@@ -261,7 +263,7 @@ namespace LongoMatch.Gui.Component
 
 		void UpdateSelection (TreeIter iter, bool active)
 		{
-			Project project = store.GetValue (iter, COL_PROJECT) as Project;
+			ProjectLongoMatch project = store.GetValue (iter, COL_PROJECT) as ProjectLongoMatch;
 			bool wasActive = (bool)store.GetValue (iter, COL_ACTIVE);
 
 			if (wasActive != active) {
@@ -282,10 +284,10 @@ namespace LongoMatch.Gui.Component
 
 		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
-			Project p1, p2;
+			ProjectLongoMatch p1, p2;
 			
-			p1 = (Project)model.GetValue (a, COL_PROJECT);
-			p2 = (Project)model.GetValue (b, COL_PROJECT);
+			p1 = (ProjectLongoMatch)model.GetValue (a, COL_PROJECT);
+			p2 = (ProjectLongoMatch)model.GetValue (b, COL_PROJECT);
 
 			if (p1 == null && p2 == null) {
 				return 0;
@@ -306,7 +308,7 @@ namespace LongoMatch.Gui.Component
 
 		bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Project project = (Project)model.GetValue (iter, COL_PROJECT);
+			ProjectLongoMatch project = (ProjectLongoMatch)model.GetValue (iter, COL_PROJECT);
 
 			if (project == null)
 				return true;
@@ -322,10 +324,10 @@ namespace LongoMatch.Gui.Component
 				return;
 
 			if (ProjectsSelected != null) {
-				selectedProjects = new List<Project> ();
+				selectedProjects = new List<ProjectLongoMatch> ();
 				for (int i = 0; i < selectedItems.Length; i++) {
 					model.GetIterFromString (out iter, selectedItems [i].ToString ());
-					selectedProjects.Add ((Project)model.GetValue (iter, COL_PROJECT));
+					selectedProjects.Add ((ProjectLongoMatch)model.GetValue (iter, COL_PROJECT));
 				}
 				ProjectsSelected (selectedProjects);
 			}
@@ -343,7 +345,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTreeviewRowActivated (object o, RowActivatedArgs args)
 		{
-			Project project = treeview.Model.GetValue (args.Path, COL_PROJECT) as Project;
+			var project = treeview.Model.GetValue (args.Path, COL_PROJECT) as ProjectLongoMatch;
 			if (project != null && ProjectSelected != null) {
 				ProjectSelected (project);
 			}
@@ -352,14 +354,14 @@ namespace LongoMatch.Gui.Component
 		void HandleItemActivated (object o, ItemActivatedArgs args)
 		{
 			TreeIter iter;
-			Project project;
+			ProjectLongoMatch project;
 			
 			if (swallowSignals)
 				return;
 				
 			if (ProjectSelected != null) {
 				iconview.Model.GetIter (out iter, args.Path);
-				project = iconview.Model.GetValue (iter, COL_PROJECT) as Project;
+				project = iconview.Model.GetValue (iter, COL_PROJECT) as ProjectLongoMatch;
 				if (project != null) {
 					ProjectSelected (project);
 				}

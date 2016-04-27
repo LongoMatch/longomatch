@@ -15,12 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
 
 namespace Tests.Core.Common
 {

@@ -20,19 +20,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
 using LongoMatch.Video.Utils;
-using LongoMatch.Core;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Image = VAS.Core.Common.Image;
+using System.Linq;
 
 namespace LongoMatch.Gui
 {
@@ -233,7 +235,7 @@ namespace LongoMatch.Gui
 			return jobs;
 		}
 
-		public void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
+		public void ExportFrameSeries (ProjectLongoMatch openedProject, TimelineEvent play, string snapshotsDir)
 		{
 			SnapshotsDialog sd;
 			uint interval;
@@ -261,14 +263,15 @@ namespace LongoMatch.Gui
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
-				dialog.Load (project, play as StatEvent);
+				dialog.Load (project as ProjectLongoMatch, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
 				PlayEditor dialog = new PlayEditor (mainWindow as Gtk.Window);
-				dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
+				dialog.LoadPlay (play as TimelineEventLongoMatch, project as ProjectLongoMatch, editTags, editPos,
+					editPlayers, editNotes);
 				dialog.Run ();
 				dialog.Destroy ();
 			}
@@ -284,9 +287,9 @@ namespace LongoMatch.Gui
 
 			Log.Information ("Drawing tool");
 			if (play == null) {
-				dialog.LoadFrame (image, project);
+				dialog.LoadFrame (image, project as ProjectLongoMatch);
 			} else {
-				dialog.LoadPlay (play, image, drawing, camConfig, project);
+				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig, project as ProjectLongoMatch);
 			}
 			dialog.Show ();
 			dialog.Run ();
@@ -296,9 +299,9 @@ namespace LongoMatch.Gui
 		public Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
-			Project project = null;
+			ProjectLongoMatch project = null;
 			ChooseProjectDialog dialog = new ChooseProjectDialog (mainWindow);
-			dialog.Fill (projects);
+			dialog.Fill (projects.OfType<ProjectLongoMatch> ().ToList ());
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				project = dialog.Project;
 			}
@@ -306,10 +309,10 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public void SelectProject (List<Project> projects)
+		public void SelectProject (List<ProjectLongoMatch> projects)
 		{
 			Log.Information ("Select project");
-			mainWindow.SelectProject (projects);
+			mainWindow.SelectProject (projects.ToList ());
 		}
 
 		public void OpenCategoriesTemplatesManager ()
@@ -328,7 +331,7 @@ namespace LongoMatch.Gui
 
 		public void OpenProjectsManager (Project openedProject)
 		{
-			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject);
+			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject as ProjectLongoMatch);
 			Log.Information ("Open projects manager");
 			mainWindow.SetPanel (panel);
 		}
@@ -384,13 +387,13 @@ namespace LongoMatch.Gui
 
 		public void CreateNewProject (Project project = null)
 		{
-			mainWindow.CreateNewProject (project);
+			mainWindow.CreateNewProject (project as ProjectLongoMatch);
 		}
 
 		public void ShowProjectStats (Project project)
 		{
 			Log.Information ("Show project stats");
-			Addins.AddinsManager.ShowStats (project);
+			Addins.AddinsManager.ShowStats (project as ProjectLongoMatch);
 			System.GC.Collect ();
 		}
 
@@ -412,7 +415,7 @@ namespace LongoMatch.Gui
 		                         out IAnalysisWindow analysisWindow)
 		{
 			Log.Information ("Open project");
-			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
+			analysisWindow = mainWindow.SetProject (project as ProjectLongoMatch, projectType, props, filter);
 		}
 
 		public void CloseProject ()

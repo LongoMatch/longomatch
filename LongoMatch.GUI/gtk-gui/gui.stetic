@@ -10705,7 +10705,7 @@ You can continue with the current capture, cancel it or save your project.
                               </widget>
                             </child>
                             <child>
-                              <widget class="Gtk.Label" id="GtkLabel">
+                              <widget class="Gtk.Label" id="GtkLabel1">
                                 <property name="MemberName" />
                                 <property name="LabelProp" translatable="yes">&lt;b&gt;Notes&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>

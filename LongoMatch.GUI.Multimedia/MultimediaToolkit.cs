@@ -24,6 +24,9 @@ using LongoMatch.Core.Common;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Core;
 using System.IO;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core;
 
 namespace LongoMatch.Video
 {

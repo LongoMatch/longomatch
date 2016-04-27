@@ -6,6 +6,7 @@ using System;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Core.Common;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing
 {

@@ -19,29 +19,31 @@ using System;
 using System.IO;
 using LongoMatch.Core.Common;
 using NUnit.Framework;
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Common
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestImage
 	{
 		Image img;
+
 		
-		
-		[SetUp()]
+		[SetUp ()]
 		public void LoadImageFromFile ()
 		{
 			img = Utils.LoadImageFromFile (false);
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			string dir = Environment.CurrentDirectory;
 			Utils.CheckSerialization (img);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestLoadFromFile ()
 		{
 			Assert.AreEqual (img.Width, 16);
@@ -50,8 +52,8 @@ namespace Tests.Core.Common
 			Assert.AreEqual (img.Width, 20);
 			Assert.AreEqual (img.Height, 20);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestSerialize ()
 		{
 			byte[] buf = img.Serialize ();
@@ -60,8 +62,8 @@ namespace Tests.Core.Common
 			Assert.AreEqual (img.Width, 16);
 			Assert.AreEqual (img.Height, 16);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestScale ()
 		{
 			Image img2 = img.Scale (20, 20);
@@ -80,8 +82,8 @@ namespace Tests.Core.Common
 			Assert.AreEqual (img.Width, Constants.MAX_THUMBNAIL_SIZE);
 			Assert.AreEqual (img.Height, Constants.MAX_THUMBNAIL_SIZE);
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestSave ()
 		{
 			string tmpFile = Path.GetTempFileName ();
@@ -94,8 +96,8 @@ namespace Tests.Core.Common
 				File.Delete (tmpFile);
 			}
 		}
-		
-		[Test()]
+
+		[Test ()]
 		public void TestComposite ()
 		{
 			Image img2 = Utils.LoadImageFromFile (true);

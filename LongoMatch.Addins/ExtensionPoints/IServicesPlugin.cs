@@ -18,6 +18,8 @@
 using System.Collections.Generic;
 using Mono.Addins;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Filters;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {

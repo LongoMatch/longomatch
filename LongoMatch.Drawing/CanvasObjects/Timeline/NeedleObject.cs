@@ -16,10 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using VAS.Core;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -88,7 +89,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, LongoMatch.Core.Common.Area area)
+		public override void Draw (IDrawingToolkit tk, VAS.Core.Common.Area area)
 		{
 			if (!UpdateDrawArea (tk, area, Area)) {
 				return;

@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {

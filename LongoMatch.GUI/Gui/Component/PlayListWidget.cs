@@ -19,11 +19,11 @@
 //
 using System.Linq;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Playlists;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
-		Project project;
+		ProjectLongoMatch project;
 
 		public PlayListWidget ()
 		{
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				project = value;
 				playlisttreeview1.Project = value;

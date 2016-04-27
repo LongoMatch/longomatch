@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
-using LongoMatch.Core;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {

@@ -23,13 +23,16 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class AnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
-		static Project openedProject;
+		static ProjectLongoMatch openedProject;
 		ProjectType projectType;
 		EventsFilter filter;
 		bool detachedPlayer;
@@ -85,7 +88,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			playsSelection.AddPlay (play);
 			codingwidget.AddPlay (play);
@@ -96,7 +99,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget.UpdateCategories ();
 		}
 
-		public void DeletePlays (List<TimelineEvent> plays)
+		public void DeletePlays (List<TimelineEventLongoMatch> plays)
 		{
 			playsSelection.RemovePlays (plays);
 			codingwidget.DeletePlays (plays);
@@ -137,7 +140,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget.ClickButton (button, tag);
 		}
 
-		public void TagPlayer (Player player)
+		public void TagPlayer (PlayerLongoMatch player)
 		{
 			codingwidget.TagPlayer (player);
 		}
@@ -190,7 +193,7 @@ namespace LongoMatch.Gui.Component
 				DetachPlayer ();
 		}
 
-		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			openedProject = project;
 			this.projectType = projectType;
@@ -214,4 +217,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

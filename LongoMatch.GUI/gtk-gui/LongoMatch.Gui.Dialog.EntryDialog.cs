@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child table1.Gtk.Table+TableChild
 			this.existentemplatelabel = new global::Gtk.Label ();
 			this.existentemplatelabel.Name = "existentemplatelabel";
-			this.existentemplatelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Copy existent template:");
+			this.existentemplatelabel.LabelProp = global::VAS.Core.Catalog.GetString ("Copy existent template:");
 			this.table1.Add (this.existentemplatelabel);
 			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.existentemplatelabel]));
 			w5.TopAttach = ((uint)(2));
@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Name:");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Name:");
 			this.table1.Add (this.label2);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.label2]));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -97,7 +97,7 @@ namespace LongoMatch.Gui.Dialog
 			this.playerslabel = new global::Gtk.Label ();
 			this.playerslabel.Name = "playerslabel";
 			this.playerslabel.Xalign = 0F;
-			this.playerslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Players:");
+			this.playerslabel.LabelProp = global::VAS.Core.Catalog.GetString ("Players:");
 			this.table1.Add (this.playerslabel);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.playerslabel]));
 			w7.TopAttach = ((uint)(1));

@@ -27,6 +27,9 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Services
 {
@@ -37,7 +40,7 @@ namespace LongoMatch.Services
 		ProjectType projectType;
 		ICapturerBin capturer;
 		Dashboard dashboard;
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 		AnalysisEventButton pendingButton;
 		bool inPlayerTagging;
 		string playerNumber;
@@ -57,7 +60,7 @@ namespace LongoMatch.Services
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
 				Team team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				Player player = team.List.FirstOrDefault (p => p.Number == playerNumber);
+				PlayerLongoMatch player = team.List.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
 					analysisWindow.TagPlayer (player);
 				}
@@ -95,7 +98,7 @@ namespace LongoMatch.Services
 			ReloadHotkeys ();
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
 		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.analysisWindow = analysisWindow;

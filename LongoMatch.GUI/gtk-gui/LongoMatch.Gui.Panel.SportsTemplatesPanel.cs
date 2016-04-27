@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Panel
 			this.editdashboardslabel = new global::Gtk.Label ();
 			this.editdashboardslabel.Name = "editdashboardslabel";
 			this.editdashboardslabel.Xalign = 0F;
-			this.editdashboardslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Manage dashboards");
+			this.editdashboardslabel.LabelProp = global::VAS.Core.Catalog.GetString ("Manage dashboards");
 			this.editdashboardslabel.UseMarkup = true;
 			this.vbox3.Add (this.editdashboardslabel);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.editdashboardslabel]));
@@ -261,7 +261,7 @@ namespace LongoMatch.Gui.Panel
 			this.editbuttonslabel = new global::Gtk.Label ();
 			this.editbuttonslabel.Name = "editbuttonslabel";
 			this.editbuttonslabel.Xalign = 0F;
-			this.editbuttonslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Manage dashboard buttons");
+			this.editbuttonslabel.LabelProp = global::VAS.Core.Catalog.GetString ("Manage dashboard buttons");
 			this.editbuttonslabel.UseMarkup = true;
 			this.vbox17.Add (this.editbuttonslabel);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox17 [this.editbuttonslabel]));

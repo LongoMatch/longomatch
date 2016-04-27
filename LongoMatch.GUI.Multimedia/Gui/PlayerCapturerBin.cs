@@ -15,14 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
-
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Interfaces;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui
 {
@@ -122,7 +120,7 @@ namespace LongoMatch.Gui
 				Player.Pause ();
 				ShowCapturer ();
 			} else {
-				if (element is TimelineEvent && mode == PlayerViewOperationMode.LiveAnalysisReview) {
+				if (element is TimelineEventLongoMatch && mode == PlayerViewOperationMode.LiveAnalysisReview) {
 					ShowPlayer ();
 					livebox.Visible = replayhbox.Visible = true;
 				}

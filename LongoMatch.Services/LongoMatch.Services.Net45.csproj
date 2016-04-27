@@ -60,16 +60,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
       <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
       <Name>LongoMatch.Drawing.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+    <ProjectReference Include="..\VAS\VAS.DB\VAS.DB.Net45.csproj">
       <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Name>VAS.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>
     </ProjectReference>
   </ItemGroup>

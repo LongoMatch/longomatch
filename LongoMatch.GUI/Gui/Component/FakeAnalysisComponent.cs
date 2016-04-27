@@ -15,13 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -37,7 +38,7 @@ namespace LongoMatch.Gui.Component
 
 		#region IAnalysisWindow implementation
 
-		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			codingwidget1.SetProject (project, projectType, filter);
 		}
@@ -50,12 +51,12 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			codingwidget1.AddPlay (play);
 		}
 
-		public void DeletePlays (List<TimelineEvent> plays)
+		public void DeletePlays (List<TimelineEventLongoMatch> plays)
 		{
 			codingwidget1.DeletePlays (plays);
 		}
@@ -101,7 +102,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.ClickButton (button, tag);
 		}
 
-		public void TagPlayer (Player player)
+		public void TagPlayer (PlayerLongoMatch player)
 		{
 			codingwidget1.TagPlayer (player);
 		}
@@ -126,4 +127,3 @@ namespace LongoMatch.Gui.Component
 		#endregion
 	}
 }
-

@@ -20,7 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Core.Migration
 {
@@ -30,7 +31,7 @@ namespace LongoMatch.Core.Migration
 		/// Migrate the specified project to the current version format.
 		/// </summary>
 		/// <param name="project">Project.</param>
-		public static void Migrate (Project project)
+		public static void Migrate (ProjectLongoMatch project)
 		{
 			/* Apply all the migration steps starting from the current version*/
 			switch (project.Version) {
@@ -44,7 +45,7 @@ namespace LongoMatch.Core.Migration
 		}
 
 		#pragma warning disable 0618
-		public static void Migrate0 (Project project, IDictionary<string, Guid> scoreNameToID = null,
+		public static void Migrate0 (ProjectLongoMatch project, IDictionary<string, Guid> scoreNameToID = null,
 		                             IDictionary<string, Guid> penaltyNameToID = null,
 		                             IDictionary<string, Guid> teamNameToID = null,
 		                             IDictionary<string, Guid> dashboardNameToID = null)
@@ -111,7 +112,7 @@ namespace LongoMatch.Core.Migration
 			}
 
 			// Convert old Team tags to Teams
-			foreach (TimelineEvent evt in project.Timeline.Where (e => e.Team != TeamType.NONE)) {
+			foreach (TimelineEventLongoMatch evt in project.Timeline.Where (e => (e as TimelineEventLongoMatch).Team != TeamType.NONE)) {
 				if (evt.Team == TeamType.LOCAL || evt.Team == TeamType.BOTH) {
 					evt.Teams.Add (project.LocalTeamTemplate);
 				}

@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using Mono.Addins;
-using LongoMatch.Addins.ExtensionPoints;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
+using LongoMatch.Addins.ExtensionPoints;
+using VAS.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Plugins.GStreamer
 {

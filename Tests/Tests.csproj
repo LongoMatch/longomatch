@@ -70,41 +70,21 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Core\Store\TestDashboardButton.cs" />
     <Compile Include="Core\Store\TestEventType.cs" />
-    <Compile Include="Core\Store\TestFrameDrawing.cs" />
-    <Compile Include="Core\Store\TestHotkey.cs" />
-    <Compile Include="Core\Store\TestMediaFile.cs" />
-    <Compile Include="Core\Store\TestMediaFileSet.cs" />
     <Compile Include="Core\Store\TestPenaltyCard.cs" />
     <Compile Include="Core\Store\TestPlayer.cs" />
     <Compile Include="Core\Store\TestPlaysFilter.cs" />
-    <Compile Include="Core\Store\TestPoint.cs" />
     <Compile Include="Core\Store\TestScore.cs" />
-    <Compile Include="Core\Store\TestTime.cs" />
     <Compile Include="Core\Store\TestTimelineEvent.cs" />
     <Compile Include="Core\Store\TestTimeNode.cs" />
     <Compile Include="Core\Common\TestColor.cs" />
-    <Compile Include="Core\Store\Drawables\TestAngle.cs" />
-    <Compile Include="Core\Store\Drawables\TestCross.cs" />
-    <Compile Include="Core\Store\Drawables\TestDrawable.cs" />
-    <Compile Include="Core\Store\Drawables\TestEllipse.cs" />
-    <Compile Include="Core\Store\Drawables\TestLine.cs" />
-    <Compile Include="Core\Store\Drawables\TestMultipoints.cs" />
-    <Compile Include="Core\Store\Drawables\TestQuadrilateral.cs" />
-    <Compile Include="Core\Store\Drawables\TestRectangle.cs" />
-    <Compile Include="Core\Store\Drawables\TestText.cs" />
     <Compile Include="Core\Common\TestImage.cs" />
     <Compile Include="Core\Store\Templates\TestTeamTemplate.cs" />
     <Compile Include="Core\Store\TestProject.cs" />
     <Compile Include="Core\Store\TestProjectDescription.cs" />
     <Compile Include="Core\Store\TestTimer.cs" />
-    <Compile Include="Core\Store\TestTag.cs" />
-    <Compile Include="Core\Store\Drawables\TestCircle.cs" />
-    <Compile Include="Core\Store\Drawables\TestCounter.cs" />
-    <Compile Include="Core\Store\TestCoordinates.cs" />
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
     <Compile Include="Services\TestRenderingJobsManager.cs" />
-    <Compile Include="Core\Store\Playlists\TestPlaylistPlayElement.cs" />
     <Compile Include="Services\TestPlayerController.cs" />
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
@@ -114,39 +94,27 @@
     <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
-    <Compile Include="Core\Store\Playlists\TestPlaylist.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
     <Compile Include="Integration\TestPostGameAnalysis.cs" />
     <Compile Include="DummyBusyDialog.cs" />
     <Compile Include="Core\TestResources.cs" />
     <Compile Include="DB\TestQueries.cs" />
     <Compile Include="Core\Common\TestExtensions.cs" />
-    <Compile Include="Core\Filters\TestQueryFilter.cs" />
     <Compile Include="Core\Filters\TestProjectsFilter.cs" />
     <Compile Include="Services\TestToolsManager.cs" />
-    <Compile Include="DB\TestDatabaseMigration.cs" />
     <Compile Include="Core\Migration\TestTeamMigration.cs" />
     <Compile Include="Core\Migration\TestProjectMigration.cs" />
     <Compile Include="Core\Migration\TestDashboardMigration.cs" />
     <Compile Include="Core\Common\TestCloner.cs" />
     <Compile Include="Integration\TestDatabaseMigration.cs" />
     <Compile Include="LocalStorage.cs" />
-    <Compile Include="DB\TestDatabaseManager.cs" />
     <Compile Include="Core\Common\TestDirectoryMonitor.cs" />
     <Compile Include="Services\TestImportMonitorService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
       <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
       <Name>LongoMatch.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
-      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
-      <Name>LongoMatch.DB.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
@@ -155,6 +123,26 @@
     <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
       <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
       <Name>LongoMatch.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
+      <Name>LongoMatch.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.DB\VAS.DB.Net45.csproj">
+      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Name>VAS.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Migration\LongoMatch.Migration.csproj">
+      <Project>{4D20F396-53C0-4298-9121-9F68C101CCAB}</Project>
+      <Name>LongoMatch.Migration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +171,6 @@
     <Folder Include="Core\Store\Templates\" />
     <Folder Include="Services\" />
     <Folder Include="DB\" />
-    <Folder Include="Core\Store\Playlists\" />
     <Folder Include="Core\Serialization\" />
     <Folder Include="Integration\" />
     <Folder Include="Core\Filters\" />

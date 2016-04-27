@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Mono.Addins;
 using LongoMatch.Core.Store;
 
@@ -25,8 +24,8 @@ namespace LongoMatch.Addins.ExtensionPoints
 	[TypeExtensionPoint]
 	public interface IStatsUI: ILongoMatchPlugin
 	{
-		void ShowStats (Project project);
-		
+		void ShowStats (ProjectLongoMatch project);
+
 		int Priority { get; }
 	}
 }

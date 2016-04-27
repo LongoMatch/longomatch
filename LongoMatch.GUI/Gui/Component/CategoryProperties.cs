@@ -20,21 +20,21 @@
 using System;
 using Gtk;
 using Pango;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Dialog;
-using Point = LongoMatch.Core.Common.Point;
-using LongoMatch.Core.Store.Templates;
-
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VASColor = VAS.Core.Common.Color;
+using Point = VAS.Core.Common.Point;
+using VAS.Core;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial  class CategoryProperties : Gtk.Bin
+	public partial class CategoryProperties : Gtk.Bin
 	{
-
 		public event EventHandler EditedEvent;
 
 		SizeGroup sizegroupLeft, sizegroupRight;
@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 		PenaltyCardButton cardButton;
 		ScoreButton scoreButton;
 		TagButton tagButton;
-		TimerButton timerButton;
+		TimerButtonLongoMatch timerButton;
 		Time lastLeadTime;
 		bool edited, ignore;
 
@@ -130,7 +130,7 @@ namespace LongoMatch.Gui.Component
 				cardButton = value as PenaltyCardButton;
 				scoreButton = value as ScoreButton;
 				tagButton = value as TagButton;
-				timerButton = value as TimerButton;
+				timerButton = value as TimerButtonLongoMatch;
 				UpdateGui ();
 			}
 			get {
@@ -226,7 +226,7 @@ namespace LongoMatch.Gui.Component
 				shapecombobox.Active = (int)cardButton.PenaltyCard.Shape;
 			}
 			if (timerButton != null) {
-				teamcombobox.Active = (int)timerButton.Timer.Team;
+				teamcombobox.Active = (int)(timerButton.Timer as TimerLongoMatch).Team;
 			}
 			if (tagButton != null) {
 				groupentry.Text = tagButton.Tag.Group;
@@ -312,7 +312,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			LongoMatch.Core.Common.Color c = Helpers.Misc.ToLgmColor ((sender as ColorButton).Color);
+			VASColor c = Helpers.Misc.ToLgmColor ((sender as ColorButton).Color);
 			if (sender == colorbutton1) {
 				button.BackgroundColor = c;
 			} else {
@@ -379,7 +379,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ignore)
 				return;
-			timerButton.Timer.Team = (TeamType)teamcombobox.Active;
+			(timerButton.Timer as TimerLongoMatch).Team = (TeamType)teamcombobox.Active;
 			Edited = true;
 		}
 
