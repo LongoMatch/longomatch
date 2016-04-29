@@ -53,6 +53,14 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
+		public override void Destroy ()
+		{			
+			if (detachedPlayer) {
+				DetachPlayer ();
+			}
+			base.Destroy ();
+		}
+
 		public IPlayerController Player {
 			get {
 				return playercapturer.Player;
