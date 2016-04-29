@@ -100,13 +100,11 @@ namespace LongoMatch.Gui.Component
 
 			filter.IgnoreUpdates = true;
 			foreach (Player player in local.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (localIter, player.ToString (), true, player);
+				store.AppendValues (localIter, player.ToString (), false, player);
 			}
 			
 			foreach (Player player in visitor.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (visitorIter, player.ToString (), true, player);
+				store.AppendValues (visitorIter, player.ToString (), false, player);
 			}
 			filter.IgnoreUpdates = false;
 			filter.Update ();

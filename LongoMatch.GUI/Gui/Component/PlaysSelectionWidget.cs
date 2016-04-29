@@ -48,8 +48,7 @@ namespace LongoMatch.Gui.Component
 			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
-			allButton.Clicked += HandleButtonClicked;
-			noneButton.Clicked += HandleButtonClicked;
+			clearButton.Clicked += HandleClearClicked;
 		}
 
 		protected override void OnDestroyed ()
@@ -116,13 +115,12 @@ namespace LongoMatch.Gui.Component
 			filtersnotebook.ShowAll ();
 		}
 
-		void HandleButtonClicked (object sender, EventArgs e)
+		void HandleClearClicked (object sender, EventArgs e)
 		{
-			bool active = sender == allButton;
 			if (filtersnotebook.Page == PAGE_CATEGORIES) {
-				categoriesfilter.ToggleAll (active);
+				categoriesfilter.ToggleAll (false);
 			} else {
-				playersfilter.ToggleAll (active);
+				playersfilter.ToggleAll (false);
 			}
 		}
 	}

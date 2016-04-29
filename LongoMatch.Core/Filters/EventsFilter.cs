@@ -189,7 +189,7 @@ namespace LongoMatch.Core.Filters
 		void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
-				VisiblePlayers = project.LocalTeamTemplate.PlayingPlayersList.Concat (
+				VisiblePlayers = project.LocalTeamTemplate.PlayingPlayersList.Union (
 					project.VisitorTeamTemplate.PlayingPlayersList).ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
@@ -236,11 +236,12 @@ namespace LongoMatch.Core.Filters
 						tag_match = true;
 					}
 				}
-
-				if (play.Players.Count == 0 && VisiblePlayers.Count ==
-				    project.LocalTeamTemplate.PlayingPlayersList.Count +
-				    project.VisitorTeamTemplate.PlayingPlayersList.Count) {
+					
+				if (play.Players.Count == 0 &&
+				    VisiblePlayers.Count == project.LocalTeamTemplate.PlayingPlayersList.Union (
+					    project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
 					player_match = true;
+
 				} else {
 					player_match = VisiblePlayers.Intersect (play.Players).Any ();
 				}

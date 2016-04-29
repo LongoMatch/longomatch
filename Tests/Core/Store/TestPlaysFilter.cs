@@ -170,6 +170,41 @@ namespace Tests.Core.Store
 			}
 		}
 
+
+		[Test ()]
+		public void TestFilterPlayersDuplicated ()
+		{
+			Project p = Utils.CreateProject ();
+			p.VisitorTeamTemplate = p.LocalTeamTemplate;
+
+			try {
+				EventsFilter filter = new EventsFilter (p);
+
+				Assert.AreEqual (5, filter.VisiblePlayers.Count);
+				Assert.AreEqual (3, filter.VisiblePlays.Count);
+
+				foreach (Player player in p.LocalTeamTemplate.List) {
+					filter.FilterPlayer (player, true);
+				}
+				Assert.AreEqual (5, filter.VisiblePlayers.Count);
+				Assert.AreEqual (3, filter.VisiblePlays.Count);
+
+				foreach (Player player in p.VisitorTeamTemplate.List) {
+					filter.FilterPlayer (player, true);
+				}
+				Assert.AreEqual (5, filter.VisiblePlayers.Count);
+				Assert.AreEqual (3, filter.VisiblePlays.Count);
+
+
+				filter.ClearAll ();
+				Assert.AreEqual (5, filter.VisiblePlayers.Count);
+				Assert.AreEqual (3, filter.VisiblePlays.Count);
+			} finally {
+				Utils.DeleteProject (p);
+			}
+		}
+
+
 		[Test ()]
 		public void TestClearAll ()
 		{
