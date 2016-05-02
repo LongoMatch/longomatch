@@ -20,21 +20,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using VAS.Core.Common;
-using VAS.Core.Store.Templates;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Drawing.Cairo;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Device = VAS.Core.Common.Device;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -111,7 +113,7 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.QuitApplicationEvent -= HandleQuit;
+			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent -= HandleQuit;
 
 			teamtagger.Dispose ();
 			projectperiods1.Destroy ();
@@ -228,7 +230,7 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
-			Config.EventsBroker.QuitApplicationEvent += HandleQuit;
+			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent += HandleQuit;
 		}
 
 		void FillProjectDetails ()
@@ -502,7 +504,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					project.CreateLineupEvent ();
 				}
-				Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
 			}
 		}
 
@@ -594,7 +596,7 @@ namespace LongoMatch.Gui.Panel
 				    projectType == ProjectType.FakeCaptureProject ||
 				    projectType == ProjectType.URICaptureProject) {
 					project.CreateLineupEvent ();
-					Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {

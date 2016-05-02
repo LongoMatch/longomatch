@@ -20,18 +20,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
@@ -383,11 +382,11 @@ namespace LongoMatch.Gui.Panel
 			if (loadedTeam != null) {
 				if (loadedTeam.Static) {
 					string msg = Catalog.GetString ("System teams can't be deleted");
-					MessagesHelpers.WarningMessage (this, msg);
+					Helpers.MessagesHelpers.WarningMessage (this, msg);
 					return;
 				} else {
 					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
-					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
 						provider.Delete (loadedTeam);
 						teamsStore.Remove (ref selectedIter);
 						teams.Remove (loadedTeam);
@@ -412,14 +411,14 @@ namespace LongoMatch.Gui.Panel
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
 					continue;
 				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The template already exists. Do you want to overwrite it?");
-					if (MessagesHelpers.QuestionMessage (this, msg)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						auxdelete = teams.FirstOrDefault (t => t.Name == dialog.Text);
 						break;

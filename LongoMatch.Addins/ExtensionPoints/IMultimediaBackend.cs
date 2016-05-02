@@ -18,7 +18,7 @@
 //
 //
 using Mono.Addins;
-using LongoMatch.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {

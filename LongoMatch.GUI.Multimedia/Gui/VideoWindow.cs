@@ -17,11 +17,10 @@
 //
 using System;
 
-using Gtk;
 using Gdk;
-
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Multimedia.Utils;
+using Gtk;
+using VAS.Core.Interfaces.GUI;
+using VAS.Multimedia.Utils;
 
 namespace LongoMatch.Gui
 {
@@ -209,4 +208,3 @@ namespace LongoMatch.Gui
 		}
 	}
 }
-

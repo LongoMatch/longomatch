@@ -5,8 +5,8 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
-    <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
+    <widget-library name="../../VAS/bin/LongoMatch.GUI.Helpers.dll" />
+    <widget-library name="../../VAS/VAS.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" internal="true" />
   </import>
   <widget class="Gtk.Window" id="LongoMatch.Gui.VolumeWindow" design-size="31 204">

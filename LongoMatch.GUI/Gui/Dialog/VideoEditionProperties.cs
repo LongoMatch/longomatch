@@ -19,11 +19,10 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Gui.Helpers;
-using Misc = LongoMatch.Gui.Helpers.Misc;
-using VAS.Core.Store.Playlists;
-using VAS.Core.Common;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store.Playlists;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {

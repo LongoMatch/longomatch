@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Drawing.CanvasObjects;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing
 {

@@ -18,14 +18,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMFilters = LongoMatch.Core.Filters;
 
 namespace LongoMatch.Gui.Component
 {
@@ -34,7 +36,7 @@ namespace LongoMatch.Gui.Component
 	{
 		static ProjectLongoMatch openedProject;
 		ProjectType projectType;
-		EventsFilter filter;
+		LMFilters.EventsFilter filter;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
 
@@ -88,10 +90,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (TimelineEvent play)
 		{
-			playsSelection.AddPlay (play);
-			codingwidget.AddPlay (play);
+			playsSelection.AddPlay ((TimelineEventLongoMatch)play);
+			codingwidget.AddPlay ((TimelineEventLongoMatch)play);
 		}
 
 		public void UpdateCategories ()
@@ -99,10 +101,10 @@ namespace LongoMatch.Gui.Component
 			codingwidget.UpdateCategories ();
 		}
 
-		public void DeletePlays (List<TimelineEventLongoMatch> plays)
+		public void DeletePlays (List<TimelineEvent> plays)
 		{
-			playsSelection.RemovePlays (plays);
-			codingwidget.DeletePlays (plays);
+			playsSelection.RemovePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+			codingwidget.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 
 		public void ZoomIn ()
@@ -140,9 +142,9 @@ namespace LongoMatch.Gui.Component
 			codingwidget.ClickButton (button, tag);
 		}
 
-		public void TagPlayer (PlayerLongoMatch player)
+		public void TagPlayer (Player player)
 		{
-			codingwidget.TagPlayer (player);
+			codingwidget.TagPlayer ((PlayerLongoMatch)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -193,14 +195,14 @@ namespace LongoMatch.Gui.Component
 				DetachPlayer ();
 		}
 
-		public void SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			openedProject = project;
+			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
-			this.filter = filter;
+			this.filter = (LMFilters.EventsFilter)filter;
 			
-			codingwidget.SetProject (project, projectType, filter);
-			playsSelection.SetProject (project, filter);
+			codingwidget.SetProject (project as ProjectLongoMatch, projectType, (LMFilters.EventsFilter)filter);
+			playsSelection.SetProject (project as ProjectLongoMatch, (LMFilters.EventsFilter)filter);
 			if (projectType == ProjectType.FileProject) {
 				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {

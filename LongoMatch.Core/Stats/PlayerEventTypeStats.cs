@@ -51,7 +51,8 @@ namespace LongoMatch.Core.Stats
 
 		public void Update ()
 		{
-			events = filter.VisiblePlays.Where (e => e.Players.Contains (player) && e.EventType.Equals (EventType)).ToList ();
+			events = filter.VisiblePlays.Where (e => ((TimelineEventLongoMatch)e).Players.Contains (player) &&
+			e.EventType.Equals (EventType)).Cast<TimelineEventLongoMatch> ().ToList ();
 			
 			SubcategoriesStats = new List<SubCategoryStat> ();
 

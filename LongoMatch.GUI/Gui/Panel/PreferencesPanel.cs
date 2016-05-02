@@ -18,10 +18,11 @@
 using System;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Gui.Component;
 using VAS.Core;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.GUI;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {

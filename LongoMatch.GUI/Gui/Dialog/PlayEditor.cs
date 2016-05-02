@@ -21,11 +21,11 @@ using System.Collections.ObjectModel;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Dialog
 {

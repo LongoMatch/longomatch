@@ -18,13 +18,14 @@
 using System;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Interfaces;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -213,7 +214,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void StartMove (Selection sel)
 		{
 			WasPlaying = PlayingState;
-			Config.EventsBroker.EmitTogglePlayEvent (false);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitTogglePlayEvent (false);
 		}
 
 		protected override void StopMove (bool moved)
@@ -224,7 +225,7 @@ namespace LongoMatch.Drawing.Widgets
 						true);
 				}
 			}
-			Config.EventsBroker.EmitTogglePlayEvent (WasPlaying);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitTogglePlayEvent (WasPlaying);
 		}
 
 		protected override void SelectionMoved (Selection sel)

@@ -17,6 +17,7 @@
 //
 using LongoMatch;
 using Pango;
+using VAS;
 using VAS.Core;
 using VAS.Core.Common;
 

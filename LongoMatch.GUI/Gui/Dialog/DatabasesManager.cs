@@ -19,9 +19,9 @@ using System;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Interfaces;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
 			}
 		}
 
@@ -134,13 +134,13 @@ namespace LongoMatch.Gui.Dialog
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
 			IStorage db;
-			string dbname = MessagesHelpers.QueryMessage (this, Catalog.GetString ("Database name"));
+			string dbname = Helpers.MessagesHelpers.QueryMessage (this, Catalog.GetString ("Database name"));
 			if (dbname == null || dbname == "")
 				return;
 			
 			if (manager.Databases.Where (d => d.Info.Name == dbname).Count () != 0) {
 				var msg = Catalog.GetString ("A database already exists with this name");
-				MessagesHelpers.ErrorMessage (this, msg);
+				Helpers.MessagesHelpers.ErrorMessage (this, msg);
 				return;
 			}
 			
@@ -159,13 +159,13 @@ namespace LongoMatch.Gui.Dialog
 			
 			if (db == manager.ActiveDB) {
 				var msg = Catalog.GetString ("This database is the active one and can't be deleted");
-				MessagesHelpers.ErrorMessage (this, msg);
+				Helpers.MessagesHelpers.ErrorMessage (this, msg);
 				return;
 			}
 
 			if (db != null) {
 				var msg = Catalog.GetString ("Do you really want to delete the database: " + db.Info.Name);
-				if (MessagesHelpers.QuestionMessage (this, msg)) {
+				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					db.Backup ();
 					manager.Delete (db);
 					store.Remove (ref iter);
@@ -178,9 +178,9 @@ namespace LongoMatch.Gui.Dialog
 			IStorage db = SelectedDB;
 			if (db != null) {
 				if (db.Backup ())
-					MessagesHelpers.InfoMessage (this, Catalog.GetString ("Backup successful"));
+					Helpers.MessagesHelpers.InfoMessage (this, Catalog.GetString ("Backup successful"));
 				else
-					MessagesHelpers.ErrorMessage (this, Catalog.GetString ("Could not create backup"));
+					Helpers.MessagesHelpers.ErrorMessage (this, Catalog.GetString ("Could not create backup"));
 			}
 		}
 

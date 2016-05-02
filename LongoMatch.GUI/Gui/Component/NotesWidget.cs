@@ -21,6 +21,8 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -69,9 +71,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayLoaded (TimelineEventLongoMatch play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
-			Play = play;
+			Play = play as TimelineEventLongoMatch;
 		}
 		
 	}

@@ -15,12 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.UI.Helpers;
 
 namespace LongoMatch.Gui
 {

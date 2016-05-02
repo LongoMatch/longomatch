@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects;
 using VAS.Core.Common;

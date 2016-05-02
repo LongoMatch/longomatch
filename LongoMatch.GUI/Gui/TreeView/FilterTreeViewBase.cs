@@ -17,14 +17,13 @@
 // 
 using System;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Gui.Component;
 using Pango;
 using VAS.Core;
-using EventType = VAS.Core.Store.EventType;
-using Misc = LongoMatch.Gui.Helpers.Misc;
 using VAS.Core.Common;
+using EventType = VAS.Core.Store.EventType;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {

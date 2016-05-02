@@ -19,20 +19,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
-using LongoMatch.Gui.Helpers;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -234,7 +234,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				Config.EventsBroker.EmitOpenProjectID (project.ID, project);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
 			}
 		}
 
@@ -315,14 +315,14 @@ namespace LongoMatch.Gui.Panel
 			deletedProjects = new List<ProjectLongoMatch> ();
 			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
 				if (openedProject != null && openedProject.ID == selectedProject.ID) {
-					MessagesHelpers.WarningMessage (this,
+					Helpers.MessagesHelpers.WarningMessage (this,
 						Catalog.GetString ("This Project is actually in use.") + "\n" +
 						Catalog.GetString ("Close it first to allow its removal from the database"));
 					continue;
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
 				             selectedProject.Description.Title;
-				if (MessagesHelpers.QuestionMessage (this, msg)) {
+				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
@@ -349,7 +349,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				Config.EventsBroker.EmitOpenProjectID (loadedProject.ID, loadedProject);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (loadedProject.ID, loadedProject);
 			}
 		}
 	}

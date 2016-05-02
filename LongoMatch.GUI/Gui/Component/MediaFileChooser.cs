@@ -17,11 +17,11 @@
 //
 using System;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -133,9 +133,9 @@ namespace LongoMatch.Gui.Component
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
 				fileentry.TooltipText = mediaFile.FilePath;
 				if (mediaFile.Exists ()) {
-					fileentry.ModifyText (Gtk.StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+					fileentry.ModifyText (Gtk.StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
 				} else {
-					fileentry.ModifyText (Gtk.StateType.Normal, Misc.ToGdkColor (Color.Red1));
+					fileentry.ModifyText (Gtk.StateType.Normal, Helpers.Misc.ToGdkColor (Color.Red1));
 				}
 				clear_visible = true;
 			} else if (path != null) {
@@ -169,20 +169,20 @@ namespace LongoMatch.Gui.Component
 		void HandleAddClicked (object sender, EventArgs e)
 		{
 			if (FileChooserMode == FileChooserMode.MediaFile) {
-				MediaFile file = Misc.OpenFile (this);
+				MediaFile file = Helpers.Misc.OpenFile (this);
 				if (file != null && MediaFile != null) {
 					file.Offset = MediaFile.Offset;
 				}
 				MediaFile = file;
 			} else if (FileChooserMode == FileChooserMode.File) {
-				CurrentPath = FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
+				CurrentPath = Helpers.FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
 					ProposedFileName, Config.LastRenderDir,
 					FilterName, FilterExtensions);
 				if (CurrentPath != null) {
 					Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
 				}
 			} else if (FileChooserMode == FileChooserMode.Directory) {
-				CurrentPath = FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"),
+				CurrentPath = Helpers.FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"),
 					ProposedDirectoryName, Config.LastRenderDir,
 					null, null);
 			}

@@ -24,6 +24,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.Store.Playlists;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -138,7 +139,7 @@ namespace LongoMatch.Gui.Component
 				playlist.Elements.Add (element);
 			}
 			
-			Config.EventsBroker.EmitRenderPlaylist (playlist);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
 		}
 
 	}

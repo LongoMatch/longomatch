@@ -29,7 +29,8 @@ using LongoMatch.Gui.Menus;
 using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Store.Playlists;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -161,7 +162,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append (edit);
 
 			render = new MenuItem (Catalog.GetString ("Render"));
-			render.Activated += (sender, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
+			render.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
 			menu.Append (render);
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));

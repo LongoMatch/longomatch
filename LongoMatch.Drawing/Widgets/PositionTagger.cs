@@ -19,11 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
-using LongoMatch.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -169,7 +170,7 @@ namespace LongoMatch.Drawing.Widgets
 				TimelineEventLongoMatch p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
-					Config.EventsBroker.EmitLoadEvent (p);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (p);
 				}
 			}
 		}

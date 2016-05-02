@@ -18,11 +18,12 @@
 using System;
 using System.Linq;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Store.Drawables;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.Widgets
 {

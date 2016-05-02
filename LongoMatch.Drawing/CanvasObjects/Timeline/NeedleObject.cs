@@ -17,7 +17,7 @@
 //
 using System;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Common;
 using VAS.Core.Store.Drawables;
 using VAS.Core;

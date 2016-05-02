@@ -15,14 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
+using LMFilters = LongoMatch.Core.Filters;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
+using VAS.Core.Filters;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LongoMatch.Gui.Component
 {
@@ -38,9 +41,10 @@ namespace LongoMatch.Gui.Component
 
 		#region IAnalysisWindow implementation
 
-		public void SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			codingwidget1.SetProject (project, projectType, filter);
+			codingwidget1.SetProject ((LongoMatch.Core.Store.ProjectLongoMatch)project, projectType, 
+				(LMFilters.EventsFilter)filter);
 		}
 
 		public void ReloadProject ()
@@ -51,14 +55,14 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (TimelineEvent play)
 		{
-			codingwidget1.AddPlay (play);
+			codingwidget1.AddPlay ((LongoMatch.Core.Store.TimelineEventLongoMatch)play);
 		}
 
-		public void DeletePlays (List<TimelineEventLongoMatch> plays)
+		public void DeletePlays (List<TimelineEvent> plays)
 		{
-			codingwidget1.DeletePlays (plays);
+			codingwidget1.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 
 		public void UpdateCategories ()
@@ -102,9 +106,9 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.ClickButton (button, tag);
 		}
 
-		public void TagPlayer (PlayerLongoMatch player)
+		public void TagPlayer (Player player)
 		{
-			codingwidget1.TagPlayer (player);
+			codingwidget1.TagPlayer ((PlayerLongoMatch)player);
 		}
 
 		public void TagTeam (TeamType team)

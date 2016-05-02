@@ -16,58 +16,42 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
-using VAS.Core.Store.Playlists;
+using VAS.Services;
+using LMCommon = LongoMatch.Core.Common;
 using Timer = System.Threading.Timer;
 
 namespace LongoMatch.Services
 {
-	public class PlaylistManager: IService
+	public class PlaylistManager: PlaylistManagerBase
 	{
 		EventsFilter filter;
 
-		public PlaylistManager ()
+		public PlaylistManager () : base ()
 		{
 		}
 
-		public IPlayerController Player {
+		public override IPlayerController Player {
 			get;
 			set;
 		}
 
-		public ProjectLongoMatch OpenedProject {
+		public override Project OpenedProject {
 			get;
 			set;
 		}
 
-		public ProjectType OpenedProjectType {
+		public override ProjectType OpenedProjectType {
 			get;
 			set;
 		}
 
-		void LoadPlay (TimelineEventLongoMatch play, Time seekTime, bool playing)
-		{
-			if (play != null && Player != null) {
-				play.Selected = true;
-				Player.LoadEvent (
-					play, seekTime, playing);
-				if (playing) {
-					Player.Play ();
-				}
-			}
-		}
-
-		void HandlePlayChanged (TimeNode tNode, Time time)
+		protected override void HandlePlayChanged (TimeNode tNode, Time time)
 		{
 			if (tNode is TimelineEventLongoMatch) {
 				LoadPlay (tNode as TimelineEventLongoMatch, time, false);
@@ -77,53 +61,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
-		{
-			var player = analysisWindow?.Player;
-			if (player == null && Player == null) {
-				return;
-			} else if (player != null) {
-				Player = player;
-			}
-
-			OpenedProject = project;
-			OpenedProjectType = projectType;
-			this.filter = filter;
-			Player.LoadedPlaylist = null;
-		}
-
-		/// <summary>
-		/// Set the playlistManager with a presentation (<see cref="Playlist"/> not attached to a <see cref="Project"/>)
-		/// If player is null, the last one will be used (if there is one).
-		/// </summary>
-		/// <param name="presentation">Presentation.</param>
-		/// <param name="player">Player.</param>
-		void HandleOpenedPresentationChanged (Playlist presentation, IPlayerController player)
-		{
-			if (player == null && Player == null) {
-				return;
-			} else if (player != null) {
-				Player = player;
-			}
-
-			OpenedProject = null;
-			Player.Switch (null, presentation, null);
-
-			OpenedProjectType = ProjectType.None;
-			filter = null;
-		}
-
-		void HandlePlaylistElementSelected (Playlist playlist, IPlaylistElement element, bool playing = false)
-		{
-			if (element != null) {
-				playlist.SetActive (element);
-			}
-			if (playlist.Elements.Count > 0 && Player != null)
-				Player.LoadPlaylistEvent (playlist, element, playing);
-		}
-
-		void HandleLoadPlayEvent (TimelineEventLongoMatch play)
+		protected override void HandleLoadPlayEvent (TimelineEvent play)
 		{
 			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
@@ -132,100 +70,20 @@ namespace LongoMatch.Services
 			if (play is SubstitutionEvent || play is LineupEvent) {
 				//FIXME: This switch bugs me, it's the only one here...
 				Player.Switch (null, null, null);
-				Config.EventsBroker.EmitEventLoaded (null);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitEventLoaded (null);
 				Player.Seek (play.EventTime, true);
 				Player.Play ();
 			} else {
 				if (play != null) {
-					LoadPlay (play, new Time (0), true);
+					LoadPlay (play as TimelineEventLongoMatch, new Time (0), true);
 				} else if (Player != null) {
 					Player.UnloadCurrentEvent ();
 				}
-				Config.EventsBroker.EmitEventLoaded (play);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitEventLoaded (play as TimelineEventLongoMatch);
 			}
 		}
 
-		void HandleNext (Playlist playlist)
-		{
-			Player.Next ();
-		}
-
-		void HandlePrev (Playlist playlist)
-		{
-			Player.Previous ();
-		}
-
-		void HandlePlaybackRateChanged (float rate)
-		{
-		}
-
-		void HandleAddPlaylistElement (Playlist playlist, List<IPlaylistElement> element)
-		{
-			if (playlist == null) {
-				playlist = HandleNewPlaylist (OpenedProject);
-				if (playlist == null) {
-					return;
-				}
-			}
-
-			foreach (var item in element) {
-				playlist.Elements.Add (item);
-			}
-		}
-
-		Playlist HandleNewPlaylist (ProjectLongoMatch project)
-		{
-			string name = Catalog.GetString ("New playlist");
-			Playlist playlist = null;
-			bool done = false;
-			if (project != null) {
-				while (name != null && !done) {
-					name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Playlist name:"), null, name).Result;
-					if (name != null) {
-						done = true;
-						if (project.Playlists.Any (p => p.Name == name)) {
-							string msg = Catalog.GetString ("A playlist already exists with the same name");
-							Config.GUIToolkit.ErrorMessage (msg);
-							done = false;
-						}
-					}
-				}
-				if (name != null) {
-					playlist = new Playlist { Name = name };
-					project.Playlists.Add (playlist);
-				}
-			}
-			return playlist;
-		}
-
-		void HandleRenderPlaylist (Playlist playlist)
-		{
-			List<EditionJob> jobs = Config.GUIToolkit.ConfigureRenderingJob (playlist);
-			if (jobs == null)
-				return;
-			foreach (Job job in jobs)
-				Config.RenderingJobsManger.AddJob (job);
-		}
-
-		void HandleSeekEvent (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
-		{
-			if (Player != null) {
-				Player.Seek (pos, accurate, synchronous, throttled);
-			}
-		}
-
-		void HandleTogglePlayEvent (bool playing)
-		{
-			if (Player != null) {
-				if (playing) {
-					Player.Play ();
-				} else {
-					Player.Pause ();
-				}
-			}
-		}
-
-		void HandleKeyPressed (object sender, HotKey key)
+		protected override void HandleKeyPressed (object sender, HotKey key)
 		{
 			if (OpenedProject == null && Player?.LoadedPlaylist == null)
 				return;
@@ -270,14 +128,14 @@ namespace LongoMatch.Services
 					return;
 				case KeyAction.SpeedUp:
 					Player.FramerateUp ();
-					Config.EventsBroker.EmitPlaybackRateChanged ((float)Player.Rate);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaybackRateChanged ((float)Player.Rate);
 					return;
 				case KeyAction.SpeedDown:
 					Player.FramerateDown ();
-					Config.EventsBroker.EmitPlaybackRateChanged ((float)Player.Rate);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaybackRateChanged ((float)Player.Rate);
 					return;
 				case KeyAction.CloseEvent:
-					Config.EventsBroker.EmitLoadEvent (null);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (null);
 					return;
 				case KeyAction.Prev:
 					HandlePrev (null);
@@ -294,56 +152,16 @@ namespace LongoMatch.Services
 
 		#region IService
 
-		public int Level {
+		public override int Level {
 			get {
 				return 80;
 			}
 		}
 
-		public string Name {
+		public  override string Name {
 			get {
 				return "Playlists";
 			}
-		}
-
-		public bool Start ()
-		{
-			Config.EventsBroker.NewPlaylistEvent += HandleNewPlaylist;
-			Config.EventsBroker.AddPlaylistElementEvent += HandleAddPlaylistElement;
-			Config.EventsBroker.RenderPlaylist += HandleRenderPlaylist;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.OpenedPresentationChanged += HandleOpenedPresentationChanged;
-			Config.EventsBroker.PreviousPlaylistElementEvent += HandlePrev;
-			Config.EventsBroker.NextPlaylistElementEvent += HandleNext;
-			Config.EventsBroker.LoadEventEvent += HandleLoadPlayEvent;
-			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelected;
-			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
-			Config.EventsBroker.TimeNodeChanged += HandlePlayChanged;
-			Config.EventsBroker.SeekEvent += HandleSeekEvent;
-			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
-
-			return true;
-		}
-
-		public bool Stop ()
-		{
-			Config.EventsBroker.NewPlaylistEvent -= HandleNewPlaylist;
-			Config.EventsBroker.AddPlaylistElementEvent -= HandleAddPlaylistElement;
-			Config.EventsBroker.RenderPlaylist -= HandleRenderPlaylist;
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
-			Config.EventsBroker.OpenedPresentationChanged -= HandleOpenedPresentationChanged;
-			Config.EventsBroker.PreviousPlaylistElementEvent -= HandlePrev;
-			Config.EventsBroker.NextPlaylistElementEvent -= HandleNext;
-			Config.EventsBroker.LoadEventEvent -= HandleLoadPlayEvent;
-			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelected;
-			Config.EventsBroker.PlaybackRateChanged -= HandlePlaybackRateChanged;
-			Config.EventsBroker.TimeNodeChanged -= HandlePlayChanged;
-			Config.EventsBroker.SeekEvent -= HandleSeekEvent;
-			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
-
-			return true;
 		}
 
 		#endregion

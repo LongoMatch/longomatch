@@ -18,199 +18,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using VAS.Core.Store;
+using VASFilters = VAS.Core.Filters;
 
 namespace LongoMatch.Core.Filters
 {
-	public class EventsFilter
+	public class EventsFilter : VASFilters.EventsFilter
 	{
-		public event FilterUpdatedHandler FilterUpdated;
+		new ProjectLongoMatch project;
 
-		Dictionary<EventType, List<Tag>> eventsFilter;
-		List<Tag> tagsFilter;
-		List<PlayerLongoMatch> playersFilter;
-		List<Period> periodsFilter;
-		List<Timer> timersFilter;
-		ProjectLongoMatch project;
-
-		public EventsFilter (ProjectLongoMatch project)
+		public EventsFilter (ProjectLongoMatch project) : base (project)
 		{
 			this.project = project;
-			eventsFilter = new Dictionary<EventType, List<Tag>> ();
-			playersFilter = new List<PlayerLongoMatch> (); 
-			periodsFilter = new List<Period> ();
-			tagsFilter = new List<Tag> ();
-			timersFilter = new List<Timer> ();
-			ClearAll ();
-			UpdateFilters ();
 		}
 
-		public bool Silent {
-			set;
-			get;
-		}
-
-		public bool IgnoreUpdates {
-			set;
-			get;
-		}
-
-		public List<EventType> VisibleEventTypes {
-			get;
-			protected set;
-		}
-
-		public List<PlayerLongoMatch> VisiblePlayers {
-			get;
-			protected set;
-		}
-
-		public List<TimelineEventLongoMatch> VisiblePlays {
-			get;
-			protected set;
-		}
-
-		public void ClearAll (bool update = true)
-		{
-			eventsFilter.Clear ();
-			playersFilter.Clear ();
-			periodsFilter.Clear ();
-			timersFilter.Clear ();
-			tagsFilter.Clear ();
-			if (update)
-				Update ();
-		}
-
-		public void FilterPlayer (PlayerLongoMatch player, bool visible)
-		{
-			if (visible) {
-				if (!playersFilter.Contains (player))
-					playersFilter.Add (player);
-			} else {
-				if (playersFilter.Contains (player))
-					playersFilter.Remove (player);
-			}
-			Update ();
-		}
-
-		public void FilterEventType (EventType evType, bool visible)
-		{
-			if (visible) {
-				if (!eventsFilter.ContainsKey (evType))
-					eventsFilter [evType] = new List<Tag> ();
-			} else {
-				if (eventsFilter.ContainsKey (evType))
-					eventsFilter.Remove (evType);
-			}
-			Update ();
-		}
-
-		public void FilterPeriod (Period period, bool visible)
-		{
-			if (visible) {
-				if (!periodsFilter.Contains (period))
-					periodsFilter.Add (period);
-			} else {
-				if (periodsFilter.Contains (period))
-					periodsFilter.Remove (period);
-			}
-			Update ();
-		}
-
-		public void FilterTag (Tag tag, bool visible)
-		{
-			if (visible) {
-				if (!tagsFilter.Contains (tag))
-					tagsFilter.Add (tag);
-			} else {
-				if (tagsFilter.Contains (tag))
-					tagsFilter.Remove (tag);
-			}
-		}
-
-		public void FilterTimer (Timer timer, bool visible)
-		{
-			if (visible) {
-				if (!timersFilter.Contains (timer))
-					timersFilter.Add (timer);
-			} else {
-				if (timersFilter.Contains (timer))
-					timersFilter.Remove (timer);
-			}
-			Update ();
-		}
-
-		public void FilterEventTag (EventType evType, Tag tag, bool visible)
-		{
-			List<Tag> tags;
-
-			if (visible) {
-				FilterEventType (evType, true);
-				tags = eventsFilter [evType];
-				if (!tags.Contains (tag))
-					tags.Add (tag);
-			} else {
-				if (eventsFilter.ContainsKey (evType)) {
-					tags = eventsFilter [evType];
-					if (tags.Contains (tag))
-						tags.Remove (tag);
-				}
-			}
-			Update ();
-		}
-
-		public bool IsVisible (object o)
-		{
-			if (o is Player) {
-				return VisiblePlayers.Contains (o as Player);
-			} else if (o is TimelineEvent) {
-				return VisiblePlays.Contains (o as TimelineEvent);
-			}
-			return true;
-		}
-
-		public void Update ()
-		{
-			if (!IgnoreUpdates) {
-				UpdateFilters ();
-				EmitFilterUpdated ();
-			}
-		}
-
-		void UpdateFilters ()
-		{
-			UpdateVisiblePlayers ();
-			UpdateVisibleCategories ();
-			UpdateVisiblePlays ();
-		}
-
-		void UpdateVisiblePlayers ()
+		protected override void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
 				VisiblePlayers = project.LocalTeamTemplate.PlayingPlayersList.Union (
-					project.VisitorTeamTemplate.PlayingPlayersList).ToList ();
+					project.VisitorTeamTemplate.PlayingPlayersList).Cast<Player> ().ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
 			}
 		}
 
-		void UpdateVisibleCategories ()
-		{
-			if (eventsFilter.Count == 0) {
-				VisibleEventTypes = project.EventTypes.ToList ();
-			} else {
-				VisibleEventTypes = eventsFilter.Keys.ToList ();
-			}
-		}
-
-		void UpdateVisiblePlays ()
+		protected override void UpdateVisiblePlays ()
 		{
 			bool cat_match = true, tag_match = true, player_match = true;
 			bool period_match = true, timer_match = true;
 
-			VisiblePlays = new List<TimelineEventLongoMatch> ();
+			VisiblePlays = new List<TimelineEvent> ();
 				
 			foreach (TimelineEventLongoMatch play in project.Timeline) {
 				cat_match = false;
@@ -272,11 +110,7 @@ namespace LongoMatch.Core.Filters
 			}
 		}
 
-		void EmitFilterUpdated ()
-		{
-			if (!Silent && FilterUpdated != null)
-				FilterUpdated ();
-		}
+
 	}
 }
 

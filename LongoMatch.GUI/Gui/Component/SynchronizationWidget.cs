@@ -21,7 +21,6 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
@@ -29,6 +28,9 @@ using Pango;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Drawing.Cairo;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -92,7 +94,7 @@ namespace LongoMatch.Gui.Component
 
 			ConnectSignals ();
 
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
+			Helpers.Misc.SetFocus (this, false);
 
 			menu = new PeriodsMenu ();
 		}
@@ -109,9 +111,9 @@ namespace LongoMatch.Gui.Component
 			// Listen for seek events from the timerule
 			timerule.SeekEvent += HandleTimeruleSeek;
 			timerule.Player = main_cam_playerbin.Player;
-			Config.EventsBroker.SeekEvent += Seek;
-			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
+			((LMCommon.EventsBroker)Config.EventsBroker).SeekEvent += Seek;
+			((LMCommon.EventsBroker)Config.EventsBroker).TogglePlayEvent += HandleTogglePlayEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed += HandleKeyPressed;
 			// Handle dragging of periods
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
@@ -143,9 +145,9 @@ namespace LongoMatch.Gui.Component
 				timeoutID = 0;
 			}
 
-			Config.EventsBroker.SeekEvent -= Seek;
-			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
+			((LMCommon.EventsBroker)Config.EventsBroker).SeekEvent -= Seek;
+			((LMCommon.EventsBroker)Config.EventsBroker).TogglePlayEvent -= HandleTogglePlayEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed -= HandleKeyPressed;
 
 			main_cam_playerbin.Destroy ();
 			sec_cam_playerbin.Destroy ();
@@ -603,7 +605,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
-			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitSeekEvent (pos, accurate, synchronous, throttled);
 		}
 	}
 }

@@ -18,16 +18,18 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
+using VAS;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using VAS.Core.Store;
+using VAS.Drawing.Cairo;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -74,8 +76,8 @@ namespace LongoMatch.Gui.Component
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;
 
-			zoominimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
-			zoomoutimage.Pixbuf = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
+			zoominimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-in", 14);
+			zoomoutimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-zoom-out", 14);
 
 			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
 			scrolledwindow1.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
@@ -277,8 +279,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
-			Config.EventsBroker.EmitLoadEvent (null);
-			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitSeekEvent (pos, accurate, synchronous, throttled);
 		}
 	}
 }

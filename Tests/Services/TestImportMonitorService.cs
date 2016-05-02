@@ -18,20 +18,18 @@
 using System;
 using System.IO;
 using LongoMatch;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Handlers.Misc;
 using VAS.Core.Interfaces;
-using VAS.DB;
 using Constants = LongoMatch.Core.Common.Constants;
+using LongoMatch.Services;
+using VAS.Core.Interfaces.GUI;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
 
 namespace Tests.Services
 {
