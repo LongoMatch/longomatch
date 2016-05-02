@@ -20,11 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {

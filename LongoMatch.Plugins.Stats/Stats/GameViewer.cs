@@ -24,6 +24,7 @@ using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
 using VAS.Core.Store;
 using Color = Cairo.Color;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Plugins.Stats
 {
@@ -167,7 +168,7 @@ namespace LongoMatch.Plugins.Stats
 			layout = new Pango.Layout (PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Center;
-			ModifyText (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
+			ModifyText (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
 			this.textSize = textSize;
 			name_tpl = "{0}";
 			count_tpl = "{0} ({1}%)";

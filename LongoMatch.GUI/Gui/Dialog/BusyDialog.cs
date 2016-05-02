@@ -19,7 +19,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.GUI;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -41,7 +42,7 @@ namespace LongoMatch.Gui.Dialog
 			box.PackStart (progressBar, true, true, 0);
 			box.ShowAll ();
 			VBox.PackStart (box);
-			Icon = LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch", 28);
+			Icon = Helpers.Misc.LoadIcon ("longomatch", 28);
 			TypeHint = Gdk.WindowTypeHint.Dialog;
 			WindowPosition = WindowPosition.Center;
 			Modal = true;
@@ -73,7 +74,7 @@ namespace LongoMatch.Gui.Dialog
 			progressBar.Pulse ();
 		}
 
-		public void ShowSync (System.Action action, uint pulseIntervalMS=100)
+		public void ShowSync (System.Action action, uint pulseIntervalMS = 100)
 		{
 			Exception ex = null;
 			object lockObject = this.lockObject = new object ();
@@ -87,7 +88,7 @@ namespace LongoMatch.Gui.Dialog
 					action.Invoke ();
 				} catch (Exception e) {
 					ex = e;
-				} finally  {
+				} finally {
 					Config.GUIToolkit.Invoke (delegate {
 						lock (lockObject) {
 							Destroy ();
@@ -103,7 +104,7 @@ namespace LongoMatch.Gui.Dialog
 				throw ex;
 		}
 
-		public void Show (uint pulseIntervalMS=0)
+		public void Show (uint pulseIntervalMS = 0)
 		{
 			timeout = GLib.Timeout.Add (pulseIntervalMS, OnTimeout);
 		}

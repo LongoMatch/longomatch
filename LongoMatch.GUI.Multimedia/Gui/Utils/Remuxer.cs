@@ -18,11 +18,10 @@
 using System;
 using System.IO;
 using Gtk;
-using LongoMatch.Core;
-
-using LongoMatch.Core.Interfaces.Multimedia;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Core;
+using VAS.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Video.Utils
 {

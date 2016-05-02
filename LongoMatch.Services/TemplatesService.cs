@@ -29,8 +29,6 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
-using VAS.Core.Store.Templates;
-using VAS.DB;
 
 namespace LongoMatch.Services
 {

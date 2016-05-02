@@ -19,15 +19,16 @@
 //
 using System;
 using Gtk;
-using Pango;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
+using Pango;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using VASColor = VAS.Core.Common.Color;
+using Helpers = VAS.UI.Helpers;
 using Point = VAS.Core.Common.Point;
-using VAS.Core;
+using VASColor = VAS.Core.Common.Color;
 
 namespace LongoMatch.Gui.Component
 {

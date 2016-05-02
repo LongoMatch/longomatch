@@ -17,10 +17,6 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core;
-
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core.Common;
 using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component

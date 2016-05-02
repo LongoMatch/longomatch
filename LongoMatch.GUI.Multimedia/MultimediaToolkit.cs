@@ -17,17 +17,17 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Multimedia.Utils;
-using LongoMatch.Core;
 using System.IO;
+using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
+using VAS.Multimedia;
+using VAS.Multimedia.Utils;
 
 namespace LongoMatch.Video
 {
-
-	public class MultimediaToolkit:MultimediaFactory, IMultimediaToolkit
+	public class MultimediaToolkit : MultimediaFactory, IMultimediaToolkit
 	{
 		public string RemuxFile (MediaFile file, object window)
 		{

@@ -21,13 +21,13 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
 using VAS.Core.Store;
 using EventType = VAS.Core.Store.EventType;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {

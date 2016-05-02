@@ -17,18 +17,13 @@
 // 
 using System;
 using System.IO;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
+using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
-using EventsBroker = LongoMatch.Core.Common.EventsBroker;
-using Newtonsoft.Json;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch
 {
@@ -42,24 +37,9 @@ namespace LongoMatch
 		*/
 
 		/* State */
-		public static IGUIToolkit GUIToolkit;
-		public static IMultimediaToolkit MultimediaToolkit;
-		public static IDrawingToolkit DrawingToolkit;
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
-		public static EventsBroker EventsBroker;
 
-		public static IStorageManager DatabaseManager;
-		public static IRenderingJobsManager RenderingJobsManger;
-
-		static ConfigState stateLongomatch {
-			get {
-				return (state as ConfigState);
-			}
-			set {
-				state = value;
-			}
-		}
 
 		public static void Init ()
 		{
@@ -395,36 +375,15 @@ namespace LongoMatch
 
 		public static Hotkeys Hotkeys {
 			get {
-				return stateLongomatch.hotkeys;
+				return ((ConfigState)state).hotkeys;
 			}
 			set {
-				stateLongomatch.hotkeys = value;
-				Save ();
-			}
-		}
-
-		public static ProjectSortMethod ProjectSortMethod {
-			get {
-				return state.projectSortMethod;
-			}
-			set {
-				state.projectSortMethod = value;
-				Save ();
-			}
-		}
-
-		public static Version IgnoreUpdaterVersion {
-			get {
-				return state.ignoreUpdaterVersion;
-			}
-			set {
-				state.ignoreUpdaterVersion = value;
+				((ConfigState)state).hotkeys = value;
 				Save ();
 			}
 		}
 
 		#endregion
-
 	}
 
 	[Serializable]

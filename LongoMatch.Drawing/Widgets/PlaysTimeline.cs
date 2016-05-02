@@ -20,13 +20,15 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
-using LongoMatch.Core.Store;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -277,7 +279,7 @@ namespace LongoMatch.Drawing.Widgets
 					loadedEvent = ev;
 				}
 			}
-			Config.EventsBroker.EmitLoadEvent (ev);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (ev);
 		}
 
 		protected override void StartMove (Selection sel)
@@ -290,7 +292,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (sel.Drawable is TimeNodeObject) {
 				movingTimeNode = true;
-				Config.EventsBroker.EmitTogglePlayEvent (false);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitTogglePlayEvent (false);
 			}
 		}
 
@@ -298,7 +300,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			widget.SetCursor (CursorType.Arrow);
 			if (movingTimeNode) {
-				Config.EventsBroker.EmitTogglePlayEvent (true);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitTogglePlayEvent (true);
 				movingTimeNode = false;
 			}
 		}
@@ -333,7 +335,7 @@ namespace LongoMatch.Drawing.Widgets
 				} else {
 					moveTime = new Time (0);
 				}
-				Config.EventsBroker.EmitTimeNodeChanged (play, moveTime);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitTimeNodeChanged (play, moveTime);
 			} else if (co is TimeNodeObject) {
 				TimeNode to = (co as TimeNodeObject).TimeNode;
 				
@@ -342,7 +344,7 @@ namespace LongoMatch.Drawing.Widgets
 				} else {
 					moveTime = to.Start;
 				}
-				Config.EventsBroker.EmitSeekEvent (moveTime, true);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitSeekEvent (moveTime, true);
 			}
 		}
 	}

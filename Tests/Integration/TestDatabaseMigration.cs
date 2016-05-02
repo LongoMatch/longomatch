@@ -20,13 +20,13 @@ using System.IO;
 using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
+using LongoMatch.Core.Store;
 using LongoMatch.DB;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
-using LongoMatch.Core.Store;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 
 namespace Tests.Integration
 {

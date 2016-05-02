@@ -23,18 +23,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Integration
 {
@@ -76,7 +78,7 @@ namespace Tests.Integration
 
 			analysisWindowMock = new Mock<IAnalysisWindow> ();
 			analysisWindowMock.Setup (a => a.Player).Returns (() => playerControllerMock.Object);
-			IAnalysisWindow aw = analysisWindowMock.Object;
+			IAnalysisWindowBase aw = analysisWindowMock.Object;
 			guiToolkitMock.Setup (g => g.OpenProject (It.IsAny<ProjectLongoMatch> (), It.IsAny<ProjectType> (),
 				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out aw));
 		}
@@ -124,7 +126,7 @@ namespace Tests.Integration
 			ProjectLongoMatch p = CreateProject ();
 			projectID = p.ID;
 			Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
-			Config.EventsBroker.EmitOpenProjectID (p.ID, p);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (p.ID, p);
 
 			// Tag some events
 			Assert.AreEqual (0, p.Timeline.Count);
@@ -141,7 +143,7 @@ namespace Tests.Integration
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			Config.EventsBroker.EmitEventsDeleted (new List<TimelineEventLongoMatch> {
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (new List<TimelineEventLongoMatch> {
 				p.Timeline [0] as TimelineEventLongoMatch,
 				p.Timeline [1] as TimelineEventLongoMatch
 			});
@@ -153,7 +155,7 @@ namespace Tests.Integration
 			p = CreateProject ();
 			Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
 			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			Config.EventsBroker.EmitOpenProjectID (p.ID, p);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (p.ID, p);
 
 			// Add some events and than remove it from the DB
 			AddEvent (p, 6, 3000, 3050, 3025);
@@ -164,8 +166,8 @@ namespace Tests.Integration
 
 			// Reopen the old project
 			savedP = Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
-			Config.EventsBroker.EmitOpenProjectID (savedP.ID, savedP);
-			Config.EventsBroker.EmitSaveProject (savedP, ProjectType.FileProject);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (savedP.ID, savedP);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitSaveProject (savedP, ProjectType.FileProject);
 
 			// Export this project to a new file
 			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
@@ -175,7 +177,7 @@ namespace Tests.Integration
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
 			guiToolkitMock.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);
-			Config.EventsBroker.EmitExportProject (p);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitExportProject (p);
 			Assert.IsTrue (File.Exists (tmpFile));
 			savedP = Project.Import (tmpFile) as ProjectLongoMatch;
 			Assert.IsNotNull (savedP);
@@ -190,15 +192,15 @@ namespace Tests.Integration
 			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
 			Config.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {
-				p = project;
+				p = project as ProjectLongoMatch;
 			};
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			Assert.IsNotNull (p);
 			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			Config.EventsBroker.EmitCloseOpenedProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
 			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();
@@ -207,7 +209,7 @@ namespace Tests.Integration
 		void AddEvent (ProjectLongoMatch p, int idx, int start, int stop, int eventTime)
 		{
 
-			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
 				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
 		}

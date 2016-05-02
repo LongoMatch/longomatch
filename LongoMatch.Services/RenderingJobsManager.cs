@@ -18,11 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Multimedia;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 

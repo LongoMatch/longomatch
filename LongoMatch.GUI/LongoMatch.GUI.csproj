@@ -10,8 +10,6 @@
     <CodePage>65001</CodePage>
     <AssemblyName>LongoMatch.GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -249,14 +247,6 @@
       <Project>{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}</Project>
       <Name>OxyPlotMono</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>LongoMatch.GUI.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>LongoMatch.Drawing.Cairo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
@@ -269,13 +259,17 @@
       <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
       <Name>VAS.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
-      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
-      <Name>LongoMatch.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>VAS.Drawing.Cairo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

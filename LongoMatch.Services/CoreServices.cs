@@ -21,14 +21,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LongoMatch;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -113,7 +113,7 @@ namespace LongoMatch.Services
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
 			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
-			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
 		}

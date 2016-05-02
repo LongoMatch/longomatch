@@ -26,16 +26,16 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Store.Templates;
 using VAS.Core.Store;
+using VAS.Drawing.Cairo;
 using Constants = LongoMatch.Core.Common.Constants;
-using Helpers = LongoMatch.Gui.Helpers;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -256,13 +256,13 @@ namespace LongoMatch.Gui.Component
 				tagger.ShowLinks = false;
 			}
 
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, mode == DashboardMode.Edit);
+			Helpers.Misc.SetFocus (this, mode == DashboardMode.Edit);
 			if (project != null) {
 				if (mode == DashboardMode.Edit) {
 					Edited = false;
 				} else {
 					if (Edited)
-						Config.EventsBroker.EmitDashboardEdited ();
+						((LMCommon.EventsBroker)Config.EventsBroker).EmitDashboardEdited ();
 				}
 
 			}
@@ -408,7 +408,7 @@ namespace LongoMatch.Gui.Component
 		void HandleActionLinksSelectedEvent (List<ActionLink> actionLinks)
 		{
 			if (actionLinks.Count == 1) {
-				if(actionLinks [0] is ActionLinkLongoMatch)
+				if (actionLinks [0] is ActionLinkLongoMatch)
 					linkproperties.Link = actionLinks [0] as ActionLinkLongoMatch;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_LINKS;
 			} else {

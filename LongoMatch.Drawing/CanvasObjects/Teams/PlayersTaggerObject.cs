@@ -21,7 +21,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.Store.Drawables;

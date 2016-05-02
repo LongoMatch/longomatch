@@ -19,7 +19,7 @@ using System;
 using Gtk;
 using VAS.Core;
 using VAS.Core.Store;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {

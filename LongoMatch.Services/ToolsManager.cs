@@ -23,11 +23,12 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
-using VAS.Core;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -121,7 +122,7 @@ namespace LongoMatch.Services
 					return;
 				}
 				if (importer.NeedsEdition) {
-					Config.EventsBroker.EmitNewProject (project);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitNewProject (project);
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
@@ -132,7 +133,7 @@ namespace LongoMatch.Services
 							return;
 					}
 					DB.Store<ProjectLongoMatch> (project, true);
-					Config.EventsBroker.EmitOpenProjectID (project.ID, project);
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
 				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
@@ -191,45 +192,45 @@ namespace LongoMatch.Services
 		public bool Start ()
 		{
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
-				this.openedProject = pr;
+				this.openedProject = pr as ProjectLongoMatch;
 			};
 
-			Config.EventsBroker.EditPreferencesEvent += () => {
+			((LMCommon.EventsBroker)Config.EventsBroker).EditPreferencesEvent += () => {
 				Config.GUIToolkit.OpenPreferencesEditor ();
 			};
 
-			Config.EventsBroker.ManageCategoriesEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+			((LMCommon.EventsBroker)Config.EventsBroker).ManageCategoriesEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
 					Config.GUIToolkit.OpenCategoriesTemplatesManager ();
 				}
 			};
 
-			Config.EventsBroker.ManageTeamsEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+			((LMCommon.EventsBroker)Config.EventsBroker).ManageTeamsEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
 					Config.GUIToolkit.OpenTeamsTemplatesManager ();
 				}
 			};
 
-			Config.EventsBroker.ManageProjectsEvent += () => {
-				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
+			((LMCommon.EventsBroker)Config.EventsBroker).ManageProjectsEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
 					Config.GUIToolkit.OpenProjectsManager (this.openedProject);
 				}
 			};
 
-			Config.EventsBroker.MigrateDB += HandleMigrateDB;
+			((LMCommon.EventsBroker)Config.EventsBroker).MigrateDB += HandleMigrateDB;
 
-			Config.EventsBroker.ExportProjectEvent += ExportProject;
-			Config.EventsBroker.ImportProjectEvent += ImportProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).ExportProjectEvent += ExportProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).ImportProjectEvent += ImportProject;
 
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.MigrateDB -= HandleMigrateDB;
+			((LMCommon.EventsBroker)Config.EventsBroker).MigrateDB -= HandleMigrateDB;
 
-			Config.EventsBroker.ExportProjectEvent -= ExportProject;
-			Config.EventsBroker.ImportProjectEvent -= ImportProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).ExportProjectEvent -= ExportProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).ImportProjectEvent -= ImportProject;
 
 			return true;
 		}

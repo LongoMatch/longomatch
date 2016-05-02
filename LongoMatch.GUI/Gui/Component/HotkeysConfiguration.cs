@@ -20,6 +20,7 @@ using Gtk;
 using LongoMatch.Core.Common;
 using VAS.Core;
 using VAS.Core.Store;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -56,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			keyLabel = new Label (); 
 			keyLabel.Markup = GLib.Markup.EscapeText (key.ToString ());
 			edit = new Button ();
-			editImage = new Gtk.Image (LongoMatch.Gui.Helpers.Misc.LoadIcon ("longomatch-pencil", 24));
+			editImage = new Gtk.Image (Helpers.Misc.LoadIcon ("longomatch-pencil", 24));
 			edit.Add (editImage);
 			box.PackStart (descLabel, true, true, 0);
 			box.PackStart (keyLabel, false, true, 0);

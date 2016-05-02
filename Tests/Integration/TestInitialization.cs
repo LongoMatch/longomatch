@@ -18,16 +18,15 @@
 using System;
 using System.IO;
 using LongoMatch;
-using LongoMatch.Addins;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
-using LongoMatch.Services;
+using VAS.Core.Interfaces.Drawing;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces.GUI;
+using LongoMatch.Services;
+using LongoMatch.Addins;
+using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 
 namespace Tests.Integration
 {
@@ -122,9 +121,7 @@ namespace Tests.Integration
 				Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 				CoreServices.Stop ();
 
-			} 
-			catch (Exception ex) 
-			{
+			} catch (Exception ex) {
 			}
 		}
 	}

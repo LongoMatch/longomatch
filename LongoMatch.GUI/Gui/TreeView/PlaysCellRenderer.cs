@@ -18,11 +18,11 @@
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
-using LongoMatch.Drawing.Cairo;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing.Cairo;
 using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component

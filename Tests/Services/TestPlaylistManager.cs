@@ -20,7 +20,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Services;
@@ -28,8 +27,10 @@ using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Services
 {
@@ -66,7 +67,7 @@ namespace Tests.Services
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 
-			Config.EventsBroker.EventLoadedEvent += (TimelineEventLongoMatch evt) => eventLoaded = true;
+			Config.EventsBroker.EventLoadedEvent += (TimelineEvent evt) => eventLoaded = true;
 			Config.EventsBroker.PlaylistElementSelectedEvent += (Playlist playlist, IPlaylistElement element, bool playing) => playlistElementSelected = true;
 		}
 
@@ -101,7 +102,7 @@ namespace Tests.Services
 				project.Description = new ProjectDescription ();
 				project.Description.FileSet = new MediaFileSet ();
 			}
-			Config.EventsBroker.EmitOpenedProjectChanged (project, projectType, new EventsFilter (project), mockAnalysisWindow.Object);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedProjectChanged (project, projectType, new EventsFilter (project), mockAnalysisWindow.Object);
 		}
 
 		[Test ()]
@@ -111,7 +112,7 @@ namespace Tests.Services
 			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => name));
 
 			ProjectLongoMatch project = new ProjectLongoMatch ();
-			Config.EventsBroker.EmitNewPlaylist (project);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
@@ -125,7 +126,7 @@ namespace Tests.Services
 		{
 			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
 			ProjectLongoMatch project = new ProjectLongoMatch ();
-			Config.EventsBroker.EmitNewPlaylist (project);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 
@@ -149,9 +150,9 @@ namespace Tests.Services
 			}));
 
 			ProjectLongoMatch project = new ProjectLongoMatch ();
-			Config.EventsBroker.EmitNewPlaylist (project);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (project);
 			called = false;
-			Config.EventsBroker.EmitNewPlaylist (project);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Exactly (3));
 
@@ -169,7 +170,7 @@ namespace Tests.Services
 			var elementList = new List<IPlaylistElement> ();
 			elementList.Add (element);
 
-			Config.EventsBroker.EmitAddPlaylistElement (playlist, elementList);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitAddPlaylistElement (playlist, elementList);
 
 			Assert.AreEqual (elementList, playlist.Elements.ToList ());
 		}
@@ -180,7 +181,7 @@ namespace Tests.Services
 			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => "name"));
 
 			var elementList = new List<IPlaylistElement> ();
-			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitAddPlaylistElement (null, elementList);
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
@@ -190,7 +191,7 @@ namespace Tests.Services
 			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
 			var elementList = new List<IPlaylistElement> ();
 
-			Config.EventsBroker.EmitAddPlaylistElement (null, elementList);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitAddPlaylistElement (null, elementList);
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
@@ -199,7 +200,7 @@ namespace Tests.Services
 		{
 			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
 
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.LoadEvent (element, new Time (0), true), Times.Once ());
 
@@ -211,7 +212,7 @@ namespace Tests.Services
 		{
 			TimelineEventLongoMatch element = null;
 
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.UnloadCurrentEvent (), Times.Once ());
 
@@ -223,7 +224,7 @@ namespace Tests.Services
 		{
 			TimelineEventLongoMatch element = new SubstitutionEvent ();
 
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Once ());
 			mockPlayerController.Verify (player => player.Play (false), Times.Once ());
@@ -240,7 +241,7 @@ namespace Tests.Services
 
 			TimelineEventLongoMatch element = new SubstitutionEvent ();
 
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 			mockPlayerController.Verify (player => player.Play (false), Times.Never ());
@@ -253,11 +254,11 @@ namespace Tests.Services
 		public void TestPrev ()
 		{
 			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 			// loadedPlay != null
 			mockPlayerController.ResetCalls ();
 
-			Config.EventsBroker.EmitPreviousPlaylistElement (null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPreviousPlaylistElement (null);
 
 			mockPlayerController.Verify (player => player.Previous (false), Times.Once ());
 		}
@@ -266,11 +267,11 @@ namespace Tests.Services
 		public void TestNext ()
 		{
 			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
-			Config.EventsBroker.EmitLoadEvent (element);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
 			// loadedPlay != null
 			mockPlayerController.ResetCalls ();
 
-			Config.EventsBroker.EmitNextPlaylistElement (null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNextPlaylistElement (null);
 
 			mockPlayerController.Verify (player => player.Next (), Times.Once ());
 		}
@@ -287,11 +288,11 @@ namespace Tests.Services
 			IPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
-			Config.EventsBroker.EmitOpenedPresentationChanged (presentation, playercontroller);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (presentation, playercontroller);
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
 			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
@@ -307,11 +308,11 @@ namespace Tests.Services
 			IPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
-			Config.EventsBroker.EmitOpenedPresentationChanged (null, playercontroller);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (null, playercontroller);
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
 			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
@@ -329,9 +330,9 @@ namespace Tests.Services
 			IPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
-			Config.EventsBroker.EmitOpenedPresentationChanged (presentation, null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (presentation, null);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
 		}
 
 		[Test ()]
@@ -345,9 +346,9 @@ namespace Tests.Services
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
-			Config.EventsBroker.EmitOpenedPresentationChanged (null, null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (null, null);
 
-			Config.EventsBroker.EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
 		}
 
 		[Test ()]
@@ -356,7 +357,7 @@ namespace Tests.Services
 			TimelineEventLongoMatch timelineEvent = new TimelineEventLongoMatch ();
 			timelineEvent.Start = new Time (10);
 			timelineEvent.Stop = new Time (20);
-			Config.EventsBroker.EmitTimeNodeChanged (timelineEvent, new Time (5));
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitTimeNodeChanged (timelineEvent, new Time (5));
 
 			mockPlayerController.Verify (p => p.LoadEvent (timelineEvent, new Time (5), false), Times.Once);
 		}

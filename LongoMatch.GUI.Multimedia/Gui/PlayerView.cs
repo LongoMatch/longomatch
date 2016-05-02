@@ -22,18 +22,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Services;
 using Pango;
+using VAS;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Drawing.Cairo;
+using VAS.Services;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui
 {
@@ -93,9 +95,9 @@ namespace LongoMatch.Gui
 			vbox3.NoShowAll = true;
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
-			LongoMatch.Gui.Helpers.Misc.SetFocus (vbox3, false);
+			Helpers.Misc.SetFocus (vbox3, false);
 			videowindow.CanFocus = true;
-			detachbutton.Clicked += (sender, e) => Config.EventsBroker.EmitDetach ();
+			detachbutton.Clicked += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitDetach ();
 			ratescale.ModifyFont (FontDescription.FromString (Config.Style.Font + " 8"));
 			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 
@@ -501,7 +503,7 @@ namespace LongoMatch.Gui
 
 		void HandleClosebuttonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitLoadEvent (null);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (null);
 		}
 
 		void HandlePrevbuttonClicked (object sender, System.EventArgs e)
@@ -540,7 +542,7 @@ namespace LongoMatch.Gui
 
 			if (!ignoreRate) {
 				Player.Rate = val;
-				Config.EventsBroker.EmitPlaybackRateChanged (val);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaybackRateChanged (val);
 			}
 		}
 
@@ -575,7 +577,7 @@ namespace LongoMatch.Gui
 
 		void HandleDrawButtonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitDrawFrame (null, -1, CamerasConfig [0], true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitDrawFrame (null, -1, CamerasConfig [0], true);
 		}
 
 		void HandleJumpValueChanged (object sender, EventArgs e)

@@ -24,6 +24,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using Color = Gdk.Color;
 using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
 using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
@@ -142,7 +143,7 @@ namespace LongoMatch.Gui.Component
 			if (!(item is TimelineEventLongoMatch))
 				return;
 
-			Config.EventsBroker.EmitLoadEvent (item as TimelineEventLongoMatch);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (item as TimelineEventLongoMatch);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
@@ -153,9 +154,9 @@ namespace LongoMatch.Gui.Component
 			Config.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
-				Config.EventsBroker.EmitTeamTagsChanged ();
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitTeamTagsChanged ();
 			}
-			Config.EventsBroker.EmitEventEdited (selectedEvent);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitEventEdited (selectedEvent);
 			modelSort.SetSortFunc (0, SortFunction);
 			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}

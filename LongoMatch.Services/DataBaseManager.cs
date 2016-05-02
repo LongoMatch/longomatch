@@ -18,15 +18,16 @@
 using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
-using VAS.DB;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
-using VAS.Core;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
+using VASFilters = VAS.Core.Filters;
 
 namespace LongoMatch.Services
 {
@@ -58,10 +59,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType, EventsFilter filter,
-		                                 IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType, VASFilters.EventsFilter filter,
+		                                 IAnalysisWindowBase analysisWindow)
 		{
-			OpenedProject = project;
+			OpenedProject = project as ProjectLongoMatch;
 		}
 
 		#region IService
@@ -80,8 +81,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			((LMCommon.EventsBroker)Config.EventsBroker).ManageDatabasesEvent += HandleManageDatabase;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += HandleOpenedProjectChanged;
 			Manager = CreateStorageManager (Config.DBDir);
 			Config.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
@@ -91,8 +92,8 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.ManageDatabasesEvent -= HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			((LMCommon.EventsBroker)Config.EventsBroker).ManageDatabasesEvent -= HandleManageDatabase;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged -= HandleOpenedProjectChanged;
 			Config.DatabaseManager = Manager = null;
 			return true;
 		}

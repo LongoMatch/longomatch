@@ -174,7 +174,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestFilterPlayersDuplicated ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 			p.VisitorTeamTemplate = p.LocalTeamTemplate;
 
 			try {

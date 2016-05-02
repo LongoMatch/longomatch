@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using VAS.Core.Common;

@@ -19,18 +19,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Services;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Services
 {
@@ -242,7 +243,7 @@ namespace Tests.Services
 			playerMock.Verify (p => p.Seek (new Time (0), true, false), Times.Never ());
 
 			/* Open with an invalid camera configuration */
-			Config.EventsBroker.MultimediaError += (o, message) => {
+			((LMCommon.EventsBroker)Config.EventsBroker).MultimediaError += (o, message) => {
 				multimediaError = true;
 			};
 			player.Ready ();
@@ -594,7 +595,7 @@ namespace Tests.Services
 		{
 			int nextSent = 0;
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => nextSent++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => nextSent++;
 
 			player.Next ();
 			Assert.AreEqual (0, nextSent);
@@ -637,7 +638,7 @@ namespace Tests.Services
 			int prevSent = 0;
 			currentTime = new Time (0);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => prevSent++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => prevSent++;
 
 			player.Previous (false);
 			playerMock.Verify (p => p.Seek (new Time (0), true, false));
@@ -686,10 +687,10 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (4000);
 			PreparePlayer ();
-			Config.EventsBroker.EmitOpenedProjectChanged (new ProjectLongoMatch (), ProjectType.FileProject, null, null);
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedProjectChanged (new ProjectLongoMatch (), ProjectType.FileProject, null, null);
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
-			Config.EventsBroker.EmitLoadEvent (evt);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (evt);
 			// loadedPlay != null
 			playerMock.ResetCalls ();
 
@@ -705,7 +706,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (4000);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 			playerMock.ResetCalls ();
 			// loadedPlay == null
 
@@ -721,7 +722,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (4000);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
@@ -744,7 +745,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (499);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
@@ -767,7 +768,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (499);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
 			IPlaylistElement element = new PlaylistImage (new Image (1, 1), new Time (10));
@@ -787,7 +788,7 @@ namespace Tests.Services
 			int playlistElementSelected = 0;
 			currentTime = new Time (4000);
 			PreparePlayer ();
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			Playlist localPlaylist = new Playlist ();
 			PlaylistPlayElement element0 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
@@ -829,7 +830,7 @@ namespace Tests.Services
 		{
 			string msg = null;
 
-			Config.EventsBroker.MultimediaError += (o, message) => {
+			((LMCommon.EventsBroker)Config.EventsBroker).MultimediaError += (o, message) => {
 				msg = message;
 			};
 			playerMock.Raise (p => p.Error += null, this, "error");
@@ -1309,12 +1310,12 @@ namespace Tests.Services
 			element.Play.Stop = new Time (10);
 			localPlaylist.Elements.Add (element0);
 			localPlaylist.Elements.Add (element);
-			Config.EventsBroker.EmitPlaylistElementSelected (localPlaylist, element0, false);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (localPlaylist, element0, false);
 			PreparePlayer ();
 			playerMock.ResetCalls ();
 
 			int playlistElementSelected = 0;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			player.PresentationMode = true;
 			player.Seek (new Time (15), true, false, false);
@@ -1338,12 +1339,12 @@ namespace Tests.Services
 			element.Play.Stop = new Time (10);
 			localPlaylist.Elements.Add (element0);
 			localPlaylist.Elements.Add (element);
-			Config.EventsBroker.EmitPlaylistElementSelected (localPlaylist, element0, false);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (localPlaylist, element0, false);
 			PreparePlayer ();
 			playerMock.ResetCalls ();
 
 			int playlistElementSelected = 0;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			player.PresentationMode = true;
 			player.Seek (new Time (5), true, false, false);
@@ -1368,7 +1369,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 
 			int playlistElementSelected = 0;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			player.PresentationMode = true;
 			Assert.IsFalse (player.Seek (new Time (5000), true, false, false));
@@ -1390,7 +1391,7 @@ namespace Tests.Services
 			playerMock.ResetCalls ();
 
 			int playlistElementSelected = 0;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += (p, e, pl) => playlistElementSelected++;
 
 			player.PresentationMode = true;
 			Assert.IsFalse (player.Seek (new Time (4000), true, false, false));

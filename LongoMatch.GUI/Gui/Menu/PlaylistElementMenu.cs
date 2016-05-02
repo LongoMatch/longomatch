@@ -24,6 +24,7 @@ using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Menus
@@ -55,7 +56,7 @@ namespace LongoMatch.Gui.Menus
 
 		void AddVideo (IPlaylistElement element, bool prepend)
 		{
-			MediaFile file = LongoMatch.Gui.Helpers.Misc.OpenFile (widget);
+			MediaFile file = Helpers.Misc.OpenFile (widget);
 			if (file != null) {
 				PlaylistVideo video = new PlaylistVideo (file);
 				int index = playlist.Elements.IndexOf (element);
@@ -68,7 +69,7 @@ namespace LongoMatch.Gui.Menus
 
 		void AddImage (IPlaylistElement element, bool prepend)
 		{
-			Pixbuf pix = LongoMatch.Gui.Helpers.Misc.OpenImage (widget);
+			Pixbuf pix = Helpers.Misc.OpenImage (widget);
 			if (pix != null) {
 				var image = new Image (pix);
 				PlaylistImage plimage = new PlaylistImage (image, new Time (5000));

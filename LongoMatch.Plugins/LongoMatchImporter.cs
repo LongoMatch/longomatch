@@ -17,11 +17,11 @@
 //
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using Mono.Addins;
+using VAS.Core;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 
 

@@ -19,16 +19,18 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using VAS.Core.Common;
-using VAS.Core.Store;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -36,7 +38,7 @@ namespace LongoMatch.Services
 	{
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
-		IAnalysisWindow analysisWindow;
+		IAnalysisWindowBase analysisWindow;
 
 		public ProjectsManager ()
 		{
@@ -69,8 +71,8 @@ namespace LongoMatch.Services
 
 		void EmitProjectChanged ()
 		{
-			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
-				PlaysFilter, analysisWindow);
+			((LMCommon.EventsBroker)LongoMatch.Config.EventsBroker).EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
+				PlaysFilter as EventsFilter, analysisWindow as IAnalysisWindow);
 		}
 
 		void RemuxOutputFile (EncodingSettings settings)
@@ -362,7 +364,7 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().ToList ());
+			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().Cast<Project> ().ToList ());
 		}
 
 		void OpenProjectID (Guid projectID, ProjectLongoMatch project)
@@ -393,7 +395,7 @@ namespace LongoMatch.Services
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				Config.EventsBroker.EmitNewProject (project);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitNewProject (project);
 				return;
 			}
 
@@ -470,15 +472,15 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = Config.MultimediaToolkit;
 			guiToolkit = Config.GUIToolkit;
-			Config.EventsBroker.NewProjectEvent += NewProject;
-			Config.EventsBroker.OpenProjectEvent += OpenProject;
-			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
-			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent += HandleSaveProject;
-			Config.EventsBroker.CaptureError += HandleCaptureError;
-			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
-			Config.EventsBroker.MultimediaError += HandleMultimediaError;
+			((LMCommon.EventsBroker)Config.EventsBroker).NewProjectEvent += NewProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectEvent += OpenProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectIDEvent += OpenProjectID;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenNewProjectEvent += OpenNewProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).CloseOpenedProjectEvent += PromptCloseProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).SaveProjectEvent += HandleSaveProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).CaptureError += HandleCaptureError;
+			((LMCommon.EventsBroker)Config.EventsBroker).CaptureFinished += HandleCaptureFinished;
+			((LMCommon.EventsBroker)Config.EventsBroker).MultimediaError += HandleMultimediaError;
 			return true;
 		}
 
@@ -486,15 +488,15 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = null;
 			guiToolkit = null;
-			Config.EventsBroker.NewProjectEvent -= NewProject;
-			Config.EventsBroker.OpenProjectEvent -= OpenProject;
-			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;
-			Config.EventsBroker.OpenNewProjectEvent -= OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent -= PromptCloseProject;
-			Config.EventsBroker.SaveProjectEvent -= HandleSaveProject;
-			Config.EventsBroker.CaptureError -= HandleCaptureError;
-			Config.EventsBroker.CaptureFinished -= HandleCaptureFinished;
-			Config.EventsBroker.MultimediaError -= HandleMultimediaError;
+			((LMCommon.EventsBroker)Config.EventsBroker).NewProjectEvent -= NewProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectEvent -= OpenProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectIDEvent -= OpenProjectID;
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenNewProjectEvent -= OpenNewProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).CloseOpenedProjectEvent -= PromptCloseProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).SaveProjectEvent -= HandleSaveProject;
+			((LMCommon.EventsBroker)Config.EventsBroker).CaptureError -= HandleCaptureError;
+			((LMCommon.EventsBroker)Config.EventsBroker).CaptureFinished -= HandleCaptureFinished;
+			((LMCommon.EventsBroker)Config.EventsBroker).MultimediaError -= HandleMultimediaError;
 			return true;
 		}
 

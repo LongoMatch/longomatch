@@ -22,14 +22,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -98,12 +100,12 @@ namespace LongoMatch.Services
 			ReloadHotkeys ();
 		}
 
-		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 EventsFilter filter, IAnalysisWindowBase analysisWindow)
 		{
-			this.analysisWindow = analysisWindow;
+			this.analysisWindow = analysisWindow as IAnalysisWindow;
 			this.capturer = analysisWindow.Capturer;
-			openedProject = project;
+			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
 			if (project == null) {
 				dashboard = null;
@@ -256,7 +258,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed += DashboardKeyListener;
 			Config.EventsBroker.KeyPressed += UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent += HandleDashboardEditedEvent;
 			timer = new System.Threading.Timer (HandleTimeout);
 			return true;
 		}
@@ -266,7 +268,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed -= DashboardKeyListener;
 			Config.EventsBroker.KeyPressed -= UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent -= HandleDashboardEditedEvent;
 			return true;
 		}
 
