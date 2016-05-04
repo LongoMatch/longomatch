@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.DB;
+using VAS.DB;
 using NUnit.Framework;
 
 namespace Tests.DB

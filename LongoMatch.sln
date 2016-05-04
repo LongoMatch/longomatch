@@ -37,15 +37,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.Stats", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F042D024-3283-4E60-9A85-76E6BBBBB2C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.DB.Net45", "LongoMatch.DB\LongoMatch.DB.Net45.csproj", "{EC395325-994F-47F6-8FC2-AC17EC452EDA}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Core", "LongoMatch.Core\LongoMatch.Core.shproj", "{DBC3B8C2-2CD0-40BA-86DE-EBA2BF436F52}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Services", "LongoMatch.Services\LongoMatch.Services.shproj", "{EC75C6BF-0788-41EE-8946-47651FACFB54}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.DB", "LongoMatch.DB\LongoMatch.DB.shproj", "{D6E928F2-1BAA-4D67-BD81-B549E9B89E83}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Drawing", "LongoMatch.Drawing\LongoMatch.Drawing.shproj", "{71D588BD-1B61-459D-9B5F-9CAA7C59C2F8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.DB", "VAS\VAS.DB\VAS.DB.shproj", "{D6E928F2-1BAA-4D67-BD81-B549E9B89E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.DB.Net45", "VAS\VAS.DB\VAS.DB.Net45.csproj", "{EC395325-994F-47F6-8FC2-AC17EC452EDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

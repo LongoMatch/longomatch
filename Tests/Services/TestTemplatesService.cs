@@ -20,7 +20,7 @@ using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
+using VAS.DB;
 using LongoMatch.Services;
 using NUnit.Framework;
 

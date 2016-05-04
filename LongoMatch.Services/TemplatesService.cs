@@ -27,7 +27,7 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
+using VAS.DB;
 
 namespace LongoMatch.Services
 {

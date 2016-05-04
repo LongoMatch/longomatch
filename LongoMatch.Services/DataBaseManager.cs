@@ -22,7 +22,7 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.DB;
+using VAS.DB;
 
 namespace LongoMatch.Services
 {

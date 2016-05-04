@@ -25,8 +25,8 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
-using LongoMatch.DB.Views;
+using VAS.DB;
+using VAS.DB.Views;
 using NUnit.Framework;
 
 namespace Tests.DB

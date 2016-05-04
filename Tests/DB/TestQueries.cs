@@ -24,7 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
+using VAS.DB;
 using NUnit.Framework;
 
 namespace Tests.DB
