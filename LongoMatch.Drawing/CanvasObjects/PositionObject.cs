@@ -22,6 +22,8 @@ using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -148,11 +150,11 @@ namespace LongoMatch.Drawing.CanvasObjects
 					strokeColor = Play.Teams.First ().Color;
 				}
 			} else {
-				fillColor = strokeColor = Constants.TAGGER_POINT_COLOR;
+				fillColor = strokeColor = VASDrawing.Constants.TAGGER_POINT_COLOR;
 			}
 			
 			if (Selected) {
-				fillColor = Constants.TAGGER_SELECTION_COLOR;
+				fillColor = VASDrawing.Constants.TAGGER_SELECTION_COLOR;
 			} else if (Highlighted) {
 				fillColor = Config.Style.PaletteActive;
 			}

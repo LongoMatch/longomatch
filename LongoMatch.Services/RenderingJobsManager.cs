@@ -214,7 +214,7 @@ namespace LongoMatch.Services
 			
 			Log.Debug (String.Format ("Adding still drawing with duration {0}s",
 				drawing.Duration));
-			img = Drawing.Utils.RenderFrameDrawing (Config.DrawingToolkit, drawing.Width,
+			img = VAS.Drawing.Utils.RenderFrameDrawing (Config.DrawingToolkit, drawing.Width,
 				drawing.Height, drawing.Drawing);
 			ProcessImage (img, drawing.Duration);
 		}
@@ -291,7 +291,7 @@ namespace LongoMatch.Services
 					filename, drawing.Render.ToMSecondsString ()));
 				return null;
 			}
-			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
+			final_image = VAS.Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
 			final_image.Save (path);
 			return path;
 		}

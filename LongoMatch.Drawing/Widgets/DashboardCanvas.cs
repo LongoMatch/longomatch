@@ -28,7 +28,8 @@ using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
-using VAS.Core.Store.Templates;
+using VAS.Drawing;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -341,12 +342,12 @@ namespace LongoMatch.Drawing.Widgets
 			if (sel != null && moved) {
 				if (sel.Drawable is DashboardButtonObject) {
 					/* Round the position of the button to match a corner in the grid */
-					int i = Constants.CATEGORY_TPL_GRID;
+					int i = VASDrawing.Constants.CATEGORY_TPL_GRID;
 					DashboardButton tb = (sel.Drawable as DashboardButtonObject).Button;
-					tb.Position.X = Utils.Round (tb.Position.X, i);
-					tb.Position.Y = Utils.Round (tb.Position.Y, i);
-					tb.Width = (int)Utils.Round (tb.Width, i);
-					tb.Height = (int)Utils.Round (tb.Height, i);
+					tb.Position.X = VASDrawing.Utils.Round (tb.Position.X, i);
+					tb.Position.Y = VASDrawing.Utils.Round (tb.Position.Y, i);
+					tb.Width = (int)VASDrawing.Utils.Round (tb.Width, i);
+					tb.Height = (int)VASDrawing.Utils.Round (tb.Height, i);
 					(sel.Drawable as DashboardButtonObject).ResetDrawArea ();
 					widget.ReDraw ();
 				}
@@ -365,11 +366,11 @@ namespace LongoMatch.Drawing.Widgets
 				tk.StrokeColor = Color.Grey1;
 				tk.FillColor = Color.Grey1;
 				/* Vertical lines */
-				for (int i = 0; i <= templateHeight; i += Constants.CATEGORY_TPL_GRID) {
+				for (int i = 0; i <= templateHeight; i += VASDrawing.Constants.CATEGORY_TPL_GRID) {
 					tk.DrawLine (new Point (0, i), new Point (templateWidth, i));
 				}
 				/* Horizontal lines */
-				for (int i = 0; i < templateWidth; i += Constants.CATEGORY_TPL_GRID) {
+				for (int i = 0; i < templateWidth; i += VASDrawing.Constants.CATEGORY_TPL_GRID) {
 					tk.DrawLine (new Point (i, 0), new Point (i, templateHeight));
 				}
 			}

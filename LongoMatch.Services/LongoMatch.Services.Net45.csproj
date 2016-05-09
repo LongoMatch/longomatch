@@ -84,6 +84,10 @@
       <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
       <Name>VAS.Services.Net45</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing.Net45\VAS.Drawing.Net45.csproj">
+      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+      <Name>VAS.Drawing.Net45</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

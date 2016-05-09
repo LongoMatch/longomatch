@@ -61,6 +61,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\V
 EndProject
 Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libvas", "VAS\libvas\libvas.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Drawing", "VAS\VAS.Drawing\VAS.Drawing.shproj", "{4041429C-9260-473E-93DB-E6B5389B7115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing.Net45\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +163,10 @@ Global
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

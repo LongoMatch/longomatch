@@ -17,14 +17,15 @@
 //
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core;
-using VAS.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Drawing;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -110,7 +111,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (filter.IsVisible (labelToObject [label])) {
 					label.OffsetY = i * label.Height;
 					label.Visible = true;
-					label.BackgroundColor = Utils.ColorForRow (i);
+					label.BackgroundColor = VASDrawing.Utils.ColorForRow (i);
 					i++;
 				} else {
 					label.Visible = false;

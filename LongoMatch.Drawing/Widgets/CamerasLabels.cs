@@ -21,6 +21,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {

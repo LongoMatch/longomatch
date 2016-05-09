@@ -30,6 +30,7 @@ using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Gui.Component
 {
@@ -66,12 +67,12 @@ namespace LongoMatch.Gui.Component
 			focusscale.ValueChanged += HandleValueChanged;
 			focusscale.ButtonPressEvent += HandleFocusScaleButtonPress;
 			focusscale.ButtonReleaseEvent += HandleFocusScaleButtonRelease;
-			timerulearea.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
+			timerulearea.HeightRequest = VASDrawing.Constants.TIMERULE_HEIGHT;
 			leftbox.WidthRequest = StyleConf.TimelineLabelsWidth;
 			labelsarea.SizeRequested += (o, args) => {
 				leftbox.WidthRequest = args.Requisition.Width;
 			};
-			hbox1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
+			hbox1.HeightRequest = VASDrawing.Constants.TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;

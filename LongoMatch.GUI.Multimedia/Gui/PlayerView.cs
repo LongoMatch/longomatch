@@ -33,6 +33,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using VAS.Drawing.Cairo;
+using VAS.Drawing.Widgets;
 using VAS.Services;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;

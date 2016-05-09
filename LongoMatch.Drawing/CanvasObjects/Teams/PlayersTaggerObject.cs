@@ -21,13 +21,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using VAS.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Templates;
-using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
 using LongoMatch.Core.Store;
-using VAS.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -698,7 +700,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 			}
 			
-			point = Utils.ToUserCoords (point, offset, scaleX, scaleY);
+			point = VASDrawing.Utils.ToUserCoords (point, offset, scaleX, scaleY);
 			selection = homeBench.GetSelection (point, 0, false);
 			if (selection == null) {
 				selection = awayBench.GetSelection (point, 0, false);
@@ -789,7 +791,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					sel = new Selection (this, SelectionPosition.All, 0);
 				}
 			} else {
-				point = Utils.ToUserCoords (point, offset, scaleX, scaleY);
+				point = VASDrawing.Utils.ToUserCoords (point, offset, scaleX, scaleY);
 				sel = homeBench.GetSelection (point, 0, false);
 				if (sel == null) {
 					sel = awayBench.GetSelection (point, 0, false);

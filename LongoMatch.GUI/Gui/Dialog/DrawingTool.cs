@@ -26,6 +26,7 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing.Cairo;
+using VAS.Drawing.Widgets;
 using VAS.UI.Helpers;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;

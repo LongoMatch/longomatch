@@ -17,15 +17,16 @@
 //
 using System;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
+using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
-using VAS.Core.Interfaces;
+using VAS.Drawing;
 using LMCommon = LongoMatch.Core.Common;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -101,7 +102,7 @@ namespace LongoMatch.Drawing.Widgets
 				Area area;
 				double start, stop, timeX;
 
-				timeX = Utils.TimeToPos (value, SecondsPerPixel) - Scroll;
+				timeX = VASDrawing.Utils.TimeToPos (value, SecondsPerPixel) - Scroll;
 				if (needle.X < timeX) {
 					start = needle.X;
 					stop = timeX;
@@ -165,12 +166,12 @@ namespace LongoMatch.Drawing.Widgets
 		public bool PlayerMode {
 			set {
 				if (value) {
-					RuleHeight = Constants.TIMERULE_RULE_PLAYER_HEIGHT;
+					RuleHeight = VASDrawing.Constants.TIMERULE_RULE_PLAYER_HEIGHT;
 					FontSize = StyleConf.TimelineRulePlayerFontSize;
 					bigLineHeight = 8;
 					smallLineHeight = 3;
 				} else {
-					RuleHeight = Constants.TIMERULE_HEIGHT;
+					RuleHeight = VASDrawing.Constants.TIMERULE_HEIGHT;
 					FontSize = StyleConf.TimelineRuleFontSize;
 					bigLineHeight = 15;
 					smallLineHeight = 5;
@@ -221,7 +222,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (moved && !ContinuousSeek) {
 				if (SeekEvent != null) {
-					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					SeekEvent (VASDrawing.Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 						true);
 				}
 			}
@@ -232,7 +233,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (ContinuousSeek) {
 				if (SeekEvent != null) {
-					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					SeekEvent (VASDrawing.Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 						false, throttled: true);
 				}
 			}
@@ -245,7 +246,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (!Selections.Any ()) {
 				needle.X = coords.X;
 				if (SeekEvent != null) {
-					SeekEvent (Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
+					SeekEvent (VASDrawing.Utils.PosToTime (new Point (needle.X + Scroll, 0), SecondsPerPixel),
 						true);
 				}
 				needle.ReDraw ();
@@ -307,7 +308,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			tk.StrokeColor = Config.Style.PaletteWidgets;
 			tk.FillColor = Config.Style.PaletteWidgets;
-			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
+			tk.LineWidth = VASDrawing.Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = FontSize;
 			tk.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
@@ -338,7 +339,7 @@ namespace LongoMatch.Drawing.Widgets
 			needle.TimelineHeight = height;
 			needle.MaxPointX = widget.Width;
 			if (!Moving) {
-				tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
+				tpos = VASDrawing.Utils.TimeToPos (CurrentTime, SecondsPerPixel);
 				tpos -= Scroll;
 				needle.X = tpos;
 			}

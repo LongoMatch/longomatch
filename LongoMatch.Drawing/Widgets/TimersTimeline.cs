@@ -17,14 +17,14 @@
 //
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -42,9 +42,9 @@ namespace LongoMatch.Drawing.Widgets
 		public TimersTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
-			Accuracy = Constants.TIMELINE_ACCURACY;
+			Accuracy = VASDrawing.Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			HeightRequest = Constants.TIMER_HEIGHT;
+			HeightRequest = VASDrawing.Constants.TIMER_HEIGHT;
 		}
 
 		public TimersTimeline () : this (null)
@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing.Widgets
 					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
 					t = to.Timer;
 				} 
-				ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowTimerMenuEvent (t, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}

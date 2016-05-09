@@ -18,6 +18,7 @@
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 {

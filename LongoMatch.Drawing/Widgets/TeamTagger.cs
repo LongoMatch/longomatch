@@ -20,13 +20,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using VAS.Core.Interfaces.Drawing;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
-using LongoMatch.Core.Store;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {

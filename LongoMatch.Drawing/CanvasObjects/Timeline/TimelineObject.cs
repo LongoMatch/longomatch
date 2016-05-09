@@ -17,14 +17,15 @@
 //
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
-using VAS.Core.Store;
-using VAS.Core;
 using LongoMatch.Core.Store;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -194,8 +195,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 			tk.FillColor = Config.Style.PaletteTool;
 			tk.StrokeColor = Config.Style.PaletteTool;
-			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
-			position = Utils.TimeToPos (CurrentTime, secondsPerPixel);
+			tk.LineWidth = VASDrawing.Constants.TIMELINE_LINE_WIDTH;
+			position = VASDrawing.Utils.TimeToPos (CurrentTime, secondsPerPixel);
 			tk.DrawLine (new Point (position, OffsetY),
 				new Point (position, OffsetY + Height));
 			

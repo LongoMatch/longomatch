@@ -22,12 +22,12 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
+using VAS.Drawing;
 using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Dialog

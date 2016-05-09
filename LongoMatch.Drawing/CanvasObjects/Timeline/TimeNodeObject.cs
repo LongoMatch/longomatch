@@ -16,13 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using VAS.Core.Common;
-using VAS.Core.Store.Drawables;
-using VAS.Core.Store;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -102,19 +103,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 
 		public double StartX {
 			get {
-				return Utils.TimeToPos (TimeNode.Start, SecondsPerPixel);
+				return VASDrawing.Utils.TimeToPos (TimeNode.Start, SecondsPerPixel);
 			}
 		}
 
 		public double StopX {
 			get {
-				return Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
+				return VASDrawing.Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			}
 		}
 
 		public double CenterX {
 			get {
-				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
+				return VASDrawing.Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
 					SecondsPerPixel);
 			}
 		}
@@ -174,15 +175,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				break;
 			}
 
-			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
+			Time newTime = VASDrawing.Utils.PosToTime (p, SecondsPerPixel);
 			diffX = p.X - start.X;
 
 			if (p.X < 0) {
 				p.X = 0;
 			} else if (newTime > MaxTime) {
-				p.X = Utils.TimeToPos (MaxTime, SecondsPerPixel);
+				p.X = VASDrawing.Utils.TimeToPos (MaxTime, SecondsPerPixel);
 			}
-			newTime = Utils.PosToTime (p, SecondsPerPixel);
+			newTime = VASDrawing.Utils.PosToTime (p, SecondsPerPixel);
 
 			if (TimeNode is StatEvent) {
 				TimeNode.EventTime = newTime;
@@ -206,7 +207,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				break;
 			case SelectionPosition.All:
 				Time tstart, tstop;
-				Time diff = Utils.PosToTime (new Point (diffX, p.Y), SecondsPerPixel);
+				Time diff = VASDrawing.Utils.PosToTime (new Point (diffX, p.Y), SecondsPerPixel);
 				bool ok = false;
 
 				tstart = TimeNode.Start;

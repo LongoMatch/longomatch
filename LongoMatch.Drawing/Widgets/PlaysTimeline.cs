@@ -17,18 +17,19 @@
 //
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects;
 using LMCommon = LongoMatch.Core.Common;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -53,7 +54,7 @@ namespace LongoMatch.Drawing.Widgets
 			eventsTimelines = new Dictionary<EventType, CategoryTimeline> ();
 			timelineToFilter = new Dictionary<TimelineObject, object> ();
 			secondsPerPixel = 0.1;
-			Accuracy = Constants.TIMELINE_ACCURACY;
+			Accuracy = VASDrawing.Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			SingleSelectionObjects.Add (typeof(TimerTimeNodeObject));
 			currentTime = new Time (0);
@@ -94,11 +95,11 @@ namespace LongoMatch.Drawing.Widgets
 					tl.CurrentTime = value;
 				}
 				if (currentTime < value) {
-					start = Utils.TimeToPos (currentTime, SecondsPerPixel);
-					stop = Utils.TimeToPos (value, SecondsPerPixel);
+					start = VASDrawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
+					stop = VASDrawing.Utils.TimeToPos (value, SecondsPerPixel);
 				} else {
-					start = Utils.TimeToPos (value, SecondsPerPixel);
-					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
+					start = VASDrawing.Utils.TimeToPos (value, SecondsPerPixel);
+					stop = VASDrawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
 				}
 				currentTime = value;
 				if (widget != null) {
@@ -198,7 +199,7 @@ namespace LongoMatch.Drawing.Widgets
 			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList (),
 				true, NodeDraggingMode.All, false, duration,
 				i * StyleConf.TimelineCategoryHeight,
-				Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+				VASDrawing.Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
 			PeriodsTimeline = tl as TimerTimeline;
 			i++;
@@ -206,7 +207,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (Timer t in project.Timers) {
 				tl = new TimerTimeline (new List<Timer> { t }, false, NodeDraggingMode.All, false, duration,
 					i * StyleConf.TimelineCategoryHeight,
-					Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+					VASDrawing.Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
 			}
 			                        
@@ -214,8 +215,7 @@ namespace LongoMatch.Drawing.Widgets
 				var timelineEventList = project.EventsByType (type).OfType<TimelineEventLongoMatch> ();
 				tl = new CategoryTimeline (project, timelineEventList, duration,
 					i * StyleConf.TimelineCategoryHeight,
-					Utils.ColorForRow (i), playsFilter);
-
+					VASDrawing.Utils.ColorForRow (i), playsFilter);
 				AddTimeline (tl, type);
 				i++;
 			}
@@ -231,7 +231,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (playsFilter.IsVisible (timelineToFilter [timeline])) {
 					timeline.OffsetY = i * timeline.Height;
 					timeline.Visible = true;
-					timeline.BackgroundColor = Utils.ColorForRow (i);
+					timeline.BackgroundColor = VASDrawing.Utils.ColorForRow (i);
 					i++;
 				} else {
 					timeline.Visible = false;
@@ -246,7 +246,7 @@ namespace LongoMatch.Drawing.Widgets
 			    coords.Y < PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
 				Timer t = Selections.Select (p => (p.Drawable as TimerTimeNodeObject).Timer).FirstOrDefault ();
 				if (ShowTimerMenuEvent != null) {
-					ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+					ShowTimerMenuEvent (t, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));
 				}
 			} else {
 				List<TimeNode> nodes = Selections.Select (p => (p.Drawable as TimeNodeObject).TimeNode).ToList ();
@@ -265,7 +265,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			ev = eventsTimelines.GetKeyByValue (catTimeline);
 			if (ev != null && ShowMenuEvent != null) {
-				ShowMenuEvent (plays, ev, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowMenuEvent (plays, ev, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 

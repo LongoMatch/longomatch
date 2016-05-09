@@ -17,10 +17,10 @@
 //
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core;
 using VAS.Core.Store;
+using VAS.Drawing;
 
 namespace LongoMatch.Gui.Menus
 {

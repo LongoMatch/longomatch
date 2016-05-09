@@ -19,13 +19,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -49,7 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 		public CamerasTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
-			Accuracy = Constants.TIMELINE_ACCURACY;
+			Accuracy = VAS.Drawing.Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			currentTime = new Time (0);
 		}
@@ -86,11 +86,11 @@ namespace LongoMatch.Drawing.Widgets
 					tl.CurrentTime = value;
 				}
 				if (currentTime < value) {
-					start = Utils.TimeToPos (currentTime, SecondsPerPixel);
-					stop = Utils.TimeToPos (value, SecondsPerPixel);
+					start = VAS.Drawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
+					stop = VAS.Drawing.Utils.TimeToPos (value, SecondsPerPixel);
 				} else {
-					start = Utils.TimeToPos (value, SecondsPerPixel);
-					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
+					start = VAS.Drawing.Utils.TimeToPos (value, SecondsPerPixel);
+					stop = VAS.Drawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
 				}
 				currentTime = value;
 				if (widget != null) {
@@ -221,7 +221,7 @@ namespace LongoMatch.Drawing.Widgets
 					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
 					t = to.Timer;
 				} 
-				ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowTimerMenuEvent (t, VAS.Drawing.Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}
