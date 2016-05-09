@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2013 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -16,22 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
+using LongoMatch.Core.Store.Templates;
+using VAS.Core;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
 
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Core.Common
 {
-	public interface IStorageManager
+	public class SubstitutionException: Exception
 	{
-		void SetActiveByName (string name);
+		public SubstitutionException (string error) : base (error)
+		{
+		}
+	}
 
-		IStorage Add (string name);
+	public class TemplateNotFoundException<T>: Exception where T: ITemplate
+	{
+		public TemplateNotFoundException (string name) :
+			base (GenerateMessage (name))
+		{
+		}
 
-		bool Delete (IStorage db);
-
-		IStorage ActiveDB { get; set; }
-
-		void UpdateDatabases ();
-
-		List<IStorage> Databases { get; set; }
+		private static string GenerateMessage (string name)
+		{
+			if (typeof(T) == typeof(Team)) {
+				return Catalog.GetString ("Team not found:\n") + name;
+			} else if (typeof(T) == typeof(Dashboard)) {
+				return Catalog.GetString ("Dashboard not found:\n") + name;
+			} else {
+				return Catalog.GetString ("Template not found:\n") + name;
+			}
+		}
 	}
 }

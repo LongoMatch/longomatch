@@ -17,7 +17,8 @@
 //
 using System;
 using LongoMatch.Core.Handlers.Drawing;
-using LongoMatch.Core.Common;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Core.Interfaces.Drawing
 {
@@ -29,13 +30,19 @@ namespace LongoMatch.Core.Interfaces.Drawing
 		event MotionHandler MotionEvent;
 		event SizeChangedHandler SizeChangedEvent;
 		event ShowTooltipHandler ShowTooltipEvent;
-		
-		double Width {get;set;}
-		double Height {get;set;}
+
+		double Width { get; set; }
+
+		double Height { get; set; }
+
 		void ReDraw (Area area = null);
+
 		void ReDraw (IMovableObject drawable);
+
 		void SetCursor (CursorType type);
+
 		void SetCursorForTool (DrawTool tool);
+
 		void ShowTooltip (string text);
 	}
 }

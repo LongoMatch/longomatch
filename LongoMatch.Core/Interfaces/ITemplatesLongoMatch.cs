@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2010 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2016 dfernandez
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,18 +15,18 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using LongoMatch.Core.Store.Templates;
+using VAS.Core.Interfaces;
 
-using System;
-
-namespace LongoMatch.Core.Common
+namespace LongoMatch.Core.Interfaces
 {
-
-	public struct CaptureSettings
+	public interface ITeamTemplatesProvider: ITemplateProvider<Team>
 	{
-		public Device Device;
-		public DeviceVideoFormat Format;
-		public EncodingSettings EncodingSettings;
 
 	}
-	
+
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<DashboardLongoMatch>
+	{
+	}
 }
+

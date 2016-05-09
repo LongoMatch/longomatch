@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Core.Migration
 {

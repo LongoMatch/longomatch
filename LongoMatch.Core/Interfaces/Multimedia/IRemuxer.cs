@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Core.Interfaces.Multimedia
@@ -24,10 +23,9 @@ namespace LongoMatch.Core.Interfaces.Multimedia
 	{
 		event ErrorHandler Error;
 		event ProgressHandler Progress;
-		
-		void Start();
-		
-		void Cancel();
+
+		void Start ();
+
+		void Cancel ();
 	}
 }
-

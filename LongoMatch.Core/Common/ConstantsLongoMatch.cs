@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2007-2010 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //
 
 using System;
+using Color = VAS.Core.Common.Color;
 
 #if HAVE_GTK
 using Gdk;
@@ -25,20 +26,18 @@ using Gdk;
 
 namespace LongoMatch.Core.Common
 {
-	public class Constants
+	public class Constants : VAS.Core.Common.Constants
 	{
-		public const string SOFTWARE_NAME = "LongoMatch";
+		new public const string SOFTWARE_NAME = "LongoMatch";
 
-		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
+		new public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 
-		public const string DEFAULT_DB_NAME = "longomatch";
-		
+		new public const string DEFAULT_DB_NAME = "longomatch";
+
 		public const string COPYRIGHT = "Copyright ©2014-2015 FLUENDO S.A.\nCopyright ©2007-2014 Andoni Morales Alastruey";
-		
-		public const string FAKE_PROJECT = "@Fake Project@";
-		
+
 		public const string PORTABLE_FILE = "longomatch.portable";
-		
+
 		public const string LICENSE =
 			@"This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -105,18 +104,10 @@ Xavier Queralt Mateu (ca)";
 		public const string PLAYLIST_EXT = ".lpl";
 		public const string PROJECT_EXT = ".lgm";
 		public const string PROJECT_ENCRYPTED_EXT = ".lgmx";
-		#if OSTYPE_ANDROID || OSTYPE_IOS
-		public const string IMAGE_EXT = ".png";
-		#else
-		public const string IMAGE_EXT = ".svg";
-		#endif
 
 		public const string LOGO_ICON = "longomatch";
 		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
-		public const string FIELD_BACKGROUND = "images/fields/field-full" + IMAGE_EXT;
-		public const string HALF_FIELD_BACKGROUND = "images/fields/field-half" + IMAGE_EXT;
-		public const string HHALF_FIELD_BACKGROUND = "images/fields/field-full-teameditor" + IMAGE_EXT;
-		public const string GOAL_BACKGROUND = "images/fields/field-goal" + IMAGE_EXT;
+
 		public const string SPLASH = "images/longomatch-splash" + IMAGE_EXT;
 		public const string LINE_NORMAL = "line" + IMAGE_EXT;
 		public const string LINE_DASHED = "dash-line" + IMAGE_EXT;
@@ -125,20 +116,15 @@ Xavier Queralt Mateu (ca)";
 		public const string LINE_DOT = "line-dot" + IMAGE_EXT;
 		public const string LINE_DOUBLE_DOT = "line-double-dot" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
-		
-		public const int DB_VERSION = 1;
 
 		public const int MAX_PLAYER_ICON_SIZE = 100;
 		public const int MAX_SHIELD_ICON_SIZE = 100;
-		public const int MAX_THUMBNAIL_SIZE = 100;
 		public const int MAX_BACKGROUND_WIDTH = 600;
 		public const int MAX_BACKGROUND_HEIGHT = 400;
-		public const int BUTTON_WIDTH = 120;
-		public const int BUTTON_HEIGHT = 80;
-		
+
 		public static Color HOME_COLOR = Color.Red1;
 		public static Color AWAY_COLOR = Color.Blue1;
-		
+
 		public static Guid PenaltyCardID = new Guid ("da4df338-3392-11e4-be8d-0811963e3880");
 		public static Guid ScoreID = new Guid ("dc4df338-3392-11e4-be8d-0811963e3880");
 		public static Guid SubsID = new Guid ("db4df338-3392-11e4-be8d-0811963e3880");

@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2010 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -16,11 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Handlers
 {
@@ -34,7 +33,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PrevButtonClickedHandler ();
 	public delegate void ProgressHandler (float progress);
 	public delegate void FramesProgressHandler (int actual,int total,Image frame);
-	public delegate void DrawFrameHandler (TimelineEvent play,int drawingIndex,CameraConfig camConfig,bool current);
+	public delegate void DrawFrameHandler (TimelineEventLongoMatch play,int drawingIndex,CameraConfig camConfig,bool current);
 	public delegate void ElapsedTimeHandler (Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
 	public delegate void SeekHandler (SeekType type,Time start,float rate);

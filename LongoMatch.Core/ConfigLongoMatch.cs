@@ -1,4 +1,4 @@
-// 
+﻿// 
 //  Copyright (C) 2011 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
@@ -17,26 +17,23 @@
 // 
 using System;
 using System.IO;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using System.Collections.Generic;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using Constants = LongoMatch.Core.Common.Constants;
+using EventsBroker = LongoMatch.Core.Common.EventsBroker;
 using Newtonsoft.Json;
-using LongoMatch.Core;
 
 namespace LongoMatch
 {
-	public class Config
+	public class Config : VAS.Config
 	{
-		public static string homeDirectory = ".";
-		public static string baseDirectory = ".";
-		public static string configDirectory = ".";
-		public static string dataDir = ".";
-		
 		/* State */
 		public static IGUIToolkit GUIToolkit;
 		public static IMultimediaToolkit MultimediaToolkit;
@@ -44,12 +41,18 @@ namespace LongoMatch
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 		public static EventsBroker EventsBroker;
-		
+
 		public static IStorageManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
-		
-		static StyleConf style;
-		static ConfigState state;
+
+		static ConfigState stateLongomatch {
+			get {
+				return (state as ConfigState);
+			}
+			set {
+				state = value;
+			}
+		}
 
 		public static void Init ()
 		{
@@ -119,11 +122,6 @@ namespace LongoMatch
 			}
 		}
 
-		public static void LoadState (ConfigState newState)
-		{
-			state = newState;
-		}
-
 		public static void Load ()
 		{
 			if (File.Exists (Config.ConfigFile)) {
@@ -135,7 +133,7 @@ namespace LongoMatch
 					Log.Exception (ex);
 				}
 			}
-			
+
 			if (state == null) {
 				Log.Information ("Creating new config at " + Config.ConfigFile);
 				state = new ConfigState ();
@@ -149,7 +147,7 @@ namespace LongoMatch
 			LatestVersionURL = Constants.LATEST_VERSION_URL;
 		}
 
-		public static void Save ()
+		new public static void Save ()
 		{
 			try {
 				Serializer.Instance.Save (state, Config.ConfigFile); 
@@ -159,19 +157,7 @@ namespace LongoMatch
 			}
 		}
 
-		public static StyleConf Style {
-			get {
-				if (style == null) {
-					style = new StyleConf ();
-				}
-				return style;
-			}
-			set {
-				style = value;
-			}
-		}
-
-		public static string ConfigFile {
+		new public static string ConfigFile {
 			get {
 				string filename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
 				return Path.Combine (Config.ConfigDir, filename);
@@ -182,57 +168,6 @@ namespace LongoMatch
 			get {
 				string filename = Constants.SOFTWARE_NAME.ToLower () + ".log";
 				return Path.Combine (Config.ConfigDir, filename);
-			}
-		}
-
-		public static string HomeDir {
-			get {
-				return homeDirectory;
-			}
-		}
-
-		public static string BaseDir {
-			set {
-				baseDirectory = value;
-			}
-		}
-
-		public static string ConfigDir {
-			set {
-				configDirectory = value;
-			}
-			get {
-				return configDirectory;
-			}
-		}
-
-		public static string TemplatesDir {
-			get {
-				return Path.Combine (DBDir, "templates");
-			}
-		}
-
-		public static string PlayListDir {
-			get {
-				return Path.Combine (homeDirectory, "playlists");
-			}
-		}
-
-		public static string SnapshotsDir {
-			get {
-				return Path.Combine (homeDirectory, "snapshots");
-			}
-		}
-
-		public static string VideosDir {
-			get {
-				return Path.Combine (homeDirectory, "videos");
-			}
-		}
-
-		public static string TempVideosDir {
-			get {
-				return Path.Combine (configDirectory, "temp");
 			}
 		}
 
@@ -256,17 +191,17 @@ namespace LongoMatch
 			}
 		}
 
-		public static string DBDir {
-			get {
-				return Path.Combine (homeDirectory, "db");
-			}
-		}
+		//		public static string DBDir {
+		//			get {
+		//				return Path.Combine (homeDirectory, "db");
+		//			}
+		//		}
 
 		public static string AnalysisDir {
 			get {
 				return Path.Combine (DBDir, "analysis");
 			}
-			
+
 		}
 
 		public static string TeamsDir {
@@ -275,22 +210,7 @@ namespace LongoMatch
 			}
 		}
 
-		public static string RelativeToPrefix (string relativePath)
-		{
-			return Path.Combine (baseDirectory, relativePath);
-		}
-
 		#region Properties
-
-		static public Version Version {
-			get;
-			set;
-		}
-
-		static public string BuildVersion {
-			get;
-			set;
-		}
 
 		static public Image Background {
 			get;
@@ -342,30 +262,6 @@ namespace LongoMatch
 			set;
 		}
 
-		static public Image FieldBackground {
-			get {
-				return Resources.LoadImage (Constants.FIELD_BACKGROUND);
-			}
-		}
-
-		static public Image HalfFieldBackground {
-			get {
-				return Resources.LoadImage (Constants.HALF_FIELD_BACKGROUND);
-			}
-		}
-
-		static public Image HHalfFieldBackground {
-			get {
-				return Resources.LoadImage (Constants.HHALF_FIELD_BACKGROUND);
-			}
-		}
-
-		static public Image GoalBackground {
-			get {
-				return Resources.LoadImage (Constants.GOAL_BACKGROUND);
-			}
-		}
-
 		public static bool FastTagging {
 			get {
 				return state.fastTagging;
@@ -379,16 +275,6 @@ namespace LongoMatch
 		public static bool UseGameUnits {
 			get;
 			set;
-		}
-
-		public static string CurrentDatabase {
-			get {
-				return state.currentDatabase;
-			}
-			set {
-				state.currentDatabase = value;
-				Save ();
-			}
 		}
 
 		public static string Lang {
@@ -418,28 +304,7 @@ namespace LongoMatch
 			set {
 				state.captureEncodingProfile = value;
 				Save ();
-				
-			}
-		}
 
-		public static VideoStandard RenderVideoStandard {
-			get {
-				return state.renderVideoStandard;
-			}
-			set {
-				state.renderVideoStandard = value;
-				Save ();
-			}
-		}
-
-		public static EncodingProfile RenderEncodingProfile {
-			get {
-				return state.renderEncodingProfile;
-			}
-			set {
-				state.renderEncodingProfile = value;
-				Save ();
-				
 			}
 		}
 
@@ -450,17 +315,7 @@ namespace LongoMatch
 			set {
 				state.captureEncodingQuality = value;
 				Save ();
-				
-			}
-		}
 
-		public static EncodingQuality RenderEncodingQuality {
-			get {
-				return state.renderEncodingQuality;
-			}
-			set {
-				state.renderEncodingQuality = value;
-				Save ();
 			}
 		}
 
@@ -470,46 +325,6 @@ namespace LongoMatch
 			}
 			set {
 				state.autoSave = value;
-				Save ();
-			}
-		}
-
-		public static bool OverlayTitle {
-			get {
-				return state.overlayTitle;
-			}
-			set {
-				state.overlayTitle = value;
-				Save ();
-			}
-		}
-
-		public static bool EnableAudio {
-			get {
-				return state.enableAudio;
-			}
-			set {
-				state.enableAudio = value;
-				Save ();
-			}
-		}
-
-		public static uint FPS_N {
-			get {
-				return state.fps_n;
-			}
-			set {
-				state.fps_n = value;
-				Save ();
-			}
-		}
-
-		public static uint FPS_D {
-			get {
-				return state.fps_d;
-			}
-			set {
-				state.fps_d = value;
 				Save ();
 			}
 		}
@@ -576,10 +391,10 @@ namespace LongoMatch
 
 		public static Hotkeys Hotkeys {
 			get {
-				return state.hotkeys;
+				return stateLongomatch.hotkeys;
 			}
 			set {
-				state.hotkeys = value;
+				stateLongomatch.hotkeys = value;
 				Save ();
 			}
 		}
@@ -609,59 +424,14 @@ namespace LongoMatch
 	}
 
 	[Serializable]
-	//[JsonConverter (typeof (LongoMatchConverter))]
-	public class ConfigState
+	[JsonConverter (typeof(LongoMatchConverter))]
+	public class ConfigState : VAS.ConfigState
 	{
-		public bool fastTagging;
-		public bool autoSave;
-		public string currentDatabase;
-		public string lang;
-		public uint fps_n;
-		public uint fps_d;
-		public VideoStandard captureVideoStandard;
-		public VideoStandard renderVideoStandard;
-		public EncodingProfile captureEncodingProfile;
-		public EncodingProfile renderEncodingProfile;
-		public EncodingQuality captureEncodingQuality;
-		public EncodingQuality renderEncodingQuality;
-		public bool overlayTitle;
-		public bool enableAudio;
-		public bool autorender;
-		public string autorenderDir;
-		public string lastRenderDir;
-		public string lastDir;
-		public bool reviewPlaysInSameWindow;
-		public string defaultTemplate;
 		public Hotkeys hotkeys;
-		public ProjectSortMethod projectSortMethod;
-		public Version ignoreUpdaterVersion;
 
-		public ConfigState ()
+		public ConfigState () : base ()
 		{
-			/* Set default values */
-			fastTagging = false;
-			currentDatabase = Constants.DEFAULT_DB_NAME;
-			lang = null;
-			autoSave = false;
-			captureVideoStandard = VideoStandards.P480_16_9.Clone ();
-			captureEncodingProfile = EncodingProfiles.MP4.Clone ();
-			captureEncodingQuality = EncodingQualities.Medium.Clone ();
-			renderVideoStandard = VideoStandards.P720_16_9.Clone ();
-			renderEncodingProfile = EncodingProfiles.MP4.Clone ();
-			renderEncodingQuality = EncodingQualities.High.Clone ();
-			overlayTitle = true;
-			enableAudio = false;
-			fps_n = 25;
-			fps_d = 1;
-			autorender = false;
-			autorenderDir = null;
-			lastRenderDir = null;
-			lastDir = null;
-			reviewPlaysInSameWindow = true;
-			defaultTemplate = null;
 			hotkeys = new Hotkeys ();
-			projectSortMethod = ProjectSortMethod.Date;
-			ignoreUpdaterVersion = null;
 		}
 	}
 }

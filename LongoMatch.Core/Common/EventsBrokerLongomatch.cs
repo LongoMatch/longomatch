@@ -1,4 +1,4 @@
-//
+﻿//
 //  Copyright (C) 2014 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -18,20 +18,22 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Core.Common
 {
-	public class EventsBroker
+	public class EventsBroker : VAS.Core.Common.EventsBroker
 	{
-	
-		public event NewEventHandler NewEventEvent;
 		public event NewDashboardEventHandler NewDashboardEventEvent;
 		public event EventCreatedHandler EventCreatedEvent;
 		public event DeleteEventsHandler EventsDeletedEvent;
@@ -40,15 +42,13 @@ namespace LongoMatch.Core.Common
 		public event EventEditedHandler EventEditedEvent;
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event TimeNodeStartedHandler TimeNodeStartedEvent;
-		public event TimeNodeStoppedHandler TimeNodeStoppedEvent;
+		//		public event TimeNodeStartedHandler TimeNodeStartedEvent;
+		//		public event TimeNodeStoppedHandler TimeNodeStoppedEvent;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event DuplicateEventsHandler DuplicateEventsEvent;
-		public event TeamsTagsChangedHandler TeamTagsChanged;
-		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
 		public event DashboardEditedHandler DashboardEditedEvent;
-		public event DatabaseCreatedHandler DatabaseCreatedEvent;
-		
+		//		public event DatabaseCreatedHandler DatabaseCreatedEvent;
+
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
 		public event AddPlaylistElementHandler AddPlaylistElementEvent;
@@ -57,15 +57,13 @@ namespace LongoMatch.Core.Common
 		public event NextPlaylistElementHandler NextPlaylistElementEvent;
 		public event PreviousPlaylistElementHandler PreviousPlaylistElementEvent;
 
-		public event KeyHandler KeyPressed;
-		
 		/* Project options */
 		public event SaveProjectHandler SaveProjectEvent;
 		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
 		public event ShowFullScreenHandler ShowFullScreenEvent;
 		public event ShowProjectStats ShowProjectStatsEvent;
 		public event TagSubcategoriesChangedHandler TagSubcategoriesChangedEvent;
-		
+
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
@@ -82,10 +80,9 @@ namespace LongoMatch.Core.Common
 		public event EditPreferences EditPreferencesEvent;
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		public event MigrateDBHandler MigrateDB;
-		
+
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
-		public event OpenedPresentationChangedHandler OpenedPresentationChanged;
-		
+
 		/* Player and Capturer */
 		public event TickHandler PlayerTick;
 		public event TickHandler CapturerTick;
@@ -99,17 +96,54 @@ namespace LongoMatch.Core.Common
 		public event TogglePlayEventHandler TogglePlayEvent;
 		public event StateChangeHandler PlaybackStateChangedEvent;
 
+		public event NewEventHandler NewEventEvent;
+		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
+
+		public event TeamsTagsChangedHandler TeamTagsChanged;
+
+		public event KeyHandler KeyPressed;
+
+		public event OpenedPresentationChangedHandler OpenedPresentationChanged;
+
 		/* Query handlers */
 		public event QueryToolsHandler QueryTools;
 
-		public void EmitNewEvent (EventType eventType, List<Player> players = null, ObservableCollection<Team> teams = null,
+		public void EmitNewEvent (EventType eventType, List<PlayerLongoMatch> players = null, ObservableCollection<Team> teams = null,
 		                          List<Tag> tags = null, Time start = null, Time stop = null, Time eventTime = null)
 		{
 			if (NewEventEvent != null)
 				NewEventEvent (eventType, players, teams, tags, start, stop, eventTime, null);
 		}
 
-		public void EmitNewDashboardEvent (TimelineEvent evt, DashboardButton btn, bool edit, List<DashboardButton> from)
+		public void EmitSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		                                   SubstitutionReason reason, Time time)
+		{
+			if (PlayerSubstitutionEvent != null) {
+				PlayerSubstitutionEvent (team, p1, p2, reason, time);
+			}
+		}
+
+		public void EmitTeamTagsChanged ()
+		{
+			if (TeamTagsChanged != null) {
+				TeamTagsChanged ();
+			}
+		}
+
+		public void EmitKeyPressed (object sender, HotKey key)
+		{
+			if (KeyPressed != null)
+				KeyPressed (sender, key);
+		}
+
+		public  void EmitOpenedPresentationChanged (Playlist presentation, IPlayerController player)
+		{
+			if (OpenedPresentationChanged != null) {
+				OpenedPresentationChanged (presentation, player);
+			}
+		}
+
+		public void EmitNewDashboardEvent (TimelineEventLongoMatch evt, DashboardButton btn, bool edit, List<DashboardButton> from)
 		{
 			if (NewDashboardEventEvent != null) {
 				if (from == null)
@@ -118,32 +152,32 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitEventsDeleted (List<TimelineEvent> events)
+		public void EmitEventsDeleted (List<TimelineEventLongoMatch> events)
 		{
 			if (EventsDeletedEvent != null)
 				EventsDeletedEvent (events);
 		}
 
-		public void EmitLoadEvent (TimelineEvent evt)
+		public void EmitLoadEvent (TimelineEventLongoMatch evt)
 		{
 			if (LoadEventEvent != null)
 				LoadEventEvent (evt);
 		}
 
-		public void EmitEventLoaded (TimelineEvent play)
+		public void EmitEventLoaded (TimelineEventLongoMatch play)
 		{
 			if (EventLoadedEvent != null)
 				EventLoadedEvent (play);
 		}
 
-		public void EmitEventEdited (TimelineEvent play)
+		public void EmitEventEdited (TimelineEventLongoMatch play)
 		{
 			if (EventEditedEvent != null) {
 				EventEditedEvent (play);
 			}
 		}
 
-		public void EmitSnapshotSeries (TimelineEvent play)
+		public void EmitSnapshotSeries (TimelineEventLongoMatch play)
 		{
 			if (SnapshotSeries != null)
 				SnapshotSeries (play);
@@ -155,7 +189,7 @@ namespace LongoMatch.Core.Common
 				RenderPlaylist (playlist);
 		}
 
-		public void EmitNewPlaylist (Project project)
+		public void EmitNewPlaylist (ProjectLongoMatch project)
 		{
 			if (NewPlaylistEvent != null) {
 				NewPlaylistEvent (project);
@@ -180,22 +214,16 @@ namespace LongoMatch.Core.Common
 				TimeNodeChanged (tn, time);
 		}
 
-		public virtual void EmitMoveToEventType (TimelineEvent evnt, EventType eventType)
+		public virtual void EmitMoveToEventType (TimelineEventLongoMatch evnt, EventType eventType)
 		{
 			if (MoveToEventTypeEvent != null)
 				MoveToEventTypeEvent (evnt, eventType);
 		}
 
-		public void EmitDuplicateEvent (List<TimelineEvent> events)
+		public void EmitDuplicateEvent (List<TimelineEventLongoMatch> events)
 		{
 			if (DuplicateEventsEvent != null)
 				DuplicateEventsEvent (events);
-		}
-
-		public void EmitKeyPressed (object sender, HotKey key)
-		{
-			if (KeyPressed != null)
-				KeyPressed (sender, key);
 		}
 
 		public bool EmitCloseOpenedProject ()
@@ -205,7 +233,7 @@ namespace LongoMatch.Core.Common
 			return false;
 		}
 
-		public void EmitShowProjectStats (Project project)
+		public void EmitShowProjectStats (ProjectLongoMatch project)
 		{
 			if (ShowProjectStatsEvent != null)
 				ShowProjectStatsEvent (project);
@@ -224,13 +252,13 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitSaveProject (Project project, ProjectType projectType)
+		public void EmitSaveProject (ProjectLongoMatch project, ProjectType projectType)
 		{
 			if (SaveProjectEvent != null)
 				SaveProjectEvent (project, projectType);
 		}
 
-		public void EmitNewProject (Project project)
+		public void EmitNewProject (ProjectLongoMatch project)
 		{
 			if (NewProjectEvent != null)
 				NewProjectEvent (project);
@@ -284,20 +312,20 @@ namespace LongoMatch.Core.Common
 				ImportProjectEvent ();
 		}
 
-		public void EmitExportProject (Project project)
+		public void EmitExportProject (ProjectLongoMatch project)
 		{
 			if (ExportProjectEvent != null)
 				ExportProjectEvent (project);
 		}
 
-		public void EmitOpenProjectID (Guid projectID, Project project)
+		public void EmitOpenProjectID (Guid projectID, ProjectLongoMatch project)
 		{
 			if (OpenProjectIDEvent != null) {
 				OpenProjectIDEvent (projectID, project);
 			}
 		}
 
-		public void EmitOpenNewProject (Project project, ProjectType projectType, CaptureSettings captureSettings)
+		public void EmitOpenNewProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings captureSettings)
 		{
 			if (OpenNewProjectEvent != null) {
 				OpenNewProjectEvent (project, projectType, captureSettings);
@@ -317,18 +345,11 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public  void EmitOpenedProjectChanged (Project project, ProjectType projectType,
+		public  void EmitOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
 		                                       EventsFilter filter, IAnalysisWindow analysisWindow)
 		{
 			if (OpenedProjectChanged != null) {
 				OpenedProjectChanged (project, projectType, filter, analysisWindow);
-			}
-		}
-
-		public  void EmitOpenedPresentationChanged (Playlist presentation, IPlayerController player)
-		{
-			if (OpenedPresentationChanged != null) {
-				OpenedPresentationChanged (presentation, player);
 			}
 		}
 
@@ -343,13 +364,6 @@ namespace LongoMatch.Core.Common
 		{
 			if (PlayerTick != null) {
 				PlayerTick (currentTime);
-			}
-		}
-
-		public void EmitTeamTagsChanged ()
-		{
-			if (TeamTagsChanged != null) {
-				TeamTagsChanged ();
 			}
 		}
 
@@ -400,7 +414,7 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitDrawFrame (TimelineEvent play, int drawingIndex, CameraConfig camConfig, bool current)
+		public void EmitDrawFrame (TimelineEventLongoMatch play, int drawingIndex, CameraConfig camConfig, bool current)
 		{
 			if (DrawFrame != null) {
 				DrawFrame (play, drawingIndex, camConfig, current);
@@ -425,14 +439,6 @@ namespace LongoMatch.Core.Common
 		{
 		}
 
-		public void EmitSubstitutionEvent (Team team, Player p1, Player p2,
-		                                   SubstitutionReason reason, Time time)
-		{
-			if (PlayerSubstitutionEvent != null) {
-				PlayerSubstitutionEvent (team, p1, p2, reason, time);
-			}
-		}
-
 		public void EmitDashboardEdited ()
 		{
 			if (DashboardEditedEvent != null) {
@@ -440,12 +446,12 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitDatabaseCreated (string name)
-		{
-			if (DatabaseCreatedEvent != null) {
-				DatabaseCreatedEvent (name);
-			}
-		}
+		//		public void EmitDatabaseCreated (string name)
+		//		{
+		//			if (DatabaseCreatedEvent != null) {
+		//				DatabaseCreatedEvent (name);
+		//			}
+		//		}
 
 		public void EmitSeekEvent (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
@@ -468,25 +474,25 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		{
-			if (TimeNodeStartedEvent != null) {
-				if (from == null)
-					from = new List<DashboardButton> ();
-				TimeNodeStartedEvent (node, btn, from);
-			}
-		}
+		//		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
+		//		{
+		//			if (TimeNodeStartedEvent != null) {
+		//				if (from == null)
+		//					from = new List<DashboardButton> ();
+		//				TimeNodeStartedEvent (node, btn, from);
+		//			}
+		//		}
+		//
+		//		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
+		//		{
+		//			if (TimeNodeStoppedEvent != null) {
+		//				if (from == null)
+		//					from = new List<DashboardButton> ();
+		//				TimeNodeStoppedEvent (node, btn, from);
+		//			}
+		//		}
 
-		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		{
-			if (TimeNodeStoppedEvent != null) {
-				if (from == null)
-					from = new List<DashboardButton> ();
-				TimeNodeStoppedEvent (node, btn, from);
-			}
-		}
-
-		public void EmitEventCreated (TimelineEvent evt)
+		public void EmitEventCreated (TimelineEventLongoMatch evt)
 		{
 			if (EventCreatedEvent != null) {
 				EventCreatedEvent (evt);

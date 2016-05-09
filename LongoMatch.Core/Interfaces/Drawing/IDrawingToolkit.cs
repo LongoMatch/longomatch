@@ -16,12 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using System.Collections.Generic;
+using VAS.Core.Common;
 
 namespace LongoMatch.Core.Interfaces.Drawing
 {
-
 	public interface IContext:IDisposable
 	{
 		object Value { get; }

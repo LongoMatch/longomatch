@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 Fluendo S.A.
+//  Copyright (C) 2015 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,35 +16,44 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
-using System.Threading;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers.Misc;
 
-namespace LongoMatch.Core.Interfaces
+namespace LongoMatch.Core.Store
 {
-
 	/// <summary>
-	/// An interface for monitoring file changes in a directory.
+	/// Defines an action link between 2 buttons in a <see cref="LongoMatch.Core.Store.Templates.Dashboard"/>.
 	/// </summary>
-	public interface IDirectoryMonitor
+	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
+	public class ActionLinkLongoMatch : ActionLink
 	{
-		event FileChangedHandler FileChangedEvent;
+		public ActionLinkLongoMatch ()
+		{
+			TeamAction = TeamLinkAction.Keep;
+		}
+			
+		/// <summary>
+		/// The type of action that will be performed in the destination.
+		/// </summary>
+		public LinkAction Action {
+			get;
+			set;
+		}
 
 		/// <summary>
-		/// The path of the directory to monitor.
+		/// The type of action that will be performed in the destination
+		/// for team tagged in the source event.
 		/// </summary>
-		string DirectoryPath { get; set; }
-
-		/// <summary>
-		/// Starts monitoring the directory
-		/// </summary>
-		void Start ();
-
-		/// <summary>
-		/// Stops monitoring the directory
-		/// </summary>
-		void Stop ();
+		public TeamLinkAction TeamAction {
+			get;
+			set;
+		}
 	}
 }
 
