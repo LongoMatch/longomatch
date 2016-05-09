@@ -19,15 +19,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace Tests.Services
 {
@@ -53,18 +55,18 @@ namespace Tests.Services
 			mfs.Add (new MediaFile { FilePath = "test1", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 
-			Project project = new Project ();
+			ProjectLongoMatch project = new ProjectLongoMatch ();
 			project.Description = new ProjectDescription ();
 			project.Description.FileSet = mfs;
 
-			Config.EventsBroker = new EventsBroker ();
+			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
 			mockAnalysisWindow = new Mock<IAnalysisWindow> ();
 			mockPlayerController = new Mock<IPlayerController> ();
 			mockPlayerController.SetupAllProperties ();
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 
-			Config.EventsBroker.EventLoadedEvent += (TimelineEvent evt) => eventLoaded = true;
+			Config.EventsBroker.EventLoadedEvent += (TimelineEventLongoMatch evt) => eventLoaded = true;
 			Config.EventsBroker.PlaylistElementSelectedEvent += (Playlist playlist, IPlaylistElement element, bool playing) => playlistElementSelected = true;
 		}
 
@@ -79,7 +81,7 @@ namespace Tests.Services
 			plmanager.Start ();
 			plmanager.Player = mockPlayerController.Object;
 
-			OpenProject (new Project ());
+			OpenProject (new ProjectLongoMatch ());
 			eventLoaded = false;
 			playlistElementSelected = false;
 
@@ -93,7 +95,7 @@ namespace Tests.Services
 			mockPlayerController.ResetCalls ();
 		}
 
-		void OpenProject (Project project = null, ProjectType projectType = ProjectType.FileProject)
+		void OpenProject (ProjectLongoMatch project = null, ProjectType projectType = ProjectType.FileProject)
 		{
 			if (project != null) {
 				project.Description = new ProjectDescription ();
@@ -108,7 +110,7 @@ namespace Tests.Services
 			string name = "name";
 			mockGuiToolkit.Setup (m => m.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (Task.Factory.StartNew (() => name));
 
-			Project project = new Project ();
+			ProjectLongoMatch project = new ProjectLongoMatch ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
@@ -122,7 +124,7 @@ namespace Tests.Services
 		public void TestNewPlaylistNull ()
 		{
 			// We DON'T Setup the QueryMessage, it will return null, and continue without creating the playlist
-			Project project = new Project ();
+			ProjectLongoMatch project = new ProjectLongoMatch ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 
 			mockGuiToolkit.Verify (guitoolkit => guitoolkit.QueryMessage (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
@@ -146,7 +148,7 @@ namespace Tests.Services
 				}
 			}));
 
-			Project project = new Project ();
+			ProjectLongoMatch project = new ProjectLongoMatch ();
 			Config.EventsBroker.EmitNewPlaylist (project);
 			called = false;
 			Config.EventsBroker.EmitNewPlaylist (project);
@@ -163,7 +165,7 @@ namespace Tests.Services
 		public void TestAddPlaylistElement ()
 		{
 			var playlist = new Playlist { Name = "name" };
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			var elementList = new List<IPlaylistElement> ();
 			elementList.Add (element);
 
@@ -195,35 +197,31 @@ namespace Tests.Services
 		[Test ()]
 		public void TestLoadPlayEvent ()
 		{
-			TimelineEvent element = new TimelineEvent ();
+			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.LoadEvent (element, new Time (0), true), Times.Once ());
 
 			Assert.IsTrue (eventLoaded);
-
 		}
 
 		[Test ()]
 		public void TestLoadPlayEventNull ()
 		{
-			
-
-			TimelineEvent element = null;
+			TimelineEventLongoMatch element = null;
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
 			mockPlayerController.Verify (player => player.UnloadCurrentEvent (), Times.Once ());
 
 			Assert.IsTrue (eventLoaded);
-
 		}
 
 		[Test ()]
 		public void TestLoadPlayEventSubs ()
 		{
-			TimelineEvent element = new SubstitutionEvent ();
+			TimelineEventLongoMatch element = new SubstitutionEvent ();
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
@@ -237,10 +235,10 @@ namespace Tests.Services
 		[Test ()]
 		public void TestLoadPlayEventFake ()
 		{
-			var project = new Project ();
+			var project = new ProjectLongoMatch ();
 			OpenProject (project, ProjectType.FakeCaptureProject);
 
-			TimelineEvent element = new SubstitutionEvent ();
+			TimelineEventLongoMatch element = new SubstitutionEvent ();
 
 			Config.EventsBroker.EmitLoadEvent (element);
 
@@ -254,7 +252,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestPrev ()
 		{
-			TimelineEvent element = new TimelineEvent ();
+			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
 			Config.EventsBroker.EmitLoadEvent (element);
 			// loadedPlay != null
 			mockPlayerController.ResetCalls ();
@@ -267,7 +265,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestNext ()
 		{
-			TimelineEvent element = new TimelineEvent ();
+			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
 			Config.EventsBroker.EmitLoadEvent (element);
 			// loadedPlay != null
 			mockPlayerController.ResetCalls ();
@@ -281,8 +279,8 @@ namespace Tests.Services
 		public void TestOpenPresentation ()
 		{
 			Playlist presentation = new Playlist ();
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
-			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
@@ -301,8 +299,8 @@ namespace Tests.Services
 		public void TestOpenNullPresentation ()
 		{
 			Playlist presentation = new Playlist ();
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
-			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
@@ -323,8 +321,8 @@ namespace Tests.Services
 			plmanager.Player = null;
 
 			Playlist presentation = new Playlist ();
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
-			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
@@ -342,8 +340,8 @@ namespace Tests.Services
 			plmanager.Player = null;
 
 			Playlist presentation = new Playlist ();
-			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
-			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEvent ());
+			IPlaylistElement element = new PlaylistPlayElement (new TimelineEventLongoMatch ());
+			IPlaylistElement element2 = new PlaylistPlayElement (new TimelineEventLongoMatch ());
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
@@ -355,7 +353,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestTimeNodeChanged ()
 		{
-			TimelineEvent timelineEvent = new TimelineEvent ();
+			TimelineEventLongoMatch timelineEvent = new TimelineEventLongoMatch ();
 			timelineEvent.Start = new Time (10);
 			timelineEvent.Stop = new Time (20);
 			Config.EventsBroker.EmitTimeNodeChanged (timelineEvent, new Time (5));

@@ -16,16 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using System.IO;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using System.Reflection;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
-using System.Reflection;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Serialization;
-using System.Collections.Generic;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace Tests
 {
@@ -33,6 +34,7 @@ namespace Tests
 	{
 		static bool debugLine = false;
 
+		//Check for specific LongoMatch objects
 		public static T SerializeDeserialize<T> (T obj)
 		{
 			var stream = new MemoryStream ();
@@ -47,6 +49,7 @@ namespace Tests
 			return Serializer.Instance.Load<T> (stream, SerializationType.Json);
 		}
 
+		//Check for specific LongoMatch objects
 		public static void CheckSerialization<T> (T obj, bool ignoreIsChanged = false)
 		{
 			List<IStorable> children, changed;
@@ -85,6 +88,7 @@ namespace Tests
 			Assert.AreEqual (jsonString, newJsonString);
 		}
 
+		//keep this test, Assembly is different from VAS
 		public static Image LoadImageFromFile (bool scaled = false)
 		{
 			Image img = null;
@@ -110,14 +114,15 @@ namespace Tests
 			return img;
 		}
 
-		public static Project CreateProject (bool withEvents = true)
+		//Specific LongoMatch objects
+		public static ProjectLongoMatch CreateProject (bool withEvents = true)
 		{
-			TimelineEvent pl;
-			Project p = new Project ();
-			p.Dashboard = Dashboard.DefaultTemplate (10);
+			TimelineEventLongoMatch pl;
+			ProjectLongoMatch p = new ProjectLongoMatch ();
+			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.LocalTeamTemplate = Team.DefaultTemplate (5);
 			p.VisitorTeamTemplate = Team.DefaultTemplate (5);
-			ProjectDescription pd = new ProjectDescription ();
+			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",
 				"aac", 320, 240, 1.3, null, "Test asset 1"));
@@ -130,7 +135,7 @@ namespace Tests
 				AnalysisEventButton b = p.Dashboard.List [0] as AnalysisEventButton;
 
 				/* No tags, no players */
-				pl = new TimelineEvent {
+				pl = new TimelineEventLongoMatch {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -139,7 +144,7 @@ namespace Tests
 				p.Timeline.Add (pl);
 				/* tags, but no players */
 				b = p.Dashboard.List [1] as AnalysisEventButton;
-				pl = new TimelineEvent {
+				pl = new TimelineEventLongoMatch {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -149,7 +154,7 @@ namespace Tests
 				p.Timeline.Add (pl);
 				/* tags and players */
 				b = p.Dashboard.List [2] as AnalysisEventButton;
-				pl = new TimelineEvent {
+				pl = new TimelineEventLongoMatch {
 					EventType = b.EventType,
 					Start = new Time (0),
 					Stop = new Time (100),
@@ -163,7 +168,8 @@ namespace Tests
 			return p;
 		}
 
-		public static void DeleteProject (Project p)
+		//Specific LongoMatch objects
+		public static void DeleteProject (ProjectLongoMatch p)
 		{
 			foreach (MediaFile mf in p.Description.FileSet) {
 				if (File.Exists (mf.FilePath)) {
@@ -172,6 +178,7 @@ namespace Tests
 			}
 		}
 
+		//Check for specific LongoMatch objects
 		public static void AreEquals (IStorable obj1, IStorable obj2, bool areEquals = true)
 		{
 			var stream = new MemoryStream ();
@@ -189,6 +196,7 @@ namespace Tests
 			}
 		}
 
+		//keep this test, Assembly is different from VAS
 		public static string SaveResource (string name, string path)
 		{
 			string filePath;

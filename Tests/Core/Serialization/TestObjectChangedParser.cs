@@ -18,10 +18,10 @@
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
 
 namespace Tests.Core.Serialization
 {

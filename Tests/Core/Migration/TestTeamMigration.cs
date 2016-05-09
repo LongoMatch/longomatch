@@ -19,10 +19,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Serialization;
 
 namespace Tests.Core.Migration
 {

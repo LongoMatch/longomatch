@@ -18,10 +18,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Common;
+using NUnit.Framework;
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Store.Templates
 {
@@ -38,9 +40,9 @@ namespace Tests.Core.Store.Templates
 			t.Name = "test";
 			t.TeamName = "team";
 			t.Shield = Utils.LoadImageFromFile ();
-			t.List.Add (new Player { Name = "P1" });
-			t.List.Add (new Player { Name = "P2" });
-			t.List.Add (new Player { Name = "P3" });
+			t.List.Add (new PlayerLongoMatch { Name = "P1" });
+			t.List.Add (new PlayerLongoMatch { Name = "P2" });
+			t.List.Add (new PlayerLongoMatch { Name = "P3" });
 			
 			
 			Utils.CheckSerialization (t);
@@ -82,16 +84,16 @@ namespace Tests.Core.Store.Templates
 		public void TestPlayingPlayers ()
 		{
 			Team t = new Team ();
-			Player p1, p2, p3;
+			PlayerLongoMatch p1, p2, p3;
 			
 			t.Name = "test";
 			t.TeamName = "team";
 			
 			Assert.AreEqual (t.PlayingPlayersList.Count, 0);
 			
-			p1 = new Player { Name = "P1", Playing = true };
-			p2 = new Player { Name = "P2", Playing = false };
-			p3 = new Player { Name = "P3", Playing = true };
+			p1 = new PlayerLongoMatch { Name = "P1", Playing = true };
+			p2 = new PlayerLongoMatch { Name = "P2", Playing = false };
+			p3 = new PlayerLongoMatch { Name = "P3", Playing = true };
 			t.List.Add (p1);
 			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
 			t.List.Add (p2);
@@ -179,19 +181,19 @@ namespace Tests.Core.Store.Templates
 
 			/* Removing a player from the starting list must be swapped
 			 * with the first player in the bench to keep the same lineup */
-			t.RemovePlayers (new List<Player>{ t.List [0] }, false);
+			t.RemovePlayers (new List<PlayerLongoMatch>{ t.List [0] }, false);
 			Assert.AreEqual (15, t.List.Count);
 			Assert.AreEqual (11, t.List [0].Number); 
 			Assert.AreEqual (2, t.List [1].Number); 
 			Assert.AreEqual (1, t.List [14].Number); 
-			t.RemovePlayers (new List<Player>{ t.List [0] }, true);
+			t.RemovePlayers (new List<PlayerLongoMatch>{ t.List [0] }, true);
 			Assert.AreEqual (14, t.List.Count);
 			Assert.AreEqual (12, t.List [0].Number); 
 
-			t.RemovePlayers (new List<Player> { new Player () }, true);
+			t.RemovePlayers (new List<PlayerLongoMatch> { new PlayerLongoMatch () }, true);
 			Assert.AreEqual (14, t.List.Count);
 
-			t.RemovePlayers (new List<Player> { new Player (), t.List [12] }, true);
+			t.RemovePlayers (new List<PlayerLongoMatch> { new PlayerLongoMatch (), t.List [12] }, true);
 			Assert.AreEqual (13, t.List.Count);
 		}
 
@@ -215,7 +217,7 @@ namespace Tests.Core.Store.Templates
 			t.List.Remove (t.List [0]);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
-			t.List.Add (new Player ());
+			t.List.Add (new PlayerLongoMatch ());
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
 			t.List = null;
