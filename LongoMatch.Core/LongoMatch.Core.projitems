@@ -65,15 +65,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\DashboardLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConfigLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Handlers\HandlersLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Handlers\MultimediaLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ActionLinkLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\ConstantsLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EventsBrokerLongomatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\ExceptionsLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EnumsLongomatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EventsBroker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Handlers\Multimedia.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
