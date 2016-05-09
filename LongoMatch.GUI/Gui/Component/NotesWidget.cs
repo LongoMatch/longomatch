@@ -21,17 +21,15 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Gui.Component
 {
-
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class NotesWidget : Gtk.Bin
 	{
 		TextBuffer buf;
-		TimelineEvent play;
+		TimelineEventLongoMatch play;
 
 		public NotesWidget ()
 		{
@@ -47,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public TimelineEvent Play {
+		public TimelineEventLongoMatch Play {
 			set {
 				play = value;
 				Notes = play.Notes;
@@ -71,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (TimelineEventLongoMatch play)
 		{
 			Play = play;
 		}

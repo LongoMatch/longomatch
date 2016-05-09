@@ -18,13 +18,11 @@
 using System;
 using System.Linq;
 using System.Runtime.Remoting;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.CanvasObjects.Dashboard;
-using LongoMatch.Drawing.CanvasObjects.Teams;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing
 {

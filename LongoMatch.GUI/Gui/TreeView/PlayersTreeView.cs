@@ -21,6 +21,7 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
+using VAS.Core.Store;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -49,7 +50,7 @@ namespace LongoMatch.Gui.Component
 
 		void ShowPlayerMenu (TreePath[] paths)
 		{
-			List<TimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
 			if (events.Count > 0) {
 				PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenu, Project, events);
 				playerMenu.Popup ();
@@ -76,7 +77,7 @@ namespace LongoMatch.Gui.Component
 			}
 
 			if (oa is Player)
-				return (oa as Player).Number.CompareTo ((ob as Player).Number);
+				return (oa as PlayerLongoMatch).Number.CompareTo ((ob as PlayerLongoMatch).Number);
 			else
 				return (oa as TimeNode).Start.CompareTo ((ob as TimeNode).Start);
 		}

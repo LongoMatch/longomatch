@@ -19,9 +19,9 @@
 
 using System;
 using Gtk;
+using VAS.Core;
+using VAS.Core.Common;
 using Dialog = Gtk.Dialog;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Helpers
 {

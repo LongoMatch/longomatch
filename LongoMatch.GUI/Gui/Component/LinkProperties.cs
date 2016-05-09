@@ -1,9 +1,9 @@
 ﻿//
 //  Copyright (C) 2015 Fluendo S.A.
 //
-
 using System;
 using LongoMatch.Core.Common;
+using VAS.Core.Store;
 using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
@@ -11,7 +11,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class LinkProperties : Gtk.Bin
 	{
-		ActionLink link;
+		ActionLinkLongoMatch link;
 
 		public LinkProperties ()
 		{
@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool Edited { get; set; }
 
-		public ActionLink Link {
+		public ActionLinkLongoMatch Link {
 			set {
 				link = value;
 				UpdateUI ();
@@ -49,7 +49,8 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void UpdateUI () {
+		void UpdateUI ()
+		{
 			labelfromdata.Text = Link.SourceButton.Name;
 			labelfromtagsdata.Text = String.Join (", ", Link.SourceTags);
 			labelfromtagsdata.Visible = (Link.SourceTags.Count != 0);
@@ -82,4 +83,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

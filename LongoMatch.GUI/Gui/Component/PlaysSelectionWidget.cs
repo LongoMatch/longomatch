@@ -18,12 +18,13 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
+using VAS.Core;
 using Helpers = LongoMatch.Gui.Helpers;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -61,7 +62,7 @@ namespace LongoMatch.Gui.Component
 
 		#region Plubic Methods
 
-		public void SetProject (Project project, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			eventslistwidget.SetProject (project, filter);
 			playersfilter.SetFilter (filter, project);
@@ -69,12 +70,12 @@ namespace LongoMatch.Gui.Component
 			playlistwidget.Project = project;
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			eventslistwidget.AddPlay (play);
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			eventslistwidget.RemovePlays (plays);
 		}

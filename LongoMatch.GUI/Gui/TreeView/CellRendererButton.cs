@@ -22,7 +22,8 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Drawing.Cairo;
-using Point = LongoMatch.Core.Common.Point;
+using Point = VAS.Core.Common.Point;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -96,7 +97,5 @@ namespace LongoMatch.Gui.Component
 		public string Path {
 			get;
 		}
-
 	}
 }
-

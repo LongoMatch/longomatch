@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Common;
 using Gtk;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {

@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Common;
+using VAS.Core.Common;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 using Pixbuf = Gdk.Pixbuf;
 

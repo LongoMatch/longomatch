@@ -15,18 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Dashboard;
-using LongoMatch.Drawing.CanvasObjects;
-using System.Collections.ObjectModel;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store.Templates;
+using VAS.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -40,7 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowDashboardMenuHandler ShowMenuEvent;
 		public event NewEventHandler NewTagEvent;
 
-		Dashboard template;
+		DashboardLongoMatch template;
 		DashboardMode mode;
 		Time currentTime;
 		int templateWidth, templateHeight;
@@ -65,12 +66,12 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}
 
-		public Dashboard Template {
+		public DashboardLongoMatch Template {
 			set {
 				template = value;
 				LoadTemplate ();
@@ -417,14 +418,15 @@ namespace LongoMatch.Drawing.Widgets
 				AddButton (co);
 			}
 
-			foreach (TimerButton t in template.List.OfType<TimerButton>()) {
+			foreach (TimerButtonLongoMatch t in template.List.OfType<TimerButtonLongoMatch>()) {
 				TimerObject to = new TimerObject (t);
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = Mode;
 				if (Project != null && t.BackgroundImage == null) {
-					if (t.Timer.Team == TeamType.LOCAL) {
+					TeamType team = (t.Timer as TimerLongoMatch).Team;
+					if (team == TeamType.LOCAL) {
 						to.TeamImage = Project.LocalTeamTemplate.Shield;
-					} else if (t.Timer.Team == TeamType.VISITOR) {
+					} else if (team == TeamType.VISITOR) {
 						to.TeamImage = Project.VisitorTeamTemplate.Shield;
 					}
 				}

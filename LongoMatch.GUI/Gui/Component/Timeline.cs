@@ -17,9 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
@@ -27,6 +25,9 @@ using LongoMatch.Core.Store;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -41,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		uint timeoutID;
 		Time currentTime, nextCurrentTime;
 		PlaysMenu menu;
-		Project project;
+		ProjectLongoMatch project;
 		PeriodsMenu periodsmenu;
 		IPlayerController player;
 
@@ -132,7 +133,7 @@ namespace LongoMatch.Gui.Component
 			focusscale.Adjustment.Value += focusscale.Adjustment.StepIncrement;
 		}
 
-		public void SetProject (Project project, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			this.project = project;
 			timeline.LoadProject (project, filter);
@@ -158,18 +159,18 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		public void LoadPlay (TimelineEvent evt)
+		public void LoadPlay (TimelineEventLongoMatch evt)
 		{
 			timeline.LoadPlay (evt);
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			timeline.AddPlay (play);
 			QueueDraw ();
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			timeline.RemovePlays (plays);
 			QueueDraw ();
@@ -249,7 +250,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		void HandleShowMenu (List<TimelineEvent> plays, EventType eventType, Time time)
+		void HandleShowMenu (List<TimelineEventLongoMatch> plays, EventType eventType, Time time)
 		{
 			menu.ShowTimelineMenu (project, plays, eventType, time);
 		}
@@ -281,4 +282,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

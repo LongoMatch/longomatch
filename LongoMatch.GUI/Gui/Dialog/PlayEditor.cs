@@ -19,12 +19,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -32,7 +33,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 		const int TAGS_PER_ROW = 5;
 		TeamTagger teamtagger;
-		TimelineEvent play;
+		TimelineEventLongoMatch play;
 
 		public PlayEditor (Window parent)
 		{
@@ -55,7 +56,8 @@ namespace LongoMatch.Gui.Dialog
 			base.OnDestroyed ();
 		}
 
-		public void LoadPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		public void LoadPlay (TimelineEventLongoMatch play, ProjectLongoMatch project, bool editTags, bool editPos,
+		                      bool editPlayers, bool editNotes)
 		{
 			this.play = play;
 			notesframe.Visible = editNotes;
@@ -91,7 +93,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void AddTagsGroup (TimelineEvent evt, string grp, List<Tag> tags, SizeGroup sgroup)
+		void AddTagsGroup (TimelineEventLongoMatch evt, string grp, List<Tag> tags, SizeGroup sgroup)
 		{
 			HBox box = new HBox ();
 			Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
@@ -137,7 +139,7 @@ namespace LongoMatch.Gui.Dialog
 			tagsvbox.PackStart (new HSeparator ());
 		}
 
-		void FillTags (Project project, TimelineEvent evt)
+		void FillTags (ProjectLongoMatch project, TimelineEventLongoMatch evt)
 		{
 			Dictionary<string, List<Tag>> tagsByGroup;
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
@@ -165,9 +167,9 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
 		{
-			play.Players = new ObservableCollection<Player> (players);
+			play.Players = new ObservableCollection<PlayerLongoMatch> (players);
 		}
 
 		void HandleTeamSelectionChangedEvent (ObservableCollection<Team> teams)

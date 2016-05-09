@@ -21,9 +21,10 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core.Common;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.Widgets
 {

@@ -20,6 +20,7 @@ using System;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Gui.Helpers;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {

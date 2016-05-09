@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
@@ -30,9 +29,13 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store.Templates;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = LongoMatch.Gui.Helpers;
-using Image = LongoMatch.Core.Common.Image;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
@@ -48,13 +51,13 @@ namespace LongoMatch.Gui.Component
 
 		DashboardMode mode;
 		DashboardCanvas tagger;
-		Dashboard template;
+		DashboardLongoMatch template;
 		DashboardButton selected;
 		Gtk.Image editimage, linksimage;
 		ToggleToolButton editbutton, linksbutton, popupbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
-		Project project;
+		ProjectLongoMatch project;
 
 		public DashboardWidget ()
 		{
@@ -142,17 +145,17 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				project = value;
 				tagger.Project = project;
-				Template = project.Dashboard;
+				Template = project.Dashboard as DashboardLongoMatch;
 				positionsbox.Visible = false;
 				periodsbox.Visible = false;
 			}
 		}
 
-		public Dashboard Template {
+		public DashboardLongoMatch Template {
 			set {
 				template = value;
 				tagger.Template = value;
@@ -220,7 +223,7 @@ namespace LongoMatch.Gui.Component
 					Score = new Score ("Score", 1)
 				};
 			} else if (buttontype == "Timer") {
-				button = new TimerButton { Timer = new Timer { Name = "Timer" } };
+				button = new TimerButtonLongoMatch { Timer = new TimerLongoMatch { Name = "Timer" } };
 			} else if (buttontype == "Tag") {
 				button = new TagButton { Tag = new Tag ("Tag", "") };
 			} else if (buttontype == "Category") {
@@ -405,7 +408,8 @@ namespace LongoMatch.Gui.Component
 		void HandleActionLinksSelectedEvent (List<ActionLink> actionLinks)
 		{
 			if (actionLinks.Count == 1) {
-				linkproperties.Link = actionLinks [0];
+				if(actionLinks [0] is ActionLinkLongoMatch)
+					linkproperties.Link = actionLinks [0] as ActionLinkLongoMatch;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_LINKS;
 			} else {
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
@@ -414,7 +418,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			LongoMatch.Core.Common.Image background;
+			Image background;
 			Gdk.Pixbuf pix = Helpers.Misc.OpenImage (this);
 			
 			if (pix == null) {
@@ -493,7 +497,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleNewTagEvent (EventType evntType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
+		void HandleNewTagEvent (EventType evntType, List<PlayerLongoMatch> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
 			/* Forward event until we have players integrted in the dashboard layout */

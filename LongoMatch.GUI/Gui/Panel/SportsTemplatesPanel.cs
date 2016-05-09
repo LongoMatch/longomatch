@@ -22,13 +22,18 @@ using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
-using Pango;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui.Helpers;
+using Pango;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store.Templates;
+using Constants = LongoMatch.Core.Common.Constants;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -43,7 +48,7 @@ namespace LongoMatch.Gui.Panel
 		const int COL_DASHBOARD = 3;
 
 		ListStore dashboardsStore;
-		Dashboard loadedDashboard;
+		DashboardLongoMatch loadedDashboard;
 		ICategoriesTemplatesProvider provider;
 		TreeIter selectedIter;
 		List<Dashboard> dashboards;
@@ -159,7 +164,7 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		void Load (Dashboard dashboard, TreeIter iter)
+		void Load (DashboardLongoMatch dashboard, TreeIter iter)
 		{
 			loadedDashboard = dashboard;
 			selectedIter = iter;
@@ -217,7 +222,7 @@ namespace LongoMatch.Gui.Panel
 		bool SaveTemplate (Dashboard dashboard)
 		{
 			try {
-				provider.Save (dashboard);
+				provider.Save (dashboard as DashboardLongoMatch);
 				return true;
 			} catch (InvalidTemplateFilenameException ex) {
 				Config.GUIToolkit.ErrorMessage (ex.Message, this);
@@ -312,13 +317,13 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			Dashboard selected;
+			DashboardLongoMatch selected;
 			TreeIter iter;
 			
 			dashboardseditortreeview.Selection.GetSelected (out iter);
 
 			try {
-				Dashboard dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as Dashboard;
+				DashboardLongoMatch dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardLongoMatch;
 				dashboard.Load ();
 				selected = dashboard.Clone ();
 			} catch (Exception ex) {
@@ -385,7 +390,7 @@ namespace LongoMatch.Gui.Panel
 					if (!abort) {
 						Pixbuf img;
 
-						provider.Save (new_dashboard);
+						provider.Save (new_dashboard as DashboardLongoMatch);
 						if (new_dashboard.Image != null)
 							img = new_dashboard.Image.Value;
 						else
@@ -465,15 +470,15 @@ namespace LongoMatch.Gui.Panel
 			if (create) {
 				if (dialog.SelectedTemplate != null) {
 					try {
-						provider.Copy (dashboards.FirstOrDefault (d => d.Name == dialog.SelectedTemplate), dialog.Text);
+						provider.Copy (dashboards.FirstOrDefault (d => d.Name == dialog.SelectedTemplate) as DashboardLongoMatch, dialog.Text);
 					} catch (InvalidTemplateFilenameException ex) {
 						Config.GUIToolkit.ErrorMessage (ex.Message, this);
 						dialog.Destroy ();
 						return;
 					}
 				} else {
-					Dashboard template;
-					template = Dashboard.DefaultTemplate (dialog.Count);
+					DashboardLongoMatch template;
+					template = DashboardLongoMatch.DefaultTemplate (dialog.Count);
 					template.Name = dialog.Text;
 					if (!SaveTemplate (template)) {
 						dialog.Destroy ();
@@ -481,7 +486,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 				if (auxdelete != null) {
-					provider.Delete (auxdelete);
+					provider.Delete (auxdelete as DashboardLongoMatch);
 				}
 				Load (dialog.Text);
 			}
@@ -493,7 +498,7 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 			dashboardsStore.GetIter (out iter, new TreePath (args.Path));
  
-			Dashboard dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as Dashboard;
+			DashboardLongoMatch dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardLongoMatch;
 
 			if (dashboard.Name != args.NewText) {
 				if (dashboards.Any (d => d.Name == args.NewText)) {
@@ -508,5 +513,3 @@ namespace LongoMatch.Gui.Panel
 		}
 	}
 }
-
-

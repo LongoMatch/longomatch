@@ -18,7 +18,8 @@
 using System;
 using Gtk;
 using System.IO;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Common;
 
 namespace LongoMatch.Migration
 {
@@ -36,7 +37,7 @@ namespace LongoMatch.Migration
 			});
 			Application.Run ();
 		}
-		
+
 		static void SetupBasedir ()
 		{
 			string home, homeDirectory, baseDirectory, configDirectory;
@@ -61,9 +62,9 @@ namespace LongoMatch.Migration
 			}
 			LongoMatch.Config.Load ();
 			var styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
-			LongoMatch.Config.Style = LongoMatch.Core.Common.StyleConf.Load (styleConf);
+			LongoMatch.Config.Style = StyleConf.Load (styleConf);
 		}
-	
+
 		static	void InitGtk ()
 		{
 			string gtkRC, iconsDir;

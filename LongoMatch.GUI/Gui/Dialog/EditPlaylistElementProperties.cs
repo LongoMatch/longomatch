@@ -17,10 +17,9 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using Pango;
+using VAS.Core.Store.Playlists;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -94,4 +93,3 @@ namespace LongoMatch.Gui.Dialog
 		}
 	}
 }
-
