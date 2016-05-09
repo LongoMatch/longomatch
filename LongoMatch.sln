@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI", "LongoMatch.GUI\LongoMatch.GUI.csproj", "{6B9682AF-0F14-456F-A674-8BABFE852BFC}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "liblongomatch", "libcesarplayer\liblongomatch.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Services.Net45", "LongoMatch.Services\LongoMatch.Services.Net45.csproj", "{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}"
@@ -60,6 +58,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Services", "VAS\VAS.Services\VAS.Services.shproj", "{4A1B1F86-316F-4A07-AC62-E284BC9AB77D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\VAS.Services\VAS.Services.Net45.csproj", "{153BFD3F-6E06-451B-AD79-6C207762BBBB}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libvas", "VAS\libvas\libvas.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
