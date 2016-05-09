@@ -5,23 +5,41 @@ namespace LongoMatch.Plugins.Stats
 	public partial class CategoryViewer
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.Notebook notebook1;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::Gtk.Label nodatalabel;
+		
 		private global::Gtk.Label label1;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.Frame allframe;
+		
 		private global::Gtk.Alignment GtkAlignment2;
+		
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger alltagger;
+		
 		private global::Gtk.Label GtkLabel2;
+		
 		private global::Gtk.Frame homeframe;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger hometagger;
+		
 		private global::Gtk.Label homeLabel;
+		
 		private global::Gtk.Frame awayframe;
+		
 		private global::Gtk.Alignment GtkAlignment1;
+		
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger awaytagger;
+		
 		private global::Gtk.Label awayLabel;
+		
 		private global::Gtk.Label label2;
 
 		protected virtual void Build ()

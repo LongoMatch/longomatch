@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.VideoConversionTool
 			this.HeightRequest = 0;
 			this.Name = "LongoMatch.Gui.Dialog.VideoConversionTool";
-			this.Title = global::LongoMatch.Core.Catalog.GetString ("Video converter tool");
+			this.Title = global::VAS.Core.Catalog.GetString ("Video converter tool");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
@@ -136,7 +136,7 @@ namespace LongoMatch.Gui.Dialog
 			this.filenamelabel = new global::Gtk.Label ();
 			this.filenamelabel.Name = "filenamelabel";
 			this.filenamelabel.Xalign = 1F;
-			this.filenamelabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("File name: ");
+			this.filenamelabel.LabelProp = global::VAS.Core.Catalog.GetString ("File name: ");
 			this.table1.Add (this.filenamelabel);
 			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.table1 [this.filenamelabel]));
 			w11.TopAttach = ((uint)(2));
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 1F;
-			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Size: ");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Size: ");
 			this.table1.Add (this.label2);
 			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table1 [this.label2]));
 			w12.YOptions = ((global::Gtk.AttachOptions)(4));
@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 1F;
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Bitrate: ");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Bitrate: ");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w13.TopAttach = ((uint)(1));

@@ -19,13 +19,16 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
@@ -39,7 +42,7 @@ namespace LongoMatch.Services
 		{
 		}
 
-		public Project OpenedProject {
+		public ProjectLongoMatch OpenedProject {
 			set;
 			get;
 		}
@@ -112,7 +115,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		bool SaveCaptureProject (Project project)
+		bool SaveCaptureProject (ProjectLongoMatch project)
 		{
 			Guid projectID = project.ID;
 			// FIXME
@@ -129,7 +132,7 @@ namespace LongoMatch.Services
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
-				Config.DatabaseManager.ActiveDB.Store<Project> (project);
+				Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -151,7 +154,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		bool SetProject (Project project, ProjectType projectType, CaptureSettings props)
+		bool SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props)
 		{
 			if (OpenedProject != null) {
 				CloseOpenedProject (true);
@@ -293,7 +296,7 @@ namespace LongoMatch.Services
 			return saveOk;
 		}
 
-		bool UpdateProject (Project project)
+		bool UpdateProject (ProjectLongoMatch project)
 		{
 			try {
 				Config.DatabaseManager.ActiveDB.Store<Project> (project);
@@ -305,7 +308,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void NewProject (Project project)
+		protected virtual void NewProject (ProjectLongoMatch project)
 		{
 			Log.Debug ("Creating new project");
 			
@@ -316,12 +319,12 @@ namespace LongoMatch.Services
 			guiToolkit.CreateNewProject (project);
 		}
 
-		protected virtual void HandleSaveProject (Project project, ProjectType projectType)
+		protected virtual void HandleSaveProject (ProjectLongoMatch project, ProjectType projectType)
 		{
 			SaveProject (project, projectType);
 		}
 
-		bool SaveProject (Project project, ProjectType projectType)
+		bool SaveProject (ProjectLongoMatch project, ProjectType projectType)
 		{
 			if (project == null)
 				return false;
@@ -340,7 +343,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void OpenNewProject (Project project, ProjectType projectType,
+		void OpenNewProject (ProjectLongoMatch project, ProjectType projectType,
 		                     CaptureSettings captureSettings)
 		{
 			if (project != null) {
@@ -359,14 +362,14 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<Project> ().ToList ());
+			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().ToList ());
 		}
 
-		void OpenProjectID (Guid projectID, Project project)
+		void OpenProjectID (Guid projectID, ProjectLongoMatch project)
 		{
 			if (project == null) {
 				try {
-					project = Config.DatabaseManager.ActiveDB.Retrieve<Project> (projectID);
+					project = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					guiToolkit.ErrorMessage (ex.Message);
@@ -407,7 +410,7 @@ namespace LongoMatch.Services
 
 		void CaptureFinished (bool cancel, bool delete, bool reopen)
 		{
-			Project project = OpenedProject;
+			ProjectLongoMatch project = OpenedProject;
 			ProjectType type = OpenedProjectType;
 			if (delete) {
 				if (type != ProjectType.FakeCaptureProject) {

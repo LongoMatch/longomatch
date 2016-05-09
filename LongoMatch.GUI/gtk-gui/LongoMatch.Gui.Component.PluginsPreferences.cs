@@ -132,7 +132,7 @@ namespace LongoMatch.Gui.Component
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Name:");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("Name:");
 			this.table1.Add (this.label1);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Component
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Description:");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("Description:");
 			this.table1.Add (this.label2);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.label2]));
 			w7.TopAttach = ((uint)(1));
@@ -152,7 +152,7 @@ namespace LongoMatch.Gui.Component
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Author:");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("Author:");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
 			w8.TopAttach = ((uint)(2));
@@ -163,7 +163,7 @@ namespace LongoMatch.Gui.Component
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.Xalign = 0F;
-			this.label4.LabelProp = global::LongoMatch.Core.Catalog.GetString ("File:");
+			this.label4.LabelProp = global::VAS.Core.Catalog.GetString ("File:");
 			this.label4.Wrap = true;
 			this.label4.Ellipsize = ((global::Pango.EllipsizeMode)(1));
 			this.label4.SingleLineMode = true;
@@ -186,7 +186,7 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Add (this.GtkAlignment);
 			this.GtkLabel = new global::Gtk.Label ();
 			this.GtkLabel.Name = "GtkLabel";
-			this.GtkLabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Description</b>");
+			this.GtkLabel.LabelProp = global::VAS.Core.Catalog.GetString ("<b>Description</b>");
 			this.GtkLabel.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel;
 			this.vbox1.Add (this.frame1);
@@ -211,7 +211,7 @@ namespace LongoMatch.Gui.Component
 			this.configframe.Add (this.GtkAlignment1);
 			this.GtkLabel1 = new global::Gtk.Label ();
 			this.GtkLabel1.Name = "GtkLabel1";
-			this.GtkLabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<b>Configuration</b>");
+			this.GtkLabel1.LabelProp = global::VAS.Core.Catalog.GetString ("<b>Configuration</b>");
 			this.GtkLabel1.UseMarkup = true;
 			this.configframe.LabelWidget = this.GtkLabel1;
 			this.vbox1.Add (this.configframe);

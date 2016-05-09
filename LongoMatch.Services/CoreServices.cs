@@ -22,17 +22,18 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using LongoMatch;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.DB;
+using VAS.Core;
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
-
 #endif
+
 namespace LongoMatch.Services
 {
 	public class CoreServices
@@ -47,37 +48,32 @@ namespace LongoMatch.Services
 		static TemplatesService ts;
 		static List<IService> services = new List<IService> ();
 		public static IProjectsImporter ProjectsImporter;
-
 		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern bool g_setenv (String env, String val, bool overwrite);
 		#endif
+
 		public static void Init ()
 		{
 			Log.Debugging = Debugging;
-
 			FillVersion ();
 			Config.Init ();
-
 			/* Check default folders */
 			CheckDirs ();
-
 			/* Redirects logs to a file */
 			Log.SetLogFile (Config.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
-
 			/* Load user config */
 			Config.Load ();
-			
+
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
-#if OSTYPE_WINDOWS
-				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
-#endif
+				#if OSTYPE_WINDOWS
+						g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
+				#endif
 			}
 			InitTranslations ();
-
 			/* Fill up the descriptions again after initializing the translations */
 			Config.Hotkeys.FillActionsDescriptions ();
 		}
@@ -93,7 +89,6 @@ namespace LongoMatch.Services
 		public static void InitTranslations ()
 		{
 			string localesDir = Config.RelativeToPrefix ("share/locale");
-
 			if (!Directory.Exists (localesDir)) {
 				var cerbero_prefix = Environment.GetEnvironmentVariable ("CERBERO_PREFIX");
 				if (cerbero_prefix != null) {
@@ -111,7 +106,7 @@ namespace LongoMatch.Services
 		{
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
-			Config.EventsBroker = new EventsBroker ();
+			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
 			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
@@ -134,34 +129,26 @@ namespace LongoMatch.Services
 			/* Start DB services */
 			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);
-
 			ts = new TemplatesService ();
 			RegisterService (ts);
-
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager ();
 			RegisterService (videoRenderer);
-
 			projectsManager = new ProjectsManager ();
 			RegisterService (projectsManager);
-
 			/* State the tools manager */
 			toolsManager = new ToolsManager ();
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
-
 			/* Start the events manager */
 			eManager = new EventsManager ();
 			RegisterService (eManager);
-
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
-
 			/* Start playlists manager */
 			plManager = new PlaylistManager ();
 			RegisterService (plManager);
-
 		}
 
 		public static void StartServices ()

@@ -17,10 +17,11 @@
 //
 using System;
 using System.Runtime.InteropServices;
-using LongoMatch.Core;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
 using LongoMatch.Video;
+using VAS.Core.Store;
+using VAS.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Video.Utils
 {
@@ -48,7 +49,7 @@ namespace LongoMatch.Video.Utils
 			float par = 0;
 			IntPtr container_ptr, audio_codec_ptr, video_codec_ptr;
 			IntPtr error = IntPtr.Zero;
-			LongoMatch.Core.Common.Image preview = null;
+			Image preview = null;
 			MultimediaFactory factory;
 			IFramesCapturer thumbnailer;
 
@@ -82,7 +83,7 @@ namespace LongoMatch.Video.Utils
 				}
 			}
 			
-			return new LongoMatch.Core.Store.MediaFile (filePath, duration, (ushort)fps, has_audio, has_video,
+			return new MediaFile (filePath, duration, (ushort)fps, has_audio, has_video,
 				container, video_codec, audio_codec, width, height,
 				par, preview, null);
 		}

@@ -5,6 +5,7 @@ namespace LongoMatch.Plugins.Stats
 	public partial class PlayerCategoryViewer
 	{
 		private global::Gtk.VBox vbox1;
+		
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger tagger;
 
 		protected virtual void Build ()

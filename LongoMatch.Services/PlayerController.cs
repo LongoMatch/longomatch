@@ -20,20 +20,34 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Constants = LongoMatch.Core.Common.Constants;
 using Timer = System.Threading.Timer;
 
 namespace LongoMatch.Services
 {
 	public class PlayerController: IPlayerController
 	{
+		public void LoadEvent (TimelineEvent evt, Time seekTime, bool playing)
+		{
+			LoadEvent (evt as TimelineEventLongoMatch, seekTime, playing);
+		}
+
+		public void Switch (TimelineEvent evt, Playlist playlist, IPlaylistElement playlistElement)
+		{
+			Switch (evt as TimelineEventLongoMatch, playlist, playlistElement);
+		}
+
 		public event TimeChangedHandler TimeChangedEvent;
 		public event StateChangeHandler PlaybackStateChangedEvent;
 		public event LoadDrawingsHandler LoadDrawingsEvent;
@@ -48,7 +62,7 @@ namespace LongoMatch.Services
 
 		IPlayer player;
 		IMultiPlayer multiPlayer;
-		TimelineEvent loadedEvent;
+		TimelineEventLongoMatch loadedEvent;
 		IPlaylistElement loadedPlaylistElement;
 		List<IViewPort> viewPorts;
 		ObservableCollection<CameraConfig> camerasConfig;
@@ -550,7 +564,7 @@ namespace LongoMatch.Services
 			player.Expose ();
 		}
 
-		public void Switch (TimelineEvent play, Playlist playlist, IPlaylistElement element)
+		public void Switch (TimelineEventLongoMatch play, Playlist playlist, IPlaylistElement element)
 		{
 			if (loadedPlaylistElement != null) {
 				loadedPlaylistElement.Selected = false;
@@ -610,7 +624,7 @@ namespace LongoMatch.Services
 			EmitElementLoaded (element, playlist.HasNext ());
 		}
 
-		public void LoadEvent (TimelineEvent evt, Time seekTime, bool playing)
+		public void LoadEvent (TimelineEventLongoMatch evt, Time seekTime, bool playing)
 		{
 			MediaFileSet fileSet = evt.FileSet;
 			Log.Debug (string.Format ("Loading event \"{0}\" seek:{1} playing:{2}", evt.Name, seekTime, playing));
@@ -701,9 +715,9 @@ namespace LongoMatch.Services
 
 		public void DrawFrame ()
 		{
-			TimelineEvent evt = loadedEvent;
+			TimelineEventLongoMatch evt = loadedEvent;
 			if (evt == null && loadedPlaylistElement is PlaylistPlayElement) {
-				evt = (loadedPlaylistElement as PlaylistPlayElement).Play;
+				evt = (loadedPlaylistElement as PlaylistPlayElement).Play as TimelineEventLongoMatch;
 			}
 			if (evt != null) {
 				Config.EventsBroker.EmitDrawFrame (evt, -1, CamerasConfig [0], true);

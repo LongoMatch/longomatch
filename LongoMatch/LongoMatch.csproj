@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LongoMatch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,9 +43,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="GtkOSXApplication.cs" />
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="GtkSynchronizationContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,10 +56,6 @@
     <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
       <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
       <Name>LongoMatch.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
-      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
-      <Name>LongoMatch.Multimedia</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
@@ -90,17 +85,29 @@
       <Project>{F03D161E-CC4D-4FE6-968A-04F884AB0939}</Project>
       <Name>LongoMatch.Plugins.Stats</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
       <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
       <Name>LongoMatch.Services.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+    <ProjectReference Include="..\VAS\VAS.DB\VAS.DB.Net45.csproj">
       <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Name>VAS.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
+      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
+      <Name>LongoMatch.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+      <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

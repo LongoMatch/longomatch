@@ -19,9 +19,13 @@ using System;
 using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
@@ -128,11 +132,11 @@ namespace LongoMatch.Services
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {
 							Dashboard team = FileStorage.RetrieveFrom<Dashboard> (path);
-							Config.CategoriesTemplatesProvider.Add (team);
+							Config.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
 							File.Delete (path);
 						} else if (ImportProjects && ext == Constants.PROJECT_EXT) {
-							Project project = FileStorage.RetrieveFrom<Project> (path);
-							Config.DatabaseManager.ActiveDB.Store<Project> (project, true);
+							ProjectLongoMatch project = FileStorage.RetrieveFrom<ProjectLongoMatch> (path);
+							Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
 							File.Delete (path);
 						}
 					} catch (Exception ex) {

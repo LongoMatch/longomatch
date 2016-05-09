@@ -23,7 +23,7 @@ namespace LongoMatch.Services
 {
 	public class ProjectImporter
 	{
-		public Func<Project> ImportFunction {
+		public Func<ProjectLongoMatch> ImportFunction {
 			get;
 			set;
 		}

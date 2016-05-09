@@ -15,19 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
 using Gtk;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
-using Image = LongoMatch.Core.Common.Image;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
+using VAS.Core.Store;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayerCategoryViewer : Gtk.Bin
 	{
 		public PlayerCategoryViewer ()
@@ -35,11 +33,13 @@ namespace LongoMatch.Plugins.Stats
 			this.Build ();
 		}
 
-		public void LoadBackgrounds (Project project) {
-			tagger.LoadBackgrounds (project);
+		public void LoadBackgrounds (Project project)
+		{
+			tagger.LoadBackgrounds (project as ProjectLongoMatch);
 		}
 
-		public void LoadStats (PlayerEventTypeStats stats) {
+		public void LoadStats (PlayerEventTypeStats stats)
+		{
 			tagger.LoadStats (stats, TeamType.BOTH);
 			
 			foreach (Widget child in vbox1.AllChildren) {
@@ -47,13 +47,13 @@ namespace LongoMatch.Plugins.Stats
 					vbox1.Remove (child);
 			}
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
-				PlayerSubcategoryViewer subcatviewer = new PlayerSubcategoryViewer();
+				PlayerSubcategoryViewer subcatviewer = new PlayerSubcategoryViewer ();
 				subcatviewer.LoadStats (st);
 				vbox1.PackStart (subcatviewer);
-				vbox1.PackStart (new HSeparator());
+				vbox1.PackStart (new HSeparator ());
 				subcatviewer.Show ();
 			}
-		}	
+		}
 	}
 }
 

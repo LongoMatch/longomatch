@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
+using System.Linq;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.Services
 {
@@ -359,7 +359,7 @@ namespace LongoMatch.Services
 		private void MainLoopOnProgress (float progress)
 		{
 			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
-				&& progress > Config.GUIToolkit.RenderingStateBar.Fraction) {
+			    && progress > Config.GUIToolkit.RenderingStateBar.Fraction) {
 				UpdateProgress (progress);
 			}
 

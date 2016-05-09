@@ -5,8 +5,11 @@ namespace LongoMatch.Plugins.Stats
 	public partial class PlayersViewer
 	{
 		private global::Gtk.HPaned hpaned1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow2;
+		
 		private global::Gtk.TreeView treeview1;
+		
 		private global::LongoMatch.Plugins.Stats.PlayerCategoriesViewer categoriesviewer;
 
 		protected virtual void Build ()
@@ -33,9 +36,7 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.GtkScrolledWindow2]));
 			w2.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
-			this.categoriesviewer = new global::LongoMatch.Plugins.Stats.PlayerCategoriesViewer ();
-			this.categoriesviewer.Events = ((global::Gdk.EventMask)(256));
-			this.categoriesviewer.Name = "categoriesviewer";
+			this.categoriesviewer = null;
 			this.hpaned1.Add (this.categoriesviewer);
 			this.Add (this.hpaned1);
 			if ((this.Child != null)) {

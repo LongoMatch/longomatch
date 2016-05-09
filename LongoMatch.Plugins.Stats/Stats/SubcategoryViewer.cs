@@ -17,40 +17,41 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Stats;
-using LongoMatch.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class SubCategoryViewer : Gtk.Bin
 	{
 		ListStore store;
+
 		public SubCategoryViewer ()
 		{
 			this.Build ();
 			treeview.AppendColumn (Catalog.GetString ("Count"), new Gtk.CellRendererText (), "text", 0);
-			treeview.AppendColumn (Catalog.GetString("All"), new Gtk.CellRendererText (), "text", 1);
-			treeview.AppendColumn (Catalog.GetString("Home"), new Gtk.CellRendererText (), "text", 2);
-			treeview.AppendColumn (Catalog.GetString("Away"), new Gtk.CellRendererText (), "text", 3);
+			treeview.AppendColumn (Catalog.GetString ("All"), new Gtk.CellRendererText (), "text", 1);
+			treeview.AppendColumn (Catalog.GetString ("Home"), new Gtk.CellRendererText (), "text", 2);
+			treeview.AppendColumn (Catalog.GetString ("Away"), new Gtk.CellRendererText (), "text", 3);
 		}
-		
-		public void LoadStats (SubCategoryStat stats, string homeName, string awayName) {
-			store = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
+
+		public void LoadStats (SubCategoryStat stats, string homeName, string awayName)
+		{
+			store = new ListStore (typeof(string), typeof(string), typeof(string), typeof(string));
 			treeview.Model = store;
 			
-			treeview.Columns[2].Title = homeName;
-			treeview.Columns[3].Title = awayName;
+			treeview.Columns [2].Title = homeName;
+			treeview.Columns [3].Title = awayName;
 			plotter.HomeName = homeName;
 			plotter.AwayName = awayName;
 			
-			gtkframe.Markup = String.Format("<b> {0} </b>", stats.Name);
+			gtkframe.Markup = String.Format ("<b> {0} </b>", stats.Name);
 			plotter.LoadHistogram (stats);
 			
 			foreach (PercentualStat st in stats.OptionStats) {
-				store.AppendValues (st.Name, st.TotalCount.ToString(),
-				                    st.LocalTeamCount.ToString(), st.VisitorTeamCount.ToString());
+				store.AppendValues (st.Name, st.TotalCount.ToString (),
+					st.LocalTeamCount.ToString (), st.VisitorTeamCount.ToString ());
 			}
 		}
 	}
