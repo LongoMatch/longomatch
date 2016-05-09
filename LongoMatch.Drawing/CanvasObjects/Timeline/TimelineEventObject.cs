@@ -22,12 +22,13 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
 	public class TimelineEventObject: TimeNodeObject
 	{
-		public TimelineEventObject (TimelineEvent play, Project project) : base (play)
+		public TimelineEventObject (TimelineEventLongoMatch play, ProjectLongoMatch project) : base (play)
 		{
 			Project = project;
 			// Only event boundaries can be dragged
@@ -44,7 +45,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}
@@ -55,9 +56,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		public TimelineEvent Event {
+		public TimelineEventLongoMatch Event {
 			get {
-				return TimeNode as TimelineEvent;
+				return TimeNode as TimelineEventLongoMatch;
 			}
 		}
 

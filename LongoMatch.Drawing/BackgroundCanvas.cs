@@ -4,12 +4,8 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.CanvasObjects;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing
 {

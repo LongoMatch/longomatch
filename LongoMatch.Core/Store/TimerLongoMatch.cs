@@ -1,5 +1,5 @@
-﻿//
-//  Copyright (C) 2015 Fluendo S.A.
+//
+//  Copyright (C) 2014 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,18 +16,24 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Common;
+using VAS.Core.Store;
 
-namespace LongoMatch.DB.Views
+namespace LongoMatch.Core.Store
 {
-	public interface IQueryView<T>
+	[Serializable]
+	[PropertyChanged.ImplementPropertyChanged]
+	public class TimerLongoMatch: Timer
 	{
-		IEnumerable<T> Query (QueryFilter filter);
+		public TimerLongoMatch ()
+		{
+			Team = TeamType.NONE;
+		}
 
-		IEnumerable<T> QueryFull (QueryFilter filter, IStorableObjectsCache cache);
+		public TeamType Team {
+			get;
+			set;
+		}
 	}
-
 }
 

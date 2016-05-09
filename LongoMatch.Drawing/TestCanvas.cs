@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
+using VAS.Core.Common;
 
 namespace LongoMatch.Drawing
 {
@@ -98,7 +99,7 @@ namespace LongoMatch.Drawing
 			tk.Begin ();
 
 			double scaleX, scaleY;
-			LongoMatch.Core.Common.Point offset;
+			Point offset;
 			TestImage.ScaleFactor (100, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
 			tk.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
 			tk.DrawImage (TestImage);

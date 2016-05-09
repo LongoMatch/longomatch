@@ -15,12 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.IO;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -32,7 +33,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		Rectangle cancelRect;
 		bool cancelPressed;
 
-		public TimerObject (TimerButton timer) : base (timer)
+		public TimerObject (TimerButtonLongoMatch timer) : base (timer)
 		{
 			Button = timer;
 			Toggle = true;
@@ -48,7 +49,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			cancelRect = new Rectangle ();
 		}
 
-		public TimerButton Button {
+		public TimerButtonLongoMatch Button {
 			get;
 			set;
 		}
