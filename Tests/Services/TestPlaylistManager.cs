@@ -45,8 +45,7 @@ namespace Tests.Services
 		Mock<IPlayerController> mockPlayerController;
 		MediaFileSet mfs;
 
-		bool eventLoaded;
-		bool playlistElementSelected;
+		bool playlistElementLoaded;
 
 
 		[TestFixtureSetUp ()]
@@ -67,8 +66,7 @@ namespace Tests.Services
 			mockAnalysisWindow.SetupGet (m => m.Player).Returns (mockPlayerController.Object);
 			mockVideoRenderer = new Mock<IRenderingJobsManager> ();
 
-			Config.EventsBroker.EventLoadedEvent += (TimelineEvent evt) => eventLoaded = true;
-			Config.EventsBroker.PlaylistElementSelectedEvent += (Playlist playlist, IPlaylistElement element, bool playing) => playlistElementSelected = true;
+			Config.EventsBroker.PlaylistElementLoadedEvent += (playlist, element) => playlistElementLoaded = true;
 		}
 
 		[SetUp ()]
@@ -83,8 +81,7 @@ namespace Tests.Services
 			plmanager.Player = mockPlayerController.Object;
 
 			OpenProject (new ProjectLongoMatch ());
-			eventLoaded = false;
-			playlistElementSelected = false;
+			playlistElementLoaded = false;
 
 		}
 
@@ -199,38 +196,25 @@ namespace Tests.Services
 		public void TestLoadPlayEvent ()
 		{
 			TimelineEventLongoMatch element = new TimelineEventLongoMatch ();
-
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
-
+			Config.EventsBroker.EmitLoadEvent (element);
 			mockPlayerController.Verify (player => player.LoadEvent (element, new Time (0), true), Times.Once ());
-
-			Assert.IsTrue (eventLoaded);
 		}
 
 		[Test ()]
 		public void TestLoadPlayEventNull ()
 		{
 			TimelineEventLongoMatch element = null;
-
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
-
+			Config.EventsBroker.EmitLoadEvent (element);
 			mockPlayerController.Verify (player => player.UnloadCurrentEvent (), Times.Once ());
-
-			Assert.IsTrue (eventLoaded);
 		}
 
 		[Test ()]
 		public void TestLoadPlayEventSubs ()
 		{
 			TimelineEventLongoMatch element = new SubstitutionEvent ();
-
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
-
+			Config.EventsBroker.EmitLoadEvent (element);
 			mockPlayerController.Verify (player => player.Seek (element.EventTime, true, false, false), Times.Once ());
 			mockPlayerController.Verify (player => player.Play (false), Times.Once ());
-
-			Assert.IsTrue (eventLoaded);
-
 		}
 
 		[Test ()]
@@ -238,16 +222,10 @@ namespace Tests.Services
 		{
 			var project = new ProjectLongoMatch ();
 			OpenProject (project, ProjectType.FakeCaptureProject);
-
 			TimelineEventLongoMatch element = new SubstitutionEvent ();
-
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (element);
-
+			Config.EventsBroker.EmitLoadEvent (element);
 			mockPlayerController.Verify (player => player.Seek (It.IsAny<Time> (), It.IsAny<bool> (), It.IsAny<bool> (), It.IsAny<bool> ()), Times.Never ());
 			mockPlayerController.Verify (player => player.Play (false), Times.Never ());
-
-			Assert.IsFalse (eventLoaded);
-
 		}
 
 		[Test ()]
@@ -292,7 +270,7 @@ namespace Tests.Services
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (presentation, element, true);
 			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
@@ -312,7 +290,7 @@ namespace Tests.Services
 
 			Assert.AreSame (playercontroller, plmanager.Player);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (presentation, element, true);
 			mockPlayerController.Verify (player => player.LoadPlaylistEvent (presentation, element, true), Times.Once ());
 		}
 
@@ -332,7 +310,7 @@ namespace Tests.Services
 
 			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (presentation, null);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (presentation, element, true);
 		}
 
 		[Test ()]
@@ -348,7 +326,7 @@ namespace Tests.Services
 
 			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenedPresentationChanged (null, null);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitPlaylistElementSelected (presentation, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (presentation, element, true);
 		}
 
 		[Test ()]
