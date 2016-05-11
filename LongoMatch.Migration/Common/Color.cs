@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Common
 {
 
-	[JsonConverter (typeof (LongoMatchConverter))]
+	[JsonConverter (typeof (VASConverter))]
 	public class Color
 	{
 		public Color (byte r, byte g, byte b, byte a=byte.MaxValue)

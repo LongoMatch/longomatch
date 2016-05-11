@@ -42,7 +42,7 @@ namespace LongoMatch.Store
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
-	[JsonConverter (typeof(LongoMatchConverter))]
+	[JsonConverter (typeof(VASConverter))]
 	public class HotKey : IEquatable<HotKey>
 	{
 		private int key;

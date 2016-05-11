@@ -424,7 +424,7 @@ namespace LongoMatch
 	}
 
 	[Serializable]
-	[JsonConverter (typeof(LongoMatchConverter))]
+	[JsonConverter (typeof(VASConverter))]
 	public class ConfigState : VAS.ConfigState
 	{
 		public Hotkeys hotkeys;
