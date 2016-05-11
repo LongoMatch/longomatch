@@ -114,7 +114,7 @@
               </packing>
             </child>
             <child>
-              <widget class="LongoMatch.Gui.CapturerBin" id="capturerbin">
+              <widget class="VAS.UI.CapturerBin" id="capturerbin">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="Capturing">False</property>
