@@ -219,19 +219,19 @@ namespace LongoMatch.Gui.Menus
 			Add (addPLN);
 			
 			render = new MenuItem ("");
-			render.Activated += (sender, e) => EmitRenderPlaylist (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+			render.Activated += (sender, e) => EmitRenderPlaylist (plays);
 			Add (render);
 			
 			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
-			snapshot.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitSnapshotSeries (plays [0] as TimelineEventLongoMatch);
+			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays [0]);
 			Add (snapshot);
 
 			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays.Cast<TimelineEvent> ().ToList ());
- 			Add (duplicate);
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
+			Add (duplicate);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
 			Add (del);
 
 			ShowAll ();
@@ -239,13 +239,13 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNewPlayActivated (object sender, EventArgs e)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewEvent (eventType,
+			Config.EventsBroker.EmitNewEvent (eventType,
 				eventTime: time,
 				start: time - new Time { TotalSeconds = 10 },
 				stop: time + new Time { TotalSeconds = 10 });
 		}
 
-		void EmitRenderPlaylist (List<TimelineEventLongoMatch> plays)
+		void EmitRenderPlaylist (List<TimelineEvent> plays)
 		{
 			Playlist pl = new Playlist ();
 			foreach (TimelineEvent p in plays) {
