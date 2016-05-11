@@ -142,7 +142,7 @@
       <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
       <Name>VAS.Drawing.Cairo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Services.Net45\VAS.Services.Net45.csproj">
+    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
       <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
       <Name>VAS.Services.Net45</Name>
     </ProjectReference>

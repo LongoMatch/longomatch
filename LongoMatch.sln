@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Multimedia", "VAS\VAS.M
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Services", "VAS\VAS.Services\VAS.Services.shproj", "{4A1B1F86-316F-4A07-AC62-E284BC9AB77D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\VAS.Services.Net45\VAS.Services.Net45.csproj", "{153BFD3F-6E06-451B-AD79-6C207762BBBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\VAS.Services\VAS.Services.Net45.csproj", "{153BFD3F-6E06-451B-AD79-6C207762BBBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
