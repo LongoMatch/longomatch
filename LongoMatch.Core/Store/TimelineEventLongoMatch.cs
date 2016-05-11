@@ -42,7 +42,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// List of players tagged in this event.
 		/// </summary>
-		[LongoMatchPropertyIndex (0)]
+		[PropertyIndex (0)]
 		public ObservableCollection<PlayerLongoMatch> Players {
 			get {
 				return players;
@@ -68,7 +68,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// A list of teams tagged in this event.
 		/// </summary>
-		[LongoMatchPropertyIndex (3)]
+		[PropertyIndex (3)]
 		public ObservableCollection<Team> Teams {
 			get {
 				return teams;

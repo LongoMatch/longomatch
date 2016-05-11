@@ -36,14 +36,14 @@ namespace Tests.DB
 {
 	public class PropertiesTest: StorableBase
 	{
-		[LongoMatchPropertyIndex (1)]
-		[LongoMatchPropertyPreload]
+		[PropertyIndex (1)]
+		[PropertyPreload]
 		public string Key1 { get; set; }
 
-		[LongoMatchPropertyIndex (0)]
+		[PropertyIndex (0)]
 		public string Key2 { get; set; }
 
-		[LongoMatchPropertyPreload]
+		[PropertyPreload]
 		public string Key3 { get; set; }
 
 		protected override void CheckIsLoaded ()

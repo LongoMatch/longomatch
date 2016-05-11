@@ -100,8 +100,8 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		[LongoMatchPropertyIndex (0)]
-		[LongoMatchPropertyPreload]
+		[PropertyIndex (0)]
+		[PropertyPreload]
 		/// <summary>
 		/// The full name used for a team (eg: FC Barcelona junior 2014).
 		/// </summary>
@@ -111,8 +111,8 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		[LongoMatchPropertyIndex (1)]
-		[LongoMatchPropertyPreload]
+		[PropertyIndex (1)]
+		[PropertyPreload]
 		/// <summary>
 		/// The display name used for a team (eg: FC Barcelona)
 		/// </summary>
@@ -122,7 +122,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		[LongoMatchPropertyPreload]
+		[PropertyPreload]
 		public Image Shield {
 			get;
 			set;

@@ -206,7 +206,7 @@ namespace LongoMatch.Core.Store
 			return se;
 		}
 
-		[LongoMatchPropertyPreload]
+		[PropertyPreload]
 		public ProjectDescription Description {
 			get;
 			set;
