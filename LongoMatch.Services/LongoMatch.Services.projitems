@@ -13,7 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ProjectsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RenderingJobsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />

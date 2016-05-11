@@ -41,6 +41,7 @@ namespace LongoMatch.Services
 		IAnalysisWindow analysisWindow;
 		ProjectType projectType;
 		ICapturerBin capturer;
+		IPlayerController player;
 		Dashboard dashboard;
 		ProjectLongoMatch openedProject;
 		AnalysisEventButton pendingButton;
@@ -104,7 +105,8 @@ namespace LongoMatch.Services
 		                                 EventsFilter filter, IAnalysisWindowBase analysisWindow)
 		{
 			this.analysisWindow = analysisWindow as IAnalysisWindow;
-			this.capturer = analysisWindow.Capturer;
+			capturer = analysisWindow.Capturer;
+			player = analysisWindow.Player;
 			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
 			if (project == null) {
@@ -166,6 +168,44 @@ namespace LongoMatch.Services
 					case KeyAction.StopPeriod:
 						capturer.StopPeriod ();
 						break;
+					}
+				} else {
+					switch (action) {
+					case KeyAction.FrameUp:
+						player.SeekToNextFrame ();
+						return;
+					case KeyAction.FrameDown:
+						player.SeekToPreviousFrame ();
+						return;
+					case KeyAction.JumpUp:
+						player.StepForward ();
+						return;
+					case KeyAction.JumpDown:
+						player.StepBackward ();
+						return;
+					case KeyAction.DrawFrame:
+						player.DrawFrame ();
+						return;
+					case KeyAction.TogglePlay:
+						player.TogglePlay ();
+						return;
+					case KeyAction.SpeedUp:
+						player.FramerateUp ();
+						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						return;
+					case KeyAction.SpeedDown:
+						player.FramerateDown ();
+						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						return;
+					case KeyAction.CloseEvent:
+						Config.EventsBroker.EmitLoadEvent (null);
+						return;
+					case KeyAction.Prev:
+						player.Previous ();
+						return;
+					case KeyAction.Next:
+						player.Next ();
+						return;
 					}
 				}
 			}

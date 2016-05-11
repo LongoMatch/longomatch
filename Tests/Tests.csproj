@@ -83,13 +83,11 @@
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
     <Compile Include="Services\TestRenderingJobsManager.cs" />
-    <Compile Include="Services\TestPlayerController.cs" />
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
     <Compile Include="Services\TestServices.cs" />
     <Compile Include="Services\TestUpdatesNotifier.cs" />
     <Compile Include="Services\TestProjectsManager.cs" />
-    <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
