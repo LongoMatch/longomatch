@@ -108,10 +108,10 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected override void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
+		protected override void HandlePlaylistElementLoaded (Playlist playlist, IPlaylistElement element)
 		{
 			if (element is PlaylistPlayElement) {
-				loadedPlay = (element as PlaylistPlayElement).Play as TimelineEventLongoMatch;
+				loadedPlay = (element as PlaylistPlayElement).Play;
 			} else {
 				loadedPlay = null;
 			}
@@ -285,7 +285,7 @@ namespace LongoMatch.Services
 			((LMCommon.EventsBroker)Config.EventsBroker).DuplicateEventsEvent += OnDuplicatePlays;
 			((LMCommon.EventsBroker)Config.EventsBroker).SnapshotSeries += OnSnapshotSeries;
 			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent += HandlePlayLoaded;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent += HandleDashboardEditedEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent += HandleShowProjectStatsEvent;
@@ -307,7 +307,7 @@ namespace LongoMatch.Services
 			((LMCommon.EventsBroker)Config.EventsBroker).DuplicateEventsEvent -= OnDuplicatePlays;
 			((LMCommon.EventsBroker)Config.EventsBroker).SnapshotSeries -= OnSnapshotSeries;
 			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementSelectedEvent -= HandlePlaylistElementSelectedEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent -= HandlePlaylistElementLoaded;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent -= HandleDashboardEditedEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
