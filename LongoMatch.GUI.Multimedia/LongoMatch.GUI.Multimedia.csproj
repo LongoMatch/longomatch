@@ -43,20 +43,9 @@
     <Folder Include="Gui\Utils\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gui\CapturerBin.cs" />
-    <Compile Include="Gui\VolumeWindow.cs" />
     <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs" />
     <Compile Include="Gui\PlayerCapturerBin.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.PlayerCapturerBin.cs" />
-    <Compile Include="Gui\Utils\Remuxer.cs" />
-    <Compile Include="MultimediaToolkit.cs" />
-    <Compile Include="Gui\Utils\FramesCapturer.cs" />
-    <Compile Include="Gui\VideoWindow.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.VideoWindow.cs" />
-    <Compile Include="Gui\PlayerView.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerView.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
@@ -113,6 +102,10 @@
     <ProjectReference Include="..\VAS\VAS.Drawing.Net45\VAS.Drawing.Net45.csproj">
       <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
       <Name>VAS.Drawing.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+      <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+      <Name>VAS.UI.Multimedia.Gtk2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

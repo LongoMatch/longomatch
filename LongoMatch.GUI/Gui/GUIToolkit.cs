@@ -25,7 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Video.Utils;
+using VAS.Video.Utils;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Filters;

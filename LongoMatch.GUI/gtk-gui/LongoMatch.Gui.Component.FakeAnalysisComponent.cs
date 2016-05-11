@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.VBox vbox3;
 		
-		private global::LongoMatch.Gui.CapturerBin capturerbin;
+		private global::VAS.UI.CapturerBin capturerbin;
 		
 		private global::Gtk.HSeparator hseparator1;
 		
@@ -28,7 +28,7 @@ namespace LongoMatch.Gui.Component
 			this.vbox3.Name = "vbox3";
 			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
+			this.capturerbin = new global::VAS.UI.CapturerBin ();
 			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
 			this.capturerbin.Name = "capturerbin";
 			this.capturerbin.Capturing = false;

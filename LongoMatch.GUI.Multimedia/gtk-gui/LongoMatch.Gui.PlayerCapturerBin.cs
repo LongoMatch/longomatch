@@ -22,7 +22,7 @@ namespace LongoMatch.Gui
 		
 		private global::Gtk.Label livelabel;
 		
-		private global::LongoMatch.Gui.CapturerBin capturerbin;
+		private global::VAS.UI.CapturerBin capturerbin;
 
 		protected virtual void Build ()
 		{
@@ -99,7 +99,7 @@ namespace LongoMatch.Gui
 			w7.Expand = false;
 			w7.Fill = false;
 			// Container child capturerbox.Gtk.Box+BoxChild
-			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
+			this.capturerbin = new global::VAS.UI.CapturerBin ();
 			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
 			this.capturerbin.Name = "capturerbin";
 			this.capturerbin.Capturing = false;

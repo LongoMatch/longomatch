@@ -20,18 +20,21 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.UI.Helpers;
+using VASUi = VAS.UI;
 
 namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class PlayerCapturerBin : Gtk.Bin
+	public partial class PlayerCapturerBin : VAS.UI.PlayerCapturerBin
 	{
-		IPlayerView playerview;
-		PlayerViewOperationMode mode;
+		//IPlayerView playerview;
+		//PlayerViewOperationMode mode;
 
 		public PlayerCapturerBin ()
 		{
+			base.Build ();
+			/*
 			this.Build ();
 			replayhbox.HeightRequest = livebox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			replayimage.Pixbuf = Misc.LoadIcon ("longomatch-replay", StyleConf.PlayerCapturerIconSize);
@@ -43,8 +46,10 @@ namespace LongoMatch.Gui
 			playerbox.PackEnd (playerview as Gtk.Widget);
 			(playerview as Gtk.Widget).ShowAll ();
 			Player = playerview.Player;
+			*/
 		}
 
+		/*
 		protected override void OnDestroyed ()
 		{
 			(playerview as Gtk.Widget).Destroy ();
@@ -108,8 +113,9 @@ namespace LongoMatch.Gui
 		{
 			ShowPlayer ();
 		}
+		*/
 
-		void HandleElementLoadedEvent (object element, bool hasNext)
+		protected override void HandleElementLoadedEvent (object element, bool hasNext)
 		{
 			if (element == null) {
 				if (mode == PlayerViewOperationMode.Analysis) {
@@ -126,11 +132,13 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		/*
 		protected void OnBacktolivebuttonClicked (object sender, System.EventArgs e)
 		{
 			Player.Pause ();
 			ShowCapturer ();
 		}
+		*/
 	}
 }
 

@@ -355,4 +355,73 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="SynchronizationWidget Properties">
+        <property name="FixedPeriods" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="LinkProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ToggleTopBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ToggleTopBar Properties">
+        <property name="CurrentPage" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ToggleTopBar Signals">
+        <signal name="PageSwitchedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="VAS.UI.CapturerBin" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="CapturerBin Properties">
+        <property name="Capturing" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="VAS.UI.PlayerCapturerBin" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="VAS.UI.VideoWindow" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="IViewPort Properties">
+        <property name="Ratio" />
+        <property name="Ready" />
+        <property name="Visible" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="VideoWindow Signals">
+        <signal name="ReadyEvent" />
+        <signal name="ExposeEvent" />
+        <signal name="ButtonPressEvent" />
+        <signal name="ButtonReleaseEvent" />
+        <signal name="ScrollEvent" />
+        <signal name="VideoDragStarted" />
+        <signal name="VideoDragStopped" />
+        <signal name="VideoDragged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="VAS.UI.PlayerView" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="PlayerView Properties">
+        <property name="TogglePlayOnClick" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
 </objects>

@@ -28,7 +28,6 @@ using LongoMatch.DB;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Services;
-using LongoMatch.Video;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.GUI;
@@ -36,7 +35,9 @@ using VAS.Drawing.Cairo;
 using VAS.Multimedia.Utils;
 using VAS.Services;
 using VAS.UI.Helpers;
+using VAS.Video;
 using Constants = LongoMatch.Core.Common.Constants;
+using VASUi = VAS.UI;
 
 namespace LongoMatch
 {
@@ -73,7 +74,7 @@ namespace LongoMatch
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
 				Config.GUIToolkit = GUIToolkit.Instance;
-				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
+				Config.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 

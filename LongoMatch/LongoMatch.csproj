@@ -111,6 +111,10 @@
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+      <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+      <Name>VAS.UI.Multimedia.Gtk2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
