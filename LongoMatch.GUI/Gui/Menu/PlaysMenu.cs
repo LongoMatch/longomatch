@@ -239,7 +239,7 @@ namespace LongoMatch.Gui.Menus
 			Add (duplicate);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays.Cast<TimelineEvent> ().ToList ());
+			del.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (plays.Cast<TimelineEvent> ().ToList ());
 			Add (del);
 
 			ShowAll ();

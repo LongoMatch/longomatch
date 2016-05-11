@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Gtk2", "VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj", "{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj", "{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
