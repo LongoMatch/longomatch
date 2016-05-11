@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Couchbase.Lite;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.DB;
 
@@ -39,8 +40,9 @@ namespace LongoMatch.DB
 			name = SanitizeDBName (name);
 			var storage = Add (name, false);
 			if (storage != null) {
-				VAS.Config.EventsBrokerBase?.EmitDatabaseCreated (name);
-				Config.EventsBroker?.EmitDatabaseCreated (name);
+				EventsAggregator.Publish (new DatabaseCreatedEvent {
+					Name = name
+				});
 			}
 			return storage;
 		}
