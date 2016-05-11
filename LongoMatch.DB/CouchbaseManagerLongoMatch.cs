@@ -22,7 +22,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Couchbase.Lite;
 using VAS.Core.Common;
-using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.DB;
 
@@ -32,19 +31,6 @@ namespace LongoMatch.DB
 	{
 		public CouchbaseManagerLongoMatch (string dbDir) : base (dbDir)
 		{
-		}
-
-		public override IStorage Add (string name)
-		{
-			// Couchbase doesn't accept uppercase databases.
-			name = SanitizeDBName (name);
-			var storage = Add (name, false);
-			if (storage != null) {
-				EventsAggregator.Publish (new DatabaseCreatedEvent {
-					Name = name
-				});
-			}
-			return storage;
 		}
 
 		protected override IStorage Add (string name, bool check)
