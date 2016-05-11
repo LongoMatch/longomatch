@@ -13,10 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\DashboardCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\Timerule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\ButtonObject.cs" />
@@ -40,11 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\CameraObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\LabelObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\NeedleObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineEventObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimeNodeObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>

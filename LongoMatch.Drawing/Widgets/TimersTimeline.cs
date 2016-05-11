@@ -24,6 +24,8 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
+using LMTimeline = LongoMatch.Drawing.CanvasObjects.Timeline;
 using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
@@ -137,7 +139,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (TimeNodeChanged != null) {
 				Time moveTime;
-				TimeNode tn = (sel.Drawable as TimeNodeObject).TimeNode;
+				TimeNode tn = (sel.Drawable as LMTimeline.TimeNodeObject).TimeNode;
 
 				if (sel.Position == SelectionPosition.Right) {
 					moveTime = tn.Stop;
@@ -153,7 +155,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (ShowTimerMenuEvent != null) {
 				Timer t = null;
 				if (Selections.Count > 0) {
-					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
+					LMTimeline.TimerTimeNodeObject to = Selections.Last ().Drawable as LMTimeline.TimerTimeNodeObject; 
 					t = to.Timer;
 				} 
 				ShowTimerMenuEvent (t, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));

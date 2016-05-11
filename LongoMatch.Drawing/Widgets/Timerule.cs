@@ -27,6 +27,7 @@ using VAS.Core.Store.Drawables;
 using VAS.Drawing;
 using LMCommon = LongoMatch.Core.Common;
 using VASDrawing = VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {

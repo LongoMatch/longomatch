@@ -58,4 +58,5 @@ namespace LongoMatch.Core.Handlers
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void ShowTimelineMenuHandler (List<TimelineEvent> plays,EventType cat,Time time);
 	public delegate void ShowTaggerMenuHandler (List<TimelineEvent> plays);
+	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 }

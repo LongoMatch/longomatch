@@ -31,6 +31,8 @@ using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
+using VAS.UI.Menus;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Component
 {
@@ -44,7 +46,7 @@ namespace LongoMatch.Gui.Component
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
 		ProjectLongoMatch project;
-		PeriodsMenu menu;
+		PeriodsMenuBase menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
 
@@ -96,7 +98,7 @@ namespace LongoMatch.Gui.Component
 
 			Helpers.Misc.SetFocus (this, false);
 
-			menu = new PeriodsMenu ();
+			menu = new PeriodsMenuBase ();
 		}
 
 		void ConnectSignals ()

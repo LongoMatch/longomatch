@@ -27,6 +27,7 @@ using VAS.Core.Store.Drawables;
 using VAS.Drawing;
 using LMCommon = LongoMatch.Core.Common;
 using VASDrawing = VAS.Drawing;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -181,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (ShowMenuEvent != null) {
 				List<TimelineEventLongoMatch> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
-				ShowMenuEvent (plays);
+				ShowMenuEvent (plays.Cast<TimelineEvent> ().ToList ());
 			}
 		}
 	}

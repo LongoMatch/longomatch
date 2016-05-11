@@ -134,8 +134,6 @@
     <Compile Include="Gui\Component\BackgroundWidget.cs" />
     <Compile Include="Gui\Panel\PreferencesPanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PreferencesPanel.cs" />
-    <Compile Include="Gui\Component\Timeline.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Timeline.cs" />
     <Compile Include="Gui\Component\CodingWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
@@ -157,7 +155,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
     <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
-    <Compile Include="Gui\Menu\PeriodsMenu.cs" />
     <Compile Include="Gui\Component\HotkeysConfiguration.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
     <Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
@@ -272,6 +269,10 @@
     <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
+      <Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
+      <Name>VAS.UI.Gtk2</Name>
     </ProjectReference>
     <ProjectReference Include="..\VAS\VAS.Drawing.Net45\VAS.Drawing.Net45.csproj">
       <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>

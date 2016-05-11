@@ -8,8 +8,8 @@
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
     <widget-library name="../../VAS/bin/VAS.Drawing.Cairo.dll" />
     <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
+    <widget-library name="../../VAS/bin/VAS.UI.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
-    <widget-library name="../../VAS/bin/VAS.UI.Multimedia.Gtk2.dll" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">
     <action-group name="Default" />
@@ -9767,159 +9767,6 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.Timeline" design-size="740 258">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <widget class="Gtk.HBox" id="hbox1">
-        <property name="MemberName" />
-        <child>
-          <widget class="Gtk.VBox" id="leftbox">
-            <property name="MemberName" />
-            <child>
-              <widget class="Gtk.HBox" id="hbox2">
-                <property name="MemberName" />
-                <property name="HeightRequest">30</property>
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="Gtk.Button" id="focusbutton">
-                    <property name="MemberName" />
-                    <property name="Type">Custom</property>
-                    <child>
-                      <widget class="Gtk.Image" id="focusbuttonimage">
-                        <property name="MemberName" />
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.DrawingArea" id="labelsarea">
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="zoomhbox">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="Gtk.Image" id="zoomoutimage">
-                    <property name="MemberName" />
-                    <property name="WidthRequest">14</property>
-                    <property name="HeightRequest">8</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HScale" id="focusscale">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Inverted">True</property>
-                    <property name="Upper">100</property>
-                    <property name="PageIncrement">10</property>
-                    <property name="StepIncrement">1</property>
-                    <property name="DrawValue">False</property>
-                    <property name="Digits">0</property>
-                    <property name="ValuePos">Top</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Image" id="zoominimage">
-                    <property name="MemberName" />
-                    <property name="WidthRequest">14</property>
-                    <property name="HeightRequest">8</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">False</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.VBox" id="vbox1">
-            <property name="MemberName" />
-            <child>
-              <widget class="Gtk.DrawingArea" id="timerulearea">
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <child>
-                  <widget class="Gtk.Viewport" id="GtkViewport">
-                    <property name="MemberName" />
-                    <property name="ShadowType">None</property>
-                    <child>
-                      <widget class="Gtk.DrawingArea" id="timelinearea">
-                        <property name="MemberName" />
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="1341 494">
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -9972,7 +9819,7 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
+          <widget class="VAS.UI.Component.Timeline" id="timeline">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
           </widget>
@@ -10050,7 +9897,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="LongoMatch.Gui.PlayerView" id="main_cam_playerbin">
+                      <widget class="VAS.UI.PlayerView" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                         <property name="TogglePlayOnClick">True</property>
@@ -10119,7 +9966,7 @@ You can continue with the current capture, cancel it or save your project.
                     <property name="Visible">False</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="LongoMatch.Gui.PlayerView" id="sec_cam_playerbin">
+                      <widget class="VAS.UI.PlayerView" id="sec_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
                         <property name="TogglePlayOnClick">False</property>
@@ -11122,7 +10969,7 @@ You can continue with the current capture, cancel it or save your project.
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="LongoMatch.Gui.CapturerBin" id="capturerbin">
+              <widget class="VAS.UI.CapturerBin" id="capturerbin">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
                 <property name="Capturing">False</property>

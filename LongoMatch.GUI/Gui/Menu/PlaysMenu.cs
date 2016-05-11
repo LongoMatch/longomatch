@@ -26,39 +26,31 @@ using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.UI.Menus;
 using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Menus
 {
-	public class PlaysMenu: Gtk.Menu
+	public class PlaysMenu : PlaysMenuBase
 	{
-	
 		public event EventHandler EditPlayEvent;
 
-		MenuItem edit, newPlay, del, addPLN, snapshot, render;
-		MenuItem duplicate, moveCat, drawings;
-		List<TimelineEventLongoMatch> plays;
-		EventType eventType;
-		Time time;
-		ProjectLongoMatch project;
-
-		
 		public PlaysMenu ()
 		{
 			CreateMenu ();
 		}
 
-		public void ShowListMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays)
+		public void ShowListMenu (ProjectLongoMatch project, List<TimelineEvent> plays)
 		{
 			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		public void ShowMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays)
+		public void ShowMenu (ProjectLongoMatch project, List<TimelineEvent> plays)
 		{
 			ShowMenu (project, plays, null, null, null, false);
 		}
 
-		public void ShowTimelineMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, EventType eventType, Time time)
+		public void ShowTimelineMenu (ProjectLongoMatch project, List<TimelineEvent> plays, EventType eventType, Time time)
 		{
 			ShowMenu (project, plays, eventType, time, null, false);
 		}
@@ -102,8 +94,8 @@ namespace LongoMatch.Gui.Menus
 			}
 		}
 
-		void ShowMenu (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, EventType eventType, Time time,
-		               IList<EventType> eventTypes, bool editableName)
+		protected override void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
+		                                  IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
 
@@ -121,7 +113,7 @@ namespace LongoMatch.Gui.Menus
 			}
 			
 			if (plays == null) {
-				plays = new List<TimelineEventLongoMatch> ();
+				plays = new List<TimelineEvent> ();
 			} else if (plays.Count == 1) {
 				isLineup = plays [0] is LineupEvent;
 				isSubstitution = plays [0] is SubstitutionEvent;
@@ -164,7 +156,7 @@ namespace LongoMatch.Gui.Menus
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
 					item.Activated += (sender, e) => {
-						((LMCommon.EventsBroker)Config.EventsBroker).EmitMoveToEventType (plays [0], c);
+						((LMCommon.EventsBroker)Config.EventsBroker).EmitMoveToEventType (plays [0] as TimelineEventLongoMatch, c);
 					}; 
 				}
 				catMenu.ShowAll ();
@@ -227,19 +219,19 @@ namespace LongoMatch.Gui.Menus
 			Add (addPLN);
 			
 			render = new MenuItem ("");
-			render.Activated += (sender, e) => EmitRenderPlaylist (plays);
+			render.Activated += (sender, e) => EmitRenderPlaylist (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 			Add (render);
 			
 			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
-			snapshot.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitSnapshotSeries (plays [0]);
+			snapshot.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitSnapshotSeries (plays [0] as TimelineEventLongoMatch);
 			Add (snapshot);
 
 			duplicate = new MenuItem ("");
 			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays.Cast<TimelineEvent> ().ToList ());
-			Add (duplicate);
+ 			Add (duplicate);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (plays.Cast<TimelineEvent> ().ToList ());
+			del.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 			Add (del);
 
 			ShowAll ();
@@ -259,7 +251,7 @@ namespace LongoMatch.Gui.Menus
 			foreach (TimelineEvent p in plays) {
 				pl.Elements.Add (new PlaylistPlayElement (p));
 			}
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (pl);
+			Config.EventsBroker.EmitRenderPlaylist (pl);
 		}
 	}
 }

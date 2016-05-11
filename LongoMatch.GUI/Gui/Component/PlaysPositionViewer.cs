@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (List<TimelineEventLongoMatch> plays)
+		void HandleShowMenuEvent (List<TimelineEvent> plays)
 		{
 			if (plays == null || plays.Count == 0) {
 				return;
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			field.Destroy ();
 			hfield.Destroy ();
 			goal.Destroy ();
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 	}

@@ -122,7 +122,7 @@ namespace LongoMatch.Gui.Component
 
 		protected void ShowMenu ()
 		{
-			playsMenu.ShowListMenu (Project, SelectedPlays);
+			playsMenu.ShowListMenu (Project, SelectedPlays.Cast<TimelineEvent> ().ToList ());
 		}
 
 		protected object GetValueFromPath (TreePath path)
