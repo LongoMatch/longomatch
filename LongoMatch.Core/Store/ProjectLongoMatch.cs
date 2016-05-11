@@ -31,6 +31,16 @@ using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store
 {
+	/// <summary>
+	/// I hold the information needed by a project and provide persistency.
+	/// I'm structured in the following way:
+	/// -Project Description (<see cref="LongoMatch.Utils.PreviewMediaFile"/>
+	/// -1 Categories Template
+	/// -1 Local Team Template
+	/// -1 Visitor Team Template
+	/// -1 list of <see cref="LongoMatch.Store.MediaTimeNode"/> for each category
+	/// </summary>
+	///
 	[Serializable]
 	public class ProjectLongoMatch : Project
 	{
