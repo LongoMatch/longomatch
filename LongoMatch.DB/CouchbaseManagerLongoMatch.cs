@@ -33,18 +33,6 @@ namespace LongoMatch.DB
 		{
 		}
 
-		public override IStorage Add (string name)
-		{
-			// Couchbase doesn't accept uppercase databases.
-			name = SanitizeDBName (name);
-			var storage = Add (name, false);
-			if (storage != null) {
-				VAS.Config.EventsBrokerBase?.EmitDatabaseCreated (name);
-				Config.EventsBroker?.EmitDatabaseCreated (name);
-			}
-			return storage;
-		}
-
 		protected override IStorage Add (string name, bool check)
 		{
 			if (check && manager.AllDatabaseNames.Contains (name)) {
