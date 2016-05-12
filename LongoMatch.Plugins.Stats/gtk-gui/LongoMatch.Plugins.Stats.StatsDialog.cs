@@ -40,7 +40,9 @@ namespace LongoMatch.Plugins.Stats
 			this.notebook1.Name = "notebook1";
 			this.notebook1.CurrentPage = 0;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.gameviewer = null;
+			this.gameviewer = new global::LongoMatch.Plugins.Stats.GameViewer ();
+			this.gameviewer.Events = ((global::Gdk.EventMask)(256));
+			this.gameviewer.Name = "gameviewer";
 			this.notebook1.Add (this.gameviewer);
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
@@ -49,7 +51,9 @@ namespace LongoMatch.Plugins.Stats
 			this.notebook1.SetTabLabel (this.gameviewer, this.label2);
 			this.label2.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.categoriesviewer = null;
+			this.categoriesviewer = new global::LongoMatch.Plugins.Stats.CategoriesViewer ();
+			this.categoriesviewer.Events = ((global::Gdk.EventMask)(256));
+			this.categoriesviewer.Name = "categoriesviewer";
 			this.notebook1.Add (this.categoriesviewer);
 			global::Gtk.Notebook.NotebookChild w3 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.categoriesviewer]));
 			w3.Position = 1;
@@ -60,7 +64,9 @@ namespace LongoMatch.Plugins.Stats
 			this.notebook1.SetTabLabel (this.categoriesviewer, this.label4);
 			this.label4.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.playersviewer = null;
+			this.playersviewer = new global::LongoMatch.Plugins.Stats.PlayersViewer ();
+			this.playersviewer.Events = ((global::Gdk.EventMask)(256));
+			this.playersviewer.Name = "playersviewer";
 			this.notebook1.Add (this.playersviewer);
 			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.playersviewer]));
 			w4.Position = 2;

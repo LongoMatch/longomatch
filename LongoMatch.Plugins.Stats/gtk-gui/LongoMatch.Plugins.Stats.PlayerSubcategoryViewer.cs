@@ -49,7 +49,9 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.GtkScrolledWindow]));
 			w2.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.plotter1 = null;
+			this.plotter1 = new global::LongoMatch.Plugins.Stats.Plotter ();
+			this.plotter1.Events = ((global::Gdk.EventMask)(256));
+			this.plotter1.Name = "plotter1";
 			this.hbox1.Add (this.plotter1);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.plotter1]));
 			w3.Position = 1;

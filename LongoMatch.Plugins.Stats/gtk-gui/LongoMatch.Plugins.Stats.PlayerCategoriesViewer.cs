@@ -46,7 +46,9 @@ namespace LongoMatch.Plugins.Stats
 			global::Gtk.Viewport w3 = new global::Gtk.Viewport ();
 			w3.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
-			this.categoryviewer = null;
+			this.categoryviewer = new global::LongoMatch.Plugins.Stats.PlayerCategoryViewer ();
+			this.categoryviewer.Events = ((global::Gdk.EventMask)(256));
+			this.categoryviewer.Name = "categoryviewer";
 			w3.Add (this.categoryviewer);
 			this.scrolledwindow3.Add (w3);
 			this.hpaned1.Add (this.scrolledwindow3);
