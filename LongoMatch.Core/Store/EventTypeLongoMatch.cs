@@ -23,6 +23,8 @@ using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store
 {
+	// TODO: Rename file to SportEventTypes.cs
+
 	[Serializable]
 	public class PenaltyCardEventType: EventType
 	{

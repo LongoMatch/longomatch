@@ -27,6 +27,8 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
 {
+	// TODO: Rename to TeamSportTimelineEvent
+
 	[Serializable]
 	public class TimelineEventLongoMatch : TimelineEvent
 	{

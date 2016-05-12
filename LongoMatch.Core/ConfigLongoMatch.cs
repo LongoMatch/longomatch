@@ -34,6 +34,13 @@ namespace LongoMatch
 {
 	public class Config : VAS.Config
 	{
+		/* FIXME: We should split Config into:
+		*  - App: store aplication states, default directories, etc...
+		*  - Config: stores application configuration.
+		*  - Move some constants such as SoftwareName in a way that they can be easilly configured by the apllication, maybe in the initialization function of the library.
+		*  - Constants classes shouldn't be inheriting from other static classes of constants.
+		*/
+
 		/* State */
 		public static IGUIToolkit GUIToolkit;
 		public static IMultimediaToolkit MultimediaToolkit;

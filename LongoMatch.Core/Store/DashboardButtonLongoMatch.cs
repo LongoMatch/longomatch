@@ -21,6 +21,8 @@ using VAS.Core.Common;
 using VAS.Core.Store;
 using System.Collections.Generic;
 
+// TODO: Rename file to SportDashboardButtons.cs // in plural!
+
 namespace LongoMatch.Core.Store
 {
 	[Serializable]

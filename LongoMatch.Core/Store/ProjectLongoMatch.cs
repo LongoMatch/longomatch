@@ -31,6 +31,8 @@ using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store
 {
+	// TODO: Rename to TeamSportProject
+
 	/// <summary>
 	/// I hold the information needed by a project and provide persistency.
 	/// I'm structured in the following way:

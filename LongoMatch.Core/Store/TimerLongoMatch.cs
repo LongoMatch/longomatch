@@ -21,6 +21,8 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
 {
+	// TODO: Rename to TeamTimer
+
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
 	public class TimerLongoMatch: Timer

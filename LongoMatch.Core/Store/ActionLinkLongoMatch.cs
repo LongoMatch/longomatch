@@ -26,6 +26,8 @@ using LongoMatch.Core.Common;
 
 namespace LongoMatch.Core.Store
 {
+	// TODO: Rename ActionLinkLongoMatch to TeamActionLink
+
 	/// <summary>
 	/// Defines an action link between 2 buttons in a <see cref="LongoMatch.Core.Store.Templates.Dashboard"/>.
 	/// </summary>
