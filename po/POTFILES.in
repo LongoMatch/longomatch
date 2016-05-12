@@ -167,3 +167,4 @@ LongoMatch.DB/Views/ProjectsView.cs
 LongoMatch.DB/Views/TeamsView.cs
 LongoMatch.DB/Views/TimelineEventsView.cs
 LongoMatch.DB/FileStorage.cs
+LongoMatch.Core/Catalog.cs
