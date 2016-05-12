@@ -191,12 +191,6 @@ namespace LongoMatch
 			}
 		}
 
-		//		public static string DBDir {
-		//			get {
-		//				return Path.Combine (homeDirectory, "db");
-		//			}
-		//		}
-
 		public static string AnalysisDir {
 			get {
 				return Path.Combine (DBDir, "analysis");
@@ -287,6 +281,7 @@ namespace LongoMatch
 			}
 		}
 
+		// FIXME: Move to VAS
 		public static VideoStandard CaptureVideoStandard {
 			get {
 				return state.captureVideoStandard;
@@ -297,6 +292,7 @@ namespace LongoMatch
 			}
 		}
 
+		// FIXME: Move to VAS
 		public static EncodingProfile CaptureEncodingProfile {
 			get {
 				return state.captureEncodingProfile;
@@ -308,6 +304,7 @@ namespace LongoMatch
 			}
 		}
 
+		// FIXME: Move to VAS
 		public static EncodingQuality CaptureEncodingQuality {
 			get {
 				return state.captureEncodingQuality;

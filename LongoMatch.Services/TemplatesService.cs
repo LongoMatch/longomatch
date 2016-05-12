@@ -238,7 +238,6 @@ namespace LongoMatch.Services
 		}
 	}
 
-	//public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
 	public class CategoriesTemplatesProvider : TemplatesProvider<DashboardLongoMatch>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)

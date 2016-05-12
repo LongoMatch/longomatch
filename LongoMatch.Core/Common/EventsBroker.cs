@@ -42,12 +42,9 @@ namespace LongoMatch.Core.Common
 		public event EventEditedHandler EventEditedEvent;
 		public event MoveEventHandler MoveToEventTypeEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
-		//		public event TimeNodeStartedHandler TimeNodeStartedEvent;
-		//		public event TimeNodeStoppedHandler TimeNodeStoppedEvent;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event DuplicateEventsHandler DuplicateEventsEvent;
 		public event DashboardEditedHandler DashboardEditedEvent;
-		//		public event DatabaseCreatedHandler DatabaseCreatedEvent;
 
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
@@ -446,13 +443,6 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		//		public void EmitDatabaseCreated (string name)
-		//		{
-		//			if (DatabaseCreatedEvent != null) {
-		//				DatabaseCreatedEvent (name);
-		//			}
-		//		}
-
 		public void EmitSeekEvent (Time time, bool accurate, bool synchronous = false, bool throttled = false)
 		{
 			if (SeekEvent != null) {
@@ -473,24 +463,6 @@ namespace LongoMatch.Core.Common
 				MigrateDB ();
 			}
 		}
-
-		//		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		//		{
-		//			if (TimeNodeStartedEvent != null) {
-		//				if (from == null)
-		//					from = new List<DashboardButton> ();
-		//				TimeNodeStartedEvent (node, btn, from);
-		//			}
-		//		}
-		//
-		//		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		//		{
-		//			if (TimeNodeStoppedEvent != null) {
-		//				if (from == null)
-		//					from = new List<DashboardButton> ();
-		//				TimeNodeStoppedEvent (node, btn, from);
-		//			}
-		//		}
 
 		public void EmitEventCreated (TimelineEventLongoMatch evt)
 		{
