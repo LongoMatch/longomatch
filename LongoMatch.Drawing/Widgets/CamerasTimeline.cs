@@ -218,7 +218,7 @@ namespace LongoMatch.Drawing.Widgets
 			    coords.Y <= PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
 				Timer t = null;
 				if (Selections.Count > 0) {
-					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
+					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject;
 					t = to.Timer;
 				} 
 				ShowTimerMenuEvent (t, VAS.Drawing.Utils.PosToTime (coords, SecondsPerPixel));

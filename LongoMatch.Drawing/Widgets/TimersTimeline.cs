@@ -155,7 +155,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (ShowTimerMenuEvent != null) {
 				Timer t = null;
 				if (Selections.Count > 0) {
-					LMTimeline.TimerTimeNodeObject to = Selections.Last ().Drawable as LMTimeline.TimerTimeNodeObject; 
+					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject;
 					t = to.Timer;
 				} 
 				ShowTimerMenuEvent (t, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));

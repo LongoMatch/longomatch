@@ -9,6 +9,7 @@
     <widget-library name="../../VAS/bin/VAS.Drawing.Cairo.dll" />
     <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../VAS/bin/VAS.UI.dll" />
+    <widget-library name="../../VAS/bin/VAS.UI.Multimedia.Gtk2.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">

@@ -189,10 +189,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CodingWidget Properties">
@@ -357,6 +353,10 @@
         <property name="TogglePlayOnClick" />
       </itemgroup>
     </itemgroups>
+    <signals />
+  </object>
+  <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
     <signals />
   </object>
 </objects>
