@@ -21,6 +21,7 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
+using System.Linq;
 
 namespace LongoMatch.Gui.Component
 {
@@ -47,10 +48,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.project = project;
 			if (project != null) {
-				var timeLine = new ObservableCollection<TimelineEventLongoMatch> ();
-				foreach (var timeLineEvent in project.Timeline) {
-					timeLine.Add (timeLineEvent as TimelineEventLongoMatch);
-				}
+				var timeLine = project.Timeline.OfType<TimelineEventLongoMatch> ();
 
 				field.Tagger.Project = project;
 				hfield.Tagger.Project = project;

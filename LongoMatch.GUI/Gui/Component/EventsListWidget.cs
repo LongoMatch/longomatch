@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Common;
+using System.Linq;
 
 namespace LongoMatch.Gui.Component
 {
@@ -84,11 +85,7 @@ namespace LongoMatch.Gui.Component
 			if (project == null)
 				return;
 
-			var timeline = new ObservableCollection<TimelineEventLongoMatch> ();
-			foreach (var timelineEvent in project.Timeline) {
-				timeline.Add (timelineEvent as TimelineEventLongoMatch);
-			}
-
+			var timeline = project.Timeline.OfType<TimelineEventLongoMatch> ();
 			localPlayersList.SetTeam (project.LocalTeamTemplate, timeline);
 			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, timeline);
 		}

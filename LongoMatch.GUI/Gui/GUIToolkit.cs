@@ -312,7 +312,7 @@ namespace LongoMatch.Gui
 		public void SelectProject (List<ProjectLongoMatch> projects)
 		{
 			Log.Information ("Select project");
-			mainWindow.SelectProject (projects.ToList ());
+			mainWindow.SelectProject (projects);
 		}
 
 		public void OpenCategoriesTemplatesManager ()

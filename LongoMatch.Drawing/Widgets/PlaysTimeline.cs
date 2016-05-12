@@ -209,12 +209,11 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			                        
 			foreach (EventType type in project.EventTypes) {
-				List<TimelineEvent> timelineEventList = project.EventsByType (type);
-				var timelineEventLongoMatchList = new List<TimelineEventLongoMatch> ();
-				timelineEventList.ForEach (x => timelineEventLongoMatchList.Add (x as TimelineEventLongoMatch));
-				tl = new CategoryTimeline (project, timelineEventLongoMatchList, duration,
+				var timelineEventList = project.EventsByType (type).OfType<TimelineEventLongoMatch> ();
+				tl = new CategoryTimeline (project, timelineEventList, duration,
 					i * StyleConf.TimelineCategoryHeight,
 					Utils.ColorForRow (i), playsFilter);
+
 				AddTimeline (tl, type);
 				i++;
 			}

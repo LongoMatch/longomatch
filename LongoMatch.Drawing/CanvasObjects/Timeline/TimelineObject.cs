@@ -245,7 +245,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		EventsFilter filter;
 		ProjectLongoMatch project;
 
-		public CategoryTimeline (ProjectLongoMatch project, List<TimelineEventLongoMatch> plays, Time maxTime,
+		public CategoryTimeline (ProjectLongoMatch project, IEnumerable<TimelineEventLongoMatch> plays, Time maxTime,
 		                         double offsetY, Color background, EventsFilter filter) :
 			base (maxTime, StyleConf.TimelineCategoryHeight, offsetY, background)
 		{

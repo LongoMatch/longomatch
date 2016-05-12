@@ -119,7 +119,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public IList<TimelineEventLongoMatch> Plays {
+		public IEnumerable<TimelineEventLongoMatch> Plays {
 			set {
 				ClearObjects ();
 				foreach (TimelineEventLongoMatch p in value) {

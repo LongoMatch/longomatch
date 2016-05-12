@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam (Team template, IList<TimelineEventLongoMatch> plays)
+		public void SetTeam (Team template, IEnumerable<TimelineEventLongoMatch> plays)
 		{
 			Dictionary<PlayerLongoMatch, TreeIter> playersDict = new Dictionary<PlayerLongoMatch, TreeIter> ();
 			
