@@ -354,7 +354,7 @@ namespace LongoMatch.Core.Store
 
 			if (Dashboard != null) {
 				/* Timers */
-				IEnumerable<TimerLongoMatch> timers = Dashboard.List.OfType<TimerButtonLongoMatch> ().Select (b => b.Timer).OfType<TimerLongoMatch> ();
+				IEnumerable<TimerLongoMatch> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer).OfType<TimerLongoMatch> ();
 				Timers.AddRange (timers.Except (Timers));
 
 				/* Update event types list that changes when the user adds or remove a

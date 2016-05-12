@@ -37,7 +37,7 @@ namespace LongoMatch.Core.Store.Templates
 		public static DashboardLongoMatch DefaultTemplate (int count)
 		{
 			TagButton tagbutton;
-			TimerButtonLongoMatch timerButton;
+			TimerButton timerButton;
 			PenaltyCardButton cardButton;
 			ScoreButton scoreButton;
 			DashboardLongoMatch template = new DashboardLongoMatch ();
@@ -85,7 +85,7 @@ namespace LongoMatch.Core.Store.Templates
 			};
 			template.List.Add (scoreButton);
 
-			timerButton = new TimerButtonLongoMatch {
+			timerButton = new TimerButton {
 				Timer = new TimerLongoMatch { Name = Catalog.GetString ("Ball playing") },
 				Position = new Point (10 + (10 + CAT_WIDTH) * 6, 10)
 			};

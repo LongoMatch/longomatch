@@ -12,11 +12,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)PlayslistCellRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\DashboardCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\ButtonObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\PositionObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CounterObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CrossObject.cs" />
@@ -25,14 +23,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\QuadrilateralObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\RectangleObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\TextObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ActionLinkObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CategoryObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\DashboardButtonObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\LinkAnchorObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\TagObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\TimerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayerObject.cs" />
@@ -47,5 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ObjectCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\SportDashboardCanvas.cs" />
   </ItemGroup>
 </Project>

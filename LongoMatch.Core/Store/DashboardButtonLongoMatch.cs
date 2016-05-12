@@ -124,39 +124,5 @@ namespace LongoMatch.Core.Store
 			}
 		}
 	}
-
-
-	[Serializable]
-	public class TimerButtonLongoMatch: TimerButton
-	{
-
-		public override void Start (Time start, List<DashboardButton> from)
-		{
-			if (currentNode != null)
-				return;
-
-			if (Timer != null) {
-				currentNode = Timer.Start (start);
-				Config.EventsBroker.EmitTimeNodeStartedEvent (currentNode, this, from);
-			}
-		}
-
-		public override void Stop (Time stop, List<DashboardButton> from)
-		{
-			if (currentNode == null)
-				return;
-
-			if (Timer != null) {
-				Timer.Stop (stop);
-				Config.EventsBroker.EmitTimeNodeStoppedEvent (currentNode, this, from);
-				currentNode = null;
-			}
-		}
-
-		public override Timer Timer {
-			get;
-			set;
-		}
-	}
 }
 

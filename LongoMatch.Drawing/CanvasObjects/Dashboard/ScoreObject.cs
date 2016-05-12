@@ -19,6 +19,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Drawing.CanvasObjects.Dashboard;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -28,13 +29,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 
 		public ScoreObject (ScoreButton score) : base (score)
 		{
-			Button = score;
+			ScoreButton = score;
 			if (iconImage == null) {
 				iconImage = Resources.LoadImage (StyleConf.ButtonScoreIcon);
 			}
 		}
 
-		public ScoreButton Button {
+		public ScoreButton ScoreButton {
 			get;
 			set;
 		}
@@ -50,7 +51,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				if (Recording) {
 					return (CurrentTime - Start).ToSecondsString ();
 				} else {
-					return Button.Name;
+					return ScoreButton.Name;
 				}
 			}
 		}

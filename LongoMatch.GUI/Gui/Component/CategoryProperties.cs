@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 		PenaltyCardButton cardButton;
 		ScoreButton scoreButton;
 		TagButton tagButton;
-		TimerButtonLongoMatch timerButton;
+		TimerButton timerButton;
 		Time lastLeadTime;
 		bool edited, ignore;
 
@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Component
 				cardButton = value as PenaltyCardButton;
 				scoreButton = value as ScoreButton;
 				tagButton = value as TagButton;
-				timerButton = value as TimerButtonLongoMatch;
+				timerButton = value as TimerButton;
 				UpdateGui ();
 			}
 			get {

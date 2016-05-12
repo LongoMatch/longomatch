@@ -35,11 +35,11 @@ namespace LongoMatch.Core.Store
 	[PropertyChanged.ImplementPropertyChanged]
 	public class ActionLinkLongoMatch : ActionLink
 	{
-		public ActionLinkLongoMatch ()
+		public ActionLinkLongoMatch () : base ()
 		{
 			TeamAction = TeamLinkAction.Keep;
 		}
-			
+
 		/// <summary>
 		/// The type of action that will be performed in the destination.
 		/// </summary>
