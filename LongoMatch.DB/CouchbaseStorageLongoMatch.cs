@@ -40,15 +40,11 @@ namespace LongoMatch.DB
 {
 	public class CouchbaseStorageLongoMatch: CouchbaseStorage
 	{
-		Database db;
-		Dictionary<Type, object> views;
-		string storageName;
-		object mutex;
-
 		static CouchbaseStorageLongoMatch ()
 		{
-			DocumentsSerializerHelper.AddTypeTranslation(typeof(TeamTemplate), typeof(Team));
-			DocumentsSerializerHelper.AddTypeTranslation(typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
+			#pragma warning disable 0618
+			DocumentsSerializerHelper.AddTypeTranslation (typeof(TeamTemplate), typeof(Team));
+			#pragma warning restore 0618
 		}
 
 		public CouchbaseStorageLongoMatch (Database db) : base (db)
