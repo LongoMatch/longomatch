@@ -17,16 +17,12 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using LongoMatch.Video.Utils;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Common;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Core;
 using System.IO;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using VAS.Core;
 
 namespace LongoMatch.Video
 {

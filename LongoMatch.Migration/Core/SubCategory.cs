@@ -21,7 +21,6 @@ using System.Linq;
 using LongoMatch.Common;
 using LongoMatch.Core;
 using LongoMatch.Interfaces;
-using VAS.Core;
 
 namespace LongoMatch.Store
 {

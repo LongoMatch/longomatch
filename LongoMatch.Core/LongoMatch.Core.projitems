@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Multimedia.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Catalog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

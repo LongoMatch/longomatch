@@ -24,7 +24,6 @@ using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
-using VAS.Core;
 
 namespace LongoMatch.Store.Templates
 {

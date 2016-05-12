@@ -16,15 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.IO;
 using Gtk;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Store;
 using LongoMatch.Core;
-using LongoMatch.Common;
-using VAS.Core;
 
 public partial class MainWindow: Gtk.Window
 {

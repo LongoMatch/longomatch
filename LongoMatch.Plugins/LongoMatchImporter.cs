@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core;
@@ -23,7 +22,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using Mono.Addins;
-using VAS.Core;
 using VAS.Core.Store;
 
 

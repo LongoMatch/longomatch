@@ -16,19 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using LongoMatch.Core;
-using GLib;
 using Gtk;
+using LongoMatch.Core;
 
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Multimedia.Utils;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using VAS.Core;
 
 namespace LongoMatch.Video.Utils
 {

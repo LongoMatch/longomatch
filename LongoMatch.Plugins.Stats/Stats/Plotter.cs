@@ -19,17 +19,14 @@ using System;
 using System.IO;
 using System.Linq;
 using Gdk;
-using Cairo;
-using OxyPlot;
-using OxyPlot.Series;
-using OxyPlot.Axes;
-
-using LongoMatch.Core;
-using LongoMatch.Core.Stats;
-using LongoMatch.Core.Common;
 using Gtk;
-using VAS.Core.Common;
-using VAS.Core;
+using LongoMatch.Core;
+using LongoMatch.Core.Common;
+
+using LongoMatch.Core.Stats;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace LongoMatch.Plugins.Stats
 {

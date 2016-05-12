@@ -21,12 +21,9 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using LongoMatch.Core;
 using LongoMatch.Common;
+using LongoMatch.Core;
 using Newtonsoft.Json;
-using VAS.Core;
 
 
 #if HAVE_GTK

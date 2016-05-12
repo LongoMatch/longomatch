@@ -22,14 +22,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using LongoMatch.Common;
 using LongoMatch.Core;
 
-using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-using VAS.Core;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Store
 {
