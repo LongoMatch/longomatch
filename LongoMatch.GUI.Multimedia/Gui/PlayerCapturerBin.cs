@@ -35,13 +35,13 @@ namespace LongoMatch.Gui
 				if (mode == PlayerViewOperationMode.Analysis) {
 					return;
 				}
-				livebox.Visible = replayhbox.Visible = false;
+				Livebox.Visible = Replayhbox.Visible = false;
 				Player.Pause ();
 				ShowCapturer ();
 			} else {
 				if (element is TimelineEventLongoMatch && mode == PlayerViewOperationMode.LiveAnalysisReview) {
 					ShowPlayer ();
-					livebox.Visible = replayhbox.Visible = true;
+					Livebox.Visible = Replayhbox.Visible = true;
 				}
 			}
 		}
