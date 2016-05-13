@@ -40,7 +40,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Gui\" />
-    <Folder Include="Gui\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
