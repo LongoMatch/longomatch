@@ -46,5 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\CircleImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
   </ItemGroup>
 </Project>

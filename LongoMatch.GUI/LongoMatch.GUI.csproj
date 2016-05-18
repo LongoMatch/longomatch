@@ -194,6 +194,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
     <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
     <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
+    <Compile Include="Gui\Component\Timeline.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

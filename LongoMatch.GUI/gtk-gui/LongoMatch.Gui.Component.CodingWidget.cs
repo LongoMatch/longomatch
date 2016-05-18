@@ -16,7 +16,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.Label label2;
 		
-		private global::VAS.UI.Component.Timeline timeline;
+		private global::LongoMatch.Gui.Component.Timeline timeline;
 		
 		private global::Gtk.Label label3;
 		
@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook.SetTabLabel (this.dashboardhpaned, this.label2);
 			this.label2.ShowAll ();
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.timeline = new global::VAS.UI.Component.Timeline ();
+			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
 			this.notebook.Add (this.timeline);
