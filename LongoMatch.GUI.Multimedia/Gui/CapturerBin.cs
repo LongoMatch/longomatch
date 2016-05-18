@@ -499,7 +499,7 @@ namespace LongoMatch.Gui
 		void HandleDeleteLast (object sender, EventArgs e)
 		{
 			if (lastevent != null) {
-				((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (new List<TimelineEventLongoMatch> { lastevent });
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { lastevent });
 				lastevent = null;
 				lasteventbox.Visible = false;
 			}

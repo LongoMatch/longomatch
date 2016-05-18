@@ -37,6 +37,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.Store.Templates;
 
 namespace Tests.Integration
 {
@@ -143,9 +144,8 @@ namespace Tests.Integration
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (new List<TimelineEventLongoMatch> {
-				p.Timeline [0] as TimelineEventLongoMatch,
-				p.Timeline [1] as TimelineEventLongoMatch
+			Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {
+				p.Timeline [0], p.Timeline [1]
 			});
 			Assert.AreEqual (3, p.Timeline.Count);
 			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
@@ -209,7 +209,7 @@ namespace Tests.Integration
 		void AddEvent (ProjectLongoMatch p, int idx, int start, int stop, int eventTime)
 		{
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewEvent (p.EventTypes [idx], null,
+			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
 				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
 		}

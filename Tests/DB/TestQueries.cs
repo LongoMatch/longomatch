@@ -133,36 +133,36 @@ namespace Tests.DB
 		[Test ()]
 		public void TestQueryTeams ()
 		{
-			IEnumerable<Team> teams;
+			IEnumerable<SportsTeam> teams;
 
 			for (int i = 0; i < 5; i++) {
-				var da = Team.DefaultTemplate (5);
+				var da = SportsTeam.DefaultTemplate (5);
 				da.Name = "Team" + (i + 1);
 				storage.Store (da);
 			}
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "Team1");
-			teams = storage.Retrieve<Team> (filter);
+			teams = storage.Retrieve<SportsTeam> (filter);
 			Assert.AreEqual (1, teams.Count ());
 			Assert.AreEqual ("Team1", teams.First ().Name);
 
 			filter.Add ("Name", "Team1", "Team3");
-			teams = storage.Retrieve<Team> (filter);
+			teams = storage.Retrieve<SportsTeam> (filter);
 			Assert.AreEqual (2, teams.Count ());
 			Assert.IsTrue (teams.Any (d => d.Name == "Team1"));
 			Assert.IsTrue (teams.Any (d => d.Name == "Team3"));
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "Pepe");
-			teams = storage.Retrieve<Team> (filter);
+			teams = storage.Retrieve<SportsTeam> (filter);
 			Assert.AreEqual (0, teams.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Unkown", "Pepe");
 			Assert.Throws<InvalidQueryException> (
 				delegate {
-					teams = storage.Retrieve<Team> (filter).ToList ();
+					teams = storage.Retrieve<SportsTeam> (filter).ToList ();
 				});
 			Assert.AreEqual (0, teams.Count ());
 		}
@@ -294,7 +294,7 @@ namespace Tests.DB
 
 			QueryFilter filter = new QueryFilter ();
 			PlayerLongoMatch nullPlayer = null;
-			Team nullTeam = null;
+			SportsTeam nullTeam = null;
 
 			filter.Add ("Player", nullPlayer);
 			Assert.AreEqual (1, storage.Retrieve<TimelineEventLongoMatch> (filter).Count ());
@@ -315,7 +315,7 @@ namespace Tests.DB
 		[Test ()]
 		public void TestQueryEventsByTeam ()
 		{
-			Team devTeam, qaTeam;
+			SportsTeam devTeam, qaTeam;
 			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
@@ -335,7 +335,7 @@ namespace Tests.DB
 		public void TestQueryEventsByPlayerEventTypeAndProject ()
 		{
 			Dashboard dashbaord;
-			Team devTeam, qaTeam;
+			SportsTeam devTeam, qaTeam;
 			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
@@ -367,14 +367,14 @@ namespace Tests.DB
 			filter.Add ("Parent", projects);
 
 			Assert.AreEqual (9, storage.Retrieve<EventType> (filter).Count ());
-			Assert.AreEqual (2, storage.Retrieve<Team> (filter).Count ());
+			Assert.AreEqual (2, storage.Retrieve<SportsTeam> (filter).Count ());
 			Assert.AreEqual (8, storage.Retrieve<PlayerLongoMatch> (filter).Count ());
 		}
 
 		[Test ()]
 		public void TestNestedQueries ()
 		{
-			Team devTeam, qaTeam;
+			SportsTeam devTeam, qaTeam;
 			List<ProjectLongoMatch> projects;
 
 			projects = CreateProjects ();
@@ -406,8 +406,8 @@ namespace Tests.DB
 			PlayerLongoMatch saray = new PlayerLongoMatch { Name = "Saray" };
 			PlayerLongoMatch ivan = new PlayerLongoMatch { Name = "Ivan" };
 			PlayerLongoMatch adria = new PlayerLongoMatch { Name = "Adria" };
-			Team devteam = new Team { Name = "DevTeam" };
-			Team qateam = new Team { Name = "QA" };
+			SportsTeam devteam = new SportsTeam { Name = "DevTeam" };
+			SportsTeam qateam = new SportsTeam { Name = "QA" };
 			devteam.List.AddRange (new List<PlayerLongoMatch> {
 				andoni,
 				jorge,

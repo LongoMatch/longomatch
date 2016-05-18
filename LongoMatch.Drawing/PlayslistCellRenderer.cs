@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing
 			po.Dispose ();
 		}
 
-		static void RenderTeam (IDrawingToolkit tk, Team team, Point imagePoint)
+		static void RenderTeam (IDrawingToolkit tk, VAS.Core.Store.Templates.Team team, Point imagePoint)
 		{
 			tk.DrawImage (imagePoint, StyleConf.ListImageWidth, StyleConf.ListImageWidth, team.Shield,
 				ScaleMode.AspectFit);
@@ -257,7 +257,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void RenderPlay (Color color, Image ss, IList<PlayerLongoMatch> players, IEnumerable<Team> teams,
+		public static void RenderPlay (Color color, Image ss, IList<Player> players, IEnumerable<VAS.Core.Store.Templates.Team> teams,
 		                               bool selected, string desc, int count, bool isExpanded, IDrawingToolkit tk,
 		                               IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{

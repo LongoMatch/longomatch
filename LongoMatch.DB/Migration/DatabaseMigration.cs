@@ -71,7 +71,7 @@ namespace LongoMatch.DB
 			List<string> teamFiles = new List<string> ();
 			List<string> dashboardFiles = new List<string> ();
 			Guid id = Guid.NewGuid ();
-			ConcurrentQueue<Team> teams = new ConcurrentQueue<Team> ();
+			ConcurrentQueue<SportsTeam> teams = new ConcurrentQueue<SportsTeam> ();
 			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
@@ -100,7 +100,7 @@ namespace LongoMatch.DB
 			// We can't use the FileStorage here, since it will migate the Team or Dashboard
 			foreach (string teamFile in teamFiles) {
 				try {
-					Team team = Serializer.Instance.Load<Team> (teamFile);
+					SportsTeam team = Serializer.Instance.Load<SportsTeam> (teamFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported team " + team.Name, id);
 					teams.Enqueue (team);
@@ -120,7 +120,7 @@ namespace LongoMatch.DB
 				}
 			}
 
-			foreach (Team team in teams) {
+			foreach (SportsTeam team in teams) {
 				var migrateTask = Task.Run (() => {
 					try {
 						Log.Information ("Migrating team " + team.Name);
@@ -289,7 +289,7 @@ namespace LongoMatch.DB
 			percent += step;
 			progress.Report (percent, "Events index created", id);
 
-			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
+			Log.Information ("Teams index created:" + database.RetrieveAll<SportsTeam> ().Count ());
 			percent += step;
 			progress.Report (percent, "Teams index created", id);
 

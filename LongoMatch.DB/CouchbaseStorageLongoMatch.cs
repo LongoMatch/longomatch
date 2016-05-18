@@ -17,24 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Couchbase.Lite;
-using ICSharpCode.SharpZipLib;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using VAS.Core;
-using VAS.Core.Common;
-using VAS.Core.Filters;
-using VAS.Core.Interfaces;
-using VAS.Core.Serialization;
-using VAS.Core.Store;
-using VAS.Core.Store.Templates;
-using VAS.DB;
-using VAS.DB.Views;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB.Views;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using VAS.DB;
 
 namespace LongoMatch.DB
 {
@@ -43,7 +29,8 @@ namespace LongoMatch.DB
 		static CouchbaseStorageLongoMatch ()
 		{
 			#pragma warning disable 0618
-			DocumentsSerializerHelper.AddTypeTranslation (typeof(TeamTemplate), typeof(Team));
+			DocumentsSerializerHelper.AddTypeTranslation (typeof(TeamTemplate), typeof(SportsTeam));
+			DocumentsSerializerHelper.AddTypeTranslation (typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
 			#pragma warning restore 0618
 		}
 
@@ -64,7 +51,7 @@ namespace LongoMatch.DB
 		{
 			base.InitializeViews ();
 			AddView (typeof(DashboardLongoMatch), new LongoMatch.DB.Views.DashboardsView (this));
-			AddView (typeof(Team), new LongoMatch.DB.Views.TeamsView (this));
+			AddView (typeof(SportsTeam), new LongoMatch.DB.Views.TeamsView (this));
 			AddView (typeof(ProjectLongoMatch), new LongoMatch.DB.Views.ProjectsView (this));
 			AddView (typeof(PlayerLongoMatch), new LongoMatch.DB.Views.PlayersView (this));
 			AddView (typeof(TimelineEventLongoMatch), new LongoMatch.DB.Views.TimelineEventsView (this));

@@ -30,23 +30,20 @@ using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class Team: StorableBase, IDisposable, ITemplate<Team>
+	public class SportsTeam: Team, ITemplate<SportsTeam>
 	{
-		public const int CURRENT_VERSION = 1;
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
-		ObservableCollection<PlayerLongoMatch> list;
 
-		public Team ()
+		public SportsTeam ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
-			ID = Guid.NewGuid ();
-			List = new ObservableCollection<PlayerLongoMatch> ();
 			try {
 				Shield = Resources.LoadImage (StyleConf.DefaultShield);
 			} catch {
@@ -56,59 +53,6 @@ namespace LongoMatch.Core.Store.Templates
 			Colors = new Color [2];
 			Colors [0] = Color.Blue1;
 			Colors [1] = Color.Red1;
-			Version = Constants.DB_VERSION;
-		}
-
-		public void Dispose ()
-		{
-			Shield?.Dispose ();
-			foreach (Player p in List) {
-				p.Dispose ();
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public bool Static {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the document version.
-		/// </summary>
-		/// <value>The version.</value>
-		[DefaultValue (0)]
-		[JsonProperty (DefaultValueHandling = DefaultValueHandling.Populate)]
-		public int Version {
-			get;
-			set;
-		}
-
-		public ObservableCollection<PlayerLongoMatch> List {
-			get {
-				return list;
-			}
-			set {
-				if (list != null) {
-					list.CollectionChanged -= PlayersChanged;
-				}
-				list = value;
-				if (list != null) {
-					list.CollectionChanged += PlayersChanged;
-				}
-			}
-		}
-
-		[PropertyIndex (0)]
-		[PropertyPreload]
-		/// <summary>
-		/// The full name used for a team (eg: FC Barcelona junior 2014).
-		/// </summary>
-		/// <value>The name of team.</value>
-		public String Name {
-			get;
-			set;
 		}
 
 		[PropertyIndex (1)]
@@ -118,12 +62,6 @@ namespace LongoMatch.Core.Store.Templates
 		/// </summary>
 		/// <value>The display name of the team.</value>
 		public String TeamName {
-			get;
-			set;
-		}
-
-		[PropertyPreload]
-		public Image Shield {
 			get;
 			set;
 		}
@@ -140,7 +78,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public Color Color {
+		public override Color Color {
 			get {
 				if (ActiveColor > 0 && ActiveColor <= Colors.Length) {
 					return Colors [ActiveColor];
@@ -199,12 +137,20 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
+		public List<PlayerLongoMatch> Players {
+			get {
+				return List.OfType<PlayerLongoMatch> ().ToList ();
+			}
+		}
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
 		public List<PlayerLongoMatch> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
-					return List.ToList ();
+					return Players.ToList ();
 				} else {
-					return List.Where (p => p.Playing).Select (p => p).ToList ();
+					return Players.Where (p => p.Playing).Select (p => p).ToList ();
 				}
 			}
 		}
@@ -236,10 +182,10 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// Creates a deep copy of this team with new ID's for each player
 		/// </summary>
-		public Team Copy (string newName)
+		public SportsTeam Copy (string newName)
 		{
 			Load ();
-			Team newTeam = this.Clone ();
+			SportsTeam newTeam = this.Clone ();
 			newTeam.ID = Guid.NewGuid ();
 			newTeam.DocumentID = null;
 			newTeam.Name = newName;
@@ -300,9 +246,9 @@ namespace LongoMatch.Core.Store.Templates
 			return p;
 		}
 
-		public static Team DefaultTemplate (int playersCount)
+		public static SportsTeam DefaultTemplate (int playersCount)
 		{
-			Team defaultTemplate = new Team ();
+			SportsTeam defaultTemplate = new SportsTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
 			return defaultTemplate;
 		}
@@ -314,16 +260,12 @@ namespace LongoMatch.Core.Store.Templates
 				AddDefaultItem (i - 1);
 		}
 
-		void PlayersChanged (object sender, NotifyCollectionChangedEventArgs e)
-		{
-			IsChanged = true;
-		}
 	}
 
 	/* Keep this for backwards compatibility importing old project files */
 	[Obsolete ("Use Team instead of TeamTeamplate in new code")]
 	[Serializable]
-	public class TeamTemplate: Team
+	public class TeamTemplate: SportsTeam
 	{
 	}
 }

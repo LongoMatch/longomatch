@@ -24,7 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\Score.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
@@ -43,7 +42,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\DashboardLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConfigLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\ActionLinkLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
@@ -52,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Catalog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\SportsTeam.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

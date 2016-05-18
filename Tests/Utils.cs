@@ -120,8 +120,8 @@ namespace Tests
 			TimelineEventLongoMatch pl;
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
-			p.LocalTeamTemplate = Team.DefaultTemplate (5);
-			p.VisitorTeamTemplate = Team.DefaultTemplate (5);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (5);
+			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (5);
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (new MediaFile (Path.GetTempFileName (), 34000, 25, true, true, "mp4", "h264",

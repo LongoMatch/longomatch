@@ -46,7 +46,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
-		Team homeTeam, awayTeam;
+		SportsTeam homeTeam, awayTeam;
 		Image background;
 		Dictionary<PlayerLongoMatch, PlayerObject> homePlayerToPlayerObject;
 		Dictionary<PlayerLongoMatch, PlayerObject> awayPlayerToPlayerObject;
@@ -195,9 +195,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public ObservableCollection<Team> SelectedTeams {
+		public ObservableCollection<SportsTeam> SelectedTeams {
 			get {
-				ObservableCollection<Team> teams = new ObservableCollection<Team> ();
+				ObservableCollection<SportsTeam> teams = new ObservableCollection<SportsTeam> ();
 				if (homeButton.Active) {
 					teams.Add (homeTeam);
 				}
@@ -221,7 +221,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			field.Update ();
 		}
 
-		public void Select (IList<PlayerLongoMatch> players, ObservableCollection<Team> teams)
+		public void Select (IList<PlayerLongoMatch> players, IList<SportsTeam> teams)
 		{
 			ResetSelection ();
 			foreach (PlayerLongoMatch p in players) {
@@ -283,7 +283,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayButton.Active = false;
 		}
 
-		public void Substitute (PlayerLongoMatch p1, PlayerLongoMatch p2, Team team)
+		public void Substitute (PlayerLongoMatch p1, PlayerLongoMatch p2, SportsTeam team)
 		{
 			if (team == homeTeam) {
 				Substitute (homePlayers.FirstOrDefault (p => p.Player == p1),
@@ -296,7 +296,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public void LoadTeams (Team homeTeam, Team awayTeam, Image background)
+		public void LoadTeams (SportsTeam homeTeam, SportsTeam awayTeam, Image background)
 		{
 			int[] homeF = null, awayF = null;
 			int playerSize, colSize, border;
@@ -592,7 +592,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void EmitSubsitutionEvent (PlayerObject player1, PlayerObject player2)
 		{
-			Team team;
+			SportsTeam team;
 			List<PlayerObject> bench;
 
 			if (substitutionPlayer.Team == TeamType.LOCAL) {

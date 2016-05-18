@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 		public event EventHandler TemplateSaved;
 
 		PlayerLongoMatch loadedPlayer;
-		Team template;
+		SportsTeam template;
 		bool edited, ignoreChanges;
 		List<PlayerLongoMatch> selectedPlayers;
 		TeamTagger teamtagger;
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Team Team {
+		public SportsTeam Team {
 			set {
 				template = value;
 				ignoreChanges = true;
@@ -366,7 +366,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);

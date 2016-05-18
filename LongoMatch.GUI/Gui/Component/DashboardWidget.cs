@@ -23,19 +23,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -408,8 +409,7 @@ namespace LongoMatch.Gui.Component
 		void HandleActionLinksSelectedEvent (List<ActionLink> actionLinks)
 		{
 			if (actionLinks.Count == 1) {
-				if (actionLinks [0] is ActionLinkLongoMatch)
-					linkproperties.Link = actionLinks [0] as ActionLinkLongoMatch;
+				linkproperties.Link = actionLinks [0];
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_LINKS;
 			} else {
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
@@ -497,7 +497,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleNewTagEvent (EventType evntType, List<PlayerLongoMatch> players, ObservableCollection<Team> teams, List<Tag> tags,
+		void HandleNewTagEvent (EventType evntType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
 			/* Forward event until we have players integrted in the dashboard layout */

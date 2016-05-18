@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="Moq">
       <HintPath>$(SolutionDir)\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
+      <Package>moq</Package>
     </Reference>
     <Reference Include="SQLitePCL.raw">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.raw.0.8.3\lib\net45\SQLitePCL.raw.dll</HintPath>

@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Panel
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Gdk.Color red;
-		Team hometemplate, awaytemplate;
+		SportsTeam hometemplate, awaytemplate;
 		DashboardLongoMatch analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
@@ -171,7 +171,7 @@ namespace LongoMatch.Gui.Panel
 
 		void LoadTeams (ProjectLongoMatch project)
 		{
-			List<Team> teams;
+			List<SportsTeam> teams;
 			bool hasLocalTeam = false;
 			bool hasAwayTeam = false;
 			
@@ -193,7 +193,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Update the combobox
 			if (hasAwayTeam) {
-				awayteamscombobox.Load (new List<Team> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
 			} else {
 				awayteamscombobox.Load (teams);
 				awayteamscombobox.Changed += (sender, e) => {
@@ -202,7 +202,7 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			if (hasLocalTeam) {
-				hometeamscombobox.Load (new List<Team> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
 			} else {
 				hometeamscombobox.Load (teams);
 				hometeamscombobox.Changed += (sender, e) => {
@@ -254,7 +254,7 @@ namespace LongoMatch.Gui.Panel
 			// otherwise set the loaded template
 			if (project.LocalTeamTemplate != null) {
 				hometeamscombobox.Sensitive = false;
-				hometeamscombobox.Load (new List<Team> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
 				hometeamscombobox.Active = 0;
 				LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
 			} else {
@@ -263,7 +263,7 @@ namespace LongoMatch.Gui.Panel
 
 			if (project.VisitorTeamTemplate != null) {
 				awayteamscombobox.Sensitive = false;
-				awayteamscombobox.Load (new List<Team> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
 				awayteamscombobox.Active = 0;
 				LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
 			} else {
@@ -352,7 +352,7 @@ namespace LongoMatch.Gui.Panel
 			area.ModifyBg (StateType.Selected, gcolor); 
 		}
 
-		void LoadTemplate (Team template, TeamType team, bool forceColor)
+		void LoadTemplate (SportsTeam template, TeamType team, bool forceColor)
 		{
 			if (team == TeamType.LOCAL) {
 				hometemplate = template;
@@ -640,7 +640,7 @@ namespace LongoMatch.Gui.Panel
 			menu.Popup ();
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
@@ -649,7 +649,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleTacticsChanged (object sender, EventArgs e)
 		{
-			Team team;
+			SportsTeam team;
 			Entry entry;
 
 			if (sender == hometacticsbutton) {

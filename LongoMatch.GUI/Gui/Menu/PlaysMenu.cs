@@ -235,11 +235,11 @@ namespace LongoMatch.Gui.Menus
 			Add (snapshot);
 
 			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitDuplicateEvent (plays);
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays.Cast<TimelineEvent> ().ToList ());
 			Add (duplicate);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitEventsDeleted (plays);
+			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays.Cast<TimelineEvent> ().ToList ());
 			Add (del);
 
 			ShowAll ();

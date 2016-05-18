@@ -11,6 +11,8 @@
     <AssemblyName>LongoMatch.GUI.Multimedia</AssemblyName>
     <AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\CesarPlayer</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,13 +94,13 @@
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>VAS.UI.Helpers.Gtk2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
       <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
       <Name>VAS.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>VAS.UI.Helpers.Gtk2</Name>
     </ProjectReference>
     <ProjectReference Include="..\VAS\VAS.Multimedia\VAS.Multimedia.csproj">
       <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>

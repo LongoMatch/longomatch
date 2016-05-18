@@ -225,7 +225,7 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider: TemplatesProvider<SportsTeam>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
