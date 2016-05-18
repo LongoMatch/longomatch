@@ -5,7 +5,6 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
     <widget-library name="../../VAS/bin/VAS.Drawing.Cairo.dll" />
     <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../VAS/bin/VAS.UI.dll" />
@@ -53,7 +52,7 @@
                             <property name="MemberName" />
                             <property name="Spacing">6</property>
                             <child>
-                              <widget class="LongoMatch.Gui.PlayerCapturerBin" id="playercapturer">
+                              <widget class="VAS.UI.PlayerCapturerBin" id="playercapturer">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                               </widget>

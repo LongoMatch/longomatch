@@ -310,47 +310,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="CapturerBin Properties">
-        <property name="Capturing" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="IViewPort Properties">
-        <property name="Ratio" />
-        <property name="Ready" />
-        <property name="Visible" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="VideoWindow Signals">
-        <signal name="ReadyEvent" />
-        <signal name="ExposeEvent" />
-        <signal name="ButtonPressEvent" />
-        <signal name="ButtonReleaseEvent" />
-        <signal name="ScrollEvent" />
-        <signal name="VideoDragStarted" />
-        <signal name="VideoDragStopped" />
-        <signal name="VideoDragged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.PlayerView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="PlayerView Properties">
-        <property name="TogglePlayOnClick" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="SynchronizationWidget Properties">
@@ -418,6 +377,10 @@
         <property name="TogglePlayOnClick" />
       </itemgroup>
     </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="VAS.UI.Component.Timeline">
+    <itemgroups />
     <signals />
   </object>
   <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">

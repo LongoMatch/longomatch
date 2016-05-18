@@ -238,10 +238,6 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj">
-      <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
-      <Name>LongoMatch.GUI.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\oxyplot\OxyPlotMono\OxyPlotMono.csproj">
       <Project>{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}</Project>
       <Name>OxyPlotMono</Name>

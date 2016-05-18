@@ -59,10 +59,6 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj">
-      <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
-      <Name>LongoMatch.GUI.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
