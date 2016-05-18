@@ -1,3 +1,5 @@
+SUBDIRS = VAS
+
 EXTRA_DIST =\
 	$(top_srcdir)/.version \
 	$(top_srcdir)/expansions.m4 \
@@ -13,7 +15,7 @@ dist-hook:
 
 ACLOCAL_AMFLAGS = -I build/m4 -I build/m4/shamrock
 
-SUBDIRS = \
+SUBDIRS += \
 	build \
 	data \
 	images \
@@ -21,7 +23,6 @@ SUBDIRS = \
 	libcesarplayer \
 	.nuget \
 	oxyplot \
-	Weavers \
 	LongoMatch.Core \
 	LongoMatch.DB \
 	LongoMatch.Multimedia \
