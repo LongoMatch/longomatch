@@ -25,6 +25,7 @@ using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.Store.Playlists;
 using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -93,9 +94,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam (Team template, IEnumerable<TimelineEventLongoMatch> plays)
+		public void SetTeam (SportsTeam template, IEnumerable<TimelineEventLongoMatch> plays)
 		{
-			Dictionary<PlayerLongoMatch, TreeIter> playersDict = new Dictionary<PlayerLongoMatch, TreeIter> ();
+			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter> ();
 			
 			Log.Debug ("Updating teams models with template:" + template);
 			team = new TreeStore (typeof(object));

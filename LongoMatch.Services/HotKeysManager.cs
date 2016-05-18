@@ -61,9 +61,9 @@ namespace LongoMatch.Services
 			int playerNumber;
 			
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				Team team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
+				SportsTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				PlayerLongoMatch player = team.List.FirstOrDefault (p => p.Number == playerNumber);
+				PlayerLongoMatch player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
 					analysisWindow.TagPlayer (player);
 				}
@@ -298,7 +298,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed += DashboardKeyListener;
 			Config.EventsBroker.KeyPressed += UIKeyListener;
-			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent += HandleDashboardEditedEvent;
+			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			timer = new System.Threading.Timer (HandleTimeout);
 			return true;
 		}
@@ -308,7 +308,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed -= DashboardKeyListener;
 			Config.EventsBroker.KeyPressed -= UIKeyListener;
-			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent -= HandleDashboardEditedEvent;
+			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
 			return true;
 		}
 

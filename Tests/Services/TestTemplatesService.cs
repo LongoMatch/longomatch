@@ -161,19 +161,19 @@ namespace Tests.Services
 			TemplatesService ts = new TemplatesService (storage);
 			ts.Start ();
 			ITeamTemplatesProvider teamtemplateprovider = ts.TeamTemplateProvider;
-			Team teamB = Team.DefaultTemplate (5);
+			SportsTeam teamB = SportsTeam.DefaultTemplate (5);
 			teamB.Name = "B";
 			teamB.TeamName = "Template B";
 			teamB.FormationStr = "1-4";
 			teamB.List [0].Name = "Paco";
 			teamtemplateprovider.Save (teamB);
-			Team teamA = new Team ();
+			SportsTeam teamA = new SportsTeam ();
 			teamA.Name = "A";
 			teamA.TeamName = "Template A";
 			teamA.FormationStr = "1-4-3-3";
 			teamtemplateprovider.Save (teamA);
 
-			Team auxdelete = teamA;
+			SportsTeam auxdelete = teamA;
 			teamtemplateprovider.Copy (teamB, "A");
 			teamtemplateprovider.Delete (auxdelete);
 			teamA = teamtemplateprovider.Templates [0];

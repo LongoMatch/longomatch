@@ -39,7 +39,7 @@ namespace Tests.Core.Store
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
 			evt.Selected = true;
-			evt.Teams.Add (new Team ());
+			evt.Teams.Add (new SportsTeam ());
 			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
 			evt.HalfFieldPosition = new Coordinates ();
@@ -220,7 +220,7 @@ namespace Tests.Core.Store
 			evt.Rate = 2f;
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
-			evt.Teams.Add (new Team ());
+			evt.Teams.Add (new SportsTeam ());
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 			evt.FieldPosition = new Coordinates ();

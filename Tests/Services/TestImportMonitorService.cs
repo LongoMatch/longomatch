@@ -154,7 +154,7 @@ namespace Tests.Services
 		public void TestAddTeam ()
 		{
 			service.Start ();
-			Team team = Team.DefaultTemplate (1);
+			SportsTeam team = SportsTeam.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.TEAMS_TEMPLATE_EXT);
 			FileStorage.StoreAt (team, outPath);
 			monitor.AddFile (outPath);

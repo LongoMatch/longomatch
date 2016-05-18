@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
@@ -26,6 +27,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -85,7 +87,8 @@ namespace LongoMatch.Gui.Dialog
 					project.Dashboard.FieldBackground);
 				/* Force lineup update */
 				teamtagger.CurrentTime = play.EventTime;
-				teamtagger.Select (play.Players, play.Teams);
+				teamtagger.Select (play.Players.Cast<PlayerLongoMatch> ().ToList (),
+					play.Teams.Cast<SportsTeam> ().ToList ());
 			}
 		
 			if (editTags) {
@@ -169,12 +172,12 @@ namespace LongoMatch.Gui.Dialog
 
 		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
 		{
-			play.Players = new ObservableCollection<PlayerLongoMatch> (players);
+			play.Players = new ObservableCollection<Player> (players);
 		}
 
-		void HandleTeamSelectionChangedEvent (ObservableCollection<Team> teams)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<SportsTeam> teams)
 		{
-			play.Teams = teams;
+			play.Teams = new ObservableCollection<Team> (teams);
 		}
 	}
 }

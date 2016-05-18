@@ -33,36 +33,6 @@ namespace LongoMatch.Core.Common
 {
 	public class EventsBroker : VAS.Core.Common.EventsBroker
 	{
-		public event NewDashboardEventHandler NewDashboardEventEvent;
-		//public event EventCreatedHandler EventCreatedEvent;
-		public event DeleteEventsHandler EventsDeletedEvent;
-		//public event LoadEventHandler LoadEventEvent;
-		//public event EventLoadedHandler EventLoadedEvent;
-		public event EventEditedHandler EventEditedEvent;
-		public event MoveEventHandler MoveToEventTypeEvent;
-		//public event TimeNodeChangedHandler TimeNodeChanged;
-		//		public event TimeNodeStartedHandler TimeNodeStartedEvent;
-		//		public event TimeNodeStoppedHandler TimeNodeStoppedEvent;
-		public event SnapshotSeriesHandler SnapshotSeries;
-		public event DuplicateEventsHandler DuplicateEventsEvent;
-		public event DashboardEditedHandler DashboardEditedEvent;
-
-		/* Playlist 
-		public event RenderPlaylistHandler RenderPlaylist;
-		public event AddPlaylistElementHandler AddPlaylistElementEvent;
-		//public event PlaylistElementSelectedHandler PlaylistElementSelectedEvent;
-		public event NewPlaylistHandler NewPlaylistEvent;
-		public event NextPlaylistElementHandler NextPlaylistElementEvent;
-		public event PreviousPlaylistElementHandler PreviousPlaylistElementEvent;
-		*/
-
-		/* Project options */
-		public event SaveProjectHandler SaveProjectEvent;
-		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
-		public event ShowFullScreenHandler ShowFullScreenEvent;
-		public event ShowProjectStats ShowProjectStatsEvent;
-		public event TagSubcategoriesChangedHandler TagSubcategoriesChangedEvent;
-
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
@@ -70,50 +40,28 @@ namespace LongoMatch.Core.Common
 		public event OpenProjectIDHandler OpenProjectIDEvent;
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
-		public event QuitApplicationHandler QuitApplicationEvent;
 		public event ManageJobsHandler ManageJobsEvent;
 		public event ManageTeamsHandler ManageTeamsEvent;
 		public event ManageDashboardsHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
 		public event ManageDatabases ManageDatabasesEvent;
 		public event EditPreferences EditPreferencesEvent;
-		//public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		public event MigrateDBHandler MigrateDB;
-
+		public event ShowProjectStats ShowProjectStatsEvent;
 
 		/* Player and Capturer */
-		//public event TickHandler PlayerTick;
 		public event TickHandler CapturerTick;
-		//public event ErrorHandler MultimediaError;
 		public event ErrorHandler CaptureError;
 		public event CaptureFinishedHandler CaptureFinished;
-		//public event DrawFrameHandler DrawFrame;
-		public event DetachPlayerHandler Detach;
-		//public event PlaybackRateChangedHandler PlaybackRateChanged;
-		//public event SeekEventHandler SeekEvent;
-		//public event TogglePlayEventHandler TogglePlayEvent;
-		//public event StateChangeHandler PlaybackStateChangedEvent;
-
 
 		public event PlayersSubstitutionHandler PlayerSubstitutionEvent;
 
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 
-		public event NewEventHandler NewEventEvent;
-
-		//public event OpenedPresentationChangedHandler OpenedPresentationChanged;
-
 		/* Query handlers */
 		public event QueryToolsHandler QueryTools;
 
-		public void EmitNewEvent (EventType eventType, List<PlayerLongoMatch> players = null, ObservableCollection<Team> teams = null,
-		                          List<Tag> tags = null, Time start = null, Time stop = null, Time eventTime = null)
-		{
-			if (NewEventEvent != null)
-				NewEventEvent (eventType, players, teams, tags, start, stop, eventTime, null);
-		}
-
-		public void EmitSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		public void EmitSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                   SubstitutionReason reason, Time time)
 		{
 			if (PlayerSubstitutionEvent != null) {
@@ -126,78 +74,6 @@ namespace LongoMatch.Core.Common
 			if (TeamTagsChanged != null) {
 				TeamTagsChanged ();
 			}
-		}
-
-		public void EmitNewDashboardEvent (TimelineEventLongoMatch evt, DashboardButton btn, bool edit, List<DashboardButton> from)
-		{
-			if (NewDashboardEventEvent != null) {
-				if (from == null)
-					from = new List<DashboardButton> ();
-				NewDashboardEventEvent (evt, btn, edit, from);
-			}
-		}
-
-		public void EmitEventsDeleted (List<TimelineEventLongoMatch> events)
-		{
-			if (EventsDeletedEvent != null)
-				EventsDeletedEvent (events);
-		}
-
-		public void EmitEventEdited (TimelineEventLongoMatch play)
-		{
-			if (EventEditedEvent != null) {
-				EventEditedEvent (play);
-			}
-		}
-
-		public void EmitSnapshotSeries (TimelineEventLongoMatch play)
-		{
-			if (SnapshotSeries != null)
-				SnapshotSeries (play);
-		}
-
-		public virtual void EmitMoveToEventType (TimelineEventLongoMatch evnt, EventType eventType)
-		{
-			if (MoveToEventTypeEvent != null)
-				MoveToEventTypeEvent (evnt, eventType);
-		}
-
-		public void EmitDuplicateEvent (List<TimelineEventLongoMatch> events)
-		{
-			if (DuplicateEventsEvent != null)
-				DuplicateEventsEvent (events);
-		}
-
-		public bool EmitCloseOpenedProject ()
-		{
-			if (CloseOpenedProjectEvent != null)
-				return CloseOpenedProjectEvent ();
-			return false;
-		}
-
-		public void EmitShowProjectStats (ProjectLongoMatch project)
-		{
-			if (ShowProjectStatsEvent != null)
-				ShowProjectStatsEvent (project);
-		}
-
-		public void EmitTagSubcategories (bool active)
-		{
-			if (TagSubcategoriesChangedEvent != null)
-				TagSubcategoriesChangedEvent (active);
-		}
-
-		public void EmitShowFullScreen (bool active)
-		{
-			if (ShowFullScreenEvent != null) {
-				ShowFullScreenEvent (active);
-			}
-		}
-
-		public void EmitSaveProject (ProjectLongoMatch project, ProjectType projectType)
-		{
-			if (SaveProjectEvent != null)
-				SaveProjectEvent (project, projectType);
 		}
 
 		public void EmitNewProject (ProjectLongoMatch project)
@@ -274,13 +150,6 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitQuitApplication ()
-		{
-			if (QuitApplicationEvent != null) {
-				QuitApplicationEvent ();
-			}
-		}
-
 		public void EmitCapturerTick (Time currentTime)
 		{
 			if (CapturerTick != null) {
@@ -307,41 +176,6 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		public void EmitDetach ()
-		{
-			if (Detach != null) {
-				Detach ();
-			}
-		}
-
-		public void EmitDrawFrame (TimelineEventLongoMatch play, int drawingIndex, CameraConfig camConfig, bool current)
-		{
-			base.EmitDrawFrame (play, drawingIndex, camConfig, current);
-			/*
-			if (DrawFrame != null) {
-				DrawFrame (play, drawingIndex, camConfig, current);
-			}
-			*/
-		}
-
-		public void EmitPressButton (DashboardButton button)
-		{
-		}
-
-		public void EmitDashboardEdited ()
-		{
-			if (DashboardEditedEvent != null) {
-				DashboardEditedEvent ();
-			}
-		}
-
-		//		public void EmitDatabaseCreated (string name)
-		//		{
-		//			if (DatabaseCreatedEvent != null) {
-		//				DatabaseCreatedEvent (name);
-		//			}
-		//		}
-
 		public void EmitMigrateDB ()
 		{
 			if (MigrateDB != null) {
@@ -349,23 +183,11 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		//		public void EmitTimeNodeStartedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		//		{
-		//			if (TimeNodeStartedEvent != null) {
-		//				if (from == null)
-		//					from = new List<DashboardButton> ();
-		//				TimeNodeStartedEvent (node, btn, from);
-		//			}
-		//		}
-		//
-		//		public void EmitTimeNodeStoppedEvent (TimeNode node, TimerButton btn, List<DashboardButton> from)
-		//		{
-		//			if (TimeNodeStoppedEvent != null) {
-		//				if (from == null)
-		//					from = new List<DashboardButton> ();
-		//				TimeNodeStoppedEvent (node, btn, from);
-		//			}
-		//		}
+		public void EmitShowProjectStats (Project project)
+		{
+			if (ShowProjectStatsEvent != null)
+				ShowProjectStatsEvent (project);
+		}
 
 		#region Queries
 

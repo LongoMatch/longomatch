@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 		SelectionCanvas incanvas, outcanvas;
 		PlayerObject inpo, outpo;
 		PlayerLongoMatch inPlayer, outPlayer, selectedPlayer;
-		Team homeTeam, awayTeam;
+		SportsTeam homeTeam, awayTeam;
 		LineupEvent lineup;
 		SubstitutionEvent substitution;
 		const int PLAYER_SIZE = 100;
@@ -123,23 +123,23 @@ namespace LongoMatch.Gui.Dialog
 
 			if (homeFieldPlayers != null) {
 				homeTeamPlayers = homeFieldPlayers.Concat (homeBenchPlayers).ToList ();
-				homeTeam = new Team {
+				homeTeam = new SportsTeam {
 					Colors = project.LocalTeamTemplate.Colors,
 					ActiveColor = project.LocalTeamTemplate.ActiveColor,
 					ID = project.LocalTeamTemplate.ID,
 					Formation = project.LocalTeamTemplate.Formation,
-					List = new ObservableCollection<PlayerLongoMatch> (homeTeamPlayers)
+					List = new ObservableCollection<Player> (homeTeamPlayers)
 				};
 			}
 
 			if (awayFieldPlayers != null) {
 				awayTeamPlayers = awayFieldPlayers.Concat (awayBenchPlayers).ToList ();
-				awayTeam = new Team {
+				awayTeam = new SportsTeam {
 					Colors = project.VisitorTeamTemplate.Colors,
 					ActiveColor = project.VisitorTeamTemplate.ActiveColor,
 					ID = project.VisitorTeamTemplate.ID,
 					Formation = project.VisitorTeamTemplate.Formation,
-					List = new ObservableCollection<PlayerLongoMatch> (awayTeamPlayers)
+					List = new ObservableCollection<Player> (awayTeamPlayers)
 				};
 			}
 
@@ -183,7 +183,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
 		{
 			tagger.Substitute (p1, p2, team);
 			if (team.ID == homeTeam.ID) {

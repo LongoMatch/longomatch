@@ -19,81 +19,42 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
-using VAS.Core.Store.Playlists;
-using VAS.Services;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
-	public class EventsManager: EventsManagerBase
+	public class EventsManager: IService
 	{
-		/* Current play loaded. null if no play is loaded */
-		//TimelineEventLongoMatch loadedPlay;
-		/* current project in use */
-		//ProjectLongoMatch openedProject;
-		//ProjectType projectType;
-		//EventsFilter filter;
-		//IAnalysisWindow analysisWindow;
-		//IPlayerController player;
-		//ICapturerBin capturer;
-		//IFramesCapturer framesCapturer;
+		protected TimelineEvent loadedPlay;
+		protected Project openedProject;
+		protected ProjectType projectType;
+		protected EventsFilter filter;
+		protected IAnalysisWindowBase analysisWindow;
+		protected IPlayerController player;
+		protected ICapturerBin capturer;
 
-		public EventsManager () : base ()
-		{
-		}
-
-		protected override void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                                    VAS.Core.Filters.EventsFilter filter, IAnalysisWindowBase analysisWindow)
+		protected void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                           EventsFilter filter, IAnalysisWindowBase analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
 			this.filter = filter;
 
-			if (project == null) {
-				if (framesCapturer != null) {
-					framesCapturer.Dispose ();
-					framesCapturer = null;
-				}
-				return;
-			}
-
-			if (projectType == ProjectType.FileProject) {
-				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
-				framesCapturer.Open (((ProjectLongoMatch)openedProject).Description.FileSet.First ().FilePath);
-			}
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
 		}
 
-		protected override void Save (Project project)
-		{
-			Save (project as ProjectLongoMatch);
-		}
-
-		void Save (ProjectLongoMatch project)
-		{
-			if (Config.AutoSave) {
-				Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
-			}
-		}
-
-		protected void HandlePlayerSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
+		protected void HandlePlayerSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
 		{
 			if (openedProject != null) {
 				TimelineEventLongoMatch evt;
@@ -108,130 +69,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected override void HandlePlaylistElementLoaded (Playlist playlist, IPlaylistElement element)
-		{
-			if (element is PlaylistPlayElement) {
-				loadedPlay = (element as PlaylistPlayElement).Play;
-			} else {
-				loadedPlay = null;
-			}
-		}
-
-		protected override void RenderPlay (Project project, TimelineEvent play)
-		{
-			RenderPlay (project as ProjectLongoMatch, play);
-		}
-
-		void RenderPlay (ProjectLongoMatch project, TimelineEvent play)
-		{
-			Playlist playlist;
-			EncodingSettings settings;
-			EditionJob job;
-			string outputDir, outputProjectDir, outputFile;
-
-			if (Config.AutoRenderDir == null ||
-			    !Directory.Exists (Config.AutoRenderDir)) {
-				outputDir = Config.VideosDir;
-			} else {
-				outputDir = Config.AutoRenderDir;
-			}
-
-			outputProjectDir = Path.Combine (outputDir,
-				Utils.SanitizePath (project.Description.DateTitle));
-			outputFile = String.Format ("{0}-{1}.mp4", play.EventType.Name, play.Name);
-			outputFile = Utils.SanitizePath (outputFile, ' ');
-			outputFile = Path.Combine (outputProjectDir, outputFile);
-			try {
-				PlaylistPlayElement element;
-
-				Directory.CreateDirectory (outputProjectDir);
-				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
-				playlist = new Playlist ();
-				element = new PlaylistPlayElement (play);
-				playlist.Elements.Add (element);
-				job = new EditionJob (playlist, settings);
-				Config.RenderingJobsManger.AddJob (job);
-			} catch (Exception ex) {
-				Log.Exception (ex);
-			}
-		}
-
-
-		public void OnNewTag (EventType evType, List<PlayerLongoMatch> players, ObservableCollection<Team> teams, List<Tag> tags,
-		                      Time start, Time stop, Time eventTime, DashboardButton btn)
-		{
-			if (openedProject == null) {
-				return;
-			} else if (projectType == ProjectType.FileProject && player == null) {
-				Log.Error ("Player not set, new event will not be created");
-				return;
-			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject ||
-			           projectType == ProjectType.FakeCaptureProject) {
-				if (!capturer.Capturing) {
-					Config.GUIToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
-					return;
-				}
-			}
-			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
-				start.ToMSecondsString (), stop.ToMSecondsString (),
-				evType.Name));
-			/* Add the new created play to the project and update the GUI */
-			var play = openedProject.AddEvent (evType, start, stop, eventTime, null) as TimelineEventLongoMatch;
-			play.Teams = teams;
-			if (players != null) {
-				play.Players = new ObservableCollection<PlayerLongoMatch> (players);
-			}
-			if (tags != null) {
-				play.Tags = new ObservableCollection<Tag> (tags);
-			}
-			AddNewPlay (play);
-		}
-
-
-		protected void OnPlaysDeleted (List<TimelineEventLongoMatch> plays)
-		{
-			base.OnPlaysDeleted (plays.Cast<TimelineEvent> ().ToList ());
-		}
-
-		protected override void OnDuplicatePlays (List<TimelineEvent> plays)
-		{
-			OnDuplicatePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
-		}
-
-		void OnDuplicatePlays (List<TimelineEventLongoMatch> plays)
-		{
-			foreach (var play in plays) {
-				TimelineEventLongoMatch copy = Cloner.Clone (play);
-				copy.ID = Guid.NewGuid ();
-				/* The category is also serialized and desarialized */
-				copy.EventType = play.EventType;
-				copy.Players = new ObservableCollection<PlayerLongoMatch> (play.Players);
-				openedProject.AddEvent (copy);
-				analysisWindow.AddPlay (copy);
-			}
-			filter.Update ();
-		}
-
-		protected override void OnPlayCategoryChanged (TimelineEvent play, EventType evType)
-		{
-			OnPlayCategoryChanged (play as TimelineEventLongoMatch, evType);
-		}
-
-		protected void OnPlayCategoryChanged (TimelineEventLongoMatch play, EventType evType)
-		{
-			var newplay = Cloner.Clone (play);
-			newplay.ID = Guid.NewGuid ();
-			newplay.EventType = evType;
-			newplay.Players = play.Players;
-			DeletePlays (new List<TimelineEvent> { play }, false);
-			openedProject.AddEvent (newplay);
-			analysisWindow.AddPlay (newplay);
-			Save (openedProject);
-			filter.Update ();
-		}
-
-		protected override void HandleKeyPressed (object sender, HotKey key)
+		protected void HandleKeyPressed (object sender, HotKey key)
 		{
 			KeyAction action;
 
@@ -257,9 +95,19 @@ namespace LongoMatch.Services
 				}
 				break;
 			case KeyAction.DeleteEvent:
-				DeletePlays (new List<TimelineEvent> { loadedPlay });
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { loadedPlay });
 				break;
 			}
+		}
+
+		protected virtual void HandlePlayLoaded (TimelineEvent play)
+		{
+			loadedPlay = play;
+		}
+
+		protected virtual void HandleShowProjectStatsEvent (Project project)
+		{
+			Config.GUIToolkit.ShowProjectStats (project);
 		}
 
 		#region IService
@@ -276,47 +124,21 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public override bool Start ()
+		public bool Start ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).NewEventEvent += OnNewTag;
-			((LMCommon.EventsBroker)Config.EventsBroker).NewDashboardEventEvent += HandleNewDashboardEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventsDeletedEvent += OnPlaysDeleted;
-			((LMCommon.EventsBroker)Config.EventsBroker).MoveToEventTypeEvent += OnPlayCategoryChanged;
-			((LMCommon.EventsBroker)Config.EventsBroker).DuplicateEventsEvent += OnDuplicatePlays;
-			((LMCommon.EventsBroker)Config.EventsBroker).SnapshotSeries += OnSnapshotSeries;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent += HandlePlayLoaded;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
+			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent += HandleDashboardEditedEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent += HandleShowProjectStatsEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += HandleOpenedProjectChanged;
-			((LMCommon.EventsBroker)Config.EventsBroker).DrawFrame += HandleDrawFrame;
-			((LMCommon.EventsBroker)Config.EventsBroker).Detach += HandleDetach;
-			((LMCommon.EventsBroker)Config.EventsBroker).ShowFullScreenEvent += HandleShowFullScreenEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed += HandleKeyPressed;
 			return true;
 		}
 
-		public override bool Stop ()
+		public bool Stop ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).NewEventEvent -= OnNewTag;
-			((LMCommon.EventsBroker)Config.EventsBroker).NewDashboardEventEvent -= HandleNewDashboardEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventsDeletedEvent -= OnPlaysDeleted;
-			((LMCommon.EventsBroker)Config.EventsBroker).MoveToEventTypeEvent -= OnPlayCategoryChanged;
-			((LMCommon.EventsBroker)Config.EventsBroker).DuplicateEventsEvent -= OnDuplicatePlays;
-			((LMCommon.EventsBroker)Config.EventsBroker).SnapshotSeries -= OnSnapshotSeries;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent -= HandlePlaylistElementLoaded;
+			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).DashboardEditedEvent -= HandleDashboardEditedEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).TagSubcategoriesChangedEvent -= HandleTagSubcategoriesChangedEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged -= HandleOpenedProjectChanged;
-			((LMCommon.EventsBroker)Config.EventsBroker).DrawFrame -= HandleDrawFrame;
-			((LMCommon.EventsBroker)Config.EventsBroker).Detach -= HandleDetach;
-			((LMCommon.EventsBroker)Config.EventsBroker).ShowFullScreenEvent -= HandleShowFullScreenEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed -= HandleKeyPressed;
 			return true;
 		}
 

@@ -45,7 +45,7 @@ namespace LongoMatch.Plugins.Stats
 		{
 			categoryviewer.LoadBackgrounds (project);
 			this.pstats = pstats;
-			ReloadStats (project.LocalTeamTemplate.List [0]);
+			ReloadStats (project.LocalTeamTemplate.Players [0]);
 		}
 
 		public void ReloadStats (PlayerLongoMatch player)

@@ -27,7 +27,7 @@ namespace LongoMatch.Core.Migration
 		/// Migrate the specified team to the current version format.
 		/// </summary>
 		/// <param name="team">team.</param>
-		public static void Migrate (Team team)
+		public static void Migrate (SportsTeam team)
 		{
 			/* Apply all the migration steps starting from the current version*/
 			switch (team.Version) {
@@ -41,7 +41,7 @@ namespace LongoMatch.Core.Migration
 		}
 
 		#pragma warning disable 0618
-		public static void Migrate0 (Team team, IDictionary<string, Guid> teamNameToID = null)
+		public static void Migrate0 (SportsTeam team, IDictionary<string, Guid> teamNameToID = null)
 		{
 			if (team.Version != 0) {
 				return;

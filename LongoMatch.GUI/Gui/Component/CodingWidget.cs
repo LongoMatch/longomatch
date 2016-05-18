@@ -28,6 +28,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
@@ -325,16 +326,16 @@ namespace LongoMatch.Gui.Component
 			selectedPlayers = players.ToList ();
 		}
 
-		void HandleNewTagEvent (EventType eventType, List<PlayerLongoMatch> players, ObservableCollection<Team> teams, List<Tag> tags,
+		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
 			TimelineEventLongoMatch play = project.AddEvent (eventType, start, stop, eventTime,
 				                               null, false) as TimelineEventLongoMatch;
-			play.Teams = teamtagger.SelectedTeams;
+			play.Teams = new ObservableCollection<Team> (teamtagger.SelectedTeams);
 			if (selectedPlayers != null) {
-				play.Players = new ObservableCollection<PlayerLongoMatch> (selectedPlayers);
+				play.Players = new ObservableCollection<Player> (selectedPlayers);
 			} else {
-				play.Players = new ObservableCollection<PlayerLongoMatch> (); 
+				play.Players = new ObservableCollection<Player> (); 
 			}
 			if (tags != null) {
 				play.Tags = new ObservableCollection <Tag> (tags);
@@ -346,7 +347,7 @@ namespace LongoMatch.Gui.Component
 			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewDashboardEvent (play, btn, true, null);
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			((LMCommon.EventsBroker)Config.EventsBroker).EmitSubstitutionEvent (team, p1, p2, reason, time);
@@ -367,14 +368,14 @@ namespace LongoMatch.Gui.Component
 				timeline.AddTimerNode (((TimerButtonLongoMatch)btn).Timer, tn);
 		}
 
-		void HandleEventEdited (TimelineEventLongoMatch play)
+		void HandleEventEdited (TimelineEvent play)
 		{
 			if (play is SubstitutionEvent || play is LineupEvent) {
 				teamtagger.Reload ();
 			}
 		}
 
-		void HandleEventsDeletedEvent (List<TimelineEventLongoMatch> events)
+		void HandleEventsDeletedEvent (List<TimelineEvent> events)
 		{
 			if (events.Count (e => e is SubstitutionEvent) != 0) {
 				teamtagger.Reload ();

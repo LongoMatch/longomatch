@@ -100,7 +100,7 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName (ObservableCollection<Team> teams)
+		string TeamName (IList<SportsTeam> teams)
 		{
 			if (teams.Count == 0) {
 				return "";
@@ -138,7 +138,7 @@ namespace LongoMatch.Plugins
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (play.Teams),
+					TeamName (play.Teams.Cast<SportsTeam> ().ToList ()),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

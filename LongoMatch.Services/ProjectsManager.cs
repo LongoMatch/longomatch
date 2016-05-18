@@ -321,9 +321,9 @@ namespace LongoMatch.Services
 			guiToolkit.CreateNewProject (project);
 		}
 
-		protected virtual void HandleSaveProject (ProjectLongoMatch project, ProjectType projectType)
+		protected virtual void HandleSaveProject (Project project, ProjectType projectType)
 		{
-			SaveProject (project, projectType);
+			SaveProject (project as ProjectLongoMatch, projectType);
 		}
 
 		bool SaveProject (ProjectLongoMatch project, ProjectType projectType)
@@ -366,6 +366,15 @@ namespace LongoMatch.Services
 			}
 			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().Cast<Project> ().ToList ());
 		}
+
+		void Save (Project project)
+		{
+			if (Config.AutoSave) {
+				Config.DatabaseManager.ActiveDB.Store (project);
+			}
+		}
+
+
 
 		void OpenProjectID (Guid projectID, ProjectLongoMatch project)
 		{

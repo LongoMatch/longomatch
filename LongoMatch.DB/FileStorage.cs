@@ -43,7 +43,7 @@ namespace LongoMatch.DB
 			if (storable is Project) {
 				ProjectMigration.Migrate (storable as ProjectLongoMatch);
 			} else if (storable is Team) {
-				TeamMigration.Migrate (storable as Team);
+				TeamMigration.Migrate (storable as SportsTeam);
 			} else if (storable is Dashboard) {
 				DashboardMigration.Migrate (storable as Dashboard);
 			}

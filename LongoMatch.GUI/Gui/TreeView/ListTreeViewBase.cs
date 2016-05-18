@@ -26,6 +26,7 @@ using Color = Gdk.Color;
 using Image = VAS.Core.Common.Image;
 using LMCommon = LongoMatch.Core.Common;
 using Point = VAS.Core.Common.Point;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -149,7 +150,7 @@ namespace LongoMatch.Gui.Component
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
 			TimelineEventLongoMatch selectedEvent = SelectedPlay;
-			List<PlayerLongoMatch> players = selectedEvent.Players.ToList ();
+			List<Player> players = selectedEvent.Players.ToList ();
 
 			Config.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 

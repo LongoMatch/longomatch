@@ -16,10 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.ObjectModel;
-using LongoMatch.Core.Common;
 using NUnit.Framework;
+using VAS.Core.Common;
 using VAS.Core.Store;
-using LongoMatch.Core.Store;
 
 namespace Tests.Core.Store
 {
@@ -27,9 +26,9 @@ namespace Tests.Core.Store
 	public class TestActionLink
 	{
 
-		ActionLinkLongoMatch CreateLink ()
+		ActionLink CreateLink ()
 		{
-			ActionLinkLongoMatch link = new ActionLinkLongoMatch ();
+			ActionLink link = new ActionLink ();
 			link.SourceButton = new DashboardButton ();
 			link.SourceTags = new ObservableCollection<Tag> { new Tag ("tag1") };
 			link.DestinationButton = new DashboardButton ();
@@ -44,13 +43,13 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			ActionLinkLongoMatch link = new ActionLinkLongoMatch ();
+			ActionLink link = new ActionLink ();
 
 			Utils.CheckSerialization (link);
 
 			link = CreateLink ();
 
-			ActionLinkLongoMatch link2 = Utils.SerializeDeserialize (link);
+			ActionLink link2 = Utils.SerializeDeserialize (link);
 			Assert.AreEqual (link.SourceTags, link2.SourceTags);
 			Assert.AreEqual (link.DestinationTags, link2.DestinationTags);
 			Assert.AreEqual (link.Action, link2.Action);
@@ -62,8 +61,8 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestEquality ()
 		{
-			ActionLinkLongoMatch link = CreateLink ();
-			ActionLinkLongoMatch link2 = new ActionLinkLongoMatch ();
+			ActionLink link = CreateLink ();
+			ActionLink link2 = new ActionLink ();
 			Assert.IsTrue (link != link2);
 			Assert.AreNotEqual (link, link2);
 			link2.SourceButton = link.SourceButton;
@@ -80,7 +79,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			ActionLinkLongoMatch link = CreateLink ();
+			ActionLink link = CreateLink ();
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
 			link.SourceButton = new DashboardButton ();

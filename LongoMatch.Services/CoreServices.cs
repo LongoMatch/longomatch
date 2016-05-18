@@ -156,14 +156,15 @@ namespace LongoMatch.Services
 			eManager = new EventsManager ();
 			RegisterService (eManager);
 
+			RegisterService (new CoreEventsManager ());
+
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
 
-			/* Start playlists manager */
+			/* Start playlists hotkeys manager */
 			plManager = new PlaylistManager ();
 			RegisterService (plManager);
-
 		}
 
 		public static void StartServices ()

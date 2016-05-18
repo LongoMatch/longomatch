@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
-    <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../VAS/bin/VAS.Drawing.Cairo.dll" />
+    <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">
@@ -3266,6 +3266,7 @@ You can download it using this direct link:</property>
                             <property name="Tooltip" translatable="yes">Angle tool</property>
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes" />
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">False</property>
                             <property name="HasLabel">False</property>
                             <property name="UseUnderline">True</property>

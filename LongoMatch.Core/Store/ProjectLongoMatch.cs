@@ -53,8 +53,8 @@ namespace LongoMatch.Core.Store
 		public ProjectLongoMatch ()
 		{
 			Dashboard = new DashboardLongoMatch ();
-			LocalTeamTemplate = new Team ();
-			VisitorTeamTemplate = new Team ();
+			LocalTeamTemplate = new SportsTeam ();
+			VisitorTeamTemplate = new SportsTeam ();
 		}
 
 		public void Dispose ()
@@ -72,7 +72,7 @@ namespace LongoMatch.Core.Store
 		/// Local team template
 		/// </value>
 		[JsonProperty (Order = -9)]
-		public Team LocalTeamTemplate {
+		public SportsTeam LocalTeamTemplate {
 			get;
 			set;
 		}
@@ -81,7 +81,7 @@ namespace LongoMatch.Core.Store
 		/// Visitor team template
 		/// </value>
 		[JsonProperty (Order = -8)]
-		public Team VisitorTeamTemplate {
+		public SportsTeam VisitorTeamTemplate {
 			get;
 			set;
 		}
@@ -145,6 +145,14 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public override String ShortDescription {
+			get {
+				return Description.DateTitle;
+			}
+		}
+
 		#endregion
 
 		#region Public Methods
@@ -162,7 +170,7 @@ namespace LongoMatch.Core.Store
 		                           out List<PlayerLongoMatch> awayFieldPlayers,
 		                           out List<PlayerLongoMatch> awayBenchPlayers)
 		{
-			Team homeTeam, awayTeam;
+			SportsTeam homeTeam, awayTeam;
 			List<PlayerLongoMatch> homeTeamPlayers, awayTeamPlayers;
 
 			homeTeamPlayers = Lineup.HomeStartingPlayers.Concat (Lineup.HomeBenchPlayers).ToList ();
@@ -179,13 +187,13 @@ namespace LongoMatch.Core.Store
 				}
 			}
 
-			homeTeam = new Team {
+			homeTeam = new SportsTeam {
 				Formation = LocalTeamTemplate.Formation,
-				List = new ObservableCollection<PlayerLongoMatch> (homeTeamPlayers)
+				List = new ObservableCollection<Player> (homeTeamPlayers)
 			};
-			awayTeam = new Team {
+			awayTeam = new SportsTeam {
 				Formation = VisitorTeamTemplate.Formation,
-				List = new ObservableCollection<PlayerLongoMatch> (awayTeamPlayers)
+				List = new ObservableCollection<Player> (awayTeamPlayers)
 			};
 
 			homeFieldPlayers = homeTeam.StartingPlayersList;
@@ -194,7 +202,7 @@ namespace LongoMatch.Core.Store
 			awayBenchPlayers = awayTeam.BenchPlayersList;
 		}
 
-		public SubstitutionEvent SubsitutePlayer (Team team, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut,
+		public SubstitutionEvent SubsitutePlayer (SportsTeam team, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut,
 		                                          SubstitutionReason reason, Time subsTime)
 		{
 			LineupEvent lineup;
@@ -255,7 +263,7 @@ namespace LongoMatch.Core.Store
 			return lineup;
 		}
 
-		public IEnumerable<TimelineEventLongoMatch> EventsByTeam (Team team)
+		public IEnumerable<TimelineEventLongoMatch> EventsByTeam (SportsTeam team)
 		{
 			var timelineEventsLongomatch = new ObservableCollection<TimelineEventLongoMatch> ();
 			foreach (var timeLineEvent in Timeline) {
@@ -264,7 +272,7 @@ namespace LongoMatch.Core.Store
 			return timelineEventsLongomatch.Where (e => e.Teams.Contains (team) || e.Players.Intersect (team.List).Any ());
 		}
 
-		public int GetScore (Team team)
+		public int GetScore (SportsTeam team)
 		{
 			return EventsByTeam (team).Where (e => e.EventType is ScoreEventType).
 				Sum (e => (e.EventType as ScoreEventType).Score.Points);
