@@ -69,6 +69,27 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
+		protected void ValidateCameras (ObservableCollection<CameraConfig> cconfig)
+		{
+			if (cconfig == null) {
+				return;
+			}
+			if (cconfig.All (c => c != null)) {
+				return;
+			}
+			List<CameraConfig> cc = cconfig.Where (c => c != null).ToList (); //cache for list (reusable enumerator)
+			int k = 0;
+			for (int i = 0; i < cconfig.Count; i++) { //per index access to set CameraConfig in the src collection
+				if (cconfig [i] == null) {
+					while (cc.Any (c => c.Index == k)) {
+						k++;
+					}
+					cconfig [i] = new CameraConfig (k);
+					k++;
+				}
+			}
+		}
+
 		#region Properties
 
 		#region IStorable
@@ -378,6 +399,7 @@ namespace LongoMatch.Core.Store
 				if (camerasConfig != null) {
 					camerasConfig.CollectionChanged += ListChanged;
 				}
+				ValidateCameras (camerasConfig);
 			}
 		}
 

@@ -247,6 +247,19 @@ namespace Tests.Core.Store
 			Assert.IsTrue (evt.IsChanged);
 			evt.IsChanged = false;
 		}
+
+		[Test ()]
+		public void TestCamerasConfigNotHavingNulls ()
+		{
+			TimelineEvent evt = CreateTimelineEvent ();
+			var cc = new ObservableCollection<CameraConfig> ();
+			cc.Add (null);
+			cc.Add (new CameraConfig (0));
+			evt.CamerasConfig = cc;
+
+			Assert.NotNull (evt.CamerasConfig [0]);
+			Assert.AreEqual (evt.CamerasConfig [0].Index, new CameraConfig (1).Index);
+		}
 	}
 }
 
