@@ -38,7 +38,7 @@ namespace LongoMatch.Drawing.Widgets
 	public class SportDashboardCanvas: VAS.Drawing.Widgets.DashboardCanvas
 	{
 		public new event ButtonSelectedHandler EditButtonTagsEvent;
-		public new event LongoMatch.Core.Handlers.NewEventHandler NewTagEvent;
+		public new event NewEventHandler NewTagEvent;
 
 		public SportDashboardCanvas (IWidget widget) : base (widget)
 		{
@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (sel != null && sel.Drawable is LinkAnchorObject) {
 				LinkAnchorObject anchor = sel.Drawable as LinkAnchorObject;
-				ActionLink link = new ActionLinkLongoMatch {
+				ActionLink link = new ActionLink {
 					SourceButton = anchor.Button.Button,
 					SourceTags = new ObservableCollection<Tag> (anchor.Tags)
 				}; 

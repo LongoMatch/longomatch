@@ -29,6 +29,9 @@ namespace LongoMatch.Core.Store.Templates
 	[Serializable]
 	public class DashboardLongoMatch : Dashboard, ITemplate<DashboardLongoMatch>
 	{
+		new const int MIN_WIDTH = 320;
+		new const int MIN_HEIGHT = 240;
+
 		/// <summary>
 		/// Creates a new dashboard with a default set of buttons
 		/// </summary>
@@ -93,6 +96,41 @@ namespace LongoMatch.Core.Store.Templates
 			return template;
 		}
 
+		/// <summary>
+		/// Adds a new <see cref="AnalysisEventButton"/> with the default values
+		/// </summary>
+		/// <returns>A new button.</returns>
+		/// <param name="index">Index of this button used to name it</param>
+		public override AnalysisEventButton AddDefaultItem (int index)
+		{
+			AnalysisEventButton button;
+			AnalysisEventType evtype;
+			Color c = StyleConf.ButtonEventColor;
+			HotKey h = new HotKey ();
+
+			evtype = new AnalysisEventType {
+				Name = "Event Type " + index,
+				SortMethod = SortMethodType.SortByStartTime,
+				Color = c
+			};
+			AddDefaultTags (evtype);
+
+			button = new  AnalysisEventButton {
+				EventType = evtype,
+				Start = new Time{ TotalSeconds = 10 },
+				Stop = new Time { TotalSeconds = 10 },
+				HotKey = h,
+				/* Leave the first row for the timers and score */
+				Position = new Point (10 + (index % 7) * (CAT_WIDTH + 10),
+					10 + (index / 7 + 1) * (CAT_HEIGHT + 10)),
+				Width = CAT_WIDTH,
+				Height = CAT_HEIGHT,
+				ShowIcon = true,
+			};
+			List.Insert (index, button);
+			return button;
+		}
+
 
 		/// <summary>
 		/// Creates a deep copy of this dashboard
@@ -109,6 +147,8 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			return newDashboard;
 		}
+
+
 	}
 }
 
