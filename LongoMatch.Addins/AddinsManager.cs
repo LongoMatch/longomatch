@@ -32,6 +32,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
+using VAS.Core.Store;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -126,7 +127,7 @@ namespace LongoMatch.Addins
 		{
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				Log.Information ("Adding import entry from plugin: " + importProject.Name);
-				importer.RegisterImporter (new Func<ProjectLongoMatch> (importProject.ImportProject),
+				importer.RegisterImporter (new Func<Project> (importProject.ImportProject),
 					importProject.Description,
 					importProject.FilterName,
 					importProject.FilterExtensions,

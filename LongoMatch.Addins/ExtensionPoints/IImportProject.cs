@@ -16,7 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using Mono.Addins;
-using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
@@ -31,7 +31,7 @@ namespace LongoMatch.Addins.ExtensionPoints
 
 		bool CanOverwrite { get; }
 
-		ProjectLongoMatch ImportProject ();
+		Project ImportProject ();
 	}
 }
 
