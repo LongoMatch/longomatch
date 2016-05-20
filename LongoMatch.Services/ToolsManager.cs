@@ -41,7 +41,7 @@ namespace LongoMatch.Services
 			ProjectImporters = new List<ProjectImporter> ();
 		}
 
-		public void RegisterImporter (Func<ProjectLongoMatch> importFunction,
+		public void RegisterImporter (Func<Project> importFunction,
 		                              string description, string filterName,
 		                              string[] extensions, bool needsEdition,
 		                              bool canOverwrite)
@@ -117,7 +117,7 @@ namespace LongoMatch.Services
 					return;
 				}
 
-				project = importer.ImportFunction ();
+				project = importer.ImportFunction () as ProjectLongoMatch;
 				if (project == null) {
 					return;
 				}

@@ -52,7 +52,7 @@ namespace LongoMatch.Plugins
 
 		#region IImportProject implementation
 
-		public ProjectLongoMatch ImportProject ()
+		public Project ImportProject ()
 		{
 			ProjectLongoMatch project = null;
 
