@@ -543,7 +543,10 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
-		//check and fix null values using as camera index a value in the range that is not used
+		/// <summary>
+		/// check and fix null values using as camera index a value in the range that is not used 
+		/// </summary>
+		/// <param name="cconfig">CameraConfig ObservableCollection to be checked and fixed if needed</param>
 		protected void ValidateCameras (ObservableCollection<CameraConfig> cconfig)
 		{
 			if (cconfig == null) {
