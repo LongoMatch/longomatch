@@ -20,6 +20,7 @@ using Gtk;
 using System.IO;
 using VAS.Core;
 using VAS.Core.Common;
+using Catalog = LongoMatch.Core.Catalog;
 
 namespace LongoMatch.Migration
 {
