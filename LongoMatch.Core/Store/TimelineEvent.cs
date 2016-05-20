@@ -69,27 +69,6 @@ namespace LongoMatch.Core.Store
 
 		#endregion
 
-		protected void ValidateCameras (ObservableCollection<CameraConfig> cconfig)
-		{
-			if (cconfig == null) {
-				return;
-			}
-			if (cconfig.All (c => c != null)) {
-				return;
-			}
-			List<CameraConfig> cc = cconfig.Where (c => c != null).ToList (); //cache for list (reusable enumerator)
-			int k = 0;
-			for (int i = 0; i < cconfig.Count; i++) { //per index access to set CameraConfig in the src collection
-				if (cconfig [i] == null) {
-					while (cc.Any (c => c.Index == k)) {
-						k++;
-					}
-					cconfig [i] = new CameraConfig (k);
-					k++;
-				}
-			}
-		}
-
 		#region Properties
 
 		#region IStorable
@@ -563,6 +542,31 @@ namespace LongoMatch.Core.Store
 		}
 
 		#endregion
+
+		/// <summary>
+		/// check and fix null values using as camera index a value in the range that is not used 
+		/// </summary>
+		/// <param name="cconfig">CameraConfig ObservableCollection to be checked and fixed if needed</param>
+		protected void ValidateCameras (ObservableCollection<CameraConfig> cconfig)
+		{
+			if (cconfig == null) {
+				return;
+			}
+			if (cconfig.All (c => c != null)) {
+				return;
+			}
+			List<CameraConfig> cc = cconfig.Where (c => c != null).ToList ();
+			int k = 0;
+			for (int i = 0; i < cconfig.Count; i++) {
+				if (cconfig [i] == null) {
+					while (cc.Any (c => c.Index == k)) {
+						k++;
+					}
+					cconfig [i] = new CameraConfig (k);
+					k++;
+				}
+			}
+		}
 
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
