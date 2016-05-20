@@ -56,7 +56,8 @@ namespace LongoMatch.Gui.Component
 			if (timeoutID == 0) {
 				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
-			//focusscale.Value = 6; // setFocusscale
+
+			FocusScale.Value = 6;
 			timerule.Duration = project.FileSet.Duration;
 
 			timeline.ShowMenuEvent += HandleShowMenu;
