@@ -18,19 +18,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
-using Constants = LongoMatch.Core.Common.Constants;
 using VAS.Core.Store.Templates;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store.Templates
 {

@@ -39,7 +39,7 @@ namespace LongoMatch.Core.Common
 
 		private static string GenerateMessage (string name)
 		{
-			if (typeof(T) == typeof(VAS.Core.Store.Templates.Team)) {
+			if (typeof(T) == typeof(Team)) {
 				return Catalog.GetString ("Team not found:\n") + name;
 			} else if (typeof(T) == typeof(Dashboard)) {
 				return Catalog.GetString ("Dashboard not found:\n") + name;
