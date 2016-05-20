@@ -34,16 +34,16 @@ namespace LongoMatch.Services
 {
 	public class EventsManager: IService
 	{
-		protected TimelineEvent loadedPlay;
-		protected Project openedProject;
-		protected ProjectType projectType;
-		protected EventsFilter filter;
-		protected IAnalysisWindowBase analysisWindow;
-		protected IPlayerController player;
-		protected ICapturerBin capturer;
+		TimelineEvent loadedPlay;
+		Project openedProject;
+		ProjectType projectType;
+		EventsFilter filter;
+		IAnalysisWindowBase analysisWindow;
+		IPlayerController player;
+		ICapturerBin capturer;
 
-		protected void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                           EventsFilter filter, IAnalysisWindowBase analysisWindow)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 EventsFilter filter, IAnalysisWindowBase analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
@@ -54,7 +54,7 @@ namespace LongoMatch.Services
 			capturer = analysisWindow.Capturer;
 		}
 
-		protected void HandlePlayerSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
+		void HandlePlayerSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2, SubstitutionReason reason, Time time)
 		{
 			if (openedProject != null) {
 				TimelineEventLongoMatch evt;
@@ -69,7 +69,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected void HandleKeyPressed (object sender, HotKey key)
+		void HandleKeyPressed (object sender, HotKey key)
 		{
 			KeyAction action;
 
@@ -100,12 +100,12 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
 			loadedPlay = play;
 		}
 
-		protected virtual void HandleShowProjectStatsEvent (Project project)
+		void HandleShowProjectStatsEvent (Project project)
 		{
 			Config.GUIToolkit.ShowProjectStats (project);
 		}

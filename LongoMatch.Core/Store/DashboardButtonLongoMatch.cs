@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 dfernandez
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -129,9 +129,6 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimerButtonLongoMatch: TimerButton
 	{
-		public TimerButtonLongoMatch () : base ()
-		{
-		}
 
 		public override void Start (Time start, List<DashboardButton> from)
 		{

@@ -30,9 +30,6 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimelineEventLongoMatch : TimelineEvent
 	{
-		public TimelineEventLongoMatch ()
-		{
-		}
 
 		[PropertyChanged.DoNotNotify]
 		[Obsolete ("Use Teams instead of Team to tag a team in a TimelineEvent")]
