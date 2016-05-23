@@ -78,14 +78,6 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>LongoMatch.GUI.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>LongoMatch.Drawing.Cairo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
       <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
       <Name>LongoMatch.Services.Net45</Name>
@@ -98,13 +90,25 @@
       <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
       <Name>VAS.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
-      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
-      <Name>LongoMatch.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>VAS.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Multimedia\VAS.Multimedia.csproj">
+      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
+      <Name>VAS.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

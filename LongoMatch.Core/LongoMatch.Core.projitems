@@ -9,31 +9,9 @@
     <Import_RootNamespace>LongoMatch.Core</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Handlers\Drawing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Queries.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Drawing\ICanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Drawing\IDrawingToolkit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Drawing\IWidget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IAnalysisWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IBusyDialog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\ICapturerBin.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IGUIToolkit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IMainController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IPanel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IPlayerView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IRenderingStateBar.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\ITool.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\GUI\IViewPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPlayerController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProjectsImporter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\ICapturer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IDiscoverer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IFramesCapturer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IMultimediaToolkit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IPlayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IRemuxer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Multimedia\IVideoEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\EventTypeStats.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\PercentualStat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stats\PlayerEventTypeStats.cs" />
@@ -46,7 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\Score.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
@@ -65,7 +42,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\DashboardLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConfigLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Store\ActionLinkLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
@@ -73,8 +49,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Handlers\Multimedia.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Catalog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\SportsTeam.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

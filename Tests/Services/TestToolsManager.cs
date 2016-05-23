@@ -18,13 +18,14 @@
 using System;
 using LongoMatch;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Services
 {
@@ -76,7 +77,7 @@ namespace Tests.Services
 		{
 			var toolsManager = new ToolsManager ();
 			toolsManager.Start ();
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
@@ -86,7 +87,7 @@ namespace Tests.Services
 			// Returns null
 			importer.ImportFunction = () => null;
 
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			dbMock.Verify (db => db.Store<ProjectLongoMatch> (It.IsAny<ProjectLongoMatch> (), It.IsAny<bool> ()), Times.Never ());
 
 			// Throws Exception
@@ -94,7 +95,7 @@ namespace Tests.Services
 				throw new Exception ();
 			};
 
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
@@ -104,13 +105,13 @@ namespace Tests.Services
 			bool openned = false;
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 
-			Config.EventsBroker.OpenProjectIDEvent += (project_id, project) => {
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectIDEvent += (project_id, project) => {
 				if (project == p) {
 					openned = true;
 				}
 			};
 			importer.ImportFunction = () => p;
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			Assert.IsTrue (openned);
 		}
@@ -124,12 +125,12 @@ namespace Tests.Services
 			p.Description.FileSet = new MediaFileSet ();
 			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });
 
-			Config.EventsBroker.OpenProjectIDEvent += (project_id, project) => {
+			((LMCommon.EventsBroker)Config.EventsBroker).OpenProjectIDEvent += (project_id, project) => {
 				openned |= project == p;
 			};
 
 			importer.ImportFunction = () => p;
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ()), Times.Never ());
 			Assert.IsTrue (openned);
@@ -141,12 +142,12 @@ namespace Tests.Services
 			bool openned = false;
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 
-			Config.EventsBroker.NewProjectEvent += project => {
+			((LMCommon.EventsBroker)Config.EventsBroker).NewProjectEvent += project => {
 				openned |= project == p;
 			};
 			importer.ImportFunction = () => p;
 			importer.NeedsEdition = true;
-			Config.EventsBroker.EmitImportProject ();
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
 			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Never ());
 			Assert.IsTrue (openned);
 		}

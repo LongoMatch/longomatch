@@ -16,24 +16,22 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Interfaces;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Serialization;
 using VAS.Core.Store.Templates;
 using Constants = LongoMatch.Core.Common.Constants;
-using LongoMatch.Core.Interfaces;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -345,7 +343,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedDashboard != null) {
 				string msg = Catalog.GetString ("Do you really want to delete the dashboard: ") + loadedDashboard.Name;
-				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+				if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
 					provider.Delete (loadedDashboard);
 					dashboardsStore.Remove (ref selectedIter);
 					dashboards.Remove (loadedDashboard);
@@ -452,11 +450,11 @@ namespace LongoMatch.Gui.Panel
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The dashboard already exists. Do you want to overwrite it?");
-					if (MessagesHelpers.QuestionMessage (this, msg)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						auxdelete = dashboards.FirstOrDefault (d => d.Name == dialog.Text);
 						break;

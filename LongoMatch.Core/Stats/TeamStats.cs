@@ -26,7 +26,7 @@ namespace LongoMatch.Core.Stats
 	public class TeamStats
 	{
 		ProjectLongoMatch project;
-		Team template;
+		SportsTeam template;
 		TeamType team;
 		EventsFilter filter;
 

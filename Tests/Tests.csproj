@@ -39,7 +39,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>$(SolutionDir)\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Package>nunit</Package>
     </Reference>
     <Reference Include="Moq">
       <HintPath>$(SolutionDir)\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
@@ -85,13 +84,11 @@
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
     <Compile Include="Services\TestRenderingJobsManager.cs" />
-    <Compile Include="Services\TestPlayerController.cs" />
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
     <Compile Include="Services\TestServices.cs" />
     <Compile Include="Services\TestUpdatesNotifier.cs" />
     <Compile Include="Services\TestProjectsManager.cs" />
-    <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
     <Compile Include="Integration\TestInitialization.cs" />
@@ -120,10 +117,6 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>LongoMatch.Drawing.Cairo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
       <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>
@@ -143,6 +136,14 @@
     <ProjectReference Include="..\LongoMatch.Migration\LongoMatch.Migration.csproj">
       <Project>{4D20F396-53C0-4298-9121-9F68C101CCAB}</Project>
       <Name>LongoMatch.Migration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>VAS.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

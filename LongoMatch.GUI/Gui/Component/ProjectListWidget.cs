@@ -18,17 +18,16 @@
 //
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using VAS.Core;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {

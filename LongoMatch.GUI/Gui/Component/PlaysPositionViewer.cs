@@ -16,12 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
-using System.Linq;
+using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -81,12 +82,12 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		void HandlePlayLoaded (TimelineEventLongoMatch play)
+		void HandlePlayLoaded (TimelineEvent play)
 		{
 			if (play != null) {
-				field.Tagger.SelectPlay (play);
-				hfield.Tagger.SelectPlay (play);
-				goal.Tagger.SelectPlay (play);
+				field.Tagger.SelectPlay (play as TimelineEventLongoMatch);
+				hfield.Tagger.SelectPlay (play as TimelineEventLongoMatch);
+				goal.Tagger.SelectPlay (play as TimelineEventLongoMatch);
 			} else {
 				field.Tagger.ClearSelection ();
 				hfield.Tagger.ClearSelection ();
@@ -107,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			field.Destroy ();
 			hfield.Destroy ();
 			goal.Destroy ();
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 	}

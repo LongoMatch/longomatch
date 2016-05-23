@@ -17,50 +17,15 @@
 // 
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
-	public interface IAnalysisWindow
+	public interface IAnalysisWindow : IAnalysisWindowBase
 	{
-		void SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter);
-
-		void ReloadProject ();
-
-		void CloseOpenedProject ();
-
-		void AddPlay (TimelineEventLongoMatch play);
-
-		void UpdateCategories ();
-
-		void DeletePlays (List<TimelineEventLongoMatch> plays);
-
-		void DetachPlayer ();
-
-		void ZoomIn ();
-
-		void ZoomOut ();
-
-		void FitTimeline ();
-
-		void ShowDashboard ();
-
-		void ShowTimeline ();
-
-		void ShowZonalTags ();
-
-		void ClickButton (DashboardButton button, Tag tag = null);
-
-		void TagPlayer (PlayerLongoMatch player);
-
 		void TagTeam (TeamType team);
-
-		IPlayerController Player{ get; }
-
-		ICapturerBin Capturer{ get; }
 	}
 }
 

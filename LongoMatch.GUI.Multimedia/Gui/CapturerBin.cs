@@ -20,16 +20,17 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
+using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
-using Misc = LongoMatch.Gui.Helpers.Misc;
 using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui
 {
@@ -53,7 +54,7 @@ namespace LongoMatch.Gui
 		public CapturerBin ()
 		{
 			this.Build ();
-			LongoMatch.Gui.Helpers.Misc.SetFocus (vbox1, false);
+			Misc.SetFocus (vbox1, false);
 			videowindow.ReadyEvent += HandleReady;
 			videowindow.ExposeEvent += HandleExposeEvent;
 			videowindow.CanFocus = true;
@@ -319,7 +320,7 @@ namespace LongoMatch.Gui
 			hourlabel.Markup = ElapsedTime.Hours.ToString ("d2");
 			minuteslabel.Markup = ElapsedTime.Minutes.ToString ("d2");
 			secondslabel.Markup = ElapsedTime.Seconds.ToString ("d2");
-			Config.EventsBroker.EmitCapturerTick (CurrentCaptureTime);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitCapturerTick (CurrentCaptureTime);
 			return true;
 		}
 
@@ -327,7 +328,7 @@ namespace LongoMatch.Gui
 		{
 			string msg = Catalog.GetString ("Do you want to finish the current capture?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
-				Config.EventsBroker.EmitCaptureFinished (false, true);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureFinished (false, true);
 			}
 		}
 
@@ -335,7 +336,7 @@ namespace LongoMatch.Gui
 		{
 			string msg = Catalog.GetString ("Do you want to close and cancel the current capture?");
 			if (MessagesHelpers.QuestionMessage (this, msg)) {
-				Config.EventsBroker.EmitCaptureFinished (true, false);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureFinished (true, false);
 			}
 		}
 
@@ -462,7 +463,7 @@ namespace LongoMatch.Gui
 		void OnError (object sender, string message)
 		{
 			Application.Invoke (delegate {
-				Config.EventsBroker.EmitCaptureError (sender, message);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureError (sender, message);
 			});
 		}
 
@@ -480,25 +481,25 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void HandleEventCreated (TimelineEventLongoMatch evt)
+		void HandleEventCreated (TimelineEvent evt)
 		{
 			lasteventbox.Visible = true;
 			lastlabel.Text = evt.Name;
 			lastlabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (evt.Color));
-			lastevent = evt;
+			lastevent = evt as TimelineEventLongoMatch;
 		}
 
 		void HandlePlayLast (object sender, EventArgs e)
 		{
 			if (lastevent != null) {
-				Config.EventsBroker.EmitLoadEvent (lastevent);
+				((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (lastevent);
 			}
 		}
 
 		void HandleDeleteLast (object sender, EventArgs e)
 		{
 			if (lastevent != null) {
-				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEventLongoMatch> { lastevent });
+				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { lastevent });
 				lastevent = null;
 				lasteventbox.Visible = false;
 			}

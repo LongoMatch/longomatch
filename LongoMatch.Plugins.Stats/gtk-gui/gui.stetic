@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.dll" />
-    <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
     <widget-library name="../../bin/LongoMatch.Plugins.Stats.dll" internal="true" />
+    <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Plugins.Stats.CategoryViewer" design-size="720 598">
     <property name="MemberName" />

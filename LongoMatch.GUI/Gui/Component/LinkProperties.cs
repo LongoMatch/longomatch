@@ -2,16 +2,15 @@
 //  Copyright (C) 2015 Fluendo S.A.
 //
 using System;
-using LongoMatch.Core.Common;
+using VAS.Core.Common;
 using VAS.Core.Store;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class LinkProperties : Gtk.Bin
 	{
-		ActionLinkLongoMatch link;
+		ActionLink link;
 
 		public LinkProperties ()
 		{
@@ -39,7 +38,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool Edited { get; set; }
 
-		public ActionLinkLongoMatch Link {
+		public ActionLink Link {
 			set {
 				link = value;
 				UpdateUI ();

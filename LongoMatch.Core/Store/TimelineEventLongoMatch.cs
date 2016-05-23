@@ -17,12 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
-using VAS.Core.Serialization;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
@@ -32,33 +30,6 @@ namespace LongoMatch.Core.Store
 	[Serializable]
 	public class TimelineEventLongoMatch : TimelineEvent
 	{
-		ObservableCollection<PlayerLongoMatch> players;
-		ObservableCollection<Team> teams;
-
-		public TimelineEventLongoMatch ()
-		{
-			Players = new ObservableCollection<PlayerLongoMatch> ();
-			Teams = new ObservableCollection<Team> ();
-		}
-
-		/// <summary>
-		/// List of players tagged in this event.
-		/// </summary>
-		[PropertyIndex (0)]
-		public ObservableCollection<PlayerLongoMatch> Players {
-			get {
-				return players;
-			}
-			set {
-				if (players != null) {
-					players.CollectionChanged -= ListChanged;
-				}
-				players = value;
-				if (players != null) {
-					players.CollectionChanged += ListChanged;
-				}
-			}
-		}
 
 		[PropertyChanged.DoNotNotify]
 		[Obsolete ("Use Teams instead of Team to tag a team in a TimelineEvent")]
@@ -67,33 +38,14 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		/// <summary>
-		/// A list of teams tagged in this event.
-		/// </summary>
-		[PropertyIndex (3)]
-		public ObservableCollection<Team> Teams {
-			get {
-				return teams;
-			}
-			set {
-				if (teams != null) {
-					teams.CollectionChanged -= ListChanged;
-				}
-				teams = value ?? new ObservableCollection<Team> ();
-				if (teams != null) {
-					teams.CollectionChanged += ListChanged;
-				}
-			}
-		}
-
 		[JsonIgnore]
-		public List<Team> TaggedTeams {
+		public List<SportsTeam> TaggedTeams {
 			get {
 				if (Project == null) {
-					return Teams.ToList ();
+					return Teams.Cast<SportsTeam> ().ToList ();
 				}
 				ProjectLongoMatch LMProject = Project as ProjectLongoMatch;
-				List<Team> teams = new List<Team> ();
+				List<SportsTeam> teams = new List<SportsTeam> ();
 				if (Teams.Contains (LMProject.LocalTeamTemplate) ||
 				    Players.Intersect (LMProject.LocalTeamTemplate.List).Any ()) {
 					teams.Add (LMProject.LocalTeamTemplate);

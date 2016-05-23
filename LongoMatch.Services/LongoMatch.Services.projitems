@@ -13,13 +13,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlayerController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ProjectsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RenderingJobsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UpdatesNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>

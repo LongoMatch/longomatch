@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
-    <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
-    <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
+    <widget-library name="../../VAS/bin/VAS.Drawing.Cairo.dll" />
+    <widget-library name="../../VAS/bin/VAS.UI.Helpers.Gtk2.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1854 741">

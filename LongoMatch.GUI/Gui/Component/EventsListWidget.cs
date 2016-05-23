@@ -16,14 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Common;
-using System.Linq;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	public partial class EventsListWidget : Gtk.Bin
 	{
 		ProjectLongoMatch project;
-		IconNotebookHelper notebookHelper;
+		Helpers.IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
 		{
@@ -40,12 +40,12 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
+			((LMCommon.EventsBroker)Config.EventsBroker).TeamTagsChanged += UpdateTeamsModels;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
+			((LMCommon.EventsBroker)Config.EventsBroker).TeamTagsChanged -= UpdateTeamsModels;
 			playsList.Project = null;
 			localPlayersList.Clear ();
 			visitorPlayersList.Clear ();
@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 
 		void LoadIcons ()
 		{
-			notebookHelper = new IconNotebookHelper (playsnotebook);
+			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
 			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {

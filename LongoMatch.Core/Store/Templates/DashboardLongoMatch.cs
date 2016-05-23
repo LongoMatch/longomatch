@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 dfernandez
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
 //
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using VAS.Core.Interfaces;
-using System.Linq;
 
 namespace LongoMatch.Core.Store.Templates
 {

@@ -20,10 +20,10 @@ using Gdk;
 using GLib;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Drawing.Cairo;
-using Point = VAS.Core.Common.Point;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing.Cairo;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {

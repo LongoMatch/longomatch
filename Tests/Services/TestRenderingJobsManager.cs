@@ -18,16 +18,16 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using LongoMatch;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Cairo;
-using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Drawing.Cairo;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
 
 namespace Tests.Services
 {

@@ -18,11 +18,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Common;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {

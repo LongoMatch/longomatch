@@ -19,19 +19,20 @@ using System;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.Cairo;
+using VAS.UI.Helpers;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Drawable = VAS.Core.Store.Drawables.Drawable;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {

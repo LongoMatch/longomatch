@@ -28,7 +28,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using VAS.Core.Serialization;
-using VAS.Core.Store.Templates;
+
 using LMStorePlayer = LongoMatch.Core.Store.PlayerLongoMatch;
 using ProjectDescription = LongoMatch.Store.ProjectDescription;
 using SystemColor = System.Drawing.Color;
@@ -137,8 +137,8 @@ namespace LongoMatch.Migration
 		}
 
 		public static DashboardLongoMatch ConvertCategories (Categories cats,
-		                                           out Dictionary <TagSubCategory, List<VASStore.Tag>> dict,
-		                                           out Dictionary <Category, VASStore.EventType > eventTypesDict)
+		                                                     out Dictionary <TagSubCategory, List<VASStore.Tag>> dict,
+		                                                     out Dictionary <Category, VASStore.EventType > eventTypesDict)
 		{
 			dict = new Dictionary<TagSubCategory, List<VASStore.Tag>> ();
 			eventTypesDict = new Dictionary<Category, VASStore.EventType> ();
@@ -248,10 +248,10 @@ namespace LongoMatch.Migration
 			Serializer.Instance.Save (dashboard, outputPath);
 		}
 
-		public static LongoMatch.Core.Store.Templates.Team ConvertTeamTemplate (TeamTemplate team,
-		                                                                        Dictionary <Player, PlayerLongoMatch> teamsDict)
+		public static LongoMatch.Core.Store.Templates.SportsTeam ConvertTeamTemplate (TeamTemplate team,
+		                                                                              Dictionary <Player, PlayerLongoMatch> teamsDict)
 		{
-			var newteam = new LongoMatch.Core.Store.Templates.Team ();
+			var newteam = new LongoMatch.Core.Store.Templates.SportsTeam ();
 			newteam.Name = team.Name;
 			newteam.TeamName = team.TeamName;
 			newteam.Shield = ConvertImage (team.Shield);
@@ -338,7 +338,7 @@ namespace LongoMatch.Migration
 				newplay.Rate = play.Rate;
 				newplay.Start = ConvertTime (play.Start);
 				newplay.Stop = ConvertTime (play.Stop);
-				newplay.Teams = new ObservableCollection<LongoMatch.Core.Store.Templates.Team> ();
+				newplay.Teams = new ObservableCollection<VASStore.Templates.Team> ();
 				if (play.Team == Team.LOCAL || play.Team == Team.BOTH) {
 					newplay.Teams.Add (newproject.LocalTeamTemplate);
 				}

@@ -22,14 +22,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -39,6 +41,7 @@ namespace LongoMatch.Services
 		IAnalysisWindow analysisWindow;
 		ProjectType projectType;
 		ICapturerBin capturer;
+		IPlayerController player;
 		Dashboard dashboard;
 		ProjectLongoMatch openedProject;
 		AnalysisEventButton pendingButton;
@@ -58,9 +61,9 @@ namespace LongoMatch.Services
 			int playerNumber;
 			
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				Team team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
+				SportsTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				PlayerLongoMatch player = team.List.FirstOrDefault (p => p.Number == playerNumber);
+				PlayerLongoMatch player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
 					analysisWindow.TagPlayer (player);
 				}
@@ -98,12 +101,13 @@ namespace LongoMatch.Services
 			ReloadHotkeys ();
 		}
 
-		void HandleOpenedProjectChanged (ProjectLongoMatch project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 EventsFilter filter, IAnalysisWindowBase analysisWindow)
 		{
-			this.analysisWindow = analysisWindow;
-			this.capturer = analysisWindow.Capturer;
-			openedProject = project;
+			this.analysisWindow = analysisWindow as IAnalysisWindow;
+			capturer = analysisWindow.Capturer;
+			player = analysisWindow.Player;
+			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
 			if (project == null) {
 				dashboard = null;
@@ -164,6 +168,44 @@ namespace LongoMatch.Services
 					case KeyAction.StopPeriod:
 						capturer.StopPeriod ();
 						break;
+					}
+				} else {
+					switch (action) {
+					case KeyAction.FrameUp:
+						player.SeekToNextFrame ();
+						return;
+					case KeyAction.FrameDown:
+						player.SeekToPreviousFrame ();
+						return;
+					case KeyAction.JumpUp:
+						player.StepForward ();
+						return;
+					case KeyAction.JumpDown:
+						player.StepBackward ();
+						return;
+					case KeyAction.DrawFrame:
+						player.DrawFrame ();
+						return;
+					case KeyAction.TogglePlay:
+						player.TogglePlay ();
+						return;
+					case KeyAction.SpeedUp:
+						player.FramerateUp ();
+						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						return;
+					case KeyAction.SpeedDown:
+						player.FramerateDown ();
+						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						return;
+					case KeyAction.CloseEvent:
+						Config.EventsBroker.EmitLoadEvent (null);
+						return;
+					case KeyAction.Prev:
+						player.Previous ();
+						return;
+					case KeyAction.Next:
+						player.Next ();
+						return;
 					}
 				}
 			}

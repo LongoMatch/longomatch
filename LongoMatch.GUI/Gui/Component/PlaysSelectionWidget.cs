@@ -18,13 +18,12 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
 using VAS.Core;
-using Helpers = LongoMatch.Gui.Helpers;
 using VAS.Core.Common;
+using VAS.UI.Helpers;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -36,7 +35,7 @@ namespace LongoMatch.Gui.Component
 
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
-		IconNotebookHelper notebookHelper;
+		Helpers.IconNotebookHelper notebookHelper;
 
 		public PlaysSelectionWidget ()
 		{
@@ -44,7 +43,7 @@ namespace LongoMatch.Gui.Component
 			
 			LoadIcons ();
 			AddFilters ();
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
+			Helpers.Misc.SetFocus (this, false, typeof(TreeView));
 			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground));
 			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
 			notebook.Page = 0;

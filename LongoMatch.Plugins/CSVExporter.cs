@@ -21,12 +21,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Addins;
-using VAS.Core.Common;
 using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 
 namespace LongoMatch.Plugins
@@ -57,10 +57,10 @@ namespace LongoMatch.Plugins
 			return "CSVExport";
 		}
 
-		public void ExportProject (ProjectLongoMatch project, IGUIToolkit guiToolkit)
+		public void ExportProject (Project project, IGUIToolkit guiToolkit)
 		{
 			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"),
-				                  Utils.SanitizePath (project.Description.Title + ".csv"),
+				                  Utils.SanitizePath (((ProjectLongoMatch)project).Description.Title + ".csv"),
 				                  Config.HomeDir, "CSV", new [] { "*.csv" });
 			
 			if (filename == null)
@@ -69,7 +69,7 @@ namespace LongoMatch.Plugins
 			filename = System.IO.Path.ChangeExtension (filename, ".csv");
 			
 			try {
-				ProjectToCSV exporter = new ProjectToCSV (project, filename);
+				ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
 				exporter.Export ();
 				guiToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
@@ -100,7 +100,7 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName (ObservableCollection<Team> teams)
+		string TeamName (IList<SportsTeam> teams)
 		{
 			if (teams.Count == 0) {
 				return "";
@@ -138,7 +138,7 @@ namespace LongoMatch.Plugins
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (play.Teams),
+					TeamName (play.Teams.Cast<SportsTeam> ().ToList ()),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

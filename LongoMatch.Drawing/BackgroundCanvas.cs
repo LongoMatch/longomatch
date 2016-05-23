@@ -4,7 +4,7 @@
 //
 
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Common;
 
 namespace LongoMatch.Drawing

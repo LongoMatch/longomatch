@@ -127,7 +127,7 @@ namespace LongoMatch.Services
 					string ext = Path.GetExtension (path);
 					try {
 						if (ImportTeams && ext == Constants.TEAMS_TEMPLATE_EXT) {
-							Team team = FileStorage.RetrieveFrom<Team> (path);
+							SportsTeam team = FileStorage.RetrieveFrom<SportsTeam> (path);
 							Config.TeamTemplatesProvider.Add (team);
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {

@@ -23,19 +23,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Addins;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.DB;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
+using VAS.Drawing.Cairo;
+using VAS.Multimedia.Utils;
+using VAS.Services;
+using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch

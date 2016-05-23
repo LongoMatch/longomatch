@@ -22,15 +22,16 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using VAS.Drawing.Cairo;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Image = VAS.Core.Common.Image;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -40,7 +41,7 @@ namespace LongoMatch.Gui.Component
 		public event EventHandler TemplateSaved;
 
 		PlayerLongoMatch loadedPlayer;
-		Team template;
+		SportsTeam template;
 		bool edited, ignoreChanges;
 		List<PlayerLongoMatch> selectedPlayers;
 		TeamTagger teamtagger;
@@ -81,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Team Team {
+		public SportsTeam Team {
 			set {
 				template = value;
 				ignoreChanges = true;
@@ -365,7 +366,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);

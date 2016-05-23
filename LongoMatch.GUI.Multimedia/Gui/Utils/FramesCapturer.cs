@@ -22,9 +22,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Gtk;
-using LongoMatch.Core.Interfaces.Multimedia;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
+using VAS.Core.Handlers;
 
 namespace LongoMatch.Video.Utils
 {
@@ -45,7 +46,7 @@ namespace LongoMatch.Video.Utils
 		private const int THUMBNAIL_MAX_HEIGHT = 250;
 		private const int THUMBNAIL_MAX_WIDTH = 300;
 
-		public event LongoMatch.Core.Handlers.FramesProgressHandler Progress;
+		public event FramesProgressHandler Progress;
 
 		public FramesSeriesCapturer (MediaFileSet fileSet, TimelineEvent evt, uint interval, string outputDir)
 		{

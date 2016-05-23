@@ -20,18 +20,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
@@ -46,10 +45,10 @@ namespace LongoMatch.Gui.Panel
 		const int COL_TEAM = 2;
 
 		ListStore teamsStore;
-		Team loadedTeam;
+		SportsTeam loadedTeam;
 		ITeamTemplatesProvider provider;
 		TreeIter selectedIter;
-		List<Team> teams;
+		List<SportsTeam> teams;
 
 		public TeamsTemplatesPanel ()
 		{
@@ -94,7 +93,7 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(Team));
+			teamsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(SportsTeam));
 			
 			var cell = new CellRendererText ();
 			cell.Editable = true;
@@ -150,9 +149,9 @@ namespace LongoMatch.Gui.Panel
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;
 
-			teams = new List<Team> ();
+			teams = new List<SportsTeam> ();
 			teamsStore.Clear ();
-			foreach (Team team in provider.Templates) {
+			foreach (SportsTeam team in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
 				string name = team.Name;
@@ -181,7 +180,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		bool SaveTemplate (Team template)
+		bool SaveTemplate (SportsTeam template)
 		{
 			try {
 				provider.Save (template);
@@ -265,7 +264,7 @@ namespace LongoMatch.Gui.Panel
 				if (newName == null) {
 					return;
 				}
-				Team newTeam = loadedTeam.Clone ();
+				SportsTeam newTeam = loadedTeam.Clone ();
 				newTeam.ID = Guid.NewGuid ();
 				newTeam.Name = newName;
 				newTeam.Static = false;
@@ -293,7 +292,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadTeam (Team team, TreeIter selectedIter)
+		void LoadTeam (SportsTeam team, TreeIter selectedIter)
 		{
 			PromptSave (true);
 
@@ -305,12 +304,12 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			Team selected;
+			SportsTeam selected;
 			TreeIter iter;
 
 			teamseditortreeview.Selection.GetSelected (out iter);
 			try {
-				Team team = teamsStore.GetValue (iter, COL_TEAM) as Team;
+				SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 				team.Load ();
 				selected = team.Clone ();
 			} catch (Exception ex) {
@@ -341,7 +340,7 @@ namespace LongoMatch.Gui.Panel
 				return;
 
 			try {
-				Team newTeam = provider.LoadFile (fileName);
+				SportsTeam newTeam = provider.LoadFile (fileName);
 
 				if (newTeam != null) {
 					bool abort = false;
@@ -383,11 +382,11 @@ namespace LongoMatch.Gui.Panel
 			if (loadedTeam != null) {
 				if (loadedTeam.Static) {
 					string msg = Catalog.GetString ("System teams can't be deleted");
-					MessagesHelpers.WarningMessage (this, msg);
+					Helpers.MessagesHelpers.WarningMessage (this, msg);
 					return;
 				} else {
 					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
-					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
 						provider.Delete (loadedTeam);
 						teamsStore.Remove (ref selectedIter);
 						teams.Remove (loadedTeam);
@@ -402,7 +401,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTeamClicked (object sender, EventArgs e)
 		{
 			bool create = false;
-			Team auxdelete = null;
+			SportsTeam auxdelete = null;
 			
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
@@ -412,14 +411,14 @@ namespace LongoMatch.Gui.Panel
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
 					continue;
 				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The template already exists. Do you want to overwrite it?");
-					if (MessagesHelpers.QuestionMessage (this, msg)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						auxdelete = teams.FirstOrDefault (t => t.Name == dialog.Text);
 						break;
@@ -434,8 +433,8 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (teams.FirstOrDefault (t => t.Name == dialog.SelectedTemplate), dialog.Text);
 				} else {
-					Team team;
-					team = Team.DefaultTemplate (dialog.Count);
+					SportsTeam team;
+					team = SportsTeam.DefaultTemplate (dialog.Count);
 					team.TeamName = dialog.Text;
 					team.Name = dialog.Text;
 					if (!SaveTemplate (team)) {
@@ -486,7 +485,7 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 			teamsStore.GetIter (out iter, new TreePath (args.Path));
  
-			Team team = teamsStore.GetValue (iter, COL_TEAM) as Team;
+			SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 			if (team.Name != args.NewText) {
 				if (teams.Any (t => t.Name == args.NewText)) {
 					Config.GUIToolkit.ErrorMessage (

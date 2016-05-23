@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
+using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
@@ -93,7 +93,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			List<Team> teams = Event.TaggedTeams;
+			List<SportsTeam> teams = Event.TaggedTeams;
 			if (teams.Count == 1) {
 				color = teams [0].Color;
 			} else {

@@ -29,8 +29,6 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
-using VAS.Core.Store.Templates;
-using VAS.DB;
 
 namespace LongoMatch.Services
 {
@@ -227,7 +225,7 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider: TemplatesProvider<SportsTeam>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{

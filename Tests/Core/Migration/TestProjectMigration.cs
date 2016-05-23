@@ -61,14 +61,14 @@ namespace Tests.Core.Migration
 			// Check that team tags have changed from TeamType to List<Team> correctly
 			foreach (TimelineEventLongoMatch evt in project.Timeline) {
 				if (evt.Team == TeamType.LOCAL) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<Team> { project.LocalTeamTemplate });
+					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> { project.LocalTeamTemplate });
 				} else if (evt.Team == TeamType.VISITOR) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<Team> { project.VisitorTeamTemplate });
+					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> { project.VisitorTeamTemplate });
 				} else if (evt.Team == TeamType.BOTH) {
 					Assert.AreEqual (evt.Teams,
-						new ObservableCollection<Team> { project.LocalTeamTemplate, project.VisitorTeamTemplate });
+						new ObservableCollection<SportsTeam> { project.LocalTeamTemplate, project.VisitorTeamTemplate });
 				} else if (evt.Team == TeamType.NONE) {
-					Assert.AreEqual (evt.Teams, new ObservableCollection<Team> ());
+					Assert.AreEqual (evt.Teams, new ObservableCollection<SportsTeam> ());
 				}
 			}
 

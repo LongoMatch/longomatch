@@ -8,8 +8,6 @@
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LongoMatch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,14 +63,6 @@
       <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
       <Name>LongoMatch.GUI.Multimedia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>LongoMatch.GUI.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>LongoMatch.Drawing.Cairo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
@@ -93,10 +83,6 @@
       <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
       <Name>VAS.DB.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Multimedia\LongoMatch.Multimedia.csproj">
-      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
-      <Name>LongoMatch.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
       <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>
@@ -108,6 +94,22 @@
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+      <Name>VAS.Drawing.Cairo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Multimedia\VAS.Multimedia.csproj">
+      <Project>{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}</Project>
+      <Name>VAS.Multimedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+      <Name>VAS.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+      <Name>VAS.UI.Helpers.Gtk2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

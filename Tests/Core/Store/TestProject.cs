@@ -38,8 +38,8 @@ namespace Tests.Core.Store
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = Team.DefaultTemplate (10);
-			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
@@ -372,10 +372,10 @@ namespace Tests.Core.Store
 			p.Dashboard = new DashboardLongoMatch ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.LocalTeamTemplate = new Team ();
+			p.LocalTeamTemplate = new SportsTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.VisitorTeamTemplate = new Team ();
+			p.VisitorTeamTemplate = new SportsTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 			p.Description = new ProjectDescription ();

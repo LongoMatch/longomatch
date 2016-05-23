@@ -21,8 +21,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {

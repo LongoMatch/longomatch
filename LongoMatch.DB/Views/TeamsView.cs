@@ -21,7 +21,7 @@ using VAS.DB;
 
 namespace LongoMatch.DB.Views
 {
-	public class TeamsView: GenericView <Team>
+	public class TeamsView: GenericView <SportsTeam>
 	{
 		public TeamsView (CouchbaseStorage storage) : base (storage)
 		{

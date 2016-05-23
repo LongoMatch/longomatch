@@ -149,12 +149,12 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListTeams ()
 		{
-			Team t = Team.DefaultTemplate (5);
+			SportsTeam t = SportsTeam.DefaultTemplate (5);
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
 
-			List<Team> teams = storage.RetrieveAll<Team> ().ToList (); 
+			List<SportsTeam> teams = storage.RetrieveAll<SportsTeam> ().ToList (); 
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
@@ -162,22 +162,22 @@ namespace Tests.DB
 			Assert.IsTrue (teams.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
-				var te = Team.DefaultTemplate (5);
+				var te = SportsTeam.DefaultTemplate (5);
 				te.Name = "Team" + (i + 2);
 				storage.Store (te);
 			}
 
-			Assert.AreEqual (6, storage.RetrieveAll<Team> ().Count ());
+			Assert.AreEqual (6, storage.RetrieveAll<SportsTeam> ().Count ());
 		}
 
 		[Test ()]
 		public void TestLoadTeam ()
 		{
-			Team t = Team.DefaultTemplate (5);
+			SportsTeam t = SportsTeam.DefaultTemplate (5);
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
-			Team t1 = storage.Retrieve<Team> (new QueryFilter ()).First ();
+			SportsTeam t1 = storage.Retrieve<SportsTeam> (new QueryFilter ()).First ();
 			t1.IsLoaded = true;
 			Utils.AreEquals (t, t1, false);
 			t1.IsLoaded = false;

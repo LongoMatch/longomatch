@@ -24,7 +24,8 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store.Playlists;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -48,7 +49,7 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
+			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
@@ -64,7 +65,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
+		void HandlePlaylistElementLoaded (Playlist playlist, IPlaylistElement element)
 		{
 			playlisttreeview1.QueueDraw ();
 		}
@@ -86,12 +87,12 @@ namespace LongoMatch.Gui.Component
 				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
 				element = el as IPlaylistElement;
 			}
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element, true);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (playlist, element, true);
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitNewPlaylist (Project);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (Project);
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
@@ -101,7 +102,7 @@ namespace LongoMatch.Gui.Component
 			menu = new Menu ();
 			foreach (Playlist playlist in Project.Playlists) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
+				plmenu.Activated += (s, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();

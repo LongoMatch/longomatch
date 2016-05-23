@@ -15,13 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using Gtk;
-using LongoMatch.Core.Common;
 using System.Collections.Generic;
-using LongoMatch.Core.Store.Templates;
 using Gdk;
+using Gtk;
+using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -37,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public void Load (List<Team> teams)
+		public void Load (List<SportsTeam> teams)
 		{
 			Clear ();
 			pixrender = new CellRendererPixbuf ();
@@ -53,8 +52,8 @@ namespace LongoMatch.Gui.Component
 				PackStart (texrender, true);
 			}
 			
-			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(Team));
-			foreach (Team t in teams) {
+			store = new ListStore (typeof(Pixbuf), typeof(string), typeof(SportsTeam));
+			foreach (SportsTeam t in teams) {
 				Pixbuf shield;
 				int size = StyleConf.NewTeamsIconSize;
 
@@ -70,12 +69,12 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
 
-		public Team ActiveTeam {
+		public SportsTeam ActiveTeam {
 			get {
 				TreeIter iter;
 
 				GetActiveIter (out iter);
-				return store.GetValue (iter, 2) as Team;
+				return store.GetValue (iter, 2) as SportsTeam;
 			}
 		}
 	}

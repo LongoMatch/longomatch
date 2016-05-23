@@ -17,7 +17,7 @@
 //
 using System;
 using Cairo;
-using LongoMatch.Gui.Helpers;
+using VAS.UI.Helpers;
 
 
 namespace LongoMatch.Core.Common

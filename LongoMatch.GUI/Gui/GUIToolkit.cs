@@ -18,23 +18,23 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
 using LongoMatch.Video.Utils;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Filters;
 using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
-using System.Linq;
 
 namespace LongoMatch.Gui
 {
@@ -235,7 +235,7 @@ namespace LongoMatch.Gui
 			return jobs;
 		}
 
-		public void ExportFrameSeries (ProjectLongoMatch openedProject, TimelineEvent play, string snapshotsDir)
+		public void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
 		{
 			SnapshotsDialog sd;
 			uint interval;
@@ -251,7 +251,8 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (openedProject.Description.FileSet, play, interval, outDir);
+				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play, 
+					          interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, mainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
@@ -259,7 +260,8 @@ namespace LongoMatch.Gui
 				sd.Destroy ();
 		}
 
-		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, 
+		                      bool editNotes)
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
@@ -289,7 +291,8 @@ namespace LongoMatch.Gui
 			if (play == null) {
 				dialog.LoadFrame (image, project as ProjectLongoMatch);
 			} else {
-				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig, project as ProjectLongoMatch);
+				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig, 
+					project as ProjectLongoMatch);
 			}
 			dialog.Show ();
 			dialog.Run ();
@@ -309,10 +312,10 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public void SelectProject (List<ProjectLongoMatch> projects)
+		public void SelectProject (List<Project> projects)
 		{
 			Log.Information ("Select project");
-			mainWindow.SelectProject (projects);
+			mainWindow.SelectProject (projects.Cast<ProjectLongoMatch> ().ToList ());
 		}
 
 		public void OpenCategoriesTemplatesManager ()
@@ -412,10 +415,10 @@ namespace LongoMatch.Gui
 
 		public void OpenProject (Project project, ProjectType projectType, 
 		                         CaptureSettings props, EventsFilter filter,
-		                         out IAnalysisWindow analysisWindow)
+		                         out IAnalysisWindowBase analysisWindow)
 		{
 			Log.Information ("Open project");
-			analysisWindow = mainWindow.SetProject (project as ProjectLongoMatch, projectType, props, filter);
+			analysisWindow = mainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
 		}
 
 		public void CloseProject ()

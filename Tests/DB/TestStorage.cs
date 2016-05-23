@@ -150,24 +150,24 @@ namespace Tests.DB
 		[Test ()]
 		public void TestIsChangedResetted ()
 		{
-			Team t, t1;
+			SportsTeam t, t1;
 			ObjectChangedParser parser;
 			List<IStorable> storables = null, changed = null;
 			StorableNode parent = null;
 
 			parser = new ObjectChangedParser ();
-			t = Team.DefaultTemplate (10);
+			t = SportsTeam.DefaultTemplate (10);
 			storage.Store (t);
 
 			// After loading an object
-			t1 = DocumentsSerializer.LoadObject (typeof(Team), t.ID, db) as Team;
+			t1 = DocumentsSerializer.LoadObject (typeof(SportsTeam), t.ID, db) as SportsTeam;
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
 			Assert.NotNull (t1.DocumentID);
 
 			// After filling an object
-			t1 = new Team ();
+			t1 = new SportsTeam ();
 			t1.ID = t.ID;
 			t1.DocumentID = t.ID.ToString ();
 			t1.IsChanged = true;
@@ -225,10 +225,10 @@ namespace Tests.DB
 		[Test ()]
 		public void TestTeam ()
 		{
-			Team team1 = Team.DefaultTemplate (10);
-			storage.Store<Team> (team1);
+			SportsTeam team1 = SportsTeam.DefaultTemplate (10);
+			storage.Store<SportsTeam> (team1);
 			Assert.AreEqual (11, db.DocumentCount);
-			Team team2 = storage.Retrieve<Team> (team1.ID);
+			SportsTeam team2 = storage.Retrieve<SportsTeam> (team1.ID);
 			Assert.AreEqual (team1.ID, team2.ID);
 			Assert.AreEqual (team1.List.Count, team2.List.Count);
 			Assert.IsNotNull (team2.DocumentID);
@@ -283,8 +283,8 @@ namespace Tests.DB
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = Team.DefaultTemplate (10);
-			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
@@ -314,8 +314,8 @@ namespace Tests.DB
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = Team.DefaultTemplate (10);
-			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
@@ -328,7 +328,7 @@ namespace Tests.DB
 					EventType = p.EventTypes [i],
 					Start = new Time (1000),
 					Stop = new Time (2000),
-					Players = new ObservableCollection<PlayerLongoMatch> { p.LocalTeamTemplate.List [0] },
+					Players = new ObservableCollection<Player> { p.LocalTeamTemplate.Players [0] },
 				};
 				p.Timeline.Add (evt);
 			}
@@ -340,7 +340,7 @@ namespace Tests.DB
 
 			ProjectLongoMatch p2 = storage.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
-			Assert.AreEqual (p2.LocalTeamTemplate.List [0], (p2.Timeline [0] as TimelineEventLongoMatch).Players [0]);
+			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
 			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
 				p2.Timeline [0].EventType);
 			Assert.IsNotNull (p2.DocumentID);
@@ -355,7 +355,7 @@ namespace Tests.DB
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = Team.DefaultTemplate (10);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
 
 			for (int i = 0; i < 10; i++) {
 				TimelineEventLongoMatch evt = new TimelineEventLongoMatch {
@@ -377,8 +377,8 @@ namespace Tests.DB
 			Assert.DoesNotThrow (() => storage.Retrieve<ProjectLongoMatch> (p.ID));
 
 			// Delete an event with a PlayerLongoMatch, a Team and an EventType, it should delete only the timeline event
-			(p.Timeline [0] as TimelineEventLongoMatch).Teams.Add (p.LocalTeamTemplate);
-			(p.Timeline [0] as TimelineEventLongoMatch).Players.Add (p.LocalTeamTemplate.List [0]);
+			p.Timeline [0].Teams.Add (p.LocalTeamTemplate);
+			p.Timeline [0].Players.Add (p.LocalTeamTemplate.List [0]);
 			p.Timeline.Remove (p.Timeline [0]);
 			Assert.DoesNotThrow (() => storage.Retrieve<ProjectLongoMatch> (p.ID));
 		}

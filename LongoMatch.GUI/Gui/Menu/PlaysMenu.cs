@@ -20,11 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
+using VAS;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -86,14 +88,14 @@ namespace LongoMatch.Gui.Menus
 					plMenu.Append (item);
 					item.Activated += (sender, e) => {
 						IEnumerable<IPlaylistElement> elements = events.Select (p => new PlaylistPlayElement (p));
-						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList ());
+						((LMCommon.EventsBroker)Config.EventsBroker).EmitAddPlaylistElement (pl, elements.ToList ());
 					};
 				}
 				item = new MenuItem (Catalog.GetString ("Create new playlist..."));
 				plMenu.Append (item);
 				item.Activated += (sender, e) => {
 					IEnumerable<IPlaylistElement> elements = events.Select (p => new PlaylistPlayElement (p));
-					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList ());
+					((LMCommon.EventsBroker)Config.EventsBroker).EmitAddPlaylistElement (null, elements.ToList ());
 				};
 				plMenu.ShowAll ();
 				addToPlaylistMenu.Submenu = plMenu;
@@ -162,7 +164,7 @@ namespace LongoMatch.Gui.Menus
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
 					item.Activated += (sender, e) => {
-						Config.EventsBroker.EmitMoveToEventType (plays [0], c);
+						((LMCommon.EventsBroker)Config.EventsBroker).EmitMoveToEventType (plays [0], c);
 					}; 
 				}
 				catMenu.ShowAll ();
@@ -182,7 +184,7 @@ namespace LongoMatch.Gui.Menus
 					drawingMenu.Append (editItem);
 					drawingMenu.Append (deleteItem);
 					editItem.Activated += (sender, e) => {
-						Config.EventsBroker.EmitDrawFrame (plays [0], index,
+						((LMCommon.EventsBroker)Config.EventsBroker).EmitDrawFrame (plays [0], index,
 							plays [0].Drawings [index].CameraConfig, false);
 					}; 
 					deleteItem.Activated += (sender, e) => {
@@ -229,15 +231,15 @@ namespace LongoMatch.Gui.Menus
 			Add (render);
 			
 			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
-			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays [0]);
+			snapshot.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitSnapshotSeries (plays [0]);
 			Add (snapshot);
 
 			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays.Cast<TimelineEvent> ().ToList ());
 			Add (duplicate);
 
 			del = new MenuItem ("");
-			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
+			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays.Cast<TimelineEvent> ().ToList ());
 			Add (del);
 
 			ShowAll ();
@@ -245,7 +247,7 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNewPlayActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitNewEvent (eventType,
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewEvent (eventType,
 				eventTime: time,
 				start: time - new Time { TotalSeconds = 10 },
 				stop: time + new Time { TotalSeconds = 10 });
@@ -257,7 +259,7 @@ namespace LongoMatch.Gui.Menus
 			foreach (TimelineEvent p in plays) {
 				pl.Elements.Add (new PlaylistPlayElement (p));
 			}
-			Config.EventsBroker.EmitRenderPlaylist (pl);
+			((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (pl);
 		}
 	}
 }
