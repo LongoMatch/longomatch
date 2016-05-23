@@ -26,18 +26,22 @@ namespace LongoMatch.Core.Filters
 {
 	public class EventsFilter : VASFilters.EventsFilter
 	{
-		new ProjectLongoMatch project;
 
 		public EventsFilter (ProjectLongoMatch project) : base (project)
 		{
-			this.project = project;
+		}
+
+		ProjectLongoMatch Project {
+			get {
+				return project as ProjectLongoMatch;
+			}
 		}
 
 		protected override void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
-				VisiblePlayers = project.LocalTeamTemplate.PlayingPlayersList.Union (
-					project.VisitorTeamTemplate.PlayingPlayersList).Cast<Player> ().ToList ();
+				VisiblePlayers = Project.LocalTeamTemplate.PlayingPlayersList.Union (
+					Project.VisitorTeamTemplate.PlayingPlayersList).Cast<Player> ().ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
 			}
@@ -76,8 +80,8 @@ namespace LongoMatch.Core.Filters
 				}
 					
 				if (play.Players.Count == 0 &&
-				    VisiblePlayers.Count == project.LocalTeamTemplate.PlayingPlayersList.Union (
-					    project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
+				    VisiblePlayers.Count == Project.LocalTeamTemplate.PlayingPlayersList.Union (
+					    Project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
 					player_match = true;
 
 				} else {
