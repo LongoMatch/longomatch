@@ -183,10 +183,7 @@ LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Drawing/Makefile
-LongoMatch.Drawing.Cairo/Makefile
 LongoMatch.Migration/Makefile
-LongoMatch.Multimedia/Makefile
-LongoMatch.GUI.Helpers/Makefile
 LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile
