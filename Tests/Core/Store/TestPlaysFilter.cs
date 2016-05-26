@@ -183,13 +183,13 @@ namespace Tests.Core.Store
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 
-				foreach (Player player in p.LocalTeamTemplate.List) {
+				foreach (PlayerLongoMatch player in p.LocalTeamTemplate.List) {
 					filter.FilterPlayer (player, true);
 				}
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
 				Assert.AreEqual (3, filter.VisiblePlays.Count);
 
-				foreach (Player player in p.VisitorTeamTemplate.List) {
+				foreach (PlayerLongoMatch player in p.VisitorTeamTemplate.List) {
 					filter.FilterPlayer (player, true);
 				}
 				Assert.AreEqual (5, filter.VisiblePlayers.Count);
