@@ -61,11 +61,11 @@ Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libvas", "VAS\libvas\libvas
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Drawing", "VAS\VAS.Drawing\VAS.Drawing.shproj", "{4041429C-9260-473E-93DB-E6B5389B7115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing.Net45\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Gtk2", "VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj", "{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj", "{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
