@@ -1,5 +1,5 @@
 NuGet.exe:
-	python -c "from urllib import urlretrieve;import ssl;context = ssl._create_unverified_context();urlretrieve('http://nuget.org/nuget.exe', 'NuGet.exe', context=context);"
+	curl -k -L -o "NuGet.exe" "http://nuget.org/nuget.exe"
 
 restore: NuGet.exe
 	mono NuGet.exe install $(top_srcdir)/LongoMatch.Core/packages.config -source "https://www.nuget.org/api/v2/;$(expanded_datadir)/nuget" -NonInteractive -solutionDir ../

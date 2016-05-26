@@ -49,7 +49,7 @@
         <NuGetCommand Condition=" '$(OS)' == 'Windows_NT'">"$(NuGetExePath)"</NuGetCommand>
         <NuGetCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(NuGetExePath)"</NuGetCommand>
 
-        <DownloadNuGetCommand>python -c "from urllib import urlretrieve;import ssl;context = ssl._create_unverified_context();urlretrieve('http://nuget.org/nuget.exe', '$(NuGetExePath)', context=context);"</DownloadNuGetCommand>
+        <DownloadNuGetCommand>curl -k -L -o '$(NuGetExePath.Replace('\', '/'))' 'http://nuget.org/nuget.exe'</DownloadNuGetCommand>
 
         <PackageOutputDir Condition="$(PackageOutputDir) == ''">$(TargetDir.Trim('\\'))</PackageOutputDir>
 
