@@ -130,6 +130,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			return true;
 		}
 
@@ -139,6 +140,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
 			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
 			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
+			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			return true;
 		}
 
