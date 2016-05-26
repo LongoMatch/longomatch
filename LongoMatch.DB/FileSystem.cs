@@ -174,7 +174,7 @@ namespace LongoMatch.DB
 
 		public VfsStream OpenReadFile (string filename)
 		{
-			return new VfsProxyStream (new FileStream (filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read), filename);
+			return new VfsProxyStream (new FileStream (filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), filename);
 		}
 
 		public VfsStream OpenWriteFile (string filename)

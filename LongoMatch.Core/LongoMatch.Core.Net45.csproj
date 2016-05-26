@@ -66,4 +66,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weavers\Weavers.csproj">
+      <Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
+      <Name>Weavers</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
