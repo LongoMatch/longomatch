@@ -51,6 +51,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Catalog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\SportsTeam.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migration\TypesMappings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

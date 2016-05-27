@@ -18,6 +18,7 @@
 using VAS.DB.Views;
 using LongoMatch.Core.Store.Templates;
 using VAS.DB;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB.Views
 {
@@ -25,6 +26,7 @@ namespace LongoMatch.DB.Views
 	{
 		public TeamsView (CouchbaseStorage storage) : base (storage)
 		{
+			DocumentType = "Team";
 		}
 
 		protected override string ViewVersion {
