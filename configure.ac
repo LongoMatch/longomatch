@@ -204,5 +204,4 @@ data/theme/Makefile
 po/Makefile.in
 ])
 
-
 AC_OUTPUT
