@@ -107,6 +107,7 @@
     <Compile Include="LocalStorage.cs" />
     <Compile Include="Core\Common\TestDirectoryMonitor.cs" />
     <Compile Include="Services\TestImportMonitorService.cs" />
+    <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
@@ -144,6 +145,10 @@
     <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
       <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
       <Name>VAS.Services.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
+      <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
+      <Name>LongoMatch.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

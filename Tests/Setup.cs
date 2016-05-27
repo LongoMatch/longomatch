@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2015 Fluendo S.A.
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,22 +15,20 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using LongoMatch.Core.Store.Templates;
-using VAS.DB.Views;
+using NUnit.Framework;
 
-namespace LongoMatch.DB.Views
+namespace Tests
 {
-	public class DashboardsView: GenericView <DashboardLongoMatch>
+	[SetUpFixture]
+	public class SetupClass
 	{
-		public DashboardsView (CouchbaseStorageLongoMatch storage) : base (storage)
+		[SetUp]
+		public void Setup ()
 		{
-			DocumentType = "Dashboard";
-		}
-
-		protected override string ViewVersion {
-			get {
-				return "1";
-			}
+			// Initialize LongoMath.Core by using a type, this will call the module initialization
+			var st = new SportsTeam ();
 		}
 	}
 }

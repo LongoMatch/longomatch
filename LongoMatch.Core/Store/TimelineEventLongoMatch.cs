@@ -64,7 +64,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
-	public class PenaltyCardEvent: TimelineEvent
+	public class PenaltyCardEvent: TimelineEventLongoMatch
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -82,7 +82,7 @@ namespace LongoMatch.Core.Store
 
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
-	public class ScoreEvent: TimelineEvent
+	public class ScoreEvent: TimelineEventLongoMatch
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]

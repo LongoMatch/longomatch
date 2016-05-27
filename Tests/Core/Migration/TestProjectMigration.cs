@@ -34,7 +34,6 @@ namespace Tests.Core.Migration
 	public class TestProjectMigration
 	{
 		[Test ()]
-		[Ignore ("Migration still pending to revise (VAS migration)")]
 		public void TestMigrateFromV0 ()
 		{
 			ProjectLongoMatch project;

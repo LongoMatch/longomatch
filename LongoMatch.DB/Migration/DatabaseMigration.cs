@@ -263,8 +263,8 @@ namespace LongoMatch.DB
 							teamNameToID [project.VisitorTeamTemplate.Name] = project.VisitorTeamTemplate.ID;
 						}
 						try {
-							ProjectMigration.Migrate0 (project as ProjectLongoMatch, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
-							database.Store<Project> (project, true);
+							ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
+							database.Store (project, true);
 						} catch (Exception ex) {
 							Log.Exception (ex);
 							ret = false;
@@ -281,11 +281,11 @@ namespace LongoMatch.DB
 			Task.WaitAll (tasks.ToArray ());
 
 			// Create a query and print the result to traverse the iterator
-			Log.Information ("Projects index created:" + database.RetrieveAll<Project> ().Count ());
+			Log.Information ("Projects index created:" + database.RetrieveAll<ProjectLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Projects index created", id);
 
-			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEvent> ().Count ());
+			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEventLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Events index created", id);
 
@@ -293,7 +293,7 @@ namespace LongoMatch.DB
 			percent += step;
 			progress.Report (percent, "Teams index created", id);
 
-			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
+			Log.Information ("DAshboards index created:" + database.RetrieveAll<DashboardLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Dashboards index created", id);
 

@@ -15,13 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using Couchbase.Lite;
-using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.DB;
 
@@ -33,33 +26,11 @@ namespace LongoMatch.DB
 		{
 		}
 
-		public override IStorage Add (string name)
+		protected override IStorage CreateStorage (string name)
 		{
-			// Couchbase doesn't accept uppercase databases.
-			name = SanitizeDBName (name);
-			var storage = Add (name, false);
-			if (storage != null) {
-				VAS.Config.EventsBrokerBase?.EmitDatabaseCreated (name);
-				Config.EventsBroker?.EmitDatabaseCreated (name);
-			}
-			return storage;
+			return new CouchbaseStorageLongoMatch (manager, name);
 		}
 
-		protected override IStorage Add (string name, bool check)
-		{
-			if (check && manager.AllDatabaseNames.Contains (name)) {
-				throw new Exception ("A database with the same name already exists");
-			}
-			try {
-				Log.Information ("Creating new database " + name);
-				IStorage db = new CouchbaseStorageLongoMatch (manager, name);
-				Databases.Add (db);
-				return db;
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				return null;
-			}
-		}
 	}
 }
 

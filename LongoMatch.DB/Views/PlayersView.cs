@@ -17,7 +17,7 @@
 //
 using LongoMatch.Core.Store;
 using VAS.DB.Views;
-using VAS.DB;
+using VAS.Core.Store;
 
 namespace LongoMatch.DB.Views
 {
@@ -25,6 +25,7 @@ namespace LongoMatch.DB.Views
 	{
 		public PlayersView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
+			DocumentType = "Player";
 		}
 
 		protected override string ViewVersion {

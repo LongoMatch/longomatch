@@ -21,7 +21,6 @@ using Couchbase.Lite;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
 using VAS.DB.Views;
-using VAS.DB;
 
 namespace LongoMatch.DB.Views
 {
@@ -31,6 +30,7 @@ namespace LongoMatch.DB.Views
 
 		public ProjectsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
+			DocumentType = "Project";
 		}
 
 		protected override string ViewVersion {
