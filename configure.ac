@@ -4,6 +4,7 @@ AC_PREREQ([2.54])
 AC_INIT([LongoMatch],
 	m4_esyscmd([build/git-version-gen .tarball-version]),
 	[contact@longomatch.com])
+AC_CONFIG_AUX_DIR([.])
 AM_INIT_AUTOMAKE([1.11 foreign])
 AM_SILENT_RULES([yes])
 AM_MAINTAINER_MODE([enable])
@@ -149,6 +150,8 @@ AC_MSG_RESULT($ostype)
 
 dnl package checks, per config
 
+AC_CONFIG_SUBDIRS([VAS])
+
 AC_CONFIG_FILES([env], [chmod +x env])
 AC_CONFIG_FILES([
 Makefile
@@ -175,16 +178,12 @@ pkgconfig/longomatch-services.pc
 
 .nuget/Makefile
 
-Weavers/Makefile
 AssemblyInfo/AssemblyInfo.cs
 LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Drawing/Makefile
-LongoMatch.Drawing.Cairo/Makefile
 LongoMatch.Migration/Makefile
-LongoMatch.Multimedia/Makefile
-LongoMatch.GUI.Helpers/Makefile
 LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile

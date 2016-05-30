@@ -30,6 +30,7 @@ using VAS.Core.Interfaces.Multimedia;
 using VAS.Services;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
+using Catalog = LongoMatch.Core.Catalog;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;

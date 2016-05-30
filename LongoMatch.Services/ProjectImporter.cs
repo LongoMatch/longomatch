@@ -18,12 +18,13 @@
 using System;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
+using VAS.Core.Store;
 
 namespace LongoMatch.Services
 {
 	public class ProjectImporter
 	{
-		public Func<ProjectLongoMatch> ImportFunction {
+		public Func<Project> ImportFunction {
 			get;
 			set;
 		}
