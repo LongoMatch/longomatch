@@ -24,6 +24,7 @@ using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
@@ -31,6 +32,7 @@ using VAS.Services;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
 using Catalog = LongoMatch.Core.Catalog;
+
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -115,6 +117,7 @@ namespace LongoMatch.Services
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
 			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
+			Config.EventsAggregator = new EventsAggregator ();
 			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
