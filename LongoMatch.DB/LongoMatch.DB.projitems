@@ -23,6 +23,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManagerLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\" />

@@ -29,6 +29,7 @@ namespace LongoMatch.DB.Views
 	{
 		public TimelineEventsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
+			DocumentType = "TimelineEvent";
 			/* We emit 1 row per player changing the Players property to Player */
 			FilterProperties.Remove ("Players");
 			FilterProperties.Remove ("Teams");

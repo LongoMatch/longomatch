@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2015 Fluendo S.A.
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,16 +15,16 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store.Templates;
 using VAS.DB.Views;
+using VAS.Core.Store;
 
 namespace LongoMatch.DB.Views
 {
-	public class DashboardsView: GenericView <DashboardLongoMatch>
+	public class EventTypeView:  GenericView <EventType>
 	{
-		public DashboardsView (CouchbaseStorageLongoMatch storage) : base (storage)
+		public EventTypeView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
-			DocumentType = "Dashboard";
+			DocumentType = "EventType";
 		}
 
 		protected override string ViewVersion {

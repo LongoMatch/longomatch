@@ -107,8 +107,6 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
-			DocumentsSerializerHelper.AddTypeTranslation (typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
-
 			string tmpPath = Path.GetTempPath ();
 			string homePath = Path.Combine (tmpPath, "LongoMatch");
 			string dbPath = Path.Combine (homePath, "db");

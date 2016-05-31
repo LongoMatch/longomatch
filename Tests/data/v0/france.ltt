@@ -5,7 +5,7 @@
   "List": [
     {
       "$id": "2",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "7429b30e-fcdd-4c45-88fb-214763c88cf3",
       "Name": "Florent",
       "LastName": "Pietrus",
@@ -22,7 +22,7 @@
     },
     {
       "$id": "3",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "07b9ef96-9134-4c18-874e-fc17b206e0ff",
       "Name": "Evan",
       "LastName": "Fournier",
@@ -39,7 +39,7 @@
     },
     {
       "$id": "4",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "6f9ccf94-fe93-486e-8733-e56d973169af",
       "Name": "Thomas",
       "LastName": "Heurtel",
@@ -56,7 +56,7 @@
     },
     {
       "$id": "5",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "193e31eb-a52a-4d71-bc55-7e80e7c311d1",
       "Name": "Charles",
       "LastName": "Kahudi",
@@ -73,7 +73,7 @@
     },
     {
       "$id": "6",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "30441575-2885-4ebc-85f4-49d6a3941708",
       "Name": "Mickael",
       "LastName": "Gelabale",
@@ -90,7 +90,7 @@
     },
     {
       "$id": "7",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "c7f340f3-e4d9-49f8-b74e-d365db8615c1",
       "Name": "Antoine",
       "LastName": "Diot",
@@ -107,7 +107,7 @@
     },
     {
       "$id": "8",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "ed5cd5a8-5c3a-49cd-a01a-3d9e46a56077",
       "Name": "Kim",
       "LastName": "Tillie",
@@ -124,7 +124,7 @@
     },
     {
       "$id": "9",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "68df7163-92cc-47ac-8172-9c76fbb5b542",
       "Name": "Joffrey",
       "LastName": "Lauvergne",
@@ -141,7 +141,7 @@
     },
     {
       "$id": "10",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "ace81ec9-8e99-4ca1-8ecf-c1aa01e6bf7f",
       "Name": "Boris",
       "LastName": "Diaw",
@@ -158,7 +158,7 @@
     },
     {
       "$id": "11",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "f1e9bbc4-52d9-4e9e-afa5-fbf55c73456c",
       "Name": "Rudy",
       "LastName": "Gobert",
@@ -175,7 +175,7 @@
     },
     {
       "$id": "12",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "a40d1d96-c909-458c-919b-a053e838b3cc",
       "Name": "Edwin",
       "LastName": "Jackson",
@@ -192,7 +192,7 @@
     },
     {
       "$id": "13",
-      "$type": "LongoMatch.Core.Store.PlayerLongoMatch, LongoMatch.Core",
+      "$type": "LongoMatch.Core.Store.Player, LongoMatch.Core",
       "ID": "0368e3ab-8274-4fff-a264-85c9182792e2",
       "Name": "Nicolas",
       "LastName": "Batum",

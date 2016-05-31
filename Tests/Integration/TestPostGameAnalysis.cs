@@ -26,6 +26,7 @@ using LongoMatch.Addins;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Plugins;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
@@ -98,7 +99,6 @@ namespace Tests.Integration
 		}
 
 		[Test ()]
-		[Ignore ("Migration still pending to revise (VAS migration)")]
 		public void TestGameAnalysis ()
 		{
 			Guid projectID;
@@ -183,12 +183,22 @@ namespace Tests.Integration
 			Assert.IsNotNull (savedP);
 
 			// Import a new project
+			LongoMatchImporter importPlugin = new LongoMatchImporter ();
+			ProjectImporter importer = new ProjectImporter {
+				Description = importPlugin.Description + " test ",
+				ImportFunction = new Func<ProjectLongoMatch> (importPlugin.ImportProject),
+				FilterName = importPlugin.FilterName,
+				Extensions = importPlugin.FilterExtensions,
+				NeedsEdition = importPlugin.NeedsEdition,
+				CanOverwrite = importPlugin.CanOverwrite,
+			};
+			CoreServices.toolsManager.ProjectImporters.Add (importer);
 			p = null;
 			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
-			ProjectImporter importer = CoreServices.toolsManager.ProjectImporters.FirstOrDefault
-				(i => i.Description == "Import LongoMatch project"); 
 			guiToolkitMock.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), null)).Returns (
-				Task.Factory.StartNew (() => (object)importer));
+				Task.Factory.StartNew (
+					() => (object)importer)
+			);
 			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
 			Config.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {

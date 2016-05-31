@@ -27,6 +27,7 @@ using Moq;
 using NUnit.Framework;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using System.Linq;
 
 namespace Tests.Integration
 {
@@ -34,7 +35,6 @@ namespace Tests.Integration
 	public class TestDatabaseMigration
 	{
 		[Test ()]
-		[Ignore ("Migration still pending to revise (VAS migration)")]
 		public void TestMigratingOldDatabase ()
 		{
 			string tmpPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
@@ -75,9 +75,10 @@ namespace Tests.Integration
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Config.DatabaseManager.SetActiveByName ("longomatch");
 			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "spain.ltt")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "france.ltt")));
@@ -86,7 +87,6 @@ namespace Tests.Integration
 		}
 
 		[Test]
-		[Ignore ("Migration still pending to revise (VAS migration)")]
 		public void TestNoOldDatabaseToMigrate ()
 		{
 			string tmpPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());

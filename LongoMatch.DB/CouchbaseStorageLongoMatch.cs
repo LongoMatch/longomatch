@@ -15,12 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
 using Couchbase.Lite;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Store;
 using VAS.DB;
+using LongoMatch.DB.Views;
+using VAS.Core.Store.Playlists;
 
 namespace LongoMatch.DB
 {
@@ -28,10 +29,6 @@ namespace LongoMatch.DB
 	{
 		static CouchbaseStorageLongoMatch ()
 		{
-			#pragma warning disable 0618
-			DocumentsSerializerHelper.AddTypeTranslation (typeof(TeamTemplate), typeof(SportsTeam));
-			DocumentsSerializerHelper.AddTypeTranslation (typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
-			#pragma warning restore 0618
 		}
 
 		public CouchbaseStorageLongoMatch (Database db) : base (db)
@@ -49,12 +46,19 @@ namespace LongoMatch.DB
 
 		protected override void InitializeViews ()
 		{
-			base.InitializeViews ();
-			AddView (typeof(DashboardLongoMatch), new LongoMatch.DB.Views.DashboardsView (this));
-			AddView (typeof(SportsTeam), new LongoMatch.DB.Views.TeamsView (this));
-			AddView (typeof(ProjectLongoMatch), new LongoMatch.DB.Views.ProjectsView (this));
-			AddView (typeof(PlayerLongoMatch), new LongoMatch.DB.Views.PlayersView (this));
-			AddView (typeof(TimelineEventLongoMatch), new LongoMatch.DB.Views.TimelineEventsView (this));
+			AddView (typeof(EventType), new EventTypeView (this));
+			AddView (typeof(TimelineEventLongoMatch), new TimelineEventsView (this));
+			AddView (typeof(ProjectLongoMatch), new ProjectsView (this));
+			AddView (typeof(SportsTeam), new TeamsView (this));
+			AddView (typeof(DashboardLongoMatch), new DashboardsView (this));
+			AddView (typeof(PlayerLongoMatch), new PlayersView (this));
+		}
+
+		protected override void InitializeDocumentTypeMappings ()
+		{
+			base.InitializeDocumentTypeMappings ();
+			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof(Playlist), "Playlist");
+			DocumentsSerializer.DocumentTypeBaseTypes.Add (typeof(MediaFileSet), "MediaFileSet");
 		}
 	}
 }

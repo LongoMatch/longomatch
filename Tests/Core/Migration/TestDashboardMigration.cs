@@ -36,7 +36,6 @@ namespace Tests.Core.Migration
 	public class TestDashboardMigration
 	{
 		[Test ()]
-		[Ignore ("Migration still pending to revise (VAS migration)")]
 		public void TestMigrateDashboardFromV0 ()
 		{
 			Dashboard dashboard, origDashboard;

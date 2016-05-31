@@ -41,7 +41,6 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
-			DocumentsSerializerHelper.AddTypeTranslation (typeof(TimelineEventLongoMatch), typeof(TimelineEventLongoMatch));
 			string dbPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);
