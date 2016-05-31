@@ -186,7 +186,7 @@ namespace Tests.Integration
 			LongoMatchImporter importPlugin = new LongoMatchImporter ();
 			ProjectImporter importer = new ProjectImporter {
 				Description = importPlugin.Description + " test ",
-				ImportFunction = new Func<ProjectLongoMatch> (importPlugin.ImportProject),
+				ImportFunction = new Func<Project> (importPlugin.ImportProject),
 				FilterName = importPlugin.FilterName,
 				Extensions = importPlugin.FilterExtensions,
 				NeedsEdition = importPlugin.NeedsEdition,
