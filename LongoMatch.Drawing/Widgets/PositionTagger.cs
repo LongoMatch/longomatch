@@ -182,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (ShowMenuEvent != null) {
 				List<TimelineEventLongoMatch> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
-				ShowMenuEvent (plays.Cast<TimelineEvent> ().ToList ());
+				ShowMenuEvent (plays);
 			}
 		}
 	}

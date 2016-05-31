@@ -95,9 +95,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (List<TimelineEvent> plays)
+		void HandleShowMenuEvent (IEnumerable<TimelineEvent> plays)
 		{
-			if (plays == null || plays.Count == 0) {
+			if (plays == null || !plays.Any ()) {
 				return;
 			}
 			menu.ShowMenu (project, plays);
