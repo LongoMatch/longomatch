@@ -9819,7 +9819,7 @@ You can continue with the current capture, cancel it or save your project.
           </packing>
         </child>
         <child>
-          <widget class="VAS.UI.Component.Timeline" id="timeline">
+          <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
           </widget>
