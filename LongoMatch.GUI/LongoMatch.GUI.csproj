@@ -193,6 +193,7 @@
     <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
     <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
     <Compile Include="Gui\Component\Timeline.cs" />
+    <Compile Include="Gui\Menu\PeriodsMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

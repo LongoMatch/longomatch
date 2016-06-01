@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
 		ProjectLongoMatch project;
-		PeriodsMenuBase menu;
+		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
 
@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Component
 
 			Helpers.Misc.SetFocus (this, false);
 
-			menu = new PeriodsMenuBase ();
+			menu = new PeriodsMenu ();
 		}
 
 		void ConnectSignals ()

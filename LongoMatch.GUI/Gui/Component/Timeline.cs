@@ -15,8 +15,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Gui.Menus;
 using VAS.Core.Filters;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
@@ -29,6 +29,13 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class Timeline : VAS.UI.Component.Timeline
 	{
+		protected PeriodsMenu periodsmenu;
+
+		public Timeline () : base ()
+		{
+			periodsmenu = new PeriodsMenu ();
+		}
+
 		protected override VASDrawing.Widgets.PlaysTimeline createPlaysTimeline ()
 		{
 			return new PlaysTimeline (new WidgetWrapper (getTimelinearea ()));
@@ -64,6 +71,11 @@ namespace LongoMatch.Gui.Component
 			timeline.ShowTimersMenuEvent += HandleShowTimersMenu;
 			timeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
 			QueueDraw ();
+		}
+
+		protected void HandleShowTimerMenuEvent (Timer timer, Time time)
+		{
+			periodsmenu.ShowMenu (project, timer, time, timeline.PeriodsTimeline, timeline);
 		}
 	}
 }
