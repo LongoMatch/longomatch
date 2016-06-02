@@ -607,7 +607,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitSeekEvent (pos, accurate, synchronous, throttled);
+			Seek (pos, accurate, synchronous, throttled);
 		}
 	}
 }
