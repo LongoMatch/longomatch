@@ -27,12 +27,13 @@ using VAS.Core.Store;
 using VAS.Drawing.CanvasObjects.Timeline;
 using LMCommon = VAS.Core.Common;
 using VASDrawing = VAS.Drawing;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
 	public class PlaysTimeline : VAS.Drawing.Widgets.PlaysTimeline
 	{
-		public PlaysTimeline (IWidget widget) : base (widget)
+		public PlaysTimeline (IWidget widget, IPlayerController player) : base (widget, player)
 		{
 			
 		}
