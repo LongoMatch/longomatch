@@ -31,11 +31,11 @@ using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Menus
 {
-	public class PlaysMenu : PlaysMenuBase
+	public class SportsPlaysMenu : PlaysMenu
 	{
 		public event EventHandler EditPlayEvent;
 
-		public PlaysMenu ()
+		public SportsPlaysMenu ()
 		{
 			CreateMenu ();
 		}

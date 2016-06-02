@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysPositionViewer : Gtk.Bin
 	{
-		PlaysMenu menu;
+		SportsPlaysMenu menu;
 		ProjectLongoMatch project;
 
 		public PlaysPositionViewer ()
@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			menu = new PlaysMenu ();
+			menu = new SportsPlaysMenu ();
 		}
 
 		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)

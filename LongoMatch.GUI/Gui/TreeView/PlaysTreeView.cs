@@ -152,7 +152,7 @@ namespace LongoMatch.Gui.Component
 		void ShowCategoryMenu (TreePath[] paths)
 		{
 			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
-			PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenuItem, Project, events);
+			SportsPlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenuItem, Project, events);
 			categoriesMenu.Popup ();
 		}
 

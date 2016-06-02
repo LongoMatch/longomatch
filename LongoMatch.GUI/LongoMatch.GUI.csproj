@@ -10,6 +10,8 @@
     <CodePage>65001</CodePage>
     <AssemblyName>LongoMatch.GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,7 +138,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
-    <Compile Include="Gui\Menu\PlaysMenu.cs" />
     <Compile Include="Gui\Component\TeamsComboBox.cs" />
     <Compile Include="Gui\Component\MediaFileChooser.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
     <Compile Include="Gui\Component\Timeline.cs" />
     <Compile Include="Gui\Menu\PeriodsMenu.cs" />
+    <Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
