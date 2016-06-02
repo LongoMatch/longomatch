@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override VASDrawing.Widgets.TimelineLabels createTimelineLabels ()
 		{
-			return new TimelineLabels (new WidgetWrapper (getLabelsarea ()));
+			return new TimelineLabels (new WidgetWrapper (LabelsArea));
 		}
 
 		public override void SetProject (Project project, EventsFilter filter)
