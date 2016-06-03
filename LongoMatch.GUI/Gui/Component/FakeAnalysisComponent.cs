@@ -37,6 +37,14 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
+			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
+			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			Config.EventsBroker.EventCreatedEvent -= HandleEventCreated;
+			Config.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
 		}
 
 		#region IAnalysisWindow implementation
@@ -53,16 +61,6 @@ namespace LongoMatch.Gui.Component
 
 		public void CloseOpenedProject ()
 		{
-		}
-
-		public void AddPlay (TimelineEvent play)
-		{
-			codingwidget1.AddPlay ((LongoMatch.Core.Store.TimelineEventLongoMatch)play);
-		}
-
-		public void DeletePlays (List<TimelineEvent> plays)
-		{
-			codingwidget1.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 
 		public void UpdateCategories ()
@@ -129,5 +127,15 @@ namespace LongoMatch.Gui.Component
 		}
 
 		#endregion
+
+		void HandleEventCreated (TimelineEvent play)
+		{
+			codingwidget1.AddPlay ((LongoMatch.Core.Store.TimelineEventLongoMatch)play);
+		}
+
+		void HandleEventsDeleted (List<TimelineEvent> plays)
+		{
+			codingwidget1.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+		}
 	}
 }

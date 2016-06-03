@@ -46,6 +46,8 @@ namespace LongoMatch.Gui.Component
 			projectType = ProjectType.None;
 			detachedPlayer = false;
 			codingwidget.Player = playercapturer.Player;
+			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
+			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
 		}
 
 		protected override void OnUnmapped ()
@@ -66,6 +68,8 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
+			Config.EventsBroker.EventCreatedEvent -= HandleEventCreated;
+			Config.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
@@ -90,21 +94,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEvent play)
-		{
-			playsSelection.AddPlay ((TimelineEventLongoMatch)play);
-			codingwidget.AddPlay ((TimelineEventLongoMatch)play);
-		}
-
 		public void UpdateCategories ()
 		{
 			codingwidget.UpdateCategories ();
-		}
-
-		public void DeletePlays (List<TimelineEvent> plays)
-		{
-			playsSelection.RemovePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
-			codingwidget.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 
 		public void ZoomIn ()
@@ -216,6 +208,18 @@ namespace LongoMatch.Gui.Component
 		{
 			codingwidget.SetProject (openedProject, projectType, filter);
 			playsSelection.SetProject (openedProject, filter);
+		}
+
+		void HandleEventCreated (TimelineEvent play)
+		{
+			playsSelection.AddPlay ((TimelineEventLongoMatch)play);
+			codingwidget.AddPlay ((TimelineEventLongoMatch)play);
+		}
+
+		void HandleEventsDeleted (List<TimelineEvent> plays)
+		{
+			playsSelection.RemovePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+			codingwidget.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 	}
 }

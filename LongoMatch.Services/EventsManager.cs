@@ -61,7 +61,7 @@ namespace LongoMatch.Services
 
 				try {
 					evt = ((ProjectLongoMatch)openedProject).SubsitutePlayer (team, p1, p2, reason, time);
-					analysisWindow.AddPlay (evt);
+					Config.EventsBroker.EmitEventCreated (evt);
 					filter.Update ();
 				} catch (SubstitutionException ex) {
 					Config.GUIToolkit.ErrorMessage (ex.Message);
