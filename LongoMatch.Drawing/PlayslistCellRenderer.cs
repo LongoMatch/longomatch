@@ -17,7 +17,6 @@
 //
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
 using VAS.Core;
 using VAS.Core.Common;

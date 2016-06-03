@@ -35,6 +35,9 @@ using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
+using VAS.Drawing;
+using VAS.Core.Store.Drawables;
+using LongoMatch.Drawing.CanvasObjects.Blackboard;
 
 namespace LongoMatch.Gui
 {
@@ -56,6 +59,7 @@ namespace LongoMatch.Gui
 			mainWindow = new MainWindow (this);
 			mainWindow.Hide ();
 			registry = new Registry ("GUI backend");
+			RegistryCanvasFromDrawables ();
 		}
 
 		public IMainController MainController {
@@ -521,6 +525,17 @@ namespace LongoMatch.Gui
 				return mainWindow;
 			}
 			return null;
+		}
+
+		void RegistryCanvasFromDrawables ()
+		{
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Counter), typeof(CounterObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Cross), typeof(CrossObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Ellipse), typeof(EllipseObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Line), typeof(LineObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Quadrilateral), typeof(QuadrilateralObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Rectangle), typeof(RectangleObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Text), typeof(TextObject), "LongoMatch.Drawing");
 		}
 	}
 }
