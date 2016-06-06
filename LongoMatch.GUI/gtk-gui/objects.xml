@@ -189,10 +189,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CodingWidget Properties">
@@ -314,7 +310,35 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="SynchronizationWidget Properties">
+        <property name="FixedPeriods" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="LinkProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ToggleTopBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ToggleTopBar Properties">
+        <property name="CurrentPage" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ToggleTopBar Signals">
+        <signal name="PageSwitchedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="VAS.UI.CapturerBin" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CapturerBin Properties">
         <property name="Capturing" />
@@ -322,11 +346,11 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="VAS.UI.PlayerCapturerBin" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.VideoWindow" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="VAS.UI.VideoWindow" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="IViewPort Properties">
         <property name="Ratio" />
@@ -347,12 +371,20 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.PlayerView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="VAS.UI.PlayerView" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="PlayerView Properties">
         <property name="TogglePlayOnClick" />
       </itemgroup>
     </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="VAS.UI.Component.Timeline">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
     <signals />
   </object>
 </objects>

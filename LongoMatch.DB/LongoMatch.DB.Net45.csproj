@@ -15,7 +15,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\bin</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -38,9 +38,11 @@
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="SQLitePCL.raw">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.raw.0.8.1\lib\net45\SQLitePCL.raw.dll</HintPath>
+      <Package>couchbase-lite</Package>
     </Reference>
     <Reference Include="SQLitePCL.ugly">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.ugly.0.8.1\lib\portable-net45+netcore45+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCL.ugly.dll</HintPath>
+      <Package>couchbase-lite</Package>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib.Portable">
       <HintPath>$(SolutionDir)\packages\SharpZipLib.Portable.0.86.0.0003\lib\portable-net45+netcore45+wp8+win8+wpa81+MonoTouch+MonoAndroid+Xamarin.iOS10\ICSharpCode.SharpZipLib.Portable.dll</HintPath>
@@ -50,6 +52,7 @@
     </Reference>
     <Reference Include="Couchbase.Lite">
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.1.2.0\lib\net45\Couchbase.Lite.dll</HintPath>
+      <Package>couchbase-lite</Package>
     </Reference>
   </ItemGroup>
   <Import Project="LongoMatch.DB.projitems" Label="Shared" Condition="Exists('LongoMatch.DB.projitems')" />

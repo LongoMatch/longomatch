@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI", "LongoMatch.GUI\LongoMatch.GUI.csproj", "{6B9682AF-0F14-456F-A674-8BABFE852BFC}"
 EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "liblongomatch", "libcesarplayer\liblongomatch.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Services.Net45", "LongoMatch.Services\LongoMatch.Services.Net45.csproj", "{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI.Multimedia", "LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj", "{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Addins", "LongoMatch.Addins\LongoMatch.Addins.csproj", "{709CCDA6-CA95-4CBD-A986-B96EE0418905}"
 EndProject
@@ -61,6 +57,16 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Services", "VAS\VAS.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\VAS.Services\VAS.Services.Net45.csproj", "{153BFD3F-6E06-451B-AD79-6C207762BBBB}"
 EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libvas", "VAS\libvas\libvas.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Drawing", "VAS\VAS.Drawing\VAS.Drawing.shproj", "{4041429C-9260-473E-93DB-E6B5389B7115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Gtk2", "VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj", "{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj", "{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,10 +97,10 @@ Global
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -103,6 +109,10 @@ Global
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,6 +169,10 @@ Global
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

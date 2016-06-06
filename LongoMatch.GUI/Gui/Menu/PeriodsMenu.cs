@@ -16,20 +16,19 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using Gtk;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core;
 using VAS.Core.Store;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Menus
 {
-	public class PeriodsMenu: Gtk.Menu
+	public class PeriodsMenu : Gtk.Menu
 	{
 		MenuItem additem, delitem;
 		Timer timer;
 		Time time;
-		ProjectLongoMatch project;
+		Project project;
 		TimerTimeline timertimeline;
 		SelectionCanvas selectionCanvas;
 
@@ -38,7 +37,7 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 
-		public void ShowMenu (ProjectLongoMatch project, Timer timer, Time time,
+		public void ShowMenu (Project project, Timer timer, Time time,
 		                      TimerTimeline timertimeline, SelectionCanvas selectionCanvas)
 		{
 			this.timer = timer;

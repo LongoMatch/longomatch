@@ -24,7 +24,10 @@ using LongoMatch.Drawing.CanvasObjects;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing;
 using LMCommon = LongoMatch.Core.Common;
+using VASDrawing = VAS.Drawing;
+using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -38,7 +41,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public PositionTagger (IWidget widget) : base (widget)
 		{
-			Accuracy = Constants.TAGGER_POINT_SIZE + 3;
+			Accuracy = VASDrawing.Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			BackgroundColor = Config.Style.PaletteBackground;

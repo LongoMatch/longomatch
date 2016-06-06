@@ -134,13 +134,10 @@
     <Compile Include="Gui\Component\BackgroundWidget.cs" />
     <Compile Include="Gui\Panel\PreferencesPanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PreferencesPanel.cs" />
-    <Compile Include="Gui\Component\Timeline.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.Timeline.cs" />
     <Compile Include="Gui\Component\CodingWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
     <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
-    <Compile Include="Gui\Menu\PlaysMenu.cs" />
     <Compile Include="Gui\Component\TeamsComboBox.cs" />
     <Compile Include="Gui\Component\MediaFileChooser.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />
@@ -157,7 +154,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
     <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
-    <Compile Include="Gui\Menu\PeriodsMenu.cs" />
     <Compile Include="Gui\Component\HotkeysConfiguration.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
     <Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
@@ -197,6 +193,9 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
     <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
     <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
+    <Compile Include="Gui\Component\Timeline.cs" />
+    <Compile Include="Gui\Menu\PeriodsMenu.cs" />
+    <Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -241,10 +240,6 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj">
-      <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
-      <Name>LongoMatch.GUI.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\oxyplot\OxyPlotMono\OxyPlotMono.csproj">
       <Project>{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}</Project>
       <Name>OxyPlotMono</Name>
@@ -272,6 +267,18 @@
     <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
+      <Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
+      <Name>VAS.UI.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+      <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+      <Name>VAS.UI.Multimedia.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+      <Name>VAS.Drawing.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

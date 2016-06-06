@@ -19,8 +19,9 @@ using System;
 using LongoMatch.Core.Common;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -192,14 +193,14 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (!Selected || !DrawsSelectionArea) {
 				return;
 			}
-			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
+			tk.StrokeColor = VASDrawing.Constants.SELECTION_INDICATOR_COLOR;
 			tk.StrokeColor = Config.Style.PaletteActive;
 			tk.FillColor = null;
 			tk.LineStyle = LineStyle.Dashed;
 			tk.LineWidth = 2;
 			tk.DrawRectangle (Position, Width, Height);
 
-			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
+			tk.StrokeColor = tk.FillColor = VASDrawing.Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawRectangle (new Point (Position.X + Width - SELECTION_SIZE / 2,
 				Position.Y + Height - SELECTION_SIZE / 2),

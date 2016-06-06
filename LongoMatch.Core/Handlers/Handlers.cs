@@ -28,7 +28,6 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Handlers
 {
-
 	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
 
@@ -57,6 +56,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlaylistVisibiltyHandler (bool visible);
 	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
-	public delegate void ShowTimelineMenuHandler (List<TimelineEventLongoMatch> plays,EventType cat,Time time);
-	public delegate void ShowTaggerMenuHandler (List<TimelineEventLongoMatch> plays);
+	public delegate void ShowTimelineMenuHandler (IEnumerable<TimelineEvent> plays,EventType cat,Time time);
+	public delegate void ShowTaggerMenuHandler (IEnumerable<TimelineEvent> plays);
+	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 }

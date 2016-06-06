@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	{
 		protected bool editing;
 		protected bool enableCategoryMove = false;
-		protected PlaysMenu playsMenu;
+		protected SportsPlaysMenu playsMenu;
 		protected TreeModelFilter modelFilter;
 		protected TreeModelSort modelSort;
 		protected TreeStore childModel;
@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			custColumn.PackStart (cr, true);
 			custColumn.SetCellDataFunc (cr, RenderElement); 
 
-			playsMenu = new PlaysMenu ();
+			playsMenu = new SportsPlaysMenu ();
 			playsMenu.EditPlayEvent += HandleEditPlayEvent;
 			AppendColumn (custColumn);
 		}
@@ -122,7 +122,7 @@ namespace LongoMatch.Gui.Component
 
 		protected void ShowMenu ()
 		{
-			playsMenu.ShowListMenu (Project, SelectedPlays);
+			playsMenu.ShowListMenu (Project, SelectedPlays.Cast<TimelineEvent> ().ToList ());
 		}
 
 		protected object GetValueFromPath (TreePath path)

@@ -2,11 +2,10 @@
 //  Copyright (C) 2015 Fluendo S.A.
 //
 //
-using System;
-using VAS.Core.Interfaces.Drawing;
-using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Core.Common;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing
 {

@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 		{
 			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
 			if (events.Count > 0) {
-				PlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenu, Project, events);
+				SportsPlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenu, Project, events);
 				playerMenu.Popup ();
 			}
 		}

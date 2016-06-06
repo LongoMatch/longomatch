@@ -207,7 +207,7 @@ namespace LongoMatch.Gui.Component
 		public void DeletePlays (List<TimelineEventLongoMatch> plays)
 		{
 			if (projectType == ProjectType.FileProject) {
-				timeline.RemovePlays (plays);
+				timeline.RemovePlays (plays.Cast<TimelineEvent> ().ToList ());
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				eventslistwidget.RemovePlays (plays);
 			}

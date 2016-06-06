@@ -15,62 +15,23 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using VAS.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
 using VAS.Core;
-using VAS.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Drawing.CanvasObjects.Timeline;
+using VASDrawing = VAS.Drawing;
+using VAS.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class TimelineLabels: Canvas
+	public class TimelineLabels : VAS.Drawing.Widgets.TimelineLabels
 	{
-		ProjectLongoMatch project;
-		EventsFilter filter;
-		Dictionary<LabelObject, object> labelToObject;
-
 		public TimelineLabels (IWidget widget) : base (widget)
 		{
-			labelToObject = new Dictionary<LabelObject, object> ();
 		}
 
-		public TimelineLabels () : this (null)
-		{
-		}
-
-		public double Scroll {
-			set {
-				foreach (var o in Objects) {
-					LabelObject cl = o as LabelObject;
-					cl.Scroll = value; 
-				}
-			}
-		}
-
-		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)
-		{
-			ClearObjects ();
-			this.project = project;
-			this.filter = filter;
-			if (project != null) {
-				FillCanvas ();
-				UpdateVisibleCategories ();
-				filter.FilterUpdated += UpdateVisibleCategories;
-			}
-		}
-
-		void AddLabel (LabelObject label, object obj)
-		{
-			Objects.Add (label);
-			labelToObject [label] = obj;
-		}
-
-		void FillCanvas ()
+		protected override void FillCanvas ()
 		{
 			LabelObject l;
 			int i = 0, w, h;
@@ -101,22 +62,6 @@ namespace LongoMatch.Drawing.Widgets
 				lo.Width = width;
 			}
 			WidthRequest = (int)width;
-		}
-
-		void UpdateVisibleCategories ()
-		{
-			int i = 0;
-			foreach (LabelObject label in Objects) {
-				if (filter.IsVisible (labelToObject [label])) {
-					label.OffsetY = i * label.Height;
-					label.Visible = true;
-					label.BackgroundColor = Utils.ColorForRow (i);
-					i++;
-				} else {
-					label.Visible = false;
-				}
-			}
-			widget?.ReDraw ();
 		}
 	}
 }

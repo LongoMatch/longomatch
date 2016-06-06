@@ -16,9 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -115,7 +117,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return selection;
 			}
 			
-			point = Utils.ToUserCoords (point, Position, 1, 1);
+			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 			
 			foreach (PlayerObject po in BenchPlayers) {
 				selection = po.GetSelection (point, precision);

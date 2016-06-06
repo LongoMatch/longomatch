@@ -145,7 +145,8 @@ namespace Tests.Integration
 
 			// Delete some events
 			Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {
-				p.Timeline [0], p.Timeline [1]
+				p.Timeline [0],
+				p.Timeline [1]
 			});
 			Assert.AreEqual (3, p.Timeline.Count);
 			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);

@@ -31,6 +31,8 @@ using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
+using VAS.UI.Menus;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Component
 {

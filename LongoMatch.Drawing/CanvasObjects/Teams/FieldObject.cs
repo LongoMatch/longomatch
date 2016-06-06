@@ -17,9 +17,11 @@
 //
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
+using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
-using VAS.Core.Common;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -173,7 +175,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			Selection selection = null;
 
-			point = Utils.ToUserCoords (point, Position, 1, 1);
+			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 
 			if (HomePlayingPlayers != null) {
 				foreach (PlayerObject po in HomePlayingPlayers) {

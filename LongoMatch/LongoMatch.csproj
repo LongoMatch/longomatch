@@ -59,10 +59,6 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj">
-      <Project>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</Project>
-      <Name>LongoMatch.GUI.Multimedia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
@@ -110,6 +106,10 @@
     <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+      <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+      <Name>VAS.UI.Multimedia.Gtk2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
