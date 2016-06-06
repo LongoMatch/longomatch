@@ -197,10 +197,6 @@ namespace LongoMatch.Gui.Menus
 
 		void CreateMenu ()
 		{
-			newPlay = new MenuItem ("");
-			Add (newPlay);
-			newPlay.Activated += HandleNewPlayActivated;
-
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
 				if (EditPlayEvent != null) {
@@ -208,6 +204,10 @@ namespace LongoMatch.Gui.Menus
 				}
 			};
 			Add (edit);
+
+			duplicate = new MenuItem ("");
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
+			Add (duplicate);
 
 			moveCat = new MenuItem (Catalog.GetString ("Move to"));
 			Add (moveCat);
@@ -225,14 +225,6 @@ namespace LongoMatch.Gui.Menus
 			snapshot = new MenuItem (Catalog.GetString ("Export to PNG images"));
 			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays.FirstOrDefault ());
 			Add (snapshot);
-
-			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
-			Add (duplicate);
-
-			del = new MenuItem ("");
-			del.Activated += (sender, e) => Config.EventsBroker.EmitEventsDeleted (plays);
-			Add (del);
 
 			ShowAll ();
 		}
