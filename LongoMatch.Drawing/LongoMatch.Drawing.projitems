@@ -16,7 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\Timerule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\ButtonObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\PositionObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CounterObject.cs" />
