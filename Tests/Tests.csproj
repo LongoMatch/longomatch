@@ -109,7 +109,6 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Integration\TestDatabaseMigrationV0.cs" />
     <Compile Include="Integration\TestDatabaseMigrationV1.cs" />
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
