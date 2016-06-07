@@ -32,7 +32,7 @@ using System.Linq;
 namespace Tests.Integration
 {
 	[TestFixture]
-	public class TestDatabaseMigration
+	public class TestDatabaseMigrationV0
 	{
 		[Test ()]
 		public void TestMigratingOldDatabase ()

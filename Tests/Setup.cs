@@ -15,9 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
+using ICSharpCode.SharpZipLib;
+using VAS.DB;
 
 namespace Tests
 {
@@ -29,6 +30,7 @@ namespace Tests
 		{
 			// Initialize LongoMath.Core by using a type, this will call the module initialization
 			var st = new SportsTeam ();
+			VFS.SetCurrent (new FileSystem ());
 		}
 	}
 }

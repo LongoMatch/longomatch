@@ -22,10 +22,19 @@ namespace LongoMatch.Core.Migration
 {
 	public static class Mappings
 	{
+		/// <summary>
+		/// A dictionary the old namespace string to replace as a key and a tuple with the new namespace and its assembly.
+		/// For example, if we moved LongoMatch.Core.Foo1 and LongoMatch.Core.Foo2 to VAS.Core.Foo1 and VAS.Core.Foo2 in
+		/// the assembly VAS.Core we use "LongoMatch.Core": ("VAS.Core", "VAS.Core")
+		/// </summary>
 		public static Dictionary<string, Tuple<string, string>> NamespacesReplacements = new Dictionary<string, Tuple<string, string>> {
 			{ "LongoMatch.Core", new Tuple<string, string> ("VAS.Core", "VAS.Core") },
 		};
 
+		/// <summary>
+		/// A dictionary to convert an old type by string to a <see cref="Type"/>.
+		/// This is only needed when we can't replace the namespace prefix using <see cref="NamespacesReplacements"/>
+		/// </summary>
 		public static Dictionary<string, Type> TypesMappings = new Dictionary<string, Type> {
 			{ "LongoMatch.Core.Store.Templates.TeamTemplate", typeof(LongoMatch.Core.Store.Templates.SportsTeam) },
 			{ "LongoMatch.Core.Store.Templates.Team", typeof(LongoMatch.Core.Store.Templates.SportsTeam) },
