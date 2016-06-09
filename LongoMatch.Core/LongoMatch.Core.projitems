@@ -40,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimelineEventLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\DashboardLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITemplatesLongoMatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ConfigLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
@@ -52,6 +51,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\Templates\SportsTeam.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TypesMappings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
