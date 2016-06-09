@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Dialog
 			TransientFor = parent;
 			this.Build ();
 			// Configure window icon
-			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
+			Icon = Misc.LoadIcon (App.Current.SoftwareIconName, IconSize.Dialog);
 			ShowCount = false;
 			setAvailableTemplatesVisible (false);
 		}

@@ -344,7 +344,7 @@ namespace LongoMatch.Drawing
 
 			public override void Draw (IContext context, Area area)
 			{
-				IDrawingToolkit dt = Config.DrawingToolkit;
+				IDrawingToolkit dt = App.Current.DrawingToolkit;
 				IContext oldcontext = dt.Context;
 				dt.Context = context;
 				dt.DrawCircle (new Point (0, 0), 50);

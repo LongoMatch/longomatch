@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 			Image img = Resources.LoadImage ("images/longomatch-pro-small.png");
 			buttonOKimage.Pixbuf = img.Value;
 
-			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
+			titlelabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 14"));
 
 			// Configure URL handler for the links
 			label1.SetLinkHandler (url => {

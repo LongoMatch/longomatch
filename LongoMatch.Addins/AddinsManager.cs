@@ -71,7 +71,7 @@ namespace LongoMatch.Addins
 				string addinPath = addin.Description.AddinFile;
 				
 				if (!addinPath.StartsWith (searchPath) &&
-				    !addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
+				    !addinPath.StartsWith (Path.GetFullPath (App.Current.baseDirectory))) {
 					AddinManager.Registry.DisableAddin (addin.Id);
 					Log.Debug ("Disable addin at path " + addinPath);
 				} else {

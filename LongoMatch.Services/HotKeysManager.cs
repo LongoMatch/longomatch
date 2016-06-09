@@ -86,7 +86,7 @@ namespace LongoMatch.Services
 
 		void HandleTimeout (object state)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			App.Current.DrawingToolkit.Invoke (delegate {
 				if (pendingButton != null) {
 					analysisWindow.ClickButton (pendingButton);
 					pendingButton = null;
@@ -122,7 +122,7 @@ namespace LongoMatch.Services
 			KeyAction action;
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
 			} catch (Exception ex) {
 				/* The dictionary contains 2 equal values for different keys */
 				Log.Exception (ex);
@@ -191,14 +191,14 @@ namespace LongoMatch.Services
 						return;
 					case KeyAction.SpeedUp:
 						player.FramerateUp ();
-						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						App.Current.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
 						return;
 					case KeyAction.SpeedDown:
 						player.FramerateDown ();
-						Config.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
+						App.Current.EventsBroker.EmitPlaybackRateChanged ((float)player.Rate);
 						return;
 					case KeyAction.CloseEvent:
-						Config.EventsBroker.EmitLoadEvent (null);
+						App.Current.EventsBroker.EmitLoadEvent (null);
 						return;
 					case KeyAction.Prev:
 						player.Previous ();
@@ -221,7 +221,7 @@ namespace LongoMatch.Services
 			}
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
 			} catch {
 				return;
 			}
@@ -295,20 +295,20 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed += DashboardKeyListener;
-			Config.EventsBroker.KeyPressed += UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+			App.Current.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			App.Current.EventsBroker.KeyPressed += DashboardKeyListener;
+			App.Current.EventsBroker.KeyPressed += UIKeyListener;
+			App.Current.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			timer = new System.Threading.Timer (HandleTimeout);
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed -= DashboardKeyListener;
-			Config.EventsBroker.KeyPressed -= UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
+			App.Current.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			App.Current.EventsBroker.KeyPressed -= DashboardKeyListener;
+			App.Current.EventsBroker.KeyPressed -= UIKeyListener;
+			App.Current.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
 			return true;
 		}
 

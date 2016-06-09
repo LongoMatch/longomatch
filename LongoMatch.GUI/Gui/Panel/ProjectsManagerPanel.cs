@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Panel
 		public ProjectsManagerPanel (ProjectLongoMatch openedProject)
 		{
 			this.openedProject = openedProject;
-			this.DB = Config.DatabaseManager.ActiveDB;
-			this.gkit = Config.GUIToolkit;
+			this.DB = App.Current.DatabaseManager.ActiveDB;
+			this.gkit = App.Current.GUIToolkit;
 			this.Build ();
 
 			this.videoFileInfos = new List<VideoFileInfo> ();
@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.ViewMode = ProjectListViewMode.List;
 
 			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
-			resyncbutton.Visible = Config.SupportsMultiCamera;
+			resyncbutton.Visible = App.Current.SupportsMultiCamera;
 
 			SetStyle ();
 		}
@@ -112,12 +112,12 @@ namespace LongoMatch.Gui.Panel
 
 		void SetStyle ()
 		{
-			FontDescription desc = FontDescription.FromString (Config.Style.Font + " 18");
-			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			FontDescription desc = FontDescription.FromString (App.Current.Style.Font + " 18");
+			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			infolabel.ModifyFont (desc);
-			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			videoslabel.ModifyFont (desc);
 		}
 
@@ -128,19 +128,19 @@ namespace LongoMatch.Gui.Panel
 
 				if (edited && !force) {
 					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (!App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						save = false;
 					}
 				}
 				if (save) {
 					try {
-						IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
+						IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
 						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
 						Log.Exception (ex);
-						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
+						App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
 						return;
 					}
 				}
@@ -170,7 +170,7 @@ namespace LongoMatch.Gui.Panel
 
 			int max = project.Description.FileSet.Count;
 			// Cap to one media file for non multi camera version
-			if (!Config.SupportsMultiCamera) {
+			if (!App.Current.SupportsMultiCamera) {
 				max = Math.Min (max, 1);
 			}
 
@@ -234,7 +234,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
+				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace LongoMatch.Gui.Panel
 					LoadProject (projects [0]);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					Config.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				}
 			}
 		}
@@ -287,7 +287,7 @@ namespace LongoMatch.Gui.Panel
 				string filename = gkit.SaveFile (
 					                  Catalog.GetString ("Export project"),
 					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					                  Config.HomeDir, Constants.PROJECT_NAME,
+					                  App.Current.HomeDir, Constants.PROJECT_NAME,
 					                  new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
@@ -327,12 +327,12 @@ namespace LongoMatch.Gui.Panel
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
+					IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
 							DB.Delete<ProjectLongoMatch> (selectedProject);
 						} catch (StorageException ex) {
-							Config.GUIToolkit.ErrorMessage (ex.Message);
+							App.Current.GUIToolkit.ErrorMessage (ex.Message);
 						}
 					});
 					deletedProjects.Add (selectedProject);
@@ -349,7 +349,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (loadedProject.ID, loadedProject);
+				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (loadedProject.ID, loadedProject);
 			}
 		}
 	}

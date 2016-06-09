@@ -62,21 +62,21 @@ namespace LongoMatch.Services
 			Log.Debugging = Debugging;
 
 			FillVersion ();
-			Config.Init ();
+			App.Init ();
 
 			/* Check default folders */
 			CheckDirs ();
 
 			/* Redirects logs to a file */
-			Log.SetLogFile (Config.LogFile);
+			Log.SetLogFile (App.Current.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
 
 			/* Load user config */
-			Config.Load ();
-			
-			if (Config.Lang != null) {
-				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
+			//Config.Load ();
+
+			if (App.Current.Config.Lang != null) {
+				Environment.SetEnvironmentVariable ("LANGUAGE", App.Current.Config.Lang.Replace ("-", "_"));
 #if OSTYPE_WINDOWS
 				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
 #endif
@@ -84,20 +84,20 @@ namespace LongoMatch.Services
 			InitTranslations ();
 
 			/* Fill up the descriptions again after initializing the translations */
-			Config.Hotkeys.FillActionsDescriptions ();
+			App.Current.Config.Hotkeys.FillActionsDescriptions ();
 		}
 
 		static void FillVersion ()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly ();
 			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
-			Config.Version = assembly.GetName ().Version;
-			Config.BuildVersion = info.ProductVersion;
+			App.Current.Version = assembly.GetName ().Version;
+			App.Current.BuildVersion = info.ProductVersion;
 		}
 
 		public static void InitTranslations ()
 		{
-			string localesDir = Config.RelativeToPrefix ("share/locale");
+			string localesDir = App.Current.RelativeToPrefix ("share/locale");
 
 			if (!Directory.Exists (localesDir)) {
 				var cerbero_prefix = Environment.GetEnvironmentVariable ("CERBERO_PREFIX");
@@ -114,11 +114,11 @@ namespace LongoMatch.Services
 
 		public static void Start (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			Config.MultimediaToolkit = multimediaToolkit;
-			Config.GUIToolkit = guiToolkit;
-			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
-			Config.EventsAggregator = new EventsAggregator ();
-			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent += HandleQuitApplicationEvent;
+			App.Current.MultimediaToolkit = multimediaToolkit;
+			App.Current.GUIToolkit = guiToolkit;
+			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
+			App.Current.EventsAggregator = new EventsAggregator ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
 		}
@@ -195,18 +195,18 @@ namespace LongoMatch.Services
 
 		public static void CheckDirs ()
 		{
-			if (!System.IO.Directory.Exists (Config.HomeDir))
-				System.IO.Directory.CreateDirectory (Config.HomeDir);
-			if (!System.IO.Directory.Exists (Config.SnapshotsDir))
-				System.IO.Directory.CreateDirectory (Config.SnapshotsDir);
-			if (!System.IO.Directory.Exists (Config.PlayListDir))
-				System.IO.Directory.CreateDirectory (Config.PlayListDir);
-			if (!System.IO.Directory.Exists (Config.DBDir))
-				System.IO.Directory.CreateDirectory (Config.DBDir);
-			if (!System.IO.Directory.Exists (Config.VideosDir))
-				System.IO.Directory.CreateDirectory (Config.VideosDir);
-			if (!System.IO.Directory.Exists (Config.TempVideosDir))
-				System.IO.Directory.CreateDirectory (Config.TempVideosDir);
+			if (!System.IO.Directory.Exists (App.Current.HomeDir))
+				System.IO.Directory.CreateDirectory (App.Current.HomeDir);
+			if (!System.IO.Directory.Exists (App.Current.SnapshotsDir))
+				System.IO.Directory.CreateDirectory (App.Current.SnapshotsDir);
+			if (!System.IO.Directory.Exists (App.Current.PlayListDir))
+				System.IO.Directory.CreateDirectory (App.Current.PlayListDir);
+			if (!System.IO.Directory.Exists (App.Current.DBDir))
+				System.IO.Directory.CreateDirectory (App.Current.DBDir);
+			if (!System.IO.Directory.Exists (App.Current.VideosDir))
+				System.IO.Directory.CreateDirectory (App.Current.VideosDir);
+			if (!System.IO.Directory.Exists (App.Current.TempVideosDir))
+				System.IO.Directory.CreateDirectory (App.Current.TempVideosDir);
 		}
 
 		static bool? debugging = null;
@@ -237,11 +237,11 @@ namespace LongoMatch.Services
 		{
 			if (videoRenderer.PendingJobs.Count > 0) {
 				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");
-				if (!Config.GUIToolkit.QuestionMessage (msg, null).Result) {
+				if (!App.Current.GUIToolkit.QuestionMessage (msg, null).Result) {
 					return;
 				}
 			}
-			Config.GUIToolkit.Quit ();
+			App.Current.GUIToolkit.Quit ();
 		}
 	}
 }

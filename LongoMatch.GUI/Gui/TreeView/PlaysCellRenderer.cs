@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Component
 					           backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
 					            cellArea.Width, cellArea.Height);
-				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, Config.DrawingToolkit,
+				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, App.Current.DrawingToolkit,
 					context, bkg, cell, state);
 			}
 		}

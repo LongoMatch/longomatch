@@ -41,7 +41,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			if (teams.Count == 1) {
 				color = teams [0].Color;
 			} else {
-				color = Config.Style.PaletteWidgets;
+				color = App.Current.Style.PaletteWidgets;
 			}
 
 			tk.FillColor = color;

@@ -54,7 +54,7 @@ public partial class MainWindow: Gtk.Window
 		teams = new List<string> (); 
 		categories = new List<string> ();
 		
-		dbdir = System.IO.Path.Combine (LongoMatch.Config.ConfigDir, "db");
+		dbdir = System.IO.Path.Combine (LongoMatch.App.Current.ConfigDir, "db");
 		if (Directory.Exists (dbdir)) {
 			foreach (string file in Directory.GetFiles (dbdir)) {
 				if (file.EndsWith ("1.db")) {
@@ -63,7 +63,7 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		
-		templatesdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "templates");
+		templatesdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "templates");
 		if (Directory.Exists (templatesdir)) {
 			foreach (string file in Directory.GetFiles (templatesdir)) {
 				if (file.EndsWith (".lct")) {
@@ -115,9 +115,9 @@ public partial class MainWindow: Gtk.Window
 
 	void StartMigrationThread ()
 	{
-		string dbdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db");
-		string teamdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "teams");
-		string analysisdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "analysis");
+		string dbdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db");
+		string teamdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db", "teams");
+		string analysisdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db", "analysis");
 		bool withError = false;
 		MessageDialog d;
 

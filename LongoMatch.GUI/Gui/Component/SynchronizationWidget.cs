@@ -89,8 +89,8 @@ namespace LongoMatch.Gui.Component
 			// We need to align the timerule and the beginning of labels list
 			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
 
-			main_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
-			sec_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
+			main_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
+			sec_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 
 			main_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
 			sec_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
@@ -114,9 +114,9 @@ namespace LongoMatch.Gui.Component
 			// Listen for seek events from the timerule
 			timerule.SeekEvent += HandleTimeruleSeek;
 			timerule.Player = main_cam_playerbin.Player;
-			((LMCommon.EventsBroker)Config.EventsBroker).SeekEvent += Seek;
-			((LMCommon.EventsBroker)Config.EventsBroker).TogglePlayEvent += HandleTogglePlayEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed += HandleKeyPressed;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).SeekEvent += Seek;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).TogglePlayEvent += HandleTogglePlayEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).KeyPressed += HandleKeyPressed;
 			// Handle dragging of periods
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
@@ -148,9 +148,9 @@ namespace LongoMatch.Gui.Component
 				timeoutID = 0;
 			}
 
-			((LMCommon.EventsBroker)Config.EventsBroker).SeekEvent -= Seek;
-			((LMCommon.EventsBroker)Config.EventsBroker).TogglePlayEvent -= HandleTogglePlayEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).KeyPressed -= HandleKeyPressed;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).SeekEvent -= Seek;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).TogglePlayEvent -= HandleTogglePlayEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).KeyPressed -= HandleKeyPressed;
 
 			main_cam_playerbin.Destroy ();
 			sec_cam_playerbin.Destroy ();
@@ -360,7 +360,7 @@ namespace LongoMatch.Gui.Component
 			KeyAction action;
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
 			} catch (Exception ex) {
 				/* The dictionary contains 2 equal values for different keys */
 				Log.Exception (ex);
@@ -502,7 +502,7 @@ namespace LongoMatch.Gui.Component
 			if (camera != null) {
 				sec_cam_label.Markup = String.Format (
 					"<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>",
-					camera.MediaFile.Name, Config.Style.PaletteActive.ToRGBString (false),
+					camera.MediaFile.Name, App.Current.Style.PaletteActive.ToRGBString (false),
 					Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
 			}
 		}

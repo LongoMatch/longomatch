@@ -37,7 +37,7 @@ namespace LongoMatch.Services
 		public TemplatesService (IStorage storage = null)
 		{
 			if (storage == null) {
-				storage = new CouchbaseStorageLongoMatch (Config.TemplatesDir, "templates");
+				storage = new CouchbaseStorageLongoMatch (App.Current.TemplatesDir, "templates");
 			}
 			TeamTemplateProvider = new TeamTemplatesProvider (storage);
 			CategoriesTemplateProvider = new CategoriesTemplatesProvider (storage);
@@ -69,8 +69,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.TeamTemplatesProvider = TeamTemplateProvider;
-			Config.CategoriesTemplatesProvider = CategoriesTemplateProvider;
+			App.Current.TeamTemplatesProvider = TeamTemplateProvider;
+			App.Current.CategoriesTemplatesProvider = CategoriesTemplateProvider;
 			return true;
 		}
 
@@ -138,7 +138,7 @@ namespace LongoMatch.Services
 			try {
 				storage.Store<T> (template, true);
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (action, template));
 				}
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Remove, template));
 				}
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 

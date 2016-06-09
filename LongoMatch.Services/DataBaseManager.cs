@@ -53,9 +53,9 @@ namespace LongoMatch.Services
 		{
 			if (OpenedProject != null) {
 				var msg = Catalog.GetString ("Close the current project to open the database manager");
-				Config.GUIToolkit.ErrorMessage (msg);
+				App.Current.GUIToolkit.ErrorMessage (msg);
 			} else {
-				Config.GUIToolkit.OpenDatabasesManager ();
+				App.Current.GUIToolkit.OpenDatabasesManager ();
 			}
 		}
 
@@ -81,20 +81,20 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).ManageDatabasesEvent += HandleManageDatabase;
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += HandleOpenedProjectChanged;
-			Manager = CreateStorageManager (Config.DBDir);
-			Config.DatabaseManager = Manager;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageDatabasesEvent += HandleManageDatabase;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged += HandleOpenedProjectChanged;
+			Manager = CreateStorageManager (App.Current.DBDir);
+			App.Current.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
-			Manager.SetActiveByName (Config.CurrentDatabase);
+			Manager.SetActiveByName (App.Current.Config.CurrentDatabase);
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).ManageDatabasesEvent -= HandleManageDatabase;
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged -= HandleOpenedProjectChanged;
-			Config.DatabaseManager = Manager = null;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageDatabasesEvent -= HandleManageDatabase;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged -= HandleOpenedProjectChanged;
+			App.Current.DatabaseManager = Manager = null;
 			return true;
 		}
 

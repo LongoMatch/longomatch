@@ -71,7 +71,7 @@ namespace LongoMatch.Drawing.Widgets
 			// Main camera
 			l = new CameraLabelObject (w, h, i * h) {
 				Name = fileSet [0].Name,
-				BackgroundColor = Config.Style.PaletteBackgroundLight
+				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
 			AddLabel (l);
 			i++;
@@ -79,7 +79,7 @@ namespace LongoMatch.Drawing.Widgets
 			// Periods
 			l = new CameraLabelObject (w, h, i * h) {
 				Name = Catalog.GetString ("Periods"),
-				BackgroundColor = Config.Style.PaletteBackgroundLight
+				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
 			AddLabel (l);
 			i++;
@@ -88,7 +88,7 @@ namespace LongoMatch.Drawing.Widgets
 			for (int j = 1; j < fileSet.Count; j++) {
 				l = new CameraLabelObject (w, h, i * h) {
 					Name = fileSet [j].Name,
-					BackgroundColor = Config.Style.PaletteBackground
+					BackgroundColor = App.Current.Style.PaletteBackground
 				};
 				AddLabel (l);
 				i++;

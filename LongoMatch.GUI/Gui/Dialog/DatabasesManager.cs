@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TransientFor = parent;
 			this.Build ();
-			this.manager = Config.DatabaseManager;
+			this.manager = App.Current.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
 		}
@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground);
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground);
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {
-				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground);
+				cell.CellBackgroundGdk = Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground);
 			}
 		}
 

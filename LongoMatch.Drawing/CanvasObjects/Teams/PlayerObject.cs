@@ -148,7 +148,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			/* Background */
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.FillColor = App.Current.Style.PaletteBackgroundDark;
 			tk.LineWidth = 0;
 			tk.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
 			
@@ -220,7 +220,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		static ISurface CreateSurface (string name)
 		{
 			Image img = Resources.LoadImage (name);
-			return Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+			return App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 		}
 	}
 }

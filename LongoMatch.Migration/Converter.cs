@@ -149,17 +149,17 @@ namespace LongoMatch.Migration
 			if (cats.FieldBackground != null) {
 				dashboard.FieldBackground = ConvertImage (cats.FieldBackground);
 			} else {
-				dashboard.FieldBackground = Config.FieldBackground;
+				dashboard.FieldBackground = App.Current.FieldBackground;
 			}
 			if (cats.HalfFieldBackground != null) {
 				dashboard.HalfFieldBackground = ConvertImage (cats.HalfFieldBackground);
 			} else {
-				dashboard.HalfFieldBackground = Config.HalfFieldBackground;
+				dashboard.HalfFieldBackground = App.Current.HalfFieldBackground;
 			}
 			if (cats.GoalBackground != null) {
 				dashboard.GoalBackground = ConvertImage (cats.GoalBackground);
 			} else {
-				dashboard.GoalBackground = Config.GoalBackground;
+				dashboard.GoalBackground = App.Current.GoalBackground;
 			}
 			dashboard.ID = cats.ID;
 			if (dashboard.ID == Guid.Empty) {

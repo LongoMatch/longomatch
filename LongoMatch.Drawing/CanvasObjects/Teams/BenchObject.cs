@@ -93,8 +93,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.Begin ();
 			tk.TranslateAndScale (Position, new Point (1, 1)); 
 			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = Config.Style.BenchLineWidth;
-			tk.StrokeColor = Config.Style.PaletteActive;
+			tk.LineWidth = App.Current.Style.BenchLineWidth;
+			tk.StrokeColor = App.Current.Style.PaletteActive;
 			tk.FillColor = null;
 			tk.DrawRectangle (new Point (0, 0), Width, Height);
 			tk.LineStyle = LineStyle.Normal;

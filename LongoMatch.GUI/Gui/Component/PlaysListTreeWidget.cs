@@ -42,12 +42,12 @@ namespace LongoMatch.Gui.Component
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 			itersDic = new Dictionary<EventType, TreeIter> ();
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent += HandlePlayLoaded;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent += HandlePlayLoaded;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 
@@ -171,7 +171,7 @@ namespace LongoMatch.Gui.Component
 				playlist.Elements.Add (element);
 			}
 			
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
 		}
 
 		void HandlePlayLoaded (TimelineEvent play)

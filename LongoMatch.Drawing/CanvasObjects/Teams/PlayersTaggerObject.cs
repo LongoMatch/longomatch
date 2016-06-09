@@ -362,7 +362,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayBench.BenchPlayers = awayBenchPlayers;
 			homeBench.Height = awayBench.Height = field.Height;
 			
-			border = Config.Style.TeamTaggerBenchBorder;
+			border = App.Current.Style.TeamTaggerBenchBorder;
 			if (homeTeam == null || awayTeam == null) {
 				if (homeTeam != null) {
 					homeBench.Position = new Point (border, 0);
@@ -473,12 +473,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			subPlayers = new ButtonObject ();
 			subPlayers.BackgroundImageActive = Resources.LoadImage (StyleConf.SubsUnlock);
-			subPlayers.BackgroundColorActive = Config.Style.PaletteBackground;
+			subPlayers.BackgroundColorActive = App.Current.Style.PaletteBackground;
 			subPlayers.BackgroundImage = Resources.LoadImage (StyleConf.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subInjury = new ButtonObject ();
-			subInjury.BackgroundColorActive = Config.Style.PaletteBackground;
+			subInjury.BackgroundColorActive = App.Current.Style.PaletteBackground;
 			subInjury.Toggle = true;
 			subInjury.ClickedEvent += HandleSubsClicked;
 			subInjury.Visible = false;
@@ -570,9 +570,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			Color color = null;
 
 			if (team == TeamType.LOCAL) {
-				color = Config.Style.HomeTeamColor;
+				color = App.Current.Style.HomeTeamColor;
 			} else {
-				color = Config.Style.AwayTeamColor;
+				color = App.Current.Style.AwayTeamColor;
 			}
 
 			playerObjects = new List<PlayerObject> ();
@@ -743,7 +743,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			/* Compute how we should scale and translate to fit the widget
 			 * in the designated area */
 			width = homeBench.Width * NTeams + field.Width +
-			2 * NTeams * Config.Style.TeamTaggerBenchBorder; 
+			2 * NTeams * App.Current.Style.TeamTaggerBenchBorder; 
 			height = field.Height;
 			Image.ScaleFactor ((int)width, (int)height, (int)Width,
 				(int)Height - BUTTONS_HEIGHT, ScaleMode.AspectFit,
@@ -762,12 +762,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 			if (homeButton.Visible) {
 				/* Draw local team button */
-				double x = Position.X + Config.Style.TeamTaggerBenchBorder * scaleX + offset.X; 
+				double x = Position.X + App.Current.Style.TeamTaggerBenchBorder * scaleX + offset.X; 
 				homeButton.Position = new Point (x, offset.Y - homeButton.Height);
 				homeButton.Draw (tk, area);
 			}
 			if (awayButton.Visible) {
-				double x = (Position.X + Width - offset.X - Config.Style.TeamTaggerBenchBorder * scaleX) - awayButton.Width; 
+				double x = (Position.X + Width - offset.X - App.Current.Style.TeamTaggerBenchBorder * scaleX) - awayButton.Width; 
 				awayButton.Position = new Point (x, offset.Y - awayButton.Height);
 				awayButton.Draw (tk, area);
 			}

@@ -94,7 +94,7 @@ namespace Tests
 					Name = "LocalStorage",
 					LastBackup = DateTime.UtcNow,
 					LastCleanup = DateTime.UtcNow,
-					Version = Config.Version
+					Version = App.Current.Version
 				};
 			}
 		}

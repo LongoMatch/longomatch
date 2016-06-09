@@ -40,12 +40,12 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			((LMCommon.EventsBroker)Config.EventsBroker).TeamTagsChanged += UpdateTeamsModels;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).TeamTagsChanged += UpdateTeamsModels;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).TeamTagsChanged -= UpdateTeamsModels;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).TeamTagsChanged -= UpdateTeamsModels;
 			playsList.Project = null;
 			localPlayersList.Clear ();
 			visitorPlayersList.Clear ();

@@ -153,7 +153,7 @@ namespace LongoMatch.Gui.Component
 
 			edit = new MenuItem (Catalog.GetString ("Edit name"));
 			edit.Activated += (sender, e) => {
-				string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+				string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
 					              playlist.Name).Result;
 				if (!String.IsNullOrEmpty (name)) {
 					playlist.Name = name;
@@ -162,7 +162,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append (edit);
 
 			render = new MenuItem (Catalog.GetString ("Render"));
-			render.Activated += (sender, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
+			render.Activated += (sender, e) => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
 			menu.Append (render);
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));

@@ -140,7 +140,7 @@ namespace LongoMatch.Gui.Component
 				playlist.Elements.Add (element);
 			}
 			
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
 		}
 
 	}

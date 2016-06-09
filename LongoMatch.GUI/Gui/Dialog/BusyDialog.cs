@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Dialog
 				} catch (Exception e) {
 					ex = e;
 				} finally {
-					Config.GUIToolkit.Invoke (delegate {
+					App.Current.GUIToolkit.Invoke (delegate {
 						lock (lockObject) {
 							Destroy ();
 						}

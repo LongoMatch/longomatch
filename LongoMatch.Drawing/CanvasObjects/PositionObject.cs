@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (Selected) {
 				fillColor = VASDrawing.Constants.TAGGER_SELECTION_COLOR;
 			} else if (Highlighted) {
-				fillColor = Config.Style.PaletteActive;
+				fillColor = App.Current.Style.PaletteActive;
 			}
 
 			tk.FillColor = fillColor;

@@ -73,12 +73,12 @@ namespace LongoMatch.Gui.Component
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 			
-			Config.EventsBroker.PlayerTick += HandleTick;
-			((LMCommon.EventsBroker)Config.EventsBroker).CapturerTick += HandleCapturerTick;
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
-			Config.EventsBroker.TimeNodeStoppedEvent += HandleTimeNodeStoppedEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventEditedEvent += HandleEventEdited;
+			App.Current.EventsBroker.PlayerTick += HandleTick;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).CapturerTick += HandleCapturerTick;
+			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
+			App.Current.EventsBroker.TimeNodeStoppedEvent += HandleTimeNodeStoppedEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventEditedEvent += HandleEventEdited;
 
 			Helpers.Misc.SetFocus (this, false);
 			
@@ -101,12 +101,12 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-			((LMCommon.EventsBroker)Config.EventsBroker).PlayerTick -= HandleTick;
-			((LMCommon.EventsBroker)Config.EventsBroker).CapturerTick -= HandleCapturerTick;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
-			Config.EventsBroker.TimeNodeStoppedEvent -= HandleTimeNodeStoppedEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventEditedEvent -= HandleEventEdited;
-			((LMCommon.EventsBroker)Config.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).PlayerTick -= HandleTick;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).CapturerTick -= HandleCapturerTick;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.TimeNodeStoppedEvent -= HandleTimeNodeStoppedEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventEditedEvent -= HandleEventEdited;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -344,13 +344,13 @@ namespace LongoMatch.Gui.Component
 			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewDashboardEvent (play, btn, true, null);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewDashboardEvent (play, btn, true, null);
 		}
 
 		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitSubstitutionEvent (team, p1, p2, reason, time);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSubstitutionEvent (team, p1, p2, reason, time);
 		}
 
 		void HandleSizeAllocated (object o, SizeAllocatedArgs args)

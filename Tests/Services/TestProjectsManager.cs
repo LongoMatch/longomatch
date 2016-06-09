@@ -77,7 +77,7 @@ namespace Tests.Services
 			mtkMock.Setup (m => m.GetCapturer ()).Returns (capturerMock.Object);
 			mtkMock.Setup (m => m.DiscoverFile (It.IsAny<string> (), It.IsAny<bool> ()))
 				.Returns ((string s, bool b) => new MediaFile { FilePath = s });
-			Config.MultimediaToolkit = mtkMock.Object;
+			App.Current.MultimediaToolkit = mtkMock.Object;
 			mockList.Add (mtkMock);
 
 			gtkMock = new Mock<IGUIToolkit> ();
@@ -88,7 +88,7 @@ namespace Tests.Services
 				.Returns (() => settings.EncodingSettings.OutputFile)
 				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
 			gtkMock.Setup (g => g.EndCapture (true)).Returns (EndCaptureResponse.Save);
-			Config.GUIToolkit = gtkMock.Object;
+			App.Current.GUIToolkit = gtkMock.Object;
 			mockList.Add (gtkMock);
 
 			capturerBinMock = new Mock<ICapturerBin> ();
@@ -104,8 +104,8 @@ namespace Tests.Services
 		[SetUp ()]
 		public void Setup ()
 		{
-			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
-			Config.DatabaseManager = new LocalDatabaseManager ();
+			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
+			App.Current.DatabaseManager = new LocalDatabaseManager ();
 			projectsManager = new ProjectsManager ();
 			projectsManager.Start ();
 			project = Utils.CreateProject ();
@@ -131,14 +131,14 @@ namespace Tests.Services
 		{
 			bool projectOpened = false;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += (p, pt, f, a) => {
+			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged += (p, pt, f, a) => {
 				Assert.AreEqual (project, p);
 				Assert.AreEqual (ProjectType.CaptureProject, pt);
 				projectOpened = true;
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (player, projectsManager.Player);
@@ -153,32 +153,32 @@ namespace Tests.Services
 			int projectOpened = 0;
 			ProjectLongoMatch testedProject = null;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += (p, pt, f, a) => {
+			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged += (p, pt, f, a) => {
 				Assert.AreEqual (testedProject, p);
 				projectOpened++;
 			};
 
 			testedProject = project;
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			Assert.AreEqual (1, projectOpened);
 			testedProject = null;
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureError (null, "Error!");
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCaptureError (null, "Error!");
 			/* Errors during a capture project should be handled gracefully
 			 * closing the current capture project and saving a copy of the
 			 * captured video and coded data, without loosing anything */
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (2, projectOpened);
 		}
 
 		[Test ()]
 		public void TestCaptureFinished ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).CaptureFinished += (c, f) => {
+			((LMCommon.EventsBroker)App.Current.EventsBroker).CaptureFinished += (c, f) => {
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureFinished (true, true);
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCaptureFinished (true, true);
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			capturerBinMock.ResetCalls ();
@@ -188,15 +188,15 @@ namespace Tests.Services
 
 			project = Utils.CreateProject ();
 			settings.EncodingSettings.OutputFile = project.Description.FileSet.FirstOrDefault ().FilePath;
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCaptureFinished (false, true);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCaptureFinished (false, true);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			/* We are not prompted to quit the capture */
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
 			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
 			// Make sure the project is not cleared.
@@ -210,32 +210,32 @@ namespace Tests.Services
 		{
 			int projectChanged = 0;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).OpenedProjectChanged += (p, pt, f, aw) => projectChanged++;
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged += (p, pt, f, aw) => projectChanged++;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
 			Assert.AreEqual (0, projectChanged);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			projectChanged = 0;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (0, projectChanged);
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
 			Assert.AreEqual (null, projectsManager.OpenedProject);
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (1, projectChanged);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, ProjectType.CaptureProject, settings);
 			projectChanged = 0;
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (2, projectChanged);
 		}
 
@@ -248,9 +248,9 @@ namespace Tests.Services
 				file.Duration = null;
 			}
 
-			Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
+			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
 
 			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
 

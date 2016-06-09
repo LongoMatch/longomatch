@@ -397,8 +397,8 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import ()
 		{
-			string file = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir, Constants.PROJECT_NAME,
-				              new string[] { "*" + Constants.PROJECT_EXT });
+			string file = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
+				              Constants.PROJECT_NAME, new string[] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;
 			return Import (file);
