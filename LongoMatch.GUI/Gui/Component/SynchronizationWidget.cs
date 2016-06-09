@@ -29,10 +29,11 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
+using VAS.Drawing.CanvasObjects.Timeline;
+using VAS.Drawing.Widgets;
+using VAS.UI.Menus;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
-using VAS.UI.Menus;
-using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Component
 {
