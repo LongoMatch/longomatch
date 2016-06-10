@@ -47,71 +47,30 @@ namespace LongoMatch.Core.Filters
 			}
 		}
 
-		protected override void UpdateVisiblePlays ()
+		protected override bool IsVisibleByPlayer (TimelineEvent play)
 		{
-			bool cat_match = true, tag_match = true, player_match = true;
-			bool period_match = true, timer_match = true;
+			if (play.Players.Count == 0 &&
+			    VisiblePlayers.Count == Project.LocalTeamTemplate.PlayingPlayersList.Union (
+				    Project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
+				return true;
 
-			VisiblePlays = new List<TimelineEvent> ();
-				
-			foreach (TimelineEventLongoMatch play in project.Timeline) {
-				cat_match = false;
-				if (VisibleEventTypes.Contains (play.EventType)) {
-					cat_match = true;
-					if (eventsFilter.ContainsKey (play.EventType)) {
-						List<Tag> tags = eventsFilter [play.EventType];
-						if (tags.Count == 0 || tags.Intersect (play.Tags).Any ()) {
-							cat_match = true;
-						} else {
-							cat_match = false;
-						}
-					}
-				}
+			} else {
+				return VisiblePlayers.Intersect (play.Players).Any ();
+			}
+		}
 
-				if (tagsFilter.Count > 0) {
-					if (play.Tags.Count > 0 && play.Tags [0].Value == "Layup") {
-						Console.WriteLine (tagsFilter.Intersect (play.Tags).Count ());
-					}
-					if (!tagsFilter.Intersect (play.Tags).Any ()) {
-						tag_match = false;
-					} else {
-						tag_match = true;
-					}
-				}
-					
-				if (play.Players.Count == 0 &&
-				    VisiblePlayers.Count == Project.LocalTeamTemplate.PlayingPlayersList.Union (
-					    Project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
-					player_match = true;
+		protected override bool IsVisibleByPeriod (TimelineEvent play)
+		{
+			if (periodsFilter.Count == 0)
+				return true;
 
-				} else {
-					player_match = VisiblePlayers.Intersect (play.Players).Any ();
-				}
-
-				if (timersFilter.Count != 0) {
-					timer_match = false;
-				}
-				foreach (Timer t in timersFilter) {
-					foreach (TimeNode tn in t.Nodes) {
-						if (tn.Join (play) != null) {
-							timer_match = true;
-						}
-					}
-				}
-
-				if (periodsFilter.Count != 0) {
-					period_match = false;
-				}
-				foreach (Period p in periodsFilter) {
-					if (p.PeriodNode.Join (play) != null) {
-						period_match = true;
-					}
-				}
-
-				if (player_match && cat_match && tag_match && period_match && timer_match) {
-					VisiblePlays.Add (play);
+			bool period_match = false;
+			foreach (Period p in periodsFilter) {
+				if (p.PeriodNode.Join (play) != null) {
+					period_match = true;
 				}
 			}
+			return period_match;
 		}
 
 
