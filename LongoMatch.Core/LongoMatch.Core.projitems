@@ -29,7 +29,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Filters\EventsFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\ProjectsFilter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProgressReport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\DashboardMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\ProjectMigration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\TeamMigration.cs" />

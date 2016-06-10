@@ -19,15 +19,14 @@ using System;
 using System.IO;
 using LongoMatch;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
-using System.Linq;
 
 namespace Tests.Integration
 {
