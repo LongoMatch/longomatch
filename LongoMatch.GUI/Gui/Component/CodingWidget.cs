@@ -364,8 +364,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeNodeStoppedEvent (TimeNode tn, TimerButton btn, List<DashboardButton> from)
 		{
-			if (btn is TimerButtonLongoMatch)
-				timeline.AddTimerNode (((TimerButtonLongoMatch)btn).Timer, tn);
+			if (btn is TimerButton)
+				timeline.AddTimerNode (((TimerButton)btn).Timer, tn);
 		}
 
 		void HandleEventEdited (TimelineEvent play)

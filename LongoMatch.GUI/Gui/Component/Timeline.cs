@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Component
 		public Timeline () : base ()
 		{
 			periodsmenu = new PeriodsMenu ();
+			menu = new SportsPlaysMenu ();
 		}
 
 		protected override VASDrawing.Widgets.PlaysTimeline createPlaysTimeline ()

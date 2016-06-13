@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 		public event NewEventHandler NewTagEvent;
 
 		DashboardMode mode;
-		DashboardCanvas tagger;
+		SportDashboardCanvas tagger;
 		DashboardLongoMatch template;
 		DashboardButton selected;
 		Gtk.Image editimage, linksimage;
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Component
 			addtagbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", IconSize.Button);
 			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
 
-			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
+			tagger = new SportDashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.ButtonsSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Component
 					Score = new Score ("Score", 1)
 				};
 			} else if (buttontype == "Timer") {
-				button = new TimerButtonLongoMatch { Timer = new TimerLongoMatch { Name = "Timer" } };
+				button = new TimerButton { Timer = new TimerLongoMatch { Name = "Timer" } };
 			} else if (buttontype == "Tag") {
 				button = new TagButton { Tag = new Tag ("Tag", "") };
 			} else if (buttontype == "Category") {

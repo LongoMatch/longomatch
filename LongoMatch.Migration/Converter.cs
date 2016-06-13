@@ -208,7 +208,7 @@ namespace LongoMatch.Migration
 				i++;
 			}
 			foreach (GameUnit gu in cats.GameUnits) {
-				var timer = new TimerButtonLongoMatch {
+				var timer = new VASStore.TimerButton {
 					Position = new VASCommon.Point (10 + (i % 7) * (120 + 10),
 						10 + (i / 7) * (80 + 10)),
 					Width = 120,
