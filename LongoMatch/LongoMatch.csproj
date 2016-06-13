@@ -49,6 +49,7 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
@@ -110,6 +111,10 @@
     <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
       <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
       <Name>VAS.UI.Multimedia.Gtk2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
+      <Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
+      <Name>VAS.UI.Gtk2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

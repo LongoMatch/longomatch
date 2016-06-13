@@ -12314,36 +12314,6 @@ Invert</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.Dialog.SplashScreen" design-size="640 480">
-    <property name="MemberName" />
-    <property name="Title" translatable="yes">SplashScreen</property>
-    <property name="WindowPosition">CenterOnParent</property>
-    <child>
-      <widget class="Gtk.Fixed" id="fixed1">
-        <property name="MemberName" />
-        <property name="WidthRequest">640</property>
-        <property name="HeightRequest">480</property>
-        <property name="HasWindow">False</property>
-        <child>
-          <widget class="Gtk.ProgressBar" id="progressbar1">
-            <property name="MemberName" />
-            <property name="WidthRequest">384</property>
-          </widget>
-          <packing>
-            <property name="X">96</property>
-            <property name="Y">430</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Image" id="splashimage">
-            <property name="MemberName" />
-            <property name="WidthRequest">640</property>
-            <property name="HeightRequest">480</property>
-          </widget>
-        </child>
-      </widget>
-    </child>
-  </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditPlaylistElementProperties" design-size="400 115">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
