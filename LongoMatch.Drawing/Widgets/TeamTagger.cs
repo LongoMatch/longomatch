@@ -167,7 +167,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<PlayerLongoMatch> { (sel.Drawable as PlayerObject).Player };
+					players = new List<PlayerLongoMatch> { (sel.Drawable as SportsPlayerObject).Player };
 				}
 			} else {
 				players = tagger.SelectedPlayers;

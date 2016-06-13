@@ -27,7 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineEventObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimeNodeObject.cs" />
@@ -40,5 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\SportDashboardCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\SportsPlayerObject.cs" />
   </ItemGroup>
 </Project>

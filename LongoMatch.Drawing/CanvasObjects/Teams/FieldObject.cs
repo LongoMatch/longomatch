@@ -57,18 +57,18 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public List<PlayerObject> HomePlayingPlayers {
+		public List<SportsPlayerObject> HomePlayingPlayers {
 			get;
 			set;
 		}
 
-		public List<PlayerObject> AwayPlayingPlayers {
+		public List<SportsPlayerObject> AwayPlayingPlayers {
 			get;
 			set;
 		}
 
 		public void LoadTeams (Image backgroundImg, int[] homeF, int[] awayF,
-		                       List<PlayerObject> homeT, List<PlayerObject> awayT,
+		                       List<SportsPlayerObject> homeT, List<SportsPlayerObject> awayT,
 		                       int size, int nteams)
 		{
 			background = backgroundImg;
@@ -96,7 +96,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		void UpdateTeam (List<PlayerObject> players, int[] formation, TeamType team)
+		void UpdateTeam (List<SportsPlayerObject> players, int[] formation, TeamType team)
 		{
 			int index = 0, offsetX;
 			int width, colWidth;
@@ -128,7 +128,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 				for (int row = 0; row < formation [col]; row++) {
 					double rowY;
-					PlayerObject po = players [index];
+					SportsPlayerObject po = players [index];
 
 					if (team == TeamType.LOCAL) {
 						rowY = rowHeight * row + rowHeight / 2;
@@ -153,7 +153,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				tk.DrawImage (background);
 			}
 			if (HomePlayingPlayers != null) {
-				foreach (PlayerObject po in HomePlayingPlayers) {
+				foreach (SportsPlayerObject po in HomePlayingPlayers) {
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
@@ -161,7 +161,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 			}
 			if (AwayPlayingPlayers != null) {
-				foreach (PlayerObject po in AwayPlayingPlayers) {
+				foreach (SportsPlayerObject po in AwayPlayingPlayers) {
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
@@ -178,14 +178,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 
 			if (HomePlayingPlayers != null) {
-				foreach (PlayerObject po in HomePlayingPlayers) {
+				foreach (SportsPlayerObject po in HomePlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;
 				}
 			}
 			if (selection == null && AwayPlayingPlayers != null) {
-				foreach (PlayerObject po in AwayPlayingPlayers) {
+				foreach (SportsPlayerObject po in AwayPlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;

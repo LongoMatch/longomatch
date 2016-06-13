@@ -148,3 +148,4 @@ LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
 LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
+LongoMatch.Drawing/CanvasObjects/Teams/SportsPlayerObject.cs
