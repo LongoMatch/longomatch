@@ -115,7 +115,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			tk.Begin ();
 			start = new Point (Size / 2, Size / 2);
-			tk.TranslateAndScale (Position - start, new Point (scale, scale));
+			tk.TranslateAndScale (Center - start, new Point (scale, scale));
 
 			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
 				tk.End ();

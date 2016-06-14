@@ -136,8 +136,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 						rowY = Height - (rowHeight * row + rowHeight / 2);
 					}
 
-					po.Position = new Point (colX, rowY);
 					po.Size = playerSize;
+					po.Center = new Point (colX, rowY);
 					index++;
 					if (players.Count == index)
 						break;

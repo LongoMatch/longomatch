@@ -58,8 +58,8 @@ namespace LongoMatch.Gui.Dialog
 			outpo.ClickedEvent += HandleClickedEvent;
 			inpo.Size = PLAYER_SIZE;
 			outpo.Size = PLAYER_SIZE;
-			inpo.Position = new Point (PLAYER_SIZE / 2, PLAYER_SIZE / 2);
-			outpo.Position = new Point (PLAYER_SIZE / 2, PLAYER_SIZE / 2);
+			inpo.Center = new Point (PLAYER_SIZE / 2, PLAYER_SIZE / 2);
+			outpo.Center = new Point (PLAYER_SIZE / 2, PLAYER_SIZE / 2);
 			incanvas.AddObject (inpo);
 			outcanvas.AddObject (outpo);
 			drawingarea2.WidthRequest = drawingarea2.HeightRequest = PLAYER_SIZE;

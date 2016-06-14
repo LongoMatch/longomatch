@@ -51,7 +51,7 @@ namespace LongoMatch.Drawing
 		static void RenderPlayer (IDrawingToolkit tk, PlayerLongoMatch p, Point imagePoint)
 		{
 			SportsPlayerObject po = new SportsPlayerObject (p);
-			po.Position = new Point (imagePoint.X + StyleConf.ListImageWidth / 2, imagePoint.Y + StyleConf.ListImageWidth / 2);
+			po.Position = imagePoint;
 			po.Size = StyleConf.ListImageWidth - 2;
 			po.Draw (tk, null);
 			po.Dispose ();

@@ -80,8 +80,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				y = s * (i / PlayersPerRow) + s / 2;
 
 				po = BenchPlayers [i];
-				po.Position = new Point (x, y);
 				po.Size = PlayersSize;
+				po.Center = new Point (x, y);
 			}
 		}
 

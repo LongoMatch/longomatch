@@ -534,9 +534,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				p1List.Insert (p1Index, p2);
 				p2List.Insert (p2Index, p1);
 			}
-			tmpPos = p2.Position;
-			p2.Position = p1.Position;
-			p1.Position = tmpPos;
+			tmpPos = p2.Center;
+			p2.Center = p1.Center;
+			p1.Center = tmpPos;
 			ResetSelection ();
 			EmitRedrawEvent (this, null);
 		}
