@@ -37,14 +37,14 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
-			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
-			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
+			App.Current.EventsBroker.EventCreatedEvent += HandleEventCreated;
+			App.Current.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.EventCreatedEvent -= HandleEventCreated;
-			Config.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
+			App.Current.EventsBroker.EventCreatedEvent -= HandleEventCreated;
+			App.Current.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
 		}
 
 		#region IAnalysisWindow implementation
