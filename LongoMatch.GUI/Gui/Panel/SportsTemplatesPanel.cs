@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Panel
 		public SportsTemplatesPanel ()
 		{
 			this.Build ();
-			provider = Config.CategoriesTemplatesProvider;
+			provider = App.Current.CategoriesTemplatesProvider;
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
@@ -140,8 +140,8 @@ namespace LongoMatch.Gui.Panel
 			deletetemplatebutton.Clicked += HandleDeleteTemplateClicked;
 			savetemplatebutton.Clicked += (sender, e) => Save (false);
 			
-			editdashboardslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
-			editbuttonslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
+			editdashboardslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
+			editbuttonslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 
 			Load (null);
 		}
@@ -223,7 +223,7 @@ namespace LongoMatch.Gui.Panel
 				provider.Save (dashboard as DashboardLongoMatch);
 				return true;
 			} catch (InvalidTemplateFilenameException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				return false;
 			}
 		}
@@ -231,16 +231,16 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
-					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					newName = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
 						loadedDashboard.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (dashboards.Any (d => d.Name == newName)) {
 						msg = Catalog.GetString ("A dashboard with the same name already exists"); 
-						Config.GUIToolkit.ErrorMessage (msg, this);
+						App.Current.GUIToolkit.ErrorMessage (msg, this);
 					} else {
 						break;
 					}
@@ -266,7 +266,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else {
 					string msg = Catalog.GetString ("Do you want to save the current dashboard");
-					if (!prompt || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (!prompt || App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						SaveLoadedDashboard ();
 					}
 				}
@@ -326,7 +326,7 @@ namespace LongoMatch.Gui.Panel
 				selected = dashboard.Clone ();
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load dashboard"));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load dashboard"));
 				return;
 			}
 			deletetemplatebutton.Visible = selected != null;
@@ -363,7 +363,7 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Dashboard files");
 			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to import */
-			fileName = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import dashboard"), null, Config.HomeDir,
+			fileName = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import dashboard"), null, App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName == null)
@@ -376,7 +376,7 @@ namespace LongoMatch.Gui.Panel
 					bool abort = false;
 
 					while (provider.Exists (new_dashboard.Name) && !abort) {
-						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
+						string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
 							              Catalog.GetString ("Name conflict"), new_dashboard.Name + "#").Result;
 						if (name == null) {
 							abort = true;
@@ -400,7 +400,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 			} catch (Exception ex) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing template:") +
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing template:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -416,8 +416,8 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Dashboard files");
 			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
-			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
-				System.IO.Path.ChangeExtension (loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
+			fileName = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
+				System.IO.Path.ChangeExtension (loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {
@@ -425,13 +425,13 @@ namespace LongoMatch.Gui.Panel
 				fileName = System.IO.Path.ChangeExtension (fileName, Constants.CAT_TEMPLATE_EXT);
 				if (System.IO.File.Exists (fileName)) {
 					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = Config.GUIToolkit.QuestionMessage (msg, null).Result;
+					succeeded = App.Current.GUIToolkit.QuestionMessage (msg, null).Result;
 				}
 
 				if (succeeded) {
 					Serializer.Instance.Save (loadedDashboard, fileName);
 					string msg = Catalog.GetString ("Dashboard exported correctly");
-					Config.GUIToolkit.InfoMessage (msg);
+					App.Current.GUIToolkit.InfoMessage (msg);
 				}
 			}
 		}
@@ -470,7 +470,7 @@ namespace LongoMatch.Gui.Panel
 					try {
 						provider.Copy (dashboards.FirstOrDefault (d => d.Name == dialog.SelectedTemplate) as DashboardLongoMatch, dialog.Text);
 					} catch (InvalidTemplateFilenameException ex) {
-						Config.GUIToolkit.ErrorMessage (ex.Message, this);
+						App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 						dialog.Destroy ();
 						return;
 					}
@@ -500,7 +500,7 @@ namespace LongoMatch.Gui.Panel
 
 			if (dashboard.Name != args.NewText) {
 				if (dashboards.Any (d => d.Name == args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A dashboard with the same name already exists"), this);
+					App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("A dashboard with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
 					dashboard.Name = args.NewText;

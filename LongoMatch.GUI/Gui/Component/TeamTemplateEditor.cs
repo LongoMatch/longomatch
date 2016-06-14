@@ -93,7 +93,7 @@ namespace LongoMatch.Gui.Component
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
-				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
+				teamtagger.LoadTeams (template, null, App.Current.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
 				colorbutton1.Color = Misc.ToGdkColor (value.Colors [0]);
@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Component
 
 			foreach (var selectedPlayer in selectedPlayers) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + selectedPlayer.Name;
-				if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+				if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 					template.List.Remove (selectedPlayer);
 					edited = true;
 				}
@@ -257,7 +257,7 @@ namespace LongoMatch.Gui.Component
 				teamtagger.Reload ();
 				Edited = true;
 			} catch {
-				Config.GUIToolkit.ErrorMessage (
+				App.Current.GUIToolkit.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
 			}
 			FillFormation ();
@@ -299,10 +299,10 @@ namespace LongoMatch.Gui.Component
 		{
 			if (template != null) {
 				try {
-					Config.TeamTemplatesProvider.Save (template);
+					App.Current.TeamTemplatesProvider.Save (template);
 					Edited = false;
 				} catch (InvalidTemplateFilenameException ex) {
-					Config.GUIToolkit.ErrorMessage (ex.ToString (), this);
+					App.Current.GUIToolkit.ErrorMessage (ex.ToString (), this);
 					return;
 				}
 			}

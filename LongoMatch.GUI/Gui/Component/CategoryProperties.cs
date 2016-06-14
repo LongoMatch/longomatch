@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Component
 			foreach (Widget w in vbox3.Children) {
 				foreach (Widget t in (w as Table).Children) {
 					if ((t is Label)) {
-						t.ModifyFont (FontDescription.FromString (Config.Style.Font + " 10"));
+						t.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 10"));
 						sizegroupLeft.AddWidget (t);
 					}
 				}
@@ -241,14 +241,14 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			HotKey hotkey = Config.GUIToolkit.SelectHotkey (button.HotKey);
+			HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (button.HotKey);
 			if (hotkey != null) {
 				try {
 					Dashboard.ChangeHotkey (button, hotkey);
 					UpdateGui ();
 					Edited = true;
 				} catch (HotkeyAlreadyInUse ex) {
-					Config.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				}
 			}
 		}

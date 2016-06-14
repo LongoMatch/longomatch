@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
@@ -87,12 +87,12 @@ namespace LongoMatch.Gui.Component
 				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
 				element = el as IPlaylistElement;
 			}
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadPlaylistElement (playlist, element, true);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitLoadPlaylistElement (playlist, element, true);
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitNewPlaylist (Project);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewPlaylist (Project);
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 			menu = new Menu ();
 			foreach (Playlist playlist in Project.Playlists) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => ((LMCommon.EventsBroker)Config.EventsBroker).EmitRenderPlaylist (playlist);
+				plmenu.Activated += (s, e) => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();

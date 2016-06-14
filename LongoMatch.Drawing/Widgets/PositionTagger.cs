@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = VASDrawing.Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			BackgroundColor = Config.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.PaletteBackground;
 		}
 
 		public PositionTagger (IWidget widget, ProjectLongoMatch project, List<TimelineEventLongoMatch> plays,
@@ -54,7 +54,7 @@ namespace LongoMatch.Drawing.Widgets
 			Background = background;
 			Plays = plays;
 			FieldPosition = position;
-			BackgroundColor = Config.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.PaletteBackground;
 		}
 
 		public PositionTagger () : this (null)
@@ -173,7 +173,7 @@ namespace LongoMatch.Drawing.Widgets
 				TimelineEventLongoMatch p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
-					((LMCommon.EventsBroker)Config.EventsBroker).EmitLoadEvent (p);
+					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitLoadEvent (p);
 				}
 			}
 		}

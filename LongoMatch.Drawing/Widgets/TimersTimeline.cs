@@ -109,8 +109,8 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas (List<Timer> timers)
 		{
 			timertimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, 0,
-				Config.Style.PaletteBackground,
-				Config.Style.PaletteBackgroundLight);
+				App.Current.Style.PaletteBackground,
+				App.Current.Style.PaletteBackgroundLight);
 			foreach (Timer t in timers) {
 				this.timers [t] = timertimeline;
 			}

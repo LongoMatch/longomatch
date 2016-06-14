@@ -133,7 +133,7 @@ namespace LongoMatch.Gui.Component
 				fileentry.Text = System.IO.Path.GetFileName (mediaFile.FilePath);
 				fileentry.TooltipText = mediaFile.FilePath;
 				if (mediaFile.Exists ()) {
-					fileentry.ModifyText (Gtk.StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteText));
+					fileentry.ModifyText (Gtk.StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteText));
 				} else {
 					fileentry.ModifyText (Gtk.StateType.Normal, Helpers.Misc.ToGdkColor (Color.Red1));
 				}
@@ -176,14 +176,14 @@ namespace LongoMatch.Gui.Component
 				MediaFile = file;
 			} else if (FileChooserMode == FileChooserMode.File) {
 				CurrentPath = Helpers.FileChooserHelper.SaveFile (this, Catalog.GetString ("Output file"),
-					ProposedFileName, Config.LastRenderDir,
+					ProposedFileName, App.Current.Config.LastRenderDir,
 					FilterName, FilterExtensions);
 				if (CurrentPath != null) {
-					Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
+					App.Current.Config.LastRenderDir = System.IO.Path.GetDirectoryName (CurrentPath);
 				}
 			} else if (FileChooserMode == FileChooserMode.Directory) {
 				CurrentPath = Helpers.FileChooserHelper.SelectFolder (this, Catalog.GetString ("Output folder"),
-					ProposedDirectoryName, Config.LastRenderDir,
+					ProposedDirectoryName, App.Current.Config.LastRenderDir,
 					null, null);
 			}
 			if (ChangedEvent != null) {

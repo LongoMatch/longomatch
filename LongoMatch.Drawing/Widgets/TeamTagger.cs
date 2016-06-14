@@ -50,7 +50,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
-			BackgroundColor = Config.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.PaletteBackground;
 			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);

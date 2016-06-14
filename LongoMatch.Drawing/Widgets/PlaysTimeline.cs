@@ -46,7 +46,7 @@ namespace LongoMatch.Drawing.Widgets
 			tl = new TimerTimeline (project.Periods.Select (p => p as Timer).ToList (),
 				true, NodeDraggingMode.All, false, duration,
 				i * StyleConf.TimelineCategoryHeight,
-				VASDrawing.Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+				VASDrawing.Utils.ColorForRow (i), App.Current.Style.PaletteBackgroundDark);
 			AddTimeline (tl, null);
 			PeriodsTimeline = tl as TimerTimeline;
 			i++;
@@ -54,7 +54,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (Timer t in project.Timers) {
 				tl = new TimerTimeline (new List<Timer> { t }, false, NodeDraggingMode.All, false, duration,
 					i * StyleConf.TimelineCategoryHeight,
-					VASDrawing.Utils.ColorForRow (i), Config.Style.PaletteBackgroundDark);
+					VASDrawing.Utils.ColorForRow (i), App.Current.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
 			}
 			                        

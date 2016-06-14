@@ -408,7 +408,7 @@ namespace LongoMatch.Gui
 		{
 			Log.Information ("Remux file");
 			try {
-				Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
+				Remuxer remuxer = new Remuxer (App.Current.MultimediaToolkit.DiscoverFile (inputFile),
 					                  outputFile, muxer);
 				return remuxer.Remux (mainWindow as Gtk.Window);
 			} catch (Exception e) {

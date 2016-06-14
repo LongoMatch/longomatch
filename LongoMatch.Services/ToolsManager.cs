@@ -70,9 +70,9 @@ namespace LongoMatch.Services
 				Log.Warning ("Opened project is null and can't be exported");
 			}
 
-			filename = Config.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
+			filename = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
 				Utils.SanitizePath (project.Description.Title + Constants.PROJECT_EXT),
-				Config.HomeDir, Constants.PROJECT_NAME,
+				App.Current.HomeDir, Constants.PROJECT_NAME,
 				new [] { "*" + Constants.PROJECT_EXT });
 			
 			if (filename == null)
@@ -82,9 +82,9 @@ namespace LongoMatch.Services
 			
 			try {
 				Project.Export (project, filename);
-				Config.GUIToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
+				App.Current.GUIToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
 				Log.Exception (ex);
 			}
 		}
@@ -92,14 +92,14 @@ namespace LongoMatch.Services
 		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
 		{
 			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter)Config.GUIToolkit.ChooseOption (options).Result;
+			return (ProjectImporter)App.Current.GUIToolkit.ChooseOption (options).Result;
 		}
 
 		void ImportProject ()
 		{
 			ProjectLongoMatch project;
 			ProjectImporter importer;
-			IStorage DB = Config.DatabaseManager.ActiveDB;
+			IStorage DB = App.Current.DatabaseManager.ActiveDB;
 			
 			Log.Debug ("Importing project");
 			/* try to import the project and show a message error is the file
@@ -122,21 +122,21 @@ namespace LongoMatch.Services
 					return;
 				}
 				if (importer.NeedsEdition) {
-					((LMCommon.EventsBroker)Config.EventsBroker).EmitNewProject (project);
+					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewProject (project);
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
-						var res = Config.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
+						var res = App.Current.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
 						          project.ID + "\n" +
 						          Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
 							return;
 					}
 					DB.Store<ProjectLongoMatch> (project, true);
-					((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
+					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
 				}
 			} catch (Exception ex) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -145,18 +145,18 @@ namespace LongoMatch.Services
 
 		void HandleMigrateDB ()
 		{
-			string db4oPath = Path.Combine (Config.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
-			string monoPath = Path.GetFullPath (Config.LibsDir) + Path.PathSeparator + Path.GetFullPath (db4oPath);
-			string migrationExe = Path.GetFullPath (Path.Combine (Config.LibsDir, "migration", "LongoMatch.exe"));
+			string db4oPath = Path.Combine (App.Current.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
+			string monoPath = Path.GetFullPath (App.Current.LibsDir) + Path.PathSeparator + Path.GetFullPath (db4oPath);
+			string migrationExe = Path.GetFullPath (Path.Combine (App.Current.LibsDir, "migration", "LongoMatch.exe"));
 			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
 			startInfo.UseShellExecute = false;
 			startInfo.Arguments = "\"" + migrationExe + "\"";
-			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (Config.baseDirectory, "bin"));
+			startInfo.WorkingDirectory = Path.GetFullPath (Path.Combine (App.Current.baseDirectory, "bin"));
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				startInfo.FileName = Path.Combine (Config.baseDirectory, "bin", "mono-sgen.exe");
+				startInfo.FileName = Path.Combine (App.Current.baseDirectory, "bin", "mono-sgen.exe");
 				startInfo.EnvironmentVariables ["MONO_CFG_DIR"] = Path.GetFullPath (
-					Path.Combine (Config.baseDirectory, "etc"));
+					Path.Combine (App.Current.baseDirectory, "etc"));
 			} else {
 				startInfo.FileName = "mono-sgen";
 			}
@@ -170,8 +170,8 @@ namespace LongoMatch.Services
 				startInfo.EnvironmentVariables ["MONO_PATH"]));
 			using (Process exeProcess = Process.Start (startInfo)) {
 				exeProcess.WaitForExit ();
-				Config.DatabaseManager.UpdateDatabases ();
-				Config.DatabaseManager.SetActiveByName (Config.DatabaseManager.ActiveDB.Info.Name);
+				App.Current.DatabaseManager.UpdateDatabases ();
+				App.Current.DatabaseManager.SetActiveByName (App.Current.DatabaseManager.ActiveDB.Info.Name);
 			}
 		}
 
@@ -191,46 +191,46 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
+			App.Current.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr as ProjectLongoMatch;
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EditPreferencesEvent += () => {
-				Config.GUIToolkit.OpenPreferencesEditor ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EditPreferencesEvent += () => {
+				App.Current.GUIToolkit.OpenPreferencesEditor ();
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).ManageCategoriesEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
-					Config.GUIToolkit.OpenCategoriesTemplatesManager ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageCategoriesEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+					App.Current.GUIToolkit.OpenCategoriesTemplatesManager ();
 				}
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).ManageTeamsEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
-					Config.GUIToolkit.OpenTeamsTemplatesManager ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageTeamsEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+					App.Current.GUIToolkit.OpenTeamsTemplatesManager ();
 				}
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).ManageProjectsEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ()) {
-					Config.GUIToolkit.OpenProjectsManager (this.openedProject);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageProjectsEvent += () => {
+				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+					App.Current.GUIToolkit.OpenProjectsManager (this.openedProject);
 				}
 			};
 
-			((LMCommon.EventsBroker)Config.EventsBroker).MigrateDB += HandleMigrateDB;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).MigrateDB += HandleMigrateDB;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).ExportProjectEvent += ExportProject;
-			((LMCommon.EventsBroker)Config.EventsBroker).ImportProjectEvent += ImportProject;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ExportProjectEvent += ExportProject;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ImportProjectEvent += ImportProject;
 
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).MigrateDB -= HandleMigrateDB;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).MigrateDB -= HandleMigrateDB;
 
-			((LMCommon.EventsBroker)Config.EventsBroker).ExportProjectEvent -= ExportProject;
-			((LMCommon.EventsBroker)Config.EventsBroker).ImportProjectEvent -= ImportProject;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ExportProjectEvent -= ExportProject;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ImportProjectEvent -= ImportProject;
 
 			return true;
 		}

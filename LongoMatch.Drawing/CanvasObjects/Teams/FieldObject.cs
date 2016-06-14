@@ -105,10 +105,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			width = Width / NTeams;
 			colWidth = width / formation.Length;
 			if (team == TeamType.LOCAL) {
-				color = Config.Style.HomeTeamColor;
+				color = App.Current.Style.HomeTeamColor;
 				offsetX = 0;
 			} else {
-				color = Config.Style.AwayTeamColor; 
+				color = App.Current.Style.AwayTeamColor; 
 				offsetX = Width;
 			}
 

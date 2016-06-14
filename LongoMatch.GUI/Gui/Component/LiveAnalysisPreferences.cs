@@ -36,9 +36,9 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Shrink, 0, 0);
 			rendercb.CanFocus = false;
 			rendercb.Show ();
-			rendercb.Active = Config.AutoRenderPlaysInLive;
+			rendercb.Active = App.Current.Config.AutoRenderPlaysInLive;
 			rendercb.Toggled += (sender, e) => {
-				Config.AutoRenderPlaysInLive = rendercb.Active;
+				App.Current.Config.AutoRenderPlaysInLive = rendercb.Active;
 			};
 			
 			reviewcb = new CheckButton ();
@@ -47,20 +47,20 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Shrink, 0, 0);
 			reviewcb.CanFocus = false;
 			reviewcb.Show ();
-			reviewcb.Active = Config.ReviewPlaysInSameWindow;
+			reviewcb.Active = App.Current.Config.ReviewPlaysInSameWindow;
 			reviewcb.Toggled += (sender, e) => {
-				Config.ReviewPlaysInSameWindow = reviewcb.Active;
+				App.Current.Config.ReviewPlaysInSameWindow = reviewcb.Active;
 			};
 			
 			mediafilechooser1.FileChooserMode = FileChooserMode.Directory;
-			mediafilechooser1.CurrentPath = Config.AutoRenderDir;
+			mediafilechooser1.CurrentPath = App.Current.Config.AutoRenderDir;
 			mediafilechooser1.ChangedEvent += HandleChangedEvent;
 			
 		}
 
 		void HandleChangedEvent (object sender, EventArgs e)
 		{
-			Config.AutoRenderDir = mediafilechooser1.CurrentPath;
+			App.Current.Config.AutoRenderDir = mediafilechooser1.CurrentPath;
 		}
 	}
 }

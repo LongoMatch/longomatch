@@ -78,14 +78,14 @@ namespace LongoMatch.DB
 			progress.Report (0, "Migrating teams and dashboards", id);
 
 			try {
-				teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
+				teamFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "teams")).
 					Where (f => f.EndsWith (".ltt")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
 				progress.Report (percent, "Migrated teams", id);
 			}
 			try {
-				dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
+				dashboardFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "analysis")).
 					Where (f => f.EndsWith (".lct")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
@@ -125,7 +125,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating team " + team.Name);
 						TeamMigration.Migrate0 (team, teamNameToID);
-						Config.TeamTemplatesProvider.Save (team);
+						App.Current.TeamTemplatesProvider.Save (team);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + team.Name, id);
 					} catch (Exception ex) {
@@ -141,7 +141,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating dashboard " + dashboard.Name);
 						DashboardMigration.Migrate0 (dashboard, scoreNameToID, penaltyNameToID);
-						Config.CategoriesTemplatesProvider.Save (dashboard as DashboardLongoMatch);
+						App.Current.CategoriesTemplatesProvider.Save (dashboard as DashboardLongoMatch);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + dashboard.Name, id);
 					} catch (Exception ex) {
@@ -155,13 +155,13 @@ namespace LongoMatch.DB
 			Task.WaitAll (tasks.ToArray ());
 
 			try {
-				string backupDir = Path.Combine (Config.TemplatesDir, "backup");
+				string backupDir = Path.Combine (App.Current.TemplatesDir, "backup");
 				if (!Directory.Exists (backupDir)) {
 					Directory.CreateDirectory (backupDir);
 				}
 
-				foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).Concat(
-				Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")))) {
+				foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "teams")).Concat(
+					Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "analysis")))) {
 					string outputFile = Path.Combine (backupDir, Path.GetFileName (templateFile));
 					if (File.Exists (outputFile)) {
 						File.Delete (outputFile);
@@ -182,7 +182,7 @@ namespace LongoMatch.DB
 			Guid id = Guid.NewGuid ();
 			progress.Report (0, "Migrating databases", id);
 			// Collect all the databases and projects to migrate for progress updates
-			foreach (var directory in Directory.EnumerateDirectories (Config.DBDir)) {
+			foreach (var directory in Directory.EnumerateDirectories (App.Current.DBDir)) {
 				if (!directory.EndsWith (".ldb")) {
 					continue;
 				}
@@ -198,10 +198,10 @@ namespace LongoMatch.DB
 
 			// Start migrating databases
 			foreach (var kv in databases) {
-				MigrateDB (Config.DatabaseManager, kv.Key, kv.Value);
+				MigrateDB (App.Current.DatabaseManager, kv.Key, kv.Value);
 			}
 			// Now that all the databases have been migrated, move the old databases to a backup directory
-			string backupDir = Path.Combine (Config.DBDir, "old");
+			string backupDir = Path.Combine (App.Current.DBDir, "old");
 			if (!Directory.Exists (backupDir)) {
 				Directory.CreateDirectory (backupDir);
 			}

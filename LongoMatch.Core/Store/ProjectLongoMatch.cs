@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 dfernandez
+//  Copyright (C) 2016 FLUENDO S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -397,8 +397,8 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import ()
 		{
-			string file = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir, Constants.PROJECT_NAME,
-				              new string[] { "*" + Constants.PROJECT_EXT });
+			string file = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
+				              Constants.PROJECT_NAME, new string[] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;
 			return Import (file);

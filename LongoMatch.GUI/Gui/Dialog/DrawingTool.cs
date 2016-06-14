@@ -146,7 +146,7 @@ namespace LongoMatch.Gui.Dialog
 			hscrollbar.Visible = wscrollbar.Visible = false;
 			zoomscale.Value = 1;
 
-			if (!Config.SupportsZoom) {
+			if (!App.Current.SupportsZoom) {
 				zoombox.Visible = false;
 				zoombutton.Visible = false;
 				hscrollbar.Visible = false;
@@ -450,7 +450,7 @@ namespace LongoMatch.Gui.Dialog
 				                           DateTime.Now.ToShortDateString ().Replace ('/', '-'));
 			string filename = FileChooserHelper.SaveFile (this,
 				                  Catalog.GetString ("Save File as..."),
-				                  proposed_filename, Config.SnapshotsDir,
+				                  proposed_filename, App.Current.SnapshotsDir,
 				                  "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");

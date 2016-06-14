@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TransientFor = parent;
 			this.Build ();
-			this.manager = Config.RenderingJobsManger;
+			this.manager = App.Current.RenderingJobsManger;
 			UpdateModel ();
 			cancelbutton.Clicked += OnCancelbuttonClicked;
 			clearbutton.Clicked += OnClearbuttonClicked;

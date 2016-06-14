@@ -122,21 +122,21 @@ namespace LongoMatch.Services
 		void HandleFileChangedEvent (FileChangeType eventType, string path)
 		{
 			// Event from the monitor usually comes from non-UI threads.
-			Config.GUIToolkit.Invoke ((s, e) => {
+			App.Current.GUIToolkit.Invoke ((s, e) => {
 				if (eventType == FileChangeType.Created) {
 					string ext = Path.GetExtension (path);
 					try {
 						if (ImportTeams && ext == Constants.TEAMS_TEMPLATE_EXT) {
 							SportsTeam team = FileStorage.RetrieveFrom<SportsTeam> (path);
-							Config.TeamTemplatesProvider.Add (team);
+							App.Current.TeamTemplatesProvider.Add (team);
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {
 							Dashboard team = FileStorage.RetrieveFrom<Dashboard> (path);
-							Config.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
+							App.Current.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
 							File.Delete (path);
 						} else if (ImportProjects && ext == Constants.PROJECT_EXT) {
 							ProjectLongoMatch project = FileStorage.RetrieveFrom<ProjectLongoMatch> (path);
-							Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
+							App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
 							File.Delete (path);
 						}
 					} catch (Exception ex) {

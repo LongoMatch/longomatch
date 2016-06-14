@@ -64,20 +64,20 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
-			Config.EventsBroker = new EventsBroker ();
+			App.Current.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Config.DatabaseManager.SetActiveByName ("longomatch");
-			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			App.Current.DatabaseManager.SetActiveByName ("longomatch");
+			Assert.AreEqual (4, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (2, App.Current.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "spain.ltt")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "france.ltt")));
@@ -103,19 +103,19 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
-			Config.EventsBroker = new EventsBroker ();
+			App.Current.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			DatabaseMigration dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			// Directory exists but it's empty
 			Directory.CreateDirectory (dbPath);
@@ -126,9 +126,9 @@ namespace Tests.Integration
 			dbMigration = new DatabaseMigration (Mock.Of<IProgressReport> ());
 			dbMigration.Start ();
 
-			Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
 		}
 	}
 }

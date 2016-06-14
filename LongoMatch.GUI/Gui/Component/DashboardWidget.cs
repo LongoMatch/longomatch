@@ -194,7 +194,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool LinksButtonVisible {
 			set {
-				if (!Config.SupportsActionLinks)
+				if (!App.Current.SupportsActionLinks)
 					linksbutton.Visible = false;
 				else
 					linksbutton.Visible = value;
@@ -263,7 +263,7 @@ namespace LongoMatch.Gui.Component
 					Edited = false;
 				} else {
 					if (Edited)
-						((LMCommon.EventsBroker)Config.EventsBroker).EmitDashboardEdited ();
+						((LMCommon.EventsBroker)App.Current.EventsBroker).EmitDashboardEdited ();
 				}
 
 			}
@@ -274,7 +274,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 			             button.Name + "?";
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				template.RemoveButton (button);
 				Edited = true;
 				Refresh ();
@@ -285,7 +285,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = string.Format ("{0} {1} ?",
 				             Catalog.GetString ("Do you want to delete: "), link);
-			if (force || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (force || App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				link.SourceButton.ActionLinks.Remove (link);
 				Edited = true;
 				Refresh ();
@@ -523,11 +523,11 @@ namespace LongoMatch.Gui.Component
 		void HandleResetField (object sender, EventArgs e)
 		{
 			if (sender == resetfieldbutton) {
-				UpdateBackground (Config.FieldBackground, 0);
+				UpdateBackground (App.Current.FieldBackground, 0);
 			} else if (sender == resethfieldbutton) {
-				UpdateBackground (Config.HalfFieldBackground, 1);
+				UpdateBackground (App.Current.HalfFieldBackground, 1);
 			} else if (sender == resetgoalbutton) {
-				UpdateBackground (Config.GoalBackground, 2);
+				UpdateBackground (App.Current.GoalBackground, 2);
 			}
 		}
 
@@ -560,7 +560,7 @@ namespace LongoMatch.Gui.Component
 				template.GamePeriods = new ObservableCollection<string> (periodsentry.Text.Split ('-'));
 				Edited = true;
 			} catch {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
 			}
 		}
 

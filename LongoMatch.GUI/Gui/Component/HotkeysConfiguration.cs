@@ -35,9 +35,9 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 
 			sgroup = new SizeGroup (SizeGroupMode.Horizontal);
-			foreach (KeyAction action in Config.Hotkeys.ActionsDescriptions.Keys) {
-				AddWidget (action, Config.Hotkeys.ActionsDescriptions [action],
-					Config.Hotkeys.ActionsHotkeys [action], i);
+			foreach (KeyAction action in App.Current.Config.Hotkeys.ActionsDescriptions.Keys) {
+				AddWidget (action, App.Current.Config.Hotkeys.ActionsDescriptions [action],
+					App.Current.Config.Hotkeys.ActionsHotkeys [action], i);
 				i++;
 			}
 		}
@@ -68,14 +68,14 @@ namespace LongoMatch.Gui.Component
 			descLabel.Justify = Justification.Left;
 			descLabel.SetAlignment (0f, 0.5f);
 			edit.Clicked += (sender, e) => {
-				HotKey hotkey = Config.GUIToolkit.SelectHotkey (key);
+				HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (key);
 				if (hotkey != null) {
-					if (Config.Hotkeys.ActionsHotkeys.ContainsValue (hotkey)) {
-						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Hotkey already in use: ") +
+					if (App.Current.Config.Hotkeys.ActionsHotkeys.ContainsValue (hotkey)) {
+						App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Hotkey already in use: ") +
 						GLib.Markup.EscapeText (hotkey.ToString ()), this);
 					} else {
-						Config.Hotkeys.ActionsHotkeys [action] = hotkey;
-						Config.Save ();
+						App.Current.Config.Hotkeys.ActionsHotkeys [action] = hotkey;
+						App.Current.Config.Save ();
 						keyLabel.Markup = GLib.Markup.EscapeText (hotkey.ToString ());
 					}
 				}

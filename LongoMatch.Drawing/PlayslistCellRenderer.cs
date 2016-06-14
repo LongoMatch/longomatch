@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing
 			x2 = x1 + backgroundArea.Width;
 			y = backgroundArea.Start.Y + backgroundArea.Height; 
 			tk.LineWidth = 1;
-			tk.StrokeColor = Config.Style.PaletteBackgroundLight;
+			tk.StrokeColor = App.Current.Style.PaletteBackgroundLight;
 			tk.DrawLine (new Point (x1, y), new Point (x2, y));
 		}
 
@@ -77,13 +77,13 @@ namespace LongoMatch.Drawing
 				if (!isExpanded) {
 					if (ArrowRight == null) {
 						Image img = Resources.LoadImage (StyleConf.ListArrowRightPath);
-						ArrowRight = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+						ArrowRight = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowRight;
 				} else {
 					if (ArrowDown == null) {
 						Image img = Resources.LoadImage (StyleConf.ListArrowDownPath);
-						ArrowDown = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+						ArrowDown = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 					}
 					arrow = ArrowDown;
 				}
@@ -96,7 +96,7 @@ namespace LongoMatch.Drawing
 			tk.DrawCircle (new Point (countX1, countYC), StyleConf.ListCountRadio);
 			tk.DrawCircle (new Point (countX2, countYC), StyleConf.ListCountRadio);
 			tk.DrawRectangle (new Point (countX1, countY), StyleConf.ListCountWidth, 2 * StyleConf.ListCountRadio);
-			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			tk.StrokeColor = App.Current.Style.PaletteBackgroundDark;
 			tk.FontAlignment = FontAlignment.Center;
 			tk.FontWeight = FontWeight.Bold;
 			tk.FontSize = 14;
@@ -111,11 +111,11 @@ namespace LongoMatch.Drawing
 			/* Background */
 			tk.LineWidth = 0;
 			if (isExpanded) {
-				backgroundColor = Config.Style.PaletteBackgroundLight;
-				textColor = Config.Style.PaletteSelected;
+				backgroundColor = App.Current.Style.PaletteBackgroundLight;
+				textColor = App.Current.Style.PaletteSelected;
 			} else {
-				backgroundColor = Config.Style.PaletteBackground;
-				textColor = Config.Style.PaletteWidgets;
+				backgroundColor = App.Current.Style.PaletteBackground;
+				textColor = App.Current.Style.PaletteWidgets;
 			}
 			tk.FillColor = backgroundColor;
 			tk.DrawRectangle (backgroundArea.Start, backgroundArea.Width, backgroundArea.Height);
@@ -156,7 +156,7 @@ namespace LongoMatch.Drawing
 			tk.Context = context;
 			tk.Begin ();
 			RenderBackgroundAndText (isExpanded, tk, backgroundArea, textP, cellArea.Width - textP.X, playlist.Name);
-			RenderCount (isExpanded, Config.Style.PaletteActive, count, tk, backgroundArea, cellArea);
+			RenderCount (isExpanded, App.Current.Style.PaletteActive, count, tk, backgroundArea, cellArea);
 			RenderSeparationLine (tk, context, backgroundArea);
 			tk.End ();
 		}
@@ -186,34 +186,34 @@ namespace LongoMatch.Drawing
 			
 			tk.LineWidth = 0;
 			if (state.HasFlag (CellState.Prelit)) {
-				tk.FillColor = Config.Style.PaletteBackgroundDarkBright;
+				tk.FillColor = App.Current.Style.PaletteBackgroundDarkBright;
 			} else {
-				tk.FillColor = Config.Style.PaletteBackgroundDark;
+				tk.FillColor = App.Current.Style.PaletteBackgroundDark;
 			}
 			tk.DrawRectangle (backgroundArea.Start, backgroundArea.Width, backgroundArea.Height);
 			/* Selection rectangle */
 			tk.LineWidth = 0;
 			tk.FillColor = color;
 			tk.DrawRectangle (selectPoint, StyleConf.ListSelectedWidth, backgroundArea.Height);
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.FillColor = App.Current.Style.PaletteBackgroundDark;
 			tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 1);
 			if (state.HasFlag (CellState.Selected)) {
-				tk.FillColor = Config.Style.PaletteBackground;
-				tk.FillColor = Config.Style.PaletteActive;
+				tk.FillColor = App.Current.Style.PaletteBackground;
+				tk.FillColor = App.Current.Style.PaletteActive;
 				tk.DrawCircle (circlePoint, (StyleConf.ListSelectedWidth / 2) - 2);
 			}
 			
 			if (desc != null) {
 				tk.FontSize = 10;
 				tk.FontWeight = FontWeight.Normal;
-				tk.StrokeColor = Config.Style.PaletteSelected;
+				tk.StrokeColor = App.Current.Style.PaletteSelected;
 				tk.FontAlignment = FontAlignment.Left;
 				tk.DrawText (textPoint, textWidth, cellArea.Height, desc);
 			}
 			if (selected) {
 				if (EyeSurface == null) {
 					Image img = Resources.LoadImage (StyleConf.ListEyeIconPath);
-					EyeSurface = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+					EyeSurface = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 				}
 				tk.DrawSurface (new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2), StyleConf.ListEyeIconWidth, StyleConf.ListEyeIconHeight, EyeSurface, ScaleMode.AspectFit);
 			}
@@ -249,7 +249,7 @@ namespace LongoMatch.Drawing
 			timePoint = new Point (outPoint.X + StyleConf.ListImageWidth + StyleConf.ListRowSeparator, textPoint.Y); 
 			tk.FontSize = 10;
 			tk.FontWeight = FontWeight.Normal;
-			tk.StrokeColor = Config.Style.PaletteSelected;
+			tk.StrokeColor = App.Current.Style.PaletteSelected;
 			tk.FontAlignment = FontAlignment.Left;
 			tk.DrawText (timePoint, 100, cellArea.Height, evt.ToSecondsString ());
 			RenderSeparationLine (tk, context, backgroundArea);
@@ -311,7 +311,7 @@ namespace LongoMatch.Drawing
 					context, backgroundArea, cellArea, state);
 			} else if (item is IPlaylistElement) {
 				IPlaylistElement p = item as IPlaylistElement;
-				RenderPlay (Config.Style.PaletteActive, p.Miniature, null, null, p.Selected, p.Description,
+				RenderPlay (App.Current.Style.PaletteActive, p.Miniature, null, null, p.Selected, p.Description,
 					count, isExpanded, tk, context, backgroundArea, cellArea, state);
 			} else {
 				Log.Error ("No renderer for type " + item.GetType ());

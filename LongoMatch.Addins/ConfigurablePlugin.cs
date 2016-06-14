@@ -62,7 +62,7 @@ namespace LongoMatch.Addins
 				foreach (char c in Path.GetInvalidFileNameChars()) {
 					filename = filename.Replace (c.ToString (), ""); 
 				}
-				return Path.Combine (Config.ConfigDir, filename);
+				return Path.Combine (App.Current.ConfigDir, filename);
 			}
 		}
 

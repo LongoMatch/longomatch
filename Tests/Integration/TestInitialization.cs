@@ -59,7 +59,7 @@ namespace Tests.Integration
 		{
 			CoreServices.Stop ();
 			try {
-				foreach (var db in Config.DatabaseManager.Databases) {
+				foreach (var db in App.Current.DatabaseManager.Databases) {
 					db.Reset ();
 				}
 				Directory.Delete (tmpPath, true);
@@ -72,53 +72,53 @@ namespace Tests.Integration
 		{
 			try {
 				CoreServices.Init ();
-				Assert.AreEqual (homePath, Config.HomeDir);
-				Assert.AreEqual (homePath, Config.ConfigDir);
-				Assert.AreEqual (homePath, Directory.GetParent (Config.DBDir).ToString ());
-				Assert.AreEqual (homePath, Directory.GetParent (Config.PlayListDir).ToString ());
-				Assert.AreEqual (homePath, Directory.GetParent (Config.SnapshotsDir).ToString ());
-				Assert.AreEqual (homePath, Directory.GetParent (Config.VideosDir).ToString ());
+				Assert.AreEqual (homePath, App.Current.HomeDir);
+				Assert.AreEqual (homePath, App.Current.ConfigDir);
+				Assert.AreEqual (homePath, Directory.GetParent (App.Current.DBDir).ToString ());
+				Assert.AreEqual (homePath, Directory.GetParent (App.Current.PlayListDir).ToString ());
+				Assert.AreEqual (homePath, Directory.GetParent (App.Current.SnapshotsDir).ToString ());
+				Assert.AreEqual (homePath, Directory.GetParent (App.Current.VideosDir).ToString ());
 
-				AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+				AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 				AddinsManager.LoadConfigModifierAddins ();
 
-				Config.EventsBroker = new EventsBroker ();
-				Config.DrawingToolkit = drawingToolkitMock.Object;
-				Config.MultimediaToolkit = multimediaToolkitMock.Object;
-				Config.GUIToolkit = guiToolkitMock.Object;
+				App.Current.EventsBroker = new EventsBroker ();
+				App.Current.DrawingToolkit = drawingToolkitMock.Object;
+				App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
+				App.Current.GUIToolkit = guiToolkitMock.Object;
 				AddinsManager.RegisterGStreamerPlugins ();
-				AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
-				AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
-				AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
+				AddinsManager.LoadExportProjectAddins (App.Current.GUIToolkit.MainController);
+				AddinsManager.LoadMultimediaBackendsAddins (App.Current.MultimediaToolkit);
+				AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
 				AddinsManager.LoadServicesAddins ();
 
-				IRenderingStateBar rr = Config.GUIToolkit.RenderingStateBar;
-				IMultimediaToolkit im = Config.MultimediaToolkit;
+				IRenderingStateBar rr = App.Current.GUIToolkit.RenderingStateBar;
+				IMultimediaToolkit im = App.Current.MultimediaToolkit;
 
-				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
+				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 				//CoreServices.Start (null, null);
 
 				// Check database dirs
-				Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (Config.TeamsDir).ToString ());
-				Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (Config.AnalysisDir).ToString ());
-				Assert.AreEqual (1, Config.DatabaseManager.Databases.Count);
+				Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.TeamsDir).ToString ());
+				Assert.AreEqual (Path.Combine (homePath, "db"), Directory.GetParent (App.Current.AnalysisDir).ToString ());
+				Assert.AreEqual (1, App.Current.DatabaseManager.Databases.Count);
 
-				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
+				AddinsManager.LoadDashboards (App.Current.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 				// Check templates and db are initialized
-				Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-				Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
-				Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+				Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+				Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
+				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 
 				CoreServices.Stop ();
 
 				// Simulate an application restart
 				CoreServices.Init ();
-				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
-				Assert.AreEqual (2, Config.TeamTemplatesProvider.Templates.Count);
-				Assert.AreEqual (1, Config.CategoriesTemplatesProvider.Templates.Count);
-				Assert.AreEqual (0, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+				Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
+				Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
+				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 				CoreServices.Stop ();
 
 			} catch (Exception ex) {

@@ -28,7 +28,7 @@ namespace Tests.Core.Common
 		[TestFixtureSetUp ()]
 		public void Setup ()
 		{
-			Config.dataDir = "../data/";
+			App.Current.dataDir = "../data/";
 		}
 
 		[Test ()]

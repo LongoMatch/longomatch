@@ -56,12 +56,12 @@ namespace LongoMatch.Plugins
 		{
 			ProjectLongoMatch project = null;
 
-			string filename = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
+			string filename = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir,
 				                  FilterName, FilterExtensions);
 			if (filename == null)
 				return null;
 
-			IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
+			IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
 			busy.ShowSync (() => {
 				project = Project.Import (filename) as ProjectLongoMatch;
 			});

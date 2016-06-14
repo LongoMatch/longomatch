@@ -41,11 +41,11 @@ namespace LongoMatch.Gui.Dialog
 			this.Build ();
 			encSettings = new EncodingSettings ();
 			stdStore = Misc.FillImageFormat (sizecombobox, VideoStandards.Rendering,
-				Config.RenderVideoStandard);
-			encStore = Misc.FillEncodingFormat (formatcombobox, Config.RenderEncodingProfile);
-			qualStore = Misc.FillQuality (qualitycombobox, Config.RenderEncodingQuality);
-			descriptioncheckbutton.Active = Config.OverlayTitle;
-			audiocheckbutton.Active = Config.EnableAudio;
+				App.Current.Config.RenderVideoStandard);
+			encStore = Misc.FillEncodingFormat (formatcombobox, App.Current.Config.RenderEncodingProfile);
+			qualStore = Misc.FillQuality (qualitycombobox, App.Current.Config.RenderEncodingQuality);
+			descriptioncheckbutton.Active = App.Current.Config.OverlayTitle;
+			audiocheckbutton.Active = App.Current.Config.EnableAudio;
 			mediafilechooser1.FileChooserMode = FileChooserMode.File;
 			mediafilechooser1.FilterName = "Multimedia Files";
 			mediafilechooser1.FilterExtensions = new string[] {"*.mkv", "*.mp4", "*.ogg",
@@ -117,8 +117,8 @@ namespace LongoMatch.Gui.Dialog
 			
 			encSettings.OutputFile = mediafilechooser1.CurrentPath;
 			
-			encSettings.Framerate_n = Config.FPS_N;
-			encSettings.Framerate_d = Config.FPS_D;
+			encSettings.Framerate_n = App.Current.Config.FPS_N;
+			encSettings.Framerate_d = App.Current.Config.FPS_D;
 			
 			encSettings.TitleSize = 20; 
 			
@@ -126,9 +126,9 @@ namespace LongoMatch.Gui.Dialog
 			encSettings.EnableTitle = descriptioncheckbutton.Active;
 			
 			if (!SplitFiles && String.IsNullOrEmpty (EncodingSettings.OutputFile)) {
-				Config.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select a video file."));
+				App.Current.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select a video file."));
 			} else if (SplitFiles && String.IsNullOrEmpty (OutputDir)) {
-				Config.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select an output directory."));
+				App.Current.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select an output directory."));
 			} else {
 				Respond (ResponseType.Ok);
 			}

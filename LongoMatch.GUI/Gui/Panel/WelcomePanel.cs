@@ -33,17 +33,17 @@ namespace LongoMatch.Gui.Panel
 	{
 		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitNewProject (null))),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewProject (null))),
 			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProject ())),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProject ())),
 			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ())),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitImportProject ())),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitManageProjects ())),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageProjects ())),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitManageTeams ())),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageTeams ())),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
-				new Action (() => ((LMCommon.EventsBroker)Config.EventsBroker).EmitManageCategories ())),
+				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageCategories ())),
 		};
 
 		List<WelcomeButton> buttons;
@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandlePreferencesClicked (object sender, EventArgs e)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitEditPreferences ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitEditPreferences ();
 		}
 
 		void Populate ()
@@ -84,12 +84,12 @@ namespace LongoMatch.Gui.Panel
 			// Query for tools
 			List<ITool> tools = new List<ITool> ();
 
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitQueryTools (tools);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitQueryTools (tools);
 
 			foreach (ITool tool in tools) {
 				if (tool.WelcomePanelIcon != null) {
 					buttons.Add (new WelcomeButton (tool.WelcomePanelIcon, tool.Name,
-						new Action (() => tool.Load (Config.GUIToolkit))));
+						new Action (() => tool.Load (App.Current.GUIToolkit))));
 				}
 			}
 		}
@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Our logo
 			logoImage = new Gtk.Image ();
-			logoImage.Pixbuf = Config.Background.Scale (StyleConf.WelcomeLogoWidth,
+			logoImage.Pixbuf = App.Current.Background.Scale (StyleConf.WelcomeLogoWidth,
 				StyleConf.WelcomeLogoHeight).Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;

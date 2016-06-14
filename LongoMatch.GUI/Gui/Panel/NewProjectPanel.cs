@@ -67,8 +67,8 @@ namespace LongoMatch.Gui.Panel
 		public NewProjectPanel (ProjectLongoMatch project)
 		{
 			this.Build ();
-			this.mtoolkit = Config.MultimediaToolkit;
-			this.gtoolkit = Config.GUIToolkit;
+			this.mtoolkit = App.Current.MultimediaToolkit;
+			this.gtoolkit = App.Current.GUIToolkit;
 			capturemediafilechooser.FileChooserMode = FileChooserMode.File;
 			capturemediafilechooser.ProposedFileName = String.Format ("Live-LongoMatch-{0}.mp4",
 				DateTime.Now.ToShortDateString ());
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent -= HandleQuit;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent -= HandleQuit;
 
 			teamtagger.Dispose ();
 			projectperiods1.Destroy ();
@@ -181,7 +181,7 @@ namespace LongoMatch.Gui.Panel
 			teamtagger.SubstitutionMode = true;
 			teamtagger.ShowSubstitutionButtons = false;
 			teamtagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
-			teams = Config.TeamTemplatesProvider.Templates;
+			teams = App.Current.TeamTemplatesProvider.Templates;
 
 			// Fill the combobox with project values or the templates ones
 			if (project != null) {
@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
-			((LMCommon.EventsBroker)Config.EventsBroker).QuitApplicationEvent += HandleQuit;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent += HandleQuit;
 		}
 
 		void FillProjectDetails ()
@@ -280,9 +280,9 @@ namespace LongoMatch.Gui.Panel
 			int index = 0;
 
 			dashboardsList = new ListStore (typeof(string), typeof(Dashboard));
-			foreach (var dashboard in Config.CategoriesTemplatesProvider.Templates) {
+			foreach (var dashboard in App.Current.CategoriesTemplatesProvider.Templates) {
 				dashboardsList.AppendValues (dashboard.Name, dashboard);
-				if (dashboard.Name == Config.DefaultTemplate)
+				if (dashboard.Name == App.Current.Config.DefaultTemplate)
 					index = i;
 				i++;
 			}
@@ -315,9 +315,9 @@ namespace LongoMatch.Gui.Panel
 		void FillFormats ()
 		{
 			videoStandardList = Misc.FillImageFormat (imagecombobox, VideoStandards.Capture,
-				Config.CaptureVideoStandard);
-			encProfileList = Misc.FillEncodingFormat (encodingcombobox, Config.CaptureEncodingProfile);
-			qualList = Misc.FillQuality (qualitycombobox, Config.CaptureEncodingQuality);
+				App.Current.Config.CaptureVideoStandard);
+			encProfileList = Misc.FillEncodingFormat (encodingcombobox, App.Current.Config.CaptureEncodingProfile);
+			qualList = Misc.FillQuality (qualitycombobox, App.Current.Config.CaptureEncodingQuality);
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -465,8 +465,8 @@ namespace LongoMatch.Gui.Panel
 			encodingcombobox.GetActiveIter (out iter);
 			encSettings.EncodingProfile = (EncodingProfile)encProfileList.GetValue (iter, 1);
 			
-			encSettings.Framerate_n = Config.FPS_N;
-			encSettings.Framerate_d = Config.FPS_D;
+			encSettings.Framerate_n = App.Current.Config.FPS_N;
+			encSettings.Framerate_d = App.Current.Config.FPS_D;
 			
 			captureSettings.EncodingSettings = encSettings;
 
@@ -474,7 +474,7 @@ namespace LongoMatch.Gui.Panel
 			if (file == null) {
 				file = new MediaFile () { Name = Catalog.GetString ("Main camera angle") };
 				file.FilePath = capturemediafilechooser.CurrentPath;
-				file.Fps = (ushort)(Config.FPS_N / Config.FPS_D);
+				file.Fps = (ushort)(App.Current.Config.FPS_N / App.Current.Config.FPS_D);
 				file.Par = 1;
 				project.Description.FileSet.Add (file);
 			}
@@ -504,7 +504,7 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					project.CreateLineupEvent ();
 				}
-				((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
+				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
 			}
 		}
 
@@ -543,7 +543,7 @@ namespace LongoMatch.Gui.Panel
 				}
 
 				if (videoDevices == null || videoDevices.Count == 0) {
-					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
+					App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
 						this);
 					return;
 				}
@@ -596,7 +596,7 @@ namespace LongoMatch.Gui.Panel
 				    projectType == ProjectType.FakeCaptureProject ||
 				    projectType == ProjectType.URICaptureProject) {
 					project.CreateLineupEvent ();
-					((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
+					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {
@@ -664,7 +664,7 @@ namespace LongoMatch.Gui.Panel
 				team.FormationStr = entry.Text;
 				teamtagger.Reload ();
 			} catch {
-				Config.GUIToolkit.ErrorMessage (
+				App.Current.GUIToolkit.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
 			}
 			entry.Text = team.FormationStr;

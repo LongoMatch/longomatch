@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleProjectSelected (ProjectLongoMatch project)
 		{
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (project.ID, project);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
 		}
 	}
 }

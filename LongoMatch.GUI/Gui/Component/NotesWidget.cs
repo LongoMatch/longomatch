@@ -38,12 +38,12 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			this.buf = textview1.Buffer;
 			buf.Changed += new EventHandler (OnEdition);
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 

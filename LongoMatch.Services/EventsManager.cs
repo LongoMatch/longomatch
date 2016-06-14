@@ -64,7 +64,7 @@ namespace LongoMatch.Services
 					Config.EventsBroker.EmitEventCreated (evt);
 					filter.Update ();
 				} catch (SubstitutionException ex) {
-					Config.GUIToolkit.ErrorMessage (ex.Message);
+					App.Current.GUIToolkit.ErrorMessage (ex.Message);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ namespace LongoMatch.Services
 			KeyAction action;
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
 			} catch (Exception ex) {
 				/* The dictionary contains 2 equal values for different keys */
 				Log.Exception (ex);
@@ -89,13 +89,13 @@ namespace LongoMatch.Services
 			case KeyAction.EditEvent:
 				bool playing = player.Playing;
 				player.Pause ();
-				Config.GUIToolkit.EditPlay (loadedPlay, openedProject, true, true, true, true);
+				App.Current.GUIToolkit.EditPlay (loadedPlay, openedProject, true, true, true, true);
 				if (playing) {
 					player.Play ();
 				}
 				break;
 			case KeyAction.DeleteEvent:
-				Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { loadedPlay });
+				App.Current.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> { loadedPlay });
 				break;
 			}
 		}
@@ -107,7 +107,7 @@ namespace LongoMatch.Services
 
 		void HandleShowProjectStatsEvent (Project project)
 		{
-			Config.GUIToolkit.ShowProjectStats (project);
+			App.Current.GUIToolkit.ShowProjectStats (project);
 		}
 
 		#region IService
@@ -126,21 +126,21 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent += HandleShowProjectStatsEvent;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.KeyPressed += HandleKeyPressed;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			App.Current.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
-			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
-			((LMCommon.EventsBroker)Config.EventsBroker).PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
-			((LMCommon.EventsBroker)Config.EventsBroker).ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			App.Current.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.KeyPressed -= HandleKeyPressed;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
+			((LMCommon.EventsBroker)App.Current.EventsBroker).ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
+			App.Current.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			return true;
 		}
 

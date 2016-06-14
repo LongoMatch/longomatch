@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Panel
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
-			provider = Config.TeamTemplatesProvider;
+			provider = App.Current.TeamTemplatesProvider;
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
 			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
@@ -122,8 +122,8 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 			};
 			
-			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
-			editplayerslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
+			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
+			editplayerslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 
 			Load (null);
 		}
@@ -186,7 +186,7 @@ namespace LongoMatch.Gui.Panel
 				provider.Save (template);
 				return true;
 			} catch (InvalidTemplateFilenameException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				return false;
 			}
 		}
@@ -247,16 +247,16 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System teams can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
-					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					newName = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
 						loadedTeam.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (teams.Any (t => t.Name == newName)) {
 						msg = Catalog.GetString ("A team with the same name already exists"); 
-						Config.GUIToolkit.ErrorMessage (msg, this);
+						App.Current.GUIToolkit.ErrorMessage (msg, this);
 					} else {
 						break;
 					}
@@ -283,7 +283,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else if (prompt) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
-					if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						SaveLoadedTeam ();
 					}
 				} else {
@@ -314,7 +314,7 @@ namespace LongoMatch.Gui.Panel
 				selected = team.Clone ();
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
 				return;
 			}
 			deleteteambutton.Visible = selected != null;
@@ -333,7 +333,7 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to import */
-			fileName = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, Config.HomeDir,
+			fileName = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName == null)
@@ -346,7 +346,7 @@ namespace LongoMatch.Gui.Panel
 					bool abort = false;
 
 					while (provider.Exists (newTeam.Name) && !abort) {
-						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
+						string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
 							              Catalog.GetString ("Name conflict"), newTeam.Name + "#").Result;
 						if (name == null) {
 							abort = true;
@@ -370,7 +370,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 			} catch (Exception ex) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -459,8 +459,8 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
-			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
-				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), Config.HomeDir,
+			fileName = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
+				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {
@@ -468,13 +468,13 @@ namespace LongoMatch.Gui.Panel
 				fileName = System.IO.Path.ChangeExtension (fileName, Constants.TEAMS_TEMPLATE_EXT);
 				if (System.IO.File.Exists (fileName)) {
 					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = Config.GUIToolkit.QuestionMessage (msg, null).Result;
+					succeeded = App.Current.GUIToolkit.QuestionMessage (msg, null).Result;
 				}
 
 				if (succeeded) {
 					Serializer.Instance.Save (loadedTeam, fileName);
 					string msg = Catalog.GetString ("Team exported correctly");
-					Config.GUIToolkit.InfoMessage (msg);
+					App.Current.GUIToolkit.InfoMessage (msg);
 				}
 			}
 
@@ -488,7 +488,7 @@ namespace LongoMatch.Gui.Panel
 			SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 			if (team.Name != args.NewText) {
 				if (teams.Any (t => t.Name == args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (
+					App.Current.GUIToolkit.ErrorMessage (
 						Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
@@ -497,7 +497,7 @@ namespace LongoMatch.Gui.Panel
 						provider.Save (team);
 						teamsStore.SetValue (iter, COL_NAME, team.Name);
 					} catch (Exception ex) {
-						Config.GUIToolkit.ErrorMessage (ex.Message);
+						App.Current.GUIToolkit.ErrorMessage (ex.Message);
 					}
 				}
 			}

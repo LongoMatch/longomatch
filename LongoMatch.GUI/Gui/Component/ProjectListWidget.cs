@@ -68,11 +68,11 @@ namespace LongoMatch.Gui.Component
 			CreateStore ();
 			CreateViews ();
 
-			sortcombobox.Active = (int)Config.ProjectSortMethod;
+			sortcombobox.Active = (int)App.Current.Config.ProjectSortMethod;
 			sortcombobox.Changed += (sender, e) => {
 				/* Hack to make it actually resort */
 				sort.SetSortFunc (COL_DISPLAY_NAME, SortFunc);
-				Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
+				App.Current.Config.ProjectSortMethod = (ProjectSortMethod)sortcombobox.Active;
 			};
 			focusimage.Pixbuf = Misc.LoadIcon ("longomatch-search", 27);
 			ViewMode = ProjectListViewMode.List;

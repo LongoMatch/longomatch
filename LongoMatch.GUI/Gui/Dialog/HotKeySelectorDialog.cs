@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Dialog
 			if (hotKey.Modifier != -1 && !IsSupportedModifier ((Gdk.Key)hotKey.Modifier)) {
 				string msg = Keyboard.NameFromKeyval ((uint)hotKey.Modifier) +
 				             Catalog.GetString ("is not a valid key modifier: Alt, Shift or Ctrl");
-				Config.GUIToolkit.WarningMessage (msg, this);
+				App.Current.GUIToolkit.WarningMessage (msg, this);
 				hotKey = null;
 				return true;
 			}

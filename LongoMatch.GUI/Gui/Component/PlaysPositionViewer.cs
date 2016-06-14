@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
 			menu = new SportsPlaysMenu ();
 		}
 
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Component
 			field.Destroy ();
 			hfield.Destroy ();
 			goal.Destroy ();
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
 			base.OnDestroyed ();
 		}
 	}

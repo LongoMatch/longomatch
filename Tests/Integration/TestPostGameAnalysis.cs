@@ -90,7 +90,7 @@ namespace Tests.Integration
 		{
 			CoreServices.Stop ();
 			try {
-				foreach (var db in Config.DatabaseManager.Databases) {
+				foreach (var db in App.Current.DatabaseManager.Databases) {
 					db.Reset ();
 				}
 				Directory.Delete (tmpPath, true);
@@ -103,82 +103,82 @@ namespace Tests.Integration
 		{
 			Guid projectID;
 			CoreServices.Init ();
-			AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			AddinsManager.LoadConfigModifierAddins ();
-			Config.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
-			Config.DrawingToolkit = drawingToolkitMock.Object;
-			Config.MultimediaToolkit = multimediaToolkitMock.Object;
-			Config.GUIToolkit = guiToolkitMock.Object;
-			Config.AutoSave = true;
-			CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
+			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
+			App.Current.DrawingToolkit = drawingToolkitMock.Object;
+			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
+			App.Current.GUIToolkit = guiToolkitMock.Object;
+			App.Current.Config.AutoSave = true;
+			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 			// Start importing templates
-			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
-			Config.TeamTemplatesProvider.Save (
-				Config.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("france.ltt", tmpPath)));
-			Config.CategoriesTemplatesProvider.Save (
-				Config.CategoriesTemplatesProvider.LoadFile (Utils.SaveResource ("basket.lct", tmpPath)));
-			Assert.AreEqual (4, Config.TeamTemplatesProvider.Templates.Count);
-			Assert.AreEqual (2, Config.CategoriesTemplatesProvider.Templates.Count);
+			App.Current.TeamTemplatesProvider.Save (
+				App.Current.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("spain.ltt", tmpPath)));
+			App.Current.TeamTemplatesProvider.Save (
+				App.Current.TeamTemplatesProvider.LoadFile (Utils.SaveResource ("france.ltt", tmpPath)));
+			App.Current.CategoriesTemplatesProvider.Save (
+				App.Current.CategoriesTemplatesProvider.LoadFile (Utils.SaveResource ("basket.lct", tmpPath)));
+			Assert.AreEqual (4, App.Current.TeamTemplatesProvider.Templates.Count);
+			Assert.AreEqual (2, App.Current.CategoriesTemplatesProvider.Templates.Count);
 
 			// Create a new project and open it
 			ProjectLongoMatch p = CreateProject ();
 			projectID = p.ID;
-			Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (p.ID, p);
+			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (p.ID, p);
 
 			// Tag some events
 			Assert.AreEqual (0, p.Timeline.Count);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (1, p.Timeline.Count);
-			ProjectLongoMatch savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			ProjectLongoMatch savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (1, savedP.Timeline.Count);
 			AddEvent (p, 6, 3000, 3050, 3025);
 			AddEvent (p, 7, 3000, 3050, 3025);
 			AddEvent (p, 8, 3000, 3050, 3025);
 			AddEvent (p, 5, 3000, 3050, 3025);
 			Assert.AreEqual (5, p.Timeline.Count);
-			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			Config.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {
+			App.Current.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {
 				p.Timeline [0],
 				p.Timeline [1]
 			});
 			Assert.AreEqual (3, p.Timeline.Count);
-			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 
 			// Now create a new ProjectLongoMatch with the same templates
 			p = CreateProject ();
-			Config.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
-			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (p.ID, p);
+			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
+			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (p.ID, p);
 
 			// Add some events and than remove it from the DB
 			AddEvent (p, 6, 3000, 3050, 3025);
 			AddEvent (p, 7, 3000, 3050, 3025);
 			AddEvent (p, 8, 3000, 3050, 3025);
 			AddEvent (p, 5, 3000, 3050, 3025);
-			Config.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (p);
+			App.Current.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (p);
 
 			// Reopen the old project
-			savedP = Config.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitOpenProjectID (savedP.ID, savedP);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitSaveProject (savedP, ProjectType.FileProject);
+			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (savedP.ID, savedP);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSaveProject (savedP, ProjectType.FileProject);
 
 			// Export this project to a new file
-			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
 			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
 			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
 			guiToolkitMock.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitExportProject (p);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitExportProject (p);
 			Assert.IsTrue (File.Exists (tmpFile));
 			savedP = Project.Import (tmpFile) as ProjectLongoMatch;
 			Assert.IsNotNull (savedP);
@@ -202,17 +202,17 @@ namespace Tests.Integration
 			);
 			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
-			Config.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {
+			App.Current.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {
 				p = project as ProjectLongoMatch;
 			};
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitImportProject ();
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitImportProject ();
 			Assert.IsNotNull (p);
-			Assert.AreEqual (2, Config.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			((LMCommon.EventsBroker)Config.EventsBroker).EmitCloseOpenedProject ();
-			savedP = Config.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
+			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
+			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();
 		}
@@ -220,7 +220,7 @@ namespace Tests.Integration
 		void AddEvent (ProjectLongoMatch p, int idx, int start, int stop, int eventTime)
 		{
 
-			Config.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
+			App.Current.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
 				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
 				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
 		}
@@ -228,11 +228,11 @@ namespace Tests.Integration
 		ProjectLongoMatch CreateProject ()
 		{
 			var project = new ProjectLongoMatch { Description = new ProjectDescription () };
-			project.LocalTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
+			project.LocalTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "spain");
 			Assert.IsNotNull (project.LocalTeamTemplate);
-			project.VisitorTeamTemplate = Config.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
+			project.VisitorTeamTemplate = App.Current.TeamTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "france");
 			Assert.IsNotNull (project.VisitorTeamTemplate);
-			project.Dashboard = Config.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket") as DashboardLongoMatch;
+			project.Dashboard = App.Current.CategoriesTemplatesProvider.Templates.FirstOrDefault (t => t.Name == "basket") as DashboardLongoMatch;
 			Assert.IsNotNull (project.Dashboard);
 			project.Description.Competition = "Liga";
 			project.Description.MatchDate = DateTime.UtcNow;

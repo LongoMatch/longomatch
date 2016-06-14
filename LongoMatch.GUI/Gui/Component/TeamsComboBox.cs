@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			Clear ();
 			pixrender = new CellRendererPixbuf ();
 			texrender = new CellRendererText ();
-			texrender.Font = Config.Style.Font + " " + StyleConf.NewTeamsFontSize;
+			texrender.Font = App.Current.Style.Font + " " + StyleConf.NewTeamsFontSize;
 			texrender.Alignment = Pango.Alignment.Center;
 
 			if (Direction == TextDirection.Ltr) {
