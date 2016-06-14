@@ -206,7 +206,7 @@ namespace LongoMatch.Gui.Menus
 			Add (edit);
 
 			duplicate = new MenuItem ("");
-			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicateEvent (plays);
+			duplicate.Activated += (sender, e) => App.Current.EventsBroker.EmitDuplicateEvent (plays);
 			Add (duplicate);
 
 			moveCat = new MenuItem (Catalog.GetString ("Move to"));

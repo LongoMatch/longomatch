@@ -46,8 +46,8 @@ namespace LongoMatch.Gui.Component
 			projectType = ProjectType.None;
 			detachedPlayer = false;
 			codingwidget.Player = playercapturer.Player;
-			Config.EventsBroker.EventCreatedEvent += HandleEventCreated;
-			Config.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
+			App.Current.EventsBroker.EventCreatedEvent += HandleEventCreated;
+			App.Current.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
 		}
 
 		protected override void OnUnmapped ()
@@ -68,8 +68,8 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
-			Config.EventsBroker.EventCreatedEvent -= HandleEventCreated;
-			Config.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
+			App.Current.EventsBroker.EventCreatedEvent -= HandleEventCreated;
+			App.Current.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
