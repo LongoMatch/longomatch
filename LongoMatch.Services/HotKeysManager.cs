@@ -30,6 +30,7 @@ using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
 using VAS.Core.Store.Templates;
 using LMCommon = LongoMatch.Core.Common;
 
@@ -117,6 +118,16 @@ namespace LongoMatch.Services
 			ReloadHotkeys ();
 		}
 
+		void HandleOpenedPresentationChanged (Playlist presentation, IPlayerController player)
+		{
+			if (player == null)
+				return;
+			this.player = player;
+
+			projectType = ProjectType.None;
+			analysisWindow = null;
+		}
+
 		public void UIKeyListener (object sender, HotKey key)
 		{
 			KeyAction action;
@@ -129,26 +140,29 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			if (action != KeyAction.None && analysisWindow != null) {
-				switch (action) {
-				case KeyAction.ZoomIn:
-					analysisWindow.ZoomIn ();
-					return;
-				case KeyAction.ZoomOut:
-					analysisWindow.ZoomOut ();
-					return;
-				case KeyAction.ShowDashboard:
-					analysisWindow.ShowDashboard ();
-					return;
-				case KeyAction.ShowTimeline:
-					analysisWindow.ShowTimeline ();
-					return;
-				case KeyAction.ShowPositions:
-					analysisWindow.ShowZonalTags ();
-					return;
-				case KeyAction.FitTimeline:
-					analysisWindow.FitTimeline ();
-					return;
+			if (action != KeyAction.None) {
+				
+				if (analysisWindow != null) {
+					switch (action) {
+					case KeyAction.ZoomIn:
+						analysisWindow.ZoomIn ();
+						return;
+					case KeyAction.ZoomOut:
+						analysisWindow.ZoomOut ();
+						return;
+					case KeyAction.ShowDashboard:
+						analysisWindow.ShowDashboard ();
+						return;
+					case KeyAction.ShowTimeline:
+						analysisWindow.ShowTimeline ();
+						return;
+					case KeyAction.ShowPositions:
+						analysisWindow.ShowZonalTags ();
+						return;
+					case KeyAction.FitTimeline:
+						analysisWindow.FitTimeline ();
+						return;
+					}
 				}
 				
 				if (projectType == ProjectType.CaptureProject ||
@@ -296,6 +310,7 @@ namespace LongoMatch.Services
 		public bool Start ()
 		{
 			App.Current.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			App.Current.EventsBroker.OpenedPresentationChanged += HandleOpenedPresentationChanged;
 			App.Current.EventsBroker.KeyPressed += DashboardKeyListener;
 			App.Current.EventsBroker.KeyPressed += UIKeyListener;
 			App.Current.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
@@ -306,6 +321,7 @@ namespace LongoMatch.Services
 		public bool Stop ()
 		{
 			App.Current.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
+			App.Current.EventsBroker.OpenedPresentationChanged -= HandleOpenedPresentationChanged;
 			App.Current.EventsBroker.KeyPressed -= DashboardKeyListener;
 			App.Current.EventsBroker.KeyPressed -= UIKeyListener;
 			App.Current.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
