@@ -76,14 +76,12 @@ namespace LongoMatch.Drawing
 			if (count > 0) {
 				if (!isExpanded) {
 					if (ArrowRight == null) {
-						Image img = Resources.LoadImage (StyleConf.ListArrowRightPath);
-						ArrowRight = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+						ArrowRight = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListArrowRightPath, false);
 					}
 					arrow = ArrowRight;
 				} else {
 					if (ArrowDown == null) {
-						Image img = Resources.LoadImage (StyleConf.ListArrowDownPath);
-						ArrowDown = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+						ArrowDown = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListArrowDownPath, false);
 					}
 					arrow = ArrowDown;
 				}
@@ -212,8 +210,7 @@ namespace LongoMatch.Drawing
 			}
 			if (selected) {
 				if (EyeSurface == null) {
-					Image img = Resources.LoadImage (StyleConf.ListEyeIconPath);
-					EyeSurface = App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
+					EyeSurface = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.ListEyeIconPath, false);
 				}
 				tk.DrawSurface (new Point (imagePoint.X - EyeSurface.Width - StyleConf.ListEyeIconOffset, imagePoint.Y + backgroundArea.Height / 2 - EyeSurface.Height / 2), StyleConf.ListEyeIconWidth, StyleConf.ListEyeIconHeight, EyeSurface, ScaleMode.AspectFit);
 			}

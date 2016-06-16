@@ -86,8 +86,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			if (!surfacesCached) {
 				base.LoadSurfaces ();
-				ArrowOut = CreateSurface (StyleConf.PlayerArrowOut);
-				ArrowIn = CreateSurface (StyleConf.PlayerArrowIn);
+				ArrowOut = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowOut);
+				ArrowIn = App.Current.DrawingToolkit.CreateSurfaceFromResource (StyleConf.PlayerArrowIn);
 				surfacesCached = true;
 			}
 		}
@@ -190,12 +190,6 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			Size = (int)PlayersIconSize.Medium;
 			Toggle = true;
 			LoadSurfaces ();
-		}
-
-		static ISurface CreateSurface (string name)
-		{
-			Image img = Resources.LoadImage (name);
-			return App.Current.DrawingToolkit.CreateSurface (img.Width, img.Height, img, false);
 		}
 	}
 }
