@@ -1,9 +1,0 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-longomatchdir=@libdir@/@PACKAGE@
-
-Name: LongoMatch.Drawing.Cairo
-Description: Cairo backend for LongoMatch Drawing framework for .NET
-Version: @VERSION@
-Libs: -r:${longomatchdir}/LongoMatch.Drawing.Cairo.dll

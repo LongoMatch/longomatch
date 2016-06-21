@@ -6,5 +6,5 @@ longomatchdir=@libdir@/@PACKAGE@
 Name: LongoMatch.DB
 Description: LongoMatch Database framework for .NET
 Version: @VERSION@
-Requires: longomatch-core
+Requires: longomatch-core vas-db
 Libs: -r:${longomatchdir}/LongoMatch.DB.dll
