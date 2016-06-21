@@ -50,7 +50,7 @@ namespace LongoMatch.Core.Common
 			set;
 		}
 
-		public T Value {
+		public virtual T Value {
 			get;
 			protected set;
 		}
