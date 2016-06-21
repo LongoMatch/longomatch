@@ -17,7 +17,12 @@
 //
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Couchbase.Lite;
+using ICSharpCode.SharpZipLib;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
@@ -26,11 +31,6 @@ using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB.Views;
-using System.Linq;
-using System.IO;
-using ICSharpCode.SharpZipLib.Tar;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib;
 
 namespace LongoMatch.DB
 {
@@ -47,26 +47,26 @@ namespace LongoMatch.DB
 			Init ();
 		}
 
-		public CouchbaseStorage (Manager manager, string storageName)
+		public CouchbaseStorage (CouchbaseManager manager, string storageName)
 		{
 			this.storageName = storageName;
-			db = manager.GetDatabase (storageName);
+			db = manager.OpenDatabase (storageName);
 			Init ();
 		}
 
 		public CouchbaseStorage (string dbDir, string storageName)
 		{
 			this.storageName = storageName;
-			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),
-				                  ManagerOptions.Default);
-			db = manager.GetDatabase (storageName);
+			var manager = (CouchbaseManager)Config.DependencyRegistry.Retrieve<IStorageManager> (dbDir);
+
+			db = manager.OpenDatabase (storageName);
 			Init ();
 		}
 
 		void Init ()
 		{
 			// Only keep one revision for each document until we support replication and can handle conflicts
-			db.MaxRevTreeDepth = 1;
+			db.SetMaxRevTreeDepth (1);
 			mutex = new object ();
 			FetchInfo ();
 			Compact ();

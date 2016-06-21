@@ -70,6 +70,8 @@ namespace LongoMatch
 				bool haveCodecs = false;
 				Config.DrawingToolkit = new CairoBackend ();
 				Config.MultimediaToolkit = new MultimediaToolkit ();
+				Config.DependencyRegistry = new Registry ("LongoMatch");
+				Config.DependencyRegistry.Register<IStorageManager, CouchbaseManager> (1);
 				Config.GUIToolkit = GUIToolkit.Instance;
 				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
 

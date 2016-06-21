@@ -47,6 +47,8 @@ namespace LongoMatch
 		
 		public static IStorageManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
+
+		public static Registry DependencyRegistry;
 		
 		static StyleConf style;
 		static ConfigState state;

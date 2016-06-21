@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Couchbase.Lite;
+using Couchbase.Lite.Store;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 
@@ -29,13 +30,23 @@ namespace LongoMatch.DB
 	public class CouchbaseManager: IStorageManager
 	{
 		readonly Manager manager;
+		readonly DatabaseOptions options;
 		IStorage activeDB;
 
 		public CouchbaseManager (string dbDir)
 		{
 			manager = new Manager (new System.IO.DirectoryInfo (dbDir),
 				ManagerOptions.Default);
+			options = new DatabaseOptions ();
+			Options.Create = true;
+
 			Databases = new List<IStorage> ();
+		}
+
+		public DatabaseOptions Options {
+			get {
+				return options;
+			}
 		}
 
 		#region IDataBaseManager implementation
@@ -83,6 +94,12 @@ namespace LongoMatch.DB
 			}
 		}
 
+		public Database OpenDatabase (string storageName)
+		{
+			Options.Create = !manager.AllDatabaseNames.Contains (storageName);
+			return manager.OpenDatabase (storageName, Options);
+		}
+
 		public IStorage ActiveDB {
 			get {
 				return activeDB;
@@ -108,7 +125,7 @@ namespace LongoMatch.DB
 			}
 			try {
 				Log.Information ("Creating new database " + name);
-				IStorage db = new CouchbaseStorage (manager, name);
+				IStorage db = new CouchbaseStorage (this, name);
 				Databases.Add (db);
 				return db;
 			} catch (Exception ex) {

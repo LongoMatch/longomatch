@@ -102,8 +102,9 @@ namespace LongoMatch.Services
 		/// <param name="storageDir">The directory used for the storages.</param>
 		public static IStorageManager CreateStorageManager (string storageDir)
 		{
-			return new CouchbaseManager (storageDir);
+			return Config.DependencyRegistry.Retrieve<IStorageManager> (storageDir);
 		}
+
 	}
 }
 

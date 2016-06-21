@@ -106,6 +106,8 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
+			Config.DependencyRegistry = new Registry ("test");
+			Config.DependencyRegistry.Register<IStorageManager, CouchbaseManager> (1);
 			string tmpPath = Path.GetTempPath ();
 			string homePath = Path.Combine (tmpPath, "LongoMatch");
 			string dbPath = Path.Combine (homePath, "db");
