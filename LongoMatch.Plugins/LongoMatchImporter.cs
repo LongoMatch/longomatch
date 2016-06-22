@@ -20,6 +20,7 @@ using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using Mono.Addins;
+using VAS.Addins.ExtensionPoints;
 using VAS.Core;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
@@ -28,7 +29,7 @@ using VAS.Core.Store;
 namespace LongoMatch.Plugins
 {
 	[Extension]
-	public class LongoMatchImporter: ILongoMatchPlugin, IImportProject
+	public class LongoMatchImporter: IPlugin, IImportProject
 	{
 		public LongoMatchImporter ()
 		{

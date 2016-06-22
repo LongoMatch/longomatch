@@ -17,12 +17,13 @@
 //
 using Mono.Addins;
 using LongoMatch.Core.Store;
+using VAS.Addins.ExtensionPoints;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 
 	[TypeExtensionPoint]
-	public interface IStatsUI: ILongoMatchPlugin
+	public interface IStatsUI: IPlugin
 	{
 		void ShowStats (ProjectLongoMatch project);
 

@@ -99,5 +99,9 @@
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Addins\VAS.Addins.csproj">
+      <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
+      <Name>VAS.Addins</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
