@@ -39,11 +39,6 @@ namespace LongoMatch
 		public ITeamTemplatesProvider TeamTemplatesProvider;
 		public ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 
-		//		App (Config config) : base (config)
-		//		{
-		//
-		//		}
-
 		public static App Current { get; set; }
 
 		public static void Init ()
@@ -77,6 +72,9 @@ namespace LongoMatch
 			Current.SoftwareName = Constants.SOFTWARE_NAME;
 			Current.SoftwareIconName = Constants.LOGO_ICON;
 			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
+			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
+			Current.ProjectExtension = Constants.PROJECT_EXT;
+			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
 		}
 
 		Config config;
@@ -137,60 +135,6 @@ namespace LongoMatch
 				return Path.Combine (DBDir, "teams");
 			}
 		}
-
-		#region Properties
-
-		public Image Background {
-			get;
-			set;
-		}
-
-		public string Copyright {
-			get;
-			set;
-		}
-
-		public string License {
-			get;
-			set;
-		}
-
-		public string SoftwareName {
-			get;
-			set;
-		}
-
-		public string SoftwareIconName {
-			get;
-			set;
-		}
-
-		public bool SupportsMultiCamera {
-			get;
-			set;
-		}
-
-		public bool SupportsFullHD {
-			get;
-			set;
-		}
-
-		public bool SupportsActionLinks {
-			get;
-			set;
-		}
-
-		public bool SupportsZoom {
-			get;
-			set;
-		}
-
-		public string LatestVersionURL {
-			get;
-			set;
-		}
-
-		#endregion
 	}
 }
 
