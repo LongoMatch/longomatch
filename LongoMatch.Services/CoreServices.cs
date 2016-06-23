@@ -116,9 +116,8 @@ namespace LongoMatch.Services
 		{
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
-			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
-			App.Current.EventsAggregator = new EventsAggregator ();
-			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent += HandleQuitApplicationEvent;
+			App.Current.EventsBroker = new EventsBroker ();
+			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuitApplicationEvent);
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
 		}
@@ -233,7 +232,7 @@ namespace LongoMatch.Services
 			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
 		}
 
-		static void HandleQuitApplicationEvent ()
+		static void HandleQuitApplicationEvent (QuitApplicationEvent e)
 		{
 			if (videoRenderer.PendingJobs.Count > 0) {
 				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");

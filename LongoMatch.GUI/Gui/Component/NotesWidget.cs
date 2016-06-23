@@ -21,6 +21,7 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
+using VAS.Core.Events;
 using VAS.Core.Store;
 using LMCommon = LongoMatch.Core.Common;
 
@@ -38,12 +39,12 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			this.buf = textview1.Buffer;
 			buf.Changed += new EventHandler (OnEdition);
-			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			App.Current.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			base.OnDestroyed ();
 		}
 
@@ -71,9 +72,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			Play = play as TimelineEventLongoMatch;
+			Play = e.TimelineEvent as TimelineEventLongoMatch;
 		}
 		
 	}

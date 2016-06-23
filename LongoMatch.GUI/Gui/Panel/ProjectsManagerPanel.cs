@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using Pango;
@@ -234,7 +235,12 @@ namespace LongoMatch.Gui.Panel
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
+				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+					new  OpenProjectIDEvent { 
+						ProjectID = project.ID, 
+						Project = project 
+					}
+				);
 			}
 		}
 
@@ -349,7 +355,12 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (loadedProject.ID, loadedProject);
+				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+					new  OpenProjectIDEvent { 
+						ProjectID = loadedProject.ID, 
+						Project = loadedProject 
+					}
+				);
 			}
 		}
 	}

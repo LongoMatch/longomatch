@@ -18,11 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
@@ -31,14 +34,15 @@ using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
-using LMCommon = LongoMatch.Core.Common;
 using VAS.Core.Store.Templates;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Integration
 {
@@ -105,7 +109,6 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			AddinsManager.LoadConfigModifierAddins ();
-			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
 			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 			App.Current.GUIToolkit = guiToolkitMock.Object;
@@ -127,7 +130,12 @@ namespace Tests.Integration
 			ProjectLongoMatch p = CreateProject ();
 			projectID = p.ID;
 			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (p.ID, p);
+			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+				new  OpenProjectIDEvent { 
+					ProjectID = p.ID, 
+					Project = p 
+				}
+			);
 
 			// Tag some events
 			Assert.AreEqual (0, p.Timeline.Count);
@@ -144,10 +152,14 @@ namespace Tests.Integration
 			Assert.AreEqual (5, savedP.Timeline.Count);
 
 			// Delete some events
-			App.Current.EventsBroker.EmitEventsDeleted (new List<TimelineEvent> {
-				p.Timeline [0],
-				p.Timeline [1]
-			});
+			App.Current.EventsBroker.Publish<EventsDeletedEvent> (
+				new EventsDeletedEvent {
+					TimelineEvents = new List<TimelineEvent> {
+						p.Timeline [0],
+						p.Timeline [1]
+					}
+				}
+			);
 			Assert.AreEqual (3, p.Timeline.Count);
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (3, savedP.Timeline.Count);
@@ -156,7 +168,12 @@ namespace Tests.Integration
 			p = CreateProject ();
 			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (p.ID, p);
+			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+				new  OpenProjectIDEvent { 
+					ProjectID = p.ID, 
+					Project = p
+				}
+			);
 
 			// Add some events and than remove it from the DB
 			AddEvent (p, 6, 3000, 3050, 3025);
@@ -167,8 +184,18 @@ namespace Tests.Integration
 
 			// Reopen the old project
 			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (savedP.ID, savedP);
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSaveProject (savedP, ProjectType.FileProject);
+			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+				new  OpenProjectIDEvent { 
+					ProjectID = savedP.ID, 
+					Project = savedP 
+				}
+			);
+			App.Current.EventsBroker.Publish<SaveProjectEvent> (
+				new SaveProjectEvent {
+					Project = savedP,
+					ProjectType = ProjectType.FileProject
+				}
+			);
 
 			// Export this project to a new file
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (projectID);
@@ -178,7 +205,7 @@ namespace Tests.Integration
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
 			guiToolkitMock.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitExportProject (p);
+			App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
 			Assert.IsTrue (File.Exists (tmpFile));
 			savedP = Project.Import (tmpFile) as ProjectLongoMatch;
 			Assert.IsNotNull (savedP);
@@ -202,16 +229,16 @@ namespace Tests.Integration
 			);
 			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
-			App.Current.EventsBroker.OpenedProjectChanged += (project, pt, f, a) => {
-				p = project as ProjectLongoMatch;
-			};
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitImportProject ();
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
+				p = e.Project as ProjectLongoMatch;
+			});
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			Assert.IsNotNull (p);
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
+			App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();
@@ -219,10 +246,17 @@ namespace Tests.Integration
 
 		void AddEvent (ProjectLongoMatch p, int idx, int start, int stop, int eventTime)
 		{
-
-			App.Current.EventsBroker.EmitNewEvent (p.EventTypes [idx], null,
-				new ObservableCollection<Team> { p.LocalTeamTemplate }, null,
-				new Time { TotalSeconds = start }, new Time { TotalSeconds = stop }, new Time { TotalSeconds = eventTime });
+			App.Current.EventsBroker.Publish<NewEventEvent> (
+				new NewEventEvent {
+					EventType = p.EventTypes [idx],
+					Players = null,
+					Teams = new ObservableCollection<Team> { p.LocalTeamTemplate }, 
+					Tags = null,
+					Start = new Time { TotalSeconds = start }, 
+					Stop = new Time { TotalSeconds = stop }, 
+					EventTime = new Time { TotalSeconds = eventTime }
+				}
+			);
 		}
 
 		ProjectLongoMatch CreateProject ()

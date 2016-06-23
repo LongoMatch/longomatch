@@ -23,6 +23,7 @@ using Gtk;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Dialog;
+using VAS.Core.Events;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using LMCommon = LongoMatch.Core.Common;
@@ -42,12 +43,12 @@ namespace LongoMatch.Gui.Component
 			treeview.EditProperties += OnEditProperties;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 			itersDic = new Dictionary<EventType, TreeIter> ();
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			base.OnDestroyed ();
 		}
 
@@ -171,10 +172,14 @@ namespace LongoMatch.Gui.Component
 				playlist.Elements.Add (element);
 			}
 			
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
+			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
+				new RenderPlaylistEvent {
+					Playlist = playlist
+				}
+			);
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
 			treeview.QueueDraw ();
 		}

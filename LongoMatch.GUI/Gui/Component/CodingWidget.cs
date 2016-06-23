@@ -20,12 +20,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -73,12 +75,12 @@ namespace LongoMatch.Gui.Component
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 			
-			App.Current.EventsBroker.PlayerTick += HandleTick;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).CapturerTick += HandleCapturerTick;
-			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
-			App.Current.EventsBroker.TimeNodeStoppedEvent += HandleTimeNodeStoppedEvent;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventEditedEvent += HandleEventEdited;
+			App.Current.EventsBroker.Subscribe<PlayerTickEvent> (HandleTick);
+			App.Current.EventsBroker.Subscribe<CapturerTickEvent> (HandleCapturerTick);
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
+			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
+			App.Current.EventsBroker.Subscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
+			App.Current.EventsBroker.Subscribe<EventEditedEvent> (HandleEventEdited);
 
 			Helpers.Misc.SetFocus (this, false);
 			
@@ -101,12 +103,12 @@ namespace LongoMatch.Gui.Component
 			foreach (Window w in activeWindows) {
 				w.Destroy ();
 			}
-			((LMCommon.EventsBroker)App.Current.EventsBroker).PlayerTick -= HandleTick;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).CapturerTick -= HandleCapturerTick;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventLoadedEvent -= HandlePlayLoaded;
-			App.Current.EventsBroker.TimeNodeStoppedEvent -= HandleTimeNodeStoppedEvent;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventEditedEvent -= HandleEventEdited;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EventsDeletedEvent += HandleEventsDeletedEvent;
+			App.Current.EventsBroker.Unsubscribe<PlayerTickEvent> (HandleTick);
+			App.Current.EventsBroker.Unsubscribe<CapturerTickEvent> (HandleCapturerTick);
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
+			App.Current.EventsBroker.Unsubscribe<TimeNodeStoppedEvent> (HandleTimeNodeStoppedEvent);
+			App.Current.EventsBroker.Unsubscribe<EventEditedEvent> (HandleEventEdited);
+			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeletedEvent);
 			buttonswidget.Destroy ();
 			timeline.Destroy ();
 			playspositionviewer1.Destroy ();
@@ -298,26 +300,26 @@ namespace LongoMatch.Gui.Component
 			notebook.SetTabDetachable (notebook.GetNthPage ((int)args.PageNum), true);
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			timeline.LoadPlay (play as TimelineEventLongoMatch);
+			timeline.LoadPlay (e.TimelineEvent as TimelineEventLongoMatch);
 		}
 
-		void HandleCapturerTick (Time currentTime)
+		void HandleCapturerTick (CapturerTickEvent e)
 		{
 			if (projectType != ProjectType.FileProject) {
-				timeline.CurrentTime = currentTime;
-				buttonswidget.CurrentTime = currentTime;
-				teamtagger.CurrentTime = currentTime;
+				timeline.CurrentTime = e.Time;
+				buttonswidget.CurrentTime = e.Time;
+				teamtagger.CurrentTime = e.Time;
 			}
 		}
 
-		void HandleTick (Time currentTime)
+		void HandleTick (PlayerTickEvent e)
 		{
 			if (projectType == ProjectType.FileProject) {
-				timeline.CurrentTime = currentTime;
-				buttonswidget.CurrentTime = currentTime;
-				teamtagger.CurrentTime = currentTime;
+				timeline.CurrentTime = e.Time;
+				buttonswidget.CurrentTime = e.Time;
+				teamtagger.CurrentTime = e.Time;
 			}
 		}
 
@@ -344,13 +346,28 @@ namespace LongoMatch.Gui.Component
 			}
 			teamtagger.ResetSelection ();
 			selectedPlayers = null;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewDashboardEvent (play, btn, true, null);
+			App.Current.EventsBroker.Publish<NewDashboardEvent> (
+				new NewDashboardEvent {
+					TimelineEvent = play,
+					DashboardButton = btn, 
+					Edit = true,
+					DashboardButtons = null
+				}
+			);
 		}
 
 		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSubstitutionEvent (team, p1, p2, reason, time);
+			App.Current.EventsBroker.Publish<PlayerSubstitutionEvent> (
+				new PlayerSubstitutionEvent {
+					Team = team,
+					Player1 = p1,
+					Player2 = p2,
+					SubstitutionReason = reason,
+					Time = time
+				}
+			);
 		}
 
 		void HandleSizeAllocated (object o, SizeAllocatedArgs args)
@@ -362,22 +379,22 @@ namespace LongoMatch.Gui.Component
 			
 		}
 
-		void HandleTimeNodeStoppedEvent (TimeNode tn, TimerButton btn, List<DashboardButton> from)
+		void HandleTimeNodeStoppedEvent (TimeNodeStoppedEvent e)
 		{
-			if (btn is TimerButton)
-				timeline.AddTimerNode (((TimerButton)btn).Timer, tn);
+			if (e.TimerButton is TimerButton)
+				timeline.AddTimerNode (((TimerButton)e.TimerButton).Timer, e.TimeNode);
 		}
 
-		void HandleEventEdited (TimelineEvent play)
+		void HandleEventEdited (EventEditedEvent e)
 		{
-			if (play is SubstitutionEvent || play is LineupEvent) {
+			if (e.TimelineEvent is SubstitutionEvent || e.TimelineEvent is LineupEvent) {
 				teamtagger.Reload ();
 			}
 		}
 
-		void HandleEventsDeletedEvent (List<TimelineEvent> events)
+		void HandleEventsDeletedEvent (EventsDeletedEvent e)
 		{
-			if (events.Count (e => e is SubstitutionEvent) != 0) {
+			if (e.TimelineEvents.Count (s => s is SubstitutionEvent) != 0) {
 				teamtagger.Reload ();
 			}
 		}

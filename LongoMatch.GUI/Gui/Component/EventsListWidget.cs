@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using VAS.Core;
@@ -40,12 +41,12 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).TeamTagsChanged += UpdateTeamsModels;
+			App.Current.EventsBroker.Subscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).TeamTagsChanged -= UpdateTeamsModels;
+			App.Current.EventsBroker.Unsubscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
 			playsList.Project = null;
 			localPlayersList.Clear ();
 			visitorPlayersList.Clear ();
@@ -63,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Project = project;
 			localPlayersList.Project = project;
 			LoadIcons ();
-			UpdateTeamsModels ();
+			UpdateTeamsModels (new TeamTagsChangedEvent ());
 		}
 
 		public void AddPlay (TimelineEventLongoMatch play)
@@ -80,7 +81,7 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.RemoveEvents (plays);
 		}
 
-		void UpdateTeamsModels ()
+		void UpdateTeamsModels (TeamTagsChangedEvent e)
 		{
 			if (project == null)
 				return;

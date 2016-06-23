@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
@@ -46,8 +47,8 @@ namespace LongoMatch.Gui.Component
 			projectType = ProjectType.None;
 			detachedPlayer = false;
 			codingwidget.Player = playercapturer.Player;
-			App.Current.EventsBroker.EventCreatedEvent += HandleEventCreated;
-			App.Current.EventsBroker.EventsDeletedEvent += HandleEventsDeleted;
+			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
 
 		protected override void OnUnmapped ()
@@ -68,8 +69,8 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
-			App.Current.EventsBroker.EventCreatedEvent -= HandleEventCreated;
-			App.Current.EventsBroker.EventsDeletedEvent -= HandleEventsDeleted;
+			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
@@ -210,16 +211,16 @@ namespace LongoMatch.Gui.Component
 			playsSelection.SetProject (openedProject, filter);
 		}
 
-		void HandleEventCreated (TimelineEvent play)
+		void HandleEventCreated (EventCreatedEvent e)
 		{
-			playsSelection.AddPlay ((TimelineEventLongoMatch)play);
-			codingwidget.AddPlay ((TimelineEventLongoMatch)play);
+			playsSelection.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
+			codingwidget.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
 		}
 
-		void HandleEventsDeleted (List<TimelineEvent> plays)
+		void HandleEventsDeleted (EventsDeletedEvent e)
 		{
-			playsSelection.RemovePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
-			codingwidget.DeletePlays (plays.Cast<TimelineEventLongoMatch> ().ToList ());
+			playsSelection.RemovePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+			codingwidget.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
 		}
 	}
 }

@@ -19,14 +19,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
+using VAS.Core.Events;
+using VAS.Core.Store;
 using Color = Gdk.Color;
 using Image = VAS.Core.Common.Image;
 using LMCommon = LongoMatch.Core.Common;
 using Point = VAS.Core.Common.Point;
-using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -144,7 +146,11 @@ namespace LongoMatch.Gui.Component
 			if (!(item is TimelineEventLongoMatch))
 				return;
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitLoadEvent (item as TimelineEventLongoMatch);
+			App.Current.EventsBroker.Publish<LoadEventEvent> (
+				new LoadEventEvent {
+					TimelineEvent = item as TimelineEventLongoMatch
+				}
+			);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
@@ -155,9 +161,13 @@ namespace LongoMatch.Gui.Component
 			App.Current.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitTeamTagsChanged ();
+				App.Current.EventsBroker.Publish<TeamTagsChangedEvent> ();
 			}
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitEventEdited (selectedEvent);
+			App.Current.EventsBroker.Publish<EventEditedEvent> (
+				new EventEditedEvent {
+					TimelineEvent = selectedEvent
+				}
+			);
 			modelSort.SetSortFunc (0, SortFunction);
 			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}

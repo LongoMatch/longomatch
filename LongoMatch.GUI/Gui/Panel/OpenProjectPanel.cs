@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using VAS.Core;
@@ -68,7 +69,12 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleProjectSelected (ProjectLongoMatch project)
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
+			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+				new  OpenProjectIDEvent { 
+					ProjectID = project.ID, 
+					Project = project 
+				}
+			);
 		}
 	}
 }

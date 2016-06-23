@@ -29,14 +29,15 @@ using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Handlers;
 using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 using LMCommon = LongoMatch.Core.Common;
-using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -262,8 +263,11 @@ namespace LongoMatch.Gui.Component
 				if (mode == DashboardMode.Edit) {
 					Edited = false;
 				} else {
-					if (Edited)
-						((LMCommon.EventsBroker)App.Current.EventsBroker).EmitDashboardEdited ();
+					if (Edited) {
+						App.Current.EventsBroker.Publish<DashboardEditedEvent> (
+							new DashboardEditedEvent ()
+						);
+					}
 				}
 
 			}
@@ -504,7 +508,6 @@ namespace LongoMatch.Gui.Component
 			if (NewTagEvent != null) {
 				NewTagEvent (evntType, players, teams, tags, start, stop, eventTime, btn);
 			}
-			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
 
 		void EditEventSubcategories (DashboardButton dashboardButton)

@@ -17,11 +17,13 @@
 // 
 using System;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
@@ -49,7 +51,7 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void HandleManageDatabase ()
+		void HandleManageDatabase (ManageDatabasesEvent e)
 		{
 			if (OpenedProject != null) {
 				var msg = Catalog.GetString ("Close the current project to open the database manager");
@@ -59,10 +61,9 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType, VASFilters.EventsFilter filter,
-		                                 IAnalysisWindowBase analysisWindow)
+		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
-			OpenedProject = project as ProjectLongoMatch;
+			OpenedProject = e.Project as ProjectLongoMatch;
 		}
 
 		#region IService
@@ -81,8 +82,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageDatabasesEvent += HandleManageDatabase;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged += HandleOpenedProjectChanged;
+			App.Current.EventsBroker.Subscribe<ManageDatabasesEvent> (HandleManageDatabase);
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			Manager = CreateStorageManager (App.Current.DBDir);
 			App.Current.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
@@ -92,8 +93,8 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageDatabasesEvent -= HandleManageDatabase;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).OpenedProjectChanged -= HandleOpenedProjectChanged;
+			App.Current.EventsBroker.Unsubscribe<ManageDatabasesEvent> (HandleManageDatabase);
+			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			App.Current.DatabaseManager = Manager = null;
 			return true;
 		}

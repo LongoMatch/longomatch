@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
@@ -28,6 +29,7 @@ using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -189,7 +191,11 @@ namespace LongoMatch.Gui
 			// Populate the menu items from pluggable tools
 			List<ITool> tools = new List<ITool> ();
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitQueryTools (tools);
+			App.Current.EventsBroker.Publish<QueryToolsEvent> (
+				new QueryToolsEvent {
+					Tools = tools
+				}
+			);
 
 			Menu menu = (this.UIManager.GetWidget ("/menubar1/ToolsAction") as MenuItem).Submenu as Menu;
 			MenuItem before = this.UIManager.GetWidget ("/menubar1/ToolsAction/DatabasesManagerAction") as MenuItem;
@@ -218,7 +224,7 @@ namespace LongoMatch.Gui
 					itemAction.Activated += (sender, e) => {
 						bool loadTool = true;
 						if (openedProject != null) {
-							loadTool = ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
+							loadTool = App.Current.EventsBroker.EmitCloseOpenedProject (this);
 						}
 						if (loadTool) {
 							tool.Load (App.Current.GUIToolkit);
@@ -258,9 +264,9 @@ namespace LongoMatch.Gui
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
 		public bool CloseAndQuit ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
+			App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			if (openedProject == null) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitQuitApplication ();
+				App.Current.EventsBroker.Publish<QuitApplicationEvent> (new QuitApplicationEvent ());
 			}
 			return openedProject != null;
 		}
@@ -272,7 +278,12 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitKeyPressed (this, VAS.Core.Common.Keyboard.ParseEvent (evnt));
+				App.Current.EventsBroker.Publish<KeyPressedEvent> (
+					new KeyPressedEvent {
+						Sender = this,
+						Key = VAS.Core.Common.Keyboard.ParseEvent (evnt)
+					}
+				);
 			}
 			return true;
 		}
@@ -287,54 +298,72 @@ namespace LongoMatch.Gui
 		{
 			/* Adding Handlers for each event */
 			renderingstatebar1.ManageJobs += (e, o) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageJobs ();
+				App.Current.EventsBroker.Publish<ManageJobsEvent> ();
 			};
 		}
 
 		private void ConnectMenuSignals ()
 		{
 			SaveProjectAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSaveProject (openedProject, projectType);
+				App.Current.EventsBroker.Publish<SaveProjectEvent> (
+					new SaveProjectEvent {
+						Project = openedProject,
+						ProjectType = projectType
+					}
+				);
 			};
 			CloseProjectAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ();
+				App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			};
 			ExportToProjectFileAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitExportProject (openedProject);
+				App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = openedProject });
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageCategories ();
+				App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ());
 			};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageTeams ();
+				App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ());
 			};
 			ProjectsManagerAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageProjects ();
+				App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ());
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageDatabases ();
+				App.Current.EventsBroker.Publish<ManageDatabasesEvent> (new ManageDatabasesEvent ());
 			};
 			PreferencesAction.Activated += (sender, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitEditPreferences ();
+				App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
 			};
 			ShowProjectStatsAction.Activated += (sender, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitShowProjectStats (openedProject);
+				App.Current.EventsBroker.Publish<ShowProjectStatsEvent> (
+					new ShowProjectStatsEvent {
+						Project = openedProject		
+					}
+				);
 			}; 
 			QuitAction.Activated += (o, e) => {
 				CloseAndQuit ();
 			};
 			OpenProjectAction.Activated += (sender, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitSaveProject (openedProject, projectType);
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProject ();
+				App.Current.EventsBroker.Publish<SaveProjectEvent> (
+					new SaveProjectEvent {
+						Project = openedProject,
+						ProjectType = projectType
+					}
+				);
+				App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ());
 			};
 			NewPojectAction.Activated += (sender, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewProject (null);
+				App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null });
 			};
 			ImportProjectAction.Activated += (sender, e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitImportProject ();
+				App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			};
 			FullScreenAction.Activated += (object sender, EventArgs e) => {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitShowFullScreen (FullScreenAction.Active);
+				App.Current.EventsBroker.Publish<ShowFullScreenEvent> (
+					new ShowFullScreenEvent { 
+						Active = FullScreenAction.Active
+					}
+				);
 			};
 		}
 
@@ -397,7 +426,7 @@ namespace LongoMatch.Gui
 			SaveProjectAction.Sensitive = sensitive2;
 		}
 
-		protected override bool OnDeleteEvent (Event evnt)
+		protected override bool OnDeleteEvent (Gdk.Event evnt)
 		{
 			CloseAndQuit ();
 			return true;
@@ -414,8 +443,12 @@ namespace LongoMatch.Gui
 			res = converter.Run ();
 			converter.Destroy ();
 			if (res == (int)ResponseType.Ok) {
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitConvertVideoFiles (converter.Files,
-					converter.EncodingSettings);
+				App.Current.EventsBroker.Publish<ConvertVideoFilesEvent> (
+					new ConvertVideoFilesEvent {
+						Files = converter.Files,
+						Settings = converter.EncodingSettings
+					}
+				);
 			}
 		}
 
@@ -437,7 +470,7 @@ namespace LongoMatch.Gui
 
 		protected void OnMigrationToolActionActivated (object sender, EventArgs e)
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitMigrateDB ();
+			App.Current.EventsBroker.Publish<MigrateDBEvent> ();
 		}
 
 		#endregion

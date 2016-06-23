@@ -43,7 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\TimerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Hotkeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Exceptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EventsBroker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Handlers.cs" />
@@ -53,9 +52,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\Events.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Events\" />
   </ItemGroup>
 </Project>
