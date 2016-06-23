@@ -157,15 +157,8 @@ namespace LongoMatch
 
 		static void InitGtk ()
 		{
-			string gtkRC, iconsDir, styleConf;
-			
-			gtkRC = Path.Combine (App.Current.dataDir, "theme", "gtk-2.0", "gtkrc");
-			if (File.Exists (gtkRC)) {
-				Rc.AddDefaultFile (gtkRC);
-			}
-			
-			styleConf = Path.Combine (App.Current.dataDir, "theme", "longomatch-dark.json");
-			App.Current.Style = StyleConf.Load (styleConf);
+			Rc.AddDefaultFile (Utils.GetDataFilePath (Path.Combine ("theme", "gtk-2.0", "gtkrc")));
+			App.Current.Style = StyleConf.Load (Utils.GetDataFilePath (Path.Combine ("theme", "longomatch-dark.json")));
 
 			/* We are having some race condition with XCB resulting on an invalid
 			 * message and thus an abort of the program, we better activate the
@@ -176,11 +169,7 @@ namespace LongoMatch
 
 			Application.Init ();
 
-			iconsDir = Path.Combine (App.Current.dataDir, "icons");
-			if (Directory.Exists (iconsDir)) {
-				IconTheme.Default.PrependSearchPath (iconsDir);
-			}
-			
+			IconTheme.Default.PrependSearchPath (Utils.GetDataDirPath ("icons"));
 		}
 
 		static void ShowCodecsDialog ()

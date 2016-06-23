@@ -55,31 +55,22 @@ namespace LongoMatch.Migration
 			
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				LongoMatch.App.Current.baseDirectory = ".";
-				LongoMatch.App.Current.dataDir = "../../data";
+				LongoMatch.App.Current.DataDir.Add ("../../data");
 			} else {
 				LongoMatch.App.Current.baseDirectory = baseDirectory;
-				LongoMatch.App.Current.dataDir = System.IO.Path.Combine (LongoMatch.App.Current.baseDirectory, "share", "longomatch");
+				LongoMatch.App.Current.DataDir.Add (System.IO.Path.Combine (LongoMatch.App.Current.baseDirectory, "share", "longomatch"));
 			}
 //			LongoMatch.App.Current.Load ();
-			var styleConf = Path.Combine (App.Current.dataDir, "theme", "longomatch-dark.json");
-			LongoMatch.App.Current.Style = StyleConf.Load (styleConf);
+			LongoMatch.App.Current.Style = StyleConf.Load (Utils.GetDataFilePath (Path.Combine ("theme", "longomatch-dark.json")));
 		}
 
 		static	void InitGtk ()
 		{
-			string gtkRC, iconsDir;
-			
-			gtkRC = Path.Combine (App.Current.dataDir, "theme", "gtk-2.0", "gtkrc");
-			if (File.Exists (gtkRC)) {
-				Rc.AddDefaultFile (gtkRC);
-			}
-			
+			Rc.AddDefaultFile (Utils.GetDataFilePath (Path.Combine ("theme", "gtk-2.0", "gtkrc")));
+
 			Application.Init ();
-			
-			iconsDir = Path.Combine (App.Current.dataDir, "icons");
-			if (Directory.Exists (iconsDir)) {
-				IconTheme.Default.PrependSearchPath (iconsDir);
-			}
+
+			IconTheme.Default.PrependSearchPath (Utils.GetDataDirPath ("icons"));
 		}
 	}
 }

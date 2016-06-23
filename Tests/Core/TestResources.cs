@@ -28,7 +28,7 @@ namespace Tests.Core.Common
 		[TestFixtureSetUp ()]
 		public void Setup ()
 		{
-			App.Current.dataDir = "../data/";
+			App.Current.DataDir.Add ("../data/");
 		}
 
 		[Test ()]
@@ -48,7 +48,7 @@ namespace Tests.Core.Common
 		[Test ()]
 		public void TestLoadInvalidResource ()
 		{
-			Assert.Throws<GLib.GException> (
+			Assert.Throws<System.IO.FileNotFoundException> (
 				delegate {
 					var img = VAS.Core.Resources.LoadImage ("longomatch.svg");
 				});
