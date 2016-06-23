@@ -42,6 +42,7 @@ namespace LongoMatch.Core.Migration
 			{ "LongoMatch.Core.Store.Player", typeof(LongoMatch.Core.Store.PlayerLongoMatch) },
 			{ "LongoMatch.Core.Store.Project", typeof(LongoMatch.Core.Store.ProjectLongoMatch) },
 			{ "LongoMatch.Core.Store.TimelineEvent", typeof(LongoMatch.Core.Store.TimelineEventLongoMatch) },
+			{ "LongoMatch.Core.Store.Timer", typeof(LongoMatch.Core.Store.TimerLongoMatch) },
 		};
 	}
 }
