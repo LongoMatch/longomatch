@@ -107,12 +107,13 @@ namespace LongoMatch.Services
 			Catalog.Init (Constants.SOFTWARE_NAME.ToLower (), localesDir);
 		}
 
+		/// <summary>
+		/// Helper method to Register & Start all default CoreServices
+		/// </summary>
+		/// <param name="guiToolkit">GUI toolkit.</param>
+		/// <param name="multimediaToolkit">Multimedia toolkit.</param>
 		public static void Start (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			Config.MultimediaToolkit = multimediaToolkit;
-			Config.GUIToolkit = guiToolkit;
-			Config.EventsBroker = new EventsBroker ();
-			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
 			RegisterServices (guiToolkit, multimediaToolkit);
 			StartServices ();
 		}
@@ -131,6 +132,11 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
+			Config.MultimediaToolkit = multimediaToolkit;
+			Config.GUIToolkit = guiToolkit;
+			Config.EventsBroker = new EventsBroker ();
+			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
+
 			/* Start DB services */
 			dbManager = new DataBaseManager ();
 			RegisterService (dbManager);
