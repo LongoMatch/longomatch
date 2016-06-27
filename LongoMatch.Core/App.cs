@@ -16,13 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using System.IO;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
-using LongoMatch.Core.Common;
 
 namespace LongoMatch
 {
@@ -77,6 +78,13 @@ namespace LongoMatch
 			}
 
 			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
+			Current.LowerRate = 1;
+			Current.UpperRate = 30;
+			Current.RatePageIncrement = 3;
+			Current.RateList = new List<double> { 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44,
+				0.48, 0.52, 0.56, 0.60, 0.64, 0.68, 0.72, 0.76, 0.80, 0.84, 0.88, 0.92, 0.96, 1, 2, 3, 4, 5
+			};
+			Current.DefaultRate = 25;
 		}
 
 		Config config;
