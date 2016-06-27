@@ -115,11 +115,6 @@ AC_SUBST(COUCHBASE_LIBS_PATHS)
 
 AM_CONDITIONAL(WITH_MIGRATION_TOOL, [test "$HAVE_DB4O" -eq 1])
 
-dnl package checks for libcesarplayer
-PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gstreamer-pbutils-0.10 gobject-2.0 gstreamer-interfaces-0.10 gstreamer-tag-0.10 gstreamer-app-0.10])
-AC_SUBST(CESARPLAYER_CFLAGS)
-AC_SUBST(CESARPLAYER_LIBS)
-
 AC_MSG_CHECKING([for the OS type])
 ostype=""
 
