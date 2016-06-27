@@ -20,7 +20,6 @@ SUBDIRS += \
 	data \
 	images \
 	pkgconfig \
-	libcesarplayer \
 	.nuget \
 	oxyplot \
 	LongoMatch.Core \
@@ -28,7 +27,6 @@ SUBDIRS += \
 	LongoMatch.Drawing \
 	LongoMatch.Services \
 	LongoMatch.Addins \
-	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
 	LongoMatch.Plugins \
 	LongoMatch.Plugins.GStreamer \

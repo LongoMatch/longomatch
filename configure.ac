@@ -160,7 +160,6 @@ build/Makefile
 build/m4/Makefile
 
 images/Makefile
-libcesarplayer/Makefile
 
 oxyplot/Makefile
 pkgconfig/Makefile
@@ -168,11 +167,7 @@ pkgconfig/longomatch-addins.pc
 pkgconfig/longomatch-db.pc
 pkgconfig/longomatch-core.pc
 pkgconfig/longomatch-drawing.pc
-pkgconfig/longomatch-drawing-cairo.pc
 pkgconfig/longomatch-gui.pc
-pkgconfig/longomatch-gui-helpers.pc
-pkgconfig/longomatch-gui-multimedia.pc
-pkgconfig/longomatch-multimedia.pc
 pkgconfig/longomatch-oxyplot.pc
 pkgconfig/longomatch-services.pc
 
@@ -184,7 +179,6 @@ LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Drawing/Makefile
 LongoMatch.Migration/Makefile
-LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile
 LongoMatch.Plugins.GStreamer/Makefile

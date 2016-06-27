@@ -6,5 +6,5 @@ longomatchdir=@libdir@/@PACKAGE@
 Name: LongoMatch.Drawing
 Description: LongoMatch Drawing framework for .NET
 Version: @VERSION@
-Requires: longomatch-core
+Requires: longomatch-core vas-drawing
 Libs: -r:${longomatchdir}/LongoMatch.Drawing.dll
