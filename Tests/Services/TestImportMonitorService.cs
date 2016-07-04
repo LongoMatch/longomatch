@@ -83,7 +83,6 @@ namespace Tests.Services
 			storageManagerMock.Object.ActiveDB = storageMock.Object;
 			var uiMock = new Mock<IGUIToolkit> ();
 			uiMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
-			App.Current.EventsBroker = new LongoMatch.Core.Common.EventsBroker ();
 			App.Current.CategoriesTemplatesProvider = dashboardsProviderMock.Object;
 			App.Current.TeamTemplatesProvider = teamsProviderMock.Object;
 			App.Current.DatabaseManager = storageManagerMock.Object;

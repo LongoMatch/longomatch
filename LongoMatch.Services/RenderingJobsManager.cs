@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
@@ -413,10 +414,10 @@ namespace LongoMatch.Services
 			App.Current.RenderingJobsManger = this;
 			App.Current.GUIToolkit.RenderingStateBar.Cancel += (sender, e) => CancelCurrentJob ();
 			App.Current.GUIToolkit.RenderingStateBar.ManageJobs += (sender, e) => ManageJobs ();
-			App.Current.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
-				ConversionJob job = new ConversionJob (inputFiles, encSettings);
+			App.Current.EventsBroker.Subscribe<ConvertVideoFilesEvent> ((e) => {
+				ConversionJob job = new ConversionJob (e.Files, e.Settings);
 				AddJob (job);
-			};
+			});
 
 			return true;
 		}

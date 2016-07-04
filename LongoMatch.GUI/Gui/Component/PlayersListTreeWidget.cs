@@ -23,9 +23,10 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using LMCommon = LongoMatch.Core.Common;
-using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -140,7 +141,11 @@ namespace LongoMatch.Gui.Component
 				playlist.Elements.Add (element);
 			}
 			
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
+			App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
+				new RenderPlaylistEvent {
+					Playlist = playlist					
+				}
+			);
 		}
 
 	}

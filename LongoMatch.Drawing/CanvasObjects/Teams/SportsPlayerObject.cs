@@ -55,8 +55,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		}
 
 		public new PlayerLongoMatch Player {
-			get;
-			set;
+			get {
+				return base.Player as PlayerLongoMatch;
+			}
+			set {
+				base.Player = value;
+			}
 		}
 
 		Color Color {

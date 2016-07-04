@@ -82,7 +82,6 @@ namespace Tests.Integration
 				AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 				AddinsManager.LoadConfigModifierAddins ();
 
-				App.Current.EventsBroker = new EventsBroker ();
 				App.Current.DrawingToolkit = drawingToolkitMock.Object;
 				App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 				App.Current.GUIToolkit = guiToolkitMock.Object;

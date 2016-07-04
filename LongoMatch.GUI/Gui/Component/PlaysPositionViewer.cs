@@ -21,6 +21,7 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Store;
 using LMCommon = LongoMatch.Core.Common;
 
@@ -41,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
-			App.Current.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 			menu = new SportsPlaysMenu ();
 		}
 
@@ -82,12 +83,12 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			if (play != null) {
-				field.Tagger.SelectPlay (play as TimelineEventLongoMatch);
-				hfield.Tagger.SelectPlay (play as TimelineEventLongoMatch);
-				goal.Tagger.SelectPlay (play as TimelineEventLongoMatch);
+			if (e.TimelineEvent != null) {
+				field.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
+				hfield.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
+				goal.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
 			} else {
 				field.Tagger.ClearSelection ();
 				hfield.Tagger.ClearSelection ();
@@ -108,7 +109,7 @@ namespace LongoMatch.Gui.Component
 			field.Destroy ();
 			hfield.Destroy ();
 			goal.Destroy ();
-			App.Current.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			base.OnDestroyed ();
 		}
 	}

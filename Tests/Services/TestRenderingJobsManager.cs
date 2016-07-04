@@ -73,7 +73,6 @@ namespace Tests.Services
 			var gtk = Mock.Of<IGUIToolkit> (g => g.RenderingStateBar == Mock.Of<IRenderingStateBar> ());
 
 			// And eventbroker
-			App.Current.EventsBroker = Mock.Of<LongoMatch.Core.Common.EventsBroker> ();
 			App.Current.GUIToolkit = gtk;
 			App.Current.MultimediaToolkit = mtk.Object;
 			App.Current.DrawingToolkit = new CairoBackend ();

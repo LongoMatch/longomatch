@@ -22,12 +22,13 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing;
 using LMCommon = LongoMatch.Core.Common;
 using VASDrawing = VAS.Drawing;
-using VAS.Core.Store;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -173,7 +174,11 @@ namespace LongoMatch.Drawing.Widgets
 				TimelineEventLongoMatch p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
-					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitLoadEvent (p);
+					App.Current.EventsBroker.Publish<LoadEventEvent> (
+						new LoadEventEvent {
+							TimelineEvent = p
+						}
+					);
 				}
 			}
 		}

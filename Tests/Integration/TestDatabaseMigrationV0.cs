@@ -64,7 +64,6 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
-			App.Current.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
@@ -83,6 +82,8 @@ namespace Tests.Integration
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "france.ltt")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "templates", "backup", "basket.lct")));
 			Assert.IsTrue (File.Exists (Path.Combine (dbPath, "old", "longomatch.ldb", "spain_france_test.lgm")));
+
+			CoreServices.Stop ();
 		}
 
 		[Test]
@@ -103,7 +104,6 @@ namespace Tests.Integration
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
-			App.Current.EventsBroker = new EventsBroker ();
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
@@ -129,6 +129,8 @@ namespace Tests.Integration
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 			Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
+
+			CoreServices.Stop ();
 		}
 	}
 }

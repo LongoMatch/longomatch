@@ -21,10 +21,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
@@ -62,16 +64,16 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void ExportProject (ProjectLongoMatch project)
+		void ExportProject (ExportProjectEvent e)
 		{
 			string filename;
 
-			if (project == null) {
+			if (e.Project == null) {
 				Log.Warning ("Opened project is null and can't be exported");
 			}
 
 			filename = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
-				Utils.SanitizePath (project.Description.Title + Constants.PROJECT_EXT),
+				Utils.SanitizePath (e.Project.Description.Title + Constants.PROJECT_EXT),
 				App.Current.HomeDir, Constants.PROJECT_NAME,
 				new [] { "*" + Constants.PROJECT_EXT });
 			
@@ -81,7 +83,7 @@ namespace LongoMatch.Services
 			Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 			
 			try {
-				Project.Export (project, filename);
+				Project.Export (e.Project, filename);
 				App.Current.GUIToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
 				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
@@ -95,7 +97,7 @@ namespace LongoMatch.Services
 			return (ProjectImporter)App.Current.GUIToolkit.ChooseOption (options).Result;
 		}
 
-		void ImportProject ()
+		void ImportProject (ImportProjectEvent e)
 		{
 			ProjectLongoMatch project;
 			ProjectImporter importer;
@@ -122,7 +124,7 @@ namespace LongoMatch.Services
 					return;
 				}
 				if (importer.NeedsEdition) {
-					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewProject (project);
+					App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = project });
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
@@ -133,7 +135,12 @@ namespace LongoMatch.Services
 							return;
 					}
 					DB.Store<ProjectLongoMatch> (project, true);
-					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProjectID (project.ID, project);
+					App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+						new  OpenProjectIDEvent { 
+							ProjectID = project.ID, 
+							Project = project 
+						}
+					);
 				}
 			} catch (Exception ex) {
 				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
@@ -143,7 +150,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void HandleMigrateDB ()
+		void HandleMigrateDB (MigrateDBEvent e)
 		{
 			string db4oPath = Path.Combine (App.Current.baseDirectory, "lib", "cli", "Db4objects.Db4o-8.0");
 			string monoPath = Path.GetFullPath (App.Current.LibsDir) + Path.PathSeparator + Path.GetFullPath (db4oPath);
@@ -191,51 +198,62 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			App.Current.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
-				this.openedProject = pr as ProjectLongoMatch;
-			};
+			openedProjectEventToken = App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
+				this.openedProject = e.Project as ProjectLongoMatch;
+			});
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EditPreferencesEvent += () => {
+			editPreferencesEventToken = App.Current.EventsBroker.Subscribe<EditPreferencesEvent> ((e) => {
 				App.Current.GUIToolkit.OpenPreferencesEditor ();
-			};
-
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageCategoriesEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+			});
+		
+			manageCategoriesEventToken = App.Current.EventsBroker.Subscribe<ManageCategoriesEvent> ((e) => {
+				if (openedProject == null || App.Current.EventsBroker.EmitCloseOpenedProject (this)) {
 					App.Current.GUIToolkit.OpenCategoriesTemplatesManager ();
 				}
-			};
+			});
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageTeamsEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+			manageTeamsEventToken = App.Current.EventsBroker.Subscribe<ManageTeamsEvent> ((e) => {
+				if (openedProject == null || App.Current.EventsBroker.EmitCloseOpenedProject (this)) {
 					App.Current.GUIToolkit.OpenTeamsTemplatesManager ();
 				}
-			};
+			});
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ManageProjectsEvent += () => {
-				if (openedProject == null || ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitCloseOpenedProject ()) {
+			manageProjectsEventToken = App.Current.EventsBroker.Subscribe<ManageProjectsEvent> ((e) => {
+				if (openedProject == null || App.Current.EventsBroker.EmitCloseOpenedProject (this)) {
 					App.Current.GUIToolkit.OpenProjectsManager (this.openedProject);
 				}
-			};
+			});
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).MigrateDB += HandleMigrateDB;
-
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ExportProjectEvent += ExportProject;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ImportProjectEvent += ImportProject;
+			App.Current.EventsBroker.Subscribe<MigrateDBEvent> (HandleMigrateDB);
+			App.Current.EventsBroker.Subscribe<ExportProjectEvent> (ExportProject);
+			App.Current.EventsBroker.Subscribe<ImportProjectEvent> (ImportProject);
 
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).MigrateDB -= HandleMigrateDB;
+			App.Current.EventsBroker.Unsubscribe<MigrateDBEvent> (HandleMigrateDB);
+			App.Current.EventsBroker.Unsubscribe<ExportProjectEvent> (ExportProject);
+			App.Current.EventsBroker.Unsubscribe<ImportProjectEvent> (ImportProject);
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ExportProjectEvent -= ExportProject;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).ImportProjectEvent -= ImportProject;
+			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (openedProjectEventToken);			
+			App.Current.EventsBroker.Unsubscribe<EditPreferencesEvent> (editPreferencesEventToken);
+			App.Current.EventsBroker.Unsubscribe<ManageCategoriesEvent> (manageCategoriesEventToken);
+			App.Current.EventsBroker.Unsubscribe<ManageTeamsEvent> (manageTeamsEventToken);
+			App.Current.EventsBroker.Unsubscribe<ManageProjectsEvent> (manageProjectsEventToken);
 
 			return true;
 		}
 
 		#endregion
+
+		//subscriber tokens for lambdas
+		EventToken openedProjectEventToken;
+		EventToken editPreferencesEventToken;
+		EventToken manageCategoriesEventToken;
+		EventToken manageTeamsEventToken;
+		EventToken manageProjectsEventToken;
 	}
 }
 

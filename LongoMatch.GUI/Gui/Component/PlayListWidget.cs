@@ -22,6 +22,7 @@ using Gtk;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Store.Playlists;
 using LMCommon = LongoMatch.Core.Common;
@@ -49,7 +50,7 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).PlaylistElementLoadedEvent += HandlePlaylistElementLoaded;
+			App.Current.EventsBroker.Subscribe<PlaylistElementLoadedEvent> (HandlePlaylistElementLoaded);
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
@@ -65,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlaylistElementLoaded (Playlist playlist, IPlaylistElement element)
+		void HandlePlaylistElementLoaded (PlaylistElementLoadedEvent e)
 		{
 			playlisttreeview1.QueueDraw ();
 		}
@@ -87,12 +88,22 @@ namespace LongoMatch.Gui.Component
 				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
 				element = el as IPlaylistElement;
 			}
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitLoadPlaylistElement (playlist, element, true);
+			App.Current.EventsBroker.Publish<LoadPlaylistElementEvent> (
+				new LoadPlaylistElementEvent {
+					Playlist = playlist,
+					Element = element,
+					Playing = true
+				}
+			);
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewPlaylist (Project);
+			App.Current.EventsBroker.Publish<NewPlaylistEvent> (
+				new NewPlaylistEvent { 
+					Project = project 
+				} 
+			);
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
@@ -102,7 +113,11 @@ namespace LongoMatch.Gui.Component
 			menu = new Menu ();
 			foreach (Playlist playlist in Project.Playlists) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitRenderPlaylist (playlist);
+				plmenu.Activated += (s, e) => App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
+					new RenderPlaylistEvent {
+						Playlist = playlist
+					}
+				);
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();

@@ -20,11 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
@@ -113,7 +115,7 @@ namespace LongoMatch.Gui.Panel
 
 		protected override void OnDestroyed ()
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent -= HandleQuit;
+			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
 
 			teamtagger.Dispose ();
 			projectperiods1.Destroy ();
@@ -230,7 +232,7 @@ namespace LongoMatch.Gui.Panel
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
-			((LMCommon.EventsBroker)App.Current.EventsBroker).QuitApplicationEvent += HandleQuit;
+			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuit);
 		}
 
 		void FillProjectDetails ()
@@ -504,7 +506,13 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					project.CreateLineupEvent ();
 				}
-				((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
+				App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
+					new OpenNewProjectEvent {
+						Project = project,
+						ProjectType = projectType,
+						CaptureSettings = captureSettings
+					}
+				);
 			}
 		}
 
@@ -556,7 +564,7 @@ namespace LongoMatch.Gui.Panel
 			HandleNextClicked (this, e);
 		}
 
-		void HandleQuit ()
+		void HandleQuit (QuitApplicationEvent e)
 		{
 			// When the application is quitting while we are on the new project panel we need to properly destroy widgets.
 			// To do that we go back to the welcome panel, a little bit like the analysis window closes the opened project first.
@@ -596,7 +604,13 @@ namespace LongoMatch.Gui.Panel
 				    projectType == ProjectType.FakeCaptureProject ||
 				    projectType == ProjectType.URICaptureProject) {
 					project.CreateLineupEvent ();
-					((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenNewProject (project, projectType, captureSettings);
+					App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
+						new OpenNewProjectEvent {
+							Project = project,
+							ProjectType = projectType,
+							CaptureSettings = captureSettings
+						}
+					);
 					return;
 				}
 			} else if (notebook1.Page == PROJECT_PERIODS) {

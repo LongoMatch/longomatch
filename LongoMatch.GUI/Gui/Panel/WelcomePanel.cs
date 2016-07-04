@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using LongoMatch.Core.Events;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.GUI;
@@ -33,17 +34,18 @@ namespace LongoMatch.Gui.Panel
 	{
 		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitNewProject (null))),
+				new Action (() => 
+					(App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null })))),
 			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitOpenProject ())),
+				new Action (() => (App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ())))),
 			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitImportProject ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ())))),			
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageProjects ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ())))),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageTeams ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ())))),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
-				new Action (() => ((LMCommon.EventsBroker)App.Current.EventsBroker).EmitManageCategories ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ())))),
 		};
 
 		List<WelcomeButton> buttons;
@@ -76,7 +78,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandlePreferencesClicked (object sender, EventArgs e)
 		{
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitEditPreferences ();
+			App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
 		}
 
 		void Populate ()
@@ -84,7 +86,11 @@ namespace LongoMatch.Gui.Panel
 			// Query for tools
 			List<ITool> tools = new List<ITool> ();
 
-			((LMCommon.EventsBroker)App.Current.EventsBroker).EmitQueryTools (tools);
+			App.Current.EventsBroker.Publish<QueryToolsEvent> (
+				new QueryToolsEvent {
+					Tools = tools	
+				}
+			);
 
 			foreach (ITool tool in tools) {
 				if (tool.WelcomePanelIcon != null) {
