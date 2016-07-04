@@ -32,10 +32,12 @@ namespace LongoMatch.Gui.Component
 	{
 		const int PAGE_CATEGORIES = 0;
 		const int PAGE_PLAYERS = 1;
+		const int PAGE_PLAYLISTS = 1;
+		const int PAGE_FILTERS = 2;
 
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
-		Helpers.IconNotebookHelper notebookHelper;
+		Helpers.IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
 
 		public PlaysSelectionWidget ()
 		{
@@ -49,6 +51,24 @@ namespace LongoMatch.Gui.Component
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			clearButton.Clicked += HandleClearClicked;
+			hbox3.NoShowAll = true;
+		}
+
+		public bool ExpandTabs {
+			set {
+				if (value) {
+					notebook.GetNthPage (PAGE_FILTERS).Reparent (notebookFilter);
+					notebook.GetNthPage (PAGE_PLAYLISTS).Reparent (notebookPlaylist);
+					notebookHelperPlaylist.UpdateTabs ();
+					notebookHelperFilter.UpdateTabs ();
+				} else {
+					notebookPlaylist.GetNthPage (0).Reparent (notebook);
+					notebookFilter.GetNthPage (0).Reparent (notebook);
+					notebookHelper.UpdateTabs ();
+				}
+				notebookPlaylist.Visible = value;
+				notebookFilter.Visible = value;
+			}
 		}
 
 		protected override void OnDestroyed ()
@@ -82,6 +102,12 @@ namespace LongoMatch.Gui.Component
 
 		void LoadIcons ()
 		{
+			notebookHelperFilter = new IconNotebookHelper (notebookFilter);
+			notebookHelperFilter.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter",
+				Catalog.GetString ("Filters"));
+			notebookHelperPlaylist = new IconNotebookHelper (notebookPlaylist);
+			notebookHelperPlaylist.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist",
+				Catalog.GetString ("Playlists"));
 			notebookHelper = new IconNotebookHelper (notebook);
 			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
 				Catalog.GetString ("Events List"));

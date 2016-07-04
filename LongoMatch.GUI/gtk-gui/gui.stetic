@@ -43,31 +43,18 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.HPaned" id="rigthpane">
+                      <widget class="Gtk.HBox" id="videowidgetsbox">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Position">1219</property>
+                        <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.HBox" id="videowidgetsbox">
+                          <widget class="VAS.UI.PlayerCapturerBin" id="playercapturer">
                             <property name="MemberName" />
-                            <property name="Spacing">6</property>
-                            <child>
-                              <widget class="VAS.UI.PlayerCapturerBin" id="playercapturer">
-                                <property name="MemberName" />
-                                <property name="Events">ButtonPressMask</property>
-                              </widget>
-                              <packing>
-                                <property name="Position">0</property>
-                                <property name="AutoSize">False</property>
-                              </packing>
-                            </child>
+                            <property name="Events">ButtonPressMask</property>
                           </widget>
                           <packing>
-                            <property name="Resize">False</property>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder />
                         </child>
                       </widget>
                     </child>
@@ -4696,145 +4683,190 @@ You can continue with the current capture, cancel it or save your project.
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.Notebook" id="notebook">
+      <widget class="Gtk.HBox" id="hbox3">
         <property name="MemberName" />
-        <property name="CanFocus">True</property>
-        <property name="CurrentPage">2</property>
-        <property name="TabPos">Left</property>
+        <property name="Spacing">6</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.EventsListWidget" id="eventslistwidget">
+          <widget class="Gtk.Notebook" id="notebook">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="label1">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">  Events   </property>
-            <property name="Justify">Center</property>
-            <property name="Angle">90</property>
-          </widget>
-          <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="LongoMatch.Gui.Component.PlayListWidget" id="playlistwidget">
-            <property name="MemberName" />
-            <property name="WidthRequest">100</property>
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="label3">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Playlists</property>
-            <property name="Angle">90</property>
-          </widget>
-          <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.VBox" id="filtersvbox">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox3">
+              <widget class="LongoMatch.Gui.Component.EventsListWidget" id="eventslistwidget">
                 <property name="MemberName" />
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label1">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">  Events   </property>
+                <property name="Justify">Center</property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="LongoMatch.Gui.Component.PlayListWidget" id="playlistwidget">
+                <property name="MemberName" />
+                <property name="WidthRequest">100</property>
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label3">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Playlists</property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VBox" id="filtersvbox">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.EventBox" id="eventbox">
+                  <widget class="Gtk.VBox" id="vbox3">
                     <property name="MemberName" />
                     <child>
-                      <widget class="Gtk.Alignment" id="alignment1">
+                      <widget class="Gtk.EventBox" id="eventbox">
                         <property name="MemberName" />
-                        <property name="HeightRequest">40</property>
-                        <property name="Xscale">0</property>
-                        <property name="Xalign">0</property>
-                        <property name="LeftPadding">25</property>
-                        <property name="TopPadding">10</property>
-                        <property name="BottomPadding">5</property>
                         <child>
-                          <widget class="Gtk.HBox" id="hbox3">
+                          <widget class="Gtk.Alignment" id="alignment1">
                             <property name="MemberName" />
-                            <property name="Homogeneous">True</property>
-                            <property name="Spacing">6</property>
+                            <property name="HeightRequest">40</property>
+                            <property name="Xscale">0</property>
+                            <property name="Xalign">0</property>
+                            <property name="LeftPadding">25</property>
+                            <property name="TopPadding">10</property>
+                            <property name="BottomPadding">5</property>
                             <child>
-                              <widget class="Gtk.Button" id="clearButton">
+                              <widget class="Gtk.HBox" id="hbox4">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="Type">TextOnly</property>
-                                <property name="Label" translatable="yes">Clear</property>
-                                <property name="UseUnderline">True</property>
+                                <property name="Homogeneous">True</property>
+                                <property name="Spacing">6</property>
+                                <child>
+                                  <widget class="Gtk.Button" id="clearButton">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">TextOnly</property>
+                                    <property name="Label" translatable="yes">Clear</property>
+                                    <property name="UseUnderline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">False</property>
+                                  </packing>
+                                </child>
                               </widget>
-                              <packing>
-                                <property name="Position">0</property>
-                                <property name="AutoSize">False</property>
-                              </packing>
                             </child>
                           </widget>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HSeparator" id="hseparator1">
+                        <property name="MemberName" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Notebook" id="filtersnotebook">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="CurrentPage">0</property>
+                        <property name="TabPos">Bottom</property>
+                        <child>
+                          <placeholder />
+                        </child>
+                        <child>
+                          <placeholder />
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
                     <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.HSeparator" id="hseparator1">
-                    <property name="MemberName" />
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Notebook" id="filtersnotebook">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="CurrentPage">0</property>
-                    <property name="TabPos">Bottom</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
-                    <property name="AutoSize">True</property>
                   </packing>
                 </child>
               </widget>
               <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
+                <property name="Position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">  Filters  </property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
               </packing>
             </child>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="label2">
+          <widget class="Gtk.Notebook" id="notebookPlaylist">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">  Filters  </property>
-            <property name="Angle">90</property>
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
           </widget>
           <packing>
-            <property name="type">tab</property>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Notebook" id="notebookFilter">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
           </packing>
         </child>
       </widget>
