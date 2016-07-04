@@ -110,12 +110,7 @@ namespace LongoMatch.DB
 				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
 					using (Stream gzipStream = new GZipOutputStream (fs)) {
 						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
-							foreach (string n in new string[] {"", "-wal", "-shm"}) {
-								TarEntry tarEntry = TarEntry.CreateEntryFromFile (
-									                    Path.Combine (Config.DBDir, storageName + ".cblite" + n));
-								tarArchive.WriteEntry (tarEntry, true);
-							}
-							AddDirectoryFilesToTar (tarArchive, Path.Combine (Config.DBDir, storageName + " attachments"), true);
+							AddDirectoryFilesToTar (tarArchive, Path.Combine (Config.DBDir, storageName + ".cblite2"), true);
 						}
 					}
 				}
