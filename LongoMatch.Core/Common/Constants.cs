@@ -82,7 +82,11 @@ Xavier Queralt Mateu (ca)";
 		public const string LATEST_VERSION_URL = "http://www.longomatch.com/latest-longomatch";
 		#endif
 
+		#if OSTYPE_ANDROID || OSTYPE_IOS
+		public const string MANUAL = "https://fluendo.atlassian.net/wiki/display/LPD/Tag2win+app";
+		#else
 		public const string MANUAL = "http://www.longomatch.com/documentation/";
+		#endif
 
 		#if HAVE_GTK
 		public const int STEP = (int)Gdk.ModifierType.ShiftMask;
