@@ -105,9 +105,13 @@ namespace LongoMatch.DB
 				return activeDB;
 			}
 			set {
-				activeDB = value;
-				Config.CurrentDatabase = value.Info.Name;
-				Config.Save ();
+				if (value != null) {
+					activeDB = value;
+					Config.CurrentDatabase = value.Info.Name;
+					Config.Save ();
+				} else {
+					throw new ArgumentNullException ("ActiveDB");
+				}
 			}
 		}
 
@@ -128,7 +132,7 @@ namespace LongoMatch.DB
 				IStorage db = new CouchbaseStorage (this, name);
 				Databases.Add (db);
 				return db;
-			} catch (Exception ex) {
+			} catch (CouchbaseLiteException ex) {
 				Log.Exception (ex);
 				return null;
 			}
