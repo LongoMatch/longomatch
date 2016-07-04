@@ -167,11 +167,13 @@ namespace LongoMatch.Gui.Component
 				// Hack to reposition video window in widget for OSX
 				playerWindow.Resize (player_width + 10, player_height);
 				videowidgetsbox.Visible = false;
+				playsSelection.ExpandTabs = true;
 			} else {
 				Log.Debug ("Attaching player again");
 				videowidgetsbox.Visible = true;
 				playercapturer.Reparent (this.videowidgetsbox);
 				playerWindow.Destroy ();
+				playsSelection.ExpandTabs = false;
 			}
 			if (isPlaying) {
 				Player.Play ();

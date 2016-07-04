@@ -16,8 +16,6 @@ namespace LongoMatch.Gui.Component
 		
 		private global::LongoMatch.Gui.Component.PlaysSelectionWidget playsSelection;
 		
-		private global::Gtk.HPaned rigthpane;
-		
 		private global::Gtk.HBox videowidgetsbox;
 		
 		private global::VAS.UI.PlayerCapturerBin playercapturer;
@@ -59,11 +57,6 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Paned.PanedChild w3 = ((global::Gtk.Paned.PanedChild)(this.uppane [this.playsSelection]));
 			w3.Resize = false;
 			// Container child uppane.Gtk.Paned+PanedChild
-			this.rigthpane = new global::Gtk.HPaned ();
-			this.rigthpane.CanFocus = true;
-			this.rigthpane.Name = "rigthpane";
-			this.rigthpane.Position = 1219;
-			// Container child rigthpane.Gtk.Paned+PanedChild
 			this.videowidgetsbox = new global::Gtk.HBox ();
 			this.videowidgetsbox.Name = "videowidgetsbox";
 			this.videowidgetsbox.Spacing = 6;
@@ -74,25 +67,22 @@ namespace LongoMatch.Gui.Component
 			this.videowidgetsbox.Add (this.playercapturer);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.playercapturer]));
 			w4.Position = 0;
-			this.rigthpane.Add (this.videowidgetsbox);
-			global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.rigthpane [this.videowidgetsbox]));
-			w5.Resize = false;
-			this.uppane.Add (this.rigthpane);
+			this.uppane.Add (this.videowidgetsbox);
 			this.centralpane.Add (this.uppane);
-			global::Gtk.Paned.PanedChild w7 = ((global::Gtk.Paned.PanedChild)(this.centralpane [this.uppane]));
-			w7.Resize = false;
+			global::Gtk.Paned.PanedChild w6 = ((global::Gtk.Paned.PanedChild)(this.centralpane [this.uppane]));
+			w6.Resize = false;
 			// Container child centralpane.Gtk.Paned+PanedChild
 			this.codingwidget = new global::LongoMatch.Gui.Component.CodingWidget ();
 			this.codingwidget.Events = ((global::Gdk.EventMask)(256));
 			this.codingwidget.Name = "codingwidget";
 			this.codingwidget.TagPositions = false;
 			this.centralpane.Add (this.codingwidget);
-			global::Gtk.Paned.PanedChild w8 = ((global::Gtk.Paned.PanedChild)(this.centralpane [this.codingwidget]));
-			w8.Resize = false;
+			global::Gtk.Paned.PanedChild w7 = ((global::Gtk.Paned.PanedChild)(this.centralpane [this.codingwidget]));
+			w7.Resize = false;
 			this.lightbackgroundeventbox.Add (this.centralpane);
 			this.hbox1.Add (this.lightbackgroundeventbox);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.lightbackgroundeventbox]));
-			w10.Position = 0;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.lightbackgroundeventbox]));
+			w9.Position = 0;
 			this.Add (this.hbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
