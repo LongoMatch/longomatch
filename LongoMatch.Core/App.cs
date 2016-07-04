@@ -61,11 +61,6 @@ namespace LongoMatch
 				}
 			}
 
-			if (Current.Config == null) {
-				Log.Information ("Creating new config at " + Current.ConfigFile);
-				Current.Config = new Config ();
-				Current.Config.Save ();
-			}
 			Current.Background = Resources.LoadImage (Constants.BACKGROUND);
 			Current.Copyright = Constants.COPYRIGHT;
 			Current.License = Constants.LICENSE;
@@ -74,6 +69,13 @@ namespace LongoMatch
 			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
 			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
 			Current.ProjectExtension = Constants.PROJECT_EXT;
+
+			if (Current.Config == null) {
+				Log.Information ("Creating new config at " + Current.ConfigFile);
+				Current.Config = new Config ();
+				Current.Config.Save ();
+			}
+
 			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
 		}
 
