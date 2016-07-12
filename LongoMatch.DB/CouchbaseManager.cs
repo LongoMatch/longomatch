@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Couchbase.Lite;
+using Couchbase.Lite.Store;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 
@@ -29,13 +30,23 @@ namespace LongoMatch.DB
 	public class CouchbaseManager: IStorageManager
 	{
 		readonly Manager manager;
+		readonly DatabaseOptions options;
 		IStorage activeDB;
 
 		public CouchbaseManager (string dbDir)
 		{
 			manager = new Manager (new System.IO.DirectoryInfo (dbDir),
 				ManagerOptions.Default);
+			options = new DatabaseOptions ();
+			Options.Create = true;
+
 			Databases = new List<IStorage> ();
+		}
+
+		public DatabaseOptions Options {
+			get {
+				return options;
+			}
 		}
 
 		#region IDataBaseManager implementation
@@ -83,14 +94,35 @@ namespace LongoMatch.DB
 			}
 		}
 
+		public Database OpenDatabase (string storageName)
+		{
+			try {
+				Options.Create = !manager.AllDatabaseNames.Contains (storageName);
+				return manager.OpenDatabase (storageName, Options);
+			} catch (CouchbaseLiteException ex) {
+				if (ex.CBLStatus.Code == StatusCode.Unauthorized) {
+					// probably trying to open a non-encrypted DB with SQLCipher, let's try without encryption.
+					// if it really is encrypted, it will throw again
+					Log.Warning ("Unauthorized access to database");
+					Log.Debug ("Retrying without encryption");
+					return manager.GetDatabase (storageName);
+				}
+				throw;
+			}
+		}
+
 		public IStorage ActiveDB {
 			get {
 				return activeDB;
 			}
 			set {
-				activeDB = value;
-				Config.CurrentDatabase = value.Info.Name;
-				Config.Save ();
+				if (value != null) {
+					activeDB = value;
+					Config.CurrentDatabase = value.Info.Name;
+					Config.Save ();
+				} else {
+					throw new ArgumentNullException ("ActiveDB");
+				}
 			}
 		}
 
@@ -108,10 +140,10 @@ namespace LongoMatch.DB
 			}
 			try {
 				Log.Information ("Creating new database " + name);
-				IStorage db = new CouchbaseStorage (manager, name);
+				IStorage db = new CouchbaseStorage (this, name);
 				Databases.Add (db);
 				return db;
-			} catch (Exception ex) {
+			} catch (CouchbaseLiteException ex) {
 				Log.Exception (ex);
 				return null;
 			}

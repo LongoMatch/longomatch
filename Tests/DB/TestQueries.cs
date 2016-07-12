@@ -20,8 +20,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Couchbase.Lite;
+using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
@@ -38,6 +40,8 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
+			Config.DependencyRegistry = new Registry ("test");
+			Config.DependencyRegistry.Register<IStorageManager, CouchbaseManager> (1);
 			string dbPath = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);

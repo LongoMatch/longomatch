@@ -55,7 +55,7 @@
       <HintPath>$(SolutionDir)\packages\Stateless.2.5.21.0\lib\portable-net40+sl50+win+wp80\Stateless.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase.Lite">
-      <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.1.2.0\lib\net45\Couchbase.Lite.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.2.1.1\lib\net45\Couchbase.Lite.dll</HintPath>
       <Package>couchbase-lite</Package>
     </Reference>
   </ItemGroup>

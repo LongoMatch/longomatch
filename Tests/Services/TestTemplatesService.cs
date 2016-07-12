@@ -17,6 +17,7 @@
 //
 using System.Collections.Specialized;
 using System.IO;
+using LongoMatch;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
@@ -31,6 +32,13 @@ namespace Tests.Services
 	{
 		IStorage storage;
 		string tempPath;
+
+		[TestFixtureSetUp]
+		public void FixtureSetUp ()
+		{
+			Config.DependencyRegistry = new Registry ("test");
+			Config.DependencyRegistry.Register<IStorageManager, CouchbaseManager> (1);
+		}
 
 		[SetUp]
 		public void CreateStorage ()

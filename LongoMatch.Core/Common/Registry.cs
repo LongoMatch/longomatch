@@ -44,7 +44,7 @@ namespace LongoMatch.Core.Common
 			elements = new Dictionary<Type, List<RegistryElement>> ();
 		}
 
-		public void Register<I, C> (int priority)
+		public virtual void Register<I, C> (int priority)
 		{
 			Type interfac = typeof(I);
 			Type klass = typeof(C);
@@ -54,7 +54,7 @@ namespace LongoMatch.Core.Common
 			elements [interfac].Add (new RegistryElement (klass, priority));
 		}
 
-		public T Retrieve<T> (params object[] args)
+		public virtual T Retrieve<T> (params object[] args)
 		{
 			Type interfac = typeof(T);
 			Type elementType;
