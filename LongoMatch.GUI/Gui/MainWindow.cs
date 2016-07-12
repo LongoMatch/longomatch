@@ -119,7 +119,7 @@ namespace LongoMatch.Gui
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
 		/// </summary>
 		/// <param name="panel">Panel.</param>
-		public void SetPanel (Widget panel)
+		public bool SetPanel (IPanel panel)
 		{
 			if (panel == null) {
 				ResetGUI ();
@@ -129,15 +129,16 @@ namespace LongoMatch.Gui
 				} else {
 					RemovePanel (false);
 				}
-				currentPanel = panel;
+				currentPanel = (Widget)panel;
 
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += BackClicked;
 					(panel as IPanel).OnLoad ();
 				}
-				panel.Show ();
-				centralbox.PackStart (panel, true, true, 0);
+				((Widget)panel).Show ();
+				centralbox.PackStart ((Widget)panel, true, true, 0);
 			}
+			return true;
 		}
 
 		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction)
@@ -168,7 +169,7 @@ namespace LongoMatch.Gui
 			} else {
 				analysisWindow = new AnalysisComponent ();
 			}
-			SetPanel (analysisWindow as Widget);
+			SetPanel (analysisWindow);
 			analysisWindow.SetProject (project, projectType, props, filter);
 			return analysisWindow;
 		}

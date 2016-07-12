@@ -408,7 +408,7 @@ namespace LongoMatch.Gui
 
 		public void LoadPanel (IPanel panel)
 		{
-			mainWindow.SetPanel ((Widget)panel);
+			mainWindow.SetPanel (panel);
 		}
 
 		public void CreateNewProject (Project project = null)
