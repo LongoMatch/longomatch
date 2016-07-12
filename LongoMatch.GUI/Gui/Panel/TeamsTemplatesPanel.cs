@@ -142,12 +142,12 @@ namespace LongoMatch.Gui.Panel
 			base.Destroy ();
 		}
 
-		public void OnLoaded ()
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
 		}

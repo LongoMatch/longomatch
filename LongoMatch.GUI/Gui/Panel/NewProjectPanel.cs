@@ -111,12 +111,12 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public void OnLoaded ()
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
 		}

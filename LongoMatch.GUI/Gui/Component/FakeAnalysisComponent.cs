@@ -50,6 +50,24 @@ namespace LongoMatch.Gui.Component
 
 		#region IAnalysisWindow implementation
 
+		public event VAS.Core.Handlers.BackEventHandle BackEvent;
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			codingwidget1.SetProject ((LongoMatch.Core.Store.ProjectLongoMatch)project, projectType, 
