@@ -101,6 +101,14 @@ namespace LongoMatch.Gui.Panel
 			SetStyle ();
 		}
 
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		public void OnLoaded ()
 		{
 

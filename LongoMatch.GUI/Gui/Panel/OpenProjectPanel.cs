@@ -51,6 +51,14 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		public void OnLoaded ()
 		{
 

@@ -23,7 +23,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
-	public interface IAnalysisWindow : IAnalysisWindowBase
+	public interface IAnalysisWindow : IAnalysisWindowBase , IPanel
 	{
 		void TagTeam (TeamType team);
 	}
