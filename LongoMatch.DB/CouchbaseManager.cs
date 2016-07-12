@@ -96,8 +96,19 @@ namespace LongoMatch.DB
 
 		public Database OpenDatabase (string storageName)
 		{
-			Options.Create = !manager.AllDatabaseNames.Contains (storageName);
-			return manager.OpenDatabase (storageName, Options);
+			try {
+				Options.Create = !manager.AllDatabaseNames.Contains (storageName);
+				return manager.OpenDatabase (storageName, Options);
+			} catch (CouchbaseLiteException ex) {
+				if (ex.CBLStatus.Code == StatusCode.Unauthorized) {
+					// probably trying to open a non-encrypted DB with SQLCipher, let's try without encryption.
+					// if it really is encrypted, it will throw again
+					Log.Warning ("Unauthorized access to database");
+					Log.Debug ("Retrying without encryption");
+					return manager.GetDatabase (storageName);
+				}
+				throw;
+			}
 		}
 
 		public IStorage ActiveDB {
