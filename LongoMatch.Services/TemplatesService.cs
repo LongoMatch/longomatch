@@ -133,10 +133,19 @@ namespace LongoMatch.Services
 
 		public void Save (T template)
 		{
+			bool isNew = false;
+
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
+			if (storage.Retrieve<T> (template.ID) == null) {
+				isNew = true;
+			}
 			try {
 				storage.Store<T> (template, true);
+				if (isNew && CollectionChanged != null) {
+					CollectionChanged (this,
+						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template));
+				}
 			} catch (StorageException ex) {
 				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
