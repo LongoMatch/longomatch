@@ -17,28 +17,33 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Drawing.CanvasObjects.Blackboard;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-using VAS.Video.Utils;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Core.Store.Playlists;
-using VAS.UI.Helpers;
-using Image = VAS.Core.Common.Image;
-using VAS.Drawing;
 using VAS.Core.Store.Drawables;
-using LongoMatch.Drawing.CanvasObjects.Blackboard;
+using VAS.Core.Store.Playlists;
+using VAS.Drawing;
+using VAS.UI.Helpers;
+using VAS.Video.Utils;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
@@ -61,6 +66,7 @@ namespace LongoMatch.Gui
 			mainWindow.Hide ();
 			registry = new Registry ("GUI backend");
 			RegistryCanvasFromDrawables ();
+			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 
 		public IMainController MainController {
@@ -325,9 +331,21 @@ namespace LongoMatch.Gui
 
 		public void OpenCategoriesTemplatesManager ()
 		{
-			SportsTemplatesPanel panel = new SportsTemplatesPanel ();
+			/* FIXME: Remove this when it's finally handled by the NavigationController */
+			IController controller;
+
+			IView view = App.Current.ViewLocator.Retrieve ("DashboardsManager");
+			var dashboardsVM = new DashboardsManagerViewModel ();
+			dashboardsVM.Model = new ObservableCollection<DashboardLongoMatch> (
+				App.Current.CategoriesTemplatesProvider.Templates);
+
+			view.SetViewModel (dashboardsVM);
+			controller = App.Current.ControllerLocator.Retrieve ("DashboardsManager");
+			controller.SetViewModel (dashboardsVM);
+			controller.Start ();
 			Log.Information ("Open sports templates manager");
-			mainWindow.SetPanel (panel);
+			mainWindow.SetPanel ((Widget)view);
+			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
 		}
 
 		public void OpenTeamsTemplatesManager ()

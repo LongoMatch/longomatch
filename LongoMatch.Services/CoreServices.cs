@@ -28,10 +28,11 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.MVVMC;
 using VAS.Services;
+using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
-using Catalog = LongoMatch.Core.Catalog;
 
 
 #if OSTYPE_WINDOWS
@@ -85,6 +86,7 @@ namespace LongoMatch.Services
 
 			/* Fill up the descriptions again after initializing the translations */
 			App.Current.Config.Hotkeys.FillActionsDescriptions ();
+			Scanner.ScanControllers (App.Current.ControllerLocator);
 		}
 
 		static void FillVersion ()
