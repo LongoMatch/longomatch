@@ -19,6 +19,7 @@ using System;
 using Newtonsoft.Json;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
@@ -27,8 +28,7 @@ namespace LongoMatch.Core.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
-	public class ProjectDescription : IChanged
+	public class ProjectDescription : BindableBase
 	{
 		DateTime matchDate, lastModified;
 
@@ -46,13 +46,6 @@ namespace LongoMatch.Core.Store
 			LocalName = "";
 			VisitorGoals = 0;
 			VisitorName = "";
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public bool IsChanged {
-			get;
-			set;
 		}
 
 		/// <summary>
