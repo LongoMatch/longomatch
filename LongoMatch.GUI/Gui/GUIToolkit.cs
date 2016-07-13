@@ -28,6 +28,7 @@ using LongoMatch.Gui.Panel;
 using VAS.Video.Utils;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
@@ -514,6 +515,34 @@ namespace LongoMatch.Gui
 		public void Invoke (EventHandler handler)
 		{
 			Gtk.Application.Invoke (handler);
+		}
+
+		public Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
+		                                        string countText, string emptyText,
+		                                        CreateEvent<T> evt) where T: ITemplate
+		{
+			bool ret = false;
+			EntryDialog dialog = new EntryDialog (mainWindow as Gtk.Window);
+			dialog.ShowCount = true;
+			dialog.Title = dialog.Text = Catalog.GetString (defaultName);
+			dialog.SelectText ();
+			dialog.CountText = Catalog.GetString (countText);
+			dialog.AvailableTemplates = availableTemplates.Select (t => t.Name).ToList ();
+
+			while (dialog.Run () == (int)ResponseType.Ok) {
+				if (dialog.Text == "") {
+					ErrorMessage (Catalog.GetString (emptyText), dialog);
+					continue;
+				} else {
+					evt.Name = dialog.Text;
+					evt.Count = dialog.Count;
+					evt.Source = availableTemplates.FirstOrDefault (t => t.Name == dialog.SelectedTemplate);
+					ret = true;
+					break;
+				}
+			}
+			dialog.Destroy ();
+			return Task.Factory.StartNew (() => ret);
 		}
 
 		Widget GetParentWidget (object parent)
