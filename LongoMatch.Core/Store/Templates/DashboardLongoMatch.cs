@@ -138,7 +138,7 @@ namespace LongoMatch.Core.Store.Templates
 		DashboardLongoMatch ITemplate<DashboardLongoMatch>.Copy (string newName)
 		{
 			Load ();
-			DashboardLongoMatch newDashboard = this.Clone ();
+			DashboardLongoMatch newDashboard = this.Clone (SerializationType.Json);
 			newDashboard.ID = Guid.NewGuid ();
 			newDashboard.DocumentID = null;
 			newDashboard.Name = newName;
