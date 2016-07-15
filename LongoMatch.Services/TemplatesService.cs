@@ -133,10 +133,19 @@ namespace LongoMatch.Services
 
 		public void Save (T template)
 		{
+			bool isNew = false;
+
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
+			if (storage.Retrieve<T> (template.ID) == null) {
+				isNew = true;
+			}
 			try {
 				storage.Store<T> (template, true);
+				if (isNew && CollectionChanged != null) {
+					CollectionChanged (this,
+						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template));
+				}
 			} catch (StorageException ex) {
 				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
@@ -145,6 +154,7 @@ namespace LongoMatch.Services
 		public void Register (T template)
 		{
 			Log.Information ("Registering new template " + template.Name);
+			template.Static = true;
 			systemTemplates.Add (template);
 			if (CollectionChanged != null) {
 				CollectionChanged (this,
@@ -171,13 +181,14 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void Copy (T template, string newName)
+		public T Copy (T template, string newName)
 		{
 			CheckInvalidChars (newName);
 			Log.Information (String.Format ("Copying template {0} to {1}", template.Name, newName));
 
 			template = template.Copy (newName);
 			Add (template);
+			return template;
 		}
 
 		public void Delete (T template)
@@ -198,7 +209,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public void Create (string templateName, params object[] list)
+		public T Create (string templateName, params object[] list)
 		{
 			/* Some templates don't need a count as a parameter but we include
 			 * so that all of them match the same signature */
@@ -207,11 +218,7 @@ namespace LongoMatch.Services
 			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
 			T t = (T)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
-			t.Static = true;
-			// TODO split the registration from the creation, i.e: this function must return T
-			// and let the constructor register the returned template. For that we need to refactor
-			// the ITemplateProvider and ITemplateProvider<T>, no need to have them separated
-			Register (t);
+			return t;
 		}
 
 		void CheckInvalidChars (string name)
@@ -229,9 +236,9 @@ namespace LongoMatch.Services
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
-			Create (Catalog.GetString ("Home team"), 20);
+			Register (Create (Catalog.GetString ("Home team"), 20));
 			systemTemplates.Last ().TeamName = Catalog.GetString ("Home");
-			Create (Catalog.GetString ("Away team"), 20);
+			Register (Create (Catalog.GetString ("Away team"), 20));
 			systemTemplates.Last ().TeamName = Catalog.GetString ("Away");
 		}
 	}
@@ -243,7 +250,7 @@ namespace LongoMatch.Services
 			// Create the default template, it will be added to the list
 			// of system templates to make it always available on the app 
 			// and also read-only
-			Create (Catalog.GetString ("Default dashboard"), 20);
+			Register (Create (Catalog.GetString ("Default dashboard"), 20));
 		}
 	}
 }

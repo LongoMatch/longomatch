@@ -221,7 +221,8 @@ namespace Tests.Services
 					eventEmitted = true;
 				}
 			};
-			provider.Create ("jamematen");
+			provider.Register (provider.Create ("jamematen"));
+
 			Assert.AreEqual (2, provider.Templates.Count);
 			Assert.IsTrue (provider.Exists ("jamematen"));
 			Assert.IsTrue (eventEmitted);

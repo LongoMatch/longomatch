@@ -22,5 +22,12 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
   </ItemGroup>
 </Project>

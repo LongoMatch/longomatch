@@ -16,51 +16,43 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Gdk;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using Gtk;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Gui.Dialog;
+using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Serialization;
-using VAS.Core.Store.Templates;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class SportsTemplatesPanel : Gtk.Bin, IPanel
+	[ViewAttribute ("DashboardsManager")]
+	public partial class SportsTemplatesPanel : Gtk.Bin, IPanel, IView
 	{
 		public event BackEventHandle BackEvent;
 
-		const int COL_PIXBUF = 0;
-		const int COL_NAME = 1;
-		const int COL_STATIC = 2;
-		const int COL_DASHBOARD = 3;
+		const int COL_DASHBOARD = 0;
+		const int COL_EDITABLE = 1;
 
 		ListStore dashboardsStore;
-		DashboardLongoMatch loadedDashboard;
-		ICategoriesTemplatesProvider provider;
-		TreeIter selectedIter;
-		List<Dashboard> dashboards;
+		DashboardsManagerViewModel viewModel;
 
 		public SportsTemplatesPanel ()
 		{
 			this.Build ();
-			provider = App.Current.CategoriesTemplatesProvider;
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
 			panelheader1.BackClicked += (sender, o) => {
-				Save (true);
+				ViewModel.Save (false);
 				if (BackEvent != null)
 					BackEvent ();
 			};
@@ -112,7 +104,7 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Clicked += (object sender, EventArgs e) =>
 				buttonswidget.AddButton ("Timer");
 
-			dashboardsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(bool), typeof(Dashboard));
+			dashboardsStore = new ListStore (typeof(DashboardVM), typeof(bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = dashboardsStore;
@@ -120,9 +112,9 @@ namespace LongoMatch.Gui.Panel
 			var cell = new CellRendererText { SizePoints = 14.0 };
 			//cell.Editable = true;
 			cell.Edited += HandleEdited;
-			var col = dashboardseditortreeview.AppendColumn ("Text", cell, "text", COL_NAME);
-			col.AddAttribute (cell, "editable", COL_STATIC);
-			dashboardseditortreeview.SearchColumn = COL_NAME;
+			var col = dashboardseditortreeview.AppendColumn ("Text", cell, RenderTemplateName);
+			col.AddAttribute (cell, "editable", COL_EDITABLE);
+			dashboardseditortreeview.SearchColumn = COL_DASHBOARD;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
 			
@@ -132,24 +124,40 @@ namespace LongoMatch.Gui.Panel
 			buttonswidget.ButtonsVisible = false;
 			buttonswidget.Mode = DashboardMode.Edit;
 			newtemplatebutton.Visible = true;
-			deletetemplatebutton.Visible = false;
-			
+			savetemplatebutton.Sensitive = false;
+			deletetemplatebutton.Sensitive = false;
+			exporttemplatebutton.Sensitive = false;
+
 			newtemplatebutton.Clicked += HandleNewTemplateClicked;
 			importtemplatebutton.Clicked += HandleImportTemplateClicked;
 			exporttemplatebutton.Clicked += HandleExportTemplateClicked;
 			deletetemplatebutton.Clicked += HandleDeleteTemplateClicked;
-			savetemplatebutton.Clicked += (sender, e) => Save (false);
-			
+			savetemplatebutton.Clicked += (sender, e) => ViewModel.Save (true);
+
+
 			editdashboardslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 			editbuttonslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
-
-			Load (null);
 		}
 
 		protected override void OnDestroyed ()
 		{
 			buttonswidget.Destroy ();
 			base.OnDestroyed ();
+		}
+
+		public DashboardsManagerViewModel ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				foreach (DashboardVM dashboard in viewModel.ViewModels) {
+					Add (dashboard);
+				}
+				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
+				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+				viewModel.PropertyChanged += HandleViewModelChanged;
+			}
 		}
 
 		public void OnLoaded ()
@@ -162,114 +170,51 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		void Load (DashboardLongoMatch dashboard, TreeIter iter)
+		public void SetViewModel (object viewModel)
 		{
-			loadedDashboard = dashboard;
-			selectedIter = iter;
+			ViewModel = (DashboardsManagerViewModel)viewModel;
 		}
 
-		void Load (string templateName)
+		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			TreeIter templateIter = TreeIter.Zero;
-			bool first = true;
+			string name;
 
-			dashboards = new List<Dashboard> ();
-			dashboardsStore.Clear ();
-			foreach (Dashboard dashboard in provider.Templates) {
-				Pixbuf img;
-				TreeIter iter;
-				string name;
-				
-				if (dashboard.Image != null)
-					img = dashboard.Image.Value;
-				else
-					img = Helpers.Misc.LoadIcon ("longomatch", 20);
-				
-				name = dashboard.Name;
-				if (dashboard.Static) {
-					name += " (" + Catalog.GetString ("System") + ")";
-				} else {
-					dashboards.Add (dashboard);
-				}
-				iter = dashboardsStore.AppendValues (img, name, !dashboard.Static, dashboard);
-				if (first || dashboard.Name == templateName) {
-					templateIter = iter;
-				}
-				first = false;
+			DashboardVM dashboardVM = (DashboardVM)model.GetValue (iter, COL_DASHBOARD);
+			name = dashboardVM.Name;
+			if (!dashboardVM.Editable) {
+				name += " (" + Catalog.GetString ("System") + ")";
 			}
-			if (dashboardsStore.IterIsValid (templateIter)) {
-				dashboardseditortreeview.Selection.SelectIter (templateIter);
-				HandleSelectionChanged (null, null);
+			(cell as CellRendererText).Text = name;
+		}
+
+		void Add (DashboardVM dashboardVM)
+		{
+			dashboardsStore.AppendValues (dashboardVM, dashboardVM.Editable);
+		}
+
+		void Remove (DashboardVM dashboardVM)
+		{
+			TreeIter iter;
+			dashboardsStore.GetIterFirst (out iter);
+			while (dashboardsStore.IterIsValid (iter)) {
+				if (dashboardsStore.GetValue (iter, COL_DASHBOARD) == dashboardVM) {
+					dashboardsStore.Remove (ref iter);
+					break;
+				}
+				dashboardsStore.IterNext (ref iter);
 			}
 		}
 
-		void SaveLoadedDashboard ()
+		void Select (DashboardVM dashboardVM)
 		{
-			if (loadedDashboard == null)
-				return;
-			if (!SaveTemplate (loadedDashboard)) {
-				return;
-			}
-			dashboardseditortreeview.Model.SetValue (selectedIter, COL_DASHBOARD, loadedDashboard);
-			buttonswidget.Edited = false;
-			//Replace the old dashboard with the new one with the new attributes
-			dashboards.RemoveAll (d => d.ID == loadedDashboard.ID);
-			dashboards.Add (loadedDashboard);
-		}
-
-		bool SaveTemplate (Dashboard dashboard)
-		{
-			try {
-				provider.Save (dashboard as DashboardLongoMatch);
-				return true;
-			} catch (InvalidTemplateFilenameException ex) {
-				App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
-				return false;
-			}
-		}
-
-		void SaveStatic ()
-		{
-			string msg = Catalog.GetString ("System dashboards can't be edited, do you want to create a copy?");
-			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
-				string newName;
-				while (true) {
-					newName = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedDashboard.Name + "_copy", this).Result;
-					if (newName == null)
-						break;
-					if (dashboards.Any (d => d.Name == newName)) {
-						msg = Catalog.GetString ("A dashboard with the same name already exists"); 
-						App.Current.GUIToolkit.ErrorMessage (msg, this);
-					} else {
-						break;
-					}
+			TreeIter iter;
+			dashboardsStore.GetIterFirst (out iter);
+			while (dashboardsStore.IterIsValid (iter)) {
+				if ((dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM).Model.Equals (dashboardVM.Model)) {
+					dashboardseditortreeview.Selection.SelectIter (iter);
+					break;
 				}
-				if (newName == null) {
-					return;
-				}
-				Dashboard newtemplate = loadedDashboard.Copy (newName);
-				newtemplate.Static = false;
-				if (SaveTemplate (newtemplate)) {
-					Load (newtemplate.Name);
-				}
-			}
-		}
-
-		void Save (bool prompt)
-		{
-			if (loadedDashboard != null && buttonswidget.Edited) {
-				if (loadedDashboard.Static) {
-					/* prompt=false when we click the save button */
-					if (!prompt) {
-						SaveStatic ();
-					}
-				} else {
-					string msg = Catalog.GetString ("Do you want to save the current dashboard");
-					if (!prompt || App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
-						SaveLoadedDashboard ();
-					}
-				}
+				dashboardsStore.IterNext (ref iter);
 			}
 		}
 
@@ -308,6 +253,25 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			switch (e.Action) {
+			case NotifyCollectionChangedAction.Add:
+				foreach (DashboardVM dashboardVM in e.NewItems) {
+					Add (dashboardVM);
+				}
+				break;
+			case NotifyCollectionChangedAction.Remove:
+				foreach (DashboardVM dashboardVM in e.OldItems) {
+					Remove (dashboardVM);
+				}
+				break;
+			case NotifyCollectionChangedAction.Replace:
+				QueueDraw ();
+				break;
+			}
+		}
+
 		void HandleLeftTagButton (object sender, EventArgs e)
 		{
 			editbuttonslabel.Markup = Catalog.GetString ("Manage dashboard buttons");
@@ -315,199 +279,59 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			DashboardLongoMatch selected;
 			TreeIter iter;
-			
 			dashboardseditortreeview.Selection.GetSelected (out iter);
+			ViewModel.Select (dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM);
+		}
 
-			try {
-				DashboardLongoMatch dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardLongoMatch;
-				dashboard.Load ();
-				selected = dashboard.Clone ();
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load dashboard"));
-				return;
+		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Model") {
+				// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
+				buttonswidget.Template = ViewModel.LoadedTemplate.Model;
+				buttonswidget.Sensitive = true;
+				Select (ViewModel.LoadedTemplate);
 			}
-			deletetemplatebutton.Visible = selected != null;
-			buttonswidget.Sensitive = selected != null;
-			if (selected != null) {
-				Save (true);
-				deletetemplatebutton.Sensitive = !selected.Static;
-				buttonswidget.Template = selected;
-			}
-			Load (selected, iter);
+		}
+
+		void HandleViewModelChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "SaveSensitive") {
+				savetemplatebutton.Sensitive = ViewModel.SaveSensitive;
+			} else if (e.PropertyName == "ExportSensitive") {
+				exporttemplatebutton.Sensitive = ViewModel.ExportSensitive;
+			} else if (e.PropertyName == "DeleteSensitive") {
+				deletetemplatebutton.Sensitive = ViewModel.DeleteSensitive;
+			}	
 		}
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)
 		{
-			if (loadedDashboard != null) {
-				string msg = Catalog.GetString ("Do you really want to delete the dashboard: ") + loadedDashboard.Name;
-				if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
-					provider.Delete (loadedDashboard);
-					dashboardsStore.Remove (ref selectedIter);
-					dashboards.Remove (loadedDashboard);
-					selectedIter = TreeIter.Zero;
-					dashboardseditortreeview.Selection.SelectPath (new TreePath ("0"));
-					HandleSelectionChanged (null, null);
-				}
-			}
+			ViewModel.Delete ();
 		}
 
 		void HandleImportTemplateClicked (object sender, EventArgs e)
 		{
-			string fileName, filterName;
-			string[] extensions;
-
-			Log.Debug ("Importing dashboard");
-			filterName = Catalog.GetString ("Dashboard files");
-			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
-			/* Show a file chooser dialog to select the file to import */
-			fileName = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import dashboard"), null, App.Current.HomeDir,
-				filterName, extensions);
-
-			if (fileName == null)
-				return;
-
-			try {
-				Dashboard new_dashboard = provider.LoadFile (fileName);
-
-				if (new_dashboard != null) {
-					bool abort = false;
-
-					while (provider.Exists (new_dashboard.Name) && !abort) {
-						string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Dashboard name:"),
-							              Catalog.GetString ("Name conflict"), new_dashboard.Name + "#").Result;
-						if (name == null) {
-							abort = true;
-						} else {
-							new_dashboard.Name = name;
-						}
-					}
-
-					if (!abort) {
-						Pixbuf img;
-
-						provider.Save (new_dashboard as DashboardLongoMatch);
-						if (new_dashboard.Image != null)
-							img = new_dashboard.Image.Value;
-						else
-							img = Helpers.Misc.LoadIcon ("longomatch", 20);
-
-						string name = new_dashboard.Name;
-						dashboardsStore.AppendValues (img, name, !new_dashboard.Static, new_dashboard);
-						Load (new_dashboard.Name);
-					}
-				}
-			} catch (Exception ex) {
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing template:") +
-				"\n" + ex.Message);
-				Log.Exception (ex);
-				return;
-			}
+			ViewModel.Import ();
 		}
 
 		void HandleExportTemplateClicked (object sender, EventArgs e)
 		{
-			string fileName, filterName;
-			string[] extensions;
-
-			Log.Debug ("Exporting dashboard");
-			filterName = Catalog.GetString ("Dashboard files");
-			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
-			/* Show a file chooser dialog to select the file to export */
-			fileName = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
-				System.IO.Path.ChangeExtension (loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), App.Current.HomeDir,
-				filterName, extensions);
-
-			if (fileName != null) {
-				bool succeeded = true;
-				fileName = System.IO.Path.ChangeExtension (fileName, Constants.CAT_TEMPLATE_EXT);
-				if (System.IO.File.Exists (fileName)) {
-					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = App.Current.GUIToolkit.QuestionMessage (msg, null).Result;
-				}
-
-				if (succeeded) {
-					Serializer.Instance.Save (loadedDashboard, fileName);
-					string msg = Catalog.GetString ("Dashboard exported correctly");
-					App.Current.GUIToolkit.InfoMessage (msg);
-				}
-			}
+			ViewModel.Export ();
 		}
 
 		void HandleNewTemplateClicked (object sender, EventArgs e)
 		{
-			bool create = false;
-			Dashboard auxdelete = null;
-
-			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
-			dialog.ShowCount = true;
-			dialog.Title = dialog.Text = Catalog.GetString ("New dasboard");
-			dialog.SelectText ();
-			dialog.CountText = Catalog.GetString ("Event types:");
-			dialog.AvailableTemplates = dashboards.Select (d => d.Name).ToList ();
-			
-			while (dialog.Run () == (int)ResponseType.Ok) {
-				if (dialog.Text == "") {
-					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The dashboard name is empty."));
-					continue;
-				} else if (provider.Exists (dialog.Text)) {
-					var msg = Catalog.GetString ("The dashboard already exists. Do you want to overwrite it?");
-					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
-						create = true;
-						auxdelete = dashboards.FirstOrDefault (d => d.Name == dialog.Text);
-						break;
-					}
-				} else {
-					create = true;
-					break;
-				}
-			}
-			
-			if (create) {
-				if (dialog.SelectedTemplate != null) {
-					try {
-						provider.Copy (dashboards.FirstOrDefault (d => d.Name == dialog.SelectedTemplate) as DashboardLongoMatch, dialog.Text);
-					} catch (InvalidTemplateFilenameException ex) {
-						App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
-						dialog.Destroy ();
-						return;
-					}
-				} else {
-					DashboardLongoMatch template;
-					template = DashboardLongoMatch.DefaultTemplate (dialog.Count);
-					template.Name = dialog.Text;
-					if (!SaveTemplate (template)) {
-						dialog.Destroy ();
-						return;
-					}
-				}
-				if (auxdelete != null) {
-					provider.Delete (auxdelete as DashboardLongoMatch);
-				}
-				Load (dialog.Text);
-			}
-			dialog.Destroy ();
+			ViewModel.New ();
 		}
 
 		void HandleEdited (object o, EditedArgs args)
 		{
 			TreeIter iter;
 			dashboardsStore.GetIter (out iter, new TreePath (args.Path));
- 
-			DashboardLongoMatch dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardLongoMatch;
-
-			if (dashboard.Name != args.NewText) {
-				if (dashboards.Any (d => d.Name == args.NewText)) {
-					App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("A dashboard with the same name already exists"), this);
-					args.RetVal = false;
-				} else {
-					dashboard.Name = args.NewText;
-					provider.Save (dashboard);
-					dashboardsStore.SetValue (iter, 1, args.NewText);
-				}
-			}
+			var dashboardVM = dashboardsStore.GetValue (iter, COL_DASHBOARD) as DashboardVM;
+			ViewModel.ChangeName (dashboardVM, args.NewText);
+			QueueDraw ();
 		}
 	}
 }
