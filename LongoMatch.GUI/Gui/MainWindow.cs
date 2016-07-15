@@ -35,6 +35,7 @@ using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
 using Misc = VAS.UI.Helpers.Misc;
+using Keyboard = VAS.Core.Common.Keyboard;
 
 namespace LongoMatch.Gui
 {
@@ -278,12 +279,7 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				App.Current.EventsBroker.Publish<KeyPressedEvent> (
-					new KeyPressedEvent {
-						Sender = this,
-						Key = VAS.Core.Common.Keyboard.ParseEvent (evnt)
-					}
-				);
+				App.Current.KeyContextManager.HandleKeyPressed (Keyboard.ParseEvent (evnt));
 			}
 			return true;
 		}
