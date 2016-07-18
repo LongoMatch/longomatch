@@ -153,6 +153,17 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public override DateTime LastModified {
+			get {
+				return Description.LastModified;
+			}
+			set {
+				Description.LastModified = value;
+			}
+		}
+
 		#endregion
 
 		#region Public Methods
