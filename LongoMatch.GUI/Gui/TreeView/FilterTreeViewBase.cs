@@ -22,6 +22,7 @@ using LongoMatch.Gui.Component;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.UI.Component;
 using EventType = VAS.Core.Store.EventType;
 using Misc = VAS.UI.Helpers.Misc;
 

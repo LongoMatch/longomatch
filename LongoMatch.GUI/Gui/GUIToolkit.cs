@@ -563,6 +563,11 @@ namespace LongoMatch.Gui
 			return Task.Factory.StartNew (() => ret);
 		}
 
+		public void CreateNewPopUpView (string viewAttribute, VAS.Core.Interfaces.MVVMC.IViewModel viewModel, object parent)
+		{
+			throw new NotImplementedException ();
+		}
+
 		Widget GetParentWidget (object parent)
 		{
 			if (parent is Widget) {
