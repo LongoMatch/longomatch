@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Panel
 		const int COL_EDITABLE = 1;
 
 		ListStore dashboardsStore;
-		DashboardsManagerViewModel viewModel;
+		DashboardsManagerVM viewModel;
 
 		public SportsTemplatesPanel ()
 		{
@@ -145,7 +145,7 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 
-		public DashboardsManagerViewModel ViewModel {
+		public DashboardsManagerVM ViewModel {
 			get {
 				return viewModel;
 			}
@@ -172,7 +172,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (DashboardsManagerViewModel)viewModel;
+			ViewModel = (DashboardsManagerVM)viewModel;
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

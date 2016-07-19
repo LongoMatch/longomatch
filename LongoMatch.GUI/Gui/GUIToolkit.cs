@@ -335,7 +335,7 @@ namespace LongoMatch.Gui
 			IController controller;
 
 			IView view = App.Current.ViewLocator.Retrieve ("DashboardsManager");
-			var dashboardsVM = new DashboardsManagerViewModel ();
+			var dashboardsVM = new DashboardsManagerVM ();
 			dashboardsVM.Model = new ObservableCollection<DashboardLongoMatch> (
 				App.Current.CategoriesTemplatesProvider.Templates);
 
