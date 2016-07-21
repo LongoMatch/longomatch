@@ -344,7 +344,7 @@ namespace LongoMatch.Gui
 			controller.SetViewModel (dashboardsVM);
 			controller.Start ();
 			Log.Information ("Open sports templates manager");
-			mainWindow.SetPanel ((Widget)view);
+			mainWindow.SetPanel ((IPanel)view);
 			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
 		}
 
@@ -408,7 +408,7 @@ namespace LongoMatch.Gui
 
 		public void LoadPanel (IPanel panel)
 		{
-			mainWindow.SetPanel ((Widget)panel);
+			mainWindow.SetPanel (panel);
 		}
 
 		public void CreateNewProject (Project project = null)

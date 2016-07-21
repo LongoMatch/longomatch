@@ -139,6 +139,14 @@ namespace LongoMatch.Gui.Panel
 			editbuttonslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 		}
 
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		protected override void OnDestroyed ()
 		{
 			buttonswidget.Destroy ();
@@ -160,12 +168,12 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public void OnLoaded ()
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
 		}

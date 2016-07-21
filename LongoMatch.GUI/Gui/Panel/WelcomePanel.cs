@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
 using VAS.Core;
@@ -93,9 +94,11 @@ namespace LongoMatch.Gui.Panel
 			);
 
 			foreach (ITool tool in tools) {
-				if (tool.WelcomePanelIcon != null) {
-					buttons.Add (new WelcomeButton (tool.WelcomePanelIcon, tool.Name,
-						new Action (() => tool.Load (App.Current.GUIToolkit))));
+				if (tool.WelcomePanelIconList.Any () && tool.WelcomePanelIconList.FirstOrDefault ().Icon != null) {
+					foreach (IWelcomeButton wpb in tool.WelcomePanelIconList) {
+						// FIXME: When LongoMatch is refactored with new ITools, 3rd  parameter will be: new Action (() => wpb.Activate ())
+						buttons.Add (new WelcomeButton (wpb.Icon, wpb.Title, new Action (() => tool.Load (App.Current.GUIToolkit))));
+					}
 				}
 			}
 		}

@@ -51,6 +51,26 @@ namespace LongoMatch.Gui.Component
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
 
+		#region IAnalysisWindow implementation
+
+		public event VAS.Core.Handlers.BackEventHandle BackEvent;
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public string PanelName {
+			get {
+				return "AnalysisComponent";
+			}
+		}
+
+		#endregion
+
 		protected override void OnUnmapped ()
 		{
 			base.OnUnmapped ();
