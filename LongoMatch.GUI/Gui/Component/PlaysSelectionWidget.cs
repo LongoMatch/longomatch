@@ -61,10 +61,12 @@ namespace LongoMatch.Gui.Component
 					notebook.GetNthPage (PAGE_PLAYLISTS).Reparent (notebookPlaylist);
 					notebookHelperPlaylist.UpdateTabs ();
 					notebookHelperFilter.UpdateTabs ();
+					notebook.TabPos = PositionType.Top;
 				} else {
 					notebookPlaylist.GetNthPage (0).Reparent (notebook);
 					notebookFilter.GetNthPage (0).Reparent (notebook);
 					notebookHelper.UpdateTabs ();
+					notebook.TabPos = PositionType.Left;
 				}
 				notebookPlaylist.Visible = value;
 				notebookFilter.Visible = value;

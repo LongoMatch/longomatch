@@ -4691,6 +4691,7 @@ You can continue with the current capture, cancel it or save your project.
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="CurrentPage">0</property>
+            <property name="TabPos">Left</property>
             <child>
               <widget class="LongoMatch.Gui.Component.EventsListWidget" id="eventslistwidget">
                 <property name="MemberName" />
