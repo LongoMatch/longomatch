@@ -67,4 +67,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Catalog.cs" />
+  </ItemGroup>
 </Project>
