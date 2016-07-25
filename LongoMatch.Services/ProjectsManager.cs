@@ -159,7 +159,7 @@ namespace LongoMatch.Services
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
-				App.Current.DatabaseManager.ActiveDB.Delete<Project> (project);
+				App.Current.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (project);
 				return false;
 			}
 		}
@@ -309,7 +309,7 @@ namespace LongoMatch.Services
 		bool UpdateProject (ProjectLongoMatch project)
 		{
 			try {
-				App.Current.DatabaseManager.ActiveDB.Store<Project> (project);
+				App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -357,7 +357,7 @@ namespace LongoMatch.Services
 		{
 			if (e.Project != null) {
 				try {
-					App.Current.DatabaseManager.ActiveDB.Store<Project> (e.Project, true);
+					App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (e.Project, true);
 					SetProject (e.Project, e.ProjectType, e.CaptureSettings);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -439,7 +439,7 @@ namespace LongoMatch.Services
 					}
 				}
 				try {
-					App.Current.DatabaseManager.ActiveDB.Delete<Project> (OpenedProject);
+					App.Current.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (OpenedProject);
 				} catch (StorageException ex) {
 					Log.Exception (ex);
 					App.Current.GUIToolkit.ErrorMessage (ex.Message);
