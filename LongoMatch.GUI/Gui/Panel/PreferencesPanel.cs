@@ -21,6 +21,7 @@ using Gtk;
 using LongoMatch.Gui.Component;
 using VAS.Core;
 using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using Helpers = VAS.UI.Helpers;
 
@@ -73,6 +74,11 @@ namespace LongoMatch.Gui.Panel
 		public void OnUnload ()
 		{
 
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		void AddPanels ()
