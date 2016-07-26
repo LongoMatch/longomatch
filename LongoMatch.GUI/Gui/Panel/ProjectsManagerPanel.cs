@@ -355,7 +355,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<Project> () == 0) {
+			if (DB.Count<ProjectLongoMatch> () == 0) {
 				rbox.Visible = false;
 			}
 		}
