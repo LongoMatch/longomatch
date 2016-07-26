@@ -329,6 +329,18 @@ namespace LongoMatch.Services
 			guiToolkit.CreateNewProject (e.Project);
 		}
 
+		protected virtual void HandleProjectImport (ProjectImportEvent e)
+		{
+			Log.Debug ("A project is being imported. Check the media fileset");
+
+			// We assume the project is a FileProject, as it's being imported from a file.
+
+			// Check if the file associated to the project exists
+			if (!e.Project.Description.FileSet.CheckFiles (Path.GetDirectoryName (e.FilePath))) {
+				Log.Warning ("FileSet not found");
+			}
+		}
+
 		protected virtual void HandleSaveProject (SaveProjectEvent e)
 		{
 			SaveProject (e.Project as ProjectLongoMatch, e.ProjectType);
@@ -489,6 +501,7 @@ namespace LongoMatch.Services
 			multimediaToolkit = App.Current.MultimediaToolkit;
 			guiToolkit = App.Current.GUIToolkit;
 			App.Current.EventsBroker.Subscribe<NewProjectEvent> (NewProject);
+			App.Current.EventsBroker.Subscribe<ProjectImportEvent> (HandleProjectImport);
 			App.Current.EventsBroker.Subscribe<OpenProjectEvent> (OpenProject);
 			App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> (OpenProjectID);
 			App.Current.EventsBroker.Subscribe<OpenNewProjectEvent> (OpenNewProject);

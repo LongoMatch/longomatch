@@ -123,8 +123,11 @@ namespace LongoMatch.Services
 				if (project == null) {
 					return;
 				}
+
 				if (importer.NeedsEdition) {
-					App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = project });
+					App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent {
+						Project = project,
+					});
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
@@ -135,6 +138,7 @@ namespace LongoMatch.Services
 							return;
 					}
 					DB.Store<ProjectLongoMatch> (project, true);
+
 					App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
 						new  OpenProjectIDEvent { 
 							ProjectID = project.ID, 

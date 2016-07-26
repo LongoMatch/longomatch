@@ -32,6 +32,13 @@ namespace LongoMatch.Core.Events
 		public ProjectLongoMatch Project { get; set; }
 	}
 
+	public class ProjectImportEvent : Event
+	{
+		public ProjectLongoMatch Project { get; set; }
+
+		public string FilePath { get; set; }
+	}
+
 	public class OpenNewProjectEvent : Event
 	{
 		public ProjectLongoMatch Project { get; set; }

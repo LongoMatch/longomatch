@@ -18,6 +18,7 @@
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using Mono.Addins;
 using VAS.Addins.ExtensionPoints;
@@ -66,6 +67,12 @@ namespace LongoMatch.Plugins
 			busy.ShowSync (() => {
 				project = Project.Import (filename) as ProjectLongoMatch;
 			});
+
+			App.Current.EventsBroker.Publish<ProjectImportEvent> (new ProjectImportEvent {
+				Project = project,
+				FilePath = filename
+			});
+
 			return project;
 		}
 
