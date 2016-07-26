@@ -25,6 +25,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\TeamsController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
