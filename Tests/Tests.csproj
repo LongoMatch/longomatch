@@ -110,6 +110,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Integration\TestDatabaseMigrationV0.cs" />
     <Compile Include="Integration\TestDatabaseMigrationV1.cs" />
+    <Compile Include="Plugins\Importers\TestLongoMatchImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
@@ -191,6 +192,8 @@
     <Folder Include="Core\Filters\" />
     <Folder Include="Core\Migration\" />
     <Folder Include="data\v0\" />
+    <Folder Include="Plugins\" />
+    <Folder Include="Plugins\Importers\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
