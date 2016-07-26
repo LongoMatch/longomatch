@@ -228,6 +228,12 @@ namespace LongoMatch.Services
 					case KeyAction.Next:
 						player.Next ();
 						return;
+					case KeyAction.SpeedUpper:
+						player.FramerateUpper ();
+						return;
+					case KeyAction.SpeedLower:
+						player.FramerateLower ();
+						return;
 					}
 				}
 			}
