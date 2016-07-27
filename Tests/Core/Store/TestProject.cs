@@ -20,9 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Store
 {
@@ -30,16 +33,16 @@ namespace Tests.Core.Store
 	public class TestProject
 	{
 	
-		Project CreateProject (bool fill = true)
+		ProjectLongoMatch CreateProject (bool fill = true)
 		{
-			Project p = new Project ();
-			p.Dashboard = Dashboard.DefaultTemplate (10);
+			ProjectLongoMatch p = new ProjectLongoMatch ();
+			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = Team.DefaultTemplate (10);
-			p.VisitorTeamTemplate = Team.DefaultTemplate (12);
+			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
-			ProjectDescription pd = new ProjectDescription ();
+			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
 			p.Description = pd;
@@ -59,16 +62,16 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			
 			Utils.CheckSerialization (p);
 			
 			p = CreateProject ();
 			Utils.CheckSerialization (p);
-			p.AddEvent (new TimelineEvent ());
+			p.AddEvent (new TimelineEventLongoMatch ());
 			Utils.CheckSerialization (p);
 			
-			Project newp = Utils.SerializeDeserialize (p);
+			ProjectLongoMatch newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
 			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
 		}
@@ -76,17 +79,17 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestProjectSetInTimelineEvents ()
 		{
-			Project p = CreateProject ();
-			TimelineEvent evt = new TimelineEvent ();
+			ProjectLongoMatch p = CreateProject ();
+			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
 			p.AddEvent (evt);
-			Project newp = Utils.SerializeDeserialize (p);
+			ProjectLongoMatch newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp, newp.Timeline [0].Project);
 		}
 
 		[Test ()]
 		public void TestIsFakeCapture ()
 		{
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			Assert.IsFalse (p.IsFakeCapture);
 			p.Description = new ProjectDescription ();
 			Assert.IsFalse (p.IsFakeCapture);
@@ -136,29 +139,6 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()]
-		public void TestEventsGroupedByEventType ()
-		{
-			Project p = CreateProject ();
-			var g = p.EventsGroupedByEventType;
-			Assert.AreEqual (g.Count (), 4);
-			var gr = g.ElementAt (0);
-			Assert.AreEqual (p.EventTypes [0], gr.Key);
-			Assert.AreEqual (2, gr.Count ());
-			
-			gr = g.ElementAt (1);
-			Assert.AreEqual (p.EventTypes [1], gr.Key);
-			Assert.AreEqual (1, gr.Count ());
-			
-			gr = g.ElementAt (2);
-			Assert.AreEqual (p.EventTypes [2], gr.Key);
-			Assert.AreEqual (3, gr.Count ());
-			
-			gr = g.ElementAt (3);
-			Assert.AreEqual (p.EventTypes [6], gr.Key);
-			Assert.AreEqual (1, gr.Count ());
-		}
-
-		[Test ()]
 		[Ignore ("Not implemented")]
 		public void Clear ()
 		{
@@ -174,8 +154,9 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestAddEvent ()
 		{
-			Project p = CreateProject (false);
-			TimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null, false);
+			ProjectLongoMatch p = CreateProject (false);
+			TimelineEventLongoMatch evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
+				                              null, null, false) as TimelineEventLongoMatch;
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
@@ -184,12 +165,12 @@ namespace Tests.Core.Store
 			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 2);
 
-			evt = new TimelineEvent ();
+			evt = new TimelineEventLongoMatch ();
 			p.AddEvent (evt);
 			Assert.AreEqual (p, evt.Project);
 			Assert.AreEqual (p.Description.FileSet, evt.FileSet);
 			Assert.AreEqual (p.Timeline.Count, 3);
-			p.AddEvent (new TimelineEvent ());
+			p.AddEvent (new TimelineEventLongoMatch ());
 			Assert.AreEqual (p.Timeline.Count, 4);
 			/*FIXME: add test for score event updating pd score */
 		}
@@ -197,13 +178,13 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestRemoveEvents ()
 		{
-			TimelineEvent p1, p2, p3;
-			List<TimelineEvent> plays = new List<TimelineEvent> ();
-			Project p = CreateProject (false);
+			TimelineEventLongoMatch p1, p2, p3;
+			List<TimelineEventLongoMatch> plays = new List<TimelineEventLongoMatch> ();
+			ProjectLongoMatch p = CreateProject (false);
 			
-			p1 = new TimelineEvent ();
-			p2 = new TimelineEvent ();
-			p3 = new TimelineEvent ();
+			p1 = new TimelineEventLongoMatch ();
+			p2 = new TimelineEventLongoMatch ();
+			p3 = new TimelineEventLongoMatch ();
 			p.AddEvent (p1);
 			p.AddEvent (p2);
 			p.AddEvent (p3);
@@ -223,8 +204,8 @@ namespace Tests.Core.Store
 		[Test ()] 
 		public void TestUpdateEventTypesAndTimers ()
 		{
-			Project p = new Project ();
-			p.Dashboard = Dashboard.DefaultTemplate (5);
+			ProjectLongoMatch p = new ProjectLongoMatch ();
+			p.Dashboard = DashboardLongoMatch.DefaultTemplate (5);
 			Assert.AreEqual (0, p.Timers.Count);
 			Assert.AreEqual (0, p.EventTypes.Count);
 			p.UpdateEventTypesAndTimers ();
@@ -239,7 +220,7 @@ namespace Tests.Core.Store
 
 			// Delete a category button with events in the timeline
 			AnalysisEventButton button = p.Dashboard.List.OfType<AnalysisEventButton> ().First ();
-			p.Timeline.Add (new TimelineEvent { EventType = button.EventType });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventType = button.EventType });
 			p.UpdateEventTypesAndTimers ();
 			Assert.AreEqual (1, p.Timers.Count);
 			Assert.AreEqual (9, p.EventTypes.Count);
@@ -268,17 +249,6 @@ namespace Tests.Core.Store
 		}
 
 		[Test ()] 
-		public void TestEventsByType ()
-		{
-			Project p = CreateProject ();
-			Assert.AreEqual (2, p.EventsByType (p.EventTypes [0]).Count);
-			Assert.AreEqual (1, p.EventsByType (p.EventTypes [1]).Count);
-			Assert.AreEqual (3, p.EventsByType (p.EventTypes [2]).Count);
-			Assert.AreEqual (0, p.EventsByType (p.EventTypes [3]).Count);
-			Assert.AreEqual (1, p.EventsByType (p.EventTypes [6]).Count);
-		}
-
-		[Test ()] 
 		[Ignore ("Not implemented")]
 		public void TestGetScore ()
 		{
@@ -294,9 +264,9 @@ namespace Tests.Core.Store
 		[Ignore ("Not implemented")]
 		public void TestEquals ()
 		{
-			Project p1 = CreateProject ();
-			Project p2 = Utils.SerializeDeserialize (p1);
-			Project p3 = new Project ();
+			ProjectLongoMatch p1 = CreateProject ();
+			ProjectLongoMatch p2 = Utils.SerializeDeserialize (p1);
+			ProjectLongoMatch p3 = new ProjectLongoMatch ();
 			
 			Assert.IsTrue (p1.Equals (p2));
 			Assert.IsFalse (p1.Equals (p3));
@@ -317,7 +287,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestResyncEvents ()
 		{
-			Project p = CreateProject (false);
+			ProjectLongoMatch p = CreateProject (false);
 			int offset1 = 100, offset2 = 120, offset3 = 150;
 			Period period;
 			List<Period> syncedPeriods;
@@ -365,17 +335,17 @@ namespace Tests.Core.Store
 			syncedPeriods.Add (period);
 
 			/* 1st Period */
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (0) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (1500) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (3000) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (0) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (1500) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (3000) });
 			/* 2nd Period */
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (3001) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (4500) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6000) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (3001) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (4500) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6000) });
 			/* 3nd Period */
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6001) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6200) });
-			p.Timeline.Add (new TimelineEvent { EventTime = new Time (6500) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6001) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6200) });
+			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6500) });
 
 			IList<TimelineEvent> oldTimeline = p.Timeline.Clone ();
 
@@ -396,22 +366,22 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Dashboard = new Dashboard ();
+			p.Dashboard = new DashboardLongoMatch ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.LocalTeamTemplate = new Team ();
+			p.LocalTeamTemplate = new SportsTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.VisitorTeamTemplate = new Team ();
+			p.VisitorTeamTemplate = new SportsTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 			p.Description = new ProjectDescription ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Timeline.Add (new TimelineEvent ());
+			p.Timeline.Add (new TimelineEventLongoMatch ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 			p.Timeline = null;

@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.playsList1 = new global::Gtk.Label ();
 			this.playsList1.Name = "playsList1";
-			this.playsList1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Events");
+			this.playsList1.LabelProp = global::VAS.Core.Catalog.GetString ("Events");
 			this.playsnotebook.SetTabLabel (this.playsList, this.playsList1);
 			this.playsList1.ShowAll ();
 			// Container child playsnotebook.Gtk.Notebook+NotebookChild

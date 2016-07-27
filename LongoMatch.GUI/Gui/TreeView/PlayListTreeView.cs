@@ -24,12 +24,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Menus;
-using LongoMatch.Core;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Events;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Playlists;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -37,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
-		Project project;
+		ProjectLongoMatch project;
 		TreeIter selectedIter;
 		TreePath pathClicked;
 		TreeStore store;
@@ -67,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			Cleanup ();
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				if (project != null) {
 					Cleanup ();
@@ -152,7 +154,7 @@ namespace LongoMatch.Gui.Component
 
 			edit = new MenuItem (Catalog.GetString ("Edit name"));
 			edit.Activated += (sender, e) => {
-				string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+				string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
 					              playlist.Name).Result;
 				if (!String.IsNullOrEmpty (name)) {
 					playlist.Name = name;
@@ -161,7 +163,11 @@ namespace LongoMatch.Gui.Component
 			menu.Append (edit);
 
 			render = new MenuItem (Catalog.GetString ("Render"));
-			render.Activated += (sender, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
+			render.Activated += (sender, e) => App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
+				new RenderPlaylistEvent { 
+					Playlist = playlist
+				}
+			);		
 			menu.Append (render);
 
 			delete = new MenuItem (Catalog.GetString ("Delete"));

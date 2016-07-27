@@ -15,12 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Stats
 {
@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Stats
 		EventsFilter filter;
 		Player player;
 		Project project;
-		List<TimelineEvent> events;
+		List<TimelineEventLongoMatch> events;
 
 		public PlayerEventTypeStats (Project project, EventsFilter filter, Player player, EventType evType)
 		{
@@ -51,7 +51,8 @@ namespace LongoMatch.Core.Stats
 
 		public void Update ()
 		{
-			events = filter.VisiblePlays.Where (e => e.Players.Contains (player) && e.EventType.Equals (EventType)).ToList ();
+			events = filter.VisiblePlays.Where (e => ((TimelineEventLongoMatch)e).Players.Contains (player) &&
+			e.EventType.Equals (EventType)).Cast<TimelineEventLongoMatch> ().ToList ();
 			
 			SubcategoriesStats = new List<SubCategoryStat> ();
 

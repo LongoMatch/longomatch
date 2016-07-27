@@ -6,5 +6,5 @@ longomatchdir=@libdir@/@PACKAGE@
 Name: LongoMatch.Services
 Description: LongoMatch Services framework for .NET
 Version: @VERSION@
-Requires: longomatch-core longomatch-drawing
+Requires: longomatch-core longomatch-drawing vas-services vas-db
 Libs: -r:${longomatchdir}/LongoMatch.Services.dll

@@ -19,10 +19,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Serialization;
 
 namespace Tests.Core.Migration
 {
@@ -34,11 +35,11 @@ namespace Tests.Core.Migration
 		[Test ()]
 		public void TestMigrateFromV0 ()
 		{
-			Team team;
-			Team origTeam;
+			SportsTeam team;
+			SportsTeam origTeam;
 
 			using (Stream resource = Assembly.GetExecutingAssembly ().GetManifestResourceStream ("spain.ltt")) {
-				origTeam = Serializer.Instance.Load <Team> (resource);
+				origTeam = Serializer.Instance.Load <SportsTeam> (resource);
 			}
 
 			team = origTeam.Clone ();

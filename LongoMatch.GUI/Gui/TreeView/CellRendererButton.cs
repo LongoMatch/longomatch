@@ -20,9 +20,10 @@ using Gdk;
 using GLib;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Drawing.Cairo;
-using Point = LongoMatch.Core.Common.Point;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing.Cairo;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -54,7 +55,7 @@ namespace LongoMatch.Gui.Component
 			x_offset = 0;
 			y_offset = 0;
 
-			Config.DrawingToolkit.MeasureText (Text, out width, out height, Config.Style.Font, 12, FontWeight.Normal);
+			App.Current.DrawingToolkit.MeasureText (Text, out width, out height, App.Current.Style.Font, 12, FontWeight.Normal);
 
 			width += StyleConf.FilterTreeViewOnlyRightOffset * 2;
 			height += 10;
@@ -63,7 +64,7 @@ namespace LongoMatch.Gui.Component
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
 		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
-			IDrawingToolkit tk = Config.DrawingToolkit;
+			IDrawingToolkit tk = App.Current.DrawingToolkit;
 
 			using (IContext context = new CairoContext (window)) {
 				int width = cellArea.Width - StyleConf.FilterTreeViewOnlyRightOffset;
@@ -75,9 +76,9 @@ namespace LongoMatch.Gui.Component
 				tk.FontSize = 12;
 				tk.FillColor = null;
 				tk.LineWidth = 1;
-				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+				tk.StrokeColor = App.Current.Style.PaletteBackgroundDark;
 				tk.DrawRoundedRectangle (pos, width, height, 3);
-				tk.StrokeColor = Config.Style.PaletteText;
+				tk.StrokeColor = App.Current.Style.PaletteText;
 				tk.FontAlignment = FontAlignment.Center;
 				tk.DrawText (pos, width, height, Text);
 				tk.End ();
@@ -96,7 +97,5 @@ namespace LongoMatch.Gui.Component
 		public string Path {
 			get;
 		}
-
 	}
 }
-

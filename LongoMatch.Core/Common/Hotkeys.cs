@@ -15,17 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
 using Newtonsoft.Json;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Common
 {
 	
 	public class Hotkeys
 	{
-	
 		public Hotkeys ()
 		{
 			ActionsDescriptions = new Dictionary<KeyAction, string> ();
@@ -81,6 +81,8 @@ namespace LongoMatch.Core.Common
 			ActionsDescriptions [KeyAction.TogglePlay] = Catalog.GetString ("Toggle playback");
 			ActionsDescriptions [KeyAction.ZoomIn] = Catalog.GetString ("Zoom timeline in");
 			ActionsDescriptions [KeyAction.ZoomOut] = Catalog.GetString ("Zoom timeline out");
+			ActionsDescriptions [KeyAction.SpeedUpper] = Catalog.GetString ("Maximum playback speed");
+			ActionsDescriptions [KeyAction.SpeedLower] = Catalog.GetString ("Default playback speed");
 		}
 
 		void FillDefaultMappings ()
@@ -112,6 +114,8 @@ namespace LongoMatch.Core.Common
 			UpdateMapping (KeyAction.ZoomOut, "minus");
 			UpdateMapping (KeyAction.Next, "<Alt_L>+Right");
 			UpdateMapping (KeyAction.Prev, "<Alt_L>+Left");
+			UpdateMapping (KeyAction.SpeedUpper, "<Shift_L>+<Alt_L>+Up");
+			UpdateMapping (KeyAction.SpeedLower, "<Shift_L>+<Alt_L>+Down");
 		}
 	}
 }

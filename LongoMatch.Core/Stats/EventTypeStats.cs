@@ -15,26 +15,27 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Stats
 {
 	public class EventTypeStats: Stat
 	{
-		List<TimelineEvent> events, homeEvents, awayEvents;
+		List<TimelineEventLongoMatch> events, homeEvents, awayEvents;
 		EventType eventType;
-		Project project;
+		ProjectLongoMatch project;
 		EventsFilter filter;
 
-		public EventTypeStats (Project project, EventsFilter filter, EventType evType)
+		public EventTypeStats (ProjectLongoMatch project, EventsFilter filter, EventType evType)
 		{
 			Name = evType.Name;
-			events = new List<TimelineEvent> ();
+			events = new List<TimelineEventLongoMatch> ();
 			this.project = project;
 			this.filter = filter;
 			this.eventType = evType;
@@ -42,7 +43,12 @@ namespace LongoMatch.Core.Stats
 
 		public void Update ()
 		{
-			events = project.EventsByType (eventType).Where (filter.IsVisible).ToList ();
+			List<TimelineEvent> originalEventsByType = project.EventsByType (eventType);
+			var eventsByType = new List<TimelineEventLongoMatch> ();
+			foreach (var eventType in originalEventsByType) {
+				eventsByType.Add (eventType as TimelineEventLongoMatch);
+			}
+			events = eventsByType.Where (filter.IsVisible).ToList ();
 			homeEvents = events.Where (e => e.Teams.Contains (project.LocalTeamTemplate) ||
 			e.Players.Intersect (project.LocalTeamTemplate.List).Any ()).ToList ();
 			awayEvents = events.Where (e => e.Teams.Contains (project.VisitorTeamTemplate) ||
@@ -82,13 +88,13 @@ namespace LongoMatch.Core.Stats
 
 		public bool HasPositionTags (TeamType team)
 		{
-			List<TimelineEvent> evts = EventsForTeam (team);
+			List<TimelineEventLongoMatch> evts = EventsForTeam (team);
 			return evts.Count (e => e.FieldPosition != null || e.HalfFieldPosition != null || e.GoalPosition != null) != 0; 
 		}
 
 		public List<Coordinates> GetFieldCoordinates (TeamType team, FieldPositionType pos)
 		{
-			List<TimelineEvent> evts = EventsForTeam (team);
+			List<TimelineEventLongoMatch> evts = EventsForTeam (team);
 			
 			switch (pos) {
 			case FieldPositionType.Field:
@@ -100,9 +106,9 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 
-		List<TimelineEvent> EventsForTeam (TeamType team)
+		List<TimelineEventLongoMatch> EventsForTeam (TeamType team)
 		{
-			List<TimelineEvent> evts;
+			List<TimelineEventLongoMatch> evts;
 			
 			switch (team) {
 			case TeamType.LOCAL:

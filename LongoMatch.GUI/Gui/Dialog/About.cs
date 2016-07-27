@@ -25,11 +25,11 @@ namespace LongoMatch.Gui.Dialog
 	{
 		public AboutDialog (Version version)
 		{
-			ProgramName = Config.SoftwareName;
+			ProgramName = App.Current.SoftwareName;
 			Version = String.Format ("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
-			Copyright = Config.Copyright;
+			Copyright = App.Current.Copyright;
 			Website = Constants.WEBSITE;
-			License = Config.License;
+			License = App.Current.License;
 			Authors = new string[] { "Andoni Morales Alastruey", "Fluendo" };
 			TranslatorCredits = Constants.TRANSLATORS;
 			WrapLicense = true;

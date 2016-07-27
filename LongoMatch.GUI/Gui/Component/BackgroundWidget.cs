@@ -19,7 +19,7 @@ using System;
 using Gtk;
 using Gdk;
 
-using Image = LongoMatch.Core.Common.Image;
+using Image = VAS.Core.Common.Image;
 
 
 namespace LongoMatch.Gui.Component

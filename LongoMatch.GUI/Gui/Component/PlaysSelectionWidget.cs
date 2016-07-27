@@ -18,12 +18,12 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
-using Helpers = LongoMatch.Gui.Helpers;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.UI.Helpers;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,10 +32,12 @@ namespace LongoMatch.Gui.Component
 	{
 		const int PAGE_CATEGORIES = 0;
 		const int PAGE_PLAYERS = 1;
+		const int PAGE_PLAYLISTS = 1;
+		const int PAGE_FILTERS = 2;
 
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
-		IconNotebookHelper notebookHelper;
+		Helpers.IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
 
 		public PlaysSelectionWidget ()
 		{
@@ -43,12 +45,32 @@ namespace LongoMatch.Gui.Component
 			
 			LoadIcons ();
 			AddFilters ();
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false, typeof(TreeView));
-			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackground));
-			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
+			Helpers.Misc.SetFocus (this, false, typeof(TreeView));
+			eventbox.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackground));
+			hseparator1.ModifyBg (StateType.Normal, Helpers.Misc.ToGdkColor (App.Current.Style.PaletteBackgroundLight));
 			notebook.Page = 0;
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			clearButton.Clicked += HandleClearClicked;
+			hbox3.NoShowAll = true;
+		}
+
+		public bool ExpandTabs {
+			set {
+				if (value) {
+					notebook.GetNthPage (PAGE_FILTERS).Reparent (notebookFilter);
+					notebook.GetNthPage (PAGE_PLAYLISTS).Reparent (notebookPlaylist);
+					notebookHelperPlaylist.UpdateTabs ();
+					notebookHelperFilter.UpdateTabs ();
+					notebook.TabPos = PositionType.Top;
+				} else {
+					notebookPlaylist.GetNthPage (0).Reparent (notebook);
+					notebookFilter.GetNthPage (0).Reparent (notebook);
+					notebookHelper.UpdateTabs ();
+					notebook.TabPos = PositionType.Left;
+				}
+				notebookPlaylist.Visible = value;
+				notebookFilter.Visible = value;
+			}
 		}
 
 		protected override void OnDestroyed ()
@@ -60,7 +82,7 @@ namespace LongoMatch.Gui.Component
 
 		#region Plubic Methods
 
-		public void SetProject (Project project, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			eventslistwidget.SetProject (project, filter);
 			playersfilter.SetFilter (filter, project);
@@ -68,12 +90,12 @@ namespace LongoMatch.Gui.Component
 			playlistwidget.Project = project;
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			eventslistwidget.AddPlay (play);
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			eventslistwidget.RemovePlays (plays);
 		}
@@ -82,6 +104,12 @@ namespace LongoMatch.Gui.Component
 
 		void LoadIcons ()
 		{
+			notebookHelperFilter = new IconNotebookHelper (notebookFilter);
+			notebookHelperFilter.SetTabIcon (filtersvbox, "longomatch-tab-filter", "longomatch-tab-active-filter",
+				Catalog.GetString ("Filters"));
+			notebookHelperPlaylist = new IconNotebookHelper (notebookPlaylist);
+			notebookHelperPlaylist.SetTabIcon (playlistwidget, "longomatch-tab-playlist", "longomatch-tab-active-playlist",
+				Catalog.GetString ("Playlists"));
 			notebookHelper = new IconNotebookHelper (notebook);
 			notebookHelper.SetTabIcon (eventslistwidget, "longomatch-tab-dashboard", "longomatch-tab-active-dashboard",
 				Catalog.GetString ("Events List"));

@@ -16,12 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
-using Misc = LongoMatch.Gui.Helpers.Misc;
 using Gtk;
+using VAS.Core;
+using VAS.Core.Store;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -39,7 +37,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			eventbox3.ButtonPressEvent += HandleButtonPressEvent;
 			HeightRequest = 100;
-			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			filelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 		}
 
 		public void SetMediaFileSet (MediaFileSet files, MediaFile file)
@@ -91,7 +89,7 @@ namespace LongoMatch.Gui.Component
 			containerlabel.Text = String.Format ("{0}: {1}", Catalog.GetString ("Container"),
 				mediaFile.Container);
 			offsetlabel.Markup = String.Format ("<span foreground=\"{0}\">{1}: {2}</span>",
-				Config.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"),
+				App.Current.Style.PaletteActive.ToRGBString (false), Catalog.GetString ("Offset"),
 				mediaFile.Offset.ToMSecondsString ());
 		}
 
@@ -115,4 +113,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

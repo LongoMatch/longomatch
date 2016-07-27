@@ -20,15 +20,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Core.Store;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -67,7 +71,7 @@ namespace LongoMatch.Addins
 				string addinPath = addin.Description.AddinFile;
 				
 				if (!addinPath.StartsWith (searchPath) &&
-				    !addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
+				    !addinPath.StartsWith (Path.GetFullPath (App.Current.baseDirectory))) {
 					AddinManager.Registry.DisableAddin (addin.Id);
 					Log.Debug ("Disable addin at path " + addinPath);
 				} else {
@@ -170,7 +174,7 @@ namespace LongoMatch.Addins
 			foreach (IAnalisysDashboardsProvider plugin in AddinManager.GetExtensionObjects<IAnalisysDashboardsProvider> ()) {
 				foreach (Dashboard dashboard in plugin.Dashboards) {
 					dashboard.Static = true;
-					provider.Register (dashboard);
+					provider.Register (dashboard as DashboardLongoMatch);
 				}
 			}
 		}
@@ -229,7 +233,7 @@ namespace LongoMatch.Addins
 			return plugins;
 		}
 
-		public static bool ShowStats (Project project)
+		public static bool ShowStats (ProjectLongoMatch project)
 		{
 			IStatsUI statsUI = AddinManager.GetExtensionObjects<IStatsUI> ().OrderByDescending (p => p.Priority).FirstOrDefault ();
 			if (statsUI != null) {

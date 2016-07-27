@@ -16,12 +16,11 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using System;
 using Gtk;
 using Gdk;
-using LongoMatch.Core.Store;
-using Keyboard = LongoMatch.Core.Common.Keyboard;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Store;
+using Keyboard = VAS.Core.Common.Keyboard;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -77,7 +76,7 @@ namespace LongoMatch.Gui.Dialog
 			if (hotKey.Modifier != -1 && !IsSupportedModifier ((Gdk.Key)hotKey.Modifier)) {
 				string msg = Keyboard.NameFromKeyval ((uint)hotKey.Modifier) +
 				             Catalog.GetString ("is not a valid key modifier: Alt, Shift or Ctrl");
-				Config.GUIToolkit.WarningMessage (msg, this);
+				App.Current.GUIToolkit.WarningMessage (msg, this);
 				hotKey = null;
 				return true;
 			}

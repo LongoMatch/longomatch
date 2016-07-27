@@ -15,20 +15,20 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Stats
 {
 	public class PlayerStats
 	{
-		Project project;
+		ProjectLongoMatch project;
 		EventsFilter filter;
 
-		public PlayerStats (Project project, EventsFilter filter, Player player)
+		public PlayerStats (ProjectLongoMatch project, EventsFilter filter, PlayerLongoMatch player)
 		{
 			this.project = project;
 			this.filter = filter;
@@ -42,7 +42,7 @@ namespace LongoMatch.Core.Stats
 			UpdateTimePlayed ();
 		}
 
-		public Player Player {
+		public PlayerLongoMatch Player {
 			get;
 			set;
 		}

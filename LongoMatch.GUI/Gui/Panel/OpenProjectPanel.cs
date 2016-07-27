@@ -18,12 +18,14 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Gui;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Gui.Component;
+using VAS.Core;
+using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces.GUI;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -44,31 +46,50 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
-		public List<Project> Projects {
+		public List<ProjectLongoMatch> Projects {
 			set {
 				projectlistwidget.Fill (value);
 			}
 		}
 
-		public void OnLoaded ()
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
 		}
+
+		//FIXME: add IPanel KeyContext using MMVMC pattern
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (BackEvent != null)
 				BackEvent ();
 		}
 
-		void HandleProjectSelected (Project project)
+		void HandleProjectSelected (ProjectLongoMatch project)
 		{
-			Config.EventsBroker.EmitOpenProjectID (project.ID, project);
+			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+				new  OpenProjectIDEvent { 
+					ProjectID = project.ID, 
+					Project = project 
+				}
+			);
 		}
 	}
 }
-

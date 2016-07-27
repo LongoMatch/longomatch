@@ -15,13 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Linq;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -70,7 +71,7 @@ namespace LongoMatch.Drawing.Widgets
 			// Main camera
 			l = new CameraLabelObject (w, h, i * h) {
 				Name = fileSet [0].Name,
-				BackgroundColor = Config.Style.PaletteBackgroundLight
+				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
 			AddLabel (l);
 			i++;
@@ -78,7 +79,7 @@ namespace LongoMatch.Drawing.Widgets
 			// Periods
 			l = new CameraLabelObject (w, h, i * h) {
 				Name = Catalog.GetString ("Periods"),
-				BackgroundColor = Config.Style.PaletteBackgroundLight
+				BackgroundColor = App.Current.Style.PaletteBackgroundLight
 			};
 			AddLabel (l);
 			i++;
@@ -87,7 +88,7 @@ namespace LongoMatch.Drawing.Widgets
 			for (int j = 1; j < fileSet.Count; j++) {
 				l = new CameraLabelObject (w, h, i * h) {
 					Name = fileSet [j].Name,
-					BackgroundColor = Config.Style.PaletteBackground
+					BackgroundColor = App.Current.Style.PaletteBackground
 				};
 				AddLabel (l);
 				i++;

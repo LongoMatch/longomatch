@@ -15,18 +15,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
-using System;
 using Gtk;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
-
 	public partial class EditCategoryDialog : Gtk.Dialog
 	{
-
-		public EditCategoryDialog (Project project, DashboardButton tagger, Window parent)
+		public EditCategoryDialog (ProjectLongoMatch project, DashboardButton tagger, Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();
@@ -34,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 			timenodeproperties2.Dashboard = project.Dashboard;
 		}
 
-		public EditCategoryDialog (Project project, EventType eventType, Window parent)
+		public EditCategoryDialog (ProjectLongoMatch project, EventType eventType, Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();

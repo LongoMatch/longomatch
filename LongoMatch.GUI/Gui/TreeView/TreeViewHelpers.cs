@@ -43,12 +43,12 @@ namespace LongoMatch.Gui.Component
 		/// <param name = "model">Model.</param>
 		/// <param name="events">Events.</param>
 		/// <param name="paths">Paths.</param>
-		public static List<TimelineEvent> EventsListFromPaths (TreeModel model, TreePath[] paths)
+		public static List<TimelineEventLongoMatch> EventsListFromPaths (TreeModel model, TreePath[] paths)
 		{
-			List<TimelineEvent> events = new List<TimelineEvent> ();
+			List<TimelineEventLongoMatch> events = new List<TimelineEventLongoMatch> ();
 
 			// If it's an EventType or a Player, traverse all children to fill the list
-			if (paths.Length == 1 && !(model.GetValue (paths [0]) is TimelineEvent)) {
+			if (paths.Length == 1 && !(model.GetValue (paths [0]) is TimelineEventLongoMatch)) {
 				TreeIter parentIter;
 				TreeIter child;
 				bool hasChild;
@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 				hasChild = model.IterHasChild (parentIter);
 				model.IterChildren (out child, parentIter);
 				while (hasChild) {
-					TimelineEvent evt = model.GetValue (child, 0) as TimelineEvent;
+					TimelineEventLongoMatch evt = model.GetValue (child, 0) as TimelineEventLongoMatch;
 					if (evt != null) {
 						events.Add (evt);
 					}
@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component
 				}
 			} else {
 				foreach (var path in paths) {
-					TimelineEvent evt = model.GetValue (path) as TimelineEvent;
+					TimelineEventLongoMatch evt = model.GetValue (path) as TimelineEventLongoMatch;
 					if (evt != null) {
 						events.Add (evt);
 					}

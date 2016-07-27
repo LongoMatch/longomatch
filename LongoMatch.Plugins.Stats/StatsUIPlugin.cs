@@ -17,7 +17,7 @@
 //
 using Mono.Addins;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core;
+using VAS.Core;
 using LongoMatch.Core.Store;
 
 [assembly:Addin]
@@ -30,7 +30,7 @@ namespace LongoMatch.Plugins.Stats
 	[Extension]
 	public class StatsUIPlugin: IStatsUI
 	{
-		public void ShowStats (Project project)
+		public void ShowStats (ProjectLongoMatch project)
 		{
 			StatsDialog statsui = new StatsDialog ();
 			statsui.LoadStats (project);

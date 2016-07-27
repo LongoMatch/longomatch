@@ -38,12 +38,12 @@ namespace LongoMatch.Gui.Dialog
 			};
 		}
 
-		public void Fill (List<Project> projects)
+		public void Fill (List<ProjectLongoMatch> projects)
 		{
 			projectlistwidget1.Fill (projects);
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}

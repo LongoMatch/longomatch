@@ -22,12 +22,16 @@ using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Core;
-using Color = LongoMatch.Core.Common.Color;
-using Image = LongoMatch.Core.Common.Image;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Drawing.Cairo;
+using Color = VAS.Core.Common.Color;
+using Constants = LongoMatch.Core.Common.Constants;
+using Image = VAS.Core.Common.Image;
+using Misc = VAS.UI.Helpers.Misc;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -36,10 +40,10 @@ namespace LongoMatch.Gui.Component
 	{
 		public event EventHandler TemplateSaved;
 
-		Player loadedPlayer;
-		Team template;
+		PlayerLongoMatch loadedPlayer;
+		SportsTeam template;
 		bool edited, ignoreChanges;
-		List<Player> selectedPlayers;
+		List<PlayerLongoMatch> selectedPlayers;
 		TeamTagger teamtagger;
 		const int SHIELD_SIZE = 70;
 
@@ -78,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Team  Team {
+		public SportsTeam Team {
 			set {
 				template = value;
 				ignoreChanges = true;
@@ -89,7 +93,7 @@ namespace LongoMatch.Gui.Component
 				}
 				teamnameentry.Text = template.TeamName;
 				FillFormation ();
-				teamtagger.LoadTeams (template, null, Config.HHalfFieldBackground);
+				teamtagger.LoadTeams (template, null, App.Current.HHalfFieldBackground);
 				// Start with disabled widget until something get selected
 				ClearPlayer ();
 				colorbutton1.Color = Misc.ToGdkColor (value.Colors [0]);
@@ -107,7 +111,7 @@ namespace LongoMatch.Gui.Component
 
 		public void AddPlayer ()
 		{
-			Player p = template.AddDefaultItem (template.List.Count);
+			PlayerLongoMatch p = template.AddDefaultItem (template.List.Count) as PlayerLongoMatch;
 			teamtagger.Reload ();
 			teamtagger.Select (p);
 			Edited = true;
@@ -121,10 +125,10 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 
-			foreach (Player p in selectedPlayers) {
-				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
-				if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
-					template.List.Remove (p);
+			foreach (var selectedPlayer in selectedPlayers) {
+				string msg = Catalog.GetString ("Do you want to delete player: ") + selectedPlayer.Name;
+				if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					template.List.Remove (selectedPlayer);
 					edited = true;
 				}
 			}
@@ -142,7 +146,6 @@ namespace LongoMatch.Gui.Component
 			
 			shieldeventbox.ButtonPressEvent += HandleShieldButtonPressEvent;
 			playereventbox.ButtonPressEvent += HandlePlayerButtonPressEvent;
-
 
 			teamnameentry.Changed += HandleEntryChanged;
 			nameentry.Changed += HandleEntryChanged;
@@ -201,7 +204,7 @@ namespace LongoMatch.Gui.Component
 			tacticsentry.Text = template.FormationStr;
 		}
 
-		void LoadPlayer (Player p)
+		void LoadPlayer (PlayerLongoMatch p)
 		{
 			ignoreChanges = true;
 
@@ -254,13 +257,13 @@ namespace LongoMatch.Gui.Component
 				teamtagger.Reload ();
 				Edited = true;
 			} catch {
-				Config.GUIToolkit.ErrorMessage (
+				App.Current.GUIToolkit.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
 			}
 			FillFormation ();
 		}
 
-		Pixbuf PlayerPhoto (Player p)
+		Pixbuf PlayerPhoto (PlayerLongoMatch p)
 		{
 			Pixbuf playerImage;
 				
@@ -272,7 +275,7 @@ namespace LongoMatch.Gui.Component
 			return playerImage;
 		}
 
-		void PlayersSelected (List<Player> players)
+		void PlayersSelected (List<PlayerLongoMatch> players)
 		{
 			ignoreChanges = true;
 
@@ -287,7 +290,7 @@ namespace LongoMatch.Gui.Component
 			ignoreChanges = false;
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
 		{
 			PlayersSelected (players);
 		}
@@ -296,10 +299,10 @@ namespace LongoMatch.Gui.Component
 		{
 			if (template != null) {
 				try {
-					Config.TeamTemplatesProvider.Save (template);
+					App.Current.TeamTemplatesProvider.Save (template);
 					Edited = false;
 				} catch (InvalidTemplateFilenameException ex) {
-					Config.GUIToolkit.ErrorMessage (ex.ToString (), this);
+					App.Current.GUIToolkit.ErrorMessage (ex.ToString (), this);
 					return;
 				}
 			}
@@ -363,7 +366,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2,
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
@@ -387,4 +390,3 @@ namespace LongoMatch.Gui.Component
 
 	}
 }
-

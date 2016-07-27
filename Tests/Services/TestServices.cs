@@ -17,10 +17,10 @@
 //
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Moq;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Services;
+using Moq;
+using NUnit.Framework;
+using VAS.Core.Interfaces;
 
 namespace Tests.Services
 {

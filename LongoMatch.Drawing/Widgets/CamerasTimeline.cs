@@ -18,12 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
+using TimeNodeObject = LongoMatch.Drawing.CanvasObjects.Timeline.TimeNodeObject;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -47,7 +49,7 @@ namespace LongoMatch.Drawing.Widgets
 		public CamerasTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
-			Accuracy = Constants.TIMELINE_ACCURACY;
+			Accuracy = VAS.Drawing.Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			currentTime = new Time (0);
 		}
@@ -84,11 +86,11 @@ namespace LongoMatch.Drawing.Widgets
 					tl.CurrentTime = value;
 				}
 				if (currentTime < value) {
-					start = Utils.TimeToPos (currentTime, SecondsPerPixel);
-					stop = Utils.TimeToPos (value, SecondsPerPixel);
+					start = VAS.Drawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
+					stop = VAS.Drawing.Utils.TimeToPos (value, SecondsPerPixel);
 				} else {
-					start = Utils.TimeToPos (value, SecondsPerPixel);
-					stop = Utils.TimeToPos (currentTime, SecondsPerPixel);
+					start = VAS.Drawing.Utils.TimeToPos (value, SecondsPerPixel);
+					stop = VAS.Drawing.Utils.TimeToPos (currentTime, SecondsPerPixel);
 				}
 				currentTime = value;
 				if (widget != null) {
@@ -142,14 +144,14 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			// Add the timeline for periods
 			PeriodsTimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, StyleConf.TimelineCameraHeight, 0,
-				Config.Style.PaletteBackground, Config.Style.PaletteBackgroundLight);
+				App.Current.Style.PaletteBackground, App.Current.Style.PaletteBackgroundLight);
 			AddTimeLine (PeriodsTimeline);
 
 			// And for the cameras
 			for (int i = 1; i < fileSet.Count; i++) {
 				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], false, true, duration, i * StyleConf.TimelineCameraHeight,
-					                                Config.Style.PaletteBackground,
-					                                Config.Style.PaletteBackgroundLight);
+					                                App.Current.Style.PaletteBackground,
+					                                App.Current.Style.PaletteBackgroundLight);
 				AddTimeLine (cameraTimeLine);
 			}
 			Update ();
@@ -216,10 +218,10 @@ namespace LongoMatch.Drawing.Widgets
 			    coords.Y <= PeriodsTimeline.OffsetY + PeriodsTimeline.Height) {
 				Timer t = null;
 				if (Selections.Count > 0) {
-					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
+					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject;
 					t = to.Timer;
 				} 
-				ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowTimerMenuEvent (t, VAS.Drawing.Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}

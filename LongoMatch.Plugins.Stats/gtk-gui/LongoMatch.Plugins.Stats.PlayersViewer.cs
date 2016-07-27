@@ -5,8 +5,11 @@ namespace LongoMatch.Plugins.Stats
 	public partial class PlayersViewer
 	{
 		private global::Gtk.HPaned hpaned1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow2;
+		
 		private global::Gtk.TreeView treeview1;
+		
 		private global::LongoMatch.Plugins.Stats.PlayerCategoriesViewer categoriesviewer;
 
 		protected virtual void Build ()

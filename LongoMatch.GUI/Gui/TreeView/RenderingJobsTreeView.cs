@@ -15,12 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using System.Collections.Generic;
 using Gtk;
 using Stetic;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
+using VAS.Core;
+using VAS.Core.Common;
 
 
 namespace LongoMatch.Gui.Component

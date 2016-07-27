@@ -15,14 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Store;
-using LongoMatch.Core;
-using Misc = LongoMatch.Gui.Helpers.Misc;
-using System.Collections.Generic;
-using LongoMatch.Core.Common;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -108,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveGroup (TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this subcategory and all its tags?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.RemoveAll (g.tags.Contains);
 				mainvbox.Remove (g.container);
 			}
@@ -117,7 +116,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveTag (Tag tag, TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this tag?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.Remove (tag);
 				g.tags.Remove (tag);
 				g.container.Remove (g.table);
@@ -171,7 +170,7 @@ namespace LongoMatch.Gui.Dialog
 			b.Clicked += (sender, e) => RemoveTag (tag, g);
 
 			editHK.Clicked += (sender, e) => {
-				HotKey hotkey = Config.GUIToolkit.SelectHotkey (tag.HotKey);
+				HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (tag.HotKey);
 				if (hotkey != null) {
 					try {
 						if (EventType.Tags.Select (tt => tt.HotKey).Contains (hotkey)) {
@@ -180,7 +179,7 @@ namespace LongoMatch.Gui.Dialog
 						tag.HotKey = hotkey;
 						hotkeyLabel.Text = hotkey.ToString ();
 					} catch (HotkeyAlreadyInUse ex) {
-						Config.GUIToolkit.ErrorMessage (ex.Message, this);
+						App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 					}
 				}
 			};
@@ -260,4 +259,3 @@ namespace LongoMatch.Gui.Dialog
 		}
 	}
 }
-

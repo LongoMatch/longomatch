@@ -115,7 +115,7 @@ namespace LongoMatch.Common
 		}
 	}
 	
-	public class LongoMatchConverter : JsonConverter
+	public class VASConverter : JsonConverter
 	{
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{

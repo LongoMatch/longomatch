@@ -18,7 +18,8 @@
 using System;
 using Gtk;
 using System.IO;
-using LongoMatch.Core;
+using VAS.Core.Common;
+using Catalog = LongoMatch.Core.Catalog;
 
 namespace LongoMatch.Migration
 {
@@ -27,7 +28,7 @@ namespace LongoMatch.Migration
 		public static void Main (string[] args)
 		{
 			SetupBasedir ();
-			Catalog.Init ("longomatch", LongoMatch.Config.RelativeToPrefix ("share/locale"));
+			Catalog.Init ("longomatch", LongoMatch.App.Current.RelativeToPrefix ("share/locale"));
 			InitGtk ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
@@ -36,7 +37,7 @@ namespace LongoMatch.Migration
 			});
 			Application.Run ();
 		}
-		
+
 		static void SetupBasedir ()
 		{
 			string home, homeDirectory, baseDirectory, configDirectory;
@@ -49,36 +50,27 @@ namespace LongoMatch.Migration
 			else {
 				configDirectory = System.IO.Path.Combine (home, "." + "longomatch");
 			}
-			LongoMatch.Config.ConfigDir = configDirectory;
-			LongoMatch.Config.homeDirectory = homeDirectory;
+			LongoMatch.App.Current.ConfigDir = configDirectory;
+			LongoMatch.App.Current.homeDirectory = homeDirectory;
 			
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
-				LongoMatch.Config.baseDirectory = ".";
-				LongoMatch.Config.dataDir = "../../data";
+				LongoMatch.App.Current.baseDirectory = ".";
+				LongoMatch.App.Current.DataDir.Add ("../../data");
 			} else {
-				LongoMatch.Config.baseDirectory = baseDirectory;
-				LongoMatch.Config.dataDir = System.IO.Path.Combine (LongoMatch.Config.baseDirectory, "share", "longomatch");
+				LongoMatch.App.Current.baseDirectory = baseDirectory;
+				LongoMatch.App.Current.DataDir.Add (System.IO.Path.Combine (LongoMatch.App.Current.baseDirectory, "share", "longomatch"));
 			}
-			LongoMatch.Config.Load ();
-			var styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
-			LongoMatch.Config.Style = LongoMatch.Core.Common.StyleConf.Load (styleConf);
+//			LongoMatch.App.Current.Load ();
+			LongoMatch.App.Current.Style = StyleConf.Load (Utils.GetDataFilePath (Path.Combine ("theme", "longomatch-dark.json")));
 		}
-	
+
 		static	void InitGtk ()
 		{
-			string gtkRC, iconsDir;
-			
-			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
-			if (File.Exists (gtkRC)) {
-				Rc.AddDefaultFile (gtkRC);
-			}
-			
+			Rc.AddDefaultFile (Utils.GetDataFilePath (Path.Combine ("theme", "gtk-2.0", "gtkrc")));
+
 			Application.Init ();
-			
-			iconsDir = Path.Combine (Config.dataDir, "icons");
-			if (Directory.Exists (iconsDir)) {
-				IconTheme.Default.PrependSearchPath (iconsDir);
-			}
+
+			IconTheme.Default.PrependSearchPath (Utils.GetDataDirPath ("icons"));
 		}
 	}
 }

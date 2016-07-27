@@ -15,10 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch;
-using LongoMatch.Core.Common;
 using NUnit.Framework;
+using VAS.Core.Common;
 
 namespace Tests.Core.Common
 {
@@ -29,29 +28,29 @@ namespace Tests.Core.Common
 		[TestFixtureSetUp ()]
 		public void Setup ()
 		{
-			Config.dataDir = "../data/";
+			App.Current.DataDir.Add ("../data/");
 		}
 
 		[Test ()]
 		public void TestLoadIconResource ()
 		{
-			Image img = LongoMatch.Core.Resources.LoadImage ("images/longomatch-dark-bg.svg");
+			Image img = VAS.Core.Resources.LoadImage ("images/longomatch-dark-bg.svg");
 			Assert.IsNotNull (img);
 		}
 
 		[Test ()]
 		public void TestLoadImageResource ()
 		{
-			Image img = LongoMatch.Core.Resources.LoadImage ("icons/hicolor/scalable/apps/longomatch.svg");
+			Image img = VAS.Core.Resources.LoadImage ("icons/hicolor/scalable/apps/longomatch.svg");
 			Assert.IsNotNull (img);
 		}
 
 		[Test ()]
 		public void TestLoadInvalidResource ()
 		{
-			Assert.Throws<GLib.GException> (
+			Assert.Throws<System.IO.FileNotFoundException> (
 				delegate {
-					var img = LongoMatch.Core.Resources.LoadImage ("longomatch.svg");
+					var img = VAS.Core.Resources.LoadImage ("longomatch.svg");
 				});
 		}
 	}

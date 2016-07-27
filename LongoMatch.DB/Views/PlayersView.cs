@@ -15,17 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
-using Couchbase.Lite;
 using LongoMatch.Core.Store;
+using VAS.DB.Views;
+using VAS.Core.Store;
 
 namespace LongoMatch.DB.Views
 {
-	public class PlayersView: GenericView <Player>
+	public class PlayersView: GenericView <PlayerLongoMatch>
 	{
-		public PlayersView (CouchbaseStorage storage) : base (storage)
+		public PlayersView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
+			DocumentType = "Player";
 		}
 
 		protected override string ViewVersion {

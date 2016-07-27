@@ -15,51 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
-	public interface IAnalysisWindow
+	public interface IAnalysisWindow : IAnalysisWindowBase , IPanel
 	{
-		void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter);
-
-		void ReloadProject ();
-
-		void CloseOpenedProject ();
-
-		void AddPlay (TimelineEvent play);
-
-		void UpdateCategories ();
-
-		void DeletePlays (List<TimelineEvent> plays);
-
-		void DetachPlayer ();
-
-		void ZoomIn ();
-
-		void ZoomOut ();
-
-		void FitTimeline ();
-
-		void ShowDashboard ();
-
-		void ShowTimeline ();
-
-		void ShowZonalTags ();
-
-		void ClickButton (DashboardButton button, Tag tag = null);
-
-		void TagPlayer (Player player);
-
 		void TagTeam (TeamType team);
-
-		IPlayerController Player{ get; }
-
-		ICapturerBin Capturer{ get; }
 	}
 }
 

@@ -15,21 +15,24 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using LongoMatch.Core;
+using System.Linq;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
+using VAS.Core;
+using VAS.Core.Common;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class EventsListWidget : Gtk.Bin
 	{
-		Project project;
-		IconNotebookHelper notebookHelper;
+		ProjectLongoMatch project;
+		Helpers.IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
 		{
@@ -38,12 +41,12 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Team = TeamType.VISITOR;
 			playsnotebook.Page = 0;
 			playsList1.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
-			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
+			App.Current.EventsBroker.Subscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
+			App.Current.EventsBroker.Unsubscribe<TeamTagsChangedEvent> (UpdateTeamsModels);
 			playsList.Project = null;
 			localPlayersList.Clear ();
 			visitorPlayersList.Clear ();
@@ -51,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (Project project, EventsFilter filter)
+		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			this.project = project;
 			playsList.Filter = filter;
@@ -61,34 +64,36 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Project = project;
 			localPlayersList.Project = project;
 			LoadIcons ();
-			UpdateTeamsModels ();
+			UpdateTeamsModels (new TeamTagsChangedEvent ());
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			playsList.AddPlay (play);
 			localPlayersList.AddEvent (play);
 			visitorPlayersList.AddEvent (play);
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			playsList.RemovePlays (plays);
 			localPlayersList.RemoveEvents (plays);
 			visitorPlayersList.RemoveEvents (plays);
 		}
 
-		void UpdateTeamsModels ()
+		void UpdateTeamsModels (TeamTagsChangedEvent e)
 		{
 			if (project == null)
 				return;
-			localPlayersList.SetTeam (project.LocalTeamTemplate, project.Timeline);
-			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, project.Timeline);
+
+			var timeline = project.Timeline.OfType<TimelineEventLongoMatch> ();
+			localPlayersList.SetTeam (project.LocalTeamTemplate, timeline);
+			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, timeline);
 		}
 
 		void LoadIcons ()
 		{
-			notebookHelper = new IconNotebookHelper (playsnotebook);
+			notebookHelper = new Helpers.IconNotebookHelper (playsnotebook);
 			notebookHelper.SetTabIcon (playsList, "longomatch-category", "longomatch-category",
 				Catalog.GetString ("Both Teams"));
 			if (project.LocalTeamTemplate.Shield != null) {
@@ -113,4 +118,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

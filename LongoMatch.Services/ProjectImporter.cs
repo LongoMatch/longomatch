@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Core.Store;
 using System.Collections.Generic;
+using VAS.Core.Store;
 
 namespace LongoMatch.Services
 {

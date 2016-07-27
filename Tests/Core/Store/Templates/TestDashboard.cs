@@ -15,13 +15,14 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
 using NUnit.Framework;
-using LongoMatch.Core.Common;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Store.Templates
 {
@@ -31,7 +32,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestSerialization ()
 		{
-			Dashboard cat = new Dashboard ();
+			DashboardLongoMatch cat = new DashboardLongoMatch ();
 			
 			Utils.CheckSerialization (cat);
 			
@@ -43,7 +44,7 @@ namespace Tests.Core.Store.Templates
 			
 			Utils.CheckSerialization (cat);
 			
-			Dashboard newcat = Utils.SerializeDeserialize (cat);
+			DashboardLongoMatch newcat = Utils.SerializeDeserialize (cat);
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
 			Assert.AreEqual (cat.GamePeriods.Count, newcat.GamePeriods.Count);
@@ -55,14 +56,14 @@ namespace Tests.Core.Store.Templates
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (Constants.DB_VERSION, new Dashboard ().Version);
-			Assert.AreEqual (Constants.DB_VERSION, Dashboard.DefaultTemplate (1).Version);
+			Assert.AreEqual (Constants.DB_VERSION, new DashboardLongoMatch ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, (DashboardLongoMatch.DefaultTemplate (1)).Version);
 		}
 
 		[Test ()]
 		public void TestCircularDepdencies ()
 		{
-			Dashboard dashboard = new Dashboard ();
+			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
 			DashboardButton b1 = new DashboardButton ();
 			DashboardButton b2 = new DashboardButton ();
 			DashboardButton b3 = new DashboardButton ();
@@ -81,7 +82,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestRemoveButton ()
 		{
-			Dashboard dashboard = new Dashboard ();
+			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
 			DashboardButton b1 = new DashboardButton ();
 			DashboardButton b2 = new DashboardButton ();
 			DashboardButton b3 = new DashboardButton ();
@@ -102,7 +103,7 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void RemoveDeadLinks ()
 		{
-			Dashboard dashboard = new Dashboard ();
+			DashboardLongoMatch dashboard = new DashboardLongoMatch ();
 			AnalysisEventButton b1 = dashboard.AddDefaultItem (0);
 			AnalysisEventButton b2 = dashboard.AddDefaultItem (1);
 
@@ -125,44 +126,44 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			Dashboard d = Dashboard.DefaultTemplate (10);
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.Name = "new";
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.Image = new Image (10, 10);
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.FieldBackground = new Image (10, 10);
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.HalfFieldBackground = new Image (10, 10);
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.DisablePopupWindow = true;
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.List.Remove (d.List [0]);
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.List.Add (new DashboardButton ());
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.List = new ObservableCollection<DashboardButton> ();
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
-			d.List = null;
-			Assert.IsTrue (d.IsChanged);
-			d.IsChanged = false;
+			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.Name = "new";
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.Image = new Image (10, 10);
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.FieldBackground = new Image (10, 10);
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.HalfFieldBackground = new Image (10, 10);
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.DisablePopupWindow = true;
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.List.Remove (dashboard.List [0]);
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.List.Add (new DashboardButton ());
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.List = new ObservableCollection<DashboardButton> ();
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
+			dashboard.List = null;
+			Assert.IsTrue (dashboard.IsChanged);
+			dashboard.IsChanged = false;
 
 		}
 
 		[Test ()]
 		public void TestCopy ()
 		{
-			Dashboard dashboard = Dashboard.DefaultTemplate (10);
-			Dashboard copy = dashboard.Copy ("newName");
+			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			DashboardLongoMatch copy = dashboard.Copy ("newName") as DashboardLongoMatch;
 			Assert.AreNotEqual (dashboard.ID, copy.ID);
 			for (int i = 0; i < dashboard.List.Count; i++) {
 				AnalysisEventButton button = copy.List [i] as AnalysisEventButton;

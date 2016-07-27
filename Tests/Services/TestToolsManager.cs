@@ -16,15 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using NUnit.Framework;
-using LongoMatch.Services;
-using LongoMatch.Core.Store;
 using LongoMatch;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
 using Moq;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using System.Security.Cryptography.X509Certificates;
+using NUnit.Framework;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.Events;
 
 namespace Tests.Services
 {
@@ -41,14 +44,12 @@ namespace Tests.Services
 		public void SetUp ()
 		{
 			guiToolkitMock = new Mock<IGUIToolkit> ();
-			Config.GUIToolkit = guiToolkitMock.Object;
+			App.Current.GUIToolkit = guiToolkitMock.Object;
 
 			dbMock = new Mock<IStorage> ();
 			dbManagerMock = new Mock<IStorageManager> ();
 			dbManagerMock.Setup (d => d.ActiveDB).Returns (dbMock.Object);
-			Config.DatabaseManager = dbManagerMock.Object;
-
-			Config.EventsBroker = new EventsBroker ();
+			App.Current.DatabaseManager = dbManagerMock.Object;
 
 			toolsManager = new ToolsManager ();
 			importer = new ProjectImporter {
@@ -63,11 +64,17 @@ namespace Tests.Services
 			toolsManager.Start ();
 		}
 
+		[TearDown]
+		public void TearDown ()
+		{
+			toolsManager.Stop ();
+		}
+
 		[Test]
 		public void TestRegister ()
 		{
 			var toolsManager = new ToolsManager ();
-			toolsManager.RegisterImporter (() => new Project (), "", "", null, false, false);
+			toolsManager.RegisterImporter (() => new ProjectLongoMatch (), "", "", null, false, false);
 			Assert.AreEqual (1, toolsManager.ProjectImporters.Count);
 		}
 
@@ -76,8 +83,9 @@ namespace Tests.Services
 		{
 			var toolsManager = new ToolsManager ();
 			toolsManager.Start ();
-			Config.EventsBroker.EmitImportProject ();
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
+			toolsManager.Stop ();
 		}
 
 		[Test]
@@ -86,15 +94,15 @@ namespace Tests.Services
 			// Returns null
 			importer.ImportFunction = () => null;
 
-			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (It.IsAny<Project> (), It.IsAny<bool> ()), Times.Never ());
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (It.IsAny<ProjectLongoMatch> (), It.IsAny<bool> ()), Times.Never ());
 
 			// Throws Exception
 			importer.ImportFunction = () => {
 				throw new Exception ();
 			};
 
-			Config.EventsBroker.EmitImportProject ();
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
@@ -102,53 +110,61 @@ namespace Tests.Services
 		public void TestImportProject ()
 		{
 			bool openned = false;
-			Project p = new Project ();
-
-			Config.EventsBroker.OpenProjectIDEvent += (project_id, project) => {
-				if (project == p) {
+			ProjectLongoMatch p = new ProjectLongoMatch ();
+					
+			EventToken et = App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((OpenProjectIDEvent e) => {
+				if (e.Project == p) {
 					openned = true;
 				}
-			};
+			});
+
 			importer.ImportFunction = () => p;
-			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			Assert.IsTrue (openned);
+
+			App.Current.EventsBroker.Unsubscribe<OpenProjectIDEvent> (et);
 		}
 
 		[Test]
 		public void TestImportFakeLiveProject ()
 		{
 			bool openned = false;
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Description = new ProjectDescription ();
 			p.Description.FileSet = new MediaFileSet ();
-			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });
+			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });		
 
-			Config.EventsBroker.OpenProjectIDEvent += (project_id, project) => {
-				openned |= project == p;
-			};
-
+			EventToken et = App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((OpenProjectIDEvent e) => {
+				openned |= e.Project == p;
+			});
+					
 			importer.ImportFunction = () => p;
-			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Once ());
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
 			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ()), Times.Never ());
 			Assert.IsTrue (openned);
+
+			App.Current.EventsBroker.Unsubscribe<OpenProjectIDEvent> (et);
 		}
 
 		[Test]
 		public void TestImportProjectThatNeedsEdition ()
 		{
 			bool openned = false;
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 
-			Config.EventsBroker.NewProjectEvent += project => {
-				openned |= project == p;
-			};
+			EventToken et = App.Current.EventsBroker.Subscribe<NewProjectEvent> ((NewProjectEvent e) => {
+				openned |= e.Project == p;
+			});
+
 			importer.ImportFunction = () => p;
 			importer.NeedsEdition = true;
-			Config.EventsBroker.EmitImportProject ();
-			dbMock.Verify (db => db.Store<Project> (p, true), Times.Never ());
+			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
+			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Never ());
 			Assert.IsTrue (openned);
+
+			App.Current.EventsBroker.Unsubscribe<NewProjectEvent> (et);
 		}
 
 	}

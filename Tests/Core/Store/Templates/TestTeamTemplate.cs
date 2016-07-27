@@ -18,10 +18,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Common;
+using NUnit.Framework;
+using VAS.Core.Common;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace Tests.Core.Store.Templates
 {
@@ -31,44 +33,44 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestSerialization ()
 		{
-			Team t = new Team ();
+			SportsTeam t = new SportsTeam ();
 			
 			Utils.CheckSerialization (t);
 			
 			t.Name = "test";
 			t.TeamName = "team";
 			t.Shield = Utils.LoadImageFromFile ();
-			t.List.Add (new Player { Name = "P1" });
-			t.List.Add (new Player { Name = "P2" });
-			t.List.Add (new Player { Name = "P3" });
+			t.List.Add (new PlayerLongoMatch { Name = "P1" });
+			t.List.Add (new PlayerLongoMatch { Name = "P2" });
+			t.List.Add (new PlayerLongoMatch { Name = "P3" });
 			
 			
 			Utils.CheckSerialization (t);
 			
-			Team newt = Utils.SerializeDeserialize (t);
+			SportsTeam newt = Utils.SerializeDeserialize (t);
 			
 			Assert.AreEqual (t.ID, newt.ID);
 			Assert.AreEqual (t.Name, newt.Name);
 			Assert.AreEqual (t.TeamName, newt.TeamName);
 			Assert.AreEqual (t.Shield.Width, 16);
 			Assert.AreEqual (t.Shield.Height, 16);
-			Assert.AreEqual (t.List.Count, newt.List.Count);
-			Assert.AreEqual (t.List [0].Name, newt.List [0].Name);
-			Assert.AreEqual (t.List [1].Name, newt.List [1].Name);
-			Assert.AreEqual (t.List [2].Name, newt.List [2].Name);
+			Assert.AreEqual (t.Players.Count, newt.Players.Count);
+			Assert.AreEqual (t.Players [0].Name, newt.Players [0].Name);
+			Assert.AreEqual (t.Players [1].Name, newt.Players [1].Name);
+			Assert.AreEqual (t.Players [2].Name, newt.Players [2].Name);
 		}
 
 		[Test]
 		public void TestVersion ()
 		{
-			Assert.AreEqual (Constants.DB_VERSION, new Team ().Version);
-			Assert.AreEqual (Constants.DB_VERSION, Team.DefaultTemplate (1).Version);
+			Assert.AreEqual (Constants.DB_VERSION, new SportsTeam ().Version);
+			Assert.AreEqual (Constants.DB_VERSION, SportsTeam.DefaultTemplate (1).Version);
 		}
 
 		[Test ()]
 		public void TestColor ()
 		{
-			Team t = new Team ();
+			SportsTeam t = new SportsTeam ();
 			Assert.AreEqual (t.Color, t.Colors [0]);
 			t.ActiveColor = -1;
 			Assert.AreEqual (t.Color, t.Colors [0]);
@@ -81,17 +83,17 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestPlayingPlayers ()
 		{
-			Team t = new Team ();
-			Player p1, p2, p3;
+			SportsTeam t = new SportsTeam ();
+			PlayerLongoMatch p1, p2, p3;
 			
 			t.Name = "test";
 			t.TeamName = "team";
 			
 			Assert.AreEqual (t.PlayingPlayersList.Count, 0);
 			
-			p1 = new Player { Name = "P1", Playing = true };
-			p2 = new Player { Name = "P2", Playing = false };
-			p3 = new Player { Name = "P3", Playing = true };
+			p1 = new PlayerLongoMatch { Name = "P1", Playing = true };
+			p2 = new PlayerLongoMatch { Name = "P2", Playing = false };
+			p3 = new PlayerLongoMatch { Name = "P3", Playing = true };
 			t.List.Add (p1);
 			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
 			t.List.Add (p2);
@@ -105,17 +107,17 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestCreateDefaultTemplate ()
 		{
-			Team t = Team.DefaultTemplate (10);
+			SportsTeam t = SportsTeam.DefaultTemplate (10);
 			
-			Assert.AreEqual (t.List.Count, 10);
+			Assert.AreEqual (t.Players.Count, 10);
 			t.AddDefaultItem (8);
-			Assert.AreEqual (t.List.Count, 11);
+			Assert.AreEqual (t.Players.Count, 11);
 		}
 
 		[Test ()]
 		public void TestFormation ()
 		{
-			Team t = Team.DefaultTemplate (1);
+			SportsTeam t = SportsTeam.DefaultTemplate (1);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (t.Formation.Length, 4);
 			Assert.AreEqual (t.Formation [0], 1);
@@ -131,11 +133,11 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestBenchPlayers ()
 		{
-			Team t = Team.DefaultTemplate (15);
+			SportsTeam t = SportsTeam.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (5, t.BenchPlayersList.Count);
-			Assert.AreEqual (t.List [10], t.BenchPlayersList [0]);
-			Assert.AreEqual (t.List [14], t.BenchPlayersList [4]);
+			Assert.AreEqual (t.Players [10], t.BenchPlayersList [0]);
+			Assert.AreEqual (t.Players [14], t.BenchPlayersList [4]);
 			t.FormationStr = "10-2-3-4";
 			Assert.AreEqual (0, t.BenchPlayersList.Count);
 		}
@@ -143,79 +145,79 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestStartingPlayers ()
 		{
-			Team t = Team.DefaultTemplate (15);
+			SportsTeam t = SportsTeam.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 			Assert.AreEqual (10, t.StartingPlayers);
 			Assert.AreEqual (10, t.StartingPlayersList.Count);
-			Assert.AreEqual (t.List [0], t.StartingPlayersList [0]);
-			Assert.AreEqual (t.List [9], t.StartingPlayersList [9]);
+			Assert.AreEqual (t.Players [0], t.StartingPlayersList [0]);
+			Assert.AreEqual (t.Players [9], t.StartingPlayersList [9]);
 
 			/* Players not playing are skipped */
-			t.List [0].Playing = false;
-			Assert.AreEqual (t.List [1], t.StartingPlayersList [0]);
-			Assert.AreEqual (t.List [10], t.StartingPlayersList [9]);
+			t.Players [0].Playing = false;
+			Assert.AreEqual (t.Players [1], t.StartingPlayersList [0]);
+			Assert.AreEqual (t.Players [10], t.StartingPlayersList [9]);
 
 			/* Unless we are editing the team */
 			t.TemplateEditorMode = true;
-			Assert.AreEqual (t.List [0], t.StartingPlayersList [0]);
-			Assert.AreEqual (t.List [9], t.StartingPlayersList [9]);
+			Assert.AreEqual (t.Players [0], t.StartingPlayersList [0]);
+			Assert.AreEqual (t.Players [9], t.StartingPlayersList [9]);
 			t.TemplateEditorMode = false;
 
 			/* If the list of playing players is smaller than the formation
 			 * the list of starting players is of the same size as the list
 			 * of playing players */
 			for (int i = 0; i < 8; i++) {
-				t.List [i].Playing = false;
+				t.Players [i].Playing = false;
 			}
 			Assert.AreEqual (7, t.StartingPlayersList.Count);
-			Assert.AreEqual (t.List [8], t.StartingPlayersList [0]);
+			Assert.AreEqual (t.Players [8], t.StartingPlayersList [0]);
 		}
 
 		[Test ()]
 		public void TestRemovePlayers ()
 		{
-			Team t = Team.DefaultTemplate (15);
+			SportsTeam t = SportsTeam.DefaultTemplate (15);
 			t.FormationStr = "1-2-3-4";
 
 			/* Removing a player from the starting list must be swapped
 			 * with the first player in the bench to keep the same lineup */
-			t.RemovePlayers (new List<Player>{ t.List [0] }, false);
-			Assert.AreEqual (15, t.List.Count);
-			Assert.AreEqual (11, t.List [0].Number); 
-			Assert.AreEqual (2, t.List [1].Number); 
-			Assert.AreEqual (1, t.List [14].Number); 
-			t.RemovePlayers (new List<Player>{ t.List [0] }, true);
-			Assert.AreEqual (14, t.List.Count);
-			Assert.AreEqual (12, t.List [0].Number); 
+			t.RemovePlayers (new List<PlayerLongoMatch>{ t.Players [0] }, false);
+			Assert.AreEqual (15, t.Players.Count);
+			Assert.AreEqual (11, t.Players [0].Number); 
+			Assert.AreEqual (2, t.Players [1].Number); 
+			Assert.AreEqual (1, t.Players [14].Number); 
+			t.RemovePlayers (new List<PlayerLongoMatch>{ t.Players [0] }, true);
+			Assert.AreEqual (14, t.Players.Count);
+			Assert.AreEqual (12, t.Players [0].Number); 
 
-			t.RemovePlayers (new List<Player> { new Player () }, true);
-			Assert.AreEqual (14, t.List.Count);
+			t.RemovePlayers (new List<PlayerLongoMatch> { new PlayerLongoMatch () }, true);
+			Assert.AreEqual (14, t.Players.Count);
 
-			t.RemovePlayers (new List<Player> { new Player (), t.List [12] }, true);
-			Assert.AreEqual (13, t.List.Count);
+			t.RemovePlayers (new List<PlayerLongoMatch> { new PlayerLongoMatch (), t.Players [12] }, true);
+			Assert.AreEqual (13, t.Players.Count);
 		}
 
 		[Test ()]
 		public void TestResetPlayers ()
 		{
-			Team t = Team.DefaultTemplate (10);
+			SportsTeam t = SportsTeam.DefaultTemplate (10);
 			for (int i = 0; i < 5; i++) {
-				t.List [0].Playing = false;
+				t.Players [0].Playing = false;
 			}
 			t.ResetPlayers ();
-			Assert.IsEmpty (t.List.Where (p => !p.Playing));
+			Assert.IsEmpty (t.Players.Where (p => !p.Playing));
 		}
 
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			Team t = Team.DefaultTemplate (10);
+			SportsTeam t = SportsTeam.DefaultTemplate (10);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
-			t.List.Remove (t.List [0]);
+			t.List.Remove (t.Players [0]);
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
-			t.List.Add (new Player ());
+			t.List.Add (new PlayerLongoMatch ());
 			Assert.IsTrue (t.IsChanged);
 			t.IsChanged = false;
 			t.List = null;
@@ -241,8 +243,8 @@ namespace Tests.Core.Store.Templates
 		[Test ()]
 		public void TestCopy ()
 		{
-			Team team = Team.DefaultTemplate (10);
-			Team copy = team.Copy ("newName");
+			SportsTeam team = SportsTeam.DefaultTemplate (10);
+			SportsTeam copy = team.Copy ("newName");
 			Assert.AreNotEqual (team.ID, copy.ID);
 			for (int i = 0; i < team.List.Count; i++) {
 				Assert.AreNotEqual (team.List [i].ID, copy.List [i].ID);

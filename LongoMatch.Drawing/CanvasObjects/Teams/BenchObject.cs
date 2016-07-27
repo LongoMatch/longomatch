@@ -15,11 +15,12 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -27,10 +28,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 	{
 		public BenchObject ()
 		{
-			BenchPlayers = new List<PlayerObject> ();
+			BenchPlayers = new List<SportsPlayerObject> ();
 		}
 
-		public List<PlayerObject> BenchPlayers {
+		public List<SportsPlayerObject> BenchPlayers {
 			get;
 			set;
 		}
@@ -71,7 +72,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return;
 			}
 			for (int i = 0; i < BenchPlayers.Count; i++) {
-				PlayerObject po;
+				SportsPlayerObject po;
 				double x, y;
 				double s = Width / PlayersPerRow;
 				
@@ -79,8 +80,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				y = s * (i / PlayersPerRow) + s / 2;
 
 				po = BenchPlayers [i];
-				po.Position = new Point (x, y);
 				po.Size = PlayersSize;
+				po.Center = new Point (x, y);
 			}
 		}
 
@@ -92,13 +93,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			tk.Begin ();
 			tk.TranslateAndScale (Position, new Point (1, 1)); 
 			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = Config.Style.BenchLineWidth;
-			tk.StrokeColor = Config.Style.PaletteActive;
+			tk.LineWidth = App.Current.Style.BenchLineWidth;
+			tk.StrokeColor = App.Current.Style.PaletteActive;
 			tk.FillColor = null;
 			tk.DrawRectangle (new Point (0, 0), Width, Height);
 			tk.LineStyle = LineStyle.Normal;
 
-			foreach (PlayerObject po in BenchPlayers) {
+			foreach (SportsPlayerObject po in BenchPlayers) {
 				po.Playing = false;
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
@@ -116,9 +117,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return selection;
 			}
 			
-			point = Utils.ToUserCoords (point, Position, 1, 1);
+			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 			
-			foreach (PlayerObject po in BenchPlayers) {
+			foreach (SportsPlayerObject po in BenchPlayers) {
 				selection = po.GetSelection (point, precision);
 				if (selection != null)
 					break;

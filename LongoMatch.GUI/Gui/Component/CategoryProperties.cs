@@ -19,22 +19,23 @@
 //
 using System;
 using Gtk;
-using Pango;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Dialog;
-using Point = LongoMatch.Core.Common.Point;
-using LongoMatch.Core.Store.Templates;
-
+using Pango;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using Helpers = VAS.UI.Helpers;
+using Point = VAS.Core.Common.Point;
+using VASColor = VAS.Core.Common.Color;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial  class CategoryProperties : Gtk.Bin
+	public partial class CategoryProperties : Gtk.Bin
 	{
-
 		public event EventHandler EditedEvent;
 
 		SizeGroup sizegroupLeft, sizegroupRight;
@@ -79,7 +80,7 @@ namespace LongoMatch.Gui.Component
 			foreach (Widget w in vbox3.Children) {
 				foreach (Widget t in (w as Table).Children) {
 					if ((t is Label)) {
-						t.ModifyFont (FontDescription.FromString (Config.Style.Font + " 10"));
+						t.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 10"));
 						sizegroupLeft.AddWidget (t);
 					}
 				}
@@ -226,7 +227,7 @@ namespace LongoMatch.Gui.Component
 				shapecombobox.Active = (int)cardButton.PenaltyCard.Shape;
 			}
 			if (timerButton != null) {
-				teamcombobox.Active = (int)timerButton.Timer.Team;
+				teamcombobox.Active = (int)(timerButton.Timer as TimerLongoMatch).Team;
 			}
 			if (tagButton != null) {
 				groupentry.Text = tagButton.Tag.Group;
@@ -240,14 +241,14 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			HotKey hotkey = Config.GUIToolkit.SelectHotkey (button.HotKey);
+			HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (button.HotKey);
 			if (hotkey != null) {
 				try {
 					Dashboard.ChangeHotkey (button, hotkey);
 					UpdateGui ();
 					Edited = true;
 				} catch (HotkeyAlreadyInUse ex) {
-					Config.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				}
 			}
 		}
@@ -312,7 +313,7 @@ namespace LongoMatch.Gui.Component
 			if (ignore)
 				return;
 
-			LongoMatch.Core.Common.Color c = Helpers.Misc.ToLgmColor ((sender as ColorButton).Color);
+			VASColor c = Helpers.Misc.ToLgmColor ((sender as ColorButton).Color);
 			if (sender == colorbutton1) {
 				button.BackgroundColor = c;
 			} else {
@@ -379,7 +380,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ignore)
 				return;
-			timerButton.Timer.Team = (TeamType)teamcombobox.Active;
+			(timerButton.Timer as TimerLongoMatch).Team = (TeamType)teamcombobox.Active;
 			Edited = true;
 		}
 

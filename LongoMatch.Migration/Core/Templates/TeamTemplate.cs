@@ -35,15 +35,17 @@ namespace LongoMatch.Store.Templates
 		private Guid _UUID;
 
 		private byte[] thumbnailBuf;
-		private const int MAX_WIDTH=100;
-		private const int MAX_HEIGHT=100;
+		private const int MAX_WIDTH = 100;
+		private const int MAX_HEIGHT = 100;
 		Version version;
-		
-		public TeamTemplate () {
+
+		public TeamTemplate ()
+		{
 			init (Guid.NewGuid ());
 		}
-		
-		public TeamTemplate (Guid uuid) {
+
+		public TeamTemplate (Guid uuid)
+		{
 			init (uuid);
 		}
 
@@ -51,11 +53,12 @@ namespace LongoMatch.Store.Templates
 		public Guid UUID {
 			get {
 				return _UUID;
-			} set {
+			}
+			set {
 				_UUID = value;
 			}
 		}
-		 
+
 		public String Name {
 			get;
 			set;
@@ -65,112 +68,121 @@ namespace LongoMatch.Store.Templates
 			get;
 			set;
 		}
-		
+
 		public Version Version {
 			get;
 			set;
 		}
-		
+
 		public List<Player> List {
 			get {
-				return this.ToList();
+				return this.ToList ();
 			}
 		}
-		
+
 		public Image Shield {
 			get {
-				if(thumbnailBuf != null)
-					return Image.Deserialize(thumbnailBuf);
-				else return null;
-			} set {
+				if (thumbnailBuf != null)
+					return Image.Deserialize (thumbnailBuf);
+				else
+					return null;
+			}
+			set {
 				if (value == null)
 					thumbnailBuf = null;
 				else
-					thumbnailBuf = value.Serialize();
+					thumbnailBuf = value.Serialize ();
 			}
 		}
-		
+
 		[JsonIgnore]
 		public int PlayingPlayers {
 			get;
 			protected set;
-		} 
-		
+		}
+
 		public int[] Formation {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		public string FormationStr {
 			set {
-				string[] elements = value.Split('-');
+				string[] elements = value.Split ('-');
 				int[] tactics = new int[elements.Length];
 				int index = 0;
 				foreach (string s in elements) {
 					try {
-						tactics[index] = int.Parse (s);
-						index ++;
+						tactics [index] = int.Parse (s);
+						index++;
 					} catch {
 						throw new FormatException ();
 					}
 				}
-				PlayingPlayers = tactics.Sum();
+				PlayingPlayers = tactics.Sum ();
 				Formation = tactics;
 			}
 			get {
 				return String.Join ("-", Formation);
 			}
 		}
-		
+
 		[JsonIgnore]
 		public List<Player> PlayingPlayersList {
 			get {
-				return this.Where(p=>p.Playing).Select(p=>p).ToList();
+				return this.Where (p => p.Playing).Select (p => p).ToList ();
 			}
 		}
 
-		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+		public void Save (string filePath)
+		{
+			SerializableObject.Save (this, filePath);
 		}
-		
-		public Player AddDefaultItem (int i) {
+
+		public Player AddDefaultItem (int i)
+		{
 			Player p = new Player {
-				Name = "Player " + (i+1).ToString(),
-				Birthday = new DateTime(),
+				Name = "Player " + (i + 1).ToString (),
+				Birthday = new DateTime (),
 				Height = 1.80f,
 				Weight = 80,
-				Number = i+1,
+				Number = i + 1,
 				Position = "",
 				Photo = null,
-				Playing = true,};
+				Playing = true,
+			};
 			Insert (i, p);
 			return p;
 		}
 
-		public static TeamTemplate Load(string filePath) {
-			TeamTemplate template = SerializableObject.LoadSafe<TeamTemplate>(filePath);
+		public static TeamTemplate Load (string filePath)
+		{
+			TeamTemplate template = SerializableObject.LoadSafe<TeamTemplate> (filePath);
 			if (template.Formation == null) {
 				template.FormationStr = "1-4-3-3";
 			}
 			return template;
 		}
 
-		public static TeamTemplate DefaultTemplate(int playersCount) {
-			TeamTemplate defaultTemplate = new TeamTemplate();
-			defaultTemplate.FillDefaultTemplate(playersCount);
+		public static TeamTemplate DefaultTemplate (int playersCount)
+		{
+			TeamTemplate defaultTemplate = new TeamTemplate ();
+			defaultTemplate.FillDefaultTemplate (playersCount);
 			return defaultTemplate;
 		}
 
-		private void FillDefaultTemplate(int playersCount) {
-			Clear();
-			for(int i=1; i<=playersCount; i++)
-				AddDefaultItem(i-1);
+		private void FillDefaultTemplate (int playersCount)
+		{
+			Clear ();
+			for (int i = 1; i <= playersCount; i++)
+				AddDefaultItem (i - 1);
 		}
-		
-		void init (Guid uuid) {
+
+		void init (Guid uuid)
+		{
 			_UUID = uuid;
-			TeamName = Catalog.GetString("Team");
+			TeamName = Catalog.GetString ("Team");
 			if (Formation == null) {
 				FormationStr = "1-4-3-3";
 			}

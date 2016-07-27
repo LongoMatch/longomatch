@@ -21,33 +21,34 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Handlers;
+using VAS.Core.Events;
+using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
-
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class NotesWidget : Gtk.Bin
 	{
 		TextBuffer buf;
-		TimelineEvent play;
+		TimelineEventLongoMatch play;
 
 		public NotesWidget ()
 		{
 			this.Build ();
 			this.buf = textview1.Buffer;
 			buf.Changed += new EventHandler (OnEdition);
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
 		}
 
 		protected override void OnDestroyed ()
 		{
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			base.OnDestroyed ();
 		}
 
-		public TimelineEvent Play {
+		public TimelineEventLongoMatch Play {
 			set {
 				play = value;
 				Notes = play.Notes;
@@ -71,9 +72,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			Play = play;
+			Play = e.TimelineEvent as TimelineEventLongoMatch;
 		}
 		
 	}

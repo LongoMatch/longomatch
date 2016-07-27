@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Gtk;
-using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Addins;
-using Mono.Addins.Description;
 using System.Collections.Generic;
-
+using Gtk;
+using LongoMatch.Addins;
+using LongoMatch.Addins.ExtensionPoints;
+using Mono.Addins.Description;
+using VAS.Addins.ExtensionPoints;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 		public PluginsPreferences ()
 		{
 			this.Build ();
-			pluginsStore = new ListStore (typeof(string), typeof(AddinDescription), typeof(ILongoMatchPlugin));
+			pluginsStore = new ListStore (typeof(string), typeof(AddinDescription), typeof(IPlugin));
 			treeview1.Model = pluginsStore;
 			treeview1.HeadersVisible = false;
 			treeview1.AppendColumn ("Text", new CellRendererText (), "text", 0); 

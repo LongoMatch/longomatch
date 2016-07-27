@@ -22,11 +22,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using VAS.Core.Store.Templates;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -36,8 +43,9 @@ namespace LongoMatch.Services
 		IAnalysisWindow analysisWindow;
 		ProjectType projectType;
 		ICapturerBin capturer;
+		IPlayerController player;
 		Dashboard dashboard;
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 		AnalysisEventButton pendingButton;
 		bool inPlayerTagging;
 		string playerNumber;
@@ -55,9 +63,9 @@ namespace LongoMatch.Services
 			int playerNumber;
 			
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				Team team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
+				SportsTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				Player player = team.List.FirstOrDefault (p => p.Number == playerNumber);
+				PlayerLongoMatch player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
 					analysisWindow.TagPlayer (player);
 				}
@@ -80,7 +88,7 @@ namespace LongoMatch.Services
 
 		void HandleTimeout (object state)
 		{
-			Config.DrawingToolkit.Invoke (delegate {
+			App.Current.DrawingToolkit.Invoke (delegate {
 				if (pendingButton != null) {
 					analysisWindow.ClickButton (pendingButton);
 					pendingButton = null;
@@ -90,58 +98,71 @@ namespace LongoMatch.Services
 			});
 		}
 
-		void HandleDashboardEditedEvent ()
+		void HandleDashboardEditedEvent (DashboardEditedEvent e)
 		{
 			ReloadHotkeys ();
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
-			this.analysisWindow = analysisWindow;
-			this.capturer = analysisWindow.Capturer;
-			openedProject = project;
-			this.projectType = projectType;
-			if (project == null) {
+			this.analysisWindow = e.AnalysisWindow as IAnalysisWindow;
+			capturer = e.AnalysisWindow.Capturer;
+			player = e.AnalysisWindow.Player;
+			openedProject = e.Project as ProjectLongoMatch;
+			this.projectType = e.ProjectType;
+			if (e.Project == null) {
 				dashboard = null;
 			} else {
-				dashboard = project.Dashboard;
+				dashboard = e.Project.Dashboard;
 			}
 			ReloadHotkeys ();
 		}
 
-		public void UIKeyListener (object sender, HotKey key)
+		void HandleOpenedPresentationChanged (OpenedPresentationChangedEvent e)
+		{
+			if (e.Player == null)
+				return;
+			this.player = e.Player;
+
+			projectType = ProjectType.None;
+			analysisWindow = null;
+		}
+
+		public void UIKeyListener (KeyPressedEvent e)
 		{
 			KeyAction action;
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (e.Key);
 			} catch (Exception ex) {
 				/* The dictionary contains 2 equal values for different keys */
 				Log.Exception (ex);
 				return;
 			}
 			
-			if (action != KeyAction.None && analysisWindow != null) {
-				switch (action) {
-				case KeyAction.ZoomIn:
-					analysisWindow.ZoomIn ();
-					return;
-				case KeyAction.ZoomOut:
-					analysisWindow.ZoomOut ();
-					return;
-				case KeyAction.ShowDashboard:
-					analysisWindow.ShowDashboard ();
-					return;
-				case KeyAction.ShowTimeline:
-					analysisWindow.ShowTimeline ();
-					return;
-				case KeyAction.ShowPositions:
-					analysisWindow.ShowZonalTags ();
-					return;
-				case KeyAction.FitTimeline:
-					analysisWindow.FitTimeline ();
-					return;
+			if (action != KeyAction.None) {
+				
+				if (analysisWindow != null) {
+					switch (action) {
+					case KeyAction.ZoomIn:
+						analysisWindow.ZoomIn ();
+						return;
+					case KeyAction.ZoomOut:
+						analysisWindow.ZoomOut ();
+						return;
+					case KeyAction.ShowDashboard:
+						analysisWindow.ShowDashboard ();
+						return;
+					case KeyAction.ShowTimeline:
+						analysisWindow.ShowTimeline ();
+						return;
+					case KeyAction.ShowPositions:
+						analysisWindow.ShowZonalTags ();
+						return;
+					case KeyAction.FitTimeline:
+						analysisWindow.FitTimeline ();
+						return;
+					}
 				}
 				
 				if (projectType == ProjectType.CaptureProject ||
@@ -162,11 +183,63 @@ namespace LongoMatch.Services
 						capturer.StopPeriod ();
 						break;
 					}
+				} else {
+					switch (action) {
+					case KeyAction.FrameUp:
+						player.SeekToNextFrame ();
+						return;
+					case KeyAction.FrameDown:
+						player.SeekToPreviousFrame ();
+						return;
+					case KeyAction.JumpUp:
+						player.StepForward ();
+						return;
+					case KeyAction.JumpDown:
+						player.StepBackward ();
+						return;
+					case KeyAction.DrawFrame:
+						player.DrawFrame ();
+						return;
+					case KeyAction.TogglePlay:
+						player.TogglePlay ();
+						return;
+					case KeyAction.SpeedUp:
+						player.FramerateUp ();
+						App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
+							new PlaybackRateChangedEvent {
+								Value = (float)player.Rate
+							}
+						);
+						return;
+					case KeyAction.SpeedDown:
+						player.FramerateDown ();
+						App.Current.EventsBroker.Publish<PlaybackRateChangedEvent> (
+							new PlaybackRateChangedEvent {
+								Value = (float)player.Rate
+							}
+						);
+						return;
+					case KeyAction.CloseEvent:
+						App.Current.EventsBroker.Publish<LoadEventEvent> (new LoadEventEvent ());
+						return;
+					case KeyAction.Prev:
+						player.Previous ();
+						return;
+					case KeyAction.Next:
+						player.Next ();
+						return;
+					case KeyAction.SpeedUpper:
+						player.FramerateUpper ();
+						return;
+					case KeyAction.SpeedLower:
+						player.FramerateLower ();
+						return;
+					}
 				}
 			}
 		}
 
-		public void DashboardKeyListener (object sender, HotKey key)
+		public void DashboardKeyListener (KeyPressedEvent e)
 		{
 			KeyAction action;
 			DashboardButton button;
@@ -176,7 +249,7 @@ namespace LongoMatch.Services
 			}
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (e.Key);
 			} catch {
 				return;
 			}
@@ -195,12 +268,12 @@ namespace LongoMatch.Services
 				timer.Change (TIMEOUT_MS, 0);
 			} else if (action == KeyAction.None) {
 				if (pendingButton != null) {
-					Tag tag = pendingButton.AnalysisEventType.Tags.FirstOrDefault (t => t.HotKey == key);
+					Tag tag = pendingButton.AnalysisEventType.Tags.FirstOrDefault (t => t.HotKey == e.Key);
 					if (tag != null) {
 						analysisWindow.ClickButton (pendingButton, tag);
 						timer.Change (TIMEOUT_MS, 0);
 					}
-				} else if (dashboardHotkeys.TryGetValue (key, out button)) {
+				} else if (dashboardHotkeys.TryGetValue (e.Key, out button)) {
 					if (inPlayerTagging) {
 						TagPlayer ();
 					}
@@ -221,7 +294,7 @@ namespace LongoMatch.Services
 					}
 				} else if (inPlayerTagging) {
 					int number;
-					string name = Keyboard.NameFromKeyval ((uint)key.Key);
+					string name = Keyboard.NameFromKeyval ((uint)e.Key.Key);
 					if (name.StartsWith ("KP_")) {
 						name = name.Replace ("KP_", "");
 					}
@@ -250,20 +323,22 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed += DashboardKeyListener;
-			Config.EventsBroker.KeyPressed += UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			App.Current.EventsBroker.Subscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
+			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (DashboardKeyListener);
+			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (UIKeyListener);
+			App.Current.EventsBroker.Subscribe<DashboardEditedEvent> (HandleDashboardEditedEvent);
 			timer = new System.Threading.Timer (HandleTimeout);
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
-			Config.EventsBroker.KeyPressed -= DashboardKeyListener;
-			Config.EventsBroker.KeyPressed -= UIKeyListener;
-			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
+			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			App.Current.EventsBroker.Unsubscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
+			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (DashboardKeyListener);
+			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (UIKeyListener);
+			App.Current.EventsBroker.Unsubscribe<DashboardEditedEvent> (HandleDashboardEditedEvent);
 			return true;
 		}
 

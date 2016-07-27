@@ -21,17 +21,18 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Addins;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
 
 namespace LongoMatch.Plugins
 {
 	[Extension]
-	public class CSVExporter:IExportProject
+	public class CSVExporter : IExportProject
 	{
 		public string Name {
 			get {
@@ -59,8 +60,8 @@ namespace LongoMatch.Plugins
 		public void ExportProject (Project project, IGUIToolkit guiToolkit)
 		{
 			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"),
-				                  Utils.SanitizePath (project.Description.Title + ".csv"),
-				                  Config.HomeDir, "CSV", new [] { "*.csv" });
+				                  Utils.SanitizePath (((ProjectLongoMatch)project).Description.Title + ".csv"),
+				                  App.Current.HomeDir, "CSV", new [] { "*.csv" });
 			
 			if (filename == null)
 				return;
@@ -68,7 +69,7 @@ namespace LongoMatch.Plugins
 			filename = System.IO.Path.ChangeExtension (filename, ".csv");
 			
 			try {
-				ProjectToCSV exporter = new ProjectToCSV (project, filename);
+				ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
 				exporter.Export ();
 				guiToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
@@ -80,11 +81,11 @@ namespace LongoMatch.Plugins
 
 	class ProjectToCSV
 	{
-		Project project;
+		ProjectLongoMatch project;
 		string filename;
 		List<string> output;
 
-		public ProjectToCSV (Project project, string filename)
+		public ProjectToCSV (ProjectLongoMatch project, string filename)
 		{
 			this.project = project;
 			this.filename = filename;
@@ -93,13 +94,13 @@ namespace LongoMatch.Plugins
 
 		public void Export ()
 		{
-			foreach (EventType eventType in project.EventTypes) {
+			foreach (var eventType in project.EventTypes) {
 				ExportCategory (eventType);
 			}
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName (ObservableCollection<Team> teams)
+		string TeamName (IList<SportsTeam> teams)
 		{
 			if (teams.Count == 0) {
 				return "";
@@ -130,14 +131,14 @@ namespace LongoMatch.Plugins
 			}
 			output.Add (headers);
 			
-			foreach (TimelineEvent play in plays.OrderBy(p=>p.Start)) {
+			foreach (TimelineEventLongoMatch play in plays.OrderBy(p=>p.Start)) {
 				string line;
 				
 				line = String.Format ("{0};{1};{2};{3};{4};{5}", play.Name,
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (play.Teams),
+					TeamName (play.Teams.Cast<SportsTeam> ().ToList ()),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

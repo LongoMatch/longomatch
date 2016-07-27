@@ -6,5 +6,5 @@ longomatchdir=@libdir@/@PACKAGE@
 Name: LongoMatch.Core
 Description: Core API's for the LongoMatch .NET framework
 Version: @VERSION@
-Requires: newtonsoft-json gtk-sharp-2.0
+Requires: newtonsoft-json gtk-sharp-2.0 vas-core
 Libs: -r:${longomatchdir}/LongoMatch.Core.dll

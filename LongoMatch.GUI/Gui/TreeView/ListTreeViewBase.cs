@@ -18,14 +18,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gdk;
 using Gtk;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
+using VAS.Core.Events;
+using VAS.Core.Store;
 using Color = Gdk.Color;
-using Image = LongoMatch.Core.Common.Image;
-using Point = LongoMatch.Core.Common.Point;
+using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,7 +36,7 @@ namespace LongoMatch.Gui.Component
 	{
 		protected bool editing;
 		protected bool enableCategoryMove = false;
-		protected PlaysMenu playsMenu;
+		protected SportsPlaysMenu playsMenu;
 		protected TreeModelFilter modelFilter;
 		protected TreeModelSort modelSort;
 		protected TreeStore childModel;
@@ -54,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			custColumn.PackStart (cr, true);
 			custColumn.SetCellDataFunc (cr, RenderElement); 
 
-			playsMenu = new PlaysMenu ();
+			playsMenu = new SportsPlaysMenu ();
 			playsMenu.EditPlayEvent += HandleEditPlayEvent;
 			AppendColumn (custColumn);
 		}
@@ -81,7 +84,7 @@ namespace LongoMatch.Gui.Component
 				modelFilter.Refilter ();
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set;
 			protected get;
 		}
@@ -106,22 +109,22 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected TimelineEvent SelectedPlay {
+		protected TimelineEventLongoMatch SelectedPlay {
 			get {
-				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEvent;
+				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEventLongoMatch;
 			}
 		}
 
-		protected List<TimelineEvent> SelectedPlays {
+		protected List<TimelineEventLongoMatch> SelectedPlays {
 			get {
 				return Selection.GetSelectedRows ().Select (
-					p => GetValueFromPath (p) as TimelineEvent).ToList ();
+					p => GetValueFromPath (p) as TimelineEventLongoMatch).ToList ();
 			}
 		}
 
 		protected void ShowMenu ()
 		{
-			playsMenu.ShowListMenu (Project, SelectedPlays);
+			playsMenu.ShowListMenu (Project, SelectedPlays.Cast<TimelineEvent> ().ToList ());
 		}
 
 		protected object GetValueFromPath (TreePath path)
@@ -140,23 +143,31 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
 		{
 			object item = GetValueFromPath (args.Path);
-			if (!(item is TimelineEvent))
+			if (!(item is TimelineEventLongoMatch))
 				return;
 
-			Config.EventsBroker.EmitLoadEvent (item as TimelineEvent);
+			App.Current.EventsBroker.Publish<LoadEventEvent> (
+				new LoadEventEvent {
+					TimelineEvent = item as TimelineEventLongoMatch
+				}
+			);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
-			TimelineEvent selectedEvent = SelectedPlay;
+			TimelineEventLongoMatch selectedEvent = SelectedPlay;
 			List<Player> players = selectedEvent.Players.ToList ();
 
-			Config.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
+			App.Current.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);
 
 			if (!players.SequenceEqual (selectedEvent.Players)) {
-				Config.EventsBroker.EmitTeamTagsChanged ();
+				App.Current.EventsBroker.Publish<TeamTagsChangedEvent> ();
 			}
-			Config.EventsBroker.EmitEventEdited (selectedEvent);
+			App.Current.EventsBroker.Publish<EventEditedEvent> (
+				new EventEditedEvent {
+					TimelineEvent = selectedEvent
+				}
+			);
 			modelSort.SetSortFunc (0, SortFunction);
 			modelSort.SetSortColumnId (0, SortType.Ascending);
 		}
