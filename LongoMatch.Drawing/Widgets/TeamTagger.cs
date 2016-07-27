@@ -15,16 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -47,7 +50,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
 			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			tagger.TeamSelectionChangedEvent += HandleTeamSelectionChangedEvent;
-			BackgroundColor = Config.Style.PaletteBackground;
+			BackgroundColor = App.Current.Style.PaletteBackground;
 			ShowSubstitutionButtons = true;
 			ObjectsCanMove = false;
 			AddObject (tagger);
@@ -63,7 +66,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Dispose ();
 		}
 
-		public void LoadTeams (Team homeTeam, Team awayTeam, Image background)
+		public void LoadTeams (SportsTeam homeTeam, SportsTeam awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget?.ReDraw ();
@@ -75,7 +78,7 @@ namespace LongoMatch.Drawing.Widgets
 			widget?.ReDraw ();
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				tagger.Project = value;
 			}
@@ -117,7 +120,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public ObservableCollection<Team> SelectedTeams {
+		public ObservableCollection<SportsTeam> SelectedTeams {
 			get {
 				return tagger.SelectedTeams;
 			}
@@ -142,29 +145,29 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Select (team);
 		}
 
-		public void Select (IList<Player> players, ObservableCollection<Team> teams)
+		public void Select (IList<PlayerLongoMatch> players, IList<SportsTeam> teams)
 		{
 			tagger.Select (players, teams);
 		}
 
-		public void Select (Player p)
+		public void Select (PlayerLongoMatch p)
 		{
 			tagger.Select (p);
 		}
 
-		public void Substitute (Player p1, Player p2, Team team)
+		public void Substitute (PlayerLongoMatch p1, PlayerLongoMatch p2, SportsTeam team)
 		{
 			tagger.Substitute (p1, p2, team);
 		}
 
 		protected override void ShowMenu (Point coords)
 		{
-			List<Player> players = tagger.SelectedPlayers;
+			List<PlayerLongoMatch> players = tagger.SelectedPlayers;
 
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<Player> { (sel.Drawable as PlayerObject).Player };
+					players = new List<PlayerLongoMatch> { (sel.Drawable as SportsPlayerObject).Player };
 				}
 			} else {
 				players = tagger.SelectedPlayers;
@@ -184,7 +187,8 @@ namespace LongoMatch.Drawing.Widgets
 			base.HandleSizeChangedEvent ();
 		}
 
-		void HandlePlayersSubstitutionEvent (Team team, Player p1, Player p2, SubstitutionReason reason, Time time)
+		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		                                     SubstitutionReason reason, Time time)
 		{
 			widget?.ReDraw ();
 			if (PlayersSubstitutionEvent != null) {
@@ -192,14 +196,14 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
 		{
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (players);
 			}
 		}
 
-		void HandleTeamSelectionChangedEvent (ObservableCollection<Team> teams)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<SportsTeam> teams)
 		{
 			if (TeamSelectionChangedEvent != null) {
 				TeamSelectionChangedEvent (teams);

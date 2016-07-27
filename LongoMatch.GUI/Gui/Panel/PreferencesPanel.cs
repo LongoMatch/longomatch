@@ -16,12 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core;
+using Gdk;
 using Gtk;
 using LongoMatch.Gui.Component;
-using Gdk;
+using VAS.Core;
+using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces.GUI;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -56,14 +58,27 @@ namespace LongoMatch.Gui.Panel
 			};
 		}
 
-		public void OnLoaded ()
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		void AddPanels ()

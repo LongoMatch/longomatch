@@ -21,11 +21,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
@@ -67,21 +71,21 @@ namespace LongoMatch.DB
 			List<string> teamFiles = new List<string> ();
 			List<string> dashboardFiles = new List<string> ();
 			Guid id = Guid.NewGuid ();
-			ConcurrentQueue<Team> teams = new ConcurrentQueue<Team> ();
+			ConcurrentQueue<SportsTeam> teams = new ConcurrentQueue<SportsTeam> ();
 			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
 			progress.Report (0, "Migrating teams and dashboards", id);
 
 			try {
-				teamFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).
+				teamFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "teams")).
 					Where (f => f.EndsWith (".ltt")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
 				progress.Report (percent, "Migrated teams", id);
 			}
 			try {
-				dashboardFiles = Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")).
+				dashboardFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "analysis")).
 					Where (f => f.EndsWith (".lct")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
@@ -96,7 +100,7 @@ namespace LongoMatch.DB
 			// We can't use the FileStorage here, since it will migate the Team or Dashboard
 			foreach (string teamFile in teamFiles) {
 				try {
-					Team team = Serializer.Instance.Load<Team> (teamFile);
+					SportsTeam team = Serializer.Instance.Load<SportsTeam> (teamFile);
 					percent += 1 / count;
 					progress.Report (percent, "Imported team " + team.Name, id);
 					teams.Enqueue (team);
@@ -116,12 +120,12 @@ namespace LongoMatch.DB
 				}
 			}
 
-			foreach (Team team in teams) {
+			foreach (SportsTeam team in teams) {
 				var migrateTask = Task.Run (() => {
 					try {
 						Log.Information ("Migrating team " + team.Name);
 						TeamMigration.Migrate0 (team, teamNameToID);
-						Config.TeamTemplatesProvider.Save (team);
+						App.Current.TeamTemplatesProvider.Save (team);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + team.Name, id);
 					} catch (Exception ex) {
@@ -137,7 +141,7 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating dashboard " + dashboard.Name);
 						DashboardMigration.Migrate0 (dashboard, scoreNameToID, penaltyNameToID);
-						Config.CategoriesTemplatesProvider.Save (dashboard);
+						App.Current.CategoriesTemplatesProvider.Save (dashboard as DashboardLongoMatch);
 						percent += 1 / count;
 						progress.Report (percent, "Migrated team " + dashboard.Name, id);
 					} catch (Exception ex) {
@@ -151,13 +155,13 @@ namespace LongoMatch.DB
 			Task.WaitAll (tasks.ToArray ());
 
 			try {
-				string backupDir = Path.Combine (Config.TemplatesDir, "backup");
+				string backupDir = Path.Combine (App.Current.TemplatesDir, "backup");
 				if (!Directory.Exists (backupDir)) {
 					Directory.CreateDirectory (backupDir);
 				}
 
-				foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (Config.DBDir, "teams")).Concat(
-				Directory.EnumerateFiles (Path.Combine (Config.DBDir, "analysis")))) {
+				foreach (string templateFile in Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "teams")).Concat(
+					Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "analysis")))) {
 					string outputFile = Path.Combine (backupDir, Path.GetFileName (templateFile));
 					if (File.Exists (outputFile)) {
 						File.Delete (outputFile);
@@ -178,7 +182,7 @@ namespace LongoMatch.DB
 			Guid id = Guid.NewGuid ();
 			progress.Report (0, "Migrating databases", id);
 			// Collect all the databases and projects to migrate for progress updates
-			foreach (var directory in Directory.EnumerateDirectories (Config.DBDir)) {
+			foreach (var directory in Directory.EnumerateDirectories (App.Current.DBDir)) {
 				if (!directory.EndsWith (".ldb")) {
 					continue;
 				}
@@ -194,10 +198,10 @@ namespace LongoMatch.DB
 
 			// Start migrating databases
 			foreach (var kv in databases) {
-				MigrateDB (Config.DatabaseManager, kv.Key, kv.Value);
+				MigrateDB (App.Current.DatabaseManager, kv.Key, kv.Value);
 			}
 			// Now that all the databases have been migrated, move the old databases to a backup directory
-			string backupDir = Path.Combine (Config.DBDir, "old");
+			string backupDir = Path.Combine (App.Current.DBDir, "old");
 			if (!Directory.Exists (backupDir)) {
 				Directory.CreateDirectory (backupDir);
 			}
@@ -240,10 +244,10 @@ namespace LongoMatch.DB
 
 			foreach (string projectFile in projectFiles) {
 				var importTask = Task.Run (() => {
-					Project project = null;
+					ProjectLongoMatch project = null;
 					try {
 						Log.Information ("Migrating project " + projectFile);
-						project = Serializer.Instance.Load<Project> (projectFile);
+						project = Serializer.Instance.Load<ProjectLongoMatch> (projectFile);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
@@ -260,7 +264,7 @@ namespace LongoMatch.DB
 						}
 						try {
 							ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
-							database.Store<Project> (project, true);
+							database.Store (project, true);
 						} catch (Exception ex) {
 							Log.Exception (ex);
 							ret = false;
@@ -277,19 +281,19 @@ namespace LongoMatch.DB
 			Task.WaitAll (tasks.ToArray ());
 
 			// Create a query and print the result to traverse the iterator
-			Log.Information ("Projects index created:" + database.RetrieveAll<Project> ().Count ());
+			Log.Information ("Projects index created:" + database.RetrieveAll<ProjectLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Projects index created", id);
 
-			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEvent> ().Count ());
+			Log.Information ("Timeline events index created:" + database.RetrieveAll<TimelineEventLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Events index created", id);
 
-			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
+			Log.Information ("Teams index created:" + database.RetrieveAll<SportsTeam> ().Count ());
 			percent += step;
 			progress.Report (percent, "Teams index created", id);
 
-			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
+			Log.Information ("DAshboards index created:" + database.RetrieveAll<DashboardLongoMatch> ().Count ());
 			percent += step;
 			progress.Report (percent, "Dashboards index created", id);
 

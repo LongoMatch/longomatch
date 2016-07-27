@@ -16,11 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Stats
 {
@@ -28,7 +29,7 @@ namespace LongoMatch.Core.Stats
 	{
 		EventsFilter filter;
 
-		public ProjectStats (Project project)
+		public ProjectStats (ProjectLongoMatch project)
 		{
 			Project = project;
 			filter = new EventsFilter (project);
@@ -39,7 +40,7 @@ namespace LongoMatch.Core.Stats
 		{
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			protected set;
 		}
@@ -76,7 +77,8 @@ namespace LongoMatch.Core.Stats
 
 		public PlayerStats GetPlayerStats (Player p)
 		{
-			if (Project.LocalTeamTemplate.List.Contains (p)) {
+			ProjectLongoMatch LMProject = Project as ProjectLongoMatch;
+			if (LMProject.LocalTeamTemplate.List.Contains (p)) {
 				return HomeTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
 			} else {
 				return AwayTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
@@ -95,7 +97,7 @@ namespace LongoMatch.Core.Stats
 			}
 
 			TimersStats = new List<TimerStats> ();
-			foreach (Timer t in Project.Timers) {
+			foreach (TimerLongoMatch t in Project.Timers) {
 				TimersStats.Add (new TimerStats (Project, t));
 			}
 

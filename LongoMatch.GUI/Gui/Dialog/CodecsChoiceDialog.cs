@@ -16,9 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using Pango;
+using VAS;
+using VAS.Core;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -31,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 			Image img = Resources.LoadImage ("images/longomatch-pro-small.png");
 			buttonOKimage.Pixbuf = img.Value;
 
-			titlelabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 14"));
+			titlelabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 14"));
 
 			// Configure URL handler for the links
 			label1.SetLinkHandler (url => {

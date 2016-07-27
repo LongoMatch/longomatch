@@ -17,22 +17,33 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.Drawing.CanvasObjects.Blackboard;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Video.Utils;
-using LongoMatch.Core;
-using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Services.ViewModel;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Core.Store.Playlists;
+using VAS.Drawing;
+using VAS.UI.Helpers;
+using VAS.Video.Utils;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
@@ -54,6 +65,8 @@ namespace LongoMatch.Gui
 			mainWindow = new MainWindow (this);
 			mainWindow.Hide ();
 			registry = new Registry ("GUI backend");
+			RegistryCanvasFromDrawables ();
+			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 
 		public IMainController MainController {
@@ -249,7 +262,8 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (openedProject.Description.FileSet, play, interval, outDir);
+				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play, 
+					          interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, mainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
@@ -257,18 +271,20 @@ namespace LongoMatch.Gui
 				sd.Destroy ();
 		}
 
-		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, bool editNotes)
+		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, 
+		                      bool editNotes)
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
-				dialog.Load (project, play as StatEvent);
+				dialog.Load (project as ProjectLongoMatch, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
 				PlayEditor dialog = new PlayEditor (mainWindow as Gtk.Window);
-				dialog.LoadPlay (play, project, editTags, editPos, editPlayers, editNotes);
+				dialog.LoadPlay (play as TimelineEventLongoMatch, project as ProjectLongoMatch, editTags, editPos,
+					editPlayers, editNotes);
 				dialog.Run ();
 				dialog.Destroy ();
 			}
@@ -284,9 +300,10 @@ namespace LongoMatch.Gui
 
 			Log.Information ("Drawing tool");
 			if (play == null) {
-				dialog.LoadFrame (image, project);
+				dialog.LoadFrame (image, project as ProjectLongoMatch);
 			} else {
-				dialog.LoadPlay (play, image, drawing, camConfig, project);
+				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig, 
+					project as ProjectLongoMatch);
 			}
 			dialog.Show ();
 			dialog.Run ();
@@ -296,9 +313,9 @@ namespace LongoMatch.Gui
 		public Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
-			Project project = null;
+			ProjectLongoMatch project = null;
 			ChooseProjectDialog dialog = new ChooseProjectDialog (mainWindow);
-			dialog.Fill (projects);
+			dialog.Fill (projects.OfType<ProjectLongoMatch> ().ToList ());
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				project = dialog.Project;
 			}
@@ -309,14 +326,26 @@ namespace LongoMatch.Gui
 		public void SelectProject (List<Project> projects)
 		{
 			Log.Information ("Select project");
-			mainWindow.SelectProject (projects);
+			mainWindow.SelectProject (projects.Cast<ProjectLongoMatch> ().ToList ());
 		}
 
 		public void OpenCategoriesTemplatesManager ()
 		{
-			SportsTemplatesPanel panel = new SportsTemplatesPanel ();
+			/* FIXME: Remove this when it's finally handled by the NavigationController */
+			IController controller;
+
+			IView view = App.Current.ViewLocator.Retrieve ("DashboardsManager");
+			var dashboardsVM = new DashboardsManagerVM ();
+			dashboardsVM.Model = new ObservableCollection<DashboardLongoMatch> (
+				App.Current.CategoriesTemplatesProvider.Templates);
+
+			view.SetViewModel (dashboardsVM);
+			controller = App.Current.ControllerLocator.Retrieve ("DashboardsManager");
+			controller.SetViewModel (dashboardsVM);
+			controller.Start ();
 			Log.Information ("Open sports templates manager");
-			mainWindow.SetPanel (panel);
+			mainWindow.SetPanel ((IPanel)view);
+			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
 		}
 
 		public void OpenTeamsTemplatesManager ()
@@ -328,7 +357,7 @@ namespace LongoMatch.Gui
 
 		public void OpenProjectsManager (Project openedProject)
 		{
-			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject);
+			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject as ProjectLongoMatch);
 			Log.Information ("Open projects manager");
 			mainWindow.SetPanel (panel);
 		}
@@ -379,18 +408,18 @@ namespace LongoMatch.Gui
 
 		public void LoadPanel (IPanel panel)
 		{
-			mainWindow.SetPanel ((Widget)panel);
+			mainWindow.SetPanel (panel);
 		}
 
 		public void CreateNewProject (Project project = null)
 		{
-			mainWindow.CreateNewProject (project);
+			mainWindow.CreateNewProject (project as ProjectLongoMatch);
 		}
 
 		public void ShowProjectStats (Project project)
 		{
 			Log.Information ("Show project stats");
-			Addins.AddinsManager.ShowStats (project);
+			Addins.AddinsManager.ShowStats (project as ProjectLongoMatch);
 			System.GC.Collect ();
 		}
 
@@ -398,7 +427,7 @@ namespace LongoMatch.Gui
 		{
 			Log.Information ("Remux file");
 			try {
-				Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
+				Remuxer remuxer = new Remuxer (App.Current.MultimediaToolkit.DiscoverFile (inputFile),
 					                  outputFile, muxer);
 				return remuxer.Remux (mainWindow as Gtk.Window);
 			} catch (Exception e) {
@@ -409,10 +438,10 @@ namespace LongoMatch.Gui
 
 		public void OpenProject (Project project, ProjectType projectType, 
 		                         CaptureSettings props, EventsFilter filter,
-		                         out IAnalysisWindow analysisWindow)
+		                         out IAnalysisWindowBase analysisWindow)
 		{
 			Log.Information ("Open project");
-			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
+			analysisWindow = mainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
 		}
 
 		public void CloseProject ()
@@ -506,6 +535,34 @@ namespace LongoMatch.Gui
 			Gtk.Application.Invoke (handler);
 		}
 
+		public Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
+		                                        string countText, string emptyText,
+		                                        CreateEvent<T> evt) where T: ITemplate
+		{
+			bool ret = false;
+			EntryDialog dialog = new EntryDialog (mainWindow as Gtk.Window);
+			dialog.ShowCount = true;
+			dialog.Title = dialog.Text = Catalog.GetString (defaultName);
+			dialog.SelectText ();
+			dialog.CountText = Catalog.GetString (countText);
+			dialog.AvailableTemplates = availableTemplates.Select (t => t.Name).ToList ();
+
+			while (dialog.Run () == (int)ResponseType.Ok) {
+				if (dialog.Text == "") {
+					ErrorMessage (Catalog.GetString (emptyText), dialog);
+					continue;
+				} else {
+					evt.Name = dialog.Text;
+					evt.Count = dialog.Count;
+					evt.Source = availableTemplates.FirstOrDefault (t => t.Name == dialog.SelectedTemplate);
+					ret = true;
+					break;
+				}
+			}
+			dialog.Destroy ();
+			return Task.Factory.StartNew (() => ret);
+		}
+
 		Widget GetParentWidget (object parent)
 		{
 			if (parent is Widget) {
@@ -515,6 +572,17 @@ namespace LongoMatch.Gui
 				return mainWindow;
 			}
 			return null;
+		}
+
+		void RegistryCanvasFromDrawables ()
+		{
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Counter), typeof(CounterObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Cross), typeof(CrossObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Ellipse), typeof(EllipseObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Line), typeof(LineObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Quadrilateral), typeof(QuadrilateralObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Rectangle), typeof(RectangleObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Text), typeof(TextObject), "LongoMatch.Drawing");
 		}
 	}
 }

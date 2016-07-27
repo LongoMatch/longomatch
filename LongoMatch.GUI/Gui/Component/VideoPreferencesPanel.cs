@@ -17,8 +17,8 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core.Common;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using Misc = VAS.UI.Helpers.Misc;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -31,23 +31,23 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			
-			if (Config.FPS_N == 30) {
+			if (App.Current.Config.FPS_N == 30) {
 				fpscombobox.Active = 1;
-			} else if (Config.FPS_N == 50) {
+			} else if (App.Current.Config.FPS_N == 50) {
 				fpscombobox.Active = 2;
-			} else if (Config.FPS_N == 60) {
+			} else if (App.Current.Config.FPS_N == 60) {
 				fpscombobox.Active = 3;
 			} else {
 				fpscombobox.Active = 0;
 			}
 			fpscombobox.Changed += HandleFPSChanged;
-			Misc.FillImageFormat (renderimagecombo, VideoStandards.Rendering, Config.RenderVideoStandard);
-			Misc.FillEncodingFormat (renderenccombo, Config.RenderEncodingProfile);
-			Misc.FillQuality (renderqualcombo, Config.RenderEncodingQuality);
+			Misc.FillImageFormat (renderimagecombo, VideoStandards.Rendering, App.Current.Config.RenderVideoStandard);
+			Misc.FillEncodingFormat (renderenccombo, App.Current.Config.RenderEncodingProfile);
+			Misc.FillQuality (renderqualcombo, App.Current.Config.RenderEncodingQuality);
 			
-			Misc.FillImageFormat (captureimagecombo, VideoStandards.Capture, Config.CaptureVideoStandard);
-			Misc.FillEncodingFormat (captureenccombo, Config.CaptureEncodingProfile);
-			Misc.FillQuality (capturequalcombo, Config.CaptureEncodingQuality);
+			Misc.FillImageFormat (captureimagecombo, VideoStandards.Capture, App.Current.Config.CaptureVideoStandard);
+			Misc.FillEncodingFormat (captureenccombo, App.Current.Config.CaptureEncodingProfile);
+			Misc.FillQuality (capturequalcombo, App.Current.Config.CaptureEncodingQuality);
 			
 			renderimagecombo.Changed += HandleImageChanged;
 			captureimagecombo.Changed += HandleImageChanged;
@@ -64,9 +64,9 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Fill, 0, 0);
 			enableSound.CanFocus = false;
 			enableSound.Show ();
-			enableSound.Active = Config.EnableAudio;
+			enableSound.Active = App.Current.Config.EnableAudio;
 			enableSound.Toggled += (sender, e) => {
-				Config.EnableAudio = enableSound.Active;
+				App.Current.Config.EnableAudio = enableSound.Active;
 			};
 
 			overlayTitle = new CheckButton ();
@@ -75,9 +75,9 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Fill, 0, 0);
 			overlayTitle.CanFocus = false;
 			overlayTitle.Show ();
-			overlayTitle.Active = Config.OverlayTitle;
+			overlayTitle.Active = App.Current.Config.OverlayTitle;
 			overlayTitle.Toggled += (sender, e) => {
-				Config.OverlayTitle = overlayTitle.Active;
+				App.Current.Config.OverlayTitle = overlayTitle.Active;
 			};
 			
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
@@ -107,15 +107,15 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFPSChanged (object sender, EventArgs e)
 		{
-			Config.FPS_D = 1;
+			App.Current.Config.FPS_D = 1;
 			if (fpscombobox.Active == 0) {
-				Config.FPS_N = 25;
+				App.Current.Config.FPS_N = 25;
 			} else if (fpscombobox.Active == 1) {
-				Config.FPS_N = 30;
+				App.Current.Config.FPS_N = 30;
 			} else if (fpscombobox.Active == 2) {
-				Config.FPS_N = 50;
+				App.Current.Config.FPS_N = 50;
 			} else if (fpscombobox.Active == 3) {
-				Config.FPS_N = 60;
+				App.Current.Config.FPS_N = 60;
 			}
 		}
 
@@ -129,11 +129,11 @@ namespace LongoMatch.Gui.Component
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
 			qual = (EncodingQuality)store.GetValue (iter, 1);
-			
+
 			if (combo == renderqualcombo)
-				Config.RenderEncodingQuality = qual;
+				App.Current.Config.RenderEncodingQuality = qual;
 			else
-				Config.CaptureEncodingQuality = qual;
+				App.Current.Config.CaptureEncodingQuality = qual;
 		}
 
 		void HandleImageChanged (object sender, EventArgs e)
@@ -142,15 +142,15 @@ namespace LongoMatch.Gui.Component
 			ListStore store;
 			TreeIter iter;
 			ComboBox combo = sender as ComboBox;
-			
+
 			combo.GetActiveIter (out iter);
 			store = combo.Model as ListStore;
 			std = (VideoStandard)store.GetValue (iter, 1);
 			
 			if (combo == renderimagecombo)
-				Config.RenderVideoStandard = std;
+				App.Current.Config.RenderVideoStandard = std;
 			else
-				Config.CaptureVideoStandard = std;
+				App.Current.Config.CaptureVideoStandard = std;
 			
 		}
 
@@ -166,9 +166,9 @@ namespace LongoMatch.Gui.Component
 			enc = (EncodingProfile)store.GetValue (iter, 1);
 			
 			if (combo == renderenccombo)
-				Config.RenderEncodingProfile = enc;
+				App.Current.Config.RenderEncodingProfile = enc;
 			else
-				Config.CaptureEncodingProfile = enc;
+				App.Current.Config.CaptureEncodingProfile = enc;
 			
 		}
 	}

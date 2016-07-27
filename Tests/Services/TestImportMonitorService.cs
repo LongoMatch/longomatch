@@ -18,16 +18,18 @@
 using System;
 using System.IO;
 using LongoMatch;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers.Misc;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
-using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Handlers.Misc;
+using VAS.Core.Interfaces;
+using Constants = LongoMatch.Core.Common.Constants;
+using LongoMatch.Services;
+using VAS.Core.Interfaces.GUI;
+using LongoMatch.Core.Store.Templates;
+using LongoMatch.DB;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
 
 namespace Tests.Services
 {
@@ -81,11 +83,10 @@ namespace Tests.Services
 			storageManagerMock.Object.ActiveDB = storageMock.Object;
 			var uiMock = new Mock<IGUIToolkit> ();
 			uiMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
-			Config.EventsBroker = new EventsBroker ();
-			Config.CategoriesTemplatesProvider = dashboardsProviderMock.Object;
-			Config.TeamTemplatesProvider = teamsProviderMock.Object;
-			Config.DatabaseManager = storageManagerMock.Object;
-			Config.GUIToolkit = uiMock.Object;
+			App.Current.CategoriesTemplatesProvider = dashboardsProviderMock.Object;
+			App.Current.TeamTemplatesProvider = teamsProviderMock.Object;
+			App.Current.DatabaseManager = storageManagerMock.Object;
+			App.Current.GUIToolkit = uiMock.Object;
 			tmpDir = Path.Combine (Path.GetTempPath (), Path.GetRandomFileName ());
 			Directory.CreateDirectory (tmpDir);
 			monitor = new DummyMonitor ();
@@ -125,7 +126,7 @@ namespace Tests.Services
 		[Test]
 		public void TestImportFilesAtStartup ()
 		{
-			Dashboard dashboard = Dashboard.DefaultTemplate (1);
+			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			FileStorage.StoreAt (dashboard, outPath);
 			dashboardsProviderMock.Verify (s => s.Add (dashboard), Times.Never ());
@@ -139,7 +140,7 @@ namespace Tests.Services
 		public void TestAddDashboard ()
 		{
 			service.Start ();
-			Dashboard dashboard = Dashboard.DefaultTemplate (1);
+			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			FileStorage.StoreAt (dashboard, outPath);
 			monitor.AddFile (outPath);
@@ -152,7 +153,7 @@ namespace Tests.Services
 		public void TestAddTeam ()
 		{
 			service.Start ();
-			Team team = Team.DefaultTemplate (1);
+			SportsTeam team = SportsTeam.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.TEAMS_TEMPLATE_EXT);
 			FileStorage.StoreAt (team, outPath);
 			monitor.AddFile (outPath);
@@ -165,11 +166,11 @@ namespace Tests.Services
 		public void TestAddProject ()
 		{
 			service.Start ();
-			Project project = new Project ();
+			ProjectLongoMatch project = new ProjectLongoMatch ();
 			string outPath = Path.Combine (tmpDir, "test" + Constants.PROJECT_EXT);
 			FileStorage.StoreAt (project, outPath);
 			monitor.AddFile (outPath);
-			storageMock.Verify (s => s.Store <Project> (project, true));
+			storageMock.Verify (s => s.Store <ProjectLongoMatch> (project, true));
 			Assert.IsFalse (File.Exists (outPath));
 			service.Stop ();
 		}

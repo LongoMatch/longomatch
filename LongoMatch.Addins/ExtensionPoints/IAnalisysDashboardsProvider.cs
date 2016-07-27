@@ -15,15 +15,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Store.Templates;
 using System.Collections.Generic;
 using Mono.Addins;
+using VAS.Addins.ExtensionPoints;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IAnalisysDashboardsProvider: ILongoMatchPlugin
+	public interface IAnalisysDashboardsProvider: IPlugin
 	{
 		List<Dashboard> Dashboards {
 			get;

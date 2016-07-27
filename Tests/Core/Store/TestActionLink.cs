@@ -15,11 +15,10 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.ObjectModel;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace Tests.Core.Store
 {
@@ -77,15 +76,16 @@ namespace Tests.Core.Store
 			Assert.IsTrue (link.Equals (link2));
 		}
 
-		[Test()]
-		public void TestIsChanged () {
+		[Test ()]
+		public void TestIsChanged ()
+		{
 			ActionLink link = CreateLink ();
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
 			link.SourceButton = new DashboardButton ();
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
-			link.SourceTags.Add (new Tag("test"));
+			link.SourceTags.Add (new Tag ("test"));
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
 			link.SourceTags = null;
@@ -94,7 +94,7 @@ namespace Tests.Core.Store
 			link.DestinationButton = new DashboardButton ();
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
-			link.DestinationTags.Remove (link.DestinationTags[0]);
+			link.DestinationTags.Remove (link.DestinationTags [0]);
 			Assert.IsTrue (link.IsChanged);
 			link.IsChanged = false;
 			link.DestinationTags = null;

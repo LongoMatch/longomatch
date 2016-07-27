@@ -15,22 +15,22 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using Mono.Addins;
+using VAS.Addins.ExtensionPoints;
+using VAS.Core;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
 
 
 namespace LongoMatch.Plugins
 {
 	[Extension]
-	public class LongoMatchImporter: ILongoMatchPlugin, IImportProject
+	public class LongoMatchImporter: IPlugin, IImportProject
 	{
-
 		public LongoMatchImporter ()
 		{
 		}
@@ -55,15 +55,17 @@ namespace LongoMatch.Plugins
 
 		public Project ImportProject ()
 		{
-			Project project = null;
+			ProjectLongoMatch project = null;
 
-			string filename = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
-				FilterName, FilterExtensions);
+			string filename = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir,
+				                  FilterName, FilterExtensions);
 			if (filename == null)
 				return null;
 
-			IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
-			busy.ShowSync (() => { project = Project.Import (filename); });
+			IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Importing project..."));
+			busy.ShowSync (() => {
+				project = Project.Import (filename) as ProjectLongoMatch;
+			});
 			return project;
 		}
 
@@ -75,7 +77,7 @@ namespace LongoMatch.Plugins
 
 		public string[] FilterExtensions { 
 			get {
-				return new string[] {"*" + Constants.PROJECT_EXT};
+				return new string[] { "*" + Constants.PROJECT_EXT };
 			}
 		}
 
@@ -90,6 +92,7 @@ namespace LongoMatch.Plugins
 				return false;
 			}
 		}
+
 		#endregion
 	}
 }

@@ -15,16 +15,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gtk;
-using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
-using LongoMatch.Drawing;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Store;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Gui.Menus
 {
-	public class PeriodsMenu: Gtk.Menu
+	public class PeriodsMenu : Gtk.Menu
 	{
 		MenuItem additem, delitem;
 		Timer timer;
@@ -54,9 +53,9 @@ namespace LongoMatch.Gui.Menus
 		{
 			additem = new MenuItem (Catalog.GetString ("Add period"));
 			additem.Activated += (sender, e) => {
-				string periodname = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
+				string periodname = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
 					                    (project.Periods.Count + 1).ToString (),
-					null).Result;
+					                    null).Result;
 				if (periodname != null) {
 					project.Dashboard.GamePeriods.Add (periodname);
 					Period p = new Period { Name = periodname };
@@ -85,4 +84,3 @@ namespace LongoMatch.Gui.Menus
 		}
 	}
 }
-

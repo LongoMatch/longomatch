@@ -15,11 +15,9 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gtk;
 using LongoMatch.Core.Store;
-using Misc = LongoMatch.Gui.Helpers.Misc;
-
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -62,21 +60,19 @@ namespace LongoMatch.Gui.Component
 
 		void SetStyle ()
 		{
-			Pango.FontDescription numDesc = Pango.FontDescription.FromString (Config.Style.Font + " 48px");
-			Pango.FontDescription nameDesc = Pango.FontDescription.FromString (Config.Style.Font + " 30px");
+			Pango.FontDescription numDesc = Pango.FontDescription.FromString (App.Current.Style.Font + " 48px");
+			Pango.FontDescription nameDesc = Pango.FontDescription.FromString (App.Current.Style.Font + " 30px");
 
-			homescoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			homescorelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			homescoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			homescorelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			homescorelabel.ModifyFont (numDesc);
-			awayscoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			awayscorelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			awayscoreeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			awayscorelabel.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			awayscorelabel.ModifyFont (numDesc);
 			homenamelabel.ModifyFont (nameDesc);
-			homenamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			homenamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			awaynamelabel.ModifyFont (nameDesc);
-			awaynamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			awaynamelabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 		}
-		
 	}
 }
-

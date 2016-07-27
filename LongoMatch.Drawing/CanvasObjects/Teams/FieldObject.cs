@@ -15,11 +15,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -55,18 +57,18 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public List<PlayerObject> HomePlayingPlayers {
+		public List<SportsPlayerObject> HomePlayingPlayers {
 			get;
 			set;
 		}
 
-		public List<PlayerObject> AwayPlayingPlayers {
+		public List<SportsPlayerObject> AwayPlayingPlayers {
 			get;
 			set;
 		}
 
 		public void LoadTeams (Image backgroundImg, int[] homeF, int[] awayF,
-		                       List<PlayerObject> homeT, List<PlayerObject> awayT,
+		                       List<SportsPlayerObject> homeT, List<SportsPlayerObject> awayT,
 		                       int size, int nteams)
 		{
 			background = backgroundImg;
@@ -94,7 +96,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		void UpdateTeam (List<PlayerObject> players, int[] formation, TeamType team)
+		void UpdateTeam (List<SportsPlayerObject> players, int[] formation, TeamType team)
 		{
 			int index = 0, offsetX;
 			int width, colWidth;
@@ -103,10 +105,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			width = Width / NTeams;
 			colWidth = width / formation.Length;
 			if (team == TeamType.LOCAL) {
-				color = Config.Style.HomeTeamColor;
+				color = App.Current.Style.HomeTeamColor;
 				offsetX = 0;
 			} else {
-				color = Config.Style.AwayTeamColor; 
+				color = App.Current.Style.AwayTeamColor; 
 				offsetX = Width;
 			}
 
@@ -126,7 +128,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 				for (int row = 0; row < formation [col]; row++) {
 					double rowY;
-					PlayerObject po = players [index];
+					SportsPlayerObject po = players [index];
 
 					if (team == TeamType.LOCAL) {
 						rowY = rowHeight * row + rowHeight / 2;
@@ -134,8 +136,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 						rowY = Height - (rowHeight * row + rowHeight / 2);
 					}
 
-					po.Position = new Point (colX, rowY);
 					po.Size = playerSize;
+					po.Center = new Point (colX, rowY);
 					index++;
 					if (players.Count == index)
 						break;
@@ -151,7 +153,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				tk.DrawImage (background);
 			}
 			if (HomePlayingPlayers != null) {
-				foreach (PlayerObject po in HomePlayingPlayers) {
+				foreach (SportsPlayerObject po in HomePlayingPlayers) {
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
@@ -159,7 +161,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				}
 			}
 			if (AwayPlayingPlayers != null) {
-				foreach (PlayerObject po in AwayPlayingPlayers) {
+				foreach (SportsPlayerObject po in AwayPlayingPlayers) {
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
@@ -173,17 +175,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			Selection selection = null;
 
-			point = Utils.ToUserCoords (point, Position, 1, 1);
+			point = VASDrawing.Utils.ToUserCoords (point, Position, 1, 1);
 
 			if (HomePlayingPlayers != null) {
-				foreach (PlayerObject po in HomePlayingPlayers) {
+				foreach (SportsPlayerObject po in HomePlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;
 				}
 			}
 			if (selection == null && AwayPlayingPlayers != null) {
-				foreach (PlayerObject po in AwayPlayingPlayers) {
+				foreach (SportsPlayerObject po in AwayPlayingPlayers) {
 					selection = po.GetSelection (point, precision);
 					if (selection != null)
 						break;

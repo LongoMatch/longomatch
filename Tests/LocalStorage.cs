@@ -21,6 +21,9 @@ using System.Linq;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Filters;
 
 namespace Tests
 {
@@ -50,12 +53,12 @@ namespace Tests
 			// nothing to do here
 		}
 
-		public IEnumerable<T> Retrieve<T> (LongoMatch.Core.Filters.QueryFilter filter) where T : IStorable
+		public IEnumerable<T> Retrieve<T> (QueryFilter filter) where T : IStorable
 		{
 			throw new NotImplementedException ();
 		}
 
-		public IEnumerable<T> RetrieveFull<T> (LongoMatch.Core.Filters.QueryFilter filter, IStorableObjectsCache cache) where T : IStorable
+		public IEnumerable<T> RetrieveFull<T> (QueryFilter filter, IStorableObjectsCache cache) where T : IStorable
 		{
 			throw new NotImplementedException ();
 		}
@@ -91,7 +94,7 @@ namespace Tests
 					Name = "LocalStorage",
 					LastBackup = DateTime.UtcNow,
 					LastCleanup = DateTime.UtcNow,
-					Version = Config.Version
+					Version = App.Current.Version
 				};
 			}
 		}

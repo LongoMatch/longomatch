@@ -9,22 +9,12 @@
     <Import_RootNamespace>LongoMatch.Drawing</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Canvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayslistCellRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\Blackboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\CamerasTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\DashboardCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PositionTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Widgets\Timerule.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\ButtonObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\CanvasObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\PositionObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CounterObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CrossObject.cs" />
@@ -33,31 +23,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\QuadrilateralObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\RectangleObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\TextObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ActionLinkObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CategoryObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\DashboardButtonObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\LinkAnchorObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\TagObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\TimerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\FieldObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayerObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\PlayersTaggerObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\CameraObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\LabelObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\NeedleObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineEventObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimelineObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\TimeNodeObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)TestCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionCanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BackgroundCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\CircleImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimelineLabels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Widgets\SportDashboardCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\SportsPlayerObject.cs" />
   </ItemGroup>
 </Project>

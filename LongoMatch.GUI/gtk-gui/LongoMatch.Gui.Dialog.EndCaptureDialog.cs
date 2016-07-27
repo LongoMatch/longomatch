@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("A capture project is actually running.\nYou can continue with the current capture, cancel it or save your project. \n\n<b>Warning: If you cancel the current project all your changes will be lost.</b>");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("A capture project is actually running.\nYou can continue with the current capture, cancel it or save your project. \n\n<b>Warning: If you cancel the current project all your changes will be lost.</b>");
 			this.label1.UseMarkup = true;
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.hbox2.Add (this.label1);
@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Dialog
 			this.returnbutton.CanFocus = true;
 			this.returnbutton.Name = "returnbutton";
 			this.returnbutton.UseUnderline = true;
-			this.returnbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Return");
+			this.returnbutton.Label = global::VAS.Core.Catalog.GetString ("Return");
 			global::Gtk.Image w5 = new global::Gtk.Image ();
 			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-undo", global::Gtk.IconSize.Button);
 			this.returnbutton.Image = w5;
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Dialog
 			this.quitbutton.CanFocus = true;
 			this.quitbutton.Name = "quitbutton";
 			this.quitbutton.UseUnderline = true;
-			this.quitbutton.Label = global::LongoMatch.Core.Catalog.GetString ("Cancel capture");
+			this.quitbutton.Label = global::VAS.Core.Catalog.GetString ("Cancel capture");
 			global::Gtk.Image w7 = new global::Gtk.Image ();
 			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-cancel", global::Gtk.IconSize.Button);
 			this.quitbutton.Image = w7;
@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Dialog
 			this.savebutton.CanFocus = true;
 			this.savebutton.Name = "savebutton";
 			this.savebutton.UseUnderline = true;
-			this.savebutton.Label = global::LongoMatch.Core.Catalog.GetString ("Stop capture and save project");
+			this.savebutton.Label = global::VAS.Core.Catalog.GetString ("Stop capture and save project");
 			global::Gtk.Image w9 = new global::Gtk.Image ();
 			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
 			this.savebutton.Image = w9;

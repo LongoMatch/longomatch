@@ -15,21 +15,23 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Common;
+using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Menus;
-using System.Collections.Generic;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Store;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysPositionViewer : Gtk.Bin
 	{
-	
-		PlaysMenu menu;
-		Project project;
+		SportsPlaysMenu menu;
+		ProjectLongoMatch project;
 
 		public PlaysPositionViewer ()
 		{
@@ -40,30 +42,32 @@ namespace LongoMatch.Gui.Component
 			field.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
-			Config.EventsBroker.EventLoadedEvent += HandlePlayLoaded;
-			menu = new PlaysMenu ();
+			App.Current.EventsBroker.Subscribe<EventLoadedEvent> (HandlePlayLoaded);
+			menu = new SportsPlaysMenu ();
 		}
 
-		public void LoadProject (Project project, EventsFilter filter)
+		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)
 		{
 			this.project = project;
 			if (project != null) {
+				var timeLine = project.Timeline.OfType<TimelineEventLongoMatch> ();
+
 				field.Tagger.Project = project;
 				hfield.Tagger.Project = project;
 				goal.Tagger.Project = project;
 				field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
 				hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
 				goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
-				field.Tagger.Plays = project.Timeline;
-				hfield.Tagger.Plays = project.Timeline;
-				goal.Tagger.Plays = project.Timeline;
+				field.Tagger.Plays = timeLine;
+				hfield.Tagger.Plays = timeLine;
+				goal.Tagger.Plays = timeLine;
 				field.Tagger.Filter = filter;
 				hfield.Tagger.Filter = filter;
 				goal.Tagger.Filter = filter;
 			}
 		}
 
-		public void AddPlay (TimelineEvent play)
+		public void AddPlay (TimelineEventLongoMatch play)
 		{
 			field.Tagger.AddPlay (play);
 			hfield.Tagger.AddPlay (play);
@@ -71,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		public void RemovePlays (List<TimelineEvent> plays)
+		public void RemovePlays (List<TimelineEventLongoMatch> plays)
 		{
 			field.Tagger.RemovePlays (plays);
 			hfield.Tagger.RemovePlays (plays);
@@ -79,12 +83,12 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		void HandlePlayLoaded (TimelineEvent play)
+		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			if (play != null) {
-				field.Tagger.SelectPlay (play);
-				hfield.Tagger.SelectPlay (play);
-				goal.Tagger.SelectPlay (play);
+			if (e.TimelineEvent != null) {
+				field.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
+				hfield.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
+				goal.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
 			} else {
 				field.Tagger.ClearSelection ();
 				hfield.Tagger.ClearSelection ();
@@ -92,9 +96,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleShowMenuEvent (List<TimelineEvent> plays)
+		void HandleShowMenuEvent (IEnumerable<TimelineEvent> plays)
 		{
-			if (plays == null || plays.Count == 0) {
+			if (plays == null || !plays.Any ()) {
 				return;
 			}
 			menu.ShowMenu (project, plays);
@@ -105,9 +109,8 @@ namespace LongoMatch.Gui.Component
 			field.Destroy ();
 			hfield.Destroy ();
 			goal.Destroy ();
-			Config.EventsBroker.EventLoadedEvent -= HandlePlayLoaded;
+			App.Current.EventsBroker.Unsubscribe<EventLoadedEvent> (HandlePlayLoaded);
 			base.OnDestroyed ();
 		}
 	}
 }
-

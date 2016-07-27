@@ -17,12 +17,16 @@
 //
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
+using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing;
+using VAS.Drawing.CanvasObjects.Timeline;
+using LMTimeline = LongoMatch.Drawing.CanvasObjects.Timeline;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -40,9 +44,9 @@ namespace LongoMatch.Drawing.Widgets
 		public TimersTimeline (IWidget widget) : base (widget)
 		{
 			secondsPerPixel = 0.1;
-			Accuracy = Constants.TIMELINE_ACCURACY;
+			Accuracy = VASDrawing.Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			HeightRequest = Constants.TIMER_HEIGHT;
+			HeightRequest = VASDrawing.Constants.TIMER_HEIGHT;
 		}
 
 		public TimersTimeline () : this (null)
@@ -105,8 +109,8 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas (List<Timer> timers)
 		{
 			timertimeline = new TimerTimeline (timers, true, NodeDraggingMode.All, true, duration, 0,
-				Config.Style.PaletteBackground,
-				Config.Style.PaletteBackgroundLight);
+				App.Current.Style.PaletteBackground,
+				App.Current.Style.PaletteBackgroundLight);
 			foreach (Timer t in timers) {
 				this.timers [t] = timertimeline;
 			}
@@ -135,7 +139,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			if (TimeNodeChanged != null) {
 				Time moveTime;
-				TimeNode tn = (sel.Drawable as TimeNodeObject).TimeNode;
+				TimeNode tn = (sel.Drawable as LMTimeline.TimeNodeObject).TimeNode;
 
 				if (sel.Position == SelectionPosition.Right) {
 					moveTime = tn.Stop;
@@ -151,10 +155,10 @@ namespace LongoMatch.Drawing.Widgets
 			if (ShowTimerMenuEvent != null) {
 				Timer t = null;
 				if (Selections.Count > 0) {
-					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject; 
+					TimerTimeNodeObject to = Selections.Last ().Drawable as TimerTimeNodeObject;
 					t = to.Timer;
 				} 
-				ShowTimerMenuEvent (t, Utils.PosToTime (coords, SecondsPerPixel));
+				ShowTimerMenuEvent (t, VASDrawing.Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 	}

@@ -16,18 +16,25 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
-using LongoMatch.Core;
 using Pango;
-using System.Collections.ObjectModel;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Store;
+using VAS.Drawing.Cairo;
+using VAS.Drawing.CanvasObjects.Timeline;
+using VAS.Drawing.Widgets;
+using VAS.UI.Menus;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -40,7 +47,7 @@ namespace LongoMatch.Gui.Component
 		CamerasTimeline camerasTimeline;
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
-		Project project;
+		ProjectLongoMatch project;
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
@@ -83,15 +90,15 @@ namespace LongoMatch.Gui.Component
 			// We need to align the timerule and the beginning of labels list
 			timerulearea.HeightRequest = StyleConf.TimelineCameraHeight;
 
-			main_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
-			sec_cam_label.ModifyFont (FontDescription.FromString (Config.Style.Font + " bold 14"));
+			main_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
+			sec_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 
 			main_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
 			sec_cam_playerbin.Mode = PlayerViewOperationMode.Synchronization;
 
 			ConnectSignals ();
 
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, false);
+			Helpers.Misc.SetFocus (this, false);
 
 			menu = new PeriodsMenu ();
 		}
@@ -108,9 +115,9 @@ namespace LongoMatch.Gui.Component
 			// Listen for seek events from the timerule
 			timerule.SeekEvent += HandleTimeruleSeek;
 			timerule.Player = main_cam_playerbin.Player;
-			Config.EventsBroker.SeekEvent += Seek;
-			Config.EventsBroker.TogglePlayEvent += HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed += HandleKeyPressed;
+			App.Current.EventsBroker.Subscribe<SeekEvent> (Seek);
+			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
 			// Handle dragging of periods
 			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
 			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
@@ -142,9 +149,9 @@ namespace LongoMatch.Gui.Component
 				timeoutID = 0;
 			}
 
-			Config.EventsBroker.SeekEvent -= Seek;
-			Config.EventsBroker.TogglePlayEvent -= HandleTogglePlayEvent;
-			Config.EventsBroker.KeyPressed -= HandleKeyPressed;
+			App.Current.EventsBroker.Unsubscribe<SeekEvent> (Seek);
+			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 
 			main_cam_playerbin.Destroy ();
 			sec_cam_playerbin.Destroy ();
@@ -166,13 +173,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Seek (Time time, bool accurate, bool synchronous = false, bool throttled = false)
+		public void Seek (SeekEvent e)
 		{
 			if (main_cam_playerbin.Player.Opened) {
-				main_cam_playerbin.Player.Seek (time, accurate, synchronous, throttled);
+				main_cam_playerbin.Player.Seek (e.Time, e.Accurate, e.Synchronous, e.Throttled);
 			}
 			if (sec_cam_playerbin.Player.Opened) {
-				sec_cam_playerbin.Player.Seek (time, accurate, synchronous, throttled);
+				sec_cam_playerbin.Player.Seek (e.Time, e.Accurate, e.Synchronous, e.Throttled);
 			}
 		}
 
@@ -180,7 +187,7 @@ namespace LongoMatch.Gui.Component
 		{
 			/* If a new camera has been added or a camera has been removed,
 			 * make sure events have a correct camera configuration */
-			foreach (TimelineEvent evt in project.Timeline) {
+			foreach (TimelineEventLongoMatch evt in project.Timeline) {
 				int cc = evt.CamerasConfig.Count;
 				int fc = project.Description.FileSet.Count;
 
@@ -205,7 +212,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				Time start, pDuration;
 				ObservableCollection <string> gamePeriods;
@@ -336,9 +343,9 @@ namespace LongoMatch.Gui.Component
 		/// Try to slave the secondary player to the first 
 		/// </summary>
 		/// <param name="playing">If set to <c>true</c> playing.</param>
-		void HandleStateChanged (object sender, bool playing)
+		void HandleStateChanged (PlaybackStateChangedEvent e)
 		{
-			if (playing) {
+			if (e.Playing) {
 				if (sec_cam_playerbin.Player.Opened) {
 					sec_cam_playerbin.Player.Play ();
 				}
@@ -349,12 +356,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleKeyPressed (object sender, HotKey key)
+		void HandleKeyPressed (KeyPressedEvent e)
 		{
 			KeyAction action;
 
 			try {
-				action = Config.Hotkeys.ActionsHotkeys.GetKeyByValue (key);
+				action = App.Current.Config.Hotkeys.ActionsHotkeys.GetKeyByValue (e.Key);
 			} catch (Exception ex) {
 				/* The dictionary contains 2 equal values for different keys */
 				Log.Exception (ex);
@@ -496,7 +503,7 @@ namespace LongoMatch.Gui.Component
 			if (camera != null) {
 				sec_cam_label.Markup = String.Format (
 					"<b>{0}</b> - <span foreground=\"{1}\" size=\"smaller\">{2}: {3}</span>",
-					camera.MediaFile.Name, Config.Style.PaletteActive.ToRGBString (false),
+					camera.MediaFile.Name, App.Current.Style.PaletteActive.ToRGBString (false),
 					Catalog.GetString ("Offset"), camera.MediaFile.Offset.ToMSecondsString ());
 			}
 		}
@@ -554,7 +561,10 @@ namespace LongoMatch.Gui.Component
 
 			Pause ();
 			// Don't try to be accurate here. We are looking for period starts
-			Seek (time, false);
+			Seek (new SeekEvent {
+				Time = time,
+				Accurate = false
+			});
 		}
 
 		/// <summary>
@@ -591,9 +601,9 @@ namespace LongoMatch.Gui.Component
 				menu.ShowMenu (project, timer, time, camerasTimeline.PeriodsTimeline, camerasTimeline);
 		}
 
-		void HandleTogglePlayEvent (bool playing)
+		void HandleTogglePlayEvent (TogglePlayEvent e)
 		{
-			if (playing) {
+			if (e.Playing) {
 				main_cam_playerbin.Player.Play ();
 			} else {
 				Pause ();
@@ -602,8 +612,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleTimeruleSeek (Time pos, bool accurate, bool synchronous = false, bool throttled = false)
 		{
-			Config.EventsBroker.EmitSeekEvent (pos, accurate, synchronous, throttled);
+			Seek (new SeekEvent {
+				Time = pos,
+				Accurate = accurate,
+				Synchronous = synchronous,
+				Throttled = throttled
+			});
 		}
 	}
 }
-

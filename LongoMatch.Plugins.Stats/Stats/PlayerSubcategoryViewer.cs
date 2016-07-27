@@ -17,35 +17,35 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Stats;
-using LongoMatch.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayerSubcategoryViewer : Gtk.Bin
 	{
 		ListStore store;
-		
+
 		public PlayerSubcategoryViewer ()
 		{
 			this.Build ();
 			treeview.AppendColumn (Catalog.GetString ("Name"), new Gtk.CellRendererText (), "text", 0);
-			treeview.AppendColumn (Catalog.GetString("Count"), new Gtk.CellRendererText (), "text", 1);
+			treeview.AppendColumn (Catalog.GetString ("Count"), new Gtk.CellRendererText (), "text", 1);
 			plotter1.ShowTeams = false;
 			plotter1.WidthRequest = 500;
 		}
-		
-		public void LoadStats (SubCategoryStat stats) {
-			store = new ListStore(typeof(string), typeof(string));
+
+		public void LoadStats (SubCategoryStat stats)
+		{
+			store = new ListStore (typeof(string), typeof(string));
 			treeview.Model = store;
 			
-			gtkframe.Markup = String.Format("<b> {0} </b>", stats.Name);
+			gtkframe.Markup = String.Format ("<b> {0} </b>", stats.Name);
 			plotter1.LoadHistogram (stats);
 			
 			foreach (PercentualStat st in stats.OptionStats) {
-				store.AppendValues (st.Name, st.TotalCount.ToString());
+				store.AppendValues (st.Name, st.TotalCount.ToString ());
 			}
 		}
 	}

@@ -17,14 +17,13 @@
 // 
 using System;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using Pango;
-using EventType = LongoMatch.Core.Store.EventType;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using EventType = VAS.Core.Store.EventType;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -53,7 +52,7 @@ namespace LongoMatch.Gui.Component
 
 			CellRendererText nameCell = new CellRendererText ();
 			nameCell.FontDesc = FontDescription.FromString (
-				String.Format ("{0} {1} {2}px", Config.Style.Font, "semibold", StyleConf.ListTextFontSize));
+				String.Format ("{0} {1} {2}px", App.Current.Style.Font, "semibold", StyleConf.ListTextFontSize));
 			nameCell.Height = 32;
 			filterColumn.PackStart (nameCell, true);
 			filterColumn.AddAttribute (nameCell, "text", COL_DESCRIPTION);
@@ -66,7 +65,7 @@ namespace LongoMatch.Gui.Component
 			AppendColumn (filterColumn);
 			AppendColumn (onlyColumn);
 
-			ModifyFg (StateType.Normal, LongoMatch.Gui.Helpers.Misc.ToGdkColor (Config.Style.PaletteBackgroundLight));
+			ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundLight));
 		}
 
 		public virtual void ToggleAll (bool active)
@@ -126,4 +125,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

@@ -19,9 +19,13 @@ using System;
 using System.IO;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Templates;
+using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
 {
@@ -118,21 +122,21 @@ namespace LongoMatch.Services
 		void HandleFileChangedEvent (FileChangeType eventType, string path)
 		{
 			// Event from the monitor usually comes from non-UI threads.
-			Config.GUIToolkit.Invoke ((s, e) => {
+			App.Current.GUIToolkit.Invoke ((s, e) => {
 				if (eventType == FileChangeType.Created) {
 					string ext = Path.GetExtension (path);
 					try {
 						if (ImportTeams && ext == Constants.TEAMS_TEMPLATE_EXT) {
-							Team team = FileStorage.RetrieveFrom<Team> (path);
-							Config.TeamTemplatesProvider.Add (team);
+							SportsTeam team = FileStorage.RetrieveFrom<SportsTeam> (path);
+							App.Current.TeamTemplatesProvider.Add (team);
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {
 							Dashboard team = FileStorage.RetrieveFrom<Dashboard> (path);
-							Config.CategoriesTemplatesProvider.Add (team);
+							App.Current.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
 							File.Delete (path);
 						} else if (ImportProjects && ext == Constants.PROJECT_EXT) {
-							Project project = FileStorage.RetrieveFrom<Project> (path);
-							Config.DatabaseManager.ActiveDB.Store<Project> (project, true);
+							ProjectLongoMatch project = FileStorage.RetrieveFrom<ProjectLongoMatch> (path);
+							App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
 							File.Delete (path);
 						}
 					} catch (Exception ex) {

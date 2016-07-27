@@ -15,25 +15,23 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Core.Filters;
-using NUnit.Framework;
-using LongoMatch.Core.Store;
 using System.Collections.Generic;
-using System.Reflection;
+using LongoMatch.Core.Filters;
+using LongoMatch.Core.Store;
+using NUnit.Framework;
 
 namespace Tests.Core.Filters
 {
 	[TestFixture ()]
 	public class TestProjectsFilter
 	{
-		List<Project> projects;
+		List<ProjectLongoMatch> projects;
 		ProjectsFilter projectsFilter;
 
 		[TestFixtureSetUp]
 		public void FillProjects ()
 		{
-			projects = new List<Project> ();
+			projects = new List<ProjectLongoMatch> ();
 			AddProject (null, null, "Complu", "Club");
 			AddProject ("Liga", null, "Complu", "Club");
 			AddProject (null, "2015", "Complu", "Club");
@@ -56,7 +54,7 @@ namespace Tests.Core.Filters
 
 		void AddProject (string competition, string season, string homeTeam, string awayTeam)
 		{
-			Project p = new Project ();
+			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Description = new ProjectDescription {
 				Competition = competition,
 				Season = season,

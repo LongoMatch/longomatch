@@ -16,23 +16,21 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
 using System.IO;
 using Gtk;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Store;
 using LongoMatch.Core;
-using LongoMatch.Common;
 
 public partial class MainWindow: Gtk.Window
-{	
+{
 
 	string buf;
 	List<string> teams, categories, dbs;
+
 	
-	
-	public MainWindow (): base (Gtk.WindowType.Toplevel)
+	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
 
@@ -47,7 +45,7 @@ public partial class MainWindow: Gtk.Window
 		FindFiles ();
 		UpdateLabel ();
 	}
-		
+
 	void FindFiles ()
 	{
 		string dbdir, templatesdir;
@@ -56,7 +54,7 @@ public partial class MainWindow: Gtk.Window
 		teams = new List<string> (); 
 		categories = new List<string> ();
 		
-		dbdir = System.IO.Path.Combine (LongoMatch.Config.ConfigDir, "db");
+		dbdir = System.IO.Path.Combine (LongoMatch.App.Current.ConfigDir, "db");
 		if (Directory.Exists (dbdir)) {
 			foreach (string file in Directory.GetFiles (dbdir)) {
 				if (file.EndsWith ("1.db")) {
@@ -65,7 +63,7 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		
-		templatesdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "templates");
+		templatesdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "templates");
 		if (Directory.Exists (templatesdir)) {
 			foreach (string file in Directory.GetFiles (templatesdir)) {
 				if (file.EndsWith (".lct")) {
@@ -79,21 +77,22 @@ public partial class MainWindow: Gtk.Window
 		
 		if (dbs.Count == 0 && teams.Count == 0 && categories.Count == 0) {
 			Gtk.MessageDialog dialog = new MessageDialog (this,
-			                                              DialogFlags.Modal | DialogFlags.DestroyWithParent,
-			                                              MessageType.Info, ButtonsType.Ok, 
-			                                              Catalog.GetString ("Nothing to migrate from the old version"));
-			dialog.Run();
+				                           DialogFlags.Modal | DialogFlags.DestroyWithParent,
+				                           MessageType.Info, ButtonsType.Ok, 
+				                           Catalog.GetString ("Nothing to migrate from the old version"));
+			dialog.Run ();
 			Application.Quit ();
 		}
 	}
-	
-	void UpdateLabel () {
+
+	void UpdateLabel ()
+	{
 		label3.Markup = String.Format (" <b> {0} </b>: {1}\n\n <b> {2} </b>: {3}\n\n <b> {4} </b>: {5}\n\n",
-		                               Catalog.GetString ("Databases"), dbs.Count,
-		                               Catalog.GetString ("Dashboards"), categories.Count,
-		                               Catalog.GetString ("Teams"), teams.Count);
+			Catalog.GetString ("Databases"), dbs.Count,
+			Catalog.GetString ("Dashboards"), categories.Count,
+			Catalog.GetString ("Teams"), teams.Count);
 	}
-	
+
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
@@ -102,10 +101,11 @@ public partial class MainWindow: Gtk.Window
 
 	protected void HandleCloseClicked (object sender, EventArgs e)
 	{
-		Application.Quit();
+		Application.Quit ();
 	}
-	
-	void UpdateText (string t) {
+
+	void UpdateText (string t)
+	{
 		Application.Invoke (delegate {
 			buf += t;
 			textview1.Buffer.Text = buf;
@@ -115,9 +115,9 @@ public partial class MainWindow: Gtk.Window
 
 	void StartMigrationThread ()
 	{
-		string dbdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db");
-		string teamdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "teams");
-		string analysisdir = System.IO.Path.Combine (LongoMatch.Config.HomeDir, "db", "analysis");
+		string dbdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db");
+		string teamdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db", "teams");
+		string analysisdir = System.IO.Path.Combine (LongoMatch.App.Current.HomeDir, "db", "analysis");
 		bool withError = false;
 		MessageDialog d;
 
@@ -184,8 +184,7 @@ public partial class MainWindow: Gtk.Window
 				string p = System.IO.Path.Combine (analysisdir, System.IO.Path.GetFileName (f));
 				LongoMatch.Migration.Converter.ConvertCategories (f, p);
 				UpdateText ("OK\n");
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				UpdateText ("ERROR\n");
 				UpdateText (ex.ToString ());
 				withError = true;
@@ -196,8 +195,7 @@ public partial class MainWindow: Gtk.Window
 				d = new MessageDialog (this, DialogFlags.Modal, MessageType.Info, ButtonsType.Ok, "Everything migrated correctly!");
 				d.Run ();
 				Application.Quit ();
-			}
-			else {
+			} else {
 				convertbutton.Visible = false;
 				progressbar1.Visible = false;
 				d = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error, ButtonsType.Ok, "Some errors where found migrating the old content.");

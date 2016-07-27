@@ -76,8 +76,8 @@ namespace LongoMatch.Gui.Component
 			w2.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child tabledata.Gtk.Table+TableChild
 			this.comboboxaction = global::Gtk.ComboBox.NewText ();
-			this.comboboxaction.AppendText (global::LongoMatch.Core.Catalog.GetString ("Activate -> Deactivate"));
-			this.comboboxaction.AppendText (global::LongoMatch.Core.Catalog.GetString ("Activate -> Activate"));
+			this.comboboxaction.AppendText (global::VAS.Core.Catalog.GetString ("Activate -> Deactivate"));
+			this.comboboxaction.AppendText (global::VAS.Core.Catalog.GetString ("Activate -> Activate"));
 			this.comboboxaction.Name = "comboboxaction";
 			this.comboboxaction.FocusOnClick = false;
 			this.tabledata.Add (this.comboboxaction);
@@ -90,9 +90,9 @@ namespace LongoMatch.Gui.Component
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child tabledata.Gtk.Table+TableChild
 			this.comboboxteamaction = global::Gtk.ComboBox.NewText ();
-			this.comboboxteamaction.AppendText (global::LongoMatch.Core.Catalog.GetString ("Clear"));
-			this.comboboxteamaction.AppendText (global::LongoMatch.Core.Catalog.GetString ("Keep"));
-			this.comboboxteamaction.AppendText (global::LongoMatch.Core.Catalog.GetString ("Invert"));
+			this.comboboxteamaction.AppendText (global::VAS.Core.Catalog.GetString ("Clear"));
+			this.comboboxteamaction.AppendText (global::VAS.Core.Catalog.GetString ("Keep"));
+			this.comboboxteamaction.AppendText (global::VAS.Core.Catalog.GetString ("Invert"));
 			this.comboboxteamaction.Name = "comboboxteamaction";
 			this.tabledata.Add (this.comboboxteamaction);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.tabledata [this.comboboxteamaction]));
@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Component
 			this.labelaction = new global::Gtk.Label ();
 			this.labelaction.Name = "labelaction";
 			this.labelaction.Xalign = 1F;
-			this.labelaction.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Action");
+			this.labelaction.LabelProp = global::VAS.Core.Catalog.GetString ("Action");
 			this.tabledata.Add (this.labelaction);
 			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelaction]));
 			w5.TopAttach = ((uint)(4));
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Component
 			this.labelfrom = new global::Gtk.Label ();
 			this.labelfrom.Name = "labelfrom";
 			this.labelfrom.Xalign = 1F;
-			this.labelfrom.LabelProp = global::LongoMatch.Core.Catalog.GetString ("From:");
+			this.labelfrom.LabelProp = global::VAS.Core.Catalog.GetString ("From:");
 			this.tabledata.Add (this.labelfrom);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelfrom]));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -152,7 +152,7 @@ namespace LongoMatch.Gui.Component
 			this.labelkeepgenerictags = new global::Gtk.Label ();
 			this.labelkeepgenerictags.Name = "labelkeepgenerictags";
 			this.labelkeepgenerictags.Xalign = 1F;
-			this.labelkeepgenerictags.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Keep generic tags");
+			this.labelkeepgenerictags.LabelProp = global::VAS.Core.Catalog.GetString ("Keep generic tags");
 			this.tabledata.Add (this.labelkeepgenerictags);
 			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelkeepgenerictags]));
 			w9.TopAttach = ((uint)(7));
@@ -163,7 +163,7 @@ namespace LongoMatch.Gui.Component
 			this.labelkeepplayertags = new global::Gtk.Label ();
 			this.labelkeepplayertags.Name = "labelkeepplayertags";
 			this.labelkeepplayertags.Xalign = 1F;
-			this.labelkeepplayertags.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Keep player tags");
+			this.labelkeepplayertags.LabelProp = global::VAS.Core.Catalog.GetString ("Keep player tags");
 			this.tabledata.Add (this.labelkeepplayertags);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelkeepplayertags]));
 			w10.TopAttach = ((uint)(6));
@@ -174,7 +174,7 @@ namespace LongoMatch.Gui.Component
 			this.labelteamaction = new global::Gtk.Label ();
 			this.labelteamaction.Name = "labelteamaction";
 			this.labelteamaction.Xalign = 1F;
-			this.labelteamaction.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Team action");
+			this.labelteamaction.LabelProp = global::VAS.Core.Catalog.GetString ("Team action");
 			this.tabledata.Add (this.labelteamaction);
 			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelteamaction]));
 			w11.TopAttach = ((uint)(5));
@@ -185,7 +185,7 @@ namespace LongoMatch.Gui.Component
 			this.labelto = new global::Gtk.Label ();
 			this.labelto.Name = "labelto";
 			this.labelto.Xalign = 1F;
-			this.labelto.LabelProp = global::LongoMatch.Core.Catalog.GetString ("To:");
+			this.labelto.LabelProp = global::VAS.Core.Catalog.GetString ("To:");
 			this.tabledata.Add (this.labelto);
 			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.tabledata [this.labelto]));
 			w12.TopAttach = ((uint)(2));

@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -57,7 +58,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleClicked (object sender, EventArgs e)
 		{
-			Date = Config.GUIToolkit.SelectDate (Date, this).Result;
+			Date = App.Current.GUIToolkit.SelectDate (Date, this).Result;
 		}
 	}
 }

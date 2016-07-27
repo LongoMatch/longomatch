@@ -23,18 +23,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Addins;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.DB;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
-using LongoMatch.Video;
-using LongoMatch.Core;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Drawing.Cairo;
+using VAS.Multimedia.Utils;
+using VAS.Services;
+using VAS.UI.Dialog;
+using VAS.UI.Helpers;
+using VAS.Video;
+using Constants = LongoMatch.Core.Common.Constants;
+using VASUi = VAS.UI;
 
 namespace LongoMatch
 {
@@ -51,7 +55,7 @@ namespace LongoMatch
 			GLib.ExceptionManager.UnhandledException += HandleException;
 			CoreServices.Init ();
 			InitGtk ();
-			var splashScreen = new SplashScreen ();
+			var splashScreen = new SplashScreen (Resources.LoadImage (Constants.SPLASH));
 			splashScreen.Show ();
 			Application.Invoke (async (s, e) => await Init (splashScreen));
 			Application.Run ();
@@ -68,19 +72,17 @@ namespace LongoMatch
 
 			try {
 				bool haveCodecs = false;
-				Config.DrawingToolkit = new CairoBackend ();
-				Config.MultimediaToolkit = new MultimediaToolkit ();
-				Config.DependencyRegistry = new Registry ("LongoMatch");
-				Config.DependencyRegistry.Register<IStorageManager, CouchbaseManager> (1);
-				Config.GUIToolkit = GUIToolkit.Instance;
-				Config.GUIToolkit.Register<IPlayerView, PlayerView> (0);
+				App.Current.DrawingToolkit = new CairoBackend ();
+				App.Current.MultimediaToolkit = new MultimediaToolkit ();
+				App.Current.GUIToolkit = GUIToolkit.Instance;
+				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
 				InitAddins (progress);
 				CoreServices.RegisterService (new UpdatesNotifier ());
-				CoreServices.Start (Config.GUIToolkit, Config.MultimediaToolkit);
-				AddinsManager.LoadDashboards (Config.CategoriesTemplatesProvider);
+				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+				AddinsManager.LoadDashboards (App.Current.CategoriesTemplatesProvider);
 				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
 
 				// Migrate the old databases now that the DB and Templates services have started
@@ -100,7 +102,7 @@ namespace LongoMatch
 
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
-				Config.GUIToolkit.Welcome ();
+				App.Current.GUIToolkit.Welcome ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}
@@ -110,12 +112,12 @@ namespace LongoMatch
 		{
 			Guid id = Guid.NewGuid ();
 			progress.Report (0.1f, "Initializing addins", id);
-			AddinsManager.Initialize (Config.PluginsConfigDir, Config.PluginsDir);
+			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			progress.Report (0.5f, "Addins parsed", id);
 			AddinsManager.LoadConfigModifierAddins ();
-			AddinsManager.LoadExportProjectAddins (Config.GUIToolkit.MainController);
-			AddinsManager.LoadMultimediaBackendsAddins (Config.MultimediaToolkit);
-			AddinsManager.LoadUIBackendsAddins (Config.GUIToolkit);
+			AddinsManager.LoadExportProjectAddins (App.Current.GUIToolkit.MainController);
+			AddinsManager.LoadMultimediaBackendsAddins (App.Current.MultimediaToolkit);
+			AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
 			AddinsManager.LoadServicesAddins ();
 			progress.Report (1, "Addins initialized", id);
 		}
@@ -136,7 +138,7 @@ namespace LongoMatch
 				GtkOSXApplication app;
 
 				app = new GtkOSXApplication ();
-				MainWindow window = Config.GUIToolkit.MainController as MainWindow;
+				MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
 				app.NSApplicationBlockTermination += (o, a) => {
 					a.RetVal = window.CloseAndQuit ();
 				};
@@ -155,15 +157,8 @@ namespace LongoMatch
 
 		static void InitGtk ()
 		{
-			string gtkRC, iconsDir, styleConf;
-			
-			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
-			if (File.Exists (gtkRC)) {
-				Rc.AddDefaultFile (gtkRC);
-			}
-			
-			styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
-			Config.Style = StyleConf.Load (styleConf);
+			Rc.AddDefaultFile (Utils.GetDataFilePath (Path.Combine ("theme", "gtk-2.0", "gtkrc")));
+			App.Current.Style = StyleConf.Load (Utils.GetDataFilePath (Path.Combine ("theme", "longomatch-dark.json")));
 
 			/* We are having some race condition with XCB resulting on an invalid
 			 * message and thus an abort of the program, we better activate the
@@ -174,11 +169,7 @@ namespace LongoMatch
 
 			Application.Init ();
 
-			iconsDir = Path.Combine (Config.dataDir, "icons");
-			if (Directory.Exists (iconsDir)) {
-				IconTheme.Default.PrependSearchPath (iconsDir);
-			}
-			
+			IconTheme.Default.PrependSearchPath (Utils.GetDataDirPath ("icons"));
 		}
 
 		static void ShowCodecsDialog ()
@@ -208,13 +199,13 @@ namespace LongoMatch
 
 			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now + ".log";
 			logFile = Utils.SanitizePath (logFile, ' ', ':');
-			logFile = Path.Combine (Config.HomeDir, logFile);
+			logFile = Path.Combine (App.Current.HomeDir, logFile);
 			Log.Exception (ex);
 			try {
 				if (File.Exists (logFile)) {
 					File.Delete (logFile);
 				}
-				File.Copy (Config.LogFile, logFile);
+				File.Copy (App.Current.LogFile, logFile);
 			} catch (Exception ex1) {
 				Log.Exception (ex1);
 			}

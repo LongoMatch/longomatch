@@ -16,16 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-
-using LongoMatch.Core;
-using Gtk;
-
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
-
-using Action = System.Action;
 using System.Collections.Generic;
-using Image = LongoMatch.Core.Common.Image;
+using System.Linq;
+using Gtk;
+using LongoMatch.Core.Events;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.GUI;
+using Action = System.Action;
+using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -34,17 +35,18 @@ namespace LongoMatch.Gui.Panel
 	{
 		static WelcomeButton[] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
-				new Action (() => Config.EventsBroker.EmitNewProject (null))),
+				new Action (() => 
+					(App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null })))),
 			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
-				new Action (() => Config.EventsBroker.EmitOpenProject ())),
+				new Action (() => (App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ())))),
 			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
-				new Action (() => Config.EventsBroker.EmitImportProject ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ())))),			
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
-				new Action (() => Config.EventsBroker.EmitManageProjects ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ())))),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
-				new Action (() => Config.EventsBroker.EmitManageTeams ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ())))),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
-				new Action (() => Config.EventsBroker.EmitManageCategories ())),
+				new Action (() => (App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ())))),
 		};
 
 		List<WelcomeButton> buttons;
@@ -77,7 +79,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandlePreferencesClicked (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitEditPreferences ();
+			App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
 		}
 
 		void Populate ()
@@ -85,12 +87,18 @@ namespace LongoMatch.Gui.Panel
 			// Query for tools
 			List<ITool> tools = new List<ITool> ();
 
-			Config.EventsBroker.EmitQueryTools (tools);
+			App.Current.EventsBroker.Publish<QueryToolsEvent> (
+				new QueryToolsEvent {
+					Tools = tools	
+				}
+			);
 
 			foreach (ITool tool in tools) {
-				if (tool.WelcomePanelIcon != null) {
-					buttons.Add (new WelcomeButton (tool.WelcomePanelIcon, tool.Name,
-						new Action (() => tool.Load (Config.GUIToolkit))));
+				if (tool.WelcomePanelIconList.Any () && tool.WelcomePanelIconList.FirstOrDefault ().Icon != null) {
+					foreach (IWelcomeButton wpb in tool.WelcomePanelIconList) {
+						// FIXME: When LongoMatch is refactored with new ITools, 3rd  parameter will be: new Action (() => wpb.Activate ())
+						buttons.Add (new WelcomeButton (wpb.Icon, wpb.Title, new Action (() => tool.Load (App.Current.GUIToolkit))));
+					}
 				}
 			}
 		}
@@ -111,7 +119,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Our logo
 			logoImage = new Gtk.Image ();
-			logoImage.Pixbuf = Config.Background.Scale (StyleConf.WelcomeLogoWidth,
+			logoImage.Pixbuf = App.Current.Background.Scale (StyleConf.WelcomeLogoWidth,
 				StyleConf.WelcomeLogoHeight).Value;
 			logoImage.WidthRequest = StyleConf.WelcomeLogoWidth;
 			logoImage.HeightRequest = StyleConf.WelcomeLogoHeight;

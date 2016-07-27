@@ -15,21 +15,22 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using Couchbase.Lite;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using Couchbase.Lite;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json.Linq;
-using System.Collections.Specialized;
+using VAS.DB.Views;
 
 namespace LongoMatch.DB.Views
 {
-	public class ProjectsView: GenericView <Project>
+	public class ProjectsView: GenericView <ProjectLongoMatch>
 	{
 		const string VERSION = "1";
 
-		public ProjectsView (CouchbaseStorage storage) : base (storage)
+		public ProjectsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{
+			DocumentType = "Project";
 		}
 
 		protected override string ViewVersion {

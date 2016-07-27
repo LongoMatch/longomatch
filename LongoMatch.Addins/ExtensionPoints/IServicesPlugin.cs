@@ -16,13 +16,16 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using Mono.Addins;
+using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces;
+using Mono.Addins;
+using VAS.Addins.ExtensionPoints;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IServicesPlugin: ILongoMatchPlugin
+	public interface IServicesPlugin: IPlugin
 	{
 		List<IService> Services { get; }
 	}

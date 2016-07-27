@@ -16,27 +16,26 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-
-using LongoMatch.Core.Store;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.Stats;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Store.Templates;
+using VAS.Core.Store;
+using LongoMatch.Core.Store;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayersViewer : Gtk.Bin
 	{
 		TreeStore store;
 		ProjectStats pstats;
-		Player current;
-		
+		PlayerLongoMatch current;
+
 		public PlayersViewer ()
 		{
 			this.Build ();
-			store = new TreeStore(typeof(string), typeof(object));
+			store = new TreeStore (typeof(string), typeof(object));
 			treeview1.AppendColumn ("Desc", new Gtk.CellRendererText (), "text", 0);
 			treeview1.CursorChanged += HandleCursorChanged;
 			treeview1.Model = store;
@@ -44,11 +43,12 @@ namespace LongoMatch.Plugins.Stats
 			treeview1.EnableGridLines = TreeViewGridLines.None;
 			treeview1.EnableTreeLines = false;
 		}
-		
-		public void LoadProject (Project project, ProjectStats stats) {
+
+		public void LoadProject (ProjectLongoMatch project, ProjectStats stats)
+		{
 			TreePath path;
 			
-			store.Clear();
+			store.Clear ();
 			pstats = stats;
 			categoriesviewer.LoadStats (pstats, project);
 			AddTeam (project.LocalTeamTemplate, project.Dashboard);
@@ -57,21 +57,21 @@ namespace LongoMatch.Plugins.Stats
 			treeview1.ExpandAll ();
 			treeview1.SetCursor (path, null, false);
 		}
-		
-		void AddTeam (Team tpl, Dashboard cats)
+
+		void AddTeam (SportsTeam tpl, Dashboard cats)
 		{
 			TreeIter iter = store.AppendValues (tpl.TeamName, null);
 			foreach (Player p in tpl.List) {
 				store.AppendValues (iter, p.Name, p);
 			}
 		}
-		
+
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
 			
-			treeview1.Selection.GetSelected(out iter);
-			current = store.GetValue(iter, 1) as Player;
+			treeview1.Selection.GetSelected (out iter);
+			current = store.GetValue (iter, 1) as PlayerLongoMatch;
 			if (current != null) {
 				categoriesviewer.ReloadStats (current);
 			}

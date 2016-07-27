@@ -18,20 +18,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Filters;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using VAS.UI.Helpers;
+using Constants = LongoMatch.Core.Common.Constants;
+using LMFilters = LongoMatch.Core.Filters;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class AnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
-		static Project openedProject;
+		static ProjectLongoMatch openedProject;
 		ProjectType projectType;
-		EventsFilter filter;
+		LMFilters.EventsFilter filter;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
 
@@ -41,7 +48,35 @@ namespace LongoMatch.Gui.Component
 			projectType = ProjectType.None;
 			detachedPlayer = false;
 			codingwidget.Player = playercapturer.Player;
+			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
+
+		#region IAnalysisWindow implementation
+
+		public event VAS.Core.Handlers.BackEventHandle BackEvent;
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public string PanelName {
+			get {
+				return "AnalysisComponent";
+			}
+		}
+
+		//FIXME: add IPanel KeyContext using MMVMC pattern
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
+		#endregion
 
 		protected override void OnUnmapped ()
 		{
@@ -61,6 +96,8 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
+			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
 			playercapturer.Destroy ();
 			base.OnDestroyed ();
 		}
@@ -85,21 +122,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEvent play)
-		{
-			playsSelection.AddPlay (play);
-			codingwidget.AddPlay (play);
-		}
-
 		public void UpdateCategories ()
 		{
 			codingwidget.UpdateCategories ();
-		}
-
-		public void DeletePlays (List<TimelineEvent> plays)
-		{
-			playsSelection.RemovePlays (plays);
-			codingwidget.DeletePlays (plays);
 		}
 
 		public void ZoomIn ()
@@ -139,7 +164,7 @@ namespace LongoMatch.Gui.Component
 
 		public void TagPlayer (Player player)
 		{
-			codingwidget.TagPlayer (player);
+			codingwidget.TagPlayer ((PlayerLongoMatch)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -169,11 +194,13 @@ namespace LongoMatch.Gui.Component
 				// Hack to reposition video window in widget for OSX
 				playerWindow.Resize (player_width + 10, player_height);
 				videowidgetsbox.Visible = false;
+				playsSelection.ExpandTabs = true;
 			} else {
 				Log.Debug ("Attaching player again");
 				videowidgetsbox.Visible = true;
 				playercapturer.Reparent (this.videowidgetsbox);
 				playerWindow.Destroy ();
+				playsSelection.ExpandTabs = false;
 			}
 			if (isPlaying) {
 				Player.Play ();
@@ -192,12 +219,12 @@ namespace LongoMatch.Gui.Component
 
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			openedProject = project;
+			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
-			this.filter = filter;
+			this.filter = (LMFilters.EventsFilter)filter;
 			
-			codingwidget.SetProject (project, projectType, filter);
-			playsSelection.SetProject (project, filter);
+			codingwidget.SetProject (project as ProjectLongoMatch, projectType, (LMFilters.EventsFilter)filter);
+			playsSelection.SetProject (project as ProjectLongoMatch, (LMFilters.EventsFilter)filter);
 			if (projectType == ProjectType.FileProject) {
 				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {
@@ -212,6 +239,17 @@ namespace LongoMatch.Gui.Component
 			codingwidget.SetProject (openedProject, projectType, filter);
 			playsSelection.SetProject (openedProject, filter);
 		}
+
+		void HandleEventCreated (EventCreatedEvent e)
+		{
+			playsSelection.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
+			codingwidget.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
+		}
+
+		void HandleEventsDeleted (EventsDeletedEvent e)
+		{
+			playsSelection.RemovePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+			codingwidget.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+		}
 	}
 }
-

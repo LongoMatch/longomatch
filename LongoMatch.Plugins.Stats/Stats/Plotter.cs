@@ -19,19 +19,18 @@ using System;
 using System.IO;
 using System.Linq;
 using Gdk;
-using Cairo;
-using OxyPlot;
-using OxyPlot.Series;
-using OxyPlot.Axes;
-
-using LongoMatch.Core;
-using LongoMatch.Core.Stats;
-using LongoMatch.Core.Common;
 using Gtk;
+using LongoMatch.Core;
+using LongoMatch.Core.Common;
+
+using LongoMatch.Core.Stats;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class Plotter : Gtk.Bin
 	{
 		const double WIDTH = 700;
@@ -41,19 +40,19 @@ namespace LongoMatch.Plugins.Stats
 		SubCategoryStat stats;
 		bool showTeams;
 		double graphWidth;
-		
+
 		public Plotter ()
 		{
 			this.Build ();
-			HeightRequest = (int) HEIGHT + 20;
-			WidthRequest = (int) WIDTH;
+			HeightRequest = (int)HEIGHT + 20;
+			WidthRequest = (int)WIDTH;
 			pieradiobutton.Toggled += HandleToggled;
 			historadiobutton.Toggled += HandleToggled;
 			HomeName = Catalog.GetString ("Home");
 			AwayName = Catalog.GetString ("Away");
 			ShowTeams = true;
 		}
-		
+
 		public bool ShowTeams {
 			protected get {
 				return showTeams;
@@ -61,60 +60,69 @@ namespace LongoMatch.Plugins.Stats
 			set {
 				showTeams = value;
 				graphWidth = value ? WIDTH : NO_TEAMS_WIDTH;
-				WidthRequest = (int) graphWidth;
+				WidthRequest = (int)graphWidth;
 			}
 		}
-		
+
 		public string HomeName {
 			get;
 			set;
 		}
-		
+
 		public string AwayName {
 			get;
 			set;
 		}
 
-		public void LoadPie (SubCategoryStat stats) {
+		public void LoadPie (SubCategoryStat stats)
+		{
 			graphType = GraphType.Pie;
 			this.stats = stats;
 			Reload ();
 		}
-		
-		public void LoadHistogram (SubCategoryStat stats) {
+
+		public void LoadHistogram (SubCategoryStat stats)
+		{
 			graphType = GraphType.Histogram;
 			this.stats = stats;
 			Reload ();
 		}
-		
-		Pixbuf Load (PlotModel model, double width, double height) {
-			MemoryStream stream = new MemoryStream();
-            SvgExporter.Export (model, stream, width, height, false, new PangoTextMeasurer());
-            stream.Seek (0, SeekOrigin.Begin);
-            return new Pixbuf (stream);
+
+		Pixbuf Load (PlotModel model, double width, double height)
+		{
+			MemoryStream stream = new MemoryStream ();
+			SvgExporter.Export (model, stream, width, height, false, new PangoTextMeasurer ());
+			stream.Seek (0, SeekOrigin.Begin);
+			return new Pixbuf (stream);
 		}
-		
-		PlotModel GetHistogram (SubCategoryStat stats) {
+
+		PlotModel GetHistogram (SubCategoryStat stats)
+		{
 			PlotModel model = new PlotModel ();
-            CategoryAxis categoryAxis;
-            LinearAxis valueAxis;
-            int maxCount;
+			CategoryAxis categoryAxis;
+			LinearAxis valueAxis;
+			int maxCount;
             
-			valueAxis = new LinearAxis(AxisPosition.Left) { MinimumPadding = 0, AbsoluteMinimum = 0,
-				MinorStep = 1, MajorStep = 1, Minimum = 0};
-            categoryAxis = new CategoryAxis () {ItemsSource = stats.OptionStats, LabelField = "Name",
-				Angle = 20.0};
+			valueAxis = new LinearAxis (AxisPosition.Left) { MinimumPadding = 0, AbsoluteMinimum = 0,
+				MinorStep = 1, MajorStep = 1, Minimum = 0
+			};
+			categoryAxis = new CategoryAxis () {ItemsSource = stats.OptionStats, LabelField = "Name",
+				Angle = 20.0
+			};
             
-			model.Series.Add(new ColumnSeries { Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
-				ValueField = "TotalCount" });	
+			model.Series.Add (new ColumnSeries { Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
+				ValueField = "TotalCount"
+			});	
 			if (ShowTeams) {
-				model.Series.Add(new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
-					ValueField = "LocalTeamCount", FillColor = new OxyColor {R=0xFF, G=0x33, B=0x0, A=0xFF}});	
-				model.Series.Add(new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
-					ValueField = "VisitorTeamCount",  FillColor = new OxyColor {R=0, G=0x99, B=0xFF, A=0xFF} });	
+				model.Series.Add (new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
+					ValueField = "LocalTeamCount", FillColor = new OxyColor { R = 0xFF, G = 0x33, B = 0x0, A = 0xFF }
+				});	
+				model.Series.Add (new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
+					ValueField = "VisitorTeamCount",  FillColor = new OxyColor { R = 0, G = 0x99, B = 0xFF, A = 0xFF }
+				});	
 			}
-            model.Axes.Add(categoryAxis);
-            model.Axes.Add(valueAxis);
+			model.Axes.Add (categoryAxis);
+			model.Axes.Add (valueAxis);
             
 			if (stats.OptionStats.Count != 0) {
 				maxCount = stats.OptionStats.Max (o => o.TotalCount);
@@ -124,31 +132,32 @@ namespace LongoMatch.Plugins.Stats
 				} else if (maxCount > 50 && maxCount <= 100) {
 					valueAxis.MinorStep = 10;
 					valueAxis.MajorStep = 20;
-				} else if (maxCount > 100 ) {
+				} else if (maxCount > 100) {
 					valueAxis.MinorStep = 10;
 					valueAxis.MajorStep = 50;
 				}
-            }
-			OxyColor text_color = OxyColor.FromArgb (LongoMatch.Config.Style.PaletteText.A,
-				LongoMatch.Config.Style.PaletteText.R,
-				LongoMatch.Config.Style.PaletteText.G,
-				LongoMatch.Config.Style.PaletteText.B);
+			}
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
+				                      LongoMatch.App.Current.Style.PaletteText.R,
+				                      LongoMatch.App.Current.Style.PaletteText.G,
+				                      LongoMatch.App.Current.Style.PaletteText.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;
 
-            return model;
+			return model;
 		}
-		
-		PlotModel GetPie (SubCategoryStat stats, TeamType team) {
+
+		PlotModel GetPie (SubCategoryStat stats, TeamType team)
+		{
 			PlotModel model = new PlotModel ();
-			PieSeries ps = new PieSeries();
+			PieSeries ps = new PieSeries ();
 			
 			foreach (PercentualStat st in stats.OptionStats) {
 				double count = GetCount (st, team);
 				if (count == 0)
 					continue;
-				ps.Slices.Add(new PieSlice(st.Name, count));
+				ps.Slices.Add (new PieSlice (st.Name, count));
 			}
 			ps.InnerDiameter = 0;
 			ps.ExplodedDistance = 0.0;
@@ -162,18 +171,19 @@ namespace LongoMatch.Plugins.Stats
 			} else if (team == TeamType.VISITOR) {
 				ps.Title = AwayName;
 			}
-			OxyColor text_color = OxyColor.FromArgb (LongoMatch.Config.Style.PaletteText.A,
-				LongoMatch.Config.Style.PaletteText.R,
-				LongoMatch.Config.Style.PaletteText.G,
-				LongoMatch.Config.Style.PaletteText.B);
+			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
+				                      LongoMatch.App.Current.Style.PaletteText.R,
+				                      LongoMatch.App.Current.Style.PaletteText.G,
+				                      LongoMatch.App.Current.Style.PaletteText.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;
-            model.Series.Add(ps);
-            return model;
+			model.Series.Add (ps);
+			return model;
 		}
-		
-		double GetCount (PercentualStat stats, TeamType team) {
+
+		double GetCount (PercentualStat stats, TeamType team)
+		{
 			switch (team) {
 			case TeamType.NONE:
 			case TeamType.BOTH:
@@ -185,8 +195,9 @@ namespace LongoMatch.Plugins.Stats
 			}
 			return 0;
 		}
-		
-		void Reload () {
+
+		void Reload ()
+		{
 			if (stats == null)
 				return;
 			
@@ -209,8 +220,9 @@ namespace LongoMatch.Plugins.Stats
 				break;
 			}
 		}
-		
-		void HandleToggled (object sender, EventArgs args) {
+
+		void HandleToggled (object sender, EventArgs args)
+		{
 			RadioButton r = sender as RadioButton;
 			
 			if (r == pieradiobutton && r.Active) {
@@ -221,19 +233,20 @@ namespace LongoMatch.Plugins.Stats
 				Reload ();
 			}
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();
 			if (imageall != null)
-				imageall.Destroy();
+				imageall.Destroy ();
 			if (imageaway != null)
-				imageaway.Destroy();
+				imageaway.Destroy ();
 			if (imagehome != null)
-				imagehome.Destroy();
+				imagehome.Destroy ();
 		}
-		
-		protected enum GraphType {
+
+		protected enum GraphType
+		{
 			Histogram,
 			Pie,
 		}

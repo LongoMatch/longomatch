@@ -19,16 +19,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
 using Pango;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -37,18 +43,18 @@ namespace LongoMatch.Gui.Panel
 	{
 		public event BackEventHandle BackEvent;
 
-		Project openedProject, loadedProject;
-		List<Project> selectedProjects;
+		ProjectLongoMatch openedProject, loadedProject;
+		List<ProjectLongoMatch> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
 		IStorage DB;
 		IGUIToolkit gkit;
 		bool edited;
 
-		public ProjectsManagerPanel (Project openedProject)
+		public ProjectsManagerPanel (ProjectLongoMatch openedProject)
 		{
 			this.openedProject = openedProject;
-			this.DB = Config.DatabaseManager.ActiveDB;
-			this.gkit = Config.GUIToolkit;
+			this.DB = App.Current.DatabaseManager.ActiveDB;
+			this.gkit = App.Current.GUIToolkit;
 			this.Build ();
 
 			this.videoFileInfos = new List<VideoFileInfo> ();
@@ -71,7 +77,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.ProjectSelected += HandleProjectSelected;
-			projectlistwidget1.Fill (DB.RetrieveAll<Project> ().ToList ());
+			projectlistwidget1.Fill (DB.RetrieveAll<ProjectLongoMatch> ().ToList ());
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
@@ -91,29 +97,42 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.ViewMode = ProjectListViewMode.List;
 
 			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
-			resyncbutton.Visible = Config.SupportsMultiCamera;
+			resyncbutton.Visible = App.Current.SupportsMultiCamera;
 
 			SetStyle ();
 		}
 
-		public void OnLoaded ()
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		void SetStyle ()
 		{
-			FontDescription desc = FontDescription.FromString (Config.Style.Font + " 18");
-			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			FontDescription desc = FontDescription.FromString (App.Current.Style.Font + " 18");
+			infoeventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			infolabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			infolabel.ModifyFont (desc);
-			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
-			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteText));
+			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
+			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			videoslabel.ModifyFont (desc);
 		}
 
@@ -124,26 +143,26 @@ namespace LongoMatch.Gui.Panel
 
 				if (edited && !force) {
 					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (!App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						save = false;
 					}
 				}
 				if (save) {
 					try {
-						IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.Store<Project> (loadedProject));
+						IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
+						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
 						Log.Exception (ex);
-						Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
+						App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
 						return;
 					}
 				}
 			}
 		}
 
-		void LoadProject (Project project)
+		void LoadProject (ProjectLongoMatch project)
 		{
 			ProjectDescription pd = project.Description;
 			
@@ -166,7 +185,7 @@ namespace LongoMatch.Gui.Panel
 
 			int max = project.Description.FileSet.Count;
 			// Cap to one media file for non multi camera version
-			if (!Config.SupportsMultiCamera) {
+			if (!App.Current.SupportsMultiCamera) {
 				max = Math.Min (max, 1);
 			}
 
@@ -226,15 +245,20 @@ namespace LongoMatch.Gui.Panel
 			edited = true;
 		}
 
-		void HandleProjectSelected (Project project)
+		void HandleProjectSelected (ProjectLongoMatch project)
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
-				Config.EventsBroker.EmitOpenProjectID (project.ID, project);
+				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+					new  OpenProjectIDEvent { 
+						ProjectID = project.ID, 
+						Project = project 
+					}
+				);
 			}
 		}
 
-		void HandleProjectsSelected (List<Project> projects)
+		void HandleProjectsSelected (List<ProjectLongoMatch> projects)
 		{
 			SaveLoadedProject (false);
 			rbox.Visible = true;
@@ -251,7 +275,7 @@ namespace LongoMatch.Gui.Panel
 					LoadProject (projects [0]);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					Config.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				}
 			}
 		}
@@ -283,7 +307,7 @@ namespace LongoMatch.Gui.Panel
 				string filename = gkit.SaveFile (
 					                  Catalog.GetString ("Export project"),
 					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					                  Config.HomeDir, Constants.PROJECT_NAME,
+					                  App.Current.HomeDir, Constants.PROJECT_NAME,
 					                  new string[] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
@@ -303,32 +327,32 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleDeleteClicked (object sender, EventArgs e)
 		{
-			List<Project> deletedProjects;
+			List<ProjectLongoMatch> deletedProjects;
 
 			if (selectedProjects == null)
 				return;
 				
-			deletedProjects = new List<Project> ();
-			foreach (Project selectedProject in selectedProjects) {
+			deletedProjects = new List<ProjectLongoMatch> ();
+			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
 				if (openedProject != null && openedProject.ID == selectedProject.ID) {
-					MessagesHelpers.WarningMessage (this,
+					Helpers.MessagesHelpers.WarningMessage (this,
 						Catalog.GetString ("This Project is actually in use.") + "\n" +
 						Catalog.GetString ("Close it first to allow its removal from the database"));
 					continue;
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
 				             selectedProject.Description.Title;
-				if (MessagesHelpers.QuestionMessage (this, msg)) {
+				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					IBusyDialog busy = Config.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
+					IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
-							DB.Delete<Project> (selectedProject);
+							DB.Delete<ProjectLongoMatch> (selectedProject);
 						} catch (StorageException ex) {
-							Config.GUIToolkit.ErrorMessage (ex.Message);
+							App.Current.GUIToolkit.ErrorMessage (ex.Message);
 						}
 					});
 					deletedProjects.Add (selectedProject);
@@ -337,7 +361,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<Project> () == 0) {
+			if (DB.Count<ProjectLongoMatch> () == 0) {
 				rbox.Visible = false;
 			}
 		}
@@ -345,9 +369,13 @@ namespace LongoMatch.Gui.Panel
 		void HandleOpenClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				Config.EventsBroker.EmitOpenProjectID (loadedProject.ID, loadedProject);
+				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
+					new  OpenProjectIDEvent { 
+						ProjectID = loadedProject.ID, 
+						Project = loadedProject 
+					}
+				);
 			}
 		}
 	}
 }
-

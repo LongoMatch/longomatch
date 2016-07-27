@@ -15,16 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Dialog;
+using VAS.Core;
+using VAS.Core.Interfaces;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -55,7 +56,7 @@ namespace LongoMatch.Gui.Menus
 
 		void AddVideo (IPlaylistElement element, bool prepend)
 		{
-			MediaFile file = LongoMatch.Gui.Helpers.Misc.OpenFile (widget);
+			MediaFile file = Helpers.Misc.OpenFile (widget);
 			if (file != null) {
 				PlaylistVideo video = new PlaylistVideo (file);
 				int index = playlist.Elements.IndexOf (element);
@@ -68,9 +69,9 @@ namespace LongoMatch.Gui.Menus
 
 		void AddImage (IPlaylistElement element, bool prepend)
 		{
-			Pixbuf pix = LongoMatch.Gui.Helpers.Misc.OpenImage (widget);
+			Pixbuf pix = Helpers.Misc.OpenImage (widget);
 			if (pix != null) {
-				var image = new LongoMatch.Core.Common.Image (pix);
+				var image = new Image (pix);
 				PlaylistImage plimage = new PlaylistImage (image, new Time (5000));
 				int index = playlist.Elements.IndexOf (element);
 				if (!prepend) {
@@ -126,4 +127,3 @@ namespace LongoMatch.Gui.Menus
 		}
 	}
 }
-
