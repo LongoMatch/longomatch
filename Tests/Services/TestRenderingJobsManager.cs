@@ -15,22 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using NUnit.Framework;
-using Moq;
-using LongoMatch;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
-using LongoMatch.Services;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
 using System.IO;
-using System.Text.RegularExpressions;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Drawing.Cairo;
+using LongoMatch;
+using Moq;
+using NUnit.Framework;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.Core.Store.Playlists;
+using VAS.Drawing.Cairo;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces.GUI;
+using LongoMatch.Core.Store;
+using LongoMatch.Services;
 
 namespace Tests.Services
 {
@@ -76,16 +73,15 @@ namespace Tests.Services
 			var gtk = Mock.Of<IGUIToolkit> (g => g.RenderingStateBar == Mock.Of<IRenderingStateBar> ());
 
 			// And eventbroker
-			Config.EventsBroker = Mock.Of<EventsBroker> ();
-			Config.GUIToolkit = gtk;
-			Config.MultimediaToolkit = mtk.Object;
-			Config.DrawingToolkit = new CairoBackend ();
+			App.Current.GUIToolkit = gtk;
+			App.Current.MultimediaToolkit = mtk.Object;
+			App.Current.DrawingToolkit = new CairoBackend ();
 		}
 
 		[Test ()]
 		public void TestRenderedCamera ()
 		{
-			Project p = Utils.CreateProject ();
+			ProjectLongoMatch p = Utils.CreateProject ();
 
 			try {
 				EditionJob job;
@@ -93,7 +89,7 @@ namespace Tests.Services
 
 				PrepareEditon (out job, out renderer);
 
-				TimelineEvent evt = p.Timeline [0];
+				TimelineEventLongoMatch evt = p.Timeline [0] as TimelineEventLongoMatch;
 				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
 				PlaylistPlayElement element = new PlaylistPlayElement (evt);
 				job.Playlist.Elements.Add (element);
@@ -107,7 +103,7 @@ namespace Tests.Services
 				/* Test with a camera index bigger than the total cameras */
 				renderer.CancelAllJobs ();
 				editorMock.ResetCalls ();
-				evt = p.Timeline [1];
+				evt = p.Timeline [1] as TimelineEventLongoMatch;
 				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (1) };
 				element = new PlaylistPlayElement (evt);
 				job.Playlist.Elements [0] = element; 
@@ -119,7 +115,7 @@ namespace Tests.Services
 				/* Test with the secondary camera */
 				renderer.CancelAllJobs ();
 				editorMock.ResetCalls ();
-				evt = p.Timeline [1];
+				evt = p.Timeline [1] as TimelineEventLongoMatch;
 				evt.CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (2) };
 				element = new PlaylistPlayElement (evt);
 				job.Playlist.Elements [0] = element; 
@@ -202,7 +198,7 @@ namespace Tests.Services
 		{
 			MediaFileSet fileset = new MediaFileSet ();
 			fileset.Add (new MediaFile { FilePath = file });
-			TimelineEvent evt = new TimelineEvent {
+			TimelineEventLongoMatch evt = new TimelineEventLongoMatch {
 				Start = new Time (start),
 				Stop = new Time (stop),
 				FileSet = fileset,

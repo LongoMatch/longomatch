@@ -19,12 +19,14 @@
 //
 using System.Linq;
 using Gtk;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces;
+using VAS.Core.Store.Playlists;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
-		Project project;
+		ProjectLongoMatch project;
 
 		public PlayListWidget ()
 		{
@@ -48,13 +50,13 @@ namespace LongoMatch.Gui.Component
 			newbutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
 
-			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
+			App.Current.EventsBroker.Subscribe<PlaylistElementLoadedEvent> (HandlePlaylistElementLoaded);
 			hbox2.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			recimage.Pixbuf = Misc.LoadIcon ("longomatch-control-record", StyleConf.PlayerCapturerIconSize);
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				project = value;
 				playlisttreeview1.Project = value;
@@ -64,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element, bool playing)
+		void HandlePlaylistElementLoaded (PlaylistElementLoadedEvent e)
 		{
 			playlisttreeview1.QueueDraw ();
 		}
@@ -86,12 +88,22 @@ namespace LongoMatch.Gui.Component
 				playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
 				element = el as IPlaylistElement;
 			}
-			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element, true);
+			App.Current.EventsBroker.Publish<LoadPlaylistElementEvent> (
+				new LoadPlaylistElementEvent {
+					Playlist = playlist,
+					Element = element,
+					Playing = true
+				}
+			);
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitNewPlaylist (Project);
+			App.Current.EventsBroker.Publish<NewPlaylistEvent> (
+				new NewPlaylistEvent { 
+					Project = project 
+				} 
+			);
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
@@ -101,7 +113,11 @@ namespace LongoMatch.Gui.Component
 			menu = new Menu ();
 			foreach (Playlist playlist in Project.Playlists) {
 				MenuItem plmenu = new MenuItem (playlist.Name);
-				plmenu.Activated += (s, e) => Config.EventsBroker.EmitRenderPlaylist (playlist);
+				plmenu.Activated += (s, e) => App.Current.EventsBroker.Publish<RenderPlaylistEvent> (
+					new RenderPlaylistEvent {
+						Playlist = playlist
+					}
+				);
 				menu.Append (plmenu);
 			}
 			menu.ShowAll ();

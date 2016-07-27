@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.MVVMC;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	[PropertyChanged.ImplementPropertyChanged]
-	public class Score: IChanged
+	public class Score: BindableBase
 	{
 		public Score ()
 		{
@@ -35,13 +35,6 @@ namespace LongoMatch.Core.Store
 			Name = name;
 			Points = points;
 			Color = Color.Red;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public bool IsChanged {
-			get;
-			set;
 		}
 
 		[Obsolete ("Color is now defined in the ScoreEventType")]

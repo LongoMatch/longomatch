@@ -13,17 +13,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlayerController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ProjectsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RenderingJobsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UpdatesNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
   </ItemGroup>
 </Project>

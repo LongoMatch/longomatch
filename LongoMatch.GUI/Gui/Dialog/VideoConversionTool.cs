@@ -16,16 +16,17 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Gui;
 using LongoMatch.Gui.Component;
-using LongoMatch.Core.Store;
-using LongoMatch.Gui.Helpers;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Store;
+using VAS.UI.Helpers;
+using Constants = LongoMatch.Core.Common.Constants;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -54,7 +55,7 @@ namespace LongoMatch.Gui.Dialog
 			buttonOk.Clicked += OnButtonOkClicked;
 			convertimage.Pixbuf = Misc.LoadIcon ("longomatch-video-converter-big", 64);
 			addimage.Pixbuf = Misc.LoadStockIcon (addimage, "gtk-add", IconSize.Button);
-			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (Config.Style.PaletteBackgroundDark));
+			eventbox1.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
 			addbutton1.CanFocus = false;
 			scrolledwindow1.Visible = false;
 		}
@@ -187,8 +188,8 @@ namespace LongoMatch.Gui.Dialog
 				fps_n = rates.First ();
 				fps_d = 1;
 			} else {
-				fps_n = Config.FPS_N;
-				fps_d = Config.FPS_D;
+				fps_n = App.Current.Config.FPS_N;
+				fps_d = App.Current.Config.FPS_D;
 			}
 			
 			if (fps_n == 50) {
@@ -204,4 +205,3 @@ namespace LongoMatch.Gui.Dialog
 		}
 	}
 }
-

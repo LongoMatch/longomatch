@@ -1,10 +1,9 @@
 ﻿//
 //  Copyright (C) 2015 Fluendo S.A.
 //
-
 using System;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -49,7 +48,8 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void UpdateUI () {
+		void UpdateUI ()
+		{
 			labelfromdata.Text = Link.SourceButton.Name;
 			labelfromtagsdata.Text = String.Join (", ", Link.SourceTags);
 			labelfromtagsdata.Visible = (Link.SourceTags.Count != 0);
@@ -82,4 +82,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

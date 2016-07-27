@@ -19,13 +19,14 @@ using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
+using VAS.Core.Common;
 
 namespace Tests.Core.Store
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestScore
 	{
-		[Test()]
+		[Test ()]
 		public void TestSerialization ()
 		{
 			Score s = new Score ();

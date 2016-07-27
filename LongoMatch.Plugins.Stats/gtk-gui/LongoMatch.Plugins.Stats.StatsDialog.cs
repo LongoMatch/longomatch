@@ -5,12 +5,19 @@ namespace LongoMatch.Plugins.Stats
 	public partial class StatsDialog
 	{
 		private global::Gtk.Notebook notebook1;
+		
 		private global::LongoMatch.Plugins.Stats.GameViewer gameviewer;
+		
 		private global::Gtk.Label label2;
+		
 		private global::LongoMatch.Plugins.Stats.CategoriesViewer categoriesviewer;
+		
 		private global::Gtk.Label label4;
+		
 		private global::LongoMatch.Plugins.Stats.PlayersViewer playersviewer;
+		
 		private global::Gtk.Label label5;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()

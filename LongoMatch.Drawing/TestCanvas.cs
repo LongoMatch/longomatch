@@ -16,8 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Common;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing;
 
 namespace LongoMatch.Drawing
 {
@@ -98,7 +99,7 @@ namespace LongoMatch.Drawing
 			tk.Begin ();
 
 			double scaleX, scaleY;
-			LongoMatch.Core.Common.Point offset;
+			Point offset;
 			TestImage.ScaleFactor (100, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
 			tk.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
 			tk.DrawImage (TestImage);
@@ -343,7 +344,7 @@ namespace LongoMatch.Drawing
 
 			public override void Draw (IContext context, Area area)
 			{
-				IDrawingToolkit dt = Config.DrawingToolkit;
+				IDrawingToolkit dt = App.Current.DrawingToolkit;
 				IContext oldcontext = dt.Context;
 				dt.Context = context;
 				dt.DrawCircle (new Point (0, 0), 50);

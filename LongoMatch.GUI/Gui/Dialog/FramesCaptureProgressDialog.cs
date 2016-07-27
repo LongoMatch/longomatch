@@ -17,19 +17,12 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
-using System;
-using Gtk;
-using Gdk;
-using LongoMatch.Core;
-
-using LongoMatch.Core.Handlers;
-using LongoMatch.Video.Utils;
-using LongoMatch.Video.Common;
+using VAS.Core;
+using Image = VAS.Core.Common.Image;
+using VAS.Video.Utils;
 
 namespace LongoMatch.Gui.Dialog
 {
-
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (false)]
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
@@ -46,7 +39,7 @@ namespace LongoMatch.Gui.Dialog
 			capturer.Start ();
 		}
 
-		protected virtual void Update (int actual, int total, LongoMatch.Core.Common.Image frame)
+		protected virtual void Update (int actual, int total, Image frame)
 		{
 			if (actual <= total) {
 				progressbar.Text = Catalog.GetString ("Capturing frame: ") + actual + "/" + total;

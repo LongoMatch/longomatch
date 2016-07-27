@@ -15,15 +15,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
-using LongoMatch.Drawing.Cairo;
-using Point = LongoMatch.Core.Common.Point;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Drawing.Cairo;
+using Point = VAS.Core.Common.Point;
 
 namespace LongoMatch.Gui.Component
 {
@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}
@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Component
 			y_offset = 0;
 			width = StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator + StyleConf.ListTextWidth;
 			height = StyleConf.ListCategoryHeight;
-			if (Item is TimelineEvent) {
-				TimelineEvent evt = Item as TimelineEvent;
+			if (Item is TimelineEventLongoMatch) {
+				TimelineEventLongoMatch evt = Item as TimelineEventLongoMatch;
 				if (evt.Miniature != null) {
 					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
@@ -70,10 +70,9 @@ namespace LongoMatch.Gui.Component
 					           backgroundArea.Width, backgroundArea.Height);
 				Area cell = new Area (new Point (cellArea.X, cellArea.Y),
 					            cellArea.Width, cellArea.Height);
-				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, Config.DrawingToolkit,
+				PlayslistCellRenderer.Render (Item, Project, Count, IsExpanded, App.Current.DrawingToolkit,
 					context, bkg, cell, state);
 			}
 		}
 	}
 }
-

@@ -21,15 +21,21 @@ using System;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
+using Misc = VAS.UI.Helpers.Misc;
+using Keyboard = VAS.Core.Common.Keyboard;
 
 namespace LongoMatch.Gui
 {
@@ -39,7 +45,7 @@ namespace LongoMatch.Gui
 	{
 		IGUIToolkit guiToolKit;
 		IAnalysisWindow analysisWindow;
-		Project openedProject;
+		ProjectLongoMatch openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
 		Widget stackPanel;
@@ -113,7 +119,7 @@ namespace LongoMatch.Gui
 		/// Sets the panel. When panel is null, welcome panel is shown. Depending on current panel and new panel stacking may happen
 		/// </summary>
 		/// <param name="panel">Panel.</param>
-		public void SetPanel (Widget panel)
+		public bool SetPanel (IPanel panel)
 		{
 			if (panel == null) {
 				ResetGUI ();
@@ -123,15 +129,16 @@ namespace LongoMatch.Gui
 				} else {
 					RemovePanel (false);
 				}
-				currentPanel = panel;
+				currentPanel = (Widget)panel;
 
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += BackClicked;
-					(panel as IPanel).OnLoaded ();
+					(panel as IPanel).OnLoad ();
 				}
-				panel.Show ();
-				centralbox.PackStart (panel, true, true, 0);
+				((Widget)panel).Show ();
+				centralbox.PackStart ((Widget)panel, true, true, 0);
 			}
+			return true;
 		}
 
 		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction)
@@ -144,7 +151,7 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append (item);
 		}
 
-		public IAnalysisWindow SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public IAnalysisWindow SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
 			
@@ -162,7 +169,7 @@ namespace LongoMatch.Gui
 			} else {
 				analysisWindow = new AnalysisComponent ();
 			}
-			SetPanel (analysisWindow as Widget);
+			SetPanel (analysisWindow);
 			analysisWindow.SetProject (project, projectType, props, filter);
 			return analysisWindow;
 		}
@@ -179,14 +186,18 @@ namespace LongoMatch.Gui
 		public void Welcome ()
 		{
 			// Configure window icon
-			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
+			Icon = Misc.LoadIcon (App.Current.SoftwareIconName, IconSize.Dialog);
 
 			// Show the welcome panel
 			SetPanel (null);
 			// Populate the menu items from pluggable tools
 			List<ITool> tools = new List<ITool> ();
 
-			Config.EventsBroker.EmitQueryTools (tools);
+			App.Current.EventsBroker.Publish<QueryToolsEvent> (
+				new QueryToolsEvent {
+					Tools = tools
+				}
+			);
 
 			Menu menu = (this.UIManager.GetWidget ("/menubar1/ToolsAction") as MenuItem).Submenu as Menu;
 			MenuItem before = this.UIManager.GetWidget ("/menubar1/ToolsAction/DatabasesManagerAction") as MenuItem;
@@ -215,10 +226,10 @@ namespace LongoMatch.Gui
 					itemAction.Activated += (sender, e) => {
 						bool loadTool = true;
 						if (openedProject != null) {
-							loadTool = Config.EventsBroker.EmitCloseOpenedProject ();
+							loadTool = App.Current.EventsBroker.EmitCloseOpenedProject (this);
 						}
 						if (loadTool) {
-							tool.Load (Config.GUIToolkit);
+							tool.Load (App.Current.GUIToolkit);
 						}
 					};
 
@@ -235,14 +246,14 @@ namespace LongoMatch.Gui
 			this.UIManager.EnsureUpdate ();
 		}
 
-		public void SelectProject (List<Project> projects)
+		public void SelectProject (List<ProjectLongoMatch> projects)
 		{
 			OpenProjectPanel panel = new OpenProjectPanel ();
 			panel.Projects = projects;
 			SetPanel (panel);
 		}
 
-		public void CreateNewProject (Project project)
+		public void CreateNewProject (ProjectLongoMatch project)
 		{
 			NewProjectPanel panel = new NewProjectPanel (project);
 			panel.Name = "newprojectpanel";
@@ -255,9 +266,9 @@ namespace LongoMatch.Gui
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
 		public bool CloseAndQuit ()
 		{
-			Config.EventsBroker.EmitCloseOpenedProject ();
+			App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			if (openedProject == null) {
-				Config.EventsBroker.EmitQuitApplication ();
+				App.Current.EventsBroker.Publish<QuitApplicationEvent> (new QuitApplicationEvent ());
 			}
 			return openedProject != null;
 		}
@@ -269,7 +280,7 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				Config.EventsBroker.EmitKeyPressed (this, LongoMatch.Core.Common.Keyboard.ParseEvent (evnt));
+				App.Current.KeyContextManager.HandleKeyPressed (Keyboard.ParseEvent (evnt));
 			}
 			return true;
 		}
@@ -284,54 +295,72 @@ namespace LongoMatch.Gui
 		{
 			/* Adding Handlers for each event */
 			renderingstatebar1.ManageJobs += (e, o) => {
-				Config.EventsBroker.EmitManageJobs ();
+				App.Current.EventsBroker.Publish<ManageJobsEvent> ();
 			};
 		}
 
 		private void ConnectMenuSignals ()
 		{
 			SaveProjectAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
+				App.Current.EventsBroker.Publish<SaveProjectEvent> (
+					new SaveProjectEvent {
+						Project = openedProject,
+						ProjectType = projectType
+					}
+				);
 			};
 			CloseProjectAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitCloseOpenedProject ();
+				App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			};
 			ExportToProjectFileAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitExportProject (openedProject);
+				App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = openedProject });
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageCategories ();
+				App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ());
 			};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageTeams ();
+				App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ());
 			};
 			ProjectsManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageProjects ();
+				App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ());
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
-				Config.EventsBroker.EmitManageDatabases ();
+				App.Current.EventsBroker.Publish<ManageDatabasesEvent> (new ManageDatabasesEvent ());
 			};
 			PreferencesAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitEditPreferences ();
+				App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
 			};
 			ShowProjectStatsAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitShowProjectStats (openedProject);
+				App.Current.EventsBroker.Publish<ShowProjectStatsEvent> (
+					new ShowProjectStatsEvent {
+						Project = openedProject		
+					}
+				);
 			}; 
 			QuitAction.Activated += (o, e) => {
 				CloseAndQuit ();
 			};
 			OpenProjectAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
-				Config.EventsBroker.EmitOpenProject ();
+				App.Current.EventsBroker.Publish<SaveProjectEvent> (
+					new SaveProjectEvent {
+						Project = openedProject,
+						ProjectType = projectType
+					}
+				);
+				App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ());
 			};
 			NewPojectAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitNewProject (null);
+				App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null });
 			};
 			ImportProjectAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitImportProject ();
+				App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			};
 			FullScreenAction.Activated += (object sender, EventArgs e) => {
-				Config.EventsBroker.EmitShowFullScreen (FullScreenAction.Active);
+				App.Current.EventsBroker.Publish<ShowFullScreenEvent> (
+					new ShowFullScreenEvent { 
+						Active = FullScreenAction.Active
+					}
+				);
 			};
 		}
 
@@ -339,7 +368,7 @@ namespace LongoMatch.Gui
 		{
 			if (panel is IPanel) {
 				(panel as IPanel).BackEvent -= BackClicked;
-				(panel as IPanel).OnUnloaded ();
+				(panel as IPanel).OnUnload ();
 			}
 			panel.Destroy ();
 			panel.Dispose ();
@@ -394,7 +423,7 @@ namespace LongoMatch.Gui
 			SaveProjectAction.Sensitive = sensitive2;
 		}
 
-		protected override bool OnDeleteEvent (Event evnt)
+		protected override bool OnDeleteEvent (Gdk.Event evnt)
 		{
 			CloseAndQuit ();
 			return true;
@@ -411,8 +440,12 @@ namespace LongoMatch.Gui
 			res = converter.Run ();
 			converter.Destroy ();
 			if (res == (int)ResponseType.Ok) {
-				Config.EventsBroker.EmitConvertVideoFiles (converter.Files,
-					converter.EncodingSettings);
+				App.Current.EventsBroker.Publish<ConvertVideoFilesEvent> (
+					new ConvertVideoFilesEvent {
+						Files = converter.Files,
+						Settings = converter.EncodingSettings
+					}
+				);
 			}
 		}
 
@@ -426,7 +459,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
-			var about = new LongoMatch.Gui.Dialog.AboutDialog (Config.Version);
+			var about = new LongoMatch.Gui.Dialog.AboutDialog (App.Current.Version);
 			about.TransientFor = this;
 			about.Run ();
 			about.Destroy ();
@@ -434,7 +467,7 @@ namespace LongoMatch.Gui
 
 		protected void OnMigrationToolActionActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitMigrateDB ();
+			App.Current.EventsBroker.Publish<MigrateDBEvent> ();
 		}
 
 		#endregion

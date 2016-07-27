@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 1F;
-			this.label1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Name");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("Name");
 			this.label1.UseMarkup = true;
 			this.nametable.Add (this.label1);
 			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.nametable [this.label1]));
@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label6 = new global::Gtk.Label ();
 			this.label6.Name = "label6";
 			this.label6.Xalign = 1F;
-			this.label6.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Duration");
+			this.label6.LabelProp = global::VAS.Core.Catalog.GetString ("Duration");
 			this.label6.UseMarkup = true;
 			this.slidetable.Add (this.label6);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.slidetable [this.label6]));

@@ -5,11 +5,17 @@ namespace LongoMatch.Plugins.Stats
 	public partial class PlayerSubcategoryViewer
 	{
 		private global::Gtk.Frame frame2;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
 		private global::Gtk.TreeView treeview;
+		
 		private global::LongoMatch.Plugins.Stats.Plotter plotter1;
+		
 		private global::Gtk.Label gtkframe;
 
 		protected virtual void Build ()

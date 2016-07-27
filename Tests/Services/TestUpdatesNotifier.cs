@@ -5,14 +5,14 @@ using System;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-using LongoMatch.Services;
+using VAS.Services;
 
 namespace Tests.Services
 {
-	[TestFixture()]
+	[TestFixture ()]
 	public class TestUpdatesNotifier
 	{
-		[Test()]
+		[Test ()]
 		public void TestParser ()
 		{
 			// Extract the file from the resources
@@ -35,7 +35,7 @@ namespace Tests.Services
 			Assert.AreEqual (changeLog, "none");
 		}
 
-		[Test()]
+		[Test ()]
 		public void TestIsOutDated ()
 		{
 			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.0.2"), new Version ("1.0.3")));
@@ -43,16 +43,16 @@ namespace Tests.Services
 			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.9.2"), new Version ("2.0.1")));
 			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.0.2"), new Version ("1.1")));
 			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.0.2"), new Version ("3.0")));
-			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("2.1"),   new Version ("3.0")));
-			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.1"),   new Version ("1.2")));
+			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("2.1"), new Version ("3.0")));
+			Assert.IsTrue (UpdatesNotifier.IsOutDated (new Version ("1.1"), new Version ("1.2")));
 
 			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.0.3"), new Version ("1.0.2")));
 			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.1.1"), new Version ("1.0.2")));
 			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("2.0.1"), new Version ("1.9.2")));
-			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.1"),   new Version ("1.0.2")));
-			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("3.0"),   new Version ("1.0.2")));
-			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("3.0"),   new Version ("2.1")  ));
-			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.2"),   new Version ("1.1")  ));
+			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.1"), new Version ("1.0.2")));
+			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("3.0"), new Version ("1.0.2")));
+			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("3.0"), new Version ("2.1")));
+			Assert.IsFalse (UpdatesNotifier.IsOutDated (new Version ("1.2"), new Version ("1.1")));
 		}
 	}
 }

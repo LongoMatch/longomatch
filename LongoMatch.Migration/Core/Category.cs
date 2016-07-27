@@ -19,14 +19,13 @@
 //
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using LongoMatch.Core;
-using Newtonsoft.Json;
-
 using LongoMatch.Common;
+using LongoMatch.Core;
+
 using LongoMatch.Interfaces;
+using Newtonsoft.Json;
 using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Store
@@ -44,10 +43,13 @@ namespace LongoMatch.Store
 		private Guid _UUID;
 
 		#region Constructors
+
 		#endregion
-		public Category() {
-			_UUID = System.Guid.NewGuid();
-			SubCategories = new List<ISubCategory>();
+
+		public Category ()
+		{
+			_UUID = System.Guid.NewGuid ();
+			SubCategories = new List<ISubCategory> ();
 			TagGoalPosition = false;
 			TagFieldPosition = true;
 		}
@@ -61,7 +63,8 @@ namespace LongoMatch.Store
 		public Guid UUID {
 			get {
 				return _UUID;
-			} set {
+			}
+			set {
 				_UUID = value;
 			}
 		}
@@ -80,12 +83,13 @@ namespace LongoMatch.Store
 		[JsonProperty ("Color")]
 		public  Color LColor {
 			get {
-				return new Color(this.Color.R, this.Color.G,
-				                 this.Color.B, this.Color.A);
-			} set {
+				return new Color (this.Color.R, this.Color.G,
+					this.Color.B, this.Color.A);
+			}
+			set {
 			}
 		}
-		
+
 		[JsonIgnore]
 		public System.Drawing.Color Color {
 			get;
@@ -112,62 +116,62 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		public List<ISubCategory> SubCategories {
 			get;
 			set;
 		}
-		
+
 		public bool TagGoalPosition {
 			get;
 			set;
 		}
-		
+
 		public bool TagFieldPosition {
 			get;
 			set;
 		}
-		
+
 		public bool TagHalfFieldPosition {
 			get;
 			set;
 		}
-		
+
 		public bool FieldPositionIsDistance {
 			get;
 			set;
 		}
-		
+
 		public bool HalfFieldPositionIsDistance {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
 		[JsonIgnore]
 		public string SortMethodString {
 			get {
-				switch(SortMethod) {
+				switch (SortMethod) {
 				case SortMethodType.SortByName:
-					return Catalog.GetString("Sort by name");
+					return Catalog.GetString ("Sort by name");
 				case SortMethodType.SortByStartTime:
-					return Catalog.GetString("Sort by start time");
+					return Catalog.GetString ("Sort by start time");
 				case SortMethodType.SortByStopTime:
-					return Catalog.GetString("Sort by stop time");
+					return Catalog.GetString ("Sort by stop time");
 				case SortMethodType.SortByDuration:
-					return Catalog.GetString("Sort by duration");
+					return Catalog.GetString ("Sort by duration");
 				default:
-					return Catalog.GetString("Sort by name");
+					return Catalog.GetString ("Sort by name");
 				}
 			}
 			set {
-				if(value == Catalog.GetString("Sort by start time"))
+				if (value == Catalog.GetString ("Sort by start time"))
 					SortMethod = SortMethodType.SortByStartTime;
-				else if(value == Catalog.GetString("Sort by stop time"))
+				else if (value == Catalog.GetString ("Sort by stop time"))
 					SortMethod = SortMethodType.SortByStopTime;
-				else if(value == Catalog.GetString("Sort by duration"))
+				else if (value == Catalog.GetString ("Sort by duration"))
 					SortMethod = SortMethodType.SortByDuration;
 				else
 					SortMethod = SortMethodType.SortByName;
@@ -175,76 +179,79 @@ namespace LongoMatch.Store
 		}
 
 		// this constructor is automatically called during deserialization
-		public Category(SerializationInfo info, StreamingContext context) {
-			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
-			Name = (string) info.GetValue("name", typeof(string));
-			Start = (Time)info.GetValue("start", typeof(Time));
-			Stop = (Time)info.GetValue("stop", typeof(Time));
-			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
-			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
-			Position = (Int32) info.GetValue("position", typeof (Int32));
-			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			Color = System.Drawing.Color.FromArgb(
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("red", typeof(ushort))),
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("green", typeof(ushort))),
-				LongoMatch.Common.Color.UShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
-			LColor = LongoMatch.Common.Color.ColorFromUShort ((ushort)info.GetValue("red", typeof(ushort)),
-			                                                  (ushort)info.GetValue("green", typeof(ushort)),
-			                                                  (ushort)info.GetValue("blue", typeof(ushort)));
+		public Category (SerializationInfo info, StreamingContext context)
+		{
+			_UUID = (Guid)info.GetValue ("uuid", typeof(Guid));
+			Name = (string)info.GetValue ("name", typeof(string));
+			Start = (Time)info.GetValue ("start", typeof(Time));
+			Stop = (Time)info.GetValue ("stop", typeof(Time));
+			HotKey = (HotKey)info.GetValue ("hotkey", typeof(HotKey));
+			SubCategories = (List<ISubCategory>)info.GetValue ("subcategories", typeof(List<ISubCategory>));
+			Position = (Int32)info.GetValue ("position", typeof(Int32));
+			SortMethod = (SortMethodType)info.GetValue ("sort_method", typeof(SortMethodType));
+			Color = System.Drawing.Color.FromArgb (
+				LongoMatch.Common.Color.UShortToByte ((ushort)info.GetValue ("red", typeof(ushort))),
+				LongoMatch.Common.Color.UShortToByte ((ushort)info.GetValue ("green", typeof(ushort))),
+				LongoMatch.Common.Color.UShortToByte ((ushort)info.GetValue ("blue", typeof(ushort))));
+			LColor = LongoMatch.Common.Color.ColorFromUShort ((ushort)info.GetValue ("red", typeof(ushort)),
+				(ushort)info.GetValue ("green", typeof(ushort)),
+				(ushort)info.GetValue ("blue", typeof(ushort)));
 			try {
-				TagFieldPosition = (bool) info.GetValue("tagfieldpos", typeof (bool));
+				TagFieldPosition = (bool)info.GetValue ("tagfieldpos", typeof(bool));
 			} catch {
 				TagFieldPosition = true;
 			}
 			try {
-				TagHalfFieldPosition =(bool) info.GetValue("taghalffieldpos", typeof (bool));
+				TagHalfFieldPosition = (bool)info.GetValue ("taghalffieldpos", typeof(bool));
 			} catch {
 				TagHalfFieldPosition = false;
 			}
 			try {
-				TagGoalPosition = (bool) info.GetValue("taggoalpos", typeof (bool));
+				TagGoalPosition = (bool)info.GetValue ("taggoalpos", typeof(bool));
 			} catch {
 				TagGoalPosition = false;
 			}
 			try {
-				FieldPositionIsDistance =(bool) info.GetValue("fieldposisdist", typeof (bool));
+				FieldPositionIsDistance = (bool)info.GetValue ("fieldposisdist", typeof(bool));
 			} catch {
 				FieldPositionIsDistance = false;
 			}
 			try {
-				HalfFieldPositionIsDistance =(bool) info.GetValue("halffieldposisdist", typeof (bool));
+				HalfFieldPositionIsDistance = (bool)info.GetValue ("halffieldposisdist", typeof(bool));
 			} catch {
 				HalfFieldPositionIsDistance = false;
 			}
 		}
 
 		// this method is automatically called during serialization
-		public void GetObjectData(SerializationInfo info, StreamingContext context) {
-			info.AddValue("ID", UUID);
-			info.AddValue("Name", Name);
-			info.AddValue("Start", Start);
-			info.AddValue("Stop", Stop);
-			info.AddValue("Hotkey", HotKey);
-			info.AddValue("Position", Position);
-			info.AddValue("SubCategories", SubCategoriesList);
+		public void GetObjectData (SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue ("ID", UUID);
+			info.AddValue ("Name", Name);
+			info.AddValue ("Start", Start);
+			info.AddValue ("Stop", Stop);
+			info.AddValue ("Hotkey", HotKey);
+			info.AddValue ("Position", Position);
+			info.AddValue ("SubCategories", SubCategoriesList);
 			/* Convert to ushort for backward compatibility */
-			info.AddValue("Color", LColor);
-			info.AddValue("red", ByteToUShort(Color.R));
-			info.AddValue("green", ByteToUShort(Color.G));
-			info.AddValue("blue", ByteToUShort(Color.B));
-			info.AddValue("SortMethod", SortMethod);
-			info.AddValue("TagFieldPosition", TagFieldPosition);
-			info.AddValue("TagHalfFieldPosition", TagHalfFieldPosition);
-			info.AddValue("TagGoalPosistion", TagGoalPosition);
-			info.AddValue("FieldPositionIsDistance", FieldPositionIsDistance);
-			info.AddValue("HalfFieldPositionIsDistance", HalfFieldPositionIsDistance);
+			info.AddValue ("Color", LColor);
+			info.AddValue ("red", ByteToUShort (Color.R));
+			info.AddValue ("green", ByteToUShort (Color.G));
+			info.AddValue ("blue", ByteToUShort (Color.B));
+			info.AddValue ("SortMethod", SortMethod);
+			info.AddValue ("TagFieldPosition", TagFieldPosition);
+			info.AddValue ("TagHalfFieldPosition", TagHalfFieldPosition);
+			info.AddValue ("TagGoalPosistion", TagGoalPosition);
+			info.AddValue ("FieldPositionIsDistance", FieldPositionIsDistance);
+			info.AddValue ("HalfFieldPositionIsDistance", HalfFieldPositionIsDistance);
 		}
 
-	    ushort ByteToUShort (Byte val) {
-			var ret = (ushort) (((float)val) / byte.MaxValue * ushort.MaxValue);
+		ushort ByteToUShort (Byte val)
+		{
+			var ret = (ushort)(((float)val) / byte.MaxValue * ushort.MaxValue);
 			return ret;
 		}
-		
+
 		#endregion
 		
 	}

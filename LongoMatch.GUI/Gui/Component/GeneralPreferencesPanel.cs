@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core;
-using Gtk;
-using LongoMatch.Core.Common;
 using System.Globalization;
+using Gtk;
+using VAS.Core;
+using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -42,9 +42,9 @@ namespace LongoMatch.Gui.Component
 				AttachOptions.Shrink, 0, 0);
 			autosavecb.CanFocus = false;
 			autosavecb.Show ();
-			autosavecb.Active = Config.AutoSave;
+			autosavecb.Active = App.Current.Config.AutoSave;
 			autosavecb.Toggled += (sender, e) => {
-				Config.AutoSave = autosavecb.Active;
+				App.Current.Config.AutoSave = autosavecb.Active;
 			};
 		}
 
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			
 			foreach (CultureInfo lang in Gettext.Languages) {
 				langsStore.AppendValues (lang.DisplayName, lang);
-				if (lang.Name == Config.Lang)
+				if (lang.Name == App.Current.Config.Lang)
 					active = index;
 				index++;
 			}
@@ -72,8 +72,8 @@ namespace LongoMatch.Gui.Component
 			int i = 0, active = -1;
 			templates = new ListStore (typeof(string));
 
-			foreach (var template in Config.CategoriesTemplatesProvider.Templates) {
-				if (template.Name == Config.DefaultTemplate) {
+			foreach (var template in App.Current.CategoriesTemplatesProvider.Templates) {
+				if (template.Name == App.Current.Config.DefaultTemplate) {
 					active = i;
 				}
 				templates.AppendValues (template.Name);
@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Component
 				templatescombobox.Active = active;
 			}
 			templatescombobox.Changed += (sender, e) => {
-				Config.DefaultTemplate = templatescombobox.ActiveText;
+				App.Current.Config.DefaultTemplate = templatescombobox.ActiveText;
 			};
 		}
 
@@ -92,13 +92,13 @@ namespace LongoMatch.Gui.Component
 		{
 			TreeIter iter;
 			CultureInfo info;
-			
+
 			langcombobox.GetActiveIter (out iter);
 			info = (CultureInfo)langsStore.GetValue (iter, 1);
 			if (info == null) {
-				Config.Lang = null;
+				App.Current.Config.Lang = null;
 			} else {
-				Config.Lang = info.Name;
+				App.Current.Config.Lang = info.Name;
 			}
 		}
 	}

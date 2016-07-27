@@ -16,12 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using System.Collections.Generic;
+using System.Linq;
+using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.CanvasObjects;
+using VASDrawing = VAS.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -54,12 +56,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			get;
 			set;
 		}
 
-		public TimelineEvent Play {
+		public TimelineEventLongoMatch Play {
 			get;
 			set;
 		}
@@ -148,13 +150,13 @@ namespace LongoMatch.Drawing.CanvasObjects
 					strokeColor = Play.Teams.First ().Color;
 				}
 			} else {
-				fillColor = strokeColor = Constants.TAGGER_POINT_COLOR;
+				fillColor = strokeColor = VASDrawing.Constants.TAGGER_POINT_COLOR;
 			}
 			
 			if (Selected) {
-				fillColor = Constants.TAGGER_SELECTION_COLOR;
+				fillColor = VASDrawing.Constants.TAGGER_SELECTION_COLOR;
 			} else if (Highlighted) {
-				fillColor = Config.Style.PaletteActive;
+				fillColor = App.Current.Style.PaletteActive;
 			}
 
 			tk.FillColor = fillColor;

@@ -16,13 +16,20 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.DB;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
+using VASFilters = VAS.Core.Filters;
 
 namespace LongoMatch.Services
 {
@@ -34,7 +41,7 @@ namespace LongoMatch.Services
 		{
 		}
 
-		public Project OpenedProject {
+		public ProjectLongoMatch OpenedProject {
 			get;
 			set;
 		}
@@ -44,20 +51,19 @@ namespace LongoMatch.Services
 			set;
 		}
 
-		void HandleManageDatabase ()
+		void HandleManageDatabase (ManageDatabasesEvent e)
 		{
 			if (OpenedProject != null) {
 				var msg = Catalog.GetString ("Close the current project to open the database manager");
-				Config.GUIToolkit.ErrorMessage (msg);
+				App.Current.GUIToolkit.ErrorMessage (msg);
 			} else {
-				Config.GUIToolkit.OpenDatabasesManager ();
+				App.Current.GUIToolkit.OpenDatabasesManager ();
 			}
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType, EventsFilter filter,
-		                                 IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
-			OpenedProject = project;
+			OpenedProject = e.Project as ProjectLongoMatch;
 		}
 
 		#region IService
@@ -76,20 +82,20 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
-			Manager = CreateStorageManager (Config.DBDir);
-			Config.DatabaseManager = Manager;
+			App.Current.EventsBroker.Subscribe<ManageDatabasesEvent> (HandleManageDatabase);
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			Manager = CreateStorageManager (App.Current.DBDir);
+			App.Current.DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
-			Manager.SetActiveByName (Config.CurrentDatabase);
+			Manager.SetActiveByName (App.Current.Config.CurrentDatabase);
 			return true;
 		}
 
 		public bool Stop ()
 		{
-			Config.EventsBroker.ManageDatabasesEvent -= HandleManageDatabase;
-			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
-			Config.DatabaseManager = Manager = null;
+			App.Current.EventsBroker.Unsubscribe<ManageDatabasesEvent> (HandleManageDatabase);
+			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			App.Current.DatabaseManager = Manager = null;
 			return true;
 		}
 
@@ -102,9 +108,8 @@ namespace LongoMatch.Services
 		/// <param name="storageDir">The directory used for the storages.</param>
 		public static IStorageManager CreateStorageManager (string storageDir)
 		{
-			return Config.DependencyRegistry.Retrieve<IStorageManager> (storageDir);
+			return App.Current.DependencyRegistry.Retrieve<IStorageManager> (storageDir);
 		}
 
 	}
 }
-

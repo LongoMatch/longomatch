@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Addins</RootNamespace>
     <AssemblyName>LongoMatch.Addins</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +34,6 @@
     <Compile Include="AddinsManager.cs" />
     <Compile Include="ExtensionPoints\IImportProject.cs" />
     <Compile Include="ExtensionPoints\IMultimediaBackend.cs" />
-    <Compile Include="ExtensionPoints\ILongoMatchPlugin.cs" />
     <Compile Include="ExtensionPoints\IGStreamerPluginsProvider.cs" />
     <Compile Include="ExtensionPoints\IAnalisysDashboardsProvider.cs" />
     <Compile Include="PreferencesAttribute.cs" />
@@ -50,19 +51,28 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.1.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+      <Name>LongoMatch.Services.Net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
       <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
       <Name>LongoMatch.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services.Net45</Name>
+    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+      <Name>VAS.Core.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Addins\VAS.Addins.csproj">
+      <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
+      <Name>VAS.Addins</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

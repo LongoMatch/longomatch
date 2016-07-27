@@ -16,12 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.IO;
 using System.Linq;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
 using NUnit.Framework;
-using LongoMatch.Core.Interfaces;
+using VAS.Core.Store;
+using LongoMatch.Core.Store;
 
 namespace Tests.Core.Store
 {
@@ -33,7 +31,7 @@ namespace Tests.Core.Store
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
-			ProjectDescription pd = new ProjectDescription ();
+			var pd = new ProjectDescription ();
 			Utils.CheckSerialization (pd);
 			
 			pd.FileSet = new MediaFileSet ();

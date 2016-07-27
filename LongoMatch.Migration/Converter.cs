@@ -16,64 +16,73 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
-using System.IO;
-using LongoMatch.Common;
-using LongoMatch.Store.Templates;
-using LongoMatch.Store;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using LongoMatch.Common;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
 using LongoMatch.Interfaces;
-using LongoMatch.Core.Interfaces;
-using System.Collections.ObjectModel;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
+using VAS.Core.Serialization;
+
+using LMStorePlayer = LongoMatch.Core.Store.PlayerLongoMatch;
+using ProjectDescription = LongoMatch.Store.ProjectDescription;
+using SystemColor = System.Drawing.Color;
+using Team = LongoMatch.Common.Team;
+using TeamTemplate = LongoMatch.Store.Templates.TeamTemplate;
+using VASCommon = VAS.Core.Common;
+using VASStore = VAS.Core.Store;
 
 namespace LongoMatch.Migration
 {
 	public class Converter
 	{
-
-		static LongoMatch.Core.Common.Point ConvertPoint (Point newp)
+		static VASCommon.Point ConvertPoint (Point newp)
 		{
-			return new LongoMatch.Core.Common.Point (newp.DX, newp.DY);
+			return new VASCommon.Point (newp.DX, newp.DY);
 		}
 
-		static LongoMatch.Core.Common.Image ConvertImage (Image image)
+		static VASCommon.Image ConvertImage (Image image)
 		{
 			if (image == null) {
 				return null;
 			}
-			return new LongoMatch.Core.Common.Image (image.Value); 
+			return new VASCommon.Image (image.Value); 
 		}
 
-		static LongoMatch.Core.Store.Time ConvertTime (Time time)
+		static VASStore.Time ConvertTime (Time time)
 		{
-			return new LongoMatch.Core.Store.Time (time.MSeconds); 
+			return new VASStore.Time (time.MSeconds); 
 		}
 
-		static LongoMatch.Core.Common.Color ConvertColor (System.Drawing.Color color)
+		static VASCommon.Color ConvertColor (SystemColor color)
 		{
-			return new LongoMatch.Core.Common.Color (color.R, color.G, color.B); 
+			return new VASCommon.Color (color.R, color.G, color.B); 
 		}
 
-		static LongoMatch.Core.Store.HotKey ConvertHotkey (HotKey hotkey)
+		static VASStore.HotKey ConvertHotkey (HotKey hotkey)
 		{
-			return new LongoMatch.Core.Store.HotKey { Key = hotkey.Key, Modifier = hotkey.Modifier }; 
+			return new VASStore.HotKey { Key = hotkey.Key, Modifier = hotkey.Modifier }; 
 		}
 
-		static LongoMatch.Core.Store.FrameDrawing ConvertFrameDrawing (Drawing keyFrameDrawing)
+		static VASStore.FrameDrawing ConvertFrameDrawing (Drawing keyFrameDrawing)
 		{
 			if (keyFrameDrawing == null)
 				return null;
-			var frameDrawing = new LongoMatch.Core.Store.FrameDrawing ();
+			var frameDrawing = new VASStore.FrameDrawing ();
 			frameDrawing.Freehand = ConvertImage (keyFrameDrawing.Pixbuf);
-			frameDrawing.Render = new LongoMatch.Core.Store.Time (keyFrameDrawing.RenderTime);
-			frameDrawing.Pause = new LongoMatch.Core.Store.Time (5000);
+			frameDrawing.Render = new VASStore.Time (keyFrameDrawing.RenderTime);
+			frameDrawing.Pause = new VASStore.Time (5000);
 			return frameDrawing;
 		}
 
-		static LongoMatch.Core.Store.MediaFile ConvertMediaFile (MediaFile file)
+		static VASStore.MediaFile ConvertMediaFile (MediaFile file)
 		{
-			var newf = new LongoMatch.Core.Store.MediaFile ();
+			var newf = new VASStore.MediaFile ();
 			newf.AudioCodec = file.AudioCodec;
 			newf.Container = file.Container;
 			newf.Duration = ConvertTime (file.Duration);
@@ -101,14 +110,14 @@ namespace LongoMatch.Migration
 			newdesc.VisitorGoals = desc.VisitorGoals;
 			newdesc.MatchDate = desc.MatchDate;
 			newdesc.LastModified = desc.LastModified;
-			newdesc.FileSet = new LongoMatch.Core.Store.MediaFileSet ();
+			newdesc.FileSet = new VASStore.MediaFileSet ();
 			newdesc.FileSet.Add (ConvertMediaFile (desc.File));
 			return newdesc;
 		}
 
-		static LongoMatch.Core.Store.Player ConvertPlayer (Player p)
+		static PlayerLongoMatch ConvertPlayer (Player p)
 		{
-			var player = new LongoMatch.Core.Store.Player ();
+			var player = new PlayerLongoMatch ();
 			if (p.ID == Guid.Empty) {
 				p.ID = new Guid ();
 			} else {
@@ -127,30 +136,30 @@ namespace LongoMatch.Migration
 			return player;
 		}
 
-		public static LongoMatch.Core.Store.Templates.Dashboard ConvertCategories (Categories cats,
-		                                                                           out Dictionary <TagSubCategory, List<LongoMatch.Core.Store.Tag>> dict,
-		                                                                           out Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict)
+		public static DashboardLongoMatch ConvertCategories (Categories cats,
+		                                                     out Dictionary <TagSubCategory, List<VASStore.Tag>> dict,
+		                                                     out Dictionary <Category, VASStore.EventType > eventTypesDict)
 		{
-			dict = new Dictionary<TagSubCategory, List<LongoMatch.Core.Store.Tag>> ();
-			eventTypesDict = new Dictionary<Category, LongoMatch.Core.Store.EventType> ();
+			dict = new Dictionary<TagSubCategory, List<VASStore.Tag>> ();
+			eventTypesDict = new Dictionary<Category, VASStore.EventType> ();
 			int i = 0;
-			var dashboard = new LongoMatch.Core.Store.Templates.Dashboard ();
+			var dashboard = new DashboardLongoMatch ();
 			dashboard.Name = cats.Name;
 			dashboard.Image = ConvertImage (cats.Image);
 			if (cats.FieldBackground != null) {
 				dashboard.FieldBackground = ConvertImage (cats.FieldBackground);
 			} else {
-				dashboard.FieldBackground = Config.FieldBackground;
+				dashboard.FieldBackground = App.Current.FieldBackground;
 			}
 			if (cats.HalfFieldBackground != null) {
 				dashboard.HalfFieldBackground = ConvertImage (cats.HalfFieldBackground);
 			} else {
-				dashboard.HalfFieldBackground = Config.HalfFieldBackground;
+				dashboard.HalfFieldBackground = App.Current.HalfFieldBackground;
 			}
 			if (cats.GoalBackground != null) {
 				dashboard.GoalBackground = ConvertImage (cats.GoalBackground);
 			} else {
-				dashboard.GoalBackground = Config.GoalBackground;
+				dashboard.GoalBackground = App.Current.GoalBackground;
 			}
 			dashboard.ID = cats.ID;
 			if (dashboard.ID == Guid.Empty) {
@@ -159,9 +168,9 @@ namespace LongoMatch.Migration
 			dashboard.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			
 			foreach (Category cat in cats) {
-				var button = new LongoMatch.Core.Store.AnalysisEventButton {
-					Position = new LongoMatch.Core.Common.Point (10 + (i % 7) * (120 + 10),
-					                                             10 + (i / 7) * (80 + 10)),
+				var button = new VASStore.AnalysisEventButton {
+					Position = new VASCommon.Point (10 + (i % 7) * (120 + 10),
+						10 + (i / 7) * (80 + 10)),
 					Width = 120,
 					Height = 80,
 				};
@@ -171,7 +180,7 @@ namespace LongoMatch.Migration
 				button.ShowSubcategories = false;
 				button.Start = ConvertTime (cat.Start);
 				button.Stop = ConvertTime (cat.Stop);
-				button.EventType = new LongoMatch.Core.Store.AnalysisEventType ();
+				button.EventType = new VASStore.AnalysisEventType ();
 				var evt = button.AnalysisEventType;
 				evt.Name = cat.Name;
 				evt.ID = cat.UUID;
@@ -180,14 +189,14 @@ namespace LongoMatch.Migration
 				evt.TagHalfFieldPosition = cat.TagHalfFieldPosition;
 				evt.HalfFieldPositionIsDistance = cat.HalfFieldPositionIsDistance;
 				evt.FieldPositionIsDistance = cat.FieldPositionIsDistance;
-				evt.SortMethod = (LongoMatch.Core.Common.SortMethodType)cat.SortMethod;
+				evt.SortMethod = (VAS.Core.Common.SortMethodType)cat.SortMethod;
 				evt.Color = ConvertColor (cat.Color);
 				foreach (ISubCategory subcat in cat.SubCategories) {
 					if (subcat is TagSubCategory) {
 						var tagsub = subcat as TagSubCategory;
-						var l = new List<LongoMatch.Core.Store.Tag> ();
+						var l = new List<VASStore.Tag> ();
 						foreach (string s in tagsub) {
-							var t = new LongoMatch.Core.Store.Tag (s, subcat.Name);
+							var t = new VASStore.Tag (s, subcat.Name);
 							l.Add (t);
 							evt.Tags.Add (t);
 						}
@@ -199,13 +208,13 @@ namespace LongoMatch.Migration
 				i++;
 			}
 			foreach (GameUnit gu in cats.GameUnits) {
-				var timer = new LongoMatch.Core.Store.TimerButton {
-					Position = new LongoMatch.Core.Common.Point (10 + (i % 7) * (120 + 10),
-					                                             10 + (i / 7) * (80 + 10)),
+				var timer = new VASStore.TimerButton {
+					Position = new VASCommon.Point (10 + (i % 7) * (120 + 10),
+						10 + (i / 7) * (80 + 10)),
 					Width = 120,
 					Height = 80,
 				};
-				timer.Timer = new LongoMatch.Core.Store.Timer {
+				timer.Timer = new TimerLongoMatch {
 					Name = gu.Name
 				};
 				dashboard.List.Add (timer);
@@ -218,11 +227,11 @@ namespace LongoMatch.Migration
 		{
 			int i = 0;
 			
-			while (System.IO.File.Exists (outputPath)) {
-				var dir = System.IO.Path.GetDirectoryName (outputPath);
-				var name = System.IO.Path.GetFileNameWithoutExtension (outputPath);
-				var ext = System.IO.Path.GetExtension (outputPath);
-				outputPath = System.IO.Path.Combine (dir, String.Format ("{0}_{1}{2}", name, i, ext));
+			while (File.Exists (outputPath)) {
+				var dir = Path.GetDirectoryName (outputPath);
+				var name = Path.GetFileNameWithoutExtension (outputPath);
+				var ext = Path.GetExtension (outputPath);
+				outputPath = Path.Combine (dir, String.Format ("{0}_{1}{2}", name, i, ext));
 				i++;
 			}
 			return outputPath;
@@ -231,18 +240,18 @@ namespace LongoMatch.Migration
 		public static void ConvertCategories (string inputPath, string outputPath)
 		{
 			Categories cats = SerializableObject.Load<Categories> (inputPath,
-			                                                       SerializationType.Binary);
-			Dictionary<TagSubCategory, List<LongoMatch.Core.Store.Tag>> ignore1;
-			Dictionary <Category, LongoMatch.Core.Store.EventType > ignore2;
+				                  SerializationType.Binary);
+			Dictionary<TagSubCategory, List<VASStore.Tag>> ignore1;
+			Dictionary <Category, VASStore.EventType > ignore2;
 			var dashboard = ConvertCategories (cats, out ignore1, out ignore2);
 			outputPath = FixPath (outputPath);
-			LongoMatch.Core.Common.Serializer.Instance.Save (dashboard, outputPath);
+			Serializer.Instance.Save (dashboard, outputPath);
 		}
 
-		public static LongoMatch.Core.Store.Templates.Team ConvertTeamTemplate (TeamTemplate team,
-		                                                                              Dictionary <Player, LongoMatch.Core.Store.Player> teamsDict)
+		public static LongoMatch.Core.Store.Templates.SportsTeam ConvertTeamTemplate (TeamTemplate team,
+		                                                                              Dictionary <Player, PlayerLongoMatch> teamsDict)
 		{
-			var newteam = new LongoMatch.Core.Store.Templates.Team ();
+			var newteam = new LongoMatch.Core.Store.Templates.SportsTeam ();
 			newteam.Name = team.Name;
 			newteam.TeamName = team.TeamName;
 			newteam.Shield = ConvertImage (team.Shield);
@@ -263,19 +272,19 @@ namespace LongoMatch.Migration
 		public static void ConvertTeamTemplate (string inputPath, string outputPath)
 		{
 			TeamTemplate team = SerializableObject.Load<TeamTemplate> (inputPath,
-			                                                           SerializationType.Binary);
+				                    SerializationType.Binary);
 			var newteam = ConvertTeamTemplate (team, null);
 			outputPath = FixPath (outputPath);
-			LongoMatch.Core.Common.Serializer.Instance.Save (newteam, outputPath);
+			Serializer.Instance.Save (newteam, outputPath);
 		}
 
 		public static void ConvertProject (Project project, string outputDir)
 		{
-			Dictionary<TagSubCategory, List<LongoMatch.Core.Store.Tag>> subcatsDict;
-			Dictionary <Category, LongoMatch.Core.Store.EventType > eventTypesDict;
+			Dictionary<TagSubCategory, List<VASStore.Tag>> subcatsDict;
+			Dictionary <Category, VASStore.EventType > eventTypesDict;
 			Image field, halffield, goal;
-			var teamsDict = new Dictionary <Player, LongoMatch.Core.Store.Player> ();
-			var newproject = new LongoMatch.Core.Store.Project ();
+			var teamsDict = new Dictionary <Player, PlayerLongoMatch> ();
+			var newproject = new ProjectLongoMatch ();
 			newproject.ID = project.UUID;
 			newproject.LocalTeamTemplate = ConvertTeamTemplate (project.LocalTeamTemplate, teamsDict);
 			newproject.VisitorTeamTemplate = ConvertTeamTemplate (project.VisitorTeamTemplate, teamsDict);
@@ -290,11 +299,11 @@ namespace LongoMatch.Migration
 					int periodDuration = duration / project.Categories.GamePeriods.Count;
 					string period = project.Categories.GamePeriods [i];
 					
-					var p = new LongoMatch.Core.Store.Period { Name = period };
-					p.Nodes.Add (new LongoMatch.Core.Store.TimeNode {
+					var p = new VASStore.Period { Name = period };
+					p.Nodes.Add (new VASStore.TimeNode {
 						Name = period,
-						Start = new LongoMatch.Core.Store.Time (i * periodDuration),
-						Stop = new LongoMatch.Core.Store.Time (i * periodDuration + periodDuration)
+						Start = new VASStore.Time (i * periodDuration),
+						Stop = new VASStore.Time (i * periodDuration + periodDuration)
 					});
 					newproject.Periods.Add (p);
 				}
@@ -315,10 +324,10 @@ namespace LongoMatch.Migration
 			}
 				
 			foreach (Play play in project.AllPlays ()) {
-				LongoMatch.Core.Common.Coordinates c;
+				VASCommon.Coordinates c;
 
-				var newplay = new LongoMatch.Core.Store.TimelineEvent ();
-				newplay.CamerasConfig.Add (new LongoMatch.Core.Store.CameraConfig (0));
+				var newplay = new TimelineEventLongoMatch ();
+				newplay.CamerasConfig.Add (new VASStore.CameraConfig (0));
 				var fd = ConvertFrameDrawing (play.KeyFrameDrawing);
 				if (fd != null) {
 					newplay.Drawings.Add (fd);
@@ -329,7 +338,7 @@ namespace LongoMatch.Migration
 				newplay.Rate = play.Rate;
 				newplay.Start = ConvertTime (play.Start);
 				newplay.Stop = ConvertTime (play.Stop);
-				newplay.Teams = new ObservableCollection<LongoMatch.Core.Store.Templates.Team> ();
+				newplay.Teams = new ObservableCollection<VASStore.Templates.Team> ();
 				if (play.Team == Team.LOCAL || play.Team == Team.BOTH) {
 					newplay.Teams.Add (newproject.LocalTeamTemplate);
 				}
@@ -348,7 +357,7 @@ namespace LongoMatch.Migration
 				}
 
 				if (play.FieldPosition != null) {
-					c = new LongoMatch.Core.Common.Coordinates ();
+					c = new VASCommon.Coordinates ();
 					foreach (Point p in play.FieldPosition) {
 						Point newp = p.Normalize (field.Width, field.Height);
 						c.Points.Add (ConvertPoint (newp));
@@ -357,7 +366,7 @@ namespace LongoMatch.Migration
 				}
 				
 				if (play.HalfFieldPosition != null) {
-					c = new LongoMatch.Core.Common.Coordinates ();
+					c = new VASCommon.Coordinates ();
 					foreach (Point p in play.HalfFieldPosition) {
 						Point newp = p.Normalize (halffield.Width, halffield.Height);
 						c.Points.Add (ConvertPoint (newp));
@@ -366,7 +375,7 @@ namespace LongoMatch.Migration
 				}
 				
 				if (play.GoalPosition != null) {
-					c = new LongoMatch.Core.Common.Coordinates ();
+					c = new VASCommon.Coordinates ();
 					foreach (Point p in play.GoalPosition) {
 						Point newp = p.Normalize (goal.Width, goal.Height);
 						c.Points.Add (ConvertPoint (newp));
@@ -378,7 +387,7 @@ namespace LongoMatch.Migration
 			field.Dispose ();
 			halffield.Dispose ();
 			goal.Dispose ();
-			LongoMatch.Core.Common.Serializer.Instance.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
+			Serializer.Instance.Save (newproject, Path.Combine (outputDir, project.UUID.ToString ()));
 		}
 
 		public static void ConvertDB (string dbfile, string outputdir)

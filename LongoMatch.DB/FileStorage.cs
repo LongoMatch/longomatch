@@ -17,8 +17,11 @@
 //
 using System;
 using System.IO;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using VAS.Core.Common;
+using VAS.Core.Interfaces;
+using VAS.Core.Serialization;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
@@ -38,9 +41,9 @@ namespace LongoMatch.DB
 			Log.Information ("Loading " + from);
 			T storable = Serializer.Instance.LoadSafe<T> (from);
 			if (storable is Project) {
-				ProjectMigration.Migrate (storable as Project);
+				ProjectMigration.Migrate (storable as ProjectLongoMatch);
 			} else if (storable is Team) {
-				TeamMigration.Migrate (storable as Team);
+				TeamMigration.Migrate (storable as SportsTeam);
 			} else if (storable is Dashboard) {
 				DashboardMigration.Migrate (storable as Dashboard);
 			}

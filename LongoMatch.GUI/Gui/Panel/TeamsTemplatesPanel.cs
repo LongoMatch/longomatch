@@ -20,16 +20,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using Gtk;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
 using Pango;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Serialization;
+using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -43,15 +46,15 @@ namespace LongoMatch.Gui.Panel
 		const int COL_TEAM = 2;
 
 		ListStore teamsStore;
-		Team loadedTeam;
+		SportsTeam loadedTeam;
 		ITeamTemplatesProvider provider;
 		TreeIter selectedIter;
-		List<Team> teams;
+		List<SportsTeam> teams;
 
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
-			provider = Config.TeamTemplatesProvider;
+			provider = App.Current.TeamTemplatesProvider;
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
 			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
@@ -91,7 +94,7 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(Team));
+			teamsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(SportsTeam));
 			
 			var cell = new CellRendererText ();
 			cell.Editable = true;
@@ -120,10 +123,18 @@ namespace LongoMatch.Gui.Panel
 					BackEvent ();
 			};
 			
-			editteamslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
-			editplayerslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
+			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
+			editplayerslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 
 			Load (null);
+		}
+
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
 		}
 
 		public override void Destroy ()
@@ -132,14 +143,19 @@ namespace LongoMatch.Gui.Panel
 			base.Destroy ();
 		}
 
-		public void OnLoaded ()
+		public void OnLoad ()
 		{
 
 		}
 
-		public void OnUnloaded ()
+		public void OnUnload ()
 		{
 
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		void Load (string templateName)
@@ -147,9 +163,9 @@ namespace LongoMatch.Gui.Panel
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;
 
-			teams = new List<Team> ();
+			teams = new List<SportsTeam> ();
 			teamsStore.Clear ();
-			foreach (Team team in provider.Templates) {
+			foreach (SportsTeam team in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
 				string name = team.Name;
@@ -178,13 +194,13 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		bool SaveTemplate (Team template)
+		bool SaveTemplate (SportsTeam template)
 		{
 			try {
 				provider.Save (template);
 				return true;
 			} catch (InvalidTemplateFilenameException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message, this);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
 				return false;
 			}
 		}
@@ -245,16 +261,16 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System teams can't be edited, do you want to create a copy?");
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
-					newName = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					newName = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
 						loadedTeam.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (teams.Any (t => t.Name == newName)) {
 						msg = Catalog.GetString ("A team with the same name already exists"); 
-						Config.GUIToolkit.ErrorMessage (msg, this);
+						App.Current.GUIToolkit.ErrorMessage (msg, this);
 					} else {
 						break;
 					}
@@ -262,7 +278,7 @@ namespace LongoMatch.Gui.Panel
 				if (newName == null) {
 					return;
 				}
-				Team newTeam = loadedTeam.Clone ();
+				SportsTeam newTeam = loadedTeam.Clone ();
 				newTeam.ID = Guid.NewGuid ();
 				newTeam.Name = newName;
 				newTeam.Static = false;
@@ -281,7 +297,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else if (prompt) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
-					if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 						SaveLoadedTeam ();
 					}
 				} else {
@@ -290,7 +306,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadTeam (Team team, TreeIter selectedIter)
+		void LoadTeam (SportsTeam team, TreeIter selectedIter)
 		{
 			PromptSave (true);
 
@@ -302,17 +318,17 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			Team selected;
+			SportsTeam selected;
 			TreeIter iter;
 
 			teamseditortreeview.Selection.GetSelected (out iter);
 			try {
-				Team team = teamsStore.GetValue (iter, COL_TEAM) as Team;
+				SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 				team.Load ();
 				selected = team.Clone ();
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
 				return;
 			}
 			deleteteambutton.Visible = selected != null;
@@ -331,20 +347,20 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to import */
-			fileName = Config.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, Config.HomeDir,
+			fileName = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName == null)
 				return;
 
 			try {
-				Team newTeam = provider.LoadFile (fileName);
+				SportsTeam newTeam = provider.LoadFile (fileName);
 
 				if (newTeam != null) {
 					bool abort = false;
 
 					while (provider.Exists (newTeam.Name) && !abort) {
-						string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
+						string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
 							              Catalog.GetString ("Name conflict"), newTeam.Name + "#").Result;
 						if (name == null) {
 							abort = true;
@@ -368,7 +384,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 			} catch (Exception ex) {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -380,11 +396,11 @@ namespace LongoMatch.Gui.Panel
 			if (loadedTeam != null) {
 				if (loadedTeam.Static) {
 					string msg = Catalog.GetString ("System teams can't be deleted");
-					MessagesHelpers.WarningMessage (this, msg);
+					Helpers.MessagesHelpers.WarningMessage (this, msg);
 					return;
 				} else {
 					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
-					if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
 						provider.Delete (loadedTeam);
 						teamsStore.Remove (ref selectedIter);
 						teams.Remove (loadedTeam);
@@ -399,7 +415,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleNewTeamClicked (object sender, EventArgs e)
 		{
 			bool create = false;
-			Team auxdelete = null;
+			SportsTeam auxdelete = null;
 			
 			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
 			dialog.ShowCount = true;
@@ -409,14 +425,14 @@ namespace LongoMatch.Gui.Panel
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
 					continue;
 				} else if (dialog.Text == "default") {
-					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
+					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
 					continue;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The template already exists. Do you want to overwrite it?");
-					if (MessagesHelpers.QuestionMessage (this, msg)) {
+					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 						create = true;
 						auxdelete = teams.FirstOrDefault (t => t.Name == dialog.Text);
 						break;
@@ -431,8 +447,8 @@ namespace LongoMatch.Gui.Panel
 				if (dialog.SelectedTemplate != null) {
 					provider.Copy (teams.FirstOrDefault (t => t.Name == dialog.SelectedTemplate), dialog.Text);
 				} else {
-					Team team;
-					team = Team.DefaultTemplate (dialog.Count);
+					SportsTeam team;
+					team = SportsTeam.DefaultTemplate (dialog.Count);
 					team.TeamName = dialog.Text;
 					team.Name = dialog.Text;
 					if (!SaveTemplate (team)) {
@@ -457,8 +473,8 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
-			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
-				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), Config.HomeDir,
+			fileName = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
+				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {
@@ -466,13 +482,13 @@ namespace LongoMatch.Gui.Panel
 				fileName = System.IO.Path.ChangeExtension (fileName, Constants.TEAMS_TEMPLATE_EXT);
 				if (System.IO.File.Exists (fileName)) {
 					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = Config.GUIToolkit.QuestionMessage (msg, null).Result;
+					succeeded = App.Current.GUIToolkit.QuestionMessage (msg, null).Result;
 				}
 
 				if (succeeded) {
 					Serializer.Instance.Save (loadedTeam, fileName);
 					string msg = Catalog.GetString ("Team exported correctly");
-					Config.GUIToolkit.InfoMessage (msg);
+					App.Current.GUIToolkit.InfoMessage (msg);
 				}
 			}
 
@@ -483,10 +499,10 @@ namespace LongoMatch.Gui.Panel
 			TreeIter iter;
 			teamsStore.GetIter (out iter, new TreePath (args.Path));
  
-			Team team = teamsStore.GetValue (iter, COL_TEAM) as Team;
+			SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 			if (team.Name != args.NewText) {
 				if (teams.Any (t => t.Name == args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (
+					App.Current.GUIToolkit.ErrorMessage (
 						Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
@@ -495,7 +511,7 @@ namespace LongoMatch.Gui.Panel
 						provider.Save (team);
 						teamsStore.SetValue (iter, COL_NAME, team.Name);
 					} catch (Exception ex) {
-						Config.GUIToolkit.ErrorMessage (ex.Message);
+						App.Current.GUIToolkit.ErrorMessage (ex.Message);
 					}
 				}
 			}

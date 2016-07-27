@@ -21,18 +21,23 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Core;
-using Helpers = LongoMatch.Gui.Helpers;
-using Image = LongoMatch.Core.Common.Image;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Handlers;
+using VAS.Core.Store;
+using VAS.Core.Store.Templates;
+using VAS.Drawing.Cairo;
+using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
+using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -47,14 +52,14 @@ namespace LongoMatch.Gui.Component
 		public event NewEventHandler NewTagEvent;
 
 		DashboardMode mode;
-		DashboardCanvas tagger;
-		Dashboard template;
+		SportDashboardCanvas tagger;
+		DashboardLongoMatch template;
 		DashboardButton selected;
 		Gtk.Image editimage, linksimage;
 		ToggleToolButton editbutton, linksbutton, popupbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
-		Project project;
+		ProjectLongoMatch project;
 
 		public DashboardWidget ()
 		{
@@ -67,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			addtagbuttonimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-tag-tag", IconSize.Button);
 			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
 
-			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
+			tagger = new SportDashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.ButtonsSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
@@ -142,17 +147,17 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Project Project {
+		public ProjectLongoMatch Project {
 			set {
 				project = value;
 				tagger.Project = project;
-				Template = project.Dashboard;
+				Template = project.Dashboard as DashboardLongoMatch;
 				positionsbox.Visible = false;
 				periodsbox.Visible = false;
 			}
 		}
 
-		public Dashboard Template {
+		public DashboardLongoMatch Template {
 			set {
 				template = value;
 				tagger.Template = value;
@@ -190,7 +195,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool LinksButtonVisible {
 			set {
-				if (!Config.SupportsActionLinks)
+				if (!App.Current.SupportsActionLinks)
 					linksbutton.Visible = false;
 				else
 					linksbutton.Visible = value;
@@ -220,7 +225,7 @@ namespace LongoMatch.Gui.Component
 					Score = new Score ("Score", 1)
 				};
 			} else if (buttontype == "Timer") {
-				button = new TimerButton { Timer = new Timer { Name = "Timer" } };
+				button = new TimerButton { Timer = new TimerLongoMatch { Name = "Timer" } };
 			} else if (buttontype == "Tag") {
 				button = new TagButton { Tag = new Tag ("Tag", "") };
 			} else if (buttontype == "Category") {
@@ -253,13 +258,16 @@ namespace LongoMatch.Gui.Component
 				tagger.ShowLinks = false;
 			}
 
-			LongoMatch.Gui.Helpers.Misc.SetFocus (this, mode == DashboardMode.Edit);
+			Helpers.Misc.SetFocus (this, mode == DashboardMode.Edit);
 			if (project != null) {
 				if (mode == DashboardMode.Edit) {
 					Edited = false;
 				} else {
-					if (Edited)
-						Config.EventsBroker.EmitDashboardEdited ();
+					if (Edited) {
+						App.Current.EventsBroker.Publish<DashboardEditedEvent> (
+							new DashboardEditedEvent ()
+						);
+					}
 				}
 
 			}
@@ -270,7 +278,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 			             button.Name + "?";
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				template.RemoveButton (button);
 				Edited = true;
 				Refresh ();
@@ -281,7 +289,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = string.Format ("{0} {1} ?",
 				             Catalog.GetString ("Do you want to delete: "), link);
-			if (force || Config.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (force || App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
 				link.SourceButton.ActionLinks.Remove (link);
 				Edited = true;
 				Refresh ();
@@ -414,7 +422,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
-			LongoMatch.Core.Common.Image background;
+			Image background;
 			Gdk.Pixbuf pix = Helpers.Misc.OpenImage (this);
 			
 			if (pix == null) {
@@ -500,7 +508,6 @@ namespace LongoMatch.Gui.Component
 			if (NewTagEvent != null) {
 				NewTagEvent (evntType, players, teams, tags, start, stop, eventTime, btn);
 			}
-			//Config.EventsBroker.EmitNewTag (button, players, tags, start, stop);
 		}
 
 		void EditEventSubcategories (DashboardButton dashboardButton)
@@ -519,11 +526,11 @@ namespace LongoMatch.Gui.Component
 		void HandleResetField (object sender, EventArgs e)
 		{
 			if (sender == resetfieldbutton) {
-				UpdateBackground (Config.FieldBackground, 0);
+				UpdateBackground (App.Current.FieldBackground, 0);
 			} else if (sender == resethfieldbutton) {
-				UpdateBackground (Config.HalfFieldBackground, 1);
+				UpdateBackground (App.Current.HalfFieldBackground, 1);
 			} else if (sender == resetgoalbutton) {
-				UpdateBackground (Config.GoalBackground, 2);
+				UpdateBackground (App.Current.GoalBackground, 2);
 			}
 		}
 
@@ -556,7 +563,7 @@ namespace LongoMatch.Gui.Component
 				template.GamePeriods = new ObservableCollection<string> (periodsentry.Text.Split ('-'));
 				Edited = true;
 			} catch {
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
+				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
 			}
 		}
 

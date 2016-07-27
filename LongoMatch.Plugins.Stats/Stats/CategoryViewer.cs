@@ -15,21 +15,20 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using Gtk;
-using LongoMatch.Core.Stats;
 using System.Collections.Generic;
+using Gtk;
 using LongoMatch.Core.Common;
-using Image = LongoMatch.Core.Common.Image;
+using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Plugins.Stats
 {
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem (true)]
 	public partial class CategoryViewer : Gtk.Bin
 	{
 		List<SubCategoryViewer> subcatViewers;
-		
+
 		public CategoryViewer ()
 		{
 			this.Build ();
@@ -38,15 +37,18 @@ namespace LongoMatch.Plugins.Stats
 		}
 
 		public string HomeName { get; set; }
+
 		public string AwayName { get; set; }
-		
-		public void LoadBackgrounds (Project project) {
+
+		public void LoadBackgrounds (ProjectLongoMatch project)
+		{
 			alltagger.LoadBackgrounds (project);
 			hometagger.LoadBackgrounds (project);
 			awaytagger.LoadBackgrounds (project);
 		}
 
-		public void LoadStats (EventTypeStats stats) {
+		public void LoadStats (EventTypeStats stats)
+		{
 			homeLabel.Text = HomeName;
 			awayLabel.Text = AwayName;
 			
@@ -60,14 +62,14 @@ namespace LongoMatch.Plugins.Stats
 				if (child is SubCategoryViewer || child is HSeparator)
 					vbox1.Remove (child);
 			}
-			subcatViewers = new List<SubCategoryViewer>();
+			subcatViewers = new List<SubCategoryViewer> ();
 			nodatalabel.Visible = stats.SubcategoriesStats.Count == 0;
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
-				SubCategoryViewer subcatviewer = new SubCategoryViewer();
+				SubCategoryViewer subcatviewer = new SubCategoryViewer ();
 				subcatviewer.LoadStats (st, HomeName, AwayName);
 				subcatViewers.Add (subcatviewer);
 				vbox1.PackStart (subcatviewer);
-				vbox1.PackStart (new HSeparator());
+				vbox1.PackStart (new HSeparator ());
 				subcatviewer.Show ();
 			}
 		}

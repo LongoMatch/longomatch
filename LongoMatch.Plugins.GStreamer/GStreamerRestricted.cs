@@ -16,12 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using Mono.Addins;
-using LongoMatch.Addins.ExtensionPoints;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
+using LongoMatch.Addins.ExtensionPoints;
+using VAS.Core.Common;
+using VAS.Core;
 
 namespace LongoMatch.Plugins.GStreamer
 {
@@ -48,7 +48,7 @@ namespace LongoMatch.Plugins.GStreamer
 
 		public void RegisterPlugins ()
 		{
-			string gstdir = Path.Combine (Config.PluginsDir, "gstreamer-0.10");
+			string gstdir = Path.Combine (App.Current.PluginsDir, "gstreamer-0.10");
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				Environment.SetEnvironmentVariable ("PATH",
 					Environment.GetEnvironmentVariable ("PATH") + ";" + gstdir);

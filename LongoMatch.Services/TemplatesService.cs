@@ -21,23 +21,23 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LongoMatch.Core;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Filters;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Services
 {
 	public class TemplatesService: IService
 	{
-
 		public TemplatesService (IStorage storage = null)
 		{
 			if (storage == null) {
-				storage = new CouchbaseStorage (Config.TemplatesDir, "templates");
+				storage = new CouchbaseStorageLongoMatch (App.Current.TemplatesDir, "templates");
 			}
 			TeamTemplateProvider = new TeamTemplatesProvider (storage);
 			CategoriesTemplateProvider = new CategoriesTemplatesProvider (storage);
@@ -69,8 +69,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
-			Config.TeamTemplatesProvider = TeamTemplateProvider;
-			Config.CategoriesTemplatesProvider = CategoriesTemplateProvider;
+			App.Current.TeamTemplatesProvider = TeamTemplateProvider;
+			App.Current.CategoriesTemplatesProvider = CategoriesTemplateProvider;
 			return true;
 		}
 
@@ -133,18 +133,28 @@ namespace LongoMatch.Services
 
 		public void Save (T template)
 		{
+			bool isNew = false;
+
 			CheckInvalidChars (template.Name);
 			Log.Information ("Saving template " + template.Name);
+			if (storage.Retrieve<T> (template.ID) == null) {
+				isNew = true;
+			}
 			try {
 				storage.Store<T> (template, true);
+				if (isNew && CollectionChanged != null) {
+					CollectionChanged (this,
+						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template));
+				}
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 
 		public void Register (T template)
 		{
 			Log.Information ("Registering new template " + template.Name);
+			template.Static = true;
 			systemTemplates.Add (template);
 			if (CollectionChanged != null) {
 				CollectionChanged (this,
@@ -167,17 +177,18 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (action, template));
 				}
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 
-		public void Copy (T template, string newName)
+		public T Copy (T template, string newName)
 		{
 			CheckInvalidChars (newName);
 			Log.Information (String.Format ("Copying template {0} to {1}", template.Name, newName));
 
 			template = template.Copy (newName);
 			Add (template);
+			return template;
 		}
 
 		public void Delete (T template)
@@ -194,11 +205,11 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Remove, template));
 				}
 			} catch (StorageException ex) {
-				Config.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.GUIToolkit.ErrorMessage (ex.Message);
 			}
 		}
 
-		public void Create (string templateName, params object[] list)
+		public T Create (string templateName, params object[] list)
 		{
 			/* Some templates don't need a count as a parameter but we include
 			 * so that all of them match the same signature */
@@ -207,11 +218,7 @@ namespace LongoMatch.Services
 			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
 			T t = (T)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
-			t.Static = true;
-			// TODO split the registration from the creation, i.e: this function must return T
-			// and let the constructor register the returned template. For that we need to refactor
-			// the ITemplateProvider and ITemplateProvider<T>, no need to have them separated
-			Register (t);
+			return t;
 		}
 
 		void CheckInvalidChars (string name)
@@ -225,25 +232,25 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class TeamTemplatesProvider: TemplatesProvider<Team>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider: TemplatesProvider<SportsTeam>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
-			Create (Catalog.GetString ("Home team"), 20);
+			Register (Create (Catalog.GetString ("Home team"), 20));
 			systemTemplates.Last ().TeamName = Catalog.GetString ("Home");
-			Create (Catalog.GetString ("Away team"), 20);
+			Register (Create (Catalog.GetString ("Away team"), 20));
 			systemTemplates.Last ().TeamName = Catalog.GetString ("Away");
 		}
 	}
 
-	public class CategoriesTemplatesProvider : TemplatesProvider<Dashboard>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<DashboardLongoMatch>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{
 			// Create the default template, it will be added to the list
 			// of system templates to make it always available on the app 
 			// and also read-only
-			Create (Catalog.GetString ("Default dashboard"), 20);
+			Register (Create (Catalog.GetString ("Default dashboard"), 20));
 		}
 	}
 }

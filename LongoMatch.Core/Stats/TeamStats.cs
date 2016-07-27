@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Filters;
@@ -26,12 +25,12 @@ namespace LongoMatch.Core.Stats
 {
 	public class TeamStats
 	{
-		Project project;
-		Team template;
+		ProjectLongoMatch project;
+		SportsTeam template;
 		TeamType team;
 		EventsFilter filter;
 
-		public TeamStats (Project project, EventsFilter filter, TeamType team)
+		public TeamStats (ProjectLongoMatch project, EventsFilter filter, TeamType team)
 		{
 			this.project = project;
 			this.filter = filter;
@@ -42,7 +41,7 @@ namespace LongoMatch.Core.Stats
 				this.template = project.VisitorTeamTemplate;
 			}
 			PlayersStats = new List<PlayerStats> ();
-			foreach (Player p in this.template.List) {
+			foreach (PlayerLongoMatch p in this.template.List) {
 				PlayersStats.Add (new PlayerStats (project, filter, p));
 			}
 		}

@@ -18,34 +18,39 @@
 using System;
 using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Drawables;
-using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing.Widgets;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Core;
-using Color = LongoMatch.Core.Common.Color;
-using Drawable = LongoMatch.Core.Store.Drawables.Drawable;
-using Image = LongoMatch.Core.Common.Image;
-using Misc = LongoMatch.Gui.Helpers.Misc;
+using VAS.Core;
+using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.Store;
+using VAS.Core.Store.Drawables;
+using VAS.Drawing.Cairo;
+using VAS.Drawing.Widgets;
+using VAS.UI.Helpers;
+using Color = VAS.Core.Common.Color;
+using Constants = LongoMatch.Core.Common.Constants;
+using Drawable = VAS.Core.Store.Drawables.Drawable;
+using Helpers = VAS.UI.Helpers;
+using Image = VAS.Core.Common.Image;
+using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
 	public partial class DrawingTool : Gtk.Dialog
 	{
 		readonly Blackboard blackboard;
-		TimelineEvent play;
+		TimelineEventLongoMatch play;
 		FrameDrawing drawing;
 		CameraConfig camConfig;
 		Drawable selectedDrawable;
 		Gtk.Dialog playerDialog;
 		Text playerText;
-		Project project;
+		ProjectLongoMatch project;
 		double scaleFactor;
 		bool ignoreChanges;
 
-		public DrawingTool (Window parent)	
+		public DrawingTool (Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();
@@ -141,7 +146,7 @@ namespace LongoMatch.Gui.Dialog
 			hscrollbar.Visible = wscrollbar.Visible = false;
 			zoomscale.Value = 1;
 
-			if (!Config.SupportsZoom) {
+			if (!App.Current.SupportsZoom) {
 				zoombox.Visible = false;
 				zoombutton.Visible = false;
 				hscrollbar.Visible = false;
@@ -155,8 +160,8 @@ namespace LongoMatch.Gui.Dialog
 			base.Destroy ();
 		}
 
-		public void LoadPlay (TimelineEvent play, Image frame, FrameDrawing drawing,
-		                      CameraConfig camConfig, Project project)
+		public void LoadPlay (TimelineEventLongoMatch play, Image frame, FrameDrawing drawing,
+		                      CameraConfig camConfig, ProjectLongoMatch project)
 		{
 			this.play = play;
 			this.drawing = drawing;
@@ -171,7 +176,7 @@ namespace LongoMatch.Gui.Dialog
 			UpdateTextSize ();
 		}
 
-		public void LoadFrame (Image frame, Project project)
+		public void LoadFrame (Image frame, ProjectLongoMatch project)
 		{
 			this.project = project;
 			drawing = new FrameDrawing ();
@@ -445,7 +450,7 @@ namespace LongoMatch.Gui.Dialog
 				                           DateTime.Now.ToShortDateString ().Replace ('/', '-'));
 			string filename = FileChooserHelper.SaveFile (this,
 				                  Catalog.GetString ("Save File as..."),
-				                  proposed_filename, Config.SnapshotsDir,
+				                  proposed_filename, App.Current.SnapshotsDir,
 				                  "PNG Images", new string[] { "*.png" });
 			if (filename != null) {
 				System.IO.Path.ChangeExtension (filename, ".png");

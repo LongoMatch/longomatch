@@ -284,7 +284,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldlabel1 = new global::Gtk.Label ();
 			this.fieldlabel1.Name = "fieldlabel1";
-			this.fieldlabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"10\">Field</span>");
+			this.fieldlabel1.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"10\">Field</span>");
 			this.fieldlabel1.UseMarkup = true;
 			this.fieldlabel1.Wrap = true;
 			this.fieldlabel1.Justify = ((global::Gtk.Justification)(2));
@@ -296,7 +296,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox12.Gtk.Box+BoxChild
 			this.fieldlabel2 = new global::Gtk.Label ();
 			this.fieldlabel2.Name = "fieldlabel2";
-			this.fieldlabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.fieldlabel2.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
 			this.fieldlabel2.UseMarkup = true;
 			this.vbox12.Add (this.fieldlabel2);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox12 [this.fieldlabel2]));
@@ -361,7 +361,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldlabel1 = new global::Gtk.Label ();
 			this.hfieldlabel1.Name = "hfieldlabel1";
-			this.hfieldlabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"10\">Half field</span>");
+			this.hfieldlabel1.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"10\">Half field</span>");
 			this.hfieldlabel1.UseMarkup = true;
 			this.vbox14.Add (this.hfieldlabel1);
 			global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.hfieldlabel1]));
@@ -371,7 +371,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox14.Gtk.Box+BoxChild
 			this.hfieldlabel2 = new global::Gtk.Label ();
 			this.hfieldlabel2.Name = "hfieldlabel2";
-			this.hfieldlabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.hfieldlabel2.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
 			this.hfieldlabel2.UseMarkup = true;
 			this.vbox14.Add (this.hfieldlabel2);
 			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox14 [this.hfieldlabel2]));
@@ -436,7 +436,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goallabel1 = new global::Gtk.Label ();
 			this.goallabel1.Name = "goallabel1";
-			this.goallabel1.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"10\">Goal</span>");
+			this.goallabel1.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"10\">Goal</span>");
 			this.goallabel1.UseMarkup = true;
 			this.vbox16.Add (this.goallabel1);
 			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.vbox16 [this.goallabel1]));
@@ -446,7 +446,7 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox16.Gtk.Box+BoxChild
 			this.goallabel2 = new global::Gtk.Label ();
 			this.goallabel2.Name = "goallabel2";
-			this.goallabel2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
+			this.goallabel2.LabelProp = global::VAS.Core.Catalog.GetString ("<span font_desc=\"8\">click to change...</span>");
 			this.goallabel2.UseMarkup = true;
 			this.vbox16.Add (this.goallabel2);
 			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox16 [this.goallabel2]));
@@ -490,7 +490,7 @@ namespace LongoMatch.Gui.Component
 			// Container child periodsbox.Gtk.Box+BoxChild
 			this.periodslabel = new global::Gtk.Label ();
 			this.periodslabel.Name = "periodslabel";
-			this.periodslabel.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Periods");
+			this.periodslabel.LabelProp = global::VAS.Core.Catalog.GetString ("Periods");
 			this.periodsbox.Add (this.periodslabel);
 			global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.periodsbox [this.periodslabel]));
 			w45.Position = 0;
@@ -549,7 +549,7 @@ namespace LongoMatch.Gui.Component
 			this.propertiesnotebook.Add (w51);
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page1");
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("page1");
 			this.propertiesnotebook.SetTabLabel (w51, this.label2);
 			this.label2.ShowAll ();
 			// Container child propertiesnotebook.Gtk.Notebook+NotebookChild
@@ -563,7 +563,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page2");
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("page2");
 			this.propertiesnotebook.SetTabLabel (this.tagproperties, this.label3);
 			this.label3.ShowAll ();
 			// Container child propertiesnotebook.Gtk.Notebook+NotebookChild
@@ -577,7 +577,7 @@ namespace LongoMatch.Gui.Component
 			// Notebook tab
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::LongoMatch.Core.Catalog.GetString ("page3");
+			this.label5.LabelProp = global::VAS.Core.Catalog.GetString ("page3");
 			this.propertiesnotebook.SetTabLabel (this.linkproperties, this.label5);
 			this.label5.ShowAll ();
 			this.tagpropertiesalignment.Add (this.propertiesnotebook);

@@ -18,12 +18,13 @@
 //
 //
 using Mono.Addins;
-using LongoMatch.Core.Interfaces.Multimedia;
+using VAS.Addins.ExtensionPoints;
+using VAS.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IMultimediaBackend: ILongoMatchPlugin
+	public interface IMultimediaBackend: IPlugin
 	{
 		void RegisterElements (IMultimediaToolkit mtoolkit);
 

@@ -17,10 +17,9 @@
 //
 using System;
 using Gtk;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Playlists;
 using Pango;
+using VAS.Core.Store.Playlists;
+using VAS.Core.Interfaces;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -39,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 			foreach (Widget w in vbox2.Children) {
 				foreach (Widget t in (w as Table).Children) {
 					if ((t is Label)) {
-						t.ModifyFont (FontDescription.FromString (Config.Style.Font + " 10"));
+						t.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 10"));
 						sizegroupLeft.AddWidget (t);
 					}
 				}
@@ -94,4 +93,3 @@ namespace LongoMatch.Gui.Dialog
 		}
 	}
 }
-

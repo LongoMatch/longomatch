@@ -15,13 +15,19 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Filters;
+using VAS.Core.Hotkeys;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Store;
+using LMFilters = LongoMatch.Core.Filters;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,13 +39,45 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			capturerbin.Mode = CapturerType.Fake;
+			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
+		}
+
+		protected override void OnDestroyed ()
+		{
+			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
+			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
 
 		#region IAnalysisWindow implementation
 
+		public event VAS.Core.Handlers.BackEventHandle BackEvent;
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
+		}
+
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			codingwidget1.SetProject (project, projectType, filter);
+			codingwidget1.SetProject ((LongoMatch.Core.Store.ProjectLongoMatch)project, projectType, 
+				(LMFilters.EventsFilter)filter);
 		}
 
 		public void ReloadProject ()
@@ -48,16 +86,6 @@ namespace LongoMatch.Gui.Component
 
 		public void CloseOpenedProject ()
 		{
-		}
-
-		public void AddPlay (TimelineEvent play)
-		{
-			codingwidget1.AddPlay (play);
-		}
-
-		public void DeletePlays (List<TimelineEvent> plays)
-		{
-			codingwidget1.DeletePlays (plays);
 		}
 
 		public void UpdateCategories ()
@@ -103,7 +131,7 @@ namespace LongoMatch.Gui.Component
 
 		public void TagPlayer (Player player)
 		{
-			codingwidget1.TagPlayer (player);
+			codingwidget1.TagPlayer ((PlayerLongoMatch)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -124,6 +152,15 @@ namespace LongoMatch.Gui.Component
 		}
 
 		#endregion
+
+		void HandleEventCreated (EventCreatedEvent e)
+		{
+			codingwidget1.AddPlay ((LongoMatch.Core.Store.TimelineEventLongoMatch)e.TimelineEvent);
+		}
+
+		void HandleEventsDeleted (EventsDeletedEvent e)
+		{
+			codingwidget1.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+		}
 	}
 }
-

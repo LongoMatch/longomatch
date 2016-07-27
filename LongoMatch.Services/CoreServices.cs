@@ -21,18 +21,24 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LongoMatch;
-using LongoMatch.Core;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.DB;
+using VAS.Core.Common;
+using VAS.Core.Events;
+using VAS.Core.Interfaces;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.MVVMC;
+using VAS.Services;
+using Catalog = LongoMatch.Core.Catalog;
+using Constants = LongoMatch.Core.Common.Constants;
+using LMCommon = LongoMatch.Core.Common;
+
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
-
 #endif
+
 namespace LongoMatch.Services
 {
 	public class CoreServices
@@ -56,22 +62,22 @@ namespace LongoMatch.Services
 		{
 			Log.Debugging = Debugging;
 
+			App.Init ();
 			FillVersion ();
-			Config.Init ();
 
 			/* Check default folders */
 			CheckDirs ();
 
 			/* Redirects logs to a file */
-			Log.SetLogFile (Config.LogFile);
+			Log.SetLogFile (App.Current.LogFile);
 			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 			Log.Information (Utils.SysInfo);
 
 			/* Load user config */
-			Config.Load ();
-			
-			if (Config.Lang != null) {
-				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
+			//Config.Load ();
+
+			if (App.Current.Config.Lang != null) {
+				Environment.SetEnvironmentVariable ("LANGUAGE", App.Current.Config.Lang.Replace ("-", "_"));
 #if OSTYPE_WINDOWS
 				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
 #endif
@@ -79,20 +85,21 @@ namespace LongoMatch.Services
 			InitTranslations ();
 
 			/* Fill up the descriptions again after initializing the translations */
-			Config.Hotkeys.FillActionsDescriptions ();
+			App.Current.Config.Hotkeys.FillActionsDescriptions ();
+			Scanner.ScanControllers (App.Current.ControllerLocator);
 		}
 
 		static void FillVersion ()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly ();
 			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
-			Config.Version = assembly.GetName ().Version;
-			Config.BuildVersion = info.ProductVersion;
+			App.Current.Version = assembly.GetName ().Version;
+			App.Current.BuildVersion = info.ProductVersion;
 		}
 
 		public static void InitTranslations ()
 		{
-			string localesDir = Config.RelativeToPrefix ("share/locale");
+			string localesDir = App.Current.RelativeToPrefix ("share/locale");
 
 			if (!Directory.Exists (localesDir)) {
 				var cerbero_prefix = Environment.GetEnvironmentVariable ("CERBERO_PREFIX");
@@ -132,10 +139,12 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			Config.MultimediaToolkit = multimediaToolkit;
-			Config.GUIToolkit = guiToolkit;
-			Config.EventsBroker = new EventsBroker ();
-			Config.EventsBroker.QuitApplicationEvent += HandleQuitApplicationEvent;
+			App.Current.DependencyRegistry = new Registry ("Dependencies");
+			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
+			App.Current.MultimediaToolkit = multimediaToolkit;
+			App.Current.GUIToolkit = guiToolkit;
+			App.Current.EventsBroker = new EventsBroker ();
+			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuitApplicationEvent);
 
 			/* Start DB services */
 			dbManager = new DataBaseManager ();
@@ -160,14 +169,15 @@ namespace LongoMatch.Services
 			eManager = new EventsManager ();
 			RegisterService (eManager);
 
+			RegisterService (new CoreEventsManager ());
+
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
 
-			/* Start playlists manager */
+			/* Start playlists hotkeys manager */
 			plManager = new PlaylistManager ();
 			RegisterService (plManager);
-
 		}
 
 		public static void StartServices ()
@@ -194,18 +204,18 @@ namespace LongoMatch.Services
 
 		public static void CheckDirs ()
 		{
-			if (!System.IO.Directory.Exists (Config.HomeDir))
-				System.IO.Directory.CreateDirectory (Config.HomeDir);
-			if (!System.IO.Directory.Exists (Config.SnapshotsDir))
-				System.IO.Directory.CreateDirectory (Config.SnapshotsDir);
-			if (!System.IO.Directory.Exists (Config.PlayListDir))
-				System.IO.Directory.CreateDirectory (Config.PlayListDir);
-			if (!System.IO.Directory.Exists (Config.DBDir))
-				System.IO.Directory.CreateDirectory (Config.DBDir);
-			if (!System.IO.Directory.Exists (Config.VideosDir))
-				System.IO.Directory.CreateDirectory (Config.VideosDir);
-			if (!System.IO.Directory.Exists (Config.TempVideosDir))
-				System.IO.Directory.CreateDirectory (Config.TempVideosDir);
+			if (!System.IO.Directory.Exists (App.Current.HomeDir))
+				System.IO.Directory.CreateDirectory (App.Current.HomeDir);
+			if (!System.IO.Directory.Exists (App.Current.SnapshotsDir))
+				System.IO.Directory.CreateDirectory (App.Current.SnapshotsDir);
+			if (!System.IO.Directory.Exists (App.Current.PlayListDir))
+				System.IO.Directory.CreateDirectory (App.Current.PlayListDir);
+			if (!System.IO.Directory.Exists (App.Current.DBDir))
+				System.IO.Directory.CreateDirectory (App.Current.DBDir);
+			if (!System.IO.Directory.Exists (App.Current.VideosDir))
+				System.IO.Directory.CreateDirectory (App.Current.VideosDir);
+			if (!System.IO.Directory.Exists (App.Current.TempVideosDir))
+				System.IO.Directory.CreateDirectory (App.Current.TempVideosDir);
 		}
 
 		static bool? debugging = null;
@@ -232,15 +242,15 @@ namespace LongoMatch.Services
 			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
 		}
 
-		static void HandleQuitApplicationEvent ()
+		static void HandleQuitApplicationEvent (QuitApplicationEvent e)
 		{
 			if (videoRenderer.PendingJobs.Count > 0) {
 				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");
-				if (!Config.GUIToolkit.QuestionMessage (msg, null).Result) {
+				if (!App.Current.GUIToolkit.QuestionMessage (msg, null).Result) {
 					return;
 				}
 			}
-			Config.GUIToolkit.Quit ();
+			App.Current.GUIToolkit.Quit ();
 		}
 	}
 }

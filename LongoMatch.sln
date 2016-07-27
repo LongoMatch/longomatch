@@ -1,21 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "Weavers\Weavers.csproj", "{A7BA3B58-76E6-461C-B842-3D4DC4995B42}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI", "LongoMatch.GUI\LongoMatch.GUI.csproj", "{6B9682AF-0F14-456F-A674-8BABFE852BFC}"
-EndProject
-Project("{2857B73E-F847-4B02-9238-064979017E93}") = "liblongomatch", "libcesarplayer\liblongomatch.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Core.Net45", "LongoMatch.Core\LongoMatch.Core.Net45.csproj", "{B70912B2-7ED5-450E-97BD-45A3D45A0358}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{55C6DAC1-C4BF-4350-9F58-AB39E92BE298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Multimedia", "LongoMatch.Multimedia\LongoMatch.Multimedia.csproj", "{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Services.Net45", "LongoMatch.Services\LongoMatch.Services.Net45.csproj", "{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI.Multimedia", "LongoMatch.GUI.Multimedia\LongoMatch.GUI.Multimedia.csproj", "{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Addins", "LongoMatch.Addins\LongoMatch.Addins.csproj", "{709CCDA6-CA95-4CBD-A986-B96EE0418905}"
 EndProject
@@ -23,11 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins", "Longo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxyPlotMono", "oxyplot\OxyPlotMono\OxyPlotMono.csproj", "{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.GUI.Helpers", "LongoMatch.GUI.Helpers\LongoMatch.GUI.Helpers.csproj", "{E75E30DC-C1CF-4683-9A36-65B91EF10095}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Drawing.Net45", "LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj", "{519B4B01-07EC-4CA4-8073-E6F468317138}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Drawing.Cairo", "LongoMatch.Drawing.Cairo\LongoMatch.Drawing.Cairo.csproj", "{AE98609B-353C-4CE4-A5B7-606BB4EE3576}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Migration", "LongoMatch.Migration\LongoMatch.Migration.csproj", "{4D20F396-53C0-4298-9121-9F68C101CCAB}"
 EndProject
@@ -37,15 +23,51 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.Stats", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F042D024-3283-4E60-9A85-76E6BBBBB2C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.DB.Net45", "LongoMatch.DB\LongoMatch.DB.Net45.csproj", "{EC395325-994F-47F6-8FC2-AC17EC452EDA}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Core", "LongoMatch.Core\LongoMatch.Core.shproj", "{DBC3B8C2-2CD0-40BA-86DE-EBA2BF436F52}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Services", "LongoMatch.Services\LongoMatch.Services.shproj", "{EC75C6BF-0788-41EE-8946-47651FACFB54}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.DB", "LongoMatch.DB\LongoMatch.DB.shproj", "{D6E928F2-1BAA-4D67-BD81-B549E9B89E83}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Drawing", "LongoMatch.Drawing\LongoMatch.Drawing.shproj", "{71D588BD-1B61-459D-9B5F-9CAA7C59C2F8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.DB", "VAS\VAS.DB\VAS.DB.shproj", "{D6E928F2-1BAA-4D67-BD81-B549E9B89E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.DB.Net45", "VAS\VAS.DB\VAS.DB.Net45.csproj", "{EC395325-994F-47F6-8FC2-AC17EC452EDA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Core", "VAS\VAS.Core\VAS.Core.shproj", "{F10023AD-3909-45AF-85EC-7A3C2FAACA75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Core.Net45", "LongoMatch.Core\LongoMatch.Core.Net45.csproj", "{B70912B2-7ED5-450E-97BD-45A3D45A0358}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Core.Net45", "VAS\VAS.Core\VAS.Core.Net45.csproj", "{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.DB", "LongoMatch.DB\LongoMatch.DB.shproj", "{D6E928F3-1BAA-4D67-BD81-B549E9B89E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.DB.Net45", "LongoMatch.DB\LongoMatch.DB.Net45.csproj", "{32E578FF-4300-4B16-8220-F5B56986DC44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Tests", "VAS\VAS.Tests\VAS.Tests.csproj", "{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "VAS\Weavers\Weavers.csproj", "{A7BA3B58-76E6-461C-B842-3D4DC4995B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Helpers.Gtk2", "VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj", "{E75E30DC-C1CF-4683-9A36-65B91EF10095}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Cairo", "VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj", "{AE98609B-353C-4CE4-A5B7-606BB4EE3576}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Multimedia", "VAS\VAS.Multimedia\VAS.Multimedia.csproj", "{269608A7-5DBC-4A2C-B7AF-D094B6FA88AC}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Services", "VAS\VAS.Services\VAS.Services.shproj", "{4A1B1F86-316F-4A07-AC62-E284BC9AB77D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Services.Net45", "VAS\VAS.Services\VAS.Services.Net45.csproj", "{153BFD3F-6E06-451B-AD79-6C207762BBBB}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "libvas", "VAS\libvas\libvas.cproj", "{513A86B7-13B9-4209-91C3-3840E68CF2F8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VAS.Drawing", "VAS\VAS.Drawing\VAS.Drawing.shproj", "{4041429C-9260-473E-93DB-E6B5389B7115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Gtk2", "VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj", "{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj", "{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Addins", "VAS\VAS.Addins\VAS.Addins.csproj", "{40016EEA-9DA1-4455-B46D-8468A8BE4230}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +75,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153BFD3F-6E06-451B-AD79-6C207762BBBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153BFD3F-6E06-451B-AD79-6C207762BBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153BFD3F-6E06-451B-AD79-6C207762BBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153BFD3F-6E06-451B-AD79-6C207762BBBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,14 +95,30 @@ Global
 		{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E578FF-4300-4B16-8220-F5B56986DC44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E578FF-4300-4B16-8220-F5B56986DC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{513A86B7-13B9-4209-91C3-3840E68CF2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -129,6 +175,10 @@ Global
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F042D024-3283-4E60-9A85-76E6BBBBB2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

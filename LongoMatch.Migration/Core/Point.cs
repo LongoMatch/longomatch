@@ -24,7 +24,7 @@ namespace LongoMatch.Common
 {
 	
 	[Serializable]
-	[JsonConverter (typeof (LongoMatchConverter))]
+	[JsonConverter (typeof (VASConverter))]
 	public class Point {
 
 		public Point (int x, int y) {

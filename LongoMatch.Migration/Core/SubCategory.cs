@@ -18,10 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LongoMatch.Core;
-using Newtonsoft.Json;
-
 using LongoMatch.Common;
+using LongoMatch.Core;
 using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
@@ -44,13 +42,16 @@ namespace LongoMatch.Store
 	public class SubCategory<T>: List<T>, ISubCategory
 	{
 
-		public SubCategory() {
+		public SubCategory ()
+		{
 			Name = "";
 			AllowMultiple = true;
 			FastTag = true;
 		}
 
-		public SubCategory(IEnumerable<T> list): base(list) {}
+		public SubCategory (IEnumerable<T> list) : base (list)
+		{
+		}
 
 		/// <summary>
 		/// Name of the subcategory
@@ -77,43 +78,56 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
-		protected string RenderDesc(string type, string values) {
+
+		protected string RenderDesc (string type, string values)
+		{
 			string str;
 			
-			str = String.Format("{0}: {1} [{2}]\n", 
-			                    Catalog.GetString("Name"), Name, type);
+			str = String.Format ("{0}: {1} [{2}]\n", 
+				Catalog.GetString ("Name"), Name, type);
 			str += values;
 			return str;
 		}
-		
-		public virtual string ToMarkupString(){
-			return this.ToString();
+
+		public virtual string ToMarkupString ()
+		{
+			return this.ToString ();
 		}
-		
-		public List<string> ElementsDesc () {
-			return this.Select(e => e.ToString()).ToList();
+
+		public List<string> ElementsDesc ()
+		{
+			return this.Select (e => e.ToString ()).ToList ();
 		}
 	}
 
 	[Serializable]
-	public class SubCategory {
-		public SubCategory() {
+	public class SubCategory
+	{
+		public SubCategory ()
+		{
 		}
 
-		public String Name {get;set;}
-		public List<string> Options {get;set;}
-		public bool AllowMultiple {get;set;}
-	}
-	
-	[Serializable]
-	public class TagSubCategory: SubCategory<string> {
-	
-		public TagSubCategory () {}
+		public String Name { get; set; }
 
-		public TagSubCategory (IEnumerable<string> tags): base(tags) {}
-		
-		public override string ToMarkupString(){
+		public List<string> Options { get; set; }
+
+		public bool AllowMultiple { get; set; }
+	}
+
+	[Serializable]
+	public class TagSubCategory: SubCategory<string>
+	{
+	
+		public TagSubCategory ()
+		{
+		}
+
+		public TagSubCategory (IEnumerable<string> tags) : base (tags)
+		{
+		}
+
+		public override string ToMarkupString ()
+		{
 			string tags = "";
 			
 			foreach (string tag in this) {
@@ -122,9 +136,9 @@ namespace LongoMatch.Store
 				else
 					tags += " - " + tag;
 			}
-			return RenderDesc (Catalog.GetString("Tags list"),
-			                  Catalog.GetString("Tags:" + 
-			                  String.Format(" <b>{0}</b>", tags)));
+			return RenderDesc (Catalog.GetString ("Tags list"),
+				Catalog.GetString ("Tags:" +
+				String.Format (" <b>{0}</b>", tags)));
 		}
 		
 	}
@@ -137,20 +151,22 @@ namespace LongoMatch.Store
 	/// affect the list of available players.
 	/// </summary>
 	[Serializable]
-	public class PlayerSubCategory: SubCategory<Team> {
+	public class PlayerSubCategory: SubCategory<Team>
+	{
 	
-		public bool PositionFilter {get; set;}
-		
-		public override string ToMarkupString(){
+		public bool PositionFilter { get; set; }
+
+		public override string ToMarkupString ()
+		{
 			string teams = "";
-			if (this.Contains(Team.LOCAL))
-				teams += Catalog.GetString("Local ");
-			if (this.Contains(Team.VISITOR))
-				teams += Catalog.GetString("Visitor");
+			if (this.Contains (Team.LOCAL))
+				teams += Catalog.GetString ("Local ");
+			if (this.Contains (Team.VISITOR))
+				teams += Catalog.GetString ("Visitor");
 			
-			return RenderDesc(Catalog.GetString("List of players"),
-			                  Catalog.GetString("Teams:" + 
-			                  String.Format(" <b>{0}</b>", teams)));
+			return RenderDesc (Catalog.GetString ("List of players"),
+				Catalog.GetString ("Teams:" +
+				String.Format (" <b>{0}</b>", teams)));
 		}
 	}
 
@@ -161,35 +177,40 @@ namespace LongoMatch.Store
 	/// so that a change in the name doesn't affect the category.
 	/// </summary>
 	[Serializable]
-	public class TeamSubCategory: SubCategory<Team> {
+	public class TeamSubCategory: SubCategory<Team>
+	{
 	
-		public TeamSubCategory() {
-			Name = Catalog.GetString("Team");
-			AllowMultiple=true;
-			FastTag=true;
-			Add(Team.LOCAL);
-			Add(Team.VISITOR);
+		public TeamSubCategory ()
+		{
+			Name = Catalog.GetString ("Team");
+			AllowMultiple = true;
+			FastTag = true;
+			Add (Team.LOCAL);
+			Add (Team.VISITOR);
 		}
-		
-		public override string ToMarkupString(){
-			return RenderDesc(Catalog.GetString("Team selection"), "");
+
+		public override string ToMarkupString ()
+		{
+			return RenderDesc (Catalog.GetString ("Team selection"), "");
 		}
 	}
-	
+
 	/// <summary>
 	/// SubCategory to tag locations or trajectories in the game field
 	/// </summary>
 	[Serializable]
-	public class CoordinatesSubCategory: SubCategory<Coordinates> {
+	public class CoordinatesSubCategory: SubCategory<Coordinates>
+	{
 	
 		/* Use 1 for locations or 2 for trajectories */
 		public int NumCoordinates {
 			get;
 			set;
 		}
-		
-		public override string ToMarkupString(){
-			return RenderDesc(Catalog.GetString("Coordinates"), "");
+
+		public override string ToMarkupString ()
+		{
+			return RenderDesc (Catalog.GetString ("Coordinates"), "");
 		}
 	}
 }
