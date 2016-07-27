@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using VAS.Core;
 using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using LMCommon = LongoMatch.Core.Common;
 
@@ -67,6 +68,12 @@ namespace LongoMatch.Gui.Panel
 		public void OnUnload ()
 		{
 
+		}
+
+		//FIXME: add IPanel KeyContext using MMVMC pattern
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		void HandleClicked (object sender, EventArgs e)

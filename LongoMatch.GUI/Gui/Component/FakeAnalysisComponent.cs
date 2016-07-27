@@ -23,6 +23,7 @@ using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Filters;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
@@ -58,6 +59,11 @@ namespace LongoMatch.Gui.Component
 
 		public void OnUnload ()
 		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		public string PanelName {

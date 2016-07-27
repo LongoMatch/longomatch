@@ -24,6 +24,7 @@ using Pango;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Handlers;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
@@ -176,6 +177,11 @@ namespace LongoMatch.Gui.Panel
 		public void OnUnload ()
 		{
 
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return new KeyContext ();
 		}
 
 		public void SetViewModel (object viewModel)

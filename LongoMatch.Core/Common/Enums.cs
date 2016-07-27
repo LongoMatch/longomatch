@@ -56,7 +56,9 @@ namespace LongoMatch.Core.Common
 		FitTimeline,
 		VideoZoomOriginal,
 		VideoZoomIn,
-		VideoZoomOut
+		VideoZoomOut,
+		SpeedUpper,
+		SpeedLower
 	}
 
 	public enum SubstitutionReason
