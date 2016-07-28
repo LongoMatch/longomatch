@@ -23,7 +23,6 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
@@ -57,7 +56,7 @@ namespace LongoMatch.Core.Store
 			VisitorTeamTemplate = new SportsTeam ();
 		}
 
-		public void Dispose ()
+		public override void Dispose ()
 		{
 			base.Dispose ();
 			LocalTeamTemplate?.Dispose ();
@@ -241,7 +240,7 @@ namespace LongoMatch.Core.Store
 		public ProjectDescription Description {
 			get;
 			set;
-		}
+		} = new ProjectDescription();
 
 		public bool LineupChanged (Time start, Time stop)
 		{
