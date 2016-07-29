@@ -1,5 +1,6 @@
 LM_DEPS = \
 	$(top_builddir)/VAS/bin/Couchbase.Lite.dll \
+	$(top_builddir)/VAS/bin/Couchbase.Lite.Storage.SystemSQLite.dll \
 	$(top_builddir)/VAS/bin/Newtonsoft.Json.dll \
 	$(top_builddir)/VAS/bin/Stateless.dll \
 	$(top_builddir)/VAS/bin/SQLitePCL.raw.dll \
