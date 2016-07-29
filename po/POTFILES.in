@@ -1,5 +1,4 @@
 [encoding: UTF-8]
-libcesarplayer/lgm-video-player.c
 LongoMatch.Core/Catalog.cs
 LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Hotkeys.cs
@@ -18,14 +17,6 @@ LongoMatch.DB/Views/TeamsView.cs
 LongoMatch.DB/Views/TimelineEventsView.cs
 LongoMatch.Drawing/Widgets/CamerasLabels.cs
 LongoMatch.Drawing/Widgets/TimelineLabels.cs
-LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
-LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
-LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerView.cs
-LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VideoWindow.cs
-LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
-LongoMatch.GUI.Multimedia/Gui/PlayerView.cs
-LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
-LongoMatch.GUI.Multimedia/MultimediaToolkit.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
@@ -56,7 +47,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PlayEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SplashScreen.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs
@@ -104,7 +94,7 @@ LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs
-LongoMatch.GUI/Gui/Menu/PlaysMenu.cs
+LongoMatch.GUI/Gui/Menu/SportsPlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/PreferencesPanel.cs
@@ -139,6 +129,7 @@ LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs
 LongoMatch.Plugins.Stats/StatsUIPlugin.cs
 LongoMatch.Plugins/CSVExporter.cs
 LongoMatch.Plugins/LongoMatchImporter.cs
+LongoMatch.Services/Controller/DashboardsController.cs
 LongoMatch.Services/CoreServices.cs
 LongoMatch.Services/DataBaseManager.cs
 LongoMatch.Services/EventsManager.cs
