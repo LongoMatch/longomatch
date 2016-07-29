@@ -158,6 +158,11 @@ namespace LongoMatch.Gui.Panel
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
+
 		void Load (string templateName)
 		{
 			TreeIter templateIter = TreeIter.Zero;

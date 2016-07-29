@@ -125,6 +125,11 @@ namespace LongoMatch.Gui.Panel
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
+
 		void SetStyle ()
 		{
 			FontDescription desc = FontDescription.FromString (App.Current.Style.Font + " 18");

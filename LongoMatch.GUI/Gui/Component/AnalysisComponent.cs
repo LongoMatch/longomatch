@@ -76,6 +76,11 @@ namespace LongoMatch.Gui.Component
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new System.NotImplementedException ();
+		}
+
 		#endregion
 
 		protected override void OnUnmapped ()

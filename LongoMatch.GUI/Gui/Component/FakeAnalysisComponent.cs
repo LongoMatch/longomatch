@@ -66,6 +66,11 @@ namespace LongoMatch.Gui.Component
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new System.NotImplementedException ();
+		}
+
 		public string PanelName {
 			get {
 				return null;

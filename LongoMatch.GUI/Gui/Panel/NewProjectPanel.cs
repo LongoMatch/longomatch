@@ -127,6 +127,11 @@ namespace LongoMatch.Gui.Panel
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
+
 		protected override void OnDestroyed ()
 		{
 			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);

@@ -76,6 +76,11 @@ namespace LongoMatch.Gui.Panel
 			return new KeyContext ();
 		}
 
+		public void SetViewModel (object viewModel)
+		{
+			throw new NotImplementedException ();
+		}
+
 		void HandleClicked (object sender, EventArgs e)
 		{
 			if (BackEvent != null)
