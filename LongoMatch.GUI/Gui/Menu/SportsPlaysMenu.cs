@@ -211,8 +211,10 @@ namespace LongoMatch.Gui.Menus
 				drawingsMenu.ShowAll ();
 				drawings.Submenu = drawingsMenu;
 			}
-			
-			FillAddToPlaylistMenu (addPLN, project, this.plays);
+
+			if (!IsLineupEvent ()) {
+				FillAddToPlaylistMenu (addPLN, project, this.plays);
+			}
 
 			Popup ();
 		}
@@ -282,6 +284,11 @@ namespace LongoMatch.Gui.Menus
 					Playlist = pl
 				}
 			);
+		}
+
+		bool IsLineupEvent ()
+		{
+			return plays.Any (p => p is LineupEvent || p is SubstitutionEvent);
 		}
 	}
 }
