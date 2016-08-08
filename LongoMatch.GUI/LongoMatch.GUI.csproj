@@ -184,7 +184,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
     <Compile Include="Gui\TreeView\StringObject.cs" />
     <Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
-    <Compile Include="Gui\TreeView\CellRendererButton.cs" />
     <Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
     <Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
