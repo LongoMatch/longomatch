@@ -6,7 +6,6 @@
     <ProjectGuid>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
-    <ApplicationIcon>.</ApplicationIcon>
     <CodePage>65001</CodePage>
     <AssemblyName>LongoMatch.GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
