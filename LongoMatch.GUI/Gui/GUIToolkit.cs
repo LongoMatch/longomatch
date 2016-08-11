@@ -41,6 +41,7 @@ using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Store.Playlists;
 using VAS.Drawing;
+using VAS.UI.Dialog;
 using VAS.UI.Helpers;
 using VAS.Video.Utils;
 using Image = VAS.Core.Common.Image;

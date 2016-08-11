@@ -119,7 +119,11 @@
   </object>
   <object type="LongoMatch.Gui.Component.AnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="IPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.WelcomePanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -130,7 +134,11 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Panel.OpenProjectPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="OpenProjectPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -138,7 +146,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.NewProjectPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="NewProjectPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -146,7 +158,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.TeamsTemplatesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="TeamsTemplatesPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -166,7 +182,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.ProjectsManagerPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="ProjectsManagerPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -174,7 +194,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.SportsTemplatesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="SportsTemplatesPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -182,7 +206,11 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.PreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="PreferencesPanel Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
@@ -259,8 +287,16 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.FakeAnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
+    <itemgroups>
+      <itemgroup label="FakeAnalysisComponent Properties">
+        <property name="PanelName" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="IPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.EventsListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -384,6 +420,10 @@
     <signals />
   </object>
   <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="VAS.UI.Dialog.ChooseOptionDialog" palette-category="General" allow-children="false" base-type="Gtk.Dialog">
     <itemgroups />
     <signals />
   </object>
