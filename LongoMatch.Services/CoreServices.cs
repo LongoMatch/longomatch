@@ -79,7 +79,7 @@ namespace LongoMatch.Services
 			if (App.Current.Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", App.Current.Config.Lang.Replace ("-", "_"));
 #if OSTYPE_WINDOWS
-				g_setenv ("LANGUAGE", Config.Lang.Replace ("-", "_"), true);
+				g_setenv ("LANGUAGE", App.Current.Config.Lang.Replace ("-", "_"), true);
 #endif
 			}
 			InitTranslations ();
