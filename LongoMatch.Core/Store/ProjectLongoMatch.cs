@@ -407,7 +407,7 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import ()
 		{
-			string file = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
+			string file = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
 				              Constants.PROJECT_NAME, new string[] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;

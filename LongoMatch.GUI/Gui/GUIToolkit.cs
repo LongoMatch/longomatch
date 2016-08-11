@@ -45,10 +45,11 @@ using VAS.UI.Dialog;
 using VAS.UI.Helpers;
 using VAS.Video.Utils;
 using Image = VAS.Core.Common.Image;
+using VASUi = VAS.UI;
 
 namespace LongoMatch.Gui
 {
-	public sealed class GUIToolkit: IGUIToolkit
+	public sealed class GUIToolkit: VASUi.GUIToolkit
 	{
 		static readonly GUIToolkit instance = new GUIToolkit ();
 
@@ -58,138 +59,46 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		MainWindow mainWindow;
-		Registry registry;
+		new MainWindow MainWindow {
+			get {
+				return base.MainWindow as MainWindow; 
+			}
+			set {
+				base.MainWindow = value;
+			}
+		}
 
 		private GUIToolkit ()
 		{
-			mainWindow = new MainWindow (this);
-			mainWindow.Hide ();
-			registry = new Registry ("GUI backend");
+			MainWindow = new MainWindow (this);
+			MainWindow.Hide ();
 			RegistryCanvasFromDrawables ();
-			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 
-		public IMainController MainController {
+		public override IMainController MainController {
 			get {
-				return mainWindow;
+				return MainWindow;
 			}
 		}
 
-		public IRenderingStateBar RenderingStateBar {
+		public override IRenderingStateBar RenderingStateBar {
 			get {
-				return mainWindow.RenderingStateBar;
+				return MainWindow.RenderingStateBar;
 			}
 		}
 
-		public bool FullScreen {
+		public override bool FullScreen {
 			set {
-				if (mainWindow != null) {
+				if (MainWindow != null) {
 					if (value)
-						mainWindow.GdkWindow.Fullscreen ();
+						MainWindow.GdkWindow.Fullscreen ();
 					else
-						mainWindow.GdkWindow.Unfullscreen ();
+						MainWindow.GdkWindow.Unfullscreen ();
 				}
 			}
 		}
 
-		public void Register <I, C> (int priority)
-		{
-			registry.Register<I, C> (priority);
-		}
-
-		public IPlayerView GetPlayerView ()
-		{
-			return registry.Retrieve<IPlayerView> ();
-		}
-
-		public void InfoMessage (string message, object parent = null)
-		{
-			MessagesHelpers.InfoMessage (GetParentWidget (parent), message);
-		}
-
-		public void ErrorMessage (string message, object parent = null)
-		{
-			MessagesHelpers.ErrorMessage (GetParentWidget (parent), message);
-		}
-
-		public void WarningMessage (string message, object parent = null)
-		{
-			MessagesHelpers.WarningMessage (GetParentWidget (parent), message);
-		}
-
-		public Task<bool> QuestionMessage (string question, string title, object parent = null)
-		{
-			bool res = MessagesHelpers.QuestionMessage (GetParentWidget (parent), question, title);
-			return Task.Factory.StartNew (() => res);
-		}
-
-		public Task<string> QueryMessage (string key, string title = null, string value = "", object parent = null)
-		{
-			string res = MessagesHelpers.QueryMessage (GetParentWidget (parent), key, title, value);
-			return Task.Factory.StartNew (() => res);
-		}
-
-		public Task<bool> NewVersionAvailable (Version currentVersion, Version latestVersion,
-		                                       string downloadURL, string changeLog, object parent = null)
-		{
-			bool res = MessagesHelpers.NewVersionAvailable (currentVersion, latestVersion, downloadURL,
-				           changeLog, GetParentWidget (parent));
-			return Task.Factory.StartNew (() => res);
-		}
-
-		public string SaveFile (string title, string defaultName, string defaultFolder,
-		                        string filterName, string[] extensionFilter)
-		{
-			return FileChooserHelper.SaveFile (mainWindow as Widget, title, defaultName,
-				defaultFolder, filterName, extensionFilter);
-		}
-
-		public string SelectFolder (string title, string defaultName, string defaultFolder,
-		                            string filterName, string[] extensionFilter)
-		{
-			return FileChooserHelper.SelectFolder (mainWindow as Widget, title, defaultName,
-				defaultFolder, filterName, extensionFilter);
-		}
-
-		public string OpenFile (string title, string defaultName, string defaultFolder,
-		                        string filterName = null, string[] extensionFilter = null)
-		{
-			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
-				defaultFolder, filterName, extensionFilter);
-		}
-
-		public List<string> OpenFiles (string title, string defaultName, string defaultFolder,
-		                               string filterName, string[] extensionFilter)
-		{
-			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
-				defaultFolder, filterName, extensionFilter);
-		}
-
-		public Task<object> ChooseOption (Dictionary<string, object> options, object parent = null)
-		{
-			object res = null;
-			Window parentWindow;
-			ChooseOptionDialog dialog; 
-
-			if (parent != null) {
-				parentWindow = (parent as Widget).Toplevel as Gtk.Window;
-			} else {
-				parentWindow = mainWindow as Gtk.Window;
-			}
-
-			dialog = new ChooseOptionDialog (parentWindow);
-			dialog.Options = options;
-
-			if (dialog.Run () == (int)ResponseType.Ok) {
-				res = dialog.SelectedOption;
-			}
-			dialog.Destroy ();
-			var task = Task.Factory.StartNew (() => res);
-			return task;
-		}
-
-		public List<EditionJob> ConfigureRenderingJob (Playlist playlist)
+		public override List<EditionJob> ConfigureRenderingJob (Playlist playlist)
 		{
 			VideoEditionProperties vep;
 			List<EditionJob> jobs = new List<EditionJob> ();
@@ -197,19 +106,19 @@ namespace LongoMatch.Gui
 			
 			Log.Information ("Configure rendering job");
 			if (playlist.Elements.Count == 0) {
-				WarningMessage (Catalog.GetString ("The playlist you want to render is empty."));
+				App.Current.Dialogs.WarningMessage (Catalog.GetString ("The playlist you want to render is empty."));
 				return null;
 			}
 
-			vep = new VideoEditionProperties (mainWindow as Gtk.Window);
+			vep = new VideoEditionProperties (MainWindow as Gtk.Window);
 			vep.Playlist = playlist;
 			response = vep.Run ();
 			while (response == (int)ResponseType.Ok) {
 				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {
-					WarningMessage (Catalog.GetString ("Please, select a video file."));
+					App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select a video file."));
 					response = vep.Run ();
 				} else if (vep.SplitFiles && vep.OutputDir == null) {
-					WarningMessage (Catalog.GetString ("Please, select an output directory."));
+					App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select an output directory."));
 					response = vep.Run ();
 				} else {
 					break;
@@ -247,7 +156,7 @@ namespace LongoMatch.Gui
 			return jobs;
 		}
 
-		public void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
+		public override void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
 		{
 			SnapshotsDialog sd;
 			uint interval;
@@ -255,7 +164,7 @@ namespace LongoMatch.Gui
 			string outDir;
 
 			Log.Information ("Export frame series");
-			sd = new SnapshotsDialog (mainWindow as Gtk.Window);
+			sd = new SnapshotsDialog (MainWindow as Gtk.Window);
 			sd.Play = play.Name;
 
 			if (sd.Run () == (int)ResponseType.Ok) {
@@ -265,25 +174,25 @@ namespace LongoMatch.Gui
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
 				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play, 
 					          interval, outDir);
-				var fcpd = new FramesCaptureProgressDialog (fsc, mainWindow as Gtk.Window);
+				var fcpd = new FramesCaptureProgressDialog (fsc, MainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
 			} else
 				sd.Destroy ();
 		}
 
-		public Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, 
-		                      bool editNotes)
+		public override Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, 
+		                               bool editNotes)
 		{
 			if (play is StatEvent) {
-				SubstitutionsEditor dialog = new SubstitutionsEditor (mainWindow as Gtk.Window);
+				SubstitutionsEditor dialog = new SubstitutionsEditor (MainWindow as Gtk.Window);
 				dialog.Load (project as ProjectLongoMatch, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
-				PlayEditor dialog = new PlayEditor (mainWindow as Gtk.Window);
+				PlayEditor dialog = new PlayEditor (MainWindow as Gtk.Window);
 				dialog.LoadPlay (play as TimelineEventLongoMatch, project as ProjectLongoMatch, editTags, editPos,
 					editPlayers, editNotes);
 				dialog.Run ();
@@ -293,11 +202,11 @@ namespace LongoMatch.Gui
 			});
 		}
 
-		public void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
-		                         CameraConfig camConfig, Project project)
+		public override void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
+		                                  CameraConfig camConfig, Project project)
 		{
-			DrawingTool dialog = new DrawingTool (mainWindow);
-			dialog.TransientFor = mainWindow;
+			DrawingTool dialog = new DrawingTool (MainWindow);
+			dialog.TransientFor = MainWindow;
 
 			Log.Information ("Drawing tool");
 			if (play == null) {
@@ -311,11 +220,11 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 		}
 
-		public Project ChooseProject (List<Project> projects)
+		public override Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
 			ProjectLongoMatch project = null;
-			ChooseProjectDialog dialog = new ChooseProjectDialog (mainWindow);
+			ChooseProjectDialog dialog = new ChooseProjectDialog (MainWindow);
 			dialog.Fill (projects.OfType<ProjectLongoMatch> ().ToList ());
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				project = dialog.Project;
@@ -324,13 +233,13 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public void SelectProject (List<Project> projects)
+		public override void SelectProject (List<Project> projects)
 		{
 			Log.Information ("Select project");
-			mainWindow.SelectProject (projects.Cast<ProjectLongoMatch> ().ToList ());
+			MainWindow.SelectProject (projects.Cast<ProjectLongoMatch> ().ToList ());
 		}
 
-		public void OpenCategoriesTemplatesManager ()
+		public override void OpenCategoriesTemplatesManager ()
 		{
 			/* FIXME: Remove this when it's finally handled by the NavigationController */
 			IController controller;
@@ -345,152 +254,126 @@ namespace LongoMatch.Gui
 			controller.SetViewModel (dashboardsVM);
 			controller.Start ();
 			Log.Information ("Open sports templates manager");
-			mainWindow.SetPanel ((IPanel)view);
+			MainWindow.SetPanel ((IPanel)view);
 			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
 		}
 
-		public void OpenTeamsTemplatesManager ()
+		public override void OpenTeamsTemplatesManager ()
 		{
 			TeamsTemplatesPanel panel = new TeamsTemplatesPanel ();
 			Log.Information ("Open teams templates manager");
-			mainWindow.SetPanel (panel);
+			MainWindow.SetPanel (panel);
 		}
 
-		public void OpenProjectsManager (Project openedProject)
+		public override void OpenProjectsManager (Project openedProject)
 		{
 			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject as ProjectLongoMatch);
 			Log.Information ("Open projects manager");
-			mainWindow.SetPanel (panel);
+			MainWindow.SetPanel (panel);
 		}
 
-		public void OpenPreferencesEditor ()
+		public override void OpenPreferencesEditor ()
 		{
 			PreferencesPanel panel = new PreferencesPanel ();
 			Log.Information ("Open preferences");
-			mainWindow.SetPanel (panel);
+			MainWindow.SetPanel (panel);
 		}
 
-		public void OpenDatabasesManager ()
+		public override void OpenDatabasesManager ()
 		{
-			DatabasesManager dm = new DatabasesManager (mainWindow);
+			DatabasesManager dm = new DatabasesManager (MainWindow);
 			Log.Information ("Open db manager");
 			dm.Run ();
 			dm.Destroy ();
 		}
 
-		public void ManageJobs ()
+		public override void ManageJobs ()
 		{
-			RenderingJobsDialog dialog = new RenderingJobsDialog (mainWindow as Gtk.Window);
+			RenderingJobsDialog dialog = new RenderingJobsDialog (MainWindow as Gtk.Window);
 			Log.Information ("Manage jobs");
 			dialog.Run ();
 			dialog.Destroy ();
 		}
 
-		public IBusyDialog BusyDialog (string message, object parent = null)
+		public override void Welcome ()
 		{
-			BusyDialog dialog;
-			Window parentWindow;
-
-			if (parent != null) {
-				parentWindow = (parent as Widget).Toplevel as Gtk.Window;
-			} else {
-				parentWindow = mainWindow as Gtk.Window;
-			}
-			dialog = new BusyDialog (parentWindow);
-			dialog.Message = message; 
-			return dialog;
+			MainWindow.Show ();
+			MainWindow.Welcome ();
 		}
 
-		public void Welcome ()
+		public override void LoadPanel (IPanel panel)
 		{
-			mainWindow.Show ();
-			mainWindow.Welcome ();
+			MainWindow.SetPanel (panel);
 		}
 
-		public void LoadPanel (IPanel panel)
+		public override void CreateNewProject (Project project = null)
 		{
-			mainWindow.SetPanel (panel);
+			MainWindow.CreateNewProject (project as ProjectLongoMatch);
 		}
 
-		public void CreateNewProject (Project project = null)
-		{
-			mainWindow.CreateNewProject (project as ProjectLongoMatch);
-		}
-
-		public void ShowProjectStats (Project project)
+		public override void ShowProjectStats (Project project)
 		{
 			Log.Information ("Show project stats");
 			Addins.AddinsManager.ShowStats (project as ProjectLongoMatch);
 			System.GC.Collect ();
 		}
 
-		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer)
+		public override string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer)
 		{
 			Log.Information ("Remux file");
 			try {
 				Remuxer remuxer = new Remuxer (App.Current.MultimediaToolkit.DiscoverFile (inputFile),
 					                  outputFile, muxer);
-				return remuxer.Remux (mainWindow as Gtk.Window);
+				return remuxer.Remux (MainWindow as Gtk.Window);
 			} catch (Exception e) {
 				Log.Exception (e);
 				return null;
 			}
 		}
 
-		public void OpenProject (Project project, ProjectType projectType, 
-		                         CaptureSettings props, EventsFilter filter,
-		                         out IAnalysisWindowBase analysisWindow)
+		public override void OpenProject (Project project, ProjectType projectType, 
+		                                  CaptureSettings props, EventsFilter filter,
+		                                  out IAnalysisWindowBase analysisWindow)
 		{
 			Log.Information ("Open project");
-			analysisWindow = mainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
+			analysisWindow = MainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
 		}
 
-		public void CloseProject ()
+		public override void CloseProject ()
 		{
 			Log.Information ("Close project");
-			mainWindow.CloseProject ();
+			MainWindow.CloseProject ();
 		}
 
-		public Task<DateTime> SelectDate (DateTime date, object widget)
-		{
-			CalendarDialog dialog = new CalendarDialog (date);
-			dialog.TransientFor = (widget as Widget).Toplevel as Gtk.Window;
-			dialog.Run ();
-			date = dialog.Date;
-			dialog.Destroy ();
-			var task = Task.Factory.StartNew (() => date);
-			return task;
-		}
-
-		public EndCaptureResponse EndCapture (bool isCapturing)
+		public override EndCaptureResponse EndCapture (bool isCapturing)
 		{
 			int res;
-			EndCaptureDialog dialog = new EndCaptureDialog (mainWindow, isCapturing);
+			EndCaptureDialog dialog = new EndCaptureDialog (MainWindow, isCapturing);
 			res = dialog.Run ();
 			dialog.Destroy ();
 			return (EndCaptureResponse)res;
 		}
 
-		public bool SelectMediaFiles (MediaFileSet fileSet)
+		public override bool SelectMediaFiles (MediaFileSet fileSet)
 		{
 			bool ret = false;
 			MediaFileSetSelection fileselector = new MediaFileSetSelection (false);
 			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select video files"),
-				               mainWindow.Toplevel as Gtk.Window,
+				               MainWindow.Toplevel as Gtk.Window,
 				               DialogFlags.Modal | DialogFlags.DestroyWithParent,
 				               Gtk.Stock.Cancel, ResponseType.Cancel,
 				               Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
 			fileselector.FileSet = fileSet.Clone ();
 			d.VBox.Add (fileselector);
-			WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
+			App.Current.Dialogs.WarningMessage (Catalog.GetString ("Some video files are missing for this project"));
 			while (d.Run () == (int)ResponseType.Ok) {
 				if (!fileselector.FileSet.CheckFiles ()) {
-					WarningMessage (Catalog.GetString ("Some video files are still missing for this project."), d);
+					App.Current.Dialogs.WarningMessage (Catalog.GetString ("Some video files are still missing for this project."), d);
 					continue;
 				}
 				if (fileselector.FileSet.Count == 0) {
-					WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
+					App.Current.Dialogs.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					continue;
 				}
 				ret = true;
@@ -509,18 +392,12 @@ namespace LongoMatch.Gui
 			return ret;
 		}
 
-		public void Quit ()
-		{
-			Log.Information ("Quit application");
-			Gtk.Application.Quit ();
-		}
-
-		public HotKey SelectHotkey (HotKey hotkey, object parent = null)
+		public override HotKey SelectHotkey (HotKey hotkey, object parent = null)
 		{
 			HotKeySelectorDialog dialog;
 			Window w;
 			
-			w = parent != null ? (parent as Widget).Toplevel as Window : mainWindow;
+			w = parent != null ? (parent as Widget).Toplevel as Window : MainWindow;
 			dialog = new HotKeySelectorDialog (w);
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				hotkey = dialog.HotKey;
@@ -531,17 +408,12 @@ namespace LongoMatch.Gui
 			return hotkey;
 		}
 
-		public void Invoke (EventHandler handler)
-		{
-			Gtk.Application.Invoke (handler);
-		}
-
-		public Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
-		                                        string countText, string emptyText,
-		                                        CreateEvent<T> evt) where T: ITemplate
+		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
+		                                                 string countText, string emptyText,
+		                                                 CreateEvent<T> evt)
 		{
 			bool ret = false;
-			EntryDialog dialog = new EntryDialog (mainWindow as Gtk.Window);
+			EntryDialog dialog = new EntryDialog (MainWindow as Gtk.Window);
 			dialog.ShowCount = true;
 			dialog.Title = dialog.Text = Catalog.GetString (defaultName);
 			dialog.SelectText ();
@@ -550,7 +422,7 @@ namespace LongoMatch.Gui
 
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
-					ErrorMessage (Catalog.GetString (emptyText), dialog);
+					App.Current.Dialogs.ErrorMessage (Catalog.GetString (emptyText), dialog);
 					continue;
 				} else {
 					evt.Name = dialog.Text;
@@ -564,21 +436,6 @@ namespace LongoMatch.Gui
 			return Task.Factory.StartNew (() => ret);
 		}
 
-		public void PopUpView (string viewAttribute, VAS.Core.Interfaces.MVVMC.IViewModel viewModel, object parent)
-		{
-			throw new NotImplementedException ();
-		}
-
-		Widget GetParentWidget (object parent)
-		{
-			if (parent is Widget) {
-				return parent as Widget;
-			}
-			if (mainWindow != null && mainWindow.Visible) {
-				return mainWindow;
-			}
-			return null;
-		}
 
 		void RegistryCanvasFromDrawables ()
 		{

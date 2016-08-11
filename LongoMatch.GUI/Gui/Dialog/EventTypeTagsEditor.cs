@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveGroup (TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this subcategory and all its tags?");
-			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.RemoveAll (g.tags.Contains);
 				mainvbox.Remove (g.container);
 			}
@@ -116,7 +116,7 @@ namespace LongoMatch.Gui.Dialog
 		void RemoveTag (Tag tag, TagsGroup g)
 		{
 			string msg = Catalog.GetString ("Do you want to remove this tag?");
-			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 				EventType.Tags.Remove (tag);
 				g.tags.Remove (tag);
 				g.container.Remove (g.table);
@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Dialog
 						tag.HotKey = hotkey;
 						hotkeyLabel.Text = hotkey.ToString ();
 					} catch (HotkeyAlreadyInUse ex) {
-						App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
+						App.Current.Dialogs.ErrorMessage (ex.Message, this);
 					}
 				}
 			};

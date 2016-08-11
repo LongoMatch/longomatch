@@ -248,7 +248,7 @@ namespace LongoMatch.Gui.Component
 					UpdateGui ();
 					Edited = true;
 				} catch (HotkeyAlreadyInUse ex) {
-					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.Dialogs.ErrorMessage (ex.Message, this);
 				}
 			}
 		}

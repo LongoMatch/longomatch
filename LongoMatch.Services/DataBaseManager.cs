@@ -55,7 +55,7 @@ namespace LongoMatch.Services
 		{
 			if (OpenedProject != null) {
 				var msg = Catalog.GetString ("Close the current project to open the database manager");
-				App.Current.GUIToolkit.ErrorMessage (msg);
+				App.Current.Dialogs.ErrorMessage (msg);
 			} else {
 				App.Current.GUIToolkit.OpenDatabasesManager ();
 			}

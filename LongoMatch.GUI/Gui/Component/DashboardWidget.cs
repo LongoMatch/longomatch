@@ -278,7 +278,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = Catalog.GetString ("Do you want to delete: ") +
 			             button.Name + "?";
-			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 				template.RemoveButton (button);
 				Edited = true;
 				Refresh ();
@@ -289,7 +289,7 @@ namespace LongoMatch.Gui.Component
 		{
 			string msg = string.Format ("{0} {1} ?",
 				             Catalog.GetString ("Do you want to delete: "), link);
-			if (force || App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (force || App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 				link.SourceButton.ActionLinks.Remove (link);
 				Edited = true;
 				Refresh ();
@@ -563,7 +563,7 @@ namespace LongoMatch.Gui.Component
 				template.GamePeriods = new ObservableCollection<string> (periodsentry.Text.Split ('-'));
 				Edited = true;
 			} catch {
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not parse game periods."));
 			}
 		}
 

@@ -59,7 +59,7 @@ namespace LongoMatch.Plugins
 
 		public void ExportProject (Project project, IGUIToolkit guiToolkit)
 		{
-			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"),
+			string filename = App.Current.Dialogs.SaveFile (Catalog.GetString ("Output file"),
 				                  Utils.SanitizePath (((ProjectLongoMatch)project).Description.Title + ".csv"),
 				                  App.Current.HomeDir, "CSV", new [] { "*.csv" });
 			
@@ -71,9 +71,9 @@ namespace LongoMatch.Plugins
 			try {
 				ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
 				exporter.Export ();
-				guiToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
+				App.Current.Dialogs.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
-				guiToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error exporting project"));
 				Log.Exception (ex);
 			}
 		}

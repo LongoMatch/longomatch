@@ -39,6 +39,7 @@ namespace LongoMatch.Services
 	public class ProjectsManager: IService
 	{
 		IGUIToolkit guiToolkit;
+		IDialogs dialogs;
 		IMultimediaToolkit multimediaToolkit;
 		IAnalysisWindowBase analysisWindow;
 
@@ -155,7 +156,7 @@ namespace LongoMatch.Services
 				projectFile = projectFile.Replace ("/", "_");
 				projectFile = filePathNoExtension + "_" + projectFile;
 				Project.Export (OpenedProject, projectFile);
-				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
+				dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
@@ -194,7 +195,7 @@ namespace LongoMatch.Services
 					Player.Open (project.Description.FileSet);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+					dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
@@ -206,7 +207,7 @@ namespace LongoMatch.Services
 					Capturer.Run (props, project.Description.FileSet.First ());
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage (ex.Message);
+					dialogs.ErrorMessage (ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
@@ -248,7 +249,7 @@ namespace LongoMatch.Services
 
 			if (OpenedProjectType == ProjectType.FileProject) {
 				bool ret;
-				ret = guiToolkit.QuestionMessage (
+				ret = dialogs.QuestionMessage (
 					Catalog.GetString ("Do you want to close the current project?"), null).Result;
 				if (ret) {
 					CloseOpenedProject (true);
@@ -313,7 +314,7 @@ namespace LongoMatch.Services
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+				dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				return false;
 			}
 		}
@@ -361,7 +362,7 @@ namespace LongoMatch.Services
 					SetProject (e.Project, e.ProjectType, e.CaptureSettings);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+					dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			}
 		}
@@ -390,18 +391,18 @@ namespace LongoMatch.Services
 					e.Project = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (e.ProjectID);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage (ex.Message);
+					dialogs.ErrorMessage (ex.Message);
 					return;
 				}
 			}
 
 			if (!e.Project.IsLoaded) {
 				try {
-					IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Loading project..."), null);
+					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Loading project..."), null);
 					busy.ShowSync (e.Project.Load);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
+					dialogs.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
 					return;
 				}
 			}
@@ -442,7 +443,7 @@ namespace LongoMatch.Services
 					App.Current.DatabaseManager.ActiveDB.Delete<ProjectLongoMatch> (OpenedProject);
 				} catch (StorageException ex) {
 					Log.Exception (ex);
-					App.Current.GUIToolkit.ErrorMessage (ex.Message);
+					App.Current.Dialogs.ErrorMessage (ex.Message);
 				}
 			}
 			bool closeOk = CloseOpenedProject (!cancel);
@@ -453,7 +454,7 @@ namespace LongoMatch.Services
 
 		void HandleMultimediaError (MultimediaErrorEvent e)
 		{
-			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
+			dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current project will be closed:") + "\n" + e.Message);
 			CloseOpenedProject (true);
 		}
@@ -465,7 +466,7 @@ namespace LongoMatch.Services
 
 		void HandleCaptureError (CaptureErrorEvent e)
 		{
-			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
+			dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + e.Message);
 			CaptureFinished (true, false, false);
 		}
@@ -488,6 +489,7 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = App.Current.MultimediaToolkit;
 			guiToolkit = App.Current.GUIToolkit;
+			dialogs = App.Current.Dialogs;
 			App.Current.EventsBroker.Subscribe<NewProjectEvent> (NewProject);
 			App.Current.EventsBroker.Subscribe<OpenProjectEvent> (OpenProject);
 			App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> (OpenProjectID);
@@ -506,6 +508,7 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = null;
 			guiToolkit = null;
+			dialogs = null;
 			App.Current.EventsBroker.Unsubscribe<NewProjectEvent> (NewProject);
 			App.Current.EventsBroker.Unsubscribe<OpenProjectEvent> (OpenProject);
 			App.Current.EventsBroker.Unsubscribe<OpenProjectIDEvent> (OpenProjectID);

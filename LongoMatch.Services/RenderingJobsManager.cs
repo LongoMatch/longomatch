@@ -154,7 +154,7 @@ namespace LongoMatch.Services
 				job.State = JobState.Error;
 				Log.Exception (ex);
 				Log.Error ("Error rendering job: ", job.Name);
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
 
@@ -184,7 +184,7 @@ namespace LongoMatch.Services
 				job.State = JobState.Error;
 				Log.Exception (ex);
 				Log.Error ("Error rendering job: ", job.Name);
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
 
@@ -350,7 +350,7 @@ namespace LongoMatch.Services
 		void HandleError ()
 		{
 			Log.Debug ("Job finished with errors");
-			App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
+			App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
 			+ Catalog.GetString ("Please, try again."));
 			currentJob.State = JobState.Error;
 			CloseAndNext ();
