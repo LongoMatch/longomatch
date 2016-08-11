@@ -294,7 +294,7 @@ namespace LongoMatch.Services
 					}
 				} else if (inPlayerTagging) {
 					int number;
-					string name = Keyboard.NameFromKeyval ((uint)e.Key.Key);
+					string name = App.Current.Keyboard.NameFromKeyval ((uint)e.Key.Key);
 					if (name.StartsWith ("KP_")) {
 						name = name.Replace ("KP_", "");
 					}

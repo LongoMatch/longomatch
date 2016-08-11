@@ -48,7 +48,7 @@ namespace LongoMatch.Core.Common
 
 		void UpdateMapping (KeyAction action, string name)
 		{
-			HotKey key = Keyboard.ParseName (name);
+			HotKey key = App.Current.Keyboard.ParseName (name);
 			ActionsHotkeys [action] = key;
 		}
 
