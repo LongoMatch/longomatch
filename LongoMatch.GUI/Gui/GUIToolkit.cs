@@ -36,20 +36,17 @@ using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
-using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Store.Playlists;
 using VAS.Drawing;
-using VAS.UI.Dialog;
-using VAS.UI.Helpers;
+using VAS.UI;
 using VAS.Video.Utils;
 using Image = VAS.Core.Common.Image;
-using VASUi = VAS.UI;
 
 namespace LongoMatch.Gui
 {
-	public sealed class GUIToolkit: VASUi.GUIToolkit
+	public sealed class GUIToolkit : GUIToolkitBase
 	{
 		static readonly GUIToolkit instance = new GUIToolkit ();
 
@@ -84,17 +81,6 @@ namespace LongoMatch.Gui
 		public override IRenderingStateBar RenderingStateBar {
 			get {
 				return MainWindow.RenderingStateBar;
-			}
-		}
-
-		public override bool FullScreen {
-			set {
-				if (MainWindow != null) {
-					if (value)
-						MainWindow.GdkWindow.Fullscreen ();
-					else
-						MainWindow.GdkWindow.Unfullscreen ();
-				}
 			}
 		}
 
