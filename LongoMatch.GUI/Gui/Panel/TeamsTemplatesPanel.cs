@@ -205,7 +205,7 @@ namespace LongoMatch.Gui.Panel
 				provider.Save (template);
 				return true;
 			} catch (InvalidTemplateFilenameException ex) {
-				App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
+				App.Current.Dialogs.ErrorMessage (ex.Message, this);
 				return false;
 			}
 		}
@@ -266,16 +266,16 @@ namespace LongoMatch.Gui.Panel
 		void SaveStatic ()
 		{
 			string msg = Catalog.GetString ("System teams can't be edited, do you want to create a copy?");
-			if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 				string newName;
 				while (true) {
-					newName = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					newName = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Name:"), null,
 						loadedTeam.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
 					if (teams.Any (t => t.Name == newName)) {
 						msg = Catalog.GetString ("A team with the same name already exists"); 
-						App.Current.GUIToolkit.ErrorMessage (msg, this);
+						App.Current.Dialogs.ErrorMessage (msg, this);
 					} else {
 						break;
 					}
@@ -302,7 +302,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				} else if (prompt) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
-					if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 						SaveLoadedTeam ();
 					}
 				} else {
@@ -333,7 +333,7 @@ namespace LongoMatch.Gui.Panel
 				selected = team.Clone ();
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load team"));
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not load team"));
 				return;
 			}
 			deleteteambutton.Visible = selected != null;
@@ -352,7 +352,7 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to import */
-			fileName = App.Current.GUIToolkit.OpenFile (Catalog.GetString ("Import team"), null, App.Current.HomeDir,
+			fileName = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import team"), null, App.Current.HomeDir,
 				filterName, extensions);
 
 			if (fileName == null)
@@ -365,7 +365,7 @@ namespace LongoMatch.Gui.Panel
 					bool abort = false;
 
 					while (provider.Exists (newTeam.Name) && !abort) {
-						string name = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Team name:"),
+						string name = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Team name:"),
 							              Catalog.GetString ("Name conflict"), newTeam.Name + "#").Result;
 						if (name == null) {
 							abort = true;
@@ -389,7 +389,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 			} catch (Exception ex) {
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing team:") +
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error importing team:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;
@@ -478,7 +478,7 @@ namespace LongoMatch.Gui.Panel
 			filterName = Catalog.GetString ("Team files");
 			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
-			fileName = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Export team"),
+			fileName = App.Current.Dialogs.SaveFile (Catalog.GetString ("Export team"),
 				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), App.Current.HomeDir,
 				filterName, extensions);
 
@@ -487,13 +487,13 @@ namespace LongoMatch.Gui.Panel
 				fileName = System.IO.Path.ChangeExtension (fileName, Constants.TEAMS_TEMPLATE_EXT);
 				if (System.IO.File.Exists (fileName)) {
 					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = App.Current.GUIToolkit.QuestionMessage (msg, null).Result;
+					succeeded = App.Current.Dialogs.QuestionMessage (msg, null).Result;
 				}
 
 				if (succeeded) {
 					Serializer.Instance.Save (loadedTeam, fileName);
 					string msg = Catalog.GetString ("Team exported correctly");
-					App.Current.GUIToolkit.InfoMessage (msg);
+					App.Current.Dialogs.InfoMessage (msg);
 				}
 			}
 
@@ -507,7 +507,7 @@ namespace LongoMatch.Gui.Panel
 			SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
 			if (team.Name != args.NewText) {
 				if (teams.Any (t => t.Name == args.NewText)) {
-					App.Current.GUIToolkit.ErrorMessage (
+					App.Current.Dialogs.ErrorMessage (
 						Catalog.GetString ("A team with the same name already exists"), this);
 					args.RetVal = false;
 				} else {
@@ -516,7 +516,7 @@ namespace LongoMatch.Gui.Panel
 						provider.Save (team);
 						teamsStore.SetValue (iter, COL_NAME, team.Name);
 					} catch (Exception ex) {
-						App.Current.GUIToolkit.ErrorMessage (ex.Message);
+						App.Current.Dialogs.ErrorMessage (ex.Message);
 					}
 				}
 			}

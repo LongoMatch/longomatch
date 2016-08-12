@@ -39,11 +39,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>$(SolutionDir)\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Package>nunit</Package>
     </Reference>
     <Reference Include="Moq">
       <HintPath>$(SolutionDir)\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
-      <Package>moq</Package>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib.Portable">
       <HintPath>$(SolutionDir)\packages\SharpZipLib.Portable.0.86.0.0003\lib\portable-net45+netcore45+wp8+win8+wpa81+MonoTouch+MonoAndroid+Xamarin.iOS10\ICSharpCode.SharpZipLib.Portable.dll</HintPath>
@@ -54,7 +52,6 @@
     </Reference>
     <Reference Include="Stateless">
       <HintPath>$(SolutionDir)\packages\Stateless.2.5.61.0\lib\portable-net40+sl50+win+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Stateless.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="SQLitePCL.raw">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.raw.0.8.6\lib\net45\SQLitePCL.raw.dll</HintPath>
@@ -66,10 +63,10 @@
     </Reference>
     <Reference Include="Couchbase.Lite.Storage.SystemSQLite">
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.Storage.SystemSQLite.LM.1.2.1.1\lib\net45\Couchbase.Lite.Storage.SystemSQLite.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Couchbase.Lite">
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.2.1.1\lib\net45\Couchbase.Lite.dll</HintPath>
+      <Package>couchbase-lite</Package>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -167,7 +164,7 @@
       <Name>VAS.Addins</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
-      <Project>{EC395325-994F-47F6-8FC2-AC17EC452EDA}</Project>
+      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>
     </ProjectReference>
   </ItemGroup>

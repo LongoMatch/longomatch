@@ -72,7 +72,7 @@ namespace LongoMatch.Services
 				Log.Warning ("Opened project is null and can't be exported");
 			}
 
-			filename = App.Current.GUIToolkit.SaveFile (Catalog.GetString ("Save project"),
+			filename = App.Current.Dialogs.SaveFile (Catalog.GetString ("Save project"),
 				Utils.SanitizePath (e.Project.Description.Title + Constants.PROJECT_EXT),
 				App.Current.HomeDir, Constants.PROJECT_NAME,
 				new [] { "*" + Constants.PROJECT_EXT });
@@ -84,9 +84,9 @@ namespace LongoMatch.Services
 			
 			try {
 				Project.Export (e.Project, filename);
-				App.Current.GUIToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
+				App.Current.Dialogs.InfoMessage (Catalog.GetString ("Project exported successfully"));
 			} catch (Exception ex) {
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error exporting project"));
 				Log.Exception (ex);
 			}
 		}
@@ -94,7 +94,7 @@ namespace LongoMatch.Services
 		ProjectImporter ChooseImporter (IEnumerable<ProjectImporter> importers)
 		{
 			Dictionary<string, object> options = importers.ToDictionary (i => i.Description, i => (object)i);
-			return (ProjectImporter)App.Current.GUIToolkit.ChooseOption (options).Result;
+			return (ProjectImporter)App.Current.Dialogs.ChooseOption (options).Result;
 		}
 
 		void ImportProject (ImportProjectEvent e)
@@ -128,7 +128,7 @@ namespace LongoMatch.Services
 				} else {
 					/* If the project exists ask if we want to overwrite it */
 					if (!importer.CanOverwrite && DB.Exists (project)) {
-						var res = App.Current.GUIToolkit.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
+						var res = App.Current.Dialogs.QuestionMessage (Catalog.GetString ("A project already exists for this ID:") +
 						          project.ID + "\n" +
 						          Catalog.GetString ("Do you want to overwrite it?"), null).Result;
 						if (!res)
@@ -143,7 +143,7 @@ namespace LongoMatch.Services
 					);
 				}
 			} catch (Exception ex) {
-				App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error importing project:") +
 				"\n" + ex.Message);
 				Log.Exception (ex);
 				return;

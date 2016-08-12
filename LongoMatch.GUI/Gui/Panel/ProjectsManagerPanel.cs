@@ -148,19 +148,19 @@ namespace LongoMatch.Gui.Panel
 
 				if (edited && !force) {
 					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+					if (!App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 						save = false;
 					}
 				}
 				if (save) {
 					try {
-						IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Saving project..."), null);
+						IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Saving project..."), null);
 						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
 						Log.Exception (ex);
-						App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
+						App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
 						return;
 					}
 				}
@@ -280,7 +280,7 @@ namespace LongoMatch.Gui.Panel
 					LoadProject (projects [0]);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					App.Current.GUIToolkit.ErrorMessage (ex.Message, this);
+					App.Current.Dialogs.ErrorMessage (ex.Message, this);
 				}
 			}
 		}
@@ -309,7 +309,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleExportClicked (object sender, EventArgs e)
 		{
 			if (loadedProject != null) {
-				string filename = gkit.SaveFile (
+				string filename = App.Current.Dialogs.SaveFile (
 					                  Catalog.GetString ("Export project"),
 					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
 					                  App.Current.HomeDir, Constants.PROJECT_NAME,
@@ -352,12 +352,12 @@ namespace LongoMatch.Gui.Panel
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					IBusyDialog busy = App.Current.GUIToolkit.BusyDialog (Catalog.GetString ("Deleting project..."), null);
+					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
 							DB.Delete<ProjectLongoMatch> (selectedProject);
 						} catch (StorageException ex) {
-							App.Current.GUIToolkit.ErrorMessage (ex.Message);
+							App.Current.Dialogs.ErrorMessage (ex.Message);
 						}
 					});
 					deletedProjects.Add (selectedProject);

@@ -76,6 +76,7 @@ namespace LongoMatch
 				App.Current.MultimediaToolkit = new MultimediaToolkit ();
 				App.Current.GUIToolkit = GUIToolkit.Instance;
 				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
+				App.Current.Dialogs = VASUi.Dialogs.Instance;
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 

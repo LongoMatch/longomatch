@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Menus
 		{
 			additem = new MenuItem (Catalog.GetString ("Add period"));
 			additem.Activated += (sender, e) => {
-				string periodname = App.Current.GUIToolkit.QueryMessage (Catalog.GetString ("Period name"), null,
+				string periodname = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Period name"), null,
 					                    (project.Periods.Count + 1).ToString (),
 					                    null).Result;
 				if (periodname != null) {

@@ -69,7 +69,7 @@ namespace LongoMatch.Services
 					);
 					filter.Update ();
 				} catch (SubstitutionException ex) {
-					App.Current.GUIToolkit.ErrorMessage (ex.Message);
+					App.Current.Dialogs.ErrorMessage (ex.Message);
 				}
 			}
 		}

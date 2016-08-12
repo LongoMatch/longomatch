@@ -126,9 +126,9 @@ namespace LongoMatch.Gui.Dialog
 			encSettings.EnableTitle = descriptioncheckbutton.Active;
 			
 			if (!SplitFiles && String.IsNullOrEmpty (EncodingSettings.OutputFile)) {
-				App.Current.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select a video file."));
+				App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select a video file."));
 			} else if (SplitFiles && String.IsNullOrEmpty (OutputDir)) {
-				App.Current.GUIToolkit.WarningMessage (Catalog.GetString ("Please, select an output directory."));
+				App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select an output directory."));
 			} else {
 				Respond (ResponseType.Ok);
 			}

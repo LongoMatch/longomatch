@@ -60,6 +60,7 @@ namespace LongoMatch.Gui.Panel
 		ListStore videoStandardList, encProfileList, qualList, dashboardsList;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
+		IDialogs dialogs;
 		Gdk.Color red;
 		SportsTeam hometemplate, awaytemplate;
 		DashboardLongoMatch analysisTemplate;
@@ -72,6 +73,7 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			this.mtoolkit = App.Current.MultimediaToolkit;
 			this.gtoolkit = App.Current.GUIToolkit;
+			dialogs = App.Current.Dialogs;
 			capturemediafilechooser.FileChooserMode = FileChooserMode.File;
 			capturemediafilechooser.ProposedFileName = String.Format ("Live-LongoMatch-{0}.mp4",
 				DateTime.Now.ToShortDateString ());
@@ -440,7 +442,7 @@ namespace LongoMatch.Gui.Panel
 			if (projectType == ProjectType.FileProject ||
 			    projectType == ProjectType.EditProject) {
 				if (!mediafilesetselection1.FileSet.CheckFiles ()) {
-					gtoolkit.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
+					dialogs.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					return false;
 				}
 			}
@@ -453,13 +455,13 @@ namespace LongoMatch.Gui.Panel
 			if (projectType == ProjectType.CaptureProject ||
 			    projectType == ProjectType.URICaptureProject) {
 				if (String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
-					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
+					dialogs.WarningMessage (Catalog.GetString ("No output video file"));
 					return false;
 				}
 			}
 			if (projectType == ProjectType.URICaptureProject) {
 				if (urientry.Text == "") {
-					gtoolkit.WarningMessage (Catalog.GetString ("No input URI"));
+					dialogs.WarningMessage (Catalog.GetString ("No input URI"));
 					return false;
 				}
 			}
@@ -570,7 +572,7 @@ namespace LongoMatch.Gui.Panel
 				}
 
 				if (videoDevices == null || videoDevices.Count == 0) {
-					App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
+					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("No capture devices found in the system"),
 						this);
 					return;
 				}
@@ -697,7 +699,7 @@ namespace LongoMatch.Gui.Panel
 				team.FormationStr = entry.Text;
 				teamtagger.Reload ();
 			} catch {
-				App.Current.GUIToolkit.ErrorMessage (
+				App.Current.Dialogs.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
 			}
 			entry.Text = team.FormationStr;

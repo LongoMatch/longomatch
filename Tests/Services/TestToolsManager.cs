@@ -23,11 +23,12 @@ using LongoMatch.Core.Store;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
+using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
 using LMCommon = LongoMatch.Core.Common;
-using VAS.Core.Events;
 
 namespace Tests.Services
 {
@@ -39,12 +40,15 @@ namespace Tests.Services
 		Mock<IStorageManager> dbManagerMock;
 		Mock<IStorage> dbMock;
 		Mock<IGUIToolkit> guiToolkitMock;
+		Mock<IDialogs> mockDialogs;
 
 		[SetUp]
 		public void SetUp ()
 		{
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			App.Current.GUIToolkit = guiToolkitMock.Object;
+			mockDialogs = new Mock<IDialogs> ();
+			App.Current.Dialogs = mockDialogs.Object;
 
 			dbMock = new Mock<IStorage> ();
 			dbManagerMock = new Mock<IStorageManager> ();
@@ -84,7 +88,7 @@ namespace Tests.Services
 			var toolsManager = new ToolsManager ();
 			toolsManager.Start ();
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
+			mockDialogs.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 			toolsManager.Stop ();
 		}
 
@@ -103,7 +107,7 @@ namespace Tests.Services
 			};
 
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			guiToolkitMock.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
+			mockDialogs.Verify (g => g.ErrorMessage (It.IsAny<string> (), It.IsAny<object> ()), Times.Once ());
 		}
 
 		[Test]

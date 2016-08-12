@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Component
 
 			foreach (var selectedPlayer in selectedPlayers) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + selectedPlayer.Name;
-				if (App.Current.GUIToolkit.QuestionMessage (msg, null, this).Result) {
+				if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
 					template.List.Remove (selectedPlayer);
 					edited = true;
 				}
@@ -257,7 +257,7 @@ namespace LongoMatch.Gui.Component
 				teamtagger.Reload ();
 				Edited = true;
 			} catch {
-				App.Current.GUIToolkit.ErrorMessage (
+				App.Current.Dialogs.ErrorMessage (
 					Catalog.GetString ("Could not parse tactics string"));
 			}
 			FillFormation ();
@@ -302,7 +302,7 @@ namespace LongoMatch.Gui.Component
 					App.Current.TeamTemplatesProvider.Save (template);
 					Edited = false;
 				} catch (InvalidTemplateFilenameException ex) {
-					App.Current.GUIToolkit.ErrorMessage (ex.ToString (), this);
+					App.Current.Dialogs.ErrorMessage (ex.ToString (), this);
 					return;
 				}
 			}

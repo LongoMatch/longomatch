@@ -33,6 +33,7 @@ using LongoMatch.Plugins;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Filters;
@@ -55,6 +56,7 @@ namespace Tests.Integration
 		Mock<IAnalysisWindow> analysisWindowMock;
 		Mock<IPlayerController> playerControllerMock;
 		Mock<IFramesCapturer> capturerMock;
+		Mock<IDialogs> mockDialogs;
 		string tmpPath, homePath;
 
 		[SetUp]
@@ -77,9 +79,10 @@ namespace Tests.Integration
 			multimediaToolkitMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
 
 			guiToolkitMock = new Mock<IGUIToolkit> ();
+			mockDialogs = new Mock<IDialogs> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
-			guiToolkitMock.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
+			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
 
 			analysisWindowMock = new Mock<IAnalysisWindow> ();
@@ -112,6 +115,7 @@ namespace Tests.Integration
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
 			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 			App.Current.GUIToolkit = guiToolkitMock.Object;
+			App.Current.Dialogs = mockDialogs.Object;
 			App.Current.Config.AutoSave = true;
 			CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 			AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
@@ -203,7 +207,7 @@ namespace Tests.Integration
 			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
 			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
 			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
-			guiToolkitMock.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
+			mockDialogs.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);
 			App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
 			Assert.IsTrue (File.Exists (tmpFile));
@@ -223,11 +227,11 @@ namespace Tests.Integration
 			CoreServices.toolsManager.ProjectImporters.Add (importer);
 			p = null;
 			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
-			guiToolkitMock.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), null)).Returns (
+			mockDialogs.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), null)).Returns (
 				Task.Factory.StartNew (
 					() => (object)importer)
 			);
-			guiToolkitMock.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
+			mockDialogs.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
 				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
 			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
 				p = e.Project as ProjectLongoMatch;

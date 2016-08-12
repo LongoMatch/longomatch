@@ -59,7 +59,6 @@
     <Compile Include="Gui\TreeView\PlaysTreeView.cs" />
     <Compile Include="Gui\Dialog\SnapshotsDialog.cs" />
     <Compile Include="Gui\Dialog\UpdateDialog.cs" />
-    <Compile Include="Gui\Dialog\CalendarDialog.cs" />
     <Compile Include="Gui\Component\PlayersListTreeWidget.cs" />
     <Compile Include="Gui\Component\PlayListWidget.cs" />
     <Compile Include="Gui\Component\ProjectListWidget.cs" />
@@ -129,7 +128,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.ProjectsManagerPanel.cs" />
     <Compile Include="Gui\Panel\SportsTemplatesPanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.SportsTemplatesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.CalendarDialog.cs" />
     <Compile Include="Gui\Component\BackgroundWidget.cs" />
     <Compile Include="Gui\Panel\PreferencesPanel.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PreferencesPanel.cs" />
@@ -170,9 +168,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoFileInfo.cs" />
     <Compile Include="Gui\Dialog\ChooseProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseProjectDialog.cs" />
-    <Compile Include="Gui\Dialog\ChooseOptionDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseOptionDialog.cs" />
-    <Compile Include="Gui\Dialog\BusyDialog.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
@@ -184,7 +179,6 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
     <Compile Include="Gui\TreeView\StringObject.cs" />
     <Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
-    <Compile Include="Gui\TreeView\CellRendererButton.cs" />
     <Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
     <Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />

@@ -71,7 +71,7 @@ namespace LongoMatch.Gui.Component
 				HotKey hotkey = App.Current.GUIToolkit.SelectHotkey (key);
 				if (hotkey != null) {
 					if (App.Current.Config.Hotkeys.ActionsHotkeys.ContainsValue (hotkey)) {
-						App.Current.GUIToolkit.ErrorMessage (Catalog.GetString ("Hotkey already in use: ") +
+						App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Hotkey already in use: ") +
 						GLib.Markup.EscapeText (hotkey.ToString ()), this);
 					} else {
 						App.Current.Config.Hotkeys.ActionsHotkeys [action] = hotkey;

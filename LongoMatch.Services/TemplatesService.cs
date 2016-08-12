@@ -147,7 +147,7 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template));
 				}
 			} catch (StorageException ex) {
-				App.Current.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.Dialogs.ErrorMessage (ex.Message);
 			}
 		}
 
@@ -177,7 +177,7 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (action, template));
 				}
 			} catch (StorageException ex) {
-				App.Current.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.Dialogs.ErrorMessage (ex.Message);
 			}
 		}
 
@@ -205,7 +205,7 @@ namespace LongoMatch.Services
 						new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Remove, template));
 				}
 			} catch (StorageException ex) {
-				App.Current.GUIToolkit.ErrorMessage (ex.Message);
+				App.Current.Dialogs.ErrorMessage (ex.Message);
 			}
 		}
 
