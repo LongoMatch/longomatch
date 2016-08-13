@@ -151,14 +151,6 @@ build/m4/Makefile
 images/Makefile
 
 oxyplot/Makefile
-pkgconfig/Makefile
-pkgconfig/longomatch-addins.pc
-pkgconfig/longomatch-db.pc
-pkgconfig/longomatch-core.pc
-pkgconfig/longomatch-drawing.pc
-pkgconfig/longomatch-gui.pc
-pkgconfig/longomatch-oxyplot.pc
-pkgconfig/longomatch-services.pc
 
 .nuget/Makefile
 

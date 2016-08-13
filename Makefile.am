@@ -19,7 +19,6 @@ SUBDIRS += \
 	build \
 	data \
 	images \
-	pkgconfig \
 	.nuget \
 	oxyplot \
 	LongoMatch.Core \
