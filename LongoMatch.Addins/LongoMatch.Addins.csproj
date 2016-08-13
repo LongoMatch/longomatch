@@ -46,15 +46,14 @@
     <Compile Include="ExtensionPoints\IServicesPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Newtonsoft.Json, Version=7.0.1.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
-      <Package>newtonsoft-json</Package>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Mono.Addins">
+      <HintPath>$(SolutionDir)\packages\Mono.Addins.1.3\lib\net40\Mono.Addins.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +73,9 @@
       <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
       <Name>VAS.Addins</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

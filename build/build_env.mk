@@ -7,4 +7,5 @@ LM_DEPS = \
 	$(top_builddir)/VAS/bin/SQLitePCL.ugly.dll \
 	$(top_builddir)/VAS/bin/ICSharpCode.SharpZipLib.Portable.dll \
 	$(top_builddir)/VAS/bin/Prism.dll \
-	$(top_builddir)/VAS/bin/PropertyChanged.dll
+	$(top_builddir)/VAS/bin/PropertyChanged.dll \
+	$(top_builddir)/bin/Mono.Addins.dll
