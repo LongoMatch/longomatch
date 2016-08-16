@@ -280,7 +280,7 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				App.Current.KeyContextManager.HandleKeyPressed (Keyboard.ParseEvent (evnt));
+				App.Current.KeyContextManager.HandleKeyPressed (App.Current.Keyboard.ParseEvent (evnt));
 			}
 			return true;
 		}

@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Dialog
 				return true;
 			}
 
-			hotKey = Keyboard.ParseEvent (evnt);
+			hotKey = App.Current.Keyboard.ParseEvent (evnt);
 			Respond (ResponseType.Ok);
 			return true;
 		}
