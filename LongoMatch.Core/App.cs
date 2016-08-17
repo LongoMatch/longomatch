@@ -22,8 +22,10 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using Constants = LongoMatch.Core.Common.Constants;
+using IConfig = LongoMatch.Core.Interfaces.IConfig;
 
 namespace LongoMatch
 {
@@ -55,7 +57,7 @@ namespace LongoMatch
 			if (File.Exists (Current.ConfigFile)) {
 				Log.Information ("Loading config from " + Current.ConfigFile);
 				try {
-					Current.Config = Serializer.Instance.LoadSafe<Config> (Current.ConfigFile);
+					Current.Config = (IConfig)Serializer.Instance.LoadSafe<Config> (Current.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -87,9 +89,9 @@ namespace LongoMatch
 			Current.DefaultRate = 25;
 		}
 
-		Config config;
+		IConfig config;
 
-		public Config Config {
+		public IConfig Config {
 			get {
 				return config;
 			}
