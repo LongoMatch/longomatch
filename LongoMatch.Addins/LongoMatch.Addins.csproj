@@ -36,8 +36,6 @@
     <Compile Include="ExtensionPoints\IMultimediaBackend.cs" />
     <Compile Include="ExtensionPoints\IGStreamerPluginsProvider.cs" />
     <Compile Include="ExtensionPoints\IAnalisysDashboardsProvider.cs" />
-    <Compile Include="PreferencesAttribute.cs" />
-    <Compile Include="ConfigurablePlugin.cs" />
     <Compile Include="ExtensionPoints\IStatsUI.cs" />
     <Compile Include="ExtensionPoints\IGUIBackend.cs" />
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
