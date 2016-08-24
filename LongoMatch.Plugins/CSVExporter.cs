@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Addins.ExtensionPoints;
@@ -25,57 +24,42 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Mono.Addins;
 using VAS.Core;
-using VAS.Core.Common;
-using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using VAS.Plugins;
 
 namespace LongoMatch.Plugins
 {
 	[Extension]
-	public class CSVExporter : IExportProject
+	public class CSVExporter : ProjectExporterBase, IExportProject
 	{
-		public string Name {
+		public override string Name {
 			get {
 				return Catalog.GetString ("CSV export plugin");
 			}
 		}
 
-		public string Description {
+		public override string Description {
 			get {
-				return Catalog.GetString ("Export project into CSV format");
+				return Catalog.GetString ("Export project to CSV file");
 			}
 		}
 
-		public string GetMenuEntryName ()
-		{
-			Log.Information ("Registering new export entry");
-			return Catalog.GetString ("Export project to CSV file");
-		}
-
-		public string GetMenuEntryShortName ()
-		{
-			return "CSVExport";
-		}
-
-		public void ExportProject (Project project, IGUIToolkit guiToolkit)
-		{
-			string filename = App.Current.Dialogs.SaveFile (Catalog.GetString ("Output file"),
-				                  Utils.SanitizePath (((ProjectLongoMatch)project).Description.Title + ".csv"),
-				                  App.Current.HomeDir, "CSV", new [] { "*.csv" });
-			
-			if (filename == null)
-				return;
-			
-			filename = System.IO.Path.ChangeExtension (filename, ".csv");
-			
-			try {
-				ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
-				exporter.Export ();
-				App.Current.Dialogs.InfoMessage (Catalog.GetString ("Project exported successfully"));
-			} catch (Exception ex) {
-				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error exporting project"));
-				Log.Exception (ex);
+		public override string Format {
+			get {
+				return "CSV";
 			}
+		}
+
+		public override string Extension {
+			get {
+				return ".csv";
+			}
+		}
+
+		protected override void ExportProject (Project project, string filename)
+		{
+			ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
+			exporter.Export ();
 		}
 	}
 
@@ -115,10 +99,10 @@ namespace LongoMatch.Plugins
 		{
 			string headers;
 			List<TimelineEvent> plays;
-			
+
 			output.Add ("CATEGORY: " + evt.Name);
 			plays = project.EventsByType (evt);
-			
+
 			/* Write Headers for this category */
 			headers = "Name;Time;Start;Stop;Team;Player";
 			if (evt is ScoreEventType) {
@@ -130,10 +114,10 @@ namespace LongoMatch.Plugins
 				}
 			}
 			output.Add (headers);
-			
-			foreach (TimelineEventLongoMatch play in plays.OrderBy(p=>p.Start)) {
+
+			foreach (TimelineEventLongoMatch play in plays.OrderBy (p => p.Start)) {
 				string line;
-				
+
 				line = String.Format ("{0};{1};{2};{3};{4};{5}", play.Name,
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),

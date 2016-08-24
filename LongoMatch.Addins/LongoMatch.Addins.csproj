@@ -29,7 +29,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExtensionPoints\IExportProject.cs" />
     <Compile Include="ExtensionPoints\IConfigModifier.cs" />
     <Compile Include="AddinsManager.cs" />
     <Compile Include="ExtensionPoints\IImportProject.cs" />
@@ -42,6 +41,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ExtensionPoints\IServicesPlugin.cs" />
+    <Compile Include="ExtensionPoints\IExportProject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

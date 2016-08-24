@@ -19,9 +19,9 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Addins;
-using LongoMatch.Addins.ExtensionPoints;
 using Mono.Addins.Description;
 using VAS.Addins.ExtensionPoints;
+using VAS.Core.Addins;
 
 namespace LongoMatch.Gui.Component
 {

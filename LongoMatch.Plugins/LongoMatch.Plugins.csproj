@@ -35,6 +35,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="LongoMatchImporter.cs" />
+    <Compile Include="LongoMatchExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

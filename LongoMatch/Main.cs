@@ -31,6 +31,8 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Plugins;
+using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using VAS.Multimedia.Utils;
 using VAS.Services;
@@ -103,6 +105,12 @@ namespace LongoMatch
 
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
+				foreach (IProjectExporter exporter in
+						 App.Current.Registry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
+					(GUIToolkit.Instance.MainController as MainWindow).AddExportEntry (exporter.Description,
+									new Func<Project, bool, Task> (exporter.Export));
+
+				}
 				App.Current.GUIToolkit.Welcome ();
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
@@ -116,7 +124,7 @@ namespace LongoMatch
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			progress.Report (0.5f, "Addins parsed", id);
 			AddinsManager.LoadConfigModifierAddins ();
-			AddinsManager.LoadExportProjectAddins (App.Current.GUIToolkit.MainController);
+			AddinsManager.LoadExportProjectAddins ();
 			AddinsManager.LoadMultimediaBackendsAddins (App.Current.MultimediaToolkit);
 			AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
 			AddinsManager.LoadServicesAddins ();
