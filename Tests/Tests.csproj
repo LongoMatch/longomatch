@@ -159,10 +159,6 @@
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Addins\VAS.Addins.csproj">
-      <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
-      <Name>VAS.Addins</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
       <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
       <Name>LongoMatch.DB.Net45</Name>

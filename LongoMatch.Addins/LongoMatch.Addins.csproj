@@ -69,10 +69,6 @@
       <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
       <Name>VAS.Core.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Addins\VAS.Addins.csproj">
-      <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
-      <Name>VAS.Addins</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

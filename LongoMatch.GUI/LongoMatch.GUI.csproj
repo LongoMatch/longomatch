@@ -279,10 +279,6 @@
       <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
       <Name>VAS.Services.Net45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Addins\VAS.Addins.csproj">
-      <Project>{40016EEA-9DA1-4455-B46D-8468A8BE4230}</Project>
-      <Name>VAS.Addins</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
