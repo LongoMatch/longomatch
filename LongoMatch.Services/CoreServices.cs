@@ -86,6 +86,7 @@ namespace LongoMatch.Services
 
 			/* Fill up the descriptions again after initializing the translations */
 			App.Current.Config.Hotkeys.FillActionsDescriptions ();
+			App.Current.DependencyRegistry = new Registry ("Dependencies");
 			Scanner.ScanControllers (App.Current.ControllerLocator);
 		}
 
@@ -139,7 +140,6 @@ namespace LongoMatch.Services
 
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			App.Current.DependencyRegistry = new Registry ("Dependencies");
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;

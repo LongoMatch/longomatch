@@ -1,5 +1,5 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Store;
+using VAS.Core.MVVMC;
+using VAS.Services.ViewModel;
 
-namespace LongoMatch.Addins
+namespace LongoMatch.Services.ViewModel
 {
-	public class PreferencesAttribute: Attribute
+	[ViewAttribute ("ProjectsManager")]
+	public class SportsProjectsManagerVM : ProjectsManagerVM<ProjectLongoMatch, SportsProjectVM>
 	{
-		public readonly string description;
-
-		public PreferencesAttribute (string description)
-		{
-			this.description = description;
-		}
 	}
 }
 

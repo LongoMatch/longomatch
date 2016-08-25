@@ -26,13 +26,14 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
+using VAS.Core.Addins;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using VAS.Core.Store;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -109,17 +110,10 @@ namespace LongoMatch.Addins
 			}
 		}
 
-		public static void LoadExportProjectAddins (IMainController mainWindow)
+		public static void LoadExportProjectAddins ()
 		{
-			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
-				try {
-					Log.Information ("Adding export entry from plugin: " + exportProject.Name);
-					mainWindow.AddExportEntry (exportProject.GetMenuEntryName (), exportProject.GetMenuEntryShortName (),
-						new Action<Project, IGUIToolkit> (exportProject.ExportProject));
-				} catch (Exception ex) {
-					Log.Error ("Error adding export entry");
-					Log.Exception (ex);
-				}
+			foreach (IProjectExporter exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
+				App.Current.Registry.Register<IProjectExporter> (exportProject.GetType (), 0);
 			}
 		}
 

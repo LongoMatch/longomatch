@@ -36,6 +36,7 @@ using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Store.Playlists;
@@ -70,6 +71,7 @@ namespace LongoMatch.Gui
 			MainWindow = new MainWindow (this);
 			MainWindow.Hide ();
 			RegistryCanvasFromDrawables ();
+			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 
 		public override IMainController MainController {

@@ -1028,9 +1028,7 @@ Sort by competition</property>
                     <node type="Menuitem" action="DatabasesManagerAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="ShowProjectStatsAction" />
-                    <node type="Menu" action="ExportProjectAction1">
-                      <node type="Menuitem" action="ExportToProjectFileAction" />
-                    </node>
+                    <node type="Menu" action="ExportProjectAction1" />
                     <node type="Separator" />
                     <node type="Menuitem" action="VideoConverterToolAction" />
                     <node type="Menuitem" action="MigrationToolAction" />

@@ -19,6 +19,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Events;
@@ -141,12 +142,12 @@ namespace LongoMatch.Gui
 			return true;
 		}
 
-		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction)
+		public void AddExportEntry (string name, Func<Project, bool, Task> exportAction)
 		{
 			MenuItem parent = (MenuItem)this.UIManager.GetWidget ("/menubar1/ToolsAction/ExportProjectAction1");
-			
+
 			MenuItem item = new MenuItem (name);
-			item.Activated += (sender, e) => (exportAction (openedProject, guiToolKit));
+			item.Activated += (sender, e) => (exportAction (openedProject, false));
 			item.Show ();
 			(parent.Submenu as Menu).Append (item);
 		}
@@ -280,7 +281,7 @@ namespace LongoMatch.Gui
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			if (!base.OnKeyPressEvent (evnt) || !(Focus is Entry)) {
-				App.Current.KeyContextManager.HandleKeyPressed (Keyboard.ParseEvent (evnt));
+				App.Current.KeyContextManager.HandleKeyPressed (App.Current.Keyboard.ParseEvent (evnt));
 			}
 			return true;
 		}
@@ -311,9 +312,6 @@ namespace LongoMatch.Gui
 			};
 			CloseProjectAction.Activated += (o, e) => {
 				App.Current.EventsBroker.EmitCloseOpenedProject (this);
-			};
-			ExportToProjectFileAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = openedProject });
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
 				App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ());

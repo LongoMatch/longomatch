@@ -16,15 +16,15 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Services.ViewModel;
-using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Services.ViewModel
 {
 	public class DashboardVM: TemplateViewModel<DashboardLongoMatch>
 	{
-	
+
 		public override Image Icon {
 			get {
 				return Model.Image;
@@ -34,5 +34,4 @@ namespace LongoMatch.Services.ViewModel
 			}
 		}
 	}
-
 }

@@ -67,8 +67,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Addins", "VAS\VAS.Addins\VAS.Addins.csproj", "{40016EEA-9DA1-4455-B46D-8468A8BE4230}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,10 +97,6 @@ Global
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E578FF-4300-4B16-8220-F5B56986DC44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40016EEA-9DA1-4455-B46D-8468A8BE4230}.Release|Any CPU.Build.0 = Release|Any CPU
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.ActiveCfg = Release|Any CPU

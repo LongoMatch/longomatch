@@ -21,8 +21,6 @@ using System.IO;
 using System.Linq;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
@@ -32,11 +30,10 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
-	public class ProjectsManager: IService
+	public class ProjectsManager : IService
 	{
 		IGUIToolkit guiToolkit;
 		IDialogs dialogs;
