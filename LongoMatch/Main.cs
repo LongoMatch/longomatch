@@ -55,6 +55,7 @@ namespace LongoMatch
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
 			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
 			GLib.ExceptionManager.UnhandledException += HandleException;
+			App.Init ();
 			CoreServices.Init ();
 			InitGtk ();
 			var splashScreen = new SplashScreen (Resources.LoadImage (Constants.SPLASH));

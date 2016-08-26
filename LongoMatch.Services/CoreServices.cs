@@ -62,7 +62,6 @@ namespace LongoMatch.Services
 		{
 			Log.Debugging = Debugging;
 
-			App.Init ();
 			FillVersion ();
 
 			/* Check default folders */

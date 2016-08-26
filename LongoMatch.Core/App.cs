@@ -49,7 +49,7 @@ namespace LongoMatch
 			Load (app);
 		}
 
-		internal static void Load (App app)
+		protected static void Load (App app)
 		{
 			Current = app;
 			if (File.Exists (Current.ConfigFile)) {
