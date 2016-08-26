@@ -8,8 +8,6 @@
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,9 +37,11 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>$(SolutionDir)\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Package>nunit</Package>
     </Reference>
     <Reference Include="Moq">
       <HintPath>$(SolutionDir)\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
+      <Package>moq</Package>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib.Portable">
       <HintPath>$(SolutionDir)\packages\SharpZipLib.Portable.0.86.0.0003\lib\portable-net45+netcore45+wp8+win8+wpa81+MonoTouch+MonoAndroid+Xamarin.iOS10\ICSharpCode.SharpZipLib.Portable.dll</HintPath>
@@ -55,11 +55,11 @@
     </Reference>
     <Reference Include="SQLitePCL.raw">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.raw.0.8.6\lib\net45\SQLitePCL.raw.dll</HintPath>
-      <Private>False</Private>
+      <Package>couchbase-lite</Package>
     </Reference>
     <Reference Include="SQLitePCL.ugly">
       <HintPath>$(SolutionDir)\packages\SQLitePCL.ugly.0.8.6\lib\net35\SQLitePCL.ugly.dll</HintPath>
-      <Private>False</Private>
+      <Package>couchbase-lite</Package>
     </Reference>
     <Reference Include="Couchbase.Lite.Storage.SystemSQLite">
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.Storage.SystemSQLite.LM.1.2.1.1\lib\net45\Couchbase.Lite.Storage.SystemSQLite.dll</HintPath>
@@ -158,10 +158,6 @@
     <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.DB\LongoMatch.DB.Net45.csproj">
-      <Project>{32E578FF-4300-4B16-8220-F5B56986DC44}</Project>
-      <Name>LongoMatch.DB.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
