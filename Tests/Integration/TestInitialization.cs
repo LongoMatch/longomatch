@@ -86,7 +86,7 @@ namespace Tests.Integration
 				App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
 				App.Current.GUIToolkit = guiToolkitMock.Object;
 				AddinsManager.RegisterGStreamerPlugins ();
-				AddinsManager.LoadExportProjectAddins (App.Current.GUIToolkit.MainController);
+				AddinsManager.LoadExportProjectAddins ();
 				AddinsManager.LoadMultimediaBackendsAddins (App.Current.MultimediaToolkit);
 				AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
 				AddinsManager.LoadServicesAddins ();

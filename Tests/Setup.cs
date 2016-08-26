@@ -37,6 +37,7 @@ namespace Tests
 			var st = new SportsTeam ();
 			VFS.SetCurrent (new FileSystem ());
 			VAS.App.Current = App.Current = new App ();
+			App.Current.Keyboard = new Keyboard ();
 			App.Current.Config = new Config ();
 
 			//set the sync context
