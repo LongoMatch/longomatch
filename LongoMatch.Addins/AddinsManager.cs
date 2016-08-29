@@ -113,7 +113,7 @@ namespace LongoMatch.Addins
 		public static void LoadExportProjectAddins ()
 		{
 			foreach (IProjectExporter exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
-				App.Current.Registry.Register<IProjectExporter> (exportProject.GetType (), 0);
+				App.Current.DependencyRegistry.Register<IProjectExporter> (exportProject.GetType (), 0);
 			}
 		}
 
