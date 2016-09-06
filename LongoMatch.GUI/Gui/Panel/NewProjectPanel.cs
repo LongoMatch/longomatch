@@ -106,12 +106,21 @@ namespace LongoMatch.Gui.Panel
 			ApplyStyle ();
 		}
 
-		public string PanelName {
-			get {
-				return null;
-			}
-			set {
-			}
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+
+			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
+
+			teamtagger.Dispose ();
+			projectperiods1.Destroy ();
+
+			base.OnDestroyed ();
+		}
+
+		public void Dispose ()
+		{
+			Destroy ();
 		}
 
 		public void OnLoad ()
@@ -124,6 +133,14 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
+		public string PanelName {
+			get {
+				return null;
+			}
+			set {
+			}
+		}
+
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -134,14 +151,26 @@ namespace LongoMatch.Gui.Panel
 			throw new NotImplementedException ();
 		}
 
-		protected override void OnDestroyed ()
+		public void FillDevices (List<Device> devices)
 		{
-			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
+			videoDevices = devices;
+			bool includeSourceName;
 
-			teamtagger.Dispose ();
-			projectperiods1.Destroy ();
+			includeSourceName = devices.GroupBy (d => d.SourceElement).Count () > 1;
 
-			base.OnDestroyed ();
+			foreach (Device device in devices) {
+				string deviceName;
+
+				if (device.Formats.Count == 0)
+					continue;
+
+				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
+				if (includeSourceName) {
+					deviceName += String.Format (" ({0})", device.SourceElement);
+				}
+				devicecombobox.AppendText (deviceName);
+				devicecombobox.Active = 0;
+			}
 		}
 
 		void ApplyStyle ()
@@ -341,28 +370,6 @@ namespace LongoMatch.Gui.Panel
 				App.Current.Config.CaptureVideoStandard);
 			encProfileList = Misc.FillEncodingFormat (encodingcombobox, App.Current.Config.CaptureEncodingProfile);
 			qualList = Misc.FillQuality (qualitycombobox, App.Current.Config.CaptureEncodingQuality);
-		}
-
-		public void FillDevices (List<Device> devices)
-		{
-			videoDevices = devices;
-			bool includeSourceName;
-
-			includeSourceName = devices.GroupBy (d => d.SourceElement).Count () > 1;
-
-			foreach (Device device in devices) {
-				string deviceName;
-
-				if (device.Formats.Count == 0)
-					continue;
-
-				deviceName = (device.ID == "") ? Catalog.GetString ("Unknown") : device.ID;
-				if (includeSourceName) {
-					deviceName += String.Format (" ({0})", device.SourceElement);
-				}
-				devicecombobox.AppendText (deviceName);
-				devicecombobox.Active = 0;
-			}
 		}
 
 		void SetButtonColor (DrawingArea area, Color color)
