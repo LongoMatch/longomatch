@@ -25,7 +25,6 @@ using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Drawing;
 using VAS.Drawing.CanvasObjects.Timeline;
-using TimeNodeObject = LongoMatch.Drawing.CanvasObjects.Timeline.TimeNodeObject;
 
 namespace LongoMatch.Drawing.Widgets
 {
