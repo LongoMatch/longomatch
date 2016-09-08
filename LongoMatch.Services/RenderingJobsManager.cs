@@ -261,7 +261,7 @@ namespace LongoMatch.Services
 					fd.Render.ToMSecondsString ());
 					continue;
 				}
-				string image_path = CreateStillImage (file.FilePath, fd);
+				string image_path = CreateStillImage (file, fd);
 				if (image_path == null) {
 					continue;
 				}
@@ -278,18 +278,18 @@ namespace LongoMatch.Services
 			return true;
 		}
 
-		private string CreateStillImage (string filename, FrameDrawing drawing)
+		private string CreateStillImage (MediaFile file, FrameDrawing drawing)
 		{
 			Image frame, final_image;
 			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			
 			capturer = App.Current.MultimediaToolkit.GetFramesCapturer ();
-			capturer.Open (filename);
-			frame = capturer.GetFrame (drawing.Render, true);
+			capturer.Open (file.FilePath);
+			frame = capturer.GetFrame (drawing.Render, true, (int) file.DisplayVideoWidth, (int) file.DisplayVideoHeight);
 			capturer.Dispose ();
 			if (frame == null) {
 				Log.Error (String.Format ("Could not get frame for file {0} at pos {1}",
-					filename, drawing.Render.ToMSecondsString ()));
+				                          file.FilePath, drawing.Render.ToMSecondsString ()));
 				return null;
 			}
 			final_image = VAS.Drawing.Utils.RenderFrameDrawingToImage (App.Current.DrawingToolkit, frame, drawing);
