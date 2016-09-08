@@ -85,6 +85,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		protected override void Dispose (bool disposing)
 		{
+			ResetSelection ();
 			ClearPlayers ();
 			homeBench.Dispose ();
 			awayBench.Dispose ();
@@ -456,14 +457,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (homePlayers != null) {
 				foreach (SportsPlayerObject po in homePlayers) {
 					po.Dispose ();
-					homePlayers = null;
 				}
+				homePlayers = null;
 			}
 			if (awayPlayers != null) {
 				foreach (SportsPlayerObject po in awayPlayers) {
 					po.Dispose ();
-					awayPlayers = null;
 				}
+				awayPlayers = null;
 			}
 			homePlayerToPlayerObject.Clear ();
 			awayPlayerToPlayerObject.Clear ();

@@ -40,13 +40,20 @@ namespace LongoMatch.DB
 		{
 			Log.Information ("Loading " + from);
 			T storable = Serializer.Instance.LoadSafe<T> (from);
-			if (storable is Project) {
-				ProjectMigration.Migrate (storable as ProjectLongoMatch);
-			} else if (storable is Team) {
-				TeamMigration.Migrate (storable as SportsTeam);
-			} else if (storable is Dashboard) {
-				DashboardMigration.Migrate (storable as Dashboard);
-			}
+			MigrateStorable (storable);
+			return storable;
+		}
+
+		/// <summary>
+		/// Retrieves an object of type T from a Stream
+		/// </summary>
+		/// <returns>The object found.</returns>
+		/// <param name="from">The Stream to retrieve the object from</param>
+		/// <typeparam name="T">The type of the object.</typeparam>
+		public static T RetrieveFrom<T> (Stream from) where T : IStorable
+		{
+			T storable = Serializer.Instance.Load<T> (from);
+			MigrateStorable (storable);
 			return storable;
 		}
 
@@ -70,6 +77,17 @@ namespace LongoMatch.DB
 
 			/* Don't cach the Exception here to chain it up */
 			Serializer.Instance.Save<T> ((T)t, at);
+		}
+
+		static void MigrateStorable (IStorable storable)
+		{
+			if (storable is Project) {
+				ProjectMigration.Migrate (storable as ProjectLongoMatch);
+			} else if (storable is Team) {
+				TeamMigration.Migrate (storable as SportsTeam);
+			} else if (storable is DashboardLongoMatch) {
+				DashboardMigration.Migrate (storable as DashboardLongoMatch);
+			}
 		}
 	}
 }
