@@ -249,6 +249,16 @@ namespace LongoMatch.Core.Store.Templates
 			return defaultTemplate;
 		}
 
+
+		protected override void ForwardPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			// FIXME: Remove this when Players have their own ViewModel and the Tagged property is moved there
+			if (sender is Player && e.PropertyName == "Tagged") {
+				return;
+			}
+			base.ForwardPropertyChanged (sender, e);
+		}
+
 		void FillDefaultTemplate (int playersCount)
 		{
 			List.Clear ();

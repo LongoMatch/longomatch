@@ -248,9 +248,20 @@ namespace LongoMatch.Gui
 
 		public override void OpenTeamsTemplatesManager ()
 		{
-			TeamsTemplatesPanel panel = new TeamsTemplatesPanel ();
-			Log.Information ("Open teams templates manager");
-			MainWindow.SetPanel (panel);
+			/* FIXME: Remove this when it's finally handled by the NavigationController */
+			IController controller;
+
+			IView view = App.Current.ViewLocator.Retrieve ("TeamsManager");
+			var teamsVM = new TeamsManagerVM ();
+			teamsVM.Model = new ObservableCollection<SportsTeam> (App.Current.TeamTemplatesProvider.Templates);
+
+			view.SetViewModel (teamsVM);
+			controller = App.Current.ControllerLocator.Retrieve ("TeamsManager");
+			controller.SetViewModel (teamsVM);
+			controller.Start ();
+			Log.Information ("Open sports templates manager");
+			MainWindow.SetPanel ((IPanel)view);
+			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
 		}
 
 		public override void OpenProjectsManager (Project openedProject)

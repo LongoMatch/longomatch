@@ -28,7 +28,6 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
-using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
@@ -52,11 +51,7 @@ namespace LongoMatch.Gui.Panel
 			// Assign images
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
-			panelheader1.BackClicked += (sender, o) => {
-				ViewModel.Save (false);
-				if (BackEvent != null)
-					BackEvent ();
-			};
+			panelheader1.BackClicked += HandleBackClicked;
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", StyleConf.TemplatesHeaderIconSize);
@@ -160,6 +155,9 @@ namespace LongoMatch.Gui.Panel
 				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
 				viewModel.PropertyChanged += HandleViewModelChanged;
+				deletetemplatebutton.Sensitive = viewModel.DeleteSensitive;
+				savetemplatebutton.Sensitive = viewModel.SaveSensitive;
+				exporttemplatebutton.Sensitive = viewModel.ExportSensitive;
 			}
 		}
 
@@ -323,6 +321,12 @@ namespace LongoMatch.Gui.Panel
 			} else if (e.PropertyName == "DeleteSensitive") {
 				deletetemplatebutton.Sensitive = ViewModel.DeleteSensitive;
 			}	
+		}
+
+		void HandleBackClicked (object sender, EventArgs e) {
+			viewModel.Save (true);
+			if (BackEvent != null)
+				BackEvent ();
 		}
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)
