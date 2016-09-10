@@ -86,6 +86,10 @@
       <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
       <Name>VAS.Drawing.Net45</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VAS\Weavers\Weavers.csproj">
+      <Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
+      <Name>Weavers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="LongoMatch.Services.projitems" Label="Shared" Condition="Exists('LongoMatch.Services.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
