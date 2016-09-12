@@ -127,8 +127,10 @@ LongoMatch.Plugins.Stats/Stats/Plotter.cs
 LongoMatch.Plugins.Stats/Stats/SubcategoryViewer.cs
 LongoMatch.Plugins.Stats/StatsUIPlugin.cs
 LongoMatch.Plugins/CSVExporter.cs
+LongoMatch.Plugins/LongoMatchExporter.cs
 LongoMatch.Plugins/LongoMatchImporter.cs
 LongoMatch.Services/Controller/DashboardsController.cs
+LongoMatch.Services/Controller/TeamsController.cs
 LongoMatch.Services/CoreServices.cs
 LongoMatch.Services/DataBaseManager.cs
 LongoMatch.Services/EventsManager.cs
