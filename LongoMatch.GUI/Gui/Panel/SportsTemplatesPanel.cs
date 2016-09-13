@@ -148,12 +148,6 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		protected override void OnDestroyed ()
-		{
-			buttonswidget.Destroy ();
-			base.OnDestroyed ();
-		}
-
 		public DashboardsManagerVM ViewModel {
 			get {
 				return viewModel;
@@ -179,6 +173,11 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
+		public void Dispose ()
+		{
+			Destroy ();
+		}
+
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -187,6 +186,13 @@ namespace LongoMatch.Gui.Panel
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (DashboardsManagerVM)viewModel;
+		}
+
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			buttonswidget.Destroy ();
+			base.OnDestroyed ();
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

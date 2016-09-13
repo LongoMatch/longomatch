@@ -107,9 +107,9 @@ namespace LongoMatch
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
 				foreach (IProjectExporter exporter in
-						 App.Current.Registry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
+						 App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
 					(GUIToolkit.Instance.MainController as MainWindow).AddExportEntry (exporter.Description,
-									new Func<Project, bool, Task> (exporter.Export));
+						new Func<Project, bool, Task> (exporter.Export));
 
 				}
 				App.Current.GUIToolkit.Welcome ();

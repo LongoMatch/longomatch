@@ -70,6 +70,11 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
+		public void Dispose ()
+		{
+			Destroy ();
+		}
+
 		//FIXME: add IPanel KeyContext using MMVMC pattern
 		public KeyContext GetKeyContext ()
 		{
@@ -79,6 +84,12 @@ namespace LongoMatch.Gui.Panel
 		public void SetViewModel (object viewModel)
 		{
 			throw new NotImplementedException ();
+		}
+
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			base.OnDestroyed ();
 		}
 
 		void HandleClicked (object sender, EventArgs e)

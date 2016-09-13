@@ -153,6 +153,11 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
+		public void Dispose ()
+		{
+			Destroy ();
+		}
+
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -161,6 +166,12 @@ namespace LongoMatch.Gui.Panel
 		public void SetViewModel (object viewModel)
 		{
 			throw new NotImplementedException ();
+		}
+
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			base.OnDestroyed ();
 		}
 
 		void Load (string templateName)

@@ -23,7 +23,9 @@ using LongoMatch.DB;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
+using VAS.Core.MVVMC;
 using VAS.DB;
+using LMConstants = LongoMatch.Core.Common.Constants;
 
 namespace Tests
 {
@@ -39,6 +41,7 @@ namespace Tests
 			VAS.App.Current = App.Current = new App ();
 			App.Current.Keyboard = new Keyboard ();
 			App.Current.Config = new Config ();
+			App.Current.SoftwareName = LMConstants.SOFTWARE_NAME;
 
 			//set the sync context
 			/*
@@ -48,6 +51,10 @@ namespace Tests
 			App.Current.EventsBroker = new VAS.Core.Events.EventsBroker ();
 			App.Current.DependencyRegistry = new Registry ("Dependencies");
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
+			App.Current.ControllerLocator = new ControllerLocator ();
+			App.Current.Config.CurrentDatabase = "longomatch";
+			App.Current.ProjectExtension = LMConstants.PROJECT_EXT;
+			;
 		}
 	}
 

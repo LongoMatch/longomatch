@@ -43,8 +43,14 @@ namespace LongoMatch.Gui.Component
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
 
+		public void Dispose ()
+		{
+			Destroy ();
+		}
+
 		protected override void OnDestroyed ()
 		{
+			OnUnload ();
 			App.Current.EventsBroker.Unsubscribe<EventCreatedEvent> (HandleEventCreated);
 			App.Current.EventsBroker.Unsubscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
@@ -160,7 +166,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEventCreated (EventCreatedEvent e)
 		{
-			codingwidget1.AddPlay ((LongoMatch.Core.Store.TimelineEventLongoMatch)e.TimelineEvent);
+			codingwidget1.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
 		}
 
 		void HandleEventsDeleted (EventsDeletedEvent e)

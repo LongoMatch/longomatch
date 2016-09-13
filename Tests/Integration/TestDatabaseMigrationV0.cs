@@ -61,6 +61,7 @@ namespace Tests.Integration
 			Directory.CreateDirectory (tmpPath);
 			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
+			App.Init ();
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
@@ -101,6 +102,7 @@ namespace Tests.Integration
 
 			Environment.SetEnvironmentVariable ("LONGOMATCH_HOME", tmpPath);
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
+			App.Init ();
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
 			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);

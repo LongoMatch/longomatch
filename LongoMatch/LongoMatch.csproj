@@ -23,7 +23,6 @@
         <Variable name="LGM_DEBUG" value="3" />
         <Variable name="LGM_UNINSTALLED" value="1" />
         <Variable name="GTK2_RC_FILES" value="" />
-        <Variable name="MONO_ENV_OPTIONS" value="--arch=64" />
       </EnvironmentVariables>
     </EnvironmentVariables>
     <ConsolePause>false</ConsolePause>

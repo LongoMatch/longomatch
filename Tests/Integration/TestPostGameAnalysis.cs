@@ -109,6 +109,8 @@ namespace Tests.Integration
 		public void TestGameAnalysis ()
 		{
 			Guid projectID;
+			string home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
+			App.Init ();
 			CoreServices.Init ();
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			AddinsManager.LoadConfigModifierAddins ();
@@ -227,7 +229,7 @@ namespace Tests.Integration
 			CoreServices.toolsManager.ProjectImporters.Add (importer);
 			p = null;
 			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
-			mockDialogs.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), "test", null)).Returns (
+			mockDialogs.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				Task.Factory.StartNew (
 					() => (object)importer)
 			);
