@@ -33,6 +33,7 @@ using VAS.Services;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMCommon = LongoMatch.Core.Common;
+using LongoMatch.Services.States;
 
 
 #if OSTYPE_WINDOWS
@@ -54,10 +55,10 @@ namespace LongoMatch.Services
 		static List<IService> services = new List<IService> ();
 		public static IProjectsImporter ProjectsImporter;
 
-		#if OSTYPE_WINDOWS
+#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern bool g_setenv (String env, String val, bool overwrite);
-		#endif
+#endif
 		public static void Init ()
 		{
 			Log.Debugging = Debugging;
@@ -86,13 +87,15 @@ namespace LongoMatch.Services
 			/* Fill up the descriptions again after initializing the translations */
 			App.Current.Config.Hotkeys.FillActionsDescriptions ();
 			App.Current.DependencyRegistry = new Registry ("Dependencies");
+			CoreTool tool = new CoreTool ();
+			tool.Enable ();
 			Scanner.ScanControllers (App.Current.ControllerLocator);
 		}
 
 		static void FillVersion ()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly ();
-			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
+			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location);
 			App.Current.Version = assembly.GetName ().Version;
 			App.Current.BuildVersion = info.ProductVersion;
 		}
@@ -221,14 +224,14 @@ namespace LongoMatch.Services
 
 		public static bool Debugging {
 			get {
-				#if DEBUG
+#if DEBUG
 				return true;
-				#else
+#else
 				if (debugging == null) {
 					debugging = EnvironmentIsSet ("LGM_DEBUG");
 				}
 				return debugging.Value;
-				#endif
+#endif
 			}
 			set {
 				debugging = value;

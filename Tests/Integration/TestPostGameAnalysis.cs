@@ -109,7 +109,6 @@ namespace Tests.Integration
 		public void TestGameAnalysis ()
 		{
 			Guid projectID;
-			string home = Environment.GetEnvironmentVariable ("LONGOMATCH_HOME");
 			App.Init ();
 			CoreServices.Init ();
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
@@ -137,9 +136,9 @@ namespace Tests.Integration
 			projectID = p.ID;
 			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p, true);
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new  OpenProjectIDEvent { 
-					ProjectID = p.ID, 
-					Project = p 
+				new OpenProjectIDEvent {
+					ProjectID = p.ID,
+					Project = p
 				}
 			);
 
@@ -175,8 +174,8 @@ namespace Tests.Integration
 			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (p);
 			Assert.AreEqual (2, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new  OpenProjectIDEvent { 
-					ProjectID = p.ID, 
+				new OpenProjectIDEvent {
+					ProjectID = p.ID,
 					Project = p
 				}
 			);
@@ -191,9 +190,9 @@ namespace Tests.Integration
 			// Reopen the old project
 			savedP = App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().FirstOrDefault (pr => pr.ID == projectID);
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new  OpenProjectIDEvent { 
-					ProjectID = savedP.ID, 
-					Project = savedP 
+				new OpenProjectIDEvent {
+					ProjectID = savedP.ID,
+					Project = savedP
 				}
 			);
 			App.Current.EventsBroker.Publish<SaveProjectEvent> (
@@ -208,9 +207,9 @@ namespace Tests.Integration
 			Assert.AreEqual (3, savedP.Timeline.Count);
 			Assert.AreEqual (12, savedP.LocalTeamTemplate.List.Count);
 			Assert.AreEqual (12, savedP.VisitorTeamTemplate.List.Count);
-			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm"); 
+			string tmpFile = Path.Combine (tmpPath, "longomatch.lgm");
 			mockDialogs.Setup (g => g.SaveFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
-				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (tmpFile);
+				It.IsAny<string> (), It.IsAny<string []> ())).Returns (tmpFile);
 			App.Current.EventsBroker.Publish<ExportProjectEvent> (new ExportProjectEvent { Project = p });
 			Assert.IsTrue (File.Exists (tmpFile));
 			savedP = Project.Import (tmpFile) as ProjectLongoMatch;
@@ -229,12 +228,12 @@ namespace Tests.Integration
 			CoreServices.toolsManager.ProjectImporters.Add (importer);
 			p = null;
 			string projectPath = Utils.SaveResource ("spain_france_test.lgm", tmpPath);
-			mockDialogs.Setup (g => g.ChooseOption (It.IsAny<Dictionary<string, object>> (), It.IsAny<string> (), It.IsAny<object> ())).Returns (
-				Task.Factory.StartNew (
-					() => (object)importer)
+			mockDialogs.Setup (g => g.ChooseOption (
+				It.IsAny<Dictionary<string, object>> (), It.IsAny<string> (), It.IsAny<object> ())).
+					   Returns (Task.Factory.StartNew (() => (object)importer)
 			);
 			mockDialogs.Setup (g => g.OpenFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<string> (),
-				It.IsAny<string> (), It.IsAny<string[]> ())).Returns (projectPath);
+				It.IsAny<string> (), It.IsAny<string []> ())).Returns (projectPath);
 			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
 				p = e.Project as ProjectLongoMatch;
 			});
@@ -256,10 +255,10 @@ namespace Tests.Integration
 				new NewEventEvent {
 					EventType = p.EventTypes [idx],
 					Players = null,
-					Teams = new ObservableCollection<Team> { p.LocalTeamTemplate }, 
+					Teams = new ObservableCollection<Team> { p.LocalTeamTemplate },
 					Tags = null,
-					Start = new Time { TotalSeconds = start }, 
-					Stop = new Time { TotalSeconds = stop }, 
+					Start = new Time { TotalSeconds = start },
+					Stop = new Time { TotalSeconds = stop },
 					EventTime = new Time { TotalSeconds = eventTime }
 				}
 			);

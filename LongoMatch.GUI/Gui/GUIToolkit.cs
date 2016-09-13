@@ -17,25 +17,21 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Blackboard;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
@@ -47,7 +43,7 @@ using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
-	public sealed class GUIToolkit : GUIToolkitBase
+	public sealed class GUIToolkit : GUIToolkitBase, INavigation
 	{
 		static readonly GUIToolkit instance = new GUIToolkit ();
 
@@ -59,7 +55,7 @@ namespace LongoMatch.Gui
 
 		new MainWindow MainWindow {
 			get {
-				return base.MainWindow as MainWindow; 
+				return base.MainWindow as MainWindow;
 			}
 			set {
 				base.MainWindow = value;
@@ -86,12 +82,30 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		public Task<bool> LoadNavigationPanel (IPanel panel)
+		{
+			bool result = MainWindow.SetPanel (panel);
+			return AsyncHelpers.Return (result);
+		}
+
+		public Task LoadModalPanel (IPanel panel, IPanel parent)
+		{
+			ShowModalWindow (panel, parent);
+			return AsyncHelpers.Return ();
+		}
+
+		public Task RemoveModalWindow (IPanel panel)
+		{
+			RemoveModalPanelAndWindow (panel);
+			return AsyncHelpers.Return ();
+		}
+
 		public override List<EditionJob> ConfigureRenderingJob (Playlist playlist)
 		{
 			VideoEditionProperties vep;
 			List<EditionJob> jobs = new List<EditionJob> ();
 			int response;
-			
+
 			Log.Information ("Configure rendering job");
 			if (playlist.Elements.Count == 0) {
 				App.Current.Dialogs.WarningMessage (Catalog.GetString ("The playlist you want to render is empty."));
@@ -132,7 +146,7 @@ namespace LongoMatch.Gui
 							ext = "png";
 						}
 						filename = String.Format ("{0}-{1}.{2}", i.ToString ("d4"), name, ext);
-						
+
 						pl.Elements.Add (play);
 						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
 						jobs.Add (new EditionJob (pl, settings));
@@ -160,8 +174,8 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play, 
-					          interval, outDir);
+				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play,
+							  interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, MainWindow as Gtk.Window);
 				fcpd.Run ();
 				fcpd.Destroy ();
@@ -169,8 +183,8 @@ namespace LongoMatch.Gui
 				sd.Destroy ();
 		}
 
-		public override Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers, 
-		                               bool editNotes)
+		public override Task EditPlay (TimelineEvent play, Project project, bool editTags, bool editPos, bool editPlayers,
+									   bool editNotes)
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (MainWindow as Gtk.Window);
@@ -191,7 +205,7 @@ namespace LongoMatch.Gui
 		}
 
 		public override void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
-		                                  CameraConfig camConfig, Project project)
+										  CameraConfig camConfig, Project project)
 		{
 			DrawingTool dialog = new DrawingTool (MainWindow);
 			dialog.TransientFor = MainWindow;
@@ -200,7 +214,7 @@ namespace LongoMatch.Gui
 			if (play == null) {
 				dialog.LoadFrame (image, project as ProjectLongoMatch);
 			} else {
-				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig, 
+				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig,
 					project as ProjectLongoMatch);
 			}
 			dialog.Show ();
@@ -221,63 +235,6 @@ namespace LongoMatch.Gui
 			return project;
 		}
 
-		public override void SelectProject (List<Project> projects)
-		{
-			Log.Information ("Select project");
-			MainWindow.SelectProject (projects.Cast<ProjectLongoMatch> ().ToList ());
-		}
-
-		public override void OpenCategoriesTemplatesManager ()
-		{
-			/* FIXME: Remove this when it's finally handled by the NavigationController */
-			IController controller;
-
-			IView view = App.Current.ViewLocator.Retrieve ("DashboardsManager");
-			var dashboardsVM = new DashboardsManagerVM ();
-			dashboardsVM.Model = new ObservableCollection<DashboardLongoMatch> (
-				App.Current.CategoriesTemplatesProvider.Templates);
-
-			view.SetViewModel (dashboardsVM);
-			controller = App.Current.ControllerLocator.Retrieve ("DashboardsManager");
-			controller.SetViewModel (dashboardsVM);
-			controller.Start ();
-			Log.Information ("Open sports templates manager");
-			MainWindow.SetPanel ((IPanel)view);
-			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
-		}
-
-		public override void OpenTeamsTemplatesManager ()
-		{
-			/* FIXME: Remove this when it's finally handled by the NavigationController */
-			IController controller;
-
-			IView view = App.Current.ViewLocator.Retrieve ("TeamsManager");
-			var teamsVM = new TeamsManagerVM ();
-			teamsVM.Model = new ObservableCollection<SportsTeam> (App.Current.TeamTemplatesProvider.Templates);
-
-			view.SetViewModel (teamsVM);
-			controller = App.Current.ControllerLocator.Retrieve ("TeamsManager");
-			controller.SetViewModel (teamsVM);
-			controller.Start ();
-			Log.Information ("Open sports templates manager");
-			MainWindow.SetPanel ((IPanel)view);
-			(view as Bin).DeleteEvent += (o, args) => controller.Stop ();
-		}
-
-		public override void OpenProjectsManager (Project openedProject)
-		{
-			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject as ProjectLongoMatch);
-			Log.Information ("Open projects manager");
-			MainWindow.SetPanel (panel);
-		}
-
-		public override void OpenPreferencesEditor ()
-		{
-			PreferencesPanel panel = new PreferencesPanel ();
-			Log.Information ("Open preferences");
-			MainWindow.SetPanel (panel);
-		}
-
 		public override void OpenDatabasesManager ()
 		{
 			DatabasesManager dm = new DatabasesManager (MainWindow);
@@ -294,20 +251,9 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 		}
 
-		public override void Welcome ()
-		{
-			MainWindow.Show ();
-			MainWindow.Welcome ();
-		}
-
 		public override void LoadPanel (IPanel panel)
 		{
 			MainWindow.SetPanel (panel);
-		}
-
-		public override void CreateNewProject (Project project = null)
-		{
-			MainWindow.CreateNewProject (project as ProjectLongoMatch);
 		}
 
 		public override void ShowProjectStats (Project project)
@@ -322,7 +268,7 @@ namespace LongoMatch.Gui
 			Log.Information ("Remux file");
 			try {
 				Remuxer remuxer = new Remuxer (App.Current.MultimediaToolkit.DiscoverFile (inputFile),
-					                  outputFile, muxer);
+									  outputFile, muxer);
 				return remuxer.Remux (MainWindow as Gtk.Window);
 			} catch (Exception e) {
 				Log.Exception (e);
@@ -330,18 +276,12 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public override void OpenProject (Project project, ProjectType projectType, 
-		                                  CaptureSettings props, EventsFilter filter,
-		                                  out IAnalysisWindowBase analysisWindow)
+		public override void OpenProject (Project project, ProjectType projectType,
+										  CaptureSettings props, EventsFilter filter,
+										  out IAnalysisWindowBase analysisWindow)
 		{
 			Log.Information ("Open project");
 			analysisWindow = MainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
-		}
-
-		public override void CloseProject ()
-		{
-			Log.Information ("Close project");
-			MainWindow.CloseProject ();
 		}
 
 		public override EndCaptureResponse EndCapture (bool isCapturing)
@@ -358,10 +298,10 @@ namespace LongoMatch.Gui
 			bool ret = false;
 			MediaFileSetSelection fileselector = new MediaFileSetSelection (false);
 			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Select video files"),
-				               MainWindow.Toplevel as Gtk.Window,
-				               DialogFlags.Modal | DialogFlags.DestroyWithParent,
-				               Gtk.Stock.Cancel, ResponseType.Cancel,
-				               Gtk.Stock.Ok, ResponseType.Ok);
+							   MainWindow.Toplevel as Gtk.Window,
+							   DialogFlags.Modal | DialogFlags.DestroyWithParent,
+							   Gtk.Stock.Cancel, ResponseType.Cancel,
+							   Gtk.Stock.Ok, ResponseType.Ok);
 			fileselector.Show ();
 			fileselector.FileSet = fileSet.Clone ();
 			d.VBox.Add (fileselector);
@@ -395,7 +335,7 @@ namespace LongoMatch.Gui
 		{
 			HotKeySelectorDialog dialog;
 			Window w;
-			
+
 			w = parent != null ? (parent as Widget).Toplevel as Window : MainWindow;
 			dialog = new HotKeySelectorDialog (w);
 			if (dialog.Run () == (int)ResponseType.Ok) {
@@ -408,8 +348,8 @@ namespace LongoMatch.Gui
 		}
 
 		public override Task<bool> CreateNewTemplate<T> (IList<T> availableTemplates, string defaultName,
-		                                                 string countText, string emptyText,
-		                                                 CreateEvent<T> evt)
+														 string countText, string emptyText,
+														 CreateEvent<T> evt)
 		{
 			bool ret = false;
 			EntryDialog dialog = new EntryDialog (MainWindow as Gtk.Window);
@@ -438,14 +378,15 @@ namespace LongoMatch.Gui
 
 		void RegistryCanvasFromDrawables ()
 		{
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Counter), typeof(CounterObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Cross), typeof(CrossObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Ellipse), typeof(EllipseObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Line), typeof(LineObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Quadrilateral), typeof(QuadrilateralObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Rectangle), typeof(RectangleObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof(Text), typeof(TextObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Counter), typeof (CounterObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Cross), typeof (CrossObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Ellipse), typeof (EllipseObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Line), typeof (LineObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Quadrilateral), typeof (QuadrilateralObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Rectangle), typeof (RectangleObject), "LongoMatch.Drawing");
+			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Text), typeof (TextObject), "LongoMatch.Drawing");
 		}
+
 	}
 }
 

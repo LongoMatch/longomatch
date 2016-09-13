@@ -20,33 +20,36 @@ using System.Collections.Generic;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
+using LongoMatch.Services.State;
+using LongoMatch.Services.States;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using Action = System.Action;
 using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class WelcomePanel : Gtk.Bin
+	[ViewAttribute (HomeState.NAME)]
+	public partial class WelcomePanel : Gtk.Bin, IPanel
 	{
-		static WelcomeButton[] default_buttons = {
+		static WelcomeButton [] default_buttons = {
 			new WelcomeButton ("longomatch-project-new", Catalog.GetString ("New"),
-				new Action (() => 
-					(App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null })))),
+							   new Action (() => App.Current.StateController.MoveTo (NewProjectState.NAME, null))),
 			new WelcomeButton ("longomatch-open", Catalog.GetString ("Open"),
-				new Action (() => (App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ())))),
+							   new Action (() => (App.Current.StateController.MoveTo (OpenProjectState.NAME, null)))),
 			new WelcomeButton ("longomatch-import", Catalog.GetString ("Import"),
-				new Action (() => (App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ())))),			
+							   new Action (() => (App.Current.EventsBroker.Publish (new ImportProjectEvent ())))),
 			new WelcomeButton ("longomatch-project", Catalog.GetString ("Projects"),
-				new Action (() => (App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ())))),
+							   new Action (() => (App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null)))),
 			new WelcomeButton ("longomatch-team-config", Catalog.GetString ("Teams"),
-				new Action (() => (App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ())))),
+							   new Action (() => (App.Current.StateController.MoveTo (TeamsManagerState.NAME, null)))),
 			new WelcomeButton ("longomatch-template-config", Catalog.GetString ("Analysis Dashboards"),
-				new Action (() => (App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ())))),
+							   new Action (() => (App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null)))),
 		};
 
 		List<WelcomeButton> buttons;
@@ -67,8 +70,6 @@ namespace LongoMatch.Gui.Panel
 			preferencesbutton.Clicked += HandlePreferencesClicked;
 
 			Create ();
-
-			Name = "WelcomePanel";
 		}
 
 		uint NRows {
@@ -77,9 +78,15 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		public string Title {
+			get {
+				return App.Current.SoftwareName;
+			}
+		}
+
 		void HandlePreferencesClicked (object sender, EventArgs e)
 		{
-			App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
+			App.Current.StateController.MoveTo (PreferencesState.NAME, null);
 		}
 
 		void Populate ()
@@ -89,7 +96,7 @@ namespace LongoMatch.Gui.Panel
 
 			App.Current.EventsBroker.Publish<QueryToolsEvent> (
 				new QueryToolsEvent {
-					Tools = tools	
+					Tools = tools
 				}
 			);
 
@@ -111,8 +118,8 @@ namespace LongoMatch.Gui.Panel
 			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
 
 			Gtk.Image prefImage = new Gtk.Image (
-				                      Helpers.Misc.LoadIcon ("longomatch-preferences",
-					                      StyleConf.WelcomeIconSize, 0));
+									  Helpers.Misc.LoadIcon ("longomatch-preferences",
+										  StyleConf.WelcomeIconSize, 0));
 			preferencesbutton.Add (prefImage);
 			preferencesbutton.WidthRequest = StyleConf.WelcomeIconSize;
 			preferencesbutton.HeightRequest = StyleConf.WelcomeIconSize;
@@ -192,6 +199,23 @@ namespace LongoMatch.Gui.Panel
 
 			return box;
 		}
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return null;
+		}
 	}
 
 	public struct WelcomeButton
@@ -216,7 +240,7 @@ namespace LongoMatch.Gui.Panel
 			Func = func;
 			Name = null;
 		}
-		
+
 	}
 }
 

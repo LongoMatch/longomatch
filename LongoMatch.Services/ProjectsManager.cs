@@ -22,6 +22,7 @@ using System.Linq;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
+using LongoMatch.Services.State;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
@@ -36,7 +37,6 @@ namespace LongoMatch.Services
 	public class ProjectsManager : IService
 	{
 		IGUIToolkit guiToolkit;
-		IDialogs dialogs;
 		IMultimediaToolkit multimediaToolkit;
 		IAnalysisWindowBase analysisWindow;
 
@@ -84,19 +84,19 @@ namespace LongoMatch.Services
 		void RemuxOutputFile (EncodingSettings settings)
 		{
 			VideoMuxerType muxer;
-				
+
 			/* We need to remux to the original format */
 			muxer = settings.EncodingProfile.Muxer;
 			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
 				string outFile = settings.OutputFile;
 				string tmpFile = settings.OutputFile;
-				
+
 				while (File.Exists (tmpFile)) {
 					tmpFile = tmpFile + ".tmp";
 				}
-				
+
 				Log.Debug ("Remuxing file tmp: " + tmpFile + " out: " + outFile);
-				
+
 				try {
 					File.Move (outFile, tmpFile);
 				} catch (Exception ex) {
@@ -112,7 +112,7 @@ namespace LongoMatch.Services
 						return;
 					}
 				}
-				
+
 				/* Remuxing suceed, delete old file */
 				if (guiToolkit.RemuxFile (tmpFile, outFile, muxer) == outFile) {
 					System.IO.File.Delete (tmpFile);
@@ -132,11 +132,11 @@ namespace LongoMatch.Services
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
 				Log.Debug ("Saving capture project: " + project.ID);
-			
-				#if !OSTYPE_ANDROID && !OSTYPE_IOS
+
+#if !OSTYPE_ANDROID && !OSTYPE_IOS
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
-				#endif
-			
+#endif
+
 				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.FileSet [0] = multimediaToolkit.DiscoverFile (filePath);
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
@@ -153,7 +153,7 @@ namespace LongoMatch.Services
 				projectFile = projectFile.Replace ("/", "_");
 				projectFile = filePathNoExtension + "_" + projectFile;
 				Project.Export (OpenedProject, projectFile);
-				dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
 				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
@@ -167,9 +167,9 @@ namespace LongoMatch.Services
 			if (OpenedProject != null) {
 				CloseOpenedProject (true);
 			}
-			
+
 			Log.Debug ("Loading project " + project.ID + " " + projectType);
-				
+
 			PlaysFilter = new EventsFilter (project);
 			project.CleanupTimers ();
 			project.ProjectType = projectType;
@@ -179,7 +179,7 @@ namespace LongoMatch.Services
 			Capturer = analysisWindow.Capturer;
 			OpenedProject = project;
 			OpenedProjectType = projectType;
-		
+
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if (!project.Description.FileSet.CheckFiles ()) {
@@ -192,19 +192,19 @@ namespace LongoMatch.Services
 					Player.Open (project.Description.FileSet);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
 
 			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject ||
-			           projectType == ProjectType.FakeCaptureProject) {
+					   projectType == ProjectType.URICaptureProject ||
+					   projectType == ProjectType.FakeCaptureProject) {
 				try {
 					Capturer.Run (props, project.Description.FileSet.First ());
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					dialogs.ErrorMessage (ex.Message);
+					App.Current.Dialogs.ErrorMessage (ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
@@ -213,6 +213,7 @@ namespace LongoMatch.Services
 			EmitProjectChanged ();
 			return true;
 		}
+
 		/*
 		public static void ExportToCSV(Project project) {
 			FileChooserDialog fChooser;
@@ -246,7 +247,7 @@ namespace LongoMatch.Services
 
 			if (OpenedProjectType == ProjectType.FileProject) {
 				bool ret;
-				ret = dialogs.QuestionMessage (
+				ret = App.Current.Dialogs.QuestionMessage (
 					Catalog.GetString ("Do you want to close the current project?"), null).Result;
 				if (ret) {
 					CloseOpenedProject (true);
@@ -283,7 +284,7 @@ namespace LongoMatch.Services
 		{
 			if (OpenedProject == null)
 				return false;
-				
+
 			Log.Debug ("Closing project " + OpenedProject.ID);
 			if (Capturer != null) {
 				Capturer.Close ();
@@ -299,8 +300,8 @@ namespace LongoMatch.Services
 
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
-			guiToolkit.CloseProject ();
 			EmitProjectChanged ();
+			App.Current.StateController.MoveToHome ();
 			return saveOk;
 		}
 
@@ -311,20 +312,9 @@ namespace LongoMatch.Services
 				return true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
-				dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				return false;
 			}
-		}
-
-		protected virtual void NewProject (NewProjectEvent e)
-		{
-			Log.Debug ("Creating new project");
-			
-			if (!PromptCloseProject (new CloseOpenedProjectEvent ())) {
-				return;
-			}
-			
-			guiToolkit.CreateNewProject (e.Project);
 		}
 
 		protected virtual void HandleSaveProject (SaveProjectEvent e)
@@ -344,7 +334,7 @@ namespace LongoMatch.Services
 				project.Periods = new ObservableCollection<Period> (Capturer.Periods);
 				return UpdateProject (project);
 			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject) {
+					   projectType == ProjectType.URICaptureProject) {
 				return SaveCaptureProject (project);
 			} else {
 				return false;
@@ -359,17 +349,9 @@ namespace LongoMatch.Services
 					SetProject (e.Project, e.ProjectType, e.CaptureSettings);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
+					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			}
-		}
-
-		void OpenProject (OpenProjectEvent e)
-		{
-			if (!PromptCloseProject (new CloseOpenedProjectEvent ())) {
-				return;
-			}
-			guiToolkit.SelectProject (App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ().Cast<Project> ().ToList ());
 		}
 
 		void Save (Project project)
@@ -388,7 +370,7 @@ namespace LongoMatch.Services
 					e.Project = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (e.ProjectID);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					dialogs.ErrorMessage (ex.Message);
+					App.Current.Dialogs.ErrorMessage (ex.Message);
 					return;
 				}
 			}
@@ -399,7 +381,7 @@ namespace LongoMatch.Services
 					busy.ShowSync (e.Project.Load);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					dialogs.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
+					App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not load project:") + "\n" + ex.Message);
 					return;
 				}
 			}
@@ -409,7 +391,7 @@ namespace LongoMatch.Services
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = e.Project });
+				App.Current.StateController.MoveTo (NewProjectState.NAME, e.Project);
 				return;
 			}
 
@@ -445,13 +427,13 @@ namespace LongoMatch.Services
 			}
 			bool closeOk = CloseOpenedProject (!cancel);
 			if (closeOk && reopen && !cancel && type != ProjectType.FakeCaptureProject) {
-				OpenProjectID (new OpenProjectIDEvent { ProjectID = project.ID, Project = project });					
+				OpenProjectID (new OpenProjectIDEvent { ProjectID = project.ID, Project = project });
 			}
 		}
 
 		void HandleMultimediaError (MultimediaErrorEvent e)
 		{
-			dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
+			App.Current.Dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current project will be closed:") + "\n" + e.Message);
 			CloseOpenedProject (true);
 		}
@@ -463,7 +445,7 @@ namespace LongoMatch.Services
 
 		void HandleCaptureError (CaptureErrorEvent e)
 		{
-			dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
+			App.Current.Dialogs.ErrorMessage (Catalog.GetString ("The following error happened and" +
 			" the current capture will be closed:") + "\n" + e.Message);
 			CaptureFinished (true, false, false);
 		}
@@ -486,9 +468,6 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = App.Current.MultimediaToolkit;
 			guiToolkit = App.Current.GUIToolkit;
-			dialogs = App.Current.Dialogs;
-			App.Current.EventsBroker.Subscribe<NewProjectEvent> (NewProject);
-			App.Current.EventsBroker.Subscribe<OpenProjectEvent> (OpenProject);
 			App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> (OpenProjectID);
 			App.Current.EventsBroker.Subscribe<OpenNewProjectEvent> (OpenNewProject);
 			closeOpenedProjectEventToken = App.Current.EventsBroker.Subscribe<CloseOpenedProjectEvent> ((e) => {
@@ -505,9 +484,6 @@ namespace LongoMatch.Services
 		{
 			multimediaToolkit = null;
 			guiToolkit = null;
-			dialogs = null;
-			App.Current.EventsBroker.Unsubscribe<NewProjectEvent> (NewProject);
-			App.Current.EventsBroker.Unsubscribe<OpenProjectEvent> (OpenProject);
 			App.Current.EventsBroker.Unsubscribe<OpenProjectIDEvent> (OpenProjectID);
 			App.Current.EventsBroker.Unsubscribe<OpenNewProjectEvent> (OpenNewProject);
 			App.Current.EventsBroker.Unsubscribe<CloseOpenedProjectEvent> (closeOpenedProjectEventToken);

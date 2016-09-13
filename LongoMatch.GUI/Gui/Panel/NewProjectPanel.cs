@@ -24,13 +24,15 @@ using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.Widgets;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
@@ -38,16 +40,14 @@ using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
 using Device = VAS.Core.Common.Device;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel
+	[ViewAttribute (NewProjectState.NAME)]
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<SportsProjectVM>
 	{
-		public event BackEventHandle BackEvent;
-
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
@@ -59,47 +59,31 @@ namespace LongoMatch.Gui.Panel
 		List<Device> videoDevices;
 		ListStore videoStandardList, encProfileList, qualList, dashboardsList;
 		IMultimediaToolkit mtoolkit;
-		IGUIToolkit gtoolkit;
 		IDialogs dialogs;
 		Gdk.Color red;
 		SportsTeam hometemplate, awaytemplate;
 		DashboardLongoMatch analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
+		SportsProjectVM viewModel;
 		bool resyncEvents;
 
-		public NewProjectPanel (ProjectLongoMatch project)
+		public NewProjectPanel ()
 		{
 			this.Build ();
 			this.mtoolkit = App.Current.MultimediaToolkit;
-			this.gtoolkit = App.Current.GUIToolkit;
 			dialogs = App.Current.Dialogs;
 			capturemediafilechooser.FileChooserMode = FileChooserMode.File;
 			capturemediafilechooser.ProposedFileName = String.Format ("Live-LongoMatch-{0}.mp4",
 				DateTime.Now.ToShortDateString ());
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
-			
+
 			LoadIcons ();
 			GroupLabels ();
 			ConnectSignals ();
 			FillDahsboards ();
 			FillFormats ();
-			LoadTeams (project);
-			if (project == null) {
-				notebook1.Page = firstPage = 0;
-				datepicker1.Date = DateTime.Now;
-				mediafilesetselection1.FileSet = new MediaFileSet ();
-			} else {
-				notebook1.Page = firstPage = 1;
-				this.project = project;
-				projectType = ProjectType.EditProject;
-				resyncEvents = true;
-				projectperiods1.FixedPeriods = project.IsFakeCapture;
-				SetProjectType ();
-				FillProjectDetails ();
-			}
-			UpdateTitle ();
 			Gdk.Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			urilabel.ModifyFg (StateType.Normal, red);
@@ -118,9 +102,40 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 
-		public void Dispose ()
+		public override void Dispose ()
 		{
+			base.Dispose ();
 			Destroy ();
+		}
+
+		public string Title {
+			get {
+				return Catalog.GetString ("New project");
+			}
+		}
+
+		public SportsProjectVM ViewModel {
+			set {
+				viewModel = value;
+				project = viewModel.Model;
+				LoadTeams (project);
+				if (project == null) {
+					notebook1.Page = firstPage = 0;
+					datepicker1.Date = DateTime.Now;
+					mediafilesetselection1.FileSet = new MediaFileSet ();
+				} else {
+					notebook1.Page = firstPage = 1;
+					projectType = ProjectType.EditProject;
+					resyncEvents = true;
+					projectperiods1.FixedPeriods = project.IsFakeCapture;
+					SetProjectType ();
+					FillProjectDetails ();
+				}
+				UpdateTitle ();
+			}
+			get {
+				return viewModel;
+			}
 		}
 
 		public void OnLoad ()
@@ -133,14 +148,6 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public string PanelName {
-			get {
-				return null;
-			}
-			set {
-			}
-		}
-
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -148,7 +155,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new NotImplementedException ();
+			ViewModel = (SportsProjectVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)
@@ -176,10 +183,10 @@ namespace LongoMatch.Gui.Panel
 		void ApplyStyle ()
 		{
 			/* Keep the central box aligned in the center of the widget */
-			SizeGroup grp = new  SizeGroup (SizeGroupMode.Horizontal);
+			SizeGroup grp = new SizeGroup (SizeGroupMode.Horizontal);
 			grp.AddWidget (lefttable);
 			grp.AddWidget (righttable);
-			
+
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
 			lefttable.RowSpacing = outputfiletable.RowSpacing =
 				righttable.RowSpacing = StyleConf.NewTableHSpacing;
@@ -197,7 +204,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			int s = StyleConf.ProjectTypeIconSize;
 			IconLookupFlags f = IconLookupFlags.ForceSvg;
- 
+
 			fileimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-file", s, f);
 			captureimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device", s, f);
 			fakeimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-video-device-fake", s, f);
@@ -226,7 +233,7 @@ namespace LongoMatch.Gui.Panel
 			List<SportsTeam> teams;
 			bool hasLocalTeam = false;
 			bool hasAwayTeam = false;
-			
+
 			drawingarea.HeightRequest = 200;
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
 			teamtagger.ShowMenuEvent += HandleShowMenuEvent;
@@ -331,7 +338,7 @@ namespace LongoMatch.Gui.Panel
 			int i = 0;
 			int index = 0;
 
-			dashboardsList = new ListStore (typeof(string), typeof(Dashboard));
+			dashboardsList = new ListStore (typeof (string), typeof (Dashboard));
 			foreach (var dashboard in App.Current.CategoriesTemplatesProvider.Templates) {
 				dashboardsList.AppendValues (dashboard.Name, dashboard);
 				if (dashboard.Name == App.Current.Config.DefaultTemplate)
@@ -349,9 +356,9 @@ namespace LongoMatch.Gui.Panel
 		void SetProjectType ()
 		{
 			bool filemode = false, urimode = false, capturemode = false;
-			
+
 			if (projectType == ProjectType.FileProject ||
-			    projectType == ProjectType.EditProject) {
+				projectType == ProjectType.EditProject) {
 				filemode = true;
 			} else if (projectType == ProjectType.CaptureProject) {
 				capturemode = true;
@@ -376,10 +383,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			Gdk.Color gcolor = Misc.ToGdkColor (color);
 			area.ModifyBg (StateType.Normal, gcolor);
-			area.ModifyBg (StateType.Active, gcolor); 
+			area.ModifyBg (StateType.Active, gcolor);
 			area.ModifyBg (StateType.Insensitive, gcolor);
-			area.ModifyBg (StateType.Prelight, gcolor); 
-			area.ModifyBg (StateType.Selected, gcolor); 
+			area.ModifyBg (StateType.Prelight, gcolor);
+			area.ModifyBg (StateType.Selected, gcolor);
 		}
 
 		void LoadTemplate (SportsTeam template, TeamType team, bool forceColor)
@@ -391,7 +398,7 @@ namespace LongoMatch.Gui.Panel
 				SetButtonColor (homecolor2, hometemplate.Colors [1]);
 				homecolor1button.Active = homecolor2button.Active = false;
 				if ((forceColor && template.ActiveColor == 1) ||
-				    (awaytemplate != null && awaytemplate.Color.Equals (hometemplate.Color))) {
+					(awaytemplate != null && awaytemplate.Color.Equals (hometemplate.Color))) {
 					homecolor2button.Click ();
 				} else {
 					homecolor1button.Click ();
@@ -403,7 +410,7 @@ namespace LongoMatch.Gui.Panel
 				SetButtonColor (awaycolor2, awaytemplate.Colors [1]);
 				awaycolor1button.Active = awaycolor2button.Active = false;
 				if ((forceColor && template.ActiveColor == 1) ||
-				    (hometemplate != null && hometemplate.Color.Equals (awaytemplate.Color))) {
+					(hometemplate != null && hometemplate.Color.Equals (awaytemplate.Color))) {
 					awaycolor2button.Click ();
 				} else {
 					awaycolor1button.Click ();
@@ -445,9 +452,9 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			MediaFile file;
-			
+
 			if (projectType == ProjectType.FileProject ||
-			    projectType == ProjectType.EditProject) {
+				projectType == ProjectType.EditProject) {
 				if (!mediafilesetselection1.FileSet.CheckFiles ()) {
 					dialogs.WarningMessage (Catalog.GetString ("You need at least 1 video file for the main angle"));
 					return false;
@@ -458,9 +465,9 @@ namespace LongoMatch.Gui.Panel
 				FillProject ();
 				return true;
 			}
-			
+
 			if (projectType == ProjectType.CaptureProject ||
-			    projectType == ProjectType.URICaptureProject) {
+				projectType == ProjectType.URICaptureProject) {
 				if (String.IsNullOrEmpty (capturemediafilechooser.CurrentPath)) {
 					dialogs.WarningMessage (Catalog.GetString ("No output video file"));
 					return false;
@@ -477,30 +484,30 @@ namespace LongoMatch.Gui.Panel
 			project.Description = new ProjectDescription ();
 			FillProject ();
 
-			
+
 			encSettings = new EncodingSettings ();
 			captureSettings = new CaptureSettings ();
-				
+
 			encSettings.OutputFile = capturemediafilechooser.CurrentPath;
-			
+
 			/* Get quality info */
 			qualitycombobox.GetActiveIter (out iter);
 			encSettings.EncodingQuality = (EncodingQuality)qualList.GetValue (iter, 1);
-			
+
 			/* Get size info */
 			imagecombobox.GetActiveIter (out iter);
 			encSettings.VideoStandard = (VideoStandard)videoStandardList.GetValue (iter, 1);
-			
+
 			/* Get encoding profile info */
 			encodingcombobox.GetActiveIter (out iter);
 			encSettings.EncodingProfile = (EncodingProfile)encProfileList.GetValue (iter, 1);
-			
+
 			encSettings.Framerate_n = App.Current.Config.FPS_N;
 			encSettings.Framerate_d = App.Current.Config.FPS_D;
-			
+
 			captureSettings.EncodingSettings = encSettings;
 
-			file = project.Description.FileSet.FirstOrDefault (); 
+			file = project.Description.FileSet.FirstOrDefault ();
 			if (file == null) {
 				file = new MediaFile () { Name = Catalog.GetString ("Main camera angle") };
 				file.FilePath = capturemediafilechooser.CurrentPath;
@@ -508,14 +515,15 @@ namespace LongoMatch.Gui.Panel
 				file.Par = 1;
 				project.Description.FileSet.Add (file);
 			}
-			
+
 			if (projectType == ProjectType.CaptureProject) {
 				captureSettings.Device = videoDevices [devicecombobox.Active];
 				captureSettings.Format = captureSettings.Device.Formats [deviceformatcombobox.Active];
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.URICaptureProject) {
-				captureSettings.Device = new Device {DeviceType = CaptureSourceType.URI,
+				captureSettings.Device = new Device {
+					DeviceType = CaptureSourceType.URI,
 					ID = urientry.Text
 				};
 				file.VideoHeight = encSettings.VideoStandard.Height;
@@ -596,9 +604,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			// When the application is quitting while we are on the new project panel we need to properly destroy widgets.
 			// To do that we go back to the welcome panel, a little bit like the analysis window closes the opened project first.
-			if (BackEvent != null) {
-				BackEvent ();
-			}
+			App.Current.StateController.MoveBack ();
 		}
 
 		void HandleBackClicked (object sender, EventArgs e)
@@ -607,9 +613,7 @@ namespace LongoMatch.Gui.Panel
 				projectperiods1.Pause ();
 			}
 			if (notebook1.Page == firstPage) {
-				if (BackEvent != null) {
-					BackEvent ();
-				}
+				App.Current.StateController.MoveBack ();
 			} else {
 				notebook1.Page--;
 			}
@@ -622,15 +626,15 @@ namespace LongoMatch.Gui.Panel
 		void HandleNextClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == PROJECT_TYPE) {
-				SetProjectType ();	
+				SetProjectType ();
 			}
 			if (notebook1.Page == PROJECT_DETAILS) {
 				if (!CreateProject ()) {
 					return;
 				}
 				if (projectType == ProjectType.CaptureProject ||
-				    projectType == ProjectType.FakeCaptureProject ||
-				    projectType == ProjectType.URICaptureProject) {
+					projectType == ProjectType.FakeCaptureProject ||
+					projectType == ProjectType.URICaptureProject) {
 					project.CreateLineupEvent ();
 					App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
 						new OpenNewProjectEvent {
@@ -661,7 +665,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			Menu menu = new Menu ();
 			MenuItem item;
-			
+
 			if (players.Count > 0) {
 				item = new MenuItem ("Remove for this match");
 				item.Activated += (sender, e) => {
@@ -683,7 +687,7 @@ namespace LongoMatch.Gui.Panel
 		}
 
 		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
-		                                     SubstitutionReason reason, Time time)
+											 SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
 			teamtagger.Substitute (p1, p2, team);
@@ -701,7 +705,7 @@ namespace LongoMatch.Gui.Panel
 				team = awaytemplate;
 				entry = awaytacticsentry;
 			}
-			
+
 			try {
 				team.FormationStr = entry.Text;
 				teamtagger.Reload ();
@@ -717,7 +721,7 @@ namespace LongoMatch.Gui.Panel
 			ToggleButton button = sender as ToggleButton;
 			if (!button.Active) {
 				return;
-			} 
+			}
 			if (button == homecolor1button) {
 				homecolor2button.Active = false;
 				hometemplate.ActiveColor = 0;
@@ -741,7 +745,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleDeviceChanged (object sender, EventArgs e)
 		{
 			Device device = videoDevices [devicecombobox.Active];
-			ListStore store = new ListStore (typeof(string));
+			ListStore store = new ListStore (typeof (string));
 			deviceformatcombobox.Model = store;
 			foreach (DeviceVideoFormat format in device.Formats) {
 				deviceformatcombobox.AppendText (format.ToString ());

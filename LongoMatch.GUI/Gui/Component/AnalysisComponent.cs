@@ -64,9 +64,9 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		public string PanelName {
+		public string Title {
 			get {
-				return "AnalysisComponent";
+				return openedProject?.ShortDescription;
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public override void Destroy ()
-		{			
+		{
 			if (detachedPlayer) {
 				DetachPlayer ();
 			}
@@ -180,13 +180,13 @@ namespace LongoMatch.Gui.Component
 		public void DetachPlayer ()
 		{
 			bool isPlaying = Player.Playing;
-			
+
 			/* Pause the player here to prevent the sink drawing while the windows
 			 * are beeing changed */
 			Player.Pause ();
 			if (!detachedPlayer) {
 				Log.Debug ("Detaching player");
-				
+
 				ExternalWindow playerWindow = new ExternalWindow ();
 				this.playerWindow = playerWindow;
 				playerWindow.Title = Constants.SOFTWARE_NAME;
@@ -227,7 +227,7 @@ namespace LongoMatch.Gui.Component
 			openedProject = project as ProjectLongoMatch;
 			this.projectType = projectType;
 			this.filter = (LMFilters.EventsFilter)filter;
-			
+
 			codingwidget.SetProject (project as ProjectLongoMatch, projectType, (LMFilters.EventsFilter)filter);
 			playsSelection.SetProject (project as ProjectLongoMatch, (LMFilters.EventsFilter)filter);
 			if (projectType == ProjectType.FileProject) {

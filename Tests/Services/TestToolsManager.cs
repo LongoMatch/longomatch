@@ -21,6 +21,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Services;
+using LongoMatch.Services.State;
 using Moq;
 using NUnit.Framework;
 using VAS.Core;
@@ -28,7 +29,6 @@ using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Services
 {
@@ -115,7 +115,7 @@ namespace Tests.Services
 		{
 			bool openned = false;
 			ProjectLongoMatch p = new ProjectLongoMatch ();
-					
+
 			EventToken et = App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((OpenProjectIDEvent e) => {
 				if (e.Project == p) {
 					openned = true;
@@ -137,12 +137,12 @@ namespace Tests.Services
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 			p.Description = new ProjectDescription ();
 			p.Description.FileSet = new MediaFileSet ();
-			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });		
+			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });
 
 			EventToken et = App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((OpenProjectIDEvent e) => {
 				openned |= e.Project == p;
 			});
-					
+
 			importer.ImportFunction = () => p;
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
@@ -158,17 +158,17 @@ namespace Tests.Services
 			bool openned = false;
 			ProjectLongoMatch p = new ProjectLongoMatch ();
 
-			EventToken et = App.Current.EventsBroker.Subscribe<NewProjectEvent> ((NewProjectEvent e) => {
-				openned |= e.Project == p;
+			EventToken et = App.Current.EventsBroker.Subscribe<NavigationEvent> ((e) => {
+				openned |= e.Name == NewProjectState.NAME;
 			});
 
 			importer.ImportFunction = () => p;
 			importer.NeedsEdition = true;
-			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Never ());
+			App.Current.EventsBroker.Publish (new ImportProjectEvent ());
+			dbMock.Verify (db => db.Store (p, true), Times.Never ());
 			Assert.IsTrue (openned);
 
-			App.Current.EventsBroker.Unsubscribe<NewProjectEvent> (et);
+			App.Current.EventsBroker.Unsubscribe<NavigationEvent> (et);
 		}
 
 	}

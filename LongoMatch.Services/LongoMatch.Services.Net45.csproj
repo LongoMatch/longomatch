@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Services</RootNamespace>
     <AssemblyName>LongoMatch.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +58,7 @@
       <HintPath>$(SolutionDir)\packages\Couchbase.Lite.LM.1.2.1.1\lib\net45\Couchbase.Lite.dll</HintPath>
       <Package>couchbase-lite</Package>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">

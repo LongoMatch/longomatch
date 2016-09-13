@@ -16,28 +16,30 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using VAS.Core;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
-using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.MVVMC;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class OpenProjectPanel : Gtk.Bin, IPanel
+	[ViewAttribute (OpenProjectState.NAME)]
+	public partial class OpenProjectPanel : Gtk.Bin, IPanel<SportsProjectsManagerVM>
 	{
-		public event BackEventHandle BackEvent;
+		SportsProjectsManagerVM viewModel;
 
 		public OpenProjectPanel ()
 		{
 			this.Build ();
-			
+
 			projectlistwidget.ProjectSelected += HandleProjectSelected;
 			projectlistwidget.SelectionMode = SelectionMode.Single;
 			projectlistwidget.ViewMode = ProjectListViewMode.Icons;
@@ -46,17 +48,31 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
 		}
 
-		public List<ProjectLongoMatch> Projects {
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			base.OnDestroyed ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public SportsProjectsManagerVM ViewModel {
 			set {
-				projectlistwidget.Fill (value);
+				viewModel = value;
+				projectlistwidget.Fill (viewModel.Model.ToList ());
+			}
+			get {
+				return viewModel;
 			}
 		}
 
-		public string PanelName {
+		public string Title {
 			get {
-				return null;
-			}
-			set {
+				return Catalog.GetString ("Open project");
 			}
 		}
 
@@ -70,11 +86,6 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public void Dispose ()
-		{
-			Destroy ();
-		}
-
 		//FIXME: add IPanel KeyContext using MMVMC pattern
 		public KeyContext GetKeyContext ()
 		{
@@ -83,27 +94,20 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new NotImplementedException ();
-		}
-
-		protected override void OnDestroyed ()
-		{
-			OnUnload ();
-			base.OnDestroyed ();
+			ViewModel = (SportsProjectsManagerVM)viewModel;
 		}
 
 		void HandleClicked (object sender, EventArgs e)
 		{
-			if (BackEvent != null)
-				BackEvent ();
+			App.Current.StateController.MoveBack ();
 		}
 
 		void HandleProjectSelected (ProjectLongoMatch project)
 		{
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new  OpenProjectIDEvent { 
-					ProjectID = project.ID, 
-					Project = project 
+				new OpenProjectIDEvent {
+					ProjectID = project.ID,
+					Project = project
 				}
 			);
 		}

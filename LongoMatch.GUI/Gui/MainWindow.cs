@@ -29,14 +29,15 @@ using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
+using LongoMatch.Services.State;
+using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
-using LMCommon = LongoMatch.Core.Common;
 using Misc = VAS.UI.Helpers.Misc;
-using Keyboard = VAS.Core.Common.Keyboard;
 
 namespace LongoMatch.Gui
 {
@@ -49,7 +50,6 @@ namespace LongoMatch.Gui
 		ProjectLongoMatch openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
-		Widget stackPanel;
 
 		#region Constructors
 
@@ -60,7 +60,7 @@ namespace LongoMatch.Gui
 			this.guiToolKit = guiToolkit;
 			Title = Constants.SOFTWARE_NAME;
 			projectType = ProjectType.None;
-			
+
 			ConnectSignals ();
 			ConnectMenuSignals ();
 
@@ -123,21 +123,21 @@ namespace LongoMatch.Gui
 		public bool SetPanel (IPanel panel)
 		{
 			if (panel == null) {
-				ResetGUI ();
-			} else {
-				if (currentPanel is IAnalysisWindow && panel is PreferencesPanel) {
-					RemovePanel (true);
-				} else {
-					RemovePanel (false);
-				}
-				currentPanel = (Widget)panel;
+				App.Current.StateController.MoveToHome ();
+			}
 
-				if (panel is IPanel) {
-					(panel as IPanel).BackEvent += BackClicked;
-					(panel as IPanel).OnLoad ();
-				}
-				((Widget)panel).Show ();
-				centralbox.PackStart ((Widget)panel, true, true, 0);
+			if (currentPanel != null) {
+				((IPanel)currentPanel).OnUnload ();
+				centralbox.Remove (currentPanel);
+			}
+			Title = panel.Title;
+			panel.OnLoad ();
+			currentPanel = (Widget)panel;
+			centralbox.PackStart (currentPanel, true, true, 0);
+			currentPanel.Show ();
+			// FIXME: Remove this once everything uses the ITool implementation correctly
+			if (panel is WelcomePanel) {
+				ResetGUI ();
 			}
 			return true;
 		}
@@ -155,7 +155,7 @@ namespace LongoMatch.Gui
 		public IAnalysisWindow SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
-			
+
 			this.projectType = projectType;
 			openedProject = project;
 			if (projectType == ProjectType.FileProject) {
@@ -175,22 +175,13 @@ namespace LongoMatch.Gui
 			return analysisWindow;
 		}
 
-		public void CloseProject ()
+		public void Initialize ()
 		{
-			openedProject = null;
-			projectType = ProjectType.None;
-			(analysisWindow as Gtk.Widget).Destroy ();
-			analysisWindow = null;
-			ResetGUI ();
-		}
+			Show ();
 
-		public void Welcome ()
-		{
 			// Configure window icon
 			Icon = Misc.LoadIcon (App.Current.SoftwareIconName, IconSize.Dialog);
 
-			// Show the welcome panel
-			SetPanel (null);
 			// Populate the menu items from pluggable tools
 			List<ITool> tools = new List<ITool> ();
 
@@ -215,6 +206,12 @@ namespace LongoMatch.Gui
 			ActionGroup ag = this.UIManager.ActionGroups [0];
 			uint mergeId;
 			mergeId = this.UIManager.NewMergeId ();
+
+			// Insert project exporters
+			foreach (IProjectExporter exporter in
+					 App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
+				AddExportEntry (exporter.Description, new Func<Project, bool, Task> (exporter.Export));
+			}
 
 			// Insert our tools
 			foreach (ITool tool in tools) {
@@ -245,20 +242,6 @@ namespace LongoMatch.Gui
 				}
 			}
 			this.UIManager.EnsureUpdate ();
-		}
-
-		public void SelectProject (List<ProjectLongoMatch> projects)
-		{
-			OpenProjectPanel panel = new OpenProjectPanel ();
-			panel.Projects = projects;
-			SetPanel (panel);
-		}
-
-		public void CreateNewProject (ProjectLongoMatch project)
-		{
-			NewProjectPanel panel = new NewProjectPanel (project);
-			panel.Name = "newprojectpanel";
-			SetPanel (panel);
 		}
 
 		/// <summary>
@@ -314,27 +297,27 @@ namespace LongoMatch.Gui
 				App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<ManageCategoriesEvent> (new ManageCategoriesEvent ());
+				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null);
 			};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<ManageTeamsEvent> (new ManageTeamsEvent ());
+				App.Current.StateController.MoveTo (TeamsManagerState.NAME, null);
 			};
 			ProjectsManagerAction.Activated += (o, e) => {
-				App.Current.EventsBroker.Publish<ManageProjectsEvent> (new ManageProjectsEvent ());
+				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null);
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
 				App.Current.EventsBroker.Publish<ManageDatabasesEvent> (new ManageDatabasesEvent ());
 			};
 			PreferencesAction.Activated += (sender, e) => {
-				App.Current.EventsBroker.Publish<EditPreferencesEvent> (new EditPreferencesEvent ());
+				App.Current.StateController.MoveTo (PreferencesState.NAME, null);
 			};
 			ShowProjectStatsAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<ShowProjectStatsEvent> (
 					new ShowProjectStatsEvent {
-						Project = openedProject		
+						Project = openedProject
 					}
 				);
-			}; 
+			};
 			QuitAction.Activated += (o, e) => {
 				CloseAndQuit ();
 			};
@@ -345,71 +328,27 @@ namespace LongoMatch.Gui
 						ProjectType = projectType
 					}
 				);
-				App.Current.EventsBroker.Publish<OpenProjectEvent> (new OpenProjectEvent ());
+				App.Current.StateController.MoveTo (OpenProjectState.NAME, null);
 			};
 			NewPojectAction.Activated += (sender, e) => {
-				App.Current.EventsBroker.Publish<NewProjectEvent> (new NewProjectEvent { Project = null });
+				App.Current.StateController.MoveTo (NewProjectState.NAME, null);
 			};
 			ImportProjectAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
 			};
 			FullScreenAction.Activated += (object sender, EventArgs e) => {
 				App.Current.EventsBroker.Publish<ShowFullScreenEvent> (
-					new ShowFullScreenEvent { 
+					new ShowFullScreenEvent {
 						Active = FullScreenAction.Active
 					}
 				);
 			};
 		}
 
-		void DestroyPanel (Widget panel)
-		{
-			if (panel is IPanel) {
-				(panel as IPanel).BackEvent -= BackClicked;
-				(panel as IPanel).OnUnload ();
-			}
-			panel.Destroy ();
-			panel.Dispose ();
-			System.GC.Collect ();
-		}
-
-		void RemovePanel (bool stack)
-		{
-			if (currentPanel == null) {
-				return;
-			}
-			if (stack) {
-				stackPanel = currentPanel;
-				stackPanel.Visible = false;
-			} else {
-				DestroyPanel (currentPanel);
-				currentPanel = null;
-				if (stackPanel != null) {
-					DestroyPanel (stackPanel);
-					stackPanel = null;
-				}
-			}
-		}
-
-		void BackClicked ()
-		{
-			if (stackPanel != null) {
-				DestroyPanel (currentPanel);
-				currentPanel = stackPanel;
-				stackPanel.Visible = true;
-			} else {
-				ResetGUI ();
-			}
-		}
-
 		private void ResetGUI ()
 		{
 			Title = Constants.SOFTWARE_NAME;
 			MakeActionsSensitive (false, projectType);
-			RemovePanel (false);
-			currentPanel = new WelcomePanel ();
-			currentPanel.Show ();
-			centralbox.PackStart (currentPanel, true, true, 0);
 		}
 
 		private void MakeActionsSensitive (bool sensitive, ProjectType projectType)

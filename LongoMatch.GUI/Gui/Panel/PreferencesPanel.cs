@@ -19,27 +19,27 @@ using System;
 using Gdk;
 using Gtk;
 using LongoMatch.Gui.Component;
+using LongoMatch.Services.State;
 using VAS.Core;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
+	[ViewAttribute (PreferencesState.NAME)]
 	public partial class PreferencesPanel : Gtk.Bin, IPanel
 	{
-		public event BackEventHandle BackEvent;
-
 		Widget selectedPanel;
 		ListStore prefsStore;
 
 		public PreferencesPanel ()
 		{
 			this.Build ();
-			prefsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(Widget));
-			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);  
+			prefsStore = new ListStore (typeof (Pixbuf), typeof (string), typeof (Widget));
+			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);
 			treeview.AppendColumn ("Desc", new CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
 			treeview.Model = prefsStore;
@@ -51,18 +51,25 @@ namespace LongoMatch.Gui.Panel
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Catalog.GetString ("PREFERENCES");
 			panelheader1.BackClicked += (sender, e) => {
-				if (BackEvent != null) {
-					BackEvent ();
-				}
-				;
+				App.Current.StateController.MoveBack ();
 			};
 		}
 
-		public string PanelName {
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			base.OnDestroyed ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public string Title {
 			get {
-				return null;
-			}
-			set {
+				return Catalog.GetString ("Preferences");
 			}
 		}
 
@@ -76,11 +83,6 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public void Dispose ()
-		{
-			Destroy ();
-		}
-
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -88,14 +90,6 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new NotImplementedException ();
-		}
-
-
-		protected override void OnDestroyed ()
-		{
-			OnUnload ();
-			base.OnDestroyed ();
 		}
 
 		void AddPanels ()
@@ -126,10 +120,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			Widget newPanel;
 			TreeIter iter;
-			
+
 			if (selectedPanel != null)
 				propsvbox.Remove (selectedPanel);
-			
+
 			treeview.Selection.GetSelected (out iter);
 			newPanel = prefsStore.GetValue (iter, 2) as Widget;
 			newPanel.Visible = true;

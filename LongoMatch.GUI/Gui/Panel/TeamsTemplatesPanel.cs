@@ -19,11 +19,11 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
@@ -32,11 +32,9 @@ using Helpers = VAS.UI.Helpers;
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	[ViewAttribute ("TeamsManager")]
+	[ViewAttribute (TeamsManagerState.NAME)]
 	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel
 	{
-		public event BackEventHandle BackEvent;
-
 		const int COL_TEAM = 0;
 		const int COL_EDITABLE = 1;
 
@@ -49,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 
 			panelheader1.ApplyVisible = false;
 			panelheader1.Title = Catalog.GetString ("TEAMS MANAGER");
-			panelheader1.BackClicked += HandleBackClicked;
+			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
@@ -89,8 +87,8 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof(TeamVM));
-			
+			teamsStore = new ListStore (typeof (TeamVM));
+
 			var cell = new CellRendererText ();
 			cell.Editable = true;
 			cell.Edited += HandleEdited;
@@ -101,30 +99,34 @@ namespace LongoMatch.Gui.Panel
 			teamseditortreeview.SearchColumn = COL_TEAM;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
-			
+
 			teamsvbox.WidthRequest = 280;
-			
+
 			deleteteambutton.Sensitive = false;
 			exportteambutton.Sensitive = false;
 			saveteambutton.Sensitive = false;
 			teamtemplateeditor1.VisibleButtons = false;
-			
+
 			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 			editplayerslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
-		}
-
-		public string PanelName {
-			get {
-				return null;
-			}
-			set {
-			}
 		}
 
 		public override void Destroy ()
 		{
 			teamtemplateeditor1.Destroy ();
 			base.Destroy ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public string Title {
+			get {
+				return Catalog.GetString ("Teams");
+			}
 		}
 
 		public void OnLoad ()
@@ -135,11 +137,6 @@ namespace LongoMatch.Gui.Panel
 		public void OnUnload ()
 		{
 
-		}
-
-		public void Dispose ()
-		{
-			Destroy ();
 		}
 
 		public TeamsManagerVM ViewModel {
@@ -167,7 +164,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (TeamsManagerVM) viewModel;
+			ViewModel = (TeamsManagerVM)viewModel;
 		}
 
 		protected override void OnDestroyed ()
@@ -256,17 +253,17 @@ namespace LongoMatch.Gui.Panel
 		void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action) {
-				case NotifyCollectionChangedAction.Add:
+			case NotifyCollectionChangedAction.Add:
 				foreach (TeamVM teamVM in e.NewItems) {
 					Add (teamVM);
 				}
 				break;
-				case NotifyCollectionChangedAction.Remove:
+			case NotifyCollectionChangedAction.Remove:
 				foreach (TeamVM teamVM in e.OldItems) {
 					Remove (teamVM);
 				}
 				break;
-				case NotifyCollectionChangedAction.Replace:
+			case NotifyCollectionChangedAction.Replace:
 				QueueDraw ();
 				break;
 			}
@@ -297,13 +294,7 @@ namespace LongoMatch.Gui.Panel
 				exportteambutton.Sensitive = ViewModel.ExportSensitive;
 			} else if (e.PropertyName == "DeleteSensitive") {
 				deleteteambutton.Sensitive = ViewModel.DeleteSensitive;
-			}	
-		}
-
-		void HandleBackClicked (object sender, EventArgs e) {
-			viewModel.Save (true);
-			if (BackEvent != null)
-				BackEvent ();
+			}
 		}
 
 		void HandleSaveTeamClicked (object sender, EventArgs e)
