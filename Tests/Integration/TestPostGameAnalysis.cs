@@ -103,6 +103,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
+			SetupClass.Initialize ();
 		}
 
 		[Test ()]
