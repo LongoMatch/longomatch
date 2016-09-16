@@ -148,9 +148,11 @@ namespace LongoMatch.Drawing.Widgets
 
 			// And for the cameras
 			for (int i = 1; i < fileSet.Count; i++) {
-				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], false, true, duration, i * StyleConf.TimelineCameraHeight,
+				CameraTimeline cameraTimeLine = new CameraTimeline (fileSet [i], false, true, duration,
+					                                i * StyleConf.TimelineCameraHeight,
 					                                App.Current.Style.PaletteBackground,
-					                                App.Current.Style.PaletteBackgroundLight);
+					                                App.Current.Style.PaletteBackgroundLight,
+					                                StyleConf.TimelineCameraHeight);
 				AddTimeLine (cameraTimeLine);
 			}
 			Update ();
