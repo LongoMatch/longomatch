@@ -109,8 +109,8 @@ namespace LongoMatch.Gui.Panel
 
 		public override void Dispose ()
 		{
-			base.Dispose ();
 			Destroy ();
+			base.Dispose ();
 		}
 
 		public string Title {
