@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
+			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Panel
 
 		public string Title {
 			get {
-				return Catalog.GetString ("Dashboards");
+				return Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
 			}
 		}
 

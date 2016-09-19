@@ -36,7 +36,7 @@ namespace LongoMatch.Services.States
 
 		public override Task<bool> PostTransition ()
 		{
-			ViewModel.Save (true);
+			ViewModel.Save (false);
 			return base.PostTransition ();
 		}
 

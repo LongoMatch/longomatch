@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Panel
 			AddPanels ();
 			treeview.SetCursor (new TreePath ("0"), null, false);
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = Catalog.GetString ("PREFERENCES");
+			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => {
 				App.Current.StateController.MoveBack ();
 			};
@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Panel
 
 		public string Title {
 			get {
-				return Catalog.GetString ("Preferences");
+				return Catalog.GetString ("PREFERENCES");
 			}
 		}
 

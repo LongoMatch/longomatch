@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = Catalog.GetString ("TEAMS MANAGER");
+			panelheader1.Title = Title;
 			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Panel
 
 		public string Title {
 			get {
-				return Catalog.GetString ("Teams");
+				return Catalog.GetString ("TEAMS MANAGER");
 			}
 		}
 

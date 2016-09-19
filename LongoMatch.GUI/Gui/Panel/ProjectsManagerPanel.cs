@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Panel
 			desctextview.Buffer.Changed += HandleChanged;
 
 			notebook1.Page = 0;
-			panelheader1.Title = Catalog.GetString ("PROJECTS MANAGER");
+			panelheader1.Title = Title;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
 
@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Panel
 
 		public string Title {
 			get {
-				return Catalog.GetString ("Projects");
+				return Catalog.GetString ("PROJECTS MANAGER");
 			}
 		}
 

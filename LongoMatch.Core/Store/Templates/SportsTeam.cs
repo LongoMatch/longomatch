@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
 using VAS.Core;
@@ -250,7 +251,7 @@ namespace LongoMatch.Core.Store.Templates
 		}
 
 
-		protected override void ForwardPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		protected override void ForwardPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			// FIXME: Remove this when Players have their own ViewModel and the Tagged property is moved there
 			if (sender is Player && e.PropertyName == "Tagged") {

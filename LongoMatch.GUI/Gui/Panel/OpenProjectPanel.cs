@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget.ViewMode = ProjectListViewMode.Icons;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleClicked;
-			panelheader1.Title = Catalog.GetString ("OPEN PROJECT");
+			panelheader1.Title = Title;
 		}
 
 		protected override void OnDestroyed ()
@@ -63,6 +63,7 @@ namespace LongoMatch.Gui.Panel
 		public SportsProjectsManagerVM ViewModel {
 			set {
 				viewModel = value;
+				//FIXME: Change it to ViewModel structure in the future
 				projectlistwidget.Fill (viewModel.Model.ToList ());
 			}
 			get {
@@ -72,7 +73,7 @@ namespace LongoMatch.Gui.Panel
 
 		public string Title {
 			get {
-				return Catalog.GetString ("Open project");
+				return Catalog.GetString ("OPEN PROJECT");
 			}
 		}
 
