@@ -297,12 +297,15 @@ namespace LongoMatch.Gui
 				App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
+				App.Current.StateController.EmptyStateStack ();
 				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null);
 			};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
+				App.Current.StateController.EmptyStateStack ();
 				App.Current.StateController.MoveTo (TeamsManagerState.NAME, null);
 			};
 			ProjectsManagerAction.Activated += (o, e) => {
+				App.Current.StateController.EmptyStateStack ();
 				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null);
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
@@ -328,9 +331,11 @@ namespace LongoMatch.Gui
 						ProjectType = projectType
 					}
 				);
+				App.Current.StateController.EmptyStateStack ();
 				App.Current.StateController.MoveTo (OpenProjectState.NAME, null);
 			};
 			NewPojectAction.Activated += (sender, e) => {
+				App.Current.StateController.EmptyStateStack ();
 				App.Current.StateController.MoveTo (NewProjectState.NAME, null);
 			};
 			ImportProjectAction.Activated += (sender, e) => {
