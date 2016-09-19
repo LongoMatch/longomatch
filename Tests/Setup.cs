@@ -20,12 +20,14 @@ using ICSharpCode.SharpZipLib;
 using LongoMatch;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
+using LongoMatch.Services.State;
+using LongoMatch.Services.States;
+using Moq;
 using NUnit.Framework;
-using VAS.Core.Common;
+using VAS.Core;
 using VAS.Core.Interfaces;
-using VAS.Core.MVVMC;
+using VAS.Core.Interfaces.GUI;
 using VAS.DB;
-using LMConstants = LongoMatch.Core.Common.Constants;
 
 namespace Tests
 {
@@ -38,23 +40,39 @@ namespace Tests
 			// Initialize LongoMath.Core by using a type, this will call the module initialization
 			var st = new SportsTeam ();
 			VFS.SetCurrent (new FileSystem ());
-			VAS.App.Current = App.Current = new App ();
-			App.Current.Keyboard = new Keyboard ();
-			App.Current.Config = new Config ();
-			App.Current.SoftwareName = LMConstants.SOFTWARE_NAME;
+			Initialize ();
+		}
 
-			//set the sync context
-			/*
-			var thisSyncContext = new MockSynchronizationContext ();
-			SynchronizationContext.SetSynchronizationContext (thisSyncContext);
-			*/
-			App.Current.EventsBroker = new VAS.Core.Events.EventsBroker ();
-			App.Current.DependencyRegistry = new Registry ("Dependencies");
+		public static void Initialize ()
+		{
+			VAS.App.Current = App.Current = new App ();
+			App.InitDependencies ();
+			App.Current.Config = new Config ();
+			App.InitConstants ();
+
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
-			App.Current.ControllerLocator = new ControllerLocator ();
-			App.Current.Config.CurrentDatabase = "longomatch";
-			App.Current.ProjectExtension = LMConstants.PROJECT_EXT;
-			;
+			App.Current.Dialogs = new Mock<IDialogs> ().Object;
+			var navigation = new Mock<INavigation> ();
+			navigation.Setup (x => x.LoadNavigationPanel (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
+			navigation.Setup (x => x.LoadModalPanel (It.IsAny<IPanel> (), It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
+			navigation.Setup (x => x.RemoveModalWindow (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));
+			App.Current.Navigation = navigation.Object;
+			App.Current.StateController.Register (HomeState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (NewProjectState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (TeamsManagerState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (PreferencesState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (ProjectsManagerState.NAME, () => CreateScreenState ());
+			App.Current.StateController.Register (OpenProjectState.NAME, () => CreateScreenState ());
+			App.Current.StateController.SetHomeTransition (HomeState.NAME, null);
+		}
+
+		static IScreenState CreateScreenState ()
+		{
+			var screenStateMock = new Mock<IScreenState> ();
+			screenStateMock.Setup (x => x.PreTransition (It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.PostTransition ()).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.Panel).Returns (new Mock<IPanel> ().Object);
+			return screenStateMock.Object;
 		}
 	}
 

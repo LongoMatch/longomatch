@@ -27,13 +27,12 @@ using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Services;
-using LMCommon = LongoMatch.Core.Common;
-using VAS.Core.Events;
 
 namespace Tests.Services
 {
@@ -98,7 +97,7 @@ namespace Tests.Services
 			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
 			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
 			mockList.Add (capturerBinMock);
-			player = new PlayerController (); 
+			player = new PlayerController ();
 			winMock.Setup (w => w.Capturer).Returns (capturerBinMock.Object);
 			winMock.Setup (w => w.Player).Returns (player);
 		}
@@ -195,9 +194,12 @@ namespace Tests.Services
 		[Test ()]
 		public void TestCaptureFinished ()
 		{
-			App.Current.EventsBroker.Subscribe<CaptureFinishedEvent> ((e) => {
+			List<string> transitions = new List<string> ();
+
+			App.Current.EventsBroker.Subscribe<NavigationEvent> ((obj) => {
+				transitions.Add (obj.Name);
 			});
-				
+
 			App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
 				new OpenNewProjectEvent {
 					Project = project,
@@ -215,7 +217,7 @@ namespace Tests.Services
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			capturerBinMock.ResetCalls ();
-			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
+			Assert.AreEqual (new List<string> { "Home" }, transitions);
 			gtkMock.ResetCalls ();
 			Utils.DeleteProject (project);
 
@@ -237,9 +239,9 @@ namespace Tests.Services
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			/* We are not prompted to quit the capture */
 			gtkMock.Verify (g => g.EndCapture (true), Times.Never ());
-			gtkMock.Verify (g => g.CloseProject (), Times.Once ());
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
+			Assert.AreEqual ("Home", App.Current.StateController.Current);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
@@ -309,9 +311,9 @@ namespace Tests.Services
 			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
 
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-				new  OpenProjectIDEvent { 
-					ProjectID = project.ID, 
-					Project = project 
+				new OpenProjectIDEvent {
+					ProjectID = project.ID,
+					Project = project
 				}
 			);
 

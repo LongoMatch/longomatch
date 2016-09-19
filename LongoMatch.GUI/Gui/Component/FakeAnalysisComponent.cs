@@ -32,8 +32,9 @@ using LMFilters = LongoMatch.Core.Filters;
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class FakeAnalysisComponent : Gtk.Bin,  IAnalysisWindow
+	public partial class FakeAnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
+		ProjectLongoMatch project;
 
 		public FakeAnalysisComponent ()
 		{
@@ -77,18 +78,16 @@ namespace LongoMatch.Gui.Component
 			throw new System.NotImplementedException ();
 		}
 
-		public string PanelName {
+		public string Title {
 			get {
-				return null;
-			}
-			set {
+				return project?.ShortDescription;
 			}
 		}
 
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			codingwidget1.SetProject ((LongoMatch.Core.Store.ProjectLongoMatch)project, projectType, 
-				(LMFilters.EventsFilter)filter);
+			this.project = (ProjectLongoMatch)project;
+			codingwidget1.SetProject (this.project, projectType, (LMFilters.EventsFilter)filter);
 		}
 
 		public void ReloadProject ()

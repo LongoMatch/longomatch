@@ -49,7 +49,7 @@ namespace Tests.Integration
 			drawingToolkitMock = new Mock<IDrawingToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			guiToolkitMock = new Mock<IGUIToolkit> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => 
+			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() =>
 				new Mock<IRenderingStateBar> ().Object
 			);
 		}
@@ -65,6 +65,7 @@ namespace Tests.Integration
 				Directory.Delete (tmpPath, true);
 			} catch {
 			}
+			SetupClass.Initialize ();
 		}
 
 		[Test]

@@ -49,7 +49,7 @@ namespace LongoMatch
 		[DllImport ("libX11", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int XInitThreads ();
 
-		public static void Main (string[] args)
+		public static void Main (string [] args)
 		{
 			// Replace the current synchronization context with a GTK synchronization context
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
@@ -78,6 +78,7 @@ namespace LongoMatch
 				App.Current.DrawingToolkit = new CairoBackend ();
 				App.Current.MultimediaToolkit = new MultimediaToolkit ();
 				App.Current.GUIToolkit = GUIToolkit.Instance;
+				App.Current.Navigation = GUIToolkit.Instance;
 				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
 				App.Current.Dialogs = VASUi.Dialogs.Instance;
 
@@ -106,13 +107,8 @@ namespace LongoMatch
 
 				splashScreen.Destroy ();
 				ConfigureOSXApp ();
-				foreach (IProjectExporter exporter in
-						 App.Current.DependencyRegistry.RetrieveAll<IProjectExporter> (InstanceType.Default)) {
-					(GUIToolkit.Instance.MainController as MainWindow).AddExportEntry (exporter.Description,
-						new Func<Project, bool, Task> (exporter.Export));
-
-				}
-				App.Current.GUIToolkit.Welcome ();
+				(GUIToolkit.Instance.MainController as MainWindow).Initialize ();
+				App.Current.StateController.SetHomeTransition ("Home", null);
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}

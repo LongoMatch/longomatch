@@ -22,37 +22,37 @@ using Gtk;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
+using LongoMatch.Services.State;
+using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.MVVMC;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
 using Misc = VAS.UI.Helpers.Misc;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel
+	[ViewAttribute (ProjectsManagerState.NAME)]
+	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel<SportsProjectsManagerVM>
 	{
-		public event BackEventHandle BackEvent;
-
-		ProjectLongoMatch openedProject, loadedProject;
+		SportsProjectsManagerVM viewModel;
+		ProjectLongoMatch loadedProject;
 		List<ProjectLongoMatch> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
 		IStorage DB;
 		IGUIToolkit gkit;
 		bool edited;
 
-		public ProjectsManagerPanel (ProjectLongoMatch openedProject)
+		public ProjectsManagerPanel ()
 		{
-			this.openedProject = openedProject;
 			this.DB = App.Current.DatabaseManager.ActiveDB;
 			this.gkit = App.Current.GUIToolkit;
 			this.Build ();
@@ -77,7 +77,6 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
 			projectlistwidget1.ProjectSelected += HandleProjectSelected;
-			projectlistwidget1.Fill (DB.RetrieveAll<ProjectLongoMatch> ().ToList ());
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
@@ -90,10 +89,10 @@ namespace LongoMatch.Gui.Panel
 			desctextview.Buffer.Changed += HandleChanged;
 
 			notebook1.Page = 0;
-			panelheader1.Title = Catalog.GetString ("PROJECTS MANAGER");
+			panelheader1.Title = Title;
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleBackClicked;
-			
+
 			projectlistwidget1.ViewMode = ProjectListViewMode.List;
 
 			// Only visible when multi camera is supported. Indeed periods can be edited in the timeline of the project.
@@ -102,11 +101,31 @@ namespace LongoMatch.Gui.Panel
 			SetStyle ();
 		}
 
-		public string PanelName {
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			base.OnDestroyed ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public string Title {
 			get {
-				return null;
+				return Catalog.GetString ("PROJECTS MANAGER");
 			}
+		}
+
+		public SportsProjectsManagerVM ViewModel {
 			set {
+				viewModel = value;
+				projectlistwidget1.Fill (viewModel.Model.ToList ());
+			}
+			get {
+				return viewModel;
 			}
 		}
 
@@ -120,11 +139,6 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public void Dispose ()
-		{
-			Destroy ();
-		}
-
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -132,13 +146,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new NotImplementedException ();
-		}
-
-		protected override void OnDestroyed ()
-		{
-			OnUnload ();
-			base.OnDestroyed ();
+			ViewModel = (SportsProjectsManagerVM)viewModel;
 		}
 
 		void SetStyle ()
@@ -181,7 +189,7 @@ namespace LongoMatch.Gui.Panel
 		void LoadProject (ProjectLongoMatch project)
 		{
 			ProjectDescription pd = project.Description;
-			
+
 			loadedProject = null;
 			gamedescriptionheader1.ProjectDescription = pd;
 			seasonentry.Text = pd.Season;
@@ -226,9 +234,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleBackClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == 0) {
-				if (BackEvent != null) {
-					BackEvent ();
-				}
+				App.Current.StateController.MoveBack ();
 			} else {
 				projectperiods1.Pause ();
 				/* FIXME: we don't support adding new cameras, so there is nothing
@@ -248,7 +254,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject == null)
 				return;
-				
+
 			if (sender == competitionentry) {
 				loadedProject.Description.Competition = (sender as Entry).Text;
 			} else if (sender == seasonentry) {
@@ -266,9 +272,9 @@ namespace LongoMatch.Gui.Panel
 			SaveLoadedProject (false);
 			if (project != null) {
 				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new  OpenProjectIDEvent { 
-						ProjectID = project.ID, 
-						Project = project 
+					new OpenProjectIDEvent {
+						ProjectID = project.ID,
+						Project = project
 					}
 				);
 			}
@@ -284,7 +290,7 @@ namespace LongoMatch.Gui.Panel
 			deletebutton.Sensitive = projects.Count != 0;
 			projectbox.Sensitive = projects.Count == 1;
 			resyncbutton.Sensitive = projects.Count == 1;
-			
+
 			selectedProjects = projects;
 			if (projects.Count == 1) {
 				try {
@@ -301,7 +307,7 @@ namespace LongoMatch.Gui.Panel
 			bool canNavigate = true;
 			if (!loadedProject.Description.FileSet.CheckFiles ()) {
 				// Show message in order to load video.
-				canNavigate = gkit.SelectMediaFiles (loadedProject.Description.FileSet);					
+				canNavigate = gkit.SelectMediaFiles (loadedProject.Description.FileSet);
 			}
 
 			if (canNavigate) {
@@ -321,10 +327,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				string filename = App.Current.Dialogs.SaveFile (
-					                  Catalog.GetString ("Export project"),
-					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-					                  App.Current.HomeDir, Constants.PROJECT_NAME,
-					                  new string[] { Constants.PROJECT_EXT });
+									  Catalog.GetString ("Export project"),
+									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
+									  App.Current.HomeDir, Constants.PROJECT_NAME,
+									  new string [] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 					Serializer.Instance.Save (loadedProject, filename);
@@ -347,17 +353,11 @@ namespace LongoMatch.Gui.Panel
 
 			if (selectedProjects == null)
 				return;
-				
+
 			deletedProjects = new List<ProjectLongoMatch> ();
 			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
-				if (openedProject != null && openedProject.ID == selectedProject.ID) {
-					Helpers.MessagesHelpers.WarningMessage (this,
-						Catalog.GetString ("This Project is actually in use.") + "\n" +
-						Catalog.GetString ("Close it first to allow its removal from the database"));
-					continue;
-				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-				             selectedProject.Description.Title;
+							 selectedProject.Description.Title;
 				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
@@ -386,9 +386,9 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new  OpenProjectIDEvent { 
-						ProjectID = loadedProject.ID, 
-						Project = loadedProject 
+					new OpenProjectIDEvent {
+						ProjectID = loadedProject.ID,
+						Project = loadedProject
 					}
 				);
 			}

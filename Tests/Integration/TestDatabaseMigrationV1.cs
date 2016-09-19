@@ -32,6 +32,12 @@ namespace Tests.Integration
 	[TestFixture]
 	public class TestDatabaseMigrationV1
 	{
+		[TearDown]
+		public void Reset ()
+		{
+			SetupClass.Initialize ();
+		}
+
 		[Test]
 		public void TestMigration ()
 		{

@@ -19,26 +19,22 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.MVVMC;
-using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	[ViewAttribute ("DashboardsManager")]
-	public partial class SportsTemplatesPanel : Gtk.Bin, IPanel, IView
+	[ViewAttribute (DashboardsManagerState.NAME)]
+	public partial class SportsTemplatesPanel : Gtk.Bin, IPanel
 	{
-		public event BackEventHandle BackEvent;
-
 		const int COL_DASHBOARD = 0;
 		const int COL_EDITABLE = 1;
 
@@ -51,12 +47,8 @@ namespace LongoMatch.Gui.Panel
 
 			// Assign images
 			panelheader1.ApplyVisible = false;
-			panelheader1.Title = Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
-			panelheader1.BackClicked += (sender, o) => {
-				ViewModel.Save (false);
-				if (BackEvent != null)
-					BackEvent ();
-			};
+			panelheader1.Title = Title;
+			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
 
 			templateimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-template-header", StyleConf.TemplatesHeaderIconSize);
 			categoryheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-category-header", StyleConf.TemplatesHeaderIconSize);
@@ -105,7 +97,7 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Clicked += (object sender, EventArgs e) =>
 				buttonswidget.AddButton ("Timer");
 
-			dashboardsStore = new ListStore (typeof(DashboardVM), typeof(bool));
+			dashboardsStore = new ListStore (typeof (DashboardVM), typeof (bool));
 
 			// Connect treeview with Model and configure
 			dashboardseditortreeview.Model = dashboardsStore;
@@ -118,9 +110,9 @@ namespace LongoMatch.Gui.Panel
 			dashboardseditortreeview.SearchColumn = COL_DASHBOARD;
 			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
-			
+
 			templatesvbox.WidthRequest = 160;
-			
+
 			buttonswidget.Sensitive = false;
 			buttonswidget.ButtonsVisible = false;
 			buttonswidget.Mode = DashboardMode.Edit;
@@ -140,11 +132,22 @@ namespace LongoMatch.Gui.Panel
 			editbuttonslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 		}
 
-		public string PanelName {
+		protected override void OnDestroyed ()
+		{
+			OnUnload ();
+			buttonswidget.Destroy ();
+			base.OnDestroyed ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public string Title {
 			get {
-				return null;
-			}
-			set {
+				return Catalog.GetString ("ANALYSIS DASHBOARDS MANAGER");
 			}
 		}
 
@@ -160,6 +163,9 @@ namespace LongoMatch.Gui.Panel
 				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
 				viewModel.PropertyChanged += HandleViewModelChanged;
+				deletetemplatebutton.Sensitive = viewModel.DeleteSensitive;
+				savetemplatebutton.Sensitive = viewModel.SaveSensitive;
+				exporttemplatebutton.Sensitive = viewModel.ExportSensitive;
 			}
 		}
 
@@ -173,11 +179,6 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public void Dispose ()
-		{
-			Destroy ();
-		}
-
 		public KeyContext GetKeyContext ()
 		{
 			return new KeyContext ();
@@ -186,13 +187,6 @@ namespace LongoMatch.Gui.Panel
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (DashboardsManagerVM)viewModel;
-		}
-
-		protected override void OnDestroyed ()
-		{
-			OnUnload ();
-			buttonswidget.Destroy ();
-			base.OnDestroyed ();
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
@@ -322,7 +316,7 @@ namespace LongoMatch.Gui.Panel
 				exporttemplatebutton.Sensitive = ViewModel.ExportSensitive;
 			} else if (e.PropertyName == "DeleteSensitive") {
 				deletetemplatebutton.Sensitive = ViewModel.DeleteSensitive;
-			}	
+			}
 		}
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)

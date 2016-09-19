@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using VAS.Core;
 using VAS.Core.Common;
@@ -45,13 +44,32 @@ namespace LongoMatch
 		public static void Init ()
 		{
 			App app = new App ();
-			VAS.App.Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
-			Load (app);
+			Current = app;
+			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
+			InitConstants ();
+			Load ();
 		}
 
-		protected static void Load (App app)
+		internal static void InitConstants ()
 		{
-			Current = app;
+			Current.Copyright = Constants.COPYRIGHT;
+			Current.License = Constants.LICENSE;
+			Current.SoftwareName = Constants.SOFTWARE_NAME;
+			Current.SoftwareIconName = Constants.LOGO_ICON;
+			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
+			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
+			Current.ProjectExtension = Constants.PROJECT_EXT;
+			Current.LowerRate = 1;
+			Current.UpperRate = 30;
+			Current.RatePageIncrement = 3;
+			Current.RateList = new List<double> { 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44,
+				0.48, 0.52, 0.56, 0.60, 0.64, 0.68, 0.72, 0.76, 0.80, 0.84, 0.88, 0.92, 0.96, 1, 2, 3, 4, 5
+			};
+			Current.DefaultRate = 25;
+		}
+
+		protected static void Load ()
+		{
 			if (File.Exists (Current.ConfigFile)) {
 				Log.Information ("Loading config from " + Current.ConfigFile);
 				try {
@@ -62,29 +80,13 @@ namespace LongoMatch
 				}
 			}
 
-			Current.Background = Resources.LoadImage (Constants.BACKGROUND);
-			Current.Copyright = Constants.COPYRIGHT;
-			Current.License = Constants.LICENSE;
-			Current.SoftwareName = Constants.SOFTWARE_NAME;
-			Current.SoftwareIconName = Constants.LOGO_ICON;
-			Current.LatestVersionURL = Constants.LATEST_VERSION_URL;
-			Current.DefaultDBName = Constants.DEFAULT_DB_NAME;
-			Current.ProjectExtension = Constants.PROJECT_EXT;
-
 			if (Current.Config == null) {
 				Log.Information ("Creating new config at " + Current.ConfigFile);
 				Current.Config = new Config ();
 				Current.Config.Save ();
 			}
-
+			Current.Background = Resources.LoadImage (Constants.BACKGROUND);
 			Current.Config.CurrentDatabase = Constants.DEFAULT_DB_NAME;
-			Current.LowerRate = 1;
-			Current.UpperRate = 30;
-			Current.RatePageIncrement = 3;
-			Current.RateList = new List<double> { 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44,
-				0.48, 0.52, 0.56, 0.60, 0.64, 0.68, 0.72, 0.76, 0.80, 0.84, 0.88, 0.92, 0.96, 1, 2, 3, 4, 5
-			};
-			Current.DefaultRate = 25;
 		}
 
 		Config config;

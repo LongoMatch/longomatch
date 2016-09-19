@@ -16,45 +16,39 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Gdk;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using Gtk;
-using LongoMatch.Core.Interfaces;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Gui.Dialog;
+using LongoMatch.Services.States;
+using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Handlers;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Serialization;
-using Constants = LongoMatch.Core.Common.Constants;
+using VAS.Core.MVVMC;
 using Helpers = VAS.UI.Helpers;
-using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
+	[ViewAttribute (TeamsManagerState.NAME)]
 	public partial class TeamsTemplatesPanel : Gtk.Bin, IPanel
 	{
-		public event BackEventHandle BackEvent;
-
-		const int COL_PIXBUF = 0;
-		const int COL_NAME = 1;
-		const int COL_TEAM = 2;
+		const int COL_TEAM = 0;
+		const int COL_EDITABLE = 1;
 
 		ListStore teamsStore;
-		SportsTeam loadedTeam;
-		ITeamTemplatesProvider provider;
-		TreeIter selectedIter;
-		List<SportsTeam> teams;
+		TeamsManagerVM viewModel;
 
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
-			provider = App.Current.TeamTemplatesProvider;
+
+			panelheader1.ApplyVisible = false;
+			panelheader1.Title = Title;
+			panelheader1.BackClicked += (sender, e) => App.Current.StateController.MoveBack ();
+
 			teamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-team-header", StyleConf.TemplatesHeaderIconSize);
 			playerheaderimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-player-header", StyleConf.TemplatesHeaderIconSize);
 			newteamimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-add", StyleConf.TemplatesIconSize);
@@ -80,9 +74,8 @@ namespace LongoMatch.Gui.Panel
 			deleteteambutton.Clicked += HandleDeleteTeamClicked;
 			saveteambutton.Entered += HandleEnterTeamButton;
 			saveteambutton.Left += HandleLeftTeamButton;
-			saveteambutton.Clicked += (s, e) => {
-				PromptSave (false);
-			};
+			saveteambutton.Clicked += HandleSaveTeamClicked;
+
 			newplayerbutton1.Entered += HandleEnterPlayerButton;
 			newplayerbutton1.Left += HandleLeftPlayerButton;
 			newplayerbutton1.Clicked += (object sender, EventArgs e) => {
@@ -94,53 +87,46 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(SportsTeam));
-			
+			teamsStore = new ListStore (typeof (TeamVM));
+
 			var cell = new CellRendererText ();
 			cell.Editable = true;
 			cell.Edited += HandleEdited;
 			teamseditortreeview.Model = teamsStore;
 			teamseditortreeview.HeadersVisible = false;
-			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", COL_PIXBUF);
-			teamseditortreeview.AppendColumn ("Text", cell, "text", COL_NAME);
-			teamseditortreeview.SearchColumn = COL_NAME;
+			teamseditortreeview.AppendColumn ("Icon", new CellRendererPixbuf (), RenderIcon);
+			teamseditortreeview.AppendColumn ("Text", cell, RenderTemplateName);
+			teamseditortreeview.SearchColumn = COL_TEAM;
 			teamseditortreeview.EnableGridLines = TreeViewGridLines.None;
 			teamseditortreeview.CursorChanged += HandleSelectionChanged;
-			
+
 			teamsvbox.WidthRequest = 280;
-			
-			teamtemplateeditor1.Visible = false;
-			newteambutton.Visible = true;
-			deleteteambutton.Visible = false;
-			
+
+			deleteteambutton.Sensitive = false;
+			exportteambutton.Sensitive = false;
+			saveteambutton.Sensitive = false;
 			teamtemplateeditor1.VisibleButtons = false;
 
-			panelheader1.ApplyVisible = false;
-			panelheader1.Title = Catalog.GetString ("TEAMS MANAGER");
-			panelheader1.BackClicked += (sender, o) => {
-				PromptSave (true);
-				if (BackEvent != null)
-					BackEvent ();
-			};
-			
 			editteamslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
 			editplayerslabel.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " 9"));
-
-			Load (null);
-		}
-
-		public string PanelName {
-			get {
-				return null;
-			}
-			set {
-			}
 		}
 
 		public override void Destroy ()
 		{
 			teamtemplateeditor1.Destroy ();
 			base.Destroy ();
+		}
+
+		public override void Dispose ()
+		{
+			Destroy ();
+			base.Dispose ();
+		}
+
+		public string Title {
+			get {
+				return Catalog.GetString ("TEAMS MANAGER");
+			}
 		}
 
 		public void OnLoad ()
@@ -153,9 +139,22 @@ namespace LongoMatch.Gui.Panel
 
 		}
 
-		public void Dispose ()
-		{
-			Destroy ();
+		public TeamsManagerVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				foreach (TeamVM team in viewModel.ViewModels) {
+					Add (team);
+				}
+				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
+				viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
+				viewModel.PropertyChanged += HandleViewModelChanged;
+				deleteteambutton.Sensitive = viewModel.DeleteSensitive;
+				saveteambutton.Sensitive = viewModel.SaveSensitive;
+				exportteambutton.Sensitive = viewModel.ExportSensitive;
+			}
 		}
 
 		public KeyContext GetKeyContext ()
@@ -165,7 +164,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			throw new NotImplementedException ();
+			ViewModel = (TeamsManagerVM)viewModel;
 		}
 
 		protected override void OnDestroyed ()
@@ -174,50 +173,46 @@ namespace LongoMatch.Gui.Panel
 			base.OnDestroyed ();
 		}
 
-		void Load (string templateName)
+		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			TreeIter templateIter = TreeIter.Zero;
-			bool first = true;
+			TeamVM teamVM = (TeamVM)model.GetValue (iter, COL_TEAM);
+			(cell as CellRendererPixbuf).Pixbuf = teamVM.Icon.Value;
+		}
 
-			teams = new List<SportsTeam> ();
-			teamsStore.Clear ();
-			foreach (SportsTeam team in provider.Templates) {
-				Pixbuf img;
-				TreeIter iter;
-				string name = team.Name;
+		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
+		{
+			TeamVM teamVM = (TeamVM)model.GetValue (iter, COL_TEAM);
+			(cell as CellRendererText).Text = teamVM.Name;
+		}
 
-				if (team.Shield != null) {
-					img = team.Shield.Scale (StyleConf.TeamsShieldIconSize,
-						StyleConf.TeamsShieldIconSize).Value;
-				} else {
-					img = Helpers.Misc.LoadIcon ("longomatch-default-shield",
-						StyleConf.TeamsShieldIconSize);
+		void Add (TeamVM teamVM)
+		{
+			teamsStore.AppendValues (teamVM, teamVM.Editable);
+		}
+
+		void Remove (TeamVM teamVM)
+		{
+			TreeIter iter;
+			teamsStore.GetIterFirst (out iter);
+			while (teamsStore.IterIsValid (iter)) {
+				if (teamsStore.GetValue (iter, COL_TEAM) == teamVM) {
+					teamsStore.Remove (ref iter);
+					break;
 				}
-				if (team.Static) {
-					name += " (" + Catalog.GetString ("System") + ")";
-				} else {
-					teams.Add (team);
-				}
-				iter = teamsStore.AppendValues (img, team.Name, team);
-				if (first || team.Name == templateName) {
-					templateIter = iter;
-				}
-				first = false;
-			}
-			if (teamsStore.IterIsValid (templateIter)) {
-				teamseditortreeview.Selection.SelectIter (templateIter);
-				HandleSelectionChanged (null, null);
+				teamsStore.IterNext (ref iter);
 			}
 		}
 
-		bool SaveTemplate (SportsTeam template)
+		void Select (TeamVM teamVM)
 		{
-			try {
-				provider.Save (template);
-				return true;
-			} catch (InvalidTemplateFilenameException ex) {
-				App.Current.Dialogs.ErrorMessage (ex.Message, this);
-				return false;
+			TreeIter iter;
+			teamsStore.GetIterFirst (out iter);
+			while (teamsStore.IterIsValid (iter)) {
+				if ((teamsStore.GetValue (iter, COL_TEAM) as TeamVM).Model.Equals (teamVM.Model)) {
+					teamseditortreeview.Selection.SelectIter (iter);
+					break;
+				}
+				teamsStore.IterNext (ref iter);
 			}
 		}
 
@@ -255,283 +250,85 @@ namespace LongoMatch.Gui.Panel
 			editplayerslabel.Markup = Catalog.GetString ("Manage players");
 		}
 
-		void SaveLoadedTeam ()
+		void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
-			if (loadedTeam == null)
-				return;
-
-			if (!SaveTemplate (loadedTeam)) {
-				return;
+			switch (e.Action) {
+			case NotifyCollectionChangedAction.Add:
+				foreach (TeamVM teamVM in e.NewItems) {
+					Add (teamVM);
+				}
+				break;
+			case NotifyCollectionChangedAction.Remove:
+				foreach (TeamVM teamVM in e.OldItems) {
+					Remove (teamVM);
+				}
+				break;
+			case NotifyCollectionChangedAction.Replace:
+				QueueDraw ();
+				break;
 			}
-			/* Update the shield and the team in our model */
-			Pixbuf shield = loadedTeam.Shield.Scale (StyleConf.TeamsShieldIconSize,
-				                StyleConf.TeamsShieldIconSize).Value;
-			teamseditortreeview.Model.SetValue (selectedIter, COL_PIXBUF, shield);
-			teamseditortreeview.Model.SetValue (selectedIter, COL_TEAM, loadedTeam);
-			teamtemplateeditor1.Edited = false;
-			//Replace the old team with the new one with the new attributes
-			teams.RemoveAll (t => t.ID == loadedTeam.ID);
-			teams.Add (loadedTeam);
-		}
-
-		void SaveStatic ()
-		{
-			string msg = Catalog.GetString ("System teams can't be edited, do you want to create a copy?");
-			if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-				string newName;
-				while (true) {
-					newName = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Name:"), null,
-						loadedTeam.Name + "_copy", this).Result;
-					if (newName == null)
-						break;
-					if (teams.Any (t => t.Name == newName)) {
-						msg = Catalog.GetString ("A team with the same name already exists"); 
-						App.Current.Dialogs.ErrorMessage (msg, this);
-					} else {
-						break;
-					}
-				}
-				if (newName == null) {
-					return;
-				}
-				SportsTeam newTeam = loadedTeam.Clone ();
-				newTeam.ID = Guid.NewGuid ();
-				newTeam.Name = newName;
-				newTeam.Static = false;
-				if (SaveTemplate (newTeam)) {
-					Load (newTeam.Name);
-				}
-			}
-		}
-
-		void PromptSave (bool prompt)
-		{
-			if (loadedTeam != null && teamtemplateeditor1.Edited) {
-				if (loadedTeam.Static) {
-					if (!prompt) {
-						SaveStatic ();
-					}
-				} else if (prompt) {
-					string msg = Catalog.GetString ("Do you want to save the current template");
-					if (App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-						SaveLoadedTeam ();
-					}
-				} else {
-					SaveLoadedTeam ();
-				}
-			}
-		}
-
-		void LoadTeam (SportsTeam team, TreeIter selectedIter)
-		{
-			PromptSave (true);
-
-			this.selectedIter = selectedIter;
-			loadedTeam = team;
-			team.TemplateEditorMode = true;
-			teamtemplateeditor1.Team = loadedTeam;
 		}
 
 		void HandleSelectionChanged (object sender, EventArgs e)
 		{
-			SportsTeam selected;
 			TreeIter iter;
-
 			teamseditortreeview.Selection.GetSelected (out iter);
-			try {
-				SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
-				team.Load ();
-				selected = team.Clone ();
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Could not load team"));
-				return;
-			}
-			deleteteambutton.Visible = selected != null;
-			teamtemplateeditor1.Visible = selected != null;
-			if (selected != null) {
-				LoadTeam (selected, iter);
+			ViewModel.Select (teamsStore.GetValue (iter, COL_TEAM) as TeamVM);
+		}
+
+		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Model") {
+				// FIXME: Remove this when the DashboardWidget is ported to the new MVVMC model
+				teamtemplateeditor1.Team = ViewModel.LoadedTemplate.Model;
+				teamtemplateeditor1.Sensitive = true;
+				Select (ViewModel.LoadedTemplate);
 			}
 		}
 
-		void HandleImportTeamClicked (object sender, EventArgs e)
+		void HandleViewModelChanged (object sender, PropertyChangedEventArgs e)
 		{
-			string fileName, filterName;
-			string[] extensions;
-
-			Log.Debug ("Importing team");
-			filterName = Catalog.GetString ("Team files");
-			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
-			/* Show a file chooser dialog to select the file to import */
-			fileName = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import team"), null, App.Current.HomeDir,
-				filterName, extensions);
-
-			if (fileName == null)
-				return;
-
-			try {
-				SportsTeam newTeam = provider.LoadFile (fileName);
-
-				if (newTeam != null) {
-					bool abort = false;
-
-					while (provider.Exists (newTeam.Name) && !abort) {
-						string name = App.Current.Dialogs.QueryMessage (Catalog.GetString ("Team name:"),
-							              Catalog.GetString ("Name conflict"), newTeam.Name + "#").Result;
-						if (name == null) {
-							abort = true;
-						} else {
-							newTeam.Name = name;
-						}
-					}
-
-					if (!abort) {
-						Pixbuf img;
-
-						provider.Save (newTeam);
-						if (newTeam.Shield != null) {
-							img = newTeam.Shield.Value;
-						} else {
-							img = Helpers.Misc.LoadIcon ("longomatch-default-shield", StyleConf.TeamsShieldIconSize);
-						}
-
-						teamsStore.AppendValues (img, newTeam.Name, newTeam);
-						Load (newTeam.Name);
-					}
-				}
-			} catch (Exception ex) {
-				App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error importing team:") +
-				"\n" + ex.Message);
-				Log.Exception (ex);
-				return;
+			if (e.PropertyName == "SaveSensitive") {
+				saveteambutton.Sensitive = ViewModel.SaveSensitive;
+			} else if (e.PropertyName == "ExportSensitive") {
+				exportteambutton.Sensitive = ViewModel.ExportSensitive;
+			} else if (e.PropertyName == "DeleteSensitive") {
+				deleteteambutton.Sensitive = ViewModel.DeleteSensitive;
 			}
+		}
+
+		void HandleSaveTeamClicked (object sender, EventArgs e)
+		{
+			ViewModel.Save (false);
 		}
 
 		void HandleDeleteTeamClicked (object sender, EventArgs e)
 		{
-			if (loadedTeam != null) {
-				if (loadedTeam.Static) {
-					string msg = Catalog.GetString ("System teams can't be deleted");
-					Helpers.MessagesHelpers.WarningMessage (this, msg);
-					return;
-				} else {
-					string msg = Catalog.GetString ("Do you really want to delete the template: ") + loadedTeam.Name;
-					if (Helpers.MessagesHelpers.QuestionMessage (this, msg, null)) {
-						provider.Delete (loadedTeam);
-						teamsStore.Remove (ref selectedIter);
-						teams.Remove (loadedTeam);
-						selectedIter = TreeIter.Zero;
-						teamseditortreeview.Selection.SelectPath (new TreePath ("0"));
-						HandleSelectionChanged (null, null);
-					}
-				}
-			}
+			ViewModel.Delete ();
 		}
 
-		void HandleNewTeamClicked (object sender, EventArgs e)
+		void HandleImportTeamClicked (object sender, EventArgs e)
 		{
-			bool create = false;
-			SportsTeam auxdelete = null;
-			
-			EntryDialog dialog = new EntryDialog (Toplevel as Gtk.Window);
-			dialog.ShowCount = true;
-			dialog.Title = dialog.Text = Catalog.GetString ("New team");
-			dialog.SelectText ();
-			dialog.AvailableTemplates = teams.Select (t => t.Name).ToList ();
-			
-			while (dialog.Run () == (int)ResponseType.Ok) {
-				if (dialog.Text == "") {
-					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template name is empty."));
-					continue;
-				} else if (dialog.Text == "default") {
-					Helpers.MessagesHelpers.ErrorMessage (dialog, Catalog.GetString ("The template can't be named 'default'."));
-					continue;
-				} else if (provider.Exists (dialog.Text)) {
-					var msg = Catalog.GetString ("The template already exists. Do you want to overwrite it?");
-					if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
-						create = true;
-						auxdelete = teams.FirstOrDefault (t => t.Name == dialog.Text);
-						break;
-					}
-				} else {
-					create = true;
-					break;
-				}
-			}
-			
-			if (create) {
-				if (dialog.SelectedTemplate != null) {
-					provider.Copy (teams.FirstOrDefault (t => t.Name == dialog.SelectedTemplate), dialog.Text);
-				} else {
-					SportsTeam team;
-					team = SportsTeam.DefaultTemplate (dialog.Count);
-					team.TeamName = dialog.Text;
-					team.Name = dialog.Text;
-					if (!SaveTemplate (team)) {
-						dialog.Destroy ();
-						return;
-					}
-				}
-				if (auxdelete != null) {
-					provider.Delete (auxdelete);
-				}
-				Load (dialog.Text);
-			}
-			dialog.Destroy ();
+			ViewModel.Import ();
 		}
 
 		void HandleExportTeamClicked (object sender, EventArgs e)
 		{
-			string fileName, filterName;
-			string[] extensions;
+			ViewModel.Export ();
+		}
 
-			Log.Debug ("Exporting team");
-			filterName = Catalog.GetString ("Team files");
-			extensions = new [] { "*" + Constants.TEAMS_TEMPLATE_EXT };
-			/* Show a file chooser dialog to select the file to export */
-			fileName = App.Current.Dialogs.SaveFile (Catalog.GetString ("Export team"),
-				System.IO.Path.ChangeExtension (loadedTeam.Name, Constants.TEAMS_TEMPLATE_EXT), App.Current.HomeDir,
-				filterName, extensions);
-
-			if (fileName != null) {
-				bool succeeded = true;
-				fileName = System.IO.Path.ChangeExtension (fileName, Constants.TEAMS_TEMPLATE_EXT);
-				if (System.IO.File.Exists (fileName)) {
-					string msg = Catalog.GetString ("A file with the same name already exists, do you want to overwrite it?");
-					succeeded = App.Current.Dialogs.QuestionMessage (msg, null).Result;
-				}
-
-				if (succeeded) {
-					Serializer.Instance.Save (loadedTeam, fileName);
-					string msg = Catalog.GetString ("Team exported correctly");
-					App.Current.Dialogs.InfoMessage (msg);
-				}
-			}
-
+		void HandleNewTeamClicked (object sender, EventArgs e)
+		{
+			ViewModel.New ();
 		}
 
 		void HandleEdited (object o, EditedArgs args)
 		{
 			TreeIter iter;
 			teamsStore.GetIter (out iter, new TreePath (args.Path));
- 
-			SportsTeam team = teamsStore.GetValue (iter, COL_TEAM) as SportsTeam;
-			if (team.Name != args.NewText) {
-				if (teams.Any (t => t.Name == args.NewText)) {
-					App.Current.Dialogs.ErrorMessage (
-						Catalog.GetString ("A team with the same name already exists"), this);
-					args.RetVal = false;
-				} else {
-					try {
-						team.Name = args.NewText;
-						provider.Save (team);
-						teamsStore.SetValue (iter, COL_NAME, team.Name);
-					} catch (Exception ex) {
-						App.Current.Dialogs.ErrorMessage (ex.Message);
-					}
-				}
-			}
+			var teamVM = teamsStore.GetValue (iter, COL_TEAM) as TeamVM;
+			ViewModel.ChangeName (teamVM, args.NewText);
+			QueueDraw ();
 		}
 	}
 }
-

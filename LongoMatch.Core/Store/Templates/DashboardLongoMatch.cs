@@ -147,8 +147,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 			return newDashboard;
 		}
-
-
 	}
 }
 
