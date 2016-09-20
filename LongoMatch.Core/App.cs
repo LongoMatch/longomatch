@@ -39,12 +39,18 @@ namespace LongoMatch
 		public ITeamTemplatesProvider TeamTemplatesProvider;
 		public ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 
-		public static App Current { get; set; }
+		new public static App Current {
+			get {
+				return (App)VAS.App.Current;
+			}
+			set {
+				VAS.App.Current = value;
+			}
+		}
 
 		public static void Init ()
 		{
 			App app = new App ();
-			Current = app;
 			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
 			InitConstants ();
 			Load ();
