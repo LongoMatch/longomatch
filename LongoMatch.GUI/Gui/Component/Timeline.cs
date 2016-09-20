@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override VASDrawing.Widgets.PlaysTimeline createPlaysTimeline ()
 		{
-			return new PlaysTimeline (new WidgetWrapper (getTimelinearea ()), Player);
+			return new PlaysTimeline (new WidgetWrapper (TimelineArea), Player);
 		}
 
 		protected override VASDrawing.Widgets.TimelineLabels createTimelineLabels ()
