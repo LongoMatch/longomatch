@@ -92,12 +92,8 @@ PKG_CHECK_MODULES([GLIBSHARP], [glib-sharp-2.0])
 AC_SUBST(GLIBSHARP_LIBS)
 PKG_CHECK_MODULES([GTKSHARP], [gtk-sharp-2.0])
 AC_SUBST(GTKSHARP_LIBS)
-PKG_CHECK_MODULES([DB4O], [db4o],  [HAVE_DB4O=1], [HAVE_DB4O=0])
-AC_SUBST(DB4O_LIBS)
 PKG_CHECK_MODULES([MONO_ADDINS], [mono-addins])
 AC_SUBST(MONO_ADDINS_LIBS)
-
-AM_CONDITIONAL(WITH_MIGRATION_TOOL, [test "$HAVE_DB4O" -eq 1])
 
 AC_MSG_CHECKING([for the OS type])
 ostype=""
@@ -149,7 +145,6 @@ LongoMatch.Addins/Makefile
 LongoMatch.DB/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Drawing/Makefile
-LongoMatch.Migration/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile
 LongoMatch.Plugins.GStreamer/Makefile
