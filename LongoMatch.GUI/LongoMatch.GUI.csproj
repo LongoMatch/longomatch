@@ -187,6 +187,8 @@
     <Compile Include="Gui\Component\Timeline.cs" />
     <Compile Include="Gui\Menu\PeriodsMenu.cs" />
     <Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
+    <Compile Include="Gui\Menu\EventTypeMenu.cs" />
+    <Compile Include="Gui\Menu\PlayerMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
