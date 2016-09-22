@@ -300,16 +300,13 @@ namespace LongoMatch.Gui
 				App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
-				App.Current.StateController.EmptyStateStack ();
-				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null);
+				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null, true);
 			};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {
-				App.Current.StateController.EmptyStateStack ();
-				App.Current.StateController.MoveTo (TeamsManagerState.NAME, null);
+				App.Current.StateController.MoveTo (TeamsManagerState.NAME, null, true);
 			};
 			ProjectsManagerAction.Activated += (o, e) => {
-				App.Current.StateController.EmptyStateStack ();
-				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null);
+				App.Current.StateController.MoveTo (ProjectsManagerState.NAME, null, true);
 			};
 			DatabasesManagerAction.Activated += (o, e) => {
 				App.Current.EventsBroker.Publish<ManageDatabasesEvent> (new ManageDatabasesEvent ());
@@ -334,12 +331,10 @@ namespace LongoMatch.Gui
 						ProjectType = projectType
 					}
 				);
-				App.Current.StateController.EmptyStateStack ();
-				App.Current.StateController.MoveTo (OpenProjectState.NAME, null);
+				App.Current.StateController.MoveTo (OpenProjectState.NAME, null, true);
 			};
 			NewPojectAction.Activated += (sender, e) => {
-				App.Current.StateController.EmptyStateStack ();
-				App.Current.StateController.MoveTo (NewProjectState.NAME, null);
+				App.Current.StateController.MoveTo (NewProjectState.NAME, null, true);
 			};
 			ImportProjectAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
