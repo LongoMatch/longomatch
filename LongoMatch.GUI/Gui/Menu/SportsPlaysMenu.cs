@@ -87,13 +87,10 @@ namespace LongoMatch.Gui.Menus
 				snapshot.Visible = moveCat.Visible = drawings.Visible =
 					addPLN.Visible = render.Visible = duplicate.Visible = false;
 			} else {
-				edit.Visible = editableName && plays.Count () == 1;
-				snapshot.Visible = plays.Count () == 1;
-				moveCat.Visible = plays.Count () == 1 && eventTypes != null;
-				drawings.Visible = plays.Count () == 1 && plays.FirstOrDefault ().Drawings.Count > 0;
-				del.Visible = plays.Count () > 0;
-				addPLN.Visible = plays.Count () > 0;
-				duplicate.Visible = plays.Count () > 0;
+				edit.Visible = editableName && this.plays.Count == 1;
+				snapshot.Visible = this.plays.Count == 1;
+				drawings.Visible = this.plays.Count == 1 && this.plays.FirstOrDefault ().Drawings.Count > 0;
+				moveCat.Visible = del.Visible = addPLN.Visible = duplicate.Visible = this.plays.Any ();
 			}
 
 			MenuHelpers.FillExportToVideoFileMenu (render, project, plays);
@@ -108,14 +105,14 @@ namespace LongoMatch.Gui.Menus
 			if (moveCat.Visible) {
 				Menu catMenu = new Menu ();
 				foreach (EventType c in eventTypes) {
-					if (plays.FirstOrDefault ().EventType == c)
+					if (plays.Any (p => p.EventType == c))
 						continue;
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
 					item.Activated += (sender, e) => {
 						App.Current.EventsBroker.Publish<MoveToEventTypeEvent> (
 							new MoveToEventTypeEvent {
-								TimelineEvent = plays.FirstOrDefault () as TimelineEventLongoMatch,
+								TimelineEvents = plays.ToList (),
 								EventType = c
 							}
 						);
