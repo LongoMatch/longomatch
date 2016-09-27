@@ -165,6 +165,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			tk.FillColor = Color.White;
 			tk.StrokeColor = Color.White;
+			tk.FontAlignment = FontAlignment.Center;
 			tk.FontWeight = FontWeight.Normal;
 			if (Player.Number >= 100) {
 				tk.FontSize = 12;
