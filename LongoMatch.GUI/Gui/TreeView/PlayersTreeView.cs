@@ -32,15 +32,12 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
 		TreePath pathClicked;
-		Menu playerMenu;
-		MenuItem addToPlaylistMenu;
+		PlayerMenu playerMenu;
 
 		public PlayersTreeView ()
 		{
 			Team = TeamType.LOCAL;
-			playerMenu = new Menu ();
-			addToPlaylistMenu = new MenuItem ("");
-			playerMenu.Add (addToPlaylistMenu);
+			playerMenu = new PlayerMenu ();
 		}
 
 		public TeamType Team {
@@ -48,13 +45,10 @@ namespace LongoMatch.Gui.Component
 			get;
 		}
 
-		void ShowPlayerMenu (TreePath[] paths)
+		void ShowPlayerMenu (TreePath [] paths)
 		{
 			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
-			if (events.Count > 0) {
-				SportsPlaysMenu.FillAddToPlaylistMenu (addToPlaylistMenu, Project, events);
-				playerMenu.Popup ();
-			}
+			playerMenu.ShowMenu (Project, events);
 		}
 
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
@@ -102,7 +96,7 @@ namespace LongoMatch.Gui.Component
 
 		override protected bool OnButtonPressEvent (Gdk.EventButton evnt)
 		{
-			TreePath[] paths = Selection.GetSelectedRows ();
+			TreePath [] paths = Selection.GetSelectedRows ();
 
 			if (Misc.RightButtonClicked (evnt)) {
 				// We don't want to unselect the play when several
@@ -132,7 +126,7 @@ namespace LongoMatch.Gui.Component
 
 		override protected bool SelectFunction (TreeSelection selection, TreeModel model, TreePath path, bool selected)
 		{
-			TreePath[] selectedRows;
+			TreePath [] selectedRows;
 
 			selectedRows = selection.GetSelectedRows ();
 			if (!selected && selectedRows.Length > 0) {
