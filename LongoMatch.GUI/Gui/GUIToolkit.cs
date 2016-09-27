@@ -82,19 +82,26 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public Task<bool> LoadNavigationPanel (IPanel panel)
+		public Task<bool> Push (IPanel panel)
 		{
 			bool result = MainWindow.SetPanel (panel);
 			return AsyncHelpers.Return (result);
 		}
 
-		public Task LoadModalPanel (IPanel panel, IPanel parent)
+		public Task<bool> Pop (IPanel panel)
+		{
+			// In Gtk+ poping a panel is equivalent to replacing the current panel with the previous panel
+			// in the stack
+			return Push (panel);
+		}
+
+		public Task PushModal (IPanel panel, IPanel parent)
 		{
 			ShowModalWindow (panel, parent);
 			return AsyncHelpers.Return ();
 		}
 
-		public Task RemoveModalWindow (IPanel panel)
+		public Task PopModal (IPanel panel)
 		{
 			RemoveModalPanelAndWindow (panel);
 			return AsyncHelpers.Return ();
