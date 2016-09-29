@@ -34,6 +34,10 @@ for i in `git diff --cached --name-only --diff-filter=A|grep ".cs$"`;do
         if [[ ! "$ret" ]];then
                 echo "$i not in POTFILES.in. Adding it automatically"
                 echo "$i" >> po/POTFILES.in
+                header=$(head -n 1 po/POTFILES.in)
+                sorted_potfiles=$(tail -n +2 po/POTFILES.in | sort)
+                echo "$header" > po/POTFILES.in
+                echo "$sorted_potfiles" >> po/POTFILES.in
         fi
 done
 git add po/POTFILES.in
