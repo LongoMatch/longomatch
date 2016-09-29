@@ -123,7 +123,7 @@ namespace LongoMatch.Gui
 		public bool SetPanel (IPanel panel)
 		{
 			if (panel == null) {
-				App.Current.StateController.MoveToHome ();
+				return App.Current.StateController.MoveToHome ().Result;
 			}
 
 			if (currentPanel != null) {
