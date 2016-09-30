@@ -180,7 +180,7 @@ namespace Tests.DB
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
-			Assert.AreEqual (16, db.DocumentCount);
+			Assert.AreEqual (17, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (dashboard.ID.ToString ()));
 			Dashboard dashboard2 = storage.Retrieve<Dashboard> (dashboard.ID);
 			Assert.IsNotNull (dashboard2);
@@ -194,7 +194,7 @@ namespace Tests.DB
 			Assert.AreEqual (16, dashboard2.Image.Width); 
 			Assert.AreEqual (16, dashboard2.Image.Height);
 			storage.Delete (dashboard);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]
@@ -207,7 +207,7 @@ namespace Tests.DB
 			};
 			player1.Photo = Utils.LoadImageFromFile ();
 			storage.Store (player1);
-			Assert.AreEqual (1, db.DocumentCount);
+			Assert.AreEqual (2, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (player1.ID.ToString ()));
 			PlayerLongoMatch player2 = storage.Retrieve<PlayerLongoMatch> (player1.ID);
 			Assert.AreEqual (player1.ID, player2.ID);
@@ -215,7 +215,7 @@ namespace Tests.DB
 			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
 			Assert.IsNotNull (player2.DocumentID);
 			storage.Delete (player1);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]
@@ -223,13 +223,13 @@ namespace Tests.DB
 		{
 			SportsTeam team1 = SportsTeam.DefaultTemplate (10);
 			storage.Store<SportsTeam> (team1);
-			Assert.AreEqual (11, db.DocumentCount);
+			Assert.AreEqual (12, db.DocumentCount);
 			SportsTeam team2 = storage.Retrieve<SportsTeam> (team1.ID);
 			Assert.AreEqual (team1.ID, team2.ID);
 			Assert.AreEqual (team1.List.Count, team2.List.Count);
 			Assert.IsNotNull (team2.DocumentID);
 			storage.Delete (team1);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]
@@ -266,11 +266,11 @@ namespace Tests.DB
 			Assert.IsNotNull (evt2.DocumentID);
 
 			storage.Delete (evt);
-			Assert.AreEqual (2, db.DocumentCount);
+			Assert.AreEqual (3, db.DocumentCount);
 			storage.Delete (p);
-			Assert.AreEqual (1, db.DocumentCount);
+			Assert.AreEqual (2, db.DocumentCount);
 			storage.Delete (evtType);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]
@@ -290,17 +290,17 @@ namespace Tests.DB
 			p.AddEvent (new TimelineEventLongoMatch ());
 
 			storage.Store<ProjectLongoMatch> (p);
-			Assert.AreEqual (44, db.DocumentCount);
+			Assert.AreEqual (45, db.DocumentCount);
 
 			p = storage.RetrieveAll<ProjectLongoMatch> ().First ();
 			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
 			Assert.IsTrue (Object.ReferenceEquals (p.Description.FileSet, p.Timeline [0].FileSet));
 			storage.Store (p);
-			Assert.AreEqual (44, db.DocumentCount);
+			Assert.AreEqual (45, db.DocumentCount);
 
 			storage.Delete (p);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 
@@ -330,9 +330,9 @@ namespace Tests.DB
 			}
 
 			storage.Store<ProjectLongoMatch> (p);
-			Assert.AreEqual (53, db.DocumentCount);
+			Assert.AreEqual (54, db.DocumentCount);
 			storage.Store<ProjectLongoMatch> (p);
-			Assert.AreEqual (53, db.DocumentCount);
+			Assert.AreEqual (54, db.DocumentCount);
 
 			ProjectLongoMatch p2 = storage.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
@@ -342,7 +342,7 @@ namespace Tests.DB
 			Assert.IsNotNull (p2.DocumentID);
 
 			storage.Delete (p);
-			Assert.AreEqual (0, db.DocumentCount);
+			Assert.AreEqual (1, db.DocumentCount);
 		}
 
 		[Test ()]
