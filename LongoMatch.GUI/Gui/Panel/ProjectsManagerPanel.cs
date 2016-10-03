@@ -277,6 +277,7 @@ namespace LongoMatch.Gui.Panel
 						Project = project
 					}
 				);
+				projectperiods1.Destroy ();
 			}
 		}
 
@@ -391,6 +392,7 @@ namespace LongoMatch.Gui.Panel
 						Project = loadedProject
 					}
 				);
+				projectperiods1.Destroy ();
 			}
 		}
 	}

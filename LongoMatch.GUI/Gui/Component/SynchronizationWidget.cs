@@ -189,6 +189,8 @@ namespace LongoMatch.Gui.Component
 			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
 			App.Current.EventsBroker.Unsubscribe<KeyPressedEvent> (HandleKeyPressed);
 
+			mainCamPlayerVM.Dispose ();
+			secCamPlayerVM.Dispose ();
 			main_cam_playerbin.Destroy ();
 			sec_cam_playerbin.Destroy ();
 
