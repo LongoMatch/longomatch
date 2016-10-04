@@ -291,12 +291,12 @@ namespace LongoMatch.Drawing
 					context, backgroundArea, cellArea);
 			} else if (item is SubstitutionEvent) {
 				SubstitutionEvent s = item as SubstitutionEvent;
-				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Selected, isExpanded, tk, context,
+				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
 				TimelineEventLongoMatch p = item as TimelineEventLongoMatch;
 				// always add local first.
-				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Selected, p.Description, count, isExpanded, tk,
+				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
 				RenderPlayer (item as PlayerLongoMatch, count, isExpanded, tk, context, backgroundArea, cellArea);
