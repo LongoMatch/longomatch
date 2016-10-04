@@ -277,6 +277,12 @@ namespace LongoMatch.Gui.Panel
 						Project = project
 					}
 				);
+				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
+				// player controller that is inside that view. becuase the open project is not
+				// used with the new Navigation, we should then replace this open method to a 
+				// new navigation state and then in the unloads methods of Views we should
+				// Unsuscribe to events.
+				projectperiods1.Destroy ();
 			}
 		}
 
@@ -327,10 +333,10 @@ namespace LongoMatch.Gui.Panel
 		{
 			if (loadedProject != null) {
 				string filename = App.Current.Dialogs.SaveFile (
-									  Catalog.GetString ("Export project"),
-									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-									  App.Current.HomeDir, Constants.PROJECT_NAME,
-									  new string [] { Constants.PROJECT_EXT });
+					                  Catalog.GetString ("Export project"),
+					                  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
+					                  App.Current.HomeDir, Constants.PROJECT_NAME,
+					                  new string [] { Constants.PROJECT_EXT });
 				if (filename != null) {
 					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 					Serializer.Instance.Save (loadedProject, filename);
@@ -357,7 +363,7 @@ namespace LongoMatch.Gui.Panel
 			deletedProjects = new List<ProjectLongoMatch> ();
 			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-							 selectedProject.Description.Title;
+				             selectedProject.Description.Title;
 				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
 					// Unload first
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
@@ -391,6 +397,12 @@ namespace LongoMatch.Gui.Panel
 						Project = loadedProject
 					}
 				);
+				//FIXME: SynchronizationWidget is destroyed because we need to dispose the
+				// player controller that is inside that view. becuase the open project is not
+				// used with the new Navigation, we should then replace this open method to a 
+				// new navigation state and then in the unloads methods of Views we should
+				// Unsuscribe to events.
+				projectperiods1.Destroy ();
 			}
 		}
 	}

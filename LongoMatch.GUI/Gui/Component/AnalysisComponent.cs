@@ -27,6 +27,7 @@ using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Store;
+using VAS.Services.ViewModel;
 using VAS.UI.Helpers;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMFilters = LongoMatch.Core.Filters;
@@ -47,7 +48,9 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 			detachedPlayer = false;
-			codingwidget.Player = playercapturer.Player;
+			//FIXME: Just a Temporal fix, until AnalysisComponent and codingwidget uses the playerVM.
+			playercapturer.SetViewModel (new PlayerVM ());
+			codingwidget.Player = playercapturer.ViewModel.Player;
 			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
 		}
@@ -117,7 +120,8 @@ namespace LongoMatch.Gui.Component
 
 		public IPlayerController Player {
 			get {
-				return playercapturer.Player;
+				//FIXME: Just a Temporal fix, until AnalysisComponent uses the playerVM.
+				return playercapturer.ViewModel.Player;
 			}
 		}
 

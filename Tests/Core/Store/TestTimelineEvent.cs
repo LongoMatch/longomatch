@@ -38,7 +38,7 @@ namespace Tests.Core.Store
 			
 			evt.EventType = evtType1;
 			evt.Notes = "notes";
-			evt.Selected = true;
+			evt.Playing = true;
 			evt.Teams.Add (new SportsTeam ());
 			evt.FieldPosition = new Coordinates ();
 			evt.FieldPosition.Points.Add (new Point (1, 2));
