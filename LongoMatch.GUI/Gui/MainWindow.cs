@@ -253,6 +253,7 @@ namespace LongoMatch.Gui
 			App.Current.EventsBroker.EmitCloseOpenedProject (this);
 			if (openedProject == null) {
 				App.Current.EventsBroker.Publish<QuitApplicationEvent> (new QuitApplicationEvent ());
+				analysisWindow?.Dispose ();
 			}
 			return openedProject != null;
 		}
@@ -281,6 +282,8 @@ namespace LongoMatch.Gui
 			renderingstatebar1.ManageJobs += (e, o) => {
 				App.Current.EventsBroker.Publish<ManageJobsEvent> ();
 			};
+
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (this.HandleOpenedProject);
 		}
 
 		private void ConnectMenuSignals ()
@@ -413,5 +416,10 @@ namespace LongoMatch.Gui
 		}
 
 		#endregion
+
+		void HandleOpenedProject (OpenedProjectEvent e)
+		{
+			openedProject = e.Project as ProjectLongoMatch;
+		}
 	}
 }
