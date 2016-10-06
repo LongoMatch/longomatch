@@ -156,7 +156,7 @@ namespace LongoMatch.Gui.Menus
 			}
 
 			if (!IsLineupEvent ()) {
-				MenuHelpers.FillAddToPlaylistMenu (addPLN, project, this.plays);
+				MenuHelpers.FillAddToPlaylistMenu (addPLN, project.Playlists, this.plays);
 			}
 
 			Popup ();

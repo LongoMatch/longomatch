@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Menus
 			this.eventType = eventType;
 			this.events = events;
 			SetupSortMenu ();
-			MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenuItem, project, events);
+			MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenuItem, project.Playlists, events);
 			MenuHelpers.FillExportToVideoFileMenu (exportToVideoFileItem, project, events);
 			Popup ();
 		}

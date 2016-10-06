@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Menus
 		public void ShowMenu (Project project, IEnumerable<TimelineEvent> events)
 		{
 			if (events.Count () > 0) {
-				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, project, events);
+				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, project.Playlists, events);
 				MenuHelpers.FillExportToVideoFileMenu (addToPlaylistMenu, project, events);
 				Popup ();
 			}
