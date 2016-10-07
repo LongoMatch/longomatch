@@ -9,4 +9,6 @@ LM_DEPS = \
 	$(top_builddir)/bin/ICSharpCode.SharpZipLib.Portable.dll \
 	$(top_builddir)/bin/Prism.dll \
 	$(top_builddir)/bin/PropertyChanged.dll \
+	$(top_builddir)/bin/OxyPlot.dll \
+	$(top_builddir)/bin/OxyPlot.GtkSharp.dll \
 	$(top_builddir)/bin/Mono.Addins.dll

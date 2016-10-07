@@ -20,7 +20,6 @@ SUBDIRS += \
 	data \
 	images \
 	.nuget \
-	oxyplot \
 	LongoMatch.Core \
 	LongoMatch.DB \
 	LongoMatch.Drawing \

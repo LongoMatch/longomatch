@@ -233,10 +233,6 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\oxyplot\OxyPlotMono\OxyPlotMono.csproj">
-      <Project>{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}</Project>
-      <Name>OxyPlotMono</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>

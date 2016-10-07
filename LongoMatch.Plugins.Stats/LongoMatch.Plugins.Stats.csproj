@@ -39,6 +39,12 @@
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix" />
+    <Reference Include="OxyPlot">
+      <HintPath>..\longomatch-pro\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.GtkSharp">
+      <HintPath>..\longomatch-pro\packages\OxyPlot.GtkSharp.1.0.0\lib\net45\OxyPlot.GtkSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -46,7 +52,6 @@
     <Compile Include="Stats\CategoriesViewer.cs" />
     <Compile Include="Stats\CategoryViewer.cs" />
     <Compile Include="Stats\GameViewer.cs" />
-    <Compile Include="Stats\PangoTextMeasurer.cs" />
     <Compile Include="Stats\PlayerCategoriesViewer.cs" />
     <Compile Include="Stats\PlayerCategoryViewer.cs" />
     <Compile Include="Stats\PlayerSubcategoryViewer.cs" />
@@ -79,10 +84,6 @@
       <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
       <Name>LongoMatch.Addins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\oxyplot\OxyPlotMono\OxyPlotMono.csproj">
-      <Project>{2CE0AF61-3E7D-43A8-ADD2-DAA38DFD5173}</Project>
-      <Name>OxyPlotMono</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongoMatch.GUI\LongoMatch.GUI.csproj">
       <Project>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</Project>
       <Name>LongoMatch.GUI</Name>
@@ -99,5 +100,8 @@
       <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
       <Name>VAS.UI.Helpers.Gtk2</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

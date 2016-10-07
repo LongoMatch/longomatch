@@ -91,7 +91,7 @@ namespace LongoMatch.Plugins.Stats
 		Pixbuf Load (PlotModel model, double width, double height)
 		{
 			MemoryStream stream = new MemoryStream ();
-			SvgExporter.Export (model, stream, width, height, false, new PangoTextMeasurer ());
+			SvgExporter.Export (model, stream, width, height, false);
 			stream.Seek (0, SeekOrigin.Begin);
 			return new Pixbuf (stream);
 		}
@@ -102,28 +102,33 @@ namespace LongoMatch.Plugins.Stats
 			CategoryAxis categoryAxis;
 			LinearAxis valueAxis;
 			int maxCount;
-            
-			valueAxis = new LinearAxis (AxisPosition.Left) { MinimumPadding = 0, AbsoluteMinimum = 0,
+
+			valueAxis = new LinearAxis {
+				Position = AxisPosition.Left, MinimumPadding = 0, AbsoluteMinimum = 0,
 				MinorStep = 1, MajorStep = 1, Minimum = 0
 			};
-			categoryAxis = new CategoryAxis () {ItemsSource = stats.OptionStats, LabelField = "Name",
+			categoryAxis = new CategoryAxis () {
+				ItemsSource = stats.OptionStats, LabelField = "Name",
 				Angle = 20.0
 			};
-            
-			model.Series.Add (new ColumnSeries { Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
+
+			model.Series.Add (new ColumnSeries {
+				Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
 				ValueField = "TotalCount"
-			});	
+			});
 			if (ShowTeams) {
-				model.Series.Add (new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
-					ValueField = "LocalTeamCount", FillColor = new OxyColor { R = 0xFF, G = 0x33, B = 0x0, A = 0xFF }
-				});	
-				model.Series.Add (new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
-					ValueField = "VisitorTeamCount",  FillColor = new OxyColor { R = 0, G = 0x99, B = 0xFF, A = 0xFF }
-				});	
+				model.Series.Add (new ColumnSeries {
+					Title = HomeName, ItemsSource = stats.OptionStats,
+					ValueField = "LocalTeamCount", FillColor = OxyColor.FromArgb (0xFF, 0xFF, 0x33, 0x0),
+				});
+				model.Series.Add (new ColumnSeries {
+					Title = AwayName, ItemsSource = stats.OptionStats,
+					ValueField = "VisitorTeamCount", FillColor = OxyColor.FromArgb (0xFF, 0, 0x99, 0xFF)
+				});
 			}
 			model.Axes.Add (categoryAxis);
 			model.Axes.Add (valueAxis);
-            
+
 			if (stats.OptionStats.Count != 0) {
 				maxCount = stats.OptionStats.Max (o => o.TotalCount);
 				if (maxCount > 10 && maxCount <= 50) {
@@ -138,9 +143,9 @@ namespace LongoMatch.Plugins.Stats
 				}
 			}
 			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
-				                      LongoMatch.App.Current.Style.PaletteText.R,
-				                      LongoMatch.App.Current.Style.PaletteText.G,
-				                      LongoMatch.App.Current.Style.PaletteText.B);
+									  LongoMatch.App.Current.Style.PaletteText.R,
+									  LongoMatch.App.Current.Style.PaletteText.G,
+									  LongoMatch.App.Current.Style.PaletteText.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;
@@ -152,7 +157,7 @@ namespace LongoMatch.Plugins.Stats
 		{
 			PlotModel model = new PlotModel ();
 			PieSeries ps = new PieSeries ();
-			
+
 			foreach (PercentualStat st in stats.OptionStats) {
 				double count = GetCount (st, team);
 				if (count == 0)
@@ -172,9 +177,9 @@ namespace LongoMatch.Plugins.Stats
 				ps.Title = AwayName;
 			}
 			OxyColor text_color = OxyColor.FromArgb (LongoMatch.App.Current.Style.PaletteText.A,
-				                      LongoMatch.App.Current.Style.PaletteText.R,
-				                      LongoMatch.App.Current.Style.PaletteText.G,
-				                      LongoMatch.App.Current.Style.PaletteText.B);
+									  LongoMatch.App.Current.Style.PaletteText.R,
+									  LongoMatch.App.Current.Style.PaletteText.G,
+									  LongoMatch.App.Current.Style.PaletteText.B);
 			model.TextColor = text_color;
 			model.TitleColor = text_color;
 			model.SubtitleColor = text_color;
@@ -200,7 +205,7 @@ namespace LongoMatch.Plugins.Stats
 		{
 			if (stats == null)
 				return;
-			
+
 			switch (graphType) {
 			case GraphType.Histogram:
 				imageall.Pixbuf = Load (GetHistogram (stats), graphWidth, HEIGHT);
@@ -224,7 +229,7 @@ namespace LongoMatch.Plugins.Stats
 		void HandleToggled (object sender, EventArgs args)
 		{
 			RadioButton r = sender as RadioButton;
-			
+
 			if (r == pieradiobutton && r.Active) {
 				graphType = GraphType.Pie;
 				Reload ();
@@ -251,6 +256,6 @@ namespace LongoMatch.Plugins.Stats
 			Pie,
 		}
 	}
-	
+
 }
 
