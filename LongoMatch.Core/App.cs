@@ -56,7 +56,7 @@ namespace LongoMatch
 			Load ();
 		}
 
-		internal static void InitConstants ()
+		internal protected static void InitConstants ()
 		{
 			Current.Copyright = Constants.COPYRIGHT;
 			Current.License = Constants.LICENSE;
