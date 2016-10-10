@@ -24,7 +24,6 @@ using ICSharpCode.SharpZipLib.Tar;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
-using LongoMatch.Store;
 using NUnit.Framework;
 
 namespace Tests.Integration
