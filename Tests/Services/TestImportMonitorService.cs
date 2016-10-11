@@ -27,14 +27,14 @@ using Constants = LongoMatch.Core.Common.Constants;
 using LongoMatch.Services;
 using VAS.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
+using VAS.DB;
 
 namespace Tests.Services
 {
 
-	class DummyMonitor: IDirectoryMonitor
+	class DummyMonitor : IDirectoryMonitor
 	{
 		#region IDirectoryMonitor implementation
 
@@ -115,7 +115,7 @@ namespace Tests.Services
 			service.Start ();
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			FileStream file = File.OpenWrite (outPath);
-			file.Write (new byte[] { 1, 2, 3, 4 }, 0, 4);
+			file.Write (new byte [] { 1, 2, 3, 4 }, 0, 4);
 			file.Flush ();
 			file.Close ();
 			monitor.AddFile (outPath);
@@ -170,7 +170,7 @@ namespace Tests.Services
 			string outPath = Path.Combine (tmpDir, "test" + Constants.PROJECT_EXT);
 			FileStorage.StoreAt (project, outPath);
 			monitor.AddFile (outPath);
-			storageMock.Verify (s => s.Store <ProjectLongoMatch> (project, true));
+			storageMock.Verify (s => s.Store<ProjectLongoMatch> (project, true));
 			Assert.IsFalse (File.Exists (outPath));
 			service.Stop ();
 		}

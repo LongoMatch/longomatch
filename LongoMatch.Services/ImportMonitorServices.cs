@@ -25,6 +25,7 @@ using LongoMatch.DB;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store.Templates;
+using VAS.DB;
 using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Services
@@ -33,7 +34,7 @@ namespace LongoMatch.Services
 	/// This services monitors a directory in the filesystem looking for <see cref="Dashboard"/>
 	/// <see cref="Team"/> or <see cref="Project"/> and imports them into the database.
 	/// </summary>
-	public class ImportMonitorServices: IService
+	public class ImportMonitorServices : IService
 	{
 		IDirectoryMonitor monitor;
 
