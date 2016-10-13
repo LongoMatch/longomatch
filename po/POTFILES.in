@@ -109,14 +109,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs
-LongoMatch.Migration/Core/Category.cs
-LongoMatch.Migration/Core/HotKey.cs
-LongoMatch.Migration/Core/Project.cs
-LongoMatch.Migration/Core/SubCategory.cs
-LongoMatch.Migration/Core/Templates/CategoriesTemplate.cs
-LongoMatch.Migration/Core/Templates/TeamTemplate.cs
-LongoMatch.Migration/MainWindow.cs
-LongoMatch.Migration/gtk-gui/MainWindow.cs
 LongoMatch.Plugins.GStreamer/GStreamerRestricted.cs
 LongoMatch.Plugins.Stats/Stats/PlayerSubcategoryViewer.cs
 LongoMatch.Plugins.Stats/Stats/Plotter.cs
