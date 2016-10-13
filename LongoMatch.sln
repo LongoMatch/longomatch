@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxyPlotMono", "oxyplot\OxyP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Drawing.Net45", "LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj", "{519B4B01-07EC-4CA4-8073-E6F468317138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Migration", "LongoMatch.Migration\LongoMatch.Migration.csproj", "{4D20F396-53C0-4298-9121-9F68C101CCAB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.GStreamer", "LongoMatch.Plugins.GStreamer\LongoMatch.Plugins.GStreamer.csproj", "{92BF45E5-4F84-48FB-B3F0-BB8878B6137B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.Plugins.Stats", "LongoMatch.Plugins.Stats\LongoMatch.Plugins.Stats.csproj", "{F03D161E-CC4D-4FE6-968A-04F884AB0939}"
@@ -101,10 +99,6 @@ Global
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D20F396-53C0-4298-9121-9F68C101CCAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
