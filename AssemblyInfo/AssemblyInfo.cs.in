@@ -44,6 +44,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("@ASSEMBLY_VERSION@")]
 [assembly: AssemblyFileVersion("@PACKAGE_VERSION@")]
+[assembly: AssemblyInformationalVersion("@PACKAGE_VERSION@")]
 
 // The following attributes specify the key for the sign of your assembly. See the
 // .NET Framework documentation for more information about signing.
