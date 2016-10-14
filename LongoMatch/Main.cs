@@ -41,6 +41,7 @@ using VAS.UI.Helpers;
 using VAS.Video;
 using Constants = LongoMatch.Core.Common.Constants;
 using VASUi = VAS.UI;
+using Device = VAS.Core.Device;
 
 namespace LongoMatch
 {
@@ -81,6 +82,7 @@ namespace LongoMatch
 				App.Current.Navigation = GUIToolkit.Instance;
 				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
 				App.Current.Dialogs = VASUi.Dialogs.Instance;
+				App.Current.Device = new Device ();
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
