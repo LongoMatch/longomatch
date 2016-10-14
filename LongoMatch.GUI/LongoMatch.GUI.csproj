@@ -1,289 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>LongoMatch</RootNamespace>
-    <CodePage>65001</CodePage>
-    <AssemblyName>LongoMatch.GUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
-    <Execution>
-      <Execution clr-version="Net_2_0" />
-    </Execution>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>3</WarningLevel>
-    <AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
-    <Execution>
-      <Execution clr-version="Net_2_0" />
-    </Execution>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Gui\" />
-    <Folder Include="Gui\Dialog\" />
-    <Folder Include="Gui\Component\" />
-    <Folder Include="Gui\TreeView\" />
-    <Folder Include="..\" />
-    <Folder Include="Gui\Panel\" />
-    <Folder Include="Gui\Menu\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Gui\MainWindow.cs" />
-    <Compile Include="Gui\TransparentDrawingArea.cs" />
-    <Compile Include="Gui\Dialog\EditCategoryDialog.cs" />
-    <Compile Include="Gui\Dialog\EntryDialog.cs" />
-    <Compile Include="Gui\Component\DashboardWidget.cs" />
-    <Compile Include="Gui\Component\NotesWidget.cs" />
-    <Compile Include="Gui\Dialog\FramesCaptureProgressDialog.cs" />
-    <Compile Include="Gui\Dialog\HotKeySelectorDialog.cs" />
-    <Compile Include="Gui\TreeView\PlayersTreeView.cs" />
-    <Compile Include="Gui\TreeView\PlayListTreeView.cs" />
-    <Compile Include="Gui\TreeView\PlaysTreeView.cs" />
-    <Compile Include="Gui\Dialog\SnapshotsDialog.cs" />
-    <Compile Include="Gui\Dialog\UpdateDialog.cs" />
-    <Compile Include="Gui\Component\PlayersListTreeWidget.cs" />
-    <Compile Include="Gui\Component\PlayListWidget.cs" />
-    <Compile Include="Gui\Component\ProjectListWidget.cs" />
-    <Compile Include="Gui\Dialog\VideoEditionProperties.cs" />
-    <Compile Include="Gui\Component\CategoryProperties.cs" />
-    <Compile Include="Gui\Component\PlaysListTreeWidget.cs" />
-    <Compile Include="Gui\Dialog\DrawingTool.cs" />
-    <Compile Include="Gui\Dialog\EndCaptureDialog.cs" />
-    <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.CategoryProperties.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayListWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EntryDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.NotesWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DrawingTool.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
-    <Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
-    <Compile Include="Gui\Component\RenderingStateBar.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.RenderingStateBar.cs" />
-    <Compile Include="Gui\TreeView\RenderingJobsTreeView.cs" />
-    <Compile Include="Gui\Dialog\RenderingJobsDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.RenderingJobsDialog.cs" />
-    <Compile Include="Gui\Dialog\About.cs" />
-    <Compile Include="Gui\GUIToolkit.cs" />
-    <Compile Include="Gui\Cairo.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
-    <Compile Include="Gui\Component\PlaysSelectionWidget.cs" />
-    <Compile Include="Gui\TreeView\PlayersFilterTreeView.cs" />
-    <Compile Include="Gui\TreeView\CategoriesFilterTreeView.cs" />
-    <Compile Include="Gui\Dialog\VideoConversionTool.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
-    <Compile Include="Gui\Dialog\DatabasesManager.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DatabasesManager.cs" />
-    <Compile Include="Gui\Component\CoordinatesTagger.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.CoordinatesTagger.cs" />
-    <Compile Include="Gui\Component\GeneralPreferencesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.GeneralPreferencesPanel.cs" />
-    <Compile Include="Gui\Component\VideoPreferencesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoPreferencesPanel.cs" />
-    <Compile Include="Gui\Component\LiveAnalysisPreferences.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.LiveAnalysisPreferences.cs" />
-    <Compile Include="Gui\Component\PlaysCoordinatesTagger.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs" />
-    <Compile Include="Gui\Component\AnalysisComponent.cs" />
-    <Compile Include="Gui\Panel\WelcomePanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.WelcomePanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.BackgroundWidget.cs" />
-    <Compile Include="Gui\Panel\OpenProjectPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.OpenProjectPanel.cs" />
-    <Compile Include="Gui\Panel\NewProjectPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.NewProjectPanel.cs" />
-    <Compile Include="Gui\Panel\TeamsTemplatesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs" />
-    <Compile Include="Gui\Component\TeamTemplateEditor.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TeamTemplateEditor.cs" />
-    <Compile Include="Gui\Panel\ProjectsManagerPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.ProjectsManagerPanel.cs" />
-    <Compile Include="Gui\Panel\SportsTemplatesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.SportsTemplatesPanel.cs" />
-    <Compile Include="Gui\Component\BackgroundWidget.cs" />
-    <Compile Include="Gui\Panel\PreferencesPanel.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PreferencesPanel.cs" />
-    <Compile Include="Gui\Component\CodingWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
-    <Compile Include="Gui\Component\PlaysPositionViewer.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
-    <Compile Include="Gui\Component\TeamsComboBox.cs" />
-    <Compile Include="Gui\Component\MediaFileChooser.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />
-    <Compile Include="Gui\Component\DatePicker.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.DatePicker.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.DashboardWidget.cs" />
-    <Compile Include="Gui\Panel\PanelHeader.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Panel.PanelHeader.cs" />
-    <Compile Include="Gui\Dialog\PlayEditor.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayEditor.cs" />
-    <Compile Include="Gui\Dialog\SubstitutionsEditor.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SubstitutionsEditor.cs" />
-    <Compile Include="Gui\Dialog\EventTypeTagsEditor.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
-    <Compile Include="Gui\Component\MediaFileSetSelection.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
-    <Compile Include="Gui\Component\HotkeysConfiguration.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
-    <Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.FakeAnalysisComponent.cs" />
-    <Compile Include="Gui\Component\EventsListWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.EventsListWidget.cs" />
-    <Compile Include="Gui\Component\PluginsPreferences.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PluginsPreferences.cs" />
-    <Compile Include="Gui\Dialog\CodecsChoiceDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.AnalysisComponent.cs" />
-    <Compile Include="Gui\Component\GameDescriptionHeader.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.GameDescriptionHeader.cs" />
-    <Compile Include="Gui\Component\VideoFileInfo.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoFileInfo.cs" />
-    <Compile Include="Gui\Dialog\ChooseProjectDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseProjectDialog.cs" />
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Gui\Component\SynchronizationWidget.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.SynchronizationWidget.cs" />
-    <Compile Include="Gui\Component\LinkProperties.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.LinkProperties.cs" />
-    <Compile Include="Gui\Component\ToggleTopBar.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
-    <Compile Include="Gui\TreeView\StringObject.cs" />
-    <Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
-    <Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
-    <Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
-    <Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
-    <Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
-    <Compile Include="Gui\Component\Timeline.cs" />
-    <Compile Include="Gui\Menu\PeriodsMenu.cs" />
-    <Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
-    <Compile Include="Gui\Menu\EventTypeMenu.cs" />
-    <Compile Include="Gui\Menu\PlayerMenu.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="gtk-gui\gui.stetic">
-      <LogicalName>gui.stetic</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\video.png">
-      <LogicalName>video.png</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\background.png">
-      <LogicalName>background.png</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\dash-line.svg">
-      <LogicalName>dash-line.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\line.svg">
-      <LogicalName>line.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\line-double-dot.svg">
-      <LogicalName>line-double-dot.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\line-dot.svg">
-      <LogicalName>line-dot.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\line-double-arrow.svg">
-      <LogicalName>line-double-arrow.svg</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\images\tools\line-arrow.svg">
-      <LogicalName>line-arrow.svg</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Mono.Cairo" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <Reference Include="Mono.Posix" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
-      <Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
-      <Name>LongoMatch.Addins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
-      <Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
-      <Name>LongoMatch.Drawing.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
-      <Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
-      <Name>VAS.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
-      <Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
-      <Name>LongoMatch.Core.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
-      <Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
-      <Name>VAS.Drawing.Cairo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
-      <Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
-      <Name>VAS.UI.Helpers.Gtk2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
-      <Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
-      <Name>VAS.UI.Gtk2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
-      <Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
-      <Name>VAS.UI.Multimedia.Gtk2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
-      <Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
-      <Name>VAS.Drawing.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
-      <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
-      <Name>LongoMatch.Services.Net45</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
-      <Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
-      <Name>VAS.Services.Net45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <GtkDesignInfo gettextClass="VAS.Core.Catalog" />
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{6B9682AF-0F14-456F-A674-8BABFE852BFC}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>LongoMatch</RootNamespace>
+		<CodePage>65001</CodePage>
+		<AssemblyName>LongoMatch.GUI</AssemblyName>
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>true</Optimize>
+		<OutputPath>..\bin</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
+		<Execution>
+			<Execution clr-version="Net_2_0" />
+		</Execution>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>true</Optimize>
+		<OutputPath>..\bin</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>3</WarningLevel>
+		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
+		<Execution>
+			<Execution clr-version="Net_2_0" />
+		</Execution>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+	<ItemGroup>
+		<Folder Include="Gui\" />
+		<Folder Include="Gui\Dialog\" />
+		<Folder Include="Gui\Component\" />
+		<Folder Include="Gui\TreeView\" />
+		<Folder Include="..\" />
+		<Folder Include="Gui\Panel\" />
+		<Folder Include="Gui\Menu\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Gui\MainWindow.cs" />
+		<Compile Include="Gui\TransparentDrawingArea.cs" />
+		<Compile Include="Gui\Dialog\EditCategoryDialog.cs" />
+		<Compile Include="Gui\Dialog\EntryDialog.cs" />
+		<Compile Include="Gui\Component\DashboardWidget.cs" />
+		<Compile Include="Gui\Component\NotesWidget.cs" />
+		<Compile Include="Gui\Dialog\FramesCaptureProgressDialog.cs" />
+		<Compile Include="Gui\Dialog\HotKeySelectorDialog.cs" />
+		<Compile Include="Gui\TreeView\PlayersTreeView.cs" />
+		<Compile Include="Gui\TreeView\PlayListTreeView.cs" />
+		<Compile Include="Gui\TreeView\PlaysTreeView.cs" />
+		<Compile Include="Gui\Dialog\SnapshotsDialog.cs" />
+		<Compile Include="Gui\Dialog\UpdateDialog.cs" />
+		<Compile Include="Gui\Component\PlayersListTreeWidget.cs" />
+		<Compile Include="Gui\Component\PlayListWidget.cs" />
+		<Compile Include="Gui\Component\ProjectListWidget.cs" />
+		<Compile Include="Gui\Dialog\VideoEditionProperties.cs" />
+		<Compile Include="Gui\Component\CategoryProperties.cs" />
+		<Compile Include="Gui\Component\PlaysListTreeWidget.cs" />
+		<Compile Include="Gui\Dialog\DrawingTool.cs" />
+		<Compile Include="Gui\Dialog\EndCaptureDialog.cs" />
+		<Compile Include="gtk-gui\generated.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.CategoryProperties.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayListWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EntryDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.NotesWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DrawingTool.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
+		<Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
+		<Compile Include="Gui\Component\RenderingStateBar.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.RenderingStateBar.cs" />
+		<Compile Include="Gui\TreeView\RenderingJobsTreeView.cs" />
+		<Compile Include="Gui\Dialog\RenderingJobsDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.RenderingJobsDialog.cs" />
+		<Compile Include="Gui\Dialog\About.cs" />
+		<Compile Include="Gui\GUIToolkit.cs" />
+		<Compile Include="Gui\Cairo.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
+		<Compile Include="Gui\Component\PlaysSelectionWidget.cs" />
+		<Compile Include="Gui\TreeView\PlayersFilterTreeView.cs" />
+		<Compile Include="Gui\TreeView\CategoriesFilterTreeView.cs" />
+		<Compile Include="Gui\Dialog\VideoConversionTool.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
+		<Compile Include="Gui\Dialog\DatabasesManager.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DatabasesManager.cs" />
+		<Compile Include="Gui\Component\CoordinatesTagger.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.CoordinatesTagger.cs" />
+		<Compile Include="Gui\Component\GeneralPreferencesPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.GeneralPreferencesPanel.cs" />
+		<Compile Include="Gui\Component\VideoPreferencesPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoPreferencesPanel.cs" />
+		<Compile Include="Gui\Component\LiveAnalysisPreferences.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.LiveAnalysisPreferences.cs" />
+		<Compile Include="Gui\Component\PlaysCoordinatesTagger.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs" />
+		<Compile Include="Gui\Component\AnalysisComponent.cs" />
+		<Compile Include="Gui\Panel\WelcomePanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.WelcomePanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.BackgroundWidget.cs" />
+		<Compile Include="Gui\Panel\OpenProjectPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.OpenProjectPanel.cs" />
+		<Compile Include="Gui\Panel\NewProjectPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.NewProjectPanel.cs" />
+		<Compile Include="Gui\Panel\TeamsTemplatesPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs" />
+		<Compile Include="Gui\Component\TeamTemplateEditor.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.TeamTemplateEditor.cs" />
+		<Compile Include="Gui\Panel\ProjectsManagerPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.ProjectsManagerPanel.cs" />
+		<Compile Include="Gui\Panel\SportsTemplatesPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.SportsTemplatesPanel.cs" />
+		<Compile Include="Gui\Component\BackgroundWidget.cs" />
+		<Compile Include="Gui\Panel\PreferencesPanel.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.PreferencesPanel.cs" />
+		<Compile Include="Gui\Component\CodingWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.CodingWidget.cs" />
+		<Compile Include="Gui\Component\PlaysPositionViewer.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
+		<Compile Include="Gui\Component\TeamsComboBox.cs" />
+		<Compile Include="Gui\Component\MediaFileChooser.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.DashboardWidget.cs" />
+		<Compile Include="Gui\Panel\PanelHeader.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.PanelHeader.cs" />
+		<Compile Include="Gui\Dialog\PlayEditor.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayEditor.cs" />
+		<Compile Include="Gui\Dialog\SubstitutionsEditor.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SubstitutionsEditor.cs" />
+		<Compile Include="Gui\Dialog\EventTypeTagsEditor.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EventTypeTagsEditor.cs" />
+		<Compile Include="Gui\Component\MediaFileSetSelection.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileSetSelection.cs" />
+		<Compile Include="Gui\Component\HotkeysConfiguration.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.HotkeysConfiguration.cs" />
+		<Compile Include="Gui\Component\FakeAnalysisComponent.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.FakeAnalysisComponent.cs" />
+		<Compile Include="Gui\Component\EventsListWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.EventsListWidget.cs" />
+		<Compile Include="Gui\Component\PluginsPreferences.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PluginsPreferences.cs" />
+		<Compile Include="Gui\Dialog\CodecsChoiceDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.AnalysisComponent.cs" />
+		<Compile Include="Gui\Component\GameDescriptionHeader.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.GameDescriptionHeader.cs" />
+		<Compile Include="Gui\Component\VideoFileInfo.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.VideoFileInfo.cs" />
+		<Compile Include="Gui\Dialog\ChooseProjectDialog.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.ChooseProjectDialog.cs" />
+		<Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+			<Link>AssemblyInfo.cs</Link>
+		</Compile>
+		<Compile Include="Gui\Component\SynchronizationWidget.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.SynchronizationWidget.cs" />
+		<Compile Include="Gui\Component\LinkProperties.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.LinkProperties.cs" />
+		<Compile Include="Gui\Component\ToggleTopBar.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
+		<Compile Include="Gui\TreeView\StringObject.cs" />
+		<Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
+		<Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
+		<Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
+		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
+		<Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
+		<Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
+		<Compile Include="Gui\Component\Timeline.cs" />
+		<Compile Include="Gui\Menu\PeriodsMenu.cs" />
+		<Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
+		<Compile Include="Gui\Menu\EventTypeMenu.cs" />
+		<Compile Include="Gui\Menu\PlayerMenu.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="gtk-gui\gui.stetic">
+			<LogicalName>gui.stetic</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\video.png">
+			<LogicalName>video.png</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\background.png">
+			<LogicalName>background.png</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\dash-line.svg">
+			<LogicalName>dash-line.svg</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\line.svg">
+			<LogicalName>line.svg</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\line-double-dot.svg">
+			<LogicalName>line-double-dot.svg</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\line-dot.svg">
+			<LogicalName>line-dot.svg</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\line-double-arrow.svg">
+			<LogicalName>line-double-arrow.svg</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\images\tools\line-arrow.svg">
+			<LogicalName>line-arrow.svg</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+		<Reference Include="Mono.Cairo" />
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+		<Reference Include="Mono.Posix" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\LongoMatch.Addins\LongoMatch.Addins.csproj">
+			<Project>{709CCDA6-CA95-4CBD-A986-B96EE0418905}</Project>
+			<Name>LongoMatch.Addins</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\LongoMatch.Drawing\LongoMatch.Drawing.Net45.csproj">
+			<Project>{519B4B01-07EC-4CA4-8073-E6F468317138}</Project>
+			<Name>LongoMatch.Drawing.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.Core\VAS.Core.Net45.csproj">
+			<Project>{08AE7734-B995-4E0D-AD8F-38F597E0D4DF}</Project>
+			<Name>VAS.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
+			<Project>{B70912B2-7ED5-450E-97BD-45A3D45A0358}</Project>
+			<Name>LongoMatch.Core.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.Drawing.Cairo\VAS.Drawing.Cairo.csproj">
+			<Project>{AE98609B-353C-4CE4-A5B7-606BB4EE3576}</Project>
+			<Name>VAS.Drawing.Cairo</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.UI.Helpers.Gtk2\VAS.UI.Helpers.Gtk2.csproj">
+			<Project>{E75E30DC-C1CF-4683-9A36-65B91EF10095}</Project>
+			<Name>VAS.UI.Helpers.Gtk2</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.UI.Gtk2\VAS.UI.Gtk2.csproj">
+			<Project>{4F1F28AB-3D1F-4F3F-95A4-2E08B448317C}</Project>
+			<Name>VAS.UI.Gtk2</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.UI.Multimedia.Gtk2\VAS.UI.Multimedia.Gtk2.csproj">
+			<Project>{473E7B85-AF42-40E8-BE21-46FF6CCC34D0}</Project>
+			<Name>VAS.UI.Multimedia.Gtk2</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.Drawing\VAS.Drawing.Net45.csproj">
+			<Project>{F99F378C-8C75-4888-A173-C7B4EC2D37E0}</Project>
+			<Name>VAS.Drawing.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">
+			<Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
+			<Name>LongoMatch.Services.Net45</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\VAS\VAS.Services\VAS.Services.Net45.csproj">
+			<Project>{153BFD3F-6E06-451B-AD79-6C207762BBBB}</Project>
+			<Name>VAS.Services.Net45</Name>
+		</ProjectReference>
+	</ItemGroup>
+	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+	<ProjectExtensions>
+		<MonoDevelop>
+			<Properties>
+				<GtkDesignInfo gettextClass="VAS.Core.Catalog" />
+			</Properties>
+		</MonoDevelop>
+	</ProjectExtensions>
 </Project>

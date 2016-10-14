@@ -35,9 +35,9 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Entry competitionentry;
 		
 		private global::Gtk.Label Competitionlabel;
-		
-		private global::LongoMatch.Gui.Component.DatePicker datepicker;
-		
+
+		private global::VAS.UI.UI.Component.DatePicker datepicker;
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 		
 		private global::Gtk.TextView desctextview;
@@ -202,7 +202,7 @@ namespace LongoMatch.Gui.Panel
 			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.datepicker = new global::LongoMatch.Gui.Component.DatePicker ();
+			this.datepicker = new global::VAS.UI.UI.Component.DatePicker ();
 			this.datepicker.WidthRequest = 150;
 			this.datepicker.Events = ((global::Gdk.EventMask)(256));
 			this.datepicker.Name = "datepicker";
