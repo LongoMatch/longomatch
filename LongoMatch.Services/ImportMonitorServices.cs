@@ -128,15 +128,18 @@ namespace LongoMatch.Services
 					string ext = Path.GetExtension (path);
 					try {
 						if (ImportTeams && ext == Constants.TEAMS_TEMPLATE_EXT) {
-							SportsTeam team = FileStorage.RetrieveFrom<SportsTeam> (path);
+							SportsTeam team = App.Current.DependencyRegistry.
+							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<SportsTeam> (path);
 							App.Current.TeamTemplatesProvider.Add (team);
 							File.Delete (path);
 						} else if (ImportDashboards && ext == Constants.CAT_TEMPLATE_EXT) {
-							Dashboard team = FileStorage.RetrieveFrom<Dashboard> (path);
+							Dashboard team = App.Current.DependencyRegistry.
+							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<Dashboard> (path);
 							App.Current.CategoriesTemplatesProvider.Add (team as DashboardLongoMatch);
 							File.Delete (path);
 						} else if (ImportProjects && ext == Constants.PROJECT_EXT) {
-							ProjectLongoMatch project = FileStorage.RetrieveFrom<ProjectLongoMatch> (path);
+							ProjectLongoMatch project = App.Current.DependencyRegistry.
+							Retrieve<IFileStorage> (InstanceType.Default, null).RetrieveFrom<ProjectLongoMatch> (path);
 							App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project, true);
 							File.Delete (path);
 						}
