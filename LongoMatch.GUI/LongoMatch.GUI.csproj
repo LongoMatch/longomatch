@@ -185,6 +185,7 @@
 		<Compile Include="Gui\Menu\SportsPlaysMenu.cs" />
 		<Compile Include="Gui\Menu\EventTypeMenu.cs" />
 		<Compile Include="Gui\Menu\PlayerMenu.cs" />
+		<Compile Include="Gui\Dialog\SportDrawingTool.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gtk-gui\gui.stetic">
