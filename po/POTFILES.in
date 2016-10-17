@@ -38,7 +38,6 @@ LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/Timeline.cs
 LongoMatch.GUI/Gui/Component/VideoFileInfo.cs
 LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs
-LongoMatch.GUI/Gui/Dialog/DrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs
 LongoMatch.GUI/Gui/Dialog/EventTypeTagsEditor.cs
 LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs
@@ -84,7 +83,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ChooseProjectDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.CodecsChoiceDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs
