@@ -265,14 +265,14 @@ namespace LongoMatch.Services
 				if (image_path == null) {
 					continue;
 				}
-				videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
-					fd.Render.MSeconds - lastTS.MSeconds,
-					element.Rate, play.Name, file.HasAudio, roi);
+				videoEditor.AddSegment (file.FilePath, (lastTS + file.Offset).MSeconds,
+										fd.Render.MSeconds - lastTS.MSeconds,
+										element.Rate, play.Name, file.HasAudio, roi);
 				// Drawings have already been cropped to ROI by the canvas, we pass an empty area
 				videoEditor.AddImageSegment (image_path, 0, fd.Pause.MSeconds, play.Name, new Area ());
 				lastTS = fd.Render;
 			}
-			videoEditor.AddSegment (file.FilePath, lastTS.MSeconds,
+			videoEditor.AddSegment (file.FilePath, (lastTS + file.Offset).MSeconds,
 				play.Stop.MSeconds - lastTS.MSeconds,
 				element.Rate, play.Name, file.HasAudio, roi);
 			return true;
@@ -285,7 +285,7 @@ namespace LongoMatch.Services
 			
 			capturer = App.Current.MultimediaToolkit.GetFramesCapturer ();
 			capturer.Open (file.FilePath);
-			frame = capturer.GetFrame (drawing.Render, true, (int) file.DisplayVideoWidth, (int) file.DisplayVideoHeight);
+			frame = capturer.GetFrame (drawing.Render + file.Offset, true, (int)file.DisplayVideoWidth, (int)file.DisplayVideoHeight);
 			capturer.Dispose ();
 			if (frame == null) {
 				Log.Error (String.Format ("Could not get frame for file {0} at pos {1}",
