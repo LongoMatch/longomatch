@@ -223,6 +223,7 @@ namespace LongoMatch.Gui.Panel
 			sg.AddWidget (urilabel);
 			sg.AddWidget (outputfilelabel);
 			sg.AddWidget (device);
+			sg.AddWidget (userlabel);
 			sg.AddWidget (videoformatlabel);
 			sg.AddWidget (deviceformatlabel);
 			sg.AddWidget (outputsizelabel);
@@ -368,6 +369,7 @@ namespace LongoMatch.Gui.Panel
 			mediafilesetselection1.Visible = filemode;
 			capturebox.Visible = capturemode || urimode;
 			urltable.Visible = urimode;
+			credentialtable.Visible = urimode;
 			devicetable.Visible = capturemode;
 		}
 
@@ -522,9 +524,16 @@ namespace LongoMatch.Gui.Panel
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.VideoWidth = encSettings.VideoStandard.Width;
 			} else if (projectType == ProjectType.URICaptureProject) {
+				string uri = urientry.Text;
+				if (!String.IsNullOrEmpty (userentry.Text) || !String.IsNullOrEmpty (passwordentry.Text)) {
+					int index = uri.IndexOf ("://", StringComparison.Ordinal);
+					if (index != -1) {
+						uri = uri.Insert (index + 3, string.Format ("{0}:{1}@", userentry.Text, passwordentry.Text));
+					}
+				}
 				captureSettings.Device = new Device {
 					DeviceType = CaptureSourceType.URI,
-					ID = urientry.Text
+					ID = uri
 				};
 				file.VideoHeight = encSettings.VideoStandard.Height;
 				file.VideoWidth = encSettings.VideoStandard.Width;
