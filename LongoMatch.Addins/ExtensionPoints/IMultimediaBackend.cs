@@ -19,15 +19,13 @@
 //
 using Mono.Addins;
 using VAS.Addins.ExtensionPoints;
+using VAS.Core.Addins;
 using VAS.Core.Interfaces.Multimedia;
 
 namespace LongoMatch.Addins.ExtensionPoints
 {
 	[TypeExtensionPoint]
-	public interface IMultimediaBackend: IPlugin
+	public interface IMultimediaBackendPlugin : IMultimediaBackend
 	{
-		void RegisterElements (IMultimediaToolkit mtoolkit);
-
-		void Shutdown ();
 	}
 }

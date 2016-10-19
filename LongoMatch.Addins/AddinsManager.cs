@@ -132,7 +132,7 @@ namespace LongoMatch.Addins
 
 		public static void LoadMultimediaBackendsAddins (IMultimediaToolkit mtoolkit)
 		{
-			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
+			foreach (IMultimediaBackendPlugin backend in AddinManager.GetExtensionObjects<IMultimediaBackendPlugin> ()) {
 				try {
 					Log.Information ("Adding multimedia backend from plugin: " + backend.Name);
 					backend.RegisterElements (mtoolkit);
