@@ -17,12 +17,11 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.DB;
+using LongoMatch.Services.States;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
@@ -32,8 +31,7 @@ using VAS.Core.MVVMC;
 using VAS.Services;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
-using LMCommon = LongoMatch.Core.Common;
-using LongoMatch.Services.States;
+using Device = VAS.Core.Device;
 
 
 #if OSTYPE_WINDOWS
@@ -65,6 +63,9 @@ namespace LongoMatch.Services
 
 			/* Check default folders */
 			CheckDirs ();
+
+			/* Initialize device */
+			App.Current.Device = new Device ();
 
 			/* Redirects logs to a file */
 			Log.SetLogFile (App.Current.LogFile);
