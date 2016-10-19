@@ -63,8 +63,6 @@ namespace LongoMatch.Services
 		{
 			Log.Debugging = Debugging;
 
-			FillVersion ();
-
 			/* Check default folders */
 			CheckDirs ();
 
@@ -90,14 +88,6 @@ namespace LongoMatch.Services
 			CoreTool tool = new CoreTool ();
 			tool.Enable ();
 			Scanner.ScanControllers (App.Current.ControllerLocator);
-		}
-
-		static void FillVersion ()
-		{
-			Assembly assembly = Assembly.GetExecutingAssembly ();
-			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location);
-			App.Current.Version = assembly.GetName ().Version;
-			App.Current.BuildVersion = info.ProductVersion;
 		}
 
 		public static void InitTranslations ()
