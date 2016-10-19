@@ -27,11 +27,12 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
+using VAS.UI.UI.Component;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
+using Helpers = VAS.UI.Helpers;
 using Image = VAS.Core.Common.Image;
 using Misc = VAS.UI.Helpers.Misc;
-using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
