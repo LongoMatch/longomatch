@@ -169,13 +169,11 @@
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.LinkProperties.cs" />
 		<Compile Include="Gui\Component\ToggleTopBar.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.ToggleTopBar.cs" />
-		<Compile Include="Gui\TreeView\StringObject.cs" />
 		<Compile Include="Gui\TreeView\PlaysCellRenderer.cs" />
 		<Compile Include="Gui\TreeView\TreeViewHelpers.cs" />
 		<Compile Include="Gui\Dialog\EditPlaylistElementProperties.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditPlaylistElementProperties.cs" />
 		<Compile Include="Gui\Menu\PlaylistElementMenu.cs" />
-		<Compile Include="Gui\TreeView\FilterTreeViewBase.cs" />
 		<Compile Include="Gui\Component\Timeline.cs" />
 		<Compile Include="Gui\Menu\PeriodsMenu.cs" />
 		<Compile Include="Gui\Menu\SportsPlaysMenu.cs" />

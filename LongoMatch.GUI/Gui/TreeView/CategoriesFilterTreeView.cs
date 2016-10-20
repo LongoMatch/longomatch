@@ -21,6 +21,7 @@ using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Store;
+using VAS.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {
