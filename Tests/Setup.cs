@@ -28,6 +28,7 @@ using VAS.Core;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.DB;
+using LMDB = LongoMatch.DB;
 
 namespace Tests
 {
@@ -51,6 +52,7 @@ namespace Tests
 			App.InitConstants ();
 
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
+			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			App.Current.Dialogs = new Mock<IDialogs> ().Object;
 			var navigation = new Mock<INavigation> ();
 			navigation.Setup (x => x.Push (It.IsAny<IPanel> ())).Returns (AsyncHelpers.Return (true));

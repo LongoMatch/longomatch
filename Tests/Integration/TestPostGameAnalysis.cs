@@ -18,10 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Addins;
@@ -29,6 +27,7 @@ using LongoMatch.Core.Events;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.DB;
 using LongoMatch.Plugins;
 using LongoMatch.Services;
 using Moq;
@@ -43,7 +42,6 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using LMCommon = LongoMatch.Core.Common;
 
 namespace Tests.Integration
 {
@@ -112,6 +110,8 @@ namespace Tests.Integration
 			Guid projectID;
 			App.Init ();
 			CoreServices.Init ();
+			App.Current.DependencyRegistry.Register<VAS.DB.IFileStorage, FileStorage> (0);
+
 			AddinsManager.Initialize (App.Current.PluginsConfigDir, App.Current.PluginsDir);
 			AddinsManager.LoadConfigModifierAddins ();
 			App.Current.DrawingToolkit = drawingToolkitMock.Object;
