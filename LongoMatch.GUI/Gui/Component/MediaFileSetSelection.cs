@@ -21,7 +21,7 @@ using System.Linq;
 using Gtk;
 using VAS.Core;
 using VAS.Core.Store;
-using VAS.UI.UI.Component;
+using VAS.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {

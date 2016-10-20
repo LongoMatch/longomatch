@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		private global::Gtk.Label label3;
 
-		private global::VAS.UI.UI.Component.MediaFileChooser mediafilechooser1;
+		private global::VAS.UI.Component.MediaFileChooser mediafilechooser1;
 
 		private global::Gtk.ComboBox sizecombobox;
 		
@@ -163,7 +163,7 @@ namespace LongoMatch.Gui.Dialog
 			w13.XOptions = ((global::Gtk.AttachOptions)(4));
 			w13.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.mediafilechooser1 = new global::VAS.UI.UI.Component.MediaFileChooser ();
+			this.mediafilechooser1 = new global::VAS.UI.Component.MediaFileChooser ();
 			this.mediafilechooser1.Events = ((global::Gdk.EventMask)(256));
 			this.mediafilechooser1.Name = "mediafilechooser1";
 			this.table1.Add (this.mediafilechooser1);

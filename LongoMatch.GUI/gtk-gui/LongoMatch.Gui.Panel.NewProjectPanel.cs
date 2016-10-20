@@ -100,7 +100,7 @@ namespace LongoMatch.Gui.Panel
 
 		private global::Gtk.Table outputfiletable;
 
-		private global::VAS.UI.UI.Component.MediaFileChooser capturemediafilechooser;
+		private global::VAS.UI.Component.MediaFileChooser capturemediafilechooser;
 
 		private global::Gtk.Label outputfilelabel;
 
@@ -580,7 +580,7 @@ namespace LongoMatch.Gui.Panel
 			this.outputfiletable.RowSpacing = ((uint)(6));
 			this.outputfiletable.ColumnSpacing = ((uint)(6));
 			// Container child outputfiletable.Gtk.Table+TableChild
-			this.capturemediafilechooser = new global::VAS.UI.UI.Component.MediaFileChooser ();
+			this.capturemediafilechooser = new global::VAS.UI.Component.MediaFileChooser ();
 			this.capturemediafilechooser.Events = ((global::Gdk.EventMask)(256));
 			this.capturemediafilechooser.Name = "capturemediafilechooser";
 			this.outputfiletable.Add(this.capturemediafilechooser);
