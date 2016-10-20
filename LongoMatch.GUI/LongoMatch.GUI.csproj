@@ -62,7 +62,6 @@
 		<Compile Include="Gui\Component\PlayersListTreeWidget.cs" />
 		<Compile Include="Gui\Component\PlayListWidget.cs" />
 		<Compile Include="Gui\Component\ProjectListWidget.cs" />
-		<Compile Include="Gui\Dialog\VideoEditionProperties.cs" />
 		<Compile Include="Gui\Component\CategoryProperties.cs" />
 		<Compile Include="Gui\Component\PlaysListTreeWidget.cs" />
 		<Compile Include="Gui\Dialog\EndCaptureDialog.cs" />
@@ -73,7 +72,6 @@
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.CategoryProperties.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayListWidget.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EntryDialog.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.NotesWidget.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
@@ -134,8 +132,6 @@
 		<Compile Include="Gui\Component\PlaysPositionViewer.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlaysPositionViewer.cs" />
 		<Compile Include="Gui\Component\TeamsComboBox.cs" />
-		<Compile Include="Gui\Component\MediaFileChooser.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Component.MediaFileChooser.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.DashboardWidget.cs" />
 		<Compile Include="Gui\Panel\PanelHeader.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Panel.PanelHeader.cs" />

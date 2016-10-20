@@ -21,6 +21,7 @@ using System.Linq;
 using Gtk;
 using VAS.Core;
 using VAS.Core.Store;
+using VAS.UI.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {
@@ -142,7 +143,7 @@ namespace LongoMatch.Gui.Component
 			for (var i = 0; i < fileChoosers.Count; i++) {
 				MediaFile mf = fileChoosers [i].MediaFile;
 				if (mf != null) {
-					fileSet.Replace (fileSet [i], mf);	
+					fileSet.Replace (fileSet [i], mf);
 				} else {
 					// Make sure that CheckFiles will not return true for this MediaFile...
 					fileSet [i].FilePath = null;
