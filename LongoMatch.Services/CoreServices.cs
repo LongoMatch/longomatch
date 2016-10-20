@@ -31,7 +31,6 @@ using VAS.Core.MVVMC;
 using VAS.Services;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
-using Device = VAS.Core.Device;
 
 
 #if OSTYPE_WINDOWS
@@ -63,9 +62,6 @@ namespace LongoMatch.Services
 
 			/* Check default folders */
 			CheckDirs ();
-
-			/* Initialize device */
-			App.Current.Device = new Device ();
 
 			/* Redirects logs to a file */
 			Log.SetLogFile (App.Current.LogFile);
