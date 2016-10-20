@@ -27,14 +27,14 @@ using Constants = LongoMatch.Core.Common.Constants;
 using LongoMatch.Services;
 using VAS.Core.Interfaces.GUI;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
+using VAS.DB;
 
 namespace Tests.Services
 {
 
-	class DummyMonitor: IDirectoryMonitor
+	class DummyMonitor : IDirectoryMonitor
 	{
 		#region IDirectoryMonitor implementation
 
@@ -115,7 +115,7 @@ namespace Tests.Services
 			service.Start ();
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			FileStream file = File.OpenWrite (outPath);
-			file.Write (new byte[] { 1, 2, 3, 4 }, 0, 4);
+			file.Write (new byte [] { 1, 2, 3, 4 }, 0, 4);
 			file.Flush ();
 			file.Close ();
 			monitor.AddFile (outPath);
@@ -128,7 +128,8 @@ namespace Tests.Services
 		{
 			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
-			FileStorage.StoreAt (dashboard, outPath);
+			App.Current.DependencyRegistry.Retrieve<IFileStorage>
+			   (InstanceType.Default, null).StoreAt (dashboard, outPath);
 			dashboardsProviderMock.Verify (s => s.Add (dashboard), Times.Never ());
 			service.Start ();
 			dashboardsProviderMock.Verify (s => s.Add (dashboard), Times.Once ());
@@ -142,7 +143,8 @@ namespace Tests.Services
 			service.Start ();
 			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
-			FileStorage.StoreAt (dashboard, outPath);
+			App.Current.DependencyRegistry.Retrieve<IFileStorage>
+			   (InstanceType.Default, null).StoreAt (dashboard, outPath);
 			monitor.AddFile (outPath);
 			dashboardsProviderMock.Verify (s => s.Add (dashboard), Times.Once ());
 			Assert.IsFalse (File.Exists (outPath));
@@ -155,7 +157,8 @@ namespace Tests.Services
 			service.Start ();
 			SportsTeam team = SportsTeam.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.TEAMS_TEMPLATE_EXT);
-			FileStorage.StoreAt (team, outPath);
+			App.Current.DependencyRegistry.Retrieve<IFileStorage>
+			   (InstanceType.Default, null).StoreAt (team, outPath);
 			monitor.AddFile (outPath);
 			teamsProviderMock.Verify (s => s.Add (team), Times.Once ());
 			Assert.IsFalse (File.Exists (outPath));
@@ -168,9 +171,10 @@ namespace Tests.Services
 			service.Start ();
 			ProjectLongoMatch project = new ProjectLongoMatch ();
 			string outPath = Path.Combine (tmpDir, "test" + Constants.PROJECT_EXT);
-			FileStorage.StoreAt (project, outPath);
+			App.Current.DependencyRegistry.Retrieve<IFileStorage>
+			   (InstanceType.Default, null).StoreAt (project, outPath);
 			monitor.AddFile (outPath);
-			storageMock.Verify (s => s.Store <ProjectLongoMatch> (project, true));
+			storageMock.Verify (s => s.Store<ProjectLongoMatch> (project, true));
 			Assert.IsFalse (File.Exists (outPath));
 			service.Stop ();
 		}

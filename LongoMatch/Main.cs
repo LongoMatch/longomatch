@@ -33,6 +33,7 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Plugins;
 using VAS.Core.Store;
+using VAS.DB;
 using VAS.Drawing.Cairo;
 using VAS.Multimedia.Utils;
 using VAS.Services;
@@ -42,6 +43,7 @@ using VAS.Video;
 using Constants = LongoMatch.Core.Common.Constants;
 using VASUi = VAS.UI;
 using Device = VAS.Core.Device;
+using LMDB = LongoMatch.DB;
 
 namespace LongoMatch
 {
@@ -85,6 +87,7 @@ namespace LongoMatch
 
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
+				App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 				InitAddins (progress);
 				CoreServices.RegisterService (new UpdatesNotifier ());
 				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);

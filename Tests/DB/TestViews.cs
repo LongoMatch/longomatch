@@ -32,10 +32,11 @@ using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.DB;
 using VAS.DB.Views;
+using LMDB = LongoMatch.DB;
 
 namespace Tests.DB
 {
-	public class PropertiesTest: StorableBase
+	public class PropertiesTest : StorableBase
 	{
 		[PropertyIndex (1)]
 		[PropertyPreload]
@@ -53,7 +54,7 @@ namespace Tests.DB
 		}
 	}
 
-	public class TestView: GenericView<PropertiesTest>
+	public class TestView : GenericView<PropertiesTest>
 	{
 
 		public TestView (CouchbaseStorage storage) : base (storage)
@@ -77,6 +78,7 @@ namespace Tests.DB
 		[TestFixtureSetUp]
 		public void InitDB ()
 		{
+			App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 			string dbPath = Path.Combine (Path.GetTempPath (), "TestDB");
 			if (Directory.Exists (dbPath)) {
 				Directory.Delete (dbPath, true);
@@ -99,7 +101,7 @@ namespace Tests.DB
 		public void CleanDB ()
 		{
 			db.RunInTransaction (() => {
-				foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
+				foreach (var d in db.CreateAllDocumentsQuery ().Run ()) {
 					db.GetDocument (d.DocumentId).Delete ();
 				}
 				return true;
@@ -155,7 +157,7 @@ namespace Tests.DB
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
 
-			List<SportsTeam> teams = storage.RetrieveAll<SportsTeam> ().ToList (); 
+			List<SportsTeam> teams = storage.RetrieveAll<SportsTeam> ().ToList ();
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
@@ -216,9 +218,9 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListPlayers ()
 		{
-			foreach (string n in new []{"andoni", "aitor", "xabi", "iñaki"}) {
-				foreach (string f in new []{"gorriti", "zabala", "otegui"}) {
-					foreach (string r in new []{"cholo", "bobi", "tolai"}) {
+			foreach (string n in new [] { "andoni", "aitor", "xabi", "iñaki" }) {
+				foreach (string f in new [] { "gorriti", "zabala", "otegui" }) {
+					foreach (string r in new [] { "cholo", "bobi", "tolai" }) {
 						PlayerLongoMatch p = new PlayerLongoMatch { Name = n, LastName = f, NickName = r };
 						storage.Store (p);
 					}

@@ -23,29 +23,10 @@ using VAS.Core.Store.Templates;
 
 namespace LongoMatch.Core.Common
 {
-	public class SubstitutionException: Exception
+	public class SubstitutionException : Exception
 	{
 		public SubstitutionException (string error) : base (error)
 		{
-		}
-	}
-
-	public class TemplateNotFoundException<T>: Exception where T: ITemplate
-	{
-		public TemplateNotFoundException (string name) :
-			base (GenerateMessage (name))
-		{
-		}
-
-		private static string GenerateMessage (string name)
-		{
-			if (typeof(T) == typeof(Team)) {
-				return Catalog.GetString ("Team not found:\n") + name;
-			} else if (typeof(T) == typeof(Dashboard)) {
-				return Catalog.GetString ("Dashboard not found:\n") + name;
-			} else {
-				return Catalog.GetString ("Template not found:\n") + name;
-			}
 		}
 	}
 }

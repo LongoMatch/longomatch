@@ -18,12 +18,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseStorageLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TeamsView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migration\DatabaseMigration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CouchbaseManagerLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\EventTypeView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\" />
