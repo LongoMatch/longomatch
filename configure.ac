@@ -49,24 +49,7 @@ fi
 IT_PROG_INTLTOOL([0.40.0])
 AM_GLIB_GNU_GETTEXT
 
-
-dnl Mono and C# compiler
-dnl Check first for a 4.0 compiler or than fallback to 2.0
-SHAMROCK_CHECK_MONO_MODULE(2.4.0)
-PKG_CHECK_EXISTS([mono >= 2.8],
-		[SHAMROCK_FIND_MONO_4_0_COMPILER
-		SHAMROCK_CHECK_MONO_4_0_GAC_ASSEMBLIES([
-			System.Data
-			Mono.Cairo
-			Mono.Posix
-		])]
-,
-		[SHAMROCK_FIND_MONO_2_0_COMPILER
-		SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
-			System.Data
-			Mono.Cairo
-			Mono.Posix
-		])])
+SHAMROCK_CHECK_MONO_MODULE(4.0.0)
 AC_SUBST(MCS, ["$MCS"])
 SHAMROCK_FIND_MONO_RUNTIME
 
