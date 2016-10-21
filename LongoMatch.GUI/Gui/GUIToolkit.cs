@@ -22,7 +22,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects.Blackboard;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Panel;
@@ -66,7 +65,6 @@ namespace LongoMatch.Gui
 		{
 			MainWindow = new MainWindow (this);
 			MainWindow.Hide ();
-			RegistryCanvasFromDrawables ();
 			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 
@@ -209,24 +207,6 @@ namespace LongoMatch.Gui
 			}
 			return Task.Factory.StartNew (() => {
 			});
-		}
-
-		public override void DrawingTool (Image image, TimelineEvent play, FrameDrawing drawing,
-										  CameraConfig camConfig, Project project)
-		{
-			DrawingTool dialog = new DrawingTool (MainWindow);
-			dialog.TransientFor = MainWindow;
-
-			Log.Information ("Drawing tool");
-			if (play == null) {
-				dialog.LoadFrame (image, project as ProjectLongoMatch);
-			} else {
-				dialog.LoadPlay (play as TimelineEventLongoMatch, image, drawing, camConfig,
-					project as ProjectLongoMatch);
-			}
-			dialog.Show ();
-			dialog.Run ();
-			dialog.Destroy ();
 		}
 
 		public override Project ChooseProject (List<Project> projects)
@@ -381,19 +361,6 @@ namespace LongoMatch.Gui
 			dialog.Destroy ();
 			return Task.Factory.StartNew (() => ret);
 		}
-
-
-		void RegistryCanvasFromDrawables ()
-		{
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Counter), typeof (CounterObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Cross), typeof (CrossObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Ellipse), typeof (EllipseObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Line), typeof (LineObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Quadrilateral), typeof (QuadrilateralObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Rectangle), typeof (RectangleObject), "LongoMatch.Drawing");
-			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Text), typeof (TextObject), "LongoMatch.Drawing");
-		}
-
 	}
 }
 

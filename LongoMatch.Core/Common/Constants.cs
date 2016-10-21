@@ -75,19 +75,19 @@ Xavier Queralt Mateu (ca)";
 
 		public const string WEBSITE = "http://www.longomatch.com";
 
-		#if DEBUG
+#if DEBUG
 		public const string LATEST_VERSION_URL = "http://cdn.longomatch.com/latest-longomatch.json";
-		#else
+#else
 		public const string LATEST_VERSION_URL = "http://www.longomatch.com/latest-longomatch";
-		#endif
+#endif
 
-		#if OSTYPE_ANDROID || OSTYPE_IOS
+#if OSTYPE_ANDROID || OSTYPE_IOS
 		public const string MANUAL = "https://fluendo.atlassian.net/wiki/display/LPD/Tag2win+app";
-		#else
+#else
 		public const string MANUAL = "http://www.longomatch.com/documentation/";
-		#endif
+#endif
 
-		#if HAVE_GTK
+#if HAVE_GTK
 		public const int STEP = (int)Gdk.ModifierType.ShiftMask;
 
 		public const int SEEK_BACKWARD = (int)Gdk.Key.Left;
@@ -99,7 +99,7 @@ Xavier Queralt Mateu (ca)";
 		public const int FRAMERATE_DOWN = (int)Gdk.Key.Down;
 
 		public const int TOGGLE_PLAY = (int)Gdk.Key.space;
-		#endif
+#endif
 
 		public const string TEMPLATES_DIR = "templates";
 		public const string TEAMS_TEMPLATE_EXT = ".ltt";
@@ -113,12 +113,6 @@ Xavier Queralt Mateu (ca)";
 		public const string BACKGROUND = "images/longomatch-dark-bg" + IMAGE_EXT;
 
 		public const string SPLASH = "images/longomatch-splash" + IMAGE_EXT;
-		public const string LINE_NORMAL = "line" + IMAGE_EXT;
-		public const string LINE_DASHED = "dash-line" + IMAGE_EXT;
-		public const string LINE_ARROW = "line-arrow" + IMAGE_EXT;
-		public const string LINE_DOUBLE_ARROW = "line-double-arrow" + IMAGE_EXT;
-		public const string LINE_DOT = "line-dot" + IMAGE_EXT;
-		public const string LINE_DOUBLE_DOT = "line-double-dot" + IMAGE_EXT;
 		public const string COMMON_TAG = "LGM_COMMON";
 
 		public const int MAX_PLAYER_ICON_SIZE = 100;

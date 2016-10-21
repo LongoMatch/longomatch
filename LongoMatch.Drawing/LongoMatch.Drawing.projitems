@@ -16,13 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TeamTagger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\TimersTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\PositionObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CounterObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\CrossObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\EllipseObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\LineObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\QuadrilateralObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\RectangleObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Blackboard\TextObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\CardObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Dashboard\ScoreObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\BenchObject.cs" />

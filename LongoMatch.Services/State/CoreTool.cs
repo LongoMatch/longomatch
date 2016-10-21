@@ -20,6 +20,7 @@ using System;
 using VAS.Core.Interfaces.GUI;
 using System.Collections.Generic;
 using LongoMatch.Services.State;
+using VAS.Services.State;
 
 namespace LongoMatch.Services.States
 {
@@ -39,6 +40,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (NewProjectState.NAME, () => new NewProjectState ());
 			uiFlow.Add (ProjectsManagerState.NAME, () => new ProjectsManagerState ());
 			uiFlow.Add (OpenProjectState.NAME, () => new OpenProjectState ());
+			uiFlow.Add (DrawingToolState.NAME, () => new DrawingToolState ());
 		}
 
 		#region ITool implementation
