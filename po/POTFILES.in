@@ -44,6 +44,7 @@ LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs
 LongoMatch.GUI/Gui/Dialog/HotKeySelectorDialog.cs
 LongoMatch.GUI/Gui/Dialog/PlayEditor.cs
 LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
+LongoMatch.GUI/Gui/Dialog/SportDrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
 LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
