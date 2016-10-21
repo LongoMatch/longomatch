@@ -51,8 +51,6 @@ namespace LongoMatch
 		public static void Init ()
 		{
 			App app = new App ();
-			/* Initialize device */
-			app.Device = new VAS.Core.Device ();
 			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
 			InitConstants ();
 			Load ();

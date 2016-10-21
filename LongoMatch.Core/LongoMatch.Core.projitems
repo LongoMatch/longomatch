@@ -52,7 +52,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\Events.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\Services\IDeviceServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RegistryAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RegistryScanner.cs" />
   </ItemGroup>
@@ -60,7 +59,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Events\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
   </ItemGroup>
 </Project>
