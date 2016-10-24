@@ -158,7 +158,7 @@ namespace LongoMatch.Addins
 
 		public static void ShutdownMultimediaBackends ()
 		{
-			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
+			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackendPlugin> ()) {
 				backend.Shutdown ();
 			}
 		}
