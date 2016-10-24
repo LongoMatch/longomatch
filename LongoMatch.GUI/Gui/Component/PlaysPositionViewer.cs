@@ -101,7 +101,7 @@ namespace LongoMatch.Gui.Component
 			if (plays == null || !plays.Any ()) {
 				return;
 			}
-			menu.ShowMenu (project, plays);
+			menu.ShowMenu (project, plays.ToList ());
 		}
 
 		protected override void OnDestroyed ()

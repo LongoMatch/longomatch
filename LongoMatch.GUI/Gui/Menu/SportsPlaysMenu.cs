@@ -34,28 +34,6 @@ namespace LongoMatch.Gui.Menus
 {
 	public class SportsPlaysMenu : PlaysMenu
 	{
-		public event EventHandler EditPlayEvent;
-
-		public SportsPlaysMenu ()
-		{
-			CreateMenu ();
-		}
-
-		public void ShowListMenu (ProjectLongoMatch project, List<TimelineEvent> plays)
-		{
-			ShowMenu (project, plays, null, null, project.EventTypes, true);
-		}
-
-		public void ShowMenu (ProjectLongoMatch project, IEnumerable<TimelineEvent> plays)
-		{
-			ShowMenu (project, plays, null, null, null, false);
-		}
-
-		public void ShowTimelineMenu (ProjectLongoMatch project, List<TimelineEvent> plays, EventType eventType, Time time)
-		{
-			ShowMenu (project, plays, eventType, time, null, false);
-		}
-
 		protected override void ShowMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
 										  IList<EventType> eventTypes, bool editableName)
 		{
@@ -162,22 +140,22 @@ namespace LongoMatch.Gui.Menus
 			Popup ();
 		}
 
-		void CreateMenu ()
+		protected override void CreateMenu (bool calledFromChild = false)
 		{
+			base.CreateMenu (true);
+
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
-				if (EditPlayEvent != null) {
-					EditPlayEvent (this, null);
-				}
+				EmitEditPlayEvent (this, null);
 			};
 			Add (edit);
 
 			duplicate = new MenuItem ("");
 			duplicate.Activated += (sender, e) => App.Current.EventsBroker.Publish<DuplicateEventsEvent> (
-				new DuplicateEventsEvent {
-					TimelineEvents = plays
-				}
-			);
+					new DuplicateEventsEvent {
+						TimelineEvents = plays
+					}
+				);
 			Add (duplicate);
 
 			moveCat = new MenuItem (Catalog.GetString ("Move to"));
@@ -202,18 +180,6 @@ namespace LongoMatch.Gui.Menus
 			Add (snapshot);
 
 			ShowAll ();
-		}
-
-		void HandleNewPlayActivated (object sender, EventArgs e)
-		{
-			App.Current.EventsBroker.Publish<NewEventEvent> (
-				new NewEventEvent {
-					EventType = eventType,
-					EventTime = time,
-					Start = time - new Time { TotalSeconds = 10 },
-					Stop = time + new Time { TotalSeconds = 10 }
-				}
-			);
 		}
 
 		bool IsLineupEvent ()
