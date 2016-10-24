@@ -24,7 +24,6 @@ using LongoMatch.Core.Common;
 namespace LongoMatch
 {
 	[Serializable]
-	[JsonConverter (typeof(VASConverter))]
 	[PropertyChanged.ImplementPropertyChanged]
 	public class Config : VAS.Config
 	{
