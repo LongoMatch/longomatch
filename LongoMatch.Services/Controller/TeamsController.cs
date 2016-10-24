@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System;
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
@@ -49,6 +50,17 @@ namespace LongoMatch.Services.Controller
 			ConfirmSaveText = Catalog.GetString ("Do you want to save the current team");
 			ImportText = Catalog.GetString ("Import team");
 			NameText = Catalog.GetString ("Team name:");
+		}
+
+		protected override bool ShouldCloseOnSave {
+			get {
+				return false;
+			}
+		}
+
+		protected override bool SaveValidations (SportsTeam model)
+		{
+			return true;
 		}
 	}
 }

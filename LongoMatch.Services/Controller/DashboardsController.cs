@@ -26,7 +26,7 @@ using VAS.Services.Controller;
 namespace LongoMatch.Services.Controller
 {
 	[ControllerAttribute ("DashboardsManager")]
-	public class DashboardsController:  TemplatesController<DashboardLongoMatch, DashboardVM>
+	public class DashboardsController : TemplatesController<DashboardLongoMatch, DashboardVM>
 	{
 		public DashboardsController ()
 		{
@@ -48,6 +48,17 @@ namespace LongoMatch.Services.Controller
 			ConfirmSaveText = Catalog.GetString ("Do you want to save the current dashboard");
 			ImportText = Catalog.GetString ("Import dashboard");
 			NameText = Catalog.GetString ("Dashboard name:");
+		}
+
+		protected override bool ShouldCloseOnSave {
+			get {
+				return false;
+			}
+		}
+
+		protected override bool SaveValidations (DashboardLongoMatch model)
+		{
+			return true;
 		}
 	}
 }
