@@ -19,6 +19,8 @@
 using VAS.Core.Interfaces.MVVMC;
 using VAS.Services.State;
 using LongoMatch.Services.ViewModel;
+using System.Threading.Tasks;
+using VAS.Core;
 
 namespace LongoMatch.Services.State
 {
@@ -35,6 +37,16 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new SportsProjectVM { Model = data };
+		}
+
+		public override async Task<bool> PreTransition (dynamic data)
+		{
+			if (!await App.Current.Device.CheckExternalStoragePermission ()) {
+				App.Current.Dialogs.WarningMessage (Catalog.GetString ("Tag2Win can't create new projects without permissions"));
+				return false;
+			}
+			await App.Current.Device.CheckCapturePermissions ();
+			return true;
 		}
 	}
 }
