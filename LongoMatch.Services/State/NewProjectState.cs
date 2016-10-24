@@ -42,7 +42,9 @@ namespace LongoMatch.Services.State
 		public override async Task<bool> PreTransition (dynamic data)
 		{
 			if (!await App.Current.Device.CheckExternalStoragePermission ()) {
-				App.Current.Dialogs.WarningMessage (Catalog.GetString ("Tag2Win can't create new projects without permissions"));
+				var warningMessage = string.Format (Catalog.GetString ("{0} can't create new projects without permissions"),
+												   App.Current.SoftwareName);
+				App.Current.Dialogs.WarningMessage (warningMessage);
 				return false;
 			}
 			await App.Current.Device.CheckCapturePermissions ();
