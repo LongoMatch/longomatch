@@ -34,8 +34,15 @@ namespace LongoMatch.Gui.Menus
 {
 	public class SportsPlaysMenu : PlaysMenu
 	{
-		protected override void ShowMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
+		protected new void ShowMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
 										  IList<EventType> eventTypes, bool editableName)
+		{
+			PrepareMenu (project, plays, eventType, time, eventTypes, editableName);
+			Popup ();
+		}
+
+		protected override void PrepareMenu (Project project, IEnumerable<TimelineEvent> plays, EventType eventType, Time time,
+										 IList<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
 
@@ -136,13 +143,11 @@ namespace LongoMatch.Gui.Menus
 			if (!IsLineupEvent ()) {
 				MenuHelpers.FillAddToPlaylistMenu (addPLN, project.Playlists, this.plays);
 			}
-
-			Popup ();
 		}
 
-		protected override void CreateMenu (bool calledFromChild = false)
+		protected override void CreateMenu ()
 		{
-			base.CreateMenu (true);
+			base.CreateMenu ();
 
 			edit = new MenuItem (Catalog.GetString ("Edit properties"));
 			edit.Activated += (sender, e) => {
