@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.Category ("LongoMatch")]
 	[System.ComponentModel.ToolboxItem (true)]
-	public class CategoriesFilterTreeView: FilterTreeViewBase
+	public class CategoriesFilterTreeView : FilterTreeViewBase
 	{
 		ProjectLongoMatch project;
 		EventsFilter filter;
@@ -67,17 +67,20 @@ namespace LongoMatch.Gui.Component
 			foreach (Period p in project.Periods) {
 				store.AppendValues (catIter, p.Name, false, p);
 			}
-			
+
 			catIter = store.AppendValues (Catalog.GetString ("Timers"), false,
 				new StringObject (Catalog.GetString ("Timers")));
 			foreach (Timer t in project.Timers) {
 				store.AppendValues (catIter, t.Name, false, t);
 			}
-			
+
 			foreach (EventType evType in project.EventTypes) {
 				catIter = store.AppendValues (evType.Name, false, evType);
 
 				if (evType is AnalysisEventType) {
+					if ((evType as AnalysisEventType).Tags.Any ()) {
+						store.AppendValues (catIter, Tag.EmptyTag.Value, false, Tag.EmptyTag);
+					}
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
 						store.AppendValues (catIter, tag.Value, false, tag);
 					}
@@ -87,7 +90,7 @@ namespace LongoMatch.Gui.Component
 			var tagsByGroup = project.Dashboard.CommonTagsByGroup.ToDictionary (x => x.Key, x => x.Value);
 			foreach (string grp in tagsByGroup.Keys) {
 				TreeIter grpIter = store.AppendValues (grp, false, new StringObject (grp));
-				foreach (Tag tag in tagsByGroup[grp]) {
+				foreach (Tag tag in tagsByGroup [grp]) {
 					store.AppendValues (grpIter, tag.Value, false, tag);
 				}
 			}
@@ -99,10 +102,10 @@ namespace LongoMatch.Gui.Component
 		void UpdateSelectionPriv (TreeIter iter, bool active, bool checkParents = true, bool recurse = true)
 		{
 			TreeIter child, parent;
-			
+
 			object o = store.GetValue (iter, COL_VALUE);
 			store.IterParent (out parent, iter);
-			
+
 			if (o is Tag) {
 				EventType evType = store.GetValue (parent, COL_VALUE) as EventType;
 				if (evType != null) {
@@ -118,12 +121,12 @@ namespace LongoMatch.Gui.Component
 				filter.FilterTimer (o as Timer, active);
 			}
 			store.SetValue (iter, COL_ACTIVE, active);
-			
+
 			/* Check its parents */
 			if (active && checkParents && store.IterIsValid (parent)) {
 				UpdateSelectionPriv (parent, active, true, false);
 			}
-			
+
 			/* Check/Uncheck all children */
 			if (recurse) {
 				bool state = filter.IgnoreUpdates;
@@ -135,7 +138,7 @@ namespace LongoMatch.Gui.Component
 				}
 				filter.IgnoreUpdates = state;
 			}
-			
+
 			if (recurse && checkParents)
 				filter.Update ();
 		}
