@@ -96,8 +96,8 @@ namespace LongoMatch.Gui.Panel
 
 			App.Current.EventsBroker.Unsubscribe<QuitApplicationEvent> (HandleQuit);
 
-			teamtagger.Dispose ();
-			projectperiods1.Destroy ();
+			teamtagger?.Dispose ();
+			projectperiods1?.Destroy ();
 
 			base.OnDestroyed ();
 		}
