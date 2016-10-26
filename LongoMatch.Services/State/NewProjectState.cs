@@ -41,6 +41,7 @@ namespace LongoMatch.Services.State
 
 		public override async Task<bool> PreTransition (dynamic data)
 		{
+			Initialize (data);
 			if (!await App.Current.Device.CheckExternalStoragePermission ()) {
 				var warningMessage = string.Format (Catalog.GetString ("{0} can't create new projects without permissions"),
 												   App.Current.SoftwareName);
