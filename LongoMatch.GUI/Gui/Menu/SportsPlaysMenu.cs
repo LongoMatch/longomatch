@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Menus
 				moveCat.Visible = del.Visible = addPLN.Visible = duplicate.Visible = this.plays.Any ();
 			}
 
-			MenuHelpers.FillExportToVideoFileMenu (render, project, plays);
+			MenuHelpers.FillExportToVideoFileMenu (render, project, plays, Catalog.GetString ("Export to video file"));
 
 			if (plays.Count () > 0) {
 				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count ());

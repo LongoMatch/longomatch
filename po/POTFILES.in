@@ -50,6 +50,7 @@ LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Menu/EventTypeMenu.cs
 LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs
+LongoMatch.GUI/Gui/Menu/PlayerMenu.cs
 LongoMatch.GUI/Gui/Menu/SportsPlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs

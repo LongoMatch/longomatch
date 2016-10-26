@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gtk;
+using VAS.Core;
 using VAS.Core.Store;
 using VAS.UI.Menus;
 
@@ -41,7 +42,8 @@ namespace LongoMatch.Gui.Menus
 		{
 			if (events.Count () > 0) {
 				MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenu, project.Playlists, events);
-				MenuHelpers.FillExportToVideoFileMenu (addToPlaylistMenu, project, events);
+				MenuHelpers.FillExportToVideoFileMenu (addToPlaylistMenu, project, events,
+													   Catalog.GetString ("Export to video file"));
 				Popup ();
 			}
 		}
