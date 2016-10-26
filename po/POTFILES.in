@@ -28,7 +28,6 @@ LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/HotkeysConfiguration.cs
 LongoMatch.GUI/Gui/Component/LinkProperties.cs
 LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
-LongoMatch.GUI/Gui/Component/MediaFileChooser.cs
 LongoMatch.GUI/Gui/Component/MediaFileSetSelection.cs
 LongoMatch.GUI/Gui/Component/PlayListWidget.cs
 LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
@@ -47,11 +46,11 @@ LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
 LongoMatch.GUI/Gui/Dialog/SportDrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
-LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Menu/EventTypeMenu.cs
 LongoMatch.GUI/Gui/Menu/PeriodsMenu.cs
 LongoMatch.GUI/Gui/Menu/PlaylistElementMenu.cs
+LongoMatch.GUI/Gui/Menu/PlayerMenu.cs
 LongoMatch.GUI/Gui/Menu/SportsPlaysMenu.cs
 LongoMatch.GUI/Gui/Panel/NewProjectPanel.cs
 LongoMatch.GUI/Gui/Panel/OpenProjectPanel.cs
@@ -97,7 +96,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubstitutionsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.OpenProjectPanel.cs

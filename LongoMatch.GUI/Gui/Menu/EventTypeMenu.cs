@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Menus
 			this.events = events;
 			SetupSortMenu ();
 			MenuHelpers.FillAddToPlaylistMenu (addToPlaylistMenuItem, project.Playlists, events);
-			MenuHelpers.FillExportToVideoFileMenu (exportToVideoFileItem, project, events);
+			MenuHelpers.FillExportToVideoFileMenu (exportToVideoFileItem, project, events, Catalog.GetString ("Export to video file"));
 			Popup ();
 		}
 

@@ -37,6 +37,7 @@ using VAS.Core.Store.Drawables;
 using VAS.Core.Store.Playlists;
 using VAS.Drawing;
 using VAS.UI;
+using VAS.UI.Dialog;
 using VAS.Video.Utils;
 using Image = VAS.Core.Common.Image;
 
@@ -103,64 +104,6 @@ namespace LongoMatch.Gui
 		{
 			RemoveModalPanelAndWindow (panel);
 			return AsyncHelpers.Return ();
-		}
-
-		public override List<EditionJob> ConfigureRenderingJob (Playlist playlist)
-		{
-			VideoEditionProperties vep;
-			List<EditionJob> jobs = new List<EditionJob> ();
-			int response;
-
-			Log.Information ("Configure rendering job");
-			if (playlist.Elements.Count == 0) {
-				App.Current.Dialogs.WarningMessage (Catalog.GetString ("The playlist you want to render is empty."));
-				return null;
-			}
-
-			vep = new VideoEditionProperties (MainWindow as Gtk.Window);
-			vep.Playlist = playlist;
-			response = vep.Run ();
-			while (response == (int)ResponseType.Ok) {
-				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {
-					App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select a video file."));
-					response = vep.Run ();
-				} else if (vep.SplitFiles && vep.OutputDir == null) {
-					App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select an output directory."));
-					response = vep.Run ();
-				} else {
-					break;
-				}
-			}
-			if (response == (int)ResponseType.Ok) {
-				if (!vep.SplitFiles) {
-					jobs.Add (new EditionJob (playlist, vep.EncodingSettings));
-				} else {
-					int i = 0;
-					foreach (IPlaylistElement play in playlist.Elements) {
-						EncodingSettings settings;
-						Playlist pl;
-						string name, ext, filename;
-
-						settings = vep.EncodingSettings;
-						pl = new Playlist ();
-						if (play is PlaylistPlayElement) {
-							name = (play as PlaylistPlayElement).Play.Name;
-							ext = settings.EncodingProfile.Extension;
-						} else {
-							name = "image";
-							ext = "png";
-						}
-						filename = String.Format ("{0}-{1}.{2}", i.ToString ("d4"), name, ext);
-
-						pl.Elements.Add (play);
-						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
-						jobs.Add (new EditionJob (pl, settings));
-						i++;
-					}
-				}
-			}
-			vep.Destroy ();
-			return jobs;
 		}
 
 		public override void ExportFrameSeries (Project openedProject, TimelineEvent play, string snapshotsDir)
