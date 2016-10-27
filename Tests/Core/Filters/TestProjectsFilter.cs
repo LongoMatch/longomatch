@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using NUnit.Framework;
+using VAS.Core.Common;
 
 namespace Tests.Core.Filters
 {
@@ -89,7 +90,7 @@ namespace Tests.Core.Filters
 			projectsFilter.FilterCompetition ("EHL", true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (10, projectsFilter.VisibleProjects.Count);
-			projectsFilter.FilterCompetition (ProjectsFilter.EMPTY_OR_NULL, true);
+			projectsFilter.FilterCompetition (Constants.EMPTY_OR_NULL, true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (12, projectsFilter.VisibleProjects.Count);
 			projectsFilter.FilterCompetition ("Liga", false);
@@ -111,7 +112,7 @@ namespace Tests.Core.Filters
 			projectsFilter.FilterSeason ("2016", true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (10, projectsFilter.VisibleProjects.Count);
-			projectsFilter.FilterSeason (ProjectsFilter.EMPTY_OR_NULL, true);
+			projectsFilter.FilterSeason (Constants.EMPTY_OR_NULL, true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (12, projectsFilter.VisibleProjects.Count);
 			projectsFilter.FilterSeason ("2015", false);
@@ -148,13 +149,13 @@ namespace Tests.Core.Filters
 		[Test ()]
 		public void TestNullOrEmptyFilters ()
 		{
-			projectsFilter.FilterCompetition (ProjectsFilter.EMPTY_OR_NULL, true);
+			projectsFilter.FilterCompetition (Constants.EMPTY_OR_NULL, true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (2, projectsFilter.VisibleProjects.Count);
-			projectsFilter.FilterSeason (ProjectsFilter.EMPTY_OR_NULL, true);
+			projectsFilter.FilterSeason (Constants.EMPTY_OR_NULL, true);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (1, projectsFilter.VisibleProjects.Count);
-			projectsFilter.FilterCompetition (ProjectsFilter.EMPTY_OR_NULL, false);
+			projectsFilter.FilterCompetition (Constants.EMPTY_OR_NULL, false);
 			projectsFilter.ApplyChanges ();
 			Assert.AreEqual (2, projectsFilter.VisibleProjects.Count);
 		}

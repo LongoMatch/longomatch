@@ -19,6 +19,7 @@ using Gtk;
 using LongoMatch.Core.Filters;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.UI.Component;
 
 namespace LongoMatch.Gui.Component
 {

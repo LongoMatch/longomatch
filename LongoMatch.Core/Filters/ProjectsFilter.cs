@@ -19,12 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
 
 namespace LongoMatch.Core.Filters
 {
 	public class ProjectsFilter
 	{
-		public const string EMPTY_OR_NULL = "$%&EMPTY$%&NULL$$%&";
 		List<ProjectLongoMatch> projects;
 
 		public ProjectsFilter ()
@@ -154,7 +154,7 @@ namespace LongoMatch.Core.Filters
 
 			filteredProjects = projects;
 			if (FilteredSeasons.Count > 0) {
-				if (FilteredSeasons.Contains (EMPTY_OR_NULL)) {
+				if (FilteredSeasons.Contains (Constants.EMPTY_OR_NULL)) {
 					filteredProjects = filteredProjects.Where
 						(p => FilteredSeasons.Contains (p.Description.Season) || String.IsNullOrEmpty (p.Description.Season));
 				} else {
@@ -162,7 +162,7 @@ namespace LongoMatch.Core.Filters
 				}
 			}
 			if (FilteredCompetitions.Count > 0) {
-				if (FilteredCompetitions.Contains (EMPTY_OR_NULL)) {
+				if (FilteredCompetitions.Contains (Constants.EMPTY_OR_NULL)) {
 					filteredProjects = filteredProjects.Where (p => FilteredCompetitions.Contains (p.Description.Competition) ||
 					String.IsNullOrEmpty (p.Description.Competition));
 				} else {
