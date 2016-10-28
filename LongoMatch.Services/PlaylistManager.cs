@@ -33,14 +33,14 @@ namespace LongoMatch.Services
 	{
 		EventToken newPlaylistEventToken;
 
-		public PlaylistManager () : base (new PlayerVM (false))
+		public PlaylistManager () : base (new VideoPlayerVM (false))
 		{
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get { return PlayerVM.Player; }
 			set {
-				PlayerVM = new PlayerVM (false) {
+				PlayerVM = new VideoPlayerVM (false) {
 					Player = value
 				};
 			}
@@ -111,7 +111,7 @@ namespace LongoMatch.Services
 		{
 			if (play != null && Player != null) {
 				play.Playing = true;
-				(Player as PlayerController)?.LoadCameraEvent (
+				(Player as VideoPlayerController)?.LoadCameraEvent (
 					play, seekTime, playing);
 				if (playing) {
 					Player.Play ();

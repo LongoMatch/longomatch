@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 			projectType = ProjectType.None;
 			detachedPlayer = false;
 			//FIXME: Just a Temporal fix, until AnalysisComponent and codingwidget uses the playerVM.
-			playercapturer.SetViewModel (new PlayerVM ());
+			playercapturer.SetViewModel (new VideoPlayerVM ());
 			codingwidget.Player = playercapturer.ViewModel.Player;
 			App.Current.EventsBroker.Subscribe<EventCreatedEvent> (HandleEventCreated);
 			App.Current.EventsBroker.Subscribe<EventsDeletedEvent> (HandleEventsDeleted);
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Component
 			base.Destroy ();
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get {
 				//FIXME: Just a Temporal fix, until AnalysisComponent uses the playerVM.
 				return playercapturer.ViewModel.Player;

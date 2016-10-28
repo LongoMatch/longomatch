@@ -41,7 +41,7 @@ namespace LongoMatch.Services
 		ProjectType projectType;
 		EventsFilter filter;
 		IAnalysisWindowBase analysisWindow;
-		IPlayerController player;
+		IVideoPlayerController player;
 		ICapturerBin capturer;
 
 		void HandleOpenedProjectChanged (OpenedProjectEvent e)

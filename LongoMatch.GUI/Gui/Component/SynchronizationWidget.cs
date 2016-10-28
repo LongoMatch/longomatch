@@ -52,8 +52,8 @@ namespace LongoMatch.Gui.Component
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
-		PlayerVM mainCamPlayerVM;
-		PlayerVM secCamPlayerVM;
+		VideoPlayerVM mainCamPlayerVM;
+		VideoPlayerVM secCamPlayerVM;
 
 		enum DidacticMessage
 		{
@@ -96,8 +96,8 @@ namespace LongoMatch.Gui.Component
 			main_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 			sec_cam_label.ModifyFont (FontDescription.FromString (App.Current.Style.Font + " bold 14"));
 			//FIXME: This Should Implement IView with a ViewModel with two PlayerVMs
-			mainCamPlayerVM = new PlayerVM ();
-			secCamPlayerVM = new PlayerVM ();
+			mainCamPlayerVM = new VideoPlayerVM ();
+			secCamPlayerVM = new VideoPlayerVM ();
 			main_cam_playerbin.SetViewModel (mainCamPlayerVM);
 			sec_cam_playerbin.SetViewModel (secCamPlayerVM);
 			mainCamPlayerVM.Mode = PlayerViewOperationMode.Synchronization;

@@ -1,4 +1,4 @@
-// IPlayer.cs
+// IVideoPlayer.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //

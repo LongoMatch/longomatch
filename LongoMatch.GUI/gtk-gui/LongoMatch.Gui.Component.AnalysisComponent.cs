@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.HBox videowidgetsbox;
 		
-		private global::VAS.UI.PlayerCapturerBin playercapturer;
+		private global::VAS.UI.VideoPlayerCapturerBin playercapturer;
 		
 		private global::LongoMatch.Gui.Component.CodingWidget codingwidget;
 
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 			this.videowidgetsbox.Name = "videowidgetsbox";
 			this.videowidgetsbox.Spacing = 6;
 			// Container child videowidgetsbox.Gtk.Box+BoxChild
-			this.playercapturer = new global::VAS.UI.PlayerCapturerBin ();
+			this.playercapturer = new global::VAS.UI.VideoPlayerCapturerBin ();
 			this.playercapturer.Events = ((global::Gdk.EventMask)(256));
 			this.playercapturer.Name = "playercapturer";
 			this.videowidgetsbox.Add (this.playercapturer);
