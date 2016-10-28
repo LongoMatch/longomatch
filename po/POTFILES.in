@@ -60,7 +60,6 @@ LongoMatch.GUI/Gui/Panel/SportsTemplatesPanel.cs
 LongoMatch.GUI/Gui/Panel/TeamsTemplatesPanel.cs
 LongoMatch.GUI/Gui/Panel/WelcomePanel.cs
 LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs
-LongoMatch.GUI/Gui/TreeView/FilterTreeViewBase.cs
 LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs
