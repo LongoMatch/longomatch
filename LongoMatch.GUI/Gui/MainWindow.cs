@@ -245,7 +245,11 @@ namespace LongoMatch.Gui
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
 		public async Task<bool> CloseAndQuit ()
 		{
+<<<<<<< ce62423a62254e06e503e2d397723e93cade5936
 			if (await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ())) {
+=======
+			if (await App.Current.EventsBroker.CheckPublish (new CloseOpenedProjectEvent ())) {
+>>>>>>> Remove hack to publish CloseOpenedProject
 				await App.Current.EventsBroker.Publish (new QuitApplicationEvent ());
 				analysisWindow?.Dispose ();
 			}
