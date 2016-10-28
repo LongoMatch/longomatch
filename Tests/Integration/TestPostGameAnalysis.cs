@@ -244,7 +244,7 @@ namespace Tests.Integration
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();
