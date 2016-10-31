@@ -17,29 +17,21 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Panel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Filters;
-using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
-using VAS.Core.Store.Drawables;
-using VAS.Core.Store.Playlists;
-using VAS.Drawing;
 using VAS.UI;
-using VAS.UI.Dialog;
 using VAS.Video.Utils;
-using Image = VAS.Core.Common.Image;
 
 namespace LongoMatch.Gui
 {
