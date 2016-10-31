@@ -85,6 +85,8 @@ namespace LongoMatch
 				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
 				App.Current.Dialogs = VASUi.Dialogs.Instance;
 
+				App.Current.KPIService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
+
 				Task gstInit = Task.Factory.StartNew (() => InitGStreamer (progress));
 
 				App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);

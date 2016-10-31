@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.UI.Multimedia.Gtk2", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAS.Drawing.Net45", "VAS\VAS.Drawing\VAS.Drawing.Net45.csproj", "{F99F378C-8C75-4888-A173-C7B4EC2D37E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kit.Core45", "VAS\HockeySDK-Windows\Src\Kit.Core45\Kit.Core45.csproj", "{14123A8E-6D6B-4362-B001-35B8C2505EED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99F378C-8C75-4888-A173-C7B4EC2D37E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14123A8E-6D6B-4362-B001-35B8C2505EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14123A8E-6D6B-4362-B001-35B8C2505EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14123A8E-6D6B-4362-B001-35B8C2505EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14123A8E-6D6B-4362-B001-35B8C2505EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
