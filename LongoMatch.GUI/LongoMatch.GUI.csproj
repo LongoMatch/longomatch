@@ -47,7 +47,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="Gui\MainWindow.cs" />
-		<Compile Include="Gui\TransparentDrawingArea.cs" />
 		<Compile Include="Gui\Dialog\EditCategoryDialog.cs" />
 		<Compile Include="Gui\Dialog\EntryDialog.cs" />
 		<Compile Include="Gui\Component\DashboardWidget.cs" />
@@ -78,7 +77,6 @@
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
 		<Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
