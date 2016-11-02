@@ -28,9 +28,11 @@ using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
+using VAS.DB;
 using VAS.Services;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMFileStorage = LongoMatch.DB.FileStorage;
 
 
 #if OSTYPE_WINDOWS
@@ -130,6 +132,7 @@ namespace LongoMatch.Services
 		public static void RegisterServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
 			App.Current.DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
+			App.Current.DependencyRegistry.Register<IFileStorage, LMFileStorage> (1);
 			App.Current.MultimediaToolkit = multimediaToolkit;
 			App.Current.GUIToolkit = guiToolkit;
 			App.Current.EventsBroker = new EventsBroker ();
