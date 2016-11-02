@@ -80,11 +80,6 @@
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
 		<Compile Include="Gui\TreeView\ListTreeViewBase.cs" />
-		<Compile Include="Gui\Component\RenderingStateBar.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Component.RenderingStateBar.cs" />
-		<Compile Include="Gui\TreeView\RenderingJobsTreeView.cs" />
-		<Compile Include="Gui\Dialog\RenderingJobsDialog.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.RenderingJobsDialog.cs" />
 		<Compile Include="Gui\Dialog\About.cs" />
 		<Compile Include="Gui\GUIToolkit.cs" />
 		<Compile Include="Gui\Cairo.cs" />

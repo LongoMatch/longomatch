@@ -78,7 +78,6 @@ namespace Tests.Integration
 
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			mockDialogs = new Mock<IDialogs> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());

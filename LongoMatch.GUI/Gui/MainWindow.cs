@@ -81,12 +81,6 @@ namespace LongoMatch.Gui
 
 		#region Plubic Methods
 
-		public IRenderingStateBar RenderingStateBar {
-			get {
-				return renderingstatebar1;
-			}
-		}
-
 		public MenuShell Menu {
 			get {
 				return menubar1;
@@ -224,7 +218,7 @@ namespace LongoMatch.Gui
 					itemAction.Activated += async (sender, e) => {
 						bool loadTool = true;
 						if (openedProject != null) {
-							loadTool = await App.Current.EventsBroker.CheckPublish (new CloseOpenedProjectEvent ());
+							loadTool = await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ());
 						}
 						if (loadTool) {
 							tool.Load (App.Current.GUIToolkit);
@@ -242,6 +236,7 @@ namespace LongoMatch.Gui
 				}
 			}
 			this.UIManager.EnsureUpdate ();
+			renderingstatebarview1.SetViewModel (App.Current.JobsManager);
 		}
 
 		/// <summary>
@@ -250,7 +245,7 @@ namespace LongoMatch.Gui
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
 		public async Task<bool> CloseAndQuit ()
 		{
-			if (await App.Current.EventsBroker.CheckPublish (new CloseOpenedProjectEvent ())) {
+			if (await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ())) {
 				await App.Current.EventsBroker.Publish (new QuitApplicationEvent ());
 				analysisWindow?.Dispose ();
 			}
@@ -277,11 +272,6 @@ namespace LongoMatch.Gui
 
 		private void ConnectSignals ()
 		{
-			/* Adding Handlers for each event */
-			renderingstatebar1.ManageJobs += (e, o) => {
-				App.Current.EventsBroker.Publish<ManageJobsEvent> ();
-			};
-
 			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (this.HandleOpenedProject);
 		}
 
@@ -379,12 +369,8 @@ namespace LongoMatch.Gui
 			res = converter.Run ();
 			converter.Destroy ();
 			if (res == (int)ResponseType.Ok) {
-				App.Current.EventsBroker.Publish<ConvertVideoFilesEvent> (
-					new ConvertVideoFilesEvent {
-						Files = converter.Files,
-						Settings = converter.EncodingSettings
-					}
-				);
+				ConversionJob job = new ConversionJob (converter.Files, converter.EncodingSettings);
+				App.Current.JobsManager.Add (job);
 			}
 		}
 

@@ -50,12 +50,6 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Dashboard name:");
 		}
 
-		protected override bool ShouldCloseOnSave {
-			get {
-				return false;
-			}
-		}
-
 		protected override bool SaveValidations (DashboardLongoMatch model)
 		{
 			return true;
