@@ -58,6 +58,7 @@ namespace LongoMatch
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
 			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
 			GLib.ExceptionManager.UnhandledException += HandleException;
+			TaskScheduler.UnobservedTaskException += HandleUnobservedTaskException;
 			App.Init ();
 			CoreServices.Init ();
 			InitGtk ();
@@ -200,6 +201,11 @@ namespace LongoMatch
 		static void HandleException (GLib.UnhandledExceptionArgs args)
 		{
 			ProcessExecutionError ((Exception)args.ExceptionObject);
+		}
+
+		static void HandleUnobservedTaskException (object sender, UnobservedTaskExceptionEventArgs e)
+		{
+			Log.Exception (e.Exception);
 		}
 
 		static void ProcessExecutionError (Exception ex)
