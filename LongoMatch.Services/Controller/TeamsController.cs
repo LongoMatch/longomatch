@@ -52,12 +52,6 @@ namespace LongoMatch.Services.Controller
 			NameText = Catalog.GetString ("Team name:");
 		}
 
-		protected override bool ShouldCloseOnSave {
-			get {
-				return false;
-			}
-		}
-
 		protected override bool SaveValidations (SportsTeam model)
 		{
 			return true;

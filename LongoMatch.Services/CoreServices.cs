@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Interfaces;
@@ -30,6 +31,7 @@ using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.MVVMC;
 using VAS.DB;
 using VAS.Services;
+using VAS.Services.ViewModel;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMFileStorage = LongoMatch.DB.FileStorage;
@@ -46,9 +48,9 @@ namespace LongoMatch.Services
 		static DataBaseManager dbManager;
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
-		static RenderingJobsManager videoRenderer;
 		static ProjectsManager projectsManager;
 		static PlaylistManager plManager;
+		static JobsManagerVM jobsManagerVM;
 		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
 		static List<IService> services = new List<IService> ();
@@ -146,8 +148,12 @@ namespace LongoMatch.Services
 			RegisterService (ts);
 
 			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager ();
-			RegisterService (videoRenderer);
+			jobsManagerVM = new JobsManagerVM {
+				Model = new ObservableCollection<Job> ()
+			};
+			App.Current.JobsManager = jobsManagerVM;
+			RenderingJobsController jobsController = new RenderingJobsController (jobsManagerVM);
+			RegisterService (jobsController);
 
 			projectsManager = new ProjectsManager ();
 			RegisterService (projectsManager);
@@ -236,11 +242,12 @@ namespace LongoMatch.Services
 
 		static void HandleQuitApplicationEvent (QuitApplicationEvent e)
 		{
-			if (videoRenderer.PendingJobs.Count > 0) {
+			if (jobsManagerVM.IsBusy) {
 				string msg = Catalog.GetString ("A rendering job is running in the background. Do you really want to quit?");
 				if (!App.Current.Dialogs.QuestionMessage (msg, null).Result) {
 					return;
 				}
+				jobsManagerVM.CancelAll ();
 			}
 			App.Current.GUIToolkit.Quit ();
 		}

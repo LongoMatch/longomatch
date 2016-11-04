@@ -5,70 +5,70 @@ namespace LongoMatch.Gui
 	public partial class MainWindow
 	{
 		private global::Gtk.UIManager UIManager;
-		
+
 		private global::Gtk.Action FileAction;
-		
+
 		private global::Gtk.Action NewPojectAction;
-		
+
 		private global::Gtk.Action OpenProjectAction;
-		
+
 		private global::Gtk.Action QuitAction;
-		
+
 		private global::Gtk.Action CloseProjectAction;
-		
+
 		private global::Gtk.Action ToolsAction;
-		
+
 		private global::Gtk.Action ProjectsManagerAction;
-		
+
 		private global::Gtk.Action CategoriesTemplatesManagerAction;
-		
+
 		private global::Gtk.Action ViewAction;
-		
+
 		private global::Gtk.ToggleAction FullScreenAction;
-		
+
 		private global::Gtk.Action SaveProjectAction;
-		
+
 		private global::Gtk.Action HelpAction;
-		
+
 		private global::Gtk.Action AboutAction;
-		
+
 		private global::Gtk.Action ExportProjectToCSVFileAction;
-		
+
 		private global::Gtk.Action TeamsTemplatesManagerAction;
-		
+
 		private global::Gtk.Action HelpAction1;
-		
+
 		private global::Gtk.Action ImportProjectAction;
-		
+
 		private global::Gtk.Action ExportProjectAction;
-		
+
 		private global::Gtk.Action ExportProjectAction1;
-		
+
 		private global::Gtk.Action Action;
-		
+
 		private global::Gtk.Action ExportToProjectFileAction;
-		
+
 		private global::Gtk.Action ImportFromFileAction;
-		
+
 		private global::Gtk.Action VideoConverterToolAction;
-		
+
 		private global::Gtk.Action DatabasesManagerAction;
-		
+
 		private global::Gtk.Action PreferencesAction;
-		
+
 		private global::Gtk.Action ShowProjectStatsAction;
-		
+
 		private global::Gtk.Action MigrationToolAction;
-		
+
 		private global::Gtk.VBox vbox1;
-		
+
 		private global::Gtk.VBox menubox;
-		
+
 		private global::Gtk.MenuBar menubar1;
-		
+
 		private global::Gtk.HBox centralbox;
-		
-		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
+
+		private global::VAS.UI.Component.RenderingStateBarView renderingstatebarview1;
 
 		protected virtual void Build ()
 		{
@@ -197,12 +197,11 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.centralbox]));
 			w4.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.renderingstatebar1 = new global::LongoMatch.Gui.Component.RenderingStateBar ();
-			this.renderingstatebar1.Events = ((global::Gdk.EventMask)(256));
-			this.renderingstatebar1.Name = "renderingstatebar1";
-			this.renderingstatebar1.Fraction = 0;
-			this.vbox1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.renderingstatebar1]));
+			this.renderingstatebarview1 = new global::VAS.UI.Component.RenderingStateBarView ();
+			this.renderingstatebarview1.Events = ((global::Gdk.EventMask)(256));
+			this.renderingstatebarview1.Name = "renderingstatebarview1";
+			this.vbox1.Add (this.renderingstatebarview1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.renderingstatebarview1]));
 			w5.Position = 2;
 			w5.Expand = false;
 			w5.Fill = false;
@@ -212,7 +211,6 @@ namespace LongoMatch.Gui
 			}
 			this.DefaultWidth = 938;
 			this.DefaultHeight = 604;
-			this.renderingstatebar1.Hide ();
 			this.Show ();
 			this.AboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 			this.HelpAction1.Activated += new global::System.EventHandler (this.OnHelpAction1Activated);

@@ -49,9 +49,6 @@ namespace Tests.Integration
 			drawingToolkitMock = new Mock<IDrawingToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			guiToolkitMock = new Mock<IGUIToolkit> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() =>
-				new Mock<IRenderingStateBar> ().Object
-			);
 		}
 
 		[TearDown]
@@ -92,7 +89,6 @@ namespace Tests.Integration
 				AddinsManager.LoadUIBackendsAddins (App.Current.GUIToolkit);
 				AddinsManager.LoadServicesAddins ();
 
-				IRenderingStateBar rr = App.Current.GUIToolkit.RenderingStateBar;
 				IMultimediaToolkit im = App.Current.MultimediaToolkit;
 
 				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);

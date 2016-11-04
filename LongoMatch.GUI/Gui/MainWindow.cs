@@ -81,12 +81,6 @@ namespace LongoMatch.Gui
 
 		#region Plubic Methods
 
-		public IRenderingStateBar RenderingStateBar {
-			get {
-				return renderingstatebar1;
-			}
-		}
-
 		public MenuShell Menu {
 			get {
 				return menubar1;
@@ -221,10 +215,10 @@ namespace LongoMatch.Gui
 					Gtk.Action itemAction = new Gtk.Action (actionName, tool.MenubarLabel, null, null);
 					itemAction.Sensitive = true;
 					itemAction.ShortLabel = tool.MenubarLabel;
-					itemAction.Activated += (sender, e) => {
+					itemAction.Activated += async (sender, e) => {
 						bool loadTool = true;
 						if (openedProject != null) {
-							loadTool = App.Current.EventsBroker.EmitCloseOpenedProject (this);
+							loadTool = await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ());
 						}
 						if (loadTool) {
 							tool.Load (App.Current.GUIToolkit);
@@ -242,17 +236,17 @@ namespace LongoMatch.Gui
 				}
 			}
 			this.UIManager.EnsureUpdate ();
+			renderingstatebarview1.SetViewModel (App.Current.JobsManager);
 		}
 
 		/// <summary>
 		/// Quit application, proposing to close a potentially opened project before.
 		/// </summary>
 		/// <returns><c>true</c>, if the application is quitting, <c>false</c> if quit was cancelled by opened project.</returns>
-		public bool CloseAndQuit ()
+		public async Task<bool> CloseAndQuit ()
 		{
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
-			if (openedProject == null) {
-				App.Current.EventsBroker.Publish<QuitApplicationEvent> (new QuitApplicationEvent ());
+			if (await App.Current.EventsBroker.PublishWithReturn (new CloseOpenedProjectEvent ())) {
+				await App.Current.EventsBroker.Publish (new QuitApplicationEvent ());
 				analysisWindow?.Dispose ();
 			}
 			return openedProject != null;
@@ -278,11 +272,6 @@ namespace LongoMatch.Gui
 
 		private void ConnectSignals ()
 		{
-			/* Adding Handlers for each event */
-			renderingstatebar1.ManageJobs += (e, o) => {
-				App.Current.EventsBroker.Publish<ManageJobsEvent> ();
-			};
-
 			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (this.HandleOpenedProject);
 		}
 
@@ -297,7 +286,7 @@ namespace LongoMatch.Gui
 				);
 			};
 			CloseProjectAction.Activated += (o, e) => {
-				App.Current.EventsBroker.EmitCloseOpenedProject (this);
+				App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {
 				App.Current.StateController.MoveTo (DashboardsManagerState.NAME, null, true);
@@ -321,8 +310,8 @@ namespace LongoMatch.Gui
 					}
 				);
 			};
-			QuitAction.Activated += (o, e) => {
-				CloseAndQuit ();
+			QuitAction.Activated += async (o, e) => {
+				await CloseAndQuit ();
 			};
 			OpenProjectAction.Activated += (sender, e) => {
 				App.Current.EventsBroker.Publish<SaveProjectEvent> (
@@ -380,12 +369,8 @@ namespace LongoMatch.Gui
 			res = converter.Run ();
 			converter.Destroy ();
 			if (res == (int)ResponseType.Ok) {
-				App.Current.EventsBroker.Publish<ConvertVideoFilesEvent> (
-					new ConvertVideoFilesEvent {
-						Files = converter.Files,
-						Settings = converter.EncodingSettings
-					}
-				);
+				ConversionJob job = new ConversionJob (converter.Files, converter.EncodingSettings);
+				App.Current.JobsManager.Add (job);
 			}
 		}
 

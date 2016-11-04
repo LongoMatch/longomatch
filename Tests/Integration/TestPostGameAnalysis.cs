@@ -78,7 +78,6 @@ namespace Tests.Integration
 
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			mockDialogs = new Mock<IDialogs> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			guiToolkitMock.Setup (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ())).Returns (true);
 			mockDialogs.Setup (g => g.BusyDialog (It.IsAny<string> (), It.IsAny<object> ())).Returns (
 				() => new DummyBusyDialog ());
@@ -244,7 +243,7 @@ namespace Tests.Integration
 			int eventsCount = p.Timeline.Count;
 			AddEvent (p, 2, 3000, 3050, 3025);
 			AddEvent (p, 3, 3000, 3050, 3025);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			savedP = App.Current.DatabaseManager.ActiveDB.Retrieve<ProjectLongoMatch> (p.ID);
 			Assert.AreEqual (eventsCount + 2, savedP.Timeline.Count);
 			CoreServices.Stop ();

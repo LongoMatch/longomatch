@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.Interfaces.GUI;
@@ -252,15 +253,15 @@ namespace Tests.Services
 		}
 
 		[Test ()]
-		public void TestCloseCaptureProject ()
+		public async Task TestCloseCaptureProject ()
 		{
 			int projectChanged = 0;
 
 			EventToken et = App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => projectChanged++);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (0, projectChanged);
 
-			App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
+			await App.Current.EventsBroker.Publish (
 				new OpenNewProjectEvent {
 					Project = project,
 					ProjectType = ProjectType.CaptureProject,
@@ -270,18 +271,18 @@ namespace Tests.Services
 			projectChanged = 0;
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (0, projectChanged);
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (1, projectChanged);
 
-			App.Current.EventsBroker.Publish<OpenNewProjectEvent> (
+			await App.Current.EventsBroker.Publish (
 				new OpenNewProjectEvent {
 					Project = project,
 					ProjectType = ProjectType.CaptureProject,
@@ -290,7 +291,7 @@ namespace Tests.Services
 			);
 			projectChanged = 0;
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
-			App.Current.EventsBroker.EmitCloseOpenedProject (this);
+			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());

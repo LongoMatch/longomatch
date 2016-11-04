@@ -95,7 +95,6 @@
     <Compile Include="Core\Store\TestTimer.cs" />
     <Compile Include="DB\TestStorage.cs" />
     <Compile Include="Services\TestTemplatesService.cs" />
-    <Compile Include="Services\TestRenderingJobsManager.cs" />
     <Compile Include="Core\Store\TestActionLink.cs" />
     <Compile Include="Core\Store\Templates\TestDashboard.cs" />
     <Compile Include="Services\TestServices.cs" />

@@ -41,6 +41,7 @@ namespace LongoMatch.Services.States
 			uiFlow.Add (ProjectsManagerState.NAME, () => new ProjectsManagerState ());
 			uiFlow.Add (OpenProjectState.NAME, () => new OpenProjectState ());
 			uiFlow.Add (DrawingToolState.NAME, () => new DrawingToolState ());
+			uiFlow.Add (JobsManagerState.NAME, () => new JobsManagerState ());
 		}
 
 		#region ITool implementation

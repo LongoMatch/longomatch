@@ -70,7 +70,6 @@ namespace Tests.Integration
 			App.Init ();
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
@@ -111,7 +110,6 @@ namespace Tests.Integration
 			App.Init ();
 			CoreServices.Init ();
 			var guiToolkitMock = new Mock<IGUIToolkit> ();
-			guiToolkitMock.Setup (g => g.RenderingStateBar).Returns (() => new Mock<IRenderingStateBar> ().Object);
 			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
