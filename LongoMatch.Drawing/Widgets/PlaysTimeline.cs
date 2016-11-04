@@ -35,7 +35,7 @@ namespace LongoMatch.Drawing.Widgets
 	{
 		public PlaysTimeline (IWidget widget, IPlayerController player) : base (widget, player)
 		{
-			
+
 		}
 
 		protected override void FillCanvas ()
@@ -57,12 +57,12 @@ namespace LongoMatch.Drawing.Widgets
 					VASDrawing.Utils.ColorForRow (i), App.Current.Style.PaletteBackgroundDark);
 				AddTimeline (tl, t);
 			}
-			                        
+
 			foreach (EventType type in project.EventTypes) {
 				List<TimelineEvent> timelineEventList = project.EventsByType (type);
 				var timelineEventLongoMatchList = new List<TimelineEvent> ();
 				timelineEventList.ForEach (x => timelineEventLongoMatchList.Add (x));
-				tl = new CategoryTimeline (project, timelineEventLongoMatchList, duration,
+				tl = new SportCategoryTimeline (project as ProjectLongoMatch, timelineEventLongoMatchList, duration,
 					i * StyleConf.TimelineCategoryHeight,
 					VASDrawing.Utils.ColorForRow (i), playsFilter);
 				AddTimeline (tl, type);
