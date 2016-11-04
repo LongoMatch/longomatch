@@ -33,5 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\PlaysTimeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Widgets\SportDashboardCanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Teams\SportsPlayerObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CanvasObjects\Timeline\SportCategoryTimeline.cs" />
   </ItemGroup>
 </Project>
