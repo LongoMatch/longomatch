@@ -71,8 +71,10 @@ namespace Tests
 		static IScreenState CreateScreenState ()
 		{
 			var screenStateMock = new Mock<IScreenState> ();
-			screenStateMock.Setup (x => x.PreTransition (It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
-			screenStateMock.Setup (x => x.PostTransition ()).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.LoadState (It.IsAny<object> ())).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.ShowState ()).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.UnloadState ()).Returns (AsyncHelpers.Return (true));
+			screenStateMock.Setup (x => x.HideState ()).Returns (AsyncHelpers.Return (true));
 			screenStateMock.Setup (x => x.Panel).Returns (new Mock<IPanel> ().Object);
 			return screenStateMock.Object;
 		}

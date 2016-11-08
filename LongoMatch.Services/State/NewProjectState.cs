@@ -39,7 +39,7 @@ namespace LongoMatch.Services.State
 			ViewModel = new SportsProjectVM { Model = data };
 		}
 
-		public override async Task<bool> PreTransition (dynamic data)
+		public override async Task<bool> LoadState (dynamic data)
 		{
 			Initialize (data);
 			if (!await App.Current.Device.CheckExternalStoragePermission ()) {
