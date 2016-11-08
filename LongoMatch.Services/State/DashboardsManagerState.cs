@@ -34,10 +34,10 @@ namespace LongoMatch.Services.States
 			}
 		}
 
-		public override Task<bool> PostTransition ()
+		public override Task<bool> ShowState ()
 		{
 			ViewModel.Save (false);
-			return base.PostTransition ();
+			return base.ShowState ();
 		}
 
 		protected override void CreateViewModel (dynamic data)
