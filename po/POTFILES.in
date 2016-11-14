@@ -63,7 +63,6 @@ LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs
-LongoMatch.GUI/Gui/TreeView/ProjectsTreeView.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DashboardWidget.cs
