@@ -16,10 +16,10 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services.ViewModel;
+using VAS.Core.Common;
 using VAS.Services.State;
 
 namespace LongoMatch.Services.States
@@ -43,7 +43,7 @@ namespace LongoMatch.Services.States
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new TeamsManagerVM ();
-			ViewModel.Model = new ObservableCollection<SportsTeam> (App.Current.TeamTemplatesProvider.Templates);
+			ViewModel.Model = new RangeObservableCollection<SportsTeam> (App.Current.TeamTemplatesProvider.Templates);
 		}
 	}
 }
