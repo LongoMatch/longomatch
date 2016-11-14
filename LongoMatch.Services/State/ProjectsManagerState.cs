@@ -18,8 +18,8 @@
 //
 using VAS.Services.State;
 using LongoMatch.Services.ViewModel;
-using System.Collections.ObjectModel;
 using LongoMatch.Core.Store;
+using VAS.Core.Common;
 
 namespace LongoMatch.Services.State
 {
@@ -36,7 +36,7 @@ namespace LongoMatch.Services.State
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new SportsProjectsManagerVM ();
-			ViewModel.Model = new ObservableCollection<ProjectLongoMatch> (
+			ViewModel.Model = new RangeObservableCollection<ProjectLongoMatch> (
 				App.Current.DatabaseManager.ActiveDB.RetrieveAll<ProjectLongoMatch> ());
 		}
 	}

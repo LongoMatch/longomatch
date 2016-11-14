@@ -149,7 +149,7 @@ namespace LongoMatch.Services
 
 			/* Start the rendering jobs manager */
 			jobsManagerVM = new JobsManagerVM {
-				Model = new ObservableCollection<Job> ()
+				Model = new RangeObservableCollection<Job> ()
 			};
 			App.Current.JobsManager = jobsManagerVM;
 			RenderingJobsController jobsController = new RenderingJobsController (jobsManagerVM);
