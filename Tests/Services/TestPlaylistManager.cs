@@ -29,8 +29,10 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
+using VAS.Services.ViewModel;
 
 namespace Tests.Services
 {
@@ -43,6 +45,8 @@ namespace Tests.Services
 		Mock<IAnalysisWindowBase> mockAnalysisWindow;
 		Mock<IPlayerController> mockPlayerController;
 		Mock<IDialogs> mockDiaklogs;
+		Mock<IMultimediaToolkit> multimediaToolkitMock;
+		Mock<IPlayer> playerMock;
 		MediaFileSet mfs;
 
 		bool playlistElementLoaded;
@@ -67,6 +71,14 @@ namespace Tests.Services
 			mockVideoRenderer = new Mock<IJobsManager> ();
 			mockDiaklogs = new Mock<IDialogs> ();
 
+			playerMock = new Mock<IPlayer> ();
+			playerMock.SetupAllProperties ();
+			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
+
+			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
+			multimediaToolkitMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
+			App.Current.MultimediaToolkit = multimediaToolkitMock.Object;
+
 			App.Current.LowerRate = 1;
 			App.Current.UpperRate = 30;
 			App.Current.RatePageIncrement = 3;
@@ -87,7 +99,9 @@ namespace Tests.Services
 
 			plmanager = new PlaylistManager ();
 			plmanager.Start ();
-			plmanager.Player = mockPlayerController.Object;
+			plmanager.SetViewModel (new PlayerVM (false) {
+				Player = mockPlayerController.Object
+			});
 
 			OpenProject (new ProjectLongoMatch ());
 			playlistElementLoaded = false;
@@ -356,7 +370,7 @@ namespace Tests.Services
 				}
 			);
 
-			Assert.AreSame (playercontroller, plmanager.Player);
+			Assert.AreSame (playercontroller, plmanager.PlayerVM.Player);
 
 			App.Current.EventsBroker.Publish<LoadPlaylistElementEvent> (
 				new LoadPlaylistElementEvent {
@@ -388,7 +402,7 @@ namespace Tests.Services
 				}
 			);
 
-			Assert.AreSame (playercontroller, plmanager.Player);
+			Assert.AreSame (playercontroller, plmanager.PlayerVM.Player);
 
 			App.Current.EventsBroker.Publish<LoadPlaylistElementEvent> (
 				new LoadPlaylistElementEvent {
@@ -403,7 +417,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestOpenPresentationNullPlayer ()
 		{
-			plmanager.Player = null;
+			plmanager.SetViewModel (new PlayerVM () { Player = null });
 
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
@@ -433,7 +447,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestOpenNullPresentationNullPlayer ()
 		{
-			plmanager.Player = null;
+			plmanager.SetViewModel (new PlayerVM () { Player = null });
 
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());

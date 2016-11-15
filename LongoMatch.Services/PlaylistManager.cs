@@ -26,29 +26,36 @@ using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
 using VAS.Services;
+using VAS.Services.Controller;
+using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services
 {
-	public class PlaylistManager : IService
+	public class PlaylistManager : PlaylistController, IService
 	{
 		EventsFilter filter;
 
-		public IPlayerController Player {
+		public PlaylistManager () : base (new PlayerVM (false))
+		{
+
+		}
+
+		//[Obsolete ("Use better PlayerVM")]
+		IPlayerController Player {
+			get { return PlayerVM.Player; }
+		}
+
+		Project OpenedProject {
 			get;
 			set;
 		}
 
-		public Project OpenedProject {
+		ProjectType OpenedProjectType {
 			get;
 			set;
 		}
 
-		public ProjectType OpenedProjectType {
-			get;
-			set;
-		}
-
-		protected virtual void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
+		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			if (play != null && Player != null) {
 				play.Playing = true;
@@ -60,7 +67,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void LoadCameraPlay (TimelineEvent play, Time seekTime, bool playing)
+		void LoadCameraPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			if (play != null && Player != null) {
 				play.Playing = true;
@@ -72,13 +79,14 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void HandleOpenedProjectChanged (OpenedProjectEvent e)
+		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
 			var player = e.AnalysisWindow?.Player;
 			if (player == null && Player == null) {
 				return;
 			} else if (player != null) {
-				Player = player;
+				SetViewModel (new PlayerVM () { Player = player });
+				//Player = player;
 			}
 
 			OpenedProject = e.Project;
@@ -93,12 +101,13 @@ namespace LongoMatch.Services
 		/// </summary>
 		/// <param name="presentation">Presentation.</param>
 		/// <param name="player">Player.</param>
-		protected virtual void HandleOpenedPresentationChanged (OpenedPresentationChangedEvent e)
+		void HandleOpenedPresentationChanged (OpenedPresentationChangedEvent e)
 		{
 			if (e.Player == null && Player == null) {
 				return;
 			} else if (e.Player != null) {
-				Player = e.Player;
+				SetViewModel (new PlayerVM () { Player = e.Player });
+				//Player = e.Player;
 			}
 
 			OpenedProject = null;
@@ -108,7 +117,7 @@ namespace LongoMatch.Services
 			filter = null;
 		}
 
-		protected virtual void HandleLoadPlaylistElement (LoadPlaylistElementEvent e)
+		void HandleLoadPlaylistElement (LoadPlaylistElementEvent e)
 		{
 			if (e.Element != null) {
 				e.Playlist.SetActive (e.Element);
@@ -117,7 +126,7 @@ namespace LongoMatch.Services
 				Player.LoadPlaylistEvent (e.Playlist, e.Element, e.Playing);
 		}
 
-		protected virtual void HandlePlayChanged (TimeNodeChangedEvent e)
+		void HandlePlayChanged (TimeNodeChangedEvent e)
 		{
 			if (e.TimeNode is TimelineEvent) {
 				LoadPlay (e.TimeNode as TimelineEvent, e.Time, false);
@@ -127,7 +136,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void HandleLoadPlayEvent (LoadEventEvent e)
+		void HandleLoadPlayEvent (LoadEventEvent e)
 		{
 			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
@@ -148,7 +157,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void HandleLoadCameraEvent (LoadCameraEvent e)
+		void HandleLoadCameraEvent (LoadCameraEvent e)
 		{
 			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
@@ -163,21 +172,21 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void HandleNext (NextPlaylistElementEvent e)
+		void HandleNext (NextPlaylistElementEvent e)
 		{
 			Player.Next ();
 		}
 
-		protected virtual void HandlePrev (PreviousPlaylistElementEvent e)
+		void HandlePrev (PreviousPlaylistElementEvent e)
 		{
 			Player.Previous ();
 		}
 
-		protected virtual void HandlePlaybackRateChanged (PlaybackRateChangedEvent e)
+		void HandlePlaybackRateChanged (PlaybackRateChangedEvent e)
 		{
 		}
 
-		protected virtual void HandleAddPlaylistElement (AddPlaylistElementEvent e)
+		void HandleAddPlaylistElement (AddPlaylistElementEvent e)
 		{
 			if (e.Playlist == null) {
 				e.Playlist = HandleNewPlaylist (
@@ -195,7 +204,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual Playlist HandleNewPlaylist (NewPlaylistEvent e)
+		Playlist HandleNewPlaylist (NewPlaylistEvent e)
 		{
 			string name = Catalog.GetString ("New playlist");
 			Playlist playlist = null;
@@ -220,7 +229,7 @@ namespace LongoMatch.Services
 			return playlist;
 		}
 
-		protected virtual void HandleRenderPlaylist (RenderPlaylistEvent e)
+		void HandleRenderPlaylist (RenderPlaylistEvent e)
 		{
 			List<EditionJob> jobs = App.Current.GUIToolkit.ConfigureRenderingJob (e.Playlist);
 			if (jobs == null)
@@ -229,7 +238,7 @@ namespace LongoMatch.Services
 				App.Current.JobsManager.Add (job);
 		}
 
-		protected virtual void HandleTogglePlayEvent (TogglePlayEvent e)
+		void HandleTogglePlayEvent (TogglePlayEvent e)
 		{
 			if (Player != null) {
 				if (e.Playing) {
@@ -242,19 +251,19 @@ namespace LongoMatch.Services
 
 		#region IService
 
-		public virtual int Level {
+		public int Level {
 			get {
 				return 80;
 			}
 		}
 
-		public virtual string Name {
+		public string Name {
 			get {
 				return "Playlists";
 			}
 		}
 
-		public virtual bool Start ()
+		public new bool Start ()
 		{
 			newPlaylistEventToken = App.Current.EventsBroker.Subscribe<NewPlaylistEvent> ((e) => HandleNewPlaylist (e));
 			App.Current.EventsBroker.Subscribe<AddPlaylistElementEvent> (HandleAddPlaylistElement);
@@ -273,7 +282,7 @@ namespace LongoMatch.Services
 			return true;
 		}
 
-		public virtual bool Stop ()
+		public new bool Stop ()
 		{
 			App.Current.EventsBroker.Unsubscribe<NewPlaylistEvent> (newPlaylistEventToken);
 			App.Current.EventsBroker.Unsubscribe<AddPlaylistElementEvent> (HandleAddPlaylistElement);

@@ -54,6 +54,7 @@ namespace Tests.Integration
 		Mock<IAnalysisWindow> analysisWindowMock;
 		Mock<IPlayerController> playerControllerMock;
 		Mock<IFramesCapturer> capturerMock;
+		Mock<IPlayer> playerMock;
 		Mock<IDialogs> mockDialogs;
 		string tmpPath, homePath;
 
@@ -73,8 +74,12 @@ namespace Tests.Integration
 			playerControllerMock.Setup (p => p.CamerasConfig).Returns (
 				new ObservableCollection<CameraConfig> { new CameraConfig (0) });
 
+			playerMock = new Mock<IPlayer> ();
+			playerMock.SetupAllProperties ();
+
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			multimediaToolkitMock.Setup (m => m.GetFramesCapturer ()).Returns (capturerMock.Object);
+			multimediaToolkitMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			mockDialogs = new Mock<IDialogs> ();
