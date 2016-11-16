@@ -99,9 +99,7 @@ namespace Tests.Services
 
 			plmanager = new PlaylistManager ();
 			plmanager.Start ();
-			plmanager.SetViewModel (new PlayerVM (false) {
-				Player = mockPlayerController.Object
-			});
+			plmanager.Player = mockPlayerController.Object;
 
 			OpenProject (new ProjectLongoMatch ());
 			playlistElementLoaded = false;
@@ -417,7 +415,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestOpenPresentationNullPlayer ()
 		{
-			plmanager.SetViewModel (new PlayerVM () { Player = null });
+			plmanager.Player = null;
 
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());
@@ -447,7 +445,7 @@ namespace Tests.Services
 		[Test ()]
 		public void TestOpenNullPresentationNullPlayer ()
 		{
-			plmanager.SetViewModel (new PlayerVM () { Player = null });
+			plmanager.Player = null;
 
 			Playlist presentation = new Playlist ();
 			IPlaylistElement element = new PlaylistPlayElement (new TimelineEvent ());

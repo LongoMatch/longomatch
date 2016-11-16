@@ -15,13 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
-using VAS.Core.Filters;
 using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Playlists;
@@ -33,27 +31,69 @@ namespace LongoMatch.Services
 {
 	public class PlaylistManager : PlaylistController, IService
 	{
-		EventsFilter filter;
+		EventToken newPlaylistEventToken;
 
 		public PlaylistManager () : base (new PlayerVM (false))
 		{
-
 		}
 
-		//[Obsolete ("Use better PlayerVM")]
-		IPlayerController Player {
+		public IPlayerController Player {
 			get { return PlayerVM.Player; }
+			set {
+				PlayerVM = new PlayerVM (false) {
+					Player = value
+				};
+			}
 		}
 
-		Project OpenedProject {
-			get;
-			set;
+		#region IService
+
+		public int Level {
+			get {
+				return 80;
+			}
 		}
 
-		ProjectType OpenedProjectType {
-			get;
-			set;
+		public string Name {
+			get {
+				return "Playlists";
+			}
 		}
+
+		public new bool Start ()
+		{
+			base.Start ();
+			newPlaylistEventToken = App.Current.EventsBroker.Subscribe<NewPlaylistEvent> ((e) => HandleNewPlaylist (e));
+			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			App.Current.EventsBroker.Subscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
+			App.Current.EventsBroker.Subscribe<PreviousPlaylistElementEvent> (HandlePrev);
+			App.Current.EventsBroker.Subscribe<NextPlaylistElementEvent> (HandleNext);
+			App.Current.EventsBroker.Subscribe<LoadEventEvent> (HandleLoadPlayEvent);
+			App.Current.EventsBroker.Subscribe<LoadCameraEvent> (HandleLoadCameraEvent);
+			App.Current.EventsBroker.Subscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
+			App.Current.EventsBroker.Subscribe<TimeNodeChangedEvent> (HandlePlayChanged);
+			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			return true;
+		}
+
+		public new bool Stop ()
+		{
+			base.Stop ();
+			App.Current.EventsBroker.Unsubscribe<NewPlaylistEvent> (newPlaylistEventToken);
+			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
+			App.Current.EventsBroker.Unsubscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
+			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
+			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
+			App.Current.EventsBroker.Unsubscribe<LoadEventEvent> (HandleLoadPlayEvent);
+			App.Current.EventsBroker.Unsubscribe<LoadCameraEvent> (HandleLoadCameraEvent);
+			App.Current.EventsBroker.Unsubscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
+			App.Current.EventsBroker.Unsubscribe<TimeNodeChangedEvent> (HandlePlayChanged);
+			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			return true;
+		}
+
+		#endregion
+
 
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
@@ -85,13 +125,11 @@ namespace LongoMatch.Services
 			if (player == null && Player == null) {
 				return;
 			} else if (player != null) {
-				SetViewModel (new PlayerVM () { Player = player });
-				//Player = player;
+				Player = player;
 			}
 
 			OpenedProject = e.Project;
 			OpenedProjectType = e.ProjectType;
-			this.filter = filter;
 			Player.LoadedPlaylist = null;
 		}
 
@@ -106,53 +144,22 @@ namespace LongoMatch.Services
 			if (e.Player == null && Player == null) {
 				return;
 			} else if (e.Player != null) {
-				SetViewModel (new PlayerVM () { Player = e.Player });
-				//Player = e.Player;
+				Player = e.Player;
 			}
 
 			OpenedProject = null;
 			Player.Switch (null, e.Presentation, null);
 
 			OpenedProjectType = ProjectType.None;
-			filter = null;
-		}
-
-		void HandleLoadPlaylistElement (LoadPlaylistElementEvent e)
-		{
-			if (e.Element != null) {
-				e.Playlist.SetActive (e.Element);
-			}
-			if (e.Playlist.Elements.Count > 0 && Player != null)
-				Player.LoadPlaylistEvent (e.Playlist, e.Element, e.Playing);
+			Filter = null;
 		}
 
 		void HandlePlayChanged (TimeNodeChangedEvent e)
 		{
 			if (e.TimeNode is TimelineEvent) {
 				LoadPlay (e.TimeNode as TimelineEvent, e.Time, false);
-				if (filter != null) {
-					filter.Update ();
-				}
-			}
-		}
-
-		void HandleLoadPlayEvent (LoadEventEvent e)
-		{
-			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
-				return;
-			}
-
-			if (e.TimelineEvent?.Duration.MSeconds == 0) {
-				// These events don't have duration, we start playing as if it was a seek
-				Player.Switch (null, null, null);
-				Player.UnloadCurrentEvent ();
-				Player.Seek (e.TimelineEvent.EventTime, true);
-				Player.Play ();
-			} else {
-				if (e.TimelineEvent != null) {
-					LoadPlay (e.TimelineEvent, new Time (0), true);
-				} else if (Player != null) {
-					Player.UnloadCurrentEvent ();
+				if (Filter != null) {
+					Filter.Update ();
 				}
 			}
 		}
@@ -186,7 +193,19 @@ namespace LongoMatch.Services
 		{
 		}
 
-		void HandleAddPlaylistElement (AddPlaylistElementEvent e)
+		void HandleTogglePlayEvent (TogglePlayEvent e)
+		{
+			if (Player != null) {
+				if (e.Playing) {
+					Player.Play ();
+				} else {
+					Player.Pause ();
+				}
+			}
+		}
+
+		//FIXME: fix playlist/project logic and use PlaylistController HandleAddPlaylistElement after MVVMC refactor
+		protected override Task HandleAddPlaylistElement (AddPlaylistElementEvent e)
 		{
 			if (e.Playlist == null) {
 				e.Playlist = HandleNewPlaylist (
@@ -195,15 +214,17 @@ namespace LongoMatch.Services
 					}
 				);
 				if (e.Playlist == null) {
-					return;
+					return AsyncHelpers.Return (true);
 				}
 			}
 
 			foreach (var item in e.PlaylistElements) {
 				e.Playlist.Elements.Add (item);
 			}
+			return AsyncHelpers.Return (true);
 		}
 
+		//FIXME: fix playlist/project logic and use PlaylistController CreateNewPlaylist after MVVMC refactor
 		Playlist HandleNewPlaylist (NewPlaylistEvent e)
 		{
 			string name = Catalog.GetString ("New playlist");
@@ -229,80 +250,25 @@ namespace LongoMatch.Services
 			return playlist;
 		}
 
-		void HandleRenderPlaylist (RenderPlaylistEvent e)
+		void HandleLoadPlayEvent (LoadEventEvent e)
 		{
-			List<EditionJob> jobs = App.Current.GUIToolkit.ConfigureRenderingJob (e.Playlist);
-			if (jobs == null)
+			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
-			foreach (Job job in jobs)
-				App.Current.JobsManager.Add (job);
-		}
+			}
 
-		void HandleTogglePlayEvent (TogglePlayEvent e)
-		{
-			if (Player != null) {
-				if (e.Playing) {
-					Player.Play ();
-				} else {
-					Player.Pause ();
+			if (e.TimelineEvent?.Duration.MSeconds == 0) {
+				// These events don't have duration, we start playing as if it was a seek
+				Player.Switch (null, null, null);
+				Player.UnloadCurrentEvent ();
+				Player.Seek (e.TimelineEvent.EventTime, true);
+				Player.Play ();
+			} else {
+				if (e.TimelineEvent != null) {
+					LoadPlay (e.TimelineEvent, new Time (0), true);
+				} else if (Player != null) {
+					Player.UnloadCurrentEvent ();
 				}
 			}
 		}
-
-		#region IService
-
-		public int Level {
-			get {
-				return 80;
-			}
-		}
-
-		public string Name {
-			get {
-				return "Playlists";
-			}
-		}
-
-		public new bool Start ()
-		{
-			newPlaylistEventToken = App.Current.EventsBroker.Subscribe<NewPlaylistEvent> ((e) => HandleNewPlaylist (e));
-			App.Current.EventsBroker.Subscribe<AddPlaylistElementEvent> (HandleAddPlaylistElement);
-			App.Current.EventsBroker.Subscribe<RenderPlaylistEvent> (HandleRenderPlaylist);
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
-			App.Current.EventsBroker.Subscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
-			App.Current.EventsBroker.Subscribe<PreviousPlaylistElementEvent> (HandlePrev);
-			App.Current.EventsBroker.Subscribe<NextPlaylistElementEvent> (HandleNext);
-			App.Current.EventsBroker.Subscribe<LoadEventEvent> (HandleLoadPlayEvent);
-			App.Current.EventsBroker.Subscribe<LoadCameraEvent> (HandleLoadCameraEvent);
-			App.Current.EventsBroker.Subscribe<LoadPlaylistElementEvent> (HandleLoadPlaylistElement);
-			App.Current.EventsBroker.Subscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
-			App.Current.EventsBroker.Subscribe<TimeNodeChangedEvent> (HandlePlayChanged);
-			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
-
-			return true;
-		}
-
-		public new bool Stop ()
-		{
-			App.Current.EventsBroker.Unsubscribe<NewPlaylistEvent> (newPlaylistEventToken);
-			App.Current.EventsBroker.Unsubscribe<AddPlaylistElementEvent> (HandleAddPlaylistElement);
-			App.Current.EventsBroker.Unsubscribe<RenderPlaylistEvent> (HandleRenderPlaylist);
-			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
-			App.Current.EventsBroker.Unsubscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
-			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
-			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
-			App.Current.EventsBroker.Unsubscribe<LoadEventEvent> (HandleLoadPlayEvent);
-			App.Current.EventsBroker.Unsubscribe<LoadCameraEvent> (HandleLoadCameraEvent);
-			App.Current.EventsBroker.Unsubscribe<LoadPlaylistElementEvent> (HandleLoadPlaylistElement);
-			App.Current.EventsBroker.Unsubscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
-			App.Current.EventsBroker.Unsubscribe<TimeNodeChangedEvent> (HandlePlayChanged);
-			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
-
-			return true;
-		}
-
-		#endregion
-
-		EventToken newPlaylistEventToken;
 	}
 }
