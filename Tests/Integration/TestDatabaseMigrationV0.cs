@@ -33,6 +33,19 @@ namespace Tests.Integration
 	[TestFixture]
 	public class TestDatabaseMigrationV0
 	{
+		Mock<IGUIToolkit> guiToolkitMock;
+		Mock<IMultimediaToolkit> multimediaToolkitMock;
+		Mock<IPlayer> player;
+
+		[TestFixtureSetUp]
+		public void TestFixtureSetUp ()
+		{
+			guiToolkitMock = new Mock<IGUIToolkit> ();
+			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
+			player = new Mock<IPlayer> ();
+			multimediaToolkitMock.Setup (g => g.GetPlayer ()).Returns (player.Object);
+		}
+
 		[TearDown]
 		public void Reset ()
 		{
@@ -69,8 +82,7 @@ namespace Tests.Integration
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
 			App.Init ();
 			CoreServices.Init ();
-			var guiToolkitMock = new Mock<IGUIToolkit> ();
-			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
+			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
@@ -109,8 +121,7 @@ namespace Tests.Integration
 			Environment.SetEnvironmentVariable ("LGM_UNINSTALLED", "1");
 			App.Init ();
 			CoreServices.Init ();
-			var guiToolkitMock = new Mock<IGUIToolkit> ();
-			CoreServices.Start (guiToolkitMock.Object, Mock.Of<IMultimediaToolkit> ());
+			CoreServices.Start (guiToolkitMock.Object, multimediaToolkitMock.Object);
 
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
 			Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);

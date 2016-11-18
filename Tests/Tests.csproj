@@ -121,6 +121,7 @@
     <Compile Include="Integration\TestDatabaseMigrationV0.cs" />
     <Compile Include="Integration\TestDatabaseMigrationV1.cs" />
     <Compile Include="Plugins\Importers\TestLongoMatchImporter.cs" />
+    <Compile Include="Services\TestPlaylistManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Services\LongoMatch.Services.Net45.csproj">

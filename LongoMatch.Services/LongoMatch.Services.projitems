@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\ProjectsManagerState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\NewProjectState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\OpenProjectState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
