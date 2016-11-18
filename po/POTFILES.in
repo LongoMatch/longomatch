@@ -121,6 +121,7 @@ LongoMatch.Services/Controller/TeamsController.cs
 LongoMatch.Services/CoreServices.cs
 LongoMatch.Services/DataBaseManager.cs
 LongoMatch.Services/EventsManager.cs
+LongoMatch.Services/PlaylistManager.cs
 LongoMatch.Services/ProjectsManager.cs
 LongoMatch.Services/TemplatesService.cs
 LongoMatch.Services/ToolsManager.cs
