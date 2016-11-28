@@ -120,7 +120,7 @@ namespace LongoMatch.Core.Store
 		[PropertyChanged.DoNotNotify]
 		public LineupEvent Lineup {
 			get {
-				LineupEvent lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
+				LineupEvent lineup = Timeline.OfType<LineupEvent> ().FirstOrDefault ();
 				if (lineup == null) {
 					lineup = CreateLineupEvent ();
 				}
@@ -152,6 +152,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override DateTime LastModified {
@@ -175,10 +176,10 @@ namespace LongoMatch.Core.Store
 		}
 
 		public void CurrentLineup (Time currentTime,
-		                           out List<PlayerLongoMatch> homeFieldPlayers,
-		                           out List<PlayerLongoMatch> homeBenchPlayers,
-		                           out List<PlayerLongoMatch> awayFieldPlayers,
-		                           out List<PlayerLongoMatch> awayBenchPlayers)
+								   out List<PlayerLongoMatch> homeFieldPlayers,
+								   out List<PlayerLongoMatch> homeBenchPlayers,
+								   out List<PlayerLongoMatch> awayFieldPlayers,
+								   out List<PlayerLongoMatch> awayBenchPlayers)
 		{
 			SportsTeam homeTeam, awayTeam;
 			List<PlayerLongoMatch> homeTeamPlayers, awayTeamPlayers;
@@ -213,7 +214,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		public SubstitutionEvent SubsitutePlayer (SportsTeam team, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut,
-		                                          SubstitutionReason reason, Time subsTime)
+												  SubstitutionReason reason, Time subsTime)
 		{
 			LineupEvent lineup;
 			SubstitutionEvent se;
@@ -240,7 +241,7 @@ namespace LongoMatch.Core.Store
 		public ProjectDescription Description {
 			get;
 			set;
-		} = new ProjectDescription();
+		} = new ProjectDescription ();
 
 		public bool LineupChanged (Time start, Time stop)
 		{
@@ -289,7 +290,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		public override TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                                        bool addToTimeline = true)
+												bool addToTimeline = true)
 		{
 			TimelineEventLongoMatch evt;
 			string count;
@@ -407,8 +408,8 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import ()
 		{
-			string file = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
-				              Constants.PROJECT_NAME, new string[] { "*" + Constants.PROJECT_EXT });
+			string file = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir,
+							  Constants.PROJECT_NAME, new string [] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;
 			return Import (file);
@@ -426,6 +427,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Media file asigned to this project
 		/// </summary>
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override MediaFileSet FileSet {

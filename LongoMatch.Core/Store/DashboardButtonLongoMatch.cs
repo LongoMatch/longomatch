@@ -18,15 +18,15 @@
 using System;
 using Newtonsoft.Json;
 using VAS.Core.Common;
+using VAS.Core.Serialization;
 using VAS.Core.Store;
-using System.Collections.Generic;
 
 // TODO: Rename file to SportDashboardButtons.cs // in plural!
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class PenaltyCardButton: EventButton
+	public class PenaltyCardButton : EventButton
 	{
 		public PenaltyCardButton ()
 		{
@@ -41,6 +41,7 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
+		[CloneIgnore]
 		public override Color BackgroundColor {
 			get {
 				return PenaltyCard?.Color;
@@ -52,6 +53,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[CloneIgnore]
 		public override string Name {
 			get {
 				return PenaltyCard?.Name;
@@ -63,6 +65,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public PenaltyCard PenaltyCard {
@@ -86,7 +89,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class ScoreButton: EventButton
+	public class ScoreButton : EventButton
 	{
 
 		public ScoreButton ()
@@ -102,6 +105,7 @@ namespace LongoMatch.Core.Store
 			get;
 		}
 
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Score Score {
@@ -114,7 +118,6 @@ namespace LongoMatch.Core.Store
 				}
 			}
 		}
-
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]

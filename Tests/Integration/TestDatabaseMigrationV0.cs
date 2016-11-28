@@ -35,14 +35,14 @@ namespace Tests.Integration
 	{
 		Mock<IGUIToolkit> guiToolkitMock;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
-		Mock<IPlayer> player;
+		Mock<IVideoPlayer> player;
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp ()
 		{
 			guiToolkitMock = new Mock<IGUIToolkit> ();
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
-			player = new Mock<IPlayer> ();
+			player = new Mock<IVideoPlayer> ();
 			multimediaToolkitMock.Setup (g => g.GetPlayer ()).Returns (player.Object);
 		}
 

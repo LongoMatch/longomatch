@@ -20,14 +20,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Couchbase.Lite;
-using LongoMatch;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.DB;
 using NUnit.Framework;
 using VAS.Core.Common;
 using VAS.Core.Filters;
-using VAS.Core.Interfaces;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.DB;
@@ -65,7 +63,7 @@ namespace Tests.DB
 		public void CleanDB ()
 		{
 			db.RunInTransaction (() => {
-				foreach (var d in db.CreateAllDocumentsQuery ().Run()) {
+				foreach (var d in db.CreateAllDocumentsQuery ().Run ()) {
 					db.GetDocument (d.DocumentId).Delete ();
 				}
 				return true;
@@ -173,9 +171,9 @@ namespace Tests.DB
 		{
 			QueryFilter filter;
 
-			foreach (string comp in new []{"Liga", "Champions", "Copa"}) {
-				foreach (string season in new []{"2013", "2014", "2015"}) {
-					foreach (string team in new []{"Barça", "Complu", "Santomera"}) {
+			foreach (string comp in new [] { "Liga", "Champions", "Copa" }) {
+				foreach (string season in new [] { "2013", "2014", "2015" }) {
+					foreach (string team in new [] { "Barça", "Complu", "Santomera" }) {
 						ProjectLongoMatch p = new ProjectLongoMatch ();
 						p.Description = new ProjectDescription ();
 						p.Description.Season = season;
@@ -432,7 +430,7 @@ namespace Tests.DB
 				foreach (var player in devteam.List.Concat (qateam.List)) {
 					foreach (var button in p.Dashboard.List.OfType<AnalysisEventButton> ()) {
 						TimelineEventLongoMatch evt = p.AddEvent (button.EventType, new Time (0), new Time (10),
-							                              new Time (5), null) as TimelineEventLongoMatch;
+														  new Time (5), null) as TimelineEventLongoMatch;
 						evt.Players.Add (player);
 						if (qateam.List.Contains (player)) {
 							evt.Teams.Add (qateam);

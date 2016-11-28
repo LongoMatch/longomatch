@@ -83,7 +83,7 @@ namespace LongoMatch
 				App.Current.MultimediaToolkit = new MultimediaToolkit ();
 				App.Current.GUIToolkit = GUIToolkit.Instance;
 				App.Current.Navigation = GUIToolkit.Instance;
-				App.Current.GUIToolkit.Register<IPlayerView, VASUi.PlayerView> (0);
+				App.Current.GUIToolkit.Register<IVideoPlayerView, VASUi.VideoPlayerView> (0);
 				App.Current.Dialogs = VASUi.Dialogs.Instance;
 
 				App.Current.KPIService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");

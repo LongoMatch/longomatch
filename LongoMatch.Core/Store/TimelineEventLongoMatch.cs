@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
@@ -47,11 +48,11 @@ namespace LongoMatch.Core.Store
 				ProjectLongoMatch LMProject = Project as ProjectLongoMatch;
 				List<SportsTeam> teams = new List<SportsTeam> ();
 				if (Teams.Contains (LMProject.LocalTeamTemplate) ||
-				    Players.Intersect (LMProject.LocalTeamTemplate.List).Any ()) {
+					Players.Intersect (LMProject.LocalTeamTemplate.List).Any ()) {
 					teams.Add (LMProject.LocalTeamTemplate);
 				}
 				if (Teams.Contains (LMProject.VisitorTeamTemplate) ||
-				    Players.Intersect (LMProject.VisitorTeamTemplate.List).Any ()) {
+					Players.Intersect (LMProject.VisitorTeamTemplate.List).Any ()) {
 					teams.Add (LMProject.VisitorTeamTemplate);
 				}
 				return teams;
@@ -64,7 +65,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
-	public class PenaltyCardEvent: TimelineEventLongoMatch
+	public class PenaltyCardEvent : TimelineEventLongoMatch
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -82,7 +83,7 @@ namespace LongoMatch.Core.Store
 
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
-	public class ScoreEvent: TimelineEventLongoMatch
+	public class ScoreEvent : TimelineEventLongoMatch
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -99,7 +100,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class StatEvent: TimelineEventLongoMatch
+	public class StatEvent : TimelineEventLongoMatch
 	{
 		public override Time Start {
 			get {
@@ -121,7 +122,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class LineupEvent: StatEvent
+	public class LineupEvent : StatEvent
 	{
 		public List<PlayerLongoMatch> HomeStartingPlayers {
 			get;
@@ -145,7 +146,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class SubstitutionEvent: StatEvent
+	public class SubstitutionEvent : StatEvent
 	{
 		public PlayerLongoMatch In {
 			get;

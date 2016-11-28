@@ -33,7 +33,7 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class PlaysTimeline : VAS.Drawing.Widgets.PlaysTimeline
 	{
-		public PlaysTimeline (IWidget widget, IPlayerController player) : base (widget, player)
+		public PlaysTimeline (IWidget widget, IVideoPlayerController player) : base (widget, player)
 		{
 
 		}

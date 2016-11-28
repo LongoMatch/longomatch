@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Component
 			codingwidget1.TagTeam (team);
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get {
 				return null;
 			}

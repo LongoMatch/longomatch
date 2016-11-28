@@ -34,6 +34,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Services;
+using VASUtils = VAS.Tests.Utils;
 
 namespace Tests.Services
 {
@@ -45,7 +46,7 @@ namespace Tests.Services
 		Mock<IAnalysisWindow> winMock;
 		Mock<ICapturer> capturerMock;
 		Mock<ICapturerBin> capturerBinMock;
-		PlayerController player;
+		VideoPlayerController player;
 		ProjectsManager projectsManager;
 		ProjectLongoMatch project;
 		CaptureSettings settings;
@@ -60,7 +61,7 @@ namespace Tests.Services
 			settings.EncodingSettings = new EncodingSettings ();
 			settings.EncodingSettings.EncodingProfile = EncodingProfiles.MP4;
 
-			var playerMock = new Mock<IPlayer> ();
+			var playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
 			mockList.Add (playerMock);
 
@@ -98,7 +99,7 @@ namespace Tests.Services
 			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
 			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
 			mockList.Add (capturerBinMock);
-			player = new PlayerController ();
+			player = new VideoPlayerController ();
 			winMock.Setup (w => w.Capturer).Returns (capturerBinMock.Object);
 			winMock.Setup (w => w.Player).Returns (player);
 		}
@@ -196,6 +197,12 @@ namespace Tests.Services
 		public void TestCaptureFinished ()
 		{
 			List<string> transitions = new List<string> ();
+
+			string stateTest = "stateTest";
+
+			App.Current.StateController.Register (stateTest, () => VASUtils.GetScreenStateMocked (stateTest).Object);
+
+			App.Current.StateController.MoveTo (stateTest, null);
 
 			App.Current.EventsBroker.Subscribe<NavigationEvent> ((obj) => {
 				transitions.Add (obj.Name);

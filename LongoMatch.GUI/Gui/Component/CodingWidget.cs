@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 		List<Window> activeWindows;
 		Helpers.IconNotebookHelper notebookHelper;
 		bool sizeAllocated;
-		IPlayerController player;
+		IVideoPlayerController player;
 
 		public CodingWidget ()
 		{
@@ -163,7 +163,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger.Select (team);
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get {
 				return player;
 			}

@@ -43,10 +43,10 @@ namespace Tests.Services
 		Mock<IGUIToolkit> mockGuiToolkit;
 		Mock<IJobsManager> mockVideoRenderer;
 		Mock<IAnalysisWindowBase> mockAnalysisWindow;
-		Mock<IPlayerController> mockPlayerController;
+		Mock<IVideoPlayerController> mockPlayerController;
 		Mock<IDialogs> mockDiaklogs;
 		Mock<IMultimediaToolkit> multimediaToolkitMock;
-		Mock<IPlayer> playerMock;
+		Mock<IVideoPlayer> playerMock;
 		MediaFileSet mfs;
 
 		bool playlistElementLoaded;
@@ -60,7 +60,7 @@ namespace Tests.Services
 			mfs.Add (new MediaFile { FilePath = "test2", VideoWidth = 320, VideoHeight = 240, Par = 1 });
 
 			mockAnalysisWindow = new Mock<IAnalysisWindowBase> ();
-			mockPlayerController = new Mock<IPlayerController> ();
+			mockPlayerController = new Mock<IVideoPlayerController> ();
 			mockPlayerController.SetupAllProperties ();
 			mockPlayerController.SetupGet (x => x.CurrentTime).Returns (new Time (1000));
 			MediaFileSet mf = new MediaFileSet ();
@@ -71,9 +71,9 @@ namespace Tests.Services
 			mockVideoRenderer = new Mock<IJobsManager> ();
 			mockDiaklogs = new Mock<IDialogs> ();
 
-			playerMock = new Mock<IPlayer> ();
+			playerMock = new Mock<IVideoPlayer> ();
 			playerMock.SetupAllProperties ();
-			Mock<IMultiPlayer> multiplayerMock = new Mock<IMultiPlayer> ();
+			Mock<IMultiVideoPlayer> multiplayerMock = new Mock<IMultiVideoPlayer> ();
 
 			multimediaToolkitMock = new Mock<IMultimediaToolkit> ();
 			multimediaToolkitMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
@@ -358,7 +358,7 @@ namespace Tests.Services
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
-			IPlayerController playercontroller = mockPlayerController.Object;
+			IVideoPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
 			App.Current.EventsBroker.Publish<OpenedPresentationChangedEvent> (
@@ -390,7 +390,7 @@ namespace Tests.Services
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
-			IPlayerController playercontroller = mockPlayerController.Object;
+			IVideoPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
 			App.Current.EventsBroker.Publish<OpenedPresentationChangedEvent> (
@@ -423,7 +423,7 @@ namespace Tests.Services
 			presentation.Elements.Add (element);
 			presentation.Elements.Add (element2);
 
-			IPlayerController playercontroller = mockPlayerController.Object;
+			IVideoPlayerController playercontroller = mockPlayerController.Object;
 			mockPlayerController.ResetCalls ();
 
 			App.Current.EventsBroker.Publish<OpenedPresentationChangedEvent> (

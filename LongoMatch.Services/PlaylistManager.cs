@@ -33,14 +33,14 @@ namespace LongoMatch.Services
 	{
 		EventToken newPlaylistEventToken;
 
-		public PlaylistManager () : base (new PlayerVM (false))
+		public PlaylistManager () : base (new VideoPlayerVM (false))
 		{
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get { return PlayerVM.Player; }
 			set {
-				PlayerVM = new PlayerVM (false) {
+				PlayerVM = new VideoPlayerVM (false) {
 					Player = value
 				};
 			}
@@ -64,14 +64,11 @@ namespace LongoMatch.Services
 		{
 			base.Start ();
 			newPlaylistEventToken = App.Current.EventsBroker.Subscribe<NewPlaylistEvent> ((e) => HandleNewPlaylist (e));
-			App.Current.EventsBroker.Subscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			App.Current.EventsBroker.Subscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
 			App.Current.EventsBroker.Subscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Subscribe<NextPlaylistElementEvent> (HandleNext);
-			App.Current.EventsBroker.Subscribe<LoadEventEvent> (HandleLoadPlayEvent);
-			App.Current.EventsBroker.Subscribe<LoadCameraEvent> (HandleLoadCameraEvent);
+
 			App.Current.EventsBroker.Subscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
-			App.Current.EventsBroker.Subscribe<TimeNodeChangedEvent> (HandlePlayChanged);
 			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
 			return true;
 		}
@@ -80,57 +77,31 @@ namespace LongoMatch.Services
 		{
 			base.Stop ();
 			App.Current.EventsBroker.Unsubscribe<NewPlaylistEvent> (newPlaylistEventToken);
-			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (HandleOpenedProjectChanged);
 			App.Current.EventsBroker.Unsubscribe<OpenedPresentationChangedEvent> (HandleOpenedPresentationChanged);
 			App.Current.EventsBroker.Unsubscribe<PreviousPlaylistElementEvent> (HandlePrev);
 			App.Current.EventsBroker.Unsubscribe<NextPlaylistElementEvent> (HandleNext);
-			App.Current.EventsBroker.Unsubscribe<LoadEventEvent> (HandleLoadPlayEvent);
-			App.Current.EventsBroker.Unsubscribe<LoadCameraEvent> (HandleLoadCameraEvent);
+
 			App.Current.EventsBroker.Unsubscribe<PlaybackRateChangedEvent> (HandlePlaybackRateChanged);
-			App.Current.EventsBroker.Unsubscribe<TimeNodeChangedEvent> (HandlePlayChanged);
 			App.Current.EventsBroker.Unsubscribe<TogglePlayEvent> (HandleTogglePlayEvent);
 			return true;
 		}
 
 		#endregion
 
-
-		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
+		protected override void HandleLoadPlayEvent (LoadEventEvent e)
 		{
-			if (play != null && Player != null) {
-				play.Playing = true;
-				Player.LoadEvent (
-					play, seekTime, playing);
-				if (playing) {
-					Player.Play ();
-				}
-			}
-		}
-
-		void LoadCameraPlay (TimelineEvent play, Time seekTime, bool playing)
-		{
-			if (play != null && Player != null) {
-				play.Playing = true;
-				(Player as PlayerController)?.LoadCameraEvent (
-					play, seekTime, playing);
-				if (playing) {
-					Player.Play ();
-				}
-			}
-		}
-
-		void HandleOpenedProjectChanged (OpenedProjectEvent e)
-		{
-			var player = e.AnalysisWindow?.Player;
-			if (player == null && Player == null) {
+			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
 				return;
-			} else if (player != null) {
-				Player = player;
 			}
+			base.HandleLoadPlayEvent (e);
+		}
 
-			OpenedProject = e.Project;
-			OpenedProjectType = e.ProjectType;
-			Player.LoadedPlaylist = null;
+		protected override void HandleLoadCameraEvent (LoadCameraEvent e)
+		{
+			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
+				return;
+			}
+			base.HandleLoadCameraEvent (e);
 		}
 
 		/// <summary>
@@ -152,31 +123,6 @@ namespace LongoMatch.Services
 
 			OpenedProjectType = ProjectType.None;
 			Filter = null;
-		}
-
-		void HandlePlayChanged (TimeNodeChangedEvent e)
-		{
-			if (e.TimeNode is TimelineEvent) {
-				LoadPlay (e.TimeNode as TimelineEvent, e.Time, false);
-				if (Filter != null) {
-					Filter.Update ();
-				}
-			}
-		}
-
-		void HandleLoadCameraEvent (LoadCameraEvent e)
-		{
-			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
-				return;
-			}
-
-			if (e.CameraTlEvent != null) {
-				Time seekTime = Player.CurrentTime - e.CameraTlEvent.Start;
-				seekTime = seekTime.Clamp (new Time (0), e.CameraTlEvent.Stop);
-				LoadCameraPlay (e.CameraTlEvent, seekTime, Player.Playing);
-			} else if (Player != null) {
-				Player.UnloadCurrentEvent ();
-			}
 		}
 
 		void HandleNext (NextPlaylistElementEvent e)
@@ -248,27 +194,6 @@ namespace LongoMatch.Services
 				}
 			}
 			return playlist;
-		}
-
-		void HandleLoadPlayEvent (LoadEventEvent e)
-		{
-			if (OpenedProject == null || OpenedProjectType == ProjectType.FakeCaptureProject) {
-				return;
-			}
-
-			if (e.TimelineEvent?.Duration.MSeconds == 0) {
-				// These events don't have duration, we start playing as if it was a seek
-				Player.Switch (null, null, null);
-				Player.UnloadCurrentEvent ();
-				Player.Seek (e.TimelineEvent.EventTime, true);
-				Player.Play ();
-			} else {
-				if (e.TimelineEvent != null) {
-					LoadPlay (e.TimelineEvent, new Time (0), true);
-				} else if (Player != null) {
-					Player.UnloadCurrentEvent ();
-				}
-			}
 		}
 	}
 }

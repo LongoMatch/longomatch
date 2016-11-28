@@ -8,6 +8,8 @@
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,7 +115,6 @@
     <Compile Include="Core\Migration\TestTeamMigration.cs" />
     <Compile Include="Core\Migration\TestProjectMigration.cs" />
     <Compile Include="Core\Migration\TestDashboardMigration.cs" />
-    <Compile Include="Core\Common\TestCloner.cs" />
     <Compile Include="LocalStorage.cs" />
     <Compile Include="Core\Common\TestDirectoryMonitor.cs" />
     <Compile Include="Services\TestImportMonitorService.cs" />
@@ -159,6 +160,10 @@
     <ProjectReference Include="..\LongoMatch.Plugins\LongoMatch.Plugins.csproj">
       <Project>{1F3FE3B0-5EF5-4420-BE2D-139B69AF0211}</Project>
       <Name>LongoMatch.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VAS\VAS.Tests\VAS.Tests.csproj">
+      <Project>{4ECD63CF-7153-4BCF-83D4-66E543CF3E8F}</Project>
+      <Name>VAS.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

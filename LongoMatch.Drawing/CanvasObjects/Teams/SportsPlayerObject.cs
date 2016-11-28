@@ -26,7 +26,7 @@ using VAS.Drawing.CanvasObjects.Teams;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
-	public class SportsPlayerObject: PlayerObject
+	public class SportsPlayerObject : PlayerObject
 	{
 		static ISurface ArrowOut;
 		static ISurface ArrowIn;
@@ -65,7 +65,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		Color Color {
 			get {
-				return Player.Color;
+				return Player?.Color;
 			}
 		}
 

@@ -43,7 +43,7 @@ namespace LongoMatch.Services
 		IAnalysisWindow analysisWindow;
 		ProjectType projectType;
 		ICapturerBin capturer;
-		IPlayerController player;
+		IVideoPlayerController player;
 		Dashboard dashboard;
 		ProjectLongoMatch openedProject;
 		AnalysisEventButton pendingButton;

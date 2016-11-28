@@ -27,12 +27,11 @@ using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class SportsTeam: Team, ITemplate<SportsTeam>
+	public class SportsTeam : Team, ITemplate<SportsTeam>
 	{
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
@@ -68,7 +67,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		public Color[] Colors {
+		public Color [] Colors {
 			get;
 			set;
 		}
@@ -94,17 +93,18 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		public int[] Formation {
+		public int [] Formation {
 			get;
 			set;
 		}
 
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public string FormationStr {
 			set {
-				string[] elements = value.Split ('-');
-				int[] tactics = new int[elements.Length];
+				string [] elements = value.Split ('-');
+				int [] tactics = new int [elements.Length];
 				int index = 0;
 				foreach (string s in elements) {
 					try {
@@ -195,7 +195,7 @@ namespace LongoMatch.Core.Store.Templates
 		public void RemovePlayers (List<PlayerLongoMatch> players, bool delete)
 		{
 			List<PlayerLongoMatch> bench, starters;
-			
+
 			bench = BenchPlayersList;
 			starters = StartingPlayersList;
 
@@ -272,7 +272,7 @@ namespace LongoMatch.Core.Store.Templates
 	/* Keep this for backwards compatibility importing old project files */
 	[Obsolete ("Use Team instead of TeamTeamplate in new code")]
 	[Serializable]
-	public class TeamTemplate: SportsTeam
+	public class TeamTemplate : SportsTeam
 	{
 	}
 }

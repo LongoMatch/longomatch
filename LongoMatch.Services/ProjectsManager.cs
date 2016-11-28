@@ -64,7 +64,7 @@ namespace LongoMatch.Services
 			get;
 		}
 
-		public IPlayerController Player {
+		public IVideoPlayerController Player {
 			get;
 			set;
 		}

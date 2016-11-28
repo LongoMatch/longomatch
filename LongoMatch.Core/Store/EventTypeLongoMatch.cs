@@ -26,11 +26,11 @@ namespace LongoMatch.Core.Store
 	// TODO: Rename file to SportEventTypes.cs
 
 	[Serializable]
-	public class PenaltyCardEventType: EventType
+	public class PenaltyCardEventType : EventType
 	{
 		public override Color Color {
 			get {
-				return PenaltyCard != null ? PenaltyCard.Color : null;
+				return PenaltyCard?.Color;
 			}
 			set {
 				if (PenaltyCard != null) {
@@ -57,7 +57,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class ScoreEventType: EventType
+	public class ScoreEventType : EventType
 	{
 		public override string Name {
 			get {
@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class SubstitutionEventType: EventType
+	public class SubstitutionEventType : EventType
 	{
 		public SubstitutionEventType ()
 		{
