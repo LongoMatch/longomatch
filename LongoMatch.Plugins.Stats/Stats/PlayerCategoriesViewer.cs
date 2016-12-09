@@ -41,14 +41,14 @@ namespace LongoMatch.Plugins.Stats
 			treeview.EnableTreeLines = false;
 		}
 
-		public void LoadStats (ProjectStats pstats, ProjectLongoMatch project)
+		public void LoadStats (ProjectStats pstats, LMProject project)
 		{
 			categoryviewer.LoadBackgrounds (project);
 			this.pstats = pstats;
 			ReloadStats (project.LocalTeamTemplate.Players [0]);
 		}
 
-		public void ReloadStats (PlayerLongoMatch player)
+		public void ReloadStats (LMPlayer player)
 		{
 			PlayerStats playerStats;
 			TreeIter iter;

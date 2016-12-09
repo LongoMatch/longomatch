@@ -25,7 +25,7 @@ using VAS.DB;
 
 namespace LongoMatch.DB.Views
 {
-	public class TimelineEventsView: GenericView <TimelineEventLongoMatch>
+	public class TimelineEventsView : GenericView<LMTimelineEvent>
 	{
 		public TimelineEventsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{

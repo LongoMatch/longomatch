@@ -43,7 +43,7 @@ namespace LongoMatch.Services.States
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new DashboardsManagerVM ();
-			ViewModel.Model = new RangeObservableCollection<DashboardLongoMatch> (App.Current.CategoriesTemplatesProvider.Templates);
+			ViewModel.Model = new RangeObservableCollection<LMDashboard> (App.Current.CategoriesTemplatesProvider.Templates);
 		}
 
 	}

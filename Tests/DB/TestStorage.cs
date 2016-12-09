@@ -146,24 +146,24 @@ namespace Tests.DB
 		[Test ()]
 		public void TestIsChangedResetted ()
 		{
-			SportsTeam t, t1;
+			LMTeam t, t1;
 			ObjectChangedParser parser;
 			List<IStorable> storables = null, changed = null;
 			StorableNode parent = null;
 
 			parser = new ObjectChangedParser ();
-			t = SportsTeam.DefaultTemplate (10);
+			t = LMTeam.DefaultTemplate (10);
 			storage.Store (t);
 
 			// After loading an object
-			t1 = DocumentsSerializer.LoadObject (typeof(SportsTeam), t.ID, db) as SportsTeam;
+			t1 = DocumentsSerializer.LoadObject (typeof(LMTeam), t.ID, db) as LMTeam;
 			Assert.IsTrue (parser.ParseInternal (out parent, t1, Serializer.JsonSettings));
 			Assert.IsTrue (parent.ParseTree (ref storables, ref changed));
 			Assert.AreEqual (0, changed.Count);
 			Assert.NotNull (t1.DocumentID);
 
 			// After filling an object
-			t1 = new SportsTeam ();
+			t1 = new LMTeam ();
 			t1.ID = t.ID;
 			t1.DocumentID = t.ID.ToString ();
 			t1.IsChanged = true;
@@ -176,7 +176,7 @@ namespace Tests.DB
 		[Test ()]
 		public void TestDashboards ()
 		{
-			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard dashboard = LMDashboard.DefaultTemplate (10);
 			dashboard.Image = dashboard.FieldBackground = dashboard.HalfFieldBackground =
 				dashboard.GoalBackground = Utils.LoadImageFromFile ();
 			storage.Store (dashboard);
@@ -200,7 +200,7 @@ namespace Tests.DB
 		[Test ()]
 		public void TestPlayer ()
 		{
-			PlayerLongoMatch player1 = new PlayerLongoMatch {Name = "andoni", Position = "runner",
+			LMPlayer player1 = new LMPlayer {Name = "andoni", Position = "runner",
 				Number = 5, Birthday = new DateTime (1984, 6, 11),
 				Nationality = "spanish", Height = 1.73f, Weight = 70,
 				Playing = true, Mail = "test@test", Color = Color.Red
@@ -209,7 +209,7 @@ namespace Tests.DB
 			storage.Store (player1);
 			Assert.AreEqual (2, db.DocumentCount);
 			Assert.IsNotNull (db.GetExistingDocument (player1.ID.ToString ()));
-			PlayerLongoMatch player2 = storage.Retrieve<PlayerLongoMatch> (player1.ID);
+			LMPlayer player2 = storage.Retrieve<LMPlayer> (player1.ID);
 			Assert.AreEqual (player1.ID, player2.ID);
 			Assert.AreEqual (player1.ToString (), player2.ToString ());
 			Assert.AreEqual (player1.Photo.Width, player2.Photo.Width);
@@ -221,10 +221,10 @@ namespace Tests.DB
 		[Test ()]
 		public void TestTeam ()
 		{
-			SportsTeam team1 = SportsTeam.DefaultTemplate (10);
-			storage.Store<SportsTeam> (team1);
+			LMTeam team1 = LMTeam.DefaultTemplate (10);
+			storage.Store<LMTeam> (team1);
 			Assert.AreEqual (12, db.DocumentCount);
-			SportsTeam team2 = storage.Retrieve<SportsTeam> (team1.ID);
+			LMTeam team2 = storage.Retrieve<LMTeam> (team1.ID);
 			Assert.AreEqual (team1.ID, team2.ID);
 			Assert.AreEqual (team1.List.Count, team2.List.Count);
 			Assert.IsNotNull (team2.DocumentID);
@@ -235,9 +235,9 @@ namespace Tests.DB
 		[Test ()]
 		public void TestTimelineEvent ()
 		{
-			PlayerLongoMatch p = new PlayerLongoMatch ();
+			LMPlayer p = new LMPlayer ();
 			AnalysisEventType evtType = new AnalysisEventType ();
-			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
+			LMTimelineEvent evt = new LMTimelineEvent ();
 
 			Document doc = db.GetDocument (evt.ID.ToString ());
 			SerializationContext context = new SerializationContext (db, evt.GetType ());
@@ -261,7 +261,7 @@ namespace Tests.DB
 			DocumentsSerializer.SaveObject (p, db);
 			Assert.AreEqual (3, db.DocumentCount);
 
-			TimelineEventLongoMatch evt2 = storage.Retrieve <TimelineEventLongoMatch> (evt.ID);
+			LMTimelineEvent evt2 = storage.Retrieve <LMTimelineEvent> (evt.ID);
 			Assert.IsNotNull (evt2.EventType);
 			Assert.IsNotNull (evt2.DocumentID);
 
@@ -276,23 +276,23 @@ namespace Tests.DB
 		[Test ()]
 		public void TestProject ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
-			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
+			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
 			p.Description = pd;
-			p.AddEvent (new TimelineEventLongoMatch ());
+			p.AddEvent (new LMTimelineEvent ());
 
-			storage.Store<ProjectLongoMatch> (p);
+			storage.Store<LMProject> (p);
 			Assert.AreEqual (45, db.DocumentCount);
 
-			p = storage.RetrieveAll<ProjectLongoMatch> ().First ();
+			p = storage.RetrieveAll<LMProject> ().First ();
 			Assert.IsNotNull (p.DocumentID);
 			p.Load ();
 			Assert.IsTrue (Object.ReferenceEquals (p.Description.FileSet, p.Timeline [0].FileSet));
@@ -307,11 +307,11 @@ namespace Tests.DB
 		[Test ()]
 		public void TestSaveProjectWithEvents ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
-			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
+			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
@@ -320,7 +320,7 @@ namespace Tests.DB
 			p.Description = pd;
 
 			for (int i = 0; i < 10; i++) {
-				TimelineEventLongoMatch evt = new TimelineEventLongoMatch {
+				LMTimelineEvent evt = new LMTimelineEvent {
 					EventType = p.EventTypes [i],
 					Start = new Time (1000),
 					Stop = new Time (2000),
@@ -329,12 +329,12 @@ namespace Tests.DB
 				p.Timeline.Add (evt);
 			}
 
-			storage.Store<ProjectLongoMatch> (p);
+			storage.Store<LMProject> (p);
 			Assert.AreEqual (54, db.DocumentCount);
-			storage.Store<ProjectLongoMatch> (p);
+			storage.Store<LMProject> (p);
 			Assert.AreEqual (54, db.DocumentCount);
 
-			ProjectLongoMatch p2 = storage.Retrieve<ProjectLongoMatch> (p.ID);
+			LMProject p2 = storage.Retrieve<LMProject> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
 			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
 			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
@@ -348,13 +348,13 @@ namespace Tests.DB
 		[Test ()]
 		public void TestDeleteProjectItems ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
+			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
 
 			for (int i = 0; i < 10; i++) {
-				TimelineEventLongoMatch evt = new TimelineEventLongoMatch {
+				LMTimelineEvent evt = new LMTimelineEvent {
 					EventType = p.EventTypes [i],
 					Start = new Time (1000),
 					Stop = new Time (2000),
@@ -363,35 +363,35 @@ namespace Tests.DB
 			}
 
 			storage.Store (p);
-			p = storage.Retrieve<ProjectLongoMatch> (p.ID);
+			p = storage.Retrieve<LMProject> (p.ID);
 
 			// Removing this object should not remove the EvenType from the database, which might be referenced by
 			// TimelineEventLongoMatch's in the timeline
 			EventType evtType = (p.Dashboard.List [0] as AnalysisEventButton).EventType;
 			p.Dashboard.List.Remove (p.Dashboard.List [0]);
 			storage.Store (p);
-			Assert.DoesNotThrow (() => storage.Retrieve<ProjectLongoMatch> (p.ID));
+			Assert.DoesNotThrow (() => storage.Retrieve<LMProject> (p.ID));
 
 			// Delete an event with a PlayerLongoMatch, a Team and an EventType, it should delete only the timeline event
 			p.Timeline [0].Teams.Add (p.LocalTeamTemplate);
 			p.Timeline [0].Players.Add (p.LocalTeamTemplate.List [0]);
 			p.Timeline.Remove (p.Timeline [0]);
-			Assert.DoesNotThrow (() => storage.Retrieve<ProjectLongoMatch> (p.ID));
+			Assert.DoesNotThrow (() => storage.Retrieve<LMProject> (p.ID));
 		}
 
 		[Test ()]
 		public void TestPreloadPropertiesArePreserved ()
 		{
-			ProjectLongoMatch p1 = Utils.CreateProject (true);
+			LMProject p1 = Utils.CreateProject (true);
 			storage.Store (p1);
-			ProjectLongoMatch p2 = storage.RetrieveAll<ProjectLongoMatch> ().First ();
+			LMProject p2 = storage.RetrieveAll<LMProject> ().First ();
 			Assert.IsFalse (p2.IsLoaded);
 			Assert.IsNotNull (p2.DocumentID);
 			p2.Description.Competition = "NEW NAME";
 			p2.Load ();
 			Assert.AreEqual ("NEW NAME", p2.Description.Competition);
 			storage.Store (p2);
-			ProjectLongoMatch p3 = storage.RetrieveAll<ProjectLongoMatch> ().First ();
+			LMProject p3 = storage.RetrieveAll<LMProject> ().First ();
 			Assert.IsNotNull (p3.DocumentID);
 			Assert.AreEqual (p2.Description.Competition, p3.Description.Competition);
 		}
@@ -399,17 +399,17 @@ namespace Tests.DB
 		[Test ()]
 		public void TestExists ()
 		{
-			ProjectLongoMatch p1 = Utils.CreateProject (true);
-			ProjectLongoMatch p2 = Utils.CreateProject (true);
+			LMProject p1 = Utils.CreateProject (true);
+			LMProject p2 = Utils.CreateProject (true);
 			storage.Store (p1);
 
-			var exists = storage.Exists<ProjectLongoMatch> (p1);
-			var notExists = storage.Exists<ProjectLongoMatch> (p2);
+			var exists = storage.Exists<LMProject> (p1);
+			var notExists = storage.Exists<LMProject> (p2);
 			Assert.IsTrue (exists);
 			Assert.IsFalse (notExists);
 
-			var existsEvent = storage.Exists<TimelineEventLongoMatch> (p1.Timeline.ElementAt (0) as TimelineEventLongoMatch);
-			var notExistsEvent = storage.Exists<TimelineEventLongoMatch> (p2.Timeline.ElementAt (0) as TimelineEventLongoMatch);
+			var existsEvent = storage.Exists<LMTimelineEvent> (p1.Timeline.ElementAt (0) as LMTimelineEvent);
+			var notExistsEvent = storage.Exists<LMTimelineEvent> (p2.Timeline.ElementAt (0) as LMTimelineEvent);
 			Assert.IsTrue (existsEvent);
 			Assert.IsFalse (notExistsEvent);
 		}
@@ -417,16 +417,16 @@ namespace Tests.DB
 		[Test ()]
 		public void TestCount ()
 		{
-			ProjectLongoMatch p1 = Utils.CreateProject (true);
-			ProjectLongoMatch p2 = Utils.CreateProject (false);
-			Assert.AreEqual (0, storage.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (0, storage.Count<TimelineEventLongoMatch> ());
+			LMProject p1 = Utils.CreateProject (true);
+			LMProject p2 = Utils.CreateProject (false);
+			Assert.AreEqual (0, storage.Count<LMProject> ());
+			Assert.AreEqual (0, storage.Count<LMTimelineEvent> ());
 			storage.Store (p1);
-			Assert.AreEqual (1, storage.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (3, storage.Count<TimelineEventLongoMatch> ());
+			Assert.AreEqual (1, storage.Count<LMProject> ());
+			Assert.AreEqual (3, storage.Count<LMTimelineEvent> ());
 			storage.Store (p2);
-			Assert.AreEqual (2, storage.Count<ProjectLongoMatch> ());
-			Assert.AreEqual (3, storage.Count<TimelineEventLongoMatch> ());
+			Assert.AreEqual (2, storage.Count<LMProject> ());
+			Assert.AreEqual (3, storage.Count<LMTimelineEvent> ());
 		}
 	}
 }

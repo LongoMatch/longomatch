@@ -21,7 +21,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.DB.Views
 {
-	public class PlayersView: GenericView <PlayerLongoMatch>
+	public class PlayersView: GenericView <LMPlayer>
 	{
 		public PlayersView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{

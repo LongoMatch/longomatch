@@ -90,7 +90,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			IStorage db = (IStorage)store.GetValue (iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = db.Count<ProjectLongoMatch> ().ToString ();
+			(cell as Gtk.CellRendererText).Text = db.Count<LMProject> ().ToString ();
 			if (db == manager.ActiveDB) {
 				cell.CellBackground = "red";
 			} else {

@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class AnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
-		static ProjectLongoMatch openedProject;
+		static LMProject openedProject;
 		ProjectType projectType;
 		LMFilters.EventsFilter filter;
 		bool detachedPlayer;
@@ -173,7 +173,7 @@ namespace LongoMatch.Gui.Component
 
 		public void TagPlayer (Player player)
 		{
-			codingwidget.TagPlayer ((PlayerLongoMatch)player);
+			codingwidget.TagPlayer ((LMPlayer)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -228,12 +228,12 @@ namespace LongoMatch.Gui.Component
 
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			openedProject = project as ProjectLongoMatch;
+			openedProject = project as LMProject;
 			this.projectType = projectType;
 			this.filter = (LMFilters.EventsFilter)filter;
 
-			codingwidget.SetProject (project as ProjectLongoMatch, projectType, (LMFilters.EventsFilter)filter);
-			playsSelection.SetProject (project as ProjectLongoMatch, (LMFilters.EventsFilter)filter);
+			codingwidget.SetProject (project as LMProject, projectType, (LMFilters.EventsFilter)filter);
+			playsSelection.SetProject (project as LMProject, (LMFilters.EventsFilter)filter);
 			if (projectType == ProjectType.FileProject) {
 				playercapturer.Mode = PlayerViewOperationMode.Analysis;
 			} else {
@@ -251,14 +251,14 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEventCreated (EventCreatedEvent e)
 		{
-			playsSelection.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
-			codingwidget.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
+			playsSelection.AddPlay ((LMTimelineEvent)e.TimelineEvent);
+			codingwidget.AddPlay ((LMTimelineEvent)e.TimelineEvent);
 		}
 
 		void HandleEventsDeleted (EventsDeletedEvent e)
 		{
-			playsSelection.RemovePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
-			codingwidget.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+			playsSelection.RemovePlays (e.TimelineEvents.Cast<LMTimelineEvent> ().ToList ());
+			codingwidget.DeletePlays (e.TimelineEvents.Cast<LMTimelineEvent> ().ToList ());
 		}
 	}
 }

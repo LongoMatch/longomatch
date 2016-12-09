@@ -43,8 +43,8 @@ namespace LongoMatch.Gui.Menus
 			FillMenu ();
 		}
 
-		public void ShowMenu (ProjectLongoMatch project, EventType eventType,
-							  IList<TimelineEventLongoMatch> events)
+		public void ShowMenu (LMProject project, EventType eventType,
+							  IList<LMTimelineEvent> events)
 		{
 			this.eventType = eventType;
 			this.events = events;

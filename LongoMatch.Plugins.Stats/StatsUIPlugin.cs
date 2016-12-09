@@ -30,7 +30,7 @@ namespace LongoMatch.Plugins.Stats
 	[Extension]
 	public class StatsUIPlugin: IStatsUI
 	{
-		public void ShowStats (ProjectLongoMatch project)
+		public void ShowStats (LMProject project)
 		{
 			StatsDialog statsui = new StatsDialog ();
 			statsui.LoadStats (project);

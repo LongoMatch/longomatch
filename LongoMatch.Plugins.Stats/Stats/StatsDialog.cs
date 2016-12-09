@@ -45,7 +45,7 @@ namespace LongoMatch.Plugins.Stats
 				stats.Dispose ();
 		}
 
-		public void LoadStats (ProjectLongoMatch project)
+		public void LoadStats (LMProject project)
 		{
 			if (stats != null)
 				stats.Dispose ();

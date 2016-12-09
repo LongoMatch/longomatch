@@ -1,5 +1,6 @@
 //
-//  Copyright (C) 2014 Andoni Morales Alastruey
+//  Copyright (C) 2008-2015 Andoni Morales Alastruey
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,38 +16,31 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+
 using System;
-using System.Collections.Generic;
-using Gtk;
-using LongoMatch.Core.Store;
-using LongoMatch.Gui.Component;
+using VAS.Core.Store;
 
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Core.Store
 {
-	public partial class ChooseProjectDialog : Gtk.Dialog
+
+	[Serializable]
+	public class ScoreEventType : EventType
 	{
-		public ChooseProjectDialog (Window parent)
-		{
-			TransientFor = parent;
-			this.Build ();
-			projectlistwidget1.ViewMode = ProjectListViewMode.Icons;
-			projectlistwidget1.SelectionMode = Gtk.SelectionMode.Single;
-			projectlistwidget1.ProjectsSelected += (projects) => {
-				if (projects != null && projects.Count == 1) {
-					Project = projects [0];
+		public override string Name {
+			get {
+				return Score != null ? Score.Name : null;
+			}
+			set {
+				if (Score != null) {
+					Score.Name = value;
 				}
-			};
+			}
 		}
 
-		public void Fill (List<LMProject> projects)
-		{
-			projectlistwidget1.Fill (projects);
-		}
-
-		public LMProject Project {
+		public Score Score {
 			get;
 			set;
 		}
 	}
-}
 
+}

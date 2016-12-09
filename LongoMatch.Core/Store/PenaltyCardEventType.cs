@@ -1,5 +1,6 @@
-﻿//
-//  Copyright (C) 2016 FLUENDO S.A.
+//
+//  Copyright (C) 2008-2015 Andoni Morales Alastruey
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,18 +16,15 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+
 using System;
-using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store
 {
-	// TODO: Rename file to SportEventTypes.cs
-
 	[Serializable]
-	public class PenaltyCardEventType: EventType
+	public class PenaltyCardEventType : EventType
 	{
 		public override Color Color {
 			get {
@@ -56,47 +54,4 @@ namespace LongoMatch.Core.Store
 		}
 	}
 
-	[Serializable]
-	public class ScoreEventType: EventType
-	{
-		public override string Name {
-			get {
-				return Score != null ? Score.Name : null;
-			}
-			set {
-				if (Score != null) {
-					Score.Name = value;
-				}
-			}
-		}
-
-		public Score Score {
-			get;
-			set;
-		}
-	}
-
-	[Serializable]
-	public class SubstitutionEventType: EventType
-	{
-		public SubstitutionEventType ()
-		{
-			ID = Constants.SubsID;
-			Name = Catalog.GetString ("Substitution");
-		}
-
-		public override bool Equals (object obj)
-		{
-			SubstitutionEventType sc = obj as SubstitutionEventType;
-			if (sc == null)
-				return false;
-			return sc.ID == ID;
-		}
-
-		public override int GetHashCode ()
-		{
-			return ID.GetHashCode ();
-		}
-	}
 }
-

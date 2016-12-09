@@ -1,5 +1,6 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2008-2015 Andoni Morales Alastruey
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,38 +17,48 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using VAS.Core.Common;
-using VAS.Core.MVVMC;
+using Newtonsoft.Json;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class PenaltyCard : BindableBase
+	public class ScoreButton : EventButton
 	{
-		public PenaltyCard ()
+
+		public ScoreButton ()
 		{
+			EventType = new ScoreEventType ();
 		}
 
-		public PenaltyCard (string name, Color color, CardShape shape)
-		{
-			Name = name;
-			Color = color;
-			Shape = shape;
-		}
-
-		public string Name {
-			get;
+		// We keep it for backwards compatibility, to be able to retrieve the Score from this object
+		[JsonProperty ("Score")]
+		[Obsolete ("Do not use, it's only kept here for migrations")]
+		public Score OldScore {
 			set;
+			get;
 		}
 
-		public Color Color {
-			get;
-			set;
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public Score Score {
+			get {
+				return ScoreEventType?.Score;
+			}
+			set {
+				if (ScoreEventType != null) {
+					ScoreEventType.Score = value;
+				}
+			}
 		}
 
-		public CardShape Shape {
-			get;
-			set;
+
+		[JsonIgnore]
+		[PropertyChanged.DoNotNotify]
+		public ScoreEventType ScoreEventType {
+			get {
+				return EventType as ScoreEventType;
+			}
 		}
 	}
 }

@@ -25,12 +25,12 @@ namespace LongoMatch.Core.Stats
 {
 	public class TeamStats
 	{
-		ProjectLongoMatch project;
-		SportsTeam template;
+		LMProject project;
+		LMTeam template;
 		TeamType team;
 		EventsFilter filter;
 
-		public TeamStats (ProjectLongoMatch project, EventsFilter filter, TeamType team)
+		public TeamStats (LMProject project, EventsFilter filter, TeamType team)
 		{
 			this.project = project;
 			this.filter = filter;
@@ -41,7 +41,7 @@ namespace LongoMatch.Core.Stats
 				this.template = project.VisitorTeamTemplate;
 			}
 			PlayersStats = new List<PlayerStats> ();
-			foreach (PlayerLongoMatch p in this.template.List) {
+			foreach (LMPlayer p in this.template.List) {
 				PlayersStats.Add (new PlayerStats (project, filter, p));
 			}
 		}

@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Panel
 			App.Current.StateController.MoveBack ();
 		}
 
-		void HandleProjectSelected (ProjectLongoMatch project)
+		void HandleProjectSelected (LMProject project)
 		{
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
 				new OpenProjectIDEvent {

@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Component
 				modelFilter.Refilter ();
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set;
 			protected get;
 		}
@@ -109,16 +109,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected TimelineEventLongoMatch SelectedPlay {
+		protected LMTimelineEvent SelectedPlay {
 			get {
-				return GetValueFromPath (Selection.GetSelectedRows () [0]) as TimelineEventLongoMatch;
+				return GetValueFromPath (Selection.GetSelectedRows () [0]) as LMTimelineEvent;
 			}
 		}
 
-		protected List<TimelineEventLongoMatch> SelectedPlays {
+		protected List<LMTimelineEvent> SelectedPlays {
 			get {
 				return Selection.GetSelectedRows ().Select (
-					p => GetValueFromPath (p) as TimelineEventLongoMatch).ToList ();
+					p => GetValueFromPath (p) as LMTimelineEvent).ToList ();
 			}
 		}
 
@@ -143,19 +143,19 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
 		{
 			object item = GetValueFromPath (args.Path);
-			if (!(item is TimelineEventLongoMatch))
+			if (!(item is LMTimelineEvent))
 				return;
 
 			App.Current.EventsBroker.Publish<LoadEventEvent> (
 				new LoadEventEvent {
-					TimelineEvent = item as TimelineEventLongoMatch
+					TimelineEvent = item as LMTimelineEvent
 				}
 			);
 		}
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
-			TimelineEventLongoMatch selectedEvent = SelectedPlay;
+			LMTimelineEvent selectedEvent = SelectedPlay;
 			List<Player> players = selectedEvent.Players.ToList ();
 
 			App.Current.GUIToolkit.EditPlay (selectedEvent, Project, true, true, true, true);

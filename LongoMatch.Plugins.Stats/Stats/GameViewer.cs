@@ -32,7 +32,7 @@ namespace LongoMatch.Plugins.Stats
 	public partial class GameViewer : Gtk.Bin
 	{
 		ProjectStats stats;
-		ProjectLongoMatch project;
+		LMProject project;
 		int catsMaxSize, subcatsMaxSize;
 		List<Widget> subcats, cats;
 
@@ -44,7 +44,7 @@ namespace LongoMatch.Plugins.Stats
 		public void LoadProject (Project project, ProjectStats stats)
 		{
 			this.stats = stats;
-			this.project = project as ProjectLongoMatch;
+			this.project = project as LMProject;
 			UpdateGui ();				
 		}
 

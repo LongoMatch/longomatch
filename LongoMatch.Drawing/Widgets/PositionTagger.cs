@@ -38,7 +38,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTaggerMenuHandler ShowMenuEvent;
 
 		EventsFilter filter;
-		TimelineEventLongoMatch playSelected;
+		LMTimelineEvent playSelected;
 
 		public PositionTagger (IWidget widget) : base (widget)
 		{
@@ -48,7 +48,7 @@ namespace LongoMatch.Drawing.Widgets
 			BackgroundColor = App.Current.Style.PaletteBackground;
 		}
 
-		public PositionTagger (IWidget widget, ProjectLongoMatch project, List<TimelineEventLongoMatch> plays,
+		public PositionTagger (IWidget widget, LMProject project, List<LMTimelineEvent> plays,
 		                       Image background, FieldPositionType position) : base (widget)
 		{
 			Project = project;
@@ -62,7 +62,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			get;
 			set;
 		}
@@ -90,7 +90,7 @@ namespace LongoMatch.Drawing.Widgets
 			set;
 		}
 
-		public void SelectPlay (TimelineEventLongoMatch play)
+		public void SelectPlay (LMTimelineEvent play)
 		{
 			PositionObject po;
 			
@@ -124,16 +124,16 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public IEnumerable<TimelineEventLongoMatch> Plays {
+		public IEnumerable<LMTimelineEvent> Plays {
 			set {
 				ClearObjects ();
-				foreach (TimelineEventLongoMatch p in value) {
+				foreach (LMTimelineEvent p in value) {
 					AddPlay (p);
 				}
 			}
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			PositionObject po;
 			Coordinates coords;
@@ -152,7 +152,7 @@ namespace LongoMatch.Drawing.Widgets
 			AddObject (po);
 		}
 
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
+		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
 			foreach (ICanvasObject co in 
 			         Objects.Where (o => plays.Contains ((o as PositionObject).Play)).ToList()) {
@@ -171,7 +171,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionChanged (List<Selection> selections)
 		{
 			if (selections.Count > 0) {
-				TimelineEventLongoMatch p = (selections.Last ().Drawable as PositionObject).Play;
+				LMTimelineEvent p = (selections.Last ().Drawable as PositionObject).Play;
 				playSelected = p;
 				if (EmitSignals) {
 					App.Current.EventsBroker.Publish<LoadEventEvent> (
@@ -186,7 +186,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void ShowMenu (Point coords)
 		{
 			if (ShowMenuEvent != null) {
-				List<TimelineEventLongoMatch> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
+				List<LMTimelineEvent> plays = Selections.Select (p => (p.Drawable as PositionObject).Play).ToList ();
 				ShowMenuEvent (plays);
 			}
 		}

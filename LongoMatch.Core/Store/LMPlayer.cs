@@ -1,4 +1,5 @@
 ﻿//
+//  Copyright (C) 2008-2015 Andoni Morales Alastruey
 //  Copyright (C) 2016 FLUENDO S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
@@ -21,7 +22,7 @@ using VAS.Core.Store;
 namespace LongoMatch.Core.Store
 {
 	[Serializable]
-	public class PlayerLongoMatch : Player
+	public class LMPlayer : Player
 	{
 		/// <summary>
 		/// My position in the field

@@ -227,7 +227,7 @@ namespace LongoMatch.Gui.Component
 				shapecombobox.Active = (int)cardButton.PenaltyCard.Shape;
 			}
 			if (timerButton != null) {
-				teamcombobox.Active = (int)(timerButton.Timer as TimerLongoMatch).Team;
+				teamcombobox.Active = (int)(timerButton.Timer as LMTimer).Team;
 			}
 			if (tagButton != null) {
 				groupentry.Text = tagButton.Tag.Group;
@@ -380,7 +380,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if (ignore)
 				return;
-			(timerButton.Timer as TimerLongoMatch).Team = (TeamType)teamcombobox.Active;
+			(timerButton.Timer as LMTimer).Team = (TeamType)teamcombobox.Active;
 			Edited = true;
 		}
 

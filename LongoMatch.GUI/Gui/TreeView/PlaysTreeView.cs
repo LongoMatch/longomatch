@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public TreePath AddEvent (TimelineEventLongoMatch evt, TreeIter evtTter)
+		public TreePath AddEvent (LMTimelineEvent evt, TreeIter evtTter)
 		{
 			TreeIter childIter = childModel.AppendValues (evtTter, evt);
 			TreePath childPath = childModel.GetPath (childIter);
@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Component
 		protected override int SortFunction (TreeModel model, TreeIter a, TreeIter b)
 		{
 			object objecta, objectb;
-			TimelineEventLongoMatch tna, tnb;
+			LMTimelineEvent tna, tnb;
 
 			if (model == null)
 				return 0;
@@ -97,9 +97,9 @@ namespace LongoMatch.Gui.Component
 			if (objecta is EventType && objectb is EventType) {
 				return int.Parse (model.GetPath (a).ToString ())
 				- int.Parse (model.GetPath (b).ToString ());
-			} else if (objecta is TimelineEventLongoMatch && objectb is TimelineEventLongoMatch) {
-				tna = objecta as TimelineEventLongoMatch;
-				tnb = objectb as TimelineEventLongoMatch;
+			} else if (objecta is LMTimelineEvent && objectb is LMTimelineEvent) {
+				tna = objecta as LMTimelineEvent;
+				tnb = objectb as LMTimelineEvent;
 				switch (tna.EventType.SortMethod) {
 				case (SortMethodType.SortByName):
 					return String.Compare (tna.Name, tnb.Name);
@@ -297,7 +297,7 @@ namespace LongoMatch.Gui.Component
 
 		void ShowEventTypeMenu (EventType eventType, TreePath [] paths)
 		{
-			List<TimelineEventLongoMatch> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
+			List<LMTimelineEvent> events = TreeViewHelpers.EventsListFromPaths (modelSort, paths);
 			eventTypeMenu.ShowMenu (Project, eventType, events);
 		}
 

@@ -24,7 +24,7 @@ using VAS.DB.Views;
 
 namespace LongoMatch.DB.Views
 {
-	public class ProjectsView: GenericView <ProjectLongoMatch>
+	public class ProjectsView: GenericView <LMProject>
 	{
 		const string VERSION = "1";
 

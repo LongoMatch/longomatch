@@ -53,17 +53,17 @@ namespace Tests.Integration
 			}
 
 			CouchbaseStorageLongoMatch storage = new CouchbaseStorageLongoMatch (dir, "longomatch");
-			Assert.AreEqual (2, storage.RetrieveAll<SportsTeam> ().Count ());
-			Assert.AreEqual (1, storage.RetrieveAll<DashboardLongoMatch> ().Count ());
-			Assert.AreEqual (1, storage.RetrieveAll<ProjectLongoMatch> ().Count ());
+			Assert.AreEqual (2, storage.RetrieveAll<LMTeam> ().Count ());
+			Assert.AreEqual (1, storage.RetrieveAll<LMDashboard> ().Count ());
+			Assert.AreEqual (1, storage.RetrieveAll<LMProject> ().Count ());
 
-			SportsTeam team = storage.RetrieveAll<SportsTeam> ().First ();
+			LMTeam team = storage.RetrieveAll<LMTeam> ().First ();
 			Assert.DoesNotThrow (team.Load);
 
-			DashboardLongoMatch dashboard = storage.RetrieveAll<DashboardLongoMatch> ().First ();
+			LMDashboard dashboard = storage.RetrieveAll<LMDashboard> ().First ();
 			Assert.DoesNotThrow (dashboard.Load);
 
-			ProjectLongoMatch project = storage.RetrieveAll<ProjectLongoMatch> ().First ();
+			LMProject project = storage.RetrieveAll<LMProject> ().First ();
 			Assert.DoesNotThrow (project.Load);
 		}
 	}

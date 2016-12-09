@@ -78,7 +78,7 @@ namespace Tests.Services
 		public void TestRegister ()
 		{
 			var toolsManager = new ToolsManager ();
-			toolsManager.RegisterImporter (() => new ProjectLongoMatch (), "", "", null, false, false);
+			toolsManager.RegisterImporter (() => new LMProject (), "", "", null, false, false);
 			Assert.AreEqual (1, toolsManager.ProjectImporters.Count);
 		}
 
@@ -99,7 +99,7 @@ namespace Tests.Services
 			importer.ImportFunction = () => null;
 
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			dbMock.Verify (db => db.Store<ProjectLongoMatch> (It.IsAny<ProjectLongoMatch> (), It.IsAny<bool> ()), Times.Never ());
+			dbMock.Verify (db => db.Store<LMProject> (It.IsAny<LMProject> (), It.IsAny<bool> ()), Times.Never ());
 
 			// Throws Exception
 			importer.ImportFunction = () => {
@@ -114,7 +114,7 @@ namespace Tests.Services
 		public void TestImportProject ()
 		{
 			bool openned = false;
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 
 			EventToken et = App.Current.EventsBroker.Subscribe<OpenProjectIDEvent> ((OpenProjectIDEvent e) => {
 				if (e.Project == p) {
@@ -124,7 +124,7 @@ namespace Tests.Services
 
 			importer.ImportFunction = () => p;
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
+			dbMock.Verify (db => db.Store<LMProject> (p, true), Times.Once ());
 			Assert.IsTrue (openned);
 
 			App.Current.EventsBroker.Unsubscribe<OpenProjectIDEvent> (et);
@@ -134,7 +134,7 @@ namespace Tests.Services
 		public void TestImportFakeLiveProject ()
 		{
 			bool openned = false;
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 			p.Description = new ProjectDescription ();
 			p.Description.FileSet = new MediaFileSet ();
 			p.Description.FileSet.Add (new MediaFile { FilePath = Constants.FAKE_PROJECT });
@@ -145,7 +145,7 @@ namespace Tests.Services
 
 			importer.ImportFunction = () => p;
 			App.Current.EventsBroker.Publish<ImportProjectEvent> (new ImportProjectEvent ());
-			dbMock.Verify (db => db.Store<ProjectLongoMatch> (p, true), Times.Once ());
+			dbMock.Verify (db => db.Store<LMProject> (p, true), Times.Once ());
 			guiToolkitMock.Verify (g => g.SelectMediaFiles (It.IsAny<MediaFileSet> ()), Times.Never ());
 			Assert.IsTrue (openned);
 
@@ -156,7 +156,7 @@ namespace Tests.Services
 		public void TestImportProjectThatNeedsEdition ()
 		{
 			bool openned = false;
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 
 			EventToken et = App.Current.EventsBroker.Subscribe<NavigationEvent> ((e) => {
 				openned |= e.Name == NewProjectState.NAME;

@@ -44,8 +44,8 @@ namespace LongoMatch.Gui.Panel
 	public partial class ProjectsManagerPanel : Gtk.Bin, IPanel<SportsProjectsManagerVM>
 	{
 		SportsProjectsManagerVM viewModel;
-		ProjectLongoMatch loadedProject;
-		List<ProjectLongoMatch> selectedProjects;
+		LMProject loadedProject;
+		List<LMProject> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
 		IStorage DB;
 		IGUIToolkit gkit;
@@ -174,7 +174,7 @@ namespace LongoMatch.Gui.Panel
 				if (save) {
 					try {
 						IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
+						busy.ShowSync (() => DB.Store<LMProject> (loadedProject));
 						projectlistwidget1.UpdateProject (loadedProject);
 						edited = false;
 					} catch (Exception ex) {
@@ -186,7 +186,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void LoadProject (ProjectLongoMatch project)
+		void LoadProject (LMProject project)
 		{
 			ProjectDescription pd = project.Description;
 
@@ -267,7 +267,7 @@ namespace LongoMatch.Gui.Panel
 			edited = true;
 		}
 
-		void HandleProjectSelected (ProjectLongoMatch project)
+		void HandleProjectSelected (LMProject project)
 		{
 			SaveLoadedProject (false);
 			if (project != null) {
@@ -286,7 +286,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleProjectsSelected (List<ProjectLongoMatch> projects)
+		void HandleProjectsSelected (List<LMProject> projects)
 		{
 			SaveLoadedProject (false);
 			rbox.Visible = true;
@@ -355,13 +355,13 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleDeleteClicked (object sender, EventArgs e)
 		{
-			List<ProjectLongoMatch> deletedProjects;
+			List<LMProject> deletedProjects;
 
 			if (selectedProjects == null)
 				return;
 
-			deletedProjects = new List<ProjectLongoMatch> ();
-			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
+			deletedProjects = new List<LMProject> ();
+			foreach (LMProject selectedProject in selectedProjects) {
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
 				             selectedProject.Description.Title;
 				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
@@ -372,7 +372,7 @@ namespace LongoMatch.Gui.Panel
 					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Deleting project..."), null);
 					busy.ShowSync (() => {
 						try {
-							DB.Delete<ProjectLongoMatch> (selectedProject);
+							DB.Delete<LMProject> (selectedProject);
 						} catch (StorageException ex) {
 							App.Current.Dialogs.ErrorMessage (ex.Message);
 						}
@@ -383,7 +383,7 @@ namespace LongoMatch.Gui.Panel
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<ProjectLongoMatch> () == 0) {
+			if (DB.Count<LMProject> () == 0) {
 				rbox.Visible = false;
 			}
 		}

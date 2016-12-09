@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class EventsListWidget : Gtk.Bin
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		Helpers.IconNotebookHelper notebookHelper;
 
 		public EventsListWidget ()
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
+		public void SetProject (LMProject project, EventsFilter filter)
 		{
 			this.project = project;
 			playsList.Filter = filter;
@@ -67,14 +67,14 @@ namespace LongoMatch.Gui.Component
 			UpdateTeamsModels (new TeamTagsChangedEvent ());
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			playsList.AddPlay (play);
 			localPlayersList.AddEvent (play);
 			visitorPlayersList.AddEvent (play);
 		}
 
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
+		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
 			playsList.RemovePlays (plays);
 			localPlayersList.RemoveEvents (plays);
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Component
 			if (project == null)
 				return;
 
-			var timeline = project.Timeline.OfType<TimelineEventLongoMatch> ();
+			var timeline = project.Timeline.OfType<LMTimelineEvent> ();
 			localPlayersList.SetTeam (project.LocalTeamTemplate, timeline);
 			visitorPlayersList.SetTeam (project.VisitorTeamTemplate, timeline);
 		}

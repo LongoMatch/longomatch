@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysPositionViewer : Gtk.Bin
 	{
 		SportsPlaysMenu menu;
-		ProjectLongoMatch project;
+		LMProject project;
 
 		public PlaysPositionViewer ()
 		{
@@ -46,11 +46,11 @@ namespace LongoMatch.Gui.Component
 			menu = new SportsPlaysMenu ();
 		}
 
-		public void LoadProject (ProjectLongoMatch project, EventsFilter filter)
+		public void LoadProject (LMProject project, EventsFilter filter)
 		{
 			this.project = project;
 			if (project != null) {
-				var timeLine = project.Timeline.OfType<TimelineEventLongoMatch> ();
+				var timeLine = project.Timeline.OfType<LMTimelineEvent> ();
 
 				field.Tagger.Project = project;
 				hfield.Tagger.Project = project;
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			field.Tagger.AddPlay (play);
 			hfield.Tagger.AddPlay (play);
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
+		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
 			field.Tagger.RemovePlays (plays);
 			hfield.Tagger.RemovePlays (plays);
@@ -86,9 +86,9 @@ namespace LongoMatch.Gui.Component
 		void HandlePlayLoaded (EventLoadedEvent e)
 		{
 			if (e.TimelineEvent != null) {
-				field.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
-				hfield.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
-				goal.Tagger.SelectPlay (e.TimelineEvent as TimelineEventLongoMatch);
+				field.Tagger.SelectPlay (e.TimelineEvent as LMTimelineEvent);
+				hfield.Tagger.SelectPlay (e.TimelineEvent as LMTimelineEvent);
+				goal.Tagger.SelectPlay (e.TimelineEvent as LMTimelineEvent);
 			} else {
 				field.Tagger.ClearSelection ();
 				hfield.Tagger.ClearSelection ();

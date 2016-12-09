@@ -82,7 +82,7 @@ namespace Tests.Services
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.IsFalse (provider.Exists ("ACANDEMOR"));
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "NEW";
 			provider.Save (d);
 			Assert.IsTrue (provider.Exists ("NEW"));
@@ -93,7 +93,7 @@ namespace Tests.Services
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.AreEqual (1, provider.Templates.Count);
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "NEW";
 			provider.Save (d);
 			Assert.AreEqual (2, provider.Templates.Count);
@@ -103,12 +103,12 @@ namespace Tests.Services
 		public void TestSaveUpdateLoad ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			provider.Save (d);
 			Assert.IsTrue (provider.Exists ("jamematen"));
 
-			d = DashboardLongoMatch.DefaultTemplate (10);
+			d = LMDashboard.DefaultTemplate (10);
 			d.Name = "system";
 			provider.Register (d);
 			Assert.IsNotNull (provider.Exists ("system"));
@@ -118,7 +118,7 @@ namespace Tests.Services
 		public void TestLoadFile ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			string path = Path.GetTempFileName ();
 			try {
@@ -133,7 +133,7 @@ namespace Tests.Services
 		public void TestRegister ()
 		{
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "system";
 			provider.Register (d);
 			Assert.IsNotNull (provider.Exists ("system"));
@@ -153,7 +153,7 @@ namespace Tests.Services
 			provider.Copy (provider.Templates [0], "NEW");
 			Assert.AreEqual (2, provider.Templates.Count);
 			Assert.IsNotNull (provider.Exists ("NEW"));
-			Assert.DoesNotThrow (() => provider.Copy (DashboardLongoMatch.DefaultTemplate (5), "NEW"));
+			Assert.DoesNotThrow (() => provider.Copy (LMDashboard.DefaultTemplate (5), "NEW"));
 			Assert.IsTrue (eventEmitted);
 		}
 
@@ -163,19 +163,19 @@ namespace Tests.Services
 			TemplatesService ts = new TemplatesService (storage);
 			ts.Start ();
 			ITeamTemplatesProvider teamtemplateprovider = ts.TeamTemplateProvider;
-			SportsTeam teamB = SportsTeam.DefaultTemplate (5);
+			LMTeam teamB = LMTeam.DefaultTemplate (5);
 			teamB.Name = "B";
 			teamB.TeamName = "Template B";
 			teamB.FormationStr = "1-4";
 			teamB.List [0].Name = "Paco";
 			teamtemplateprovider.Save (teamB);
-			SportsTeam teamA = new SportsTeam ();
+			LMTeam teamA = new LMTeam ();
 			teamA.Name = "A";
 			teamA.TeamName = "Template A";
 			teamA.FormationStr = "1-4-3-3";
 			teamtemplateprovider.Save (teamA);
 
-			SportsTeam auxdelete = teamA;
+			LMTeam auxdelete = teamA;
 			teamtemplateprovider.Copy (teamB, "A");
 			teamtemplateprovider.Delete (auxdelete);
 			teamA = teamtemplateprovider.Templates [0];
@@ -195,10 +195,10 @@ namespace Tests.Services
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.AreEqual (1, provider.Templates.Count);
 			// Template does not exists
-			Assert.DoesNotThrow (() => provider.Delete (DashboardLongoMatch.DefaultTemplate (1)));
+			Assert.DoesNotThrow (() => provider.Delete (LMDashboard.DefaultTemplate (1)));
 			// System template
-			Assert.Throws<TemplateNotFoundException<DashboardLongoMatch>> (() => provider.Delete (provider.Templates [0]));
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (10);
+			Assert.Throws<TemplateNotFoundException<LMDashboard>> (() => provider.Delete (provider.Templates [0]));
+			LMDashboard d = LMDashboard.DefaultTemplate (10);
 			d.Name = "jamematen";
 			provider.Save (d);
 			Assert.AreEqual (2, provider.Templates.Count);
@@ -234,7 +234,7 @@ namespace Tests.Services
 		public void TestAdd ()
 		{
 			bool eventEmitted = false;
-			var dashboard = DashboardLongoMatch.DefaultTemplate (5);
+			var dashboard = LMDashboard.DefaultTemplate (5);
 			CategoriesTemplatesProvider provider = new CategoriesTemplatesProvider (storage);
 			Assert.AreEqual (1, provider.Templates.Count);
 			provider.CollectionChanged += (sender, e) => {

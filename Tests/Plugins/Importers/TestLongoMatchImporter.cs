@@ -56,7 +56,7 @@ namespace Tests.Plugins.Importers
 			App.Current.GUIToolkit = mockGUI.Object;
 			App.Current.Dialogs = mockDialog.Object;
 
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 			p.FileSet.First ().FilePath = originalPath;
 			Assert.IsFalse (p.FileSet.CheckFiles ());
 

@@ -20,7 +20,7 @@ using VAS.DB.Views;
 
 namespace LongoMatch.DB.Views
 {
-	public class DashboardsView: GenericView <DashboardLongoMatch>
+	public class DashboardsView: GenericView <LMDashboard>
 	{
 		public DashboardsView (CouchbaseStorageLongoMatch storage) : base (storage)
 		{

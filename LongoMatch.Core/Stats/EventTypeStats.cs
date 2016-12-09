@@ -27,15 +27,15 @@ namespace LongoMatch.Core.Stats
 {
 	public class EventTypeStats: Stat
 	{
-		List<TimelineEventLongoMatch> events, homeEvents, awayEvents;
+		List<LMTimelineEvent> events, homeEvents, awayEvents;
 		EventType eventType;
-		ProjectLongoMatch project;
+		LMProject project;
 		EventsFilter filter;
 
-		public EventTypeStats (ProjectLongoMatch project, EventsFilter filter, EventType evType)
+		public EventTypeStats (LMProject project, EventsFilter filter, EventType evType)
 		{
 			Name = evType.Name;
-			events = new List<TimelineEventLongoMatch> ();
+			events = new List<LMTimelineEvent> ();
 			this.project = project;
 			this.filter = filter;
 			this.eventType = evType;
@@ -44,9 +44,9 @@ namespace LongoMatch.Core.Stats
 		public void Update ()
 		{
 			List<TimelineEvent> originalEventsByType = project.EventsByType (eventType);
-			var eventsByType = new List<TimelineEventLongoMatch> ();
+			var eventsByType = new List<LMTimelineEvent> ();
 			foreach (var eventType in originalEventsByType) {
-				eventsByType.Add (eventType as TimelineEventLongoMatch);
+				eventsByType.Add (eventType as LMTimelineEvent);
 			}
 			events = eventsByType.Where (filter.IsVisible).ToList ();
 			homeEvents = events.Where (e => e.Teams.Contains (project.LocalTeamTemplate) ||
@@ -88,13 +88,13 @@ namespace LongoMatch.Core.Stats
 
 		public bool HasPositionTags (TeamType team)
 		{
-			List<TimelineEventLongoMatch> evts = EventsForTeam (team);
+			List<LMTimelineEvent> evts = EventsForTeam (team);
 			return evts.Count (e => e.FieldPosition != null || e.HalfFieldPosition != null || e.GoalPosition != null) != 0; 
 		}
 
 		public List<Coordinates> GetFieldCoordinates (TeamType team, FieldPositionType pos)
 		{
-			List<TimelineEventLongoMatch> evts = EventsForTeam (team);
+			List<LMTimelineEvent> evts = EventsForTeam (team);
 			
 			switch (pos) {
 			case FieldPositionType.Field:
@@ -106,9 +106,9 @@ namespace LongoMatch.Core.Stats
 			}
 		}
 
-		List<TimelineEventLongoMatch> EventsForTeam (TeamType team)
+		List<LMTimelineEvent> EventsForTeam (TeamType team)
 		{
-			List<TimelineEventLongoMatch> evts;
+			List<LMTimelineEvent> evts;
 			
 			switch (team) {
 			case TeamType.LOCAL:

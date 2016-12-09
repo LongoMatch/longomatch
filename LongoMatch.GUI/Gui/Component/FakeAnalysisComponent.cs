@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class FakeAnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 
 		public FakeAnalysisComponent ()
 		{
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Component
 
 		public void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
-			this.project = (ProjectLongoMatch)project;
+			this.project = (LMProject)project;
 			codingwidget1.SetProject (this.project, projectType, (LMFilters.EventsFilter)filter);
 		}
 
@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Component
 
 		public void TagPlayer (Player player)
 		{
-			codingwidget1.TagPlayer ((PlayerLongoMatch)player);
+			codingwidget1.TagPlayer ((LMPlayer)player);
 		}
 
 		public void TagTeam (TeamType team)
@@ -165,12 +165,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEventCreated (EventCreatedEvent e)
 		{
-			codingwidget1.AddPlay ((TimelineEventLongoMatch)e.TimelineEvent);
+			codingwidget1.AddPlay ((LMTimelineEvent)e.TimelineEvent);
 		}
 
 		void HandleEventsDeleted (EventsDeletedEvent e)
 		{
-			codingwidget1.DeletePlays (e.TimelineEvents.Cast<TimelineEventLongoMatch> ().ToList ());
+			codingwidget1.DeletePlays (e.TimelineEvents.Cast<LMTimelineEvent> ().ToList ());
 		}
 	}
 }

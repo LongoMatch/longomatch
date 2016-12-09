@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Stats
 	{
 		EventsFilter filter;
 
-		public ProjectStats (ProjectLongoMatch project)
+		public ProjectStats (LMProject project)
 		{
 			Project = project;
 			filter = new EventsFilter (project);
@@ -40,7 +40,7 @@ namespace LongoMatch.Core.Stats
 		{
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			get;
 			protected set;
 		}
@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Stats
 
 		public PlayerStats GetPlayerStats (Player p)
 		{
-			ProjectLongoMatch LMProject = Project as ProjectLongoMatch;
+			LMProject LMProject = Project as LMProject;
 			if (LMProject.LocalTeamTemplate.List.Contains (p)) {
 				return HomeTeamStats.PlayersStats.FirstOrDefault (ps => ps.Player == p);
 			} else {
@@ -97,7 +97,7 @@ namespace LongoMatch.Core.Stats
 			}
 
 			TimersStats = new List<TimerStats> ();
-			foreach (TimerLongoMatch t in Project.Timers) {
+			foreach (LMTimer t in Project.Timers) {
 				TimersStats.Add (new TimerStats (Project, t));
 			}
 

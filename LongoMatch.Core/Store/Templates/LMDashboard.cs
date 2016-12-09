@@ -27,7 +27,7 @@ using VAS.Core.Store.Templates;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class DashboardLongoMatch : Dashboard, ITemplate<DashboardLongoMatch>
+	public class LMDashboard : Dashboard, ITemplate<LMDashboard>
 	{
 		new const int MIN_WIDTH = 320;
 		new const int MIN_HEIGHT = 240;
@@ -37,13 +37,13 @@ namespace LongoMatch.Core.Store.Templates
 		/// </summary>
 		/// <returns>the new dashboadrd.</returns>
 		/// <param name="count">Number of <see cref="AnalysisEventButton"/> to add.</param>
-		public static DashboardLongoMatch DefaultTemplate (int count)
+		public static LMDashboard DefaultTemplate (int count)
 		{
 			TagButton tagbutton;
 			TimerButton timerButton;
 			PenaltyCardButton cardButton;
 			ScoreButton scoreButton;
-			DashboardLongoMatch template = new DashboardLongoMatch ();
+			LMDashboard template = new LMDashboard ();
 
 			template.FillDefaultTemplate (count);
 			template.GamePeriods = new ObservableCollection<string> { "1", "2" };
@@ -89,7 +89,7 @@ namespace LongoMatch.Core.Store.Templates
 			template.List.Add (scoreButton);
 
 			timerButton = new TimerButton {
-				Timer = new TimerLongoMatch { Name = Catalog.GetString ("Ball playing") },
+				Timer = new LMTimer { Name = Catalog.GetString ("Ball playing") },
 				Position = new Point (10 + (10 + CAT_WIDTH) * 6, 10)
 			};
 			template.List.Add (timerButton);
@@ -135,10 +135,10 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// Creates a deep copy of this dashboard
 		/// </summary>
-		DashboardLongoMatch ITemplate<DashboardLongoMatch>.Copy (string newName)
+		LMDashboard ITemplate<LMDashboard>.Copy (string newName)
 		{
 			Load ();
-			DashboardLongoMatch newDashboard = this.Clone (SerializationType.Json);
+			LMDashboard newDashboard = this.Clone (SerializationType.Json);
 			newDashboard.ID = Guid.NewGuid ();
 			newDashboard.DocumentID = null;
 			newDashboard.Name = newName;

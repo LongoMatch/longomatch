@@ -111,14 +111,14 @@ namespace LongoMatch.Drawing.Widgets
 				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = Mode;
 				if (Project != null && t.BackgroundImage == null) {
-					TeamType team = (t.Timer as TimerLongoMatch).Team;
+					TeamType team = (t.Timer as LMTimer).Team;
 					if (team == TeamType.LOCAL) {
-						if (Project is ProjectLongoMatch) {
-							to.TeamImage = (Project as ProjectLongoMatch).LocalTeamTemplate.Shield;
+						if (Project is LMProject) {
+							to.TeamImage = (Project as LMProject).LocalTeamTemplate.Shield;
 						}
 					} else if (team == TeamType.VISITOR) {
-						if (Project is ProjectLongoMatch) {
-							to.TeamImage = (Project as ProjectLongoMatch).VisitorTeamTemplate.Shield;
+						if (Project is LMProject) {
+							to.TeamImage = (Project as LMProject).VisitorTeamTemplate.Shield;
 						}
 					}
 				}

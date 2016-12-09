@@ -25,7 +25,7 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for sports projects.
 	/// </summary>
-	public class SportsProjectVM : ProjectVM<ProjectLongoMatch>
+	public class SportsProjectVM : ProjectVM<LMProject>
 	{
 		/// <summary>
 		/// Gets the description of the project

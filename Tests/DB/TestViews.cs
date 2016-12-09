@@ -111,23 +111,23 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListDashboards ()
 		{
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (5);
+			LMDashboard d = LMDashboard.DefaultTemplate (5);
 			d.Name = "Dashboard1";
 			storage.Store (d);
 
-			List<DashboardLongoMatch> dashboards = storage.RetrieveAll<DashboardLongoMatch> ().ToList ();
+			List<LMDashboard> dashboards = storage.RetrieveAll<LMDashboard> ().ToList ();
 			Assert.AreEqual (1, dashboards.Count);
 			Assert.AreEqual (d.ID, dashboards [0].ID);
 			Assert.AreEqual (d.Name, dashboards [0].Name);
 			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
-				var da = DashboardLongoMatch.DefaultTemplate (5);
+				var da = LMDashboard.DefaultTemplate (5);
 				da.Name = "Dashboard" + (i + 2);
 				storage.Store (da);
 			}
 
-			dashboards = storage.RetrieveAll<DashboardLongoMatch> ().ToList ();
+			dashboards = storage.RetrieveAll<LMDashboard> ().ToList ();
 			Assert.IsTrue (dashboards.All (i => i.DocumentID != null));
 			Assert.AreEqual (6, dashboards.Count);
 		}
@@ -135,14 +135,14 @@ namespace Tests.DB
 		[Test ()]
 		public void TestLoadDashboards ()
 		{
-			DashboardLongoMatch d = DashboardLongoMatch.DefaultTemplate (5);
+			LMDashboard d = LMDashboard.DefaultTemplate (5);
 			d.Name = "Dashboard1";
 			// Make PenaltyCardEventType and ScoreEventType the same object so that both are serialized
 			// as references and Utils.AreEquals can check the rest correctly
 			(d.List [8] as PenaltyCardButton).EventType = (d.List [7] as PenaltyCardButton).EventType;
 			(d.List [10] as ScoreButton).EventType = (d.List [9] as ScoreButton).EventType;
 			storage.Store (d);
-			DashboardLongoMatch d1 = storage.Retrieve<DashboardLongoMatch> (new QueryFilter ()).First ();
+			LMDashboard d1 = storage.Retrieve<LMDashboard> (new QueryFilter ()).First ();
 			d1.IsLoaded = true;
 			Utils.AreEquals (d, d1, false);
 			d1.IsLoaded = false;
@@ -152,12 +152,12 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListTeams ()
 		{
-			SportsTeam t = SportsTeam.DefaultTemplate (5);
+			LMTeam t = LMTeam.DefaultTemplate (5);
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
 
-			List<SportsTeam> teams = storage.RetrieveAll<SportsTeam> ().ToList ();
+			List<LMTeam> teams = storage.RetrieveAll<LMTeam> ().ToList ();
 			Assert.AreEqual (1, teams.Count);
 			Assert.AreEqual (t.ID, teams [0].ID);
 			Assert.AreEqual (t.Name, teams [0].Name);
@@ -165,22 +165,22 @@ namespace Tests.DB
 			Assert.IsTrue (teams.All (i => i.DocumentID != null));
 
 			for (int i = 0; i < 5; i++) {
-				var te = SportsTeam.DefaultTemplate (5);
+				var te = LMTeam.DefaultTemplate (5);
 				te.Name = "Team" + (i + 2);
 				storage.Store (te);
 			}
 
-			Assert.AreEqual (6, storage.RetrieveAll<SportsTeam> ().Count ());
+			Assert.AreEqual (6, storage.RetrieveAll<LMTeam> ().Count ());
 		}
 
 		[Test ()]
 		public void TestLoadTeam ()
 		{
-			SportsTeam t = SportsTeam.DefaultTemplate (5);
+			LMTeam t = LMTeam.DefaultTemplate (5);
 			t.Name = "Team1";
 			t.Shield = Utils.LoadImageFromFile ();
 			storage.Store (t);
-			SportsTeam t1 = storage.Retrieve<SportsTeam> (new QueryFilter ()).First ();
+			LMTeam t1 = storage.Retrieve<LMTeam> (new QueryFilter ()).First ();
 			t1.IsLoaded = true;
 			Utils.AreEquals (t, t1, false);
 			t1.IsLoaded = false;
@@ -191,24 +191,24 @@ namespace Tests.DB
 		[Test ()]
 		public void TestListProjects ()
 		{
-			ProjectLongoMatch p = Utils.CreateProject ();
+			LMProject p = Utils.CreateProject ();
 			try {
 				p.Description.Group = "GRP";
 				p.Description.Competition = "COMP";
 				storage.Store (p);
 
-				List<ProjectLongoMatch> projects = storage.RetrieveAll<ProjectLongoMatch> ().ToList ();
+				List<LMProject> projects = storage.RetrieveAll<LMProject> ().ToList ();
 				Assert.AreEqual (1, projects.Count);
 				Assert.AreEqual (p.Timeline.Count, projects [0].Timeline.Count);
 				Assert.AreEqual ("GRP", p.Description.Group);
 				Assert.AreEqual ("COMP", p.Description.Competition);
 				Assert.IsTrue (projects.All (i => i.DocumentID != null));
 
-				Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (null).Count ());
+				Assert.AreEqual (1, storage.Retrieve<LMProject> (null).Count ());
 
 				var filter = new QueryFilter ();
 				filter.Add ("Competition", "COMP");
-				Assert.AreEqual (1, storage.Retrieve<ProjectLongoMatch> (filter).Count ());
+				Assert.AreEqual (1, storage.Retrieve<LMProject> (filter).Count ());
 
 			} finally {
 				Utils.DeleteProject (p);
@@ -221,35 +221,35 @@ namespace Tests.DB
 			foreach (string n in new [] { "andoni", "aitor", "xabi", "iñaki" }) {
 				foreach (string f in new [] { "gorriti", "zabala", "otegui" }) {
 					foreach (string r in new [] { "cholo", "bobi", "tolai" }) {
-						PlayerLongoMatch p = new PlayerLongoMatch { Name = n, LastName = f, NickName = r };
+						LMPlayer p = new LMPlayer { Name = n, LastName = f, NickName = r };
 						storage.Store (p);
 					}
 				}
 			}
 
-			IEnumerable<PlayerLongoMatch> players = storage.RetrieveAll<PlayerLongoMatch> ();
+			IEnumerable<LMPlayer> players = storage.RetrieveAll<LMPlayer> ();
 			Assert.AreEqual (36, players.Count ());
 
 			QueryFilter filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
-			players = storage.Retrieve<PlayerLongoMatch> (filter);
+			players = storage.Retrieve<LMPlayer> (filter);
 			Assert.AreEqual (9, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni");
 			filter.Add ("LastName", "zabala");
-			players = storage.Retrieve<PlayerLongoMatch> (filter);
+			players = storage.Retrieve<LMPlayer> (filter);
 			Assert.AreEqual (3, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
-			players = storage.Retrieve<PlayerLongoMatch> (filter);
+			players = storage.Retrieve<LMPlayer> (filter);
 			Assert.AreEqual (18, players.Count ());
 
 			filter = new QueryFilter ();
 			filter.Add ("Name", "andoni", "aitor");
 			filter.Add ("LastName", "zabala");
-			players = storage.Retrieve<PlayerLongoMatch> (filter);
+			players = storage.Retrieve<LMPlayer> (filter);
 			Assert.AreEqual (6, players.Count ());
 		}
 	}

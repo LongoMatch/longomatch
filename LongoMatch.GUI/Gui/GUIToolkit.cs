@@ -108,7 +108,7 @@ namespace LongoMatch.Gui
 				seriesName = sd.SeriesName;
 				sd.Destroy ();
 				outDir = System.IO.Path.Combine (snapshotsDir, seriesName);
-				var fsc = new FramesSeriesCapturer (((ProjectLongoMatch)openedProject).Description.FileSet, play,
+				var fsc = new FramesSeriesCapturer (((LMProject)openedProject).Description.FileSet, play,
 							  interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog (fsc, MainWindow as Gtk.Window);
 				fcpd.Run ();
@@ -122,14 +122,14 @@ namespace LongoMatch.Gui
 		{
 			if (play is StatEvent) {
 				SubstitutionsEditor dialog = new SubstitutionsEditor (MainWindow as Gtk.Window);
-				dialog.Load (project as ProjectLongoMatch, play as StatEvent);
+				dialog.Load (project as LMProject, play as StatEvent);
 				if (dialog.Run () == (int)ResponseType.Ok) {
 					dialog.SaveChanges ();
 				}
 				dialog.Destroy ();
 			} else {
 				PlayEditor dialog = new PlayEditor (MainWindow as Gtk.Window);
-				dialog.LoadPlay (play as TimelineEventLongoMatch, project as ProjectLongoMatch, editTags, editPos,
+				dialog.LoadPlay (play as LMTimelineEvent, project as LMProject, editTags, editPos,
 					editPlayers, editNotes);
 				dialog.Run ();
 				dialog.Destroy ();
@@ -141,9 +141,9 @@ namespace LongoMatch.Gui
 		public override Project ChooseProject (List<Project> projects)
 		{
 			Log.Information ("Choosing project");
-			ProjectLongoMatch project = null;
+			LMProject project = null;
 			ChooseProjectDialog dialog = new ChooseProjectDialog (MainWindow);
-			dialog.Fill (projects.OfType<ProjectLongoMatch> ().ToList ());
+			dialog.Fill (projects.OfType<LMProject> ().ToList ());
 			if (dialog.Run () == (int)ResponseType.Ok) {
 				project = dialog.Project;
 			}
@@ -167,7 +167,7 @@ namespace LongoMatch.Gui
 		public override void ShowProjectStats (Project project)
 		{
 			Log.Information ("Show project stats");
-			Addins.AddinsManager.ShowStats (project as ProjectLongoMatch);
+			Addins.AddinsManager.ShowStats (project as LMProject);
 			System.GC.Collect ();
 		}
 
@@ -189,7 +189,7 @@ namespace LongoMatch.Gui
 										  out IAnalysisWindowBase analysisWindow)
 		{
 			Log.Information ("Open project");
-			analysisWindow = MainWindow.SetProject (project as ProjectLongoMatch, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
+			analysisWindow = MainWindow.SetProject (project as LMProject, projectType, props, (LongoMatch.Core.Filters.EventsFilter)filter);
 		}
 
 		public override EndCaptureResponse EndCapture (bool isCapturing)

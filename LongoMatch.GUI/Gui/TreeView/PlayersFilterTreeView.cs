@@ -27,19 +27,19 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public class PlayersFilterTreeView: FilterTreeViewBase
 	{
-		SportsTeam local, visitor;
-		PlayerLongoMatch localTeam, visitorTeam;
+		LMTeam local, visitor;
+		LMPlayer localTeam, visitorTeam;
 		TreeIter localIter, visitorIter;
 		EventsFilter filter;
 
 		public PlayersFilterTreeView () : base ()
 		{
-			visitorTeam = new PlayerLongoMatch ();
-			localTeam = new PlayerLongoMatch ();
+			visitorTeam = new LMPlayer ();
+			localTeam = new LMPlayer ();
 			HeadersVisible = false;
 		}
 
-		public void SetFilter (EventsFilter filter, ProjectLongoMatch project)
+		public void SetFilter (EventsFilter filter, LMProject project)
 		{
 			this.local = project.LocalTeamTemplate;
 			this.visitor = project.VisitorTeamTemplate;
@@ -59,7 +59,7 @@ namespace LongoMatch.Gui.Component
 		protected override void UpdateSelection (TreeIter iter, bool active)
 		{
 			TreeStore store = Model as TreeStore;
-			PlayerLongoMatch player = (PlayerLongoMatch)store.GetValue (iter, COL_VALUE);
+			LMPlayer player = (LMPlayer)store.GetValue (iter, COL_VALUE);
 			
 			/* Check all children */
 			if (player == localTeam || player == visitorTeam) {
@@ -68,7 +68,7 @@ namespace LongoMatch.Gui.Component
 				
 				filter.IgnoreUpdates = true;
 				while (store.IterIsValid (child)) {
-					PlayerLongoMatch childPlayer = (PlayerLongoMatch)store.GetValue (child, COL_VALUE);
+					LMPlayer childPlayer = (LMPlayer)store.GetValue (child, COL_VALUE);
 					filter.FilterPlayer (childPlayer, active);
 					store.SetValue (child, COL_ACTIVE, active);
 					store.IterNext (ref child);
@@ -97,11 +97,11 @@ namespace LongoMatch.Gui.Component
 			visitorIter = store.AppendValues (visitorTeam.Name, false, visitorTeam);
 
 			filter.IgnoreUpdates = true;
-			foreach (PlayerLongoMatch player in local.PlayingPlayersList) {
+			foreach (LMPlayer player in local.PlayingPlayersList) {
 				store.AppendValues (localIter, player.ToString (), false, player);
 			}
 			
-			foreach (PlayerLongoMatch player in visitor.PlayingPlayersList) {
+			foreach (LMPlayer player in visitor.PlayingPlayersList) {
 				store.AppendValues (visitorIter, player.ToString (), false, player);
 			}
 			filter.IgnoreUpdates = false;

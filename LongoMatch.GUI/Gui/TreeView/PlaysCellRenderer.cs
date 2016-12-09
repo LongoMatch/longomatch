@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			get;
 			set;
 		}
@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Component
 			y_offset = 0;
 			width = StyleConf.ListSelectedWidth + StyleConf.ListRowSeparator + StyleConf.ListTextWidth;
 			height = StyleConf.ListCategoryHeight;
-			if (Item is TimelineEventLongoMatch) {
-				TimelineEventLongoMatch evt = Item as TimelineEventLongoMatch;
+			if (Item is LMTimelineEvent) {
+				LMTimelineEvent evt = Item as LMTimelineEvent;
 				if (evt.Miniature != null) {
 					width += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}

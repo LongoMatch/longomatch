@@ -58,10 +58,10 @@ namespace LongoMatch.Services
 		void HandlePlayerSubstitutionEvent (PlayerSubstitutionEvent e)
 		{
 			if (openedProject != null) {
-				TimelineEventLongoMatch evt;
+				LMTimelineEvent evt;
 
 				try {
-					evt = ((ProjectLongoMatch)openedProject).SubsitutePlayer (e.Team, e.Player1, e.Player2, e.SubstitutionReason, e.Time);
+					evt = ((LMProject)openedProject).SubsitutePlayer (e.Team, e.Player1, e.Player2, e.SubstitutionReason, e.Time);
 					App.Current.EventsBroker.Publish<EventCreatedEvent> (
 						new EventCreatedEvent {
 							TimelineEvent = evt

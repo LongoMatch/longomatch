@@ -32,12 +32,12 @@ using Constants = LongoMatch.Core.Common.Constants;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class SportsTeam: Team, ITemplate<SportsTeam>
+	public class LMTeam : Team, ITemplate<LMTeam>
 	{
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
 
-		public SportsTeam ()
+		public LMTeam ()
 		{
 			TeamName = Catalog.GetString ("Team");
 			FormationStr = "1-4-3-3";
@@ -68,7 +68,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		public Color[] Colors {
+		public Color [] Colors {
 			get;
 			set;
 		}
@@ -94,7 +94,7 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		public int[] Formation {
+		public int [] Formation {
 			get;
 			set;
 		}
@@ -103,8 +103,8 @@ namespace LongoMatch.Core.Store.Templates
 		[PropertyChanged.DoNotNotify]
 		public string FormationStr {
 			set {
-				string[] elements = value.Split ('-');
-				int[] tactics = new int[elements.Length];
+				string [] elements = value.Split ('-');
+				int [] tactics = new int [elements.Length];
 				int index = 0;
 				foreach (string s in elements) {
 					try {
@@ -134,15 +134,15 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PlayerLongoMatch> Players {
+		public List<LMPlayer> Players {
 			get {
-				return List.OfType<PlayerLongoMatch> ().ToList ();
+				return List.OfType<LMPlayer> ().ToList ();
 			}
 		}
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PlayerLongoMatch> PlayingPlayersList {
+		public List<LMPlayer> PlayingPlayersList {
 			get {
 				if (TemplateEditorMode) {
 					return Players.ToList ();
@@ -154,9 +154,9 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PlayerLongoMatch> StartingPlayersList {
+		public List<LMPlayer> StartingPlayersList {
 			get {
-				List<PlayerLongoMatch> playingPlayers = PlayingPlayersList;
+				List<LMPlayer> playingPlayers = PlayingPlayersList;
 				int count = Math.Min (StartingPlayers, playingPlayers.Count);
 				return playingPlayers.GetRange (0, count);
 			}
@@ -164,14 +164,14 @@ namespace LongoMatch.Core.Store.Templates
 
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
-		public List<PlayerLongoMatch> BenchPlayersList {
+		public List<LMPlayer> BenchPlayersList {
 			get {
-				List<PlayerLongoMatch> playingPlayers = PlayingPlayersList;
+				List<LMPlayer> playingPlayers = PlayingPlayersList;
 				int starting = StartingPlayers;
 				if (playingPlayers.Count > starting) {
 					return playingPlayers.GetRange (starting, playingPlayers.Count - starting);
 				} else {
-					return new List<PlayerLongoMatch> ();
+					return new List<LMPlayer> ();
 				}
 			}
 		}
@@ -179,10 +179,10 @@ namespace LongoMatch.Core.Store.Templates
 		/// <summary>
 		/// Creates a deep copy of this team with new ID's for each player
 		/// </summary>
-		public SportsTeam Copy (string newName)
+		public LMTeam Copy (string newName)
 		{
 			Load ();
-			SportsTeam newTeam = this.Clone ();
+			LMTeam newTeam = this.Clone ();
 			newTeam.ID = Guid.NewGuid ();
 			newTeam.DocumentID = null;
 			newTeam.Name = newName;
@@ -192,14 +192,14 @@ namespace LongoMatch.Core.Store.Templates
 			return newTeam;
 		}
 
-		public void RemovePlayers (List<PlayerLongoMatch> players, bool delete)
+		public void RemovePlayers (List<LMPlayer> players, bool delete)
 		{
-			List<PlayerLongoMatch> bench, starters;
-			
+			List<LMPlayer> bench, starters;
+
 			bench = BenchPlayersList;
 			starters = StartingPlayersList;
 
-			foreach (PlayerLongoMatch p in players) {
+			foreach (LMPlayer p in players) {
 				if (List.Contains (p)) {
 					if (starters.Contains (p) && bench.Count > 0) {
 						List.Swap (p, bench [0]);
@@ -215,7 +215,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		public void ResetPlayers ()
 		{
-			foreach (PlayerLongoMatch p in List) {
+			foreach (LMPlayer p in List) {
 				p.Playing = true;
 			}
 		}
@@ -229,7 +229,7 @@ namespace LongoMatch.Core.Store.Templates
 
 		public Player AddDefaultItem (int i)
 		{
-			var p = new PlayerLongoMatch {
+			var p = new LMPlayer {
 				Name = "Player " + (i + 1).ToString (),
 				Birthday = new DateTime (DateTime.Now.Year - 25, 6, 1),
 				Height = 1.80f,
@@ -243,9 +243,9 @@ namespace LongoMatch.Core.Store.Templates
 			return p;
 		}
 
-		public static SportsTeam DefaultTemplate (int playersCount)
+		public static LMTeam DefaultTemplate (int playersCount)
 		{
-			SportsTeam defaultTemplate = new SportsTeam ();
+			LMTeam defaultTemplate = new LMTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
 			return defaultTemplate;
 		}
@@ -272,7 +272,7 @@ namespace LongoMatch.Core.Store.Templates
 	/* Keep this for backwards compatibility importing old project files */
 	[Obsolete ("Use Team instead of TeamTeamplate in new code")]
 	[Serializable]
-	public class TeamTemplate: SportsTeam
+	public class TeamTemplate : LMTeam
 	{
 	}
 }

@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			Init ();
 		}
 
-		public SportsPlayerObject (PlayerLongoMatch player, Point position = null)
+		public SportsPlayerObject (LMPlayer player, Point position = null)
 		{
 			// Set the base Player too, because it's a different Property
 			base.Player = Player = player;
@@ -54,9 +54,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public new PlayerLongoMatch Player {
+		public new LMPlayer Player {
 			get {
-				return base.Player as PlayerLongoMatch;
+				return base.Player as LMPlayer;
 			}
 			set {
 				base.Player = value;

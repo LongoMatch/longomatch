@@ -56,12 +56,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			get;
 			set;
 		}
 
-		public TimelineEventLongoMatch Play {
+		public LMTimelineEvent Play {
 			get;
 			set;
 		}

@@ -26,7 +26,7 @@ using VAS.Services.Controller;
 namespace LongoMatch.Services.Controller
 {
 	[ControllerAttribute ("DashboardsManager")]
-	public class DashboardsController : TemplatesController<DashboardLongoMatch, DashboardVM>
+	public class DashboardsController:  TemplatesController<LMDashboard, DashboardVM>
 	{
 		public DashboardsController ()
 		{

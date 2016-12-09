@@ -28,12 +28,12 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			TimerLongoMatch timer = new TimerLongoMatch ();
+			LMTimer timer = new LMTimer ();
 			Utils.CheckSerialization (timer);
 
 			timer.Name = "test";
 			timer.Team = TeamType.LOCAL;
-			TimerLongoMatch timer2 = Utils.SerializeDeserialize (timer);
+			LMTimer timer2 = Utils.SerializeDeserialize (timer);
 			Assert.AreEqual (timer.Name, timer2.Name);
 			Assert.AreEqual (timer.Nodes, timer2.Nodes);
 			Assert.AreEqual (timer.Team, timer2.Team);

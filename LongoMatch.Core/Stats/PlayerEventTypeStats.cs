@@ -29,7 +29,7 @@ namespace LongoMatch.Core.Stats
 		EventsFilter filter;
 		Player player;
 		Project project;
-		List<TimelineEventLongoMatch> events;
+		List<LMTimelineEvent> events;
 
 		public PlayerEventTypeStats (Project project, EventsFilter filter, Player player, EventType evType)
 		{
@@ -51,8 +51,8 @@ namespace LongoMatch.Core.Stats
 
 		public void Update ()
 		{
-			events = filter.VisiblePlays.Where (e => ((TimelineEventLongoMatch)e).Players.Contains (player) &&
-			e.EventType.Equals (EventType)).Cast<TimelineEventLongoMatch> ().ToList ();
+			events = filter.VisiblePlays.Where (e => ((LMTimelineEvent)e).Players.Contains (player) &&
+			e.EventType.Equals (EventType)).Cast<LMTimelineEvent> ().ToList ();
 			
 			SubcategoriesStats = new List<SubCategoryStat> ();
 

@@ -35,7 +35,7 @@ namespace LongoMatch.Plugins.Stats
 
 		public void LoadBackgrounds (Project project)
 		{
-			tagger.LoadBackgrounds (project as ProjectLongoMatch);
+			tagger.LoadBackgrounds (project as LMProject);
 		}
 
 		public void LoadStats (PlayerEventTypeStats stats)

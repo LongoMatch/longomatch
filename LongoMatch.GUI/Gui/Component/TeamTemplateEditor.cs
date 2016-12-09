@@ -41,10 +41,10 @@ namespace LongoMatch.Gui.Component
 	{
 		public event EventHandler TemplateSaved;
 
-		PlayerLongoMatch loadedPlayer;
-		SportsTeam template;
+		LMPlayer loadedPlayer;
+		LMTeam template;
 		bool edited, ignoreChanges;
-		List<PlayerLongoMatch> selectedPlayers;
+		List<LMPlayer> selectedPlayers;
 		TeamTagger teamtagger;
 		const int SHIELD_SIZE = 70;
 
@@ -83,7 +83,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public SportsTeam Team {
+		public LMTeam Team {
 			set {
 				template = value;
 				ignoreChanges = true;
@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Component
 
 		public void AddPlayer ()
 		{
-			PlayerLongoMatch p = template.AddDefaultItem (template.List.Count) as PlayerLongoMatch;
+			LMPlayer p = template.AddDefaultItem (template.List.Count) as LMPlayer;
 			teamtagger.Reload ();
 			teamtagger.Select (p);
 			Edited = true;
@@ -205,7 +205,7 @@ namespace LongoMatch.Gui.Component
 			tacticsentry.Text = template.FormationStr;
 		}
 
-		void LoadPlayer (PlayerLongoMatch p)
+		void LoadPlayer (LMPlayer p)
 		{
 			ignoreChanges = true;
 
@@ -264,7 +264,7 @@ namespace LongoMatch.Gui.Component
 			FillFormation ();
 		}
 
-		Pixbuf PlayerPhoto (PlayerLongoMatch p)
+		Pixbuf PlayerPhoto (LMPlayer p)
 		{
 			Pixbuf playerImage;
 				
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Component
 			return playerImage;
 		}
 
-		void PlayersSelected (List<PlayerLongoMatch> players)
+		void PlayersSelected (List<LMPlayer> players)
 		{
 			ignoreChanges = true;
 
@@ -291,7 +291,7 @@ namespace LongoMatch.Gui.Component
 			ignoreChanges = false;
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			PlayersSelected (players);
 		}
@@ -367,7 +367,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);

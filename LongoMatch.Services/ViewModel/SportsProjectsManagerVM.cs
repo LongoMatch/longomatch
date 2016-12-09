@@ -23,7 +23,7 @@ using VAS.Services.ViewModel;
 namespace LongoMatch.Services.ViewModel
 {
 	[ViewAttribute ("ProjectsManager")]
-	public class SportsProjectsManagerVM : ProjectsManagerVM<ProjectLongoMatch, SportsProjectVM>
+	public class SportsProjectsManagerVM : ProjectsManagerVM<LMProject, SportsProjectVM>
 	{
 	}
 }

@@ -48,7 +48,7 @@ namespace LongoMatch.Drawing
 			tk.DrawLine (new Point (x1, y), new Point (x2, y));
 		}
 
-		static void RenderPlayer (IDrawingToolkit tk, PlayerLongoMatch p, Point imagePoint)
+		static void RenderPlayer (IDrawingToolkit tk, LMPlayer p, Point imagePoint)
 		{
 			SportsPlayerObject po = new SportsPlayerObject (p);
 			po.Position = imagePoint;
@@ -126,7 +126,7 @@ namespace LongoMatch.Drawing
 			tk.DrawText (textP, textW, backgroundArea.Height, text);
 		}
 
-		public static void RenderPlayer (PlayerLongoMatch player, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void RenderPlayer (LMPlayer player, int count, bool isExpanded, IDrawingToolkit tk,
 		                                 IContext context, Area backgroundArea, Area cellArea)
 		{
 			Point image, text;
@@ -220,7 +220,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		public static void RenderSubstitution (Color color, Time evt, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut, bool selected,
+		public static void RenderSubstitution (Color color, Time evt, LMPlayer playerIn, LMPlayer playerOut, bool selected,
 		                                       bool isExpanded, IDrawingToolkit tk, IContext context, Area backgroundArea,
 		                                       Area cellArea, CellState state)
 		{
@@ -268,7 +268,7 @@ namespace LongoMatch.Drawing
 
 			imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 			if (players != null && players.Count > 0) {
-				foreach (PlayerLongoMatch p in players) {
+				foreach (LMPlayer p in players) {
 					RenderPlayer (tk, p, imagePoint);
 					imagePoint.X += StyleConf.ListImageWidth + StyleConf.ListRowSeparator;
 				}
@@ -283,7 +283,7 @@ namespace LongoMatch.Drawing
 			tk.End ();
 		}
 
-		public static void Render (object item, ProjectLongoMatch project, int count, bool isExpanded, IDrawingToolkit tk,
+		public static void Render (object item, LMProject project, int count, bool isExpanded, IDrawingToolkit tk,
 		                           IContext context, Area backgroundArea, Area cellArea, CellState state)
 		{
 			if (item is EventType) {
@@ -294,12 +294,12 @@ namespace LongoMatch.Drawing
 				RenderSubstitution (s.Color, s.EventTime, s.In, s.Out, s.Playing, isExpanded, tk, context,
 					backgroundArea, cellArea, state);
 			} else if (item is TimelineEvent) {
-				TimelineEventLongoMatch p = item as TimelineEventLongoMatch;
+				LMTimelineEvent p = item as LMTimelineEvent;
 				// always add local first.
 				RenderPlay (p.Color, p.Miniature, p.Players, p.Teams, p.Playing, p.Description, count, isExpanded, tk,
 					context, backgroundArea, cellArea, state);
 			} else if (item is Player) {
-				RenderPlayer (item as PlayerLongoMatch, count, isExpanded, tk, context, backgroundArea, cellArea);
+				RenderPlayer (item as LMPlayer, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is Playlist) {
 				RenderPlaylist (item as Playlist, count, isExpanded, tk, context, backgroundArea, cellArea);
 			} else if (item is PlaylistPlayElement) {

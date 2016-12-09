@@ -20,12 +20,12 @@ using VAS.Core.Interfaces;
 
 namespace LongoMatch.Core.Interfaces
 {
-	public interface ITeamTemplatesProvider: ITemplateProvider<SportsTeam>
+	public interface ITeamTemplatesProvider: ITemplateProvider<LMTeam>
 	{
 
 	}
 
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<DashboardLongoMatch>
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<LMDashboard>
 	{
 	}
 }

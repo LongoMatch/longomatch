@@ -48,10 +48,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
 		ButtonObject subPlayers, subInjury, homeButton, awayButton;
-		SportsTeam homeTeam, awayTeam;
+		LMTeam homeTeam, awayTeam;
 		Image background;
-		Dictionary<PlayerLongoMatch, SportsPlayerObject> homePlayerToPlayerObject;
-		Dictionary<PlayerLongoMatch, SportsPlayerObject> awayPlayerToPlayerObject;
+		Dictionary<LMPlayer, SportsPlayerObject> homePlayerToPlayerObject;
+		Dictionary<LMPlayer, SportsPlayerObject> awayPlayerToPlayerObject;
 		List<SportsPlayerObject> homePlayingPlayers, awayPlayingPlayers;
 		List<SportsPlayerObject> homeBenchPlayers, awayBenchPlayers;
 		List <SportsPlayerObject> homePlayers, awayPlayers;
@@ -72,10 +72,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayBench = new BenchObject ();
 			offset = new Point (0, 0);
 			scaleX = scaleY = 1;
-			homePlayerToPlayerObject = new Dictionary<PlayerLongoMatch, SportsPlayerObject> ();
-			awayPlayerToPlayerObject = new Dictionary<PlayerLongoMatch, SportsPlayerObject> ();
+			homePlayerToPlayerObject = new Dictionary<LMPlayer, SportsPlayerObject> ();
+			awayPlayerToPlayerObject = new Dictionary<LMPlayer, SportsPlayerObject> ();
 			field = new FieldObject ();
-			SelectedPlayers = new List<PlayerLongoMatch> ();
+			SelectedPlayers = new List<LMPlayer> ();
 			lastTime = null;
 			LoadSubsButtons ();
 			LoadTeamsButtons ();
@@ -147,7 +147,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			set;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			get;
 			set;
 		}
@@ -193,14 +193,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public List<PlayerLongoMatch> SelectedPlayers {
+		public List<LMPlayer> SelectedPlayers {
 			get;
 			set;
 		}
 
-		public ObservableCollection<SportsTeam> SelectedTeams {
+		public ObservableCollection<LMTeam> SelectedTeams {
 			get {
-				ObservableCollection<SportsTeam> teams = new ObservableCollection<SportsTeam> ();
+				ObservableCollection<LMTeam> teams = new ObservableCollection<LMTeam> ();
 				if (homeButton.Active) {
 					teams.Add (homeTeam);
 				}
@@ -224,10 +224,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			field.Update ();
 		}
 
-		public void Select (IList<PlayerLongoMatch> players, IList<SportsTeam> teams)
+		public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
 		{
 			ResetSelection ();
-			foreach (PlayerLongoMatch p in players) {
+			foreach (LMPlayer p in players) {
 				Select (p, true, false);
 			}
 			homeButton.Active = teams.Contains (homeTeam);
@@ -248,7 +248,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public void Select (PlayerLongoMatch player, bool silent = false, bool reset = false)
+		public void Select (LMPlayer player, bool silent = false, bool reset = false)
 		{
 			SportsPlayerObject po;
 
@@ -286,7 +286,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			awayButton.Active = false;
 		}
 
-		public void Substitute (PlayerLongoMatch p1, PlayerLongoMatch p2, SportsTeam team)
+		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
 		{
 			if (team == homeTeam) {
 				Substitute (homePlayers.FirstOrDefault (p => p.Player == p1),
@@ -299,7 +299,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public void LoadTeams (SportsTeam homeTeam, SportsTeam awayTeam, Image background)
+		public void LoadTeams (LMTeam homeTeam, LMTeam awayTeam, Image background)
 		{
 			int[] homeF = null, awayF = null;
 			int playerSize, colSize, border;
@@ -402,7 +402,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void UpdateLineup ()
 		{
-			List<PlayerLongoMatch> homeFieldL, awayFieldL, homeBenchL, awayBenchL;
+			List<LMPlayer> homeFieldL, awayFieldL, homeBenchL, awayBenchL;
 			
 			if (Project == null) {
 				return;
@@ -565,7 +565,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		List<SportsPlayerObject> GetPlayers (List<PlayerLongoMatch> players, TeamType team)
+		List<SportsPlayerObject> GetPlayers (List<LMPlayer> players, TeamType team)
 		{
 			List<SportsPlayerObject> playerObjects;
 			Color color = null;
@@ -595,7 +595,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void EmitSubsitutionEvent (SportsPlayerObject player1, SportsPlayerObject player2)
 		{
-			SportsTeam team;
+			LMTeam team;
 			List<SportsPlayerObject> bench;
 
 			if (substitutionPlayer.Team == TeamType.LOCAL) {

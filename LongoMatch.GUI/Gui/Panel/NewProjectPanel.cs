@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Panel
 		const int PROJECT_DETAILS = 1;
 		const int PROJECT_PERIODS = 2;
 		int firstPage;
-		ProjectLongoMatch project;
+		LMProject project;
 		ProjectType projectType;
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
@@ -61,8 +61,8 @@ namespace LongoMatch.Gui.Panel
 		IMultimediaToolkit mtoolkit;
 		IDialogs dialogs;
 		Gdk.Color red;
-		SportsTeam hometemplate, awaytemplate;
-		DashboardLongoMatch analysisTemplate;
+		LMTeam hometemplate, awaytemplate;
+		LMDashboard analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
 		SportsProjectVM viewModel;
@@ -229,9 +229,9 @@ namespace LongoMatch.Gui.Panel
 			sg.AddWidget (outputsizelabel);
 		}
 
-		void LoadTeams (ProjectLongoMatch project)
+		void LoadTeams (LMProject project)
 		{
-			List<SportsTeam> teams;
+			List<LMTeam> teams;
 			bool hasLocalTeam = false;
 			bool hasAwayTeam = false;
 
@@ -253,7 +253,7 @@ namespace LongoMatch.Gui.Panel
 
 			// Update the combobox
 			if (hasAwayTeam) {
-				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<LMTeam> { project.VisitorTeamTemplate });
 			} else {
 				awayteamscombobox.Load (teams);
 				awayteamscombobox.Changed += (sender, e) => {
@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Panel
 			}
 
 			if (hasLocalTeam) {
-				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<LMTeam> { project.LocalTeamTemplate });
 			} else {
 				hometeamscombobox.Load (teams);
 				hometeamscombobox.Changed += (sender, e) => {
@@ -305,7 +305,7 @@ namespace LongoMatch.Gui.Panel
 			if (project.Dashboard != null) {
 				tagscombobox.Visible = false;
 				analysislabel.Visible = false;
-				analysisTemplate = project.Dashboard as DashboardLongoMatch;
+				analysisTemplate = project.Dashboard as LMDashboard;
 			} else {
 				project.Dashboard = analysisTemplate;
 			}
@@ -314,7 +314,7 @@ namespace LongoMatch.Gui.Panel
 			// otherwise set the loaded template
 			if (project.LocalTeamTemplate != null) {
 				hometeamscombobox.Sensitive = false;
-				hometeamscombobox.Load (new List<SportsTeam> { project.LocalTeamTemplate });
+				hometeamscombobox.Load (new List<LMTeam> { project.LocalTeamTemplate });
 				hometeamscombobox.Active = 0;
 				LoadTemplate (project.LocalTeamTemplate, TeamType.LOCAL, true);
 			} else {
@@ -323,7 +323,7 @@ namespace LongoMatch.Gui.Panel
 
 			if (project.VisitorTeamTemplate != null) {
 				awayteamscombobox.Sensitive = false;
-				awayteamscombobox.Load (new List<SportsTeam> { project.VisitorTeamTemplate });
+				awayteamscombobox.Load (new List<LMTeam> { project.VisitorTeamTemplate });
 				awayteamscombobox.Active = 0;
 				LoadTemplate (project.VisitorTeamTemplate, TeamType.VISITOR, true);
 			} else {
@@ -391,7 +391,7 @@ namespace LongoMatch.Gui.Panel
 			area.ModifyBg (StateType.Selected, gcolor);
 		}
 
-		void LoadTemplate (SportsTeam template, TeamType team, bool forceColor)
+		void LoadTemplate (LMTeam template, TeamType team, bool forceColor)
 		{
 			if (team == TeamType.LOCAL) {
 				hometemplate = template;
@@ -482,7 +482,7 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 
-			project = new ProjectLongoMatch ();
+			project = new LMProject ();
 			project.Description = new ProjectDescription ();
 			FillProject ();
 
@@ -580,7 +580,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			tagscombobox.GetActiveIter (out iter);
-			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as DashboardLongoMatch;
+			analysisTemplate = tagscombobox.Model.GetValue (iter, 1) as LMDashboard;
 			if (teamtagger != null) {
 				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
 			}
@@ -670,7 +670,7 @@ namespace LongoMatch.Gui.Panel
 			UpdateTitle ();
 		}
 
-		void HandleShowMenuEvent (List<PlayerLongoMatch> players)
+		void HandleShowMenuEvent (List<LMPlayer> players)
 		{
 			Menu menu = new Menu ();
 			MenuItem item;
@@ -695,7 +695,7 @@ namespace LongoMatch.Gui.Panel
 			menu.Popup ();
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
 											 SubstitutionReason reason, Time time)
 		{
 			team.List.Swap (p1, p2);
@@ -704,7 +704,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleTacticsChanged (object sender, EventArgs e)
 		{
-			SportsTeam team;
+			LMTeam team;
 			Entry entry;
 
 			if (sender == hometacticsbutton) {

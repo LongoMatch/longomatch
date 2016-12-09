@@ -25,10 +25,8 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Store
 {
-	// TODO: Rename to TeamSportTimelineEvent
-
 	[Serializable]
-	public class TimelineEventLongoMatch : TimelineEvent
+	public class LMTimelineEvent : TimelineEvent
 	{
 
 		[PropertyChanged.DoNotNotify]
@@ -39,20 +37,20 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
-		public List<SportsTeam> TaggedTeams {
+		public List<LMTeam> TaggedTeams {
 			get {
 				if (Project == null) {
-					return Teams.Cast<SportsTeam> ().ToList ();
+					return Teams.Cast<LMTeam> ().ToList ();
 				}
-				ProjectLongoMatch LMProject = Project as ProjectLongoMatch;
-				List<SportsTeam> teams = new List<SportsTeam> ();
-				if (Teams.Contains (LMProject.LocalTeamTemplate) ||
-				    Players.Intersect (LMProject.LocalTeamTemplate.List).Any ()) {
-					teams.Add (LMProject.LocalTeamTemplate);
+				LMProject project = Project as LMProject;
+				List<LMTeam> teams = new List<LMTeam> ();
+				if (Teams.Contains (project.LocalTeamTemplate) ||
+					Players.Intersect (project.LocalTeamTemplate.List).Any ()) {
+					teams.Add (project.LocalTeamTemplate);
 				}
-				if (Teams.Contains (LMProject.VisitorTeamTemplate) ||
-				    Players.Intersect (LMProject.VisitorTeamTemplate.List).Any ()) {
-					teams.Add (LMProject.VisitorTeamTemplate);
+				if (Teams.Contains (project.VisitorTeamTemplate) ||
+					Players.Intersect (project.VisitorTeamTemplate.List).Any ()) {
+					teams.Add (project.VisitorTeamTemplate);
 				}
 				return teams;
 			}
@@ -64,7 +62,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
-	public class PenaltyCardEvent: TimelineEventLongoMatch
+	public class PenaltyCardEvent : LMTimelineEvent
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -82,7 +80,7 @@ namespace LongoMatch.Core.Store
 
 	[Serializable]
 	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
-	public class ScoreEvent: TimelineEventLongoMatch
+	public class ScoreEvent : LMTimelineEvent
 	{
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
@@ -99,7 +97,7 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class StatEvent: TimelineEventLongoMatch
+	public class StatEvent : LMTimelineEvent
 	{
 		public override Time Start {
 			get {
@@ -121,38 +119,38 @@ namespace LongoMatch.Core.Store
 	}
 
 	[Serializable]
-	public class LineupEvent: StatEvent
+	public class LineupEvent : StatEvent
 	{
-		public List<PlayerLongoMatch> HomeStartingPlayers {
+		public List<LMPlayer> HomeStartingPlayers {
 			get;
 			set;
 		}
 
-		public List<PlayerLongoMatch> HomeBenchPlayers {
+		public List<LMPlayer> HomeBenchPlayers {
 			get;
 			set;
 		}
 
-		public List<PlayerLongoMatch> AwayStartingPlayers {
+		public List<LMPlayer> AwayStartingPlayers {
 			get;
 			set;
 		}
 
-		public List<PlayerLongoMatch> AwayBenchPlayers {
+		public List<LMPlayer> AwayBenchPlayers {
 			get;
 			set;
 		}
 	}
 
 	[Serializable]
-	public class SubstitutionEvent: StatEvent
+	public class SubstitutionEvent : StatEvent
 	{
-		public PlayerLongoMatch In {
+		public LMPlayer In {
 			get;
 			set;
 		}
 
-		public PlayerLongoMatch Out {
+		public LMPlayer Out {
 			get;
 			set;
 		}

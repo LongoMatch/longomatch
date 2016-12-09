@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Component
 		CamerasTimeline camerasTimeline;
 		Timerule timerule;
 		Time duration, currentTime, nextCurrentTime;
-		ProjectLongoMatch project;
+		LMProject project;
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Component
 		{
 			/* If a new camera has been added or a camera has been removed,
 			 * make sure events have a correct camera configuration */
-			foreach (TimelineEventLongoMatch evt in project.Timeline) {
+			foreach (LMTimelineEvent evt in project.Timeline) {
 				int cc = evt.CamerasConfig.Count;
 				int fc = project.Description.FileSet.Count;
 
@@ -250,7 +250,7 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				Time start, pDuration;
 				ObservableCollection <string> gamePeriods;

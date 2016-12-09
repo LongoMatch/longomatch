@@ -30,8 +30,6 @@ using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store
 {
-	// TODO: Rename to TeamSportProject
-
 	/// <summary>
 	/// I hold the information needed by a project and provide persistency.
 	/// I'm structured in the following way:
@@ -43,17 +41,17 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class ProjectLongoMatch : Project
+	public class LMProject : Project
 	{
 		SubstitutionEventType subsType;
 
 		#region Constructors
 
-		public ProjectLongoMatch ()
+		public LMProject ()
 		{
-			Dashboard = new DashboardLongoMatch ();
-			LocalTeamTemplate = new SportsTeam ();
-			VisitorTeamTemplate = new SportsTeam ();
+			Dashboard = new LMDashboard ();
+			LocalTeamTemplate = new LMTeam ();
+			VisitorTeamTemplate = new LMTeam ();
 		}
 
 		public override void Dispose ()
@@ -71,7 +69,7 @@ namespace LongoMatch.Core.Store
 		/// Local team template
 		/// </value>
 		[JsonProperty (Order = -9)]
-		public SportsTeam LocalTeamTemplate {
+		public LMTeam LocalTeamTemplate {
 			get;
 			set;
 		}
@@ -80,7 +78,7 @@ namespace LongoMatch.Core.Store
 		/// Visitor team template
 		/// </value>
 		[JsonProperty (Order = -8)]
-		public SportsTeam VisitorTeamTemplate {
+		public LMTeam VisitorTeamTemplate {
 			get;
 			set;
 		}
@@ -120,7 +118,7 @@ namespace LongoMatch.Core.Store
 		[PropertyChanged.DoNotNotify]
 		public LineupEvent Lineup {
 			get {
-				LineupEvent lineup = Timeline.OfType <LineupEvent> ().FirstOrDefault ();
+				LineupEvent lineup = Timeline.OfType<LineupEvent> ().FirstOrDefault ();
 				if (lineup == null) {
 					lineup = CreateLineupEvent ();
 				}
@@ -175,13 +173,13 @@ namespace LongoMatch.Core.Store
 		}
 
 		public void CurrentLineup (Time currentTime,
-		                           out List<PlayerLongoMatch> homeFieldPlayers,
-		                           out List<PlayerLongoMatch> homeBenchPlayers,
-		                           out List<PlayerLongoMatch> awayFieldPlayers,
-		                           out List<PlayerLongoMatch> awayBenchPlayers)
+								   out List<LMPlayer> homeFieldPlayers,
+								   out List<LMPlayer> homeBenchPlayers,
+								   out List<LMPlayer> awayFieldPlayers,
+								   out List<LMPlayer> awayBenchPlayers)
 		{
-			SportsTeam homeTeam, awayTeam;
-			List<PlayerLongoMatch> homeTeamPlayers, awayTeamPlayers;
+			LMTeam homeTeam, awayTeam;
+			List<LMPlayer> homeTeamPlayers, awayTeamPlayers;
 
 			homeTeamPlayers = Lineup.HomeStartingPlayers.Concat (Lineup.HomeBenchPlayers).ToList ();
 			awayTeamPlayers = Lineup.AwayStartingPlayers.Concat (Lineup.AwayBenchPlayers).ToList ();
@@ -197,11 +195,11 @@ namespace LongoMatch.Core.Store
 				}
 			}
 
-			homeTeam = new SportsTeam {
+			homeTeam = new LMTeam {
 				Formation = LocalTeamTemplate.Formation,
 				List = new ObservableCollection<Player> (homeTeamPlayers)
 			};
-			awayTeam = new SportsTeam {
+			awayTeam = new LMTeam {
 				Formation = VisitorTeamTemplate.Formation,
 				List = new ObservableCollection<Player> (awayTeamPlayers)
 			};
@@ -212,8 +210,8 @@ namespace LongoMatch.Core.Store
 			awayBenchPlayers = awayTeam.BenchPlayersList;
 		}
 
-		public SubstitutionEvent SubsitutePlayer (SportsTeam team, PlayerLongoMatch playerIn, PlayerLongoMatch playerOut,
-		                                          SubstitutionReason reason, Time subsTime)
+		public SubstitutionEvent SubsitutePlayer (LMTeam team, LMPlayer playerIn, LMPlayer playerOut,
+												  SubstitutionReason reason, Time subsTime)
 		{
 			LineupEvent lineup;
 			SubstitutionEvent se;
@@ -240,7 +238,7 @@ namespace LongoMatch.Core.Store
 		public ProjectDescription Description {
 			get;
 			set;
-		} = new ProjectDescription();
+		} = new ProjectDescription ();
 
 		public bool LineupChanged (Time start, Time stop)
 		{
@@ -273,31 +271,31 @@ namespace LongoMatch.Core.Store
 			return lineup;
 		}
 
-		public IEnumerable<TimelineEventLongoMatch> EventsByTeam (SportsTeam team)
+		public IEnumerable<LMTimelineEvent> EventsByTeam (LMTeam team)
 		{
-			var timelineEventsLongomatch = new ObservableCollection<TimelineEventLongoMatch> ();
+			var timelineEventsLongomatch = new ObservableCollection<LMTimelineEvent> ();
 			foreach (var timeLineEvent in Timeline) {
-				timelineEventsLongomatch.Add (timeLineEvent as TimelineEventLongoMatch);
+				timelineEventsLongomatch.Add (timeLineEvent as LMTimelineEvent);
 			}
 			return timelineEventsLongomatch.Where (e => e.Teams.Contains (team) || e.Players.Intersect (team.List).Any ());
 		}
 
-		public int GetScore (SportsTeam team)
+		public int GetScore (LMTeam team)
 		{
 			return EventsByTeam (team).Where (e => e.EventType is ScoreEventType).
 				Sum (e => (e.EventType as ScoreEventType).Score.Points);
 		}
 
 		public override TimelineEvent AddEvent (EventType type, Time start, Time stop, Time eventTime, Image miniature,
-		                                        bool addToTimeline = true)
+												bool addToTimeline = true)
 		{
-			TimelineEventLongoMatch evt;
+			LMTimelineEvent evt;
 			string count;
 			string name;
 
 			count = String.Format ("{0:000}", EventsByType (type).Count + 1);
 			name = String.Format ("{0} {1}", type.Name, count);
-			evt = new TimelineEventLongoMatch ();
+			evt = new LMTimelineEvent ();
 
 			evt.Name = name;
 			evt.Start = start;
@@ -342,7 +340,7 @@ namespace LongoMatch.Core.Store
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemoveEvents (List<TimelineEventLongoMatch> plays)
+		public void RemoveEvents (List<LMTimelineEvent> plays)
 		{
 			bool updateScore = false;
 
@@ -364,7 +362,7 @@ namespace LongoMatch.Core.Store
 
 			if (Dashboard != null) {
 				/* Timers */
-				IEnumerable<TimerLongoMatch> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer).OfType<TimerLongoMatch> ();
+				IEnumerable<LMTimer> timers = Dashboard.List.OfType<TimerButton> ().Select (b => b.Timer).OfType<LMTimer> ();
 				Timers.AddRange (timers.Except (Timers));
 
 				/* Update event types list that changes when the user adds or remove a
@@ -390,7 +388,7 @@ namespace LongoMatch.Core.Store
 			}
 
 			/* Remove null EventTypes just in case */
-			EventTypes = new ObservableCollection<EventType> (EventTypes.Where (e => e != null));
+			EventTypes = new RangeObservableCollection<EventType> (EventTypes.Where (e => e != null));
 		}
 
 		public void ConsolidateDescription ()
@@ -407,8 +405,8 @@ namespace LongoMatch.Core.Store
 
 		public static Project Import ()
 		{
-			string file = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir, 
-				              Constants.PROJECT_NAME, new string[] { "*" + Constants.PROJECT_EXT });
+			string file = App.Current.Dialogs.OpenFile (Catalog.GetString ("Import project"), null, App.Current.HomeDir,
+							  Constants.PROJECT_NAME, new string [] { "*" + Constants.PROJECT_EXT });
 			if (file == null)
 				return null;
 			return Import (file);
@@ -418,7 +416,7 @@ namespace LongoMatch.Core.Store
 		{
 			Project project = null;
 			project = Project.Import (file);
-			ProjectMigration.Migrate (project as ProjectLongoMatch);
+			ProjectMigration.Migrate (project as LMProject);
 			return project;
 		}
 

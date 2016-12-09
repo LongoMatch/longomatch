@@ -29,7 +29,7 @@ namespace LongoMatch.Services.Controller
 	/// Controller for teams.
 	/// </summary>
 	[ControllerAttribute ("TeamsManager")]
-	public class TeamsController : TemplatesController<SportsTeam, TeamVM>
+	public class TeamsController : TemplatesController<LMTeam, TeamVM>
 	{
 		public TeamsController ()
 		{

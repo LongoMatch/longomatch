@@ -25,7 +25,7 @@ namespace LongoMatch.Services.ViewModel
 	/// <summary>
 	/// ViewModel for a sports team.
 	/// </summary>
-	public class TeamVM : TemplateViewModel<SportsTeam>
+	public class TeamVM : TemplateViewModel<LMTeam>
 	{
 
 		/// <summary>

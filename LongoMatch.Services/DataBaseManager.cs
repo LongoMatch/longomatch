@@ -41,7 +41,7 @@ namespace LongoMatch.Services
 		{
 		}
 
-		public ProjectLongoMatch OpenedProject {
+		public LMProject OpenedProject {
 			get;
 			set;
 		}
@@ -63,7 +63,7 @@ namespace LongoMatch.Services
 
 		void HandleOpenedProjectChanged (OpenedProjectEvent e)
 		{
-			OpenedProject = e.Project as ProjectLongoMatch;
+			OpenedProject = e.Project as LMProject;
 		}
 
 		#region IService

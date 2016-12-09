@@ -47,7 +47,7 @@ namespace Tests.Services
 		Mock<ICapturerBin> capturerBinMock;
 		VideoPlayerController player;
 		ProjectsManager projectsManager;
-		ProjectLongoMatch project;
+		LMProject project;
 		CaptureSettings settings;
 
 		List<Mock> mockList;
@@ -84,7 +84,7 @@ namespace Tests.Services
 
 			gtkMock = new Mock<IGUIToolkit> ();
 			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
-			gtkMock.Setup (m => m.OpenProject (It.IsAny<ProjectLongoMatch> (), It.IsAny<ProjectType> (),
+			gtkMock.Setup (m => m.OpenProject (It.IsAny<LMProject> (), It.IsAny<ProjectType> (),
 				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out win));
 			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
 				.Returns (() => settings.EncodingSettings.OutputFile)
@@ -145,7 +145,7 @@ namespace Tests.Services
 					CaptureSettings = settings
 				}
 			);
-			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (player, projectsManager.Player);
@@ -160,7 +160,7 @@ namespace Tests.Services
 		public void TestCaptureProjectError ()
 		{
 			int projectOpened = 0;
-			ProjectLongoMatch testedProject = null;
+			LMProject testedProject = null;
 
 			EventToken et = App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
 				Assert.AreEqual (testedProject, e.Project);
@@ -186,7 +186,7 @@ namespace Tests.Services
 			/* Errors during a capture project should be handled gracefully
 			 * closing the current capture project and saving a copy of the
 			 * captured video and coded data, without loosing anything */
-			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, projectOpened);
 
 			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (et);
@@ -214,7 +214,7 @@ namespace Tests.Services
 					Reopen = true
 				}
 			);
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (null, projectsManager.OpenedProject);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			capturerBinMock.ResetCalls ();
@@ -243,7 +243,7 @@ namespace Tests.Services
 			gtkMock.Verify (g => g.RemuxFile (It.IsAny<string> (),
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
 			Assert.AreEqual ("Home", App.Current.StateController.Current);
-			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
 			// Make sure the project is not cleared.
@@ -279,7 +279,7 @@ namespace Tests.Services
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (null, projectsManager.OpenedProject);
-			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (1, projectChanged);
 
 			await App.Current.EventsBroker.Publish (
@@ -294,7 +294,7 @@ namespace Tests.Services
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
 			Assert.AreEqual (project, projectsManager.OpenedProject);
 			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
-			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, projectChanged);
 
 			App.Current.EventsBroker.Unsubscribe<OpenedProjectEvent> (et);
@@ -309,7 +309,7 @@ namespace Tests.Services
 				file.Duration = null;
 			}
 
-			App.Current.DatabaseManager.ActiveDB.Store<ProjectLongoMatch> (project);
+			App.Current.DatabaseManager.ActiveDB.Store<LMProject> (project);
 
 			App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
 				new OpenProjectIDEvent {

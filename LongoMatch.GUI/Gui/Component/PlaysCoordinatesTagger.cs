@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.Accuracy = 20;
 		}
 
-		public void LoadBackgrounds (ProjectLongoMatch project)
+		public void LoadBackgrounds (LMProject project)
 		{
 			field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
 			hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
@@ -72,7 +72,7 @@ namespace LongoMatch.Gui.Component
 			goal.Tagger.ObjectsCanMove = false;
 		}
 
-		public void LoadPlay (TimelineEventLongoMatch play)
+		public void LoadPlay (LMTimelineEvent play)
 		{
 			field.Visible = play.EventType.TagFieldPosition;
 			hfield.Visible = play.EventType.TagHalfFieldPosition;

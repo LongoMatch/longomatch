@@ -75,7 +75,7 @@ namespace LongoMatch.Services
 		#endregion
 	}
 
-	public class TeamTemplatesProvider : TemplatesProvider<SportsTeam>, ITeamTemplatesProvider
+	public class TeamTemplatesProvider : TemplatesProvider<LMTeam>, ITeamTemplatesProvider
 	{
 		public TeamTemplatesProvider (IStorage storage) : base (storage)
 		{
@@ -86,7 +86,7 @@ namespace LongoMatch.Services
 		}
 	}
 
-	public class CategoriesTemplatesProvider : TemplatesProvider<DashboardLongoMatch>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<LMDashboard>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (IStorage storage) : base (storage)
 		{

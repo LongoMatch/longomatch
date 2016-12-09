@@ -27,13 +27,13 @@ namespace LongoMatch.Core.Filters
 	public class EventsFilter : VASFilters.EventsFilter
 	{
 
-		public EventsFilter (ProjectLongoMatch project) : base (project)
+		public EventsFilter (LMProject project) : base (project)
 		{
 		}
 
-		ProjectLongoMatch Project {
+		LMProject Project {
 			get {
-				return project as ProjectLongoMatch;
+				return project as LMProject;
 			}
 		}
 

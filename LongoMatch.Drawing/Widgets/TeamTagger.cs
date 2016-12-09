@@ -66,7 +66,7 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Dispose ();
 		}
 
-		public void LoadTeams (SportsTeam homeTeam, SportsTeam awayTeam, Image background)
+		public void LoadTeams (LMTeam homeTeam, LMTeam awayTeam, Image background)
 		{
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget?.ReDraw ();
@@ -78,7 +78,7 @@ namespace LongoMatch.Drawing.Widgets
 			widget?.ReDraw ();
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				tagger.Project = value;
 			}
@@ -120,7 +120,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public ObservableCollection<SportsTeam> SelectedTeams {
+		public ObservableCollection<LMTeam> SelectedTeams {
 			get {
 				return tagger.SelectedTeams;
 			}
@@ -145,29 +145,29 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.Select (team);
 		}
 
-		public void Select (IList<PlayerLongoMatch> players, IList<SportsTeam> teams)
+		public void Select (IList<LMPlayer> players, IList<LMTeam> teams)
 		{
 			tagger.Select (players, teams);
 		}
 
-		public void Select (PlayerLongoMatch p)
+		public void Select (LMPlayer p)
 		{
 			tagger.Select (p);
 		}
 
-		public void Substitute (PlayerLongoMatch p1, PlayerLongoMatch p2, SportsTeam team)
+		public void Substitute (LMPlayer p1, LMPlayer p2, LMTeam team)
 		{
 			tagger.Substitute (p1, p2, team);
 		}
 
 		protected override void ShowMenu (Point coords)
 		{
-			List<PlayerLongoMatch> players = tagger.SelectedPlayers;
+			List<LMPlayer> players = tagger.SelectedPlayers;
 
 			if (players.Count == 0) {
 				Selection sel = tagger.GetSelection (coords, 0, true);
 				if (sel != null) {
-					players = new List<PlayerLongoMatch> { (sel.Drawable as SportsPlayerObject).Player };
+					players = new List<LMPlayer> { (sel.Drawable as SportsPlayerObject).Player };
 				}
 			} else {
 				players = tagger.SelectedPlayers;
@@ -187,7 +187,7 @@ namespace LongoMatch.Drawing.Widgets
 			base.HandleSizeChangedEvent ();
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			widget?.ReDraw ();
@@ -196,14 +196,14 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			if (PlayersSelectionChangedEvent != null) {
 				PlayersSelectionChangedEvent (players);
 			}
 		}
 
-		void HandleTeamSelectionChangedEvent (ObservableCollection<SportsTeam> teams)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
 		{
 			if (TeamSelectionChangedEvent != null) {
 				TeamSelectionChangedEvent (teams);

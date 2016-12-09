@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 
 		public PlayListWidget ()
 		{
@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Component
 			newimage.Pixbuf = Misc.LoadIcon ("longomatch-playlist-new", StyleConf.PlayerCapturerIconSize);
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				project = value;
 				playlisttreeview1.Project = value;

@@ -14,7 +14,7 @@ namespace LongoMatch.Services.Controller
 	/// Controller for sports projects.
 	/// </summary>
 	[ControllerAttribute ("ProjectsManager")]
-	public class SportsProjectsController : ProjectsController<ProjectLongoMatch, SportsProjectVM>
+	public class SportsProjectsController : ProjectsController<LMProject, SportsProjectVM>
 	{
 		// FIXME: Currently this is used only in mobile. It will be used in LongoMatch, and we will need to remove all the current behaviour
 	}

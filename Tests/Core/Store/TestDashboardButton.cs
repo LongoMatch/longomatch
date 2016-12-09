@@ -43,7 +43,7 @@ namespace Tests.Core.Store
 		{
 			TimerButton tm = new TimerButton ();
 			Assert.IsNull (tm.Name);
-			tm.Timer = new TimerLongoMatch { Name = "test" };
+			tm.Timer = new LMTimer { Name = "test" };
 			Assert.AreEqual (tm.Name, "test");
 			tm.Name = "test2";
 			Assert.AreEqual (tm.Timer.Name, "test2");
@@ -78,7 +78,7 @@ namespace Tests.Core.Store
 			var tib = new TimerButton ();
 			Assert.IsTrue (tib.IsChanged);
 			tib.IsChanged = false;
-			tib.Timer = new TimerLongoMatch ();
+			tib.Timer = new LMTimer ();
 			Assert.IsTrue (tib.IsChanged);
 			tib.IsChanged = false;
 		}

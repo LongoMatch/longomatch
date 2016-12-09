@@ -33,13 +33,13 @@ namespace Tests.Core.Store
 	public class TestProject
 	{
 	
-		ProjectLongoMatch CreateProject (bool fill = true)
+		LMProject CreateProject (bool fill = true)
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (10);
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (10);
 			p.UpdateEventTypesAndTimers ();
-			p.LocalTeamTemplate = SportsTeam.DefaultTemplate (10);
-			p.VisitorTeamTemplate = SportsTeam.DefaultTemplate (12);
+			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
+			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
 				               "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
@@ -62,16 +62,16 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestSerialization ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 			
 			Utils.CheckSerialization (p);
 			
 			p = CreateProject ();
 			Utils.CheckSerialization (p);
-			p.AddEvent (new TimelineEventLongoMatch ());
+			p.AddEvent (new LMTimelineEvent ());
 			Utils.CheckSerialization (p);
 			
-			ProjectLongoMatch newp = Utils.SerializeDeserialize (p);
+			LMProject newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
 			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
 		}
@@ -79,17 +79,17 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestProjectSetInTimelineEvents ()
 		{
-			ProjectLongoMatch p = CreateProject ();
-			TimelineEventLongoMatch evt = new TimelineEventLongoMatch ();
+			LMProject p = CreateProject ();
+			LMTimelineEvent evt = new LMTimelineEvent ();
 			p.AddEvent (evt);
-			ProjectLongoMatch newp = Utils.SerializeDeserialize (p);
+			LMProject newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp, newp.Timeline [0].Project);
 		}
 
 		[Test ()]
 		public void TestIsFakeCapture ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 			Assert.IsFalse (p.IsFakeCapture);
 			p.Description = new ProjectDescription ();
 			Assert.IsFalse (p.IsFakeCapture);
@@ -154,9 +154,9 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestAddEvent ()
 		{
-			ProjectLongoMatch p = CreateProject (false);
-			TimelineEventLongoMatch evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
-				                              null, null, false) as TimelineEventLongoMatch;
+			LMProject p = CreateProject (false);
+			LMTimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
+				                              null, null, false) as LMTimelineEvent;
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
@@ -165,12 +165,12 @@ namespace Tests.Core.Store
 			p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000), null, null);
 			Assert.AreEqual (p.Timeline.Count, 2);
 
-			evt = new TimelineEventLongoMatch ();
+			evt = new LMTimelineEvent ();
 			p.AddEvent (evt);
 			Assert.AreEqual (p, evt.Project);
 			Assert.AreEqual (p.Description.FileSet, evt.FileSet);
 			Assert.AreEqual (p.Timeline.Count, 3);
-			p.AddEvent (new TimelineEventLongoMatch ());
+			p.AddEvent (new LMTimelineEvent ());
 			Assert.AreEqual (p.Timeline.Count, 4);
 			/*FIXME: add test for score event updating pd score */
 		}
@@ -178,13 +178,13 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestRemoveEvents ()
 		{
-			TimelineEventLongoMatch p1, p2, p3;
-			List<TimelineEventLongoMatch> plays = new List<TimelineEventLongoMatch> ();
-			ProjectLongoMatch p = CreateProject (false);
+			LMTimelineEvent p1, p2, p3;
+			List<LMTimelineEvent> plays = new List<LMTimelineEvent> ();
+			LMProject p = CreateProject (false);
 			
-			p1 = new TimelineEventLongoMatch ();
-			p2 = new TimelineEventLongoMatch ();
-			p3 = new TimelineEventLongoMatch ();
+			p1 = new LMTimelineEvent ();
+			p2 = new LMTimelineEvent ();
+			p3 = new LMTimelineEvent ();
 			p.AddEvent (p1);
 			p.AddEvent (p2);
 			p.AddEvent (p3);
@@ -204,8 +204,8 @@ namespace Tests.Core.Store
 		[Test ()] 
 		public void TestUpdateEventTypesAndTimers ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
-			p.Dashboard = DashboardLongoMatch.DefaultTemplate (5);
+			LMProject p = new LMProject ();
+			p.Dashboard = LMDashboard.DefaultTemplate (5);
 			Assert.AreEqual (0, p.Timers.Count);
 			Assert.AreEqual (0, p.EventTypes.Count);
 			p.UpdateEventTypesAndTimers ();
@@ -220,7 +220,7 @@ namespace Tests.Core.Store
 
 			// Delete a category button with events in the timeline
 			AnalysisEventButton button = p.Dashboard.List.OfType<AnalysisEventButton> ().First ();
-			p.Timeline.Add (new TimelineEventLongoMatch { EventType = button.EventType });
+			p.Timeline.Add (new LMTimelineEvent { EventType = button.EventType });
 			p.UpdateEventTypesAndTimers ();
 			Assert.AreEqual (1, p.Timers.Count);
 			Assert.AreEqual (9, p.EventTypes.Count);
@@ -264,9 +264,9 @@ namespace Tests.Core.Store
 		[Ignore ("Not implemented")]
 		public void TestEquals ()
 		{
-			ProjectLongoMatch p1 = CreateProject ();
-			ProjectLongoMatch p2 = Utils.SerializeDeserialize (p1);
-			ProjectLongoMatch p3 = new ProjectLongoMatch ();
+			LMProject p1 = CreateProject ();
+			LMProject p2 = Utils.SerializeDeserialize (p1);
+			LMProject p3 = new LMProject ();
 			
 			Assert.IsTrue (p1.Equals (p2));
 			Assert.IsFalse (p1.Equals (p3));
@@ -287,7 +287,7 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestResyncEvents ()
 		{
-			ProjectLongoMatch p = CreateProject (false);
+			LMProject p = CreateProject (false);
 			int offset1 = 100, offset2 = 120, offset3 = 150;
 			Period period;
 			List<Period> syncedPeriods;
@@ -335,17 +335,17 @@ namespace Tests.Core.Store
 			syncedPeriods.Add (period);
 
 			/* 1st Period */
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (0) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (1500) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (3000) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (0) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (1500) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (3000) });
 			/* 2nd Period */
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (3001) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (4500) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6000) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (3001) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (4500) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (6000) });
 			/* 3nd Period */
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6001) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6200) });
-			p.Timeline.Add (new TimelineEventLongoMatch { EventTime = new Time (6500) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (6001) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (6200) });
+			p.Timeline.Add (new LMTimelineEvent { EventTime = new Time (6500) });
 
 			IList<TimelineEvent> oldTimeline = p.Timeline.Clone ();
 
@@ -366,22 +366,22 @@ namespace Tests.Core.Store
 		[Test ()]
 		public void TestIsChanged ()
 		{
-			ProjectLongoMatch p = new ProjectLongoMatch ();
+			LMProject p = new LMProject ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Dashboard = new DashboardLongoMatch ();
+			p.Dashboard = new LMDashboard ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.LocalTeamTemplate = new SportsTeam ();
+			p.LocalTeamTemplate = new LMTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.VisitorTeamTemplate = new SportsTeam ();
+			p.VisitorTeamTemplate = new LMTeam ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 			p.Description = new ProjectDescription ();
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Timeline.Add (new TimelineEventLongoMatch ());
+			p.Timeline.Add (new LMTimelineEvent ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 			p.Timeline = null;

@@ -58,18 +58,18 @@ namespace LongoMatch.Plugins
 
 		protected override void ExportProject (Project project, string filename)
 		{
-			ProjectToCSV exporter = new ProjectToCSV (project as ProjectLongoMatch, filename);
+			ProjectToCSV exporter = new ProjectToCSV (project as LMProject, filename);
 			exporter.Export ();
 		}
 	}
 
 	class ProjectToCSV
 	{
-		ProjectLongoMatch project;
+		LMProject project;
 		string filename;
 		List<string> output;
 
-		public ProjectToCSV (ProjectLongoMatch project, string filename)
+		public ProjectToCSV (LMProject project, string filename)
 		{
 			this.project = project;
 			this.filename = filename;
@@ -84,7 +84,7 @@ namespace LongoMatch.Plugins
 			File.WriteAllLines (filename, output);
 		}
 
-		string TeamName (IList<SportsTeam> teams)
+		string TeamName (IList<LMTeam> teams)
 		{
 			if (teams.Count == 0) {
 				return "";
@@ -115,14 +115,14 @@ namespace LongoMatch.Plugins
 			}
 			output.Add (headers);
 
-			foreach (TimelineEventLongoMatch play in plays.OrderBy (p => p.Start)) {
+			foreach (LMTimelineEvent play in plays.OrderBy (p => p.Start)) {
 				string line;
 
 				line = String.Format ("{0};{1};{2};{3};{4};{5}", play.Name,
 					play.EventTime == null ? "" : play.EventTime.ToMSecondsString (),
 					play.Start.ToMSecondsString (),
 					play.Stop.ToMSecondsString (),
-					TeamName (play.Teams.Cast<SportsTeam> ().ToList ()),
+					TeamName (play.Teams.Cast<LMTeam> ().ToList ()),
 					String.Join (" | ", play.Players));
 
 				if (evt is ScoreEventType) {

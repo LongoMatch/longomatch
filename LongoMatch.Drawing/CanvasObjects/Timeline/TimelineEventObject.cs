@@ -37,7 +37,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			List<SportsTeam> teams = (Event as TimelineEventLongoMatch).TaggedTeams;
+			List<LMTeam> teams = (Event as LMTimelineEvent).TaggedTeams;
 			if (teams.Count == 1) {
 				color = teams [0].Color;
 			} else {

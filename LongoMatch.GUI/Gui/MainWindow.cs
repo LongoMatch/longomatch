@@ -47,7 +47,7 @@ namespace LongoMatch.Gui
 	{
 		IGUIToolkit guiToolKit;
 		IAnalysisWindow analysisWindow;
-		ProjectLongoMatch openedProject;
+		LMProject openedProject;
 		ProjectType projectType;
 		Widget currentPanel;
 
@@ -146,7 +146,7 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append (item);
 		}
 
-		public IAnalysisWindow SetProject (ProjectLongoMatch project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
+		public IAnalysisWindow SetProject (LMProject project, ProjectType projectType, CaptureSettings props, EventsFilter filter)
 		{
 			ExportProjectAction1.Sensitive = true;
 
@@ -403,7 +403,7 @@ namespace LongoMatch.Gui
 
 		void HandleOpenedProject (OpenedProjectEvent e)
 		{
-			openedProject = e.Project as ProjectLongoMatch;
+			openedProject = e.Project as LMProject;
 		}
 	}
 }

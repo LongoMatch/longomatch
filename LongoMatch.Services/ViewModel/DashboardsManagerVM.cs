@@ -21,7 +21,7 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardsManagerVM:  TemplatesManagerViewModel<DashboardLongoMatch, DashboardVM>
+	public class DashboardsManagerVM:  TemplatesManagerViewModel<LMDashboard, DashboardVM>
 	{
 		public DashboardsManagerVM ()
 		{

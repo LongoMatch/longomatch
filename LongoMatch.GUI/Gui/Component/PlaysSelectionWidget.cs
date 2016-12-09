@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 
 		#region Plubic Methods
 
-		public void SetProject (ProjectLongoMatch project, EventsFilter filter)
+		public void SetProject (LMProject project, EventsFilter filter)
 		{
 			eventslistwidget.SetProject (project, filter);
 			playersfilter.SetFilter (filter, project);
@@ -90,12 +90,12 @@ namespace LongoMatch.Gui.Component
 			playlistwidget.Project = project;
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			eventslistwidget.AddPlay (play);
 		}
 
-		public void RemovePlays (List<TimelineEventLongoMatch> plays)
+		public void RemovePlays (List<LMTimelineEvent> plays)
 		{
 			eventslistwidget.RemovePlays (plays);
 		}

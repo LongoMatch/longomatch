@@ -37,7 +37,7 @@ namespace LongoMatch.Services
 {
 	public class ToolsManager : IProjectsImporter, IService
 	{
-		ProjectLongoMatch openedProject;
+		LMProject openedProject;
 
 		public ToolsManager ()
 		{
@@ -100,7 +100,7 @@ namespace LongoMatch.Services
 
 		void ImportProject (ImportProjectEvent e)
 		{
-			ProjectLongoMatch project;
+			LMProject project;
 			ProjectImporter importer;
 			IStorage DB = App.Current.DatabaseManager.ActiveDB;
 
@@ -120,7 +120,7 @@ namespace LongoMatch.Services
 					return;
 				}
 
-				project = importer.ImportFunction () as ProjectLongoMatch;
+				project = importer.ImportFunction () as LMProject;
 				if (project == null) {
 					return;
 				}
@@ -135,7 +135,7 @@ namespace LongoMatch.Services
 						if (!res)
 							return;
 					}
-					DB.Store<ProjectLongoMatch> (project, true);
+					DB.Store<LMProject> (project, true);
 					App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
 						new OpenProjectIDEvent {
 							ProjectID = project.ID,
@@ -200,7 +200,7 @@ namespace LongoMatch.Services
 		public bool Start ()
 		{
 			openedProjectEventToken = App.Current.EventsBroker.Subscribe<OpenedProjectEvent> ((e) => {
-				this.openedProject = e.Project as ProjectLongoMatch;
+				this.openedProject = e.Project as LMProject;
 			});
 
 			App.Current.EventsBroker.Subscribe<MigrateDBEvent> (HandleMigrateDB);

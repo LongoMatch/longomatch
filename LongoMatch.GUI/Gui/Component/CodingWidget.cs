@@ -42,8 +42,8 @@ namespace LongoMatch.Gui.Component
 	{
 		TeamTagger teamtagger;
 		ProjectType projectType;
-		ProjectLongoMatch project;
-		List<PlayerLongoMatch> selectedPlayers;
+		LMProject project;
+		List<LMPlayer> selectedPlayers;
 		List<Window> activeWindows;
 		Helpers.IconNotebookHelper notebookHelper;
 		bool sizeAllocated;
@@ -153,7 +153,7 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.ClickButton (button, tag);
 		}
 
-		public void TagPlayer (PlayerLongoMatch player)
+		public void TagPlayer (LMPlayer player)
 		{
 			teamtagger.Select (player);
 		}
@@ -173,7 +173,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetProject (ProjectLongoMatch project, ProjectType projectType, EventsFilter filter)
+		public void SetProject (LMProject project, ProjectType projectType, EventsFilter filter)
 		{
 			this.projectType = projectType;
 			this.project = project;
@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Component
 			playspositionviewer1.LoadProject (project, filter);
 		}
 
-		public void AddPlay (TimelineEventLongoMatch play)
+		public void AddPlay (LMTimelineEvent play)
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.AddPlay (play);
@@ -206,7 +206,7 @@ namespace LongoMatch.Gui.Component
 			playspositionviewer1.AddPlay (play);
 		}
 
-		public void DeletePlays (List<TimelineEventLongoMatch> plays)
+		public void DeletePlays (List<LMTimelineEvent> plays)
 		{
 			if (projectType == ProjectType.FileProject) {
 				timeline.RemovePlays (plays.Cast<TimelineEvent> ().ToList ());
@@ -302,7 +302,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayLoaded (EventLoadedEvent e)
 		{
-			timeline.LoadPlay (e.TimelineEvent as TimelineEventLongoMatch);
+			timeline.LoadPlay (e.TimelineEvent as LMTimelineEvent);
 		}
 
 		void HandleCapturerTick (CapturerTickEvent e)
@@ -323,7 +323,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			selectedPlayers = players.ToList ();
 		}
@@ -331,8 +331,8 @@ namespace LongoMatch.Gui.Component
 		void HandleNewTagEvent (EventType eventType, List<Player> players, ObservableCollection<Team> teams, List<Tag> tags,
 		                        Time start, Time stop, Time eventTime, DashboardButton btn)
 		{
-			TimelineEventLongoMatch play = project.AddEvent (eventType, start, stop, eventTime,
-				                               null, false) as TimelineEventLongoMatch;
+			LMTimelineEvent play = project.AddEvent (eventType, start, stop, eventTime,
+				                               null, false) as LMTimelineEvent;
 			play.Teams = new ObservableCollection<Team> (teamtagger.SelectedTeams);
 			if (selectedPlayers != null) {
 				play.Players = new ObservableCollection<Player> (selectedPlayers);
@@ -356,7 +356,7 @@ namespace LongoMatch.Gui.Component
 			);
 		}
 
-		void HandlePlayersSubstitutionEvent (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		void HandlePlayersSubstitutionEvent (LMTeam team, LMPlayer p1, LMPlayer p2,
 		                                     SubstitutionReason reason, Time time)
 		{
 			App.Current.EventsBroker.Publish<PlayerSubstitutionEvent> (

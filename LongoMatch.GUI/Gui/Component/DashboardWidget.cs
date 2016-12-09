@@ -53,13 +53,13 @@ namespace LongoMatch.Gui.Component
 
 		DashboardMode mode;
 		SportDashboardCanvas tagger;
-		DashboardLongoMatch template;
+		LMDashboard template;
 		DashboardButton selected;
 		Gtk.Image editimage, linksimage;
 		ToggleToolButton editbutton, linksbutton, popupbutton;
 		RadioToolButton d11button, fillbutton, fitbutton;
 		bool internalButtons, edited, ignoreChanges;
-		ProjectLongoMatch project;
+		LMProject project;
 
 		public DashboardWidget ()
 		{
@@ -147,17 +147,17 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public ProjectLongoMatch Project {
+		public LMProject Project {
 			set {
 				project = value;
 				tagger.Project = project;
-				Template = project.Dashboard as DashboardLongoMatch;
+				Template = project.Dashboard as LMDashboard;
 				positionsbox.Visible = false;
 				periodsbox.Visible = false;
 			}
 		}
 
-		public DashboardLongoMatch Template {
+		public LMDashboard Template {
 			set {
 				template = value;
 				tagger.Template = value;
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Component
 					Score = new Score ("Score", 1)
 				};
 			} else if (buttontype == "Timer") {
-				button = new TimerButton { Timer = new TimerLongoMatch { Name = "Timer" } };
+				button = new TimerButton { Timer = new LMTimer { Name = "Timer" } };
 			} else if (buttontype == "Tag") {
 				button = new TagButton { Tag = new Tag ("Tag", "") };
 			} else if (buttontype == "Category") {

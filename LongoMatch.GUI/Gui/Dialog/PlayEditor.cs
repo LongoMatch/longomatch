@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 		const int TAGS_PER_ROW = 5;
 		TeamTagger teamtagger;
-		TimelineEventLongoMatch play;
+		LMTimelineEvent play;
 
 		public PlayEditor (Window parent)
 		{
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Dialog
 			base.OnDestroyed ();
 		}
 
-		public void LoadPlay (TimelineEventLongoMatch play, ProjectLongoMatch project, bool editTags, bool editPos,
+		public void LoadPlay (LMTimelineEvent play, LMProject project, bool editTags, bool editPos,
 		                      bool editPlayers, bool editNotes)
 		{
 			this.play = play;
@@ -87,8 +87,8 @@ namespace LongoMatch.Gui.Dialog
 					project.Dashboard.FieldBackground);
 				/* Force lineup update */
 				teamtagger.CurrentTime = play.EventTime;
-				teamtagger.Select (play.Players.Cast<PlayerLongoMatch> ().ToList (),
-					play.Teams.Cast<SportsTeam> ().ToList ());
+				teamtagger.Select (play.Players.Cast<LMPlayer> ().ToList (),
+					play.Teams.Cast<LMTeam> ().ToList ());
 			}
 		
 			if (editTags) {
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void AddTagsGroup (TimelineEventLongoMatch evt, string grp, List<Tag> tags, SizeGroup sgroup)
+		void AddTagsGroup (LMTimelineEvent evt, string grp, List<Tag> tags, SizeGroup sgroup)
 		{
 			HBox box = new HBox ();
 			Label label = new Label (String.IsNullOrEmpty (grp) ? Catalog.GetString ("Common tags") : grp);
@@ -142,7 +142,7 @@ namespace LongoMatch.Gui.Dialog
 			tagsvbox.PackStart (new HSeparator ());
 		}
 
-		void FillTags (ProjectLongoMatch project, TimelineEventLongoMatch evt)
+		void FillTags (LMProject project, LMTimelineEvent evt)
 		{
 			Dictionary<string, List<Tag>> tagsByGroup;
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
@@ -170,12 +170,12 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		void HandlePlayersSelectionChangedEvent (List<PlayerLongoMatch> players)
+		void HandlePlayersSelectionChangedEvent (List<LMPlayer> players)
 		{
 			play.Players = new ObservableCollection<Player> (players);
 		}
 
-		void HandleTeamSelectionChangedEvent (ObservableCollection<SportsTeam> teams)
+		void HandleTeamSelectionChangedEvent (ObservableCollection<LMTeam> teams)
 		{
 			play.Teams = new ObservableCollection<Team> (teams);
 		}

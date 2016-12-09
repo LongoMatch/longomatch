@@ -45,7 +45,7 @@ namespace LongoMatch.Services
 		ICapturerBin capturer;
 		IVideoPlayerController player;
 		Dashboard dashboard;
-		ProjectLongoMatch openedProject;
+		LMProject openedProject;
 		AnalysisEventButton pendingButton;
 		bool inPlayerTagging;
 		string playerNumber;
@@ -63,9 +63,9 @@ namespace LongoMatch.Services
 			int playerNumber;
 			
 			if (int.TryParse (this.playerNumber, out playerNumber)) {
-				SportsTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
+				LMTeam team = taggedTeam == TeamType.LOCAL ? openedProject.LocalTeamTemplate :
 					openedProject.VisitorTeamTemplate;
-				PlayerLongoMatch player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
+				LMPlayer player = team.Players.FirstOrDefault (p => p.Number == playerNumber);
 				if (player != null) {
 					analysisWindow.TagPlayer (player);
 				}
@@ -108,7 +108,7 @@ namespace LongoMatch.Services
 			this.analysisWindow = e.AnalysisWindow as IAnalysisWindow;
 			capturer = e.AnalysisWindow.Capturer;
 			player = e.AnalysisWindow.Player;
-			openedProject = e.Project as ProjectLongoMatch;
+			openedProject = e.Project as LMProject;
 			this.projectType = e.ProjectType;
 			if (e.Project == null) {
 				dashboard = null;

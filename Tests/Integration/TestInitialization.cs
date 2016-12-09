@@ -105,7 +105,7 @@ namespace Tests.Integration
 				// Check templates and db are initialized
 				Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 				Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
-				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 
 				CoreServices.Stop ();
 
@@ -114,7 +114,7 @@ namespace Tests.Integration
 				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 				Assert.AreEqual (2, App.Current.TeamTemplatesProvider.Templates.Count);
 				Assert.AreEqual (1, App.Current.CategoriesTemplatesProvider.Templates.Count);
-				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<ProjectLongoMatch> ());
+				Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 				CoreServices.Stop ();
 
 			} catch (Exception ex) {

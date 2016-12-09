@@ -1,5 +1,6 @@
-//
-//  Copyright (C) 2014 Andoni Morales Alastruey
+﻿//
+//  Copyright (C) 2008-2015 Andoni Morales Alastruey
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,36 +17,31 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Collections.Generic;
-using Gtk;
-using LongoMatch.Core.Store;
-using LongoMatch.Gui.Component;
+using VAS.Core.Store;
+using Constants = LongoMatch.Core.Common.Constants;
 
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Core.Store
 {
-	public partial class ChooseProjectDialog : Gtk.Dialog
+	[Serializable]
+	public class SubstitutionEventType : EventType
 	{
-		public ChooseProjectDialog (Window parent)
+		public SubstitutionEventType ()
 		{
-			TransientFor = parent;
-			this.Build ();
-			projectlistwidget1.ViewMode = ProjectListViewMode.Icons;
-			projectlistwidget1.SelectionMode = Gtk.SelectionMode.Single;
-			projectlistwidget1.ProjectsSelected += (projects) => {
-				if (projects != null && projects.Count == 1) {
-					Project = projects [0];
-				}
-			};
+			ID = Constants.SubsID;
+			Name = Catalog.GetString ("Substitution");
 		}
 
-		public void Fill (List<LMProject> projects)
+		public override bool Equals (object obj)
 		{
-			projectlistwidget1.Fill (projects);
+			SubstitutionEventType sc = obj as SubstitutionEventType;
+			if (sc == null)
+				return false;
+			return sc.ID == ID;
 		}
 
-		public LMProject Project {
-			get;
-			set;
+		public override int GetHashCode ()
+		{
+			return ID.GetHashCode ();
 		}
 	}
 }

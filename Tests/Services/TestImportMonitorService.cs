@@ -126,7 +126,7 @@ namespace Tests.Services
 		[Test]
 		public void TestImportFilesAtStartup ()
 		{
-			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
+			LMDashboard dashboard = LMDashboard.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			App.Current.DependencyRegistry.Retrieve<IFileStorage>
 			   (InstanceType.Default, null).StoreAt (dashboard, outPath);
@@ -141,7 +141,7 @@ namespace Tests.Services
 		public void TestAddDashboard ()
 		{
 			service.Start ();
-			DashboardLongoMatch dashboard = DashboardLongoMatch.DefaultTemplate (1);
+			LMDashboard dashboard = LMDashboard.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.CAT_TEMPLATE_EXT);
 			App.Current.DependencyRegistry.Retrieve<IFileStorage>
 			   (InstanceType.Default, null).StoreAt (dashboard, outPath);
@@ -155,7 +155,7 @@ namespace Tests.Services
 		public void TestAddTeam ()
 		{
 			service.Start ();
-			SportsTeam team = SportsTeam.DefaultTemplate (1);
+			LMTeam team = LMTeam.DefaultTemplate (1);
 			string outPath = Path.Combine (tmpDir, "test" + Constants.TEAMS_TEMPLATE_EXT);
 			App.Current.DependencyRegistry.Retrieve<IFileStorage>
 			   (InstanceType.Default, null).StoreAt (team, outPath);
@@ -169,12 +169,12 @@ namespace Tests.Services
 		public void TestAddProject ()
 		{
 			service.Start ();
-			ProjectLongoMatch project = new ProjectLongoMatch ();
+			LMProject project = new LMProject ();
 			string outPath = Path.Combine (tmpDir, "test" + Constants.PROJECT_EXT);
 			App.Current.DependencyRegistry.Retrieve<IFileStorage>
 			   (InstanceType.Default, null).StoreAt (project, outPath);
 			monitor.AddFile (outPath);
-			storageMock.Verify (s => s.Store<ProjectLongoMatch> (project, true));
+			storageMock.Verify (s => s.Store<LMProject> (project, true));
 			Assert.IsFalse (File.Exists (outPath));
 			service.Stop ();
 		}

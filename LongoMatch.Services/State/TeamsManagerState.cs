@@ -43,7 +43,7 @@ namespace LongoMatch.Services.States
 		protected override void CreateViewModel (dynamic data)
 		{
 			ViewModel = new TeamsManagerVM ();
-			ViewModel.Model = new RangeObservableCollection<SportsTeam> (App.Current.TeamTemplatesProvider.Templates);
+			ViewModel.Model = new RangeObservableCollection<LMTeam> (App.Current.TeamTemplatesProvider.Templates);
 		}
 	}
 }

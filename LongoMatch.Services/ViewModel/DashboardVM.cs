@@ -22,7 +22,7 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardVM: TemplateViewModel<DashboardLongoMatch>
+	public class DashboardVM: TemplateViewModel<LMDashboard>
 	{
 
 		public override Image Icon {
