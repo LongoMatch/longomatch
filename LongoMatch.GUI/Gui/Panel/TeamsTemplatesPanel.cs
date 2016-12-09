@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Panel
 				teamtemplateeditor1.DeleteSelectedPlayers ();
 			};
 
-			teamsStore = new ListStore (typeof (TeamVM));
+			teamsStore = new ListStore (typeof (LMTeamVM));
 
 			var cell = new CellRendererText ();
 			cell.Editable = true;
@@ -145,7 +145,7 @@ namespace LongoMatch.Gui.Panel
 			}
 			set {
 				viewModel = value;
-				foreach (TeamVM team in viewModel.ViewModels) {
+				foreach (LMTeamVM team in viewModel.ViewModels) {
 					Add (team);
 				}
 				viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
@@ -175,22 +175,22 @@ namespace LongoMatch.Gui.Panel
 
 		void RenderIcon (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			TeamVM teamVM = (TeamVM)model.GetValue (iter, COL_TEAM);
+			LMTeamVM teamVM = (LMTeamVM)model.GetValue (iter, COL_TEAM);
 			(cell as CellRendererPixbuf).Pixbuf = teamVM.Icon.Value;
 		}
 
 		void RenderTemplateName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			TeamVM teamVM = (TeamVM)model.GetValue (iter, COL_TEAM);
+			LMTeamVM teamVM = (LMTeamVM)model.GetValue (iter, COL_TEAM);
 			(cell as CellRendererText).Text = teamVM.Name;
 		}
 
-		void Add (TeamVM teamVM)
+		void Add (LMTeamVM teamVM)
 		{
 			teamsStore.AppendValues (teamVM, teamVM.Editable);
 		}
 
-		void Remove (TeamVM teamVM)
+		void Remove (LMTeamVM teamVM)
 		{
 			TreeIter iter;
 			teamsStore.GetIterFirst (out iter);
@@ -203,12 +203,12 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void Select (TeamVM teamVM)
+		void Select (LMTeamVM teamVM)
 		{
 			TreeIter iter;
 			teamsStore.GetIterFirst (out iter);
 			while (teamsStore.IterIsValid (iter)) {
-				if ((teamsStore.GetValue (iter, COL_TEAM) as TeamVM).Model.Equals (teamVM.Model)) {
+				if ((teamsStore.GetValue (iter, COL_TEAM) as LMTeamVM).Model.Equals (teamVM.Model)) {
 					teamseditortreeview.Selection.SelectIter (iter);
 					break;
 				}
@@ -254,12 +254,12 @@ namespace LongoMatch.Gui.Panel
 		{
 			switch (e.Action) {
 			case NotifyCollectionChangedAction.Add:
-				foreach (TeamVM teamVM in e.NewItems) {
+				foreach (LMTeamVM teamVM in e.NewItems) {
 					Add (teamVM);
 				}
 				break;
 			case NotifyCollectionChangedAction.Remove:
-				foreach (TeamVM teamVM in e.OldItems) {
+				foreach (LMTeamVM teamVM in e.OldItems) {
 					Remove (teamVM);
 				}
 				break;
@@ -273,7 +273,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			teamseditortreeview.Selection.GetSelected (out iter);
-			ViewModel.Select (teamsStore.GetValue (iter, COL_TEAM) as TeamVM);
+			ViewModel.Select (teamsStore.GetValue (iter, COL_TEAM) as LMTeamVM);
 		}
 
 		void HandleLoadedTemplateChanged (object sender, PropertyChangedEventArgs e)
@@ -326,7 +326,7 @@ namespace LongoMatch.Gui.Panel
 		{
 			TreeIter iter;
 			teamsStore.GetIter (out iter, new TreePath (args.Path));
-			var teamVM = teamsStore.GetValue (iter, COL_TEAM) as TeamVM;
+			var teamVM = teamsStore.GetValue (iter, COL_TEAM) as LMTeamVM;
 			ViewModel.ChangeName (teamVM, args.NewText);
 			QueueDraw ();
 		}

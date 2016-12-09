@@ -25,7 +25,7 @@ namespace LongoMatch.Core.Filters
 {
 	public class ProjectsFilter
 	{
-		List<ProjectLongoMatch> projects;
+		List<LMProject> projects;
 
 		public ProjectsFilter ()
 		{

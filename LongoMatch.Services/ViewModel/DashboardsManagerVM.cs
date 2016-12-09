@@ -17,11 +17,12 @@
 //
 using System;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardsManagerVM:  TemplatesManagerViewModel<LMDashboard, DashboardVM>
+	public class DashboardsManagerVM : TemplatesManagerViewModel<LMDashboard, LMDashboardVM>
 	{
 		public DashboardsManagerVM ()
 		{

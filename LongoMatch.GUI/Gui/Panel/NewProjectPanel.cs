@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	[ViewAttribute (NewProjectState.NAME)]
-	public partial class NewProjectPanel : Gtk.Bin, IPanel<SportsProjectVM>
+	public partial class NewProjectPanel : Gtk.Bin, IPanel<LMProjectVM>
 	{
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Panel
 		LMDashboard analysisTemplate;
 		TeamTagger teamtagger;
 		SizeGroup sg;
-		SportsProjectVM viewModel;
+		LMProjectVM viewModel;
 		bool resyncEvents;
 
 		public NewProjectPanel ()
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		public SportsProjectVM ViewModel {
+		public LMProjectVM ViewModel {
 			set {
 				viewModel = value;
 				project = viewModel.Model;
@@ -155,7 +155,7 @@ namespace LongoMatch.Gui.Panel
 
 		public void SetViewModel (object viewModel)
 		{
-			ViewModel = (SportsProjectVM)viewModel;
+			ViewModel = (LMProjectVM)viewModel;
 		}
 
 		public void FillDevices (List<Device> devices)

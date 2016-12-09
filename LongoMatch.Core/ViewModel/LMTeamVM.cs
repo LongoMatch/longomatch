@@ -15,22 +15,29 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
-using VAS.Services.ViewModel;
+using VAS.Core.ViewModel;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
-	public class DashboardVM: TemplateViewModel<LMDashboard>
+
+	/// <summary>
+	/// ViewModel for a sports team.
+	/// </summary>
+	public class LMTeamVM : TemplateViewModel<LMTeam>
 	{
 
+		/// <summary>
+		/// Gets or sets the icon of the team.
+		/// </summary>
+		/// <value>The icon.</value>
 		public override Image Icon {
 			get {
-				return Model.Image;
+				return Model.Shield;
 			}
 			set {
-				Model.Image = Icon;
+				Model.Shield = value;
 			}
 		}
 	}

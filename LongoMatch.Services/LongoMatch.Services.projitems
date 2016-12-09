@@ -21,13 +21,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\TeamsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SportsProjectVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SportsProjectsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\SportsProjectsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\CoreTool.cs" />

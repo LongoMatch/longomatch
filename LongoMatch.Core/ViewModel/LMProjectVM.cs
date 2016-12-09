@@ -18,14 +18,14 @@
 using System;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
-using VAS.Services.ViewModel;
+using VAS.Core.ViewModel;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
 	/// <summary>
 	/// ViewModel for sports projects.
 	/// </summary>
-	public class SportsProjectVM : ProjectVM<LMProject>
+	public class LMProjectVM : ProjectVM<LMProject>
 	{
 		/// <summary>
 		/// Gets the description of the project
