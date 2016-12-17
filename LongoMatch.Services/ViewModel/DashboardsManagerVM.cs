@@ -19,14 +19,13 @@ using System;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Core.ViewModel;
 using VAS.Services.ViewModel;
+using VAS.Core.ViewModel;
+using VAS.Core.Store;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardsManagerVM : TemplatesManagerViewModel<LMDashboard, LMDashboardVM>
+	public class DashboardsManagerVM : TemplatesManagerViewModel<LMDashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>
 	{
-		public DashboardsManagerVM ()
-		{
-		}
 	}
 }
 

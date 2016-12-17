@@ -19,6 +19,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Gtk;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.States;
 using LongoMatch.Services.ViewModel;
 using Pango;
@@ -321,7 +322,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)
 		{
-			ViewModel.Delete ();
+			ViewModel.NewCommand.Execute ();
 		}
 
 		void HandleImportTemplateClicked (object sender, EventArgs e)
@@ -336,7 +337,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleNewTemplateClicked (object sender, EventArgs e)
 		{
-			ViewModel.New ();
+			ViewModel.NewCommand.Execute ();
 		}
 
 		void HandleEdited (object o, EditedArgs args)

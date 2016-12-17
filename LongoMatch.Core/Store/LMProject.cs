@@ -197,11 +197,11 @@ namespace LongoMatch.Core.Store
 
 			homeTeam = new LMTeam {
 				Formation = LocalTeamTemplate.Formation,
-				List = new ObservableCollection<Player> (homeTeamPlayers)
+				List = new RangeObservableCollection<LMPlayer> (homeTeamPlayers)
 			};
 			awayTeam = new LMTeam {
 				Formation = VisitorTeamTemplate.Formation,
-				List = new ObservableCollection<Player> (awayTeamPlayers)
+				List = new RangeObservableCollection<LMPlayer> (awayTeamPlayers)
 			};
 
 			homeFieldPlayers = homeTeam.StartingPlayersList;

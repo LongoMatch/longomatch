@@ -27,7 +27,7 @@ using VAS.Core.Store.Templates;
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class LMDashboard : Dashboard, ITemplate<LMDashboard>
+	public class LMDashboard : Dashboard, ITemplate<DashboardButton>
 	{
 		new const int MIN_WIDTH = 320;
 		new const int MIN_HEIGHT = 240;
@@ -115,9 +115,9 @@ namespace LongoMatch.Core.Store.Templates
 			};
 			AddDefaultTags (evtype);
 
-			button = new  AnalysisEventButton {
+			button = new AnalysisEventButton {
 				EventType = evtype,
-				Start = new Time{ TotalSeconds = 10 },
+				Start = new Time { TotalSeconds = 10 },
 				Stop = new Time { TotalSeconds = 10 },
 				HotKey = h,
 				/* Leave the first row for the timers and score */
@@ -129,23 +129,6 @@ namespace LongoMatch.Core.Store.Templates
 			};
 			List.Insert (index, button);
 			return button;
-		}
-
-
-		/// <summary>
-		/// Creates a deep copy of this dashboard
-		/// </summary>
-		LMDashboard ITemplate<LMDashboard>.Copy (string newName)
-		{
-			Load ();
-			LMDashboard newDashboard = this.Clone (SerializationType.Json);
-			newDashboard.ID = Guid.NewGuid ();
-			newDashboard.DocumentID = null;
-			newDashboard.Name = newName;
-			foreach (AnalysisEventButton evtButton in newDashboard.List.OfType<AnalysisEventButton> ()) {
-				evtButton.EventType.ID = Guid.NewGuid ();
-			}
-			return newDashboard;
 		}
 	}
 }

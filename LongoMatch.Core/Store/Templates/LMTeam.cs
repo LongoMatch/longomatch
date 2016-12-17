@@ -23,16 +23,14 @@ using System.Linq;
 using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store.Templates
 {
 	[Serializable]
-	public class LMTeam : Team, ITemplate<LMTeam>
+	public class LMTeam : Team<LMPlayer>
 	{
 		const int MAX_WIDTH = 100;
 		const int MAX_HEIGHT = 100;
@@ -174,22 +172,6 @@ namespace LongoMatch.Core.Store.Templates
 					return new List<LMPlayer> ();
 				}
 			}
-		}
-
-		/// <summary>
-		/// Creates a deep copy of this team with new ID's for each player
-		/// </summary>
-		public LMTeam Copy (string newName)
-		{
-			Load ();
-			LMTeam newTeam = this.Clone ();
-			newTeam.ID = Guid.NewGuid ();
-			newTeam.DocumentID = null;
-			newTeam.Name = newName;
-			foreach (Player player in newTeam.List) {
-				player.ID = Guid.NewGuid ();
-			}
-			return newTeam;
 		}
 
 		public void RemovePlayers (List<LMPlayer> players, bool delete)

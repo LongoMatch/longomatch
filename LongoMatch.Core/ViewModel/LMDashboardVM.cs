@@ -19,10 +19,11 @@ using System;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
+using VAS.Core.Store;
 
 namespace LongoMatch.Core.ViewModel
 {
-	 public class LMDashboardVM  : TemplateViewModel<LMDashboard>
+	public class LMDashboardVM : TemplateViewModel<LMDashboard, DashboardButton, DashboardButtonVM>
 	{
 
 		public override Image Icon {

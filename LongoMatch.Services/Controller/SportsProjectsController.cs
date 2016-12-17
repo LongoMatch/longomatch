@@ -3,7 +3,7 @@
 //
 //
 using LongoMatch.Core.Store;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Services.Controller;
 
