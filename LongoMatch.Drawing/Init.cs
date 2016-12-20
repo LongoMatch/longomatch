@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,16 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Gui.Menus;
-using VAS.Core.Store;
+using System;
+using VAS.Core.MVVMC;
 
-namespace LongoMatch.Gui.Component
+namespace LongoMatch.Drawing
 {
-	[System.ComponentModel.ToolboxItem (true)]
-	public class Timeline : VAS.UI.Component.Timeline
+	public static class LMDrawingInit
 	{
-		protected PeriodsMenu periodsmenu;
-
-		public Timeline () : base ()
+		public static void ScanViews ()
 		{
-			periodsmenu = new PeriodsMenu ();
-			menu = new SportsPlaysMenu ();
-		}
-
-		protected void HandleShowTimerMenuEvent (Timer timer, Time time)
-		{
-			periodsmenu.ShowMenu (ViewModel.Project.Model, timer, time, timeline);
+			Scanner.ScanViews (App.Current.ViewLocator);
 		}
 	}
 }

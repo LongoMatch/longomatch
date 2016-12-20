@@ -1,5 +1,5 @@
 ﻿//
-//  Copyright (C) 2016 
+//  Copyright (C) 2016 Fluendo S.A.
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,35 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Gui.Menus;
-using VAS.Core.Store;
 
-namespace LongoMatch.Gui.Component
+using VAS.Core.Interfaces.Drawing;
+using VAS.Core.MVVMC;
+using VAS.Core.ViewModel;
+
+namespace VAS.Drawing.CanvasObjects.Timeline
 {
-	[System.ComponentModel.ToolboxItem (true)]
-	public class Timeline : VAS.UI.Component.Timeline
-	{
-		protected PeriodsMenu periodsmenu;
 
-		public Timeline () : base ()
-		{
-			periodsmenu = new PeriodsMenu ();
-			menu = new SportsPlaysMenu ();
+	/// <summary>
+	/// A label for the times timeline row.
+	/// </summary>
+	[View ("PeriodLabelView")]
+	public class PeriodLabelView : LabelView, ICanvasObjectView<PeriodVM>
+	{
+		public override string Name {
+			get {
+				return ViewModel.Name;
+			}
 		}
 
-		protected void HandleShowTimerMenuEvent (Timer timer, Time time)
+		public PeriodVM ViewModel {
+			get;
+			set;
+		}
+
+		public void SetViewModel (object viewModel)
 		{
-			periodsmenu.ShowMenu (ViewModel.Project.Model, timer, time, timeline);
+			ViewModel = viewModel as PeriodVM;
 		}
 	}
+
 }

@@ -16,19 +16,30 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System.Collections.Generic;
-using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Store;
+using VAS.Core.MVVMC;
 using VAS.Drawing.CanvasObjects.Timeline;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
-	public class TimelineEventObject : TimelineEventObjectBase
+	[View ("TimelineEventView")]
+	public class LMTimelineEventView : TimelineEventView, ICanvasObjectView<LMTimelineEventVM>
 	{
-		public TimelineEventObject (TimelineEvent play, Project project) : base (play, project)
+		public LMTimelineEventVM ViewModel {
+			get {
+				return (LMTimelineEventVM)TimelineEvent;
+			}
+			set {
+				TimelineEvent = value;
+			}
+		}
+
+		public void SetViewModel (object viewModel)
 		{
+			ViewModel = (LMTimelineEventVM)viewModel;
 		}
 
 		protected override void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
@@ -37,7 +48,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			double y1, y2;
 
 			tk.LineWidth = lineWidth;
-			List<LMTeam> teams = (Event as LMTimelineEvent).TaggedTeams;
+			List<LMTeam> teams = ViewModel.Model.TaggedTeams;
 			if (teams.Count == 1) {
 				color = teams [0].Color;
 			} else {
