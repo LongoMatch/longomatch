@@ -29,6 +29,14 @@ namespace Tests.Core.Common
 		public void Setup ()
 		{
 			App.Current.DataDir.Add ("../data/");
+			VAS.Core.Resources.TEST_MODE = false;
+		}
+
+		[TestFixtureTearDown]
+		public void TearDown ()
+		{
+			App.Current.DataDir.Add ("../data/");
+			VAS.Core.Resources.TEST_MODE = true;
 		}
 
 		[Test ()]
