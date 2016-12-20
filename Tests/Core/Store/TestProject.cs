@@ -32,7 +32,7 @@ namespace Tests.Core.Store
 	[TestFixture ()]
 	public class TestProject
 	{
-	
+
 		LMProject CreateProject (bool fill = true)
 		{
 			LMProject p = new LMProject ();
@@ -41,7 +41,7 @@ namespace Tests.Core.Store
 			p.LocalTeamTemplate = LMTeam.DefaultTemplate (10);
 			p.VisitorTeamTemplate = LMTeam.DefaultTemplate (12);
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-				               "aac", 320, 240, 1.3, null, "Test asset");
+							   "aac", 320, 240, 1.3, null, "Test asset");
 			var pd = new ProjectDescription ();
 			pd.FileSet = new MediaFileSet ();
 			pd.FileSet.Add (mf);
@@ -63,14 +63,14 @@ namespace Tests.Core.Store
 		public void TestSerialization ()
 		{
 			LMProject p = new LMProject ();
-			
+
 			Utils.CheckSerialization (p);
-			
+
 			p = CreateProject ();
 			Utils.CheckSerialization (p);
 			p.AddEvent (new LMTimelineEvent ());
 			Utils.CheckSerialization (p);
-			
+
 			LMProject newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
 			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
@@ -156,7 +156,7 @@ namespace Tests.Core.Store
 		{
 			LMProject p = CreateProject (false);
 			LMTimelineEvent evt = p.AddEvent (p.EventTypes [0], new Time (1000), new Time (2000),
-				                              null, null, false) as LMTimelineEvent;
+											  null, null, false) as LMTimelineEvent;
 			Assert.AreEqual (p, evt.Project);
 
 			Assert.AreEqual (p.Timeline.Count, 0);
@@ -181,7 +181,7 @@ namespace Tests.Core.Store
 			LMTimelineEvent p1, p2, p3;
 			List<LMTimelineEvent> plays = new List<LMTimelineEvent> ();
 			LMProject p = CreateProject (false);
-			
+
 			p1 = new LMTimelineEvent ();
 			p2 = new LMTimelineEvent ();
 			p3 = new LMTimelineEvent ();
@@ -195,13 +195,13 @@ namespace Tests.Core.Store
 			Assert.AreEqual (p.Timeline [0], p3);
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestCleanupTimers ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		public void TestUpdateEventTypesAndTimers ()
 		{
 			LMProject p = new LMProject ();
@@ -236,49 +236,49 @@ namespace Tests.Core.Store
 			Assert.AreEqual (8, p.EventTypes.Count);
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestSubstituePlayer ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestCurrentLineup ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestGetScore ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestConsolidateDescription ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestEquals ()
 		{
 			LMProject p1 = CreateProject ();
 			LMProject p2 = Utils.SerializeDeserialize (p1);
 			LMProject p3 = new LMProject ();
-			
+
 			Assert.IsTrue (p1.Equals (p2));
 			Assert.IsFalse (p1.Equals (p3));
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestExport ()
 		{
 		}
 
-		[Test ()] 
+		[Test ()]
 		[Ignore ("Not implemented")]
 		public void TestImport ()
 		{
@@ -293,17 +293,20 @@ namespace Tests.Core.Store
 			List<Period> syncedPeriods;
 
 			period = new Period ();
-			period.Nodes.Add (new TimeNode { Start = new Time (0),
+			period.Nodes.Add (new TimeNode {
+				Start = new Time (0),
 				Stop = new Time (3000)
 			});
 			p.Periods.Add (period);
 			period = new Period ();
-			period.Nodes.Add (new TimeNode { Start = new Time (3001),
+			period.Nodes.Add (new TimeNode {
+				Start = new Time (3001),
 				Stop = new Time (6000)
 			});
 			p.Periods.Add (period);
 			period = new Period ();
-			period.Nodes.Add (new TimeNode { Start = new Time (6001),
+			period.Nodes.Add (new TimeNode {
+				Start = new Time (6001),
 				Stop = new Time (6500)
 			});
 			p.Periods.Add (period);
@@ -384,9 +387,6 @@ namespace Tests.Core.Store
 			p.Timeline.Add (new LMTimelineEvent ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Timeline = null;
-			Assert.IsTrue (p.IsChanged);
-			p.IsChanged = false;
 			p.EventTypes.Add (new EventType ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
@@ -396,19 +396,10 @@ namespace Tests.Core.Store
 			p.Playlists.Add (new Playlist ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Playlists = null;
-			Assert.IsTrue (p.IsChanged);
-			p.IsChanged = false;
 			p.Periods.Add (new Period ());
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
-			p.Periods = null;
-			Assert.IsTrue (p.IsChanged);
-			p.IsChanged = false;
 			p.Timers.Add (new Timer ());
-			Assert.IsTrue (p.IsChanged);
-			p.IsChanged = false;
-			p.Timers = null;
 			Assert.IsTrue (p.IsChanged);
 			p.IsChanged = false;
 		}

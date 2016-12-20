@@ -54,13 +54,17 @@ namespace LongoMatch.Core.Store
 			VisitorTeamTemplate = new LMTeam ();
 		}
 
-		public override void Dispose ()
+		protected override void Dispose (bool disposing)
 		{
-			base.Dispose ();
-			LocalTeamTemplate?.Dispose ();
-			VisitorTeamTemplate?.Dispose ();
+			if (Disposed) {
+				return;
+			}
+			base.Dispose (disposing);
+			if (disposing) {
+				LocalTeamTemplate?.Dispose ();
+				VisitorTeamTemplate?.Dispose ();
+			}
 		}
-
 		#endregion
 
 		#region Properties
@@ -197,12 +201,12 @@ namespace LongoMatch.Core.Store
 
 			homeTeam = new LMTeam {
 				Formation = LocalTeamTemplate.Formation,
-				List = new RangeObservableCollection<LMPlayer> (homeTeamPlayers)
 			};
+			homeTeam.List.Replace (homeTeamPlayers);
 			awayTeam = new LMTeam {
 				Formation = VisitorTeamTemplate.Formation,
-				List = new RangeObservableCollection<LMPlayer> (awayTeamPlayers)
 			};
+			awayTeam.List.Replace (awayTeamPlayers);
 
 			homeFieldPlayers = homeTeam.StartingPlayersList;
 			homeBenchPlayers = homeTeam.BenchPlayersList;

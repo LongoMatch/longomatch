@@ -33,17 +33,17 @@ namespace Tests.Core.Store.Templates
 		public void TestSerialization ()
 		{
 			LMDashboard cat = new LMDashboard ();
-			
+
 			Utils.CheckSerialization (cat);
-			
+
 			cat.Name = "test";
 			cat.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			cat.List.Add (new AnalysisEventButton { Name = "cat1" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat2" });
 			cat.List.Add (new AnalysisEventButton { Name = "cat3" });
-			
+
 			Utils.CheckSerialization (cat);
-			
+
 			LMDashboard newcat = Utils.SerializeDeserialize (cat);
 			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
@@ -150,13 +150,6 @@ namespace Tests.Core.Store.Templates
 			dashboard.List.Add (new DashboardButton ());
 			Assert.IsTrue (dashboard.IsChanged);
 			dashboard.IsChanged = false;
-			dashboard.List = new ObservableCollection<DashboardButton> ();
-			Assert.IsTrue (dashboard.IsChanged);
-			dashboard.IsChanged = false;
-			dashboard.List = null;
-			Assert.IsTrue (dashboard.IsChanged);
-			dashboard.IsChanged = false;
-
 		}
 
 		[Test ()]
