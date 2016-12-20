@@ -19,90 +19,69 @@ using System.Collections.Generic;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Stats;
 using LongoMatch.Core.Store;
+using LongoMatch.Drawing.Widgets;
 using VAS.Core.Common;
-using Image = VAS.Core.Common.Image;
-using Point = VAS.Core.Common.Point;
+using VAS.Drawing.Cairo;
+using Gtk;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
 	public partial class PlaysCoordinatesTagger : Gtk.Bin
 	{
+		PositionsViewerView field, hfield, goal;
+
 		public PlaysCoordinatesTagger ()
 		{
 			this.Build ();
 			HeightRequest = 300;
 			WidthRequest = 500;
-			field.Tagger.EmitSignals = false;
-			hfield.Tagger.EmitSignals = false;
-			goal.Tagger.EmitSignals = false;
-			field.Tagger.Accuracy = 20;
-			hfield.Tagger.Accuracy = 20;
-			goal.Tagger.Accuracy = 20;
+
+			field = new PositionsViewerView (new WidgetWrapper (fieldDrawingarea));
+			hfield = new PositionsViewerView (new WidgetWrapper (hfieldDrawingarea));
+			goal = new PositionsViewerView (new WidgetWrapper (goalDrawingarea));
+		}
+
+		protected override void OnDestroyed ()
+		{
+			field.Dispose ();
+			hfield.Dispose ();
+			goal.Dispose ();
+			base.OnDestroyed ();
 		}
 
 		public void LoadBackgrounds (LMProject project)
 		{
-			field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
-			hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
-			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
+			field.Background = project.GetBackground (FieldPositionType.Field);
+			hfield.Background = project.GetBackground (FieldPositionType.HalfField);
+			goal.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 
 		public void LoadStats (EventTypeStats stats, TeamType team)
 		{
 			Visible = false;
-			
-			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Field), field);
-			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.HalfField), hfield);
-			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Goal), goal);
-			field.Tagger.ObjectsCanMove = false;
-			hfield.Tagger.ObjectsCanMove = false;
-			goal.Tagger.ObjectsCanMove = false;
+
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Field), field, fieldDrawingarea);
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.HalfField), hfield, hfieldDrawingarea);
+			UpdateTags (stats.GetFieldCoordinates (team, FieldPositionType.Goal), goal, goalDrawingarea);
 		}
 
-		public void LoadStats (PlayerEventTypeStats stats, TeamType team)
+		public void LoadStats (PlayerEventTypeStats stats)
 		{
 			Visible = false;
-			
-			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Field), field);
-			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.HalfField), hfield);
-			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Goal), goal);
-			field.Tagger.ObjectsCanMove = false;
-			hfield.Tagger.ObjectsCanMove = false;
-			goal.Tagger.ObjectsCanMove = false;
+
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Field), field, fieldDrawingarea);
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.HalfField), hfield, hfieldDrawingarea);
+			UpdateTags (stats.GetFieldCoordinates (FieldPositionType.Goal), goal, goalDrawingarea);
 		}
 
-		public void LoadPlay (LMTimelineEvent play)
-		{
-			field.Visible = play.EventType.TagFieldPosition;
-			hfield.Visible = play.EventType.TagHalfFieldPosition;
-			goal.Visible = play.EventType.TagGoalPosition;
-			
-			play.AddDefaultPositions ();
-
-			if (play.FieldPosition != null) {
-				field.Tagger.Points = play.FieldPosition.Points;
-			}
-			if (play.HalfFieldPosition != null) {
-				hfield.Tagger.Points = play.HalfFieldPosition.Points;
-			}
-			if (play.GoalPosition != null) {
-				goal.Tagger.Points = play.GoalPosition.Points;
-			}
-		}
-
-		void UpdateTags (List<Coordinates> coords, CoordinatesTagger tagger)
+		void UpdateTags (List<Coordinates> coords, PositionsViewerView tagger, Widget widget)
 		{
 			if (coords.Count > 0) {
 				Visible = true;
 			}
-			tagger.Tagger.Coordinates = coords;
-			tagger.Visible = coords.Count != 0;
-		}
-
-		protected override void OnDestroyed ()
-		{
-			base.OnDestroyed ();
+			tagger.Coordinates = coords;
+			widget.Visible = coords.Count != 0;
 		}
 	}
 }

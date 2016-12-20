@@ -22,12 +22,13 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.ViewModel;
 using LongoMatch.Drawing.Widgets;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
-using VAS.Drawing.Cairo;
 using VAS.Core.Store.Templates;
+using VAS.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -36,11 +37,22 @@ namespace LongoMatch.Gui.Dialog
 		const int TAGS_PER_ROW = 5;
 		TeamTagger teamtagger;
 		LMTimelineEvent play;
+		TimelineEventLocationTaggerView field, hfield, goal;
 
 		public PlayEditor (Window parent)
 		{
 			TransientFor = parent;
 			this.Build ();
+			field = new TimelineEventLocationTaggerView (new WidgetWrapper (fieldDrawingarea)) {
+				FieldPosition = FieldPositionType.Field
+			};
+			hfield = new TimelineEventLocationTaggerView (new WidgetWrapper (hfieldDrawingarea)) {
+				FieldPosition = FieldPositionType.HalfField
+			};
+			goal = new TimelineEventLocationTaggerView (new WidgetWrapper (goalDrawingarea)) {
+				FieldPosition = FieldPositionType.Goal
+			};
+
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea3));
 			teamtagger.Compact = true;
 			teamtagger.ShowSubstitutionButtons = false;
@@ -54,16 +66,18 @@ namespace LongoMatch.Gui.Dialog
 		protected override void OnDestroyed ()
 		{
 			teamtagger.Dispose ();
-			tagger.Destroy ();
+			field.Dispose ();
+			hfield.Dispose ();
+			goal.Dispose ();
 			base.OnDestroyed ();
 		}
 
 		public void LoadPlay (LMTimelineEvent play, LMProject project, bool editTags, bool editPos,
-		                      bool editPlayers, bool editNotes)
+							  bool editPlayers, bool editNotes)
 		{
 			this.play = play;
 			notesframe.Visible = editNotes;
-			tagger.Visible = editPos && (play.EventType.TagFieldPosition ||
+			locationsBox.Visible = editPos && (play.EventType.TagFieldPosition ||
 			play.EventType.TagHalfFieldPosition ||
 			play.EventType.TagGoalPosition);
 			drawingarea3.Visible = editPlayers;
@@ -74,10 +88,10 @@ namespace LongoMatch.Gui.Dialog
 			nameentry.GrabFocus ();
 
 			if (editPos) {
-				tagger.LoadBackgrounds (project);
-				tagger.LoadPlay (play);
+				LoadBackgrounds (project);
+				LoadTimelineEvent (play);
 			}
-			
+
 			if (editNotes) {
 				notes.Play = play;
 			}
@@ -90,10 +104,28 @@ namespace LongoMatch.Gui.Dialog
 				teamtagger.Select (play.Players.Cast<LMPlayer> ().ToList (),
 					play.Teams.Cast<LMTeam> ().ToList ());
 			}
-		
+
 			if (editTags) {
 				FillTags (project, play);
 			}
+		}
+
+		void LoadBackgrounds (LMProject project)
+		{
+			field.Background = project.GetBackground (FieldPositionType.Field);
+			hfield.Background = project.GetBackground (FieldPositionType.HalfField);
+			goal.Background = project.GetBackground (FieldPositionType.Goal);
+		}
+
+		void LoadTimelineEvent (LMTimelineEvent timelineEvent)
+		{
+			var viewModel = new LMTimelineEventVM { Model = timelineEvent };
+			fieldDrawingarea.Visible = timelineEvent.EventType.TagFieldPosition;
+			hfieldDrawingarea.Visible = timelineEvent.EventType.TagHalfFieldPosition;
+			goalDrawingarea.Visible = timelineEvent.EventType.TagGoalPosition;
+			field.SetViewModel (viewModel);
+			hfield.SetViewModel (viewModel);
+			goal.SetViewModel (viewModel);
 		}
 
 		void AddTagsGroup (LMTimelineEvent evt, string grp, List<Tag> tags, SizeGroup sgroup)
@@ -146,13 +178,13 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Dictionary<string, List<Tag>> tagsByGroup;
 			SizeGroup sgroup = new SizeGroup (SizeGroupMode.Horizontal);
-			
+
 			if (evt.EventType is AnalysisEventType) {
-				tagsByGroup = (evt.EventType as AnalysisEventType).TagsByGroup; 
+				tagsByGroup = (evt.EventType as AnalysisEventType).TagsByGroup;
 			} else {
 				tagsByGroup = new Dictionary<string, List<Tag>> ();
 			}
-			
+
 			tagsvbox.PackStart (new HSeparator ());
 			foreach (var kv in project.Dashboard.CommonTagsByGroup) {
 				AddTagsGroup (evt, kv.Key, kv.Value, sgroup);
