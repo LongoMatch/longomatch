@@ -17,6 +17,7 @@
 //
 using System;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
 
@@ -27,6 +28,13 @@ namespace LongoMatch.Core.ViewModel
 	/// </summary>
 	public class LMProjectVM : ProjectVM<LMProject>
 	{
+		public LMProjectVM ()
+		{
+			HomeTeam = new LMTeamVM ();
+			AwayTeam = new LMTeamVM ();
+			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
+		}
+
 		/// <summary>
 		/// Gets the description of the project
 		/// </summary>
@@ -141,6 +149,32 @@ namespace LongoMatch.Core.ViewModel
 			set {
 				Model.Description.Competition = value;
 			}
+		}
+
+		/// <summary>
+		/// Gets the bottom team.
+		/// </summary>
+		/// <value>The bottom team.</value>
+		public LMTeamVM HomeTeam {
+			get;
+			protected set;
+		}
+
+		/// <summary>
+		/// Gets the top team.
+		/// </summary>
+		/// <value>The top team.</value>
+		public LMTeamVM AwayTeam {
+			get;
+			protected set;
+		}
+
+		protected override void UpdateModels ()
+		{
+			base.UpdateModels ();
+			HomeTeam.Model = Model.LocalTeamTemplate;
+			AwayTeam.Model = Model.VisitorTeamTemplate;
+			(Timeline as LMTimelineVM).UpdatePredicates ();
 		}
 	}
 }

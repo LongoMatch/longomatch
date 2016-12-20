@@ -52,14 +52,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardButtonVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineCollectionVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineEventVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTimelineVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\PenaltyCardEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ScoreEventType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardButtonVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMPlayerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
