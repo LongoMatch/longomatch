@@ -11,9 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CoreServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataBaseManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HotKeysManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ProjectsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemplatesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\AssemblyInfo\AssemblyInfo.cs">
@@ -35,7 +33,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)State\ProjectsManagerState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\NewProjectState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)State\OpenProjectState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlaylistManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectAnalysisVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\EventsController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\LMPlaylistController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\ProjectAnalysisController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />

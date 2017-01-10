@@ -22,7 +22,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
 using LongoMatch.Core.Events;
-using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Services;
 using Moq;
@@ -34,20 +33,24 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Services;
+using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.ViewModel;
+using VAS.Core.ViewModel;
 
-namespace Tests.Services
+namespace Tests.Controller
 {
 	[TestFixture ()]
-	public class TestProjectsManager
+	public class TestProjectAnalysisController
 	{
 		Mock<IMultimediaToolkit> mtkMock;
 		Mock<IGUIToolkit> gtkMock;
-		Mock<IAnalysisWindow> winMock;
 		Mock<ICapturer> capturerMock;
 		Mock<ICapturerBin> capturerBinMock;
 		VideoPlayerController player;
-		ProjectsManager projectsManager;
+		ProjectAnalysisController projectsManager;
 		LMProject project;
+		LMProjectVM projectVM;
+		VideoPlayerVM videoPlayerVM;
 		CaptureSettings settings;
 
 		List<Mock> mockList;
@@ -68,11 +71,6 @@ namespace Tests.Services
 			capturerMock.SetupAllProperties ();
 			mockList.Add (capturerMock);
 
-			winMock = new Mock<IAnalysisWindow> ();
-			winMock.SetupAllProperties ();
-			IAnalysisWindowBase win = winMock.Object;
-			mockList.Add (winMock);
-
 			mtkMock = new Mock<IMultimediaToolkit> ();
 			mtkMock.Setup (m => m.GetPlayer ()).Returns (playerMock.Object);
 			mtkMock.Setup (m => m.GetMultiPlayer ()).Throws (new Exception ());
@@ -85,7 +83,7 @@ namespace Tests.Services
 			gtkMock = new Mock<IGUIToolkit> ();
 			gtkMock.Setup (m => m.Invoke (It.IsAny<EventHandler> ())).Callback<EventHandler> (e => e (null, null));
 			gtkMock.Setup (m => m.OpenProject (It.IsAny<LMProject> (), It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out win));
+				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> ()));
 			gtkMock.Setup (g => g.RemuxFile (It.IsAny<string> (), It.IsAny<string> (), It.IsAny<VideoMuxerType> ()))
 				.Returns (() => settings.EncodingSettings.OutputFile)
 				.Callback ((string s, string d, VideoMuxerType m) => File.Copy (s, d));
@@ -98,19 +96,28 @@ namespace Tests.Services
 			capturerBinMock.Setup (w => w.CaptureSettings).Returns (() => settings);
 			capturerBinMock.Setup (w => w.Periods).Returns (() => new List<Period> ());
 			mockList.Add (capturerBinMock);
+
 			player = new VideoPlayerController ();
-			winMock.Setup (w => w.Capturer).Returns (capturerBinMock.Object);
-			winMock.Setup (w => w.Player).Returns (player);
+			videoPlayerVM = new VideoPlayerVM ();
+			videoPlayerVM.Player = player;
 		}
 
 		[SetUp ()]
 		public void Setup ()
 		{
-			App.Current.DatabaseManager = new LocalDatabaseManager ();
-			projectsManager = new ProjectsManager ();
-			projectsManager.Start ();
-			project = Utils.CreateProject ();
 			settings.EncodingSettings.OutputFile = Path.GetTempFileName ();
+
+			App.Current.DatabaseManager = new LocalDatabaseManager ();
+
+			project = Utils.CreateProject ();
+			projectVM = new LMProjectVM { Model = project };
+			LMProjectAnalysisVM viewModel = new LMProjectAnalysisVM ();
+			viewModel.VideoPlayer = videoPlayerVM;
+			viewModel.Project = projectVM;
+
+			projectsManager = new ProjectAnalysisController ();
+			projectsManager.ViewModel = viewModel;
+			projectsManager.Start ();
 		}
 
 		[TearDown ()]
@@ -146,9 +153,9 @@ namespace Tests.Services
 				}
 			);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			Assert.AreEqual (project, projectsManager.OpenedProject);
-			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
-			Assert.AreEqual (player, projectsManager.Player);
+			Assert.AreEqual (project, projectsManager.Project);
+			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.ViewModel.Project.ProjectType);
+			Assert.AreEqual (player, projectsManager.VideoPlayer);
 			Assert.AreEqual (capturerBinMock.Object, projectsManager.Capturer);
 			Assert.IsTrue (projectOpened);
 			capturerBinMock.Verify (c => c.Run (settings, project.Description.FileSet.First ()), Times.Once ());
@@ -215,7 +222,7 @@ namespace Tests.Services
 				}
 			);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			Assert.AreEqual (null, projectsManager.OpenedProject);
+			Assert.AreEqual (null, projectsManager.Project);
 			capturerBinMock.Verify (c => c.Close (), Times.Once ());
 			capturerBinMock.ResetCalls ();
 			Assert.AreEqual (new List<string> { "Home" }, transitions);
@@ -244,12 +251,12 @@ namespace Tests.Services
 				settings.EncodingSettings.OutputFile, VideoMuxerType.Mp4));
 			Assert.AreEqual ("Home", App.Current.StateController.Current);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
-			Assert.AreEqual (project, projectsManager.OpenedProject);
-			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (project, projectsManager.Project);
+			/*Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
 			// Make sure the project is not cleared.
-			Assert.IsNotEmpty (projectsManager.OpenedProject.Dashboard.List);
-			Assert.IsNotEmpty (projectsManager.OpenedProject.LocalTeamTemplate.List);
-			Assert.IsNotEmpty (projectsManager.OpenedProject.VisitorTeamTemplate.List);
+			Assert.IsNotEmpty (projectsManager.Project.Dashboard.List);
+			Assert.IsNotEmpty (projectsManager.Project.LocalTeamTemplate.List);
+			Assert.IsNotEmpty (projectsManager.Project.VisitorTeamTemplate.List);*/
 		}
 
 		[Test ()]
@@ -272,13 +279,13 @@ namespace Tests.Services
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Return);
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
-			Assert.AreEqual (project, projectsManager.OpenedProject);
-			Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (project, projectsManager.Project);
+			//Assert.AreEqual (ProjectType.CaptureProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (0, projectChanged);
 
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Quit);
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
-			Assert.AreEqual (null, projectsManager.OpenedProject);
+			Assert.AreEqual (null, projectsManager.Project);
 			Assert.AreEqual (0, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (1, projectChanged);
 
@@ -292,8 +299,8 @@ namespace Tests.Services
 			projectChanged = 0;
 			gtkMock.Setup (g => g.EndCapture (false)).Returns (EndCaptureResponse.Save);
 			await App.Current.EventsBroker.Publish (new CloseOpenedProjectEvent ());
-			Assert.AreEqual (project, projectsManager.OpenedProject);
-			Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
+			Assert.AreEqual (project, projectsManager.Project);
+			//Assert.AreEqual (ProjectType.FileProject, projectsManager.OpenedProjectType);
 			Assert.AreEqual (1, App.Current.DatabaseManager.ActiveDB.Count<LMProject> ());
 			Assert.AreEqual (2, projectChanged);
 
@@ -320,9 +327,8 @@ namespace Tests.Services
 
 			mtkMock.Verify (g => g.DiscoverFile (It.IsAny<string> (), true), Times.Exactly (project.Description.FileSet.Count));
 
-			IAnalysisWindowBase win = winMock.Object;
 			gtkMock.Verify (g => g.OpenProject (project, It.IsAny<ProjectType> (),
-				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> (), out win), Times.Once ());
+				It.IsAny<CaptureSettings> (), It.IsAny<EventsFilter> ()), Times.Once ());
 
 		}
 	}

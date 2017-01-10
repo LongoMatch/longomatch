@@ -46,10 +46,7 @@ namespace LongoMatch.Services
 	public class CoreServices
 	{
 		static DataBaseManager dbManager;
-		static EventsManager eManager;
 		static HotKeysManager hkManager;
-		static ProjectsManager projectsManager;
-		static PlaylistManager plManager;
 		static JobsManagerVM jobsManagerVM;
 		internal static ToolsManager toolsManager;
 		static TemplatesService ts;
@@ -155,27 +152,14 @@ namespace LongoMatch.Services
 			RenderingJobsController jobsController = new RenderingJobsController (jobsManagerVM);
 			RegisterService (jobsController);
 
-			projectsManager = new ProjectsManager ();
-			RegisterService (projectsManager);
-
 			/* State the tools manager */
 			toolsManager = new ToolsManager ();
 			RegisterService (toolsManager);
 			ProjectsImporter = toolsManager;
 
-			/* Start the events manager */
-			eManager = new EventsManager ();
-			RegisterService (eManager);
-
-			RegisterService (new CoreEventsManager ());
-
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
 			RegisterService (hkManager);
-
-			/* Start playlists hotkeys manager */
-			plManager = new PlaylistManager ();
-			RegisterService (plManager);
 		}
 
 		public static void StartServices ()
